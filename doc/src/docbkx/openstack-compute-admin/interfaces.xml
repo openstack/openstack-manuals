@@ -1,35 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-    <?dbhtml filename="ch_openstack-interfaces.html" ?>
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="ch_openstack-interfaces">
+ 
     <title>OpenStack Interfaces</title>
 
     <para>OpenStack has components that provide a view of the OpenStack installation such as a Django-built website that serves as a dashboard and the ability to connect to running instances using a VNC connection via a VNC Proxy.</para>
-    <section><?dbhtml filename="about-the-dashboard.html" ?><title>About the Dashboard</title><para>You can use a dashboard interface with an OpenStack Compute installation with a web-based
+    <section xml:id="about-the-dashboard">
+        <title>About the Dashboard</title><para>You can use a dashboard interface with an OpenStack Compute installation with a web-based
         console provided by the Openstack-Dashboard project. It provides a reference implementation of a Django site that provides web-based interactions with the OpenStack Compute cloud controller. For more information about the Openstack-Dashboard project,
         please visit: <link xlink:href="http://launchpad.net/openstack-dashboard"
             >http://launchpad.net/openstack-dashboard</link>. These instructions are for a test deployment of an OpenStack Dashboard. They configure your dashboard to use the default Django server. To create a more robust, production-ready installation, you would configure this with an Apache web server. </para>
 
     
-    <section>
-        <?dbhtml filename="dashboard-system-requirements.html" ?>
+        <section xml:id="dashboard-system-requirements">
+        
         <title>System Requirements for the Dashboard</title>
         
-        <para>You should have a running OpenStack Compute installation with the Keystone module enabled. </para>
+        <para>You should have a running OpenStack Compute installation with the Keystone module
+            enabled for identity management. Follow these <link xlink:href="http://docs.openstack.org/diablo/">general instructions for installing Identity Management</link>. For a good all-in-one Nova/Glance/Keystone installation there is the <link xlink:href="https://github.com/cloudbuilders/devstack">devstack</link> project.</para>
         <para>The dashboard needs to be installed on the node that can contact the Keystone service.</para>
-        <para>You should know the URL of your Keystone endpoint. </para>
+        <para>You should know the URL of your Identity endpoint and the Compute endpoint. </para>
         <para>You must know the credentials of a valid Keystone tenant.</para>
-        <para>Python 2.6 is required, and these instructions have been tested with Ubuntu 10.10.</para>
+            <para>You must have git installed. It's straightforward to install it with <code>sudo
+                    apt-get install git-core</code>. </para>
+        <para>Python 2.6 is required, and these instructions have been tested with Ubuntu 10.10. It
+                should run on any system with Python 2.6 or 2.7 that is capable of running Django
+                including Mac OS X (installing prerequisites may differ depending on platform). </para>
+            <para>Optional components:</para>
+            <para>an Image Store (Glance) endpoint </para>
+            <para>an Object Store (Swift) endpoint </para>
+            <para>a <link xlink:href="http://wiki.openstack.org/Quantum">Quantum</link> (networking)
+                endpoint</para>
     </section>
-    <section><?dbhtml filename="installing-openstack-dashboard.html" ?>
+        <section xml:id="installing-openstack-dashboard">
 
         <title>Installing the OpenStack Dashboard</title>
         <para>Here are the overall steps for building the dashboard.</para>
 
         <orderedlist>
             <listitem><para>Get the source for the openstack-dashboard project.</para></listitem>
-            <listitem><para>Build and configure the openstack-dashboard.</para></listitem>
+            <listitem>
+                    <para>Configure the openstack-dashboard.</para>
+                </listitem>
+                <listitem>
+                    <para>Install.</para>
+                </listitem>
             <listitem>
                 <para>Run the server that starts the dashboard.</para>
             </listitem>
@@ -37,8 +54,7 @@
 
             
             
-            <para>Before you begin, you must have git installed. It's straightforward to install
-            it with <code>sudo apt-get install git-core</code>. </para>
+            <para>Before you begin, you must have git installed. </para>
         <para>Create a source directory to house the project:</para>
        
             <literallayout class="monospaced">mkdir src
@@ -50,16 +66,16 @@ cd src            </literallayout>
 git clone https://github.com/4P/openstack-dashboard
 </literallayout>
         <para>You should now have a directory called openstack-dashboard, which contains the OpenStack Dashboard application.</para>
-        <section><?dbhtml filename="build-and-configure-openstack-dashboard.html" ?>
-            <title>Build and Configure Openstack-Dashboard</title>
+        <section xml:id="build-and-configure-openstack-dashboard">
+            <title>Configure Openstack-Dashboard</title>
                 <para>Now you can configure the dashboard application. The first step in configuring the application
                 is to create your local_settings.py file. An example is provided that you can copy
                 to local_settings.py and then modify for your environment.
                 </para>
             <para>
                 <literallayout class="monospaced">
-cd openstack-dashboard/openstack-dashboard/local
-cp local_settings.py.example local_settings.py
+cd openstack-dashboard/openstack-dashboard
+cp local_settings.py.example local/local_settings.py
 vi local_settings.py
                 </literallayout>
             </para>
@@ -71,29 +87,52 @@ vi local_settings.py
                 <listitem>
                     <para>OPENSTACK_KEYSTONE_URL : URL for the Keystone endpoint.</para>
                 </listitem>
-                    <listitem>
-                        <para>SWIFT_ENABLED : Flag to enable/disable swift support from the dashboard. </para>
-                    </listitem>
-                </itemizedlist>
-
-            <para>Now install the openstack-dashboard environment. This installs all the dependencies for
-                openstack-dashboard. If you don't already have easy_install installed,
-                use sudo apt-get install python-setuptools.
-            </para>
+            </itemizedlist>
+            <simplesect> <title>Keystone Configuration (required)</title>
             <para>
-                <literallayout class="monospaced">
-sudo apt-get install -y python-setuptools
-sudo easy_install virtualenv
-python tools/install_venv.py
-                </literallayout>
-            </para>
-            <para>This step takes some time since it downloads a number of dependencies.</para>
+                
+                The admin token can be generated by executing something like the following using the keystone-manage command on the Keystone host:</para>
+                
+               <literallayout class="monospaced"> keystone-manage token add 999888777666 admin admin 2015-02-05T00:00</literallayout>
+                
+                <para>To use this token you would add the following to local_settings.py:</para>
+                
+                <literallayout class="monospaced">OPENSTACK_ADMIN_TOKEN = "999888777666"</literallayout>
+                
+                <para>The Keystone endpoint setting takes the following form:</para>
+                
+                <literallayout class="monospaced">OPENSTACK_KEYSTONE_URL = "http://mykeystoneurl:5000/v2.0/".</literallayout></simplesect>
+            <simplesect><title>Object Storage Configuration (optional)</title>
+                <para>If a Swift endpoint is available and configured in the Keystone service catalog turning on the Swift UI is as simple as adding the following to local_settings.py:
+                    
+                </para>
+                <literallayout class="monospaced">SWIFT_ENABLED = True</literallayout>
+            </simplesect>
+            <simplesect><title>Quantum Configuration (optional)</title>
+            <para>Quantum currently requires the following settings:</para>
+            <literallayout class="monospaced">
+QUANTUM_ENABLED = True
+QUANTUM_URL = '127.0.0.1'
+QUANTUM_PORT = '9696'
+QUANTUM_TENANT = '1234'
+QUANTUM_CLIENT_VERSION='0.1'
+            </literallayout></simplesect>
         </section>
-        <section>
-            <?dbhtml filename="run-the-server.html" ?>
-
-            <title>Run the Server</title>
-            <para>Now run the server on a high port value so that you can validate the installation.</para><para><literallayout class="monospaced">tools/with_venv.sh dashboard/manage.py runserver 0.0.0.0:8000</literallayout></para><para>Make sure that your firewall isn't blocking TCP/8000 and just point your browser at this server on port 8000. If you are running the server on the same machine as your browser, this would be "http://localhost:8000". </para>
+            <section xml:id="install-dashboard">
+                <title>Install the Dashboard</title>
+                <para>After Dashboard has been configured install the Dashboard virtual environment using the terminal commands below:</para>
+                    
+                    <note><para>Note: the instructions below are for Ubuntu, however, setuptools can be installed on a wide variety of platforms: http://pypi.python.org/pypi/setuptools</para></note>
+                    
+                    <literallayout class="monospaced">$ apt-get install -y python-setuptools 
+                    $ sudo easy_install virtualenv
+                    $ python tools/install_venv.py</literallayout>
+                    
+                    <para>Installing the virtual environment will take some time depending on download speeds. </para>
+            </section>
+            <section xml:id="run-the-server">
+          <title>Run the Server</title>
+                <para>Dashboard is run using the standard Django manage.py script from the context of the virtual environment. Run the server on a high port value so that you can validate the installation.</para><para><literallayout class="monospaced">tools/with_venv.sh dashboard/manage.py runserver 0.0.0.0:8000</literallayout></para><para>Make sure that your firewall isn't blocking TCP/8000 and just point your browser at this server on port 8000. If you are running the server on the same machine as your browser, this would be "http://localhost:8000". </para>
             <mediaobject>
                 <imageobject role="fo">
                     <imagedata fileref="figures/dashboard-overview.png"

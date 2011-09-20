@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-    <?dbhtml filename="ch_openstack-compute-tutorials.html" ?>
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="ch_openstack-compute-tutorials">
     <title>OpenStack Compute Tutorials</title>
     <para>We want OpenStack to make sense, and sometimes the best way to make sense of the cloud is to try out some basic ideas with cloud computing. Flexible, elastic, and scalable are a few attributes of cloud computing, so these tutorials show various ways to use virtual computing or web-based storage with OpenStack components.</para>
-    <section>
-        <?dbhtml filename="running-elastic-web-app-cloud.html" ?>
+    <section xml:id="running-elastic-web-app-cloud">
         <title>Running Your First Elastic Web Application on the Cloud</title>
 
         <para>In this OpenStack Compute tutorial, we’ll walk through the creation of an elastic,
@@ -36,7 +35,7 @@
             <listitem><para>On the instances you spin up, installing Wordpress and its dependencies, the Memcached plugin, and multiple memcache servers.</para></listitem>
 
         </itemizedlist>
-        <section><?dbhtml filename="part-i-setting-up-cloud-infrastructure.html" ?>
+        <section xml:id="part-i-setting-up-cloud-infrastructure">
             <title>Part I: Setting Up the Cloud Infrastructure</title>
             <para>In this part, we'll get the networking layer set up based on what we think most
                 networks would work like. We'll also create a user and a project to house our cloud
@@ -76,6 +75,7 @@
 # DHCP bridge information
 --dhcpbridge_flagfile=/etc/nova/nova.conf
 --dhcpbridge=nova-dhcpbridge
+--flat_network_bridge=br100
 --logdir=/var/log/nova
 # Top-level directory for maintaining nova's state 
 --state_path=/var/lib/nova
@@ -102,7 +102,7 @@
                     tutorial. Be careful when setting up --flat_interface in nova.conf, if you
                     specify an interface that already has an IP it will break and if this is the
                     interface you are connecting through with SSH, you cannot fix it unless you have
-                    ipmi/console access. </para>
+                    ipmi/console access. Also the --flat_network_bridge is now required.</para>
                 <para>For this tutorial, we set a 24 value for network_size, the number of addresses
                     in each private subnet, since that falls inside the /12 CIDR-notated range
                     that's set in ‘fixed-range’ in nova.conf. We probably won't use that many at
@@ -181,8 +181,7 @@ source ~/.bashrc</literallayout>
                     some images and run instances. Onward to Part II!</para>
             </simplesect>
         </section>
-        <section>
-            <?dbhtml filename="part-ii-getting-virtual-machines.html" ?>
+        <section xml:id="part-ii-getting-virtual-machines">
             <title>Part II: Getting Virtual Machines to Run the Virtual Servers</title>
             <para>Understanding what you can do with cloud computing means you should have a grasp
                 on the concept of virtualization. With virtualization, you can run operating systems
@@ -214,8 +213,7 @@ uec-publish-tarball $image wpbucket x86_64</literallayout>
                 euca-describe-images to ensure the image is untarred. Wait until the state shows
                 "available" so that you know the instances is ready to roll.</para>
         </section>
-        <section>
-            <?dbhtml filename="installing-needed-software-for-web-scale.html" ?>
+        <section xml:id="installing-needed-software-for-web-scale">
             <title>Part III: Installing the Needed Software for the Web-Scale Scenario</title>
             <para>Once that state is "available" you can enter this command, which will use your
                 credentials to start up the instance with the identifier you got by publishing the
@@ -260,8 +258,7 @@ cd blog</literallayout>
                 <para>
                     <literallayout class="monospaced">apt-get install memcached</literallayout>
                 </para></simplesect><simplesect><title>Configure the Wordpress Memcache plugin</title><para>From a web browser, point to the IP address of your Wordpress server. Download and install the Memcache Plugin. Enter the IP address of your Memcache server.</para></simplesect>
-        </section><section>
-            <?dbhtml filename="running-a-blog-in-the-cloud.html" ?>
+        </section><section xml:id="running-a-blog-in-the-cloud">
             <title>Running a Blog in the Cloud</title><para>That's it! You're now running your blog on a cloud server in OpenStack Compute, and you've scaled it horizontally using additional virtual images to run the database and Memcache. Now if your blog gets a big boost of comments, you'll be ready for the extra reads-and-writes to the database. </para></section>
     </section>
 </chapter>

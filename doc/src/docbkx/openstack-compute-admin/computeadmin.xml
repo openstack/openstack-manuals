@@ -21,8 +21,9 @@ format="SVG" scale="60"/>
 ]>
 <chapter xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-    <?dbhtml filename="ch_system-administration-for-openstack-compute.html" ?>
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="ch_system-administration-for-openstack-compute">
+
     <title>System Administration</title>
     <para>By understanding how the different installed nodes interact with each other you can
         administer the OpenStack Compute installation. OpenStack Compute offers many ways to install
@@ -77,7 +78,7 @@ format="SVG" scale="60"/>
             <para><literallayout class="monospaced">nova-network --network_manager=nova.network.manager.FlatManager</literallayout></para>
         </listitem>
     </itemizedlist>
-    <section><?dbhtml filename="starting-images.html" ?>
+    <section xml:id="starting-images">
         <title>Starting Images</title><para>Once you have an installation, you want to get images that you can use in your Compute cloud. We've created a basic Ubuntu image for testing your installation. First you'll download the image, then use uec-publish-tarball to publish it:</para>
             
            <para><literallayout class="monospaced">image="ubuntu1010-UEC-localuser-image.tar.gz"
@@ -127,8 +128,8 @@ chmod 600 test.pem</literallayout>
                 
                <para><literallayout class="monospaced">sudo -i</literallayout></para>
                 </section>
-                <section>
-                    <?dbhtml filename="deleting-instances.html" ?>
+    <section xml:id="deleting-instances">
+                  
                     <title>Deleting Instances</title>
                 
                 <para>When you are done playing with an instance, you can tear the instance down
@@ -136,8 +137,8 @@ chmod 600 test.pem</literallayout>
             look it up with euca-describe-instances):</para>
                 
                 <para><literallayout class="monospaced">euca-terminate-instances $instanceid</literallayout></para></section>
-    <section>
-        <?dbhtml filename="creating-custom-images.html" ?>
+    <section xml:id="creating-custom-images">
+   
         <info><author>
             <orgname>CSS Corp-  Open Source Services</orgname>
         </author><title>Image management</title></info>
@@ -151,7 +152,7 @@ chmod 600 test.pem</literallayout>
         <para>In both cases, the documentation below assumes that you have a working KVM installation to use for creating the images. We are using the machine called &#8216;client1&#8242; as explained in the chapter on &#8220;Installation and Configuration&#8221; for this purpose.</para>
         <para>The approach explained below will give you disk images that represent a disk without any partitions. Nova-compute can resize such disks ( including resizing the file system) based on the instance type chosen at the time of launching the instance. These images cannot have &#8216;bootable&#8217; flag and hence it is mandatory to have associated kernel and ramdisk images. These kernel and ramdisk images need to be used by nova-compute at the time of launching the instance.</para>
         <para>However, we have also added a small section towards the end of the chapter about creating bootable images with multiple partitions that can be be used by nova to launch an instance without the need for  kernel and ramdisk images. The caveat is that while nova-compute can re-size such disks at the time of launching the instance, the file system size is not altered and hence, for all practical purposes, such disks are not re-sizable.</para>
-        <section><?dbhtml filename="creating-a-linux-image.html" ?><title>Creating a Linux Image &#8211; Ubuntu &amp; Fedora</title>
+        <section xml:id="creating-a-linux-image"><title>Creating a Linux Image &#8211; Ubuntu &amp; Fedora</title>
             
             <para>The first step would be to create a raw image on Client1. This will represent the main HDD of the virtual machine, so make sure to give it as much space as you will need.</para>
             <literallayout class="monospaced">
@@ -373,7 +374,7 @@ IMAGE   aki-3d0aeb08    bucket1/vmlinuz-2.6.38-7-server.manifest.xml     css    
 localadmin@client1:~$
 </literallayout>
     </simplesect></section>
-        <section><?dbhtml filename="creating-a-windows-image.html" ?><title>Creating a Windows Image</title>
+    <section xml:id="creating-a-windows-image"><title>Creating a Windows Image</title>
             <para>The first step would be to create a raw image on Client1, this will represent the main HDD of the virtual machine, so make sure to give it as much space as you will need.</para>
             <literallayout class="monospaced">
 kvm-img create -f raw windowsserver.img 20G
@@ -396,8 +397,8 @@ euca-upload-bundle -b mybucket -m /tmp/windowsserver.img.manifest.xml
 euca-register mybucket/windowsserver.img.manifest.xml
 </literallayout>
         </section>
-    <section>
-        <?dbhtml filename="understanding-the-compute-service-architecture.html" ?>
+    <section xml:id="understanding-the-compute-service-architecture">
+      
         <title>Understanding the Compute Service Architecture</title>
         <para>These basic categories describe the service architecture and what's going on within the cloud controller.</para>
         <simplesect><title>API Server</title>
@@ -443,8 +444,8 @@ euca-register mybucket/windowsserver.img.manifest.xml
             <listitem><para>Establish Compute volumes</para></listitem></itemizedlist>
             
     <para>Volumes may easily be transferred between instances, but may be attached to only a single instance at a time.</para></simplesect></section>
-    <section>
-        <?dbhtml filename="managing-the-cloud.html" ?>
+    <section xml:id="managing-the-cloud">
+       
         <title>Managing the Cloud</title><para>There are two main tools that a system administrator will find useful to manage their cloud;
             the nova-manage command or the Euca2ools command line commands. </para>
         <para>With the Diablo release, the nova-manage command has been deprecated and you must
@@ -471,8 +472,8 @@ euca-register mybucket/windowsserver.img.manifest.xml
                 volume, and vpn. </para>
             <para>You can also run with a category argument such as user to see a list of all commands in that category: nova-manage user</para>
             </simplesect></section>
-    <section>
-        <?dbhtml filename="managing-compute-users.html" ?>
+    <section xml:id="managing-compute-users">
+        
         <title>Managing Compute Users</title>
         
             <para>Access to the Euca2ools (ec2) API is controlled by an access and secret key. The
@@ -528,8 +529,8 @@ euca-register mybucket/windowsserver.img.manifest.xml
             <listitem><para>Project Manager. (projectmanager) This is a role that is assigned upon project creation and can't be added or removed, but this role can do anything a sysadmin can do.</para></listitem></itemizedlist>
         
         <para>RBAC management is exposed through the dashboard for simplified user management.</para></simplesect></section>
-<section>
-        <?dbhtml filename="managing-volumes.html" ?>
+    <section xml:id="managing-volumes">
+       
         <title>Managing Volumes</title>
         <para>Nova-volume is the service that allows you to give extra block level storage to your
             OpenStack Compute instances. You may recognize this as a similar offering that Amazon
@@ -973,8 +974,8 @@ tcp: [9] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000014         
         
     </section>
     
-    <section>
-        <?dbhtml filename="live-migration-usage.html" ?>
+    <section xml:id="live-migration-usage">
+        
         <title>Using Live Migration</title>
         <para>Before starting live migration, check "Configuring Live Migration" sections.</para>
         <para>Live migration provides a scheme to migrate running instances from one OpenStack
@@ -1053,8 +1054,7 @@ Migration of i-00000001 initiated. Check its progress using euca-describe-instan
 
 
     </section>
-    <section>
-        <?dbhtml filename="reference-for-flags-in-nova-conf.html" ?>
+    <section xml:id="reference-for-flags-in-nova-conf">
         <title>Reference for Flags in nova.conf</title>
                 <para>For a complete list of all available flags for each OpenStack Compute service,
             run bin/nova-&lt;servicename> --help. </para>
@@ -1231,12 +1231,13 @@ Migration of i-00000001 initiated. Check its progress using euca-describe-instan
                 <tr>
                     <td>--flat_interface</td>
                     <td>default: ''</td>
-                    <td>FlatDhcp will bridge into this interface if set</td>
+                    <td>FlatDhcp will bridge into this interface</td>
                 </tr>
                 <tr>
                     <td>--flat_network_bridge</td>
-                    <td>default: 'br100'</td>
-                    <td>Bridge for simple network instances</td>
+                    <td>default: ''</td>
+                    <td>Bridge for simple network instances, formerly defaulted to br100; required
+                        setting for Flat DHCP</td>
                 </tr>
                 <tr>
                     <td>--flat_network_dhcp_start</td>

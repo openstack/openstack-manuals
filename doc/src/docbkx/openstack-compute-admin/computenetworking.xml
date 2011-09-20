@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-    
-    <?dbhtml filename="ch_networking.html" ?>
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="ch_networking">
     <title>Networking</title>
     <para>By understanding the available networking configuration options you can design the best
         configuration for your OpenStack Compute instances.</para>
     
-    <section><?dbhtml filename="networking-options.html" ?>
+    <section xml:id="networking-options">
         <title>Networking Options</title>
         <para>This section offers a brief overview of each concept in networking for Compute. </para>
         <para>In Compute, users organize their cloud resources in projects. A Compute project
@@ -67,7 +66,7 @@
             belonging to one project are bridged into the same VLAN for that project. OpenStack
             Compute creates the Linux networking bridges and VLANs when required.</para></section>
     
-    <section><?dbhtml filename="cloudpipe-per-project-vpns.html" ?>
+    <section xml:id="cloudpipe-per-project-vpns">
         <title>Cloudpipe — Per Project Vpns</title>
         <para>
             Cloudpipe is a method for connecting end users to their project
@@ -76,7 +75,7 @@
       
             <para>
                 The support code for cloudpipe implements admin commands (via
-                nova-manage) to automatically create a vm for a project that
+                nova-manage) to automatically create a VM for a project that
                 allows users to vpn into the private network of their project.
                 Access to this vpn is provided through a public port on the
                 network host for the project. This allows users to have free
@@ -98,7 +97,7 @@
                 are connected with revoked certificates when their connection is
                 renegotiated (every hour).
             </para>
-        <section><?dbhtml filename="creating-a-cloudpipe-image.html" ?>
+        <section xml:id="creating-a-cloudpipe-image">
             <title>Creating a Cloudpipe Image</title>
             <para>
                 Making a cloudpipe image is relatively easy.
@@ -171,7 +170,7 @@
                 </listitem>
             </orderedlist>
         </section>
-        <section><?dbhtml filename="vpn-access.html" ?>
+        <section xml:id="vpn-access">
             <title>VPN Access</title>
             <para>
                 In vlan networking mode, the second IP in each private network is
@@ -189,7 +188,7 @@
                 (This will be turned into a nova-manage command or a flag soon.)
             </para>
         </section>
-        <section><?dbhtml filename="certificates-and-revocation.html" ?>
+        <section xml:id="certificates-and-revocation">
             <title>Certificates and Revocation</title>
             <para>If the use_project_ca flag is set (required to for cloudpipes to work securely),
                 then each project has its own ca. This ca is used to sign the certificate for the
@@ -203,7 +202,7 @@
                 user's credentials are revoked.
             </para>
         </section>
-        <section><?dbhtml filename="restarting-and-logging-into-cloudpipe-vpn.html" ?>
+        <section xml:id="restarting-and-logging-into-cloudpipe-vpn">
             <title>Restarting and Logging into the Cloudpipe VPN</title>
             <para>You can reboot a cloudpipe vpn through the api if something goes wrong (using
                 euca-reboot-instances for example), but if you generate a new crl, you will have to
@@ -224,8 +223,7 @@
             <para>The keypair that was used to launch the cloudpipe  instance should be in the keys/&lt;project_id&gt; folder. You can use this key to log into the cloudpipe instance for debugging purposes.</para>
         </section>
     </section>
-    <section>
-        <?dbhtml filename="configuring-networking-on-the-compute-node.html" ?>
+    <section xml:id="configuring-networking-on-the-compute-node">
         <title>Configuring Networking on the Compute Node</title>
         <para>To configure the Compute node's networking for the VM images, the overall steps are:</para>
             
@@ -249,7 +247,8 @@
             </listitem>
             <listitem>
                 <para>--network_manager = nova.network.manager.FlatDHCPManager</para>
-                <para>Flat networking with DHCP</para>
+                <para>Flat networking with DHCP,  you must set a bridge using the
+                    --flat_network_bridge flag</para>
             </listitem>
             <listitem>
                 <para>--network_manager = nova.network.manager.VlanManager</para>
@@ -260,7 +259,7 @@
         <para>Also, when you issue the nova-manage network create command, it uses the settings from
             the nova.conf flag file. Use the "nova-manage network create public 192.168.0.0/24 1
             255" command to create the subnet that your VMs will run on. You specify public or
-            private after the create command.</para><section><?dbhtml filename="configuring-flat-networking.html" ?><title>Configuring Flat Networking</title>
+            private after the create command.</para><section xml:id="configuring-flat-networking"><title>Configuring Flat Networking</title>
             <para>FlatNetworking uses ethernet adapters configured as bridges to allow network
                 traffic to transit between all the various nodes. This setup can be done with a
                 single adapter on the physical host, or multiple. This option does not require a
@@ -277,7 +276,13 @@
             <para>Compute defaults to a bridge device named ‘br100’ which is stored in the Nova
                 database, so you can change the name of the bridge device by modifying the entry in
                 the database. Consult the diagrams for additional configuration options.</para>
-                <para>In any set up with FlatNetworking (either Flat or FlatDHCP), the host with nova-network on it is responsible for forwarding traffic from the private network configured with the --fixed_range= directive in nova.conf. This host needs to have br100 configured and talking to any other nodes that are hosting VMs. With either of the Flat Networking options, the default gateway for the virtual machines is set to the host which is running nova-network. </para>
+                <para>In any set up with FlatNetworking (either Flat or FlatDHCP), the host with
+                nova-network on it is responsible for forwarding traffic from the private network
+                configured with the --fixed_range= directive in nova.conf and the
+                --flat_network_bridge setting. This host needs to have br100 configured and talking
+                to any other nodes that are hosting VMs. With either of the Flat Networking options,
+                the default gateway for the virtual machines is set to the host which is running
+                nova-network. </para>
             <para>Set the compute node's external IP address to be on the bridge and add eth0 to
                 that bridge. To do this, edit your network interfaces configuration to look like the
                 following example: </para>
@@ -330,16 +335,16 @@ iface br100 inet dhcp
                     </mediaobject>
                 </figure>
             </section>
-                <section>
-                    <?dbhtml filename="configuring-flat-dhcp-networking.html" ?>    
+        <section xml:id="configuring-flat-dhcp-networking">
                     <title>Configuring Flat DHCP Networking</title><para>With Flat DHCP, the host running nova-network acts as the gateway to the virtual nodes. You
                 can run one nova-network per cluster. Set the flag --network_host on the nova.conf
                 stored on the nova-compute node to tell it which host the nova-network is running on
-                so it can communicate with nova-network. The nova-network service will track leases
-                and releases in the database so it knows if a VM instance has stopped properly
-                configuring via DHCP. Lastly, it sets up iptables rules to allow the VMs to
-                communicate with the outside world and contact a special metadata server to retrieve
-                information from the cloud.</para>
+                so it can communicate with nova-network. You must also set the --flat_network_bridge
+                setting to the name of the bridge (no default is set for it). The nova-network
+                service will track leases and releases in the database so it knows if a VM instance
+                has stopped properly configuring via DHCP. Lastly, it sets up iptables rules to
+                allow the VMs to communicate with the outside world and contact a special metadata
+                server to retrieve information from the cloud.</para>
             <para>Compute hosts in the FlatDHCP model are responsible for bringing up a matching
                 bridge and bridging the VM tap devices into the same ethernet device that the
                 network host is on. The compute hosts do not need an IP address on the VM network,
@@ -381,7 +386,7 @@ iface br100 inet dhcp
 --public_interface=eth0</literallayout>
             </para>
             <para>Integrate your network interfaces to match this configuration.</para></section>
-        <section><?dbhtml filename="outbound-traffic-flow-with-any-flat-networking.html" ?><title>Outbound Traffic Flow with Any Flat Networking</title><para>In any set up with FlatNetworking, the host with nova-network on it is responsible for forwarding traffic from the private network configured with the {{--fixed_range=...} directive in nova.conf. This host needs to have br100 configured and talking to any other nodes that are hosting VMs. With either of the Flat Networking options, the default gateway for the virtual machines is set to the host which is running nova-network.</para>
+        <section xml:id="outbound-traffic-flow-with-any-flat-networking"><title>Outbound Traffic Flow with Any Flat Networking</title><para>In any set up with FlatNetworking, the host with nova-network on it is responsible for forwarding traffic from the private network configured with the {{--fixed_range=...} directive in nova.conf. This host needs to have br100 configured and talking to any other nodes that are hosting VMs. With either of the Flat Networking options, the default gateway for the virtual machines is set to the host which is running nova-network.</para>
             <para>When a virtual machine sends traffic out to the public networks, it sends it first to its default gateway, which is where nova-network is configured. </para>
             <figure>
                 <title>Single adaptor hosts, first route</title>
@@ -402,17 +407,13 @@ iface br100 inet dhcp
             </figure>
             <warning><para>If you're using a single interface, then that interface (often eth0) needs to be set into promiscuous mode for the forwarding to happen correctly. This does not appear to be needed if you're running with physical hosts that have and use two interfaces.</para></warning>
         </section>
-                <section>
-                    <?dbhtml filename="configuring-vlan-networking.html" ?>
+        <section xml:id="configuring-vlan-networking">
                     <title>Configuring VLAN Networking</title>
             <para>In some networking environments, you may have a large IP space which is cut up
                 into smaller subnets. The smaller subnets are then trunked together at the switch
                 level (dividing layer 3 by layer 2) so that all machines in the larger IP space can
                 communicate. The purpose of this is generally to control the size of broadcast
                 domains.</para>
-                
-                
-                
                <para>Using projects as a way to logically separate each VLAN, we can setup our cloud
                 in this environment. Please note that you must have IP forwarding enabled for this
                 network mode to work.</para>
@@ -509,8 +510,7 @@ brctl delbr br_NNN</literallayout>
                 are connected with revoked certificates when their connection is re-negotiated
                 (every hour). You set the --use_project_ca flag in nova.conf for cloudpipes to work
                 securely so that each project has its own Certificate Authority (CA).</para></section>
-                <section>
-                    <?dbhtml filename="enabling-ping-and-ssh-on-vms.html" ?>
+        <section xml:id="enabling-ping-and-ssh-on-vms">
                     <title>Enabling Ping and SSH on VMs</title>
         <para>Be sure you enable access to your VMs by using the ‘euca-authorize’ command. Below,
             you will find the commands to allow ‘ping’ and ‘ssh’ to your VMs: </para>
@@ -519,7 +519,7 @@ euca-authorize -P tcp -p 22 default</literallayout>If
             you still cannot ping or SSH your instances after issuing the ‘euca-authorize’ commands,
             look at the number of ‘dnsmasq’ processes that are running. If you have a running
             instance, check to see that TWO ‘dnsmasq’ processes are running. If not, perform the
-            following: <code>killall dnsmasq; service nova-network restart</code></para></section><section><?dbhtml filename="allocating-associating-ip-addresses.html" ?><title>Allocating and Associating IP Addresses with Instances</title><para>You can use Euca2ools commands to manage floating IP addresses used with Flat DHCP or VLAN
+            following: <code>killall dnsmasq; service nova-network restart</code></para></section><section xml:id="allocating-associating-ip-addresses"><title>Allocating and Associating IP Addresses with Instances</title><para>You can use Euca2ools commands to manage floating IP addresses used with Flat DHCP or VLAN
                 networking. </para>
                 
                 <para>To assign a reserved IP address to your project, removing it from the pool of
@@ -538,13 +538,13 @@ euca-authorize -P tcp -p 22 default</literallayout>If
             <para>nova-manage floating create [hostname] [cidr] - This command creates specific
                 floating IPs for a specific network host and either a single address or a subnet. </para>
             <para>nova-manage floating destroy [hostname] [cidr] - This command removes floating IP
-                addresses using the same parameters as the create command.</para></section><section><?dbhtml filename="associating-public-ip.html" ?><title>Associating a Public IP Address</title>
+                addresses using the same parameters as the create command.</para></section><section xml:id="associating-public-ip"><title>Associating a Public IP Address</title>
                 <para>OpenStack Compute uses NAT for public IPs. If you plan to use public IP
                 addresses for your virtual instances, you must configure --public_interface=vlan100'
                 in the nova.conf file so that Nova knows where to bind public IP addresses. Restart
                 nova-network if you change nova.conf while the service is running. Also, ensure you
                 have opened port 22 for the nova network.</para>
-            <para>You must add the IP address or block of public ip addresses to the floating IP
+            <para>You must add the IP address or block of public IP addresses to the floating IP
                 list using the <code>nova-manage floating create</code> command. When you start a
                 new virtual instance, associate one of the public addresses to the new instance
                 using the euca-associate-address command.</para>
@@ -583,5 +583,44 @@ valid_lft forever preferred_lft forever</literallayout>
                 server as the routing configuration won't allow it. </para>
             
                 </section></section>
-    <section><?dbhtml filename="removing-network-from-project.html" ?><title>Removing a Network from a Project</title><para>You will find that you cannot remove a network that has already been associated to a project by simply deleting it. You can disassociate the project from the network with a scrub command and the project name as the final parameter:
-    </para><literallayout class="monospaced">nova-manage project scrub projectname</literallayout></section></chapter>
+    <section xml:id="removing-network-from-project">
+        <title>Removing a Network from a Project</title><para>You will find that you cannot remove a network that has already been associated to a project by simply deleting it. You can disassociate the project from the network with a scrub command and the project name as the final parameter:
+        </para><literallayout class="monospaced">nova-manage project scrub projectname</literallayout></section>
+<section xml:id="existing-ha-networking-options"><title>Existing High Availability Options for Networking</title>
+    <para>from <link xlink:href="http://unchainyourbrain.com/openstack/13-networking-in-nova">Vish Ishaya</link></para>
+
+<para>As you can see from the Flat DHCP diagram titled "Flat DHCP network, multiple interfaces, multiple servers," traffic from the VM to the public internet has to go through the host running nova network. Dhcp is handled by nova-network as well, listening on the gateway address of the fixed_range network. The compute hosts can optionally have their own public IPs, or they can use the network host as their gateway. This mode is pretty simple and it works in the majority of situations, but it has one major drawback: the network host is a single point of failure! If the network host goes down for any reason, it is impossible to communicate with the VMs. Here are some options for avoiding the single point of failure.</para>
+    <simplesect><title>Option 1: Failover</title>
+    <para>The folks at NTT labs came up with a ha-linux configuration that allows for a 4 second failover to a hot backup of the network host. Details on their approach can be found in the following post to the openstack mailing list: <link xlink:href="https://lists.launchpad.net/openstack/msg02099.html">https://lists.launchpad.net/openstack/msg02099.html</link></para>
+    <para>This solution is definitely an option, although it requires a second host that essentially does nothing unless there is a failure. Also four seconds can be too long for some real-time applications.</para>
+    </simplesect>
+   <simplesect> <title>Option 2: Multi-nic</title>
+    <para>Recently, nova gained support for multi-nic. This allows us to bridge a given VM into multiple networks. This gives us some more options for high availability. It is possible to set up two networks on separate vlans (or even separate ethernet devices on the host) and give the VMs a NIC and an IP on each network. Each of these networks could have its own network host acting as the gateway.</para>
+    <para>In this case, the VM has two possible routes out. If one of them fails, it has the option of using the other one. The disadvantage of this approach is it offloads management of failure scenarios to the guest. The guest needs to be aware of multiple networks and have a strategy for switching between them. It also doesn't help with floating IPs. One would have to set up a floating IP associated with each of the IPs on private the private networks to achieve some type of redundancy.</para></simplesect>
+    <simplesect><title>Option 3: HW Gateway</title>
+    <para>It is possible to tell dnsmasq to use an external gateway instead of acting as the gateway for the VMs. You can pass dhcpoption=3,&lt;ip of gateway&gt; to make the VMs use an external gateway. This will require some manual setup. The metadata IP forwarding rules will need to be set on the hardware gateway instead of the nova-network host. You will have to make sure to set up routes properly so that the subnet that you use for VMs is routable.</para>
+    <para>This offloads HA to standard switching hardware and it has some strong benefits. Unfortunately, nova-network is still responsible for floating IP natting and dhcp, so some failover strategy needs to be employed for those options.</para></simplesect>
+    <simplesect><title>New HA Option</title>
+    
+    <para>Essentially, what the current options are lacking, is the ability to specify different gateways for different VMs. An agnostic approach to a better model might propose allowing multiple gateways per VM. Unfortunately this rapidly leads to some serious networking complications, especially when it comes to the natting for floating IPs. With a few assumptions about the problem domain, we can come up with a much simpler solution that is just as effective.</para>
+    <para>The key realization is that there is no need to isolate the failure domain away from the host where the VM is running. If the host itself goes down, losing networking to the VM is a non-issue. The VM is already gone. So the simple solution involves allowing each compute host to do all of the networking jobs for its own VMs. This means each compute host does NAT, dhcp, and acts as a gateway for all of its own VMs. While we still have a single point of failure in this scenario, it is the same point of failure that applies to all virtualized systems, and so it is about the best we can do.</para>
+    <para>So the next question is: how do we modify the Nova code to provide this option. One possibility would be to add code to the compute worker to do complicated networking setup. This turns out to be a bit painful, and leads to a lot of duplicated code between compute and network. Another option is to modify nova-network slightly so that it can run successfully on every compute node and change the message passing logic to pass the network commands to a local network worker.</para>
+    <para>Surprisingly, the code is relatively simple. A couple fields needed to be added to the database in order to support these new types of "multihost" networks without breaking the functionality of the existing system. All-in-all it is a pretty small set of changes for a lot of added functionality: about 250 lines, including quite a bit of cleanup. You can see the branch here: <link xlink:href="https://code.launchpad.net/%7Evishvananda/nova/ha-net/+merge/67078">https://code.launchpad.net/~vishvananda/nova/ha-net/+merge/67078</link></para>
+        
+    <para>The drawbacks here are relatively minor. It requires adding an IP on the VM network to each host in the system, and it implies a little more overhead on the compute hosts. It is also possible to combine this with option 3 above to remove the need for your compute hosts to gateway. In that hybrid version they would no longer gateway for the VMs and their responsibilities would only be dhcp and nat.</para>
+    <para>The resulting layout for the new HA networking option looks the following diagram:</para>
+        <para><figure>
+            <title>High Availability Networking Option</title>
+            <mediaobject>
+                <imageobject>
+                            <imagedata scale="80" fileref="../figures/ha-net.jpg"/>
+                        </imageobject>
+            </mediaobject>
+        </figure></para>
+    <para>In contrast with the earlier diagram, all the hosts in the system are running both nova-compute and nova-network. Each host does DHCP and does NAT for public traffic for the VMs running on that particular host. In this model every compute host requires a connection to the public internet and each host is also assigned an address from the VM network where it listens for dhcp traffic.</para>
+        <para>The requirements for configuring are the following: --multi_host flag must be in place for network creation and nova-network must be run on every compute host. These created multi hosts networks will send all network related commands to the host that the VM is on.
+        </para></simplesect>
+    
+    <simplesect><title>Future of Networking</title>
+    <para>With the existing multi-nic code and the HA networking code, we have a pretty robust system with a lot of deployment options. This should be enough to provide deployers enough room to solve todays networking problems. Ultimately, we want to provide users the ability to create arbitrary networks and have real and virtual network appliances managed automatically. The efforts underway in the Quantum and Melange projects will help us reach this lofty goal, but with the current additions we should have enough flexibility to get us by until those projects can take over.</para></simplesect></section>
+</chapter>

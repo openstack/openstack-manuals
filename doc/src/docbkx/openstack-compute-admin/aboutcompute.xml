@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-    <?dbhtml filename="ch_introduction-to-openstack-compute.html" ?>
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="ch_introduction-to-openstack-compute">
     <title>Introduction to OpenStack Compute</title>
     <para>OpenStack Compute gives you a tool to orchestrate a cloud, including running instances,
         managing networks, and controlling access to the cloud through users and projects. The
@@ -13,16 +13,20 @@
         virtualization mechanisms that run on your host operating system, and exposes functionality
         over a web-based API.</para>
     
-    <section>
-        <?dbhtml filename="hypervisors.html" ?>
+    <section xml:id="hypervisors">
         <title>Hypervisors</title>
     
     <para>OpenStack Compute requires a hypervisor and Compute controls the hypervisors through an
             API server. The process for selecting a hypervisor usually means prioritizing and making
             decisions based on budget and resource constraints as well as the inevitable list of
-            supported features and required technical specifications. With OpenStack Compute, you
-            can orchestrate clouds using multiple hypervisors in different zones. The types of
-            virtualization standards that may be used with Compute include:</para>
+            supported features and required technical specifications. The majority of development is
+            done with the KVM and Xen-based hypervisors. Refer to <link
+                xlink:href="http://wiki.openstack.org/HypervisorSupportMatrix"
+                >http://wiki.openstack.org/HypervisorSupportMatrix</link> for a detailed list of
+        features and support across the hypervisors.  </para>
+        <para>With OpenStack Compute, you can orchestrate clouds using multiple hypervisors in
+            different zones. The types of virtualization standards that may be used with Compute
+            include:</para>
         <itemizedlist>
             <listitem>
                 <para><link
@@ -57,10 +61,10 @@
             </listitem>
         </itemizedlist>
     </section>
-    <section><?dbhtml filename="users-and-projects.html" ?>
+    <section xml:id="users-and-projects">
         <title>Users and Projects</title>
         <para>The OpenStack Compute system is designed to be used by many different cloud computing
-            consumers or customers, using role-based access assignments. Roles control the
+            consumers or customers, using role-based access assignments. With the use of the Identity Service, the issuing of a token also issues the roles assigned to the user. Roles control the
             actions that a user is allowed to perform. For example, a user cannot allocate a public
             IP without the netadmin or admin role. There are both global roles and per-project role assignments. 
             A user's access to particular images is limited
@@ -106,7 +110,7 @@
                 </listitem>
             </itemizedlist></para>
         
-    </section><section><?dbhtml filename="images-and-instances.html" ?>
+    </section><section xml:id="images-and-instances">
             <title>Images and Instances</title>
         
         <para>An image is a file containing information about a virtual disk that completely
@@ -127,8 +131,7 @@
             cycle that is controlled by OpenStack Compute. Compute creates the instances and it is
             responsible for building a disk image, launching it, reporting the state, attaching
             persistent storage, and terminating it. </para>
-    </section><section>
-        <?dbhtml filename="system-architecture.html" ?>
+    </section><section xml:id="system-architecture">
         <title>System Architecture</title><para>OpenStack Compute consists of several main components. A "cloud controller" contains many of these components, 
             and it represents the global state and interacts with all other components. An API Server
             acts as the web services front end for the cloud controller. The compute controller
@@ -146,8 +149,8 @@
             OpenStack Compute uses asynchronous calls, with a call-back that gets triggered when a
             response is received.</para>
         
-        <para>To achieve the shared-nothing property with multiple copies of the same component, OpenStack Compute keeps all the cloud system state in a distributed data store. Updates to system state are written into this store, using atomic transactions when required. Requests for system state are read out of this store. In limited cases, the read results are cached within controllers for short periods of time (for example, the current list of system users.)</para></section><section>
-            <?dbhtml filename="storage-and-openstack-compute.html" ?>
+        <para>To achieve the shared-nothing property with multiple copies of the same component, OpenStack Compute keeps all the cloud system state in a distributed data store. Updates to system state are written into this store, using atomic transactions when required. Requests for system state are read out of this store. In limited cases, the read results are cached within controllers for short periods of time (for example, the current list of system users.)</para></section>
+    <section xml:id="storage-and-openstack-compute">
             <title>Storage and OpenStack Compute</title><para>A ‘volume’ is a detachable block storage device. You can think of it as a USB hard drive. It
             can only be attached to one instance at a time, so it does not work like a SAN. If you
             wish to expose the same volume to multiple instances, you will have to use an NFS or

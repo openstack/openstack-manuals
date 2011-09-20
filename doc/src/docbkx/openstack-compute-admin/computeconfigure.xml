@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-    <?dbhtml filename="ch_configuring-openstack-compute.html" ?>
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="ch_configuring-openstack-compute">
         <title>Configuring OpenStack Compute</title>
         <para>The OpenStack system has several key projects that are separate installations but can
             work together depending on your cloud needs: OpenStack Compute, OpenStack Object
             Storage, and OpenStack Image Store. You can install any of these projects separately and
             then configure them either as standalone or connected entities.</para>
-        <section>
-            <?dbhtml filename="general-compute-configuration-overview.html" ?>
+    <section xml:id="general-compute-configuration-overview">
+            
             <title>General Compute Configuration Overview</title>
             <para>Most configuration information is available in the nova.conf flag file. Here are
             some general purpose flags that you can use to learn more about the flag file and the
@@ -91,8 +91,7 @@
             
         </section>
     
-    <section>
-        <?dbhtml filename="sample-nova-configuration-files.html" ?>
+    <section xml:id="sample-nova-configuration-files">
         <title>Example nova.conf Configuration Files</title>
         <para>The following sections describe many of the flag settings that can go into the nova.conf files. These need to be copied to each compute node. Here are some sample nova.conf files that offer examples of specific configurations</para>
         
@@ -114,6 +113,7 @@
 --ec2_url=http://$nova_api_host:8773/services/Cloud
 --libvirt_type=kvm
 --dhcpbridge=/usr/bin/nova-dhcpbridge
+--flat_network_bridge=br100
 --network_manager=nova.network.manager.FlatDHCPManager
 --flat_interface=$nova_network_flat_interface
 --public_interface=$nova_network_public_interface
@@ -141,6 +141,7 @@
 --daemonize=1
 --dhcpbridge_flagfile=/etc/nova/nova.conf
 --dhcpbridge=/usr/bin/nova-dhcpbridge
+--flat_network_bridge=br100
 --lock_path=/var/lock/nova
 --logdir=/var/log/nova
 --state_path=/var/lib/nova
@@ -156,7 +157,7 @@
 --iscsi_ip_prefix=nnn.nnn.nnn 
         </literallayout></simplesect>
         </section>
-    <section><?dbhtml filename="configuring-logging.html" ?>
+    <section xml:id="configuring-logging">
         <title>Configuring Logging</title>
         
         <para>You can use nova.conf flags to indicate where Compute will log events, the level of logging, and customize log formats.</para>
@@ -241,15 +242,13 @@
         </tbody>
         </table>
     </section>
-    <section>
-        <?dbhtml filename="configuring-hypervisors.html" ?>
+    <section xml:id="configuring-hypervisors">
+      
         <title>Configuring Hypervisors </title>
         <para>OpenStack Compute requires a hypervisor and supports several hypervisors and virtualization standards. Configuring and running OpenStack Compute to use a particular hypervisor takes several installation and configuration steps. </para>
         </section>
-    <section>
-        <?dbhtml filename="configuring-compute-to-use-ipv6-addresses.html" ?>
+    <section xml:id="configuring-compute-to-use-ipv6-addresses">
         <title>Configuring Compute to use IPv6 Addresses </title>
-    
             <para>You can configure Compute to use both IPv4 and IPv6 addresses for communication by
             putting it into a IPv4/IPv6 dual stack mode. In IPv4/IPv6 dual stack mode, instances can
             acquire their IPv6 global unicast address by stateless address autoconfiguration
@@ -319,7 +318,7 @@ sudo bash -c "echo 0 > /proc/sys/net/ipv6/conf/all/accept_ra"</literallayout>
             </table>
         </section>
         
-    <section><?dbhtml filename="configuring-compute-to-use-the-image-service.html" ?>
+    <section xml:id="configuring-compute-to-use-the-image-service">
             <title>Configuring Image Service and Storage for Compute</title>
         
                 <para>You can either use a local image storage system or install Glance for storing and retrieving images. After you have installed a Glance server, you can configure nova-compute to
@@ -458,7 +457,7 @@ sudo bash -c "echo 0 > /proc/sys/net/ipv6/conf/all/accept_ra"</literallayout>
         </table>
             </section>
             
-    <section><?dbhtml filename="configuring-live-migrations.html" ?>
+    <section xml:id="configuring-live-migrations">
                 <title>Configuring Live Migrations </title>
        
         <para>The live migration feature is useful when you need to upgrade or installing patches to hypervisors/BIOS and you need the machines to keep running. For example, when one of HDD volumes RAID or one of bonded NICs is out of order. Also for regular periodic maintenance, you may need to migrate VM instances. When many VM instances are running on a specific physical machine, you can redistribute the high load. Sometimes when VM instances are scattered, you can move VM instances to a physical machine to arrange them more logically.</para>
@@ -655,9 +654,8 @@ root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l
         </table>
     </section>
     
-    <section><?dbhtml filename="configuring-database-connections.html" ?>
+    <section xml:id="configuring-database-connections">
         <title>Configuring Database Connections </title>
-        
         <para>You can configure OpenStack Compute to use any SQLAlchemy-compatible database. The database name is 'nova' and entries to it are mostly written by the nova-scheduler service, although all the services need to be able to update entries in the database. Use these settings to configure the connection string for the nova database.</para>
         
         <table rules="all">
@@ -706,7 +704,7 @@ root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l
             </tbody>
         </table>
     </section>
-    <section><?dbhtml filename="configuring-compute-messaging.html" ?>
+    <section xml:id="configuring-compute-messaging">
         <title>Configuring the Compute Messaging System</title>
         
         <para>OpenStack Compute uses an open standard for messaging middleware known as AMQP.
@@ -827,17 +825,26 @@ root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l
                 </tr>
             </tbody></table>
     </section>
-    <section><?dbhtml filename="configuring-authentication-authorization.html" ?>
+    
+    <section xml:id="configuring-authentication-authorization">
         <title>Configuring Authentication and Authorization </title>
         
+        <para>There are different methods of authentication for the OpenStack Compute project and
+            the default setting is now to use the OpenStack Identity Service, code-named Keystone. For the
+            older, deprecated auth system, you set the --use_deprecated-auth flag. For no auth, use
+            the default paste.ini that is included in the etch directory. </para>
         <para>OpenStack Compute uses an implementation of an authentication system structured like
             having an Active Directory or other federated LDAP user store that backends to an
-            identity manager or other SAML Policy Controller that then maps to groups. You can also
-            customize roles for projects. Credentials for API calls are stored in the project zip
-            file. Certificate authority is also customzed in nova.conf. </para>
+            identity manager or other SAML Policy Controller that then maps to groups. Credentials
+            for API calls are stored in the project zip file when using the deprecated auth system.
+            Certificate authority is also customized in nova.conf for the deprecated auth system. </para>
+        <para>If you see errors such as "EC2ResponseError: 403 Forbidden" it is likely you are
+            trying to use euca commands without the auth system properly configured. Either install
+            and configure the Identity Service, use the deprecated auth setting, or change out the
+            default paste.ini file to use no auth.</para>
         
         <table rules="all">
-            <caption>Description of nova.conf flag for Authentication</caption>
+            <caption>Description of nova.conf flags for Authentication</caption>
             
             <thead>
                 <tr>
@@ -850,25 +857,29 @@ root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l
                     <td>--auth_driver</td>
                     <td>default:'nova.auth.dbdriver.DbDriver'</td>
                     <td><para>String value; Name of the driver for authentication</para><itemizedlist>
-                            <listitem>
-                                <para>nova.auth.dbdriver.DbDriver - Default setting.</para>
-                            </listitem>
-                            <listitem>
-                                
-                                    <para>nova.auth.ldapdriver.FakeLdapDriver - create a replacement
-                                    for this driver supporting other backends by creating another
-                                    class that exposes the same public methods</para>
-                               
-                                <para>.</para>
-                            </listitem>
+                        <listitem>
+                            <para>nova.auth.dbdriver.DbDriver - Default setting, uses Identity
+                                Service (Keystone).</para>
+                        </listitem>
+                        <listitem>
                             
-                        </itemizedlist></td>
+                            <para>nova.auth.ldapdriver.FakeLdapDriver - create a replacement
+                                for this driver supporting other backends by creating another
+                                class that exposes the same public methods.</para>
+                        </listitem>
+                        
+                    </itemizedlist></td>
                 </tr>
-                
+                <tr>
+                    <td>--use_deprecated_auth</td>
+                    <td>default:'false'</td>
+                    <td><para>True or false; Sets the auth system to use the zip file provided with the project files to store all credentials</para></td>
+                </tr>
             </tbody>
         </table>
         <table rules="all">
-            <caption>Description of nova.conf flags for customizing roles</caption>
+            <caption>Description of nova.conf flags for customizing roles in deprecated
+                auth</caption>
             
             <thead>
                 <tr>
@@ -896,7 +907,7 @@ root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l
             </tbody>
         </table>
         <table rules="all">
-            <caption>Description of nova.conf flags for credentials</caption>
+            <caption>Description of nova.conf flags for credentials in deprecated auth</caption>
             
             <thead>
                 <tr>
@@ -907,7 +918,7 @@ root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l
             </thead><tbody>
                 <tr>
                     <td>--credentials_template</td>
-                    <td>default: '/Users/termie/p/nova/nova/auth/novarc.template') </td>
+                    <td>default: '') </td>
                     <td>Directory; Template for creating users' RC file</td>
                 </tr>
                 <tr>
@@ -938,7 +949,7 @@ root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l
                 </tr>
             </tbody></table>
         
-       
+        
         <table rules="all">
             <caption>Description of nova.conf flags for CA (Certificate Authority)</caption>
             
@@ -991,7 +1002,7 @@ root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l
                     <td>String; Subject for certificate for vpns, %s for project, timestamp </td>
                 </tr>
             </tbody></table>
-        </section>
+    </section>
     
     </chapter>
      
