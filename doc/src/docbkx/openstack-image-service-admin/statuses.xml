@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<!-- Converted by db4-upgrade version 1.0 -->
+<chapter xmlns="http://docbook.org/ns/docbook" version="5.0-extension RaxBook-1.0" xml:id="image-statuses"><info><title>Image Statuses</title></info>
+  
+  <para>
+    Images in Glance can be in one the following statuses:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        <literal>queued</literal>
+      </para>
+      <para>
+        The image identifier has been reserved for an image in the
+        Glance registry. No image data has been uploaded to Glance.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        <literal>saving</literal>
+      </para>
+      <para>
+        Denotes that an image's raw data is currently being uploaded to
+        Glance. When an image is registered with a call to `POST
+        /images` and there is an `x-image-meta-location` header present,
+        that image will never be in the `saving` status (as the image
+        data is already available in some other location).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        <literal>active</literal>
+      </para>
+      <para>
+        Denotes an image that is fully available in Glance.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        <literal>killed</literal>
+      </para>
+      <para>
+        Denotes that an error occurred during the uploading of an
+        image's data, and that the image is not readable.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        <literal>deleted</literal>
+      </para>
+      <para>
+        Glance has retained the information about the image, but it is
+        no longer available to use. An image in this state will be
+        removed automatically at a later date.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        <literal>pending_delete</literal>
+      </para>
+      <para>
+        This is similiar to `deleted`, however, Glance has not yet
+        removed the image data. An image in this state is recoverable.
+      </para>
+    </listitem>
+  </itemizedlist>
+</chapter>

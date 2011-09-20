@@ -1,0 +1,277 @@
+<?xml version="1.0"?>
+<!-- Converted by db4-upgrade version 1.0 -->
+<chapter xmlns="http://docbook.org/ns/docbook" version="5.0-extension RaxBook-1.0" xml:id="controlling-glance-servers"><info><title>Controlling Glance Servers</title></info>
+  
+  <para>
+    This section describes the ways to start, stop, and reload Glance's
+    server programs.
+  </para>
+  <section xml:id="starting-a-server"><info><title>Starting a server</title></info>
+    
+    <para>
+      There are two ways to start a Glance server (either the API server
+      or the reference implementation registry server that ships with
+      Glance):
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Manually calling the server program
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Using the <literal>glance-control</literal> server daemon
+          wrapper program
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      We recommend using the second way.
+    </para>
+    <section xml:id="manually-starting-the-server"><info><title>Manually starting the server</title></info>
+      
+      <para>
+        The first is by directly calling the server program, passing in
+        command-line options and a single argument for a
+        <literal>paste.deploy</literal> configuration file to use when
+        configuring the server application.
+      </para>
+      
+      <note>
+<para>Glance ships with an ``etc/`` directory that contains sample ``paste.deploy``
+configuration files that you can copy to a standard configuration directory and
+adapt for your own uses. Specifically, bind_host must be set properly.</para>
+</note>
+      <para>
+        If you do `not` specify a configuration file on the command
+        line, Glance will do its best to locate a configuration file in
+        one of the following directories, stopping at the first config
+        file it finds:
+      </para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            <literal>$CWD</literal>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>~/.glance</literal>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>~/</literal>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>/etc/glance</literal>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>/etc</literal>
+          </para>
+        </listitem>
+      </itemizedlist>
+      <para>
+        The filename that is searched for depends on the server
+        application name. So, if you are starting up the API server,
+        <literal>glance-api.conf</literal> is searched for, otherwise
+        <literal>glance-registry.conf</literal>.
+      </para>
+      <para>
+        If no configuration file is found, you will see an error, like:
+      </para>
+      <screen>
+$&gt; glance-api
+ERROR: Unable to locate any configuration file. Cannot load application glance-api
+</screen>
+      <para>
+        Here is an example showing how you can manually start the
+        <literal>glance-api</literal> server and
+        <literal>glance-registry</literal> in a shell.:
+      </para>
+      <screen>
+$ sudo glance-api glance-api.conf --debug &amp;  
+jsuh@mc-ats1:~$ 2011-04-13 14:50:12    DEBUG [glance-api] ********************************************************************************
+2011-04-13 14:50:12    DEBUG [glance-api] Configuration options gathered from config file:
+2011-04-13 14:50:12    DEBUG [glance-api] /home/jsuh/glance-api.conf
+2011-04-13 14:50:12    DEBUG [glance-api] ================================================
+2011-04-13 14:50:12    DEBUG [glance-api] bind_host                      65.114.169.29
+2011-04-13 14:50:12    DEBUG [glance-api] bind_port                      9292
+2011-04-13 14:50:12    DEBUG [glance-api] debug                          True
+2011-04-13 14:50:12    DEBUG [glance-api] default_store                  file
+2011-04-13 14:50:12    DEBUG [glance-api] filesystem_store_datadir       /home/jsuh/images/
+2011-04-13 14:50:12    DEBUG [glance-api] registry_host                  65.114.169.29
+2011-04-13 14:50:12    DEBUG [glance-api] registry_port                  9191
+2011-04-13 14:50:12    DEBUG [glance-api] verbose                        False
+2011-04-13 14:50:12    DEBUG [glance-api] ********************************************************************************
+2011-04-13 14:50:12    DEBUG [routes.middleware] Initialized with method overriding = True, and path info altering = True
+2011-04-13 14:50:12    DEBUG [eventlet.wsgi.server] (21354) wsgi starting up on http://65.114.169.29:9292/
+
+$ sudo glance-registry glance-registry.conf &amp;  
+jsuh@mc-ats1:~$ 2011-04-13 14:51:16     INFO [sqlalchemy.engine.base.Engine.0x...feac] PRAGMA table_info("images")
+2011-04-13 14:51:16     INFO [sqlalchemy.engine.base.Engine.0x...feac] ()
+2011-04-13 14:51:16    DEBUG [sqlalchemy.engine.base.Engine.0x...feac] Col ('cid', 'name', 'type', 'notnull', 'dflt_value', 'pk')
+2011-04-13 14:51:16    DEBUG [sqlalchemy.engine.base.Engine.0x...feac] Row (0, u'created_at', u'DATETIME', 1, None, 0)
+2011-04-13 14:51:16    DEBUG [sqlalchemy.engine.base.Engine.0x...feac] Row (1, u'updated_at', u'DATETIME', 0, None, 0)
+2011-04-13 14:51:16    DEBUG [sqlalchemy.engine.base.Engine.0x...feac] Row (2, u'deleted_at', u'DATETIME', 0, None, 0)
+2011-04-13 14:51:16    DEBUG [sqlalchemy.engine.base.Engine.0x...feac] Row (3, u'deleted', u'BOOLEAN', 1, None, 0)
+2011-04-13 14:51:16    DEBUG [sqlalchemy.engine.base.Engine.0x...feac] Row (4, u'id', u'INTEGER', 1, None, 1)
+2011-04-13 14:51:16    DEBUG [sqlalchemy.engine.base.Engine.0x...feac] Row (5, u'name', u'VARCHAR(255)', 0, None, 0)
+2011-04-13 14:51:16    DEBUG [sqlalchemy.engine.base.Engine.0x...feac] Row (6, u'disk_format', u'VARCHAR(20)', 0, None, 0)
+2011-04-13 14:51:16    DEBUG [sqlalchemy.engine.base.Engine.0x...feac] Row (7, u'container_format', u'VARCHAR(20)', 0, None, 0)
+2011-04-13 14:51:16    DEBUG [sqlalchemy.engine.base.Engine.0x...feac] Row (8, u'size', u'INTEGER', 0, None, 0)
+2011-04-13 14:51:16    DEBUG [sqlalchemy.engine.base.Engine.0x...feac] Row (9, u'status', u'VARCHAR(30)', 1, None, 0)
+2011-04-13 14:51:16    DEBUG [sqlalchemy.engine.base.Engine.0x...feac] Row (10, u'is_public', u'BOOLEAN', 1, None, 0)
+2011-04-13 14:51:16    DEBUG [sqlalchemy.engine.base.Engine.0x...feac] Row (11, u'location', u'TEXT', 0, None, 0)
+2011-04-13 14:51:16     INFO [sqlalchemy.engine.base.Engine.0x...feac] PRAGMA table_info("image_properties")
+2011-04-13 14:51:16     INFO [sqlalchemy.engine.base.Engine.0x...feac] ()
+2011-04-13 14:51:16    DEBUG [sqlalchemy.engine.base.Engine.0x...feac] Col ('cid', 'name', 'type', 'notnull', 'dflt_value', 'pk')
+2011-04-13 14:51:16    DEBUG [sqlalchemy.engine.base.Engine.0x...feac] Row (0, u'created_at', u'DATETIME', 1, None, 0)
+2011-04-13 14:51:16    DEBUG [sqlalchemy.engine.base.Engine.0x...feac] Row (1, u'updated_at', u'DATETIME', 0, None, 0)
+2011-04-13 14:51:16    DEBUG [sqlalchemy.engine.base.Engine.0x...feac] Row (2, u'deleted_at', u'DATETIME', 0, None, 0)
+2011-04-13 14:51:16    DEBUG [sqlalchemy.engine.base.Engine.0x...feac] Row (3, u'deleted', u'BOOLEAN', 1, None, 0)
+2011-04-13 14:51:16    DEBUG [sqlalchemy.engine.base.Engine.0x...feac] Row (4, u'id', u'INTEGER', 1, None, 1)
+2011-04-13 14:51:16    DEBUG [sqlalchemy.engine.base.Engine.0x...feac] Row (5, u'image_id', u'INTEGER', 1, None, 0)
+2011-04-13 14:51:16    DEBUG [sqlalchemy.engine.base.Engine.0x...feac] Row (6, u'key', u'VARCHAR(255)', 1, None, 0)
+2011-04-13 14:51:16    DEBUG [sqlalchemy.engine.base.Engine.0x...feac] Row (7, u'value', u'TEXT', 0, None, 0)
+
+$ ps aux | grep glance
+root     20009  0.7  0.1  12744  9148 pts/1    S    12:47   0:00 /usr/bin/python /usr/bin/glance-api glance-api.conf --debug
+root     20012  2.0  0.1  25188 13356 pts/1    S    12:47   0:00 /usr/bin/python /usr/bin/glance-registry glance-registry.conf
+jsuh     20017  0.0  0.0   3368   744 pts/1    S+   12:47   0:00 grep glance
+</screen>
+      <para>
+        Simply supply the configuration file as the first argument (the
+        <literal>etc/glance-api.conf</literal> and
+        <literal>etc/glance-registry.conf</literal> sample configuration
+        files were used in the above example) and then any common
+        options you want to use (<literal>--debug</literal> was used
+        above to show some of the debugging output that the server shows
+        when starting up. Call the server program with
+        <literal>--help</literal> to see all available options you can
+        specify on the command line.)
+      </para>
+      <para>
+        For more information on configuring the server via the
+        <literal>paste.deploy</literal> configuration files, see the
+        section entitled Configuring Glance servers.
+      </para>
+      <para>
+        Note that the server `daemonizes` itself by using the standard
+        shell backgrounding indicator, <literal>&amp;</literal>, in the
+        previous example. For most use cases, we recommend using the
+        <literal>glance-control</literal> server daemon wrapper for
+        daemonizing. See below for more details on daemonization with
+        <literal>glance-control</literal>.
+      </para>
+    </section>
+    <section xml:id="using-the-glance-control-program-to-start-the-server"><info><title>Using the <literal>glance-control</literal> program to
+      start the server</title></info>
+      
+      <para>
+        The second way to start up a Glance server is to use the
+        <literal>glance-control</literal> program.
+        <literal>glance-control</literal> is a wrapper script that
+        allows the user to start, stop, restart, and reload the other
+        Glance server programs in a fashion that is more conducive to
+        automation and scripting.
+      </para>
+      <para>
+        Servers started via the <literal>glance-control</literal>
+        program are always `daemonized`, meaning that the server program
+        process runs in the background.
+      </para>
+      <para>
+        To start a Glance server with <literal>glance-control</literal>,
+        simply call <literal>glance-control</literal> with a server and
+        the word "start", followed by any command-line options
+        you wish to provide. Start the server with
+        <literal>glance-control</literal> in the following way:
+      </para>
+      <screen>
+$&gt; sudo glance-control &lt;SERVER&gt; start [CONFPATH]
+</screen>
+      <para>
+        ..note:
+      </para>
+      <screen>
+You must use the ``sudo`` program to run ``glance-control`` currently, as the
+pid files for the server programs are written to /var/run/glance/
+</screen>
+      <para>
+        Here is an example that shows how to start the
+        <literal>glance-registry</literal> server with the
+        <literal>glance-control</literal> wrapper script.
+      </para>
+      <para>
+        ::
+      </para>
+      
+        <para>
+          $ sudo glance-control api start glance-api.conf Starting
+          glance-api with /home/jsuh/glance.conf
+        </para>
+        <para>
+          $ sudo glance-control registry start glance-registry.conf
+          Starting glance-registry with /home/jsuh/glance.conf
+        </para>
+        <para>
+          $ ps aux | grep glance root 20038 4.0 0.1 12728 9116 ? Ss
+          12:51 0:00 /usr/bin/python /usr/bin/glance-api
+          /home/jsuh/glance-api.conf root 20039 6.0 0.1 25188 13356 ? Ss
+          12:51 0:00 /usr/bin/python /usr/bin/glance-registry
+          /home/jsuh/glance-registry.conf jsuh 20042 0.0 0.0 3368 744
+          pts/1 S+ 12:51 0:00 grep glance
+        </para>
+      
+      <para>
+        The same <literal>paste.deploy</literal> configuration files are
+        used by <literal>glance-control</literal> to start the Glance
+        server programs, and you can specify (as the example above
+        shows) a configuration file when starting the server.
+      </para>
+    </section>
+  </section>
+  <section xml:id="stopping-a-server"><info><title>Stopping a server</title></info>
+    
+    <para>
+      If you started a Glance server manually and did not use the
+      <literal>&amp;</literal> backgrounding function, simply send a
+      terminate signal to the server process by typing
+      <literal>Ctrl-C</literal>
+    </para>
+    <para>
+      If you started the Glance server using the
+      <literal>glance-control</literal> program, you can use the
+      <literal>glance-control</literal> program to stop it. Simply do
+      the following:
+    </para>
+    <screen>
+$&gt; sudo glance-control &lt;SERVER&gt; stop
+</screen>
+    <para>
+      as this example shows:
+    </para>
+    <screen>
+$&gt; sudo glance-control registry stop
+Stopping glance-registry  pid: 17602  signal: 15
+</screen>
+  </section>
+  <section xml:id="restarting-a-server"><info><title>Restarting a server</title></info>
+    
+    <para>
+      You can restart a server with the
+      <literal>glance-control</literal> program, as demonstrated here:
+    </para>
+    <screen>
+$&gt; sudo glance-control registry restart etc/glance-registry.conf
+Stopping glance-registry  pid: 17611  signal: 15
+Starting glance-registry with /home/jpipes/repos/glance/trunk/etc/glance-registry.conf
+</screen>
+  </section>
+</chapter>

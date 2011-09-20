@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!-- Converted by db4-upgrade version 1.0 -->
+<chapter xmlns="http://docbook.org/ns/docbook" version="5.0-extension RaxBook-1.0" xml:id="glance-authentication-with-keystone"><info><title>Glance Authentication With Keystone</title></info>
+  
+  <para>
+    Glance may optionally be integrated with Keystone. Setting this up
+    is relatively straightforward: the Keystone distribution includes
+    the requisite middleware and examples of appropriately modified
+    <literal>glance-api.conf</literal> and
+    <literal>glance-registry.conf</literal> configuration files in the
+    <literal>examples/paste</literal> directory. Once you have installed
+    Keystone and edited your configuration files, newly created images
+    will have their `owner` attribute set to the tenant of the
+    authenticated users, and the `is_public` attribute will cause access
+    to those images for which it is `false` to be restricted to only the
+    owner.
+  </para>
+  
+  <note>
+<para>The exception is those images for which `owner` is set to `null`,
+which may only be done by those users having the ``Admin`` role.
+These images may still be accessed by the public, but will not
+appear in the list of public images.  This allows the Glance
+Registry owner to publish images for beta testing without allowing
+those images to show up in lists, potentially confusing users.</para>
+</note>
+  <section xml:id="sharing-images-with-others"><info><title>Sharing Images With Others</title></info>
+    
+    <para>
+      It is possible to allow a private image to be shared with one or
+      more alternate tenants. This is done through image
+      <emphasis>memberships</emphasis>, which are available via the
+      `members` resource of images. (For more details, see
+      :ref:`glanceapi`.) Essentially, a membership is an association
+      between an image and a tenant which has permission to access that
+      image. These membership associations may also have a `can_share`
+      attribute, which, if set to `true`, delegates the authority to
+      share an image to the named tenant.
+    </para>
+  </section>
+</chapter>

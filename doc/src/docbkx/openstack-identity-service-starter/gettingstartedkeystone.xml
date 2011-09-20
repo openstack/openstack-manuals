@@ -1,0 +1,159 @@
+<?xml version="1.0"?>
+<!-- Converted by db4-upgrade version 1.0 -->
+<chapter xmlns="http://docbook.org/ns/docbook" version="5.0-extension RaxBook-1.0" xml:id="quick-guide-to-getting-started-with-keystone"><info><title>Quick Guide to Getting Started with Keystone</title></info>
+  <para>
+      First, you will need to install keystone, if you haven't done so
+      already. Refer to Installing for more information.</para>
+  <section xml:id="dependencies"><info><title>Dependencies</title></info>
+    
+    
+    <para>Once Keystone is installed you need to initialize the database. You can do so with the keystone-manage command line utility. The keystone-manage utility helps with managing and configuring a Keystone installation. You configure the keystone-manage utility itself with a SQL Alchemy connection configuration via a parameter passed to the utility:</para>
+    <para>--sql_connection=CONN_STRING</para>
+    <para>Where the CONN_STRING is a proper SQLAlchemy connection string as described in
+      http://www.sqlalchemy.org/docs/05/reference/sqlalchemy/connections.html?highlight=engine#sqlalchemy.create_engine.</para>
+    <para>One important use of keystone-manage is to setup the database. To do so, run:</para>
+      <screen>
+      keystone-manage db_sync</screen>
+   
+  </section>
+  <section xml:id="creating-your-first-global-admin"><info><title>Creating your first global admin and tenant admin</title></info>
+       <para>
+      Change directory to your Keystone install path.
+    </para>
+    <orderedlist numeration="arabic">
+      <listitem>
+        <para>
+          Run the following to create the first tenant:
+        </para>
+        
+        <screen>
+          $&gt; bin/keystone-manage tenant add "MyTenant"
+        </screen>
+      </listitem>
+      <listitem>
+        <para>
+          Run the following to create the first tenant admin:
+        </para>
+        <screen>
+          $&gt; bin/keystone-manage user add MyAdmin P@ssw0rd MyTenant
+        </screen>
+      </listitem>
+    </orderedlist>
+   
+    <note><para>
+Some reserved roles are defined (and can be modified) through the keystone.conf in the /etc folder.</para>
+</note>
+    <orderedlist numeration="arabic">
+      <listitem override="3">
+        <para>
+          Associate your tenant admin with the Admin role:
+        </para>
+        
+        <screen>
+          $&gt; bin/keystone-manage role grant Admin MyAdmin
+        </screen>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section xml:id="curl-examples"><info><title>Curl examples</title></info>
+ 
+ <para>All examples assume default port usage (5001) and use the example admin account created above.</para>
+ 
+<para><emphasis>Admin Initial GET</emphasis></para>
+ 
+ <para>Retrieves version, full API url, pdf doc link, and wadl link:</para>
+ 
+ <screen>$> curl http://0.0.0.0:5001</screen>
+ 
+ <para>or:</para>
+ 
+ <screen>$> curl http://0.0.0.0:5001/v2.0/</screen>
+ 
+ <para><emphasis>Retrieve token:</emphasis></para>
+ 
+ <para>To retrieve the token and expiration date for a user:</para>
+ 
+ <screen>$> curl -d '{"passwordCredentials":{"username": "MyAdmin", "password": "P@ssw0rd"}}' -H "Content-type: application/json" http://localhost:5001/v2.0/tokens</screen>
+ 
+ <para>This will return something like:</para>
+ 
+ <screen>$> {"auth": {"token": {"expires": "2011-08-10T17:45:22.838440", "id": "0eed0ced-4667-4221-a0b2-24c91f242b0b"}}}</screen>
+ 
+  
+ <note><para>Save the “id” value as you’ll be using it in the calls below.</para></note>
+ 
+ <para><emphasis>To retrieve a list of tenants:</emphasis></para>
+ 
+ <para>Run:</para>
+ 
+ <screen>$> curl -H "X-Auth-Token:999888777666" http://localhost:5001/v2.0/tenants</screen>
+ 
+ <para>This will return something like:</para>
+ 
+ <screen>$> {"tenants": {"values": [{"enabled": 1, "id": "MyTenant", "description": null}], "links": []}}</screen>
+ 
+ <para><emphasis>Retrieve a list of users:</emphasis></para>
+ 
+<para> Run:</para>
+ 
+ <screen>$> curl -H "X-Auth-Token:999888777666" http://localhost:5001/v2.0/users</screen>
+ 
+ <para>This will return something like:</para>
+ 
+ <screen>$> {"users": {"values": [{"email": null, "enabled": true, "id": "MyAdmin", "tenantId": "MyTenant"}], "links": []}}</screen>
+ 
+ 
+ <para><emphasis>Retrieve information about the token:</emphasis></para>
+ 
+ <para>Run:</para>
+ 
+ <screen>$> curl -H "X-Auth-Token:999888777666" http://localhost:5001/v2.0/tokens/0eed0ced-4667-4221-a0b2-24c91f242b0b</screen>
+ 
+<para> This will return something like:</para>
+ 
+ <screen>$> {"auth": {"token": {"expires": "2011-08-11T04:26:58.145171", "id": "0eed0ced-4667-4221-a0b2-24c91f242b0b"}, "user": {"username": "MyAdmin", "roleRefs": [{"roleId": "Admin", "id": 1}], "tenantId": "MyTenant"}}}</screen>
+ 
+<para><emphasis> Revoking a token:</emphasis></para>
+ 
+ <para>Run:</para>
+ 
+ <screen>$> curl -X DELETE -H "X-Auth-Token:999888777666" http://localhost:5001/tokens/0eed0ced-4667-4221-a0b2-24c91f242b0b</screen>
+ 
+ <para><emphasis>Creating a tenant:</emphasis></para>
+ 
+ <para>Run:</para>
+ 
+<screen> $> curl -H "X-Auth-Token:999888777666" -H "Content-type: application/json" -d '{"tenant":{"id":"MyTenant2", "description":"My 2nd Tenant", "enabled":true}}'  http://localhost:5001/tenants</screen>
+ 
+<para> This will return something like:</para>
+ 
+ <screen>$> {"tenant": {"enabled": true, "id": "MyTenant2", "description": "My 2nd Tenant"}}</screen>
+ 
+ <para><emphasis>Verifying the tenant:</emphasis></para> 
+    
+ <para>Run:</para>
+ 
+ <screen>$> curl -H "X-Auth-Token:999888777666" http://localhost:5001/v2.0/tenants/MyTenant2</screen>
+ 
+ <para>This will return something like:</para>
+ 
+ <screen>$> {"tenant": {"enabled": 1, "id": "MyTenant2", "description": "My 2nd Tenant"}}</screen>
+ 
+ <para><emphasis>Updating the tenant:</emphasis></para>
+ 
+ <para>Run:</para>
+ 
+ <screen>$> curl -X PUT -H "X-Auth-Token:999888777666" -H "Content-type: application/json" -d '{"tenant":{"description":"My NEW 2nd Tenant"}}' http://localhost:5001/v2.0/tenants/MyTenant2
+</screen> 
+ <para>This will return something like:
+</para> 
+ <screen>$> {"tenant": {"enabled": true, "id": "MyTenant2", "description": "My NEW 2nd Tenant"}}
+</screen> 
+ <para><emphasis>Deleting the tenant:</emphasis></para>
+ 
+ <para>Run:</para>
+ 
+ <screen>$> curl -X DELETE -H "X-Auth-Token:999888777666" http://localhost:5001/v2.0/tenants/MyTenant2</screen>
+ 
+  </section>
+</chapter>

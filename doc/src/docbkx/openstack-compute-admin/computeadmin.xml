@@ -1,0 +1,1635 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter [
+<!-- Some useful entities borrowed from HTML -->
+<!ENTITY ndash  "&#x2013;">
+<!ENTITY mdash  "&#x2014;">
+<!ENTITY hellip "&#x2026;">
+<!ENTITY nbsp "&#160;">
+<!ENTITY CHECK  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
+<imageobject>
+<imagedata fileref="img/Check_mark_23x20_02.svg"
+format="SVG" scale="60"/>
+</imageobject>
+</inlinemediaobject>'>
+
+<!ENTITY ARROW  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
+<imageobject>
+<imagedata fileref="img/Arrow_east.svg"
+format="SVG" scale="60"/>
+</imageobject>
+</inlinemediaobject>'>
+]>
+<chapter xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <?dbhtml filename="ch_system-administration-for-openstack-compute.html" ?>
+    <title>System Administration</title>
+    <para>By understanding how the different installed nodes interact with each other you can
+        administer the OpenStack Compute installation. OpenStack Compute offers many ways to install
+        using multiple servers but the general idea is that you can have multiple compute nodes that 
+        control the virtual servers and a cloud controller node that contains the remaining Nova services. </para>
+    <para>The OpenStack Compute cloud works via the interaction of a series of daemon processes
+        named nova-* that reside persistently on the host machine or machines. These binaries can
+        all run on the same machine or be spread out on multiple boxes in a large deployment. The
+        responsibilities of Services, Managers, and Drivers, can be a bit confusing at first. Here
+        is an outline the division of responsibilities to make understanding the system a little bit
+        easier. </para>
+    <para>Currently, Services are nova-api, nova-objectstore (which can be replaced with Glance, the
+        OpenStack Image Service), nova-compute, nova-volume, and nova-network. Managers and Drivers
+        are specified by flags and loaded using utils.load_object(). Managers are responsible for a
+        certain aspect of the system. It is a logical grouping of code relating to a portion of the
+        system. In general other components should be using the manager to make changes to the
+        components that it is responsible for. </para>
+    <para>For example, other components that need to deal with volumes in some way, should do so by
+        calling methods on the VolumeManager instead of directly changing fields in the database.
+        This allows us to keep all of the code relating to volumes in the same place. </para>
+    <itemizedlist>
+        <listitem>
+            <para>nova-api - The nova-api service receives xml requests and sends them to the rest
+                of the system. It is a wsgi app that routes and authenticate requests. It supports
+                the ec2 and openstack apis. There is a nova-api.conf file created when you install
+                Compute.</para>
+        </listitem>
+        <listitem>
+            <para>nova-objectstore - The nova-objectstore service is an ultra simple file-based
+                storage system for images that replicates most of the S3 API. It can be replaced
+                with OpenStack Image Service and a simple image manager or use OpenStack Object
+                Storage as the virtual machine image storage facility. It must reside on the same
+                node as nova-compute.</para>
+        </listitem>
+        <listitem>
+            <para>nova-compute - The nova-compute service is responsible for managing virtual
+                machines. It loads a Service object which exposes the public methods on
+                ComputeManager via Remote Procedure Call (RPC).</para>
+        </listitem>
+        <listitem>
+            <para>nova-volume - The nova-volume service is responsible for managing attachable block
+                storage devices. It loads a Service object which exposes the public methods on
+                VolumeManager via RPC.</para>
+        </listitem>
+        <listitem>
+            <para>nova-network - The nova-network service is responsible for managing floating and
+                fixed IPs, DHCP, bridging and VLANs. It loads a Service object which exposes the
+                public methods on one of the subclasses of NetworkManager. Different networking
+                strategies are available to the service by changing the network_manager flag to
+                FlatManager, FlatDHCPManager, or VlanManager (default is VLAN if no other is
+                specified):</para>
+            <para><literallayout class="monospaced">nova-network --network_manager=nova.network.manager.FlatManager</literallayout></para>
+        </listitem>
+    </itemizedlist>
+    <section><?dbhtml filename="starting-images.html" ?>
+        <title>Starting Images</title><para>Once you have an installation, you want to get images that you can use in your Compute cloud. We've created a basic Ubuntu image for testing your installation. First you'll download the image, then use uec-publish-tarball to publish it:</para>
+            
+           <para><literallayout class="monospaced">image="ubuntu1010-UEC-localuser-image.tar.gz"
+wget http://c0179148.cdn1.cloudfiles.rackspacecloud.com/ubuntu1010-UEC-localuser-image.tar.gz
+uec-publish-tarball $image [bucket-name] [hardware-arch]</literallayout></para>
+                
+               <para>Here's an example of what this command looks like with data:</para>
+                
+               <para><literallayout class="monospaced"> uec-publish-tarball ubuntu1010-UEC-localuser-image.tar.gz dub-bucket x86_64</literallayout></para>
+                
+        <para>The command in return should output three references: emi, eri and eki. You need to use the emi value (for example, “ami-zqkyh9th″) for the euca-run-instances command.</para>
+                
+       
+        <para>Now you can schedule, launch and connect to the instance, which you do with tools from the Euca2ools on the command line. Create the emi value from the uec-publish-tarball command, and then you can use the euca-run-instances command.</para>
+                <para>One thing to note here, once you publish the tarball, it has to untar before you can launch an image from it. Using the 'euca-describe-images' command, wait until the state turns to "available" from "untarring.":</para>
+                
+                <para><literallayout class="monospaced">euca-describe-images</literallayout></para>
+                
+        <para>Depending on the image that you're using, you need a public key to connect to it. Some images have built-in accounts already created. Images can be shared by many users, so it is dangerous to put passwords into the images. Nova therefore supports injecting ssh keys into instances before they are
+            booted. This allows a user to login to the instances that he or she creates securely.
+            Generally the first thing that a user does when using the system is create a keypair.
+            Keypairs provide secure authentication to your instances. As part of the first boot of a
+            virtual image, the private key of your keypair is added to root’s authorized_keys file.
+            Nova generates a public and private key pair, and sends the private key to the user. The
+            public key is stored so that it can be injected into instances. </para>
+        <para>Keypairs are created through the api and you use them as a parameter when launching an
+            instance. They can be created on the command line using the euca2ools script
+            euca-add-keypair. Refer to the man page for the available options. Example usage:</para>
+                    
+                    <literallayout class="monospaced">euca-add-keypair test > test.pem
+chmod 600 test.pem</literallayout>
+        
+        <para>Now, you can run the instances:</para>
+                    <literallayout class="monospaced">euca-run-instances -k test -t m1.tiny ami-zqkyh9th</literallayout>
+        <para>Here's a description of the parameters used above:</para>
+        <para>-t what type of image to create</para>
+        <para>-k name of the key to inject in to the image at launch </para>
+        <para>Optionally, you can use the -n parameter to indicate how many images of this type to
+            launch. </para>
+                
+                
+                <para>The instance will go from “launching” to “running” in a short time, and you should be able to connect via SSH using the 'ubuntu' account, with the password 'ubuntu': (replace $ipaddress with the one you got from euca-describe-instances):</para>
+                
+                <para><literallayout class="monospaced">ssh ubuntu@$ipaddress</literallayout></para>
+                <para>The 'ubuntu' user is part of the sudoers group, so you can escalate to 'root'
+            via the following command:</para>
+                
+               <para><literallayout class="monospaced">sudo -i</literallayout></para>
+                </section>
+                <section>
+                    <?dbhtml filename="deleting-instances.html" ?>
+                    <title>Deleting Instances</title>
+                
+                <para>When you are done playing with an instance, you can tear the instance down
+            using the following command (replace $instanceid with the instance IDs from above or
+            look it up with euca-describe-instances):</para>
+                
+                <para><literallayout class="monospaced">euca-terminate-instances $instanceid</literallayout></para></section>
+    <section>
+        <?dbhtml filename="creating-custom-images.html" ?>
+        <info><author>
+            <orgname>CSS Corp-  Open Source Services</orgname>
+        </author><title>Image management</title></info>
+        <para>by <link xlink:href="http://www.csscorp.com/">CSS Corp Open Source Services</link> </para>
+        <para>There are several pre-built images for OpenStack available from  various sources. You can download such images and use them to get familiar with OpenStack. You can refer to  <link xlink:href="http://docs.openstack.org/cactus/openstack-compute/admin/content/starting-images.html">http://docs.openstack.org/cactus/openstack-compute/admin/content/starting-images.html</link> for details on using such images.</para>
+        <para>For any production deployment,  you may like to have the ability to bundle custom images, with a custom set of applications or configuration. This chapter will guide you through the process of creating Linux images of Debian and Redhat based distributions from scratch. We have also covered an approach to bundling Windows images.</para>
+        <para>There are some minor differences in the way you would bundle a Linux image, based on the distribution. Ubuntu makes it very easy by providing cloud-init package, which can be used to take care of the instance configuration at the time of launch. cloud-init handles importing ssh keys for password-less login, setting hostname etc. The instance acquires the instance specific configuration from Nova-compute by connecting to a meta data interface running on 169.254.169.254.</para>
+        <para>While creating the image of a distro that does not have cloud-init or an equivalent package, you may need to take care of importing the keys etc. by running a set of commands at boot time from rc.local.</para>
+        <para>The process used for Ubuntu and Fedora is largely the same with a few minor differences, which are explained below.</para>
+        
+        <para>In both cases, the documentation below assumes that you have a working KVM installation to use for creating the images. We are using the machine called &#8216;client1&#8242; as explained in the chapter on &#8220;Installation and Configuration&#8221; for this purpose.</para>
+        <para>The approach explained below will give you disk images that represent a disk without any partitions. Nova-compute can resize such disks ( including resizing the file system) based on the instance type chosen at the time of launching the instance. These images cannot have &#8216;bootable&#8217; flag and hence it is mandatory to have associated kernel and ramdisk images. These kernel and ramdisk images need to be used by nova-compute at the time of launching the instance.</para>
+        <para>However, we have also added a small section towards the end of the chapter about creating bootable images with multiple partitions that can be be used by nova to launch an instance without the need for  kernel and ramdisk images. The caveat is that while nova-compute can re-size such disks at the time of launching the instance, the file system size is not altered and hence, for all practical purposes, such disks are not re-sizable.</para>
+        <section><?dbhtml filename="creating-a-linux-image.html" ?><title>Creating a Linux Image &#8211; Ubuntu &amp; Fedora</title>
+            
+            <para>The first step would be to create a raw image on Client1. This will represent the main HDD of the virtual machine, so make sure to give it as much space as you will need.</para>
+            <literallayout class="monospaced">
+
+kvm-img create -f raw server.img 5G
+</literallayout>
+            
+            <simplesect><title>OS Installation</title>
+                <para>Download the iso file of the Linux distribution you want installed in the image. The instructions below are tested on Ubuntu 11.04 Natty Narwhal 64-bit server and Fedora 14 64-bit. Most of the instructions refer to Ubuntu. The points of difference between Ubuntu and Fedora are mentioned wherever required.</para>
+                <literallayout class="monospaced">
+
+wget http://releases.ubuntu.com/natty/ubuntu-11.04-server-amd64.iso
+</literallayout>
+                <para>Boot a KVM Instance with the OS installer ISO in the virtual CD-ROM. This will start the installation process. The command below also sets up a VNC display at port 0</para>
+                <literallayout class="monospaced">
+
+sudo kvm -m 256 -cdrom ubuntu-11.04-server-amd64.iso -drive   file=server.img,if=scsi,index=0 -boot d -net nic -net user -nographic  -vnc :0
+</literallayout>
+                <para>Connect to the VM through VNC (use display number :0) and finish the installation.</para>
+                <para>For Example,  where 10.10.10.4 is the IP address of client1:</para>
+                <literallayout class="monospaced">
+
+ vncviewer 10.10.10.4 :0
+</literallayout>
+                <para>During the installation of Ubuntu, create a single ext4 partition mounted on &#8216;/&#8217;. Do not create a swap partition.</para>
+                <para>In the case of Fedora 14, the installation will not progress unless you create a swap partition. Please go ahead and create a swap partition.</para>
+                
+                <para>After finishing the installation, relaunch the VM by executing the following command.</para>
+                <literallayout class="monospaced">
+sudo kvm -m 256 -drive file=server.img,if=scsi,index=0,boot=on -boot c -net nic -net user -nographic -vnc :0
+</literallayout>
+                <para>At this point, you can add all the packages you want to have installed, update the installation, add users and make any configuration changes you want in your image.</para>
+                <para>At the minimum, for Ubuntu you may run the following commands</para>
+                <literallayout class="monospaced">
+
+sudo apt-get update
+
+sudo apt-get upgrade
+
+sudo apt-get install openssh-server cloud-init
+</literallayout>
+                <para>For Fedora run the following commands as root</para>
+                <literallayout class="monospaced">
+
+yum update
+
+yum install openssh-server
+
+chkconfig sshd on
+</literallayout>
+                <para>Also remove the network persistence rules from /etc/udev/rules.d as their presence will result in the network interface in the instance coming up as an interface other than eth0.</para>
+                <literallayout class="monospaced">
+
+sudo rm -rf /etc/udev/rules.d/70-persistent-net.rules
+</literallayout>
+                <para>Shutdown the Virtual machine and proceed with the next steps.</para>
+            </simplesect>
+            <simplesect><title>Extracting the EXT4 partition</title>
+                <para>The image that needs to be uploaded to OpenStack needs to be an ext4 filesystem image. Here are the steps to create a ext4 filesystem image from the raw image i.e server.img</para>
+                <literallayout class="monospaced">
+
+sudo losetup  -f  server.img
+
+sudo losetup -a
+
+</literallayout>
+                <para>You should see an output like this:</para>
+                <literallayout class="monospaced">
+
+/dev/loop0: [0801]:16908388 ($filepath)
+</literallayout>
+                <para>Observe the name of the loop device ( /dev/loop0 in our setup) when $filepath is the path to the mounted .raw file.</para>
+                <para>Now we need to find out the starting sector of the partition. Run:</para>
+                <literallayout class="monospaced">
+
+sudo fdisk -cul /dev/loop0
+</literallayout>
+                <para>You should see an output like this:</para>
+                
+                <literallayout class="monospaced">
+
+Disk /dev/loop0: 5368 MB, 5368709120 bytes
+
+149 heads, 8 sectors/track, 8796 cylinders, total 10485760 sectors
+
+Units = sectors of 1 * 512 = 512 bytes
+
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+Disk identifier: 0x00072bd4
+
+Device Boot      Start         End      Blocks   Id  System
+
+/dev/loop0p1   *        2048    10483711     5240832   83  Linux
+</literallayout>
+                <para>Make a note of the starting sector of the /dev/loop0p1 partition i.e the partition whose ID is 83. This number should be multiplied by 512 to obtain the correct value. In this case: 2048 x 512 = 1048576</para>
+                <para>Unmount the loop0 device:</para>
+                <literallayout class="monospaced">
+
+sudo losetup -d /dev/loop0
+</literallayout>
+                <para>Now mount only the partition(/dev/loop0p1) of server.img which we had previously noted down, by adding the -o parameter with value previously calculated value</para>
+                <literallayout class="monospaced">
+
+sudo losetup -f -o 1048576 server.img
+
+sudo losetup -a
+
+</literallayout>
+                <para>You&#8217;ll see a message like this:</para>
+                <literallayout class="monospaced">
+
+/dev/loop0: [0801]:16908388 ($filepath) offset 1048576
+</literallayout>
+                <para>Make a note of the mount point of our device(/dev/loop0 in our setup) when $filepath is the path to the mounted .raw file.</para>
+                <para>Copy the entire partition to a new .raw file</para>
+                <literallayout class="monospaced">
+
+sudo dd if=/dev/loop0 of=serverfinal.img
+</literallayout>
+                <para>Now we have our ext4 filesystem image i.e serverfinal.img</para>
+                
+                <para>Unmount the loop0 device</para>
+                <literallayout class="monospaced">
+
+sudo losetup -d /dev/loop0
+</literallayout>
+            </simplesect>
+            <simplesect><title>Tweaking /etc/fstab</title>
+                <para>You will need to tweak /etc/fstab to make it suitable for a cloud instance. Nova-compute may resize the disk at the time of launch of instances based on the instance type chosen. This can make the UUID of the disk invalid. Hence we have to use File system label as the identifier for the partition instead of the UUID.</para>
+                <para>Loop mount the serverfinal.img, by running</para>
+                <literallayout class="monospaced">
+
+sudo mount -o loop serverfinal.img /mnt
+</literallayout>
+                <para>Edit /mnt/etc/fstab and modify the line for mounting root partition(which may look like the following)</para>
+                
+                <literallayout class="monospaced">
+
+UUID=e7f5af8d-5d96-45cc-a0fc-d0d1bde8f31c  /               ext4    errors=remount-ro  0       1
+</literallayout>
+                <para>to</para>
+                <literallayout class="monospaced">
+
+LABEL=uec-rootfs              /          ext4           defaults     0    0
+</literallayout>
+            </simplesect>
+            <simplesect><title>Fetching Metadata in Fedora</title>
+                <para>Since, Fedora does not ship with cloud-init or an equivalent, you will need to take a few steps to have the instance  fetch the meta data like ssh keys etc.</para>
+                <para>Edit the /etc/rc.local file and add the following lines before the line “touch /var/lock/subsys/local”</para>
+                <literallayout class="monospaced">
+
+depmod -a
+modprobe acpiphp
+
+# simple attempt to get the user ssh key using the meta-data service
+mkdir -p /root/.ssh
+echo &gt;&gt; /root/.ssh/authorized_keys
+curl -m 10 -s http://169.254.169.254/latest/meta-data/public-keys/0/openssh-key | grep 'ssh-rsa' &gt;&gt; /root/.ssh/authorized_keys
+echo &quot;AUTHORIZED_KEYS:&quot;
+echo &quot;************************&quot;
+cat /root/.ssh/authorized_keys
+echo &quot;************************&quot;
+</literallayout>
+            </simplesect></section>
+        <simplesect><title>Kernel and Initrd for OpenStack</title>
+            
+            <para>Copy the kernel and the initrd image from /mnt/boot to user home directory. These will be used later for creating and uploading a complete virtual image to OpenStack.</para>
+            <literallayout class="monospaced">
+
+sudo cp /mnt/boot/vmlinuz-2.6.38-7-server /home/localadmin
+
+sudo cp /mnt/boot/initrd.img-2.6.38-7-server /home/localadmin
+</literallayout>
+            <para>Unmount the Loop partition</para>
+            <literallayout class="monospaced">
+
+sudo umount  /mnt
+</literallayout>
+            <para>Change the filesystem label of serverfinal.img to &#8216;uec-rootfs&#8217;</para>
+            <literallayout class="monospaced">
+
+sudo tune2fs -L uec-rootfs serverfinal.img
+</literallayout>
+            <para>Now, we have all the components of the image ready to be uploaded to OpenStack imaging server.</para>
+        </simplesect>
+        <simplesect><title>Registering with OpenStack</title>
+            <para>The last step would be to upload the images to Openstack Imaging Server glance. The files that need to be uploaded for the above sample setup of Ubuntu are: vmlinuz-2.6.38-7-server, initrd.img-2.6.38-7-server, serverfinal.img</para>
+            <para>Run the following command</para>
+            <literallayout class="monospaced">
+
+uec-publish-image -t image --kernel-file vmlinuz-2.6.38-7-server --ramdisk-file initrd.img-2.6.38-7-server amd64 serverfinal.img bucket1
+</literallayout>
+            <para>For Fedora, the process will be similar. Make sure that you use the right kernel and initrd files extracted above.</para>
+            <para>uec-publish-image, like  several other commands from euca2ools, returns the prompt back immediately. However,  the upload process takes some time and the images will be usable only after the process is complete. You can keep checking the status using the command &#8216;euca-describe-images&#8217; as mentioned below.</para>
+        </simplesect>
+        <simplesect><title>Bootable Images</title>
+            <para>You can register bootable disk images without associating kernel and ramdisk images. When you do not want the flexibility of using the same disk image with different kernel/ramdisk images, you can go for bootable disk images. This greatly simplifies the process of bundling and registering the images. However, the caveats mentioned in the introduction to this chapter apply.  Please note that the instructions below use server.img and you can skip all the cumbersome steps related to extracting the single ext4 partition.</para>
+            <literallayout class="monospaced">
+euca-bundle-image -i server.img
+euca-upload-bundle -b mybucket -m /tmp/server.img.manifest.xml
+euca-register mybucket/server.img.manifest.xml
+</literallayout>
+        </simplesect>
+    <simplesect><title>Image Listing</title>
+        <para>The status of the images that have been uploaded can be viewed by using euca-describe-images command. The output should like this:</para>
+        <literallayout class="monospaced">
+
+localadmin@client1:~$ euca-describe-images
+
+IMAGE   ari-7bfac859    bucket1/initrd.img-2.6.38-7-server.manifest.xml  css     available           private         x86_64       ramdisk
+
+IMAGE   ami-5e17eb9d    bucket1/serverfinal.img.manifest.xml       css     available               private         x86_64  machine      aki-3d0aeb08    ari-7bfac859
+
+IMAGE   aki-3d0aeb08    bucket1/vmlinuz-2.6.38-7-server.manifest.xml     css     available           private         x86_64       kernel
+
+localadmin@client1:~$
+</literallayout>
+    </simplesect></section>
+        <section><?dbhtml filename="creating-a-windows-image.html" ?><title>Creating a Windows Image</title>
+            <para>The first step would be to create a raw image on Client1, this will represent the main HDD of the virtual machine, so make sure to give it as much space as you will need.</para>
+            <literallayout class="monospaced">
+kvm-img create -f raw windowsserver.img 20G
+</literallayout>
+            <para>OpenStack presents the disk using aVIRTIO interface while launching the instance. Hence the OS needs to have drivers for VIRTIO. By default, the Windows Server 2008 ISO does not have the drivers for VIRTIO. Sso download a virtual floppy drive containing VIRTIO drivers from the following location</para>
+            <para><link xlink:href="http://alt.fedoraproject.org/pub/alt/virtio-win/latest/images/bin/">http://alt.fedoraproject.org/pub/alt/virtio-win/latest/images/bin/</link></para>
+            <para>and attach it during the installation</para>
+            <para>Start the installation by running</para>
+            <literallayout class="monospaced">
+sudo kvm -m 1024 -cdrom win2k8_dvd.iso -drive file=windowsserver.img,if=virtio,boot=on -fda virtio-win-1.1.16.vfd -boot d -nographic -vnc :0
+
+</literallayout>
+            <para>When the installation prompts you to choose  a hard disk device you won’t see any devices available. Click on “Load drivers” at the bottom left and load the drivers from A:\i386\Win2008</para>
+            <para>After the Installation is over, boot into it once and install any additional applications you need to install and make any configuration changes you need to make.  Also ensure that RDP is enabled as that would be the only way you can connect to a running instance of Windows. Windows firewall needs to be configured to allow incoming ICMP and RDP connections.</para>
+            <para>For OpenStack to allow incoming RDP Connections, use euca-authorize command to open up port 3389 as described in the chapter  on &#8220;Security&#8221;.</para>
+            <para>Shut-down the VM and upload the image to OpenStack</para>
+            <literallayout class="monospaced">
+euca-bundle-image -i windowsserver.img
+euca-upload-bundle -b mybucket -m /tmp/windowsserver.img.manifest.xml
+euca-register mybucket/windowsserver.img.manifest.xml
+</literallayout>
+        </section>
+    <section>
+        <?dbhtml filename="understanding-the-compute-service-architecture.html" ?>
+        <title>Understanding the Compute Service Architecture</title>
+        <para>These basic categories describe the service architecture and what's going on within the cloud controller.</para>
+        <simplesect><title>API Server</title>
+            
+            <para>At the heart of the cloud framework is an API Server. This API Server makes command and control of the hypervisor, storage, and networking programmatically available to users in realization of the definition of cloud computing.
+            </para>
+            <para>The API endpoints are basic http web services which handle authentication, authorization, and basic command and control functions using various API interfaces under the Amazon, Rackspace, and related models. This enables API compatibility with multiple existing tool sets created for interaction with offerings from other vendors. This broad compatibility prevents vendor lock-in.
+            </para> </simplesect>
+        <simplesect><title>Message Queue</title>
+            <para>
+            A messaging queue brokers the interaction between compute nodes (processing), volumes (block storage), the networking controllers (software which controls network infrastructure), API endpoints, the scheduler (determines which physical hardware to allocate to a virtual resource), and similar components. Communication to and from the cloud controller is by HTTP requests through multiple API endpoints.</para>
+            
+<para>            A typical message passing event begins with the API server receiving a request from a user. The API server authenticates the user and ensures that the user is permitted to issue the subject command. Availability of objects implicated in the request is evaluated and, if available, the request is routed to the queuing engine for the relevant workers. Workers continually listen to the queue based on their role, and occasionally their type hostname. When such listening produces a work request, the worker takes assignment of the task and begins its execution. Upon completion, a response is dispatched to the queue which is received by the API server and relayed to the originating user. Database entries are queried, added, or removed as necessary throughout the process.
+</para>            
+</simplesect>
+        <simplesect><title>Compute Worker</title>
+            
+            <para>Compute workers manage computing instances on host machines. Through the API, commands are dispatched to compute workers to:</para>
+            
+            <itemizedlist>
+            <listitem><para>Run instances</para></listitem>
+            <listitem><para>Terminate instances</para></listitem>
+            <listitem><para>Reboot instances</para></listitem>
+            <listitem><para>Attach volumes</para></listitem>
+            <listitem><para>Detach volumes</para></listitem>
+            <listitem><para>Get console output</para></listitem></itemizedlist>
+            </simplesect>
+            <simplesect><title>Network Controller</title>
+            
+            <para>The Network Controller manages the networking resources on host machines. The API server dispatches commands through the message queue, which are subsequently processed by Network Controllers. Specific operations include:</para>
+            
+            <itemizedlist><listitem><para>Allocate fixed IP addresses</para></listitem>
+            <listitem><para>Configuring VLANs for projects</para></listitem>
+            <listitem><para>Configuring networks for compute nodes</para></listitem></itemizedlist>
+            </simplesect>
+<simplesect><title>Volume Workers</title>
+            
+            <para>Volume Workers interact with iSCSI storage to manage LVM-based instance volumes. Specific functions include:
+            </para>
+            <itemizedlist>
+                <listitem><para>Create volumes</para></listitem>
+            <listitem><para>Delete volumes</para></listitem>
+            <listitem><para>Establish Compute volumes</para></listitem></itemizedlist>
+            
+    <para>Volumes may easily be transferred between instances, but may be attached to only a single instance at a time.</para></simplesect></section>
+    <section>
+        <?dbhtml filename="managing-the-cloud.html" ?>
+        <title>Managing the Cloud</title><para>There are two main tools that a system administrator will find useful to manage their cloud;
+            the nova-manage command or the Euca2ools command line commands. </para>
+        <para>With the Diablo release, the nova-manage command has been deprecated and you must
+            specify if you want to use it by using the --use_deprecated_auth flag in nova.conf. You
+            must also use the modified middleware stack that is commented out in the default
+            paste.ini file.</para>
+        <para>The nova-manage command may only be run by users with admin privileges. Commands for
+            euca2ools can be used by all users, though specific commands may be restricted by Role
+            Based Access Control in the deprecated nova auth system. </para>
+        <simplesect><title>Using the nova-manage command</title>
+        <para>The nova-manage command may be used to perform many essential functions for
+                administration and ongoing maintenance of nova, such as user creation, vpn
+                management, and much more.</para>
+        
+        <para>The standard pattern for executing a nova-manage command is: </para>
+            <literallayout class="monospaced">nova-manage category command [args]</literallayout>
+            
+            <para>For example, to obtain a list of all projects: nova-manage project list</para>
+            
+            <para>Run without arguments to see a list of available command categories: nova-manage</para>
+            
+            <para>Command categories are: account, agent, config, db, fixed, flavor, floating, host,
+                instance_type, image, network, project, role, service, shell, user, version, vm,
+                volume, and vpn. </para>
+            <para>You can also run with a category argument such as user to see a list of all commands in that category: nova-manage user</para>
+            </simplesect></section>
+    <section>
+        <?dbhtml filename="managing-compute-users.html" ?>
+        <title>Managing Compute Users</title>
+        
+            <para>Access to the Euca2ools (ec2) API is controlled by an access and secret key. The
+                user’s access key needs to be included in the request, and the request must be
+                signed with the secret key. Upon receipt of API requests, Compute will verify the
+                signature and execute commands on behalf of the user. </para>
+            <para>In order to begin using nova, you will need to create a user. This can be easily
+            accomplished using the user create or user admin commands in nova-manage. user create
+            will create a regular user, whereas user admin will create an admin user. The syntax of
+            the command is nova-manage user create username [access] [secretword]. For example: </para>
+            <literallayout class="monospaced">nova-manage user create john my-access-key a-super-secret-key</literallayout>
+            <para>If you do not specify an access or secret key, a random uuid will be created
+                automatically.</para>
+     
+        <simplesect><title>Credentials</title>
+        
+        <para>Nova can generate a handy set of credentials for a user. These credentials include a CA for bundling images and a file for setting environment variables to be used by euca2ools. If you don’t need to bundle images, just the environment script is required. You can export one with the project environment command. The syntax of the command is nova-manage project environment project_id user_id [filename]. If you don’t specify a filename, it will be exported as novarc. After generating the file, you can simply source it in bash to add the variables to your environment:</para>
+        
+        <literallayout class="monospaced">
+        nova-manage project environment john_project john
+        . novarc</literallayout>
+        
+        <para>If you do need to bundle images, you will need to get all of the credentials using project zipfile. Note that zipfile will give you an error message if networks haven’t been created yet. Otherwise zipfile has the same syntax as environment, only the default file name is nova.zip. Example usage:
+        </para>
+        <literallayout class="monospaced">
+        nova-manage project zipfile john_project john
+        unzip nova.zip
+        . novarc
+        </literallayout></simplesect>
+        <simplesect><title>Role Based Access Control</title>
+        
+        <para>Roles control the API actions that a user is allowed to perform. For example, a user
+                cannot allocate a public ip without the netadmin role. It is important to remember
+                that a users de facto permissions in a project is the intersection of user (global)
+                roles and project (local) roles. So for john to have netadmin permissions in his
+                project, he needs to separate roles specified. You can add roles with role add. The
+                syntax is nova-manage role add user_id role [project_id]. Let’s give john the
+                netadmin role for his project:</para>
+        
+        <literallayout class="monospaced">        nova-manage role add john netadmin
+        nova-manage role add john netadmin john_project</literallayout>
+        
+        <para>Role-based access control (RBAC) is an approach to restricting system access to authorized users based on an individual's role within an organization. Various employee functions require certain levels of system access in order to be successful. These functions are mapped to defined roles and individuals are categorized accordingly. Since users are not assigned permissions directly, but only acquire them through their role (or roles), management of individual user rights becomes a matter of assigning appropriate roles to the user. This simplifies common operations, such as adding a user, or changing a user’s department.
+        </para>
+        <para>Nova’s rights management system employs the RBAC model and currently supports the following five roles:</para>
+        
+        <itemizedlist>
+            <listitem><para>Cloud Administrator. (cloudadmin) Users of this class enjoy complete system access.</para></listitem>
+        <listitem><para>IT Security. (itsec) This role is limited to IT security personnel. It permits role holders to quarantine instances.</para></listitem>
+        <listitem><para>System Administrator. (sysadmin)The default for project owners, this role affords users the ability to add other users to a project, interact with project images, and launch and terminate instances.</para></listitem>
+        <listitem><para>Network Administrator. (netadmin) Users with this role are permitted to allocate and assign publicly accessible IP addresses as well as create and modify firewall rules.</para></listitem>
+        <listitem><para>Developer. This is a general purpose role that is assigned to users by default.</para></listitem>
+            <listitem><para>Project Manager. (projectmanager) This is a role that is assigned upon project creation and can't be added or removed, but this role can do anything a sysadmin can do.</para></listitem></itemizedlist>
+        
+        <para>RBAC management is exposed through the dashboard for simplified user management.</para></simplesect></section>
+<section>
+        <?dbhtml filename="managing-volumes.html" ?>
+        <title>Managing Volumes</title>
+        <para>Nova-volume is the service that allows you to give extra block level storage to your
+            OpenStack Compute instances. You may recognize this as a similar offering that Amazon
+            EC2 offers, Elastic Block Storage (EBS). However, nova-volume is not the same
+            implementation that EC2 uses today. Nova-volume is an iSCSI solution that employs the
+            use of Logical Volume Manager (LVM) for Linux. Note that a volume may only be attached
+            to one instance at a time. This is not a ‘shared storage’ solution like a SAN of NFS on
+            which multiple servers can attach to.</para>
+        <para> Before going any further ; let's present the nova-volume implementation in OpenStack
+            : </para>
+        <para>The nova-volumes service uses iSCSI-exposed LVM volumes to the compute nodes which run
+            instances. Thus, there are two components involved: </para>
+        <para>
+            <orderedlist>
+                <listitem>
+                <para>lvm2, which works with a VG called "nova-volumes" (Refer to
+                    <link xlink:href="http://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)">http://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)</link>
+                        for further details)</para></listitem>
+                        <listitem><para>open-iscsi, the iSCSI implementation which manages iSCSI sessions on the compute nodes </para>
+                </listitem>
+            </orderedlist>
+        </para>
+        <para>Here is what happens from the volume creation to its attachment (we use here the
+            euca2ools, but the same explanation goes with the API): </para>
+        <orderedlist>
+            <listitem>
+                <para>The volume is created via $euca-create-volume; which creates an LV into the
+                    volume group (VG) "nova-volumes" </para>
+            </listitem>
+            <listitem>
+                <para>The volume is attached to an instance via $euca-attach-volume; which creates a
+                    unique iSCSI IQN that will be exposed to the compute node. </para>
+            </listitem>
+            <listitem>
+                <para>The compute node which run the concerned instance has now an active ISCSI
+                    session; and a new local storage (usually a /dev/sdX disk) </para>
+            </listitem>
+            <listitem>
+                <para>libvirt uses that local storage as a storage for the instance; the instance
+                    get a new disk (usually a /dev/vdX disk) </para>
+            </listitem>
+        </orderedlist>
+        <para>For this particular walkthrough, there is one cloud controller running nova-api,
+            nova-compute, nova-scheduler, nova-objectstore, nova-network and nova-volume services. There are
+            two additional compute nodes running nova-compute. The walkthrough uses a custom
+            partitioning scheme that carves out 60GB of space and labels it as LVM. The network is a
+            /28 .80-.95, and FlatManger is the NetworkManager setting for OpenStack Compute (Nova). </para>
+        <para>Please note that the network mode doesn't interfere at all the way nova-volume works,
+            but it is essential for nova-volumes to work that the mode you are currently using is
+            set up. Please refer to the Section 7 "Networking" for more details.</para>
+        <para>To set up Compute to use volumes, ensure that nova-volume is installed along with
+            lvm2. The guide will be split in three parts : </para>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para>A- Installing the nova-volume service on the cloud controller.</para>
+                </listitem>
+                <listitem>
+                    <para>B- Configuring the nova-volumes volume group on the compute nodes.</para>
+
+                </listitem>
+                <listitem>
+                    <para>C- Troubleshooting your nova-volumes installation.</para>
+                </listitem>
+                
+            </itemizedlist>
+        </para>
+
+        <simplesect>
+            <title>A- Install nova-volumes on the cloud controller.</title>
+            <para> This is simply done by installing the two components on the cloud controller : <literallayout class="monospaced"><code>apt-get install lvm2 nova-volume</code></literallayout><itemizedlist>
+                    <listitem>
+                        <para>
+                            <emphasis role="bold">Configure Volumes for use with
+                                nova-volumes</emphasis></para>
+                        <para> If you do not already have LVM volumes on hand, but have free drive
+                            space, you will need to create a LVM volume before proceeding. Here is a
+                            short run down of how you would create a LVM from free drive space on
+                            your system. Start off by issuing an fdisk command to your drive with
+                            the free space:
+                            <literallayout class="monospaced"><code>fdisk /dev/sda</code></literallayout>
+                            Once in fdisk, perform the following commands: <orderedlist>
+                                <listitem>
+                                    <para>Press ‘<code>n'</code> to create a new disk
+                                        partition,</para>
+                                </listitem>
+                                <listitem>
+                                    <para>Press <code>'p'</code> to create a primary disk
+                                        partition,</para>
+                                </listitem>
+                                <listitem>
+                                    <para>Press <code>'1'</code> to denote it as 1st disk
+                                        partition,</para>
+                                </listitem>
+                                <listitem>
+                                    <para>Either press ENTER twice to accept the default of 1st and
+                                        last cylinder – to convert the remainder of hard disk to a
+                                        single disk partition -OR- press ENTER once to accept the
+                                        default of the 1st, and then choose how big you want the
+                                        partition to be by specifying +size{K,M,G} e.g. +5G or
+                                        +6700M.</para>
+                                </listitem>
+                                <listitem>
+                                    <para>Press <code>'t', then</code> select the new partition you
+                                        made.</para>
+                                </listitem>
+                                <listitem>
+                                    <para>Press <code>'8e'</code> change your new partition to 8e,
+                                        i.e. Linux LVM partition type.</para>
+                                </listitem>
+                                <listitem>
+                                    <para>Press ‘<code>p'</code> to display the hard disk partition
+                                        setup. Please take note that the first partition is denoted
+                                        as /dev/sda1 in Linux.</para>
+                                </listitem>
+                                <listitem>
+                                    <para>Press <code>'w'</code> to write the partition table and
+                                        exit fdisk upon completion.</para>
+                                    <para>Refresh your partition table to ensure your new partition
+                                        shows up, and verify with fdisk. We then inform the OS about
+                                        the table partition update : </para>
+                                    <para>
+                                        <literallayout class="monospaced"><code>partprobe</code>
+
+Again :
+<code>fdisk -l (you should see your new partition in this listing)</code></literallayout>
+                                    </para>
+                                    <para>Here is how you can set up partitioning during the OS
+                                        install to prepare for this nova-volume
+                                        configuration:</para>
+                                    <para>root@osdemo03:~# fdisk -l </para>
+                                    <para>
+                                        <programlisting>
+Device Boot Start End Blocks Id System
+
+/dev/sda1 * 1 12158 97280 83 Linux
+/dev/sda2 12158 24316 97655808 83 Linux
+
+/dev/sda3 24316 24328 97654784 83 Linux
+/dev/sda4 24328 42443 145507329 5 Extended
+
+<emphasis role="bold">/dev/sda5 24328 32352 64452608 8e Linux LVM</emphasis>
+<emphasis role="bold">/dev/sda6 32352 40497 65428480 8e Linux LVM</emphasis>
+
+/dev/sda7 40498 42443 15624192 82 Linux swap / Solaris
+</programlisting>
+                                    </para>
+                                    <para>Now that you have identified a partition has been labeled
+                                        for LVM use, perform the following steps to configure LVM
+                                        and prepare it as nova-volumes. <emphasis role="bold">You
+                                            must name your volume group ‘nova-volumes’ or things
+                                            will not work as expected</emphasis>:</para>
+                                    <literallayout class="monospaced"><code>pvcreate /dev/sda5
+vgcreate nova-volumes /dev/sda5</code> </literallayout>
+                                </listitem>
+                            </orderedlist></para>
+                    </listitem>
+                </itemizedlist></para>
+        </simplesect>
+        <simplesect>
+            <title> B- Configuring nova-volumes on the compute nodes</title>
+            <para> Since you have created the volume group, you will be able to use the following
+                tools for managing your volumes : </para>
+            <simpara><code>euca-create-volume</code></simpara>
+            <simpara><code>euca-attach-volume</code></simpara>
+            <simpara><code>euca-detach-volume</code></simpara>
+            <simpara><code>euca-delete-volume</code></simpara>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <emphasis role="bold">Installing and configuring the iSCSI
+                            initiator</emphasis></para>
+                    <para> Remember that every node will act as the iSCSI initiator while the server
+                        running nova-volumes will act as the iSCSI target. So make sure, before
+                        going further that your nodes can communicate with you nova-volumes server.
+                        If you have a firewall running on it, make sure that the port 3260 (tcp)
+                        accepts incoming connections. </para>
+                    <para>First install the open-iscsi package <emphasis role="bold">on your
+                            compute-nodes only :</emphasis>
+                        <literallayout class="monospaced"><code>apt-get install open-iscsi</code> </literallayout></para>
+                    <para>You have to enable it so the startut script (/etc/init.d/open-iscsi) will
+                        work :
+                        <literallayout class="monospaced"><code>sed -i ‘s/false/true/g’ /etc/default/iscsitarget</code></literallayout>
+                        Then run :
+                        <literallayout class="monospaced"><code>service iscsitarget start</code></literallayout></para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="bold">Configure nova.conf flag file</emphasis></para>
+                    <para>Edit your nova.conf to include a new flag, "–iscsi_ip_prefix=192.168." The
+                        flag will be used by the compute node when the iSCSI discovery will be
+                        performed and the session created. The prefix based on the two first bytes
+                        will allows the iSCSI discovery to use all the available routes (also known
+                        as multipathing) to the iSCSI server (eg. nova-volumes) into your network.
+                        We will see into the "Troubleshooting" section how to deal with ISCSI
+                        sessions.</para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <emphasis role="bold">Start nova-volume and create volumes</emphasis></para>
+                    <para>You are now ready to fire up nova-volume, and start creating
+                        volumes!</para>
+
+                    <para><literallayout class="monospaced"><code>service nova-volume start</code></literallayout></para>
+
+                    <para>Once the service is started, login to your controller and ensure you’ve
+                        properly sourced your ‘novarc’ file. You will be able to use the euca2ools
+                        related to volumes interactions (see above).</para>
+
+                    <para>One of the first things you should do is make sure that nova-volume is
+                        checking in as expected. You can do so using nova-manage:</para>
+                    <para><literallayout class="monospaced"><code>nova-manage service list</code></literallayout></para>
+                    <para>If you see a smiling ‘nova-volume’ in there, you are looking good. Now
+                        create a new volume:</para>
+                    <para><literallayout class="monospaced"><code>euca-create-volume -s 7 -z nova </code> (-s refers to the size of the volume in GB, and -z is the default zone (usually nova))</literallayout></para>
+
+                    <para>You should get some output similar to this:</para>
+                    <para>
+                        <programlisting>VOLUME vol-0000000b 7 creating (wayne, None, None, None) 2011-02-11 06:58:46.941818</programlisting>
+                    </para>
+                    <para>You can view that status of the volumes creation using
+                        ‘euca-describe-volumes’. Once that status is ‘available,’ it is ready to be
+                        attached to an instance:</para>
+                    <para><literallayout class="monospaced"><code>euca-attach-volume -i i-00000008 -d /dev/vdb vol-00000009</code></literallayout> (-i refers to the instance you will attach the volume to, -d is the mountpoint<emphasis role="bold"> (on the compute-node !</emphasis> and then the volume name.)</para>
+                    <para>By doing that, the compute-node which runs the instance basically performs
+                        an iSCSI connection and creates a session. You can ensure that the session
+                        has been created by running : </para>
+                    <para><code>iscsciadm -m session </code></para>
+                    <para>Which should output : </para>
+                    <para>
+                        <programlisting>root@nova-cn1:~# iscsiadm -m session
+tcp: [1] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-0000000b</programlisting>
+                    </para>
+
+                    <para>If you do not get any errors, it is time to login to instance ‘i-00000008′
+                        and see if the new space is there. You can check the volume attachment by
+                        running : </para>
+                    <para><code>dmesg | tail </code></para>
+                    <para>You should from there see a new disk. Here is the output from ‘fdisk -l’
+                        from i-00000008:</para>
+                    <programlisting>Disk /dev/vda: 10.7 GB, 10737418240 bytes
+16 heads, 63 sectors/track, 20805 cylinders
+Units = cylinders of 1008 * 512 = 516096 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0×00000000
+Disk /dev/vda doesn’t contain a valid partition table
+<emphasis role="bold">Disk /dev/vdb: 21.5 GB, 21474836480 bytes &lt;—–Here is our new volume!</emphasis>
+16 heads, 63 sectors/track, 41610 cylinders
+Units = cylinders of 1008 * 512 = 516096 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes Disk identifier: 0×00000000 </programlisting>
+
+                    <para>Now with the space presented, let’s configure it for use:</para>
+                    <para><literallayout class="monospaced"><code>fdisk /dev/vdb</code></literallayout></para>
+                    <orderedlist>
+                        <listitem>
+                            <para>Press ‘<code>n'</code> to create a new disk partition.</para>
+                        </listitem>
+                        <listitem>
+                            <para>Press <code>'p'</code> to create a primary disk partition.</para>
+                        </listitem>
+                        <listitem>
+                            <para>Press <code>'1'</code> to denote it as 1st disk partition.</para>
+                        </listitem>
+
+                        <listitem>
+                            <para>Press ENTER twice to accept the default of 1st and last cylinder –
+                                to convert the remainder of hard disk to a single disk
+                                partition.</para>
+                        </listitem>
+                        <listitem>
+                            <para>Press <code>'t', then</code> select the new partition you
+                                made.</para>
+                        </listitem>
+                        <listitem>
+                            <para>Press <code>'83'</code> change your new partition to 83, i.e.
+                                Linux partition type.</para>
+                        </listitem>
+                        <listitem>
+                            <para>Press ‘<code>p'</code> to display the hard disk partition setup.
+                                Please take note that the first partition is denoted as /dev/vda1 in
+                                your instance.</para>
+                        </listitem>
+
+                        <listitem>
+                            <para>Press <code>'w'</code> to write the partition table and exit fdisk
+                                upon completion.</para>
+                        </listitem>
+                        <listitem>
+                            <para>Lastly, make a file system on the partition and mount it.
+                                <programlisting>mkfs.ext3 /dev/vdb1
+mkdir /extraspace
+mount /dev/vdb1 /extraspace </programlisting></para>
+
+                        </listitem>
+                    </orderedlist>
+                    <para>Your new volume has now been successfully mounted, and is ready for use!
+                        The ‘euca’ commands are pretty self-explanatory, so play around with them
+                        and create new volumes, tear them down, attach and reattach, and so on.
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </simplesect>
+        <simplesect>
+            <title>C- Troubleshoot your nova-volumes installation</title>
+            <para>If the volume attachment doesn't work, you should be able to perform different
+                checks in order to see where the issue is. The nova-volume.log and nova-compute.log
+                will help you to diagnosis the errors you could encounter : </para>
+            <para><emphasis role="bold">nova-compute.log / nova-volume.log</emphasis></para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><emphasis role="italic">ERROR "15- already exists"</emphasis>
+                            <programlisting>"ProcessExecutionError: Unexpected error while running command.\nCommand: sudo iscsiadm -m node -T iqn.2010-10.org.openstack:volume-00000001 -p
+10.192.12.34:3260 --login\nExit code: 255\nStdout: 'Logging in to [iface: default, target: iqn.2010-10.org.openstack:volume-00000001, portal:
+10.192.12.34,3260]\\n'\nStderr: 'iscsiadm: Could not login to [iface: default, target: iqn.2010-10.org.openstack:volume-00000001,
+portal:10.192.12.34,3260]: openiscsiadm: initiator reported error (15 - already exists)\\n'\n"] </programlisting></para>
+                        <para> This errors happens sometimes when you run an euca-detach-volume and
+                            euca-attach-volume and/ or try to attach another volume to an instance.
+                            It happens when the compute node has a running session while you try to
+                            attach a volume by using the same IQN. You could check that by running : </para>
+                        <para><literallayout class="monospaced"><code>iscsiadm -m session</code></literallayout>
+                            You should have a session with the same name that the compute is trying
+                            to open. Actually, it seems to be related to the several routes
+                            available for the iSCSI exposition, those routes could be seen by
+                            running on the compute node :
+                            <literallayout class="monospaced"><code>iscsiadm -m discovery -t st -p $ip_of_nova-volumes</code></literallayout>
+                            You should see for a volume multiple addresses to reach it. The only
+                            known workaround to that is to change the "–iscsi_ip_prefix" flag and
+                            use the 4 bytes (full IP) of the nova-volumes server, eg : </para>
+                        <para><literallayout class="monospaced"><code>"–iscsi_ip_prefix=192.168.2.1</code></literallayout>
+                            You'll have then to restart both nova-compute and nova-volume services. </para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="italic">ERROR "Cannot resolve host"</emphasis>
+                            <programlisting>(nova.root): TRACE: ProcessExecutionError: Unexpected error while running command.
+(nova.root): TRACE: Command: sudo iscsiadm -m discovery -t sendtargets -p ubuntu03c
+(nova.root): TRACE: Exit code: 255
+(nova.root): TRACE: Stdout: ''
+(nova.root): TRACE: Stderr: 'iscsiadm: Cannot resolve host ubuntu03c. getaddrinfo error: [Name or service not known]\n\niscsiadm: 
+cannot resolve host name ubuntu03c\niscsiadm: Could not perform SendTargets discovery.\n'
+(nova.root): TRACE:</programlisting>This
+                            error happens when the compute node is unable to resolve the nova-volume
+                            server name. You could either add a record for the server if you have a
+                            DNS server; or add it into the "/etc/hosts" file of the nova-compute. </para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="italic">ERROR "No route to host"</emphasis>
+                            <programlisting>iscsiadm: cannot make connection to 172.29.200.37: No route to host\niscsiadm: cannot make connection to 172.29.200.37</programlisting>
+                            This error could be caused by several things, but<emphasis role="bold">
+                                it means only one thing : openiscsi is unable to establish a
+                                communication with your nova-volumes server</emphasis>.</para>
+                        <para>The first thing you could do is running a telnet session in order to
+                            see if you are able to reach the nova-volume server. From the
+                            compute-node, run :</para>
+                        <literallayout class="monospaced"><code>telnet $ip_of_nova_volumes  3260</code></literallayout>
+                        <para> If the session times out, check the server firewall ; or try to ping
+                            it. You could also run a tcpdump session which will likely gives you
+                            extra information : </para>
+                        <literallayout class="monospaced"><code>tcpdump -nvv -i $iscsi_interface port dest $ip_of_nova_volumes</code></literallayout>
+                        <para> Again, try to manually run an iSCSI discovery via : </para>
+                        <literallayout class="monospaced"><code>iscsiadm -m discovery -t st -p $ip_of_nova-volumes</code></literallayout>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="italic">"Lost connectivity between nova-volumes and
+                                node-compute ; how to restore a clean state ?"</emphasis>
+                        </para>
+                        <para>Network disconnection can happens, from an "iSCSI view", losing
+                            connectivity could be seen as a physical removal of a server's disk. If
+                            the instance runs a volume while you loose the network between them, you
+                            won't be able to detach the volume. You would encounter several errors.
+                            Here is how you could clean this : </para>
+                        <para>First, from the nova-compute, close the active (but stalled) iSCSI
+                            session, refer to the volume attached to get the session, and perform
+                            the following command : </para>
+                        <literallayout class="monospaced"><code>iscsiadm -m session -r $session_id -u</code></literallayout>
+                        <para>Here is an <code>iscsi -m session</code> output : </para>
+                        <programlisting>
+tcp: [1] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-0000000e
+tcp: [2] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000010
+tcp: [3] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000011
+tcp: [4] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-0000000a
+tcp: [5] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000012
+tcp: [6] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000007
+tcp: [7] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000009
+tcp: [9] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000014                        </programlisting>
+                        <para>I would close the session number 9 if I want to free the volume
+                            00000014. </para>
+                        <para>The cloud-controller is actually unaware about the iSCSI session
+                            closing, and will keeps the volume state as "in-use":
+                            <programlisting>VOLUME  vol-00000014     30     nova    in-use (nuage-and-co, nova-cc1, i-0000009a[nova-cn1], \/dev\/sdb)   2011-07-18T12:45:39Z</programlisting>You
+                            now have to inform it that the disk can be used. Nova stores the volumes
+                            info into the "volumes" table. You will have to update four fields into
+                            the database nova uses (eg. MySQL). First, conect to the database : </para>
+                        <literallayout class="monospaced"><code>mysql -uroot -p$password nova</code></literallayout>
+                        <para>Then, we get some information from the table "volumes" : </para>
+                        <programlisting>
+ mysql> select id,created_at, size, instance_id, status, attach_status, display_name from volumes;
++----+---------------------+------+-------------+----------------+---------------+--------------+
+| id | created_at          | size | instance_id | status         | attach_status | display_name |
++----+---------------------+------+-------------+----------------+---------------+--------------+
+|  1 | 2011-06-08 09:02:49 |    5 |           0 | available      | detached      | volume1      |
+|  2 | 2011-06-08 14:04:36 |    5 |           0 | available      | detached      | NULL         |
+|  3 | 2011-06-08 14:44:55 |    5 |           0 | available      | detached      | NULL         |
+|  4 | 2011-06-09 09:09:15 |    5 |           0 | error_deleting | detached      | NULL         |
+|  5 | 2011-06-10 08:46:33 |    6 |           0 | available      | detached      | NULL         |
+|  6 | 2011-06-10 09:16:18 |    6 |           0 | available      | detached      | NULL         |
+|  7 | 2011-06-16 07:45:57 |   10 |         157 | in-use         | attached      | NULL         |
+|  8 | 2011-06-20 07:51:19 |   10 |           0 | available      | detached      | NULL         |
+|  9 | 2011-06-21 08:21:38 |   10 |         152 | in-use         | attached      | NULL         |
+| 10 | 2011-06-22 09:47:42 |   50 |         136 | in-use         | attached      | NULL         |
+| 11 | 2011-06-30 07:30:48 |   50 |           0 | available      | detached      | NULL         |
+| 12 | 2011-06-30 11:56:32 |   50 |           0 | available      | detached      | NULL         |
+| 13 | 2011-06-30 12:12:08 |   50 |           0 | error_deleting | detached      | NULL         |
+| 14 | 2011-07-04 12:33:50 |   30 |         155 | in-use         | attached      | NULL         |
+| 15 | 2011-07-06 15:15:11 |    5 |           0 | error_deleting | detached      | NULL         |
+| 16 | 2011-07-07 08:05:44 |   20 |         149 | in-use         | attached      | NULL         |
+| 20 | 2011-08-30 13:28:24 |   20 |         158 | in-use         | attached      | NULL         |
+| 17 | 2011-07-13 19:41:13 |   20 |         149 | in-use         | attached      | NULL         |
+| 18 | 2011-07-18 12:45:39 |   30 |         154 | in-use         | attached      | NULL         |
+| 19 | 2011-08-22 13:11:06 |   50 |           0 | available      | detached      | NULL         |
+| 21 | 2011-08-30 15:39:16 |    5 |        NULL | error_deleting | detached      | NULL         |
++----+---------------------+------+-------------+----------------+---------------+--------------+
+21 rows in set (0.00 sec)</programlisting>
+                        <para> Once you get the volume id, you will have to run the following sql
+                            queries (let's say, my volume 14 as the id number 21 : </para>
+                        <programlisting>
+            mysql> update volumes set mountpoint=NULL where id=21;
+            mysql> update volumes set status="available" where status "error_deleting" where id=21;
+            mysql> update volumes set attach_status="detached" where id=21;
+            mysql> update volumes set instance_id=0 where id=21;
+                        </programlisting>
+                        <para>Now if you run again <code>euca-describe-volumes</code>from the cloud
+                            controller, you should see an available volume now : </para>
+                        <programlisting>VOLUME  vol-00000014     30     nova    available (nuage-and-co, nova-cc1, None, None)  2011-07-18T12:45:39Z</programlisting>
+                        <para>You can now proceed to the volume attachment again!</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+        </simplesect>
+        
+    </section>
+    
+    <section>
+        <?dbhtml filename="live-migration-usage.html" ?>
+        <title>Using Live Migration</title>
+        <para>Before starting live migration, check "Configuring Live Migration" sections.</para>
+        <para>Live migration provides a scheme to migrate running instances from one OpenStack
+            Compute server to another OpenStack Compute server. No visible downtime and no
+            transaction loss is the ideal goal. This feature can be used as depicted below. </para>
+        
+        <itemizedlist>
+            <listitem>
+                <para>First, make sure any instances running on a specific server.</para>
+                <programlisting><![CDATA[
+# euca-describe-instances
+Reservation:r-2raqmabo
+RESERVATION   r-2raqmabo    admin   default
+INSTANCE      i-00000003    ami-ubuntu-lucid      a.b.c.d  e.f.g.h      running     testkey (admin, HostB)  0             m1.small     2011-02-15 07:28:32   nova
+                 ]]></programlisting>
+                 <para> In this example, i-00000003 is running on HostB.</para>
+            </listitem>
+            <listitem>
+                <para>Second, pick up other server where instances are migrated to.</para>
+                <programlisting><![CDATA[
+# nova-manage service list
+HostA nova-scheduler enabled  :-) None
+HostA nova-volume enabled  :-) None
+HostA nova-network enabled  :-) None
+HostB nova-compute enabled  :-) None
+HostC nova-compute enabled  :-) None
+                 ]]></programlisting>
+                 <para> In this example, HostC can be picked up because nova-compute is running onto it.</para>
+            </listitem>
+            <listitem>
+                <para>Third, check HostC has enough resource for live migration.</para>
+                <programlisting><![CDATA[
+# nova-manage service update_resource HostC
+# nova-manage service describe_resource HostC
+HOST             PROJECT     cpu   mem(mb) disk(gb)
+HostC(total)                  16     32232     878
+HostC(used)                   13     21284     442
+HostC            p1            5     10240     150
+HostC            p2            5     10240     150
+.....
+                 ]]></programlisting>
+                 <para>Remember to use update_resource first, then describe_resource. Otherwise,
+                    Host(used) is not updated.</para>
+                 <itemizedlist>
+                     <listitem>
+                         <para><emphasis role="bold">cpu:</emphasis>the nuber of cpu</para>
+                     </listitem>
+                     <listitem>
+                         <para><emphasis role="bold">mem(mb):</emphasis>total amount of memory (MB)</para>
+                     </listitem>
+                     <listitem>
+                         <para><emphasis role="bold">disk(gb)</emphasis>total amount of NOVA-INST-DIR/instances(GB)</para>
+                     </listitem>
+                     <listitem>
+                         <para><emphasis role="bold">1st line shows </emphasis>total amount of resource physical server has.</para>
+                     </listitem>
+                     <listitem>
+                         <para><emphasis role="bold">2nd line shows </emphasis>current used resource.</para>
+                     </listitem>
+                     <listitem>
+                         <para><emphasis role="bold">3rd line and under</emphasis> is used resource per project.</para>
+                     </listitem>
+                 </itemizedlist>
+            </listitem>
+            <listitem>
+                <para>Finally, live migration</para>
+                <programlisting><![CDATA[
+# nova-manage vm live_migration i-00000003 HostC
+Migration of i-00000001 initiated. Check its progress using euca-describe-instances.
+                 ]]></programlisting>
+                 <para>Make sure instances are migrated successfully with euca-describe-instances.
+                    If instances are still running on HostB, check logfiles( src/dest nova-compute
+                    and nova-scheduler)</para>
+            </listitem>
+        </itemizedlist>
+
+
+    </section>
+    <section>
+        <?dbhtml filename="reference-for-flags-in-nova-conf.html" ?>
+        <title>Reference for Flags in nova.conf</title>
+                <para>For a complete list of all available flags for each OpenStack Compute service,
+            run bin/nova-&lt;servicename> --help. </para>
+            
+                <table rules="all">
+            <caption>Description of common nova.conf flags (nova-api, nova-compute)</caption>
+          
+            <thead>
+                <tr>
+                    <td>Flag</td>
+                    <td>Default</td>
+                    <td>Description</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>--ajax_console_proxy_port</td>
+                    <td>default: '8000'</td>
+                    <td>Port value; port to which the ajax console proxy server binds</td>
+                </tr>
+                <tr>
+                    <td>--ajax_console_proxy_topic</td>
+                    <td>default: 'ajax_proxy'</td>
+                    <td>String value; Topic that the ajax proxy nodes listen on</td>
+                </tr>
+                <tr>
+                    <td>--ajax_console_proxy_url</td>
+                    <td>default: 'http://127.0.0.1:8000'</td>
+                    <td>IP address plus port value; Location of the ajax console proxy and port</td>
+                </tr>
+                <tr>
+                    <td>--auth_token_ttl</td>
+                    <td>default: '3600'</td>
+                    <td>Seconds; Amount of time for auth tokens to linger, must be an integer
+                        value</td>
+                </tr>
+                <tr>
+                    <td>--aws_access_key_id</td>
+                    <td>default: 'admin'</td>
+                    <td>Username; ID that accesses AWS if necessary</td>
+                </tr>
+                <tr>
+                    <td>--aws_secret_access_key</td>
+                    <td>default: 'admin'</td>
+                    <td>Password key; The secret access key that pairs with the AWS ID for
+                        connecting to AWS if necessary</td>
+                </tr>
+                <tr>
+                    <td>--compute_manager</td>
+                    <td>default: 'nova.compute.manager.ComputeManager</td>
+                    <td>String value; Manager for Compute which handles remote procedure calls
+                        relating to creating instances</td>
+                </tr>
+                <tr>
+                    <td>--compute_topic</td>
+                    <td>default: 'compute'</td>
+                    <td>String value; Names the topic that compute nodes listen on</td>
+                </tr>
+                <tr>
+                    <td>--connection_type</td>
+                    <td>default: 'libvirt'</td>
+                    <td>String value libvirt, xenapi or fake; Virtualization driver for spawning
+                        instances</td>
+                </tr>
+                <tr>
+                    <td>--console_manager</td>
+                    <td>default: 'nova.console.manager.ConsoleProxyManager'</td>
+                    <td>String value; Manager for console proxy</td>
+                </tr>
+                <tr>
+                    <td>--console_topic</td>
+                    <td>default: 'console'</td>
+                    <td>String value; The topic console proxy nodes listen on</td>
+                </tr>
+                <tr>
+                    <td>--control_exchange</td>
+                    <td>default:nova</td>
+                    <td>String value; Name of the main exchange to connect to</td>
+                </tr>
+                <tr>
+                    <td>--default_image</td>
+                    <td>default: 'ami-11111'</td>
+                    <td>Name of an image; Names the default image to use, testing purposes only</td>
+                </tr>
+                <tr>
+                    <td>--db_backend</td>
+                    <td>default: 'sqlalchemy'</td>
+                    <td>The backend selected for the database connection</td>
+                </tr>
+                <tr>
+                    <td>--db_driver</td>
+                    <td>default: 'nova.db.api'</td>
+                    <td>The drive to use for database access</td>
+                </tr>
+                <tr>
+                    <td>--default_instance_type</td>
+                    <td>default: 'm1.small'</td>
+                    <td>Name of an image; Names the default instance type to use, testing purposes
+                        only</td>
+                </tr>
+                <tr>
+                    <td>--default_log_levels</td>
+                    <td>default: 'amqplib=WARN,sqlalchemy=WARN,eventlet.wsgi.server=WARN'</td>
+                    <td>Pair of named loggers and level of message to be logged; List of
+                        logger=LEVEL pairs</td>
+                </tr>
+                <tr>
+                    <td>--default_project</td>
+                    <td>default: 'openstack'</td>
+                    <td>Name of a project; Names the default project for openstack</td>
+                </tr>
+                <tr>
+                    <td>--ec2_dmz_host</td>
+                    <td>default: '$my_ip'</td>
+                    <td>IP Address; Internal IP of API server (a DMZ is shorthand for a
+                        demilitarized zone)</td>
+                </tr>
+                <tr>
+                    <td>--ec2_host</td>
+                    <td>default: '$my_ip'</td>
+                    <td>IP Address; External-facing IP of API server</td>
+                </tr>
+                <tr>
+                    <td>--ec2_listen_port</td>
+                    <td>default: '8773'</td>
+                    <td>Port value; Port that the server is listening on so you can specify a listen_host / port value for the server (not for clients).</td>
+                </tr>
+                <tr>
+                    <td>--ec2_path</td>
+                    <td>default: '/services/Cloud'</td>
+                    <td>String value; Suffix for EC2-style URL where nova-api resides</td>
+                </tr>
+                <tr>
+                    <td>--ec2_port</td>
+                    <td>default: '8773'</td>
+                    <td>Port value; Cloud controller port (where nova-api resides)</td>
+                </tr>
+                <tr>
+                    <td>--ec2_scheme</td>
+                    <td>default: 'http'</td>
+                    <td>Protocol; Prefix for EC2-style URLs where nova-api resides</td>
+                </tr>
+                <tr>
+                    <td>--ec2_url</td>
+                    <td>none</td>
+                    <td>Deprecated - HTTP URL; Location to interface nova-api. Example:
+                        http://184.106.239.134:8773/services/Cloud</td>
+                </tr>
+                <tr>
+                    <td>--flat_injected</td>
+                    <td>default: 'false'</td>
+                    <td>Indicates whether Compute (Nova) should use attempt to inject IPv6 network configuration information into the guest. It attempts to modify /etc/network/interfaces and currently only works on Debian-based systems.  </td>
+                </tr>
+                <tr>
+                    <td>--fixed_ip_disassociate_timeout</td>
+                    <td>default: '600'</td>
+                    <td>Integer: Number of seconds after which a deallocated ip is disassociated. </td>
+                </tr>
+                <tr>
+                    <td>--fixed_range</td>
+                    <td>default: '10.0.0.0/8'</td>
+                    <td>Fixed IP address block of addresses from which a set of iptables rules is created</td>
+                </tr>
+                <tr>
+                    <td>--fixed_range_v6</td>
+                    <td>default: 'fd00::/48'</td>
+                    <td>Fixed IPv6 address block of addresses</td>
+                </tr>
+                <tr>
+                    <td>--[no]flat_injected</td>
+                    <td>default: 'true'</td>
+                    <td>Indicates whether to attempt to inject network setup into guest; network injection only works for Debian systems</td>
+                </tr>
+                <tr>
+                    <td>--flat_interface</td>
+                    <td>default: ''</td>
+                    <td>FlatDhcp will bridge into this interface if set</td>
+                </tr>
+                <tr>
+                    <td>--flat_network_bridge</td>
+                    <td>default: 'br100'</td>
+                    <td>Bridge for simple network instances</td>
+                </tr>
+                <tr>
+                    <td>--flat_network_dhcp_start</td>
+                    <td>default: '10.0.0.2'</td>
+                    <td>Starting IP address for the DHCP server to start handing out IP addresses when using FlatDhcp </td>
+                </tr>
+                <tr>
+                    <td>--flat_network_dns</td>
+                    <td>default: '8.8.4.4'</td>
+                    <td>DNS for simple network </td>
+                </tr>
+                <tr>
+                    <td>--floating_range</td>
+                    <td>default: '4.4.4.0/24'</td>
+                    <td>Floating IP address block </td>
+                </tr>
+              
+                <tr>
+                    <td>--[no]fake_network</td>
+                    <td>default: 'false'</td>
+                    <td>Indicates whether Compute (Nova) should use fake network devices and
+                        addresses</td>
+                </tr>
+                <tr>
+                    <td>--[no]enable_new_services</td>
+                    <td>default: 'true'</td>
+                    <td>Services to be added to the available pool when creating services using
+                        nova-manage</td>
+                </tr>
+                <tr>
+                    <td>--[no]fake_rabbit</td>
+                    <td>default: 'false'</td>
+                    <td>Indicates whether Compute (Nova) should use a fake rabbit server</td>
+                </tr>
+                <tr>
+                    <td>--glance_api_servers</td>
+                    <td>default: '$my_ip:9292'</td>
+                    <td>List of Glance API hosts. Each item may contain a host (or IP address) and
+                        port of an OpenStack Compute Image Service server (project's name is
+                        Glance)</td>
+                </tr>
+                <tr>
+                    <td>-?, --[no]help</td>
+                    <td/>
+                    <td>Show this help.</td>
+                </tr>
+                <tr>
+                    <td>--[no]helpshort</td>
+                    <td/>
+                    <td>Show usage only for this module.</td>
+                </tr>
+                <tr>
+                    <td>--[no]helpxml</td>
+                    <td/>
+                    <td>Show this help, but with XML output instead of text</td>
+                </tr>
+                <tr>
+                    <td>--host</td>
+                    <td>default: ''</td>
+                    <td>String value; Name of the node where the cloud controller is hosted</td>
+                </tr>
+                <tr>
+                    <td>--image_service</td>
+                    <td>default: 'nova.image.s3.S3ImageService'</td>
+                    <td><para>The service to use for retrieving and searching for images. Images must be registered using
+                            euca2ools. Options: </para><itemizedlist>
+                            <listitem>
+                                <para>nova.image.s3.S3ImageService</para>
+                                <para>S3 backend for the Image Service.</para>
+                            </listitem>
+                            <listitem>
+                                <para>nova.image.local.LocalImageService</para>
+                                <para>Image service storing images to local disk. It assumes that image_ids are integers.  This is the default setting if no image manager is defined here.</para>
+                            </listitem>
+                            <listitem>
+                                <para>nova.image.glance.GlanceImageService</para>
+                                <para>Glance back end for storing and retrieving images; See <link
+                                        xlink:href="http://glance.openstack.org"
+                                        >http://glance.openstack.org</link> for more info.</para>
+                            </listitem>
+                        </itemizedlist></td>
+                </tr>
+                <tr>
+                    <td>--image_decryption_dir</td>
+                    <td>default: 'tmp/'</td>
+                    <td>Parent directory for the temporary directory used for image decryption. Ensure the user has correct permissions to access this directory when decrypting images.</td>
+                </tr>
+                <tr>
+                    <td>--instance_name_template</td>
+                    <td>default: 'instance-%08x'</td>
+                    <td>Template string to be used to generate instance names.</td>
+                </tr>
+                <tr>
+                    <td>--libvirt_type</td>
+                    <td>default: kvm</td>
+                    <td>String: Name of connection to a hypervisor through libvirt. Supported options are kvm, qemu, uml, and xen.</td>
+                </tr>
+                <tr>
+                    <td>--lock_path</td>
+                    <td>default: none</td>
+                    <td>Directory path: Writeable path to store lock files.</td>
+                </tr>
+                <tr>
+                    <td>--logfile</td>
+                    <td>default: none</td>
+                    <td>Output to named file.</td>
+                </tr>
+                <tr>
+                    <td>--logging_context_format_string</td>
+                    <td>default: '%(asctime)s %(levelname)s %(name)s [%(request_id)s %(user)s
+                        %(project)s] %(message)s'</td>
+                    <td>The format string to use for log messages with additional context.</td>
+                </tr>
+                <tr>
+                    <td>--logging_debug_format_suffix</td>
+                    <td>default: 'from %(processName)s (pid=%(process)d) %(funcName)s
+                        %(pathname)s:%(lineno)d'</td>
+                    <td>The data to append to the log format when level is DEBUG.</td>
+                </tr>
+                <tr>
+                    <td>--logging_default_format_string</td>
+                    <td>default: '%(asctime)s %(levelname)s %(name)s [-] %(message)s'</td>
+                    <td>The format string to use for log messages without context.</td>
+                </tr>
+                <tr>
+                    <td>--logging_exception_prefix</td>
+                    <td>default: '(%(name)s): TRACE: '</td>
+                    <td>String value; Prefix each line of exception output with this format.</td>
+                </tr>
+                <tr>
+                    <td>--my_ip</td>
+                    <td>default: ''</td>
+                    <td>IP address; Cloud controller host IP address.</td>
+                </tr>
+                <tr>
+                    <td>--network_manager</td>
+                    <td>default: 'nova.network.manager.VlanManager'</td>
+                    <td>
+                        <para>Configures how your controller will communicate with additional
+                            OpenStack Compute nodes and virtual machines. Options: </para>
+                        <itemizedlist>
+                            <listitem>
+                                <para>nova.network.manager.FlatManager</para>
+                                <para>Simple, non-VLAN networking</para>
+                            </listitem>
+                            <listitem>
+                                <para>nova.network.manager.FlatDHCPManager</para>
+                                <para>Flat networking with DHCP</para>
+                            </listitem>
+                            <listitem>
+                                <para>nova.network.manager.VlanManager</para>
+                                <para>VLAN networking with DHCP; This is the Default if no network
+                                    manager is defined here in nova.conf. </para>
+                            </listitem>
+                        </itemizedlist>
+                    </td>
+                </tr>
+                <tr>
+                    <td>--network_driver</td>
+                    <td>default: 'nova.network.linux_net'</td>
+                    <td>String value; Driver to use for network creation.</td>
+                </tr>
+                <tr>
+                    <td>--network_host</td>
+                    <td>default: 'preciousroy.hsd1.ca.comcast.net'</td>
+                    <td>String value; Network host to use for ip allocation in flat modes.</td>
+                </tr>
+                <tr>
+                    <td>--network_size</td>
+                    <td>default: '256'</td>
+                    <td>Integer value; Number of addresses in each private subnet.</td>
+                </tr>
+                <tr>
+                    <td>--num_networks</td>
+                    <td>default: '1000'</td>
+                    <td>Integer value; Number of networks to support.</td>
+                </tr>
+                <tr>
+                    <td>--network_topic</td>
+                    <td>default: 'network'</td>
+                    <td>String value; The topic network nodes listen on.</td>
+                </tr>
+                <tr>
+                    <td>--node_availability_zone</td>
+                    <td>default: 'nova'</td>
+                    <td>String value; Availability zone of this node.</td>
+                </tr>
+                <tr>
+                    <td>--null_kernel</td>
+                    <td>default: 'nokernel'</td>
+                    <td>String value; Kernel image that indicates not to use a kernel, but to use a
+                        raw disk image instead.</td>
+                </tr>
+                <tr>
+                    <td>--osapi_host</td>
+                    <td>default: '$my_ip'</td>
+                    <td>IP address; IP address of the API server.</td>
+                </tr>
+                <tr>
+                    <td>--osapi_listen_port</td>
+                    <td>default: '8774'</td>
+                    <td>Port value; Port for the OpenStack Compute API to listen on.</td>
+                </tr>
+                <tr>
+                    <td>--osapi_path</td>
+                    <td>default: '/v1.0/'</td>
+                    <td/>
+                </tr>
+                <tr>
+                    <td>--osapi_port</td>
+                    <td>default: '8774'</td>
+                    <td>Integer value; Port open for the OpenStack API server.</td>
+                </tr>
+                <tr>
+                    <td>--osapi_scheme</td>
+                    <td>default: 'http'</td>
+                    <td>Protocol; Prefix for the OpenStack API URL.</td>
+                </tr>
+                <tr>
+                    <td>--periodic_interval</td>
+                    <td>default: '60'</td>
+                    <td>Integer value; Seconds between running periodic tasks.</td>
+                </tr>
+                <tr>
+                    <td>--pidfile</td>
+                    <td>default: ''</td>
+                    <td>String value; Name of pid file to use for this service (such as the
+                        nova-compute service).</td>
+                </tr>
+                <tr>
+                    <td>--rabbit_host</td>
+                    <td>default: 'localhost'</td>
+                    <td>IP address; Location of rabbitmq installation.</td>
+                </tr>
+                <tr>
+                    <td>--rabbit_max_retries</td>
+                    <td>default: '12'</td>
+                    <td>Integer value; Rabbit connection attempts.</td>
+                </tr>
+                <tr>
+                    <td>--rabbit_password</td>
+                    <td>default: 'guest'</td>
+                    <td>String value; Password for the Rabbitmq server.</td>
+                </tr>
+                <tr>
+                    <td>--rabbit_port</td>
+                    <td>default: '5672'</td>
+                    <td>Integer value; Port where Rabbitmq server is running/listening.</td>
+                </tr>
+                <tr>
+                    <td>--rabbit-retry-interval</td>
+                    <td>default: '10'</td>
+                    <td>Integer value: Rabbit connection retry interval.</td>
+                </tr>
+                <tr>
+                    <td>--rabbit_userid</td>
+                    <td>default: 'guest'</td>
+                    <td>String value; User ID used for Rabbit connections.</td>
+                </tr>
+                <tr>
+                    <td>--region_list</td>
+                    <td>default: ''</td>
+                    <td>Comma-delimited pairs; List of region = fully qualified domain name pairs
+                        separated by commas.</td>
+                </tr>
+                <tr>
+                    <td>--report_interval</td>
+                    <td>default: '10'</td>
+                    <td>Integer value; Seconds between nodes reporting state to the data store.</td>
+                </tr>
+                <tr>
+                    <td>--routing_source_ip</td>
+                    <td>default: '10'</td>
+                    <td>IP address; Public IP of network host. When instances without a floating IP hit the Internet, traffic is snatted to this IP address.</td>
+                </tr>
+                <tr>
+                    <td>--s3_dmz</td>
+                    <td>default: '$my_ip'</td>
+                    <td>IP address; For instances internal IP (a DMZ is shorthand for a
+                        demilitarized zone)</td>
+                </tr>
+                <tr>
+                    <td>--s3_host</td>
+                    <td>default: '$my_ip'</td>
+                    <td>IP address: IP address of the S3 host for infrastructure. Location where
+                        OpenStack Compute is hosting the objectstore service, which will contain the
+                        virtual machine images and buckets.</td>
+                </tr>
+                <tr>
+                    <td>--s3_port</td>
+                    <td>default: '3333'</td>
+                    <td>Integer value; Port where S3 host is running</td>
+                </tr>
+                <tr>
+                    <td>--scheduler_manager</td>
+                    <td>default: 'nova.scheduler.manager.SchedulerManager'</td>
+                    <td>Manager for the scheduler for Compute (Nova)</td>
+                </tr>
+                <tr>
+                    <td>--scheduler_topic</td>
+                    <td>default: 'scheduler'</td>
+                    <td>String value; The topic scheduler nodes listen on.</td>
+                </tr>
+                <tr>
+                    <td>--sql_connection</td>
+                    <td>default: 'sqlite:///$state_path/nova.sqlite'</td>
+                    <td>IP address; Location of OpenStack Compute SQL database</td>
+                </tr>
+                <tr>
+                    <td>--sql_idle_timeout</td>
+                    <td>default: '3600'</td>
+                    <td/>
+                </tr>
+                <tr>
+                    <td>--sql_max_retries</td>
+                    <td>default: '12'</td>
+                    <td>Integer value; Number of attempts on the SQL connection</td>
+                </tr>
+                <tr>
+                    <td>--sql_retry_interval</td>
+                    <td>default: '10'</td>
+                    <td>Integer value; Retry interval for SQL connections</td>
+                </tr>
+                <tr>
+                    <td>--state_path</td>
+                    <td>default: '/usr/lib/pymodules/python2.6/nova/../'</td>
+                    <td>Top-level directory for maintaining Nova's state</td>
+                </tr>
+                <tr><td>--use_deprecated_auth</td>
+                    <td>default: 'false'</td>
+                    <td>Set to 1 or true to turn on; Determines whether to use the deprecated nova auth system or Keystone as the auth system </td></tr>
+                <tr><td>--use_ipv6</td>
+                    <td>default: 'false'</td>
+                    <td>Set to 1 or true to turn on; Determines whether to use IPv6 network addresses </td></tr>
+                <tr><td>--use_s3</td>
+                    <td>default: 'true'</td>
+                    <td>Set to 1 or true to turn on; Determines whether to get images from s3 or use a local copy </td></tr>
+                <tr>
+                    <td>--verbose</td>
+                    <td>default: 'false'</td>
+                    <td>Set to 1 or true to turn on; Optional but helpful during initial setup</td>
+                </tr>
+                <tr>
+                    <td>--vlan_interface</td>
+                    <td>default: 'eth0'</td>
+                    <td>This is the interface that VlanManager uses to bind bridges and vlans to. </td>
+                </tr>
+                <tr>
+                    <td>--vlan_start</td>
+                    <td>default: '100'</td>
+                    <td>Integer; First VLAN for private networks.</td>
+                </tr>
+                <tr>
+                    <td>--vpn_image_id</td>
+                    <td>default: 'ami-cloudpipe'</td>
+                    <td>AMI (Amazon Machine Image) for cloudpipe VPN server</td>
+                </tr>
+                <tr>
+                    <td>--vpn_key_suffix</td>
+                    <td>default: '-vpn'</td>
+                    <td>This is the interface that VlanManager uses to bind bridges and VLANs to.</td>
+                </tr>
+            </tbody>
+                </table>
+                <table rules="all">
+                    <caption>Description of nova.conf flags specific to nova-volume</caption>
+                    
+                    <thead>
+                        <tr>
+                            <td>Flag</td>
+                            <td>Default</td>
+                            <td>Description</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>--iscsi_ip_prefix</td>
+                            <td>default: ''</td>
+                            
+                            <td>IP address or partial IP address; Value that differentiates the IP
+                                addresses using simple string matching, so if all of your hosts are on the 192.168.1.0/24 network you could use --iscsi_ip_prefix=192.168.1</td></tr>
+                        
+                        <tr>
+                            <td>--volume_manager</td>
+                            <td>default: 'nova.volume.manager.VolumeManager'</td>
+                            <td>String value; Manager to use for nova-volume</td>
+                        </tr>
+                        <tr>
+                            <td>--volume_name_template</td>
+                            <td>default: 'volume-%08x'</td>
+                            <td>String value; Template string to be used to generate volume names</td>
+                        </tr><tr>
+                            <td>--volume_topic</td>
+                            <td>default: 'volume'</td>
+                            <td>String value; Name of the topic that volume nodes listen on</td>
+                        </tr></tbody></table></section>
+</chapter>

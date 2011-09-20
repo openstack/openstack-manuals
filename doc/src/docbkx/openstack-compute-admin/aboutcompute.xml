@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <?dbhtml filename="ch_introduction-to-openstack-compute.html" ?>
+    <title>Introduction to OpenStack Compute</title>
+    <para>OpenStack Compute gives you a tool to orchestrate a cloud, including running instances,
+        managing networks, and controlling access to the cloud through users and projects. The
+        underlying open source project's name is Nova, and it provides the software that can control
+        an Infrastructure as a Service (IaaS) cloud computing platform. It is similar in scope to
+        Amazon EC2 and Rackspace Cloud Servers. OpenStack Compute does not include any
+        virtualization software; rather it defines drivers that interact with underlying
+        virtualization mechanisms that run on your host operating system, and exposes functionality
+        over a web-based API.</para>
+    
+    <section>
+        <?dbhtml filename="hypervisors.html" ?>
+        <title>Hypervisors</title>
+    
+    <para>OpenStack Compute requires a hypervisor and Compute controls the hypervisors through an
+            API server. The process for selecting a hypervisor usually means prioritizing and making
+            decisions based on budget and resource constraints as well as the inevitable list of
+            supported features and required technical specifications. With OpenStack Compute, you
+            can orchestrate clouds using multiple hypervisors in different zones. The types of
+            virtualization standards that may be used with Compute include:</para>
+        <itemizedlist>
+            <listitem>
+                <para><link
+                        xlink:href="https://www.microsoft.com/windowsserver2008/en/us/hyperv-main.aspx"
+                        >Hyper-V 2008</link>
+                </para>
+            </listitem>
+            <listitem>
+                <para><link xlink:href="http://www.linux-kvm.org/page/Main_Page">KVM</link> -
+                    Kernel-based Virtual Machine</para>
+            </listitem>
+            <listitem>
+                <para><link xlink:href="http://lxc.sourceforge.net/">LXC</link> - Linux Containers
+                    (through libvirt)</para>
+            </listitem>
+            <listitem>
+                <para><link xlink:href="http://wiki.qemu.org/Manual">QEMU</link> - Quick
+                    EMUlator</para>
+            </listitem>
+            <listitem>
+                <para><link xlink:href="http://user-mode-linux.sourceforge.net/">UML</link> - User
+                    Mode Linux</para>
+            </listitem>
+            <listitem>
+                <para><link
+                        xlink:href="http://www.vmware.com/products/vsphere-hypervisor/support.html"
+                        >VMWare ESX/ESXi</link> 4.1 update 1</para>
+            </listitem>
+            <listitem>
+                <para><link xlink:href="http://www.xen.org/support/documentation.html">Xen</link> -
+                    XenServer 5.5, Xen Cloud Platform (XCP)</para>
+            </listitem>
+        </itemizedlist>
+    </section>
+    <section><?dbhtml filename="users-and-projects.html" ?>
+        <title>Users and Projects</title>
+        <para>The OpenStack Compute system is designed to be used by many different cloud computing
+            consumers or customers, using role-based access assignments. Roles control the
+            actions that a user is allowed to perform. For example, a user cannot allocate a public
+            IP without the netadmin or admin role. There are both global roles and per-project role assignments. 
+            A user's access to particular images is limited
+            by project, but the access key and secret key are assigned per user. Key pairs granting
+            access to an instance are enabled per user, but quotas to control resource consumption
+            across available hardware resources are per project. </para>
+        
+        <para>OpenStack Compute uses a rights management system that employs a Role-Based Access
+            Control (RBAC) model and supports the following five roles:</para>
+       <itemizedlist> 
+        <listitem><para>Cloud Administrator (admin): Global role. Users of this class enjoy complete system access.</para></listitem>
+        <listitem><para>IT Security (itsec): Global role. This role is limited to IT security personnel. It permits role holders to
+                    quarantine instances on any project.</para></listitem>
+        <listitem><para>Project Manager (projectmanager): Project role. The default for project owners, this role affords users the
+                    ability to add other users to a project, interact with project images, and
+                    launch and terminate instances.</para></listitem>
+        <listitem><para>Network Administrator (netadmin): Project role. Users with this role are permitted to allocate and assign
+                    publicly accessible IP addresses as well as create and modify firewall
+                    rules.</para></listitem>
+        <listitem><para>Developer (developer): Project role. This is a general purpose role that is assigned to users by
+                    default.</para></listitem></itemizedlist>
+<para>While the original EC2 API supports users, OpenStack Compute adds the concept of projects.
+            Projects are isolated resource containers forming the principal organizational structure
+            within Nova. They consist of a separate VLAN, volumes, instances, images, keys, and
+            users. A user can specify which project he or she wishes to use by appending :project_id
+            to his or her access key. If no project is specified in the API request, Compute
+            attempts to use a project with the same id as the user. </para>
+        <para>For projects, quota controls are available to limit the: <itemizedlist>
+                <listitem>
+                    <para>Number of volumes which may be created</para>
+                </listitem>
+                <listitem>
+                    <para>Total size of all volumes within a project as measured in GB</para>
+                </listitem>
+                <listitem>
+                    <para>Number of instances which may be launched</para>
+                </listitem>
+                <listitem>
+                    <para>Number of processor cores which may be allocated</para>
+                </listitem>
+                <listitem>
+                    <para>Publicly accessible IP addresses</para>
+                </listitem>
+            </itemizedlist></para>
+        
+    </section><section><?dbhtml filename="images-and-instances.html" ?>
+            <title>Images and Instances</title>
+        
+        <para>An image is a file containing information about a virtual disk that completely
+            replicates all information about a working computer at a point in time including
+            operating system information and file system information. Compute can use certificate
+            management for decrypting bundled images. For now, Compute relies on using the euca2ools
+            command-line tools distributed by the Eucalyptus Team for adding, bundling, and deleting
+            images. </para>
+        <para>There are two methods for managing images. Images can be served through the OpenStack
+            Image Service, a project that is named Glance, or use the nova-objectstore service.
+            With an OpenStack Image Service server in place, the Image Service fetches the image
+            on to the host machine and then OpenStack Compute boots the image from the host machine.
+            To place images into the service, you would use a ReST interface to stream them, and the
+            service, in turn, streams that into a back end which could be S3, OpenStack Object
+            Storage (which can use an S3), or the local file system on the server where OpenStack
+            Image Service is installed.</para>
+        <para>An instance is a running virtual machine within the cloud. An instance has a life
+            cycle that is controlled by OpenStack Compute. Compute creates the instances and it is
+            responsible for building a disk image, launching it, reporting the state, attaching
+            persistent storage, and terminating it. </para>
+    </section><section>
+        <?dbhtml filename="system-architecture.html" ?>
+        <title>System Architecture</title><para>OpenStack Compute consists of several main components. A "cloud controller" contains many of these components, 
+            and it represents the global state and interacts with all other components. An API Server
+            acts as the web services front end for the cloud controller. The compute controller
+            provides compute server resources and typically contains the compute service, The Object Store component optionally provides storage
+            services. An auth manager provides authentication and authorization services. A volume
+            controller provides fast and permanent block-level storage for the compute servers. A
+            network controller provides virtual networks to enable compute servers to interact with
+            each other and with the public network. A scheduler selects the most suitable compute
+            controller to host an instance. </para><para>OpenStack Compute is built on a shared-nothing, messaging-based architecture. You can run all
+            of the major components on multiple servers including a compute controller, volume
+            controller, network controller, and object store. A cloud controller communicates with
+            the internal object store via HTTP (Hyper Text Transfer Protocol), but it communicates
+            with a scheduler, network controller, and volume controller via AMQP (Advanced Message
+            Queue Protocol). To avoid blocking each component while waiting for a response,
+            OpenStack Compute uses asynchronous calls, with a call-back that gets triggered when a
+            response is received.</para>
+        
+        <para>To achieve the shared-nothing property with multiple copies of the same component, OpenStack Compute keeps all the cloud system state in a distributed data store. Updates to system state are written into this store, using atomic transactions when required. Requests for system state are read out of this store. In limited cases, the read results are cached within controllers for short periods of time (for example, the current list of system users.)</para></section><section>
+            <?dbhtml filename="storage-and-openstack-compute.html" ?>
+            <title>Storage and OpenStack Compute</title><para>A ‘volume’ is a detachable block storage device. You can think of it as a USB hard drive. It
+            can only be attached to one instance at a time, so it does not work like a SAN. If you
+            wish to expose the same volume to multiple instances, you will have to use an NFS or
+            SAMBA share from an existing instance. </para><para>Every instance larger than m1.tiny starts with some local storage (up to 160GB for m1.xlarge).
+            This storage is currently the second partition on the root drive. </para></section></chapter>

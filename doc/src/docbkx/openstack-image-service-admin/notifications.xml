@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<!-- Converted by db4-upgrade version 1.0 -->
+<chapter xmlns="http://docbook.org/ns/docbook" version="5.0-extension RaxBook-1.0" xml:id="notifications"><info><title>Notifications</title></info>
+  
+  <para>
+    Notifications can be generated for each upload, update or delete
+    image event. These can be used for auditing, troubleshooting, etc.
+  </para>
+  <section xml:id="strategies"><info><title>Strategies</title></info>
+    
+    <itemizedlist>
+      <listitem>
+        <para>
+          logging
+        </para>
+        <para>
+          This strategy uses the standard Python logging infrastructure
+          with the notifications ending up in file specificed by the
+          log_file configuration directive.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          rabbit
+        </para>
+        <para>
+          This strategy sends notifications to a rabbitmq queue. This
+          can then be processed by other services or applications.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          noop
+        </para>
+        <para>
+          This strategy produces no notifications. It is the default
+          strategy.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section xml:id="content"><info><title>Content</title></info>
+    
+    <para>
+      Every message contains a handful of attributes.
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          message_id
+        </para>
+        <para>
+          UUID identifying the message.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          publisher_id
+        </para>
+        <para>
+          The hostname of the glance instance that generated the
+          message.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          event_type
+        </para>
+        <para>
+          Event that generated the message.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          priority
+        </para>
+        <para>
+          One of WARN, INFO or ERROR.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          timestamp
+        </para>
+        <para>
+          UTC timestamp of when event was generated.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          payload
+        </para>
+        <para>
+          Data specific to the event type.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section xml:id="payload"><info><title>Payload</title></info>
+    
+    <para>
+      WARN and ERROR events contain a text message in the payload.
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          image.upload
+        </para>
+        <para>
+          For INFO events, it is the image metadata.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          image.update
+        </para>
+        <para>
+          For INFO events, it is the image metadata.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          image.delete
+        </para>
+        <para>
+          For INFO events, it is the image id.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+</chapter>

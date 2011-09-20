@@ -1,0 +1,997 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <?dbhtml filename="ch_configuring-openstack-compute.html" ?>
+        <title>Configuring OpenStack Compute</title>
+        <para>The OpenStack system has several key projects that are separate installations but can
+            work together depending on your cloud needs: OpenStack Compute, OpenStack Object
+            Storage, and OpenStack Image Store. You can install any of these projects separately and
+            then configure them either as standalone or connected entities.</para>
+        <section>
+            <?dbhtml filename="general-compute-configuration-overview.html" ?>
+            <title>General Compute Configuration Overview</title>
+            <para>Most configuration information is available in the nova.conf flag file. Here are
+            some general purpose flags that you can use to learn more about the flag file and the
+            node. The configuration file nova.conf is typically stored in
+            /etc/nova/nova.conf.</para>
+        <para>You can use a particular flag file by using the --flagfile (nova.conf) parameter when
+            running one of the nova- services. This inserts flag definitions from the given configuration file name, which may be useful for debugging or performance tuning. Here are some general purpose flags. </para>
+            <table rules="all">
+                <caption>Description of general purpose nova.conf flags </caption>
+                
+                <thead>
+                    <tr>
+                        <td>Flag</td>
+                        <td>Default</td>
+                        <td>Description</td>
+                    </tr>
+                </thead>
+                <tbody><tr>
+                <td>--my_ip</td>
+                <td>None</td>
+                <td>IP address; Calculated to contain the host IP address.</td>
+                </tr>
+                    
+                    <tr>
+                        <td>--host</td>
+                        <td>None</td>
+                        <td>String value; Calculated to contain the name of the node where the cloud controller is hosted</td>
+                    </tr>
+                    <tr>
+                    <td>-?, --[no]help</td>
+                    <td>None</td>
+                    <td>Show this help.</td>
+                </tr>
+                    <tr>
+                        <td>--[no]helpshort</td>
+                        <td>None</td>
+                        <td>Show usage only for this module.</td>
+                    </tr>
+                    <tr>
+                        <td>--[no]helpxml</td>
+                        <td>None</td>
+                        <td>Show this help, but with XML output instead of text</td>
+                    </tr>
+                   
+                </tbody>
+            </table>
+            
+            <para>If you want to maintain the state of all the services, you can use the --state_path flag to indicate a top-level directory for storing data related to the state of Compute including images if you are using the Compute object store. Here are additional flags that apply to all nova- services.</para>
+            
+            <table rules="all">
+                <caption>Description of nova.conf flags for all services </caption>
+                
+                <thead>
+                    <tr>
+                        <td>Flag</td>
+                        <td>Default</td>
+                        <td>Description</td>
+                    </tr>
+                </thead>
+                <tbody><tr>
+                    <td>--state_path</td>
+                    <td>'/Users/username/p/nova/nova/../'</td>
+                    <td>Directory path; Top-level directory for maintaining nova's state.</td>
+                </tr>
+                    
+                    <tr>
+                    <td>--periodic_interval</td>
+                    <td>default: '60'</td>
+                    <td>Integer value; Seconds between running periodic tasks.</td>
+                    </tr>
+                    <tr>
+                        <td>--report_interval</td>
+                        <td>default: '10'</td>
+                        <td>Integer value; Seconds between nodes reporting state to the data store.</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+            
+        </section>
+    
+    <section>
+        <?dbhtml filename="sample-nova-configuration-files.html" ?>
+        <title>Example nova.conf Configuration Files</title>
+        <para>The following sections describe many of the flag settings that can go into the nova.conf files. These need to be copied to each compute node. Here are some sample nova.conf files that offer examples of specific configurations</para>
+        
+        
+        <simplesect><title>Configuration using KVM, FlatDHCP, MySQL, Glance, LDAP, and optionally sheepdog, API is EC2</title>
+        <para>From <link xlink:href="http://wikitech.wikimedia.org/view/OpenStack#On_the_controller_and_all_compute_nodes.2C_configure_.2Fetc.2Fnova.2Fnova.conf">wikimedia.org</link>, used with permission. Where you see parameters passed in, it's likely an IP address you need. </para><literallayout class="monospaced">
+# configured using KVM, FlatDHCP, MySQL, Glance, LDAP, and optionally sheepdog, API is EC2
+--verbose
+--daemonize=1
+--logdir=/var/log/nova
+--state_path=/var/lib/nova
+--lock_path=/var/lock/nova
+--sql_connection=mysql://$nova_db_user:$nova_db_pass@$nova_db_host/$nova_db_name
+--image_service=nova.image.glance.GlanceImageService
+--s3_host=$nova_glance_host
+--glance_api_servers=$nova_glance_host
+--rabbit_host=$nova_rabbit_host
+--network_host=$nova_network_host
+--ec2_url=http://$nova_api_host:8773/services/Cloud
+--libvirt_type=kvm
+--dhcpbridge=/usr/bin/nova-dhcpbridge
+--network_manager=nova.network.manager.FlatDHCPManager
+--flat_interface=$nova_network_flat_interface
+--public_interface=$nova_network_public_interface
+--routing_source_ip=$nova_network_public_ip
+--ajax_console_proxy_url=$nova_ajax_proxy_url
+--volume_driver=nova.volume.driver.SheepdogDriver
+--auth_driver=nova.auth.ldapdriver.LdapDriver
+--ldap_url=ldap://$nova_ldap_host
+--ldap_password=$nova_ldap_user_pass
+--ldap_user_dn=$nova_ldap_user_dn
+--ldap_user_unit=people
+--ldap_user_subtree=ou=people,$nova_ldap_base_dn
+--ldap_project_subtree=ou=groups,$nova_ldap_base_dn
+--role_project_subtree=ou=groups,$nova_ldap_base_dn
+--ldap_cloudadmin=cn=cloudadmins,ou=groups,$nova_ldap_base_dn
+--ldap_itsec=cn=itsec,ou=groups,$nova_ldap_base_dn
+--ldap_sysadmin=cn=sysadmins,$nova_ldap_base_dn
+--ldap_netadmin=cn=netadmins,$nova_ldap_base_dn
+--ldap_developer=cn=developers,$nova_ldap_base_dn
+        </literallayout></simplesect>
+        <simplesect><title>KVM, Flat, MySQL, and Glance, OpenStack or EC2 API</title><para>This example nova.conf file is from an internal Rackspace test system used for demonstrations. </para>
+        
+        <literallayout class="monospaced">
+# configured using KVM, Flat, MySQL, and Glance, API is OpenStack (or EC2)
+--daemonize=1
+--dhcpbridge_flagfile=/etc/nova/nova.conf
+--dhcpbridge=/usr/bin/nova-dhcpbridge
+--lock_path=/var/lock/nova
+--logdir=/var/log/nova
+--state_path=/var/lib/nova
+--verbose
+--network_manager=nova.network.manager.FlatManager
+--sql_connection=mysql://$nova_db_user:$nova_db_pass@$nova_db_host/$nova_db_name
+--osapi_host=$nova_api_host
+--rabbit_host=$rabbit_api_host
+--ec2_host=$nova_api_host
+--image_service=nova.image.glance.GlanceImageService
+--glance_api_servers=$nova_glance_host
+# first 3 octets of the network your volume service is on, substitute with real numbers
+--iscsi_ip_prefix=nnn.nnn.nnn 
+        </literallayout></simplesect>
+        </section>
+    <section><?dbhtml filename="configuring-logging.html" ?>
+        <title>Configuring Logging</title>
+        
+        <para>You can use nova.conf flags to indicate where Compute will log events, the level of logging, and customize log formats.</para>
+            
+            
+        <table rules="all">
+            <caption>Description of nova.conf flags for logging </caption>
+            
+            <thead>
+                <tr>
+                    <td>Flag</td>
+                    <td>Default</td>
+                    <td>Description</td>
+                </tr>
+            </thead>
+            <tbody><tr>
+                <td>--logdir</td>
+                <td>'/var/logs/nova'</td>
+                <td>Directory path; Output to a per-service log file in the named directory.</td>
+            </tr>
+                
+                <tr>
+                    <td>--logfile</td>
+                    <td>default: ''</td>
+                    <td>File name; Output to named file.</td>
+                </tr>
+                <tr>
+                    <td>--[no]use_syslog</td>
+                    <td>default: 'false'</td>
+                    <td>Output to syslog using their file naming system.</td>
+                </tr><tr>
+                    <td>--default_log_levels</td>
+                    <td>default: 'amqplib=WARN,sqlalchemy=WARN,eventlet.wsgi.server=WARN'</td>
+                    <td>Pair of named loggers and level of message to be logged; List of
+                        logger=LEVEL pairs</td>
+                </tr>
+                <tr>
+                    <td>--verbose</td>
+                    <td>default: 'false'</td>
+                    <td>Set to 1 or true to turn on; Shows debug output - optional but helpful during initial setup.</td>
+                </tr>
+                
+            </tbody>
+        </table>
+          
+            
+           <para>To customize log formats for OpenStack Compute, use these flag settings.</para>
+        
+        <table rules="all">
+            <caption>Description of nova.conf flags for customized log formats </caption>
+            
+            <thead>
+                <tr>
+                    <td>Flag</td>
+                    <td>Default</td>
+                    <td>Description</td>
+                </tr>
+            </thead>
+            <tbody>
+        <tr>
+            <td>--logging_context_format_string</td>
+            <td>default: '%(asctime)s %(levelname)s %(name)s [%(request_id)s %(user)s
+                %(project)s] %(message)s'</td>
+            <td>The format string to use for log messages with additional context.</td>
+        </tr>
+        <tr>
+            <td>--logging_debug_format_suffix</td>
+            <td>default: 'from %(processName)s (pid=%(process)d) %(funcName)s
+                %(pathname)s:%(lineno)d'</td>
+            <td>The data to append to the log format when level is DEBUG</td>
+        </tr>
+        <tr>
+            <td>--logging_default_format_string</td>
+            <td>default: '%(asctime)s %(levelname)s %(name)s [-] %(message)s'</td>
+            <td>The format string to use for log messages without context.</td>
+        </tr>
+        <tr>
+            <td>--logging_exception_prefix</td>
+            <td>default: '(%(name)s): TRACE: '</td>
+            <td>String value; Prefix each line of exception output with this format.</td>
+        </tr>
+        </tbody>
+        </table>
+    </section>
+    <section>
+        <?dbhtml filename="configuring-hypervisors.html" ?>
+        <title>Configuring Hypervisors </title>
+        <para>OpenStack Compute requires a hypervisor and supports several hypervisors and virtualization standards. Configuring and running OpenStack Compute to use a particular hypervisor takes several installation and configuration steps. </para>
+        </section>
+    <section>
+        <?dbhtml filename="configuring-compute-to-use-ipv6-addresses.html" ?>
+        <title>Configuring Compute to use IPv6 Addresses </title>
+    
+            <para>You can configure Compute to use both IPv4 and IPv6 addresses for communication by
+            putting it into a IPv4/IPv6 dual stack mode. In IPv4/IPv6 dual stack mode, instances can
+            acquire their IPv6 global unicast address by stateless address autoconfiguration
+            mechanism [RFC 4862/2462]. IPv4/IPv6 dual stack mode works with VlanManager and
+            FlatDHCPManager networking modes, though floating IPs are not supported in the Bexar
+            release. In VlanManager, different 64bit global routing prefix is used for each project.
+            In FlatDHCPManager, one 64bit global routing prefix is used for all instances. The
+            Cactus release includes support for the FlatManager networking mode with a required
+            database migration.</para>
+        <para>This configuration has been tested on Ubuntu 10.04 with VM images that have IPv6
+            stateless address autoconfiguration capability (must use EUI-64 address for stateless
+            address autoconfiguration), a requirement for any VM you want to run with an IPv6
+            address. Each node that executes a nova- service must have python-netaddr and radvd
+            installed. </para>
+        <para>On all nova-nodes, install python-netaddr:</para>
+        <para>
+            <literallayout class="monospaced">sudo apt-get install -y python-netaddr</literallayout>
+        </para>
+        <para>On all nova-network nodes install radvd and configure IPv6 networking: </para>
+        <literallayout class="monospaced">sudo apt-get install -y radvd 
+sudo bash -c "echo 1 > /proc/sys/net/ipv6/conf/all/forwarding" 
+sudo bash -c "echo 0 > /proc/sys/net/ipv6/conf/all/accept_ra"</literallayout>
+        <para>Edit the nova.conf file on all nodes to set the --use_ipv6 flag to True. Restart all
+            nova- services. </para>
+        <para>When using the command 'nova-manage network create' you can add a fixed range for IPv6
+            addresses. You must specify public or private after the create parameter.</para>
+        <para>
+            <literallayout class="monospaced">nova-manage network create public fixed_range num_networks network_size [vlan_start] [vpn_start] [fixed_range_v6]</literallayout>
+        </para>
+        <para>You can set IPv6 global routing prefix by using the fixed_range_v6 parameter. The
+            default is: fd00::/48. When you use FlatDHCPManager, the command uses the original value
+            of fixed_range_v6. When you use VlanManager, the command creates prefixes of subnet by
+            incrementing subnet id. Guest VMs uses this prefix for generating their IPv6 global
+            unicast address. </para>
+        <para>Here is a usage example for VlanManager: </para>
+        <para>
+            <literallayout class="monospaced">nova-manage network create public 10.0.1.0/24 3 32 100 1000 fd00:1::/48 </literallayout>
+        </para>
+        <para>Here is a usage example for FlatDHCPManager: </para>
+        <para>
+            <literallayout class="monospaced">nova-manage network create public 10.0.2.0/24 3 32 0 0 fd00:1::/48 </literallayout>
+        </para>
+        <para>Note that [vlan_start] and [vpn_start] parameters are not used by
+        FlatDHCPManager.</para>
+        
+        <table rules="all">
+            <caption>Description of nova.conf flags for configuring IPv6</caption>
+            
+            <thead>
+                <tr>
+                    <td>Flag</td>
+                    <td>Default</td>
+                    <td>Description</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>--use_ipv6</td>
+                    <td>default: 'false'</td>
+                    <td>Set to 1 or true to turn on; Determines whether to use IPv6 network addresses </td>
+                </tr>
+                <tr>
+                    <td>--flat_injected</td>
+                    <td>default: 'false'</td>
+                    <td>Cactus only:Indicates whether Compute (Nova) should use attempt to inject IPv6 network configuration information into the guest. It attempts to modify /etc/network/interfaces and currently only works on Debian-based systems.  </td>
+                </tr>
+            </tbody>
+            </table>
+        </section>
+        
+    <section><?dbhtml filename="configuring-compute-to-use-the-image-service.html" ?>
+            <title>Configuring Image Service and Storage for Compute</title>
+        
+                <para>You can either use a local image storage system or install Glance for storing and retrieving images. After you have installed a Glance server, you can configure nova-compute to
+            use Glance for image storage and retrieval. You must change the --image_service flag to
+            'nova.image.glance.GlanceImageService' in order to use Glance to store and retrieve
+            images for OpenStack Compute.</para>
+        
+        <table rules="all">
+            <caption>Description of nova.conf flags for the Glance image service and
+                storage</caption>
+            
+            <thead>
+                <tr>
+                    <td>Flag</td>
+                    <td>Default</td>
+                    <td>Description</td>
+                </tr>
+            </thead>
+            <tbody>
+                
+                
+                <tr>
+                    <td>--image_service</td>
+                    <td>default: 'nova.image.local.LocalImageService'</td>
+                    <td><para>The service to use for retrieving and searching for images. Images must be registered using
+                        euca2ools. Options: </para><itemizedlist>
+                            <listitem>
+                                <para>nova.image.s3.S3ImageService</para>
+                                <para>S3 backend for the Image Service.</para>
+                            </listitem>
+                            <listitem>
+                                <para>nova.image.local.LocalImageService</para>
+                                <para>Image service storing images to local disk. It assumes that image_ids are integers. This is the default setting if no image manager is defined here.</para>
+                            </listitem>
+                            <listitem>
+                                <para><emphasis role="bold"
+                                        >nova.image.glance.GlanceImageService</emphasis></para>
+                                <para>Glance back end for storing and retrieving images; See <link
+                                    xlink:href="http://glance.openstack.org"
+                                    >http://glance.openstack.org</link> for more info.</para>
+                            </listitem>
+                        </itemizedlist></td>
+                </tr>
+                <tr>
+                <td>--glance_api_servers</td>
+                    <td>default: '$my_ip:9292'</td>
+                    <td>List of Glance API hosts. Each item may contain a host (or IP address) and
+                        port of an OpenStack Compute Image Service server (project's name is
+                        Glance)</td>
+                </tr>
+                <tr>
+                    <td>--s3_dmz</td>
+                    <td>default: '$my_ip'</td>
+                    <td>IP address; For instances internal IP (a DMZ is shorthand for a
+                        demilitarized zone)</td>
+                </tr>
+                <tr>
+                    <td>--s3_host</td>
+                    <td>default: '$my_ip'</td>
+                    <td>IP address: IP address of the S3 host for infrastructure. Location where
+                        OpenStack Compute is hosting the objectstore service, which will contain the
+                        virtual machine images and buckets.</td>
+                </tr>
+                <tr>
+                    <td>--s3_port</td>
+                    <td>default: '3333'</td>
+                    <td>Integer value; Port where S3 host is running</td>
+                </tr>
+                <tr><td>--use_s3</td>
+                    <td>default: 'true'</td>
+                    <td>Set to 1 or true to turn on; Determines whether to get images from s3 or use a local copy </td></tr>
+            </tbody>
+        </table>
+        
+        <para>If you choose not to use Glance for the image service, you can use the object store
+            that maintains images in a particular location, namely the state path on the server
+            local to the nova.conf file. You can also use a set of S3 buckets to store
+            images.</para>
+        
+        <table rules="all">
+            <caption>Description of nova.conf flags for local image storage</caption>
+            
+            <thead>
+                <tr>
+                    <td>Flag</td>
+                    <td>Default</td>
+                    <td>Description</td>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    <td>--image_service</td>
+                    <td>default: 'nova.image.local.LocalImageService'</td>
+                    <td><para>The service to use for retrieving and searching for images. Images must be registered using
+                        euca2ools. Options: </para><itemizedlist>
+                            <listitem>
+                                <para>nova.image.s3.S3ImageService</para>
+                                <para>S3 backend for the Image Service; In Cactus, the S3
+                                    image service wraps the other image services for use by the EC2
+                                    API. The EC2 api will always use the S3 image service by default
+                                    so setting the flag is not necessary.</para>
+                            </listitem>
+                            <listitem>
+                                 <para><emphasis role="bold">
+                                   nova.image.local.LocalImageService
+                                </emphasis></para>
+                                <para>Image service storing images to local disk. It assumes that
+                                    image_ids are integers.</para>
+                            </listitem>
+                            <listitem>
+                                <para>nova.image.glance.GlanceImageService</para>
+                                <para>Glance back end for storing and retrieving images; See <link
+                                    xlink:href="http://glance.openstack.org"
+                                    >http://glance.openstack.org</link> for more info.</para>
+                            </listitem>
+                        </itemizedlist></td>
+                </tr>
+        <tr>
+            <td>--state_path</td>
+            <td>'/Users/username/p/nova/nova/../'</td>
+            <td>Directory path; Top-level directory for maintaining nova's state.</td>
+        </tr>
+                <tr>
+                    <td>--buckets_path</td>
+                    <td>'$state_path/buckets'</td>
+                    <td>Directory path; Directory established for S3-style buckets.</td>
+                </tr>
+                <tr>
+                    <td>--images_path</td>
+                    <td>'$state_path/images'</td>
+                    <td>Directory path; Directory that stores images when using object store.</td>
+                </tr>
+        
+        </tbody>
+        </table>
+            </section>
+            
+    <section><?dbhtml filename="configuring-live-migrations.html" ?>
+                <title>Configuring Live Migrations </title>
+       
+        <para>The live migration feature is useful when you need to upgrade or installing patches to hypervisors/BIOS and you need the machines to keep running. For example, when one of HDD volumes RAID or one of bonded NICs is out of order. Also for regular periodic maintenance, you may need to migrate VM instances. When many VM instances are running on a specific physical machine, you can redistribute the high load. Sometimes when VM instances are scattered, you can move VM instances to a physical machine to arrange them more logically.</para>
+
+                <para>
+                    <emphasis role="bold">Environments</emphasis>
+                    <itemizedlist>
+                        <listitem>
+                            <para><emphasis role="bold">OS:</emphasis> Ubuntu 10.04/10.10 
+                            for both instances and host.</para>
+                        </listitem>
+                        <listitem>
+                             <para><emphasis role="bold">Shared storage:</emphasis> 
+                             NOVA-INST-DIR/instances/ has to be mounted by shared storage
+                             (tested using NFS).</para>
+                        </listitem>
+                        <listitem>
+                            <para><emphasis role="bold">Instances:</emphasis> Instance can 
+                            be migrated with ISCSI/AoE based volumes</para>
+                        </listitem>
+                        <listitem>
+                            <para><emphasis role="bold">Hypervisor:</emphasis>
+                            KVM with libvirt</para>
+                        </listitem>
+                        <listitem>
+                            <para><emphasis role="bold">(NOTE1)</emphasis> 
+                            "NOVA-INST-DIR/instance" is expected that vm image is put on to. 
+                            see "flags.instances_path" in nova.compute.manager for the default 
+                            value</para>
+                        </listitem>
+                        <listitem>
+                            <para><emphasis role="bold">(NOTE2)</emphasis> This feature is 
+                             admin only, since nova-manage is necessary.</para>
+                        </listitem>
+                    </itemizedlist>
+                 </para>
+
+                 <para>
+                    <emphasis role="bold">Sample Nova Installation before starting</emphasis>
+                    <itemizedlist>
+                        <listitem>
+                            <para>Prepare 3 servers at least, lets say, HostA, HostB
+                            and HostC</para> 
+                        </listitem>
+                        <listitem>
+                             <para>nova-api/nova-network/nova-volume/nova-objectstore/
+                             nova-scheduler(and other daemon) are running on HostA.</para>
+                        </listitem>
+                        <listitem>
+                            <para>nova-compute is running on both HostB and HostC.</para>
+                        </listitem>
+                        <listitem>
+                            <para>HostA export NOVA-INST-DIR/instances, HostB and HostC 
+                            mount it.</para>
+                        </listitem>
+                        <listitem>
+                            <para>To avoid any confusion, NOVA-INST-DIR is same at 
+                            HostA/HostB/HostC("NOVA-INST-DIR" shows top of install dir). </para>
+                        </listitem>
+                        <listitem>
+                            <para>HostA export NOVA-INST-DIR/instances, HostB and HostC mount it.</para> 
+                        </listitem>
+                     </itemizedlist>
+                 </para>
+                     
+
+                 <para><emphasis role="bold">Pre-requisite configurations</emphasis></para>
+                 <para>
+                    <orderedlist>
+                        <listitem>
+                            <para>Configure /etc/hosts, Make sure 3 Hosts can do name-resolution
+                             with each other. Ping with each other is better way to test.</para>
+                            <programlisting><![CDATA[
+# ping HostA
+# ping HostB
+# ping HostC
+                            ]]></programlisting>
+                        </listitem>
+                        <listitem>
+                            <para>Configure NFS at HostA by adding below to /etc/exports</para>
+                            <literallayout class="monospaced">NOVA-INST-DIR/instances HostA/255.255.0.0(rw,sync,fsid=0,no_root_squash</literallayout>
+                            <para> Change "255.255.0.0" appropriate netmask, which should include 
+                            HostB/HostC. Then restart nfs server.</para>
+                            <programlisting><![CDATA[
+# /etc/init.d/nfs-kernel-server restart
+# /etc/init.d/idmapd restart
+                            ]]></programlisting>
+                        </listitem>
+                        <listitem>
+                            <para>Configure NFS at HostB and HostC by adding below to 
+                            /etc/fstab</para>
+                            <literallayout class="monospaced">HostA:/ DIR nfs4 defaults 0 0</literallayout>
+                            <para>Then mount, check exported directory can be mounted.</para>
+                            <literallayout class="monospaced"># mount -a -v</literallayout>
+                            <para>If fail, try this at any hosts.</para>
+                            <literallayout class="monospaced"># iptables -F</literallayout>
+                            <para>Also, check file/daemon permissions. We expect any nova daemons 
+                            are running as root. </para>
+                            <programlisting><![CDATA[
+# ps -ef | grep nova
+root 5948 5904 9 11:29 pts/4 00:00:00 python /opt/nova-2010.4//bin/nova-api
+root 5952 5908 6 11:29 pts/5 00:00:00 python /opt/nova-2010.4//bin/nova-objectstore
+... (snip)
+                            ]]></programlisting>
+                            <para>"NOVA-INST-DIR/instances/" directory can be seen at HostA</para>
+                            <programlisting><![CDATA[
+# ls -ld NOVA-INST-DIR/instances/
+drwxr-xr-x 2 root root 4096 2010-12-07 14:34 nova-install-dir/instances/
+                            ]]></programlisting>
+                            <para>Same check at HostB and HostC</para>
+                            <programlisting><![CDATA[
+# ls -ld NOVA-INST-DIR/instances/
+drwxr-xr-x 2 root root 4096 2010-12-07 14:34 nova-install-dir/instances/
+
+# df -k
+Filesystem           1K-blocks      Used Available Use% Mounted on
+/dev/sda1            921514972   4180880 870523828   1% /
+none                  16498340      1228  16497112   1% /dev
+none                  16502856         0  16502856   0% /dev/shm
+none                  16502856       368  16502488   1% /var/run
+none                  16502856         0  16502856   0% /var/lock
+none                  16502856         0  16502856   0% /lib/init/rw
+HostA:        921515008 101921792 772783104  12% /opt  ( <--- this line is important.)
+                            ]]></programlisting>
+                        </listitem>
+                        <listitem>
+                            <para>Libvirt configurations. Modify /etc/libvirt/libvirt.conf:</para> 
+                            <programlisting><![CDATA[
+before : #listen_tls = 0
+after : listen_tls = 0
+
+before : #listen_tcp = 1
+after : listen_tcp = 1
+
+add: auth_tcp = "none"
+                            ]]></programlisting>
+                            <para>Modify /etc/init/libvirt-bin.conf</para> 
+                            <programlisting><![CDATA[
+before : exec /usr/sbin/libvirtd -d
+ after : exec /usr/sbin/libvirtd -d -l
+                            ]]></programlisting>
+
+                            <para>Modify /etc/default/libvirt-bin</para> 
+                            <programlisting><![CDATA[
+before :libvirtd_opts=" -d"
+after :libvirtd_opts=" -d -l"
+                            ]]></programlisting>
+                            <para>then, restart libvirt. Make sure libvirt is restarted.</para> 
+                            <programlisting><![CDATA[
+# stop libvirt-bin && start libvirt-bin
+# ps -ef | grep libvirt
+root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l
+                            ]]></programlisting>
+
+                        </listitem>
+                        <listitem>
+                            <para>Flag configuration. usually, you do not have to configure
+                            any flags. Below chart is only for advanced usage.</para>
+                        </listitem>
+                    </orderedlist>
+                 </para>
+
+
+        <table rules="all">
+            <caption>Description of nova.conf flags for live migration</caption>
+            <thead>
+                <tr>
+                    <td>Flag</td>
+                    <td>Default</td>
+                    <td>Description</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>--live_migration_retry_count</td>
+                    <td>default: 30</td>
+                    <td>Retry count needed in live_migration. Sleep 1sec for each retry</td>
+                </tr>
+                <tr>
+                    <td>--live_migration_uri</td>
+                    <td>default: 'qemu+tcp://%s/system'</td>
+                    <td>Define protocol used by live_migration feature. If you would like to use qemu+ssh, change this as described at http://libvirt.org/. </td>
+                </tr>
+                <tr>
+                    <td>--live_migration_bandwidth</td>
+                    <td>default: 0</td>
+                    <td>Define bandwidth used by live migration. </td>
+                </tr>
+                <tr>
+                    <td>--live_migration_flag</td>
+                    <td>default: 'VIR_MIGRATE_UNDEFINE_SOURCE, VIR_MIGRATE_PEER2PEER'</td>
+                    <td>Define libvirt flag for live migration. </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    
+    <section><?dbhtml filename="configuring-database-connections.html" ?>
+        <title>Configuring Database Connections </title>
+        
+        <para>You can configure OpenStack Compute to use any SQLAlchemy-compatible database. The database name is 'nova' and entries to it are mostly written by the nova-scheduler service, although all the services need to be able to update entries in the database. Use these settings to configure the connection string for the nova database.</para>
+        
+        <table rules="all">
+            <caption>Description of nova.conf flags for database access </caption>
+            
+            <thead>
+                <tr>
+                    <td>Flag</td>
+                    <td>Default</td>
+                    <td>Description</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>--sql_connection</td>
+                    <td>default: 'sqlite:///$state_path/nova.sqlite'</td>
+                    <td>IP address; Location of OpenStack Compute SQL database</td>
+                </tr>
+               
+                <tr>
+                    <td>--sql_idle_timeout</td>
+                    <td>default: '3600'</td>
+                    <td/>
+                </tr>
+                <tr>
+                    <td>--sql_max_retries</td>
+                    <td>default: '12'</td>
+                    <td>Integer value; Number of attempts on the SQL connection</td>
+                </tr>
+                <tr>
+                    <td>--sql_retry_interval</td>
+                    <td>default: '10'</td>
+                    <td>Integer value; Retry interval for SQL connections</td>
+                </tr>
+                
+                <tr>
+                    <td>--db_backend</td>
+                    <td>default: 'sqlalchemy'</td>
+                    <td>The backend selected for the database connection</td>
+                </tr>
+                <tr>
+                    <td>--db_driver</td>
+                    <td>default: 'nova.db.api'</td>
+                    <td>The drive to use for database access</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    <section><?dbhtml filename="configuring-compute-messaging.html" ?>
+        <title>Configuring the Compute Messaging System</title>
+        
+        <para>OpenStack Compute uses an open standard for messaging middleware known as AMQP.
+            RabbitMQ enables this messaging system so that nova- services can talk to each other.
+            You can configure the messaging communication for different installation scenarios as
+            well as tune RabbitMQ's retries and the size of the RPC thread pool. </para>
+        
+        <table rules="all">
+            <caption>Description of nova.conf flags for Remote Procedure Calls and RabbitMQ Messaging </caption>
+            
+            <thead>
+                <tr>
+                    <td>Flag</td>
+                    <td>Default</td>
+                    <td>Description</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>--rabbit_host</td>
+                    <td>default: 'localhost'</td>
+                    <td>IP address; Location of RabbitMQ installation.</td>
+                </tr>
+                
+                <tr>
+                    <td>--rabbit_password</td>
+                    <td>default: 'guest'</td>
+                    <td>String value; Password for the RabbitMQ server.</td>
+                </tr>
+                <tr>
+                    <td>--rabbit_port</td>
+                    <td>default: '5672'</td>
+                    <td>Integer value; Port where RabbitMQ server is running/listening.</td>
+                </tr>
+               
+                <tr>
+                    <td>--rabbit_userid</td>
+                    <td>default: 'guest'</td>
+                    <td>String value; User ID used for Rabbit connections.</td>
+                </tr>
+                
+                <tr>
+                    <td>--rabbit_virtual_host</td>
+                    <td>default: '/'</td>
+                    <td>Location of a virtual RabbitMQ installation.</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <table rules="all">
+            <caption>Description of nova.conf flags for Tuning RabbitMQ Messaging </caption>
+            
+            <thead>
+                <tr>
+                    <td>Flag</td>
+                    <td>Default</td>
+                    <td>Description</td>
+                </tr>
+            </thead><tbody>
+            <tr>
+            <td>--rabbit_max_retries</td>
+            <td>default: '12'</td>
+            <td>Integer value; RabbitMQ connection attempts.</td>
+        </tr>
+        <tr>
+            <td>--rabbit-retry-interval</td>
+            <td>default: '10'</td>
+            <td>Integer value: RabbitMQ connection retry interval.</td>
+        </tr>
+                <tr>
+                    <td>--rpc_thread_pool_size</td>
+                    <td>default: '1024'</td>
+                    <td>Integer value: Size of Remote Procedure Call thread pool.</td>
+                </tr>
+            </tbody></table>
+        
+        <table rules="all">
+            <caption>Description of nova.conf flags for Customizing Exchange or Topic Names </caption>
+            
+            <thead>
+                <tr>
+                    <td>Flag</td>
+                    <td>Default</td>
+                    <td>Description</td>
+                </tr>
+            </thead><tbody>
+                <tr>
+                    <td>--control_exchange</td>
+                    <td>default:nova</td>
+                    <td>String value; Name of the main exchange to connect to</td>
+                </tr>
+                <tr>
+                    <td>--ajax_console_proxy_topic</td>
+                    <td>default: 'ajax_proxy'</td>
+                    <td>String value; Topic that the ajax proxy nodes listen on</td>
+                </tr>
+                <tr>
+                    <td>--console_topic</td>
+                    <td>default: 'console'</td>
+                    <td>String value; The topic console proxy nodes listen on</td>
+                </tr>
+                <tr>
+                    <td>--network_topic</td>
+                    <td>default: 'network'</td>
+                    <td>String value; The topic network nodes listen on.</td>
+                </tr>
+                
+                <tr>
+                    <td>--scheduler_topic</td>
+                    <td>default: 'scheduler'</td>
+                    <td>String value; The topic scheduler nodes listen on.</td>
+                </tr>
+                
+                <tr>
+                    <td>--volume_topic</td>
+                    <td>default: 'volume'</td>
+                    <td>String value; Name of the topic that volume nodes listen on</td>
+                </tr>
+            </tbody></table>
+    </section>
+    <section><?dbhtml filename="configuring-authentication-authorization.html" ?>
+        <title>Configuring Authentication and Authorization </title>
+        
+        <para>OpenStack Compute uses an implementation of an authentication system structured like
+            having an Active Directory or other federated LDAP user store that backends to an
+            identity manager or other SAML Policy Controller that then maps to groups. You can also
+            customize roles for projects. Credentials for API calls are stored in the project zip
+            file. Certificate authority is also customzed in nova.conf. </para>
+        
+        <table rules="all">
+            <caption>Description of nova.conf flag for Authentication</caption>
+            
+            <thead>
+                <tr>
+                    <td>Flag</td>
+                    <td>Default</td>
+                    <td>Description</td>
+                </tr>
+            </thead><tbody>
+                <tr>
+                    <td>--auth_driver</td>
+                    <td>default:'nova.auth.dbdriver.DbDriver'</td>
+                    <td><para>String value; Name of the driver for authentication</para><itemizedlist>
+                            <listitem>
+                                <para>nova.auth.dbdriver.DbDriver - Default setting.</para>
+                            </listitem>
+                            <listitem>
+                                
+                                    <para>nova.auth.ldapdriver.FakeLdapDriver - create a replacement
+                                    for this driver supporting other backends by creating another
+                                    class that exposes the same public methods</para>
+                               
+                                <para>.</para>
+                            </listitem>
+                            
+                        </itemizedlist></td>
+                </tr>
+                
+            </tbody>
+        </table>
+        <table rules="all">
+            <caption>Description of nova.conf flags for customizing roles</caption>
+            
+            <thead>
+                <tr>
+                    <td>Flag</td>
+                    <td>Default</td>
+                    <td>Description</td>
+                </tr>
+            </thead><tbody>
+                <tr>
+                    <td>--allowed_roles</td>
+                    <td>default: 'cloudadmin,itsec,sysadmin,netadmin,developer') </td>
+                    <td>Comma separated list; Allowed roles for project</td>
+                </tr>
+                <tr>
+                    <td>--global_roles</td>
+                    <td>default: 'cloudadmin,itsec') </td>
+                    <td>Comma separated list; Roles that apply to all projects</td>
+                </tr>
+                <tr>
+                    <td>--superuser_roles</td>
+                    <td>default: 'cloudadmin') </td>
+                    <td>Comma separated list; Roles that ignore authorization checking completely</td>
+                </tr>
+                
+            </tbody>
+        </table>
+        <table rules="all">
+            <caption>Description of nova.conf flags for credentials</caption>
+            
+            <thead>
+                <tr>
+                    <td>Flag</td>
+                    <td>Default</td>
+                    <td>Description</td>
+                </tr>
+            </thead><tbody>
+                <tr>
+                    <td>--credentials_template</td>
+                    <td>default: '/Users/termie/p/nova/nova/auth/novarc.template') </td>
+                    <td>Directory; Template for creating users' RC file</td>
+                </tr>
+                <tr>
+                    <td>--credential_rc_file</td>
+                    <td>default: '%src') </td>
+                    <td>File name; File name of rc in credentials zip</td>
+                </tr>
+                
+                <tr>
+                    <td>--credential_cert_file</td>
+                    <td>default: 'cert.pem') </td>
+                    <td>File name; File name of certificate in credentials zip</td>
+                </tr>
+                <tr>
+                    <td>--credential_key_file</td>
+                    <td>default: 'pk.pem') </td>
+                    <td>File name; File name of rc in credentials zip</td>
+                </tr>
+                <tr>
+                    <td>--vpn_client_template</td>
+                    <td>default: 'nova/cloudpipe/client/ovpn.template') </td>
+                    <td>Directory; Refers to where the template lives for creating users vpn file</td>
+                </tr>
+                <tr>
+                    <td>--credential_vpn_file</td>
+                    <td>default: 'nova-vpn.conf') </td>
+                    <td>File name; Filename of certificate in credentials.zip</td>
+                </tr>
+            </tbody></table>
+        
+       
+        <table rules="all">
+            <caption>Description of nova.conf flags for CA (Certificate Authority)</caption>
+            
+            <thead>
+                <tr>
+                    <td>Flag</td>
+                    <td>Default</td>
+                    <td>Description</td>
+                </tr>
+            </thead><tbody>
+                <tr>
+                    <td>--keys_path</td>
+                    <td>default: '$state_path/keys') </td>
+                    <td>Directory; Where Nova keeps the keys</td>
+                </tr>
+                <tr>
+                    <td>--ca_file</td>
+                    <td>default: 'cacert.pem') </td>
+                    <td>File name; File name of root CA</td>
+                </tr>
+                
+                <tr>
+                    <td>--crl_file</td>
+                    <td>default: 'crl.pem') </td>
+                    <td>File name; File name of Certificate Revocation List</td>
+                </tr>
+                <tr>
+                    <td>--key_file</td>
+                    <td>default: 'private/cakey.pem') </td>
+                    <td>File name; File name of private key</td>
+                </tr>
+                <tr>
+                    <td>--use_project_ca</td>
+                    <td>default: 'false') </td>
+                    <td>True or false; Indicates whether to use a CA for each project; false means CA is not used for each project</td>
+                </tr>
+                <tr>
+                    <td>--project_cert_subject</td>
+                    <td>default: '/C=US/ST=California/L=MountainView/O=AnsoLabs/OU=NovaDev/CN=proje ct-ca-%s-%s') </td>
+                    <td>String; Subject for certificate for projects, %s for project, timestamp </td>
+                </tr>
+                <tr>
+                    <td>--user_cert_subject</td>
+                    <td>default: '/C=US/ST=California/L=MountainView/O=AnsoLabs/OU=NovaDev/CN=%s-%s-%s') </td>
+                    <td>String; Subject for certificate for users, %s for project, users, timestamp </td>
+                </tr>
+                <tr>
+                    <td>--vpn_cert_subject</td>
+                    <td>default: '/C=US/ST=California/L=MountainView/O=AnsoLabs/OU=NovaDev/CN=project-vpn-%s-%s') </td>
+                    <td>String; Subject for certificate for vpns, %s for project, timestamp </td>
+                </tr>
+            </tbody></table>
+        </section>
+    
+    </chapter>
+     

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="Identity-Service-Concepts-e1362">
+    <title>Identity Service Concepts</title>
+    <para>
+        The Keystone Identity Service has several key concepts which are
+        important to understand:
+    </para>
+    <variablelist>
+        <varlistentry>
+            <term>User</term>
+            <listitem><para>A digital representation of a person, system, or service who uses OpenStack cloud services.
+                Keystone authentication services will validate that incoming request are being made by the user
+                who claims to be making the call. Users have a login and may be assigned tokens to access
+                resources. Users may be directly assigned to a particular tenant and
+                behave as if they are contained in that tenant.</para></listitem>
+        </varlistentry>
+        <varlistentry>
+            <term>Credentials</term>
+            <listitem><para>
+                Data that belongs to, is owned by, and generally only known by a user that the user can present
+                to prove they are who they are (since nobody else should know that data).
+            </para><para>Examples are:
+                <itemizedlist>
+                    <listitem><para>a matching username and password</para></listitem>
+                    <listitem><para>a matching username and API key</para></listitem>
+                    <listitem><para>yourself and a driver's license with a picture of you</para></listitem>
+                    <listitem><para>a token that was issued to you that nobody else knows of</para></listitem>
+                </itemizedlist>
+            </para></listitem>
+        </varlistentry>
+        <varlistentry>
+            <term>Authentication</term>
+            <listitem><para>
+                In the context of Keystone, authentication is the act of confirming the identity of a
+                user or the truth of a claim. 
+                Keystone will confirm that incoming request are being made by the user
+                who claims to be making the call by validating a set of claims that the user is making.
+                These claims are initially in the form of a set of credentials (username &amp; password,
+                or username and API key). After initial confirmation, Keystone will issue the user a token
+                which the user can then provide to demonstrate that their identity has been authenticated
+                when making subsequent requests.
+            </para></listitem>
+        </varlistentry>
+        <varlistentry>
+            <term>Token</term>
+            <listitem><para>
+                A token is an arbitrary bit of text that is used to access
+                resources. Each token has a scope which describes which
+                resources are accessible with it. A token may be
+                revoked at anytime and is valid for a finite duration.
+            </para>
+                <para>
+                    While Keystone supports token-based authentication in this release,
+                    the intention is for it to support additional protocols in the
+                    future. The intent is for it to be an integration service foremost, and not
+                    a aspire to be a full-fledged identity store and management solution.
+                </para></listitem>
+        </varlistentry>
+        <varlistentry>
+            <term>Tenant</term>
+            <listitem><para>
+                A container used to group or isolate resources and/or identity
+                objects. Depending on the service operator, a tenant may map to a customer,
+                account, organization, or project.
+            </para></listitem>
+        </varlistentry>
+        <varlistentry>
+            <term>Service</term>
+            <listitem><para>
+                An OpenStack service, such as Compute (Nova), Object Storage (Swift), or Image Service (Glance). A service provides
+                one or more endpoints through which users can access resources and perform
+                (presumably useful) operations.
+            </para></listitem>
+        </varlistentry>
+        <varlistentry>
+            <term>Endpoint</term>
+            <listitem> <para>
+                An network-accessible address, usually described by URL, where a service may be accessed. If using an extension for templates, you can create an endpoint template, which represents the templates of all the consumable services that are available across the regions. 
+            </para></listitem>
+        </varlistentry>
+        <varlistentry>
+            <term>Role</term>
+            <listitem><para> A personality that a user assumes when performing a specific set of operations.
+                A role includes a set of right and privileges. A user assuming that role inherits
+                those rights and privileges.
+            </para><para>
+                In Keystone, a token that is issued to a user includes the list of roles that user 
+                can assume. Services that are being called by that user determine how they interpret the set
+                of roles a user has and which operations or resources each roles grants access to.
+            </para></listitem>
+        </varlistentry>
+        
+    </variablelist>
+    
+    
+</chapter>

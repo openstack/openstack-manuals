@@ -1,0 +1,805 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <?dbhtml filename="ch_introduction-to-openstack-imaging-service.html" ?>
+    <title>OpenStack Image Service</title>
+    <para>You can use OpenStack Image Service for discovering, registering, and retrieving virtual machine images. The service includes a RESTful API that allows users to query VM image metadata and retrieve the actual image with HTTP requests, or you can use a client class in your Python code to accomplish the same tasks.
+        </para><para>
+        VM images made available through OpenStack Image Service can be stored in a variety of locations from simple file systems to object-storage systems like the OpenStack Object Storage project, or even use S3 storage either on its own or through an OpenStack Object Storage S3 interface.</para>
+    <section>
+        <?dbhtml filename="overview-of-architecture.html" ?>
+        <title>Overview of  Architecture</title>
+        <para>There are two main parts to the Image Service’s architecture:</para>
+            
+            <itemizedlist><listitem><para>API server</para></listitem>
+            <listitem><para>Registry server(s)</para>
+               </listitem>
+            </itemizedlist>
+        
+        <para>OpenStack Image Service is designed to be as adaptable as possible for various back-end storage and registry database solutions. There is a main API server (the ``glance-api`` program) that serves as the communications hub between various client programs, the registry of image metadata, and the storage systems that actually contain the virtual machine image data.</para>
+    </section>
+    <section>
+        <?dbhtml filename="openstack-imaging-service-api-server.html" ?>
+        <title>OpenStack Image Service API Server</title>
+                       
+            <para>The API server is the main interface for OpenStack Image Service. It routes requests from clients to registries of image metadata and to its backend stores, which are the mechanisms by which OpenStack Image Service actually saves incoming virtual machine images.</para>
+            
+            <para>The backend stores that OpenStack Image Service can work with are as follows:</para>
+    <itemizedlist><listitem><para>OpenStack Object Storage - OpenStack Object Storage is the highly-available object storage project in OpenStack.</para></listitem> 
+                       
+            <listitem><para>Filesystem - The default backend that OpenStack Image Service uses to store virtual machine images is the filesystem backend. This simple backend writes image files to the local filesystem.</para></listitem>
+            
+            <listitem><para>S3 - This backend allows OpenStack Image Service to store virtual machine images in Amazon’s S3 service.</para></listitem>
+           
+            <listitem><para>HTTP - OpenStack Image Service can read virtual machine images that are available via HTTP somewhere on the Internet. This store is read-only.</para></listitem></itemizedlist>
+            </section>
+            
+            <section>
+                <?dbhtml filename="openstack-imaging-service-registry-servers.html" ?>
+                <title>OpenStack Image Service Registry Servers</title>
+            
+            <para>OpenStack Image Service registry servers are servers that conform to the OpenStack Image Service Registry API. OpenStack Image Service ships with a reference implementation of a registry server that complies with this API (bin/OpenStack Image Service-registry).</para></section>
+    <section>
+    <?dbhtml filename="installing-openstack-imaging-service.html" ?>
+    <title>Installing and Configuring OpenStack Image Service</title>
+    <para>The OpenStack system has several key projects that are separate installations but can work
+        together depending on your cloud needs: OpenStack Compute, OpenStack Object Storage, and an
+        OpenStack Image Service with a project name of Glance. You can install any of these
+        projects separately and then configure them either as standalone or connected
+        entities.</para>
+    <section>
+        <?dbhtml filename="glance-system-requirements.html" ?>
+        <title>System Requirements for OpenStack Image Service (Glance)</title>
+        <para><emphasis role="bold">Hardware</emphasis>: OpenStack components are intended to run on
+            standard hardware.</para>
+        <para><emphasis role="bold">Operating System</emphasis>: The OpenStack Image Service
+            itself currently runs on Ubuntu but the images it stores may contain different operating
+            systems.</para>
+        <para><emphasis role="bold">Networking</emphasis>: 1000 Mbps are suggested. </para>
+        <para><emphasis role="bold">Database</emphasis>: Any SQLAlchemy-compatible database, such as
+            MySQL, Oracle, PostgreSQL, or SQLite. The reference registry server implementation that
+            ships with OpenStack Image Service uses a SQL database to store information about an
+            image, and publishes this information via an HTTP/REST-like interface.</para>
+        <para><emphasis role="bold">Permissions</emphasis>: You can install OpenStack imaging
+            service either as root or as a user with sudo permissions if you configure the sudoers
+            file to enable all the permissions. </para>
+    </section>
+    <section>
+        <?dbhtml filename="installing-openstack-imaging-service-on-ubuntu.html" ?>
+        <title>Installing OpenStack Image Service on Ubuntu </title><para>The installation of the Image Services themselves are separate from the storage of the virtual images to be retrieved.  </para>
+        
+        <section><?dbhtml filename="example-installation-architecture-glance.html" ?>
+            <title>Example Installation Architecture</title>
+            <para>These installation instructions have you set up the services on a single node, so the API server and registry services are on the same server. The images themselves can be stored either in OpenStack Object Storage, Amazon's S3 infrastructure, in a filesystem, or if you want read-only access, on a web server to be served via HTTP.</para></section>
+        
+        <section>
+            <?dbhtml filename="installing-glance.html" ?>
+            <title>Installing OpenStack Image Service (Glance) </title>
+            <para>First, add the Glance PPA to your sources.lst. </para>
+            <para>
+                <literallayout class="monospaced">sudo add-apt-repository ppa:glance-core/trunk                   </literallayout></para>
+            <para>Run update. </para>
+            <para><literallayout class="monospaced">sudo apt-get update</literallayout></para>
+            <para>Now, install the Glance server. </para>
+            <para>
+                <literallayout class="monospaced">sudo apt-get install glance </literallayout></para>
+            <para>All dependencies should be automatically installed.</para>
+            <para>Refer to the <link xlink:href="http://glance.openstack.org/installing.html">Glance
+                developer documentation site to install from a Bazaar branch</link>. </para>
+        </section>
+        
+    </section><section>
+        <?dbhtml filename="configuring-and-controlling-openstack-imaging-servers.html" ?>
+        <title>Configuring and Controlling Glance Servers</title>
+        <para>You start Glance either by calling the server program, glance-api, or using the server daemon wrapper program named glance-control.</para> <para>Glance ships with an etc/ directory that contains sample paste.deploy configuration files that you can copy to a standard configuration directory and adapt for your own uses.</para>
+        <para>If you do not specify a configuration file on the command line when starting the glance-api server, Glance attempts to locate a glance.conf configuration file in one of the following directories, and uses the first config file it finds in this order:</para>
+        
+        <orderedlist>
+            <listitem><para>.</para></listitem>
+            <listitem><para>~/.glance</para></listitem>
+            <listitem><para>~/</para></listitem>
+            <listitem><para>/etc/glance/</para></listitem>
+            <listitem><para>/etc</para></listitem></orderedlist>
+        
+        <para>If Glance doesn't find a configuration file in one of these locations, you see an error: <code>ERROR: Unable to locate any configuration file. Cannot load application glance-api</code>.</para>
+        <simplesect><title>Manually starting the server</title>
+            <para>To manually start the glance-api server, use a command like the following: </para>
+            <literallayout class="monospaced">sudo glance-api etc/glance.conf.sample --debug</literallayout>
+            
+            <para>Supply the configuration file as the first argument (etc/glance.conf.sample in the above example) and then any common options you want to use. In the above example, the --debug option shows some of the debugging output that the server shows when starting up. Call the server program with --help to see all available options you can specify on the command line.</para>
+            
+            <para>Note that the server does not daemonize itself when run manually from the terminal. You can force the server to daemonize using the standard shell backgrounding indicator, However, for most use cases, we recommend using the glance-control  server daemon wrapper for daemonizing. See below for more details on daemonization with glance-control.</para></simplesect>
+        <simplesect><title>Starting the server with the glance-control wrapper script</title>
+            
+            <para>The second way to start up a Glance server is to use the glance-control program. glance-control  is a wrapper script that allows the user to start, stop, restart, and reload the other Glance server programs in a fashion that is more conducive to automation and scripting.</para>
+            
+            <para>Servers started via the glance-control program are always daemonized, meaning that the server program process runs in the background.</para>
+            
+            <para>To start a Glance server with glance-control, simply call glance-control with a server and the word “start”, followed by any command-line options you wish to provide. Start the server with glance-control in the following way:</para>
+            
+            <literallayout class="monospaced"> sudo glance-control {SERVER} start [CONFPATH]</literallayout>
+            
+            <para>   Here is an example that shows how to start the glance-registry server with the glance-control wrapper script.</para>
+            
+            <literallayout class="monospaced">sudo glance-control registry start etc/glance.conf.sample
+             Starting glance-registry with /home/jpipes/repos/glance/trunk/etc/glance.conf.sample</literallayout>
+            
+            <para>To start all the Glance servers (currently the glance-api and glance-registry programs) at once, you can specify “all” for the {SERVER}.</para>
+            
+            
+        </simplesect>
+        <simplesect><title>Stopping a Glance server</title><para>You can use Ctrl-C to stop a Glance server if it was started manually. </para>
+            <para>If you started the Glance server using the glance-control program, you can use the glance-control  program to stop it. Simply do the following:</para>
+            
+            <literallayout class="monospaced">sudo glance-control {SERVER} stop</literallayout>
+            
+            <para>                 as this example shows:
+            </para>                 
+            <literallayout class="monospaced">sudo glance-control registry stop
+                 Stopping glance-registry  pid: 17602  signal: 15
+                </literallayout> 
+            
+            
+        </simplesect>
+        <simplesect><title>Restarting a Glance server</title>
+            <para>
+                You can restart a server with the glance-control program, as demonstrated here:
+                
+                
+                
+            </para>
+            
+            <literallayout class ="monospaced">
+         sudo glance-control registry restart etc/glance.conf.sample
+         Stopping glance-registry  pid: 17611  signal: 15
+         Starting glance-registry with /home/jpipes/repos/glance/trunk/etc/glance.conf.sample</literallayout>
+            
+        </simplesect>
+    </section>
+        <section><?dbhtml filename="configuring-compute-to-use-glance.html" ?><title>Configuring Compute to use Glance</title>
+        <para>Once Glance is installed and the server is running, you should edit your nova.conf file to add or edit the following flags:</para>
+        
+        <literallayout class="monospaced">
+       --glance_api_servers=GLANCE_SERVER_IP
+       --image_service=nova.image.glance.GlanceImageService</literallayout>
+        
+        <para>Where the GLANCE_SERVER_IP is the IP address of the server running the glance-api service.</para></section>
+    </section>
+    <section><?dbhtml filename="configuring-logging-for-glance.html" ?><title>Configuring Logging for Glance</title>
+    
+        <para>There are a number of configuration options in Glance that control how Glance servers log messages. The configuration options are specified in the glance.conf configuration file.</para>
+        
+        <table rules="all">
+            <caption>Description of glance.conf flags for Glance logging</caption>
+            
+            <thead>
+                <tr>
+                    <td>Flag</td>
+                    <td>Default</td>
+                    <td>Description</td>
+                </tr>
+            </thead>
+            <tbody>
+                
+                
+                <tr>
+                    <td>--log-config=PATH </td>
+                    <td>default: none</td>
+                    <td>Path name to a configuration file to use for configuring logging: Specified on the command line only. </td>
+                </tr>
+                <tr>
+                    <td>--log-format </td>
+                    <td>default: %(asctime)s %(levelname)8s [%(name)s] %(message)s</td>
+                    <td>Format of log records: Because of a bug in the PasteDeploy package, this
+                        option is only available on the command line. See the <link
+                            xlink:href="http://docs.python.org/library/logging.html">Python logging
+                            module documentation</link> for more information about the options in
+                        the format string.</td>
+                </tr>
+                <tr>
+                    <td>--log_file </td>
+                    <td>default: none</td>
+                    <td>Path name: The filepath of the file to use for logging messages from Glance’s servers. Without this setting, the default is to output messages to stdout, so if you are running Glance servers in a daemon mode (using glance-control) you should make sure that the log_file option is set appropriately.</td>
+                </tr>
+                <tr>
+                    <td>--log_dir </td>
+                    <td>default: none</td>
+                    <td>Path name: The filepath of the directory to use for log files. If not specified (the default) the log_file is used as an absolute filepath.</td>
+                </tr>
+                <tr>
+                    <td>--log_date_format </td>
+                    <td>default: %Y-%m-%d %H:%M:%S</td>
+                    <td>Python logging module formats: The format string for timestamps in the log
+                        output. See the <link
+                            xlink:href="http://docs.python.org/library/logging.html">Python logging
+                            module documentation</link> for more information on setting this format
+                        string.</td>
+                </tr>
+            </tbody>
+            </table>
+            
+     </section>
+    <section><?dbhtml filename="openstack-imaging-service-glance-rest-api.html" ?>
+        <info><title>The Glance REST API</title></info>
+  
+  <para>
+    Glance has a RESTful API that exposes both metadata about registered
+    virtual machine images and the image data itself.
+  </para>
+  <para>
+    A host that runs the <literal>bin/glance-api</literal> service is
+    said to be a <emphasis>Glance API Server</emphasis>.
+  </para>
+  <para>
+    Assume there is a Glance API server running at the URL
+    <literal>http://glance.example.com</literal>.
+  </para>
+  <para>
+    Let's walk through how a user might request information from this
+    server.
+  </para>
+        <section xml:id="requesting-a-list-of-public-vm-images"><?dbhtml filename="requesting-vm-list.html" ?><info><title>Requesting a List of Public VM Images</title></info>
+    
+    <para>
+      We want to see a list of available virtual machine images that the
+      Glance server knows about.
+    </para>
+    <para>
+      We issue a <literal>GET</literal> request to
+      <literal>http://glance.example.com/images/</literal> to retrieve
+      this list of available <emphasis>public</emphasis> images. The
+      data is returned as a JSON-encoded mapping in the following
+      format:
+    </para>
+    <screen>
+{'images': [
+  {'uri': 'http://glance.example.com/images/1',
+   'name': 'Ubuntu 10.04 Plain',
+   'disk_format': 'vhd',
+   'container_format': 'ovf',
+   'size': '5368709120'}
+  ...]}
+</screen>
+    <note><para>
+      
+All images returned from the above `GET` request are *public* images
+</para></note>
+  </section>
+        <section xml:id="requesting-detailed-metadata-on-public-vm-images"><?dbhtml filename="requesting-vm-metadata.html" ?><info><title>Requesting Detailed Metadata on Public VM Images</title></info>
+    
+    <para>
+      We want to see more detailed information on available virtual
+      machine images that the Glance server knows about.
+    </para>
+    <para>
+      We issue a <literal>GET</literal> request to
+      <literal>http://glance.example.com/images/detail</literal> to
+      retrieve this list of available <emphasis>public</emphasis>
+      images. The data is returned as a JSON-encoded mapping in the
+      following format:
+    </para>
+    <screen>
+{'images': [
+  {'uri': 'http://glance.example.com/images/1',
+   'name': 'Ubuntu 10.04 Plain 5GB',
+   'disk_format': 'vhd',
+   'container_format': 'ovf',
+   'size': '5368709120',
+   'checksum': 'c2e5db72bd7fd153f53ede5da5a06de3',
+   'location': 'swift://account:key/container/image.tar.gz.0',
+   'created_at': '2010-02-03 09:34:01',
+   'updated_at': '2010-02-03 09:34:01',
+   'deleted_at': '',
+   'status': 'active',
+   'is_public': True,
+   'properties': {'distro': 'Ubuntu 10.04 LTS'}},
+  ...]}
+</screen>
+    <note><para>
+      All images returned from the above `GET` request are *public* images.
+</para><para>
+All timestamps returned are in UTC.</para>
+
+<para>The `updated_at` timestamp is the timestamp when an image's metadata
+was last updated, not its image data, as all image data is immutable
+once stored in Glance.</para>
+
+<para>The `properties` field is a mapping of free-form key/value pairs that
+have been saved with the image metadata.</para>
+
+<para>The `checksum` field is an MD5 checksum of the image file data.
+    </para></note>
+  
+  </section>
+  <section xml:id="filtering-images-returned-via-get-images-and-get-imagesdetail"><info><title>Filtering Images Returned via <literal>GET /images</literal>
+    and <literal>GET /images/detail</literal></title></info>
+    
+    <para>
+      Both the <literal>GET /images</literal> and
+      <literal>GET /images/detail</literal> requests take query
+      parameters that serve to filter the returned list of images. The
+      following list details these query parameters.
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          <literal>name=NAME</literal>
+        </para>
+        <para>
+          Filters images having a <literal>name</literal> attribute
+          matching <literal>NAME</literal>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>container_format=FORMAT</literal>
+        </para>
+        <para>
+          Filters images having a <literal>container_format</literal>
+          attribute matching <literal>FORMAT</literal>
+        </para>
+        <para>
+          For more information, see About Disk and Container
+          Formats.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>disk_format=FORMAT</literal>
+        </para>
+        <para>
+          Filters images having a <literal>disk_format</literal>
+          attribute matching <literal>FORMAT</literal>
+        </para>
+        <para>
+          For more information, see About Disk and Container
+          Formats.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>status=STATUS</literal>
+        </para>
+        <para>
+          Filters images having a <literal>status</literal> attribute
+          matching <literal>STATUS</literal>
+        </para>
+        <para>
+          For more information, see :doc:`About Image Statuses
+          &lt;statuses&gt;`
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>size_min=BYTES</literal>
+        </para>
+        <para>
+          Filters images having a <literal>size</literal> attribute
+          greater than or equal to <literal>BYTES</literal>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>size_max=BYTES</literal>
+        </para>
+        <para>
+          Filters images having a <literal>size</literal> attribute less
+          than or equal to <literal>BYTES</literal>
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      These two resources also accept sort parameters:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          <literal>sort_key=KEY</literal>
+        </para>
+        <para>
+          Results will be ordered by the specified image attribute
+          <literal>KEY</literal>. Accepted values include
+          <literal>id</literal>, <literal>name</literal>,
+          <literal>status</literal>, <literal>disk_format</literal>,
+          <literal>container_format</literal>, <literal>size</literal>,
+          <literal>created_at</literal> (default) and
+          <literal>updated_at</literal>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>sort_dir=DIR</literal>
+        </para>
+        <para>
+          Results will be sorted in the direction
+          <literal>DIR</literal>. Accepted values are
+          <literal>asc</literal> for ascending or
+          <literal>desc</literal> (default) for descending.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+        <section xml:id="requesting-detailed-metadata-on-a-specific-image"><?dbhtml filename="requesting-metadata-specific-image.html" ?><info><title>Requesting Detailed Metadata on a Specific Image</title></info>
+    
+    <para>
+      We want to see detailed information for a specific virtual machine
+      image that the Glance server knows about.
+    </para>
+    <para>
+      We have queried the Glance server for a list of public images and
+      the data returned includes the `uri` field for each available
+      image. This `uri` field value contains the exact location needed
+      to get the metadata for a specific image.
+    </para>
+    <para>
+      Continuing the example from above, in order to get metadata about
+      the first public image returned, we can issue a
+      <literal>HEAD</literal> request to the Glance server for the
+      image's URI.
+    </para>
+    <para>
+      We issue a <literal>HEAD</literal> request to
+      <literal>http://glance.example.com/images/1</literal> to retrieve
+      complete metadata for that image. The metadata is returned as a
+      set of HTTP headers that begin with the prefix
+      <literal>x-image-meta-</literal>. The following shows an example
+      of the HTTP headers returned from the above
+      <literal>HEAD</literal> request:
+    </para>
+    <screen>
+x-image-meta-uri              http://glance.example.com/images/1
+x-image-meta-name             Ubuntu 10.04 Plain 5GB
+x-image-meta-disk-format      vhd
+x-image-meta-container-format ovf
+x-image-meta-size             5368709120
+x-image-meta-checksum         c2e5db72bd7fd153f53ede5da5a06de3
+x-image-meta-location         swift://account:key/container/image.tar.gz.0
+x-image-meta-created_at       2010-02-03 09:34:01
+x-image-meta-updated_at       2010-02-03 09:34:01
+x-image-meta-deleted_at
+x-image-meta-status           available
+x-image-meta-is-public        True
+x-image-meta-property-distro  Ubuntu 10.04 LTS
+</screen>
+    <note><para>
+        All timestamps returned are in UTC.
+        </para>
+        <para>The `x-image-meta-updated_at` timestamp is the timestamp when an
+        image's metadata was last updated, not its image data, as all
+        image data is immutable once stored in Glance.</para>
+        
+        <para>There may be multiple headers that begin with the prefix
+        `x-image-meta-property-`.  These headers are free-form key/value pairs
+        that have been saved with the image metadata. The key is the string
+        after `x-image-meta-property-` and the value is the value of the header.</para>
+        
+        <para>The response's `ETag` header will always be equal to the
+        `x-image-meta-checksum` value.</para>
+  </note>
+    
+  </section>
+        <section xml:id="retrieving-a-virtual-machine-image"><?dbhtml filename="retrieving-vm-image.html" ?><info><title>Retrieving a Virtual Machine Image</title></info>
+    
+    <para>
+      We want to retrieve that actual raw data for a specific virtual
+      machine image that the Glance server knows about.
+    </para>
+    <para>
+      We have queried the Glance server for a list of public images and
+      the data returned includes the `uri` field for each available
+      image. This `uri` field value contains the exact location needed
+      to get the metadata for a specific image.
+    </para>
+    <para>
+      Continuing the example from above, in order to get metadata about
+      the first public image returned, we can issue a
+      <literal>HEAD</literal> request to the Glance server for the
+      image's URI.
+    </para>
+    <para>
+      We issue a <literal>GET</literal> request to
+      <literal>http://glance.example.com/images/1</literal> to retrieve
+      metadata for that image as well as the image itself encoded into
+      the response body.
+    </para>
+    <para>
+      The metadata is returned as a set of HTTP headers that begin with
+      the prefix <literal>x-image-meta-</literal>. The following shows
+      an example of the HTTP headers returned from the above
+      <literal>GET</literal> request:
+    </para>
+    <screen>
+x-image-meta-uri              http://glance.example.com/images/1
+x-image-meta-name             Ubuntu 10.04 Plain 5GB
+x-image-meta-disk-format      vhd
+x-image-meta-container-format ovf
+x-image-meta-size             5368709120
+x-image-meta-checksum         c2e5db72bd7fd153f53ede5da5a06de3
+x-image-meta-location         swift://account:key/container/image.tar.gz.0
+x-image-meta-created_at       2010-02-03 09:34:01
+x-image-meta-updated_at       2010-02-03 09:34:01
+x-image-meta-deleted_at
+x-image-meta-status           available
+x-image-meta-is-public        True
+x-image-meta-property-distro  Ubuntu 10.04 LTS
+</screen>
+    <note><para>
+        All timestamps returned are in UTC.</para>
+        
+       <para> The `x-image-meta-updated_at` timestamp is the timestamp when an
+        image's metadata was last updated, not its image data, as all
+        image data is immutable once stored in Glance.</para>
+        
+        <para>There may be multiple headers that begin with the prefix
+        `x-image-meta-property-`.  These headers are free-form key/value pairs
+        that have been saved with the image metadata. The key is the string
+        after `x-image-meta-property-` and the value is the value of the header.</para>
+        
+        <para>The response's `Content-Length` header shall be equal to the value of
+        the `x-image-meta-size` header.</para>
+        
+        <para>The response's `ETag` header will always be equal to the
+        `x-image-meta-checksum` value.</para>
+        
+        <para>The image data itself will be the body of the HTTP response returned
+        from the request, which will have content-type of
+        `application/octet-stream`.</para>
+    </note>
+    
+  </section>
+        <section xml:id="adding-a-new-virtual-machine-image"><?dbhtml filename="adding-vm-image.html" ?><info><title>Adding a New Virtual Machine Image</title></info>
+    
+    <para>
+      We have created a new virtual machine image in some way (created a
+      "golden image" or snapshotted/backed up an existing
+      image) and we wish to do two things:
+    </para>
+    
+      <itemizedlist>
+        <listitem>
+          <para>
+            Store the disk image data in Glance
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Store metadata about this image in Glance
+          </para>
+        </listitem>
+      </itemizedlist>
+    
+    <para>
+      We can do the above two activities in a single call to the Glance
+      API. Assuming, like in the examples above, that a Glance API
+      server is running at <literal>glance.example.com</literal>, we
+      issue a <literal>POST</literal> request to add an image to Glance:
+    </para>
+    <screen>
+POST http://glance.example.com/images/
+</screen>
+    <para>
+      The metadata about the image is sent to Glance in HTTP headers.
+      The body of the HTTP request to the Glance API will be the
+      MIME-encoded disk image data.
+    </para>
+            <section xml:id="adding-image-metadata-in-http-headers"><?dbhtml filename="adding-image-metadata-http-headers.html" ?><info><title>Adding Image Metadata in HTTP Headers</title></info>
+      
+      <para>
+        Glance will view as image metadata any HTTP header that it
+        receives in a
+      </para>
+      <screen>
+``POST`` request where the header key is prefixed with the strings
+``x-image-meta-`` and ``x-image-meta-property-``.
+</screen>
+      <para>
+        The list of metadata headers that Glance accepts are listed
+        below.
+      </para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            <literal>x-image-meta-name</literal>
+          </para>
+          <para>
+            This header is required. Its value should be the name of the
+            image.
+          </para>
+          <para>
+            Note that the name of an image <emphasis>is not unique to a
+            Glance node</emphasis>. It would be an unrealistic
+            expectation of users to know all the unique names of all
+            other user's images.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>x-image-meta-id</literal>
+          </para>
+          <para>
+            This header is optional.
+          </para>
+          <para>
+            When present, Glance will use the supplied identifier for
+            the image. If the identifier already exists in that Glance
+            node, then a <emphasis role="strong">409 Conflict</emphasis>
+            will be returned by Glance.
+          </para>
+          <para>
+            When this header is <emphasis>not</emphasis> present, Glance
+            will generate an identifier for the image and return this
+            identifier in the response (see below)
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>x-image-meta-store</literal>
+          </para>
+          <para>
+            This header is optional. Valid values are one of
+            <literal>file</literal>, <literal>s3</literal>, or
+            <literal>swift</literal>
+          </para>
+          <para>
+            When present, Glance will attempt to store the disk image
+            data in the backing store indicated by the value of the
+            header. If the Glance node does not support the backing
+            store, Glance will return a <emphasis role="strong">400 Bad
+            Request</emphasis>.
+          </para>
+          <para>
+            When not present, Glance will store the disk image data in
+            the backing store that is marked default. See the
+            configuration option <literal>default_store</literal> for
+            more information.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>x-image-meta-disk-format</literal>
+          </para>
+          <para>
+            This header is optional. Valid values are one of
+            <literal>aki</literal>, <literal>ari</literal>,
+            <literal>ami</literal>, <literal>raw</literal>,
+            <literal>iso</literal>, <literal>vhd</literal>,
+            <literal>vdi</literal>, <literal>qcow2</literal>, or
+            <literal>vmdk</literal>.
+          </para>
+          <para>
+            For more information, see :doc:`About Disk and Container
+            Formats &lt;formats&gt;`
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>x-image-meta-container-format</literal>
+          </para>
+          <para>
+            This header is optional. Valid values are one of
+            <literal>aki</literal>, <literal>ari</literal>,
+            <literal>ami</literal>, <literal>bare</literal>, or
+            <literal>ovf</literal>.
+          </para>
+          <para>
+            For more information, see :doc:`About Disk and Container
+            Formats &lt;formats&gt;`
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>x-image-meta-size</literal>
+          </para>
+          <para>
+            This header is optional.
+          </para>
+          <para>
+            When present, Glance assumes that the expected size of the
+            request body will be the value of this header. If the length
+            in bytes of the request body <emphasis>does not
+            match</emphasis> the value of this header, Glance will
+            return a <emphasis role="strong">400 Bad Request</emphasis>.
+          </para>
+          <para>
+            When not present, Glance will calculate the image's size
+            based on the size of the request body.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>x-image-meta-checksum</literal>
+          </para>
+          <para>
+            This header is optional. When present it shall be the
+            expected <emphasis role="strong">MD5</emphasis> checksum of
+            the image file data.
+          </para>
+          <para>
+            When present, Glance will verify the checksum generated from
+            the backend store when storing your image against this value
+            and return a <emphasis role="strong">400 Bad
+            Request</emphasis> if the values do not match.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>x-image-meta-is-public</literal>
+          </para>
+          <para>
+            This header is optional.
+          </para>
+          <para>
+            When Glance finds the string "true"
+            (case-insensitive), the image is marked as a public image,
+            meaning that any user may view its metadata and may read the
+            disk image from Glance.
+          </para>
+          <para>
+            When not present, the image is assumed to be <emphasis>not
+            public</emphasis> and specific to a user.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>x-image-meta-property-*</literal>
+          </para>
+          <para>
+            When Glance receives any HTTP header whose key begins with
+            the string prefix <literal>x-image-meta-property-</literal>,
+            Glance adds the key and value to a set of custom, free-form
+            image properties stored with the image. The key is the
+            lower-cased string following the prefix
+            <literal>x-image-meta-property-</literal> with dashes and
+            punctuation replaced with underscores.
+          </para>
+          <para>
+            For example, if the following HTTP header were sent:
+          </para>
+          <screen>
+x-image-meta-property-distro  Ubuntu 10.10
+</screen>
+          <para>
+            Then a key/value pair of "distro"/"Ubuntu
+            10.10" will be stored with the image in Glance.
+          </para>
+          <para>
+            There is no limit on the number of free-form key/value
+            attributes that can be attached to the image. However, keep
+            in mind that the 8K limit on the size of all HTTP headers
+            sent in a request will effectively limit the number of image
+            properties.
+          </para>
+        </listitem>
+      </itemizedlist>
+    </section>
+            <section xml:id="updating-an-image"><?dbhtml filename="updating-vm-image.html" ?><info><title>Updating an Image</title></info>
+      
+      <para>
+        Glance will view as image metadata any HTTP header that it
+        receives in a
+      </para>
+      <screen>
+``PUT`` request where the header key is prefixed with the strings
+``x-image-meta-`` and ``x-image-meta-property-``.
+</screen>
+      <para>
+        If an image was previously reserved, and thus is in the
+        <literal>queued</literal> state, then image data can be added by
+        including it as the request body. If the image already as data
+        associated with it (e.g. not in the <literal>queued</literal>
+        state), then including a request body will result in a
+        <emphasis role="strong">409 Conflict</emphasis> exception.
+      </para>
+      <para>
+        On success, the <literal>PUT</literal> request will return the
+        image metadata encoded as HTTP headers.
+      </para>
+      <para>
+        See more about image statuses here: :doc:`Image Statuses
+        &lt;statuses&gt;`
+      </para>
+    </section>
+  </section>
+        </section>
+    </chapter>

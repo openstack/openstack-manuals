@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" 
+    xml:id="ch_openstack-object-storage-tutorials">
+    
+    <title>OpenStack Object Storage Tutorials</title> 
+    <para>We want people to use OpenStack for practical problem solving, and the increasing size and
+        density of web content makes for a great use-case for object storage. These tutorials show
+        you how to use your OpenStack Object Storage installation for practical purposes, and it
+        assumes Object Storage is already installed.</para>
+    <section xml:id="storing-large-photos-or-videos-on-the-cloud">
+        
+        <title>Storing Large Photos or Videos on the Cloud</title>
+        
+        <para>In this OpenStack tutorial, we’ll walk through using an Object Storage installation to
+            back up all your photos or videos. As the sensors on consumer-grade and pro-sumer grade
+            cameras generate more and more megapixels, we all need a place to back our files to and
+            know they are safe. </para>
+        
+        <para>We'll go through this tutorial in parts:</para>
+        <itemizedlist>
+            
+            <listitem>
+                <para>Setting up secure access to Object Storage.</para></listitem>
+            
+            <listitem><para>Configuring Cyberduck for connecting to OpenStack Object Storage.</para></listitem>
+            
+            <listitem><para>Copying files to the cloud.</para></listitem>
+            
+        </itemizedlist>
+        <section xml:id="part-i-setting-up-secure-access">
+            
+            <title>Part I: Setting Up Secure Access</title>
+            <para>In this part, we'll get the proxy server running with SSL on the Object Storage
+                installation. It's a requirement for using Cyberduck as a client interface to Object
+                Storage.</para>
+            <para>You will need a key and certificate to do this, which we can create as a
+                self-signed for the tutorial since we can do the extra steps to have Cyberduck
+                accept it. Creating a self-signed cert can usually be done with these commands on
+                the proxy server: </para>
+                <literallayout class="monospaced">cd /etc/swift
+openssl req -new -x509 -nodes -out cert.crt -keyout cert.key</literallayout> 
+                
+            <para>Ensure these generated files are in /etc/swift/cert.crt and /etc/swift/cert.key. </para>
+            <para>You also should configure your iptables to enable https traffic. Here's an example
+                setup that works.</para>
+            <literallayout class="monospaced">Chain INPUT (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+76774 1543M ACCEPT     all  --  lo     any     localhost            anywhere            
+ 416K  537M ACCEPT     all  --  any    any     anywhere             anywhere            state RELATED,ESTABLISHED 
+  106  6682 ACCEPT     tcp  --  any    any     anywhere             anywhere            tcp dpt:https 
+   13   760 ACCEPT     tcp  --  any    any     anywhere             anywhere            tcp dpt:ssh 
+    3   124 ACCEPT     icmp --  any    any     anywhere             anywhere            icmp echo-request 
+  782 38880 DROP       all  --  any    any     anywhere             anywhere            
+
+Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+    0     0 DROP       all  --  any    any     anywhere             anywhere            
+
+Chain OUTPUT (policy ACCEPT 397K packets, 1561M bytes)
+ pkts bytes target     prot opt in     out     source               destination   </literallayout>
+            <para>If you don't have access to the Object Storage installation to configure these
+                settings, ask your service provider to set up secure access for you. </para><para>Then, edit your proxy-server.conf file to include the following in the [DEFAULT] sections. </para>
+            <literallayout class="monospaced">[DEFAULT]                           
+bind_port = 443
+cert_file = /etc/swift/cert.crt
+key_file = /etc/swift/cert.key </literallayout>
+            <para>Also, make sure you use https: for all references to the URL for the server in the
+                .conf files as needed.</para>
+            <para>Verify that you can connect using the Public URL to Object Storage by using the
+                "swift" tool:</para>
+            <para>
+                <literallayout class="monospaced">swift -A https://yourswiftinstall.com:11000/v1.0 -U test:tester -K testing stat</literallayout>
+            </para>
+          
+                <para>Okay, you've created the access that Cyberduck expects for your Object Storage
+                    installation. Let's start configuring the Cyberduck side of things.</para>
+            
+        </section>
+        <section xml:id="part-ii-configuring-cyberduck">
+            
+            <title>Part II: Configuring Cyberduck</title>
+            <para>Next, you want to change the context of the URL from the default /v1.0 by opening
+                a Terminal window and using <code>defaults write ch.sudo.cyberduck
+                    cf.authentication.context &lt;string></code> to change the URL. Substitute
+                /auth/v1.0 for the &lt;string> (Mac OSX). </para>
+            <para>Cyberduck 3.8.1 includes a drop-down for selecting Swift (OpenStack Object
+                Storage) when opening a connection. Launch Cyberduck, and then click the New
+                Connection toolbar button or choose File > Open Connection. </para>
+            <para>Select Swift (OpenStack Object Storage). Enter the following values:</para>
+            <para>Server: Enter the URL of the installed Swift server.</para>
+            <para>Port: Enter 443 since you are connecting via https.</para>
+            <para>Username: Enter the account name followed by a colon and then the user name, for
+                example test:tester.</para>
+            <para>Password: Enter the password for the account and user name entered above.<figure>
+                    <title>Example Cyberduck Swift Connection</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="../figures/cyberduck_swift_connection.png"/>
+                        </imageobject>
+                    </mediaobject>
+                </figure></para>
+        </section>
+        <section xml:id="part-iii-copying-files">
+            <title>Part III: Creating Containers (Folders) and Uploading Files</title>
+            <para>Now you want to create containers to hold your files. Without containers, Object
+                Storage doesn't know where to put the files. In the Action menu, choose New Folder
+                and name the folder.</para>
+            <para>Next you can drag and drop files into the created folder or select File > Upload
+                to select files to upload to the OpenStack Object Storage service. <figure>
+                    <title>Example Cyberduck Swift Showing Uploads</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="../figures/cyberduck_swift_uploads.png"/>
+                        </imageobject>
+                    </mediaobject>
+                </figure></para><para>Et voila! You can back up terabytes of data if you just have the space and the data. That's a lot of pictures or video, so get snapping and rolling!</para>
+        </section>
+    </section>
+</chapter>

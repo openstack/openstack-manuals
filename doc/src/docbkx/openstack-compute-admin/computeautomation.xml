@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter [
+<!-- Some useful entities borrowed from HTML -->
+<!ENTITY ndash  "&#x2013;">
+<!ENTITY mdash  "&#x2014;">
+<!ENTITY hellip "&#x2026;">
+<!ENTITY nbsp "&#160;">
+<!ENTITY CHECK  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
+<imageobject>
+<imagedata fileref="img/Check_mark_23x20_02.svg"
+format="SVG" scale="60"/>
+</imageobject>
+</inlinemediaobject>'>
+
+<!ENTITY ARROW  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
+<imageobject>
+<imagedata fileref="img/Arrow_east.svg"
+format="SVG" scale="60"/>
+</imageobject>
+</inlinemediaobject>'>
+]>
+<chapter xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <?dbhtml filename="ch_openstack-compute-automated-installations.html" ?>
+    <title>OpenStack Compute Automated Installations</title>
+    <para>In a large-scale cloud deployment, automated installations are a requirement for
+        successful, efficient, repeatable installations. Automation for installation also helps with
+        continuous integration and testing. This chapter offers some tested methods for deploying
+        OpenStack Compute with either Puppet (an infrastructure management platform) or Chef (an
+        infrastructure management framework) paired with Vagrant (a tool for building and
+        distributing virtualized development environments).</para>
+    
+    <section>
+        <?dbhtml filename="openstack-compute-deployment-tool-with-puppet.html" ?>
+        <title>Deployment Tool for OpenStack using Puppet</title>
+        <para>Thanks to a new project available that couples Puppet automation with a configuration
+            file and deployment tool, you can install many servers automatically by simply editing
+            the configuration file (deploy.conf) and running the deployment tool (deploy.py in the
+            nova-deployment-tool project in Launchpad).</para>
+        <simplesect>
+            <title>Prerequisites</title>
+            <itemizedlist>
+                <listitem>
+                    <para>Networking: The servers must be connected to a subnet. </para>
+                </listitem>
+                <listitem>
+                    <para>Networking: Ensure that the puppet server can access nova component
+                        servers by name. The command examples in this document identify the user as
+                        “nii”. You should change the name but you need to create the same users on
+                        all Nova, Glance and Swift component servers in ~/DeploymentTool/conf/deploy.conf
+                        (ssh_user=’user’). </para>
+                </listitem>
+                <listitem>
+                    <para>Permissions: You must have root user permission for installation and
+                        service provision. </para></listitem>
+                <listitem><para>Software: You must configure the installation server to access the Puppet server by name.
+                        (Puppet 0.25 or higher)</para></listitem>
+                <listitem>
+                    <para>Software: You must configure LVM if you do not change the default setting
+                        of the VolumeManager in the nova-volume service. </para>
+                </listitem>
+                <listitem>
+                    <para>Software: Python 2.6 or higher</para>
+                </listitem>
+                <listitem>
+                    <para>Software: Because of the current Nova implementation architecture, the
+                        binaries for nova-api, nova-objectstore, and euca2ools must have been loaded
+                        in one server.</para>
+                </listitem>
+                <listitem>
+                    <para>Operating system: Ubuntu 10.04, 10.10 or 11.04</para>
+                </listitem>
+            </itemizedlist>
+            <para>The tool does not support system configurations other than those listed above. If you want
+                to use other configurations, you have to change the configuration after running the
+                deployment tool or modify the deployment tool. </para>
+            <para>This deployment tool has been tested under the following configurations. </para>
+            <itemizedlist>
+                <listitem><para>Nova-compute components are installed on multiple servers. </para></listitem>
+               <listitem><para>OS: Ubuntu10.04, Ubuntu10.10 or Ubuntu 11.04 </para></listitem>
+                <listitem><para>Multiple network modes (VLAN Mode, Flat Mode)</para></listitem>
+            </itemizedlist>
+                    
+        <para>Although we conducted extensive tests, we were unable to test every configuration.
+                Please let us know any problems that occur in your environment by contacting us at
+                https://answers.launchpad.net/nova-deployment-tool. We will try to resolve any
+                problem you send us and make the tool better for Stackers. </para>
+            <para>
+                <note>
+                    <para>The configurations, which are not described on this document, are Nova
+                        default settings. Note also that, although we have not done so ourselves,
+                        you should be able to change the network mode to flat DHCP mode and
+                        hypervisor to Xen if you follow the instructions in the Notes section
+                        below.</para>
+                </note>
+            </para>
+        </simplesect>
+        <simplesect><title>Overview of Deployment Tool Steps</title>
+            <para>You can install/test/uninstall Nova, Glance and Swift with the Nova deployment tool as follows,
+                which is simply an overview. The detailed steps are in the sections that
+                follow.</para>
+            <para>Deploy.py takes care of the details using puppet. Puppet is an automation tool
+                with standardized scripts that manage a machine's configuration. See an
+                Introduction to Puppet on the PuppetLabs site.</para>
+            <para>Install by typing the following command.</para>
+            <literallayout class="monospaced">python deploy.py install</literallayout>
+            <para>Confirm that the installation succeeded by typing the following
+                command.</para>
+            <literallayout class="monospaced">python deploy.py test</literallayout>
+            <para>Uninstall by typing the following command.</para>
+            <literallayout class="monospaced">python deploy.py uninstall
+python deploy.py all = python deploy.py uninstall; python deploy.py install; python deploy.py test </literallayout>
+            <para>Uninstall/install/test only Nova.</para>
+            <literallayout class="monospaced">python deploy.py all nova</literallayout>
+            <para>Uninstall/install/test only Swift.</para>
+            <literallayout class="monospaced">python deploy.py all swift</literallayout>
+            <para>Uninstall/install/test only Glance.</para>
+            <literallayout class="monospaced">python deploy.py all glance</literallayout></simplesect>
+                <simplesect><title>Installing the Deployment Tool</title>
+      
+        
+        <para>Type or copy/paste the following command to use the OpenStack PPA on all component servers.</para>
+        
+<literallayout class="monospaced">
+sudo apt-get install python-software-properties -y
+sudo add-apt-repository ppa:openstack-release/2011.2
+sudo apt-get update</literallayout>
+                </simplesect>
+        <simplesect><title>Set permissions to the deployment 'user'</title>
+        <para>Edit sudoers file to give the correct permissions to the 'user' running all the components.      
+        Type or copy/paste the visudo command to set ‘user’ (= nii in this document) as a sudouer on all nova component servers.
+        </para>
+        <literallayout class="monospaced">sudo visudo</literallayout>
+        
+<para>Append the following lines to the visudo file, and then save the file.</para>
+        
+        <literallayout class="monospaced">nii      ALL=(ALL) NOPASSWD:ALL
+nova     ALL=(ALL) NOPASSWD:ALL</literallayout></simplesect>
+        
+<simplesect><title>Configure SSH</title><para>Next, we'll configure the system so that SSH works by generating public and private key pairs that provide credentials without a password intervention. </para>
+        
+       <para> The Deployment tool needs to connect to all nova, glance and swift component servers without having the operator enter a password for any of the servers.</para>
+        
+        <para>Type or copy/paste the following command to generate public and private key pairs on the server running the Nova deployment tool.</para>
+        
+        <literallayout class="monospaced">ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa</literallayout>
+        
+        
+        <para>Copy this generated public key to all nova component servers.</para>
+        
+        <para>Next, type or copy/paste the following commands to register the public keys on all nova component servers.</para>
+        
+<literallayout class="monospaced">ssh-copy-id nii@(each nova component server name) </literallayout>
+            <para>Download the code for the deployment tool next, and extract the contents of the
+                compressed file. </para>
+            <literallayout class="monospaced">wget http://launchpad.net/nova-deployment-tool/cactus/cactus1.3/+download/nova-deployment-tool-cactus.tgz 
+tar xzvf nova-deployment-tool-cactus.tgz</literallayout>        
+        
+        </simplesect>
+    <simplesect><title>Create Swift storage folder and mount device</title>
+		<para>First, create a Swift-storage folder and mount device on each swift-storage server. </para>
+		<para>The commands vary depending on which destination (Partition or Lookback device) is to be used. </para>
+		<para>The steps are detailed in the sections that follow. </para>
+		<para>“$storage_path” and “$storage_dev” are defined in “deploy.conf”.</para>
+
+		<para>Partition</para>
+		<literallayout class="monospaced">
+sudo apt-get install xfsprogs -y
+sudo sh -c "echo '/dev/$storage_dev $storage_path/$storage_dev xfs noatime,nodiratime,nobarrier,logbufs=8 0 0' >> /etc/fstab"
+sudo mount $storage_path/$storage_dev
+</literallayout>
+		<para>Loopback device</para>
+		<literallayout class="monospaced">
+sudo apt-get install xfsprogs -y
+sudo mkdir -p $storage_path/$storage_dev
+sudo dd if=/dev/zero of=/srv/swift-disk bs=1024 count=0 seek=1000000
+sudo mkfs.xfs -i size=1024 /srv/swift-disk
+sudo sh -c "echo '/srv/swift-disk $storage_path/$storage_dev xfs loop,noatime,nodiratime,nobarrier,logbufs=8 0 0' >> /etc/fstab"
+sudo mount $storage_path/$storage_dev
+</literallayout>
+        </simplesect>
+
+    <simplesect><title>Configuring the Deployment Tool</title>
+        <para>You must change the configuration file in order to execute the Nova deployment tool according to your environment and configuration design. In the unzipped files, edit conf/deploy.conf to change the settings according to your environment and desired installation (single or multiple servers, for example). </para>
+        
+        
+        <para>Here are the definitions of the values which are used in deploy.conf.</para>
+
+		<para>default section</para>
+        <itemizedlist>     
+        	<listitem><para>puppet_server  Name of server in which the puppet server is installed</para></listitem>
+        	<listitem><para>sh_user  User name that is used to SSH into a nova component</para></listitem>        	
+        </itemizedlist>
+        
+        <para>nova section</para>
+        <itemizedlist>     
+        	<listitem><para>nova_api  Name of server in which the nava-api component is installed</para></listitem>
+        	<listitem><para>nova_objectstore  Name of server in which the nova-objectstore component is installed*</para></listitem>
+        	<listitem><para>nova_compute  Name of server in which the nova-compute component is installed</para></listitem>        	
+        	<listitem><para>nova_scheduler  Name of server in which the nova-scheduler component is installed</para></listitem>  
+        	<listitem><para>nova_network  Name of server in which the nova-network component is installed</para></listitem>  
+			<listitem><para>nova_volume  Name of server in which the nova-volume component is installed</para></listitem>  
+			<listitem><para>euca2ools  Name of server that runs the test sequence</para></listitem>  
+			<listitem><para>mysql  Name of server in which mysql is installed</para></listitem>  
+			<listitem><para>glance_host  Glance server name</para></listitem>  
+			<listitem><para>libvirt_type  Virtualization type</para></listitem>  
+			<listitem><para>network_manager  Network management class name</para></listitem>  
+			<listitem><para>image_service  Image management class name</para></listitem>  
+			<listitem><para>network_interface  Network interface that is used in the nova-compute component</para></listitem>  
+			<listitem><para>network_ip_range  IP address range used by guest VMS. This value should be included in the values of fixed_range.</para></listitem>  
+			<listitem><para>volume_group  LVM volume group name that is used in the nova volume component</para></listitem>  
+			<listitem><para>fixed_range  Range of IP addresses used in all projects. If you want to change the value, please also change the IP addresses X.X.X.X of the command "nova-manage network create X.X.X.X ..." in file setup-network.sh, and the IP addresses should include the new value.</para></listitem>  
+			<listitem><para>network_size  Number of IP addresses used by Guest VM in all projects</para></listitem>  
+        </itemizedlist>
+                
+
+		<para>glance section</para>
+        <itemizedlist>     
+			<listitem><para>glance  Name of server in which the glance is installed</para></listitem>  
+			<listitem><para>default_store  Image store that is used in glance.  Available value: file, swift, s3</para></listitem>  
+        </itemizedlist>		
+
+		<para>swift section</para>
+        <itemizedlist>     
+			<listitem><para>swift_proxy  Name of server in which the glance is installed</para></listitem>  
+			<listitem><para>swift_storage  Name of server in which the swift=storage is installed</para></listitem>  
+			<listitem><para>account  swift account name</para></listitem>  
+			<listitem><para>username  swift user name</para></listitem>  
+			<listitem><para>password  swift password</para></listitem>  
+			<listitem><para>storage_path  Folder for saving account, container and object information in swift storage server</para></listitem>  
+			<listitem><para>storage_dev  Device holding account, container and object information</para></listitem>  
+			<listitem><para>ring_builder_replicas  Number of account, container, and object copies. The value has to be equal or less than the number of swift-storage servers.</para></listitem>  
+			<listitem><para>super_admin_key  A key for creating swift users</para></listitem>  
+        </itemizedlist>			
+                
+        <para>	If you install swift on Ubuntu 11.04, due to the bug https://bugs.launchpad.net/swift/+bug/796404 swift_proxy should be installed on the different machine from the machine where swift_storage will be installed.</para>        
+
+        <para>Because of the current implementation architecture, you must load nova-api, nova-objectstore and euca2ools on a single server.</para>
+        
+        <para>The following configuration information is an example. If you want to have multiple
+                nova-computes, you can do so by nova_compute=ubuntu3, ubuntu8, for example. And if
+                you want to have multiple swift storage, you can do so by swift_storage=ubuntu3,
+                ubuntu8, for example.</para>
+            
+            <literallayout class="monospaced">
+&lt;begin ~/DeploymentTool/conf/deploy.conf>
+[default]
+puppet_server=ubuntu7
+ssh_user=nii
+
+[nova]
+nova_api=ubuntu7
+nova_objectstore=ubuntu7
+nova_compute=ubuntu7
+nova_scheduler=ubuntu7
+nova_network=ubuntu7
+nova_volume=ubuntu7
+euca2ools=ubuntu7
+mysql=ubuntu7
+
+glance_host=ubuntu7
+
+libvirt_type=kvm
+network_manager=nova.network.manager.VlanManager
+image_service=nova.image.glance.GlanceImageService
+
+network_interface=eth0
+network_ip_range=10.0.0.0/24
+
+volume_group=ubuntu7
+fixed_range=10.0.0.0/8
+network_size=5000
+
+[glance]
+glance=ubuntu7
+default_store=swift
+
+[swift]
+swift_proxy=ubuntu7
+swift_storage=ubuntu7
+
+account=system
+username=root
+password=testpass
+
+storage_path=/srv/node
+storage_dev=sdb1
+ring_builder_replicas=1
+
+super_admin_key=swauth
+&lt;end ~/DeploymentTool/conf/deploy.conf></literallayout>
+        
+    </simplesect>
+    
+    </section>
+    <section>
+    
+    <?dbhtml filename="openstack-compute-installation-using-virtualbox-vagrant-and-chef.html" ?>
+    <title>OpenStack Compute Installation Using VirtualBox, Vagrant, And Chef</title>
+    
+        <para>Integration testing for distributed systems that have many dependencies can be a huge challenge. Ideally, you would have a cluster of machines that you could PXE boot to a base OS install and run a complete install of the system. Unfortunately not everyone has a bunch of extra hardware sitting around. For those of us that are a bit on the frugal side, a whole lot of testing can be done with Virtual Machines. Read on for a simple guide to installing OpenStack Compute (Nova) with VirtualBox and Vagrant.</para>
+        
+        <simplesect><title>Installing VirtualBox</title>
+        
+        <para>VirtualBox is virtualization software by Oracle. It runs on Mac/Linux/Windows and can be controlled from the command line. Note that we will be using VirtualBox 4.0 and the vagrant prerelease.</para>
+        
+        <para>OSX</para>
+        
+        <literallayout class="monospaced">curl -O http://download.virtualbox.org/virtualbox/4.0.2/VirtualBox-4.0.2-69518-OSX.dmg&#x000A;open VirtualBox-4.0.2-69518-OSX.dmg</literallayout>
+        
+        <para>Ubuntu Maverick</para>
+        
+        <literallayout class="monospaced">wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc -O- | sudo apt-key add -&#x000A;echo &quot;deb http://download.virtualbox.org/virtualbox/debian maverick contrib&quot; | sudo tee /etc/apt/sources.list.d/virtualbox.list&#x000A;sudo apt-get update&#x000A;sudo apt-get install -y virtualbox-4.0</literallayout>
+        
+        <para>Ubuntu Lucid</para>
+        
+        <literallayout class="monospaced">wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc -O- | sudo apt-key add -&#x000A;echo &quot;deb http://download.virtualbox.org/virtualbox/debian lucid contrib&quot; | sudo tee /etc/apt/sources.list.d/virtualbox.list&#x000A;sudo apt-get update&#x000A;sudo apt-get install -y virtualbox-4.0</literallayout></simplesect>
+        <simplesect><title>Install RubyGems</title>
+            <para>The following instructions for installing Vagrant use RubyGems for the installation commands. You can download RubyGems from <link xlink:href="http://rubygems.org/pages/download">http://rubygems.org/pages/download</link>. </para>
+            
+            
+            
+        </simplesect>
+        <simplesect><title>Get the Vagrant Pre-release</title>
+        
+        <para>OSX</para>
+                    
+        <literallayout class="monospaced">sudo gem update -- system&#x000A;sudo gem install vagrant -- pre</literallayout>
+        
+        <para>Ubuntu Maverick</para>
+        
+        <literallayout class="monospaced">sudo gem install vagrant --pre&#x000A;sudo ln -s /var/lib/gems/1.8/bin/vagrant /usr/local/bin/vagrant</literallayout>
+        
+        <para>Ubuntu Lucid</para>
+        
+        <literallayout class="monospaced">wget http://production.cf.rubygems.org/rubygems/rubygems-1.3.6.zip&#x000A;sudo apt-get install -y unzip&#x000A;unzip rubygems-1.3.6.zip&#x000A;cd rubygems-1.3.6&#x000A;sudo ruby setup.rb&#x000A;sudo gem1.8 install vagrant --pre</literallayout></simplesect>
+        
+       <simplesect> <title>Get the Chef Recipes</title>
+        
+        <literallayout class="monospaced">cd ~&#x000A;git clone https://github.com/ansolabs/openstack-cookbooks/openstack-cookbooks.git</literallayout>
+        </simplesect>
+        <simplesect><title>Set Up Some Directories</title>
+        
+        <literallayout class="monospaced">mkdir aptcache&#x000A;mkdir chef&#x000A;cd chef</literallayout>
+        </simplesect>
+        <simplesect><title>Get the chef-solo Vagrant file</title>
+        
+        <para>Provisioning for vagrant can use chef-solo, chef-server, or puppet. We&#8217;re going to use chef-solo for the installation of OpenStack Compute.</para>
+        
+        <literallayout class="monospaced">curl -o Vagrantfile https://raw.github.com/gist/786945/solo.rb</literallayout>
+        </simplesect>
+        <simplesect><title>Running OpenStack Compute within a Vagrant Instance</title>
+        
+        <para>Installing and running OpenStack Compute is as simple as typing "vagrant up"</para>
+        
+        <literallayout class="monospaced">vagrant up</literallayout>
+        
+        <para>In 3-10 minutes, your vagrant instance should be running. NOTE: Some people report an
+                error from vagrant complaining about MAC addresses the first time they vagrant up.
+                Doing <code>vagrant up</code> again seems to resolve the problem.</para>
+        
+        <literallayout class="monospaced">vagrant ssh</literallayout>
+        
+        <para>Now you can run an instance and connect to it:</para>
+        
+        <literallayout class="monospaced">. /vagrant/novarc&#x000A;euca-add-keypair test &gt; test.pem&#x000A;chmod 600 test.pem&#x000A;euca-run-instances -t m1.tiny -k test ami-tty&#x000A;# wait for boot (euca-describe-instances should report running)&#x000A;ssh -i test.pem root@10.0.0.3</literallayout>
+        
+        <para>Yo, dawg, your VMs have VMs! That is, you are now running an instance inside of OpenStack Compute, which itself is running inside a VirtualBox VM.</para>
+        
+        <para>When the you are finished, you can destroy the entire system with vagrant destroy. You will also need to remove the .pem files and the novarc if you want to run the system again.</para>
+        
+        <literallayout class="monospaced">vagrant destroy&#x000A;rm *.pem novarc</literallayout></simplesect>
+    
+        <simplesect><title>Using the dashboard
+            
+        </title><para>The OpenStack Dashboard should be running on 192.168.86.100. You can login using username: admin, password: vagrant.</para>
+    
+    </simplesect></section>
+    
+    
+</chapter>

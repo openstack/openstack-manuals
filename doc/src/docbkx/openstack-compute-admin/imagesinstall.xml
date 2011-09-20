@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    
+    <?dbhtml filename="ch_installing-openstack-imaging-service.html" ?>
+    <title>Installing and Configuring OpenStack Image Service</title>
+    <para>The OpenStack system has several key projects that are separate installations but can work
+        together depending on your cloud needs: OpenStack Compute, OpenStack Object Storage, and an
+        OpenStack Image Service with a project name of Glance. You can install any of these
+        projects separately and then configure them either as standalone or connected
+        entities.</para>
+    <section>
+        <?dbhtml filename="glance-system-requirements.html" ?>
+        <title>System Requirements for OpenStack Image Service (Glance)</title>
+        <para><emphasis role="bold">Hardware</emphasis>: OpenStack components are intended to run on
+            standard hardware.</para>
+        <para><emphasis role="bold">Operating System</emphasis>: The OpenStack Image Service
+            itself currently runs on Ubuntu but the images it stores may contain different operating
+            systems.</para>
+        <para><emphasis role="bold">Networking</emphasis>: 1000 Mbps are suggested. </para>
+        <para><emphasis role="bold">Database</emphasis>: Any SQLAlchemy-compatible database, such as
+            MySQL, Oracle, PostgreSQL, or SQLite. The reference registry server implementation that
+            ships with OpenStack Image Service uses a SQL database to store information about an
+            image, and publishes this information via an HTTP/REST-like interface.</para>
+        <para><emphasis role="bold">Permissions</emphasis>: You can install OpenStack imaging
+            service either as root or as a user with sudo permissions if you configure the sudoers
+            file to enable all the permissions. </para>
+    </section>
+    <section>
+        <?dbhtml filename="installing-openstack-imaging-service-on-ubuntu.html" ?>
+        <title>Installing OpenStack Image Service on Ubuntu </title><para>The installation of the Image Services themselves are separate from the storage of the virtual images to be retrieved.  </para>
+        
+        <section>
+            <title>Example Installation Architecture</title>
+            <para>These installation instructions have you set up the services on a single node, so the API server and registry services are on the same server. The images themselves can be stored either in OpenStack Object Storage, Amazon's S3 infrastructure, in a filesystem, or if you want read-only access, on a web server to be served via HTTP.</para></section>
+        
+        <section>
+            <?dbhtml filename="installing-glance.html" ?>
+            <title>Installing OpenStack Image Service (Glance) </title>
+            <para>First, add the Glance PPA to your sources.lst. </para>
+            <para>
+                <literallayout class="monospaced">sudo add-apt-repository ppa:glance-core/trunk                   </literallayout></para>
+            <para>Run update. </para>
+            <para><literallayout class="monospaced">sudo apt-get update</literallayout></para>
+            <para>Now, install the Glance server. </para>
+            <para>
+                <literallayout class="monospaced">sudo apt-get install glance </literallayout></para>
+            <para>All dependencies should be automatically installed.</para>
+            <para>Refer to the <link xlink:href="http://glance.openstack.org/installing.html">Glance
+                    developer documentation site to install from a Bazaar branch</link>. </para>
+        </section>
+        
+    </section><section>
+        <?dbhtml filename="configuring-and-controlling-openstack-imaging-servers.html" ?>
+        <title>Configuring and Controlling Glance Servers</title>
+            <para>You start Glance either by calling the server program, glance-api, or using the server daemon wrapper program named glance-control.</para> <para>Glance ships with an etc/ directory that contains sample paste.deploy configuration files that you can copy to a standard configuration directory and adapt for your own uses.</para>
+            <para>If you do not specify a configuration file on the command line when starting the glance-api server, Glance attempts to locate a glance.conf configuration file in one of the following directories, and uses the first config file it finds in this order:</para>
+            
+            <orderedlist>
+            <listitem><para>.</para></listitem>
+            <listitem><para>~/.glance</para></listitem>
+            <listitem><para>~/</para></listitem>
+            <listitem><para>/etc/glance/</para></listitem>
+            <listitem><para>/etc</para></listitem></orderedlist>
+            
+            <para>If Glance doesn't find a configuration file in one of these locations, you see an error: <code>ERROR: Unable to locate any configuration file. Cannot load application glance-api</code>.</para>
+         <simplesect><title>Manually starting the server</title>
+             <para>To manually start the glance-api server, use a command like the following: </para>
+             <literallayout class="monospaced">sudo glance-api etc/glance.conf.sample --debug</literallayout>
+             
+             <para>Supply the configuration file as the first argument (etc/glance.conf.sample in the above example) and then any common options you want to use. In the above example, the --debug option shows some of the debugging output that the server shows when starting up. Call the server program with --help to see all available options you can specify on the command line.</para>
+         
+         <para>Note that the server does not daemonize itself when run manually from the terminal. You can force the server to daemonize using the standard shell backgrounding indicator, However, for most use cases, we recommend using the glance-control  server daemon wrapper for daemonizing. See below for more details on daemonization with glance-control.</para></simplesect>
+         <simplesect><title>Starting the server with the glance-control wrapper script</title>
+         
+         <para>The second way to start up a Glance server is to use the glance-control program. glance-control  is a wrapper script that allows the user to start, stop, restart, and reload the other Glance server programs in a fashion that is more conducive to automation and scripting.</para>
+         
+         <para>Servers started via the glance-control program are always daemonized, meaning that the server program process runs in the background.</para>
+         
+         <para>To start a Glance server with glance-control, simply call glance-control with a server and the word “start”, followed by any command-line options you wish to provide. Start the server with glance-control in the following way:</para>
+         
+        <literallayout class="monospaced"> sudo glance-control {SERVER} start [CONFPATH]</literallayout>
+             
+          <para>   Here is an example that shows how to start the glance-registry server with the glance-control wrapper script.</para>
+             
+             <literallayout class="monospaced">sudo glance-control registry start etc/glance.conf.sample
+             Starting glance-registry with /home/jpipes/repos/glance/trunk/etc/glance.conf.sample</literallayout>
+             
+             <para>To start all the Glance servers (currently the glance-api and glance-registry programs) at once, you can specify “all” for the {SERVER}.</para>
+         
+         
+         </simplesect>
+         <simplesect><title>Stopping a Glance server</title><para>You can use Ctrl-C to stop a Glance server if it was started manually. </para>
+             <para>If you started the Glance server using the glance-control program, you can use the glance-control  program to stop it. Simply do the following:</para>
+             
+             <literallayout class="monospaced">sudo glance-control {SERVER} stop</literallayout>
+                 
+<para>                 as this example shows:
+</para>                 
+                 <literallayout class="monospaced">sudo glance-control registry stop
+                 Stopping glance-registry  pid: 17602  signal: 15
+                </literallayout> 
+                 
+         
+         </simplesect>
+         <simplesect><title>Restarting a Glance server</title>
+         <para>
+             You can restart a server with the glance-control program, as demonstrated here:
+             
+             
+             
+         </para>
+         
+         <literallayout class ="monospaced">
+         sudo glance-control registry restart etc/glance.conf.sample
+         Stopping glance-registry  pid: 17611  signal: 15
+         Starting glance-registry with /home/jpipes/repos/glance/trunk/etc/glance.conf.sample</literallayout>
+         
+         </simplesect>
+     </section>
+            </chapter>

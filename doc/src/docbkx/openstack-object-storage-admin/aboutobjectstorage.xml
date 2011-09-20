@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="ch_introduction-to-openstack-object-storage">
+    <title>Introduction to OpenStack Object Storage</title>
+    <para>OpenStack Object Storage is a scalable object storage system - it is not a file system in
+        the traditional sense. You will not be able to mount this system like traditional SAN or NAS
+        volumes. Since OpenStack Object Storage is a different way of thinking when it comes to
+        storage, take a few moments to review the key concepts listed below.</para>
+    <section xml:id="accounts-and-account-servers">
+        <title>Accounts and Account Servers</title>
+        <para>The OpenStack Object Storage system is designed to be used by many different storage
+            consumers or customers. Each user must identify themselves using an authentication
+            system.</para>
+        <para>Nodes that run the Account service are a separate concept from individual accounts.
+            Account servers are part of the storage system and must be configured along with
+            Container servers and Object servers.</para>
+    </section>
+    <section xml:id="authentication-and-access-permissions">
+        <title>Authentication and Access Permissions</title>
+        <para>You must authenticate against an Authentication service to receive OpenStack Object
+            Storage connection parameters and an authentication token. The token must be passed in
+            for all subsequent container/object operations. One authentication service that you can
+            use as a middleware example is called swauth and you can download it from
+            <link xlink:href="https://github.com/gholt/swauth">https://github.com/gholt/swauth</link>. You can also integrate with the OpenStack Identity Service, code-named Keystone, which you can download from <link xlink:href="https://github.com/openstack/keystone">https://github.com/openstack/keystone</link>. </para>
+        <note>
+            <para>Typically the language-specific APIs handle authentication, token passing, and HTTPS
+                request/response communication.</para>
+        </note>
+    
+        <para>You can implement access control for objects either for users or accounts using
+            X-Container-Read: accountname and X-Container-Write: accountname:username, which allows
+            any user from the accountname account to read but only allows the username user from the
+            accountname account to write. You can also grant public access to objects stored in
+            OpenStack Object Storage but also limit public access using the Referer header to
+            prevent site-based content theft such as hot-linking (for example, linking to an image
+            file from off-site and therefore using other's bandwidth). The public container settings
+            are used as the default authorization over access control lists. For example, using
+            X-Container-Read: referer:any allows anyone to read from the container regardless of
+            other authorization settings.</para>
+        <para>Generally speaking, each user has their own storage account and has full access to
+            that account. Users must authenticate with their credentials as described above, but
+            once authenticated they can create/delete containers and objects within that account.
+            The only way a user can access the content from another account is if they share an API
+            access key or a session token provided by your authentication system.</para>
+    </section>
+    <section xml:id="containers-and-objects">
+        <title>Containers and Objects</title>
+        <para>A container is a storage compartment for your data and provides a way for you to
+            organize your data. You can think of a container as a folder in Windows® or a directory in
+            UNIX®. The primary difference between a container and these other file system concepts is
+            that containers cannot be nested. You can, however, create an unlimited number of containers
+            within your account. Data must be stored in a container so you must have at least one
+            container defined in your account prior to uploading data.</para>
+        <para>The only restrictions on container names is that they cannot contain a forward slash
+            (<code>/</code>) and must be less than 256 bytes in length. Please note that the length
+            restriction applies to the name after it has been URL encoded. For example, a container name
+            of <code>Course Docs</code> would be URL encoded as <code>Course%20Docs</code> and therefore
+            be 13 bytes in length rather than the expected 11.</para>
+   
+        <para>An object is the basic storage entity and any optional metadata that represents the
+            files you store in the OpenStack Object Storage system. When you upload data to OpenStack Object Storage, the data is
+            stored as-is (no compression or encryption) and consists of a location (container), the
+            object's name, and any metadata consisting of key/value pairs. For instance, you may chose
+            to store a backup of your digital photos and organize them into albums. In this case, each
+            object could be tagged with metadata such as <code>Album : Caribbean Cruise</code> or
+            <code>Album : Aspen Ski Trip</code>.</para>
+        <para>The only restriction on object names is that they must be less than 1024 bytes in length
+            after URL encoding. For example, an object name of <code>C++final(v2).txt</code> should be
+            URL encoded as <code>C%2B%2Bfinal%28v2%29.txt</code> and therefore be 24 bytes in length
+            rather than the expected 16.</para>
+        <para>The maximum allowable size for a storage object upon upload is 5 gigabytes (GB) and
+            the minimum is zero bytes. You can use the built-in large object support and the swift
+            utility to retrieve objects larger than 5 GB. </para>
+        <para>For metadata, you should not exceed 90 individual key/value pairs for any one object
+            and the total byte length of all key/value pairs should not exceed 4KB (4096 bytes).</para>
+    </section>
+ <section xml:id="operations">
+        <title>Operations</title>
+        <para>Operations are the actions you perform within an OpenStack Object Storage system such
+            as creating or deleting containers, uploading or downloading objects, and so on. The
+            full list of operations is documented in the Developer Guide. Operations may be
+            performed via the ReST web service API or a language-specific API; currently, we support
+            Python, PHP, Java, Ruby, and C#/.NET.</para>
+        <important>
+            <para> All operations must include a valid authorization token from your authorization system. </para>
+        </important>
+    </section>
+   
+    <section xml:id="language-specific-api-bindings">
+        <title>Language-Specific API Bindings</title>
+        <para>A set of supported API bindings in several popular languages are available from the
+            Rackspace Cloud Files product, which uses OpenStack Object Storage code for its
+            implementation. These bindings provide a layer of abstraction on top of the base ReST
+            API, allowing programmers to work with a container and object model instead of working
+            directly with HTTP requests and responses. These bindings are free (as in beer and as in
+            speech) to download, use, and modify. They are all licensed under the MIT License as
+            described in the COPYING file packaged with each binding. If you do make any
+            improvements to an API, you are encouraged (but not required) to submit those changes
+            back to us.</para>
+        <para>The API bindings for Rackspace Cloud Files are hosted at <link
+                xlink:href="http://github.com/rackspace">http://github.com/rackspace</link>. Feel
+            free to coordinate your changes through github or, if you prefer, send your changes to
+            cloudfiles@rackspacecloud.com. Just make sure to indicate which language and version you
+            modified and send a unified diff. </para>
+        <para>Each binding includes its own documentation (either HTML, PDF, or CHM). They also
+            include code snippets and examples to help you get started. The currently supported API
+            binding for OpenStack Object Storage are:</para>
+        <itemizedlist>
+            <listitem>
+                <para>PHP (requires 5.x and the modules: cURL, FileInfo, mbstring)</para>
+            </listitem>
+            <listitem>
+                <para>Python (requires 2.4 or newer)</para>
+            </listitem>
+            <listitem>
+                <para>Java (requires JRE v1.5 or newer)</para>
+            </listitem>
+            <listitem>
+                <para>C#/.NET (requires .NET Framework v3.5)</para>
+            </listitem>
+            <listitem>
+                <para>Ruby (requires 1.8 or newer and mime-tools module)</para>
+            </listitem>
+        </itemizedlist>
+        <para>There are no other supported language-specific bindings at this time. You are welcome
+            to create your own language API bindings and we can help answer any questions during
+            development, host your code if you like, and give you full credit for your work.</para>
+    </section>
+</chapter>

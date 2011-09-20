@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <?dbhtml filename="ch_openstack-interfaces.html" ?>
+    <title>OpenStack Interfaces</title>
+
+    <para>OpenStack has components that provide a view of the OpenStack installation such as a Django-built website that serves as a dashboard and the ability to connect to running instances using a VNC connection via a VNC Proxy.</para>
+    <section><?dbhtml filename="about-the-dashboard.html" ?><title>About the Dashboard</title><para>You can use a dashboard interface with an OpenStack Compute installation with a web-based
+        console provided by the Openstack-Dashboard project. It provides a reference implementation of a Django site that provides web-based interactions with the OpenStack Compute cloud controller. For more information about the Openstack-Dashboard project,
+        please visit: <link xlink:href="http://launchpad.net/openstack-dashboard"
+            >http://launchpad.net/openstack-dashboard</link>. These instructions are for a test deployment of an OpenStack Dashboard. They configure your dashboard to use the default Django server. To create a more robust, production-ready installation, you would configure this with an Apache web server. </para>
+
+    
+    <section>
+        <?dbhtml filename="dashboard-system-requirements.html" ?>
+        <title>System Requirements for the Dashboard</title>
+        
+        <para>You should have a running OpenStack Compute installation with the Keystone module enabled. </para>
+        <para>The dashboard needs to be installed on the node that can contact the Keystone service.</para>
+        <para>You should know the URL of your Keystone endpoint. </para>
+        <para>You must know the credentials of a valid Keystone tenant.</para>
+        <para>Python 2.6 is required, and these instructions have been tested with Ubuntu 10.10.</para>
+    </section>
+    <section><?dbhtml filename="installing-openstack-dashboard.html" ?>
+
+        <title>Installing the OpenStack Dashboard</title>
+        <para>Here are the overall steps for building the dashboard.</para>
+
+        <orderedlist>
+            <listitem><para>Get the source for the openstack-dashboard project.</para></listitem>
+            <listitem><para>Build and configure the openstack-dashboard.</para></listitem>
+            <listitem>
+                <para>Run the server that starts the dashboard.</para>
+            </listitem>
+        </orderedlist>
+
+            
+            
+            <para>Before you begin, you must have git installed. It's straightforward to install
+            it with <code>sudo apt-get install git-core</code>. </para>
+        <para>Create a source directory to house the project:</para>
+       
+            <literallayout class="monospaced">mkdir src
+cd src            </literallayout>
+        
+        <para>Next, get the openstack-dashboard project, which provides all the look and feel for the OpenStack Dashboard.</para>
+        
+        <literallayout class="monospaced">
+git clone https://github.com/4P/openstack-dashboard
+</literallayout>
+        <para>You should now have a directory called openstack-dashboard, which contains the OpenStack Dashboard application.</para>
+        <section><?dbhtml filename="build-and-configure-openstack-dashboard.html" ?>
+            <title>Build and Configure Openstack-Dashboard</title>
+                <para>Now you can configure the dashboard application. The first step in configuring the application
+                is to create your local_settings.py file. An example is provided that you can copy
+                to local_settings.py and then modify for your environment.
+                </para>
+            <para>
+                <literallayout class="monospaced">
+cd openstack-dashboard/openstack-dashboard/local
+cp local_settings.py.example local_settings.py
+vi local_settings.py
+                </literallayout>
+            </para>
+            <para>In the new copy of the local_settings.py file, change these important options:</para>
+            <itemizedlist>
+                <listitem>
+                    <para>OPENSTACK_ADMIN_TOKEN : Token for Keystone endpoint.</para>
+                </listitem>
+                <listitem>
+                    <para>OPENSTACK_KEYSTONE_URL : URL for the Keystone endpoint.</para>
+                </listitem>
+                    <listitem>
+                        <para>SWIFT_ENABLED : Flag to enable/disable swift support from the dashboard. </para>
+                    </listitem>
+                </itemizedlist>
+
+            <para>Now install the openstack-dashboard environment. This installs all the dependencies for
+                openstack-dashboard. If you don't already have easy_install installed,
+                use sudo apt-get install python-setuptools.
+            </para>
+            <para>
+                <literallayout class="monospaced">
+sudo apt-get install -y python-setuptools
+sudo easy_install virtualenv
+python tools/install_venv.py
+                </literallayout>
+            </para>
+            <para>This step takes some time since it downloads a number of dependencies.</para>
+        </section>
+        <section>
+            <?dbhtml filename="run-the-server.html" ?>
+
+            <title>Run the Server</title>
+            <para>Now run the server on a high port value so that you can validate the installation.</para><para><literallayout class="monospaced">tools/with_venv.sh dashboard/manage.py runserver 0.0.0.0:8000</literallayout></para><para>Make sure that your firewall isn't blocking TCP/8000 and just point your browser at this server on port 8000. If you are running the server on the same machine as your browser, this would be "http://localhost:8000". </para>
+            <mediaobject>
+                <imageobject role="fo">
+                    <imagedata fileref="figures/dashboard-overview.png"
+                    format="PNG" scale="60"/>
+            </imageobject>
+                <imageobject role="html">
+                    <imagedata fileref="../figures/dashboard-overview.png"
+                        format="PNG" />
+                </imageobject>
+            </mediaobject></section></section></section>
+ <section xml:id="getting-started-with-the-vnc-proxy"><info><title>Getting Started with the VNC Proxy</title></info>
+        
+        <para>
+            The VNC Proxy is an OpenStack component that allows users of Nova to
+            access their instances through a websocket enabled browser (like
+            Google Chrome 4.0). See <link xlink:href="http://caniuse.com/#search=websocket">http://caniuse.com/#search=websocket</link> for a reference list of supported web browsers.</para>
+        <para>
+            A VNC Connection works like so:
+        </para>
+        <itemizedlist>
+            <listitem>
+                <para>
+                    User connects over an API and gets a URL like
+                    http://ip:port/?token=xyz
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    User pastes URL in browser
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Browser connects to VNC Proxy though a websocket enabled client
+                    like noVNC
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    VNC Proxy authorizes users token, maps the token to a host and
+                    port of an instance's VNC server
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    VNC Proxy initiates connection to VNC server, and continues
+                    proxying until the session ends
+                </para>
+            </listitem>
+        </itemizedlist>
+        <section xml:id="configuring-the-vnc-proxy"><info><title>Configuring the VNC Proxy</title></info>
+            
+            <para>The nova-vncproxy requires a websocket enabled html client to work properly. At this time,
+                the only tested client is a slightly modified fork of noVNC, which you can at find <link
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    xlink:href="http://github.com/openstack/noVNC.git"
+                    >http://github.com/openstack/noVNC.git</link>
+            </para>
+            <para>The noVNC tool must be in the location specified by --vncproxy_wwwroot, which defaults to
+                /var/lib/nova/noVNC. nova-vncproxy will fail to launch until this code is properly installed. </para>
+            <para>
+                By default, nova-vncproxy binds 0.0.0.0:6080. This can be
+                configured with:
+            </para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        --vncproxy_port=[port]
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        --vncproxy_host=[host]
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </section>
+        <section xml:id="enabling-vnc-consoles-in-nova"><info><title>Enabling VNC Consoles in Nova</title></info>
+            
+            <para>
+                At the moment, VNC support is supported only when using libvirt.
+                To enable VNC Console, configure the following flags in the nova.conf file:
+            </para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        --vnc_console_proxy_url=http://[proxy_host]:[proxy_port] -
+                        proxy_port defaults to 6080. This URL must point to
+                        nova-vncproxy
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        --vnc_enabled=[True|False] - defaults to True. If this flag is
+                        not set your instances will launch without VNC support.
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </section>
+        <section xml:id="getting-an-instances-vnc-console"><info><title>Getting an Instance's VNC Console</title></info>
+            
+            <para>
+                You can access an instance's VNC Console URL in the following
+                methods:
+            </para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        Using the direct api: eg: 'stack --user=admin --project=admin
+                        compute get_vnc_console instance_id=1'
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Support for Dashboard, and the Openstack API will be
+                        forthcoming
+                    </para>
+                </listitem>
+            </itemizedlist><para>
+                At the moment, VNC Consoles are only supported through the web
+                browser, but more general VNC support is in the works.
+            </para>
+        </section>
+    </section>
+
+</chapter>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <?dbhtml filename="ch_introduction-to-openstack-imaging-service.html" ?>
+    <title>Introcution to the OpenStack Image Service</title>
+    <para>You can use OpenStack Image Services for discovering, registering, and retrieving virtual machine images. The service includes a RESTful API that allows users to query VM image metadata and retrieve the actual image with HTTP requests, or you can use a client class in your Python code to accomplish the same tasks.
+        </para><para>
+        VM images made available through OpenStack Image Service can be stored in a variety of locations from simple file systems to object-storage systems like the OpenStack Object Storage project, or even use S3 storage either on its own or through an OpenStack Object Storage S3 interface.</para>
+    <section>
+        <?dbhtml filename="overview-of-architecture.html" ?>
+        <title>Overview of  Architecture</title>
+        <para>There are two main parts to the Image Service’s architecture:</para>
+            
+            <itemizedlist><listitem><para>API server</para></listitem>
+            <listitem><para>Registry server(s)</para>
+               </listitem>
+            </itemizedlist>
+        
+        <para>OpenStack Image Service is designed to be as adaptable as possible for various back-end storage and registry database solutions. There is a main API server (the ``glance-api`` program) that serves as the communications hub betweenvarious client programs, the registry of image metadata, and the storage systems that actually contain the virtual machine image data.</para>
+    </section>
+    <section>
+        <?dbhtml filename="openstack-imaging-service-api-server.html" ?>
+        <title>OpenStack Image Service API Server</title>
+                       
+            <para>The API server is the main interface for OpenStack Image Service. It routes requests from clients to registries of image metadata and to its backend stores, which are the mechanisms by which OpenStack Image Service actually saves incoming virtual machine images.</para>
+            
+            <para>The backend stores that OpenStack Image Service can work with are as follows:</para>
+    <itemizedlist><listitem><para>OpenStack Object Storage - OpenStack Object Storage is the highly-available object storage project in OpenStack.</para></listitem> 
+                       
+            <listitem><para>Filesystem - The default backend that OpenStack Image Service uses to store virtual machine images is the filesystem backend. This simple backend writes image files to the local filesystem.</para></listitem>
+            
+            <listitem><para>S3 - This backend allows OpenStack Image Service to store virtual machine images in Amazon’s S3 service.</para></listitem>
+           
+            <listitem><para>HTTP - OpenStack Image Service can read virtual machine images that are available via HTTP somewhere on the Internet. This store is readonly.</para></listitem></itemizedlist>
+            </section>
+            
+            <section>
+                <?dbhtml filename="openstack-imaging-service-registry-servers.html" ?>
+                <title>OpenStack Image Service Registry Servers</title>
+            
+            <para>OpenStack Image Service registry servers are servers that conform to the OpenStack Image Service Registry API. OpenStack Image Service ships with a reference implementation of a registry server that complies with this API (bin/OpenStack Image Service-registry).</para></section>
+    
+    
+    
+    </chapter>

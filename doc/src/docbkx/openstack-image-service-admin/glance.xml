@@ -1,0 +1,613 @@
+<?xml version="1.0"?>
+<!-- Converted by db4-upgrade version 1.0 -->
+<chapter xmlns="http://docbook.org/ns/docbook" version="5.0-extension RaxBook-1.0" xml:id="using-the-glance-cli-tool"><info><title>Using the Glance CLI Tool</title></info>
+  
+  <para>
+    Glance ships with a command-line tool for querying and managing
+    Glance It has a fairly simple but powerful interface of the form:
+  </para>
+  <screen>
+Usage: glance &lt;command&gt; [options] [args]
+</screen>
+  <para>
+    Where <literal>&lt;command&gt;</literal> is one of the following:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        <literal>help</literal>
+      </para>
+      <para>
+        Show detailed help information about a specific command
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        <literal>add</literal>
+      </para>
+      <para>
+        Adds an image to Glance
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        <literal>update</literal>
+      </para>
+      <para>
+        Updates an image's stored metadata in Glance
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        <literal>delete</literal>
+      </para>
+      <para>
+        Deletes an image and its metadata from Glance
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        <literal>index</literal>
+      </para>
+      <para>
+        Lists brief information about <emphasis>public</emphasis> images
+        that Glance knows about
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        <literal>details</literal>
+      </para>
+      <para>
+        Lists detailed information about <emphasis>public</emphasis>
+        images that Glance knows about
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        <literal>show</literal>
+      </para>
+      <para>
+        Lists detailed information about a specific image
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        <literal>clear</literal>
+      </para>
+      <para>
+        Destroys all <emphasis role="strong">public</emphasis> images
+        and their associated metadata
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    This document describes how to use the <literal>glance</literal>
+    tool for each of the above commands.
+  </para>
+  <section xml:id="the-help-command"><info><title>The <literal>help</literal> command</title></info>
+    
+    <para>
+      Issuing the <literal>help</literal> command with a
+      <literal>&lt;COMMAND&gt;</literal> argument shows detailed help
+      about a specific command. Running <literal>glance</literal>
+      without any arguments shows a brief help message, like so:
+    </para>
+    <screen>
+$&gt; glance
+Usage: glance &lt;command&gt; [options] [args]
+
+Commands:
+
+    help &lt;command&gt;  Output help for one of the commands below
+
+    add             Adds a new image to Glance
+
+    update          Updates an image's metadata in Glance
+
+    delete          Deletes an image from Glance
+
+    index           Return brief information about images in Glance
+
+    details         Return detailed information about images in
+                    Glance
+
+    show            Show detailed information about an image in
+                    Glance
+
+    clear           Removes all images and metadata from Glance
+
+Options:
+  --version             show program's version number and exit
+  -h, --help            show this help message and exit
+  -v, --verbose         Print more verbose output
+  -H ADDRESS, --host=ADDRESS
+                        Address of Glance API host. Default: example.com
+  -p PORT, --port=PORT  Port the Glance API host listens on. Default: 9292
+  --limit=LIMIT         Page size to use while requesting image metadata
+  --marker=MARKER       Image index after which to begin pagination
+  --sort_key=KEY        Sort results by this image attribute.
+  --sort_dir=[desc|asc]
+                        Sort results in this direction.
+  -f, --force           Prevent select actions from requesting user
+                        confirmation
+  --dry-run             Don't actually execute the command, just print output
+                        showing what WOULD happen.
+</screen>
+    <para>
+      With a <literal>&lt;COMMAND&gt;</literal> argument, more
+      information on the command is shown, like so:
+    </para>
+    <screen>
+$&gt; glance help update
+
+glance update [options] &lt;ID&gt; &lt;field1=value1 field2=value2 ...&gt;
+
+Updates an image's metadata in Glance. Specify metadata fields as arguments.
+
+All field/value pairs are converted into a mapping that is passed
+to Glance that represents the metadata for an image.
+
+Field names that can be specified:
+
+name                A name for the image.
+is_public           If specified, interpreted as a boolean value
+                    and sets or unsets the image's availability to the public.
+disk_format         Format of the disk image
+container_format    Format of the container
+
+All other field names are considered to be custom properties so be careful
+to spell field names correctly. :)
+</screen>
+  </section>
+  <section xml:id="the-add-command"><info><title>The <literal>add</literal> command</title></info>
+    
+    <para>
+      The <literal>add</literal> command is used to do both of the
+      following:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Store virtual machine image data and metadata about that image
+          in Glance
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Let Glance know about an existing virtual machine image that
+          may be stored somewhere else
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      We cover both use cases below.
+    </para>
+    <section xml:id="important-information-about-uploading-images"><info><title>Important Information about Uploading Images</title></info>
+      
+      <para>
+        Before we go over the commands for adding an image to Glance, it
+        is important to understand that Glance
+        <emphasis role="strong">does not currently inspect</emphasis>
+        the image files you add to it. In other words,
+        <emphasis role="strong">Glance only understands what you tell
+        it, via attributes and custom properties</emphasis>.
+      </para>
+      <para>
+        If the file extension of the file you upload to Glance ends in
+        '.vhd', Glance <emphasis role="strong">does not</emphasis> know
+        that the image you are uploading has a disk format of
+        <literal>vhd</literal>. You have to
+        <emphasis role="strong">tell</emphasis> Glance that the image
+        you are uploading has a disk format by using the
+        <literal>disk_format=vhd</literal> on the command line (see more
+        below).
+      </para>
+      <para>
+        By the same token, Glance does not currently allow you to upload
+        "multi-part" disk images at once.
+        <emphasis role="strong">The common operation of bundling a
+        kernel image and ramdisk image into a machine image is not done
+        automagically by Glance.</emphasis>
+      </para>
+    </section>
+    <section xml:id="store-virtual-machine-image-data-and-metadata"><info><title>Store virtual machine image data and metadata</title></info>
+      
+      <para>
+        When adding an actual virtual machine image to Glance, you use
+        the <literal>add</literal> command. You will pass metadata about
+        the VM image on the command line, and you will use a standard
+        shell redirect to stream the image data file to
+        <literal>glance</literal>.
+      </para>
+      <para>
+        Let's walk through a simple example. Suppose we have a virtual
+        disk image stored on our local filesystem that we wish to
+        "upload" to Glance. This image is stored on our local
+        filesystem in <literal>/tmp/images/myimage.iso</literal>.
+      </para>
+      <para>
+        We'd also like to tell Glance that this image should be called
+        "My Image", and that the image should be public --
+        anyone should be able to fetch it.
+      </para>
+      <para>
+        Here is how we'd upload this image to Glance. Change example ip
+        number to your server ip number.:
+      </para>
+      <screen>
+$&gt; glance add name="My Image" is_public=true &lt; /tmp/images/myimage.iso --host=65.114.169.29
+</screen>
+      <para>
+        If Glance was able to successfully upload and store your VM
+        image data and metadata attributes, you would see something like
+        this:
+      </para>
+      <screen>
+$&gt; glance add name="My Image" is_public=true &lt; /tmp/images/myimage.iso --host=65.114.169.29
+Added new image with ID: 2
+</screen>
+      <para>
+        You can use the <literal>--verbose</literal> (or
+        <literal>-v</literal>) command-line option to print some more
+        information about the metadata that was saved with the image:
+      </para>
+      <screen>
+$&gt; glance --verbose add name="My Image" is_public=true &lt; /tmp/images/myimage.iso --host=65.114.169.29
+Added new image with ID: 4
+Returned the following metadata for the new image:
+               container_format =&gt; ovf
+                     created_at =&gt; 2011-02-22T19:20:53.298556
+                        deleted =&gt; False
+                     deleted_at =&gt; None
+                    disk_format =&gt; raw
+                             id =&gt; 4
+                      is_public =&gt; True
+                       location =&gt; file:///tmp/images/4
+                           name =&gt; My Image
+                     properties =&gt; {}
+                           size =&gt; 58520278
+                         status =&gt; active
+                     updated_at =&gt; None
+Completed in 0.6141 sec.
+</screen>
+      <para>
+        If you are unsure about what will be added, you can use the
+        <literal>--dry-run</literal> command-line option, which will
+        simply show you what <emphasis>would</emphasis> have happened:
+      </para>
+      <screen>
+$&gt; glance --dry-run add name="Foo" distro="Ubuntu" is_publi=True &lt; /tmp/images/myimage.iso --host=65.114.169.29
+Dry run. We would have done the following:
+Add new image with metadata:
+               container_format =&gt; ovf
+                    disk_format =&gt; raw
+                      is_public =&gt; False
+                           name =&gt; Foo
+                     properties =&gt; {'is_publi': 'True', 'distro': 'Ubuntu'}
+</screen>
+      <para>
+        This is useful for detecting problems and for seeing what the
+        default field values supplied by <literal>glance</literal> are.
+        For instance, there was a typo in the command above (the
+        <literal>is_public</literal> field was incorrectly spelled
+        <literal>is_publi</literal> which resulted in the image having
+        an <literal>is_publi</literal> custom property added to the
+        image and the <emphasis>real</emphasis>
+        <literal>is_public</literal> field value being `False` (the
+        default) and not `True`...
+      </para>
+    </section>
+    <section xml:id="register-a-virtual-machine-image-in-another-location"><info><title>Register a virtual machine image in another
+      location</title></info>
+      
+      <para>
+        Sometimes, you already have stored the virtual machine image in
+        some non-Glance location -- perhaps even a location you have no
+        write access to -- and you want to tell Glance where this
+        virtual machine image is located and some metadata about it. The
+        <literal>add</literal> command can do this for you.
+      </para>
+      <para>
+        When registering an image in this way, the only difference is
+        that you do not use a shell redirect to stream a virtual machine
+        image file into Glance, but instead, you tell Glance where to
+        find the existing virtual machine image by setting the
+        <literal>location</literal> field. Below is an example of doing
+        this.
+      </para>
+      <para>
+        Let's assume that there is a virtual machine image located at
+        the URL
+        <literal>http://example.com/images/myimage.vhd</literal>. We can
+        register this image with Glance using the following:
+      </para>
+      <screen>
+$&gt; glance --verbose add name="Some web image" disk_format=vhd container_format=ovf\
+   location="http://example.com/images/myimage.vhd"
+Added new image with ID: 1
+Returned the following metadata for the new image:
+               container_format =&gt; ovf
+                     created_at =&gt; 2011-02-23T00:42:04.688890
+                        deleted =&gt; False
+                     deleted_at =&gt; None
+                    disk_format =&gt; vhd
+                             id =&gt; 1
+                      is_public =&gt; True
+                       location =&gt; http://example.com/images/myimage.vhd
+                           name =&gt; Some web image
+                     properties =&gt; {}
+                           size =&gt; 0
+                         status =&gt; active
+                     updated_at =&gt; None
+Completed in 0.0356 sec.
+</screen>
+    </section>
+  </section>
+  <section xml:id="the-update-command"><info><title>The <literal>update</literal> command</title></info>
+    
+    <para>
+      After uploading/adding a virtual machine image to Glance, it is
+      not possible to modify the actual virtual machine image -- images
+      are read-only after all --however, it <emphasis>is</emphasis>
+      possible to update any metadata about the image after you add it
+      to Glance.
+    </para>
+    <para>
+      The <literal>update</literal> command allows you to update the
+      metadata fields of a stored image. You use this command like so:
+    </para>
+    <screen>
+glance update &lt;ID&gt; [field1=value1 field2=value2 ...]
+</screen>
+    <para>
+      Let's say we have an image with identifier 5 that we wish to
+      change the is_public attribute of the image from False to True.
+      The following would accomplish this:
+    </para>
+    <screen>
+$&gt; glance update 5 is_public=true --host=65.114.169.29
+Updated image 5
+</screen>
+    <para>
+      Using the <literal>--verbose</literal> flag will show you all the
+      updated data about the image:
+    </para>
+    <screen>
+$&gt; glance --verbose update 5 is_public=true --host=65.114.169.29
+Updated image 5
+Updated image metadata for image 5:
+URI: http://example.com/images/5
+Id: 5
+Public? Yes
+Name: My Image
+Size: 58520278
+Location: file:///tmp/images/5
+Disk format: raw
+Container format: ovf
+Completed in 0.0596 sec.
+</screen>
+  </section>
+  <section xml:id="the-delete-command"><info><title>The <literal>delete</literal> command</title></info>
+    
+    <para>
+      You can delete an image by using the <literal>delete</literal>
+      command, shown below:
+    </para>
+    <screen>
+$&gt; glance --verbose delete 5 --host=65.114.169.29
+Deleted image 5
+</screen>
+  </section>
+  <section xml:id="the-index-command"><info><title>The <literal>index</literal> command</title></info>
+    
+    <para>
+      The <literal>index</literal> command displays brief information
+      about the <emphasis>public</emphasis> images available in Glance,
+      as shown below:
+    </para>
+    <screen>
+$&gt; glance index --host=65.114.169.29
+ID               Name                           Disk Format          Container Format     Size          
+---------------- ------------------------------ -------------------- -------------------- --------------
+1                Ubuntu 10.10                   vhd                  ovf                        58520278
+2                Ubuntu 10.04                   ami                  ami                        58520278
+3                Fedora 9                       vdi                  bare                           3040
+4                Vanilla Linux 2.6.22           qcow2                bare                              0
+</screen>
+    <para>
+      Image metadata such as 'name', 'disk_format', 'container_format'
+      and 'status' may be used to filter the results of an index or
+      details command. These commands also accept 'size_min' and
+      'size_max' as lower and upper bounds of the image metadata 'size.'
+      Any unrecognized fields are handled as custom image properties.
+    </para>
+    <para>
+      The 'limit' and 'marker' options are used by the index and details
+      commands to control pagination. The 'marker' indicates the last
+      record that was seen by the user. The page of results returned
+      will begin after the provided image ID. The 'limit' param
+      indicates the page size. Each request to the api will be
+      restricted to returning a maximum number of results. Without the
+      'force' option, the user will be prompted before each page of
+      results is fetched from the API.
+    </para>
+    <para>
+      Results from index and details commands may be ordered using the
+      'sort_key' and 'sort_dir' options. Any image attribute may be used
+      for 'sort_key', while only 'asc' or 'desc' are allowed for
+      'sort_dir'.
+    </para>
+  </section>
+  <section xml:id="the-details-command"><info><title>The <literal>details</literal> command</title></info>
+    
+    <para>
+      The <literal>details</literal> command displays detailed
+      information about the <emphasis>public</emphasis> images available
+      in Glance, as shown below:
+    </para>
+    <screen>
+$&gt; glance details --host=65.114.169.29
+================================================================================
+URI: http://example.com/images/1
+Id: 1
+Public? Yes
+Name: Ubuntu 10.10
+Status: active
+Size: 58520278
+Location: file:///tmp/images/1
+Disk format: vhd
+Container format: ovf
+Property 'distro_version': 10.10
+Property 'distro': Ubuntu
+================================================================================
+URI: http://example.com/images/2
+Id: 2
+Public? Yes
+Name: Ubuntu 10.04
+Status: active
+Size: 58520278
+Location: file:///tmp/images/2
+Disk format: ami
+Container format: ami
+Property 'distro_version': 10.04
+Property 'distro': Ubuntu
+================================================================================
+URI: http://example.com/images/3
+Id: 3
+Public? Yes
+Name: Fedora 9
+Status: active
+Size: 3040
+Location: file:///tmp/images/3
+Disk format: vdi
+Container format: bare
+Property 'distro_version': 9
+Property 'distro': Fedora
+================================================================================
+URI: http://example.com/images/4
+Id: 4
+Public? Yes
+Name: Vanilla Linux 2.6.22
+Status: active
+Size: 0
+Location: http://example.com/images/vanilla.iso
+Disk format: qcow2
+Container format: bare
+================================================================================
+</screen>
+  </section>
+  <section xml:id="the-show-command"><info><title>The <literal>show</literal> command</title></info>
+    
+    <para>
+      The <literal>show</literal> command displays detailed information
+      about a specific image, specified with
+      <literal>&lt;ID&gt;</literal>, as shown below:
+    </para>
+    <screen>
+$&gt; glance show 3 --host=65.114.169.29
+URI: http://example.com/images/3
+Id: 3
+Public? Yes
+Name: Fedora 9
+Status: active
+Size: 3040
+Location: file:///tmp/images/3
+Disk format: vdi
+Container format: bare
+Property 'distro_version': 9
+Property 'distro': Fedora
+</screen>
+  </section>
+  <section xml:id="the-clear-command"><info><title>The <literal>clear</literal> command</title></info>
+    
+    <para>
+      The <literal>clear</literal> command is an administrative command
+      that deletes <emphasis role="strong">ALL</emphasis> images and all
+      image metadata. Passing the <literal>--verbose</literal> command
+      will print brief information about all the images that were
+      deleted, as shown below:
+    </para>
+    <screen>
+$&gt; glance --verbose clear --host=65.114.169.29
+Deleting image 1 "Some web image" ... done
+Deleting image 2 "Some other web image" ... done
+Completed in 0.0328 sec.
+</screen>
+  </section>
+  <section xml:id="the-image-members-command"><info><title>The <literal>image-members</literal> Command</title></info>
+    
+    <para>
+      The <literal>image-members</literal> command displays the list of
+      members with which a specific image, specified with
+      <literal>&lt;ID&gt;</literal>, is shared, as shown below:
+    </para>
+    <screen>
+$&gt; glance image-members 3 --host=65.114.169.29
+tenant1
+tenant2 *
+
+(*: Can share image)
+</screen>
+  </section>
+  <section xml:id="the-member-images-command"><info><title>The <literal>member-images</literal> Command</title></info>
+    
+    <para>
+      The <literal>member-images</literal> command displays the list of
+      images which are shared with a specific member, specified with
+      <literal>&lt;MEMBER&gt;</literal>, as shown below:
+    </para>
+    <screen>
+$&gt; glance member-images tenant1 --host=65.114.169.29
+1
+2 *
+
+(*: Can share image)
+</screen>
+  </section>
+  <section xml:id="the-member-add-command"><info><title>The <literal>member-add</literal> Command</title></info>
+    
+    <para>
+      The <literal>member-add</literal> command grants a member,
+      specified with <literal>&lt;MEMBER&gt;</literal>, access to a
+      private image, specified with <literal>&lt;ID&gt;</literal>. The
+      <literal>--can-share</literal> flag can be given to allow the
+      member to share the image, as shown below:
+    </para>
+    <screen>
+$&gt; glance member-add 1 tenant1 --host=65.114.169.29
+$&gt; glance member-add 1 tenant2 --can-share --host=65.114.169.29
+</screen>
+  </section>
+  <section xml:id="the-member-delete-command"><info><title>The <literal>member-delete</literal> Command</title></info>
+    
+    <para>
+      The <literal>member-delete</literal> command revokes the access of
+      a member, specified with <literal>&lt;MEMBER&gt;</literal>, to a
+      private image, specified with <literal>&lt;ID&gt;</literal>, as
+      shown below:
+    </para>
+    <screen>
+$&gt; glance member-delete 1 tenant1
+$&gt; glance member-delete 1 tenant2
+</screen>
+  </section>
+  <section xml:id="the-members-replace-command"><info><title>The <literal>members-replace</literal> Command</title></info>
+    
+    <para>
+      The <literal>members-replace</literal> command revokes all
+      existing memberships on a private image, specified with
+      <literal>&lt;ID&gt;</literal>, and replaces them with a membership
+      for one member, specified with <literal>&lt;MEMBER&gt;</literal>.
+      The <literal>--can-share</literal> flag can be given to allow the
+      member to share the image, as shown below:
+    </para>
+    <screen>
+$&gt; glance members-replace 1 tenant1 --can-share --host=65.114.169.29
+</screen>
+    <para>
+      The command is given in plural form to make it clear that all
+      existing memberships are affected by the command.
+    </para>
+  </section>
+</chapter>
