@@ -76,10 +76,9 @@
                 </tr>
             </tbody>
         </table>
-        <para>
-        <emphasis role="bold">Operating System</emphasis>: OpenStack currently has
-            packages for the following distributions: Ubuntu, RHEL, SUSE, Debian, and Fedora. These
-            packages are maintained by community members, refer to <link
+        <para><emphasis role="bold">Operating System</emphasis>: OpenStack currently has packages
+            for the following distributions: Ubuntu, RHEL, SUSE, Debian, and Fedora. These packages
+            are maintained by community members, refer to <link
                 xlink:href="http://wiki.openstack.org/Packaging"
                 >http://wiki.openstack.org/Packaging</link> for additional links. </para>
             <para><emphasis role="bold">Networking</emphasis>: 1000 Mbps are suggested. For
@@ -90,9 +89,11 @@
             <para><emphasis role="bold">Database</emphasis>: For OpenStack Compute, you need access
             to either a PostgreSQL or MySQL database, or you can install it as part of the OpenStack
             Compute installation process.</para>
-            <para><emphasis role="bold">Permissions</emphasis>: You can install OpenStack Compute
+        <para><emphasis role="bold">Permissions</emphasis>: You can install OpenStack Compute
             either as root or as a user with sudo permissions if you configure the sudoers file to
             enable all the permissions. </para>
+        <para><emphasis role="bold">Network Time Protocol</emphasis>: You must install a time synchronization program such as NTP to keep your cloud
+            controller and compute nodes talking to the same time server to avoid problems scheduling VM launches on compute nodes.</para>
     </section><section xml:id="example-installation-architecture">
         <title>Example Installation Architectures</title>
         <para>OpenStack Compute uses a shared-nothing, messaging-based architecture. While very
@@ -299,9 +300,57 @@ sudo service mysql restart</literallayout></para>
                         <literallayout class="monospaced">sudo mysql -uroot -p$MYSQL_PASS -e "SET PASSWORD FOR 'nova'@'%' =
                             PASSWORD('$NOVA_PASS');"</literallayout>
                     </para>
-                    </section>
-
-            </section>
+                </section>
+                <section xml:id="setting-up-sql-database-postgresql"><title></title>
+                    
+                    <para>OpenStack can use PostgreSQL as an alternative database. This is a matter of substituting the MySQL steps with PostgreSQL equivalents, as outlined here.</para>
+                    
+                    <para>First, install PostgreSQL on the controller node.</para>
+                    <literallayout class="monospaced">$ apt-fast install postgresql postgresql-server-dev-8.4 python-dev python-psycopg2</literallayout>
+                    
+                    <para>Edit /etc/postgresql/8.4/main/postgresql.conf and change the listen_address to listen to all appropriate addesses, PostgreSQL listen only to localhost by default. For example:</para>
+                    <para>To listen on a specific IP address:</para>
+                    <literallayout class="monospaced"># - Connection Settings -
+                    listen_address = '10.1.1.200,192.168.100.2'</literallayout>
+                    <para>To listen on all addresses:</para>
+                    <literallayout class="monospaced"># - Connection Settings -
+                    listen_address = '*'</literallayout>
+                    
+                    <para>Add appropriate addresses and networks to /etc/postgresql/8.4/main/pg_hba.conf to allow remote access to PostgreSQL, this should include all servers hosting OpenStack (but not neccessarily those hosted by Openstack). As an example, append the following lines:</para>
+                    <literallayout class="monospaced">host all all 192.168.0.0/16
+                    host all all 10.1.0.0/16
+                    </literallayout>
+                   <para>Change the default PostgreSQL user's password:</para>
+                    <literallayout class="monospaced">$ sudo -u postgres psql template1
+                    template1=#\password
+                    Enter Password:
+                    Enter again:
+                    template1=#\q</literallayout>
+                    
+                    <para>Restart PostgreSQL:</para>
+                    <literallayout class="monospaced">$ service postgresql restart</literallayout>
+                    
+                    <para>Create nova databases:</para>
+                    <literallayout class="monospaced">$ sudo -u postgres createdb nova
+                    $ sudo -u postgres createdb glance</literallayout>
+                    
+                    <para>Create nova database user which will be used for all OpenStack services, note the adduser and createuser steps will prompt for the user's password ($PG_PASS):</para>
+                    <literallayout class="monospaced">$ adduser nova
+                    $ sudo -u postgres createuser -PSDR nova
+                    $ sudo -u postgres psql template1
+                    template1=#GRANT ALL PRIVILEGES ON DATABASE nova TO nova
+                    template1=#GRANT ALL PRIVILEGES ON DATABASE glance TO nova
+                    template1=#\q</literallayout>
+                    
+                    <para>For the Cactus version of Nova, the following fix is required for the PostgreSQL database schema. You don't need to do this for Diablo:</para>
+                    <literallayout class="monospaced">$ sudo -u postgres psql template1
+                    template1=#alter table instances alter instance_type_id type integer using cast(instance_type_id as integer);
+                    template1=#\q</literallayout>
+                    <para>For Nova components that require access to this database the required configuration in /etc/nova/nova.conf should be (replace $PG_PASS with password):</para>
+                    
+                    <literallayout class="monospaced">--sql_connection=postgresql://nova:$PG_PASS@control.example.com/nova</literallayout>
+                    <para>At this stage the databases are empty and contain no content. These will be initialised when you do the nova-manage db sync command. </para>
+            </section></section>
             <section xml:id="installing-the-compute-node">
                 <title>Installing the Compute Node</title>
                 <para>There are many different ways to perform a multinode install of Compute. In
@@ -577,9 +626,9 @@ chmod 640 /etc/nova/nova.conf</literallayout>
                 automatically for Flat Manager.</para>
             </section>
         <section xml:id="creating-certifications">
-                <title>Creating Certifications</title>
-                <para>Generate the certifications as a zip file. These are the certs you will use to
-                    launch instances, bundle images, and all the other assorted API functions. </para>
+                <title>Creating Credentials</title>
+                <para>Generate the credentials as a zip file. These are the certs you will use to
+                launch instances, bundle images, and all the other assorted API functions. </para>
                 <para>
                     <literallayout class="monospaced">mkdir –p /root/creds
 /usr/bin/python /usr/bin/nova-manage project zipfile $NOVA_PROJECT $NOVA_PROJECT_USER /root/creds/novacreds.zip</literallayout>
@@ -591,6 +640,8 @@ chmod 640 /etc/nova/nova.conf</literallayout>
                 <literallayout class="monospaced">unzip /root/creds/novacreds.zip -d /root/creds/
 cat /root/creds/novarc >> ~/.bashrc
 source ~/.bashrc </literallayout>
+            <para>
+            If you already have Nova credentials present in your environment, you can use a script included with Glance the Image Service, tools/nova_to_os_env.sh, to create Glance-style credentials. This script adds OS_AUTH credentials to the environment which are used by the Image Service to enable private images when the Identity Service is configured as the authentication system for Compute and the Image Service.</para>
             </section>
         <section xml:id="enabling-access-to-vms-on-the-compute-node">
                 <title>Enabling Access to VMs on the Compute Node</title>
@@ -615,11 +666,14 @@ service nova-network restart</literallayout>
                 While there are additional ways to accomplish the build-out, this section describes
                 adding compute nodes, and the service we are scaling out is called
                 'nova-compute.'</para>
-            <para>With the Bexar release we have two configuration files: nova-api.conf and nova.conf. For a multi-node install you only make changes to nova.conf and copy it to additional compute nodes. Ensure each nova.conf file points to the correct IP addresses for the respective services. Customize the nova.config example below to match your environment. The CC_ADDR is the Cloud Controller IP Address.
-                   </para>
+            <para>For a multi-node install you only make changes to nova.conf and copy it to
+                additional compute nodes. Ensure each nova.conf file points to the correct IP
+                addresses for the respective services. Customize the nova.conf example below to
+                match your environment. The CC_ADDR is the Cloud Controller IP Address. </para>
                   <literallayout class="monospaced">
                    --dhcpbridge_flagfile=/etc/nova/nova.conf
                    --dhcpbridge=/usr/bin/nova-dhcpbridge
+                   --flat_network_bridge=br100
                    --logdir=/var/log/nova
                    --state_path=/var/lib/nova
                    --verbose
@@ -630,7 +684,9 @@ service nova-network restart</literallayout>
                    --ec2_url=http://CC_ADDR:8773/services/Cloud
                    --network_manager=nova.network.manager.FlatManager
                    --fixed_range= network/CIDR
-                   --network_size=number of addresses</literallayout><para>By default, Nova sets 'br100' as the bridge device, and this is what needs to be done next.  Edit /etc/network/interfaces with the following template, updated with your IP information. </para>
+                   --network_size=number of addresses</literallayout><para>By default, Nova sets the bridge device based on the setting in --flat_network_bridge. Now you
+                can edit /etc/network/interfaces with the following template, updated with your IP
+                information. </para>
 
 
 <literallayout class="monospaced">
@@ -656,7 +712,8 @@ service nova-network restart</literallayout>
             <para>Restart networking:</para>
 
             <literallayout class="monospaced">/etc/init.d/networking restart</literallayout>
-            <para>With nova.conf updated and networking set, configuration is nearly complete.  First, lets bounce the relevant services to take the latest updates:</para>
+            <para>With nova.conf updated and networking set, configuration is nearly complete.
+                First, bounce the relevant services to take the latest updates:</para>
 
             <literallayout class="monospaced">restart libvirt-bin; service nova-compute restart</literallayout>
             <para>To avoid issues with KVM and permissions with Nova, run the following commands to ensure we have VM's that are running optimally:</para>
@@ -688,8 +745,8 @@ chmod g+rwx /dev/kvm</literallayout>
         <section xml:id="determining-version-of-compute">
             
             <title>Determining the Version of Compute</title>
-            <para>In the Diablo release, you can find the version of the installation by using the
-                nova-manage command:</para>
+            <para>You can find the version of the installation by using the nova-manage
+                command:</para>
             <literallayout class="monospaced">nova-manage version list</literallayout>
         </section>
         <section xml:id="migrating-from-cactus-to-diablo"><title>Migrating from Cactus to Diablo</title>

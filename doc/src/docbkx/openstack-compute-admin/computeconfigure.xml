@@ -93,7 +93,9 @@
     
     <section xml:id="sample-nova-configuration-files">
         <title>Example nova.conf Configuration Files</title>
-        <para>The following sections describe many of the flag settings that can go into the nova.conf files. These need to be copied to each compute node. Here are some sample nova.conf files that offer examples of specific configurations</para>
+        <para>The following sections describe many of the flag settings that can go into the
+            nova.conf files. These need to be copied to each compute node. Here are some sample
+            nova.conf files that offer examples of specific configurations.</para>
         
         
         <simplesect><title>Configuration using KVM, FlatDHCP, MySQL, Glance, LDAP, and optionally sheepdog, API is EC2</title>
@@ -247,6 +249,196 @@
         <title>Configuring Hypervisors </title>
         <para>OpenStack Compute requires a hypervisor and supports several hypervisors and virtualization standards. Configuring and running OpenStack Compute to use a particular hypervisor takes several installation and configuration steps. </para>
         </section>
+    <section xml:id="configuring-authentication-authorization">
+        <title>Configuring Authentication and Authorization </title>
+        <para>There are different methods of authentication for the OpenStack Compute project. The
+            default setting is to use the novarc file that contains credentials. To do so, set the
+            --use_deprecated-auth flag in your nova.conf, which is True by default. For no auth,
+            modify the paste.ini that is included in the etc/nova directory. With additional
+            configuration, you can use the OpenStack Identity Service, code-named Keystone. In
+            Compute, the settings for using Keystone are commented lines in etc/nova/api-paste.ini,
+            and Keystone also provides an example file in
+            keystone/examples/paste/nova-api-paste.ini. Restart the nova-api service for these
+            settings to be configured. Refer to the Identity Service Starter Guide for additional
+            information.</para>
+        <para>OpenStack Compute uses an implementation of an authentication system structured with
+            an Active Directory or other federated LDAP user store that backends to an identity
+            manager or other SAML Policy Controller that then maps to groups. Credentials for API
+            calls are stored in the project zip file when using this auth system. Certificate
+            authority is also customized in nova.conf for the this built-in auth system. </para>
+        <para>If you see errors such as "EC2ResponseError: 403 Forbidden" it is likely you are
+            trying to use euca commands without the auth system properly configured. Either install
+            and use the default auth setting, or change out the default paste.ini file to use no
+            auth, or configure the Identity Service.</para>
+        <table rules="all">
+            <caption>Description of nova.conf flags for Authentication</caption>
+            <thead>
+                <tr>
+                    <td>Flag</td>
+                    <td>Default</td>
+                    <td>Description</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>--auth_driver</td>
+                    <td>default:'nova.auth.dbdriver.DbDriver'</td>
+                    <td>
+                        <para>String value; Name of the driver for authentication</para>
+                        <itemizedlist>
+                            <listitem>
+                                <para>nova.auth.dbdriver.DbDriver - Default setting, uses
+                                    credentials stored in zip file, one per project.</para>
+                            </listitem>
+                            <listitem>
+                                <para>nova.auth.ldapdriver.FakeLdapDriver - create a replacement for
+                                    this driver supporting other backends by creating another class
+                                    that exposes the same public methods.</para>
+                            </listitem>
+                        </itemizedlist>
+                    </td>
+                </tr>
+                <tr>
+                    <td>--use_deprecated_auth</td>
+                    <td>default:'True'</td>
+                    <td>
+                        <para>True or false; Sets the auth system to use the zip file provided with
+                            the project files to store all credentials</para>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table rules="all">
+            <caption>Description of nova.conf flags for customizing roles in deprecated
+                auth</caption>
+            <thead>
+                <tr>
+                    <td>Flag</td>
+                    <td>Default</td>
+                    <td>Description</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>--allowed_roles</td>
+                    <td>default: 'cloudadmin,itsec,sysadmin,netadmin,developer') </td>
+                    <td>Comma separated list; Allowed roles for project</td>
+                </tr>
+                <tr>
+                    <td>--global_roles</td>
+                    <td>default: 'cloudadmin,itsec') </td>
+                    <td>Comma separated list; Roles that apply to all projects</td>
+                </tr>
+                <tr>
+                    <td>--superuser_roles</td>
+                    <td>default: 'cloudadmin') </td>
+                    <td>Comma separated list; Roles that ignore authorization checking
+                        completely</td>
+                </tr>
+            </tbody>
+        </table>
+        <table rules="all">
+            <caption>Description of nova.conf flags for credentials in deprecated auth</caption>
+            <thead>
+                <tr>
+                    <td>Flag</td>
+                    <td>Default</td>
+                    <td>Description</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>--credentials_template</td>
+                    <td>default: '') </td>
+                    <td>Directory; Template for creating users' RC file</td>
+                </tr>
+                <tr>
+                    <td>--credential_rc_file</td>
+                    <td>default: '%src') </td>
+                    <td>File name; File name of rc in credentials zip</td>
+                </tr>
+                <tr>
+                    <td>--credential_cert_file</td>
+                    <td>default: 'cert.pem') </td>
+                    <td>File name; File name of certificate in credentials zip</td>
+                </tr>
+                <tr>
+                    <td>--credential_key_file</td>
+                    <td>default: 'pk.pem') </td>
+                    <td>File name; File name of rc in credentials zip</td>
+                </tr>
+                <tr>
+                    <td>--vpn_client_template</td>
+                    <td>default: 'nova/cloudpipe/client/ovpn.template') </td>
+                    <td>Directory; Refers to where the template lives for creating users vpn
+                        file</td>
+                </tr>
+                <tr>
+                    <td>--credential_vpn_file</td>
+                    <td>default: 'nova-vpn.conf') </td>
+                    <td>File name; Filename of certificate in credentials.zip</td>
+                </tr>
+            </tbody>
+        </table>
+        <table rules="all">
+            <caption>Description of nova.conf flags for CA (Certificate Authority)</caption>
+            <thead>
+                <tr>
+                    <td>Flag</td>
+                    <td>Default</td>
+                    <td>Description</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>--keys_path</td>
+                    <td>default: '$state_path/keys') </td>
+                    <td>Directory; Where Nova keeps the keys</td>
+                </tr>
+                <tr>
+                    <td>--ca_file</td>
+                    <td>default: 'cacert.pem') </td>
+                    <td>File name; File name of root CA</td>
+                </tr>
+                <tr>
+                    <td>--crl_file</td>
+                    <td>default: 'crl.pem') </td>
+                    <td>File name; File name of Certificate Revocation List</td>
+                </tr>
+                <tr>
+                    <td>--key_file</td>
+                    <td>default: 'private/cakey.pem') </td>
+                    <td>File name; File name of private key</td>
+                </tr>
+                <tr>
+                    <td>--use_project_ca</td>
+                    <td>default: 'false') </td>
+                    <td>True or false; Indicates whether to use a CA for each project; false means
+                        CA is not used for each project</td>
+                </tr>
+                <tr>
+                    <td>--project_cert_subject</td>
+                    <td>default: '/C=US/ST=California/L=MountainView/O=AnsoLabs/OU=NovaDev/CN=proje
+                        ct-ca-%s-%s') </td>
+                    <td>String; Subject for certificate for projects, %s for project, timestamp
+                    </td>
+                </tr>
+                <tr>
+                    <td>--user_cert_subject</td>
+                    <td>default:
+                        '/C=US/ST=California/L=MountainView/O=AnsoLabs/OU=NovaDev/CN=%s-%s-%s') </td>
+                    <td>String; Subject for certificate for users, %s for project, users, timestamp
+                    </td>
+                </tr>
+                <tr>
+                    <td>--vpn_cert_subject</td>
+                    <td>default:
+                        '/C=US/ST=California/L=MountainView/O=AnsoLabs/OU=NovaDev/CN=project-vpn-%s-%s') </td>
+                    <td>String; Subject for certificate for vpns, %s for project, timestamp </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
     <section xml:id="configuring-compute-to-use-ipv6-addresses">
         <title>Configuring Compute to use IPv6 Addresses </title>
             <para>You can configure Compute to use both IPv4 and IPv6 addresses for communication by
@@ -431,9 +623,10 @@ sudo bash -c "echo 0 > /proc/sys/net/ipv6/conf/all/accept_ra"</literallayout>
                             </listitem>
                             <listitem>
                                 <para>nova.image.glance.GlanceImageService</para>
-                                <para>Glance back end for storing and retrieving images; See <link
-                                    xlink:href="http://glance.openstack.org"
-                                    >http://glance.openstack.org</link> for more info.</para>
+                                <para>OpenStack Image Service (Glance) back end for storing and
+                                    retrieving images; See <link
+                                        xlink:href="http://glance.openstack.org"
+                                        >http://glance.openstack.org</link> for more info.</para>
                             </listitem>
                         </itemizedlist></td>
                 </tr>
@@ -678,7 +871,7 @@ root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l
                 <tr>
                     <td>--sql_idle_timeout</td>
                     <td>default: '3600'</td>
-                    <td/>
+                    <td>Integer value; Number of seconds to wait for a database connection</td>
                 </tr>
                 <tr>
                     <td>--sql_max_retries</td>
@@ -822,180 +1015,6 @@ root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l
                     <td>--volume_topic</td>
                     <td>default: 'volume'</td>
                     <td>String value; Name of the topic that volume nodes listen on</td>
-                </tr>
-            </tbody></table>
-    </section>
-    
-    <section xml:id="configuring-authentication-authorization">
-        <title>Configuring Authentication and Authorization </title>
-        
-        <para>There are different methods of authentication for the OpenStack Compute project. The default setting is to use the novarc file that contains credentials. To do so, set the --use_deprecated-auth flag in your nova.conf, which is True by default. For no auth, modify the paste.ini that is included in the etc/nova directory. 
-            With additional configuration, you can use the OpenStack Identity Service, code-named Keystone. In Compute, the settings for using Keystone are commented lines in etc/nova/api-paste.ini, and Keystone also provides an example file in keystone/examples/paste/nova-api-paste.ini. Restart the nova-api service for these settings to be configured. Refer to the Identity Service Starter Guide for additional information.</para>
-        <para>OpenStack Compute uses an implementation of an authentication system structured with an Active Directory or other federated LDAP user store that backends to an
-            identity manager or other SAML Policy Controller that then maps to groups. Credentials
-            for API calls are stored in the project zip file when using this auth system.
-            Certificate authority is also customized in nova.conf for the this built-in auth system. </para>
-        <para>If you see errors such as "EC2ResponseError: 403 Forbidden" it is likely you are
-            trying to use euca commands without the auth system properly configured. Either install
-            and use the default auth setting, or change out the
-            default paste.ini file to use no auth, or configure the Identity Service.</para>
-        
-        <table rules="all">
-            <caption>Description of nova.conf flags for Authentication</caption>
-            
-            <thead>
-                <tr>
-                    <td>Flag</td>
-                    <td>Default</td>
-                    <td>Description</td>
-                </tr>
-            </thead><tbody>
-                <tr>
-                    <td>--auth_driver</td>
-                    <td>default:'nova.auth.dbdriver.DbDriver'</td>
-                    <td><para>String value; Name of the driver for authentication</para><itemizedlist>
-                        <listitem>
-                            <para>nova.auth.dbdriver.DbDriver - Default setting, uses credentials stored in zip file, one per project.</para>
-                        </listitem>
-                        <listitem>
-                            
-                            <para>nova.auth.ldapdriver.FakeLdapDriver - create a replacement
-                                for this driver supporting other backends by creating another
-                                class that exposes the same public methods.</para>
-                        </listitem>
-                        
-                    </itemizedlist></td>
-                </tr>
-                <tr>
-                    <td>--use_deprecated_auth</td>
-                    <td>default:'True'</td>
-                    <td><para>True or false; Sets the auth system to use the zip file provided with the project files to store all credentials</para></td>
-                </tr>
-            </tbody>
-        </table>
-        <table rules="all">
-            <caption>Description of nova.conf flags for customizing roles in deprecated
-                auth</caption>
-            
-            <thead>
-                <tr>
-                    <td>Flag</td>
-                    <td>Default</td>
-                    <td>Description</td>
-                </tr>
-            </thead><tbody>
-                <tr>
-                    <td>--allowed_roles</td>
-                    <td>default: 'cloudadmin,itsec,sysadmin,netadmin,developer') </td>
-                    <td>Comma separated list; Allowed roles for project</td>
-                </tr>
-                <tr>
-                    <td>--global_roles</td>
-                    <td>default: 'cloudadmin,itsec') </td>
-                    <td>Comma separated list; Roles that apply to all projects</td>
-                </tr>
-                <tr>
-                    <td>--superuser_roles</td>
-                    <td>default: 'cloudadmin') </td>
-                    <td>Comma separated list; Roles that ignore authorization checking completely</td>
-                </tr>
-                
-            </tbody>
-        </table>
-        <table rules="all">
-            <caption>Description of nova.conf flags for credentials in deprecated auth</caption>
-            
-            <thead>
-                <tr>
-                    <td>Flag</td>
-                    <td>Default</td>
-                    <td>Description</td>
-                </tr>
-            </thead><tbody>
-                <tr>
-                    <td>--credentials_template</td>
-                    <td>default: '') </td>
-                    <td>Directory; Template for creating users' RC file</td>
-                </tr>
-                <tr>
-                    <td>--credential_rc_file</td>
-                    <td>default: '%src') </td>
-                    <td>File name; File name of rc in credentials zip</td>
-                </tr>
-                
-                <tr>
-                    <td>--credential_cert_file</td>
-                    <td>default: 'cert.pem') </td>
-                    <td>File name; File name of certificate in credentials zip</td>
-                </tr>
-                <tr>
-                    <td>--credential_key_file</td>
-                    <td>default: 'pk.pem') </td>
-                    <td>File name; File name of rc in credentials zip</td>
-                </tr>
-                <tr>
-                    <td>--vpn_client_template</td>
-                    <td>default: 'nova/cloudpipe/client/ovpn.template') </td>
-                    <td>Directory; Refers to where the template lives for creating users vpn file</td>
-                </tr>
-                <tr>
-                    <td>--credential_vpn_file</td>
-                    <td>default: 'nova-vpn.conf') </td>
-                    <td>File name; Filename of certificate in credentials.zip</td>
-                </tr>
-            </tbody></table>
-        
-        
-        <table rules="all">
-            <caption>Description of nova.conf flags for CA (Certificate Authority)</caption>
-            
-            <thead>
-                <tr>
-                    <td>Flag</td>
-                    <td>Default</td>
-                    <td>Description</td>
-                </tr>
-            </thead><tbody>
-                <tr>
-                    <td>--keys_path</td>
-                    <td>default: '$state_path/keys') </td>
-                    <td>Directory; Where Nova keeps the keys</td>
-                </tr>
-                <tr>
-                    <td>--ca_file</td>
-                    <td>default: 'cacert.pem') </td>
-                    <td>File name; File name of root CA</td>
-                </tr>
-                
-                <tr>
-                    <td>--crl_file</td>
-                    <td>default: 'crl.pem') </td>
-                    <td>File name; File name of Certificate Revocation List</td>
-                </tr>
-                <tr>
-                    <td>--key_file</td>
-                    <td>default: 'private/cakey.pem') </td>
-                    <td>File name; File name of private key</td>
-                </tr>
-                <tr>
-                    <td>--use_project_ca</td>
-                    <td>default: 'false') </td>
-                    <td>True or false; Indicates whether to use a CA for each project; false means CA is not used for each project</td>
-                </tr>
-                <tr>
-                    <td>--project_cert_subject</td>
-                    <td>default: '/C=US/ST=California/L=MountainView/O=AnsoLabs/OU=NovaDev/CN=proje ct-ca-%s-%s') </td>
-                    <td>String; Subject for certificate for projects, %s for project, timestamp </td>
-                </tr>
-                <tr>
-                    <td>--user_cert_subject</td>
-                    <td>default: '/C=US/ST=California/L=MountainView/O=AnsoLabs/OU=NovaDev/CN=%s-%s-%s') </td>
-                    <td>String; Subject for certificate for users, %s for project, users, timestamp </td>
-                </tr>
-                <tr>
-                    <td>--vpn_cert_subject</td>
-                    <td>default: '/C=US/ST=California/L=MountainView/O=AnsoLabs/OU=NovaDev/CN=project-vpn-%s-%s') </td>
-                    <td>String; Subject for certificate for vpns, %s for project, timestamp </td>
                 </tr>
             </tbody></table>
     </section>
