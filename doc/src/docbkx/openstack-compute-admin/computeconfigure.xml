@@ -829,19 +829,16 @@ root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l
     <section xml:id="configuring-authentication-authorization">
         <title>Configuring Authentication and Authorization </title>
         
-        <para>There are different methods of authentication for the OpenStack Compute project and
-            the default setting is now to use the OpenStack Identity Service, code-named Keystone. For the
-            older, deprecated auth system, you set the --use_deprecated-auth flag. For no auth, use
-            the default paste.ini that is included in the etch directory. </para>
-        <para>OpenStack Compute uses an implementation of an authentication system structured like
-            having an Active Directory or other federated LDAP user store that backends to an
+        <para>There are different methods of authentication for the OpenStack Compute project. The default setting is to use the novarc file that contains credentials. To do so, set the --use_deprecated-auth flag in your nova.conf. For no auth, use the default paste.ini that is included in the etc directory. 
+            With additional configuration, you can use the OpenStack Identity Service, code-named Keystone. Refer to the Identity Service Starter Guide for additional information.</para>
+        <para>OpenStack Compute uses an implementation of an authentication system structured with an Active Directory or other federated LDAP user store that backends to an
             identity manager or other SAML Policy Controller that then maps to groups. Credentials
-            for API calls are stored in the project zip file when using the deprecated auth system.
-            Certificate authority is also customized in nova.conf for the deprecated auth system. </para>
+            for API calls are stored in the project zip file when using this auth system.
+            Certificate authority is also customized in nova.conf for the this built-in auth system. </para>
         <para>If you see errors such as "EC2ResponseError: 403 Forbidden" it is likely you are
             trying to use euca commands without the auth system properly configured. Either install
-            and configure the Identity Service, use the deprecated auth setting, or change out the
-            default paste.ini file to use no auth.</para>
+            and use the default auth setting, or change out the
+            default paste.ini file to use no auth, or configure the Identity Service.</para>
         
         <table rules="all">
             <caption>Description of nova.conf flags for Authentication</caption>
@@ -858,8 +855,7 @@ root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l
                     <td>default:'nova.auth.dbdriver.DbDriver'</td>
                     <td><para>String value; Name of the driver for authentication</para><itemizedlist>
                         <listitem>
-                            <para>nova.auth.dbdriver.DbDriver - Default setting, uses Identity
-                                Service (Keystone).</para>
+                            <para>nova.auth.dbdriver.DbDriver - Default setting, uses credentials stored in zip file, one per project.</para>
                         </listitem>
                         <listitem>
                             
@@ -872,7 +868,7 @@ root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l
                 </tr>
                 <tr>
                     <td>--use_deprecated_auth</td>
-                    <td>default:'false'</td>
+                    <td>default:'True'</td>
                     <td><para>True or false; Sets the auth system to use the zip file provided with the project files to store all credentials</para></td>
                 </tr>
             </tbody>
