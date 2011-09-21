@@ -829,8 +829,8 @@ root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l
     <section xml:id="configuring-authentication-authorization">
         <title>Configuring Authentication and Authorization </title>
         
-        <para>There are different methods of authentication for the OpenStack Compute project. The default setting is to use the novarc file that contains credentials. To do so, set the --use_deprecated-auth flag in your nova.conf. For no auth, use the default paste.ini that is included in the etc directory. 
-            With additional configuration, you can use the OpenStack Identity Service, code-named Keystone. Refer to the Identity Service Starter Guide for additional information.</para>
+        <para>There are different methods of authentication for the OpenStack Compute project. The default setting is to use the novarc file that contains credentials. To do so, set the --use_deprecated-auth flag in your nova.conf, which is True by default. For no auth, modify the paste.ini that is included in the etc/nova directory. 
+            With additional configuration, you can use the OpenStack Identity Service, code-named Keystone. In Compute, the settings for using Keystone are commented lines in etc/nova/api-paste.ini, and Keystone also provides an example file in keystone/examples/paste/nova-api-paste.ini. Restart the nova-api service for these settings to be configured. Refer to the Identity Service Starter Guide for additional information.</para>
         <para>OpenStack Compute uses an implementation of an authentication system structured with an Active Directory or other federated LDAP user store that backends to an
             identity manager or other SAML Policy Controller that then maps to groups. Credentials
             for API calls are stored in the project zip file when using this auth system.

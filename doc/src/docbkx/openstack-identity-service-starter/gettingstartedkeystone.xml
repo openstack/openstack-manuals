@@ -193,6 +193,8 @@
       </section>
     
     <section xml:id="starting-identity-service"><title>Starting the Identity Service</title>
+      
+      <para>By default, configuration parameters (such as the IP and port binding for each service) are parsed from etc/keystone.conf, so ensure it is up-to-date prior to starting the service.</para>
       <para>To start up the Keystone service, enter the following:</para>
         
         <literallayout class="monospaced">$ cd ~/keystone/bin &amp;&amp; ./keystone </literallayout>
@@ -202,10 +204,39 @@
         Service API listening on 0.0.0.0:5000
         Admin API listening on 0.0.0.0:5001</literallayout>
         
+        <para>Use this command for starting the auth server only which exposes the Service API:</para>
+        
+        <literallayout class="monospaced">$ ./bin/keystone-auth</literallayout>
+        
+        <para>Use this command for starting the admin server only which exposes the Admin API:</para>
+        
+        <literallayout class="monospaced">$ ./bin/keystone-admin</literallayout>
+      <para>After starting keystone or running keystone-manage a keystone.db sqlite database should be created in the keystone folder.</para>
      </section>
     <section xml:id="configuring-the-identity-service"><title>Configuring the Identity Service</title>
-  <para>
-      Here are the steps to get started with authentication using Keystone, the project name for the OpenStack Identity Service.</para></section>
+  <para>Here are the steps to get started with authentication using Keystone, the project name for
+      the OpenStack Identity Service. </para>
+    <para>Typically a project that uses Keystone has settings in a configuration file:</para> 
+      
+      <para>
+      <itemizedlist>
+        <listitem>
+          <para>In Compute, the settings are in etc/nova/api-paste.ini, but Keystone also provides
+            an example file in keystone/examples/paste/nova-api-paste.ini. Restart the nova-api
+            service for these settings to be configured.</para>
+        </listitem>
+        <listitem>
+          <para>In Image Service, the settings are in glance-api.conf and glance-registry.conf
+            configuration files in the examples/paste directory. Restart the glance-api service and
+            also ensure your environment contains OS_AUTH credentials which you can set up with tools/nova_to_os_env.sh provided by the Glance project.</para>
+        </listitem>
+            <listitem><para>In Object Storage, the settings are held in /etc/swift/proxy-server.conf in a
+              [filter:keystone] section. Use <code>swift-init main start</code> to restart Object
+              Storage with the new configuration.</para></listitem>
+          
+       
+      </itemizedlist>
+    </para></section>
   <section xml:id="dependencies"><info><title>Dependencies</title></info>
     <para>Once Keystone is installed you need to initialize the database. You can do so with the keystone-manage command line utility. The keystone-manage utility helps with managing and configuring a Keystone installation. You configure the keystone-manage utility itself with a SQL Alchemy connection configuration via a parameter passed to the utility:</para>
     <para>--sql_connection=CONN_STRING</para>
@@ -223,20 +254,20 @@
     Some reserved roles are defined (and can be modified) through the keystone.conf in the /etc folder.</para>
   </note>
   <para>Add two tenants, and administrative tenant and a tenant named demo. Tenants are equivalent to projects in the previous auth system in Compute. In Object Storage, Tenants are similar to accounts in the swauth system.</para>
-  <literallayout class="monospaced">bin/keystone-manage  tenant add admin
+  <literallayout class="monospaced">  bin/keystone-manage  tenant add admin
   bin/keystone-manage  tenant add demo</literallayout>
   
   <para>Next add two users to the Identity Service and assign their passwords. The last value in the list is an ID number.</para>
-  <literallayout class="monospaced">bin/keystone-manage  user add admin p4ssw0rd 1
+  <literallayout class="monospaced">  bin/keystone-manage  user add admin p4ssw0rd 1
   bin/keystone-manage  user add demo p455w0rd 2</literallayout>
   
   <para>Now you can assign roles, which includes a set of rights and privileges that are double-checked with the token that the user is issued.</para>
-  <literallayout class="monospaced">bin/keystone-manage  role add Admin
+  <literallayout class="monospaced">  bin/keystone-manage  role add Admin
   bin/keystone-manage  role add Member
   bin/keystone-manage  role grant Admin admin</literallayout>
   
   <para>Now define the endpointTemplates, which are URLs plus port values that indicate where a service may be accessed. This example shows many services available to Compute including the Image Service, the Object Storage service, as well as Identity itself. Since there is just one zone in this example, it represents all the services across the single region (but could also represent all the regions).</para> 
-  <literallayout class="monospaced">bin/keystone-manage  endpointTemplates add RegionOne swift http://%HOST_IP%:8080/v1/AUTH_%tenant_id% http://%HOST_IP%:8080/ http://%HOST_IP%:8080/v1/AUTH_%tenant_id% 1 1
+  <literallayout class="monospaced">  bin/keystone-manage  endpointTemplates add RegionOne swift http://%HOST_IP%:8080/v1/AUTH_%tenant_id% http://%HOST_IP%:8080/ http://%HOST_IP%:8080/v1/AUTH_%tenant_id% 1 1
   bin/keystone-manage  endpointTemplates add RegionOne nova_compat http://%HOST_IP%:8774/v1.0/ http://%HOST_IP%:8774/v1.0  http://%HOST_IP%:8774/v1.0 1 1
   bin/keystone-manage  endpointTemplates add RegionOne nova http://%HOST_IP%:8774/v1.1/%tenant_id% http://%HOST_IP%:8774/v1.1/%tenant_id%  http://%HOST_IP%:8774/v1.1/%tenant_id% 1 1
   bin/keystone-manage  endpointTemplates add RegionOne glance http://%HOST_IP%:9292/v1.1/%tenant_id% http://%HOST_IP%:9292/v1.1/%tenant_id% http://%HOST_IP%:9292/v1.1/%tenant_id% 1 1
@@ -246,7 +277,7 @@
   <literallayout class="monospaced">bin/keystone-manage  token add 999888777666 1 1 2015-02-05T00:00</literallayout>
   
   <para>This section adds the tenant endpoints for each user created above (admin with ID 1 and demo with ID 2).</para>
-  <literallayout class="monospaced">bin/keystone-manage  endpoint add 1 1
+  <literallayout class="monospaced">  bin/keystone-manage  endpoint add 1 1
   bin/keystone-manage  endpoint add 1 2
   bin/keystone-manage  endpoint add 1 3
   bin/keystone-manage  endpoint add 1 4

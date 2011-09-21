@@ -693,11 +693,16 @@ chmod g+rwx /dev/kvm</literallayout>
             <literallayout class="monospaced">nova-manage version list</literallayout>
         </section>
         <section xml:id="migrating-from-cactus-to-diablo"><title>Migrating from Cactus to Diablo</title>
-            <para>If you have an installation already installed and running, to migrate to
-                Diablo you must update the installation first, then your database, then perhaps
-                your images if you were already running images on Cactus in the nova-objectstore.
-                If you were running images through Glance, your images should work automatically
-                after an upgrade. You can also export your users for importing into the OpenStack Identity Service (Keystone). Here are the overall steps. </para>
+            <para>If you have an installation already installed and running, to migrate to Diablo
+                you must update the installation first, then your database, then perhaps your images
+                if you were already running images in the nova-objectstore. You can also export your
+                users for importing into the OpenStack Identity Service (Keystone). </para>
+            <para>Here are the overall steps for upgrading the Image Service.</para>
+            <para>Download and install the Diablo Glance packages.</para>
+            <para>Migrate the registry database schema by running:</para>
+            <literallayout class="monospaced"> glance-manage db_sync </literallayout>
+            <para>Update configuration files, including the glance-api.conf and glance-registry.conf configuration files by using the examples in the examples/paste directory for the Diablo release.</para>
+            <para>Here are the overall steps for upgrading Compute. </para>
             <para>If your installation already pointed to ppa:nova-core/release, the release
                 package has been updated from Cactus to Diablo so you can simply run: </para>
             <literallayout class="monospaced">apt-get update
