@@ -103,19 +103,19 @@
       <para>
         To install the latest version of the Identity Service (Keystone) from the Github
         repositories, following the following instructions.
-      </para><para>
-     For Debian/Ubuntu, add the Keystone PPA to your sources.lst:
-            </para><orderedlist>
-    <listitem><para>
-              $&gt; sudo add-apt-repository ppa:keystone-core/trunk $&gt;
-              sudo apt-get update
-            </para>
+      </para><orderedlist>
+        <listitem><para>
+          For Debian/Ubuntu, add the Keystone PPA to your sources.lst:
+        </para><literallayout class="monospaced">
+              $&gt; sudo add-apt-repository ppa:keystone-core/trunk 
+              $&gt; sudo apt-get update
+            </literallayout>
           </listitem>
           <listitem>
             <para>
               Install Keystone:
             </para>
-            <para>  $&gt; sudo apt-get install keystone </para>
+            <literallayout class="monospaced">  $&gt; sudo apt-get install keystone </literallayout>
           </listitem>
         </orderedlist>
       
@@ -134,18 +134,18 @@
           <para>
             Untar the source tarball:
           </para>
-          <para>
+          <literallayout class="monospaced">
             $&gt; tar -xzf &lt;FILE&gt;
-          </para>
+          </literallayout>
         </listitem>
         <listitem>
           <para>
             Change into the package directory and build/install:
           </para>
-          <para>
+          <literallayout class="monospaced">
             $&gt; cd keystone-&lt;RELEASE&gt; $&gt; sudo python setup.py
             install
-          </para>
+          </literallayout>
         </listitem>
       </orderedlist>
     
@@ -164,9 +164,9 @@
             <para>
               Install Git and build dependencies:
             </para>
-            <para>  $&gt; sudo apt-get install git python-eventlet python-routes python-greenlet
+            <literallayout class="monospaced">  $&gt; sudo apt-get install git python-eventlet python-routes python-greenlet
               swift $&gt; sudo apt-get install python-argparse python-sqlalchemy python-wsgiref
-              python-pastedeploy </para>
+              python-pastedeploy </literallayout>
           </listitem>
         
           <listitem>
@@ -176,18 +176,19 @@
               to get the project initially setup):
             </para>
            
-            <para>
-              $&gt; git checkout master $&gt; git pull origin master
-            </para>
+            <literallayout class="monospaced">
+              $&gt; git checkout master 
+              $&gt; git pull origin master
+            </literallayout>
           </listitem>
           <listitem>
             <para>
               Install Keystone:
             </para>
            
-            <para>
+            <literallayout class="monospaced">
               $&gt; sudo python setup.py install
-            </para>
+            </literallayout>
           </listitem>
         </orderedlist>
       </section>
@@ -230,9 +231,45 @@
             configuration files in the examples/paste directory. Restart the glance-api service and
             also ensure your environment contains OS_AUTH credentials which you can set up with tools/nova_to_os_env.sh provided by the Glance project.</para>
         </listitem>
-            <listitem><para>In Object Storage, the settings are held in /etc/swift/proxy-server.conf in a
-              [filter:keystone] section. Use <code>swift-init main start</code> to restart Object
-              Storage with the new configuration.</para></listitem>
+            <listitem>
+          <para>In Object Storage, the settings are held in /etc/swift/proxy-server.conf in a
+            [filter:keystone] section. Use <code>swift-init main start</code> to restart Object
+            Storage with the new configuration. Here's an example
+            /etc/swift/proxy-server.conf:</para>
+        
+        
+          <literallayout class="monospaced">
+            [DEFAULT]
+bind_port = 8888
+user = &lt;user&gt;
+
+[pipeline:main]
+pipeline = catch_errors cache keystone proxy-server
+
+[app:proxy-server]
+use = egg:swift#proxy
+account_autocreate = true
+
+[filter:keystone]
+use = egg:keystone#tokenauth
+auth_protocol = http
+auth_host = 127.0.0.1
+auth_port = 5001
+admin_token = 999888777666
+delay_auth_decision = 0
+service_protocol = http
+service_host = 127.0.0.1
+service_port = 8100
+service_pass = dTpw
+
+[filter:cache]
+use = egg:swift#memcache
+set log_name = cache
+
+[filter:catch_errors]
+use = egg:swift#catch_errors
+ </literallayout>
+        </listitem>
           
        
       </itemizedlist>
