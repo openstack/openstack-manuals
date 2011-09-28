@@ -230,7 +230,7 @@ sudo chmod 755 nova-install</literallayout><para>You
         </section>
         <section xml:id="manual-ubuntu-installation">
             <title>Manual Installation</title>
-            <para>The manual installation involves installing from packages on Ubuntu 10.04 or 10.10
+            <para>The manual installation involves installing from packages on Ubuntu 10.10 or 11.04
                 as a user with root permission. Depending on your environment, you may need to
                 prefix these commands with sudo.</para>
             <para>This installation process walks through installing a cloud controller node and a
@@ -243,24 +243,30 @@ sudo chmod 755 nova-install</literallayout><para>You
             <section xml:id="installing-the-cloud-controller">
                 <title>Installing the Cloud Controller</title>
                 <para>First, set up pre-requisites to use the Nova PPA (Personal Packages Archive)
-                    provided through https://launchpad.net/~nova-core/+archive/trunk. The
-                    ‘python-software-properties’ package is a pre-requisite for setting up the nova
-                    package repository. You can also use the release package by adding the
-                    ppa:nova-core/release repository.</para>
+                    provided through https://launchpad.net/. The ‘python-software-properties’
+                    package is a pre-requisite for setting up the nova package repository. You can
+                    also use the trunk package built daily by adding the ppa:nova-core/trunk
+                    repository, but trunk changes rapidly and may not run any given day.</para>
                 <literallayout class="monospaced">sudo apt-get install python-software-properties</literallayout>
-                <literallayout class="monospaced">sudo add-apt-repository ppa:nova-core/trunk</literallayout>
+                <literallayout class="monospaced">sudo add-apt-repository ppa:openstack-release/2011.3</literallayout>
                 <para>Run update.</para>
                 <literallayout class="monospaced">sudo apt-get update</literallayout>
                 <para>Install the messaging queue server, RabbitMQ.</para>
                 <literallayout class="monospaced">sudo apt-get install -y rabbitmq-server</literallayout>
                 <para>Now, install the Python dependencies. </para>
                 <literallayout class="monospaced">sudo apt-get install -y python-greenlet python-mysqldb </literallayout>
-                <para>Install the required nova- packages, and dependencies should be automatically
+                <note><para>You can use either MySQL or PostgreSQL.</para></note>
+                <para>Install the required nova- packages, and dependencies are automatically
                     installed.</para>
-                <literallayout class="monospaced">sudo apt-get install -y nova-common nova-doc python-nova nova-api
-                        nova-network nova-objectstore nova-scheduler nova-compute</literallayout>
+                <literallayout class="monospaced">
+sudo apt-get install nova-volume nova-vncproxy nova-api nova-ajax-console-proxy
+sudo apt-get install nova-doc nova-scheduler nova-objectstore
+sudo apt-get install nova-network nova-compute
+sudo apt-get install glance
+</literallayout>
                 <para>Install the supplemental tools such as euca2ools and unzip.</para>
                 <literallayout class="monospaced">sudo apt-get install -y euca2ools unzip</literallayout>
+                <para> Next set up the database, either MySQL or PostgreSQL.</para>
 
                 <section xml:id="setting-up-sql-database-mysql">
                         <title>Setting up the SQL Database (MySQL) on the Cloud Controller</title>
@@ -301,7 +307,7 @@ sudo service mysql restart</literallayout></para>
                             PASSWORD('$NOVA_PASS');"</literallayout>
                     </para>
                 </section>
-                <section xml:id="setting-up-sql-database-postgresql"><title></title>
+                <section xml:id="setting-up-sql-database-postgresql"><title>Setting Up PostgreSQL as the Database</title>
                     
                     <para>OpenStack can use PostgreSQL as an alternative database. This is a matter of substituting the MySQL steps with PostgreSQL equivalents, as outlined here.</para>
                     
