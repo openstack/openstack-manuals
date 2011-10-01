@@ -1,0 +1,629 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book [
+        <!-- Some useful entities borrowed from HTML -->
+        <!ENTITY ndash  "&#x2013;">
+        <!ENTITY mdash  "&#x2014;">
+        <!ENTITY hellip "&#x2026;">
+        <!ENTITY plusmn "&#xB1;">
+
+]>
+<book xmlns="http://docbook.org/ns/docbook"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:svg="http://www.w3.org/2000/svg"
+      xmlns:m="http://www.w3.org/1998/Math/MathML"
+      xmlns:html="http://www.w3.org/1999/xhtml"
+      xmlns:db="http://docbook.org/ns/docbook"
+      version="5.0" status="final"
+    xml:id="Quantum-admin-guide">
+    <title>Quantum Admin Guide</title>
+    <titleabbrev>Quantum Admin Guide</titleabbrev>
+    <info>
+        <author>
+            <personname>
+                <firstname/>
+                <surname/>
+            </personname>
+        </author>
+        <copyright>
+            <year>2011</year>
+            <holder>OpenStack</holder>
+        </copyright>
+        <releaseinfo>Quantum 1.0 Administrator Guide</releaseinfo>
+        <productname>OpenStack Quantum (virtual network service)</productname>
+        <pubdate>2011-09-30</pubdate>
+        <legalnotice role="apache2">
+            <annotation>
+                <remark>Copyright details are filled in by the template.</remark>
+            </annotation>
+        </legalnotice>
+        <abstract>
+            <para>This document is intended for administrators interested in running the OpenStack
+                Quantum Virtual Network Service. </para>
+        </abstract>
+    </info>
+    <chapter xml:id="Preface-d1e71">
+        <title>Preface</title>
+        <para>
+            Quantum is a project to provide "network connectivity as a
+            service" between devices managed by other OpenStack services
+            (e.g., vNICs from the OpenStack Nova compute service).
+            For more information on Quantum and the other network-related
+            projects please check the Quantum home page
+            (<link xlink:href="http://wiki.openstack.org/Quantum">wiki.openstack.org/Quantum</link>)
+            and the NetStack home page
+            (<link xlink:href="http://wiki.openstack.org/Network">wiki.openstack.org/Network</link>).
+        </para>
+        <para> We welcome feedback, comments, and bug reports at <link
+            xlink:href="http://bugs.launchpad.net/Quantum">bugs.launchpad.net/Quantum</link>.
+        </para>
+        <section xml:id="Intended_Audience-d1e85">
+            <title>Intended Audience</title>
+            <para> This guide is intended to assist OpenStack
+            administrators looking to run an OpenStack cloud that
+            leverages Quantum for advanced networking.
+            This document only covers the process of installing,
+            configuring, and running Quantum.  Information about
+            programming against the Quantum API is found in the Quantum API
+            Guide.
+            </para>
+            <para>
+            The user should also have access to a plugin providing the
+            implementation of the Quantum service.
+            Two plugins are included in the Quantum distribution:
+			</para>
+            <itemizedlist spacing="compact">
+                <listitem>
+                    <para>Openvswitch - Implementing Quantum with Open vSwitch for KVM and
+                            XenServer compute platforms.</para>
+                </listitem>
+                <listitem>
+                    <para>Cisco - Implementing Quantum for deployments using Cisco UCS blades and
+                    Nexus switches.</para>
+                </listitem>
+            </itemizedlist>
+            <para>
+            Plugins can also be distributed separately from Quantum.
+            </para>
+            <para>
+            You should also be familiar with running the OpenStack Nova compute service as
+            described in the Nova documentation.
+			</para>
+        </section>
+        <section xml:id="Document_Change_History-d1e118">
+            <title>Document Change History</title>
+            <para>The most recent changes are described in the table below:</para>
+            <informaltable rules='all'>
+                    <thead>
+                        <tr>
+                            <td align="center" colspan="1">Revision Date</td>
+                            <td align="center" colspan="4">Summary of Changes</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="1" align="center">September 22, 2011</td>
+                            <td colspan="4">
+                                 <itemizedlist spacing="compact">
+                                     <listitem>
+                                         <para>
+                                             Initial draft.
+                                         </para>
+                                    </listitem>
+                                </itemizedlist>
+                            </td>
+                        </tr>
+                    </tbody>
+            </informaltable>
+        </section>
+        <?hard-pagebreak?>
+    </chapter>
+    <chapter xml:id="Overview-d1e369">
+        <title>Overview</title>
+	    <para>
+        This section describes the high-level concepts and components of a Quantum deployment.
+        </para>
+	    <section xml:id="WhatIsQuantum">
+	    	<title>What is Quantum?</title>
+            <para>
+            Quantum is a "virtual network service" that aims to provide a powerful API to
+            define the network connectivity between devices from other OpenStack services.
+            The Quantum service has an API that presents a logical abstraction for
+            describing network connectivity.
+            The service relies on a Quantum plugin to manage virtual and/or
+            physical switches within the cloud data center to make sure those devices
+            forward packets according to the behavior defined in the logical API model.
+            This notion of a plugin
+            is similar to how Nova can use different types of hypervisors to implement
+            the same virtual server API.
+            </para>
+            <para>
+            The Quantum API utilizes the following logical abstractions:
+            </para>
+            <itemizedlist>
+                <listitem> <para> Network: An isolated L2 segment, analogous to a
+                                  single physical L2 switching device with an
+                                  arbitrary number of ports.  </para> </listitem>
+                <listitem> <para> Port: Provide a connection point to a Quantum network.
+                                  Ports can also be configured to apply various network
+                                  security, QoS, monitoring, etc. policies.
+                                  Such policies are currently exposed by API extensions.
+                                 </para> </listitem>
+                <listitem> <para> Attachment: Identifier of an interface device to
+                                  be ''plugged in'' to a Quantum port, such as a vNIC from Nova.
+                                  </para> </listitem>
+            </itemizedlist>
+            <para>
+             For a detailed description of the Quantum API abstractions and their attributes,
+             please see the Quantum API Guide.
+            </para>
+	    </section>
+        <section xml:id="Architecture">
+            <title> Quantum Architecture </title>
+            <para>
+            This section describes the high-level components of a Quantum deployment.
+            </para>
+        <section xml:id="SwitchInfrastructure">
+            <title>Switching Infrastructure</title>
+            <para>
+            At its core, Quantum controls the network connectivity seen by other OpenStack resources
+            like Nova vNICs by managing the switching infrastructure
+            within the cloud data center.  Exactly which switches need to be managed depends on the
+            plugin in use.  For example, a plugin may manage only the vswitch running on
+            compute server, or it may manage both the vswitch and adjacent physical switches.
+			</para>
+        </section>
+        <section xml:id="QuantumAwareServices">
+            <title>Quantum-Aware OpenStack Services</title>
+            <para>
+            A Quantum-aware OpenStack service (e.g., Nova) must inform
+            Quantum about individual interface devices (e.g., Nova vNICs) that can be plugged into
+            Quantum networks.  This interaction enables a Quantum plugin to associate a port on
+            a managed virtual/physical switch with a particular interface device identifier (and
+            thus, ultimately with a port on a Quantum network).
+			</para>
+        </section>
+        <section xml:id="QuantumService">
+            <title>Quantum Service</title>
+            <para>
+            The Quantum Service is a python process that runs the Quantum API webserver
+            and is responsible for loading a Quantum plugin and passing each API call
+            to the Quantum plugin for processing.  This process is commonly run on a ''controller''
+            host along with other OpenStack services (e.g., nova-api, nova-scheduler),
+            but can also be run stand-alone.
+			</para>
+        </section>
+        <section xml:id="QuantumPlugin">
+            <title>Quantum Plugin</title>
+            <para>
+            The role of the Quantum plugin is to translate logical network modifications received from the
+            Quantum Service API and map them to specific operations on the switching infrastructure.
+            A plugin may be open source or proprietary, and may be specific to a single type of switching
+            infrastructure, or work across switches of many different types/vendors.
+            Plugins are able to expose advanced capabilities beyond L2 connectivity using API extensions.
+			</para>
+        </section>
+      </section>
+    </chapter>
+    <chapter xml:id="Installation-d1e436">
+        <title>Quantum Setup</title>
+        <para>
+            This chapter covers how to install the Quantum Service and get it up and running.
+        </para>
+        <section xml:id="SeletingAHost-d1e444">
+            <title>Selecting a Host</title>
+            <para>
+            The Quantum Service is a python process, similar to other OpenStack
+            projects like OpenStack Nova.  If your deployment uses a ''controller host''
+            to run centralize OpenStack Nova components, you can deploy Quantum
+            on that same host.  However, Quantum is entirely standalone and can be
+            deployed on its own server as well.
+            </para>
+            <para>
+            If you are building a host from scratch to use for Quantum, we recommend using a
+            recent versions of
+            Ubuntu (10.10 or newer) or Red Hat Enterprise Linux (version 6.x) as these are the platforms
+            the most well-tested platforms.
+            </para>
+        </section>
+        <section xml:id="GettingQuantum-d1e445">
+            <title>Getting Quantum</title>
+            <para>
+            There is currently no packaging for Quantum, so it must be deployed
+            from source.  The most recent official release of Quantum is the 2011.3
+            "diablo" release (9/2011), available at:
+            <link xlink:href="http://launchpad.net/quantum/diablo/2011.3/+download/quantum-2011.3.tar.gz"/>.
+            </para>
+            <para>
+            Since Quantum is still evolving rapidly, you may want to check the Quantum
+            launchpad site for the most recent milestone release:
+            <link xlink:href="http://launchpad.net/quantum"/>.
+            </para>
+            <para>
+            Unarchive the file and change into the directory.  All commands described in the rest of this
+            document should be run from the top level of this directory unless otherwise stated.  The
+            Quantum distribution has the following key directories and files:
+            </para>
+            <itemizedlist spacing="compact">
+                <listitem> <para> bin: contains quantum service and CLI executables
+                                  </para> </listitem>
+                <listitem> <para> etc: contains service configuration files quantum.conf
+                                  </para> </listitem>
+                <listitem> <para> quantum: main source code directory
+                                  </para> </listitem>
+                <listitem> <para> quantum/plugins: directory containing plugins shipped with Quantum
+                                  </para> </listitem>
+            </itemizedlist>
+        </section>
+        <section xml:id="Dependencies-d1e445">
+            <title>Installing Dependencies</title>
+            <para>
+            To install dependencies for the Quantum service, install 'pip' and use it to
+            install all dependencies listed in tools/pip-requires .  For example, on Ubuntu:
+            <literallayout class="monospaced">
+            sudo apt-get install python-pip
+            sudo pip install tools/pip-requires
+            </literallayout>
+            </para>
+            <para>
+            Please see the documentation for your Quantum plugin to see if there are any
+            additional dependencies.
+            </para>
+        </section>
+
+        <section xml:id="SelectingPlugin-d1e445">
+            <title>Selecting a Plugin</title>
+            <para>
+            The plugin used by the Quantum Service is configured in the file quantum/plugins.ini .
+            By default, Quantum is configured to use a ''FakePlugin'' that will let you make
+            API calls, but does not actually manage any switches.  To change to another plugin,
+            edit the following line in the plugins.ini file to point to your plugin of choice:
+            </para>
+            <literallayout class="monospaced">
+provider = quantum.plugins.SamplePlugin.FakePlugin
+            </literallayout>
+            <para>
+            Plugins distributed with Quantum are available in the quantum/plugins directory.
+            You may also use a plugin that is distributed separately from the main Quantum code.  If so,
+            copy that plugin into the quantum/plugins directory.
+            </para>
+            <para>
+            The plugin should include its own documentation (e.g., a README file) indicating plugin-specific
+            dependencies, plugin-specific configuration files, and the ''provider'' value that should be specified
+            in the main quantum/plugins.ini configuration file. The README files for the plugins shipped with
+            Quantum are located in:
+            </para>
+            <itemizedlist spacing="compact">
+                <listitem> <para> Open vSwitch: <link xlink:href="http://openvswitch.org/openstack/documentation/"/>
+                                  </para> </listitem>
+                <listitem> <para> Cisco: quantum/plugins/cisco/README
+                                  </para> </listitem>
+            </itemizedlist>
+        </section>
+        <section xml:id="Running-d1e447">
+            <title>Running the Service</title>
+            <para>
+            To start the service, simply run:
+            </para>
+            <literallayout class="monospaced">
+bin/quantum
+            </literallayout>
+            <para>
+            A successful start of the Quantum service with default settings will have output that ends with
+            a line similar to:
+            </para>
+            <literallayout class="monospaced">
+DEBUG [eventlet.wsgi.server] (2094) wsgi starting up on http://0.0.0.0:9696/
+            </literallayout>
+            <para>
+            By default the service uses TCP port 9696 and listens on all IP addresses.
+            To edit this and other Quantum Service settings, edit etc/quantum.conf .
+            Editing this file can also be used to enable any extensions supported by
+            the plugin.  See your plugin documentation for more details.
+            </para>
+
+        </section>
+        <section xml:id="Validation-d1e447">
+            <title>Validating the Setup</title>
+            <para>
+            A good first step to validate the setup is to run the unit tests:
+            </para>
+            <literallayout class="monospaced">
+./run_tests.sh -N
+            </literallayout>
+            <para>
+            All tests should print a green 'OK'.  The end of the test output may print a few
+            pep8 errors depending on your version of pep8 installed.  These can be safely ignored.
+            </para>
+            <para>
+            You can use the basic API client CLI that ships with Quantum to validate your setup.
+            While still running the Quantum service, run the following command from the same host to confirm
+            that the client can communicate with Quantum service API running your plugin:
+            </para>
+            <literallayout class="monospaced">
+bin/cli create_net quantum-fake-tenant net1
+            </literallayout>
+            <para>
+            This command creates a Quantum network named 'net1' for a tenant named 'quantum-fake-tenant'.
+            The resulting output should resemble:
+            </para>
+            <literallayout class="monospaced">
+Created a new Virtual Network with ID: 0a649eca-3764-417c-91a7-eb51291d4bb9
+for Tenant: quantum-fake-tenant
+            </literallayout>
+            <para>
+            This validation confirms that the Quantum service is able to communicate with the Quantum
+            plugin and that the Quantum plugin is able to perform basic API operations.  It does not
+            test whether the Quantum plugin is correctly communicating with your switch infrastructure.
+            See your plugin documentation for additional validation steps.
+            </para>
+            <para>
+            To experiment more with basic Quantum API commands, invoke the CLI utility with
+            no arguments to see all available commands:
+            </para>
+            <literallayout class="monospaced">
+list_nets [tenant-id]
+rename_net [tenant-id] [net-id] [new-name]
+show_port [tenant-id] [net-id] [port-id]
+unplug_iface [tenant-id] [net-id] [port-id]
+plug_iface [tenant-id] [net-id] [port-id] [iface-id]
+show_net [tenant-id] [net-id]
+delete_port [tenant-id] [net-id] [port-id]
+delete_net [tenant-id] [net-id]
+set_port_state [tenant-id] [net-id] [port-id] [new_state]
+create_net [tenant-id] [net-name]
+create_port [tenant-id] [net-id]
+list_ports [tenant-id] [net-id]
+            </literallayout>
+            <para>
+            Invoking the CLI utility help also displays additional command-line options to, for example,
+            specify an alternate Quantum server IP address or port.
+            </para>
+        </section>
+        <?hard-pagebreak?>
+    </chapter>
+    <chapter xml:id="QuantumManager-d1e450">
+        <title>Using Quantum with Nova Compute</title>
+            <para>
+            This chapter covers how to configure the OpenStack Nova compute service
+            to communicate with Quantum using a special network manager class called
+            the Quantum Manager.
+            </para>
+            <para>
+            The Quantum Manager code was added to Nova in the 2011.3 "diablo" release
+            of Nova.  The Quantum Manager instructions in this section
+            will not work with any "diablo" milestone
+            releases, or previous Nova releases.
+            </para>
+            <para>
+            The final section of this chapter describes another model of using
+            Quantum with Nova that does not require Quantum Manager, but requires
+            manually associating vNICs with Quantum networks.
+            </para>
+        <section xml:id="EnablingQuantumManager-d1e453">
+            <title>Enabling Quantum Manager</title>
+            <para>
+            The nova-network process
+            manages VM network connectivity and related network services within Nova.
+            Nova supports plugging in
+            different implementation of ''managers'' for this network service,
+            and Quantum takes advantage of this by creating a standard Quantum Manager
+            that communicates with Quantum to allow Nova and Quantum to integrate.
+            </para>
+            <para>
+            To enable the Quantum Manager, make sure your nova-network service is
+            started with the following flag:
+            </para>
+            <literallayout class="monospaced">
+--network_manager=nova.network.quantum.manager.QuantumManager
+            </literallayout>
+        </section>
+        <section xml:id="Vifplugging-d1e453">
+            <title>Quantum Compatible Vif-Plugging in Nova</title>
+            <para>
+            As described in the Architecture
+            section, a service like Nova must be made aware of Quantum such that
+            a Quantum Plugin can associate an attachment-id passed in via the Quantum
+            API with a port on a vswitch or physical switch managed by the plugin.
+            </para>
+            <para>
+            In Nova, this is done by specifying that the nova-compute service
+            use a type of ''vif-plugging'' that is compatible with your
+            Quantum plugin.  A Quantum plugin's documentation should specify the
+            nova-compute flags it requires for vif-plugging.  Usually this will
+            include setting the vif-driver flag for your virt-layer
+            (e.g., ''libvirt_vif_driver'' or ''xenapi_vif_driver'') to point to a
+            vif-driver class that is specied in your plugin documentation.  Depending
+            on the vif-driver selected, the plugin documentation may require that additional
+            configuration flags are set as well (e.g., ''libvirt_vif_type'').
+            </para>
+        </section>
+        <section xml:id="IPAM-dle454">
+            <title> IP Address Management (IPAM) </title>
+            <para>
+            By default, the Quantum Manager uses the existing IPAM
+            database tables within Nova for managing fixed-ip assignments for VMs.
+            Quantum Manager also supports using a new standalone IPAM service from the
+            Melange project (<link xlink:href="http://wiki.openstack.org/Melange"/>).
+            To enable Melange IPAM, set the following flag:
+            </para>
+            <literallayout class="monospaced">
+--quantum_ipam_lib=nova.network.quantum.melange_ipam_lib
+            </literallayout>
+            <para>
+            Melange is still experimental and is being integrated into the Nova codebase early in the
+            Essex cycle.  See the Melange documentation for more information.
+            </para>
+        </section>
+        <section xml:id="Using-dle455">
+            <title> Defining VM Connectivity </title>
+            <para>
+            With Nova, the network manager is responsible for much more than
+            simply creating L2 connectivity.  Among other things, the network
+            manager is responsible for:
+            </para>
+            <itemizedlist spacing="compact">
+                <listitem> <para> Determining the number and order of vNICs on each VM.
+                                  </para> </listitem>
+                <listitem> <para> Associating vNICs with an L2 network.
+                                  </para> </listitem>
+                <listitem> <para> IP Address Management (IPAM), assigning each vNIC a
+                                  fixed IP address from a subnet associated with its
+                                  Quantum network.
+                                  </para> </listitem>
+            </itemizedlist>
+            <para>
+            Similar to standard Nova multi-nic networking, the Quantum Manager determines the
+            set of vNICs and fixed IPs for a VM based on networks
+            statically created by the cloud administrator using nova-manage.
+            </para>
+            <para>
+            For each vNIC created, the Quantum Manager will create a port on the
+            Quantum network and attach the vNIC.  If the VM is later terminated, Quantum
+            Manager will destroy the associated Quantum port.
+            </para>
+            <para>
+            To create a network using Quantum Manager, run:
+            </para>
+            <literallayout class="monospaced">
+nova-manage network create --label=public --fixed_range_v4=8.8.8.0/24
+            </literallayout>
+            <para>
+            When this command is invoked, the Quantum Manager will contact the Quantum Service
+            to create a corresponding Quantum network, and likewise will create an IPAM subnet
+            using the specified fixed range.
+            </para>
+            <para>
+            By default, networks are ''global'' in the sense that they are shared by all projects.
+            To create a project-specific network, specify the ''project_id'' flag when creating the
+            network.  For example:
+            </para>
+            <literallayout class="monospaced">
+nova-manage network create --label=tenantA-private --fixed_range_v4=10.0.0.0/24 --project_id=tenantA
+            </literallayout>
+            <para>
+            When a new VM is created, it is given a vNIC for each global network, as well as a vNIC
+            for each network owned by the project associated with the VM.  This lets users create
+            hybrid scenarios where a VM has a vNIC both on a shared public network and on a private
+            tenant-specific network.
+            </para>
+            <para>
+            To provide a mechanism for ordering multiple vNICs on a VM, Quantum Manager has a notion
+            of an integer ''priority'' for each network.  When a VM has multiple vNICs, the vNICs are
+            added in ascending priority order
+            (i.e., 0 is highest priority).  The priority of a network can be specified at network creation.
+            Consider a deployment where all all VMs should have two vNICs: the first (e.g., eth0) connected to the
+            shared public network and a second (e.g., eth1) connected to a private tenant network.
+            </para>
+            <para>
+            To do this, first create the shared network:
+            </para>
+            <literallayout class="monospaced">
+nova-manage network create --label=public --fixed_range_v4=8.8.8.0/24 --priority=0
+            </literallayout>
+            <para>
+            Then, for each projectX, create a private network:
+            </para>
+            <literallayout class="monospaced">
+nova-manage network create --label=tenantX-private --fixed_range_v4=10.0.0.0/24 --project_id=tenantX --priority=1
+            </literallayout>
+            <para>
+            If a network is created with no ''priority'', the network has priority 0.
+            Networks should be created such that a VM is never associated with multiple networks of
+            the same priority, as the order of vNICs will be undefined.
+            </para>
+            <note>
+                <para> In the future, Quantum Manager aims to extend the Nova API to
+                    expose a more flexible
+                    mechanism to determine the number of vNICs on each VM and their
+                    associations with Quantum networks.
+                    This will make it easier to create more advanced multi-tier
+                    network topologies.
+                </para>
+                <para>
+                Quantum Manager already supports more flexible vNIC-to-network
+                associations using the 'os-create-server-ext' extension, though there are
+                currently no user-friendly tools available to leverage this capability.
+                The Quantum Manager supports the network association
+                portion of this extension, but ignores any IP address data in the request.
+                </para>
+            </note>
+            <para>
+            It is also possible to use nova-manage to create a network that refers to an existing
+            Quantum network.  The ''uuid'' flag passes an existing Quantum Network UUID
+            to nova-manage, meaning that Quantum Manager does not need to contact the Quantum service
+            to create a network.  Instead the Quantum Manager will just create and delete ports on
+            the network when VMs are created/deleted.
+            For example:
+            </para>
+            <literallayout class="monospaced">
+nova-manage network create --label=public --fixed_range_v4=8.8.8.0/24 --priority=0 --uuid=0a649eca-3764-417c-91a7-eb51291d4bb9
+            </literallayout>
+        </section>
+        <section xml:id="Limits-dle455">
+            <title> Quantum Manager Limitations </title>
+            <para>
+            The 2011.3 diablo release is the first release of QuantumManager,
+            and only a subset of Nova networking functionality is supported
+            in this initial release.  Specifically, there are the following limitations:
+            </para>
+            <itemizedlist spacing="compact">
+                <listitem> <para> Nova's mechanism for providing DHCP using dnsmasq
+                                  is not supported.  This means that
+                                  for Nova virt drivers that do not support IP injection
+                                  (e.g., libvirt), VMs will not automatically receive
+                                  IP addresses.
+                                  </para> </listitem>
+                <listitem> <para> Floating IP addresses are not supported.
+                                  </para> </listitem>
+                <listitem> <para> NAT gateway and EC2 metadata server
+                                  are not supported.
+                                  </para> </listitem>
+                <listitem> <para> If Quantum Manager is controlling
+                                  the networking for a tenant, you should
+                                  not create or modify ports for that tenant
+                                  using the Quantum CLI or other API clients.
+                                  </para> </listitem>
+            </itemizedlist>
+            <para>
+            We expect most of these limitations to be addressed by enhancements to Quantum Manager
+            during the Essex timeframe.
+            </para>
+        </section>
+        <section xml:id="quantum-and-nova-flatmanager">
+            <title> Quantum and Nova FlatManager </title>
+            <para>
+             It is also possible to use Quantum and Nova together without using Quantum Manager,
+             though it requires extra work on behalf of the user or orchestration software to
+             associate vNICs with networks.  The approach is to have nova-network use the FlatManager
+             class with a single global IP subnet used by all VMs.  This can be achieved using the
+             following flags in the flags file for nova-network:
+            </para>
+            <literallayout class="monospaced">
+--network_manager=nova.network.manager.FlatManager
+--flat_network_bridge=br100
+--fixed_range=192.168.0.0/16
+            </literallayout>
+            <para>
+            In addition, the flags file used by the compute node must specify the vif-driver flags
+            (e.g., ''libvirt_vif_driver'') associated with your Quantum plugin.  These flags should
+            be described in your plugin's documentation.  The ''flat_network_bridge'' flag must be
+            specified as well, though commonly it is can be set to any value in the, all Quantum-aware
+            vif-drivers ignore this flag (it must be specified however, otherwise the FlatManager code
+            will produce an error). As mentioned in the OpenStack documentation,
+            in Flat Mode, the IP addresses for VM instances are grabbed from the subnet specified in
+            the ''fixed_range'' flag, and then injected into the image on launch. Each instance receives
+            a fixed IP address from the pool of available addresses. The configuration injection currently
+            only works on Linux-style systems that keep networking configuration in /etc/network/interfaces.
+            </para>
+            <para>
+            With this setup, VMs will be spawned with a single vNIC, but that vNIC will not be plugged into
+            any Quantum port.  You will need to create a Quantum port using a Quantum API client and
+            associate the interface-id of the vNIC with that port.  The interface-id for a Nova vNIC is exposed
+            using a the 'os-virtual-interfaces' extension to the Nova API.  Currently there are no CLI tools
+            that list these interface-id in an easily consumable format.  However, Quantum integration for the
+            Dashboard project leverages this extension.
+            </para>
+        </section>
+    </chapter>
+</book>
