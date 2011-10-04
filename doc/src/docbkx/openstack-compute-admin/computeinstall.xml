@@ -170,63 +170,32 @@
                 <link xlink:href="http://getsatisfaction.com/stackops">http://getsatisfaction.com/stackops</link>.</para></section>
         <section xml:id="scripted-ubuntu-installation">
             <title>Scripted Installation</title>
-            <para>You can download a script from GitHub at <link
-                    xlink:href="https://github.com/elasticdog/OpenStack-NOVA-Installer-Script/raw/master/nova-install"
-                    >https://github.com/elasticdog/OpenStack-NOVA-Installer-Script/raw/master/nova-install</link>.</para>
-            <para>Copy the file to the servers where you want to install OpenStack Compute services
-                - with multiple servers, you could install a cloud controller node and multiple
-                compute nodes. The compute nodes manage the virtual machines through the
-                nova-compute service. The cloud controller node contains all other nova-
-                services.</para>
-            <para>Ensure you can execute the script by modifying the permissions on the script
-                file.</para>
-            <literallayout class="monospaced">wget --no-check-certificate https://github.com/elasticdog/OpenStack-NOVA-Installer-Script/raw/master/nova-install
-sudo chmod 755 nova-install</literallayout><para>You
-                must run the script with root permissions. </para>
-            <literallayout class="monospaced">sudo bash nova-install -t cloud</literallayout>
-            <para>The way this script is designed, you can have multiple servers for the cloud
-                controller, the messaging service, and the database server, or run it all on one
-                server. The -t or -type parameter has two options: <code>nova-install -t
-                    cloud</code> installs the cloud controller and <code>nova-install -t
-                    compute</code> installs a compute node for an existing cloud controller.</para>
-            <para>These are the parameters you enter using the script:</para>
-            <para>
-                <itemizedlist>
-                    <listitem>
-                        <para>Enter the Cloud Controller Host IP address.</para>
-                    </listitem>
-                    <listitem>
-                        <para>Enter the S3 IP, or use the default address as the current server's IP
-                            address.</para>
-                    </listitem>
-                    <listitem>
-                        <para>Enter the RabbitMQ Host IP. Again, you can use the default to install
-                            it to the local server. RabbitMQ will be installed. </para>
-                    </listitem>
-                    <listitem>
-                        <para>Enter the MySQL host IP address.</para>
-                    </listitem>
-                    <listitem>
-                        <para>Enter the MySQL root password and verify it.</para>
-                    </listitem>
-                    <listitem>
-                        <para>Enter a network range for all projects in CIDR format.</para>
-                    </listitem>
-                </itemizedlist>
-            </para>
-            <para>The script uses all these values entered for the configuration information to
-                create the nova.conf configuration file. The script also walks you through creating
-                a user and project. Enter a user name and project name when prompted. After the script is finished, you also need to create the project zip file. Credentials are generated after you create the project zip file with <code>nova-manage project zipfile projname username</code></para>
-            <para>After configuring OpenStack Compute and creating a project zip file using the nova-manage project create command, be sure to unizp the project zip file and then source the novarc
-                credential file that you extracted. </para>
-            <literallayout class="monospaced">source /root/creds/novarc                </literallayout>
-            <para>Now all the necessary nova services are started up and you can begin to issue
-                nova-manage commands. If you configured it to all run from one server, you're done.
-                If you have a second server that you intend to use as a compute node (a node that
-                does not contain the database), install the nova services on the second node using
-                the -t compute parameters using the same nova-install script.</para>
-                <para>To run from two or more servers, copy the nova.conf from the cloud controller node to the compute node. </para>
+            <para>You can download a script for a standalone install for proof-of-concept, learning, or for development purposes for Ubuntu 11.04 at <link
+                    xlink:href="http://devstack.org"
+                >https://devstack.org</link>.</para>
+            
+            <orderedlist>
+                <listitem><para>Install Ubuntu 11.04 (Natty):</para> <para>In order to correctly install all the dependencies, we assume a specific version of Ubuntu to
+                        make it as easy as possible. OpenStack works on other flavors of Linux (and
+                        some folks even run it on Windows!) We recommend using a minimal install of
+                        Ubuntu server in a VM if this is your first time.</para></listitem>
+            
+           
+          
+            <listitem><para>Download DevStack:</para>
+                <literallayout class="monospaced">git clone git://github.com/cloudbuilders/devstack.git</literallayout>
+                <para>The devstack repo contains a script that installs OpenStack Compute, the Image
+                        Service and the Identity Service and offers templates for configuration
+                        files plus data scripts. </para></listitem>
+            
+                        
+            
+                <listitem><para>Start the install:</para><literallayout class="monospaced">cd devstack; ./stack.sh</literallayout><para>It takes a few minutes, we recommend <link xlink:href="http://devstack.org/stack.sh.html"
+                            >reading the well-documented script</link> while it is building to learn
+                        more about what is going on. </para>
+                </listitem>
 
+            </orderedlist>
         </section>
         <section xml:id="manual-ubuntu-installation">
             <title>Manual Installation</title>
@@ -365,43 +334,8 @@ sudo service mysql restart</literallayout></para>
                     Your installation can run any nova- services anywhere, so long as the service
                     can access nova.conf so it knows where the rabbitmq server is installed.</para>
                 <para>The Compute Node is where you configure the Compute network, the networking
-                    between your instances. There are three options: flat, flatDHCP, and
-                    VLAN.</para>
-                <para>If you use FlatManager as your network manager, there are some additional
-                    networking changes to ensure connectivity between your nodes and VMs. If you
-                    chose VlanManager or FlatDHCP, you may skip this section because they are set up
-                    for you automatically. </para>
-                <para>Compute defaults to a bridge device named ‘br100’. This needs to be created
-                    and somehow integrated into your network. To keep things as simple as possible,
-                    have all the VM guests on the same network as the VM hosts (the compute nodes).
-                    To do so, set the compute node’s external IP address to be on the bridge and add
-                    eth0 to that bridge. To do this, edit your network interfaces configuration to
-                    look like the following example: </para>
-                <para>
-                    <literallayout class="monospaced">
-&lt; begin /etc/network/interfaces >
-# The loopback network interface
-auto lo
-iface lo inet loopback
-
-# Networking for OpenStack Compute
-auto br100
-
-iface br100 inet dhcp
-bridge_ports        eth0
-bridge_stp           off
-bridge_maxwait   0
-bridge_fd            0
-&lt; end /etc/network/interfaces >
-</literallayout>
-                </para>
-                <para>Next, restart networking to apply the changes: </para>
-                <literallayout class="monospaced">sudo /etc/init.d/networking restart</literallayout>
-                <para>If you use flat networking, you must manually insert the IP address into the
-                    'fixed_ips' table in the nova database. Also ensure that the database lists the
-                    bridge name correctly that matches the network configuration you are working
-                    within. Flat networking should insert this automatically but you may need to
-                    check it.</para>
+                    between your instances. There are three options: flat, flatDHCP, and VLAN. Read
+                    more about specific configurations in the <xref linkend="ch_networking">Networking chapter</xref>. </para>
                 <para>Because you may need to query the database from the Compute node and learn
                     more information about instances, euca2ools and mysql-client packages should be
                     installed on any additional Compute nodes.</para>
@@ -414,19 +348,37 @@ bridge_fd            0
                     <literallayout class="monospaced">restart libvirt-bin; restart nova-network; restart nova-compute;
 restart nova-api; restart nova-objectstore; restart nova-scheduler</literallayout>
                 </para>
+                <para>All nova services are now installed, the rest of your steps involve specific configuration steps. Please refer to <xref linkend="configuring-openstack-compute-basics">Configuring Compute</xref> for additional information. </para>
             </section>
         </section>
     </section>
     <section xml:id="installing-openstack-compute-on-rhel6">
         <title>Installing OpenStack Compute on Red Hat Enterprise Linux 6 </title>
         <para>This section documents a multi-node installation using RHEL 6. RPM repos for the Bexar
-            release, the Cactus release, and also per-commit trunk builds for OpenStack Nova are
-            available at <link xlink:href="http://yum.griddynamics.net"
-                >http://yum.griddynamics.net</link>. </para>
+            release, the Cactus release, milestone releases of Diablo, and also per-commit trunk
+            builds for OpenStack Nova are available at <link
+                xlink:href="http://yum.griddynamics.net">http://yum.griddynamics.net</link>. The
+            final release of Diablo is available at <link
+                xlink:href="http://yum.griddynamics.net/yum/diablo/"
+                >http://yum.griddynamics.net/yum/diablo/</link>, but is not yet tested completely
+            (as of Oct 4, 2011). Check this page for updates: <link
+                xlink:href="http://wiki.openstack.org/NovaInstall/RHEL6Notes"
+                >http://wiki.openstack.org/NovaInstall/RHEL6Notes</link>.</para>
         
-        <para>Known limitations for RHEL version 6 installations: </para>
+        <para>Known considerations for RHEL version 6 installations: </para>
 
-<itemizedlist><listitem><para>iSCSI LUN not supported due to tgtadm vs ietadm differences</para></listitem>
+<itemizedlist><listitem>
+                <para>iSCSI LUN not supported due to tgtadm versus ietadm differences</para>
+            </listitem>
+            <listitem>
+                <para>GuestFS is used for files injection</para>
+            </listitem>
+            <listitem>
+                <para>Files injection works with libvirt</para>
+            </listitem>
+            <listitem>
+                <para>Static network configuration can detect OS type for RHEL and Ubuntu</para>
+            </listitem>
 <listitem><para>Only KVM hypervisor has been tested with this installation</para></listitem></itemizedlist>
         <para>To install Nova on RHEL v.6 you need access to two repositories, one available on the
             yum.griddynamics.net website and the RHEL DVD image connected as repo. </para>
@@ -443,17 +395,17 @@ baseurl=file:///mnt/cdrom/Server
 enabled=1
 gpgcheck=0</literallayout>
         <para>Download and install repo config and key.</para>
-        <literallayout class="monospaced">wget http://yum.griddynamics.net/openstack-repo-2011.1-2.noarch.rpm
-sudo rpm -i openstack-repo-2011.1-2.noarch.rpm</literallayout>
+        <literallayout class="monospaced">wget http://yum.griddynamics.net/yum/diablo/openstack-repo-2011.3-0.3.noarch.rpm
+sudo rpm -i openstack-repo-2011.1-3.noarch.rpm</literallayout>
         <para>Install the libvirt package (these instructions are tested only on KVM). </para>
         <literallayout class="monospaced">sudo yum install libvirt
 sudo chkconfig libvirtd on
 sudo service libvirtd start</literallayout>
         <para>Repeat the basic installation steps to put the pre-requisites on all cloud controller and compute nodes. Nova has many different possible configurations. You can install Nova services on separate servers as needed but these are the basic pre-reqs.</para>
         <para>These are the basic packages to install for a cloud controller node:</para>
-        <literallayout class="monospaced">sudo yum install euca2ools openstack-nova-{api,compute,network,objectstore,scheduler,volume} openstack-nova-cc-config openstack-glance</literallayout>
+        <literallayout class="monospaced">sudo yum install euca2ools openstack-nova-node-full</literallayout>
         <para>These are the basic packages to install compute nodes. Repeat for each compute node (the node that runs the VMs) that you want to install.</para>
-        <literallayout class="monospaced">sudo yum install openstack-nova-compute openstack-nova-compute-config</literallayout>
+        <literallayout class="monospaced">sudo yum install openstack-nova-compute </literallayout>
         <para>On the cloud controller node, create a MySQL database named nova. </para>
         <literallayout class="monospaced">sudo service mysqld start
 sudo chkconfig mysqld on
@@ -481,13 +433,29 @@ echo "GRANT ALL PRIVILEGES ON $DB_NAME.* TO $DB_USER IDENTIFIED BY '$DB_PASS';" 
 echo "GRANT ALL PRIVILEGES ON $DB_NAME.* TO root IDENTIFIED BY '$DB_PASS';" | mysql -uroot -p$DB_PASS mysql </literallayout>
         <para>Now, ensure the database version matches the version of nova that you are installing:</para>
         <literallayout class="monospaced">nova-manage db sync</literallayout>
-        
-        <para>On each node, set up the configuration file in /etc/nova/nova.conf.</para>
+        <para>For iptables configuration, update your firewall configuration to allow incoming
+            requests on ports 5672 (RabbitMQ), 3306 (MySQL DB), 9292 (Glance), 6080 (noVNC web
+            console), API (8773, 8774) and DHCP traffic from instances. For non-production
+            environments the easiest way to fix any firewall problems is removing final REJECT in
+            INPUT chain of filter table. </para>
+            <literallayout class="monospaced">$ sudo iptables -I INPUT 1 -p tcp --dport 5672 -j ACCEPT
+            $ sudo iptables -I INPUT 1 -p tcp --dport 3306 -j ACCEPT
+            $ sudo iptables -I INPUT 1 -p tcp --dport 9292 -j ACCEPT
+            $ sudo iptables -I INPUT 1 -p tcp --dport 6080 -j ACCEPT
+            $ sudo iptables -I INPUT 1 -p tcp --dport 8773 -j ACCEPT
+            $ sudo iptables -I INPUT 1 -p tcp --dport 8774 -j ACCEPT
+            $ sudo iptables -I INPUT 1 -p udp --dport 67 -j ACCEPT</literallayout>
+            
+            <para>On every node when you have nova-compute running ensure that unencrypted VNC access is allowed only from Cloud Controller node:</para> 
+            
+            <literallayout class="monospaced">$ sudo iptables -I INPUT 1 -p tcp -s &lt;CLOUD_CONTROLLER_IP_ADDRESS&gt; --dport 5900:6400 -j ACCEPT
+        </literallayout><para>On each node, set up the configuration file in /etc/nova/nova.conf.</para>
         <para>Start the Nova services after configuring and you then are running an OpenStack
             cloud!</para>
-        <literallayout class="monospaced">for n in api compute network objectstore scheduler volume; do sudo service openstack-nova-$n start; done
-sudo service openstack-glance start
-for n in node1 node2 node3; do ssh $n sudo service openstack-nova-compute start; done</literallayout>
+        <literallayout class="monospaced">$ for n in api compute network objectstore scheduler vncproxy; do sudo service openstack-nova-$n start; done
+$ sudo service openstack-glance-api start
+$ sudo service openstack-glance-registry start
+$ for n in node1 node2 node3; do ssh $n sudo service openstack-nova-compute start; done</literallayout>
         </section>
     <section xml:id="configuring-openstack-compute-basics">
         <title>Post-Installation Configuration for OpenStack Compute</title>
@@ -578,6 +546,10 @@ for n in node1 node2 node3; do ssh $n sudo service openstack-nova-compute start;
                         <td>--network_size</td>
                         <td>Number value; Number of addresses in each private subnet.</td>
                     </tr>
+                    <tr>
+                        <td>--glance_api_servers </td>
+                        <td>IP and port; Address for Image Service.</td>
+                    </tr>
 
                 </tbody>
             </table>
@@ -595,6 +567,7 @@ for n in node1 node2 node3; do ssh $n sudo service openstack-nova-compute start;
 --ec2_url=http://184.106.239.134:8773/services/Cloud
 --fixed_range=192.168.0.0/16
 --network_size=8
+--glance_api_servers=184.106.239.134:9292
 --routing_source_ip=184.106.239.134
 --sql_connection=mysql://nova:notnova@184.106.239.134/nova            </literallayout>
             <para>Create a “nova” group, so you can set permissions on the configuration file: </para>
@@ -606,17 +579,18 @@ chmod 640 /etc/nova/nova.conf</literallayout>
         </section><section xml:id="setting-up-openstack-compute-environment-on-the-compute-node">
                 <title>Setting Up OpenStack Compute Environment on the Compute Node</title>
                 <para>These are the commands you run to ensure the database schema is current, and
-                then set up a user and project: </para>
+                then set up a user and project, if you are using built-in auth with the
+                --use_deprecated_auth flag rather than the Identity Service: </para>
                 <para>
-<literallayout class="monospaced">/usr/bin/nova-manage db sync
-/usr/bin/nova-manage user admin &lt;user_name>
-/usr/bin/nova-manage project create &lt;project_name> &lt;user_name>
-/usr/bin/nova-manage network create &lt;network-label> &lt;project-network> &lt;number-of-networks-in-project> &lt;addresses-in-each-network></literallayout></para>
+<literallayout class="monospaced">nova-manage db sync
+nova-manage user admin &lt;user_name>
+nova-manage project create &lt;project_name> &lt;user_name>
+nova-manage network create &lt;network-label> &lt;project-network> &lt;number-of-networks-in-project> &lt;addresses-in-each-network></literallayout></para>
                 <para>Here is an example of what this looks like with real values entered: </para>
-                <literallayout class="monospaced">/usr/bin/nova-manage db sync
-/usr/bin/nova-manage user admin dub
-/usr/bin/nova-manage project create dubproject dub
-/usr/bin/nova-manage network create novanet 192.168.0.0/24 1 256 </literallayout>
+                <literallayout class="monospaced">nova-manage db sync
+nova-manage user admin dub
+nova-manage project create dubproject dub
+ova-manage network create novanet 192.168.0.0/24 1 256 </literallayout>
                 <para>For this example, the number of IPs is /24 since that falls inside the /16
                     range that was set in ‘fixed-range’ in nova.conf. Currently, there can only be
                     one network, and this set up would use the max IPs available in a /24. You can
@@ -772,8 +746,9 @@ chmod g+rwx /dev/kvm</literallayout>
 apt-get upgrade</literallayout>
             <para>Next, update the database schema. </para><literallayout class="monospaced">nova-manage db sync</literallayout>
             <para>Restart all the nova- services. </para>
-            <para>A separate command is available to migrate users from the deprecated auth system to the Identity Service. </para>
-            <literallayout class="monospaced">nova-manage shell export</literallayout>
+            <para>A separate command is available to migrate users from the deprecated auth system
+                to the Identity Service. </para>
+            <literallayout class="monospaced">nova-manage shell export textfilename.txt</literallayout>
             <para>Within the Keystone project there is a keystone-import script that you can run to
                 import these users.</para>
             <para>Make sure that you can launch images. You can convert images that were previously stored in the nova object store using this command: </para>
