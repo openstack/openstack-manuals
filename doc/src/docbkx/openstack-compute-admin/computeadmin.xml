@@ -530,7 +530,6 @@ euca-register mybucket/windowsserver.img.manifest.xml
         
         <para>RBAC management is exposed through the dashboard for simplified user management.</para></simplesect></section>
     <section xml:id="managing-volumes">
-       
         <title>Managing Volumes</title>
         <para>Nova-volume is the service that allows you to give extra block level storage to your
             OpenStack Compute instances. You may recognize this as a similar offering that Amazon
@@ -546,10 +545,14 @@ euca-register mybucket/windowsserver.img.manifest.xml
         <para>
             <orderedlist>
                 <listitem>
-                <para>lvm2, which works with a VG called "nova-volumes" (Refer to
-                    <link xlink:href="http://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)">http://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)</link>
-                        for further details)</para></listitem>
-                        <listitem><para>open-iscsi, the iSCSI implementation which manages iSCSI sessions on the compute nodes </para>
+                    <para>lvm2, which works with a VG called "nova-volumes" (Refer to <link
+                            xlink:href="http://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)"
+                            >http://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)</link> for
+                        further details)</para>
+                </listitem>
+                <listitem>
+                    <para>open-iscsi, the iSCSI implementation which manages iSCSI sessions on the
+                        compute nodes </para>
                 </listitem>
             </orderedlist>
         </para>
@@ -574,15 +577,15 @@ euca-register mybucket/windowsserver.img.manifest.xml
             </listitem>
         </orderedlist>
         <para>For this particular walkthrough, there is one cloud controller running nova-api,
-            nova-compute, nova-scheduler, nova-objectstore, nova-network and nova-volume services. There are
-            two additional compute nodes running nova-compute. The walkthrough uses a custom
+            nova-scheduler, nova-objectstore, nova-network and nova-volume services. There are two
+            additional compute nodes running nova-compute. The walkthrough uses a custom
             partitioning scheme that carves out 60GB of space and labels it as LVM. The network is a
             /28 .80-.95, and FlatManger is the NetworkManager setting for OpenStack Compute (Nova). </para>
         <para>Please note that the network mode doesn't interfere at all the way nova-volume works,
             but it is essential for nova-volumes to work that the mode you are currently using is
             set up. Please refer to the Section 7 "Networking" for more details.</para>
         <para>To set up Compute to use volumes, ensure that nova-volume is installed along with
-            lvm2. The guide will be split in three parts : </para>
+            lvm2. The guide will be split in four parts : </para>
         <para>
             <itemizedlist>
                 <listitem>
@@ -590,18 +593,56 @@ euca-register mybucket/windowsserver.img.manifest.xml
                 </listitem>
                 <listitem>
                     <para>B- Configuring the nova-volumes volume group on the compute nodes.</para>
-
                 </listitem>
                 <listitem>
                     <para>C- Troubleshooting your nova-volumes installation.</para>
                 </listitem>
-                
+                <listitem>
+                    <para>D- Backup your nova volumes.</para>
+                </listitem>
             </itemizedlist>
         </para>
-
         <simplesect>
             <title>A- Install nova-volumes on the cloud controller.</title>
-            <para> This is simply done by installing the two components on the cloud controller : <literallayout class="monospaced"><code>apt-get install lvm2 nova-volume</code></literallayout><itemizedlist>
+            <para> This is simply done by installing the two components on the cloud controller : <literallayout class="monospaced"><code>apt-get install lvm2 nova-volumes</code></literallayout><literallayout><emphasis role="bold">For ubuntu distros, the nova-volumes componenent will not properly work</emphasis> (regarding the part which deals with volumes deletion) without a small fix. In dorder to fix that, do the following : </literallayout>
+                <code>sudo visudo</code>
+            </para>
+            <para>Then add an entry for the nova user (here is the default sudoers file with our added nova user) :</para>
+            <programlisting>
+# /etc/sudoers
+#
+# This file MUST be edited with the 'visudo' command as root.
+#
+# See the man page for details on how to write a sudoers file.
+#
+
+Defaults	env_reset
+
+# Host alias specification
+
+# User alias specification
+
+# Cmnd alias specification
+nova ALL = (root) NOPASSWD: /bin/dd
+
+# User privilege specification
+root	ALL=(ALL) ALL
+
+# Allow members of group sudo to execute any command
+# (Note that later entries override this, so you might need to move
+# it further down)
+%sudo ALL=(ALL) ALL
+#
+#includedir /etc/sudoers.d
+
+# Members of the admin group may gain root privileges
+%admin ALL=(ALL) ALL
+
+            </programlisting>
+            <para>That will allow the nova user to run the "dd" command (which empties a volume
+                before it's deletion).</para>
+            <para>
+                <itemizedlist>
                     <listitem>
                         <para>
                             <emphasis role="bold">Configure Volumes for use with
@@ -688,7 +729,8 @@ vgcreate nova-volumes /dev/sda5</code> </literallayout>
                                 </listitem>
                             </orderedlist></para>
                     </listitem>
-                </itemizedlist></para>
+                </itemizedlist>
+            </para>
         </simplesect>
         <simplesect>
             <title> B- Configuring nova-volumes on the compute nodes</title>
@@ -708,14 +750,15 @@ vgcreate nova-volumes /dev/sda5</code> </literallayout>
                         going further that your nodes can communicate with you nova-volumes server.
                         If you have a firewall running on it, make sure that the port 3260 (tcp)
                         accepts incoming connections. </para>
-                    <para>First install the open-iscsi package <emphasis role="bold">on your
-                            compute-nodes only :</emphasis>
-                        <literallayout class="monospaced"><code>apt-get install open-iscsi</code> </literallayout></para>
-                    <para>You have to enable it so the startut script (/etc/init.d/open-iscsi) will
-                        work :
-                        <literallayout class="monospaced"><code>sed -i ‘s/false/true/g’ /etc/default/iscsitarget</code></literallayout>
-                        Then run :
-                        <literallayout class="monospaced"><code>service iscsitarget start</code></literallayout></para>
+                    <para>First install the open-iscsi package on the initiators, so the
+                        compute-nodes <emphasis role="bold">only</emphasis> :
+                        <literallayout class="monospaced"><code>apt-get install open-iscsi</code> </literallayout><literallayout>Then on the target, which is in our case the cloud-controller, the iscsitarget package : </literallayout><literallayout><code>apt-get install iscsitarget</code> </literallayout><literallayout>This package could refuse to start with a "FATAL: Module iscsi_trgt not found" error. This error is caused by the kernel which does not contain the iscsi module's source into it ; you can install the kernel modules by installing an extra pacakge : </literallayout><literallayout> <code>apt-get install iscsitarget-dkms</code> (the Dynamic Kernel Module Support is a framework used for created modules with non-existent sources into the current kernel)</literallayout></para>
+                    <para>You have to enable it so the startut script (/etc/init.d/iscsitarget) can
+                        start the daemon :
+                        <literallayout class="monospaced"><code>sed -i 's/false/true/g' /etc/default/iscsitarget</code></literallayout>
+                        Then run on the nova-controller (iscsi target) :
+                            <literallayout class="monospaced"><code>service iscsitarget start</code></literallayout><literallayout>And on the compute-nodes (iscsi initiators) :</literallayout><code>service
+                            open-iscsi start</code></para>
                 </listitem>
                 <listitem>
                     <para><emphasis role="bold">Configure nova.conf flag file</emphasis></para>
@@ -732,20 +775,22 @@ vgcreate nova-volumes /dev/sda5</code> </literallayout>
                         <emphasis role="bold">Start nova-volume and create volumes</emphasis></para>
                     <para>You are now ready to fire up nova-volume, and start creating
                         volumes!</para>
-
-                    <para><literallayout class="monospaced"><code>service nova-volume start</code></literallayout></para>
-
+                    <para>
+                        <literallayout class="monospaced"><code>service nova-volume start</code></literallayout>
+                    </para>
                     <para>Once the service is started, login to your controller and ensure you’ve
                         properly sourced your ‘novarc’ file. You will be able to use the euca2ools
                         related to volumes interactions (see above).</para>
-
                     <para>One of the first things you should do is make sure that nova-volume is
                         checking in as expected. You can do so using nova-manage:</para>
-                    <para><literallayout class="monospaced"><code>nova-manage service list</code></literallayout></para>
+                    <para>
+                        <literallayout class="monospaced"><code>nova-manage service list</code></literallayout>
+                    </para>
                     <para>If you see a smiling ‘nova-volume’ in there, you are looking good. Now
                         create a new volume:</para>
-                    <para><literallayout class="monospaced"><code>euca-create-volume -s 7 -z nova </code> (-s refers to the size of the volume in GB, and -z is the default zone (usually nova))</literallayout></para>
-
+                    <para>
+                        <literallayout class="monospaced"><code>euca-create-volume -s 7 -z nova </code> (-s refers to the size of the volume in GB, and -z is the default zone (usually nova))</literallayout>
+                    </para>
                     <para>You should get some output similar to this:</para>
                     <para>
                         <programlisting>VOLUME vol-0000000b 7 creating (wayne, None, None, None) 2011-02-11 06:58:46.941818</programlisting>
@@ -753,20 +798,26 @@ vgcreate nova-volumes /dev/sda5</code> </literallayout>
                     <para>You can view that status of the volumes creation using
                         ‘euca-describe-volumes’. Once that status is ‘available,’ it is ready to be
                         attached to an instance:</para>
-                    <para><literallayout class="monospaced"><code>euca-attach-volume -i i-00000008 -d /dev/vdb vol-00000009</code></literallayout> (-i refers to the instance you will attach the volume to, -d is the mountpoint<emphasis role="bold"> (on the compute-node !</emphasis> and then the volume name.)</para>
+                    <para><literallayout class="monospaced"><code>euca-attach-volume -i i-00000008 -d /dev/vdb vol-00000009</code></literallayout>
+                        (-i refers to the instance you will attach the volume to, -d is the
+                            mountpoint<emphasis role="bold"> (on the compute-node !</emphasis> and
+                        then the volume name.)</para>
                     <para>By doing that, the compute-node which runs the instance basically performs
                         an iSCSI connection and creates a session. You can ensure that the session
                         has been created by running : </para>
-                    <para><code>iscsciadm -m session </code></para>
+                    <para><code>iscsiadm -m session </code></para>
                     <para>Which should output : </para>
                     <para>
                         <programlisting>root@nova-cn1:~# iscsiadm -m session
 tcp: [1] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-0000000b</programlisting>
                     </para>
-
                     <para>If you do not get any errors, it is time to login to instance ‘i-00000008′
-                        and see if the new space is there. You can check the volume attachment by
-                        running : </para>
+                        and see if the new space is there. <emphasis role="italic"/></para>
+                    <para><emphasis role="italic">KVM changes the device name, since it's not
+                            considered to be the same type of device as the instances uses as it's
+                            local one, you will find the nova-volumes will be designated as
+                            "/dev/vdX" devices, while local are named "/dev/sdX". </emphasis></para>
+                    <para>You can check the volume attachment by running : </para>
                     <para><code>dmesg | tail </code></para>
                     <para>You should from there see a new disk. Here is the output from ‘fdisk -l’
                         from i-00000008:</para>
@@ -782,9 +833,10 @@ Disk /dev/vda doesn’t contain a valid partition table
 Units = cylinders of 1008 * 512 = 516096 bytes
 Sector size (logical/physical): 512 bytes / 512 bytes
 I/O size (minimum/optimal): 512 bytes / 512 bytes Disk identifier: 0×00000000 </programlisting>
-
                     <para>Now with the space presented, let’s configure it for use:</para>
-                    <para><literallayout class="monospaced"><code>fdisk /dev/vdb</code></literallayout></para>
+                    <para>
+                        <literallayout class="monospaced"><code>fdisk /dev/vdb</code></literallayout>
+                    </para>
                     <orderedlist>
                         <listitem>
                             <para>Press ‘<code>n'</code> to create a new disk partition.</para>
@@ -795,7 +847,6 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes Disk identifier: 0×00000000 <
                         <listitem>
                             <para>Press <code>'1'</code> to denote it as 1st disk partition.</para>
                         </listitem>
-
                         <listitem>
                             <para>Press ENTER twice to accept the default of 1st and last cylinder –
                                 to convert the remainder of hard disk to a single disk
@@ -814,7 +865,6 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes Disk identifier: 0×00000000 <
                                 Please take note that the first partition is denoted as /dev/vda1 in
                                 your instance.</para>
                         </listitem>
-
                         <listitem>
                             <para>Press <code>'w'</code> to write the partition table and exit fdisk
                                 upon completion.</para>
@@ -824,7 +874,6 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes Disk identifier: 0×00000000 <
                                 <programlisting>mkfs.ext3 /dev/vdb1
 mkdir /extraspace
 mount /dev/vdb1 /extraspace </programlisting></para>
-
                         </listitem>
                     </orderedlist>
                     <para>Your new volume has now been successfully mounted, and is ready for use!
@@ -862,7 +911,8 @@ portal:10.192.12.34,3260]: openiscsiadm: initiator reported error (15 - already 
                             known workaround to that is to change the "–iscsi_ip_prefix" flag and
                             use the 4 bytes (full IP) of the nova-volumes server, eg : </para>
                         <para><literallayout class="monospaced"><code>"–iscsi_ip_prefix=192.168.2.1</code></literallayout>
-                            You'll have then to restart both nova-compute and nova-volume services. </para>
+                            You'll have then to restart both nova-compute and nova-volume services.
+                        </para>
                     </listitem>
                     <listitem>
                         <para><emphasis role="italic">ERROR "Cannot resolve host"</emphasis>
@@ -875,7 +925,8 @@ cannot resolve host name ubuntu03c\niscsiadm: Could not perform SendTargets disc
 (nova.root): TRACE:</programlisting>This
                             error happens when the compute node is unable to resolve the nova-volume
                             server name. You could either add a record for the server if you have a
-                            DNS server; or add it into the "/etc/hosts" file of the nova-compute. </para>
+                            DNS server; or add it into the "/etc/hosts" file of the nova-compute.
+                        </para>
                     </listitem>
                     <listitem>
                         <para><emphasis role="italic">ERROR "No route to host"</emphasis>
@@ -971,7 +1022,250 @@ tcp: [9] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000014         
                 </itemizedlist>
             </para>
         </simplesect>
-        
+        <simplesect>
+            <title> D- Backup your nova-volumes </title>
+            <para> While Diablo provides the snapshot functionnality (using itself LVM snapshot),
+                were are going to see here how you can backup your EBS-volumes. The way we will do
+                it offers the advantage to make backup that don't size much, in fact, only existent
+                datas will be backed up, not the whole volume. So let's suppose we create a 100 gb
+                nova-volume for an instance, while only 4 gigabytes are used ; we will only backup
+                these 4 giga-bytes, here are the tools we are going to use in order to achieve that
+                : </para>
+            <orderedlist>
+                <listitem>
+                    <para><emphasis role="italic">lvm2</emphasis>, in order to directly manipulating
+                        the volumes. </para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="italic">kpartx</emphasis> which will help us to discover
+                        the partition table created inside the instance. </para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="italic">tar</emphasis> will be used in order to create a
+                        minimum-sized backup </para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="italic">sha1sum</emphasis> for calculating our backup
+                        checksum, in order to check it's consistency </para>
+                </listitem>
+            </orderedlist>
+            <para>
+                <emphasis role="bold">1- Create a snapshot of a used volume</emphasis></para>
+            <itemizedlist>
+                <listitem>
+                    <para> In order to backup our volume, we first need to create a snapshot of it.
+                        An LVM snapshot is the exact copy of a logicial volume, which contains
+                        datas, at a frozen state. Thus, data corruption is avoided (preventing data
+                        manipulation during the process of creating the volume itself). Remember the
+                        EBS-like volumes created through a : <code>$ euca-create-volume </code>
+                        consists in an LVM's logical volume. </para>
+                    <para><emphasis role="italic">Make sure you have enough space (a security is
+                            twice the size for a volume snapshot) before creating the snapshot,
+                            otherwise, there is a risk the snapshot will become corrupted is not
+                            enough space is allocated to it !</emphasis></para>
+                    <para>So you should be able to list all the volumes by running :
+                        <literallayout class="monospaced"><code>$ lvdisplay</code></literallayout>
+                        During our process, we will only work with a volume called "<emphasis
+                            role="italic">volume-00000001</emphasis>", which, we suppose, is a 10gb
+                        volume : but,everything discussed here applies to all volumes, not matter
+                        their size. At the end of the section, we will present a script that you
+                        could use in order to create scheduled backups. </para>
+                    <para> The script itself exploits what we discuss here. So let's create our
+                        snapshot ; this can be achieved while the volume is attached to an instance
+                        :</para>
+                    <para>
+                        <literallayout class="monospaced"><code>$ lvcreate --size 10G --snapshot --name volume-00000001-snapshot /dev/nova-volumes/volume-00000001</code></literallayout>
+                    </para>
+                    <para> We indicate LVM we want a snapshot of an already existing volumes via the
+                            "<emphasis role="italic">--snapshot</emphasis>" flag, plus the path of
+                        an already existing volume (In most cases, the path will be
+                        /dev/nova-volumes/$volume_name, the name we want to give to our snapshot,
+                        and a size.</para>
+                    <para>
+                        <emphasis role="italic">This size don't have to be the same as the volume we
+                            snapshot, in fact, it's a space that LMV will reserve to our snapshot
+                            volume, but, by safety, let's specify the same size (even if we know the
+                            whole space is not currently used). </emphasis>
+                    </para>
+                    <para>We now have a full snapshot, and it only took few seconds ! </para>
+                    <para>Let's check it, by running </para>
+                    <para>
+                        <literallayout><code>$ lvdisplay</code> again. You should see now your shapshot : </literallayout>
+                    </para>
+                    <para>
+                        <programlisting>
+                  --- Logical volume ---
+  LV Name                /dev/nova-volumes/volume-00000001
+  VG Name                nova-volumes
+  LV UUID                gI8hta-p21U-IW2q-hRN1-nTzN-UC2G-dKbdKr
+  LV Write Access        read/write
+  LV snapshot status     source of
+                         /dev/nova-volumes/volume-00000026-snap [active]
+  LV Status              available
+  # open                 1
+  LV Size                15,00 GiB
+  Current LE             3840
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     256
+  Block device           251:13
+   
+  --- Logical volume ---
+  LV Name                /dev/nova-volumes/volume-00000001-snap
+  VG Name                nova-volumes
+  LV UUID                HlW3Ep-g5I8-KGQb-IRvi-IRYU-lIKe-wE9zYr
+  LV Write Access        read/write
+  LV snapshot status     active destination for /dev/nova-volumes/volume-00000026
+  LV Status              available
+  # open                 0
+  LV Size                15,00 GiB
+  Current LE             3840
+  COW-table size         10,00 GiB
+  COW-table LE           2560
+  Allocated to snapshot  0,00% 
+  Snapshot chunk size    4,00 KiB
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     256
+  Block device           251:14
+            </programlisting>
+                    </para>
+                </listitem>
+            </itemizedlist>
+            <para>
+                <emphasis role="bold">2- Partition table discovery </emphasis></para>
+            <itemizedlist>
+                <listitem>
+                    <para> If we want to exploit that snapshot, and use the <emphasis role="italic"
+                            >tar</emphasis> program accordingly, we first need to mount our
+                        partition on the nova-volumes server. </para>
+                    <para>Kpartx is a small utility which performs table partition discoveries, and
+                        map it. This is usefull since we will need to use it if we want to see
+                        partition creates inside the instance. </para>
+                    <para>Without using the partitions created inside instances, we won' t be able
+                        to see it's content, and creating efficient backups. Let's use kpartx (a
+                        simple <emphasis role="monospaced"><code>$ apt-get install
+                            kpartx</code></emphasis> would do the trick on Debian's flavor distros): </para>
+                    <para>
+                        <literallayout class="monospaced"><code>$ kpartx -av /dev/nova-volumes/volume-00000001-snapshot</code></literallayout>
+                    </para>
+                    <para>If not any errors is displayed, it means the tools has been able to find
+                        it, and map the partition table. </para>
+                    <para>You can easily check that map by running : </para>
+                    <para><literallayout class="monospaced"><code>$ ls /dev/mapper/nova*</code></literallayout>
+                        You should now see a partition called
+                        "nova--volumes-volume--00000001--snapshot1" </para>
+                    <para>If you have created more than one partition on that volumes, you should
+                        have accordingly several partitions ( eg
+                        :nova--volumes-volume--00000001--snapshot2,nova--volumes-volume--00000001--snapshot3
+                        and so forth). </para>
+                    <para>We can now mount our parition : </para>
+                    <para>
+                        <literallayout class="monospaced"><code>$ mount /dev/mapper/nova--volumes-volume--volume--00000001--snapshot1 /mnt</code></literallayout>
+                    </para>
+                    <para>If there is not any errors, it means you successfully mounted the
+                        partition ! </para>
+                    <para>You should now be able to access directly to the datas that were created
+                        inside the instance. If you have a message asking for you to specify a
+                        partition, or if you are unable to mount it (despite a well-specified
+                        filesystem) there could be two causes :</para>
+                    <para><itemizedlist>
+                            <listitem>
+                                <para> You didn't allocate enought size for the snapshot </para>
+                            </listitem>
+                            <listitem>
+                                <para> kapartx had been unable to disover the partition table.
+                                </para>
+                            </listitem>
+                        </itemizedlist> Try to allocate more space to the snapshot and see if it
+                        works. </para>
+                </listitem>
+            </itemizedlist>
+            <para>
+                <emphasis role="bold"> 3- Use tar in order to create archives</emphasis>
+                <itemizedlist>
+                    <listitem>
+                        <para> Now we have our mounted volume, let's create a backup of it : </para>
+                        <para>
+                            <literallayout class="monospaced"><code>$ tar --exclude={"lost+found","some/data/to/exclude"} -czf volume-00000001.tar.gz -C /mnt/ /backup/destination</code></literallayout>
+                        </para>
+                        <para>This command will create a tar.gz file containing the datas, <emphasis
+                                role="italic">and datas only</emphasis>, so you ensure you don't
+                            waste space by backupping empty sectors !</para>
+                    </listitem>
+                </itemizedlist></para>
+            <para>
+                <emphasis role="bold">4- Checksum calculation I</emphasis>
+                <itemizedlist>
+                    <listitem>
+                        <para> It's always good to have the checksum for your backup files. The
+                            checksum is a unique identifier for a file. </para>
+                        <para>When you transfer that same file over the network ; you can run
+                            another checksum calculation. Having different checksums means the file
+                            is corrupted,so it is an interesting way to make sure your file is has
+                            not been corrupted during it's transfer.</para>
+                        <para>Let's checksum our file, and save the result to a file :</para>
+                        <para><literallayout class="monospaced"><code>$sha1sum volume-00000001.tar.gz > volume-00000001.checksum</code></literallayout><emphasis
+                                role="bold">Be aware</emphasis> the sha1sum should be used carefully
+                            since the required time for the calculation is proportionate to the
+                            file's size. </para>
+                        <para>For files that weight more than ~4-6 gigabytes, and depending on your
+                            CPU, it could require a lot of times.</para>
+                    </listitem>
+                </itemizedlist>
+                <emphasis role="bold">5- After work cleaning</emphasis>
+                <itemizedlist>
+                    <listitem>
+                        <para>Now we have an efficient and consistent backup ; let's clean a bit : </para>
+                        <para><orderedlist>
+                                <listitem>
+                                    <para> Umount the volume : <code>$ umount /mnt </code></para>
+                                </listitem>
+                                <listitem>
+                                    <para> Delete the partition table : <code>$ kpartx -dv
+                                            /dev/nova-volumes/volume-00000001-snapshot</code></para>
+                                </listitem>
+                                <listitem>
+                                    <para>Remove the snapshot : <code>$lvremove -f
+                                            /dev/nova-volumes/volume-00000001-snapshot</code></para>
+                                </listitem>
+                            </orderedlist> And voila :) You can now repeat these steps for every
+                            volume you have.</para>
+                    </listitem>
+                </itemizedlist>
+                <emphasis role="bold">6- Automate your backups</emphasis>
+            </para>
+            <para>You will mainly have more and more volumes on you nova-volumes' server. It might
+                be interesting then to automate things a bit. This script <link
+                    xlink:href="https://github.com/Razique/Bash-stuff/blob/master/SCR_5005_V01_NUAC-OPENSTACK-EBS-volumes-backup.sh"
+                    >here</link> will assist you on this task. The script does the operations we
+                just did earlier, but also provides mail report and backup prunning (based on the "
+                backups_retention_days " setting). It is meant to be launched from the server which
+                runs the nova-volumes component.</para>
+            <para>Here is how a mail report looks like : </para>
+            <programlisting>
+Backup Start Time - 07/10 at 01:00:01
+Current retention - 7 days 
+
+The backup volume is mounted. Proceed...
+Removing old backups...  : /BACKUPS/EBS-VOL/volume-00000019/volume-00000019_28_09_2011.tar.gz
+	 /BACKUPS/EBS-VOL/volume-00000019 - 0 h 1 m and 21 seconds. Size - 3,5G 
+
+The backup volume is mounted. Proceed...
+Removing old backups...  : /BACKUPS/EBS-VOL/volume-0000001a/volume-0000001a_28_09_2011.tar.gz
+	 /BACKUPS/EBS-VOL/volume-0000001a - 0 h 4 m and 15 seconds. Size - 6,9G 
+---------------------------------------
+Total backups size - 267G - Used space : 35%
+Total execution time - 1 h 75 m and 35 seconds
+            </programlisting>
+            <para> The script also provides the ability to SSH to your instances and run a mysqldump
+                into them. In order to make this to work, make sure the connection via the nova's
+                project keys is possible. If you don't want to run the mysqldumps, then just turn
+                off this functionality by putting <code>enable_mysql_dump=0</code> into the script
+                (see all settings at the top of the script)</para>
+        </simplesect>
     </section>
     
     <section xml:id="live-migration-usage">
