@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:exsl="http://exslt.org/common" xmlns:ng="http://docbook.org/docbook-ng"><head>
+<meta http-equiv="X-UA-Compatible" content="IE=7"/>
+<title>OpenStack API Quick Start</title><meta name="generator" content="DocBook XSL-NS Stylesheets V1.76.1"/><link rel="home" href="index.html" title="OpenStack API Quick Start"/><link rel="next" href="Getting-Credentials-a00665.html" title="2. Getting Credentials"/><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><script type="text/javascript">
+            //The id for tree cookie
+            var treeCookieId = "treeview-147";
+            var language = "en";
+            var w = new Object();
+            //Localization
+            txt_filesfound = 'Results';
+            txt_enter_at_least_1_char = "You must enter at least one character.";
+            txt_browser_not_supported = "Your browser is not supported. Use of Mozilla Firefox is recommended.";
+            txt_please_wait = "Please wait. Search in progress...";
+            txt_results_for = "Results for: ";
+        </script><style type="text/css">
+            input {
+            margin-bottom: 5px;
+            margin-top: 2px;
+            }
+
+            .folder {
+            display: block;
+            height: 22px;
+            padding-left: 20px;
+            background: transparent url(../common/jquery/treeview/images/folder.gif) 0 0px no-repeat;
+            }
+            
+        </style><link rel="shortcut icon" href="../favicon.ico" type="image/x-icon"/><link rel="stylesheet" type="text/css" href="../common/css/positioning.css"/><!--[if IE]>
+	<link rel="stylesheet" type="text/css" href="../common/css/ie.css"/>
+	<![endif]--><link rel="stylesheet" type="text/css" href="../common/jquery/theme-redmond/jquery-ui-1.8.2.custom.css"/><link rel="stylesheet" type="text/css" href="../common/jquery/treeview/jquery.treeview.css"/><script type="text/javascript" src="../common/jquery/jquery-1.4.2.min.js"><!----></script><script type="text/javascript" src="../common/jquery/jquery-ui-1.8.2.custom.min.js"><!----></script><script type="text/javascript" src="../common/jquery/jquery.cookie.js"><!----></script><script type="text/javascript" src="../common/jquery/treeview/jquery.treeview.min.js"><!----></script><script type="text/javascript" src="search/htmlFileList.js"><!----></script><script type="text/javascript" src="search/htmlFileInfoList.js"><!----></script><script type="text/javascript" src="search/nwSearchFnt.js"><!----></script><script type="text/javascript" src="search/stemmers/en_stemmer.js"><!--//make this scalable to other languages as well.--></script><script type="text/javascript" src="search/index-1.js"><!----></script><script type="text/javascript" src="search/index-2.js"><!----></script><script type="text/javascript" src="search/index-3.js"><!----></script><script type="text/javascript">
+	    var _gaq = _gaq || [];
+	    _gaq.push(['_setAccount', 'UA-17511903-6']);
+	  </script><script type="text/javascript" src="../common/ga.js"><!----></script></head><body><div id="header"><a onclick="_gaq.push(['_trackEvent', 'Header', 'logo', 'click', 1]);" target="_blank" href="http://www.openstack.org"><img src="../common/images/openstack-logo.png" alt="OpenStack Documentation" width="157" height="47"/></a><p class="breadcrumbs"><a href="http://docs.openstack.org/">OpenStack Manuals</a><a href="index.html">OpenStack API Quick Start</a></p><h1>OpenStack API Quick Start</h1><div id="navheader" align="right"><!----><table class="navLinks"><tr><td><a id="showHideButton" onclick="showHideToc(); _gaq.push(['_trackEvent', 'Header', 'show/hide', 'click', 1]);" class="pointLeft" title="Hide TOC tree">Sidebar
+                            </a></td><td> 
+				  |
+                                    <a accesskey="n" class="navLinkNext" onclick="_gaq.push(['_trackEvent', 'Header', 'nextLink', 'click', 1]);" tabindex="5" href="Getting-Credentials-a00665.html">Next</a></td></tr></table></div></div><div id="content"><div class="statustext"> </div><div class="article" title="OpenStack API Quick Start"><div xmlns="" class="titlepage"><div><div><h2 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="Compute_API_Quick_Start"/>OpenStack API Quick Start</h2></div></div><hr/></div><div class="toc"><p><strong>Contents</strong></p><dl><dt><span class="section"><a href="index.html#Openstack-API-Concepts-a09234">1. OpenStack API Introduction</a></span></dt><dt><span class="section"><a href="Getting-Credentials-a00665.html">2. Getting Credentials</a></span></dt><dt><span class="section"><a href="Sending-Requests-to-API-a09879.html">3. Sending Requests to the API</a></span></dt><dt><span class="section"><a href="Setting-Up-python-novaclient-a03867.html">4. Setting Up  python-novaclient</a></span></dt><dt><span class="section"><a href="Launching-Images-a09140.html">5. Listing Images</a></span></dt><dt><span class="section"><a href="Listing-Images-a01518.html">6. Launching Instances </a></span></dt></dl></div><p>The OpenStack system has several key projects that are separate installations but can work
+        together depending on your cloud needs: OpenStack Compute, OpenStack Object Storage,
+        OpenStack Identity Service, and OpenStack Image Store. With a standalone OpenStack
+        installation such as the Rackspace Rapid Deployment Program, the OpenStack Compute,
+        OpenStack Identity, and OpenStack Image Store projects are all working together in the
+        background of your installation. </p><div class="section" title="1. OpenStack API Introduction"><div xmlns="" class="titlepage"><div><div><h2 xmlns="http://www.w3.org/1999/xhtml" class="title" style="clear: both"><a id="Openstack-API-Concepts-a09234"/>1. OpenStack API Introduction</h2></div></div></div><p>This page covers the basics for talking to your OpenStack cloud through the Compute API
+            after authorizing with the Identity Service API. You can then build a cloud by launching
+            images and assigning metadata to instances, all through the API. For an API reference of
+            all the possible commands, see the OpenStack Compute API 1.1 specification and the
+            Identity Service 2.0 Developer Guide published at <a class="link" href="http://docs.openstack.org" target="_top">docs.openstack.org</a>. </p></div></div><script type="text/javascript" src="../common/main.js"><!----></script><hr/><div class="legal"><a href="index.html">Legal notices</a></div></div><div><div id="leftnavigation" style="padding-top:3px; background-color:white;"><div id="tabs"><ul><li><a href="#treeDiv" tabindex="1"><span class="contentsTab">Contents</span></a></li></ul><div id="treeDiv"><img src="../common/images/loading.gif" alt="loading table of contents..." id="tocLoading" style="display:block;"/><div id="ulTreeDiv" style="display:none" class="thisisthat"><ul id="tree" class="filetree"><li tabindex="2"><span class="file"><a href="index.html#Openstack-API-Concepts-a09234">1. OpenStack API Introduction</a></span></li><li tabindex="2"><span class="file"><a href="Getting-Credentials-a00665.html">2. Getting Credentials</a></span></li><li tabindex="2"><span class="file"><a href="Sending-Requests-to-API-a09879.html">3. Sending Requests to the API</a></span></li><li tabindex="2"><span class="file"><a href="Setting-Up-python-novaclient-a03867.html">4. Setting Up  python-novaclient</a></span></li><li tabindex="2"><span class="file"><a href="Launching-Images-a09140.html">5. Listing Images</a></span></li><li tabindex="2"><span class="file"><a href="Listing-Images-a01518.html">6. Launching Instances </a></span></li></ul></div></div></div></div></div></body></html>
