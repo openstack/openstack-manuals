@@ -8,9 +8,9 @@
     <title>OpenStack API Quick Start</title>
     <para>The OpenStack system has several key projects that are separate installations but can work
         together depending on your cloud needs: OpenStack Compute, OpenStack Object Storage,
-        OpenStack Identity Service, and OpenStack Image Store. With a standalone OpenStack
+        OpenStack Identity Service, and OpenStack Image Registry and Delivery Service. With a standalone OpenStack
         installation such as the Rackspace Rapid Deployment Program, the OpenStack Compute,
-        OpenStack Identity, and OpenStack Image Store projects are all working together in the
+        OpenStack Identity, and OpenStack Image Registry and Delivery Service projects are all working together in the
         background of your installation. </para>
     <section xml:id="Openstack-API-Concepts-a09234">
         
@@ -30,7 +30,7 @@
             this: </para>
     <orderedlist>
         <listitem><para>Begin API requests by asking for an authorization token from the endpoint your cloud
-                    administrator gave you, typically http://hostname:5000/v2.0/tokens. You send your
+                    administrator gave you, typically http://hostname:5000/v2.0/tokens. You will need to provide your
                     username, password, and what group you are with (the "tenant" in auth-speak). </para>
         <para><programlisting>
 $ curl -X 'POST' -v http://hostname:5000/v2.0/tokens -d '{"auth":{"passwordCredentials":{"username": "joecool", "password":"coolword"}, "tenantId":"5"}}' -H 'Content-type: application/json' 
@@ -56,11 +56,11 @@ $ curl -X 'POST' -v http://hostname:5000/v2.0/tokens -d '{"auth":{"passwordCrede
 {"access": {"token": {"expires": "2011-10-07T14:59:49.644963", "id": "e83abbdc-a8c8-4f81-897b-541cbcd1dbb5", "tenant": {"id": "5", "name": "coolu"}}, "serviceCatalog": [{"endpoints": [{"adminURL": "http://55.51.11.198:8774/v1.1/5", "region": "RegionOne", "internalURL": "http://55.51.11.198:8774/v1.1/5", "publicURL": "http://55.51.11.198:8774/v1.1/5"}], "type": "compute", "name": "nova"}, {"endpoints": [{"adminURL": "http://55.51.11.198:9292/v1.1/5", "region": "RegionOne", "internalURL": "http://55.51.11.198:9292/v1.1/5", "publicURL": "http://55.51.11.198:9292/v1.1/5"}], "type": "image", "name": "glance"}, {"endpoints": [{"adminURL": "http://55.51.11.198:35357/v2.0", "region": "RegionOne", "internalURL": "http://55.51.11.198:5000/v2.0", "publicURL": "http://55.51.11.198:5000/v2.0"}], "type": "identity", "name": "keystone"}], "user": {"id": "4", "roles": [{"tenantId": "5", "id": "2", "name": "Member"}], "name": "joecool"}}}
 
  </programlisting>
-                    Use that token to send API requests with the X-Auth-Token included as an header
+                    Use that token in further API requests with the X-Auth-Token included as an header
                     field.</para></listitem>
      
         <listitem>
-                <para>Repeatedly send API requests with that token in the x-auth-token header until
+                <para>All further API requests will utilize this token in the x-auth-token header until
                     either: 1) the job's done or 2) you get a 401 (Unauthorized) code in return.
                 </para>
             </listitem>
