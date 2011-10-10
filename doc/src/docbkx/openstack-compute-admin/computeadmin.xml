@@ -538,8 +538,7 @@ euca-register mybucket/windowsserver.img.manifest.xml
             use of Logical Volume Manager (LVM) for Linux. Note that a volume may only be attached
             to one instance at a time. This is not a ‘shared storage’ solution like a SAN of NFS on
             which multiple servers can attach to.</para>
-        <para> Before going any further ; let's present the nova-volume implementation in OpenStack
-            : </para>
+        <para>Before going any further; let's discuss the nova-volume implementation in OpenStack: </para>
         <para>The nova-volumes service uses iSCSI-exposed LVM volumes to the compute nodes which run
             instances. Thus, there are two components involved: </para>
         <para>
@@ -556,8 +555,8 @@ euca-register mybucket/windowsserver.img.manifest.xml
                 </listitem>
             </orderedlist>
         </para>
-        <para>Here is what happens from the volume creation to its attachment (we use here the
-            euca2ools, but the same explanation goes with the API): </para>
+        <para>Here is what happens from the volume creation to its attachment (we use euca2ools for
+            examples, but the same explanation goes with the API): </para>
         <orderedlist>
             <listitem>
                 <para>The volume is created via $euca-create-volume; which creates an LV into the
@@ -583,7 +582,7 @@ euca-register mybucket/windowsserver.img.manifest.xml
             /28 .80-.95, and FlatManger is the NetworkManager setting for OpenStack Compute (Nova). </para>
         <para>Please note that the network mode doesn't interfere at all the way nova-volume works,
             but it is essential for nova-volumes to work that the mode you are currently using is
-            set up. Please refer to the Section 7 "Networking" for more details.</para>
+            set up. Please refer to <xref linkend="ch_networking">Networking</xref> for more details.</para>
         <para>To set up Compute to use volumes, ensure that nova-volume is installed along with
             lvm2. The guide will be split in four parts : </para>
         <para>
@@ -604,7 +603,7 @@ euca-register mybucket/windowsserver.img.manifest.xml
         </para>
         <simplesect>
             <title>A- Install nova-volumes on the cloud controller.</title>
-            <para> This is simply done by installing the two components on the cloud controller : <literallayout class="monospaced"><code>apt-get install lvm2 nova-volumes</code></literallayout><literallayout><emphasis role="bold">For ubuntu distros, the nova-volumes componenent will not properly work</emphasis> (regarding the part which deals with volumes deletion) without a small fix. In dorder to fix that, do the following : </literallayout>
+            <para> This is simply done by installing the two components on the cloud controller : <literallayout class="monospaced"><code>apt-get install lvm2 nova-volumes</code></literallayout><literallayout><emphasis role="bold">For Ubuntu distros, the nova-volumes component will not properly work</emphasis> (regarding the part which deals with volumes deletion) without a small fix. In dorder to fix that, do the following : </literallayout>
                 <code>sudo visudo</code>
             </para>
             <para>Then add an entry for the nova user (here is the default sudoers file with our added nova user) :</para>
@@ -640,7 +639,7 @@ root	ALL=(ALL) ALL
 
             </programlisting>
             <para>That will allow the nova user to run the "dd" command (which empties a volume
-                before it's deletion).</para>
+                before its deletion).</para>
             <para>
                 <itemizedlist>
                     <listitem>
@@ -735,11 +734,12 @@ vgcreate nova-volumes /dev/sda5</code> </literallayout>
         <simplesect>
             <title> B- Configuring nova-volumes on the compute nodes</title>
             <para> Since you have created the volume group, you will be able to use the following
-                tools for managing your volumes : </para>
+                tools for managing your volumes: </para>
             <simpara><code>euca-create-volume</code></simpara>
             <simpara><code>euca-attach-volume</code></simpara>
             <simpara><code>euca-detach-volume</code></simpara>
             <simpara><code>euca-delete-volume</code></simpara>
+            <note><para>If you are using KVM as your hypervisor, then the actual device name in the guest will be different than the one specified in the euca-attach-volume command. You can specify a device name to the KVM hypervisor, but the actual means of attaching to the guest is over a virtual PCI bus. When the guest sees a new device on the PCI bus, it picks the next available name (which in most cases is /dev/vdc) and the disk shows up there on the guest. </para></note>
             <itemizedlist>
                 <listitem>
                     <para>
@@ -1024,13 +1024,12 @@ tcp: [9] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000014         
         </simplesect>
         <simplesect>
             <title> D- Backup your nova-volumes </title>
-            <para> While Diablo provides the snapshot functionnality (using itself LVM snapshot),
-                were are going to see here how you can backup your EBS-volumes. The way we will do
-                it offers the advantage to make backup that don't size much, in fact, only existent
-                datas will be backed up, not the whole volume. So let's suppose we create a 100 gb
-                nova-volume for an instance, while only 4 gigabytes are used ; we will only backup
-                these 4 giga-bytes, here are the tools we are going to use in order to achieve that
-                : </para>
+            <para> While Diablo provides the snapshot functionality (using LVM snapshot), were are
+                going to see here how you can backup your EBS-volumes. The way we will do it offers
+                the advantage to make backup that don't size much, in fact, only existing data will
+                be backed up, not the whole volume. So let's suppose we create a 100 gb nova-volume
+                for an instance, while only 4 gigabytes are used ; we will only backup these 4
+                giga-bytes, here are the tools we are going to use in order to achieve that : </para>
             <orderedlist>
                 <listitem>
                     <para><emphasis role="italic">lvm2</emphasis>, in order to directly manipulating
@@ -1046,7 +1045,7 @@ tcp: [9] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000014         
                 </listitem>
                 <listitem>
                     <para><emphasis role="italic">sha1sum</emphasis> for calculating our backup
-                        checksum, in order to check it's consistency </para>
+                        checksum, in order to check its consistency </para>
                 </listitem>
             </orderedlist>
             <para>
