@@ -276,7 +276,7 @@ sudo service mysql restart</literallayout></para>
                             PASSWORD('$NOVA_PASS');"</literallayout>
                     </para>
                 </section>
-                <section xml:id="setting-up-sql-database-postgresql"><title>Setting Up PostgreSQL as the Database</title>
+                <section xml:id="setting-up-sql-database-postgresql"><title>Setting Up PostgreSQL as the Database on the Cloud Controller</title>
                     
                     <para>OpenStack can use PostgreSQL as an alternative database. This is a matter of substituting the MySQL steps with PostgreSQL equivalents, as outlined here.</para>
                     
@@ -473,7 +473,7 @@ $ for n in node1 node2 node3; do ssh $n sudo service openstack-nova-compute star
                 follows:</para>
             <literallayout class="monospaced">--daemonize=1
 --dhcpbridge_flagfile=/etc/nova/nova.conf
---dhcpbridge=/usr/bin/nova-dhcpbridge
+--dhcpbridge=/bin/nova-dhcpbridge
 --logdir=/var/log/nova
 --state_path=/var/lib/nova                </literallayout>
             <para>Starting with the default file, you must define the following required items in
@@ -491,7 +491,8 @@ $ for n in node1 node2 node3; do ssh $n sudo service openstack-nova-compute star
                 <tbody>
                     <tr>
                         <td>--sql_connection</td>
-                        <td>IP address; Location of OpenStack Compute SQL database</td>
+                        <td>SQL Alchemy connect string (reference); Location of OpenStack Compute
+                            SQL database</td>
                     </tr>
                     <tr>
                         <td>--s3_host</td>
@@ -500,21 +501,14 @@ $ for n in node1 node2 node3; do ssh $n sudo service openstack-nova-compute star
                     </tr>
                     <tr>
                         <td>--rabbit_host</td>
-                        <td>IP address; Location of OpenStack Compute SQL database</td>
+                        <td>IP address; Location of RabbitMQ server</td>
                     </tr>
-                    <tr>
-                        <td>--ec2_api</td>
-                        <td>IP address; Location where the nova-api service runs</td>
-                    </tr>
+                   
                     <tr>
                         <td>--verbose</td>
                         <td>Set to 1 to turn on; Optional but helpful during initial setup</td>
                     </tr>
-                    <tr>
-                        <td>--ec2_url</td>
-                        <td>HTTP URL; Location to interface nova-api. Example:
-                            http://184.106.239.134:8773/services/Cloud</td>
-                    </tr>
+                   
                     <tr>
                         <td>--network_manager</td>
                         <td>
@@ -543,12 +537,24 @@ $ for n in node1 node2 node3; do ssh $n sudo service openstack-nova-compute star
                             projects for future VM guests reside on. Example: 192.168.0.0/12</td>
                     </tr>
                     <tr>
+                        <td>--ec2_host</td>
+                        <td>IP address; Indicates where the nova-api service is installed.</td>
+                    </tr>
+                    <tr>
+                        <td>--osapi_host</td>
+                        <td>IP address; Indicates where the nova-api service is installed.</td>
+                    </tr>
+                    <tr>
                         <td>--network_size</td>
                         <td>Number value; Number of addresses in each private subnet.</td>
                     </tr>
                     <tr>
                         <td>--glance_api_servers </td>
                         <td>IP and port; Address for Image Service.</td>
+                    </tr>
+                    <tr>
+                        <td>--use_deprecated_auth </td>
+                        <td>If this flag is present, the Cactus method of authentication is used with the novarc file containing credentials.</td>
                     </tr>
 
                 </tbody>
@@ -557,14 +563,15 @@ $ for n in node1 node2 node3; do ssh $n sudo service openstack-nova-compute star
                 cloud controller services, database server, and messaging server on the same
                 server.</para>
             <literallayout class="monospaced">--dhcpbridge_flagfile=/etc/nova/nova.conf
---dhcpbridge=/usr/bin/nova-dhcpbridge
+--dhcpbridge=/bin/nova-dhcpbridge
 --logdir=/var/log/nova
 --state_path=/var/lib/nova
 --verbose
+--use_deprecated_auth
+--ec2_host=http://184.106.239.134
+--osapi_host=http://184.106.239.134
 --s3_host=184.106.239.134
 --rabbit_host=184.106.239.134
---ec2_api=184.106.239.134
---ec2_url=http://184.106.239.134:8773/services/Cloud
 --fixed_range=192.168.0.0/16
 --network_size=8
 --glance_api_servers=184.106.239.134:9292
@@ -573,8 +580,10 @@ $ for n in node1 node2 node3; do ssh $n sudo service openstack-nova-compute star
             <para>Create a “nova” group, so you can set permissions on the configuration file: </para>
             <literallayout class="monospaced">sudo addgroup nova</literallayout>
             <para>The nova.config file should have its owner set to root:nova, and mode set to 0640,
-                since the file contains your MySQL server’s username and password. </para>
-            <literallayout class="monospaced">chown -R root:nova /etc/nova
+                since the file contains your MySQL server’s username and password. You also want to
+                ensure that the nova user belongs to the nova group.</para>
+            <literallayout class="monospaced">sudo usermod -g nova nova
+chown -R root:nova /etc/nova
 chmod 640 /etc/nova/nova.conf</literallayout>
         </section><section xml:id="setting-up-openstack-compute-environment-on-the-compute-node">
                 <title>Setting Up OpenStack Compute Environment on the Compute Node</title>

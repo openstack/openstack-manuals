@@ -74,10 +74,10 @@ git clone https://github.com/4P/openstack-dashboard
                 </para>
             <para>
                 <literallayout class="monospaced">
-cd openstack-dashboard/openstack-dashboard
-cp local_settings.py.example local/local_settings.py
-vi local_settings.py
-                </literallayout>
+cd openstack-dashboard/openstack-dashboard/local
+cp local_settings.py.example local_settings.py
+vi local_settings.py                
+</literallayout>
             </para>
             <para>In the new copy of the local_settings.py file, change these important options:</para>
             <itemizedlist>
@@ -132,7 +132,12 @@ QUANTUM_CLIENT_VERSION='0.1'
             </section>
             <section xml:id="run-the-server">
           <title>Run the Server</title>
-                <para>Dashboard is run using the standard Django manage.py script from the context of the virtual environment. Run the server on a high port value so that you can validate the installation.</para><para><literallayout class="monospaced">tools/with_venv.sh dashboard/manage.py runserver 0.0.0.0:8000</literallayout></para><para>Make sure that your firewall isn't blocking TCP/8000 and just point your browser at this server on port 8000. If you are running the server on the same machine as your browser, this would be "http://localhost:8000". </para>
+                <para>Dashboard is run using the standard Django manage.py script from the context
+                    of the virtual environment. Be sure you synchronize the database with this
+                    command: </para>
+                <literallayout class="monospaced">tools/with_venv.sh dashboard/manage.py syncdb</literallayout>
+                <para>Run the server on a high port value so that you can validate the
+                    installation.</para><para><literallayout class="monospaced">tools/with_venv.sh dashboard/manage.py runserver 0.0.0.0:8000</literallayout></para><para>Make sure that your firewall isn't blocking TCP/8000 and just point your browser at this server on port 8000. If you are running the server on the same machine as your browser, this would be "http://localhost:8000". </para>
             <mediaobject>
                 <imageobject role="fo">
                     <imagedata fileref="figures/dashboard-overview.png"

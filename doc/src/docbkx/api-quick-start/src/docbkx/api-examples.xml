@@ -8,13 +8,36 @@
     
     <title>OpenStack API Examples</title>
     <para>Here are some examples of the basic API commands you can send to an OpenStack deployment
-        containing Compute, the Image Service, and with a running Identity Server.  </para>
+        containing Compute, the Image Service, with a running Identity Server. In the "service
+        catalog" that is returned when you get a token, you can find the endpoint URLs that you use
+        for these API commands. For example this public URL entry in the service catalog offers the
+        URL for the Image Service, code-named glance: </para>
+    <para>
+        <literallayout class="monospaced">"publicURL": "http://55.51.11.198:9292/v1.1/9"}], "type": "image", "name": "glance"</literallayout>
+    </para>
+    <para>For the Compute API, you see a service of type compute, code-named "nova" such as: </para>
+    <para>
+        <literallayout class="monospaced">"publicURL": "http://55.51.11.198:8774/v1.1/9"}], "type": "compute", "name": "nova"</literallayout>
+    </para>
+    <para>With these publicURLs in hand, you can now use curl commands for these endpoints and send
+        API requests. The following sections offer walk-throughs of common API commands. Refer to
+            <link xlink:href="http://docs.openstack.org/api">docs.openstack.org/api</link> for a
+        full reference of all API commands for these services.</para>
     <section xml:id="Compute-API-Server-Examples-a09234">
         
-    <title>Compute API Server Examples</title>
-    <para>GET /v1.1/servers</para>
+    <title>Compute API Server Information Examples</title>
+    <para><emphasis role="bold">GET /v1.1/servers</emphasis></para>
+        <para>Gives you a listing of active servers under your account and tenant authorized with a
+            particular token. If there are no servers running, you see just "{"servers": []}"
+            returned but still get a 200 OK response.</para>
+        <para>Curl example: </para>
+        <literallayout class="monospaced">curl -D - -H "X-Auth-Token: 3017813d-deca-4764-aa33-9ab59a283ba6" -X 'GET' -v http://host.na.me:8774/v1.1/9/servers</literallayout>
     
-    <para>GET /v1.1/servers/details</para>
+    <para><emphasis role="bold">GET /v1.1/servers/detail</emphasis></para>
+        <para>Shows details of all the active servers currently running under your account. </para>
+        <para>Curl example:</para>
+        <para>curl -D - -H "X-Auth-Token: 3017813d-deca-4764-aa33-9ab59a283ba6" -X 'GET' -v
+            http://demo.rcb.me:8774/v1.1/9/servers/detail </para>
         <para>POST /v1.1/servers</para>
         <para>GET /v1.1/servers/<emphasis role="italic">id</emphasis></para>
         <para>PUT /v1.1/servers/<emphasis role="italic">id</emphasis></para>
@@ -33,8 +56,54 @@
     <section xml:id="Compute-API-Server-Flavor-Examples-a10234">
         
         <title>Compute API Flavor Examples</title>
-        <para>GET /v1.1/flavors</para>
-        <para>GET /v1.1/flavors/detail</para>
+        <para><emphasis role="bold">GET /v1.1/flavors</emphasis></para>
+        <para>Gives you a listing of flavors available, which are combinations of disk space, memory
+            and CPU capacity bundled together as resources for virtual machines.</para>
+        <para>Curl example: </para>
+        <literallayout class="monospaced">curl -D - -H "X-Auth-Token: 3017813d-deca-4764-aa33-9ab59a283ba6" -X 'GET' -v
+            http://demo.rcb.me:8774/v1.1/9/flavors
+
+{"flavors": [{"id": 3, "links": [
+{"href": "http://demo.rcb.me:8774/v1.1/9/flavors/3", "rel": "self"}, 
+{"href": "http://demo.rcb.me:8774/9/flavors/3", "rel": "bookmark"}], "name": "m1.medium"}, 
+{"id": 4, "links": [{"href": "http://demo.rcb.me:8774/v1.1/9/flavors/4", "rel": "self"}, 
+{"href": "http://demo.rcb.me:8774/9/flavors/4", "rel": "bookmark"}], "name": "m1.large"}, 
+{"id": 1, "links": [{"href": "http://demo.rcb.me:8774/v1.1/9/flavors/1", "rel": "self"}, 
+{"href": "http://demo.rcb.me:8774/9/flavors/1", "rel": "bookmark"}], "name": "m1.tiny"}, 
+{"id": 5, "links": [{"href": "http://demo.rcb.me:8774/v1.1/9/flavors/5", "rel": "self"}, 
+{"href": "http://demo.rcb.me:8774/9/flavors/5", "rel": "bookmark"}], "name": "m1.xlarge"}, 
+{"id": 2, "links": [{"href": "http://demo.rcb.me:8774/v1.1/9/flavors/2", "rel": "self"}, 
+{"href": "http://demo.rcb.me:8774/9/flavors/2", "rel": "bookmark"}], "name": "m1.small"}]}</literallayout>
+        <para><emphasis role="bold">GET /v1.1/flavors/&lt;id></emphasis></para>
+        <para>Gives you more detail about the specific flavor. </para>
+        <para>Curl example:</para>
+        <para>curl -D - -H "X-Auth-Token: 3017813d-deca-4764-aa33-9ab59a283ba6" -X 'GET' -v
+            http://demo.rcb.me:8774/v1.1/9/flavors/5</para>
+        <para>{"flavor": {"rxtx_quota": 0, "name": "m1.xlarge", "links": [{"href":
+            "http://demo.rcb.me:8774/v1.1/9/flavors/5", "rel": "self"}, {"href":
+            "http://demo.rcb.me:8774/9/flavors/5", "rel": "bookmark"}], "ram": 16384, "vcpus": 8,
+            "rxtx_cap": 0, "swap": 0, "disk": 160, "id": 5}}</para>
+        <para><emphasis role="bold">GET /v1.1/flavors/detail</emphasis></para>
+        <para>Gives you details on all the available instance types (flavors). </para>
+        <para>Curl example: </para>
+        <para>curl -D - -H "X-Auth-Token: 3017813d-deca-4764-aa33-9ab59a283ba6" -X 'GET' -v
+            http://demo.rcb.me:8774/v1.1/9/flavors/detail</para>
+        <para>{"flavors": [{"rxtx_quota": 0, "name": "m1.medium", "links": [{"href":
+            "http://demo.rcb.me:8774/v1.1/9/flavors/3", "rel": "self"}, {"href":
+            "http://demo.rcb.me:8774/9/flavors/3", "rel": "bookmark"}], "ram": 4096, "vcpus": 2,
+            "rxtx_cap": 0, "swap": 0, "disk": 40, "id": 3}, {"rxtx_quota": 0, "name": "m1.large",
+            "links": [{"href": "http://demo.rcb.me:8774/v1.1/9/flavors/4", "rel": "self"}, {"href":
+            "http://demo.rcb.me:8774/9/flavors/4", "rel": "bookmark"}], "ram": 8192, "vcpus": 4,
+            "rxtx_cap": 0, "swap": 0, "disk": 80, "id": 4}, {"rxtx_quota": 0, "name": "m1.tiny",
+            "links": [{"href": "http://demo.rcb.me:8774/v1.1/9/flavors/1", "rel": "self"}, {"href":
+            "http://demo.rcb.me:8774/9/flavors/1", "rel": "bookmark"}], "ram": 512, "vcpus": 1,
+            "rxtx_cap": 0, "swap": 0, "disk": 0, "id": 1}, {"rxtx_quota": 0, "name": "m1.xlarge",
+            "links": [{"href": "http://demo.rcb.me:8774/v1.1/9/flavors/5", "rel": "self"}, {"href":
+            "http://demo.rcb.me:8774/9/flavors/5", "rel": "bookmark"}], "ram": 16384, "vcpus": 8,
+            "rxtx_cap": 0, "swap": 0, "disk": 160, "id": 5}, {"rxtx_quota": 0, "name": "m1.small",
+            "links": [{"href": "http://demo.rcb.me:8774/v1.1/9/flavors/2", "rel": "self"}, {"href":
+            "http://demo.rcb.me:8774/9/flavors/2", "rel": "bookmark"}], "ram": 2048, "vcpus": 1,
+            "rxtx_cap": 0, "swap": 0, "disk": 20, "id": 2}]}</para>
     </section>
     <section xml:id="Compute-API-Server-Extensions-Examples-a09744">
         
@@ -43,6 +112,10 @@
     </section>
     <section xml:id="Image-API-Examples"><title>Image API Examples</title>
     <para>GET /images</para>
+        <para>Example</para>
+        <para>
+            <literallayout class="monospaced">curl -D - -H GET http://host.na.me:9292/v1/images</literallayout>
+        </para>
         <para>GET /images/details</para>
         <para>GET /images/<emphasis role="italic">id</emphasis></para>
         <para>POST /images</para>
