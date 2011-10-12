@@ -248,16 +248,9 @@ use = egg:swift#proxy
 account_autocreate = true
 
 [filter:keystone]
-use = egg:keystone#tokenauth
-auth_protocol = http
-auth_host = 127.0.0.1
-auth_port = 5001
-admin_token = 999888777666
-delay_auth_decision = 0
-service_protocol = http
-service_host = 127.0.0.1
-service_port = 8100
-service_pass = dTpw
+use = egg:keystone#swiftauth
+keystone_admin_token = 999888777666
+keystone_url = http://localhost:35357/2.0
 
 [filter:cache]
 use = egg:swift#memcache
