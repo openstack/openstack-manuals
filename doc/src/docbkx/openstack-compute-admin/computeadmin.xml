@@ -532,8 +532,8 @@ euca-register mybucket/windowsserver.img.manifest.xml
     <section xml:id="managing-volumes">
         <title>Managing Volumes</title>
         <para>Nova-volume is the service that allows you to give extra block level storage to your
-            OpenStack Compute instances. You may recognize this as a similar offering that Amazon
-            EC2 offers, Elastic Block Storage (EBS). However, nova-volume is not the same
+            OpenStack Compute instances. You may recognize this as a similar offering from Amazon
+            EC2 known as Elastic Block Storage (EBS). However, nova-volume is not the same
             implementation that EC2 uses today. Nova-volume is an iSCSI solution that employs the
             use of Logical Volume Manager (LVM) for Linux. Note that a volume may only be attached
             to one instance at a time. This is not a ‘shared storage’ solution like a SAN of NFS on
@@ -564,7 +564,7 @@ euca-register mybucket/windowsserver.img.manifest.xml
             </listitem>
             <listitem>
                 <para>The volume is attached to an instance via $euca-attach-volume; which creates a
-                    unique iSCSI IQN that will be exposed to the compute node. </para>
+                    unique iSCSI IQN that will be exposed to the compute node </para>
             </listitem>
             <listitem>
                 <para>The compute node which run the concerned instance has now an active ISCSI
@@ -580,9 +580,9 @@ euca-register mybucket/windowsserver.img.manifest.xml
             additional compute nodes running nova-compute. The walkthrough uses a custom
             partitioning scheme that carves out 60GB of space and labels it as LVM. The network is a
             /28 .80-.95, and FlatManger is the NetworkManager setting for OpenStack Compute (Nova). </para>
-        <para>Please note that the network mode doesn't interfere at all the way nova-volume works,
-            but it is essential for nova-volumes to work that the mode you are currently using is
-            set up. Please refer to <xref linkend="ch_networking">Networking</xref> for more details.</para>
+        <para>Please note that the network mode doesn't interfere at all with the way nova-volume
+            works, but networking must be set up for for nova-volumes to work. Please refer to <xref
+                linkend="ch_networking">Networking</xref> for more details.</para>
         <para>To set up Compute to use volumes, ensure that nova-volume is installed along with
             lvm2. The guide will be split in four parts : </para>
         <para>
@@ -1172,11 +1172,10 @@ tcp: [9] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000014         
                         filesystem) there could be two causes :</para>
                     <para><itemizedlist>
                             <listitem>
-                                <para> You didn't allocate enought size for the snapshot </para>
+                                <para> You didn't allocate enough size for the snapshot </para>
                             </listitem>
                             <listitem>
-                                <para> kapartx had been unable to disover the partition table.
-                                </para>
+                                <para> kapartx had been unable to discover the partition table. </para>
                             </listitem>
                         </itemizedlist> Try to allocate more space to the snapshot and see if it
                         works. </para>
@@ -1192,7 +1191,7 @@ tcp: [9] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000014         
                         </para>
                         <para>This command will create a tar.gz file containing the datas, <emphasis
                                 role="italic">and datas only</emphasis>, so you ensure you don't
-                            waste space by backupping empty sectors !</para>
+                            waste space by backing up empty sectors !</para>
                     </listitem>
                 </itemizedlist></para>
             <para>
@@ -1203,8 +1202,8 @@ tcp: [9] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000014         
                             checksum is a unique identifier for a file. </para>
                         <para>When you transfer that same file over the network ; you can run
                             another checksum calculation. Having different checksums means the file
-                            is corrupted,so it is an interesting way to make sure your file is has
-                            not been corrupted during it's transfer.</para>
+                            is corrupted, so it is an interesting way to make sure your file is has
+                            not been corrupted during its transfer.</para>
                         <para>Let's checksum our file, and save the result to a file :</para>
                         <para><literallayout class="monospaced"><code>$sha1sum volume-00000001.tar.gz > volume-00000001.checksum</code></literallayout><emphasis
                                 role="bold">Be aware</emphasis> the sha1sum should be used carefully
@@ -1236,11 +1235,11 @@ tcp: [9] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000014         
                 </itemizedlist>
                 <emphasis role="bold">6- Automate your backups</emphasis>
             </para>
-            <para>You will mainly have more and more volumes on you nova-volumes' server. It might
+            <para>You will mainly have more and more volumes on your nova-volumes' server. It might
                 be interesting then to automate things a bit. This script <link
                     xlink:href="https://github.com/Razique/Bash-stuff/blob/master/SCR_5005_V01_NUAC-OPENSTACK-EBS-volumes-backup.sh"
                     >here</link> will assist you on this task. The script does the operations we
-                just did earlier, but also provides mail report and backup prunning (based on the "
+                just did earlier, but also provides mail report and backup running (based on the "
                 backups_retention_days " setting). It is meant to be launched from the server which
                 runs the nova-volumes component.</para>
             <para>Here is how a mail report looks like : </para>
@@ -1340,12 +1339,262 @@ HostC            p2            5     10240     150
 Migration of i-00000001 initiated. Check its progress using euca-describe-instances.
                  ]]></programlisting>
                  <para>Make sure instances are migrated successfully with euca-describe-instances.
-                    If instances are still running on HostB, check logfiles( src/dest nova-compute
+                    If instances are still running on HostB, check logfiles ( src/dest nova-compute
                     and nova-scheduler)</para>
             </listitem>
         </itemizedlist>
 
 
+    </section>
+    <section xml:id="nova-disaster-recovery-process">
+        <title>Nova Disaster Recovery Process</title>
+        <para> Sometimes, things just don't go right. An incident is never planned, by its
+            definition. </para>
+        <para>In this section, we will see how to manage your cloud after a disaster, and how to
+            easily backup the persistent storage volumes, which is another approach when you face a
+            disaster. Even apart from the disaster scenario, backup ARE mandatory. While the Diablo
+            release includes the snapshot functions, both the backup procedure and the utility
+            do apply to the Cactus release. </para>
+        <para>For reference, you cand find a DRP definition here : <link
+                xlink:href="http://en.wikipedia.org/wiki/Disaster_Recovery_Plan"
+                >http://en.wikipedia.org/wiki/Disaster_Recovery_Plan</link>. </para>
+            <simplesect>
+                <title>A- The disaster Recovery Process presentation</title>
+           <para>A disaster could happen to several components of your architecture : a disk crash,
+                a network loss, a power cut... In our scenario, we suppose the following setup : <orderedlist>
+                    <listitem>
+                        <para> A cloud controller (nova-api, nova-objecstore, nova-volumes,
+                            nova-network) </para>
+                    </listitem>
+                    <listitem>
+                        <para> A compute node (nova-compute) </para>
+                    </listitem>
+                    <listitem>
+                        <para> - A Storage Area Network used by nova-volumes (aka SAN) </para>
+                    </listitem>
+                </orderedlist> Our disaster will be the worst one : a power loss. That power loss
+                applies to the three components. <emphasis role="italic">Let's see what runs and how
+                    it runs before the crash</emphasis> : <itemizedlist>
+                    <listitem>
+                        <para>From the SAN to the cloud controller, we have an active iscsi session
+                            (used for the "nova-volumes" LVM's VG). </para>
+                    </listitem>
+                    <listitem>
+                        <para>From the cloud controller to the compute node we also have active
+                            iscsi sessions (managed by nova-volumes). </para>
+                    </listitem>
+                    <listitem>
+                        <para>For every volume an iscsi session is made (so 14 ebs volumes equals 14
+                            sessions). </para>
+                    </listitem>
+                    <listitem>
+                        <para>From the cloud controller to the compute node, we also have iptables/
+                            ebtables rules which allows the acess from the cloud controller to the
+                            running instance. </para>
+                    </listitem>
+                    <listitem>
+                        <para>And at least, from the cloud controller to the compute node ; saved
+                            into database, the current state of the instances (in that case
+                            "running" ), and their volumes attachment (mountpoint, volume id, volume
+                            status, etc..) </para>
+                    </listitem>
+                </itemizedlist> Now, our power loss occurs and everything restarts (the hardware
+                parts), and here is now the situation : </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>From the SAN to the cloud, the ISCSI session no longer exists. </para>
+                    </listitem>
+                    <listitem>
+                        <para>From the cloud controller to the compute node, the ISCSI sessions no
+                            longer exist. </para>
+                    </listitem>
+                    <listitem>
+                        <para>From the cloud controller to the compute node, the iptables/ ebtables
+                            are recreated, since, at boot, nova-network reapply the configurations.
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>From the cloud controller, instances turn into a shutdown state
+                            (because they are no longer running) </para>
+                    </listitem>
+                    <listitem>
+                        <para>Into the datase, datas were not updated at all, since nova could not
+                            have guessed the crash. </para>
+                    </listitem>
+                </itemizedlist> Before going further, and in order to prevent the admin to make
+                fatal mistakes,<emphasis role="bold"> the instances won't be lost</emphasis>, since
+                not any "<emphasis role="italic">destroy</emphasis>" or "<emphasis role="italic"
+                    >terminate</emphasis>" command had been invoked, so the files for the instances
+                remain on the compute node. </para>
+            <para>The plan is to perform the following tasks, in that exact order, <emphasis
+                    role="underline">any extra step would be dangerous at that stage</emphasis>
+                :</para>
+            <para>
+                <orderedlist>
+                    <listitem>
+               <para>We need to get the current relation from a volume to its instance, since we
+                            will recreate the attachment.</para>
+                    </listitem>
+                    <listitem>
+                        <para>We need to update the database in order to clean the stalled state.
+                            (After that, we won't be able to perform the first step). </para>
+                    </listitem>
+                    <listitem>
+                        <para>We need to restart the instances (so go from a "shutdown" to a
+                            "running" state). </para>
+                    </listitem>
+                    <listitem>
+                        <para>After the restart, we can reattach the volumes to their respective
+                            instances. </para>
+                    </listitem>
+                    <listitem>
+                        <para> That step, which is not a mandatory one, exists in an SSH into the
+                            instances in order to reboot them. </para>
+                    </listitem>
+                </orderedlist>
+            </para>
+            </simplesect>
+        <simplesect>
+            <title>B - The Disaster Recovery Process itself</title>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>
+                            <emphasis role="bold"> Instance to Volume relation </emphasis>
+                        </para>
+                        <para> We need to get the current relation from a volume to its instance,
+                            since we will recreate the attachment : </para>
+                        <para>This relation could be figured by running an "euca-describe-volumes" :
+                            <literallayout class="monospaced"><code>euca-describe-volumes | $AWK '{print $2,"\t",$8,"\t,"$9}' | $GREP -v "None" | $SED "s/\,//g; s/)//g; s/\[.*\]//g; s/\\\\\//g"</code></literallayout>
+                            That would output a three-columns table : <emphasis role="italic">VOLUME
+                                INSTANCE MOUNTPOINT</emphasis>
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>
+                            <emphasis role="bold"> Database Update </emphasis>
+                        </para>
+                        <para> Second, we need to update the database in order to clean the stalled
+                            state. Now that we have saved for every volume the attachment we need to
+                            restore, it's time to clean the database, here are the queries that need
+                            to be run :
+                            <programlisting>
+                mysql> use nova;
+                mysql> update volumes set mountpoint=NULL;
+                mysql> update volumes set status="available" where status &lt;&gt;"error_deleting";
+                mysql> update volumes set attach_status="detached";
+                mysql> update volumes set instance_id=0;
+                </programlisting>
+                            Now, by running an <code>euca-describe-volumes</code>all volumes should
+                            be available. </para>
+                    </listitem>
+                    <listitem>
+                        <para>
+                            <emphasis role="bold"> Instances Restart </emphasis>
+                        </para>
+                        <para> We need to restart the instances ; It's time to launch a restart, so
+                            the instances will really run. This can be done via a simple
+                                <code>euca-reboot-instances $instance</code>
+                        </para>
+                        <para>At that stage, depending on your image, some instances would totally
+                            reboot (thus become reacheable), while others would stop on the
+                            "plymouth" stage. </para>
+                        <para><emphasis role="bold">DO NOT reboot a second time</emphasis> the ones
+                            which are stopped at that stage (<emphasis role="italic">see below, the
+                                fourth step</emphasis>). In fact it depends on whether you added an
+                            "/etc/fstab" entry for that volume or not. Images built with the
+                                <emphasis role="italic">cloud-init</emphasis> package (More infos on
+                                <link xlink:href="https://help.ubuntu.com/community/CloudInit"
+                                >help.ubuntu.com</link>)will remain on a pending state, while others
+                            will skip the missing volume and start. But remember that the idea of
+                            that stage is only to ask nova to reboot every instance, so the stored
+                            state is preserved. </para>
+                        <para/>
+                    </listitem>
+                    <listitem>
+                        <para>
+                            <emphasis role="bold"> Volume Attachment </emphasis>
+                        </para>
+                        <para> After the restart, we can reattach the volumes to their respective
+                            instances. Now that nova has restored the right status, it is time to
+                            performe the attachments via an <code>euca-attach-volume</code>
+                        </para>
+                        <para>Here is a simple snippet that uses the file we created :
+                            <programlisting>
+                #!/bin/bash
+
+                while read line; do
+                    volume=`echo $line | $CUT -f 1 -d " "`
+                    instance=`echo $line | $CUT -f 2 -d " "`
+                    mount_point=`echo $line | $CUT -f 3 -d " "`
+                        echo "ATTACHING VOLUME FOR INSTANCE - $instance"
+                    euca-attach-volume -i $instance -d $mount_point $volume
+                    sleep 2
+                done &lt; $volumes_tmp_file
+                </programlisting>
+                            At that stage, instances which were pending on the boot sequence
+                                (<emphasis role="italic">plymouth</emphasis>) will automatically
+                            continue their boot, and restart normally, while the ones which booted
+                            will see the volume. </para>
+                    </listitem>
+                    <listitem>
+                        <para>
+                            <emphasis role="bold"> SSH into instances </emphasis>
+                        </para>
+                        <para> If some services depend on the volume, or if a volume has an entry
+                            into fstab, it could be good to simply restart the instance. This
+                            restart needs to be made from the instance itself, not via nova. So, we
+                            SSH into the instance and perform a reboot :
+                            <literallayout class="monospaced"><code>shutdown -r now</code></literallayout>
+                        </para>
+                    </listitem>
+                </itemizedlist> Voila! You successfully recovered your cloud after that. </para>
+            <para>Here are some suggestions : </para>
+            <para><itemizedlist>
+                    <listitem>
+                        <para> Use the parameter <code>errors=remount,ro</code> into you fstab file,
+                            that would prevent data corruption.</para>
+                        <para> The system would lock any write to the disk if it detects an I/O
+                            error. This flag should be added into the nova-volume server (the one
+                            which performs the ISCSI connection to the SAN), but also into the
+                            intances' fstab file.</para>
+                    </listitem>
+                    <listitem>
+                        <para> Do not add into the nova-volumes' fstab file the entry for the SAN's
+                            disks. </para>
+                        <para>Some systems would hang on that step, which means you could loose
+                            access to your cloud-controller. In order to re-run the session
+                            manually, you would run :
+                            <literallayout class="monospaced"><code>iscsiadm -m discovery -t st -p $SAN_IP $ iscsiadm -m node --target-name $IQN -p $SAN_IP -l</code>          
+Then perform the mount. </literallayout></para>
+                    </listitem>
+                    <listitem>
+                        <para> For your instances, if you have the whole "/home/" directory on the
+                            disk, then, instead of emptying the /home directory and map the disk on
+                            it, leave a user's directory, with at least, his bash files ;  but, more
+                            importantly, the "authorized_keys" file. </para>
+                        <para>That would allow you to connect to the instance, even without the
+                            volume attached. (If you allow only connections via public keys.)
+                        </para>
+                    </listitem>
+            </itemizedlist>
+                </para>
+        </simplesect>
+        <simplesect>
+                    <title>C- Scripted DRP</title>
+            <para>You could get <link xlink:href="https://github.com/Razique/Bash-stuff/blob/master/SCR_5006_V00_NUAC-OPENSTACK-DRP-OpenStack.sh">here</link> a bash script which performs these five steps : </para>
+            <para>The "test mode" allows you to perform that whole sequence for only one
+                instance.</para>
+            <para>In order to reproduce the power loss, simply connect to the compute node which
+                runs that same instance, and close the iscsi session (<emphasis role="underline">do
+                    not dettach the volume via "euca-dettach"</emphasis>, but manually close the
+                iscsi session). </para>
+            <para>Let's say this is the iscsi session number 15 for that instance :
+                    <literallayout class="monospaced"><code>iscsiadm -m session -u -r 15</code></literallayout><emphasis
+                    role="bold">Do not forget the flag -r, otherwise, you would close ALL
+                    sessions</emphasis> !!</para>
+        </simplesect>
     </section>
     <section xml:id="reference-for-flags-in-nova-conf">
         <title>Reference for Flags in nova.conf</title>
@@ -1378,7 +1627,29 @@ Migration of i-00000001 initiated. Check its progress using euca-describe-instan
                     <td>default: 'http://127.0.0.1:8000'</td>
                     <td>IP address plus port value; Location of the ajax console proxy and port</td>
                 </tr>
-                
+                <tr>
+                    <td>--allowed_roles</td>
+                    <td>default: 'cloudadmin,itsec,sysadmin,netadmin,developer'</td>
+                    <td>Comma separated list: List of allowed roles for a project (or tenant).</td>
+                </tr>
+                <tr>
+                    <td>--auth_driver</td>
+                    <td>default:'nova.auth.dbdriver.DbDriver'</td>
+                    <td>
+                        <para>String value; Name of the driver for authentication</para>
+                        <itemizedlist>
+                            <listitem>
+                                <para>nova.auth.dbdriver.DbDriver - Default setting, uses
+                                    credentials stored in zip file, one per project.</para>
+                            </listitem>
+                            <listitem>
+                                <para>nova.auth.ldapdriver.FakeLdapDriver - create a replacement for
+                                    this driver supporting other backends by creating another class
+                                    that exposes the same public methods.</para>
+                            </listitem>
+                        </itemizedlist>
+                    </td>
+                </tr>
                 <tr>
                     <td>--auth_token_ttl</td>
                     <td>default: '3600'</td>
@@ -1402,6 +1673,12 @@ Migration of i-00000001 initiated. Check its progress using euca-describe-instan
                         connecting to AWS if necessary</td>
                 </tr>
                 <tr>
+                    <td>--ca_file</td>
+                    <td>default: 'cacert.pem') </td>
+                    <td>File name; File name of root CA</td>
+                </tr>
+                
+                <tr>
                     <td>--cnt_vpn_clients</td>
                     <td>default: '0'</td>
                     <td>Integer; Number of addresses reserved for VPN clients</td>
@@ -1409,16 +1686,40 @@ Migration of i-00000001 initiated. Check its progress using euca-describe-instan
                 <tr>
                     <td>--compute_manager</td>
                     <td>default: 'nova.compute.manager.ComputeManager'</td>
-                    <td>String value; Manager for Compute which handles remote procedure calls
-                        relating to creating instances</td>
+                    <td>String value; Manager for Compute which handles remote procedure calls relating to creating instances</td>
                 </tr>
                 <tr>
                     <td>--create_unique_mac_address_attempts</td>
-                    <td>default: 'nova.compute.manager.ComputeManager'</td>
-                    <td>String value; Manager for Compute which handles remote procedure calls
-                        relating to creating instances</td>
+                    <td>default: '5'</td>
+                    <td>String value; Number of attempts to create unique mac
+                        address</td>
                 </tr> 
-               
+                <tr>
+                    <td>--credential_cert_file</td>
+                    <td>default: 'cert.pem'</td>
+                    <td>Filename; Filename of certificate in credentials zip</td>
+                </tr> 
+                <tr>
+                    <td>--credential_key_file</td>
+                    <td>default: 'pk.pem'</td>
+                    <td>Filename; Filename of private key in credentials zip</td>
+                </tr> 
+                <tr>
+                    <td>--credential_rc_file</td>
+                    <td>default: '%src'</td>
+                    <td>File name; Filename of rc in credentials zip, %src will be replaced
+                        by name of the region (nova by default).</td>
+                </tr> 
+                <tr>
+                    <td>--credential_vpn_file</td>
+                    <td>default: 'nova-vpn.conf'</td>
+                    <td>File name; Filename of certificate in credentials zip</td>
+                </tr> 
+                <tr>
+                    <td>--crl_file</td>
+                    <td>default: 'crl.pem') </td>
+                    <td>File name; File name of Certificate Revocation List</td>
+                </tr>
                 <tr>
                     <td>--compute_topic</td>
                     <td>default: 'compute'</td>
@@ -1514,6 +1815,12 @@ Migration of i-00000001 initiated. Check its progress using euca-describe-instan
                     <td>Deprecated - HTTP URL; Location to interface nova-api. Example:
                         http://184.106.239.134:8773/services/Cloud</td>
                 </tr>
+                <tr>
+                    <td>--global_roles</td>
+                    <td>default: 'cloudadmin,itsec'</td>
+                    <td>Comma separated list; Roles that apply to all projects (or tenants)</td>
+                </tr>
+                
                 <tr>
                     <td>--flat_injected</td>
                     <td>default: 'false'</td>
@@ -1642,6 +1949,11 @@ Migration of i-00000001 initiated. Check its progress using euca-describe-instan
                     <td>Template string to be used to generate instance names.</td>
                 </tr>
                 <tr>
+                    <td>--keys_path</td>
+                    <td>default: '$state_path/keys') </td>
+                    <td>Directory; Where Nova keeps the keys</td>
+                </tr>
+                <tr>
                     <td>--libvirt_type</td>
                     <td>default: kvm</td>
                     <td>String: Name of connection to a hypervisor through libvirt. Supported options are kvm, qemu, uml, and xen.</td>
@@ -1650,6 +1962,21 @@ Migration of i-00000001 initiated. Check its progress using euca-describe-instan
                     <td>--lock_path</td>
                     <td>default: none</td>
                     <td>Directory path: Writeable path to store lock files.</td>
+                </tr>
+                <tr>
+                    <td>--lockout_attempts</td>
+                    <td>default: 5</td>
+                    <td>Integer value: Allows this number of failed EC2 authorizations before lockout.</td>
+                </tr>
+                <tr>
+                    <td>--lockout_minutes</td>
+                    <td>default: 15</td>
+                    <td>Integer value: Number of minutes to lockout if triggered.</td>
+                </tr>
+                <tr>
+                    <td>--lockout_window</td>
+                    <td>default: 15</td>
+                    <td>Integer value: Number of minutes for lockout window.</td>
                 </tr>
                 <tr>
                     <td>--logfile</td>
@@ -1932,6 +2259,11 @@ Migration of i-00000001 initiated. Check its progress using euca-describe-instan
                     <td>default: '/usr/lib/pymodules/python2.6/nova/../'</td>
                     <td>Top-level directory for maintaining Nova's state</td>
                 </tr>
+                <tr>
+                    <td>--superuser_roles</td>
+                    <td>default: 'cloudadmin'</td>
+                    <td>Comma separate list; Roles that ignore authorization checking completely</td>
+                </tr>
                 <tr><td>--use_deprecated_auth</td>
                     <td>default: 'false'</td>
                     <td>Set to 1 or true to turn on; Determines whether to use the deprecated nova auth system or Keystone as the auth system </td></tr>
@@ -1962,8 +2294,13 @@ Migration of i-00000001 initiated. Check its progress using euca-describe-instan
                     <td>AMI (Amazon Machine Image) for cloudpipe VPN server</td>
                 </tr>
                 <tr>
-                    <td>--vpn_key_suffix</td>
+                    <td>--vpn_client_template</td>
                     <td>default: '-vpn'</td>
+                    <td>String value; Template for creating users vpn file.</td>
+                </tr>
+                <tr>
+                    <td>--vpn_key_suffix</td>
+                    <td>default: '/root/nova/nova/nova/cloudpipe/client.ovpn.template'</td>
                     <td>This is the interface that VlanManager uses to bind bridges and VLANs to.</td>
                 </tr>
             </tbody>
