@@ -591,10 +591,11 @@ euca-register mybucket/windowsserver.img.manifest.xml
                     <para>A- Installing the nova-volume service on the cloud controller.</para>
                 </listitem>
                 <listitem>
-                    <para>B- Configuring the nova-volumes volume group on the compute nodes.</para>
+                    <para>B- Configuring the "nova-volumes" volume group on the compute
+                        nodes.</para>
                 </listitem>
                 <listitem>
-                    <para>C- Troubleshooting your nova-volumes installation.</para>
+                    <para>C- Troubleshooting your nova-volume installation.</para>
                 </listitem>
                 <listitem>
                     <para>D- Backup your nova volumes.</para>
@@ -602,8 +603,8 @@ euca-register mybucket/windowsserver.img.manifest.xml
             </itemizedlist>
         </para>
         <simplesect>
-            <title>A- Install nova-volumes on the cloud controller.</title>
-            <para> This is simply done by installing the two components on the cloud controller : <literallayout class="monospaced"><code>apt-get install lvm2 nova-volumes</code></literallayout><literallayout><emphasis role="bold">For Ubuntu distros, the nova-volumes component will not properly work</emphasis> (regarding the part which deals with volumes deletion) without a small fix. In dorder to fix that, do the following : </literallayout>
+            <title>A- Install nova-volume on the cloud controller.</title>
+            <para> This is simply done by installing the two components on the cloud controller : <literallayout class="monospaced"><code>apt-get install lvm2 nova-volume</code></literallayout><literallayout><emphasis role="bold">For Ubuntu distros, the nova-volumes component will not properly work</emphasis> (regarding the part which deals with volumes deletion) without a small fix. In dorder to fix that, do the following : </literallayout>
                 <code>sudo visudo</code>
             </para>
             <para>Then add an entry for the nova user (here is the default sudoers file with our added nova user) :</para>
@@ -645,7 +646,7 @@ root	ALL=(ALL) ALL
                     <listitem>
                         <para>
                             <emphasis role="bold">Configure Volumes for use with
-                                nova-volumes</emphasis></para>
+                                nova-volume</emphasis></para>
                         <para> If you do not already have LVM volumes on hand, but have free drive
                             space, you will need to create a LVM volume before proceeding. Here is a
                             short run down of how you would create a LVM from free drive space on
@@ -732,7 +733,7 @@ vgcreate nova-volumes /dev/sda5</code> </literallayout>
             </para>
         </simplesect>
         <simplesect>
-            <title> B- Configuring nova-volumes on the compute nodes</title>
+            <title> B- Configuring nova-volume on the compute nodes</title>
             <para> Since you have created the volume group, you will be able to use the following
                 tools for managing your volumes: </para>
             <simpara><code>euca-create-volume</code></simpara>
@@ -815,7 +816,7 @@ tcp: [1] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-0000000b</program
                         and see if the new space is there. <emphasis role="italic"/></para>
                     <para><emphasis role="italic">KVM changes the device name, since it's not
                             considered to be the same type of device as the instances uses as it's
-                            local one, you will find the nova-volumes will be designated as
+                            local one, you will find the nova-volume will be designated as
                             "/dev/vdX" devices, while local are named "/dev/sdX". </emphasis></para>
                     <para>You can check the volume attachment by running : </para>
                     <para><code>dmesg | tail </code></para>
@@ -884,7 +885,7 @@ mount /dev/vdb1 /extraspace </programlisting></para>
             </itemizedlist>
         </simplesect>
         <simplesect>
-            <title>C- Troubleshoot your nova-volumes installation</title>
+            <title>C- Troubleshoot your nova-volume installation</title>
             <para>If the volume attachment doesn't work, you should be able to perform different
                 checks in order to see where the issue is. The nova-volume.log and nova-compute.log
                 will help you to diagnosis the errors you could encounter : </para>
@@ -1023,7 +1024,7 @@ tcp: [9] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000014         
             </para>
         </simplesect>
         <simplesect>
-            <title> D- Backup your nova-volumes </title>
+            <title> D- Backup your nova-volume disks</title>
             <para> While Diablo provides the snapshot functionality (using LVM snapshot), were are
                 going to see here how you can backup your EBS-volumes. The way we will do it offers
                 the advantage to make backup that don't size much, in fact, only existing data will
@@ -1235,8 +1236,8 @@ tcp: [9] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000014         
                 </itemizedlist>
                 <emphasis role="bold">6- Automate your backups</emphasis>
             </para>
-            <para>You will mainly have more and more volumes on your nova-volumes' server. It might
-                be interesting then to automate things a bit. This script <link
+            <para>You will mainly have more and more volumes allocated to your nova-volume service.
+                It might be interesting then to automate things a bit. This script <link
                     xlink:href="https://github.com/Razique/Bash-stuff/blob/master/SCR_5005_V01_NUAC-OPENSTACK-EBS-volumes-backup.sh"
                     >here</link> will assist you on this task. The script does the operations we
                 just did earlier, but also provides mail report and backup running (based on the "
