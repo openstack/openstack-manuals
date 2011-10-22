@@ -300,7 +300,7 @@
                 </tr>
                 <tr>
                     <td>--use_deprecated_auth</td>
-                    <td>default:'True'</td>
+                    <td>default:'False'</td>
                     <td>
                         <para>True or false; Sets the auth system to use the zip file provided with
                             the project files to store all credentials</para>
@@ -513,10 +513,11 @@ sudo bash -c "echo 0 > /proc/sys/net/ipv6/conf/all/accept_ra"</literallayout>
     <section xml:id="configuring-compute-to-use-the-image-service">
             <title>Configuring Image Service and Storage for Compute</title>
         
-                <para>You can either use a local image storage system or install Glance for storing and retrieving images. After you have installed a Glance server, you can configure nova-compute to
-            use Glance for image storage and retrieval. You must change the --image_service flag to
-            'nova.image.glance.GlanceImageService' in order to use Glance to store and retrieve
-            images for OpenStack Compute.</para>
+                <para>Diablo uses Glance for storing and retrieving images. After you have installed
+            a Glance server, you can configure nova-compute to use Glance for image storage and
+            retrieval. You must ensure the --image_service flag is defined with the Glance service :
+            'nova.image.glance.GlanceImageService' uses Glance to store and retrieve images for
+            OpenStack Compute.</para>
         
         <table rules="all">
             <caption>Description of nova.conf flags for the Glance image service and
@@ -534,16 +535,12 @@ sudo bash -c "echo 0 > /proc/sys/net/ipv6/conf/all/accept_ra"</literallayout>
                 
                 <tr>
                     <td>--image_service</td>
-                    <td>default: 'nova.image.local.LocalImageService'</td>
+                    <td>default: 'nova.image.local.GlanceImageService'</td>
                     <td><para>The service to use for retrieving and searching for images. Images must be registered using
                         euca2ools. Options: </para><itemizedlist>
                             <listitem>
                                 <para>nova.image.s3.S3ImageService</para>
                                 <para>S3 backend for the Image Service.</para>
-                            </listitem>
-                            <listitem>
-                                <para>nova.image.local.LocalImageService</para>
-                                <para>Image service storing images to local disk. It assumes that image_ids are integers. This is the default setting if no image manager is defined here.</para>
                             </listitem>
                             <listitem>
                                 <para><emphasis role="bold"
@@ -583,71 +580,7 @@ sudo bash -c "echo 0 > /proc/sys/net/ipv6/conf/all/accept_ra"</literallayout>
                     <td>default: 'true'</td>
                     <td>Set to 1 or true to turn on; Determines whether to get images from s3 or use a local copy </td></tr>
             </tbody>
-        </table>
-        
-        <para>If you choose not to use Glance for the image service, you can use the object store
-            that maintains images in a particular location, namely the state path on the server
-            local to the nova.conf file. You can also use a set of S3 buckets to store
-            images.</para>
-        
-        <table rules="all">
-            <caption>Description of nova.conf flags for local image storage</caption>
-            
-            <thead>
-                <tr>
-                    <td>Flag</td>
-                    <td>Default</td>
-                    <td>Description</td>
-                </tr>
-            </thead>
-            <tbody>
-                
-                <tr>
-                    <td>--image_service</td>
-                    <td>default: 'nova.image.local.LocalImageService'</td>
-                    <td><para>The service to use for retrieving and searching for images. Images must be registered using
-                        euca2ools. Options: </para><itemizedlist>
-                            <listitem>
-                                <para>nova.image.s3.S3ImageService</para>
-                                <para>S3 backend for the Image Service; In Cactus, the S3
-                                    image service wraps the other image services for use by the EC2
-                                    API. The EC2 api will always use the S3 image service by default
-                                    so setting the flag is not necessary.</para>
-                            </listitem>
-                            <listitem>
-                                 <para><emphasis role="bold">
-                                   nova.image.local.LocalImageService
-                                </emphasis></para>
-                                <para>Image service storing images to local disk. It assumes that
-                                    image_ids are integers.</para>
-                            </listitem>
-                            <listitem>
-                                <para>nova.image.glance.GlanceImageService</para>
-                                <para>OpenStack Image Service (Glance) back end for storing and
-                                    retrieving images; See <link
-                                        xlink:href="http://glance.openstack.org"
-                                        >http://glance.openstack.org</link> for more info.</para>
-                            </listitem>
-                        </itemizedlist></td>
-                </tr>
-        <tr>
-            <td>--state_path</td>
-            <td>'/Users/username/p/nova/nova/../'</td>
-            <td>Directory path; Top-level directory for maintaining nova's state.</td>
-        </tr>
-                <tr>
-                    <td>--buckets_path</td>
-                    <td>'$state_path/buckets'</td>
-                    <td>Directory path; Directory established for S3-style buckets.</td>
-                </tr>
-                <tr>
-                    <td>--images_path</td>
-                    <td>'$state_path/images'</td>
-                    <td>Directory path; Directory that stores images when using object store.</td>
-                </tr>
-        
-        </tbody>
-        </table>
+        </table>     
             </section>
             
     <section xml:id="configuring-live-migrations">
