@@ -1364,14 +1364,14 @@ Migration of i-00000001 initiated. Check its progress using euca-describe-instan
            <para>A disaster could happen to several components of your architecture : a disk crash,
                 a network loss, a power cut... In our scenario, we suppose the following setup : <orderedlist>
                     <listitem>
-                        <para> A cloud controller (nova-api, nova-objecstore, nova-volumes,
+                        <para> A cloud controller (nova-api, nova-objecstore, nova-volume,
                             nova-network) </para>
                     </listitem>
                     <listitem>
                         <para> A compute node (nova-compute) </para>
                     </listitem>
                     <listitem>
-                        <para> - A Storage Area Network used by nova-volumes (aka SAN) </para>
+                        <para> A Storage Area Network used by nova-volumes (aka SAN) </para>
                     </listitem>
                 </orderedlist> Our disaster will be the worst one : a power loss. That power loss
                 applies to the three components. <emphasis role="italic">Let's see what runs and how
@@ -1382,7 +1382,7 @@ Migration of i-00000001 initiated. Check its progress using euca-describe-instan
                     </listitem>
                     <listitem>
                         <para>From the cloud controller to the compute node we also have active
-                            iscsi sessions (managed by nova-volumes). </para>
+                            iscsi sessions (managed by nova-volume). </para>
                     </listitem>
                     <listitem>
                         <para>For every volume an iscsi session is made (so 14 ebs volumes equals 14
@@ -1562,7 +1562,7 @@ Migration of i-00000001 initiated. Check its progress using euca-describe-instan
                             intances' fstab file.</para>
                     </listitem>
                     <listitem>
-                        <para> Do not add into the nova-volumes' fstab file the entry for the SAN's
+                        <para> Do not add into the nova-volume's fstab file the entry for the SAN's
                             disks. </para>
                         <para>Some systems would hang on that step, which means you could loose
                             access to your cloud-controller. In order to re-run the session
