@@ -79,23 +79,50 @@ format="SVG" scale="60"/>
         </listitem>
     </itemizedlist>
     <section xml:id="starting-images">
-        <title>Starting Images</title><para>Once you have an installation, you want to get images that you can use in your Compute cloud. We've created a basic Ubuntu image for testing your installation. First you'll download the image, then use uec-publish-tarball to publish it:</para>
+        <title>Starting Images</title><para>Once you have an installation, you want to get images that you can use in your Compute cloud.
+            We've created a basic Ubuntu image for testing your installation. First you'll download
+            the image, then use "uec-publish-tarball" to publish it:</para>
             
-           <para><literallayout class="monospaced">image="ubuntu1010-UEC-localuser-image.tar.gz"
+           <para><literallayout class="monospaced">
+ <code>image="ubuntu1010-UEC-localuser-image.tar.gz"
 wget http://c0179148.cdn1.cloudfiles.rackspacecloud.com/ubuntu1010-UEC-localuser-image.tar.gz
-uec-publish-tarball $image [bucket-name] [hardware-arch]</literallayout></para>
+uec-publish-tarball $image [bucket-name] [hardware-arch]</code>
+           </literallayout>
+           <itemizedlist>
+               <listitem>
+                   <para>
+                        <emphasis role="bold">Image</emphasis> : a tar.gz file that contains the
+                        system, it's kernel and ramdisk. </para>
+               </listitem>
+               <listitem>
+                   <para>
+                        <emphasis role="bold">Bucket</emphasis> : a local repository that contains
+                        images. </para>
+               </listitem>
+               <listitem>
+                   <para>
+                        <emphasis role="bold">Hardware architecture</emphasis> : specify via "amd64"
+                        or "i386" the image's architecture (32 or 64 bits). </para>
+               </listitem>
+           </itemizedlist>
+           </para>
                 
                <para>Here's an example of what this command looks like with data:</para>
                 
-               <para><literallayout class="monospaced"> uec-publish-tarball ubuntu1010-UEC-localuser-image.tar.gz dub-bucket x86_64</literallayout></para>
+               <para><literallayout class="monospaced"><code>uec-publish-tarball ubuntu1010-UEC-localuser-image.tar.gz dub-bucket amd64</code></literallayout></para>
                 
-        <para>The command in return should output three references: emi, eri and eki. You need to use the emi value (for example, “ami-zqkyh9th″) for the euca-run-instances command.</para>
+        <para>The command in return should output three references:<emphasis role="italic">
+                emi</emphasis>, <emphasis role="italic">eri</emphasis> and <emphasis role="italic"
+                >eki</emphasis>. You need to use the emi value (for example, “<emphasis
+                role="italic">ami-zqkyh9th</emphasis>″) for the "euca-run-instances" command.</para>
                 
        
-        <para>Now you can schedule, launch and connect to the instance, which you do with tools from the Euca2ools on the command line. Create the emi value from the uec-publish-tarball command, and then you can use the euca-run-instances command.</para>
+        <para>Now you can schedule, launch and connect to the instance, which you do with tools from
+            the euca2ools on the command line. Create the emi value from the uec-publish-tarball
+            command, and then you can use the euca-run-instances command.</para>
                 <para>One thing to note here, once you publish the tarball, it has to untar before you can launch an image from it. Using the 'euca-describe-images' command, wait until the state turns to "available" from "untarring.":</para>
                 
-                <para><literallayout class="monospaced">euca-describe-images</literallayout></para>
+                <para><literallayout class="monospaced"><code>euca-describe-images</code></literallayout></para>
                 
         <para>Depending on the image that you're using, you need a public key to connect to it. Some images have built-in accounts already created. Images can be shared by many users, so it is dangerous to put passwords into the images. Nova therefore supports injecting ssh keys into instances before they are
             booted. This allows a user to login to the instances that he or she creates securely.
@@ -108,25 +135,45 @@ uec-publish-tarball $image [bucket-name] [hardware-arch]</literallayout></para>
             instance. They can be created on the command line using the euca2ools script
             euca-add-keypair. Refer to the man page for the available options. Example usage:</para>
                     
-                    <literallayout class="monospaced">euca-add-keypair test > test.pem
-chmod 600 test.pem</literallayout>
+                    <literallayout class="monospaced">
+<code>euca-add-keypair test > test.pem
+chmod 600 test.pem</code>
+                    </literallayout>
         
         <para>Now, you can run the instances:</para>
-                    <literallayout class="monospaced">euca-run-instances -k test -t m1.tiny ami-zqkyh9th</literallayout>
+                    <literallayout class="monospaced"><code>euca-run-instances -k test -t m1.tiny ami-zqkyh9th</code></literallayout>
         <para>Here's a description of the parameters used above:</para>
-        <para>-t what type of image to create</para>
-        <para>-k name of the key to inject in to the image at launch </para>
-        <para>Optionally, you can use the -n parameter to indicate how many images of this type to
-            launch. </para>
-                
-                
-                <para>The instance will go from “launching” to “running” in a short time, and you should be able to connect via SSH using the 'ubuntu' account, with the password 'ubuntu': (replace $ipaddress with the one you got from euca-describe-instances):</para>
-                
-                <para><literallayout class="monospaced">ssh ubuntu@$ipaddress</literallayout></para>
+        <itemizedlist>
+            <listitem>
+                <para><emphasis role="bold">-t</emphasis> what type of image to create. This type is
+                    also designated as "flavors". You can get all the flavors you have by running
+                    <literallayout class="monospaced"><code>nova-manage flavor list</code></literallayout></para>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="bold">-k</emphasis> name of the key to inject in to the image at
+                    launch.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Optionally, you can use the<emphasis role="bold"> -n</emphasis> parameter to indicate
+                    how many images of this type to launch. 
+                </para>
+            </listitem>
+        </itemizedlist>          
+                <para>
+                    The instance will go from “launching” to “running” in a short time, and you should be able to connect via SSH using the 'ubuntu' account, with the password 'ubuntu': (replace $ipaddress with the one you got from euca-describe-instances):
+                </para>
+                <para>
+                    <literallayout class="monospaced"><code>ssh ubuntu@$ipaddress</code></literallayout></para>
                 <para>The 'ubuntu' user is part of the sudoers group, so you can escalate to 'root'
             via the following command:</para>
-                
-               <para><literallayout class="monospaced">sudo -i</literallayout></para>
+               <para>
+                   <literallayout class="monospaced">
+                       <code>sudo -i</code>
+                   </literallayout>
+               </para>
                 </section>
     <section xml:id="deleting-instances">
                   
