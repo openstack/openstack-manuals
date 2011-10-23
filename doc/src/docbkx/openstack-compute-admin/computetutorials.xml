@@ -68,34 +68,47 @@
                 </itemizedlist>
                 <para>Here is an example nova.conf for a single node installation of OpenStack
                     Compute.</para>
-                <literallayout class="monospaced"># Sets the network type
+                <literallayout class="monospaced">
+ <code># Sets the network type
 --network_manager=nova.network.manager.FlatManager
+
 # Sets whether to use IPV6 addresses
 --use_ipv6=false
+
 # DHCP bridge information
 --dhcpbridge_flagfile=/etc/nova/nova.conf
 --dhcpbridge=nova-dhcpbridge
 --flat_network_bridge=br100
 --logdir=/var/log/nova
+
 # Top-level directory for maintaining nova's state 
 --state_path=/var/lib/nova
+
 # These indicate where nova-api services are installed
 --s3_host=184.106.239.134
 --rabbit_host=184.106.239.134
 --ec2_api=184.106.239.134
 --ec2_url=http://184.106.239.134:8773/services/Cloud
+
 # Block of IP addresses that are fixed IPs
 --fixed_range=192.168.0.0/12
+
 # Number of addresses in each private subnet
 --network_size=24
+
 # FlatDHCP bridges to this interface if set, be very careful setting it on an interface that does not already have an IP associated with it
 --flat_interface=eth0
+
 # Public IP of the server running nova-network, when instances without a floating IP hit the internet, traffic is snatted to this IP
 --routing_source_ip=184.106.239.134
+
 # Not required, but handy for debugging
 --verbose
+
 # Tells nova where to connect for database
---sql_connection=mysql://nova:notnova@184.106.239.134/nova</literallayout>
+--sql_connection=mysql://nova:notnova@184.106.239.134/nova
+                </code>
+                </literallayout>
                 <para>Now that we know the networking configuration, let's set up the network for
                     our project. With Flat DHCP, the host running nova-network acts as the gateway
                     to the virtual nodes, so ideally this will have a public IP address for our
@@ -119,20 +132,22 @@
                         table.o but that scenario shouldn't happen for this tutorial.</para>
                 </note>
                 <para>Run this command as root or sudo:</para>
-                <literallayout class="monospaced"> nova-manage network create public 192.168.3.0/12 1 256</literallayout>
+                <literallayout class="monospaced"><code>nova-manage network create public 192.168.3.0/12 1 256</code></literallayout>
                 <para>On running this command, entries are made in the ‘networks’ and ‘fixed_ips’
                     table in the nova database. However, one of the networks listed in the
                     ‘networks’ table needs to be marked as bridge in order for the code to know that
                     a bridge exists. The Network is marked as bridged automatically based on the
                     type of network manager selected. </para>
-                <para>Next you want to integrate this network bridge, named br100, into your
-                    network. A bridge connects two Ethernet segments together.</para>
+                <para>Next you want to integrate this network bridge, named <emphasis role="bold"
+                        >br100</emphasis>, into your network. A bridge connects two Ethernet
+                    segments together.</para>
+                <para/>
             </simplesect>
             <simplesect>
                 <title>Ensure the Database is Up-to-date</title>
                 <para>The first command you run using nova-manage is one called db sync, which
                     ensures that your database is updated. You must run this as root.</para>
-                <literallayout class="monospaced">nova-manage db sync</literallayout>
+                <literallayout class="monospaced"><code>nova-manage db sync</code></literallayout>
             </simplesect>
             <simplesect>
                 <title>Creating a user</title>
@@ -147,7 +162,7 @@
                     commands are given an access and secret key through the project itself. Let's
                     create a user that has the access we want for this project.</para>
                 <para>To add an admin user named cloudypants, use:</para>
-                <literallayout class="monospaced">nova-manage user admin cloudypants</literallayout>
+                <literallayout class="monospaced"><code>nova-manage user admin cloudypants</code></literallayout>
             </simplesect>
             <simplesect>
                 <title>Creating a project and related credentials</title>
@@ -164,21 +179,22 @@
                     the other assorted API and command-line functions.</para>
                 <para>First, we'll create a directory that'll house these credentials, in this case
                     in the root directory. You need to sudo here or save this to your own directory
-                    with 'mkdir -p ~/creds' so that the credentials match the user and are stored in
+                    with <code>mkdir -p ~/creds</code> so that the credentials match the user and are stored in
                     their home.</para>
-                <literallayout class="monospaced">mkdir –p /root/creds</literallayout>
+                <literallayout class="monospaced"><code>mkdir –p /root/creds</code></literallayout>
                 <para>Now, run nova-manage to create a zip file for your project called wpscales
                     with the user cloudypants (the admin user we created previously). </para>
-                <literallayout class="monospaced">sudo nova-manage project zipfile wpscales cloudypants /root/creds/novacreds.zip</literallayout>
+                <literallayout class="monospaced"><code>sudo nova-manage project zipfile wpscales cloudypants /root/creds/novacreds.zip</code></literallayout>
                 <para>Next, you can unzip novacreds.zip in your home directory, and add these
                     credentials to your environment. </para>
-                <literallayout class="monospaced">unzip /root/creds/novacreds.zip -d /root/creds/</literallayout>
+                <literallayout class="monospaced"><code>unzip /root/creds/novacreds.zip -d /root/creds/</code></literallayout>
                 <para>Sending that information and sourcing it as part of your .bashrc file
                     remembers those credentials for next time.</para>
-                <literallayout class="monospaced">cat /root/creds/novarc >> ~/.bashrc
-source ~/.bashrc</literallayout>
+                <literallayout class="monospaced"><code>cat /root/creds/novarc >> ~/.bashrc
+source ~/.bashrc</code></literallayout>
                 <para>Okay, you've created the basic scaffolding for your cloud so that you can get
                     some images and run instances. Onward to Part II!</para>
+                <para/>
             </simplesect>
         </section>
         <section xml:id="part-ii-getting-virtual-machines">
@@ -195,20 +211,23 @@ source ~/.bashrc</literallayout>
                 publish it. </para>
             <para>Here are the commands to get your virtual image. Be aware that the download of the
                 compressed file may take a few minutes.</para>
-            <literallayout class="monospaced">image="ubuntu1010-UEC-localuser-image.tar.gz"
+            <literallayout class="monospaced"><code>image="ubuntu1010-UEC-localuser-image.tar.gz"
 wget http://c0179148.cdn1.cloudfiles.rackspacecloud.com/
 ubuntu1010-UEC-localuser-image.tar.gz
-uec-publish-tarball $image wpbucket x86_64</literallayout>
-            <para>What you'll get in return from this command is three references: emi, eri and eki.
-                These are acronyms - emi stands for eucalyptus machine image, eri stands for
-                eucalyptus ramdisk image, and eki stands for eucalyptus kernal image. Amazon has
-                similar references for their images - ami, ari, and aki.</para>
+uec-publish-tarball $image wpbucket amd64</code>
+            </literallayout>
+            <para>What you'll get in return from this command is three references: <emphasis
+                    role="italic">emi</emphasis>, <emphasis role="italic">eri</emphasis> and
+                    <emphasis role="italic">eki</emphasis>. These are acronyms - emi stands for
+                eucalyptus machine image, eri stands for eucalyptus ramdisk image, and eki stands
+                for eucalyptus kernal image. Amazon has similar references for their images - ami,
+                ari, and aki.</para>
             <para>You need to use the emi value when you run the instance. These look something like
                 “ami-zqkyh9th″ - basically a unique identifier.</para>
             <para>Okay, now that you have your image and it's published, realize that it has to be
                 decompressed before you can launch an image from it. We can realize what state an
                 image is in using the 'euca-describe-instances' command. Basically, run:</para>
-            <literallayout class="monospaced">euca-describe-instances</literallayout>
+            <literallayout class="monospaced"><code>euca-describe-instances</code></literallayout>
             <para>and look for the state in the text that returns. You can also use
                 euca-describe-images to ensure the image is untarred. Wait until the state shows
                 "available" so that you know the instances is ready to roll.</para>
@@ -218,45 +237,50 @@ uec-publish-tarball $image wpbucket x86_64</literallayout>
             <para>Once that state is "available" you can enter this command, which will use your
                 credentials to start up the instance with the identifier you got by publishing the
                 image.</para>
-            <literallayout class="monospaced">emi=ami-zqkyh9th
-euca-run-instances $emi -k mykey -t m1.tiny</literallayout>
+            <literallayout class="monospaced">
+<code>emi=ami-zqkyh9th
+euca-run-instances $emi -k mykey -t m1.tiny</code>
+            </literallayout>
             <para>Now you can look at the state of the running instances by using
                 euca-describe-instances again. The instance will go from “launching” to “running” in
                 a short time, and you should be able to connect via SSH. Look at the IP addresses so
                 that you can connect to the instance once it starts running.</para>
             <para>Basically launch a terminal window from any computer, and enter: </para>
-            <literallayout class="monospaced">ssh -i mykey ubuntu@10.127.35.119</literallayout>
+            <literallayout class="monospaced"><code>ssh -i mykey ubuntu@10.127.35.119</code></literallayout>
             <para>On this particular image, the 'ubuntu' user has been set up as part of the sudoers
                 group, so you can escalate to 'root' via the following command:</para>
-            <literallayout class="monospaced">sudo -i</literallayout>
+            <literallayout class="monospaced"><code>sudo -i</code></literallayout>
+            <literallayout/>
             <simplesect>
                 <title>On the first VM, install WordPress</title>
                 <para>Now, you can install WordPress. Create and then switch to a blog
                     directory:</para>
-                <literallayout class="monospaced">mkdir blog
-cd blog</literallayout>
+                <literallayout class="monospaced"><code>mkdir blog
+cd blog</code></literallayout>
                 <para>Download WordPress directly to you by using wget:</para>
-                <literallayout class="monospaced">wget http://wordpress.org/latest.tar.gz           </literallayout>
+                <literallayout class="monospaced"><code>wget http://wordpress.org/latest.tar.gz</code></literallayout>
                 <para>Then unzip the package using: </para>
-                <literallayout class="monospaced">tar -xzvf latest.tar.gz</literallayout>
+                <literallayout class="monospaced"><code>tar -xzvf latest.tar.gz</code></literallayout>
                 <para>The WordPress package will extract into a folder called wordpress in the same
                     directory that you downloaded latest.tar.gz. </para>
                 <para>Next, enter "exit" and disconnect from this SSH session.</para>
+                <para/>
             </simplesect>
             <simplesect>
                 <title>On a second VM, install MySQL</title>
                 <para>Next, SSH into another virtual machine and install MySQL and use these
                     instructions to install the WordPress database using the MySQL Client from a
-                    command line: <link
-                        xlink:href="http://codex.wordpress.org/Installing_WordPress#Using_the_MySQL_Client"
-                        >Using the MySQL Client - Wordpress Codex</link>.</para>
+                    command line: <link xlink:href="http://codex.wordpress.org/Installing_WordPress#Using_the_MySQL_Client">Using the MySQL Client - Wordpress Codex.</link>
+                </para>
+                <para/>
             </simplesect>
 
             <simplesect><title>On a third VM, install Memcache</title><para>Memcache makes Wordpress database reads and writers more efficient, so your virtual servers
                     can go to work for you in a scalable manner. SSH to a third virtual machine and
                     install Memcache:</para>
                 <para>
-                    <literallayout class="monospaced">apt-get install memcached</literallayout>
+                    <literallayout class="monospaced"><code>apt-get install memcached</code>
+</literallayout>
                 </para></simplesect><simplesect><title>Configure the Wordpress Memcache plugin</title><para>From a web browser, point to the IP address of your Wordpress server. Download and install the Memcache Plugin. Enter the IP address of your Memcache server.</para></simplesect>
         </section><section xml:id="running-a-blog-in-the-cloud">
             <title>Running a Blog in the Cloud</title><para>That's it! You're now running your blog on a cloud server in OpenStack Compute, and you've scaled it horizontally using additional virtual images to run the database and Memcache. Now if your blog gets a big boost of comments, you'll be ready for the extra reads-and-writes to the database. </para></section>
