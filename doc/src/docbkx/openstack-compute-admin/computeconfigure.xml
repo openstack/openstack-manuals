@@ -158,6 +158,31 @@
 # first 3 octets of the network your volume service is on, substitute with real numbers
 --iscsi_ip_prefix=nnn.nnn.nnn 
         </literallayout></simplesect>
+        <simplesect><title>XenServer 5.6, Flat networking, MySQL, and Glance, OpenStack API</title><para>This example nova.conf file is from an internal Rackspace test system. </para>
+            
+            <literallayout class="monospaced">
+--verbose
+--nodaemon
+--sql_connection=mysql://root:&lt;password&gt;@127.0.0.1/nova
+--network_manager=nova.network.manager.FlatManager
+--image_service=nova.image.glance.GlanceImageService
+--flat_network_bridge=xenbr0
+--connection_type=xenapi
+--xenapi_connection_url=https://&lt;XenServer IP&gt;
+--xenapi_connection_username=root
+--xenapi_connection_password=supersecret
+--rescue_timeout=86400
+--allow_admin_api=true
+--xenapi_inject_image=false
+--use_ipv6=true
+# To enable flat_injected, currently only works on Debian-based systems
+--flat_injected=true
+--ipv6_backend=account_identifier
+--ca_path=./nova/CA
+# Add the following to your flagfile if you're running on Ubuntu Maverick
+--xenapi_remap_vbd_dev=true
+
+         </literallayout></simplesect>
         </section>
     <section xml:id="configuring-logging">
         <title>Configuring Logging</title>
@@ -247,7 +272,29 @@
     <section xml:id="configuring-hypervisors">
       
         <title>Configuring Hypervisors </title>
-        <para>OpenStack Compute requires a hypervisor and supports several hypervisors and virtualization standards. Configuring and running OpenStack Compute to use a particular hypervisor takes several installation and configuration steps. </para>
+        <para>OpenStack Compute requires a hypervisor and supports several hypervisors and
+            virtualization standards. Configuring and running OpenStack Compute to use a particular
+            hypervisor takes several installation and configuration steps. The --libvirt_type flag
+            indicates which hypervisor will be used.</para>
+        
+        <table rules="all" >
+            <caption>Description of nova.conf flags for hypervisors </caption>
+            
+            <thead>
+                <tr>
+                    <td>Flag</td>
+                    <td>Default</td>
+                    <td>Description</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>--libvirt_type</td>
+                    <td>default: 'kvm'</td>
+                    <td>Libvirt domain type (valid options are: kvm, lxc, qemu, uml, xen)</td>
+                </tr>
+            </tbody>
+        </table>
         </section>
     <section xml:id="configuring-authentication-authorization">
         <title>Configuring Authentication and Authorization </title>
