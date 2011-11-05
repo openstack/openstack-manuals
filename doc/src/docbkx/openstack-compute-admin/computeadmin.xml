@@ -84,9 +84,9 @@ format="SVG" scale="60"/>
             the image, then use "uec-publish-tarball" to publish it:</para>
             
            <para><literallayout class="monospaced">
- <code>image="ubuntu1010-UEC-localuser-image.tar.gz"
+image="ubuntu1010-UEC-localuser-image.tar.gz"
 wget http://c0179148.cdn1.cloudfiles.rackspacecloud.com/ubuntu1010-UEC-localuser-image.tar.gz
-uec-publish-tarball $image [bucket-name] [hardware-arch]</code>
+uec-publish-tarball $image [bucket-name] [hardware-arch]
            </literallayout>
            <itemizedlist>
                <listitem>
@@ -109,69 +109,67 @@ uec-publish-tarball $image [bucket-name] [hardware-arch]</code>
                 
                <para>Here's an example of what this command looks like with data:</para>
                 
-               <para><literallayout class="monospaced"><code>uec-publish-tarball ubuntu1010-UEC-localuser-image.tar.gz dub-bucket amd64</code></literallayout></para>
+               <para><literallayout class="monospaced">uec-publish-tarball ubuntu1010-UEC-localuser-image.tar.gz dub-bucket amd64</literallayout></para>
                 
         <para>The command in return should output three references:<emphasis role="italic">
                 emi</emphasis>, <emphasis role="italic">eri</emphasis> and <emphasis role="italic"
-                >eki</emphasis>. You need to use the emi value (for example, “<emphasis
-                role="italic">ami-zqkyh9th</emphasis>″) for the "euca-run-instances" command.</para>
+                >eki</emphasis>. You will next run nova image-list in order to obtain the ID of the
+            image you just uploaded.</para>
                 
        
-        <para>Now you can schedule, launch and connect to the instance, which you do with tools from
-            the euca2ools on the command line. Create the emi value from the uec-publish-tarball
-            command, and then you can use the euca-run-instances command.</para>
-                <para>One thing to note here, once you publish the tarball, it has to untar before you can launch an image from it. Using the 'euca-describe-images' command, wait until the state turns to "available" from "untarring.":</para>
+        <para>Now you can schedule, launch and connect to the instance, which you do with the "nova"
+            command line. The ID of the image will be used with the <literallayout class="monospaced">nova boot</literallayout>command.</para>
+                <para>One thing to note here, once you publish the tarball, it has to untar before
+            you can launch an image from it. Using the 'nova list' command, and make sure the image
+            has it's status as "ACTIVE".</para>
                 
-                <para><literallayout class="monospaced"><code>euca-describe-images</code></literallayout></para>
+                <para><literallayout class="monospaced">nova image-list</literallayout></para>
                 
-        <para>Depending on the image that you're using, you need a public key to connect to it. Some images have built-in accounts already created. Images can be shared by many users, so it is dangerous to put passwords into the images. Nova therefore supports injecting ssh keys into instances before they are
-            booted. This allows a user to login to the instances that he or she creates securely.
-            Generally the first thing that a user does when using the system is create a keypair.
-            Keypairs provide secure authentication to your instances. As part of the first boot of a
-            virtual image, the private key of your keypair is added to root’s authorized_keys file.
-            Nova generates a public and private key pair, and sends the private key to the user. The
-            public key is stored so that it can be injected into instances. </para>
+        <para>Depending on the image that you're using, you need a public key to connect to it. Some
+            images have built-in accounts already created. Images can be shared by many users, so it
+            is dangerous to put passwords into the images. Nova therefore supports injecting ssh
+            keys into instances before they are booted. This allows a user to login to the instances
+            that he or she creates securely. Generally the first thing that a user does when using
+            the system is create a keypair. </para>
+        <para>Keypairs provide secure authentication to your instances. As part of the first boot of
+            a virtual image, the private key of your keypair is added to root’s authorized_keys
+            file. Nova generates a public and private key pair, and sends the private key to the
+            user. The public key is stored so that it can be injected into instances. </para>
         <para>Keypairs are created through the api and you use them as a parameter when launching an
-            instance. They can be created on the command line using the euca2ools script
-            euca-add-keypair. Refer to the man page for the available options. Example usage:</para>
+            instance. They can be created on the command line using the following command :
+            <literallayout class="monospaced">nova keypair-add</literallayout>In order to list all the available options, you would run :<literallayout class="monospaced">nova help </literallayout>
+            Example usage:</para>
                     
                     <literallayout class="monospaced">
-<code>euca-add-keypair test > test.pem
-chmod 600 test.pem</code>
+nova keypair-add test > test.pem
+chmod 600 test.pem
                     </literallayout>
         
         <para>Now, you can run the instances:</para>
-                    <literallayout class="monospaced"><code>euca-run-instances -k test -t m1.tiny ami-zqkyh9th</code></literallayout>
+                    <literallayout class="monospaced">nova boot --image 1 --flavor 1 --key_name test my-first-server</literallayout>
         <para>Here's a description of the parameters used above:</para>
         <itemizedlist>
             <listitem>
-                <para><emphasis role="bold">-t</emphasis> what type of image to create. This type is
-                    also designated as "flavors". You can get all the flavors you have by running
-                    <literallayout class="monospaced"><code>nova-manage flavor list</code></literallayout></para>
+                <para><emphasis role="bold">--flavor</emphasis> what type of image to create. You
+                    can get all the flavors you have by running
+                    <literallayout class="monospaced">nova flavor-list</literallayout></para>
             </listitem>
             <listitem>
                 <para>
-                    <emphasis role="bold">-k</emphasis> name of the key to inject in to the image at
-                    launch.
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    Optionally, you can use the<emphasis role="bold"> -n</emphasis> parameter to indicate
-                    how many images of this type to launch. 
-                </para>
+                    <emphasis role="bold">-key_ name</emphasis> name of the key to inject in to the
+                    image at launch. </para>
             </listitem>
         </itemizedlist>          
+                <para> The instance will go from “BUILD” to “ACTIVE” in a short time, and you should
+            be able to connect via SSH using the 'ubuntu' account, with the password 'ubuntu':
+            (replace $ipaddress with the one you got from nova list): </para>
                 <para>
-                    The instance will go from “launching” to “running” in a short time, and you should be able to connect via SSH using the 'ubuntu' account, with the password 'ubuntu': (replace $ipaddress with the one you got from euca-describe-instances):
-                </para>
-                <para>
-                    <literallayout class="monospaced"><code>ssh ubuntu@$ipaddress</code></literallayout></para>
+                    <literallayout class="monospaced">ssh ubuntu@$ipaddress</literallayout></para>
                 <para>The 'ubuntu' user is part of the sudoers group, so you can escalate to 'root'
             via the following command:</para>
                <para>
                    <literallayout class="monospaced">
-                       <code>sudo -i</code>
+                       sudo -i
                    </literallayout>
                </para>
                 </section>
@@ -183,7 +181,7 @@ chmod 600 test.pem</code>
             using the following command (replace $instanceid with the instance IDs from above or
             look it up with euca-describe-instances):</para>
                 
-                <para><literallayout class="monospaced">euca-terminate-instances $instanceid</literallayout></para></section>
+                <para><literallayout class="monospaced">nova delete $server-id</literallayout></para></section>
     <section xml:id="creating-custom-images">
    
         <info><author>
@@ -203,25 +201,21 @@ chmod 600 test.pem</code>
             
             <para>The first step would be to create a raw image on Client1. This will represent the main HDD of the virtual machine, so make sure to give it as much space as you will need.</para>
             <literallayout class="monospaced">
-
 kvm-img create -f raw server.img 5G
 </literallayout>
             
             <simplesect><title>OS Installation</title>
                 <para>Download the iso file of the Linux distribution you want installed in the image. The instructions below are tested on Ubuntu 11.04 Natty Narwhal 64-bit server and Fedora 14 64-bit. Most of the instructions refer to Ubuntu. The points of difference between Ubuntu and Fedora are mentioned wherever required.</para>
                 <literallayout class="monospaced">
-
 wget http://releases.ubuntu.com/natty/ubuntu-11.04-server-amd64.iso
 </literallayout>
                 <para>Boot a KVM Instance with the OS installer ISO in the virtual CD-ROM. This will start the installation process. The command below also sets up a VNC display at port 0</para>
                 <literallayout class="monospaced">
-
 sudo kvm -m 256 -cdrom ubuntu-11.04-server-amd64.iso -drive   file=server.img,if=scsi,index=0 -boot d -net nic -net user -nographic  -vnc :0
 </literallayout>
                 <para>Connect to the VM through VNC (use display number :0) and finish the installation.</para>
                 <para>For Example,  where 10.10.10.4 is the IP address of client1:</para>
                 <literallayout class="monospaced">
-
  vncviewer 10.10.10.4 :0
 </literallayout>
                 <para>During the installation of Ubuntu, create a single ext4 partition mounted on &#8216;/&#8217;. Do not create a swap partition.</para>
@@ -234,25 +228,19 @@ sudo kvm -m 256 -drive file=server.img,if=scsi,index=0,boot=on -boot c -net nic 
                 <para>At this point, you can add all the packages you want to have installed, update the installation, add users and make any configuration changes you want in your image.</para>
                 <para>At the minimum, for Ubuntu you may run the following commands</para>
                 <literallayout class="monospaced">
-
 sudo apt-get update
-
 sudo apt-get upgrade
-
 sudo apt-get install openssh-server cloud-init
 </literallayout>
                 <para>For Fedora run the following commands as root</para>
                 <literallayout class="monospaced">
 
 yum update
-
 yum install openssh-server
-
 chkconfig sshd on
 </literallayout>
                 <para>Also remove the network persistence rules from /etc/udev/rules.d as their presence will result in the network interface in the instance coming up as an interface other than eth0.</para>
                 <literallayout class="monospaced">
-
 sudo rm -rf /etc/udev/rules.d/70-persistent-net.rules
 </literallayout>
                 <para>Shutdown the Virtual machine and proceed with the next steps.</para>
@@ -260,73 +248,53 @@ sudo rm -rf /etc/udev/rules.d/70-persistent-net.rules
             <simplesect><title>Extracting the EXT4 partition</title>
                 <para>The image that needs to be uploaded to OpenStack needs to be an ext4 filesystem image. Here are the steps to create a ext4 filesystem image from the raw image i.e server.img</para>
                 <literallayout class="monospaced">
-
 sudo losetup  -f  server.img
-
 sudo losetup -a
-
 </literallayout>
                 <para>You should see an output like this:</para>
                 <literallayout class="monospaced">
-
 /dev/loop0: [0801]:16908388 ($filepath)
 </literallayout>
                 <para>Observe the name of the loop device ( /dev/loop0 in our setup) when $filepath is the path to the mounted .raw file.</para>
                 <para>Now we need to find out the starting sector of the partition. Run:</para>
                 <literallayout class="monospaced">
-
 sudo fdisk -cul /dev/loop0
 </literallayout>
                 <para>You should see an output like this:</para>
                 
                 <literallayout class="monospaced">
-
 Disk /dev/loop0: 5368 MB, 5368709120 bytes
-
 149 heads, 8 sectors/track, 8796 cylinders, total 10485760 sectors
-
 Units = sectors of 1 * 512 = 512 bytes
-
 Sector size (logical/physical): 512 bytes / 512 bytes
-
 I/O size (minimum/optimal): 512 bytes / 512 bytes
-
 Disk identifier: 0x00072bd4
-
 Device Boot      Start         End      Blocks   Id  System
-
 /dev/loop0p1   *        2048    10483711     5240832   83  Linux
 </literallayout>
                 <para>Make a note of the starting sector of the /dev/loop0p1 partition i.e the partition whose ID is 83. This number should be multiplied by 512 to obtain the correct value. In this case: 2048 x 512 = 1048576</para>
                 <para>Unmount the loop0 device:</para>
                 <literallayout class="monospaced">
-
 sudo losetup -d /dev/loop0
 </literallayout>
                 <para>Now mount only the partition(/dev/loop0p1) of server.img which we had previously noted down, by adding the -o parameter with value previously calculated value</para>
                 <literallayout class="monospaced">
-
 sudo losetup -f -o 1048576 server.img
-
 sudo losetup -a
-
 </literallayout>
                 <para>You&#8217;ll see a message like this:</para>
                 <literallayout class="monospaced">
-
 /dev/loop0: [0801]:16908388 ($filepath) offset 1048576
 </literallayout>
                 <para>Make a note of the mount point of our device(/dev/loop0 in our setup) when $filepath is the path to the mounted .raw file.</para>
                 <para>Copy the entire partition to a new .raw file</para>
                 <literallayout class="monospaced">
-
 sudo dd if=/dev/loop0 of=serverfinal.img
 </literallayout>
                 <para>Now we have our ext4 filesystem image i.e serverfinal.img</para>
                 
                 <para>Unmount the loop0 device</para>
                 <literallayout class="monospaced">
-
 sudo losetup -d /dev/loop0
 </literallayout>
             </simplesect>
@@ -334,25 +302,23 @@ sudo losetup -d /dev/loop0
                 <para>You will need to tweak /etc/fstab to make it suitable for a cloud instance. Nova-compute may resize the disk at the time of launch of instances based on the instance type chosen. This can make the UUID of the disk invalid. Hence we have to use File system label as the identifier for the partition instead of the UUID.</para>
                 <para>Loop mount the serverfinal.img, by running</para>
                 <literallayout class="monospaced">
-
 sudo mount -o loop serverfinal.img /mnt
 </literallayout>
                 <para>Edit /mnt/etc/fstab and modify the line for mounting root partition(which may look like the following)</para>
                 
-                <literallayout class="monospaced">
-
+                <programlisting>
 UUID=e7f5af8d-5d96-45cc-a0fc-d0d1bde8f31c  /               ext4    errors=remount-ro  0       1
-</literallayout>
+</programlisting>
                 <para>to</para>
-                <literallayout class="monospaced">
+                <programlisting>
 
 LABEL=uec-rootfs              /          ext4           defaults     0    0
-</literallayout>
+                </programlisting>
             </simplesect>
             <simplesect><title>Fetching Metadata in Fedora</title>
                 <para>Since, Fedora does not ship with cloud-init or an equivalent, you will need to take a few steps to have the instance  fetch the meta data like ssh keys etc.</para>
                 <para>Edit the /etc/rc.local file and add the following lines before the line “touch /var/lock/subsys/local”</para>
-                <literallayout class="monospaced">
+                <programlisting>
 
 depmod -a
 modprobe acpiphp
@@ -365,25 +331,21 @@ echo &quot;AUTHORIZED_KEYS:&quot;
 echo &quot;************************&quot;
 cat /root/.ssh/authorized_keys
 echo &quot;************************&quot;
-</literallayout>
+</programlisting>
             </simplesect></section>
         <simplesect><title>Kernel and Initrd for OpenStack</title>
             
             <para>Copy the kernel and the initrd image from /mnt/boot to user home directory. These will be used later for creating and uploading a complete virtual image to OpenStack.</para>
             <literallayout class="monospaced">
-
 sudo cp /mnt/boot/vmlinuz-2.6.38-7-server /home/localadmin
-
 sudo cp /mnt/boot/initrd.img-2.6.38-7-server /home/localadmin
 </literallayout>
             <para>Unmount the Loop partition</para>
             <literallayout class="monospaced">
-
 sudo umount  /mnt
 </literallayout>
             <para>Change the filesystem label of serverfinal.img to &#8216;uec-rootfs&#8217;</para>
             <literallayout class="monospaced">
-
 sudo tune2fs -L uec-rootfs serverfinal.img
 </literallayout>
             <para>Now, we have all the components of the image ready to be uploaded to OpenStack imaging server.</para>
@@ -392,7 +354,6 @@ sudo tune2fs -L uec-rootfs serverfinal.img
             <para>The last step would be to upload the images to Openstack Imaging Server glance. The files that need to be uploaded for the above sample setup of Ubuntu are: vmlinuz-2.6.38-7-server, initrd.img-2.6.38-7-server, serverfinal.img</para>
             <para>Run the following command</para>
             <literallayout class="monospaced">
-
 uec-publish-image -t image --kernel-file vmlinuz-2.6.38-7-server --ramdisk-file initrd.img-2.6.38-7-server amd64 serverfinal.img bucket1
 </literallayout>
             <para>For Fedora, the process will be similar. Make sure that you use the right kernel and initrd files extracted above.</para>
@@ -401,25 +362,21 @@ uec-publish-image -t image --kernel-file vmlinuz-2.6.38-7-server --ramdisk-file 
         <simplesect><title>Bootable Images</title>
             <para>You can register bootable disk images without associating kernel and ramdisk images. When you do not want the flexibility of using the same disk image with different kernel/ramdisk images, you can go for bootable disk images. This greatly simplifies the process of bundling and registering the images. However, the caveats mentioned in the introduction to this chapter apply.  Please note that the instructions below use server.img and you can skip all the cumbersome steps related to extracting the single ext4 partition.</para>
             <literallayout class="monospaced">
-euca-bundle-image -i server.img
-euca-upload-bundle -b mybucket -m /tmp/server.img.manifest.xml
-euca-register mybucket/server.img.manifest.xml
+nova-manage image image_register server.img --public=T --arch=amd64
 </literallayout>
         </simplesect>
     <simplesect><title>Image Listing</title>
         <para>The status of the images that have been uploaded can be viewed by using euca-describe-images command. The output should like this:</para>
-        <literallayout class="monospaced">
-
-localadmin@client1:~$ euca-describe-images
-
-IMAGE   ari-7bfac859    bucket1/initrd.img-2.6.38-7-server.manifest.xml  css     available           private         x86_64       ramdisk
-
-IMAGE   ami-5e17eb9d    bucket1/serverfinal.img.manifest.xml       css     available               private         x86_64  machine      aki-3d0aeb08    ari-7bfac859
-
-IMAGE   aki-3d0aeb08    bucket1/vmlinuz-2.6.38-7-server.manifest.xml     css     available           private         x86_64       kernel
-
-localadmin@client1:~$
-</literallayout>
+        <literallayout class="monospaced">nova image-list</literallayout>
+            <programlisting>
++----+---------------------------------------------+--------+
+| ID |                     Name                    | Status |
++----+---------------------------------------------+--------+
+| 6  | ttylinux-uec-amd64-12.1_2.6.35-22_1-vmlinuz | ACTIVE |
+| 7  | ttylinux-uec-amd64-12.1_2.6.35-22_1-initrd  | ACTIVE |
+| 8  | ttylinux-uec-amd64-12.1_2.6.35-22_1.img     | ACTIVE |
++----+---------------------------------------------+--------+
+</programlisting>
     </simplesect></section>
     <section xml:id="creating-a-windows-image"><title>Creating a Windows Image</title>
             <para>The first step would be to create a raw image on Client1, this will represent the main HDD of the virtual machine, so make sure to give it as much space as you will need.</para>
@@ -432,16 +389,13 @@ kvm-img create -f raw windowsserver.img 20G
             <para>Start the installation by running</para>
             <literallayout class="monospaced">
 sudo kvm -m 1024 -cdrom win2k8_dvd.iso -drive file=windowsserver.img,if=virtio,boot=on -fda virtio-win-1.1.16.vfd -boot d -nographic -vnc :0
-
 </literallayout>
             <para>When the installation prompts you to choose  a hard disk device you won’t see any devices available. Click on “Load drivers” at the bottom left and load the drivers from A:\i386\Win2008</para>
             <para>After the Installation is over, boot into it once and install any additional applications you need to install and make any configuration changes you need to make.  Also ensure that RDP is enabled as that would be the only way you can connect to a running instance of Windows. Windows firewall needs to be configured to allow incoming ICMP and RDP connections.</para>
             <para>For OpenStack to allow incoming RDP Connections, use euca-authorize command to open up port 3389 as described in the chapter  on &#8220;Security&#8221;.</para>
             <para>Shut-down the VM and upload the image to OpenStack</para>
             <literallayout class="monospaced">
-euca-bundle-image -i windowsserver.img
-euca-upload-bundle -b mybucket -m /tmp/windowsserver.img.manifest.xml
-euca-register mybucket/windowsserver.img.manifest.xml
+nova-manage image image_register windowsserver.img --public=T --arch=x86
 </literallayout>
         </section>
     <section xml:id="understanding-the-compute-service-architecture">
@@ -493,15 +447,11 @@ euca-register mybucket/windowsserver.img.manifest.xml
     <para>Volumes may easily be transferred between instances, but may be attached to only a single instance at a time.</para></simplesect></section>
     <section xml:id="managing-the-cloud">
        
-        <title>Managing the Cloud</title><para>There are two main tools that a system administrator will find useful to manage their cloud;
-            the nova-manage command or the Euca2ools command line commands. </para>
-        <para>With the Diablo release, the nova-manage command has been deprecated and you must
-            specify if you want to use it by using the --use_deprecated_auth flag in nova.conf. You
-            must also use the modified middleware stack that is commented out in the default
-            paste.ini file.</para>
-        <para>The nova-manage command may only be run by users with admin privileges. Commands for
-            euca2ools can be used by all users, though specific commands may be restricted by Role
-            Based Access Control in the deprecated nova auth system. </para>
+        <title>Managing the Cloud</title><para>There are three main tools that a system administrator will find useful to manage their cloud;
+            the nova-manage command, and the novaclient or the Euca2ools commands. </para>
+        <para>The nova-manage command may only be run by users with admin privileges. Both
+            novaclient and euca2ools can be used by all users, though specific commands may be
+            restricted by Role Based Access Control in the deprecated nova auth system. </para>
         <simplesect><title>Using the nova-manage command</title>
         <para>The nova-manage command may be used to perform many essential functions for
                 administration and ongoing maintenance of nova, such as user creation, vpn
@@ -514,9 +464,30 @@ euca-register mybucket/windowsserver.img.manifest.xml
             
             <para>Run without arguments to see a list of available command categories: nova-manage</para>
             
-            <para>Command categories are: account, agent, config, db, fixed, flavor, floating, host,
-                instance_type, image, network, project, role, service, shell, user, version, vm,
-                volume, and vpn. </para>
+            <para>Command categories are: <simplelist>
+                    <member>account</member>
+                    <member>agent</member>
+                    <member>config</member>
+                    <member>db</member>
+                    <member>drive</member>
+                    <member>fixed</member>
+                    <member>flavor</member>
+                    <member>floating</member>
+                    <member>host</member>
+                    <member>instance_type</member>
+                    <member>image</member>
+                    <member>network</member>
+                    <member>project</member>
+                    <member>role</member>
+                    <member>service</member>
+                    <member>shell</member>
+                    <member>user</member>
+                    <member>version</member>
+                    <member>vm</member>
+                    <member>volume</member>
+                    <member>vpn</member>
+                    <member>vsa</member>
+                </simplelist></para>
             <para>You can also run with a category argument such as user to see a list of all commands in that category: nova-manage user</para>
             </simplesect></section>
     <section xml:id="managing-compute-users">
@@ -537,7 +508,13 @@ euca-register mybucket/windowsserver.img.manifest.xml
      
         <simplesect><title>Credentials</title>
         
-        <para>Nova can generate a handy set of credentials for a user. These credentials include a CA for bundling images and a file for setting environment variables to be used by euca2ools. If you don’t need to bundle images, just the environment script is required. You can export one with the project environment command. The syntax of the command is nova-manage project environment project_id user_id [filename]. If you don’t specify a filename, it will be exported as novarc. After generating the file, you can simply source it in bash to add the variables to your environment:</para>
+        <para>Nova can generate a handy set of credentials for a user. These credentials include a
+                CA for bundling images and a file for setting environment variables to be used by
+                novaclient. If you don’t need to bundle images, you will only need the environemnt
+                script. You can export one with the project environment command. The syntax of the
+                command is nova-manage project environment project_id user_id [filename]. If you
+                don’t specify a filename, it will be exported as novarc. After generating the file,
+                you can simply source it in bash to add the variables to your environment:</para>
         
         <literallayout class="monospaced">
         nova-manage project environment john_project john
@@ -628,8 +605,7 @@ euca-register mybucket/windowsserver.img.manifest.xml
             partitioning scheme that carves out 60GB of space and labels it as LVM. The network is a
             /28 .80-.95, and FlatManger is the NetworkManager setting for OpenStack Compute (Nova). </para>
         <para>Please note that the network mode doesn't interfere at all with the way nova-volume
-            works, but networking must be set up for for nova-volumes to work. Please refer to <xref
-                linkend="ch_networking">Networking</xref> for more details.</para>
+            works, but networking must be set up for for nova-volumes to work. Please refer to <link linkend="ch_networking">Networking</link> for more details.</para>
         <para>To set up Compute to use volumes, ensure that nova-volume is installed along with
             lvm2. The guide will be split in four parts : </para>
         <para>
@@ -651,8 +627,8 @@ euca-register mybucket/windowsserver.img.manifest.xml
         </para>
         <simplesect>
             <title>A- Install nova-volume on the cloud controller.</title>
-            <para> This is simply done by installing the two components on the cloud controller : <literallayout class="monospaced"><code>apt-get install lvm2 nova-volume</code></literallayout><literallayout><emphasis role="bold">For Ubuntu distros, the nova-volumes component will not properly work</emphasis> (regarding the part which deals with volumes deletion) without a small fix. In dorder to fix that, do the following : </literallayout>
-                <code>sudo visudo</code>
+            <para> This is simply done by installing the two components on the cloud controller : <literallayout class="monospaced">apt-get install lvm2 nova-volume</literallayout><literallayout><emphasis role="bold">For Ubuntu distros, the nova-volumes component will not properly work</emphasis> (regarding the part which deals with volumes deletion) without a small fix. In dorder to fix that, do the following : </literallayout>
+                sudo visudo
             </para>
             <para>Then add an entry for the nova user (here is the default sudoers file with our added nova user) :</para>
             <programlisting>
@@ -699,18 +675,18 @@ root	ALL=(ALL) ALL
                             short run down of how you would create a LVM from free drive space on
                             your system. Start off by issuing an fdisk command to your drive with
                             the free space:
-                            <literallayout class="monospaced"><code>fdisk /dev/sda</code></literallayout>
+                            <literallayout class="monospaced">fdisk /dev/sda</literallayout>
                             Once in fdisk, perform the following commands: <orderedlist>
                                 <listitem>
-                                    <para>Press ‘<code>n'</code> to create a new disk
+                                    <para>Press ‘n' to create a new disk
                                         partition,</para>
                                 </listitem>
                                 <listitem>
-                                    <para>Press <code>'p'</code> to create a primary disk
+                                    <para>Press 'p' to create a primary disk
                                         partition,</para>
                                 </listitem>
                                 <listitem>
-                                    <para>Press <code>'1'</code> to denote it as 1st disk
+                                    <para>Press '1' to denote it as 1st disk
                                         partition,</para>
                                 </listitem>
                                 <listitem>
@@ -722,29 +698,29 @@ root	ALL=(ALL) ALL
                                         +6700M.</para>
                                 </listitem>
                                 <listitem>
-                                    <para>Press <code>'t', then</code> select the new partition you
+                                    <para>Press 't', then select the new partition you
                                         made.</para>
                                 </listitem>
                                 <listitem>
-                                    <para>Press <code>'8e'</code> change your new partition to 8e,
+                                    <para>Press '8e' change your new partition to 8e,
                                         i.e. Linux LVM partition type.</para>
                                 </listitem>
                                 <listitem>
-                                    <para>Press ‘<code>p'</code> to display the hard disk partition
+                                    <para>Press ‘p' to display the hard disk partition
                                         setup. Please take note that the first partition is denoted
                                         as /dev/sda1 in Linux.</para>
                                 </listitem>
                                 <listitem>
-                                    <para>Press <code>'w'</code> to write the partition table and
+                                    <para>Press 'w' to write the partition table and
                                         exit fdisk upon completion.</para>
                                     <para>Refresh your partition table to ensure your new partition
                                         shows up, and verify with fdisk. We then inform the OS about
                                         the table partition update : </para>
                                     <para>
-                                        <literallayout class="monospaced"><code>partprobe</code>
+                                        <literallayout class="monospaced">partprobe
 
 Again :
-<code>fdisk -l (you should see your new partition in this listing)</code></literallayout>
+fdisk -l (you should see your new partition in this listing)</literallayout>
                                     </para>
                                     <para>Here is how you can set up partitioning during the OS
                                         install to prepare for this nova-volume
@@ -771,8 +747,8 @@ Device Boot Start End Blocks Id System
                                         and prepare it as nova-volumes. <emphasis role="bold">You
                                             must name your volume group ‘nova-volumes’ or things
                                             will not work as expected</emphasis>:</para>
-                                    <literallayout class="monospaced"><code>pvcreate /dev/sda5
-vgcreate nova-volumes /dev/sda5</code> </literallayout>
+                                    <literallayout class="monospaced">pvcreate /dev/sda5
+vgcreate nova-volumes /dev/sda5 </literallayout>
                                 </listitem>
                             </orderedlist></para>
                     </listitem>
@@ -783,10 +759,10 @@ vgcreate nova-volumes /dev/sda5</code> </literallayout>
             <title> B- Configuring nova-volume on the compute nodes</title>
             <para> Since you have created the volume group, you will be able to use the following
                 tools for managing your volumes: </para>
-            <simpara><code>euca-create-volume</code></simpara>
-            <simpara><code>euca-attach-volume</code></simpara>
-            <simpara><code>euca-detach-volume</code></simpara>
-            <simpara><code>euca-delete-volume</code></simpara>
+            <simpara>euca-create-volume</simpara>
+            <simpara>euca-attach-volume</simpara>
+            <simpara>euca-detach-volume</simpara>
+            <simpara>euca-delete-volume</simpara>
             <note><para>If you are using KVM as your hypervisor, then the actual device name in the guest will be different than the one specified in the euca-attach-volume command. You can specify a device name to the KVM hypervisor, but the actual means of attaching to the guest is over a virtual PCI bus. When the guest sees a new device on the PCI bus, it picks the next available name (which in most cases is /dev/vdc) and the disk shows up there on the guest. </para></note>
             <itemizedlist>
                 <listitem>
@@ -800,13 +776,13 @@ vgcreate nova-volumes /dev/sda5</code> </literallayout>
                         accepts incoming connections. </para>
                     <para>First install the open-iscsi package on the initiators, so the
                         compute-nodes <emphasis role="bold">only</emphasis> :
-                        <literallayout class="monospaced"><code>apt-get install open-iscsi</code> </literallayout><literallayout>Then on the target, which is in our case the cloud-controller, the iscsitarget package : </literallayout><literallayout><code>apt-get install iscsitarget</code> </literallayout><literallayout>This package could refuse to start with a "FATAL: Module iscsi_trgt not found" error. This error is caused by the kernel which does not contain the iscsi module's source into it ; you can install the kernel modules by installing an extra pacakge : </literallayout><literallayout> <code>apt-get install iscsitarget-dkms</code> (the Dynamic Kernel Module Support is a framework used for created modules with non-existent sources into the current kernel)</literallayout></para>
+                        <literallayout class="monospaced">apt-get install open-iscsi </literallayout><literallayout>Then on the target, which is in our case the cloud-controller, the iscsitarget package : </literallayout><literallayout>apt-get install iscsitarget </literallayout><literallayout>This package could refuse to start with a "FATAL: Module iscsi_trgt not found" error. This error is caused by the kernel which does not contain the iscsi module's source into it ; you can install the kernel modules by installing an extra pacakge : </literallayout><literallayout> apt-get install iscsitarget-dkms (the Dynamic Kernel Module Support is a framework used for created modules with non-existent sources into the current kernel)</literallayout></para>
                     <para>You have to enable it so the startut script (/etc/init.d/iscsitarget) can
                         start the daemon :
-                        <literallayout class="monospaced"><code>sed -i 's/false/true/g' /etc/default/iscsitarget</code></literallayout>
+                        <literallayout class="monospaced">sed -i 's/false/true/g' /etc/default/iscsitarget</literallayout>
                         Then run on the nova-controller (iscsi target) :
-                            <literallayout class="monospaced"><code>service iscsitarget start</code></literallayout><literallayout>And on the compute-nodes (iscsi initiators) :</literallayout><code>service
-                            open-iscsi start</code></para>
+                            <literallayout class="monospaced">service iscsitarget start</literallayout><literallayout>And on the compute-nodes (iscsi initiators) :</literallayout>service
+                            open-iscsi start</para>
                 </listitem>
                 <listitem>
                     <para><emphasis role="bold">Configure nova.conf flag file</emphasis></para>
@@ -824,7 +800,7 @@ vgcreate nova-volumes /dev/sda5</code> </literallayout>
                     <para>You are now ready to fire up nova-volume, and start creating
                         volumes!</para>
                     <para>
-                        <literallayout class="monospaced"><code>service nova-volume start</code></literallayout>
+                        <literallayout class="monospaced">service nova-volume start</literallayout>
                     </para>
                     <para>Once the service is started, login to your controller and ensure you’ve
                         properly sourced your ‘novarc’ file. You will be able to use the euca2ools
@@ -832,12 +808,12 @@ vgcreate nova-volumes /dev/sda5</code> </literallayout>
                     <para>One of the first things you should do is make sure that nova-volume is
                         checking in as expected. You can do so using nova-manage:</para>
                     <para>
-                        <literallayout class="monospaced"><code>nova-manage service list</code></literallayout>
+                        <literallayout class="monospaced">nova-manage service list</literallayout>
                     </para>
                     <para>If you see a smiling ‘nova-volume’ in there, you are looking good. Now
                         create a new volume:</para>
                     <para>
-                        <literallayout class="monospaced"><code>euca-create-volume -s 7 -z nova </code> (-s refers to the size of the volume in GB, and -z is the default zone (usually nova))</literallayout>
+                        <literallayout class="monospaced">euca-create-volume -s 7 -z nova  (-s refers to the size of the volume in GB, and -z is the default zone (usually nova))</literallayout>
                     </para>
                     <para>You should get some output similar to this:</para>
                     <para>
@@ -846,14 +822,14 @@ vgcreate nova-volumes /dev/sda5</code> </literallayout>
                     <para>You can view that status of the volumes creation using
                         ‘euca-describe-volumes’. Once that status is ‘available,’ it is ready to be
                         attached to an instance:</para>
-                    <para><literallayout class="monospaced"><code>euca-attach-volume -i i-00000008 -d /dev/vdb vol-00000009</code></literallayout>
+                    <para><literallayout class="monospaced">euca-attach-volume -i i-00000008 -d /dev/vdb vol-00000009</literallayout>
                         (-i refers to the instance you will attach the volume to, -d is the
                             mountpoint<emphasis role="bold"> (on the compute-node !</emphasis> and
                         then the volume name.)</para>
                     <para>By doing that, the compute-node which runs the instance basically performs
                         an iSCSI connection and creates a session. You can ensure that the session
                         has been created by running : </para>
-                    <para><code>iscsiadm -m session </code></para>
+                    <para>iscsiadm -m session </para>
                     <para>Which should output : </para>
                     <para>
                         <programlisting>root@nova-cn1:~# iscsiadm -m session
@@ -866,7 +842,7 @@ tcp: [1] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-0000000b</program
                             local one, you will find the nova-volume will be designated as
                             "/dev/vdX" devices, while local are named "/dev/sdX". </emphasis></para>
                     <para>You can check the volume attachment by running : </para>
-                    <para><code>dmesg | tail </code></para>
+                    <para>dmesg | tail </para>
                     <para>You should from there see a new disk. Here is the output from ‘fdisk -l’
                         from i-00000008:</para>
                     <programlisting>Disk /dev/vda: 10.7 GB, 10737418240 bytes
@@ -883,17 +859,17 @@ Sector size (logical/physical): 512 bytes / 512 bytes
 I/O size (minimum/optimal): 512 bytes / 512 bytes Disk identifier: 0×00000000 </programlisting>
                     <para>Now with the space presented, let’s configure it for use:</para>
                     <para>
-                        <literallayout class="monospaced"><code>fdisk /dev/vdb</code></literallayout>
+                        <literallayout class="monospaced">fdisk /dev/vdb</literallayout>
                     </para>
                     <orderedlist>
                         <listitem>
-                            <para>Press ‘<code>n'</code> to create a new disk partition.</para>
+                            <para>Press ‘n' to create a new disk partition.</para>
                         </listitem>
                         <listitem>
-                            <para>Press <code>'p'</code> to create a primary disk partition.</para>
+                            <para>Press 'p' to create a primary disk partition.</para>
                         </listitem>
                         <listitem>
-                            <para>Press <code>'1'</code> to denote it as 1st disk partition.</para>
+                            <para>Press '1' to denote it as 1st disk partition.</para>
                         </listitem>
                         <listitem>
                             <para>Press ENTER twice to accept the default of 1st and last cylinder –
@@ -901,20 +877,20 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes Disk identifier: 0×00000000 <
                                 partition.</para>
                         </listitem>
                         <listitem>
-                            <para>Press <code>'t', then</code> select the new partition you
+                            <para>Press 't', then select the new partition you
                                 made.</para>
                         </listitem>
                         <listitem>
-                            <para>Press <code>'83'</code> change your new partition to 83, i.e.
+                            <para>Press '83' change your new partition to 83, i.e.
                                 Linux partition type.</para>
                         </listitem>
                         <listitem>
-                            <para>Press ‘<code>p'</code> to display the hard disk partition setup.
+                            <para>Press ‘p' to display the hard disk partition setup.
                                 Please take note that the first partition is denoted as /dev/vda1 in
                                 your instance.</para>
                         </listitem>
                         <listitem>
-                            <para>Press <code>'w'</code> to write the partition table and exit fdisk
+                            <para>Press 'w' to write the partition table and exit fdisk
                                 upon completion.</para>
                         </listitem>
                         <listitem>
@@ -949,16 +925,16 @@ portal:10.192.12.34,3260]: openiscsiadm: initiator reported error (15 - already 
                             euca-attach-volume and/ or try to attach another volume to an instance.
                             It happens when the compute node has a running session while you try to
                             attach a volume by using the same IQN. You could check that by running : </para>
-                        <para><literallayout class="monospaced"><code>iscsiadm -m session</code></literallayout>
+                        <para><literallayout class="monospaced">iscsiadm -m session</literallayout>
                             You should have a session with the same name that the compute is trying
                             to open. Actually, it seems to be related to the several routes
                             available for the iSCSI exposition, those routes could be seen by
                             running on the compute node :
-                            <literallayout class="monospaced"><code>iscsiadm -m discovery -t st -p $ip_of_nova-volumes</code></literallayout>
+                            <literallayout class="monospaced">iscsiadm -m discovery -t st -p $ip_of_nova-volumes</literallayout>
                             You should see for a volume multiple addresses to reach it. The only
                             known workaround to that is to change the "–iscsi_ip_prefix" flag and
                             use the 4 bytes (full IP) of the nova-volumes server, eg : </para>
-                        <para><literallayout class="monospaced"><code>"–iscsi_ip_prefix=192.168.2.1</code></literallayout>
+                        <para><literallayout class="monospaced">"–iscsi_ip_prefix=192.168.2.1</literallayout>
                             You'll have then to restart both nova-compute and nova-volume services.
                         </para>
                     </listitem>
@@ -985,13 +961,13 @@ cannot resolve host name ubuntu03c\niscsiadm: Could not perform SendTargets disc
                         <para>The first thing you could do is running a telnet session in order to
                             see if you are able to reach the nova-volume server. From the
                             compute-node, run :</para>
-                        <literallayout class="monospaced"><code>telnet $ip_of_nova_volumes  3260</code></literallayout>
+                        <literallayout class="monospaced">telnet $ip_of_nova_volumes  3260</literallayout>
                         <para> If the session times out, check the server firewall ; or try to ping
                             it. You could also run a tcpdump session which will likely gives you
                             extra information : </para>
-                        <literallayout class="monospaced"><code>tcpdump -nvv -i $iscsi_interface port dest $ip_of_nova_volumes</code></literallayout>
+                        <literallayout class="monospaced">tcpdump -nvv -i $iscsi_interface port dest $ip_of_nova_volumes</literallayout>
                         <para> Again, try to manually run an iSCSI discovery via : </para>
-                        <literallayout class="monospaced"><code>iscsiadm -m discovery -t st -p $ip_of_nova-volumes</code></literallayout>
+                        <literallayout class="monospaced">iscsiadm -m discovery -t st -p $ip_of_nova-volumes</literallayout>
                     </listitem>
                     <listitem>
                         <para><emphasis role="italic">"Lost connectivity between nova-volumes and
@@ -1005,8 +981,8 @@ cannot resolve host name ubuntu03c\niscsiadm: Could not perform SendTargets disc
                         <para>First, from the nova-compute, close the active (but stalled) iSCSI
                             session, refer to the volume attached to get the session, and perform
                             the following command : </para>
-                        <literallayout class="monospaced"><code>iscsiadm -m session -r $session_id -u</code></literallayout>
-                        <para>Here is an <code>iscsi -m session</code> output : </para>
+                        <literallayout class="monospaced">iscsiadm -m session -r $session_id -u</literallayout>
+                        <para>Here is an iscsi -m session output : </para>
                         <programlisting>
 tcp: [1] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-0000000e
 tcp: [2] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000010
@@ -1024,7 +1000,7 @@ tcp: [9] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000014         
                             now have to inform it that the disk can be used. Nova stores the volumes
                             info into the "volumes" table. You will have to update four fields into
                             the database nova uses (eg. MySQL). First, conect to the database : </para>
-                        <literallayout class="monospaced"><code>mysql -uroot -p$password nova</code></literallayout>
+                        <literallayout class="monospaced">mysql -uroot -p$password nova</literallayout>
                         <para>Then, we get some information from the table "volumes" : </para>
                         <programlisting>
  mysql> select id,created_at, size, instance_id, status, attach_status, display_name from volumes;
@@ -1062,7 +1038,7 @@ tcp: [9] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000014         
             mysql> update volumes set attach_status="detached" where id=21;
             mysql> update volumes set instance_id=0 where id=21;
                         </programlisting>
-                        <para>Now if you run again <code>euca-describe-volumes</code>from the cloud
+                        <para>Now if you run again euca-describe-volumesfrom the cloud
                             controller, you should see an available volume now : </para>
                         <programlisting>VOLUME  vol-00000014     30     nova    available (nuage-and-co, nova-cc1, None, None)  2011-07-18T12:45:39Z</programlisting>
                         <para>You can now proceed to the volume attachment again!</para>
@@ -1104,14 +1080,14 @@ tcp: [9] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000014         
                         An LVM snapshot is the exact copy of a logicial volume, which contains
                         datas, at a frozen state. Thus, data corruption is avoided (preventing data
                         manipulation during the process of creating the volume itself). Remember the
-                        EBS-like volumes created through a : <code>$ euca-create-volume </code>
+                        EBS-like volumes created through a : $ euca-create-volume 
                         consists in an LVM's logical volume. </para>
                     <para><emphasis role="italic">Make sure you have enough space (a security is
                             twice the size for a volume snapshot) before creating the snapshot,
                             otherwise, there is a risk the snapshot will become corrupted is not
                             enough space is allocated to it !</emphasis></para>
                     <para>So you should be able to list all the volumes by running :
-                        <literallayout class="monospaced"><code>$ lvdisplay</code></literallayout>
+                        <literallayout class="monospaced">$ lvdisplay</literallayout>
                         During our process, we will only work with a volume called "<emphasis
                             role="italic">volume-00000001</emphasis>", which, we suppose, is a 10gb
                         volume : but,everything discussed here applies to all volumes, not matter
@@ -1121,7 +1097,7 @@ tcp: [9] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000014         
                         snapshot ; this can be achieved while the volume is attached to an instance
                         :</para>
                     <para>
-                        <literallayout class="monospaced"><code>$ lvcreate --size 10G --snapshot --name volume-00000001-snapshot /dev/nova-volumes/volume-00000001</code></literallayout>
+                        <literallayout class="monospaced">$ lvcreate --size 10G --snapshot --name volume-00000001-snapshot /dev/nova-volumes/volume-00000001</literallayout>
                     </para>
                     <para> We indicate LVM we want a snapshot of an already existing volumes via the
                             "<emphasis role="italic">--snapshot</emphasis>" flag, plus the path of
@@ -1137,7 +1113,7 @@ tcp: [9] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000014         
                     <para>We now have a full snapshot, and it only took few seconds ! </para>
                     <para>Let's check it, by running </para>
                     <para>
-                        <literallayout><code>$ lvdisplay</code> again. You should see now your shapshot : </literallayout>
+                        <literallayout>$ lvdisplay again. You should see now your shapshot : </literallayout>
                     </para>
                     <para>
                         <programlisting>
@@ -1193,15 +1169,15 @@ tcp: [9] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000014         
                         partition creates inside the instance. </para>
                     <para>Without using the partitions created inside instances, we won' t be able
                         to see it's content, and creating efficient backups. Let's use kpartx (a
-                        simple <emphasis role="monospaced"><code>$ apt-get install
-                            kpartx</code></emphasis> would do the trick on Debian's flavor distros): </para>
+                        simple <emphasis role="monospaced">$ apt-get install
+                            kpartx</emphasis> would do the trick on Debian's flavor distros): </para>
                     <para>
-                        <literallayout class="monospaced"><code>$ kpartx -av /dev/nova-volumes/volume-00000001-snapshot</code></literallayout>
+                        <literallayout class="monospaced">$ kpartx -av /dev/nova-volumes/volume-00000001-snapshot</literallayout>
                     </para>
                     <para>If not any errors is displayed, it means the tools has been able to find
                         it, and map the partition table. </para>
                     <para>You can easily check that map by running : </para>
-                    <para><literallayout class="monospaced"><code>$ ls /dev/mapper/nova*</code></literallayout>
+                    <para><literallayout class="monospaced">$ ls /dev/mapper/nova*</literallayout>
                         You should now see a partition called
                         "nova--volumes-volume--00000001--snapshot1" </para>
                     <para>If you have created more than one partition on that volumes, you should
@@ -1210,7 +1186,7 @@ tcp: [9] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000014         
                         and so forth). </para>
                     <para>We can now mount our parition : </para>
                     <para>
-                        <literallayout class="monospaced"><code>$ mount /dev/mapper/nova--volumes-volume--volume--00000001--snapshot1 /mnt</code></literallayout>
+                        <literallayout class="monospaced">$ mount /dev/mapper/nova--volumes-volume--volume--00000001--snapshot1 /mnt</literallayout>
                     </para>
                     <para>If there is not any errors, it means you successfully mounted the
                         partition ! </para>
@@ -1235,7 +1211,7 @@ tcp: [9] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000014         
                     <listitem>
                         <para> Now we have our mounted volume, let's create a backup of it : </para>
                         <para>
-                            <literallayout class="monospaced"><code>$ tar --exclude={"lost+found","some/data/to/exclude"} -czf volume-00000001.tar.gz -C /mnt/ /backup/destination</code></literallayout>
+                            <literallayout class="monospaced">$ tar --exclude={"lost+found","some/data/to/exclude"} -czf volume-00000001.tar.gz -C /mnt/ /backup/destination</literallayout>
                         </para>
                         <para>This command will create a tar.gz file containing the datas, <emphasis
                                 role="italic">and datas only</emphasis>, so you ensure you don't
@@ -1253,7 +1229,7 @@ tcp: [9] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000014         
                             is corrupted, so it is an interesting way to make sure your file is has
                             not been corrupted during its transfer.</para>
                         <para>Let's checksum our file, and save the result to a file :</para>
-                        <para><literallayout class="monospaced"><code>$sha1sum volume-00000001.tar.gz > volume-00000001.checksum</code></literallayout><emphasis
+                        <para><literallayout class="monospaced">$sha1sum volume-00000001.tar.gz > volume-00000001.checksum</literallayout><emphasis
                                 role="bold">Be aware</emphasis> the sha1sum should be used carefully
                             since the required time for the calculation is proportionate to the
                             file's size. </para>
@@ -1267,15 +1243,15 @@ tcp: [9] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000014         
                         <para>Now we have an efficient and consistent backup ; let's clean a bit : </para>
                         <para><orderedlist>
                                 <listitem>
-                                    <para> Umount the volume : <code>$ umount /mnt </code></para>
+                                    <para> Umount the volume : $ umount /mnt </para>
                                 </listitem>
                                 <listitem>
-                                    <para> Delete the partition table : <code>$ kpartx -dv
-                                            /dev/nova-volumes/volume-00000001-snapshot</code></para>
+                                    <para> Delete the partition table : $ kpartx -dv
+                                            /dev/nova-volumes/volume-00000001-snapshot</para>
                                 </listitem>
                                 <listitem>
-                                    <para>Remove the snapshot : <code>$lvremove -f
-                                            /dev/nova-volumes/volume-00000001-snapshot</code></para>
+                                    <para>Remove the snapshot : $lvremove -f
+                                            /dev/nova-volumes/volume-00000001-snapshot</para>
                                 </listitem>
                             </orderedlist> And voila :) You can now repeat these steps for every
                             volume you have.</para>
@@ -1309,7 +1285,7 @@ Total execution time - 1 h 75 m and 35 seconds
             <para> The script also provides the ability to SSH to your instances and run a mysqldump
                 into them. In order to make this to work, make sure the connection via the nova's
                 project keys is possible. If you don't want to run the mysqldumps, then just turn
-                off this functionality by putting <code>enable_mysql_dump=0</code> into the script
+                off this functionality by putting enable_mysql_dump=0 into the script
                 (see all settings at the top of the script)</para>
         </simplesect>
     </section>
@@ -1514,7 +1490,7 @@ Migration of i-00000001 initiated. Check its progress using euca-describe-instan
                         <para> We need to get the current relation from a volume to its instance,
                             since we will recreate the attachment : </para>
                         <para>This relation could be figured by running an "euca-describe-volumes" :
-                            <literallayout class="monospaced"><code>euca-describe-volumes | $AWK '{print $2,"\t",$8,"\t,"$9}' | $GREP -v "None" | $SED "s/\,//g; s/)//g; s/\[.*\]//g; s/\\\\\//g"</code></literallayout>
+                            <literallayout class="monospaced">euca-describe-volumes | $AWK '{print $2,"\t",$8,"\t,"$9}' | $GREP -v "None" | $SED "s/\,//g; s/)//g; s/\[.*\]//g; s/\\\\\//g"</literallayout>
                             That would output a three-columns table : <emphasis role="italic">VOLUME
                                 INSTANCE MOUNTPOINT</emphasis>
                         </para>
@@ -1534,7 +1510,7 @@ Migration of i-00000001 initiated. Check its progress using euca-describe-instan
                 mysql> update volumes set attach_status="detached";
                 mysql> update volumes set instance_id=0;
                 </programlisting>
-                            Now, by running an <code>euca-describe-volumes</code>all volumes should
+                            Now, by running an euca-describe-volumesall volumes should
                             be available. </para>
                     </listitem>
                     <listitem>
@@ -1543,7 +1519,7 @@ Migration of i-00000001 initiated. Check its progress using euca-describe-instan
                         </para>
                         <para> We need to restart the instances ; It's time to launch a restart, so
                             the instances will really run. This can be done via a simple
-                                <code>euca-reboot-instances $instance</code>
+                                euca-reboot-instances $instance
                         </para>
                         <para>At that stage, depending on your image, some instances would totally
                             reboot (thus become reacheable), while others would stop on the
@@ -1566,7 +1542,7 @@ Migration of i-00000001 initiated. Check its progress using euca-describe-instan
                         </para>
                         <para> After the restart, we can reattach the volumes to their respective
                             instances. Now that nova has restored the right status, it is time to
-                            performe the attachments via an <code>euca-attach-volume</code>
+                            performe the attachments via an euca-attach-volume
                         </para>
                         <para>Here is a simple snippet that uses the file we created :
                             <programlisting>
@@ -1594,14 +1570,14 @@ Migration of i-00000001 initiated. Check its progress using euca-describe-instan
                             into fstab, it could be good to simply restart the instance. This
                             restart needs to be made from the instance itself, not via nova. So, we
                             SSH into the instance and perform a reboot :
-                            <literallayout class="monospaced"><code>shutdown -r now</code></literallayout>
+                            <literallayout class="monospaced">shutdown -r now</literallayout>
                         </para>
                     </listitem>
                 </itemizedlist> Voila! You successfully recovered your cloud after that. </para>
             <para>Here are some suggestions : </para>
             <para><itemizedlist>
                     <listitem>
-                        <para> Use the parameter <code>errors=remount,ro</code> into you fstab file,
+                        <para> Use the parameter errors=remount,ro into you fstab file,
                             that would prevent data corruption.</para>
                         <para> The system would lock any write to the disk if it detects an I/O
                             error. This flag should be added into the nova-volume server (the one
@@ -1614,7 +1590,7 @@ Migration of i-00000001 initiated. Check its progress using euca-describe-instan
                         <para>Some systems would hang on that step, which means you could loose
                             access to your cloud-controller. In order to re-run the session
                             manually, you would run :
-                            <literallayout class="monospaced"><code>iscsiadm -m discovery -t st -p $SAN_IP $ iscsiadm -m node --target-name $IQN -p $SAN_IP -l</code>          
+                            <literallayout class="monospaced">iscsiadm -m discovery -t st -p $SAN_IP $ iscsiadm -m node --target-name $IQN -p $SAN_IP -l          
 Then perform the mount. </literallayout></para>
                     </listitem>
                     <listitem>
@@ -1639,7 +1615,7 @@ Then perform the mount. </literallayout></para>
                     not dettach the volume via "euca-dettach"</emphasis>, but manually close the
                 iscsi session). </para>
             <para>Let's say this is the iscsi session number 15 for that instance :
-                    <literallayout class="monospaced"><code>iscsiadm -m session -u -r 15</code></literallayout><emphasis
+                    <literallayout class="monospaced">iscsiadm -m session -u -r 15</literallayout><emphasis
                     role="bold">Do not forget the flag -r, otherwise, you would close ALL
                     sessions</emphasis> !!</para>
         </simplesect>

@@ -305,7 +305,7 @@ template1=#\q</literallayout>
                     
                     <para>Create nova databases:</para>
                     <literallayout class="monospaced">sudo -u postgres createdb nova
- sudo -u postgres createdb glance</literallayout>
+sudo -u postgres createdb glance</literallayout>
                     
                     <para>Create nova database user which will be used for all OpenStack services, note the adduser and createuser steps will prompt for the user's password ($PG_PASS):</para>
                     <literallayout class="monospaced">
@@ -392,14 +392,15 @@ restart nova-api; restart nova-objectstore; restart nova-scheduler
             
             <literallayout class="monospaced">
 sudo mount /dev/cdrom /mnt/cdrom
-cat /etc/yum.repos.d/rhel.repo 
-
+/etc/yum.repos.d/rhel.repo 
+            </literallayout>
+        <programlisting>
 [rhel]
 name=RHEL 6.0
 baseurl=file:///mnt/cdrom/Server
 enabled=1
 gpgcheck=0
-            </literallayout>
+            </programlisting>
         <para>Download and install repo config and key.</para>
         <literallayout class="monospaced">
 wget http://yum.griddynamics.net/yum/diablo/openstack-repo-2011.3-0.3.noarch.rpm
@@ -469,10 +470,12 @@ sudo iptables -I INPUT 1 -p udp --dport 67 -j ACCEPT
         <para>Start the Nova services after configuring and you then are running an OpenStack
             cloud!</para>
         <literallayout class="monospaced">
-for n in api compute network objectstore scheduler vncproxy; do sudo service openstack-nova-$n start; done
-sudo service openstack-glance-api start
-sudo service openstack-glance-registry start
-for n in node1 node2 node3; do ssh $n sudo service openstack-nova-compute start; done
+for n in api compute network objectstore scheduler vncproxy; do 
+              sudo service openstack-nova-$n start; done
+              sudo service openstack-glance-api start
+              sudo service openstack-glance-registry start
+for n in node1 node2 node3; do 
+              ssh $n sudo service openstack-nova-compute start; done
         </literallayout>
         </section>
     <section xml:id="configuring-openstack-compute-basics">
@@ -679,8 +682,8 @@ If the EC2 credentials have been put into another user's .bashrc file, then, it 
                 </para>
             </note>
                 <literallayout class="monospaced">
-euca-authorize -P icmp -t -1:-1 default
-euca-authorize -P tcp -p 22 default
+ nova  secgroup-add-rule default  icmp - 1 -1 0.0.0.0/0 
+ nova  secgroup-add-rule default  tcp 22 22 0.0.0.0/0 
                 </literallayout>
                 <para>Another
                     common issue is you cannot ping or SSH your instances after issuing the
@@ -767,7 +770,7 @@ chmod g+rwx /dev/kvm
 </literallayout>
             <para>If you want to use the 10.04 Ubuntu Enterprise Cloud images that are readily available at http://uec-images.ubuntu.com/releases/10.04/release/, you may run into delays with booting. Any server that does not have nova-api running on it needs this iptables entry so that UEC images can get metadata info. On compute nodes, configure the iptables with this next step:</para>
 
-           <literallayout class="monospaced"> # iptables -t nat -A PREROUTING -d 169.254.169.254/32 -p tcp -m tcp --dport 80 -j DNAT --to-destination $NOVA_API_IP:8773</literallayout>
+           <literallayout class="monospaced">iptables -t nat -A PREROUTING -d 169.254.169.254/32 -p tcp -m tcp --dport 80 -j DNAT --to-destination $NOVA_API_IP:8773</literallayout>
 
             <para>Lastly, confirm that your compute node is talking to your cloud controller. From the cloud controller, run this database query:</para>
             <literallayout class="monospaced">mysql -u$MYSQL_USER -p$MYSQL_PASS nova -e 'select * from services;'</literallayout>

@@ -99,7 +99,8 @@
         
         
         <simplesect><title>Configuration using KVM, FlatDHCP, MySQL, Glance, LDAP, and optionally sheepdog, API is EC2</title>
-        <para>From <link xlink:href="http://wikitech.wikimedia.org/view/OpenStack#On_the_controller_and_all_compute_nodes.2C_configure_.2Fetc.2Fnova.2Fnova.conf">wikimedia.org</link>, used with permission. Where you see parameters passed in, it's likely an IP address you need. </para><literallayout class="monospaced">
+        <para>From <link xlink:href="http://wikitech.wikimedia.org/view/OpenStack#On_the_controller_and_all_compute_nodes.2C_configure_.2Fetc.2Fnova.2Fnova.conf">wikimedia.org</link>, used with permission. Where you see parameters passed in, it's likely an IP address you need. </para>
+            <programlisting>
 # configured using KVM, FlatDHCP, MySQL, Glance, LDAP, and optionally sheepdog, API is EC2
 --verbose
 --daemonize=1
@@ -135,10 +136,11 @@
 --ldap_sysadmin=cn=sysadmins,$nova_ldap_base_dn
 --ldap_netadmin=cn=netadmins,$nova_ldap_base_dn
 --ldap_developer=cn=developers,$nova_ldap_base_dn
-        </literallayout></simplesect>
+            </programlisting>
+        </simplesect>
         <simplesect><title>KVM, Flat, MySQL, and Glance, OpenStack or EC2 API</title><para>This example nova.conf file is from an internal Rackspace test system used for demonstrations. </para>
         
-        <literallayout class="monospaced">
+        <programlisting>
 # configured using KVM, Flat, MySQL, and Glance, API is OpenStack (or EC2)
 --daemonize=1
 --dhcpbridge_flagfile=/etc/nova/nova.conf
@@ -155,12 +157,13 @@
 --ec2_host=$nova_api_host
 --image_service=nova.image.glance.GlanceImageService
 --glance_api_servers=$nova_glance_host
+
 # first 3 octets of the network your volume service is on, substitute with real numbers
 --iscsi_ip_prefix=nnn.nnn.nnn 
-        </literallayout></simplesect>
+        </programlisting>
+        </simplesect>
         <simplesect><title>XenServer 5.6, Flat networking, MySQL, and Glance, OpenStack API</title><para>This example nova.conf file is from an internal Rackspace test system. </para>
-            
-            <literallayout class="monospaced">
+            <programlisting>
 --verbose
 --nodaemon
 --sql_connection=mysql://root:&lt;password&gt;@127.0.0.1/nova
@@ -175,24 +178,22 @@
 --allow_admin_api=true
 --xenapi_inject_image=false
 --use_ipv6=true
+
 # To enable flat_injected, currently only works on Debian-based systems
 --flat_injected=true
 --ipv6_backend=account_identifier
 --ca_path=./nova/CA
+
 # Add the following to your flagfile if you're running on Ubuntu Maverick
 --xenapi_remap_vbd_dev=true
-
-         </literallayout></simplesect>
+            </programlisting>
+        </simplesect>
         </section>
     <section xml:id="configuring-logging">
         <title>Configuring Logging</title>
-        
-        <para>You can use nova.conf flags to indicate where Compute will log events, the level of logging, and customize log formats.</para>
-            
-            
+        <para>You can use nova.conf flags to indicate where Compute will log events, the level of logging, and customize log formats.</para>            
         <table rules="all">
             <caption>Description of nova.conf flags for logging </caption>
-            
             <thead>
                 <tr>
                     <td>Flag</td>
@@ -685,62 +686,56 @@ sudo bash -c "echo 0 > /proc/sys/net/ipv6/conf/all/accept_ra"</literallayout>
                         <listitem>
                             <para>Configure /etc/hosts, Make sure 3 Hosts can do name-resolution
                              with each other. Ping with each other is better way to test.</para>
-                            <programlisting><![CDATA[
-# ping HostA
-# ping HostB
-# ping HostC
-                            ]]></programlisting>
+                            <literallayout class="monospaced">                      
+ping HostA
+ping HostB
+ping HostC
+                            </literallayout>
                         </listitem>
                         <listitem>
                             <para>Configure NFS at HostA by adding below to /etc/exports</para>
                             <literallayout class="monospaced">NOVA-INST-DIR/instances HostA/255.255.0.0(rw,sync,fsid=0,no_root_squash</literallayout>
                             <para> Change "255.255.0.0" appropriate netmask, which should include 
                             HostB/HostC. Then restart nfs server.</para>
-                            <programlisting><![CDATA[
-# /etc/init.d/nfs-kernel-server restart
-# /etc/init.d/idmapd restart
-                            ]]></programlisting>
+                            <literallayout class="monospaced">
+/etc/init.d/nfs-kernel-server restart
+/etc/init.d/idmapd restart
+                            </literallayout>
                         </listitem>
                         <listitem>
                             <para>Configure NFS at HostB and HostC by adding below to 
                             /etc/fstab</para>
                             <literallayout class="monospaced">HostA:/ DIR nfs4 defaults 0 0</literallayout>
                             <para>Then mount, check exported directory can be mounted.</para>
-                            <literallayout class="monospaced"># mount -a -v</literallayout>
+                            <literallayout class="monospaced">mount -a -v</literallayout>
                             <para>If fail, try this at any hosts.</para>
-                            <literallayout class="monospaced"># iptables -F</literallayout>
+                            <literallayout class="monospaced">iptables -F</literallayout>
                             <para>Also, check file/daemon permissions. We expect any nova daemons 
                             are running as root. </para>
-                            <programlisting><![CDATA[
-# ps -ef | grep nova
-root 5948 5904 9 11:29 pts/4 00:00:00 python /opt/nova-2010.4//bin/nova-api
+                            <literallayout class="monospaced">ps -ef | grep nova                            </literallayout>
+                            <programlisting>root 5948 5904 9 11:29 pts/4 00:00:00 python /opt/nova-2010.4//bin/nova-api
 root 5952 5908 6 11:29 pts/5 00:00:00 python /opt/nova-2010.4//bin/nova-objectstore
-... (snip)
-                            ]]></programlisting>
+... (snip)                           </programlisting>
                             <para>"NOVA-INST-DIR/instances/" directory can be seen at HostA</para>
-                            <programlisting><![CDATA[
-# ls -ld NOVA-INST-DIR/instances/
-drwxr-xr-x 2 root root 4096 2010-12-07 14:34 nova-install-dir/instances/
-                            ]]></programlisting>
+                            <literallayout class="monospaced">ls -ld NOVA-INST-DIR/instances/</literallayout>
+<programlisting>drwxr-xr-x 2 root root 4096 2010-12-07 14:34 nova-install-dir/instances/                            </programlisting>
                             <para>Same check at HostB and HostC</para>
-                            <programlisting><![CDATA[
-# ls -ld NOVA-INST-DIR/instances/
-drwxr-xr-x 2 root root 4096 2010-12-07 14:34 nova-install-dir/instances/
-
-# df -k
-Filesystem           1K-blocks      Used Available Use% Mounted on
+                           <literallayout>ls -ld NOVA-INST-DIR/instances/</literallayout>
+<programlisting>drwxr-xr-x 2 root root 4096 2010-12-07 14:34 nova-install-dir/instances/</programlisting>
+<literallayout class="monospaced">df -k</literallayout>
+<programlisting>Filesystem           1K-blocks      Used Available Use% Mounted on
 /dev/sda1            921514972   4180880 870523828   1% /
 none                  16498340      1228  16497112   1% /dev
 none                  16502856         0  16502856   0% /dev/shm
 none                  16502856       368  16502488   1% /var/run
 none                  16502856         0  16502856   0% /var/lock
 none                  16502856         0  16502856   0% /lib/init/rw
-HostA:        921515008 101921792 772783104  12% /opt  ( <--- this line is important.)
-                            ]]></programlisting>
+HostA:        921515008 101921792 772783104  12% /opt  ( &lt;--- this line is important.)
+                            </programlisting>
                         </listitem>
                         <listitem>
                             <para>Libvirt configurations. Modify /etc/libvirt/libvirt.conf:</para> 
-                            <programlisting><![CDATA[
+                            <programlisting>
 before : #listen_tls = 0
 after : listen_tls = 0
 
@@ -748,25 +743,24 @@ before : #listen_tcp = 1
 after : listen_tcp = 1
 
 add: auth_tcp = "none"
-                            ]]></programlisting>
+                            </programlisting>
                             <para>Modify /etc/init/libvirt-bin.conf</para> 
-                            <programlisting><![CDATA[
+                            <programlisting>
 before : exec /usr/sbin/libvirtd -d
- after : exec /usr/sbin/libvirtd -d -l
-                            ]]></programlisting>
+after : exec /usr/sbin/libvirtd -d -l
+                            </programlisting>
 
                             <para>Modify /etc/default/libvirt-bin</para> 
-                            <programlisting><![CDATA[
+                            <programlisting>
 before :libvirtd_opts=" -d"
 after :libvirtd_opts=" -d -l"
-                            ]]></programlisting>
+                            </programlisting>
                             <para>then, restart libvirt. Make sure libvirt is restarted.</para> 
-                            <programlisting><![CDATA[
-# stop libvirt-bin && start libvirt-bin
-# ps -ef | grep libvirt
-root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l
-                            ]]></programlisting>
+                            <literallayout class="monospaced">
+stop libvirt-bin &amp;&amp; start libvirt-bin
 
+ps -ef | grep libvirt</literallayout>
+<programlisting>root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l                           </programlisting>
                         </listitem>
                         <listitem>
                             <para>Flag configuration. usually, you do not have to configure
