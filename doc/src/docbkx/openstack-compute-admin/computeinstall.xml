@@ -670,8 +670,14 @@ source ~/.bashrc
         <section xml:id="enabling-access-to-vms-on-the-compute-node">
                 <title>Enabling Access to VMs on the Compute Node</title>
                 <para>One of the most commonly missed configuration areas is not allowing the proper
-                    access to VMs. Use the ‘euca-authorize’ command to enable access. Below, you
-                    will find the commands to allow ‘ping’ and ‘ssh’ to your VMs: </para>
+                access to VMs. Use the ‘euca-authorize’ command to enable access. Below, you will
+                find the commands to allow 'ping' and 'ssh' to your VMs : </para>
+            <note>
+                <para>
+These commands need to be run as root only if the credentials used to interact with nova-api have been put under /root/.bashrc.
+If the EC2 credentials have been put into another user's .bashrc file, then, it is necessary to run these commands as the user.
+                </para>
+            </note>
                 <literallayout class="monospaced">
 euca-authorize -P icmp -t -1:-1 default
 euca-authorize -P tcp -p 22 default
@@ -680,11 +686,17 @@ euca-authorize -P tcp -p 22 default
                     common issue is you cannot ping or SSH your instances after issuing the
                     ‘euca-authorize’ commands. Something to look at is the amount of ‘dnsmasq’
                     processes that are running. If you have a running instance, check to see that
-                    TWO ‘dnsmasq’ processes are running. If not, perform the following:</para>
+                    TWO "dnsmasq’" processes are running. If not, perform the following:
+                </para>
                         <literallayout class="monospaced">
-killall dnsmasq 
-service nova-network restart
+sudo killall dnsmasq 
+sudo service nova-network restart
                         </literallayout>
+<para>If you get the <literallayout class="monospaced">instance not found</literallayout> message
+                while performing the restart, that means the service was not previously running. You
+                simply need to start it instead of restarting it :
+                <literallayout class="monospaced">sudo service nova-network start</literallayout>
+            </para>
             </section>
         <section xml:id="configuring-multiple-compute-nodes">
             <title>Configuring Multiple Compute Nodes</title><para>If your goal is to split your VM load across more than one server, you can connect an
