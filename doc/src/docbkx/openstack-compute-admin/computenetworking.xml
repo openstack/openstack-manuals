@@ -65,164 +65,6 @@
             out IP addresses to VM instances from the subnet assigned to the project. All instances
             belonging to one project are bridged into the same VLAN for that project. OpenStack
             Compute creates the Linux networking bridges and VLANs when required.</para></section>
-    
-    <section xml:id="cloudpipe-per-project-vpns">
-        <title>Cloudpipe — Per Project Vpns</title>
-        <para>
-            Cloudpipe is a method for connecting end users to their project
-            instances in VLAN networking mode.
-        </para>
-      
-            <para>
-                The support code for cloudpipe implements admin commands (via
-                nova-manage) to automatically create a VM for a project that
-                allows users to vpn into the private network of their project.
-                Access to this vpn is provided through a public port on the
-                network host for the project. This allows users to have free
-                access to the virtual machines in their project without exposing
-                those machines to the public internet.
-            </para>
-       
-            <para>
-                The cloudpipe image is basically just a Linux instance with
-                openvpn installed. It needs a simple script to grab user data from
-                the metadata server, b64 decode it into a zip file, and run the
-                autorun.sh script from inside the zip. The autorun script will
-                configure and run openvpn to run using the data from nova.
-            </para>
-            <para>
-                It is also useful to have a cron script that will periodically
-                redownload the metadata and copy the new crl. This will keep
-                revoked users from connecting and will disconnect any users that
-                are connected with revoked certificates when their connection is
-                renegotiated (every hour).
-            </para>
-        <section xml:id="creating-a-cloudpipe-image">
-            <title>Creating a Cloudpipe Image</title>
-            <para>
-                Making a cloudpipe image is relatively easy.
-            </para>
-            <itemizedlist><listitem><para>
-                # install openvpn on a base ubuntu image. 
-                </para></listitem>
-                <listitem><para># set up a
-                server.conf.template in /etc/openvpn/</para></listitem>
-            
-            <listitem><para>
-                # set up.sh in /etc/openvpn/
-            </para></listitem>
-            <listitem><para>
-                # set down.sh in /etc/openvpn/
-            </para></listitem>
-            <listitem><para>
-                # download and run the payload on boot from /etc/rc.local
-            </para></listitem>
-            <listitem><para>
-                # setup /etc/network/interfaces
-            </para></listitem>
-            <listitem><para>
-                # register the image and set the image id in your flagfile:
-            </para>
-            <literallayout class="monospaced">
---vpn_image_id=ami-xxxxxxxx
-</literallayout></listitem>
-            <listitem><para>
-                # you should set a few other flags to make vpns work properly:
-            </para>
-            <literallayout class="monospaced">
---use_project_ca
---cnt_vpn_clients=5
-</literallayout></listitem></itemizedlist>
-        
-            <para>
-                When you use nova-manage to launch a cloudpipe for a user, it goes
-                through the following process:
-            </para>
-            <orderedlist>
-                <listitem>
-                    <para>
-                        creates a keypair called &lt;project_id&gt;-vpn and saves it
-                        in the keys directory
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>
-                        creates a security group &lt;project_id&gt;-vpn and opens up
-                        1194 and icmp
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>
-                        creates a cert and private key for the vpn instance and saves
-                        it in the CA/projects/&lt;project_id&gt;/ directory
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>
-                        zips up the info and puts it b64 encoded as user data
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>
-                        launches an m1.tiny instance with the above settings using the
-                        flag-specified vpn image
-                    </para>
-                </listitem>
-            </orderedlist>
-        </section>
-        <section xml:id="vpn-access">
-            <title>VPN Access</title>
-            <para>
-                In vlan networking mode, the second IP in each private network is
-                reserved for the cloudpipe instance. This gives a consistent IP to
-                the instance so that nova-network can create forwarding rules for
-                access from the outside world. The network for each project is
-                given a specific high-numbered port on the public IP of the
-                network host. This port is automatically forwarded to 1194 on the
-                vpn instance.
-            </para>
-            <para>
-                If specific high numbered ports do not work for your users, you
-                can always allocate and associate a public IP to the instance, and
-                then change the vpn_public_ip and vpn_public_port in the database.
-                (This will be turned into a nova-manage command or a flag soon.)
-            </para>
-        </section>
-        <section xml:id="certificates-and-revocation">
-            <title>Certificates and Revocation</title>
-            <para>If the use_project_ca flag is set (required to for cloudpipes to work securely),
-                then each project has its own ca. This ca is used to sign the certificate for the
-                vpn, and is also passed to the user for bundling images. When a certificate is
-                revoked using nova-manage, a new Certificate Revocation List (crl) is generated. As
-                long as cloudpipe has an updated crl, it will block revoked users from connecting to
-                the vpn. </para>
-            <para>
-                The userdata for cloudpipe isn't currently updated when certs are
-                revoked, so it is necessary to restart the cloudpipe instance if a
-                user's credentials are revoked.
-            </para>
-        </section>
-        <section xml:id="restarting-and-logging-into-cloudpipe-vpn">
-            <title>Restarting and Logging into the Cloudpipe VPN</title>
-            <para>You can reboot a cloudpipe vpn through the api if something goes wrong (using
-                euca-reboot-instances for example), but if you generate a new crl, you will have to
-                terminate it and start it again using nova-manage vpn run. The cloudpipe instance
-                always gets the first ip in the subnet and it can take up to 10 minutes for the ip
-                to be recovered. If you try to start the new vpn instance too soon, the instance
-                will fail to start because of a NoMoreAddresses error. If you can’t wait 10 minutes,
-                you can manually update the ip with something like the following (use the right ip
-                for the project): </para>
-            <literallayout class="monospaced">
-                euca-terminate-instances &lt;instance_id&gt;
-                    mysql nova -e "update fixed_ips set allocated=0, leased=0, instance_id=NULL where fixed_ip='10.0.0.2'"
-            </literallayout>
-            <para>You also will need to terminate the dnsmasq running for the user (make sure you use the right pid file):</para>
-            <literallayout class="monospaced">sudo kill `cat /var/lib/nova/br100.pid`</literallayout>
-            <para>Now you should be able to re-run the vpn:</para>
-            <literallayout class="monospaced">nova-manage vpn run &lt;project_id&gt;</literallayout>
-            <para>The keypair that was used to launch the cloudpipe  instance should be in the keys/&lt;project_id&gt; folder. You can use this key to log into the cloudpipe instance for debugging purposes.</para>
-        </section>
-    </section>
     <section xml:id="configuring-networking-on-the-compute-node">
         <title>Configuring Networking on the Compute Node</title>
         <para>To configure the Compute node's networking for the VM images, the overall steps are:</para>
@@ -499,20 +341,148 @@ __EOF_</literallayout>
 ifconfig br_NNN down
 brctl delbr br_NNN</literallayout>
                     
-                <para>Also, if users need to access the instances in their project across a VPN, a special VPN instance (code
-                named cloudpipe) needs to be created. You can create the cloudpipe instance. The
-                image is basically just a Linux instance with openvpn installed. It needs a simple
-                script to grab user data from the metadata server, b64 decode it into a zip file,
-                and run the autorun.sh script from inside the zip. The autorun script should
-                configure and run openvpn to run using the data from Compute. </para>
+                <para>Also, if users need to access the instances in their project across a VPN, a
+                special VPN instance (code named cloudpipe) needs to be created as described. You
+                can create the cloudpipe instance. The image is basically just a Linux instance with
+                openvpn installed. It needs a simple script to grab user data from the metadata
+                server, b64 decode it into a zip file, and run the autorun.sh script from inside the
+                zip. The autorun script should configure and run openvpn to run using the data from
+                Compute. </para>
             <para>For certificate management, it is also useful to have a cron script that will
                 periodically download the metadata and copy the new Certificate Revocation List
                 (CRL). This will keep revoked users from connecting and disconnects any users that
                 are connected with revoked certificates when their connection is re-negotiated
                 (every hour). You set the --use_project_ca flag in nova.conf for cloudpipes to work
                 securely so that each project has its own Certificate Authority (CA).</para></section>
-        <section xml:id="enabling-ping-and-ssh-on-vms">
-                    <title>Enabling Ping and SSH on VMs</title>
+        <section xml:id="cloudpipe-per-project-vpns">
+            <title>Cloudpipe — Per Project Vpns</title>
+            <para> Cloudpipe is a method for connecting end users to their project instances in VLAN
+                networking mode. </para>
+            <para> The support code for cloudpipe implements admin commands (via nova-manage) to
+                automatically create a VM for a project that allows users to vpn into the private
+                network of their project. Access to this vpn is provided through a public port on
+                the network host for the project. This allows users to have free access to the
+                virtual machines in their project without exposing those machines to the public
+                internet. </para>
+            <para> The cloudpipe image is basically just a Linux instance with openvpn installed. It
+                needs a simple script to grab user data from the metadata server, b64 decode it into
+                a zip file, and run the autorun.sh script from inside the zip. The autorun script
+                will configure and run openvpn to run using the data from nova. </para>
+            <para> It is also useful to have a cron script that will periodically redownload the
+                metadata and copy the new crl. This will keep revoked users from connecting and will
+                disconnect any users that are connected with revoked certificates when their
+                connection is renegotiated (every hour). </para>
+            <section xml:id="creating-a-cloudpipe-image">
+                <title>Creating a Cloudpipe Image</title>
+                <para> Making a cloudpipe image is relatively easy. </para>
+                <itemizedlist>
+                    <listitem>
+                        <para> # install openvpn on a base ubuntu image. </para>
+                    </listitem>
+                    <listitem>
+                        <para># set up a server.conf.template in /etc/openvpn/</para>
+                    </listitem>
+                    <listitem>
+                        <para> # set up.sh in /etc/openvpn/ </para>
+                    </listitem>
+                    <listitem>
+                        <para> # set down.sh in /etc/openvpn/ </para>
+                    </listitem>
+                    <listitem>
+                        <para> # download and run the payload on boot from /etc/rc.local </para>
+                    </listitem>
+                    <listitem>
+                        <para> # setup /etc/network/interfaces </para>
+                    </listitem>
+                    <listitem>
+                        <para> # register the image and set the image id in your flagfile: </para>
+                        <literallayout class="monospaced">
+--vpn_image_id=ami-xxxxxxxx
+</literallayout>
+                    </listitem>
+                    <listitem>
+                        <para> # you should set a few other flags to make vpns work properly: </para>
+                        <literallayout class="monospaced">
+--use_project_ca
+--cnt_vpn_clients=5
+</literallayout>
+                    </listitem>
+                </itemizedlist>
+                <para> When you use nova-manage to launch a cloudpipe for a user, it goes through
+                    the following process: </para>
+                <orderedlist>
+                    <listitem>
+                        <para> creates a keypair called &lt;project_id&gt;-vpn and saves it in the
+                            keys directory </para>
+                    </listitem>
+                    <listitem>
+                        <para> creates a security group &lt;project_id&gt;-vpn and opens up 1194 and
+                            icmp </para>
+                    </listitem>
+                    <listitem>
+                        <para> creates a cert and private key for the vpn instance and saves it in
+                            the CA/projects/&lt;project_id&gt;/ directory </para>
+                    </listitem>
+                    <listitem>
+                        <para> zips up the info and puts it b64 encoded as user data </para>
+                    </listitem>
+                    <listitem>
+                        <para> launches an m1.tiny instance with the above settings using the
+                            flag-specified vpn image </para>
+                    </listitem>
+                </orderedlist>
+            </section>
+            <section xml:id="vpn-access">
+                <title>VPN Access</title>
+                <para> In vlan networking mode, the second IP in each private network is reserved
+                    for the cloudpipe instance. This gives a consistent IP to the instance so that
+                    nova-network can create forwarding rules for access from the outside world. The
+                    network for each project is given a specific high-numbered port on the public IP
+                    of the network host. This port is automatically forwarded to 1194 on the vpn
+                    instance. </para>
+                <para> If specific high numbered ports do not work for your users, you can always
+                    allocate and associate a public IP to the instance, and then change the
+                    vpn_public_ip and vpn_public_port in the database. (This will be turned into a
+                    nova-manage command or a flag soon.) </para>
+            </section>
+            <section xml:id="certificates-and-revocation">
+                <title>Certificates and Revocation</title>
+                <para>If the use_project_ca flag is set (required to for cloudpipes to work
+                    securely), then each project has its own ca. This ca is used to sign the
+                    certificate for the vpn, and is also passed to the user for bundling images.
+                    When a certificate is revoked using nova-manage, a new Certificate Revocation
+                    List (crl) is generated. As long as cloudpipe has an updated crl, it will block
+                    revoked users from connecting to the vpn. </para>
+                <para> The userdata for cloudpipe isn't currently updated when certs are revoked, so
+                    it is necessary to restart the cloudpipe instance if a user's credentials are
+                    revoked. </para>
+            </section>
+            <section xml:id="restarting-and-logging-into-cloudpipe-vpn">
+                <title>Restarting and Logging into the Cloudpipe VPN</title>
+                <para>You can reboot a cloudpipe vpn through the api if something goes wrong (using
+                    euca-reboot-instances for example), but if you generate a new crl, you will have
+                    to terminate it and start it again using nova-manage vpn run. The cloudpipe
+                    instance always gets the first ip in the subnet and it can take up to 10 minutes
+                    for the ip to be recovered. If you try to start the new vpn instance too soon,
+                    the instance will fail to start because of a NoMoreAddresses error. If you can’t
+                    wait 10 minutes, you can manually update the ip with something like the
+                    following (use the right ip for the project): </para>
+                <literallayout class="monospaced">
+                euca-terminate-instances &lt;instance_id&gt;
+                    mysql nova -e "update fixed_ips set allocated=0, leased=0, instance_id=NULL where fixed_ip='10.0.0.2'"
+            </literallayout>
+                <para>You also will need to terminate the dnsmasq running for the user (make sure
+                    you use the right pid file):</para>
+                <literallayout class="monospaced">sudo kill `cat /var/lib/nova/br100.pid`</literallayout>
+                <para>Now you should be able to re-run the vpn:</para>
+                <literallayout class="monospaced">nova-manage vpn run &lt;project_id&gt;</literallayout>
+                <para>The keypair that was used to launch the cloudpipe instance should be in the
+                    keys/&lt;project_id&gt; folder. You can use this key to log into the cloudpipe
+                    instance for debugging purposes.</para>
+            </section>
+        </section></section>
+    <section xml:id="enabling-ping-and-ssh-on-vms">
+        <title>Enabling Ping and SSH on VMs</title>
         <para>Be sure you enable access to your VMs by using the ‘euca-authorize’ command. Below,
             you will find the commands to allow ‘ping’ and ‘ssh’ to your VMs: </para>
         <para><literallayout>euca-authorize -P icmp -t -1:-1 default 
@@ -520,70 +490,72 @@ euca-authorize -P tcp -p 22 default</literallayout>If
             you still cannot ping or SSH your instances after issuing the ‘euca-authorize’ commands,
             look at the number of ‘dnsmasq’ processes that are running. If you have a running
             instance, check to see that TWO ‘dnsmasq’ processes are running. If not, perform the
-            following: <code>killall dnsmasq; service nova-network restart</code></para></section><section xml:id="allocating-associating-ip-addresses"><title>Allocating and Associating IP Addresses with Instances</title><para>You can use Euca2ools commands to manage floating IP addresses used with Flat DHCP or VLAN
-                networking. </para>
-                
-                <para>To assign a reserved IP address to your project, removing it from the pool of
-                available floating IP addresses, use <code>euca-allocate-address</code>. It'll
-                return an IP address, assign it to the project you own, and remove it from the pool
-                of available floating IP addresses. </para>
-            <para>To associate the floating IP to your instance, use <code>euca-associate-address -i
-                    [instance_id] [floating_ip]</code>.</para>
-            <para>When you want to return the floating IP to the pool, first use
-                euca-disassociate-address [floating_ip] to disassociate the IP address from your
-                instance, then use euca-deallocate-address [floating_ip] to return the IP to the
-                pool of IPs for someone else to grab.</para>
-            <para>There are nova-manage commands that also help you manage the floating IPs.</para>
-            <para>nova-manage floating list - This command lists the floating IP addresses in the
-                pool. </para>
-            <para>nova-manage floating create [hostname] [cidr] - This command creates specific
-                floating IPs for a specific network host and either a single address or a subnet. </para>
-            <para>nova-manage floating destroy [hostname] [cidr] - This command removes floating IP
-                addresses using the same parameters as the create command.</para></section><section xml:id="associating-public-ip"><title>Associating a Public IP Address</title>
-                <para>OpenStack Compute uses NAT for public IPs. If you plan to use public IP
-                addresses for your virtual instances, you must configure --public_interface=vlan100'
-                in the nova.conf file so that Nova knows where to bind public IP addresses. Restart
-                nova-network if you change nova.conf while the service is running. Also, ensure you
-                have opened port 22 for the nova network.</para>
-            <para>You must add the IP address or block of public IP addresses to the floating IP
-                list using the <code>nova-manage floating create</code> command. When you start a
-                new virtual instance, associate one of the public addresses to the new instance
-                using the euca-associate-address command.</para>
-                    <para>These are the basic overall steps and checkpoints. </para>
-                <para>First, set up the public address.</para>
-                    
-                    <literallayout class="monospaced">nova-manage floating create my-hostname 68.99.26.170/31
+            following: <code>killall dnsmasq; service nova-network restart</code></para>
+    </section>
+    <section xml:id="associating-public-ip">
+        <title>Associating a Public IP Address</title>
+        <para>OpenStack Compute uses NAT for public IPs. If you plan to use public IP addresses for
+            your virtual instances, you must configure --public_interface=vlan100' in the nova.conf
+            file so that Nova knows where to bind public IP addresses. Restart nova-network if you
+            change nova.conf while the service is running. Also, ensure you have opened port 22 for
+            the nova network.</para>
+        <para>You must add the IP address or block of public IP addresses to the floating IP list
+            using the <code>nova-manage floating create</code> command. When you start a new virtual
+            instance, associate one of the public addresses to the new instance using the
+            euca-associate-address command.</para>
+        <para>These are the basic overall steps and checkpoints. </para>
+        <para>First, set up the public address.</para>
+        <literallayout class="monospaced">nova-manage floating create my-hostname 68.99.26.170/31
 euca-allocate-address 68.99.26.170
 euca-associate-address -i i-1 68.99.26.170</literallayout>
-                    
-                    <para>Make sure the security groups are open.</para>
-                    
-                    <literallayout class="monospaced">root@my-hostname:~# euca-describe-groups
+        <para>Make sure the security groups are open.</para>
+        <literallayout class="monospaced">root@my-hostname:~# euca-describe-groups
 GROUP admin-project default default
 PERMISSION admin-project default ALLOWS icmp -1 -1
 FROM CIDR 0.0.0.0/0
 PERMISSION admin-project default ALLOWS tcp 22 22
 FROM CIDR 0.0.0.0/0</literallayout>
-                    
-                    <para>Ensure the NAT rules have been added to iptables.</para>
-                    
-                <literallayout class="monospaced">-A nova-network-OUTPUT -d 68.99.26.170/32 -j DNAT --to-destination 10.0.0.3
+        <para>Ensure the NAT rules have been added to iptables.</para>
+        <literallayout class="monospaced">-A nova-network-OUTPUT -d 68.99.26.170/32 -j DNAT --to-destination 10.0.0.3
 -A nova-network-PREROUTING -d 68.99.26.170/32 -j DNAT --to-destination10.0.0.3
 -A nova-network-floating-snat -s 10.0.0.3/32 -j SNAT --to-source 68.99.26.170</literallayout>
-                    
-                    <para>Check that the public address, in this example 68.99.26.170, has been added to your public interface. You
-                    should see the address in the listing when you enter "ip addr" at the command prompt.</para>
-                    
-                    <literallayout class="monospaced">2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP qlen 1000
+        <para>Check that the public address, in this example 68.99.26.170, has been added to your
+            public interface. You should see the address in the listing when you enter "ip addr" at
+            the command prompt.</para>
+        <literallayout class="monospaced">2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP qlen 1000
 link/ether xx:xx:xx:17:4b:c2 brd ff:ff:ff:ff:ff:ff
 inet 13.22.194.80/24 brd 13.22.194.255 scope global eth0
 inet 68.99.26.170/32 scope global eth0
 inet6 fe80::82b:2bf:fe1:4b2/64 scope link
 valid_lft forever preferred_lft forever</literallayout>
-                <para>Note that you cannot SSH to an instance with a public IP from within the same
-                server as the routing configuration won't allow it. </para>
-            
-                </section></section>
+        <para>Note that you cannot SSH to an instance with a public IP from within the same server
+            as the routing configuration won't allow it. </para>
+    </section>
+    <section xml:id="allocating-associating-ip-addresses">
+        <title>Allocating and Associating IP Addresses with Instances</title>
+        <para>You can use Euca2ools or nova-client commands to manage floating IP addresses used
+            with Flat DHCP or VLAN networking. </para>
+        <para>If you are using Keystone as your identity service and want to use euca2ools with EC2
+            credentials, you can create an admin user with <code>keystone-manage credentials add
+                admin EC2 'admin' 'secretepassword' admin</code>, get a creds zipfile for that user,
+            and then you can use euca- tools commands with the generated EC2 credentials. </para>
+        <para>To assign a reserved IP address to your project, removing it from the pool of
+            available floating IP addresses, use <code>euca-allocate-address</code>. It'll return an
+            IP address, assign it to the project you own, and remove it from the pool of available
+            floating IP addresses. </para>
+        <para>To associate the floating IP to your instance, use <code>euca-associate-address -i
+                [instance_id] [floating_ip]</code>.</para>
+        <para>When you want to return the floating IP to the pool, first use
+            euca-disassociate-address [floating_ip] to disassociate the IP address from your
+            instance, then use euca-release-address [floating_ip] to return the IP to the pool of
+            IPs for someone else to grab.</para>
+        <para>There are nova-manage commands that also help you manage the floating IPs.</para>
+        <para>nova-manage floating list - This command lists the floating IP addresses in the pool. </para>
+        <para>nova-manage floating create [hostname] [cidr] - This command creates specific floating
+            IPs for a specific network host and either a single address or a subnet. </para>
+        <para>nova-manage floating destroy [hostname] [cidr] - This command removes floating IP
+            addresses using the same parameters as the create command.</para>
+    </section>
     <section xml:id="removing-network-from-project">
         <title>Removing a Network from a Project</title><para>You will find that you cannot remove a network that has already been associated to a project by simply deleting it. You can disassociate the project from the network with a scrub command and the project name as the final parameter:
         </para><literallayout class="monospaced">nova-manage project scrub projectname</literallayout></section>

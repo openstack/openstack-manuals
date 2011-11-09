@@ -445,6 +445,95 @@ nova-manage image image_register windowsserver.img --public=T --arch=x86
             <listitem><para>Establish Compute volumes</para></listitem></itemizedlist>
             
     <para>Volumes may easily be transferred between instances, but may be attached to only a single instance at a time.</para></simplesect></section>
+    <section xml:id="managing-compute-users">
+        <title>Managing Compute Users</title>
+        <para>Access to the Euca2ools (ec2) API is controlled by an access and secret key. The
+            user’s access key needs to be included in the request, and the request must be signed
+            with the secret key. Upon receipt of API requests, Compute will verify the signature and
+            execute commands on behalf of the user. </para>
+        <para>In order to begin using nova, you will need to create a user. This can be easily
+            accomplished using the user create or user admin commands in nova-manage. user create
+            will create a regular user, whereas user admin will create an admin user. The syntax of
+            the command is nova-manage user create username [access] [secretword]. For example: </para>
+        <literallayout class="monospaced">nova-manage user create john my-access-key a-super-secret-key</literallayout>
+        <para>If you do not specify an access or secret key, a random uuid will be created
+            automatically.</para>
+        <simplesect>
+            <title>Credentials</title>
+            <para>Nova can generate a handy set of credentials for a user. These credentials include
+                a CA for bundling images and a file for setting environment variables to be used by
+                novaclient. If you don’t need to bundle images, you will only need the environment
+                script. You can export one with the project environment command. The syntax of the
+                command is nova-manage project environment project_id user_id [filename]. If you
+                don’t specify a filename, it will be exported as novarc. After generating the file,
+                you can simply source it in bash to add the variables to your environment:</para>
+            <literallayout class="monospaced">
+        nova-manage project environment john_project john
+        . novarc</literallayout>
+            <para>If you do need to bundle images, you will need to get all of the credentials using
+                a project zipfile. Note that the zipfile will give you an error message if networks
+                haven’t been created yet. Otherwise zipfile has the same syntax as environment, only
+                the default file name is nova.zip. Example usage: </para>
+            <literallayout class="monospaced">
+        nova-manage project zipfile john_project john
+        unzip nova.zip
+        . novarc
+        </literallayout>
+        </simplesect>
+        <simplesect>
+            <title>Role Based Access Control</title>
+            <para>Roles control the API actions that a user is allowed to perform. For example, a
+                user cannot allocate a public ip without the netadmin role. It is important to
+                remember that a users de facto permissions in a project is the intersection of user
+                (global) roles and project (local) roles. So for John to have netadmin permissions
+                in his project, he needs to separate roles specified. You can add roles with role
+                add. The syntax is nova-manage role add user_id role [project_id]. Let’s give a user
+                named John the netadmin role for his project:</para>
+            <literallayout class="monospaced">        nova-manage role add john netadmin
+        nova-manage role add john netadmin john_project</literallayout>
+            <para>Role-based access control (RBAC) is an approach to restricting system access to
+                authorized users based on an individual's role within an organization. Various
+                employee functions require certain levels of system access in order to be
+                successful. These functions are mapped to defined roles and individuals are
+                categorized accordingly. Since users are not assigned permissions directly, but only
+                acquire them through their role (or roles), management of individual user rights
+                becomes a matter of assigning appropriate roles to the user. This simplifies common
+                operations, such as adding a user, or changing a user’s department. </para>
+            <para>Nova’s rights management system employs the RBAC model and currently supports the
+                following five roles:</para>
+            <itemizedlist>
+                <listitem>
+                    <para>Cloud Administrator. (cloudadmin) Users of this class enjoy complete
+                        system access.</para>
+                </listitem>
+                <listitem>
+                    <para>IT Security. (itsec) This role is limited to IT security personnel. It
+                        permits role holders to quarantine instances.</para>
+                </listitem>
+                <listitem>
+                    <para>System Administrator. (sysadmin)The default for project owners, this role
+                        affords users the ability to add other users to a project, interact with
+                        project images, and launch and terminate instances.</para>
+                </listitem>
+                <listitem>
+                    <para>Network Administrator. (netadmin) Users with this role are permitted to
+                        allocate and assign publicly accessible IP addresses as well as create and
+                        modify firewall rules.</para>
+                </listitem>
+                <listitem>
+                    <para>Developer. This is a general purpose role that is assigned to users by
+                        default.</para>
+                </listitem>
+                <listitem>
+                    <para>Project Manager. (projectmanager) This is a role that is assigned upon
+                        project creation and can't be added or removed, but this role can do
+                        anything a sysadmin can do.</para>
+                </listitem>
+            </itemizedlist>
+            <para>RBAC management is exposed through the dashboard for simplified user
+                management.</para>
+        </simplesect>
+    </section>
     <section xml:id="managing-the-cloud">
        
         <title>Managing the Cloud</title><para>There are three main tools that a system administrator will find useful to manage their cloud;
@@ -489,70 +578,39 @@ nova-manage image image_register windowsserver.img --public=T --arch=x86
                     <member>vsa</member>
                 </simplelist></para>
             <para>You can also run with a category argument such as user to see a list of all commands in that category: nova-manage user</para>
-            </simplesect></section>
-    <section xml:id="managing-compute-users">
-        
-        <title>Managing Compute Users</title>
-        
-            <para>Access to the Euca2ools (ec2) API is controlled by an access and secret key. The
-                user’s access key needs to be included in the request, and the request must be
-                signed with the secret key. Upon receipt of API requests, Compute will verify the
-                signature and execute commands on behalf of the user. </para>
-            <para>In order to begin using nova, you will need to create a user. This can be easily
-            accomplished using the user create or user admin commands in nova-manage. user create
-            will create a regular user, whereas user admin will create an admin user. The syntax of
-            the command is nova-manage user create username [access] [secretword]. For example: </para>
-            <literallayout class="monospaced">nova-manage user create john my-access-key a-super-secret-key</literallayout>
-            <para>If you do not specify an access or secret key, a random uuid will be created
-                automatically.</para>
-     
-        <simplesect><title>Credentials</title>
-        
-        <para>Nova can generate a handy set of credentials for a user. These credentials include a
-                CA for bundling images and a file for setting environment variables to be used by
-                novaclient. If you don’t need to bundle images, you will only need the environemnt
-                script. You can export one with the project environment command. The syntax of the
-                command is nova-manage project environment project_id user_id [filename]. If you
-                don’t specify a filename, it will be exported as novarc. After generating the file,
-                you can simply source it in bash to add the variables to your environment:</para>
-        
-        <literallayout class="monospaced">
-        nova-manage project environment john_project john
-        . novarc</literallayout>
-        
-        <para>If you do need to bundle images, you will need to get all of the credentials using project zipfile. Note that zipfile will give you an error message if networks haven’t been created yet. Otherwise zipfile has the same syntax as environment, only the default file name is nova.zip. Example usage:
-        </para>
-        <literallayout class="monospaced">
-        nova-manage project zipfile john_project john
-        unzip nova.zip
-        . novarc
-        </literallayout></simplesect>
-        <simplesect><title>Role Based Access Control</title>
-        
-        <para>Roles control the API actions that a user is allowed to perform. For example, a user
-                cannot allocate a public ip without the netadmin role. It is important to remember
-                that a users de facto permissions in a project is the intersection of user (global)
-                roles and project (local) roles. So for john to have netadmin permissions in his
-                project, he needs to separate roles specified. You can add roles with role add. The
-                syntax is nova-manage role add user_id role [project_id]. Let’s give john the
-                netadmin role for his project:</para>
-        
-        <literallayout class="monospaced">        nova-manage role add john netadmin
-        nova-manage role add john netadmin john_project</literallayout>
-        
-        <para>Role-based access control (RBAC) is an approach to restricting system access to authorized users based on an individual's role within an organization. Various employee functions require certain levels of system access in order to be successful. These functions are mapped to defined roles and individuals are categorized accordingly. Since users are not assigned permissions directly, but only acquire them through their role (or roles), management of individual user rights becomes a matter of assigning appropriate roles to the user. This simplifies common operations, such as adding a user, or changing a user’s department.
-        </para>
-        <para>Nova’s rights management system employs the RBAC model and currently supports the following five roles:</para>
-        
-        <itemizedlist>
-            <listitem><para>Cloud Administrator. (cloudadmin) Users of this class enjoy complete system access.</para></listitem>
-        <listitem><para>IT Security. (itsec) This role is limited to IT security personnel. It permits role holders to quarantine instances.</para></listitem>
-        <listitem><para>System Administrator. (sysadmin)The default for project owners, this role affords users the ability to add other users to a project, interact with project images, and launch and terminate instances.</para></listitem>
-        <listitem><para>Network Administrator. (netadmin) Users with this role are permitted to allocate and assign publicly accessible IP addresses as well as create and modify firewall rules.</para></listitem>
-        <listitem><para>Developer. This is a general purpose role that is assigned to users by default.</para></listitem>
-            <listitem><para>Project Manager. (projectmanager) This is a role that is assigned upon project creation and can't be added or removed, but this role can do anything a sysadmin can do.</para></listitem></itemizedlist>
-        
-        <para>RBAC management is exposed through the dashboard for simplified user management.</para></simplesect></section>
+        </simplesect><simplesect><title>Using the nova command-line tool</title>
+            <para>Installing the python-novaclient gives you a <code>nova</code> shell command that enables
+                Compute API interactions from the command line. You install the client, and then provide
+                your username and password, set as environment variables for convenience, and then you
+                can have the ability to send commands to your cloud on the command-line.</para>
+            <para>To install python-novaclient, download the tarball from
+                <link xlink:href="http://pypi.python.org/pypi/python-novaclient/2.6.3#downloads">http://pypi.python.org/pypi/python-novaclient/2.6.3#downloads</link> and then install it in your favorite python environment. </para>
+            <programlisting>
+$ curl -O http://pypi.python.org/packages/source/p/python-novaclient/python-novaclient-2.6.3.tar.gz
+$ tar -zxvf python-novaclient-2.6.3.tar.gz
+$ cd python-novaclient-2.6.3
+$ sudo python setup.py install
+    </programlisting>
+            <para>Now that you have installed the python-novaclient, confirm the installation by entering:</para>
+<literallayout class="monospaced">$ nova help</literallayout>
+<programlisting>
+usage: nova [--username USERNAME] [--apikey APIKEY] [--projectid PROJECTID]
+            [--url URL] [--version VERSION]
+            &lt;subcommand&gt; ...
+</programlisting>
+            <para>In return, you will get a listing of all the commands and parameters for the nova command line client. By setting up the required parameters as environment variables, you can fly through these commands on the command line. You can add --username on the nova command, or set them as environment variables: </para>
+            <para><programlisting>
+export NOVA_USERNAME=joecool
+export NOVA_API_KEY=coolword
+export NOVA_PROJECT_ID=coolu
+</programlisting>
+            </para><para>Using the Identity Service, you are supplied with an authentication endpoint, which nova recognizes as the NOVA_URL. </para>
+            <para>
+                <programlisting>
+export NOVA_URL=http://hostname:5000/v2.0
+export NOVA_VERSION=1.1
+</programlisting>
+            </para></simplesect></section>
     <section xml:id="managing-volumes">
         <title>Managing Volumes</title>
         <para>Nova-volume is the service that allows you to give extra block level storage to your
@@ -1884,7 +1942,9 @@ Then perform the mount. </literallayout></para>
                 <tr>
                     <td>--flat_network_dhcp_start</td>
                     <td>default: '10.0.0.2'</td>
-                    <td>Starting IP address for the DHCP server to start handing out IP addresses when using FlatDhcp </td>
+                    <td>(Deprecated in Diablo release, only applies to Cactus and earlier) Starting
+                        IP address for the DHCP server to start handing out IP addresses when using
+                        FlatDhcp </td>
                 </tr>
                 <tr>
                     <td>--flat_network_dns</td>
