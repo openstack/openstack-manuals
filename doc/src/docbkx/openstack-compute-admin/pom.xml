@@ -73,7 +73,7 @@
                         <phase>generate-sources</phase>
                         <configuration>
                             <!-- These parameters only apply to webhelp -->
-                            <enableDisqus>1</enableDisqus>
+                            <enableDisqus>0</enableDisqus>
                             <disqusShortname>openstackdocs</disqusShortname>
                             <enableGoogleAnalytics>1</enableGoogleAnalytics>
                             <googleAnalyticsId>UA-17511903-6</googleAnalyticsId>
@@ -96,17 +96,12 @@
                             <postProcess>
                                 <!-- Copies the figures to the correct location for webhelp -->
                                 
-                                <copy todir="${basedir}/target/docbkx/webhelp/os-compute-adminguide/figures">
-                                    <fileset dir="${basedir}/figures">
-                                        <include name="**/*.png" />
+                                <copy todir="${basedir}/target/docbkx/webhelp/openstack-compute-admin/os-compute-adminguide/content/figures">
+                                    <fileset dir="${basedir}/src/docbkx/openstack-compute-admin/figures">
+                                        <include name="**/*.*" />
                                     </fileset>
                                 </copy>
                                 
-                                <copy todir="${basedir}/target/docbkx/webhelp/os-compute-adminguide/figures">
-                                    <fileset dir="${basedir}/figures">
-                                        <include name="**/*.jpg" />
-                                    </fileset>
-                                </copy>
                                 <!-- Copies webhelp (HTML output) to desired URL location on docs.openstack.org -->
                                                    
                                 <copy

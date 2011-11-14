@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:exsl="http://exslt.org/common" xmlns:ng="http://docbook.org/docbook-ng"><head>
+<meta http-equiv="X-UA-Compatible" content="IE=7"/>
+<title>OpenStack API Examples</title><meta name="generator" content="DocBook XSL-NS Stylesheets V1.76.1"/><link rel="home" href="index.html" title="OpenStack API Quick Start"/><link rel="up" href="index.html" title="OpenStack API Quick Start"/><link rel="prev" href="Listing-Images-a01518.html" title="2. Launching Instances"/><link rel="next" href="Compute-API-Server-Examples-a09234.html" title="2. Compute API Server Information Examples"/><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><script type="text/javascript">
+            //The id for tree cookie
+            var treeCookieId = "treeview-434";
+            var language = "en";
+            var w = new Object();
+            //Localization
+            txt_filesfound = 'Results';
+            txt_enter_at_least_1_char = "You must enter at least one character.";
+            txt_browser_not_supported = "Your browser is not supported. Use of Mozilla Firefox is recommended.";
+            txt_please_wait = "Please wait. Search in progress...";
+            txt_results_for = "Results for: ";
+        </script><style type="text/css">
+            input {
+            margin-bottom: 5px;
+            margin-top: 2px;
+            }
+
+            .folder {
+            display: block;
+            height: 22px;
+            padding-left: 20px;
+            background: transparent url(../common/jquery/treeview/images/folder.gif) 0 0px no-repeat;
+            }
+            
+        </style><link rel="shortcut icon" href="../favicon.ico" type="image/x-icon"/><link rel="stylesheet" type="text/css" href="../common/css/positioning.css"/><!--[if IE]>
+	<link rel="stylesheet" type="text/css" href="../common/css/ie.css"/>
+	<![endif]--><link rel="stylesheet" type="text/css" href="../common/jquery/theme-redmond/jquery-ui-1.8.2.custom.css"/><link rel="stylesheet" type="text/css" href="../common/jquery/treeview/jquery.treeview.css"/><script type="text/javascript" src="../common/jquery/jquery-1.4.2.min.js"><!----></script><script type="text/javascript" src="../common/jquery/jquery-ui-1.8.2.custom.min.js"><!----></script><script type="text/javascript" src="../common/jquery/jquery.cookie.js"><!----></script><script type="text/javascript" src="../common/jquery/treeview/jquery.treeview.min.js"><!----></script><script type="text/javascript" src="search/htmlFileList.js"><!----></script><script type="text/javascript" src="search/htmlFileInfoList.js"><!----></script><script type="text/javascript" src="search/nwSearchFnt.js"><!----></script><script type="text/javascript" src="search/stemmers/en_stemmer.js"><!--//make this scalable to other languages as well.--></script><script type="text/javascript" src="search/index-1.js"><!----></script><script type="text/javascript" src="search/index-2.js"><!----></script><script type="text/javascript" src="search/index-3.js"><!----></script><script type="text/javascript">
+	    var _gaq = _gaq || [];
+	    _gaq.push(['_setAccount', 'UA-17511903-6']);
+	  </script><script type="text/javascript" src="../common/ga.js"><!----></script></head><body><div id="header"><a onclick="_gaq.push(['_trackEvent', 'Header', 'logo', 'click', 1]);" target="_blank" href="http://www.openstack.org"><img src="../common/images/openstack-logo.png" alt="OpenStack Documentation" width="157" height="47"/></a><p class="breadcrumbs"><a href="http://docs.openstack.org/">OpenStack Manuals</a><a href="index.html">OpenStack API Quick Start
+   - Diablo</a></p><h1>OpenStack API Examples</h1><div id="navheader" align="right"><!----><table class="navLinks"><tr><td><a id="showHideButton" onclick="showHideToc(); _gaq.push(['_trackEvent', 'Header', 'show/hide', 'click', 1]);" class="pointLeft" title="Hide TOC tree">Sidebar
+                            </a></td><td><a accesskey="p" class="navLinkPrevious" onclick="_gaq.push(['_trackEvent', 'Header', 'prevLink', 'click', 1]);" tabindex="5" href="Listing-Images-a01518.html">Prev</a> 
+				  |
+                                    <a accesskey="n" class="navLinkNext" onclick="_gaq.push(['_trackEvent', 'Header', 'nextLink', 'click', 1]);" tabindex="5" href="Compute-API-Server-Examples-a09234.html">Next</a></td></tr></table></div></div><div id="content"><div class="statustext"> </div><div class="chapter" title="OpenStack API Examples"><div xmlns="" class="titlepage"><div><div><h2 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="Compute_API_Examples"/>OpenStack API Examples</h2></div></div></div><div class="toc"><p><strong>Contents</strong></p><dl><dt><span class="section"><a href="Compute_API_Examples.html#Compute-API-Server-Flavor-Examples-a10234">1. Compute API Flavor Examples</a></span></dt><dt><span class="section"><a href="Compute-API-Server-Examples-a09234.html">2. Compute API Server Information Examples</a></span></dt><dt><span class="section"><a href="Compute-API-Server-Action-Examples-a08234.html">3. Compute API Server Actions Examples</a></span></dt><dt><span class="section"><a href="Compute-API-Server-Extensions-Examples-a09744.html">4. Compute API Extensions Examples</a></span></dt><dt><span class="section"><a href="Image-API-Examples.html">5. Image API Examples</a></span></dt><dt><span class="section"><a href="Identity-API-Examples.html">6. Identity API Examples</a></span></dt><dt><span class="section"><a href="Object-API-Examples.html">7. Object API Examples</a></span></dt><dd><dl><dt><span class="section"><a href="Object-API-Examples.html#d6e229">7.1. Storage Account Services</a></span></dt><dt><span class="section"><a href="ch03s07s02.html">7.2. Storage Container Services</a></span></dt><dt><span class="section"><a href="ch03s07s03.html">7.3. Storage Object Services</a></span></dt></dl></dd></dl></div><p>Here are some examples of the basic API commands you can send to an OpenStack deployment
+        containing Compute, the Image Service, with a running Identity Server. In the "service
+        catalog" that is returned when you get a token, you can find the endpoint URLs that you use
+        for these API commands. For example this public URL entry in the service catalog offers the
+        URL for the Image Service, code-named glance: </p><p>
+        </p><pre class="literallayout">"publicURL": "http://55.51.11.198:9292/v1.1/9"}], "type": "image", "name": "glance"</pre><p>
+    </p><p>For the Compute API, you see a service of type compute, code-named "nova" such as: </p><p>
+        </p><pre class="literallayout">"publicURL": "http://55.51.11.198:8774/v1.1/9"}], "type": "compute", "name": "nova"</pre><p>
+    </p><p>With these publicURLs in hand, you can now use curl commands for these endpoints and send
+        API requests. The following sections offer walk-throughs of common API commands. Refer to
+            <a class="link" href="http://docs.openstack.org/api" target="_top">docs.openstack.org/api</a> for a
+            full reference of all API commands for these services.</p><div class="section" title="1. Compute API Flavor Examples"><div xmlns="" class="titlepage"><div><div><h2 xmlns="http://www.w3.org/1999/xhtml" class="title" style="clear: both"><a id="Compute-API-Server-Flavor-Examples-a10234"/>1. Compute API Flavor Examples</h2></div></div></div><p><span class="bold"><strong>GET /v1.1/flavors</strong></span></p><p>Gives you a listing of flavors available, which are combinations of disk space, memory
+            and CPU capacity bundled together as resources for virtual machines.</p><p>Curl example: </p><pre class="literallayout">curl -D - -H "X-Auth-Token: 3017813d-deca-4764-aa33-9ab59a283ba6" -X 'GET' -v
+            http://demo.rcb.me:8774/v1.1/9/flavors
+
+{"flavors": [{"id": 3, "links": [
+{"href": "http://demo.rcb.me:8774/v1.1/9/flavors/3", "rel": "self"}, 
+{"href": "http://demo.rcb.me:8774/9/flavors/3", "rel": "bookmark"}], "name": "m1.medium"}, 
+{"id": 4, "links": [{"href": "http://demo.rcb.me:8774/v1.1/9/flavors/4", "rel": "self"}, 
+{"href": "http://demo.rcb.me:8774/9/flavors/4", "rel": "bookmark"}], "name": "m1.large"}, 
+{"id": 1, "links": [{"href": "http://demo.rcb.me:8774/v1.1/9/flavors/1", "rel": "self"}, 
+{"href": "http://demo.rcb.me:8774/9/flavors/1", "rel": "bookmark"}], "name": "m1.tiny"}, 
+{"id": 5, "links": [{"href": "http://demo.rcb.me:8774/v1.1/9/flavors/5", "rel": "self"}, 
+{"href": "http://demo.rcb.me:8774/9/flavors/5", "rel": "bookmark"}], "name": "m1.xlarge"}, 
+{"id": 2, "links": [{"href": "http://demo.rcb.me:8774/v1.1/9/flavors/2", "rel": "self"}, 
+{"href": "http://demo.rcb.me:8774/9/flavors/2", "rel": "bookmark"}], "name": "m1.small"}]}</pre><p><span class="bold"><strong>GET /v1.1/flavors/&lt;id&gt;</strong></span></p><p>Gives you more detail about the specific flavor. </p><p>Curl example:</p><p>curl -D - -H "X-Auth-Token: 3017813d-deca-4764-aa33-9ab59a283ba6" -X 'GET' -v
+            http://demo.rcb.me:8774/v1.1/9/flavors/5</p><p>{"flavor": {"rxtx_quota": 0, "name": "m1.xlarge", "links": [{"href":
+            "http://demo.rcb.me:8774/v1.1/9/flavors/5", "rel": "self"}, {"href":
+            "http://demo.rcb.me:8774/9/flavors/5", "rel": "bookmark"}], "ram": 16384, "vcpus": 8,
+            "rxtx_cap": 0, "swap": 0, "disk": 160, "id": 5}}</p><p><span class="bold"><strong>GET /v1.1/flavors/detail</strong></span></p><p>Gives you details on all the available instance types (flavors). </p><p>Curl example: </p><p>curl -D - -H "X-Auth-Token: 3017813d-deca-4764-aa33-9ab59a283ba6" -X 'GET' -v
+            http://demo.rcb.me:8774/v1.1/9/flavors/detail</p><p>{"flavors": [{"rxtx_quota": 0, "name": "m1.medium", "links": [{"href":
+            "http://demo.rcb.me:8774/v1.1/9/flavors/3", "rel": "self"}, {"href":
+            "http://demo.rcb.me:8774/9/flavors/3", "rel": "bookmark"}], "ram": 4096, "vcpus": 2,
+            "rxtx_cap": 0, "swap": 0, "disk": 40, "id": 3}, {"rxtx_quota": 0, "name": "m1.large",
+            "links": [{"href": "http://demo.rcb.me:8774/v1.1/9/flavors/4", "rel": "self"}, {"href":
+            "http://demo.rcb.me:8774/9/flavors/4", "rel": "bookmark"}], "ram": 8192, "vcpus": 4,
+            "rxtx_cap": 0, "swap": 0, "disk": 80, "id": 4}, {"rxtx_quota": 0, "name": "m1.tiny",
+            "links": [{"href": "http://demo.rcb.me:8774/v1.1/9/flavors/1", "rel": "self"}, {"href":
+            "http://demo.rcb.me:8774/9/flavors/1", "rel": "bookmark"}], "ram": 512, "vcpus": 1,
+            "rxtx_cap": 0, "swap": 0, "disk": 0, "id": 1}, {"rxtx_quota": 0, "name": "m1.xlarge",
+            "links": [{"href": "http://demo.rcb.me:8774/v1.1/9/flavors/5", "rel": "self"}, {"href":
+            "http://demo.rcb.me:8774/9/flavors/5", "rel": "bookmark"}], "ram": 16384, "vcpus": 8,
+            "rxtx_cap": 0, "swap": 0, "disk": 160, "id": 5}, {"rxtx_quota": 0, "name": "m1.small",
+            "links": [{"href": "http://demo.rcb.me:8774/v1.1/9/flavors/2", "rel": "self"}, {"href":
+            "http://demo.rcb.me:8774/9/flavors/2", "rel": "bookmark"}], "ram": 2048, "vcpus": 1,
+            "rxtx_cap": 0, "swap": 0, "disk": 20, "id": 2}]}</p></div></div><script type="text/javascript" src="../common/main.js"><!----></script><hr/><div class="legal"><a href="index.html">Legal notices</a></div></div><div><div id="leftnavigation" style="padding-top:3px; background-color:white;"><div id="tabs"><ul><li><a href="#treeDiv" tabindex="1"><span class="contentsTab">Contents</span></a></li></ul><div id="treeDiv"><img src="../common/images/loading.gif" alt="loading table of contents..." id="tocLoading" style="display:block;"/><div id="ulTreeDiv" style="display:none" class="thisisthat"><ul id="tree" class="filetree"><li tabindex="2"><span class="file"><a href="Compute_API_Quick_Start.html">OpenStack API Quick Start</a></span><ul><li tabindex="2"><span class="file"><a href="Compute_API_Quick_Start.html#Openstack-API-Concepts-a09234">1. OpenStack API Introduction</a></span></li><li tabindex="2"><span class="file"><a href="Getting-Credentials-a00665.html">2. Getting Credentials</a></span></li><li tabindex="2"><span class="file"><a href="Sending-Requests-to-API-a09879.html">3. Sending Requests to the API</a></span></li></ul></li><li tabindex="2"><span class="file"><a href="Setting-Up-Python-novaclient.html">Setting Up  python-novaclient</a></span><ul><li tabindex="2"><span class="file"><a href="Setting-Up-Python-novaclient.html#Launching-Images-a09140">1. Listing Images</a></span></li><li tabindex="2"><span class="file"><a href="Listing-Images-a01518.html">2. Launching Instances </a></span></li></ul></li><li tabindex="2" id="webhelp-currentid"><span class="file"><a href="Compute_API_Examples.html">OpenStack API Examples</a></span><ul><li tabindex="2"><span class="file"><a href="Compute_API_Examples.html#Compute-API-Server-Flavor-Examples-a10234">1. Compute API Flavor Examples</a></span></li><li tabindex="2"><span class="file"><a href="Compute-API-Server-Examples-a09234.html">2. Compute API Server Information Examples</a></span></li><li tabindex="2"><span class="file"><a href="Compute-API-Server-Action-Examples-a08234.html">3. Compute API Server Actions Examples</a></span></li><li tabindex="2"><span class="file"><a href="Compute-API-Server-Extensions-Examples-a09744.html">4. Compute API Extensions Examples</a></span></li><li tabindex="2"><span class="file"><a href="Image-API-Examples.html">5. Image API Examples</a></span></li><li tabindex="2"><span class="file"><a href="Identity-API-Examples.html">6. Identity API Examples</a></span></li><li tabindex="2"><span class="file"><a href="Object-API-Examples.html">7. Object API Examples</a></span><ul><li tabindex="2"><span class="file"><a href="Object-API-Examples.html#d6e229">7.1. Storage Account Services</a></span></li><li tabindex="2"><span class="file"><a href="ch03s07s02.html">7.2. Storage Container Services</a></span></li><li tabindex="2"><span class="file"><a href="ch03s07s03.html">7.3. Storage Object Services</a></span></li></ul></li></ul></li></ul></div></div></div></div></div></body></html>

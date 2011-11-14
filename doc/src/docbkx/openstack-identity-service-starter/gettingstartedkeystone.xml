@@ -1,23 +1,27 @@
 <?xml version="1.0"?>
 <!-- Converted by db4-upgrade version 1.0 -->
-<chapter xmlns="http://docbook.org/ns/docbook" version="5.0-extension RaxBook-1.0" xml:id="quick-guide-to-getting-started-with-keystone"><info><title>Quick Guide to Getting Started with Keystone</title></info>
-  <para>
-    The OpenStack Identity Service provides services for authenticating and managing user, account, and role information for OpenStack clouds running on OpenStack Compute and as an authorization service for OpenStack Object Storage.</para>
+<chapter xmlns="http://docbook.org/ns/docbook" version="5.0-extension RaxBook-1.0" xml:id="quick-guide-to-getting-started-with-keystone"><info><title>Quick Guide to Getting Started with the Identity
+      Service</title></info>
+  <para>The OpenStack Identity Service provides services for
+    authenticating and managing user, account, and role information
+    for OpenStack clouds running on OpenStack Compute and as an
+    authorization service for OpenStack Object Storage.</para>
   
   <section xml:id="Identity-Service-Concepts-e1362">
   <title>Identity Service Concepts</title>
-  <para>
-    The Keystone Identity Service has several key concepts which are
-    important to understand:
-  </para>
+  <para> The OpenStack Identity Service with the project named
+      Keystone, has several key concepts which are important to
+      understand: </para>
   <variablelist>
     <varlistentry>
       <term>User</term>
-      <listitem><para>A digital representation of a person, system, or service who uses OpenStack cloud services.
-        Keystone authentication services will validate that incoming request are being made by the user
-        who claims to be making the call. Users have a login and may be assigned tokens to access
-        resources. Users may be directly assigned to a particular tenant and
-        behave as if they are contained in that tenant.</para></listitem>
+      <listitem><para>A digital representation of a person, system, or service who
+            uses OpenStack cloud services. The authentication services
+            will validate that incoming request are being made by the
+            user who claims to be making the call. Users have a login
+            and may be assigned tokens to access resources. Users may
+            be directly assigned to a particular tenant and behave as
+            if they are contained in that tenant.</para></listitem>
     </varlistentry>
     <varlistentry>
       <term>Credentials</term>
@@ -35,16 +39,18 @@
     </varlistentry>
     <varlistentry>
       <term>Authentication</term>
-      <listitem><para>
-        In the context of Keystone, authentication is the act of confirming the identity of a
-        user or the truth of a claim. 
-        Keystone will confirm that incoming request are being made by the user
-        who claims to be making the call by validating a set of claims that the user is making.
-        These claims are initially in the form of a set of credentials (username &amp; password,
-        or username and API key). After initial confirmation, Keystone will issue the user a token
-        which the user can then provide to demonstrate that their identity has been authenticated
-        when making subsequent requests.
-      </para></listitem>
+      <listitem><para> In the context of the Identity Service (Keystone),
+            authentication is the act of confirming the identity of a
+            user or the truth of a claim. The Identity Service will
+            confirm that incoming request are being made by the user
+            who claims to be making the call by validating a set of
+            claims that the user is making. These claims are initially
+            in the form of a set of credentials (username &amp;
+            password, or username and API key). After initial
+            confirmation, the Identity Service will issue the user a
+            token which the user can then provide to demonstrate that
+            their identity has been authenticated when making
+            subsequent requests. </para></listitem>
     </varlistentry>
     <varlistentry>
       <term>Token</term>
@@ -54,12 +60,12 @@
         resources are accessible with it. A token may be
         revoked at anytime and is valid for a finite duration.
       </para>
-        <para>
-          While Keystone supports token-based authentication in this release,
-          the intention is for it to support additional protocols in the
-          future. The intent is for it to be an integration service foremost, and not
-          a aspire to be a full-fledged identity store and management solution.
-        </para></listitem>
+        <para> While the Identity Service supports token-based
+            authentication in this release, the intention is for it to
+            support additional protocols in the future. The intent is
+            for it to be an integration service foremost, and not a
+            aspire to be a full-fledged identity store and management
+            solution. </para></listitem>
     </varlistentry>
     <varlistentry>
       <term>Tenant</term>
@@ -86,11 +92,11 @@
       <listitem><para> A personality that a user assumes when performing a specific set of operations.
         A role includes a set of right and privileges. A user assuming that role inherits
         those rights and privileges.
-      </para><para>
-        In Keystone, a token that is issued to a user includes the list of roles that user 
-        can assume. Services that are being called by that user determine how they interpret the set
-        of roles a user has and which operations or resources each roles grants access to.
-      </para></listitem>
+      </para><para> In the Identity Service, a token that is issued to a user
+            includes the list of roles that user can assume. Services
+            that are being called by that user determine how they
+            interpret the set of roles a user has and which operations
+            or resources each roles grants access to. </para></listitem>
     </varlistentry>
     
   </variablelist>
@@ -110,17 +116,14 @@
             </literallayout>
           </listitem>
           <listitem>
-            <para>
-              Install Keystone:
-            </para>
+            <para> Install the Identity Service: </para>
             <literallayout class="monospaced">  $&gt; sudo apt-get install keystone </literallayout>
           </listitem>
         </orderedlist>
       
-      <para>
-        To install the latest version of Keystone from the Launchpad
-        Bazaar repositories, following the following instructions.
-      </para>
+      <para> To install the latest version of the Identity Service
+      from the Launchpad Bazaar repositories, following the following
+      instructions. </para>
       <orderedlist numeration="arabic">
         <listitem>
           <para>
@@ -146,15 +149,14 @@
         </listitem>
       </orderedlist>
     
-      <para>
-        To install the latest version of Keystone from the Github
-        repositories, see the following instructions.
-      </para>
+      <para> To install the latest version of the Identity Service
+      from the Github repositories, see the following instructions. </para>
      <para> These are for Debian/Ubuntu.</para>
     
     <note>
-      <para>If you want to build the Keystone documentation locally, you will also want
-        to install the python-sphinx package.</para>
+      <para>If you want to build the the Identity Service
+        documentation locally, you will also want to install the
+        python-sphinx package.</para>
     </note>
         <orderedlist numeration="arabic">
           <listitem>
@@ -167,11 +169,11 @@
           </listitem>
         
           <listitem>
-            <para>
-              Branch Keystone's trunk branch. (See
-              <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://wiki.openstack.org/GerritWorkflow">http://wiki.openstack.org/GerritWorkflow</link>
-              to get the project initially setup):
-            </para>
+            <para> Branch the Identity Service's trunk branch. (See
+            <link xmlns:xlink="http://www.w3.org/1999/xlink"
+            xlink:href="http://wiki.openstack.org/GerritWorkflow"
+            >http://wiki.openstack.org/GerritWorkflow</link> to get
+          the project initially setup): </para>
            
             <literallayout class="monospaced">
               $&gt; git checkout master 
@@ -179,9 +181,7 @@
             </literallayout>
           </listitem>
           <listitem>
-            <para>
-              Install Keystone:
-            </para>
+            <para> Install the Identity Service: </para>
            
             <literallayout class="monospaced">
               $&gt; sudo python setup.py install
@@ -193,7 +193,8 @@
     <section xml:id="starting-identity-service"><title>Starting the Identity Service</title>
       
       <para>By default, configuration parameters (such as the IP and port binding for each service) are parsed from etc/keystone.conf, so ensure it is up-to-date prior to starting the service.</para>
-      <para>To start up the Keystone service, enter the following:</para>
+      <para>To start up the Identity Service (Keystone), enter the
+      following:</para>
         
         <literallayout class="monospaced">$ cd ~/keystone/bin &amp;&amp; ./keystone </literallayout>
         
@@ -209,19 +210,25 @@
         <para>Use this command for starting the admin server only which exposes the Admin API:</para>
         
         <literallayout class="monospaced">$ ./bin/keystone-admin</literallayout>
-      <para>After starting keystone or running keystone-manage a keystone.db sqlite database should be created in the keystone folder.</para>
+      <para>After starting the Identity Service or running
+      keystone-manage a keystone.db sqlite database should be created
+      in the keystone folder.</para>
      </section>
     <section xml:id="configuring-the-identity-service"><title>Configuring the Identity Service</title>
   <para>Here are the steps to get started with authentication using Keystone, the project name for
       the OpenStack Identity Service. </para>
-    <para>Typically a project that uses Keystone has settings in a configuration file:</para> 
+    <para>Typically a project that uses the OpenStack Identity Service
+      has settings in a configuration file:</para> 
       
       <para>
       <itemizedlist>
         <listitem>
-          <para>In Compute, the settings are in etc/nova/api-paste.ini, but Keystone also provides
-            an example file in keystone/examples/paste/nova-api-paste.ini. Restart the nova-api
-            service for these settings to be configured.</para>
+          <para>In Compute, the settings are in
+            etc/nova/api-paste.ini, but the Identity Service also
+            provides an example file in
+            keystone/examples/paste/nova-api-paste.ini. Restart the
+            nova-api service for these settings to be
+            configured.</para>
         </listitem>
         <listitem>
           <para>In Image Service, the settings are in glance-api.conf and glance-registry.conf
@@ -265,7 +272,13 @@ use = egg:swift#catch_errors
       </itemizedlist>
     </para></section>
   <section xml:id="dependencies"><info><title>Dependencies</title></info>
-    <para>Once Keystone is installed you need to initialize the database. You can do so with the keystone-manage command line utility. The keystone-manage utility helps with managing and configuring a Keystone installation. You configure the keystone-manage utility itself with a SQL Alchemy connection configuration via a parameter passed to the utility:</para>
+    <para>Once the Identity Service is installed you need to
+      initialize the database. You can do so with the keystone-manage
+      command line utility. The keystone-manage utility helps with
+      managing and configuring an Identity Service installation. You
+      configure the keystone-manage utility itself with a SQL Alchemy
+      connection configuration via a parameter passed to the
+      utility:</para>
     <para>--sql_connection=CONN_STRING</para>
     <para>Where the CONN_STRING is a proper SQLAlchemy connection string as described in
       http://www.sqlalchemy.org/docs/05/reference/sqlalchemy/connections.html?highlight=engine#sqlalchemy.create_engine.</para>

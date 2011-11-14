@@ -1,8 +1,4 @@
 //Auto generated index for searching.
-w["environ"]="0";
-w["equival"]="1";
-w["etc"]="0,1,7";
-w["exampl"]="0,1,2,4,6";
 w["expir"]="2";
 w["expos"]="7";
 w["extens"]="4";
@@ -69,6 +65,8 @@ w["keystone-admin"]="7";
 w["keystone-auth"]="7";
 w["keystone-cor"]="5";
 w["keystone-manag"]="1,3,7";
+w["keystone_admin_token"]="0";
+w["keystone_url"]="0";
 w["know"]="4";
 w["known"]="4";
 w["label"]="1";
@@ -85,7 +83,7 @@ w["list"]="1,2,4";
 w["listen"]="7";
 w["ll"]="2";
 w["local"]="5";
-w["localhost"]="2";
+w["localhost"]="0,2";
 w["log_nam"]="0";
 w["login"]="4";
 w["lst"]="5";
@@ -153,5 +151,4 @@ w["person"]="4";
 w["pictur"]="4";
 w["pipelin"]="0";
 w["pleas"]="0,1,2,3,4,5,6,7";
-w["plus"]="1";
 

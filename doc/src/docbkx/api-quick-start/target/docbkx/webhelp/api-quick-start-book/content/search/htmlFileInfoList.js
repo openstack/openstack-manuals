@@ -1,0 +1,15 @@
+fil = new Array();
+fil["0"]= "ch03s07s02.html@@@7.2. Storage Container Services@@@null";
+fil["1"]= "ch03s07s03.html@@@7.3. Storage Object Services@@@null";
+fil["2"]= "Compute-API-Server-Action-Examples-a08234.html@@@3. Compute API Server Actions Examples@@@null";
+fil["3"]= "Compute-API-Server-Examples-a09234.html@@@2. Compute API Server Information Examples@@@null";
+fil["4"]= "Compute-API-Server-Extensions-Examples-a09744.html@@@4. Compute API Extensions Examples@@@null";
+fil["5"]= "Compute_API_Examples.html@@@OpenStack API Examples@@@null";
+fil["6"]= "Compute_API_Quick_Start.html@@@OpenStack API Quick Start@@@null";
+fil["7"]= "Getting-Credentials-a00665.html@@@2. Getting Credentials@@@null";
+fil["8"]= "Identity-API-Examples.html@@@6. Identity API Examples@@@null";
+fil["9"]= "Image-API-Examples.html@@@5. Image API Examples@@@null";
+fil["10"]= "Listing-Images-a01518.html@@@2. Launching Instances@@@null";
+fil["11"]= "Object-API-Examples.html@@@7. Object API Examples@@@null";
+fil["12"]= "Sending-Requests-to-API-a09879.html@@@3. Sending Requests to the API@@@null";
+fil["13"]= "Setting-Up-Python-novaclient.html@@@Setting Up python-novaclient@@@null";
