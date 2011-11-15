@@ -7,6 +7,113 @@
     for OpenStack clouds running on OpenStack Compute and as an
     authorization service for OpenStack Object Storage.</para>
   
+  <section xml:id="what-is">
+    <title>What is this Keystone anyway?</title>
+    <para>from <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://mirantis.blogspot.com/2011/09/what-is-this-keystone-anyway.html">Yuriy Taraday</link></para>
+    <para>The simplest way to authenticate a user is to ask for credentials
+      (login+password, login+keys, etc.) and check them over some database.
+      But when it comes to lots of separate services as it is in the
+      <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://openstack.org/">OpenStack</link>
+      world, we have to rethink that. The main problem is an inability to use
+      one user entity to be authorized everywhere. For example, a user expects
+      <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://nova.openstack.org/">Nova</link>
+      to get one's credentials and create or fetch some images in
+      <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://launchpad.net/glance">Glance</link>
+      or set up networks in
+      <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://wiki.openstack.org/Quantum">Quantum</link>.
+      This cannot be done without a central authentication and authorization system.</para>
+    <para>So now we have one more OpenStack project -
+      <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://wiki.openstack.org/keystone">Keystone</link>.
+      It is intended to incorporate all common information about users and
+      their capabilities across other services, along with a list of these
+      services themselves. We have spent some time explaining to our friends
+      what, why, and how it is and now we decided to blog about it. What
+      follows is an explanation of every entity that drives Keystone’s life.
+      Of course, this explanation can become outdated in no time since the
+      Keystone project is very young and it has developed very fast.</para>
+    <para>The first basis is the user. Users are users, they represent someone
+      or something that can gain access through Keystone. Users come with
+      credentials that can be checked like passwords or API keys.</para>
+    <para>The second one is tenant. It represents what is called the project in
+      Nova, meaning something that aggregates the number of resources in each
+      service. For example, a tenant can have some machines in Nova, a number
+      of images in Swift/Glance, and couple of networks in Quantum. Users are
+      always bound to some tenant by default.</para>
+    <para>The third and last authorization-related kinds of objects are roles.
+      They represent a group of users that is assumed to have some access to
+      resources, e.g. some VMs in Nova and a number of images in Glance. Users
+      can be added to any role either globally or in a tenant. In the first
+      case, the user gains access implied by the role to the resources in all
+      tenants; in the second case, one's access is limited to resources of the
+      corresponding tenant. For example, the user can be an operator of all
+      tenants and an admin of his own playground.</para>
+    <para>Now let&apos;s talk about service discovery capabilities. With the
+      first three primitives, any service (Nova, Glance, Swift) can check
+      whether or not the user has access to resources. But to try to access
+      some service in the tenant, the user has to know that the service exists
+      and to find a way to access it. So the basic objects here are services.
+      They are actually just some distinguished names. The roles we've talked
+      about recently can be not only general but also bound to a service. For
+      example, when Swift requires administrator access to create some object,
+      it should not require the user to have administrator access to Nova too.
+      To achieve that, we should create two separate Admin roles - one bound to
+      Swift and another bound to Nova. After that admin access to Swift can be
+      given to user with no impact on Nova and vice versa.</para>
+    <para>To access a service, we have to know its endpoint. So there are
+      endpoint templates in Keystone that provide information about all
+      existing endpoints of all existing services. One endpoint template
+      provides a list of URLs to access an instance of service. These URLs are
+      public, private and admin ones. The public one is intended to be
+      accessible from the global world (like http://compute.example.com),
+      the private one can be used to access from a local network (like
+      http://compute.example.local), and the admin one is used in case admin
+      access to service is separated from the common access (like it is in
+      Keystone).</para>
+    <para>Now we have the global list of services that exist in our farm and
+      we can bind tenants to them. Every tenant can have its own list of
+      service instances and this binding entity is named the endpoint, which
+      &quot;plugs&quot; the tenant to one service instance. It makes it
+      possible, for example, to have two tenants that share a common image
+      store but use distinct compute servers.</para>
+    <para>This is a long list of entities that are involved in the process but
+      how does it actually work?
+      <orderedlist>
+        <listitem>
+          <para>To access some service, users provide their credentials to
+            Keystone and receive a token. The token is just a string that is
+            connected to the user and tenant internally by Keystone. This token
+            travels between services with every user request or requests
+            generated by a service to another service to process the
+            user&apos;s request.</para>
+        </listitem>
+        <listitem>
+          <para>The users find a URL of a service that they need. If the user,
+            for example, wants to spawn a new VM instance in Nova, one can find
+            an URL to Nova in the list of endpoints provided by Keystone and
+            send an appropriate request.</para>
+        </listitem>
+        <listitem>
+          <para>After that, Nova verifies the validity of the token in Keystone
+            and should create an instance from some image by the provided image
+            ID and plug it into some network.
+            <itemizedlist>
+              <listitem>At first Nova passes this token to Glance to get the
+                image stored somewhere in there.</listitem>
+              <listitem>After that, it asks Quantum to plug this new instance
+                into a network; Quantum verifies whether the user has access to
+                the network in its own database and to the interface of VM by
+                requesting info in Nova.</listitem>
+            </itemizedlist>
+            All the way this token travels between services so that they can
+            ask Keystone or each other for additional information or some
+            actions.</para>
+        </listitem>
+      </orderedlist>
+      Here is a rough diagram of this process:
+      <figure><mediaobject><imageobject>
+        <imagedata fileref="figures/keystone-flowchart.png" />
+      </imageobject></mediaobject></figure></para>
+  </section>
   <section xml:id="Identity-Service-Concepts-e1362">
   <title>Identity Service Concepts</title>
   <para> The OpenStack Identity Service with the project named
