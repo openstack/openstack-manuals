@@ -2,7 +2,7 @@
 <!-- Converted by db4-upgrade version 1.0 -->
 <chapter xmlns="http://docbook.org/ns/docbook" version="5.0-extension RaxBook-1.0" xml:id="quick-guide-to-getting-started-with-keystone"><info><title>Quick Guide to Getting Started with the Identity
       Service</title></info>
-  <para>The OpenStack Identity Service provides services for
+  <para>The OpenStack Identity Service, Keystone, provides services for
     authenticating and managing user, account, and role information
     for OpenStack clouds running on OpenStack Compute and as an
     authorization service for OpenStack Object Storage.</para>
@@ -38,10 +38,11 @@
       Nova, meaning something that aggregates the number of resources in each
       service. For example, a tenant can have some machines in Nova, a number
       of images in Swift/Glance, and couple of networks in Quantum. Users are
-      always bound to some tenant by default.</para>
+      bound to a tenant by assigning them a role on that tenant.</para>
     <para>The third and last authorization-related kinds of objects are roles.
-      They represent a group of users that is assumed to have some access to
-      resources, e.g. some VMs in Nova and a number of images in Glance. Users
+      A role represents a number of privileges or rights a user has or actions
+      they are allowed to perform. For example, a user who has an 'Admin' role
+      can take admin actions like view all tenants. Users
       can be added to any role either globally or in a tenant. In the first
       case, the user gains access implied by the role to the resources in all
       tenants; in the second case, one's access is limited to resources of the
@@ -114,11 +115,70 @@
         <imagedata fileref="figures/keystone-flowchart.png" />
       </imageobject></mediaobject></figure></para>
   </section>
+  <section xml:id="example-flows">
+    <title>Show me some use cases</title>
+       <para>Below are some sample use cases for how a client and service interact with the
+       OpenStack Identity service, Keystone:
+      <orderedlist>
+        <listitem>
+          <para>Here is an example of the default authentication sequence. The flow starts with the
+          client knowing only their credentials and the URL to Keystone. The client
+          sends their credentials to Keystone and get back a default token. That default token
+          is then used to get a list of tenants the user has access to. The use then authenticates
+          again this time specifying the tenant they want to authenticate against
+          and they get a token that is scoped to that tenant. That token gives them the necessary
+          rights to perform operations on that tenant (like create a VM under that tenant in Nova).
+          Authenticating against the tenant also returns a service catalog
+          which has a list of all the endpoints the client can go to to manage resources
+          under that tenant. The client then picks an endpoint (in the diagram, they choose the nova endpoint)
+          and perform operations (like create instance to create a VM).
+          When the client makes that call, they pass in the token. The service, nova in this example,
+          checks with Keystone to see if the token is valid. Keystone responds and also returns
+          additional information like the user name, the roles they have, etc...
+          Nova them decides based on that information if the user and token have the necessary rights to perform
+          the operation and if they do, goes ahead and performs the operation.</para>
+          <figure><mediaobject><imageobject>
+            <imagedata fileref="figures/use_case_1.png" />
+            </imageobject></mediaobject>
+          </figure>
+        </listitem>
+        <listitem>
+          <para>This shows a similar sequence to the one above but with a shortcut. In this
+          case the client knows their tenant and goes ahead and gets a scoped token
+          in the first step and then calls nova right after to perform their operations.
+          This is a common use case since many clients may already know their tenant Id or Name.</para>
+          <figure><mediaobject><imageobject>
+            <imagedata fileref="figures/use_case_2.png" />
+            </imageobject></mediaobject>
+          </figure>
+        </listitem>
+        <listitem>
+          <para>This third sequence is slightly different. In this situation, the client knows the URL
+          for Nova, but not necessarily what authentication protocols are supported or the Keystone URL.
+          The flow is a lot like how browsers negotiate with web servers. They client sends an
+          unauthenticated call to Nova and Nova responds with a 401 listing the supported protocols in a list of
+          WWW-Authenticate headers. If Basic Auth is supported, this would be returned:</para>
+          <literallayout class="monospaced">WWW-Authenticate: Basic</literallayout>
+          <para>
+          In the case of Keystone authententiction, the returned header will say the Keystone protocol
+          is supported and list the Keystone URL:</para>
+          <literallayout class="monospaced">WWW-Authenticate: Keystone uri="https://identity.example.com:35357/"</literallayout>
+          <para>
+            The client then goes to that URL and retrieves a token and repeats the call to Nova,
+            but this time providing the necessary token.
+          </para>
+          <figure><mediaobject><imageobject>
+            <imagedata fileref="figures/use_case_3.png" />
+            </imageobject></mediaobject>
+          </figure>
+        </listitem>
+      </orderedlist>
+    </para>
+  </section>
   <section xml:id="Identity-Service-Concepts-e1362">
   <title>Identity Service Concepts</title>
-  <para> The OpenStack Identity Service with the project named
-      Keystone, has several key concepts which are important to
-      understand: </para>
+  <para> The OpenStack Identity Service, Keystone, has several key concepts
+  which are important to understand: </para>
   <variablelist>
     <varlistentry>
       <term>User</term>
@@ -139,8 +199,11 @@
         <itemizedlist>
           <listitem><para>a matching username and password</para></listitem>
           <listitem><para>a matching username and API key</para></listitem>
-          <listitem><para>yourself and a driver's license with a picture of you</para></listitem>
           <listitem><para>a token that was issued to you that nobody else knows of</para></listitem>
+          <listitem><para>A real life example, for illustration only, would be you showing up
+          and presenting a driver's license with a picture of you. The person
+          behind the desk can then 'authenticate' you and verify you are who you
+          say you are. Keystone performs effectively the same operation.</para></listitem>
         </itemizedlist>
       </para></listitem>
     </varlistentry>
@@ -229,7 +292,7 @@
         </orderedlist>
       
       <para> To install the latest version of the Identity Service
-      from the Launchpad Bazaar repositories, following the following
+      from the Github.com Git repositories, following the following
       instructions. </para>
       <orderedlist numeration="arabic">
         <listitem>
@@ -299,7 +362,9 @@
     
     <section xml:id="starting-identity-service"><title>Starting the Identity Service</title>
       
-      <para>By default, configuration parameters (such as the IP and port binding for each service) are parsed from etc/keystone.conf, so ensure it is up-to-date prior to starting the service.</para>
+      <para>By default, configuration parameters (such as the IP and port binding
+      for each service) are parsed from etc/keystone.conf, so ensure it is up-to-date
+      prior to starting the service.</para>
       <para>To start up the Identity Service (Keystone), enter the
       following:</para>
         
@@ -308,7 +373,7 @@
         <para>In return you should see something like this:</para>
         <literallayout class="monospaced">Starting the Legacy Authentication component
         Service API listening on 0.0.0.0:5000
-        Admin API listening on 0.0.0.0:5001</literallayout>
+        Admin API listening on 0.0.0.0:35357</literallayout>
         
         <para>Use this command for starting the auth server only which exposes the Service API:</para>
         
@@ -364,7 +429,7 @@ account_autocreate = true
 [filter:keystone]
 use = egg:keystone#swiftauth
 keystone_admin_token = 999888777666
-keystone_url = http://localhost:35357/2.0
+keystone_url = http://localhost:35357/v2.0
 
 [filter:cache]
 use = egg:swift#memcache
@@ -418,7 +483,7 @@ use = egg:swift#catch_errors
   bin/keystone-manage  endpointTemplates add RegionOne nova_compat http://%HOST_IP%:8774/v1.0/ http://%HOST_IP%:8774/v1.0  http://%HOST_IP%:8774/v1.0 1 1
   bin/keystone-manage  endpointTemplates add RegionOne nova http://%HOST_IP%:8774/v1.1/%tenant_id% http://%HOST_IP%:8774/v1.1/%tenant_id%  http://%HOST_IP%:8774/v1.1/%tenant_id% 1 1
   bin/keystone-manage  endpointTemplates add RegionOne glance http://%HOST_IP%:9292/v1.1/%tenant_id% http://%HOST_IP%:9292/v1.1/%tenant_id% http://%HOST_IP%:9292/v1.1/%tenant_id% 1 1
-  bin/keystone-manage  endpointTemplates add RegionOne identity http://%HOST_IP%:5000/v2.0 http://%HOST_IP%:5001/v2.0 http://%HOST_IP%:5000/v2.0 1 1</literallayout>
+  bin/keystone-manage  endpointTemplates add RegionOne identity http://%HOST_IP%:5000/v2.0 http://%HOST_IP%:35357/v2.0 http://%HOST_IP%:5000/v2.0 1 1</literallayout>
   
 <para>  Now you add a default token for the admin user to get when requesting a token.</para>
   <literallayout class="monospaced">bin/keystone-manage  token add 999888777666 1 1 2015-02-05T00:00</literallayout>
@@ -444,31 +509,31 @@ use = egg:swift#catch_errors
           zones. You need to add a label for the endpoint for each region. Having a single region
           doesn't require any work other than adding label.</para>
 <para>
-          <literallayout class="monospaced">keystone-manage endpointTemplates add SWRegion identity http://%HOST_IP%:5000/v2.0 http://%HOST_IP%:5001/v2.0 http://%HOST_IP%:5000/v2.0 1 1</literallayout>
+          <literallayout class="monospaced">keystone-manage endpointTemplates add SWRegion identity http://%HOST_IP%:5000/v2.0 http://%HOST_IP%:35357/v2.0 http://%HOST_IP%:5000/v2.0 1 1</literallayout>
         </para> </section>
   <section xml:id="curl-examples"><info><title>Curl examples</title></info>
  
- <para>All examples assume default port usage (5001) and use the example admin account created above.</para>
+ <para>All examples assume default port usage (35357) and use the example admin account created above.</para>
  
 <para><emphasis>Admin Initial GET</emphasis></para>
  
  <para>Retrieves version, full API url, pdf doc link, and wadl link:</para>
  
- <screen>$> curl http://0.0.0.0:5001</screen>
+ <screen>$> curl http://0.0.0.0:35357</screen>
  
- <para>or:</para>
+ <para>to get details on a specific version:</para>
  
- <screen>$> curl http://0.0.0.0:5001/v2.0/</screen>
+ <screen>$> curl http://0.0.0.0:35357/v2.0/</screen>
  
  <para><emphasis>Retrieve token:</emphasis></para>
  
  <para>To retrieve the token and expiration date for a user:</para>
  
- <screen>$> curl -d '{"passwordCredentials":{"username": "MyAdmin", "password": "P@ssw0rd"}}' -H "Content-type: application/json" http://localhost:5001/v2.0/tokens</screen>
+ <screen>$> curl -d '{"auth":{"passwordCredentials":{"username": "MyAdmin", "password": "P@ssw0rd"}}}' -H "Content-type: application/json" http://localhost:5000/v2.0/tokens</screen>
  
  <para>This will return something like:</para>
  
- <screen>$> {"auth": {"token": {"expires": "2011-08-10T17:45:22.838440", "id": "0eed0ced-4667-4221-a0b2-24c91f242b0b"}}}</screen>
+ <screen>$> {"access": {"token": {"expires": "2011-08-10T17:45:22.838440", "id": "0eed0ced-4667-4221-a0b2-24c91f242b0b"}}}</screen>
  
   
  <note><para>Save the “id” value as you’ll be using it in the calls below.</para></note>
@@ -477,7 +542,7 @@ use = egg:swift#catch_errors
  
  <para>Run:</para>
  
- <screen>$> curl -H "X-Auth-Token:999888777666" http://localhost:5001/v2.0/tenants</screen>
+ <screen>$> curl -H "X-Auth-Token:999888777666" http://localhost:35357/v2.0/tenants</screen>
  
  <para>This will return something like:</para>
  
@@ -487,7 +552,7 @@ use = egg:swift#catch_errors
  
 <para> Run:</para>
  
- <screen>$> curl -H "X-Auth-Token:999888777666" http://localhost:5001/v2.0/users</screen>
+ <screen>$> curl -H "X-Auth-Token:999888777666" http://localhost:35357/v2.0/users</screen>
  
  <para>This will return something like:</para>
  
@@ -498,53 +563,59 @@ use = egg:swift#catch_errors
  
  <para>Run:</para>
  
- <screen>$> curl -H "X-Auth-Token:999888777666" http://localhost:5001/v2.0/tokens/0eed0ced-4667-4221-a0b2-24c91f242b0b</screen>
+ <screen>$> curl -H "X-Auth-Token:999888777666" http://localhost:35357/v2.0/tokens/0eed0ced-4667-4221-a0b2-24c91f242b0b</screen>
  
 <para> This will return something like:</para>
  
- <screen>$> {"auth": {"token": {"expires": "2011-08-11T04:26:58.145171", "id": "0eed0ced-4667-4221-a0b2-24c91f242b0b"}, "user": {"username": "MyAdmin", "roleRefs": [{"roleId": "Admin", "id": 1}], "tenantId": "MyTenant"}}}</screen>
+ <screen>$> {"access": {"token": {"expires": "2011-08-11T04:26:58.145171", "id": "0eed0ced-4667-4221-a0b2-24c91f242b0b"}, "user": {"username": "MyAdmin", "roles": [{"Id": "Admin", "id": 1}], "tenantId": "MyTenant"}}}</screen>
  
 <para><emphasis> Revoking a token:</emphasis></para>
  
  <para>Run:</para>
  
- <screen>$> curl -X DELETE -H "X-Auth-Token:999888777666" http://localhost:5001/tokens/0eed0ced-4667-4221-a0b2-24c91f242b0b</screen>
+ <screen>$> curl -X DELETE -H "X-Auth-Token:999888777666" http://localhost:3537/tokens/0eed0ced-4667-4221-a0b2-24c91f242b0b</screen>
  
  <para><emphasis>Creating a tenant:</emphasis></para>
  
  <para>Run:</para>
  
-<screen> $> curl -H "X-Auth-Token:999888777666" -H "Content-type: application/json" -d '{"tenant":{"id":"MyTenant2", "description":"My 2nd Tenant", "enabled":true}}'  http://localhost:5001/tenants</screen>
+<screen> $> curl -H "X-Auth-Token:999888777666" -H "Content-type: application/json" -d '{"tenant":{"name":"MyTenant2", "description":"My 2nd Tenant", "enabled":true}}'  http://localhost:35357/tenants</screen>
  
 <para> This will return something like:</para>
  
- <screen>$> {"tenant": {"enabled": true, "id": "MyTenant2", "description": "My 2nd Tenant"}}</screen>
+ <screen>$> {"tenant": {"enabled": true, "id": "372", "name": "MyTenant2", "description": "My 2nd Tenant"}}</screen>
  
  <para><emphasis>Verifying the tenant:</emphasis></para> 
     
  <para>Run:</para>
  
- <screen>$> curl -H "X-Auth-Token:999888777666" http://localhost:5001/v2.0/tenants/MyTenant2</screen>
+ <screen>$> curl -H "X-Auth-Token:999888777666" http://localhost:35357/v2.0/tenants/372</screen>
  
  <para>This will return something like:</para>
  
  <screen>$> {"tenant": {"enabled": 1, "id": "MyTenant2", "description": "My 2nd Tenant"}}</screen>
  
+ <para><emphasis>Verifying the tenant by name:</emphasis></para> 
+    
+ <para>Run:</para>
+ 
+ <screen>$> curl -H "X-Auth-Token:999888777666" http://localhost:35357/v2.0/tenants/?name-MyTenant2</screen>
+ 
  <para><emphasis>Updating the tenant:</emphasis></para>
  
  <para>Run:</para>
  
- <screen>$> curl -X PUT -H "X-Auth-Token:999888777666" -H "Content-type: application/json" -d '{"tenant":{"description":"My NEW 2nd Tenant"}}' http://localhost:5001/v2.0/tenants/MyTenant2
+ <screen>$> curl -X PUT -H "X-Auth-Token:999888777666" -H "Content-type: application/json" -d '{"tenant":{"description":"My NEW 2nd Tenant"}}' http://localhost:35357/v2.0/tenants/372
 </screen> 
  <para>This will return something like:
 </para> 
- <screen>$> {"tenant": {"enabled": true, "id": "MyTenant2", "description": "My NEW 2nd Tenant"}}
+ <screen>$> {"tenant": {"enabled": true, "id": "372", "name": "MyTenant2", "description": "My NEW 2nd Tenant"}}
 </screen> 
  <para><emphasis>Deleting the tenant:</emphasis></para>
  
  <para>Run:</para>
  
- <screen>$> curl -X DELETE -H "X-Auth-Token:999888777666" http://localhost:5001/v2.0/tenants/MyTenant2</screen>
+ <screen>$> curl -X DELETE -H "X-Auth-Token:999888777666" http://localhost:35357/v2.0/tenants/372</screen>
  
   </section>
 </chapter>
