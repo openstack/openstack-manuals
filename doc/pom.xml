@@ -157,6 +157,62 @@
                             </postProcess>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>goal3</id>
+                        <goals>
+                            <goal>generate-epub</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <highlightSource>true</highlightSource>
+                            <!-- The following elements sets the autonumbering of sections in output for chapter numbers but no numbered sections-->
+                            <sectionAutolabel>0</sectionAutolabel>
+                            <sectionLabelIncludesComponentLabel>0</sectionLabelIncludesComponentLabel>
+                            
+                            <postProcess>
+                                <!-- Copies the figures to the correct location for epub -->
+                                <mkdir dir="${basedir}/target/docbkx/epub/openstack-compute-admin/os-compute-adminguide/figures"/>
+                                <copy todir="${basedir}/target/docbkx/epub/openstack-compute-admin/os-compute-adminguide/figures">
+                                    <fileset dir="${basedir}/src/docbkx/openstack-compute-admin/figures">
+                                        <include name="**/*.png" />
+                                        <include name="**/*.jpg" />
+                                        <include name="**/*.gif" />
+                                    </fileset>
+                                </copy>
+                                <copy todir="${basedir}/target/docbkx/epub/openstack-image-service-admin/os-image-adminguide/figures">
+                                    <fileset dir="${basedir}/src/docbkx/openstack-image-service-admin/figures">
+                                        <include name="**/*.png" />
+                                    </fileset>
+                                </copy>
+                                <copy todir="${basedir}/target/docbkx/epub/openstack-object-storage-admin/os-objectstorage-adminguide/figures">
+                                    <fileset dir="${basedir}/src/docbkx/openstack-object-storage-admin/figures">
+                                        <include name="**/*.png" />
+                                    </fileset>
+                                </copy>
+                                
+                                <!-- Rezip now that the figures are in the correct location -->
+                                <zip
+                                    destfile="${basedir}/target/docbkx/webhelp/openstack-compute-admin/os-compute-adminguide/os-compute-adminguide.epub"
+                                    basedir="${basedir}/target/docbkx/epub/openstack-compute-admin/os-compute-adminguide/"
+                                    update="true"
+                                    excludes="**/*.epub"/>
+                                
+                                <zip
+                                    destfile="${basedir}/target/docbkx/webhelp/openstack-image-service-admin/os-image-adminguide/os-image-adminguide.epub"
+                                    basedir="${basedir}/target/docbkx/epub/openstack-image-service-admin/os-image-adminguide/"
+                                    update="true"
+                                    excludes="**/*.epub"/>
+                                    
+                                <zip
+                                    destfile="${basedir}/target/docbkx/webhelp/openstack-object-service-admin/os-objectstorage-adminguide/os-objectstorage-adminguide.epub"
+                                    basedir="${basedir}/target/docbkx/epub/openstack-object-service-admin/os-objectstorage-adminguide/"
+                                    update="true"
+                                    excludes="**/*.epub"/>
+                                
+                                
+                            </postProcess>
+                        </configuration>
+                    </execution>
                 </executions>
                 <configuration>
                     <!-- These parameters apply to pdf and webhelp -->
