@@ -1472,6 +1472,40 @@ admin_token = 999888777666
                     <listitem>
                         <para><emphasis role="bold">Database update</emphasis></para>
                         <para>You are now ready to upgrade the database, by running : <literallayout class="monospaced">nova-manage db sync</literallayout></para>
+                        <para>You will also need to update the field "bridge_interface" for your
+                            network into your database, and make sure that field contains the
+                            inteface used for the brige (in our case eth1) :
+                            <programlisting>
+         created_at: 2011-06-08 07:45:23
+         updated_at: 2011-06-08 07:46:06
+         deleted_at: NULL
+            deleted: 0
+                 id: 9
+           injected: NULL
+               cidr: 192.168.2.0/24
+            netmask: 255.255.255.0
+             bridge: br100
+            gateway: 192.168.2.1
+          broadcast: 192.168.2.255
+               dns1: NULL
+               vlan: 100
+ vpn_public_address: 172.16.40.11
+    vpn_public_port: 1000
+vpn_private_address: 192.168.2.2
+         dhcp_start: 192.168.2.3
+         project_id: myproject
+               host: nova-cc1
+            cidr_v6: NULL
+         gateway_v6: NULL
+              label: NULL
+         netmask_v6: NULL
+   bridge_interface: eth1
+         multi_host: 0
+               dns2: NULL
+               uuid: 852fa14
+                            </programlisting>Without 
+                            the update of that field, nova-network won't start since it won't be
+                            able to create the bridges per network. </para>
                     </listitem>
                     <listitem><para><emphasis role="bold">Restart the services</emphasis></para>
                     <para>After the database upgrade, services can be restarted : </para>
@@ -1541,19 +1575,18 @@ export EUCALYPTUS_CERT=${NOVA_CERT} # euca-bundle-image seems to require this se
 alias ec2-bundle-image="ec2-bundle-image --cert ${EC2_CERT} --privatekey ${EC2_PRIVATE_KEY} --user 42 --ec2cert ${NOVA_CERT}"
 alias ec2-upload-bundle="ec2-upload-bundle -a ${EC2_ACCESS_KEY} -s ${EC2_SECRET_KEY} --url ${S3_URL} --ec2cert ${NOVA_CERT}"
                         </programlisting>
-                        <para>
-                            On server-side, there are also not any changes to make, since we don't use keystone.
-                             Here are some commands you should be able to run : 
-                        <literallayout class="monospaced">
-                            euca-describe-instances
-                            euca-describe-adresses
-                            euca-terminate-instance $instance_id
-                            euca-create-volume -s 5 -z $zone
-                            euca-attach-volume -i $instance_id -d $device $volume_name
-                            euca-associate-address -i $instance_id $address 
+                        <para> On server-side, there are also not any changes to make, since we
+                            don't use keystone. Here are some commands you should be able to run :
+                            <literallayout class="monospaced">
+euca-describe-instances
+euca-describe-adresses
+euca-terminate-instance $instance_id
+euca-create-volume -s 5 -z $zone
+euca-attach-volume -i $instance_id -d $device $volume_name
+euca-associate-address -i $instance_id $address 
                         </literallayout>
-                            If all these commands work flawlessly, it means the tools in properly integrated.
-                        </para>
+                            If all these commands work flawlessly, it means the tools in properly
+                            integrated. </para>
                         <para/>
                     </listitem>
                     <listitem>
@@ -1578,10 +1611,10 @@ export NOVA_VERSION=1.1
                             </programlisting>
                             He are some nova commands you should be able to run :
                             <literallayout class="monospaced">
-                            nova list
-                            nova image-show
-                            nova boot $flavor_id --image $image_id --key_name $key_name $instance_name
-                            nova volume-create --display_name $name $size
+nova list
+ nova image-show
+nova boot $flavor_id --image $image_id --key_name $key_name $instance_name
+nova volume-create --display_name $name $size
                         </literallayout>
                             Again, if the commands run without any error, the tools is then properly
                             integrated.</para>
@@ -1589,9 +1622,32 @@ export NOVA_VERSION=1.1
                 </orderedlist>
             </simplesect>
             <simplesect>
+                <title>D- Known issues</title>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para>UnicodeEncodeError: 'ascii' codec can't encode character u'\xe9' in position 11: ordinal not in range(128)</para>
+                            <para>
+                                This error could be found into nova-network.log. It is due to libvirt which doesn't know how to deal with encoded characters. That will happen if the locale of your system differs from "C" or "POSIX".
+                            </para>
+                            <para> In order to resolve that issue, while the system is running, you
+                                will have to do :
+                                <literallayout class="monospaced">sudo nova -c "export LANG C" &amp;&amp; export LANG=C</literallayout>That
+                                changes the locale for the running user, and for the nova user. In
+                                order to make these changes permanent, you will need to edit the
+                                default locale file : (/etc/default/locale) :
+                                <literallayout class="monospaced">LANG="C"</literallayout>Note that
+                                you will need to reboot the server in order to validate the changes
+                                you just made to the file, hence our previous command (which
+                                directly fixes the locale issue).</para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+            </simplesect>
+            <simplesect>
                 <title>D- Why is Keystone not integrated ?</title>
                 <para>Keystone introduces a new identity management, instead of having users into
-                    nova's database, they are now fully relagated to Keystone. While nova deals with
+                    nova's database, they are now fully relegated to Keystone. While nova deals with
                     "users as IDs" (eg : the project name is the project id), Keystones makes a
                     difference between a name and an ID. ; thus, the integration breaks a running
                     Cactus cloud. Since we were looking for a smooth integration on a running
@@ -1670,32 +1726,32 @@ paste.filter_factory = keystone.middleware.glance_auth_token:filter_factory
                             <listitem>
                             <para>
                                     <emphasis> Nova Pipeline </emphasis>
-                                    <literallayout class="monospaced">nova-api.conf</literallayout>
+                                    <literallayout class="monospaced">nova.conf</literallayout>
                                     <programlisting>
---keystone_ec2_url=http://$NOVA-API-IP:5000/v2.0/ec2tokens
+--keystone_ec2_url=http://$KEYSTONE-IP:5000/v2.0/ec2tokens
                                 </programlisting>
-                            </para>
+                                </para>
                                 <literallayout class="monospaced">api-paste.ini</literallayout>
                                 <programlisting>
 # EC2 API
 [pipeline:ec2cloud]
-pipeline = logrequest ec2noauth cloudrequest authorizer ec2executor
+pipeline = logrequest totoken authtoken keystonecontext cloudrequest authorizer ec2executor 
 # NOTE(vish): use the following pipeline for deprecated auth
 # pipeline = logrequest authenticate cloudrequest authorizer ec2executor
 
 [pipeline:ec2admin]
-pipeline = logrequest ec2noauth adminrequest authorizer ec2executor
+pipeline = logrequest totoken authtoken keystonecontext adminrequest authorizer ec2executor 
 # NOTE(vish): use the following pipeline for deprecated auth
 # pipeline = logrequest authenticate adminrequest authorizer ec2executor
 
 # OSAPI
 [pipeline:openstackapi10]
-pipeline = faultwrap noauth ratelimit osapiapp10
+pipeline = faultwrap authtoken keystonecontext ratelimit osapiapp10  
 # NOTE(vish): use the following pipeline for deprecated auth
 # pipeline = faultwrap auth ratelimit osapiapp10
 
 [pipeline:openstackapi11]
-pipeline = faultwrap noauth ratelimit extensions osapiapp11
+pipeline   =   faultwrap authtoken keystonecontext ratelimit extensions osapiapp11 
 # NOTE(vish): use the following pipeline for deprecated auth
 # pipeline = faultwrap auth ratelimit extensions osapiapp11
 
@@ -1725,7 +1781,7 @@ admin_token = 999888777666
                                     <programlisting>
 # Euca2ools
 [...]
-export EC2_URL="http://$KEYSTONE-IP:5000/services/Cloud"
+export EC2_URL="http://$NOVA-API-IP:8773/services/Cloud"
 [...]
                                     </programlisting>
                                 </para>
