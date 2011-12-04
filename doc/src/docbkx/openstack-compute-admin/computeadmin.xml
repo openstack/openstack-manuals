@@ -397,7 +397,106 @@ sudo kvm -m 1024 -cdrom win2k8_dvd.iso -drive file=windowsserver.img,if=virtio,b
             <literallayout class="monospaced">
 nova-manage image image_register windowsserver.img --public=T --arch=x86
 </literallayout>
-        </section>
+    </section>
+    <section xml:id="creating-images-from-running-instances">
+        <title>Creating images from running instances with KVM and Xen</title>
+        <para>
+            It is possible to create an image from a running instance on KVM and Xen. This is a convenient way to spawn pre-configured instances; update them according to your needs ; and re-image the instances.
+            The process to create an image from a running instance is quite simple : 
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <emphasis role="bold">Pre-requisites</emphasis>
+                    </para>
+                    <para> In order to use the feature properly, you will need qemu-img on it's 0.14
+                        version. The imaging feature uses the copy from a snapshot for image files.
+                        (e.g qcow-img convert -f qcow2 -O qcow2 -s $snapshot_name
+                        $instance-disk).</para>
+                    <para>On Debian-like distros, you can check the version by running :
+                        <literallayout class="monospaced">dpkg -l | grep qemu</literallayout></para>
+                    <programlisting>
+ii  qemu                            0.14.0~rc1+noroms-0ubuntu4~ppalucid1            dummy transitional pacakge from qemu to qemu
+ii  qemu-common                     0.14.0~rc1+noroms-0ubuntu4~ppalucid1            qemu common functionality (bios, documentati
+ii  qemu-kvm                        0.14.0~rc1+noroms-0ubuntu4~ppalucid1            Full virtualization on i386 and amd64 hardwa
+                   </programlisting>
+                </listitem>
+                <listitem>
+                    <para>
+                        <emphasis role="bold">Write data to disk</emphasis></para>
+                    <para>
+                        Before creating the image, we need to make sure we are not missing any
+                        buffered content that wouldn't have been written to the instance's disk. In
+                        order to resolve that ; connect to the instance and run
+                        <command>sync</command> then exit. 
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <emphasis role="bold">Create the image</emphasis>
+                    </para>
+                    <para> In order to create the image, we first need obtain the server id :
+                        <literallayout class="monospaced">nova list</literallayout><programlisting>
++-----+------------+--------+--------------------+
+|  ID |    Name    | Status |      Networks      |
++-----+------------+--------+--------------------+
+| 116 | Server 116 | ACTIVE | private=20.10.0.14 |
++-----+------------+--------+--------------------+
+                       </programlisting>
+                        Based on the output, we run :
+                        <literallayout class="monospaced">nova image-create 116 Image-116</literallayout>
+                        The command will then perform the image creation (by creating qemu snapshot) and will automatically upload the image to your repository. 
+                        <note>
+                            <para>
+                                The image that will be created will be flagged as "Private" (For glance : is_public=False). Thus, the image will be available only for the tenant.
+                            </para>
+                        </note>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <emphasis role="bold">Check image status</emphasis>
+                    </para>
+                    <para> After a while the image will turn from a "SAVING" state to an "ACTIVE"
+                        one. <literallayout class="monospaced">nova image-list</literallayout> will
+                        allow you to check the progress :
+                        <literallayout class="monospaced">nova image-list </literallayout><programlisting>
++----+---------------------------------------------+--------+
+| ID |                     Name                    | Status |
++----+---------------------------------------------+--------+
+| 20 | Image-116                                   | ACTIVE |
+| 6  | ttylinux-uec-amd64-12.1_2.6.35-22_1-vmlinuz | ACTIVE |
+| 7  | ttylinux-uec-amd64-12.1_2.6.35-22_1-initrd  | ACTIVE |
+| 8  | ttylinux-uec-amd64-12.1_2.6.35-22_1.img     | ACTIVE |
++----+---------------------------------------------+--------+
+                       </programlisting>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <emphasis role="bold">Create an instance from the image</emphasis>
+                    </para>
+                    <para>You can now create an instance based on this image as you normally do for other images :<literallayout class="monospaced">nova boot --flavor 1 --image20 New_server</literallayout>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <emphasis role="bold">
+                            Troubleshooting
+                        </emphasis>
+                    </para>
+                    <para> Mainly, it wouldn't take more than 5 minutes in order to go from a
+                        "SAVING" to the "ACTIVE" state. If this takes longer than five minutes, here are several hints: </para>
+                    <para>- The feature doesn't work while you have attached a volume (via
+                        nova-volume) to the instance. Thus, you should dettach the volume first,
+                        create the image, and re-mount the volume.</para>
+                    <para>- Make sure the version of qemu you are using is not older than the 0.14
+                        version. That would create "unknown option -s" into nova-compute.log.</para>
+                    <para>- Look into nova-api.log and nova-compute.log for extra
+                        information.</para>
+                </listitem>
+            </itemizedlist>
+        </para>
+    </section>
     <section xml:id="understanding-the-compute-service-architecture">
       
         <title>Understanding the Compute Service Architecture</title>

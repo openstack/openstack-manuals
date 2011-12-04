@@ -118,10 +118,12 @@
                                         <para>Install common OpenStack Object Storage software and
                                                 pre-requisites:</para>
                                         <para>
-                                                <literallayout class="monospaced">apt-get install python-software-properties
+                                                <literallayout class="monospaced">
+apt-get install python-software-properties
 add-apt-repository ppa:swift-core/ppa
 apt-get update
-apt-get install swift openssh-server</literallayout>
+apt-get install swift openssh-server
+                                                  </literallayout>
                                         </para>
                                 </listitem>
                         </orderedlist>
@@ -132,14 +134,15 @@ apt-get install swift openssh-server</literallayout>
                                                
                         <listitem><para>Create and populate configuration directories on all nodes:</para>
                                 <para><literallayout class="monospaced">mkdir -p /etc/swift
-chown -R swift:swift /etc/swift/</literallayout></para>
+chown -R swift:swift /etc/swift/
+                                </literallayout></para>
                         </listitem>
                         
                         <listitem><para>Create /etc/swift/swift.conf:</para>
-                                <para><literallayout class="monospaced">[swift-hash]
+                                <para><programlisting>
 # random unique string that can never change, keep it secret and do NOT lose it
 swift_hash_path_suffix = changeme
-                                </literallayout></para>
+                                </programlisting></para>
                         </listitem>
                 </orderedlist>
                 <note>
@@ -159,8 +162,10 @@ swift_hash_path_suffix = changeme
                                 on the proxy server, or on a separate server, but you need to point
                                 to swauth from the proxy-server.conf file in the following
                                 line:</para>
-                        <literallayout>[filter:swauth]                       
-use = egg:swauth#swauth </literallayout>
+                        <programlisting>
+[filter:swauth]                       
+use = egg:swauth#swauth 
+                        </programlisting>
                         
                         <para>In the Diablo release, the Keystone project at <link xlink:href="http://github.com/rackspace/keystone">http://github.com/rackspace/keystone</link> should become the auth standard for OpenStack, but swauth may be used as an alternative.</para></section>
                 <section xml:id="installing-and-configuring-the-proxy-node">
@@ -181,7 +186,7 @@ use = egg:swauth#swauth </literallayout>
                                 <para>Create self-signed cert for SSL:</para>
                                 <para>
                                         <literallayout class="monospaced">cd /etc/swift
-openssl req -new -x509 -nodes -out cert.crt -keyout cert.key</literallayout>
+openssl req -new -x509 -nodes -out cert.crt -keyout cert.key             </literallayout>
                                 </para>
                         </listitem>
                         <listitem>
@@ -202,7 +207,7 @@ to
                         <listitem>
                                 <para>Create /etc/swift/proxy-server.conf:</para>
                                 <para>
-                                        <literallayout class="monospaced">[DEFAULT]
+                                        <programlisting>[DEFAULT]
 # Enter these next two values if using SSL certifications
 cert_file = /etc/swift/cert.crt
 key_file = /etc/swift/cert.key
@@ -221,15 +226,20 @@ allow_account_management = true
 [filter:swauth]
 # the line below points to swauth as a separate project from swift
 use = egg:swauth#swauth
+
 # Highly recommended to change this.
 super_admin_key = swauthkey
+
+# Local cluster
+default_swift_cluster = https://127.0.0.1:8080/v1
 
 [filter:healthcheck]
 use = egg:swift#healthcheck
 
 [filter:cache]
 use = egg:swift#memcache
-memcache_servers = &lt;PROXY_LOCAL_NET_IP&gt;:11211</literallayout>
+memcache_servers = &lt;PROXY_LOCAL_NET_IP&gt;:11211
+                                        </programlisting>
                                 </para>
                                 <note>
                                         <para>If you run multiple memcache servers, put the multiple
@@ -242,26 +252,33 @@ memcache_servers = &lt;PROXY_LOCAL_NET_IP&gt;:11211</literallayout>
                         <listitem>
                                 <para>Create the account, container and object rings:</para>
                                 <para>
-                                        <literallayout class="monospaced">cd /etc/swift
+                                        <literallayout class="monospaced">
+cd /etc/swift
 swift-ring-builder account.builder create 18 3 1
 swift-ring-builder container.builder create 18 3 1
-swift-ring-builder object.builder create 18 3 1</literallayout>
+swift-ring-builder object.builder create 18 3 1
+                                        </literallayout>
                                 </para>
-                                
                         </listitem>
                         <listitem>
                                 <para>For every storage device on each node add entries to each
                                         ring:</para>
                                 <para>
-                                        <literallayout class="monospaced">swift-ring-builder account.builder add z&lt;ZONE&gt;-&lt;STORAGE_LOCAL_NET_IP&gt;:6002/&lt;DEVICE&gt; 100
+                                        <literallayout class="monospaced">
+swift-ring-builder account.builder add z&lt;ZONE&gt;-&lt;STORAGE_LOCAL_NET_IP&gt;:6002/&lt;DEVICE&gt; 100
 swift-ring-builder container.builder add z&lt;ZONE&gt;-&lt;STORAGE_LOCAL_NET_IP_1&gt;:6001/&lt;DEVICE&gt; 100
-swift-ring-builder object.builder add z&lt;ZONE&gt;-&lt;STORAGE_LOCAL_NET_IP_1&gt;:6000/&lt;DEVICE&gt; 100</literallayout>
+swift-ring-builder object.builder add z&lt;ZONE&gt;-&lt;STORAGE_LOCAL_NET_IP_1&gt;:6000/&lt;DEVICE&gt; 100
+                                        </literallayout>
                                 </para>
-                                <para>For example, if you were setting up a storage node with a partition of /dev/sdb1 in Zone 1 on IP 10.0.0.1, the DEVICE would be sdb1 and the commands would look like:
-                                        
-                                        <literallayout class="monospaced">swift-ring-builder account.builder add z1-10.0.0.1:6002/sdb1 100
+                                <para>For example, if you were setting up a storage node with a
+                                                partition of /dev/sdb1 in Zone 1 on IP 10.0.0.1, the
+                                                DEVICE would be sdb1 and the commands would look
+                                                like:
+                                                <literallayout class="monospaced">
+swift-ring-builder account.builder add z1-10.0.0.1:6002/sdb1 100
 swift-ring-builder container.builder add z1-10.0.0.1:6001/sdb1 100
-swift-ring-builder object.builder add z1-10.0.0.1:6000/sdb1 100</literallayout></para>
+swift-ring-builder object.builder add z1-10.0.0.1:6000/sdb1 100
+                                        </literallayout></para>
                                 <note>
                                         <para>Assuming there are 5 zones with 1 node per zone, ZONE
                                                 should start at 1 and increment by one for each
@@ -271,20 +288,23 @@ swift-ring-builder object.builder add z1-10.0.0.1:6000/sdb1 100</literallayout><
                         <listitem>
                                 <para>Verify the ring contents for each ring:</para>
                                 <para>
-                                        <literallayout class="monospaced">swift-ring-builder account.builder
+                                        <literallayout class="monospaced">
+swift-ring-builder account.builder
 swift-ring-builder container.builder
-swift-ring-builder object.builder</literallayout>
+swift-ring-builder object.builder
+                                        </literallayout>
                                 </para>
                         </listitem>
                         <listitem>
                                 <para>Rebalance the rings:</para>
                                 <para>
-                                        <literallayout class="monospaced">swift-ring-builder account.builder rebalance
+                                        <literallayout class="monospaced">
+swift-ring-builder account.builder rebalance
 swift-ring-builder container.builder rebalance
-swift-ring-builder object.builder rebalance</literallayout>
+swift-ring-builder object.builder rebalance
+                                        </literallayout>
                                 </para>
                                 <note>
-                                        <title>Note</title>
                                         <para>Rebalancing rings can take some time.</para>
                                 </note>
                         </listitem>
@@ -310,7 +330,7 @@ swift-ring-builder object.builder rebalance</literallayout>
                 <section xml:id="installing-and-configuring-storage-nodes">
 <title>Installing and Configuring the Storage Nodes</title>
 
-<note><title>Note</title>
+<note>
 <para>OpenStack Object Storage should work on any modern filesystem that supports
 Extended Attributes (XATTRS).  We currently recommend XFS as it
 demonstrated the best overall performance for the swift use case after
@@ -324,15 +344,26 @@ only filesystem that has been thoroughly tested.</para>
 </listitem>
 <listitem><para>For every device on the node, setup the XFS volume (/dev/sdb is used
 as an example):</para>
-<para><literallayout class="monospaced">fdisk /dev/sdb  (set up a single partition)
+<para><literallayout class="monospaced"># We create a partition
+fdisk /dev/sdb  (set up a single partition)
+
+# We format it
 mkfs.xfs -i size=1024 /dev/sdb1
+
+# We add the partition to the /etc/fstab file
 echo "/dev/sdb1 /srv/node/sdb1 xfs noatime,nodiratime,nobarrier,logbufs=8 0 0" &gt;&gt; /etc/fstab
+
+# We mount the partition
 mkdir -p /srv/node/sdb1
 mount /srv/node/sdb1
-chown -R swift:swift /srv/node</literallayout></para>
+
+# We set the rights
+chown -R swift:swift /srv/node
+</literallayout></para>
 </listitem>
 <listitem><para>Create /etc/rsyncd.conf:</para>
-<para><literallayout class="monospaced">uid = swift
+<para><programlisting>
+uid = swift
 gid = swift
 log file = /var/log/rsyncd.log
 pid file = /var/run/rsyncd.pid
@@ -354,7 +385,7 @@ lock file = /var/lock/container.lock
 max connections = 2
 path = /srv/node/
 read only = false
-lock file = /var/lock/object.lock</literallayout></para>
+lock file = /var/lock/object.lock</programlisting></para>
 </listitem>
 <listitem><para>Edit the following line in /etc/default/rsync:</para>
 <para><literallayout class="monospaced">RSYNC_ENABLE = true</literallayout></para>
@@ -369,7 +400,8 @@ a local, private network.</para></note>
 
 </listitem>
 <listitem><para>Create /etc/swift/account-server.conf:</para>
-<para><literallayout class="monospaced">[DEFAULT]
+<para><programlisting>
+[DEFAULT]
 bind_ip = &lt;STORAGE_LOCAL_NET_IP&gt;
 workers = 2
 
@@ -383,12 +415,13 @@ use = egg:swift#account
 
 [account-auditor]
 
-[account-reaper]</literallayout></para>
+[account-reaper]</programlisting></para>
 
 </listitem>
 
 <listitem><para>Create /etc/swift/container-server.conf:</para>
-<para><literallayout class="monospaced">[DEFAULT]
+<para><programlisting>
+DEFAULT]
 bind_ip = &lt;STORAGE_LOCAL_NET_IP&gt;
 workers = 2
 
@@ -402,11 +435,13 @@ use = egg:swift#container
 
 [container-updater]
 
-[container-auditor]</literallayout></para>
+[container-auditor]</programlisting></para>
 
 </listitem>
 <listitem><para>Create /etc/swift/object-server.conf:</para>
-<para><literallayout class="monospaced">[DEFAULT]
+<para>
+<programlisting>
+[DEFAULT]
 bind_ip = &lt;STORAGE_LOCAL_NET_IP&gt;
 workers = 2
 
@@ -420,12 +455,15 @@ use = egg:swift#object
 
 [object-updater]
 
-[object-auditor]</literallayout></para>
+[object-auditor]
+</programlisting>
+</para>
 
 
 </listitem>
 <listitem><para>Start the storage services:</para>
-<para><literallayout class="monospaced">swift-init object-server start
+<para><literallayout class="monospaced">
+swift-init object-server start
 swift-init object-replicator start
 swift-init object-updater start
 swift-init object-auditor start
@@ -435,38 +473,47 @@ swift-init container-updater start
 swift-init container-auditor start
 swift-init account-server start
 swift-init account-replicator start
-swift-init account-auditor start</literallayout></para>
+swift-init account-auditor start
+</literallayout></para>
 
 </listitem>
 </orderedlist>
-
-                        <section xml:id="verify-swift-installation">
+                    <section xml:id="verify-swift-installation">
 <title>Create OpenStack Object Storage admin Account and Verify the Installation</title>
-<para>You can run these commands from the proxy server if you have installed swauth there. Look for the default_swift_cluster setting
-                                        in the proxy-server.conf and match the URLs (including http
-                                        or https) when issuing swauth commands.</para>
+<para>You can run these commands from the proxy server if you have installed swauth there. Look for
+                                        the default_swift_cluster setting in the proxy-server.conf
+                                        and match the URLs (<emphasis role="bold">including http or
+                                                https</emphasis>) when issuing swauth
+                                        commands.</para>
 <orderedlist>
 <listitem>
                                                 <para>Prepare the system for authorization commands
-                                                  by telling it the key and the URL for auth. </para><para><literallayout class="monospaced">swauth-prep -K key -A http://&lt;AUTH_HOSTNAME&gt;:8080/auth/</literallayout></para>
+                                                  by telling it the key and the URL for auth.  </para>
+        <note>
+                <para> The key we use along with the following command is the one you defined in the
+                                                  proxy-server.conf file.</para>
+        </note>                                        
+        <para>
+                <literallayout class="monospaced">
+swauth-prep -K $key -A http://&lt;AUTH_HOSTNAME&gt;:8080/auth/
+        </literallayout>
+        </para>
                                         </listitem>
                                         <listitem>
                                                 <para>Create a user with administrative privileges
                                                   (account = system, username = root, password =
-                                                  testpass). Make sure to replace <code>key</code>
+                                                  testpass). Make sure to replace key
                                                   in the swauth-add-user command below with whatever
                                                   super_admin key you assigned in the
                                                   proxy-server.conf file above. None of the values
                                                   of account, username, or password are special -
                                                   they can be anything.</para>
                                                 <para>
-                                                  <literallayout class="monospaced">swauth-add-user -K key -A http://&lt;AUTH_HOSTNAME&gt;:8080/auth/ -a system root testpass</literallayout>
+                                                  <literallayout class="monospaced">swauth-add-user -K $key -A http://&lt;AUTH_HOSTNAME&gt;:8080/auth/ -a system root testpass</literallayout>
                                                 </para>
                                         </listitem>
 <listitem><para>Get an X-Storage-Url and X-Auth-Token:</para>
 <para><literallayout class="monospaced">curl -k -v -H 'X-Storage-User: system:root' -H 'X-Storage-Pass: testpass' http://&lt;AUTH_HOSTNAME&gt;:8080/auth/v1.0</literallayout></para>
-
-
 </listitem>
 <listitem><para>Check that you can HEAD the account:</para>
 <para><literallayout class="monospaced">curl -k -v -H 'X-Auth-Token: &lt;token-from-x-auth-token-above&gt;' &lt;url-from-x-storage-url-above&gt;</literallayout></para>
@@ -496,21 +543,24 @@ swift -A http://&lt;AUTH_HOSTNAME&gt;:8080/auth/v1.0 -U system:root -K testpass 
 <orderedlist>
 <listitem><para>Update the list of memcache servers in /etc/swift/proxy-server.conf for all the added proxy servers. If you run multiple memcache servers, use this pattern for the multiple IP:port listings: <literallayout class="monospaced">10.1.2.3:11211,10.1.2.4:11211</literallayout> in each proxy server&#8217;s conf file.:</para>
 
-<para><literallayout class="monospaced">
+<para><programlisting>
 [filter:cache]
 use = egg:swift#memcache
 memcache_servers = &lt;PROXY_LOCAL_NET_IP&gt;:11211
-</literallayout></para>
+</programlisting>
+</para>
 
 </listitem>
 <listitem><para>Change the default_cluster_url to point to the load balanced url, rather than the first proxy
                                                   server you created in
                                                   /etc/swift/proxy-server.conf:</para>
-<para><literallayout class="monospaced">[app:auth-server]
+<para><programlisting>
+[app:auth-server]
 use = egg:swift#auth
 default_cluster_url = https://&lt;LOAD_BALANCER_HOSTNAME&gt;/v1
 # Highly recommended to change this key to something else!
-super_admin_key = devauth</literallayout></para>
+super_admin_key = devauth
+</programlisting></para>
 
 </listitem>
 <listitem><para>After you change the default_cluster_url setting, you have to delete the auth database and recreate the OpenStack Object Storage users, or manually update the auth database with the correct URL for each account.</para>

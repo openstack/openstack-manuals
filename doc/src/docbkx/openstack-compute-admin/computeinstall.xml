@@ -244,33 +244,43 @@ sudo apt-get install glance
                         <para>First you can set environments with a "pre-seed" line to bypass all
                             the installation prompts, running this as root: </para>
                         <para>
-                           <literallayout class="monospaced">bash
+                            <programlisting>
+bash
 MYSQL_PASS=nova
 NOVA_PASS=notnova
 cat &lt;&lt;MYSQL_PRESEED | debconf-set-selections
 mysql-server-5.1 mysql-server/root_password password $MYSQL_PASS
 mysql-server-5.1 mysql-server/root_password_again password $MYSQL_PASS
 mysql-server-5.1 mysql-server/start_on_boot boolean true
-MYSQL_PRESEED</literallayout>
+MYSQL_PRESEED
+                           </programlisting>
                         </para>
                     <para>Next, install MySQL with: <literallayout class="monospaced">sudo apt-get install -y mysql-server</literallayout>
                     </para>
-                        <para>Edit /etc/mysql/my.cnf to change "bind-address" from localhost
+                    <para>Edit /etc/mysql/my.cnf to change "bind-address" from localhost
                         (127.0.0.1) to any (0.0.0.0) and restart the mysql service: </para>
                     <para>
                         <literallayout class="monospaced">sudo sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/my.cnf
 sudo service mysql restart</literallayout></para>
-                        <para>To configure the MySQL database, create the nova database:  </para>
-                        <literallayout class="monospaced">sudo mysql -u root -p$MYSQL_PASS -e 'CREATE DATABASE nova;'</literallayout>
-
-                        <para>Update the DB to give user ‘nova’@’%’ full control of the nova
+                    <para>To configure the MySQL database, create the nova database:  </para>
+                    <literallayout class="monospaced">sudo mysql -u root -p$MYSQL_PASS -e 'CREATE DATABASE nova;'</literallayout>
+                    
+                    <para>Update the DB to give user ‘nova’@’%’ full control of the nova
                         database:</para>
                     <para>
-                        <literallayout class="monospaced">sudo mysql -u root -p$MYSQL_PASS -e "GRANT ALL PRIVILEGES ON *.* TO 'nova'@'%' WITH GRANT OPTION;"</literallayout>
+                        <literallayout class="monospaced">sudo mysql -u root -p$MYSQL_PASS -e "GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'%' WITH GRANT OPTION;"</literallayout>
                     </para>
-                        <para>Set MySQL password for the user "nova@%"</para>
+                    <para>Set MySQL password for the user "nova@%"</para>
                     <para>
                         <literallayout class="monospaced">sudo mysql -u root -p$MYSQL_PASS -e "SET PASSWORD FOR 'nova'@'%' = PASSWORD('$NOVA_PASS');"</literallayout>
+                    </para>
+                    <para>
+                        For Nova components that require access to this database the required configuration in /etc/nova/nova.conf should be (replace $PG_PASS with password):
+                    </para>
+                    <literallayout class="monospaced">--sql_connection=mysql://nova:$PG_PASS@control.example.com/nova</literallayout>
+                    <para>Finally, populate the nova database</para>
+                    <para>
+                        <literallayout class="monospaced">nova-manage db sync</literallayout>
                     </para>
                 </section>
                 <section xml:id="setting-up-sql-database-postgresql"><title>Setting Up PostgreSQL as the Database on the Cloud Controller</title>
@@ -282,31 +292,35 @@ sudo service mysql restart</literallayout></para>
                     
                     <para>Edit /etc/postgresql/8.4/main/postgresql.conf and change the listen_address to listen to all appropriate addesses, PostgreSQL listen only to localhost by default. For example:</para>
                     <para>To listen on a specific IP address:</para>
-                    <literallayout class="monospaced"># - Connection Settings -
-listen_address = '10.1.1.200,192.168.100.2'</literallayout>
+                    <programlisting>
+ # - Connection Settings -
+listen_address = '10.1.1.200,192.168.100.2'
+                    </programlisting>
                     <para>To listen on all addresses:</para>
-                    <literallayout class="monospaced"># - Connection Settings -
-listen_address = '*'</literallayout>
-                    
+                    <programlisting>
+# - Connection Settings -
+listen_address = '*'
+                    </programlisting>
                     <para>Add appropriate addresses and networks to /etc/postgresql/8.4/main/pg_hba.conf to allow remote access to PostgreSQL, this should include all servers hosting OpenStack (but not neccessarily those hosted by Openstack). As an example, append the following lines:</para>
-                    <literallayout class="monospaced">host all all 192.168.0.0/16
+                    <programlisting>
+host all all 192.168.0.0/16
 host all all 10.1.0.0/16
-                    </literallayout>
-                   <para>Change the default PostgreSQL user's password:</para>
+                    </programlisting>
+                    <para>Change the default PostgreSQL user's password:</para>
                     <literallayout class="monospaced">
 sudo -u postgres psql template1
 template1=#\password
 Enter Password:
 Enter again:
-template1=#\q</literallayout>
-                    
+template1=#\q
+                    </literallayout>
                     <para>Restart PostgreSQL:</para>
                     <literallayout class="monospaced">service postgresql restart</literallayout>
-                    
                     <para>Create nova databases:</para>
-                    <literallayout class="monospaced">sudo -u postgres createdb nova
-sudo -u postgres createdb glance</literallayout>
-                    
+                    <literallayout class="monospaced">
+sudo -u postgres createdb nova
+sudo -u postgres createdb glance
+                    </literallayout>
                     <para>Create nova database user which will be used for all OpenStack services, note the adduser and createuser steps will prompt for the user's password ($PG_PASS):</para>
                     <literallayout class="monospaced">
 adduser nova
@@ -316,17 +330,20 @@ template1=#GRANT ALL PRIVILEGES ON DATABASE nova TO nova
 template1=#GRANT ALL PRIVILEGES ON DATABASE glance TO nova
 template1=#\q
                     </literallayout>
-                    
                     <para>For the Cactus version of Nova, the following fix is required for the PostgreSQL database schema. You don't need to do this for Diablo:</para>
                     <literallayout class="monospaced">
 sudo -u postgres psql template1
 template1=#alter table instances alter instance_type_id type integer using cast(instance_type_id as integer);
-template1=#\q</literallayout>
+template1=#\q
+                    </literallayout>
                     <para>For Nova components that require access to this database the required configuration in /etc/nova/nova.conf should be (replace $PG_PASS with password):</para>
-                    
                     <literallayout class="monospaced">--sql_connection=postgresql://nova:$PG_PASS@control.example.com/nova</literallayout>
-                    <para>At this stage the databases are empty and contain no content. These will be initialised when you do the nova-manage db sync command. </para>
-            </section></section>
+                    <para>Finally, populate the nova and glance databases</para>
+                    <para>
+                        <literallayout class="monospaced">nova-manage db sync</literallayout>
+                        <literallayout class="monospaced">glance-manage db_sync</literallayout>
+                    </para>
+                </section></section>
             <section xml:id="installing-the-compute-node">
                 <title>Installing the Compute Node</title>
                 <para>There are many different ways to perform a multinode install of Compute. In
