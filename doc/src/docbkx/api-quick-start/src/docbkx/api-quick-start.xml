@@ -4,21 +4,24 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" 
     xml:id="Compute_API_Quick_Start"
     version="5.0">
-    
     <title>OpenStack API Quick Start</title>
-    <para>The OpenStack system has several key projects that are separate installations but can work
-        together depending on your cloud needs: OpenStack Compute, OpenStack Object Storage,
-        OpenStack Identity Service, and OpenStack Image Store. With a standalone OpenStack
-        installation, the OpenStack Compute, OpenStack Identity, and OpenStack Image Store projects
-        are all working together in the background of your installation. </para>
+    <para>The OpenStack system has several key projects that are
+        separate installations but can work together depending on your
+        cloud needs: OpenStack Compute, OpenStack Object Storage,
+        OpenStack Identity Service, and OpenStack Image Store.
+        <!--With a standalone OpenStack installation, the OpenStack Compute, OpenStack Identity, and OpenStack Image Store projects are all working together in the background of your installation. --></para>
     <section xml:id="Openstack-API-Concepts-a09234">
         
         <title>OpenStack API Introduction</title>
-    <para>This page covers the basics for talking to your OpenStack cloud through the Compute API
-            after authorizing with the Identity Service API. You can then build a cloud by launching
-            images and assigning metadata to instances, all through the API. For an API reference of
-            all the possible commands, see the OpenStack Compute API 1.1 specification and the
-            Identity Service 2.0 Developer Guide published at <link xlink:href="http://docs.openstack.org">docs.openstack.org</link>. </para></section>
+    <para>This page covers the basics for talking to your OpenStack
+            cloud through the Compute API after authorizing with the
+            Identity Service API. You can then build a cloud by
+            launching images and assigning metadata to instances, all
+            through the API. For an API reference of all the possible
+            commands, see the <link xlink:href="http://docs.openstack.org/api/openstack-compute/1.1/content/">OpenStack Compute API 1.1 specification</link>
+        and the <link xlink:href="http://docs.openstack.org/api/openstack-identity-service/2.0/content/">Identity Service 2.0 specification</link> published at
+                <link xlink:href="http://docs.openstack.org/api"
+                >docs.openstack.org/api</link>. </para></section>
     <section xml:id="Getting-Credentials-a00665"><title>Getting Credentials</title><para>Credentials are a combination of your username, password, and what tenant (or project) your
             cloud is running under. You only need to generate an additional token if you are
             interacting with your cloud directly with API endpoints, and not with a client. Your
@@ -32,7 +35,7 @@
                     administrator gave you, typically http://hostname:5000/v2.0/tokens. You send your
                     username, password, and what group you are with (the "tenant" in auth-speak). </para>
         <para><programlisting>
-$ curl -X 'POST' -v http://host.na.me:5000/v2.0/tokens -d '{"auth":{"passwordCredentials":{"username": "joecool", "password":"coolword"}, "tenantId":"5"}}' -H 'Content-type: application/json' 
+curl -X 'POST' -v http://host.na.me:5000/v2.0/tokens -d '{"passwordCredentials":{"username": "joecool", "password":"coolword"}, "tenantId":"5"}' -H 'Content-type: application/json' 
         </programlisting></para></listitem>
         <listitem><para>The server returns a response in which the 24-hours token is contained :
                     <programlisting>

@@ -3,8 +3,7 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" 
     xml:id="Compute_API_Examples"
-    version="5.0"
-    >
+    version="5.0">
     
     <title>OpenStack API Examples</title>
     <para>Here are some examples of the basic API commands you can send to an OpenStack deployment
@@ -23,6 +22,43 @@
         API requests. The following sections offer walk-throughs of common API commands. Refer to
             <link xlink:href="http://docs.openstack.org/api">docs.openstack.org/api</link> for a
             full reference of all API commands for these services.</para>
+    <para>Many of the APIs support query parameters. For example, to navigate the collection, the parameters limit and marker can be set in the URI. </para>
+    <variablelist>
+        <title>Query Parameters</title>
+        <varlistentry>
+            <term><code>limit</code></term>
+            <listitem>
+                <para>For an integer value <inlineequation>
+                    <mathphrase><emphasis>n</emphasis></mathphrase>
+                </inlineequation>, limits the number of results to at most <inlineequation>
+                    <mathphrase><emphasis>n</emphasis></mathphrase>
+                </inlineequation> values.</para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><code>marker</code></term>
+            <listitem>
+                <para>Given a string value <inlineequation>
+                    <mathphrase><emphasis>x</emphasis></mathphrase>
+                </inlineequation>, return object names greater in value than the specified
+                    marker.</para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><code>format</code></term>
+            <listitem>
+                <para>Specify either <code>json</code> or
+                        <code>xml</code> to return the respective
+                    serialized response. For example, append
+                    <programlisting>?format=json</programlisting>onto
+                    a query to inform the service that you want the
+                    information serialized in JSON when it is returned
+                    to you.</para>
+            </listitem>
+        </varlistentry>
+    </variablelist>
+    <para>At this time, a <code>prefix</code> query parameter is not supported at the account
+        level for Object Storage.</para>
     
     <section xml:id="Compute-API-Server-Flavor-Examples-a10234">
         
@@ -180,42 +216,13 @@
         <para>DELETE /images/1/members/tenant1 (revokes tenant's access to an image)</para></section>
     <section xml:id="Identity-API-Examples"><title>Identity API Examples</title>
         <para>POST /v2.0/tokens</para>
-        <para>GET /v2.0/tenants</para></section>
+        <programlisting>
+curl -X 'POST' -v http://host.na.me:5000/v2.0/tokens -d '{"passwordCredentials":{"username": "joecool", "password":"coolword"}, "tenantId":"5"}' -H 'Content-type: application/json' 
+        </programlisting>
+        
+    </section>
     <section xml:id="Object-API-Examples"><title>Object API Examples</title>
-        <variablelist>
-            <title>Query Parameters</title>
-            <varlistentry>
-                <term><code>limit</code></term>
-                <listitem>
-                    <para>For an integer value <inlineequation>
-                        <mathphrase><emphasis>n</emphasis></mathphrase>
-                    </inlineequation>, limits the number of results to at most <inlineequation>
-                        <mathphrase><emphasis>n</emphasis></mathphrase>
-                    </inlineequation> values.</para>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
-                <term><code>marker</code></term>
-                <listitem>
-                    <para>Given a string value <inlineequation>
-                        <mathphrase><emphasis>x</emphasis></mathphrase>
-                    </inlineequation>, return object names greater in value than the specified
-                        marker.</para>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
-                <term><code>format</code></term>
-                <listitem>
-                    <para>Specify either <code>json</code> or <code>xml</code> to return the
-                        respective serialized response, for example append
-                        <programlisting>?format=json</programlisting>onto a query to inform the
-                        service that you want the information serialized in JSON when it is returned
-                        to you.</para>
-                </listitem>
-            </varlistentry>
-        </variablelist>
-        <para>At this time, a <code>prefix</code> query parameter is not supported at the account
-            level.</para>
+        
         <section><title>Storage Account Services</title>
             <para>GET /v1.0/&lt;account&gt;</para>
         <para>HEAD /v1.0/&lt;account&gt;</para></section>
