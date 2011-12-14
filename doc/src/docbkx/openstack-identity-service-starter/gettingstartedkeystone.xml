@@ -488,7 +488,8 @@ use = egg:swift#catch_errors
       Image Service, the Object Storage service, as well as Identity itself. Since there is just one
       zone in this example, it represents all the services across the single region (but could also
       represent all the regions). The last two values are flags which indicate the template is
-      enabled and global.</para>
+      enabled and global. Note that the URLs contain a %tenant_id% string which Keystone populates
+      at runtime.</para>
   <literallayout class="monospaced">  HOST_IP=127.0.0.1
   bin/keystone-manage  endpointTemplates add RegionOne swift http://$HOST_IP:8080/v1/AUTH_%tenant_id% http://$HOST_IP:8080/ http://$HOST_IP:8080/v1/AUTH_%tenant_id% 1 1
   bin/keystone-manage  endpointTemplates add RegionOne nova_compat http://$HOST_IP:8774/v1.0/ http://$HOST_IP:8774/v1.0  http://$HOST_IP:8774/v1.0 1 1
