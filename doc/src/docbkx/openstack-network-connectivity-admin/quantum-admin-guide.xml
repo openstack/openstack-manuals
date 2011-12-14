@@ -444,17 +444,21 @@ list_ports [tenant-id] [net-id]
             <para>
             By default, the Quantum Manager uses the existing IPAM
             database tables within Nova for managing fixed-ip assignments for VMs.
-            Quantum Manager also supports using a new standalone IPAM service from the
-            Melange project (<link xlink:href="http://wiki.openstack.org/Melange"/>).
+            Quantum Manager also supports using the new standalone IPAM service from the
+            <link xlink:href="http://wiki.openstack.org/Melange"> Melange Project </link>.
+            Using Melange requires downloading the Melange code (it is a separate project
+            from both Quantum and Nova) and running the melange service.
             To enable Melange IPAM, set the following flag:
             </para>
-            <literallayout class="monospaced">
---quantum_ipam_lib=nova.network.quantum.melange_ipam_lib
-            </literallayout>
-            <para>
-            Melange is still experimental and is being integrated into the Nova codebase early in the
-            Essex cycle.  See the Melange documentation for more information.
+            <literallayout class="monospaced">--quantum_ipam_lib=nova.network.quantum.melange_ipam_lib</literallayout>
+            <para> To configure the Melange server IP address and port, use:
             </para>
+<literallayout>--melange_host=127.0.0.1
+--melange_port=9898</literallayout>
+            <para>
+            Melange is still experimental.  See the Melange documentation for more information.
+            </para>
+
         </section>
         <section xml:id="Using-dle455">
             <title> Defining VM Connectivity </title>
