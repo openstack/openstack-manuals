@@ -227,16 +227,16 @@
             <para>This section describes the different options for installing Quantum.  Regardless
                 of how it is installed, a Quantum installation provides two executables:<itemizedlist>
                     <listitem>
-                        <para>/usr/sbin/quantum-server : a daemon that implements the Quantum
-                            virtual network service. An init script should be installed (e.g.,
+                        <para>quantum-server : a daemon that implements the Quantum virtual network
+                            service. An init script should be installed (e.g.,
                             /etc/init.d/quantum-server) for starting/stopping the service and logs
                             are sent to /var/log/quantum/quantum-server.log . </para>
                     </listitem>
                     <listitem>
-                        <para>/usr/bin/quantum : a CLI utility for manually driving the Quantum API
-                            (note: in most common use cases, the Quantum API is primarily driven by
-                            another service, for example OpenStack Nova, and this CLI is used only
-                            for simple testing or troubleshooting).</para>
+                        <para>quantum : a CLI utility for manually driving the Quantum API (note: in
+                            most common use cases, the Quantum API is primarily driven by another
+                            service, for example OpenStack Nova, and this CLI is used only for
+                            simple testing or troubleshooting).</para>
                     </listitem>
                 </itemizedlist></para>
             <para>Quantum has two configuration files quantum.conf and plugins.ini .  The location
@@ -252,16 +252,19 @@
             </section>
             <section xml:id="Source-Install-d1e445">
                 <title>Installing from Source</title>
+                <note><para>Installing from source is only supported for essex-2 or any more recent release. </para> </note>
                 <para>If you cannot install Quantum from distribution packages, you can download the
                     Quantum source release from <link>https://launchpad.net/quantum/+download</link>
-                    . On this page you can choose between the latest "milestone release" in the
-                    "essex" release cycle, or the last official release from the "diablo" release
-                    cycle (version 2011.3, released 2011-09-23). Since Quantum is still evolving
+                    . On this page you can choose among all of the recent Quantum releases. 
+                    Since Quantum is still evolving
                     rapidly, if you want all of the features described in this document, the latest
                     milestone release is suggested. </para>
-                <para>After downloading the source tar.gz file, unarchive the file and cd into the
-                    directory. Install quantum as using: </para>
-                <literallayout class="monospaced">tar -xzf quantum*.tar.gz
+                <para>After downloading the source tar.gz file, install dependencies using pip,
+                    unarchive the files, and cd into the directory, and install.  For example, on
+                    Ubuntu: </para>
+                <literallayout class="monospaced">sudo apt-get install python-pip 
+sudo pip install -r tools/pip-requires 
+tar -xzf quantum*.tar.gz
 cd quantum*
 sudo python setup.py install</literallayout>
                 <para>After the install, the executables "quantum-server" and "quantum" should be in
@@ -272,15 +275,11 @@ sudo python setup.py install</literallayout>
             <section xml:id="Source-Run-dle445">
                 <title>No Installation (Running from Source)</title>
                 <para>If you with to run Quantum from the source directory without installing, you
-                    will need to manually install the dependencies. First, untar the download file
-                    and cd to the directory. To manually install dependencies, install 'pip' and use
-                    it to install all dependencies listed in tools/pip-requires. For example, on
-                    Ubuntu:
-                    <literallayout class="monospaced">tar -xzf quantum*.tar.gz
-cd quantum*
-sudo apt-get install python-pip
-sudo pip install -r tools/pip-requires</literallayout></para>
-                <para>You can then run the unit tests to confirm that the dependencies are correctly installed:</para>
+                    will need to download a Quantum tarball and install dependencies, as described above in
+                    the <link linkend="Source-Install-d1e445">Source Install</link> section.
+                </para>
+                <para>Then, from within the Quantum source directory, you can 
+                    run the unit tests to confirm that the dependencies are correctly installed:</para>
                 <literallayout>./run_tests.sh -N</literallayout>
                 <para>All tests should print a green 'OK'. The end of the test output may print a
                     few pep8 errors depending on your version of pep8 installed. These can be safely
@@ -289,7 +288,8 @@ sudo pip install -r tools/pip-requires</literallayout></para>
                 root directory of the Quantum source tree, and that the executables in the bin/ directory of the source
                 tree are in your PATH environment variable.</para>
                 <para>When running from source, $QUANTUM_CONF_DIR is the etc/ directory within the
-                    Quantum source directory. </para>
+                Quantum source directory. For example, from the top of the Quantum source directory, run:</para>
+                <literallayout>./bin/quantum-server</literallayout>
             </section>
         </section>
 
