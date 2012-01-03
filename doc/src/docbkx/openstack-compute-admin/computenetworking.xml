@@ -43,26 +43,28 @@
         <para>In Flat DHCP Mode, you start a DHCP server to pass out IP addresses to VM instances
             from the specified subnet in addition to manually configuring the networking bridge. IP
             addresses for VM instances are grabbed from a subnet specified by the network
-            administrator. Like Flat Mode, all instances are attached to a single bridge on the
-            compute node. In addition a DHCP server is running to configure instances. In this mode,
-            Compute does a bit more configuration in that it attempts to bridge into an ethernet
-            device (eth0 by default). It will also run dnsmasq as a dhcpserver listening on this
-            bridge. Instances receive their fixed IPs by doing a dhcpdiscover. </para>
+            administrator. </para>
+        <para>Like Flat Mode, all instances are attached to a single bridge on the compute node. In
+            addition a DHCP server is running to configure instances. In this mode, Compute does a
+            bit more configuration in that it attempts to bridge into an ethernet device (eth0 by
+            default). It will also run dnsmasq as a dhcpserver listening on this bridge. Instances
+            receive their fixed IPs by doing a dhcpdiscover. </para>
         <para>In both flat modes, the network nodes do not act as a default gateway. Instances are
             given public IP addresses. Compute nodes have iptables/ebtables entries created per
             project and instance to protect against IP/MAC address spoofing and ARP poisoning. </para>
         <para>VLAN Network Mode is the default mode for OpenStack Compute. In this mode, Compute
             creates a VLAN and bridge for each project. For multiple machine installation, the VLAN
-            Network Mode requires a switch that supports VLAN tagging (IEEE 802.1Q). The project gets
-            a range of private IPs that are only accessible from inside the VLAN. In order for a
-            user to access the instances in their project, a special VPN instance (code named
+            Network Mode requires a switch that supports VLAN tagging (IEEE 802.1Q). The project
+            gets a range of private IPs that are only accessible from inside the VLAN. In order for
+            a user to access the instances in their project, a special VPN instance (code named
             cloudpipe) needs to be created. Compute generates a certificate and key for the user to
             access the VPN and starts the VPN automatically. It provides a private network segment
             for each project's instances that can be accessed via a dedicated VPN connection from
             the Internet. In this mode, each project gets its own VLAN, Linux networking bridge, and
-            subnet. The subnets are specified by the network administrator, and are assigned
-            dynamically to a project when required. A DHCP Server is started for each VLAN to pass
-            out IP addresses to VM instances from the subnet assigned to the project. All instances
+            subnet. </para>
+        <para>The subnets are specified by the network administrator, and are assigned dynamically
+            to a project when required. A DHCP Server is started for each VLAN to pass out IP
+            addresses to VM instances from the subnet assigned to the project. All instances
             belonging to one project are bridged into the same VLAN for that project. OpenStack
             Compute creates the Linux networking bridges and VLANs when required.</para></section>
     <section xml:id="configuring-networking-on-the-compute-node">
@@ -71,10 +73,11 @@
             
                     <orderedlist>
                             <listitem>
-                                <para>Set the --network-manager flag in nova.conf.</para>
-                            </listitem><listitem>
-                        <para>Use the <code>nova-manage network create networkname CIDR n n</code>
-                    command to create the subnet that the VMs reside on.</para>
+                                <para>Set the "--network-manager" flag in nova.conf.</para>
+                            </listitem>
+                        <listitem>
+                        <para>Use the <code>nova-manage network create label CIDR n n</code> command
+                    to create the subnet that the VMs reside on.</para>
                     </listitem>
                     <listitem>
                         <para>Integrate the bridge with your network. </para>
@@ -99,9 +102,11 @@
             </listitem>
         </itemizedlist>
         <para>Also, when you issue the nova-manage network create command, it uses the settings from
-            the nova.conf flag file. Use the "nova-manage network create public 192.168.0.0/24 1
-            255" command to create the subnet that your VMs will run on. You specify public or
-            private after the create command.</para><section xml:id="configuring-flat-networking"><title>Configuring Flat Networking</title>
+            the nova.conf flag file. Use the following command to create the subnet that your VMs
+            will run on :
+            <literallayout class="monospaced">nova-manage network create private 192.168.0.0/24 1 256           </literallayout>
+        </para>
+        <section xml:id="configuring-flat-networking"><title>Configuring Flat Networking</title>
             <para>FlatNetworking uses ethernet adapters configured as bridges to allow network
                 traffic to transit between all the various nodes. This setup can be done with a
                 single adapter on the physical host, or multiple. This option does not require a
@@ -129,7 +134,7 @@
                 that bridge. To do this, edit your network interfaces configuration to look like the
                 following example: </para>
             <para>
-                <literallayout class="monospaced">&lt; begin /etc/network/interfaces > 
+                <programlisting>
 # The loopback network interface 
 auto lo 
 iface lo inet loopback 
@@ -142,7 +147,7 @@ iface br100 inet dhcp
     bridge_stp           off 
     bridge_maxwait   0 
     bridge_fd            0 
-&lt; end /etc/network/interfaces > </literallayout>
+ </programlisting>
             </para>
             <para>Next, restart networking to apply the changes: <code>sudo /etc/init.d/networking
                     restart</code></para>
@@ -179,14 +184,14 @@ iface br100 inet dhcp
             </section>
         <section xml:id="configuring-flat-dhcp-networking">
                     <title>Configuring Flat DHCP Networking</title><para>With Flat DHCP, the host running nova-network acts as the gateway to the virtual nodes. You
-                can run one nova-network per cluster. Set the flag --network_host on the nova.conf
+                can run one nova-network per cluster. Set the flag "--network_host" on the nova.conf
                 stored on the nova-compute node to tell it which host the nova-network is running on
-                so it can communicate with nova-network. You must also set the --flat_network_bridge
-                setting to the name of the bridge (no default is set for it). The nova-network
-                service will track leases and releases in the database so it knows if a VM instance
-                has stopped properly configuring via DHCP. Lastly, it sets up iptables rules to
-                allow the VMs to communicate with the outside world and contact a special metadata
-                server to retrieve information from the cloud.</para>
+                so it can communicate with nova-network. You must also set the
+                "--flat_network_bridge" setting to the name of the bridge (no default is set for
+                it). The nova-network service will track leases and releases in the database so it
+                knows if a VM instance has stopped properly configuring via DHCP. Lastly, it sets up
+                iptables rules to allow the VMs to communicate with the outside world and contact a
+                special metadata server to retrieve information from the cloud.</para>
             <para>Compute hosts in the FlatDHCP model are responsible for bringing up a matching
                 bridge and bridging the VM tap devices into the same ethernet device that the
                 network host is on. The compute hosts do not need an IP address on the VM network,
@@ -204,33 +209,40 @@ iface br100 inet dhcp
                     </figure>
             <para>FlatDHCP doesn't create VLANs, it creates a bridge. This bridge works just fine on
                 a single host, but when there are multiple hosts, traffic needs a way to get out of
-                the bridge onto a physical interface. Be careful when setting up --flat_interface,
-                if you specify an interface that already has an IP it will break and if this is the
-                interface you are connecting through with SSH, you cannot fix it unless you have
-                ipmi/console access. In FlatDHCP mode, the setting for --network_size should be
-                number of IPs in the entire fixed range. If you are doing a /12 in CIDR notation,
-                then this number would be 2^20 or 1,048,576 IP addresses. That said, it will take a
-                very long time for you to create your initial network, as an entry for each IP will
-                be created in the database. </para>
+                the bridge onto a physical interface. </para>
+            <para>Be careful when setting up "--flat_interface", if you specify an interface that
+                already has an IP it will break and if this is the interface you are connecting
+                through with SSH, you cannot fix it unless you have ipmi/console access. In FlatDHCP
+                mode, the setting for "--network_size" should be number of IPs in the entire fixed
+                range. If you are doing a /12 in CIDR notation, then this number would be 2^20 or
+                1,048,576 IP addresses. That said, it will take a very long time for you to create
+                your initial network, as an entry for each IP will be created in the database. </para>
             <para>If you have an unused interface on your hosts that has connectivity with no IP
                 address, you can simply tell FlatDHCP to bridge into the interface by specifying
-                --flat_interface=&lt;interface> in your flagfile. The network host will
+                "--flat_interface=&lt;interface>" in your flagfile. The network host will
                 automatically add the gateway ip to this bridge. You can also add the interface to
                 br100 manually and not set flat_interface. If this is the case for you, edit your
                 nova.conf file to contain the following lines: </para>
             <para>
-                <literallayout>--dhcpbridge_flagfile=/etc/nova/nova.conf
+                <programlisting>
+--dhcpbridge_flagfile=/etc/nova/nova.conf
 --dhcpbridge=/usr/bin/nova-dhcpbridge
 --network_manager=nova.network.manager.FlatDHCPManager
 --flat_network_dhcp_start=10.0.0.2
 --flat_network_bridge=br100
 --flat_interface=eth2
 --flat_injected=False
---public_interface=eth0</literallayout>
+--public_interface=eth0
+                </programlisting>
             </para>
             <para>Integrate your network interfaces to match this configuration.</para></section>
-        <section xml:id="outbound-traffic-flow-with-any-flat-networking"><title>Outbound Traffic Flow with Any Flat Networking</title><para>In any set up with FlatNetworking, the host with nova-network on it is responsible for forwarding traffic from the private network configured with the {{--fixed_range=...} directive in nova.conf. This host needs to have br100 configured and talking to any other nodes that are hosting VMs. With either of the Flat Networking options, the default gateway for the virtual machines is set to the host which is running nova-network.</para>
-            <para>When a virtual machine sends traffic out to the public networks, it sends it first to its default gateway, which is where nova-network is configured. </para>
+        <section xml:id="outbound-traffic-flow-with-any-flat-networking"><title>Outbound Traffic Flow with Any Flat Networking</title>
+            <para>
+                In any set up with FlatNetworking, the host with nova-network on it is responsible for forwarding traffic from the private network configured with the "--fixed_range=..." directive in nova.conf. This host needs to have br100 configured and talking to any other nodes that are hosting VMs. With either of the Flat Networking options, the default gateway for the virtual machines is set to the host which is running nova-network.
+            </para>
+            <para>
+                When a virtual machine sends traffic out to the public networks, it sends it first to its default gateway, which is where nova-network is configured.
+            </para>
             <figure>
                 <title>Single adaptor hosts, first route</title>
                 <mediaobject>
@@ -298,7 +310,7 @@ nova-manage --flagfile=/etc/nova/nova.conf network create private 10.1.174.0/24 
                 <para>Log in to the nova database to determine the network ID assigned to each VLAN:</para>    
                     <literallayout class="monospaced">select id,cidr from networks;</literallayout>
                     <para>Update the DB to match your network settings. The following script will generate SQL based on the predetermined settings for this example. <emphasis>You will need to modify this database update to fit your environment.</emphasis></para>   
-                    <literallayout class="monospaced">
+                    <programlisting>
 if [ -z $1 ]; then
   echo "You need to specify the vlan to modify"
 fi
@@ -316,8 +328,8 @@ update networks set bridge = 'br_$VLAN' where id = $ID;
 update networks set gateway = '10.1.$VLAN.7' where id = $ID;
 update networks set dhcp_start = '10.1.$VLAN.8' where id = $ID;
 update fixed_ips set reserved = 1 where address in ('10.1.$VLAN.1','10.1.$VLAN.2','10.1.$VLAN.3','10.1.$VLAN.4','10.1.$VLAN.5','10.1.$VLAN.6','10.1.$VLAN.7');
-__EOF_</literallayout>
-                    
+__EOF_
+                    </programlisting>
                     <para>After verifying that the above SQL will work for your environment, run it against the nova database, once for every VLAN you have in the environment.</para>
                     
                     <para>Next, create a project manager for the Compute project:</para>
@@ -374,38 +386,25 @@ brctl delbr br_NNN</literallayout>
                 connection is renegotiated (every hour). </para>
             <section xml:id="creating-a-cloudpipe-image">
                 <title>Creating a Cloudpipe Image</title>
-                <para> Making a cloudpipe image is relatively easy. </para>
-                <itemizedlist>
-                    <listitem>
-                        <para> # install openvpn on a base ubuntu image. </para>
-                    </listitem>
-                    <listitem>
-                        <para># set up a server.conf.template in /etc/openvpn/</para>
-                    </listitem>
-                    <listitem>
-                        <para> # set up.sh in /etc/openvpn/ </para>
-                    </listitem>
-                    <listitem>
-                        <para> # set down.sh in /etc/openvpn/ </para>
-                    </listitem>
-                    <listitem>
-                        <para> # download and run the payload on boot from /etc/rc.local </para>
-                    </listitem>
-                    <listitem>
-                        <para> # setup /etc/network/interfaces </para>
-                    </listitem>
-                    <listitem>
-                        <para> # register the image and set the image id in your flagfile: </para>
+                <para>
+                    Making a cloudpipe image is relatively easy.
+                </para>
+                <itemizedlist><listitem><para>install openvpn on a base ubuntu image. </para></listitem>
+                    <listitem><para>set up a server.conf.template in /etc/openvpn/</para></listitem>
+                    <listitem><para>set up.sh in /etc/openvpn/ </para></listitem>
+                    <listitem><para>set down.sh in /etc/openvpn/ </para></listitem>
+                    <listitem><para>download and run the payload on boot from /etc/rc.local</para></listitem>
+                    <listitem><para>setup /etc/network/interfaces </para></listitem>
+                    <listitem><para>register the image and set the image id in your flagfile: </para>
                         <literallayout class="monospaced">
 --vpn_image_id=ami-xxxxxxxx
-</literallayout>
+                        </literallayout>
                     </listitem>
-                    <listitem>
-                        <para> # you should set a few other flags to make vpns work properly: </para>
+                    <listitem><para>you should set a few other flags to make vpns work properly: </para>
                         <literallayout class="monospaced">
 --use_project_ca
 --cnt_vpn_clients=5
-</literallayout>
+                        </literallayout>
                     </listitem>
                 </itemizedlist>
                 <para> When you use nova-manage to launch a cloudpipe for a user, it goes through
@@ -460,16 +459,16 @@ brctl delbr br_NNN</literallayout>
             <section xml:id="restarting-and-logging-into-cloudpipe-vpn">
                 <title>Restarting and Logging into the Cloudpipe VPN</title>
                 <para>You can reboot a cloudpipe vpn through the api if something goes wrong (using
-                    euca-reboot-instances for example), but if you generate a new crl, you will have
-                    to terminate it and start it again using nova-manage vpn run. The cloudpipe
+                    "nova reboot" for example), but if you generate a new crl, you will have to
+                    terminate it and start it again using nova-manage vpn run. The cloudpipe
                     instance always gets the first ip in the subnet and it can take up to 10 minutes
                     for the ip to be recovered. If you try to start the new vpn instance too soon,
-                    the instance will fail to start because of a NoMoreAddresses error. If you can’t
-                    wait 10 minutes, you can manually update the ip with something like the
+                    the instance will fail to start because of a "NoMoreAddresses" error. If you
+                    can’t wait 10 minutes, you can manually update the ip with something like the
                     following (use the right ip for the project): </para>
                 <literallayout class="monospaced">
-                euca-terminate-instances &lt;instance_id&gt;
-                    mysql nova -e "update fixed_ips set allocated=0, leased=0, instance_id=NULL where fixed_ip='10.0.0.2'"
+                nova delete &lt;instance_id&gt;
+                mysql nova -e "update fixed_ips set allocated=0, leased=0, instance_id=NULL where fixed_ip='10.0.0.2'"
             </literallayout>
                 <para>You also will need to terminate the dnsmasq running for the user (make sure
                     you use the right pid file):</para>
@@ -483,78 +482,108 @@ brctl delbr br_NNN</literallayout>
         </section></section>
     <section xml:id="enabling-ping-and-ssh-on-vms">
         <title>Enabling Ping and SSH on VMs</title>
-        <para>Be sure you enable access to your VMs by using the ‘euca-authorize’ command. Below,
+        <para>Be sure you enable access to your VMs by using the ‘secgroup-add-rule’ command. Below,
             you will find the commands to allow ‘ping’ and ‘ssh’ to your VMs: </para>
-        <para><literallayout>euca-authorize -P icmp -t -1:-1 default 
-euca-authorize -P tcp -p 22 default</literallayout>If
-            you still cannot ping or SSH your instances after issuing the ‘euca-authorize’ commands,
-            look at the number of ‘dnsmasq’ processes that are running. If you have a running
-            instance, check to see that TWO ‘dnsmasq’ processes are running. If not, perform the
-            following: <code>killall dnsmasq; service nova-network restart</code></para>
-    </section>
-    <section xml:id="associating-public-ip">
-        <title>Associating a Public IP Address</title>
-        <para>OpenStack Compute uses NAT for public IPs. If you plan to use public IP addresses for
-            your virtual instances, you must configure --public_interface=vlan100' in the nova.conf
-            file so that Nova knows where to bind public IP addresses. Restart nova-network if you
-            change nova.conf while the service is running. Also, ensure you have opened port 22 for
-            the nova network.</para>
-        <para>You must add the IP address or block of public IP addresses to the floating IP list
-            using the <code>nova-manage floating create</code> command. When you start a new virtual
-            instance, associate one of the public addresses to the new instance using the
-            euca-associate-address command.</para>
+        <para><literallayout>nova  secgroup-add-rule default icmp -1 -1 0.0.0.0/0 
+nova  secgroup-add-rule default tcp 22 22 0.0.0.0/0 </literallayout>If
+            you still cannot ping or SSH your instances after issuing the ‘nova
+            secgroup-add-rule’ commands, look at the number of ‘dnsmasq’ processes that are
+            running. If you have a running instance, check to see that TWO ‘dnsmasq’ processes
+            are running. If not, perform the following: <code>killall dnsmasq; service
+                nova-network restart</code></para></section>
+    <section xml:id="associating-public-ip"><title>Associating a Public IP Address</title>
+        <para>OpenStack Compute uses NAT for public IPs. If you plan to use public IP
+            addresses for your virtual instances, you must configure --public_interface=vlan100'
+            in the nova.conf file so that Nova knows where to bind public IP addresses. Restart
+            nova-network if you change nova.conf while the service is running. Also, ensure you
+            have opened port 22 for the nova network.</para>
+        <para>You must add the IP address or block of public IP addresses to the floating IP
+            list using the <code>nova-manage floating create</code> command. When you start a
+            new virtual instance, associate one of the public addresses to the new instance
+            using the euca-associate-address command.</para>
         <para>These are the basic overall steps and checkpoints. </para>
         <para>First, set up the public address.</para>
-        <literallayout class="monospaced">nova-manage floating create my-hostname 68.99.26.170/31
-euca-allocate-address 68.99.26.170
-euca-associate-address -i i-1 68.99.26.170</literallayout>
+        
+        <literallayout class="monospaced">nova-manage create my-hostname 68.99.26.170/31
+nova floating-ip-create 68.99.26.170
+nova add-floating-ip 1 68.99.26.170</literallayout>
+        
         <para>Make sure the security groups are open.</para>
-        <literallayout class="monospaced">root@my-hostname:~# euca-describe-groups
-GROUP admin-project default default
-PERMISSION admin-project default ALLOWS icmp -1 -1
-FROM CIDR 0.0.0.0/0
-PERMISSION admin-project default ALLOWS tcp 22 22
-FROM CIDR 0.0.0.0/0</literallayout>
+        
+        <literallayout class="monospaced">root@my-hostname:~# nova secgroup-list-rules default</literallayout>
+        <programlisting>
++-------------+-----------+---------+-----------+--------------+
+| IP Protocol | From Port | To Port |  IP Range | Source Group |
++-------------+-----------+---------+-----------+--------------+
+| icmp        | -1        | -1      | 0.0.0.0/0 |              |
+| tcp         | 22        | 22      | 0.0.0.0/0 |              |
++-------------+-----------+---------+-----------+--------------+
+                    </programlisting>
         <para>Ensure the NAT rules have been added to iptables.</para>
-        <literallayout class="monospaced">-A nova-network-OUTPUT -d 68.99.26.170/32 -j DNAT --to-destination 10.0.0.3
+        
+        <literallayout class="monospaced">
+ iptables -L -nv
+                </literallayout>
+        <programlisting>
+ -A nova-network-OUTPUT -d 68.99.26.170/32 -j DNAT --to-destination 10.0.0.3
+            </programlisting>
+        <literallayout class="monospaced">
+iptables -L -nv -t nat
+            </literallayout>
+        <programlisting>
 -A nova-network-PREROUTING -d 68.99.26.170/32 -j DNAT --to-destination10.0.0.3
--A nova-network-floating-snat -s 10.0.0.3/32 -j SNAT --to-source 68.99.26.170</literallayout>
-        <para>Check that the public address, in this example 68.99.26.170, has been added to your
-            public interface. You should see the address in the listing when you enter "ip addr" at
-            the command prompt.</para>
-        <literallayout class="monospaced">2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP qlen 1000
+-A nova-network-floating-snat -s 10.0.0.3/32 -j SNAT --to-source 68.99.26.170
+            </programlisting>
+        
+        <para>Check that the public address, in this example "68.99.26.170", has been
+            added to your public interface. You should see the address in the listing when you
+            enter "ip addr" at the command prompt.</para>
+        
+        <programlisting>
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP qlen 1000
 link/ether xx:xx:xx:17:4b:c2 brd ff:ff:ff:ff:ff:ff
 inet 13.22.194.80/24 brd 13.22.194.255 scope global eth0
 inet 68.99.26.170/32 scope global eth0
 inet6 fe80::82b:2bf:fe1:4b2/64 scope link
-valid_lft forever preferred_lft forever</literallayout>
-        <para>Note that you cannot SSH to an instance with a public IP from within the same server
-            as the routing configuration won't allow it. </para>
+valid_lft forever preferred_lft forever
+                    </programlisting>
+        <para>Note that you cannot SSH to an instance with a public IP from within the same
+            server as the routing configuration won't allow it. </para>
     </section>
-    <section xml:id="allocating-associating-ip-addresses">
-        <title>Allocating and Associating IP Addresses with Instances</title>
-        <para>You can use Euca2ools or nova-client commands to manage floating IP addresses used
-            with Flat DHCP or VLAN networking. </para>
-        <para>If you are using Keystone as your identity service and want to use euca2ools with EC2
-            credentials, you can create an admin user with <code>keystone-manage credentials add
-                admin EC2 'admin' 'secretepassword' admin</code>, get a creds zipfile for that user,
-            and then you can use euca- tools commands with the generated EC2 credentials. </para>
+    <section xml:id="allocating-associating-ip-addresses"><title>Allocating and Associating IP Addresses with Instances</title><para>You can use Euca2ools commands to manage floating IP addresses used with Flat DHCP or VLAN
+        networking. </para>
+        
         <para>To assign a reserved IP address to your project, removing it from the pool of
-            available floating IP addresses, use <code>euca-allocate-address</code>. It'll return an
-            IP address, assign it to the project you own, and remove it from the pool of available
-            floating IP addresses. </para>
-        <para>To associate the floating IP to your instance, use <code>euca-associate-address -i
-                [instance_id] [floating_ip]</code>.</para>
+            available floating IP addresses, use <code>nova floating-ip-create </code>. It'll
+            return an IP address, assign it to the project you own, and remove it from the pool
+            of available floating IP addresses. </para>
+        <para>To associate the floating IP to your instance, use <code>nova add-floating-ip
+            $server-name/id $floating-ip</code>.</para>
         <para>When you want to return the floating IP to the pool, first use
             euca-disassociate-address [floating_ip] to disassociate the IP address from your
-            instance, then use euca-release-address [floating_ip] to return the IP to the pool of
-            IPs for someone else to grab.</para>
+            instance, then use euca-deallocate-address [floating_ip] to return the IP to the
+            pool of IPs for someone else to grab.</para>
         <para>There are nova-manage commands that also help you manage the floating IPs.</para>
-        <para>nova-manage floating list - This command lists the floating IP addresses in the pool. </para>
-        <para>nova-manage floating create [hostname] [cidr] - This command creates specific floating
-            IPs for a specific network host and either a single address or a subnet. </para>
-        <para>nova-manage floating destroy [hostname] [cidr] - This command removes floating IP
-            addresses using the same parameters as the create command.</para>
+        <itemizedlist>
+            <listitem>
+                <para>
+                    nova-manage floating list - This command lists the floating IP addresses in the
+                    pool. 
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    nova-manage floating create [hostname] [cidr] - This command creates specific
+                    floating IPs for a specific network host and either a single address or a subnet. 
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    nova-manage floating destroy [hostname] [cidr] - This command removes floating IP
+                    addresses using the same parameters as the create command.
+                </para>
+            </listitem>
+        </itemizedlist>
     </section>
     <section xml:id="removing-network-from-project">
         <title>Removing a Network from a Project</title><para>You will find that you cannot remove a network that has already been associated to a project by simply deleting it. You can disassociate the project from the network with a scrub command and the project name as the final parameter:
