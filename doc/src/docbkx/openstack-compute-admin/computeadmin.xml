@@ -932,8 +932,13 @@ vgcreate nova-volumes /dev/sda5 </literallayout>
                         If you have a firewall running on it, make sure that the port 3260 (tcp)
                         accepts incoming connections. </para>
                     <para>First install the open-iscsi package on the initiators, so the
-                        compute-nodes <emphasis role="bold">only</emphasis> :
-                        <literallayout class="monospaced">apt-get install open-iscsi </literallayout><literallayout>Then on the target, which is in our case the cloud-controller, the iscsitarget package : </literallayout><literallayout>apt-get install iscsitarget </literallayout><literallayout>This package could refuse to start with a "FATAL: Module iscsi_trgt not found" error. This error is caused by the kernel which does not contain the iscsi module's source into it ; you can install the kernel modules by installing an extra pacakge : </literallayout><literallayout> apt-get install iscsitarget-dkms (the Dynamic Kernel Module Support is a framework used for created modules with non-existent sources into the current kernel)</literallayout></para>
+                        compute-nodes <emphasis role="bold">only</emphasis> : <code>apt-get install
+                            open-iscsi </code>
+                        <literallayout>Then on the target, which is in our case the cloud-controller, the iscsitarget package :                        </literallayout>
+                        <code>apt-get install iscsitarget </code>
+                        <literallayout>This package could refuse to start with a "FATAL: Module iscsi_trgt not found" error. </literallayout><literallayout>This error is caused by the kernel which does not contain the iscsi module's source into it ; you can install the kernel modules by installing an extra package : </literallayout>
+                        <code> apt-get install iscsitarget-dkms</code>
+                        <literallayout>(the Dynamic Kernel Module Support is a framework used for created modules with non-existent sources into the current kernel)</literallayout></para>
                     <para>You have to enable it so the startut script (/etc/init.d/iscsitarget) can
                         start the daemon :
                         <literallayout class="monospaced">sed -i 's/false/true/g' /etc/default/iscsitarget</literallayout>
