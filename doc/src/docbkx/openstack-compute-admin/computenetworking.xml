@@ -619,8 +619,11 @@ valid_lft forever preferred_lft forever</literallayout>
             </mediaobject>
         </figure></para>
     <para>In contrast with the earlier diagram, all the hosts in the system are running both nova-compute and nova-network. Each host does DHCP and does NAT for public traffic for the VMs running on that particular host. In this model every compute host requires a connection to the public internet and each host is also assigned an address from the VM network where it listens for dhcp traffic.</para>
-        <para>The requirements for configuring are the following: --multi_host flag must be in place for network creation and nova-network must be run on every compute host. These created multi hosts networks will send all network related commands to the host that the VM is on.
-        </para></simplesect>
+        <para>The requirements for configuring are the following: --multi_host flag must be in place
+                for network creation along the extra installation of nova-network and nova-api on
+                every compute host. The nova-api will make sure the instances will be able to get
+                the metadatas from their local nova-api server. These created multi hosts networks
+                will send all network related commands to the host that the VM is on. </para></simplesect>
     
     <simplesect><title>Future of Networking</title>
     <para>With the existing multi-nic code and the HA networking code, we have a pretty robust system with a lot of deployment options. This should be enough to provide deployers enough room to solve todays networking problems. Ultimately, we want to provide users the ability to create arbitrary networks and have real and virtual network appliances managed automatically. The efforts underway in the Quantum and Melange projects will help us reach this lofty goal, but with the current additions we should have enough flexibility to get us by until those projects can take over.</para></simplesect></section>
