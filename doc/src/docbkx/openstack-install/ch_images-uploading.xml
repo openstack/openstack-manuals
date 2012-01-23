@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="uploading-to-glance"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Uploading Images</title>
+    <para>First, download some images that are known to work with
+        OpenStack. The smallest test image is a tty testing image
+        with a username/password of root/password. You can get it
+        from http://images.ansolabs.com/tty.tgz. This is the image
+        we'll use for this walkthrough.</para>
+    <para>Create a directory to house your image files.</para>
+    <para>
+        <literallayout class="monospaced">sudo mkdir stackimages</literallayout>
+    </para>
+    <para>Download the tty image into your stackimages directory.</para>
+    <para>
+        <literallayout class="monospaced">sudo wget -c http://images.ansolabs.com/tty.tgz -O stackimages/tty.tgz</literallayout>
+    </para>
+    <para>Now expand the image.</para>
+    <literallayout class="monospaced">sudo tar -zxf stackimages/tty.tgz -C stackimages</literallayout>
+    <para>You can get a token in order to upload images using this
+        curl command. </para>
+    <para>
+        <literallayout class="monospaced">curl -d '{"auth":{"passwordCredentials":{"username": "adminUser", "password": "secretword"}}}' -H "Content-type: application/json" http://192.168.206.130:35357/v2.0/tokens | python -mjson.tool</literallayout>
+    </para>
+   
+    <para>Now add the kernel image to the Image Service with glance
+        add commands. In this case we're hard-coding the kernel_id and
+        ramdisk_id values in the third command, but for additional
+        images, you need to get the return values for the first two
+        commands to enter into the third command.  </para>
+    <para>
+        <literallayout class="monospaced">glance add -A d1819479-be8b-451d-8682-82c654502ddb name="tty-kernel" is_public=true container_format=aki disk_format=aki &lt; stackimages/aki-tty/image 
+glance add -A d1819479-be8b-451d-8682-82c654502ddb name="tty-ramdisk" is_public=true container_format=ari disk_format=ari &lt; stackimages/ari-tty/image 
+glance add -A d1819479-be8b-451d-8682-82c654502ddb name="tty" is_public=true container_format=ami disk_format=ami kernel_id=1 ramdisk_id=2 &lt; stackimages/ami-tty/image </literallayout>
+    </para>
+    
+    <para>For other images, you can get Ubuntu Oneiric (11.10) at
+        http://cloud-images.ubuntu.com/oneiric/current/oneiric-server-cloudimg-amd64-disk1.img. </para>
+    <para>You can ensure that your Image service has indexed these
+        images by using the glance CLI with an authorization
+        token:</para>
+    <literallayout class="monospaced">glance -A c9640d83-ef4f-4718-a0c2-32437a931196 index</literallayout>
+    <para>In return you should see a listing of images. Here's an
+        example.</para>
+    <literallayout class="monospaced">
+ID               Name                           Disk Format          Container Format     Size          
+---------------- ------------------------------ -------------------- -------------------- --------------
+3                tty                            ami                  ami                        25165824
+2                tty-ramdisk                    ari                  ari                         5882349
+1                tty-kernel                     aki                  aki                         4404752
+    </literallayout>
+    <para>If you see an ECONNREFUSED error in return, it means your
+        glance-registry.conf file is incorrectly configured.
+        Double-check and compare to the file in the Appendix. If you
+        get a 401 Unauthorized error, check your environment
+        variables.</para>
+</chapter>

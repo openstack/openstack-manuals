@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="compute-minimum-configuration-settings"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Configuring OpenStack Compute</title>
+    <para>Many of the settings for Compute services are stored in
+        the /etc/nova/nova.conf file by default. Here are the
+        relevant settings for getting a minimal install running.
+        Refer to the OpenStack Compute Admin Manual for guidance
+        on more configuration options.</para>
+    
+    <para>The packages automatically do these steps for a user
+        named nova, but if you are installing as another user you
+        should ensure that the nova.conf file should have its
+        owner set to root:nova, and mode set to 0640, since the
+        file contains your MySQL server’s username and password.
+        This packaged install ensures that the nova user belongs
+        to the nova group and that the .conf file permissions are
+        set, but here are the manual commands.</para>
+    <literallayout class="monospaced">sudo groupadd nova
+sudo usermod -g nova nova
+sudo chown -R root:nova /etc/nova
+sudo chmod 640 /etc/nova/nova.conf</literallayout>
+    <para>The hypervisor is set either by editing
+        /etc/nova/nova.conf or referring to nova-compute.conf in
+        the nova.conf file. The hypervisor defaults to "kvm", but
+        if you are working within a VM already, switch to "qemu"
+        on the --libvirt_type= line. </para>
+    <para>Ensure the database connection defines your backend data
+        store by adding a --sql_connection line to nova.conf:
+        "--sql_connection=mysql://[ user ]:[ pass ]@[ primary IP
+        ]/[ db name ]", such as
+        --sql_connection=mysql://nova:yourpassword@192.168.206.130/nova.</para>
+    <para>Add these settings to /etc/nova/nova.conf for the
+        network configuration assumptions made for this
+        installation scenario. You can place comments in the
+        nova.conf file by entering a new line with a # sign at the
+        beginning of the line. To see a listing of all possible
+        flag settings, see the output of running /bin/nova-api
+        --help.</para>                
+    <literallayout class="monospaced">--network_manager=nova.network.manager.FlatDHCPManager
+--fixed_range=192.168.100.0/24
+--flat_network_dhcp_start=192.168.100.2
+--public_interface=eth0
+--flat_interface=eth0
+--flat_network_bridge=br100</literallayout>
+    <para>Here is an example nova.conf with commented
+        sections:</para>
+    <para><literallayout class="monospaced"><xi:include parse="text" href="samples/nova.conf"/>
+</literallayout></para>
+    <para>You also need to configure the api-paste.ini file to
+        enable Keystone as the Identity service. An example
+        <link linkend="api-paste-ini-file">api-paste.ini file</link> is included in the Appendix. Update the
+        /etc/nova/api-paste.ini file according to the sample
+        file.</para>
+    <para>Restart the nova- services prior to running db
+        sync.</para>
+    <para>
+        <literallayout class="monospaced">sudo restart nova-api
+sudo restart nova-compute
+sudo restart nova-network
+sudo restart nova-scheduler
+sudo restart nova-vncproxy</literallayout>
+    </para>
+</section>

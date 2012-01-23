@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="compute-assumptions-installation"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Packaged Compute Installation with the Image and Identity
+        Services</title>
+    <para>The manual installation involves installing OpenStack
+        Compute from packages on Ubuntu 11.04 or 11.10 as a user named
+        nova with root permission. This guide is written with all
+        commands prefixed with sudo.</para>
+    <para>Our assumptions for this installation are that you have a
+        base Ubuntu Server 11.04 or 11.10 ready. For this
+        installation, use the following assumptions:</para>
+    <para>
+        <itemizedlist>
+            <listitem><para>Installing with a user with sudo access named "nova" (though you can use any username).</para></listitem>
+            <listitem>
+                <para>Ensure that the server can resolve its
+                    own hostname, otherwise RabbitMQ cannot
+                    start.</para>
+            </listitem>
+            <listitem>
+                <para>You need an LVM volume group called
+                    "nova-volumes" to provide persistent
+                    storage to guest VMs. Either create this
+                    during the installation or leave some free
+                    space to create it prior to installing
+                    nova services.</para>
+            </listitem>
+            <listitem>
+                <para>192.168.206.130 is the primary IP for our host
+                    on eth0.</para>
+            </listitem>
+            <listitem>
+                <para>192.168.100.0/24 as the fixed range for our
+                    guest VMs, connected to the host via br100.</para>
+            </listitem>
+            <listitem>
+                <para>FlatDHCP with a single network interface.</para>
+            </listitem>
+            <listitem>
+                <para>KVM or QEMU as the hypervisor.</para>
+            </listitem>
+            <listitem>
+                <para>Ensure the operating system is
+                    up-to-date by running
+                    <command>apt-get
+                        update</command> and
+                    <command>apt-get upgrade</command>
+                    prior to the installation.</para>
+            </listitem>
+        </itemizedlist>
+    </para>
+    <para>This installation process walks through installing a cloud
+        controller node and a compute node using a set of packages
+        that are known to work with each other. The cloud controller
+        node contains all the nova- services including the API server
+        and the database server. The compute node needs to run only
+        the nova-compute service. You only need one nova-network
+        service running in a multi-node install. You cannot install
+        nova-objectstore on a different machine from nova-compute,
+        although production-style deployments will use an Image
+        Service (Glance) server for virtual images so you do not need
+        to install nova-objectstore when using the Image
+        Service.</para>
+    </section>
+    

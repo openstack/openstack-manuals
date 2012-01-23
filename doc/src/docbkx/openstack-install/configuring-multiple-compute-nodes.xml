@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="configuring-multiple-compute-nodes"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+        <title>Configuring Multiple Compute Nodes</title>
+    <para>If your goal is to split your VM load across more than
+        one server, you can connect an additional nova-compute
+        node to a cloud controller node. This configuring can be
+        reproduced on multiple compute servers to start building a
+        true multi-node OpenStack Compute cluster. </para>
+    <para>To build out and scale the Compute platform, you spread
+        out services amongst many servers. While there are
+        additional ways to accomplish the build-out, this section
+        describes adding compute nodes, and the service we are
+        scaling out is called 'nova-compute.'</para>
+    <para>For a multi-node install you only make changes to
+        nova.conf and copy it to additional compute nodes. Ensure
+        each nova.conf file points to the correct IP addresses for
+        the respective services. Customize the nova.conf example
+        below to match your environment. The CC_ADDR is the Cloud
+        Controller IP Address. </para>
+    <programlisting>
+--dhcpbridge_flagfile=/etc/nova/nova.conf
+--dhcpbridge=/usr/bin/nova-dhcpbridge
+--flat_network_bridge=br100
+--logdir=/var/log/nova
+--state_path=/var/lib/nova
+--verbose
+--sql_connection=mysql://root:nova@CC_ADDR/nova
+--s3_host=CC_ADDR
+--rabbit_host=CC_ADDR
+--ec2_api=CC_ADDR
+--ec2_url=http://CC_ADDR:8773/services/Cloud
+--network_manager=nova.network.manager.FlatManager
+--fixed_range= network/CIDR
+--network_size=number of addresses
+                  </programlisting>
+    <para> By default, Nova sets the bridge device based on the
+        setting in --flat_network_bridge. Now you can edit
+        /etc/network/interfaces with the following template,
+        updated with your IP information. </para>
+    <programlisting>
+# The loopback network interface
+auto lo
+    iface lo inet loopback
+
+# The primary network interface
+auto br100
+iface br100 inet static
+    bridge_ports    eth0
+    bridge_stp      off
+    bridge_maxwait  0
+    bridge_fd       0
+    address xxx.xxx.xxx.xxx
+    netmask xxx.xxx.xxx.xxx
+    network xxx.xxx.xxx.xxx
+    broadcast xxx.xxx.xxx.xxx
+    gateway xxx.xxx.xxx.xxx
+    # dns-* options are implemented by the resolvconf package, if installed
+    dns-nameservers xxx.xxx.xxx.xxx
+</programlisting>
+    <para>Restart networking:</para>
+    <literallayout class="monospaced">/etc/init.d/networking restart</literallayout>
+    <para>With nova.conf updated and networking set, configuration
+        is nearly complete. First, bounce the relevant services to
+        take the latest updates:</para>
+    <literallayout class="monospaced">restart libvirt-bin; service nova-compute restart</literallayout>
+    <para>To avoid issues with KVM and permissions with Nova, run
+        the following commands to ensure we have VM's that are
+        running optimally:</para>
+    <literallayout class="monospaced">
+chgrp kvm /dev/kvm
+chmod g+rwx /dev/kvm
+</literallayout>
+    <para>If you want to use the 10.04 Ubuntu Enterprise Cloud
+        images that are readily available at
+        http://uec-images.ubuntu.com/releases/10.04/release/, you
+        may run into delays with booting. Any server that does not
+        have nova-api running on it needs this iptables entry so
+        that UEC images can get metadata info. On compute nodes,
+        configure the iptables with this next step:</para>
+    <literallayout class="monospaced">iptables -t nat -A PREROUTING -d 169.254.169.254/32 -p tcp -m tcp --dport 80 -j DNAT --to-destination $NOVA_API_IP:8773</literallayout>
+    <para>Lastly, confirm that your compute node is talking to
+        your cloud controller. From the cloud controller, run this
+        database query:</para>
+    <literallayout class="monospaced">mysql -u$MYSQL_USER -p$MYSQL_PASS nova -e 'select * from services;'</literallayout>
+    <para>In return, you should see something similar to
+        this:</para>
+    <programlisting>
++---------------------+---------------------+------------+---------+----+----------+----------------+-----------+--------------+----------+-------------------+
+| created_at          | updated_at          | deleted_at | deleted | id | host     | binary         | topic     | report_count | disabled | availability_zone |
++---------------------+---------------------+------------+---------+----+----------+----------------+-----------+--------------+----------+-------------------+
+| 2011-01-28 22:52:46 | 2011-02-03 06:55:48 | NULL       |       0 |  1 | osdemo02 | nova-network   | network   |        46064 |        0 | nova              |
+| 2011-01-28 22:52:48 | 2011-02-03 06:55:57 | NULL       |       0 |  2 | osdemo02 | nova-compute   | compute   |        46056 |        0 | nova              |
+| 2011-01-28 22:52:52 | 2011-02-03 06:55:50 | NULL       |       0 |  3 | osdemo02 | nova-scheduler | scheduler |        46065 |        0 | nova              |
+| 2011-01-29 23:49:29 | 2011-02-03 06:54:26 | NULL       |       0 |  4 | osdemo01 | nova-compute   | compute   |        37050 |        0 | nova              |
+| 2011-01-30 23:42:24 | 2011-02-03 06:55:44 | NULL       |       0 |  9 | osdemo04 | nova-compute   | compute   |        28484 |        0 | nova              |
+| 2011-01-30 21:27:28 | 2011-02-03 06:54:23 | NULL       |       0 |  8 | osdemo05 | nova-compute   | compute   |        29284 |        0 | nova              |
++---------------------+---------------------+------------+---------+----+----------+----------------+-----------+--------------+----------+-------------------+
+            </programlisting>
+    <para>You can see that 'osdemo0{1,2,4,5} are all running
+        'nova-compute.' When you start spinning up instances, they
+        will allocate on any node that is running nova-compute
+        from this list.</para>
+
+</section>

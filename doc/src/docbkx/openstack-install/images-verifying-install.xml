@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="images-verifying-install"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">            
+            <title>Verifying the Image Service Installation</title>
+    <para>You can find the version of the installation by using the
+        glance --version command:</para>
+            <literallayout class="monospaced">glance --version</literallayout>
+        
+        <para>The version number 2011.3 corresponds with the Diablo
+        release.</para>
+    
+    <literallayout class="monospaced">glance 2011.3</literallayout>
+    <para>Another verification at this point for the Glance
+        installation working with Keystone is to issue a glance
+        details command with a token from Keystone assigned to the
+        adminUser. The one below is just an example. You use a curl
+        command to get a token for the adminUser. If you get no errors
+        (and no response) it means that the token is accepted by
+        Keystone and no images are yet loaded to Glance. If you get a
+        "NotAuthorized" error, check your configuration files, check
+        your environment variables, and ensure the Keystone endpoints
+        are accurate with "sudo keystone-manage endpointTemplates
+        list".</para>
+    <literallayout class="monospaced">glance details -A d1819479-be8b-451d-8682-82c654502ddb</literallayout>
+    </section>

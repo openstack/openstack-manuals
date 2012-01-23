@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="scripted-ubuntu-installation"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Compute Scripted Installations</title>
+    <para>You can download a script for a standalone install
+        for proof-of-concept, learning, or for development
+        purposes for Ubuntu 11.04 at <link
+            xlink:href="http://devstack.org"
+            >https://devstack.org</link>. This is not a
+        permanent installation.</para>
+    
+    <orderedlist>
+        <listitem><para>Install Ubuntu 11.04 (Natty):</para> <para>In order to correctly install all the dependencies, we assume a specific version of Ubuntu to
+            make it as easy as possible. OpenStack works on other flavors of Linux (and
+            some folks even run it on Windows!) We recommend using a minimal install of
+            Ubuntu server in a VM if this is your first time.</para></listitem>
+        
+        
+        
+        <listitem><para>Download DevStack:</para>
+            <literallayout class="monospaced">git clone git://github.com/cloudbuilders/devstack.git</literallayout>
+            <para>The devstack repo contains a script that
+                installs OpenStack Compute with the Image
+                Service and the Identity Service and OpenStack
+                Object Storage. It offers templates for
+                configuration files plus data scripts. </para></listitem>
+        
+        
+        
+        <listitem><para>Start the install:</para><literallayout class="monospaced">cd devstack; ./stack.sh</literallayout><para>It takes a few minutes, we recommend <link xlink:href="http://devstack.org/stack.sh.html"
+            >reading the well-documented script</link> while it is building to learn
+            more about what is going on. </para>
+        </listitem>
+        
+    </orderedlist>
+    <para>You can also install a more permanent deployment using an upstart script after running the devstack script.</para> 
+    <para>Once you have tested stack.sh and tailored it to
+        your system, you can convert the installation into
+        upstart services. The additions with this script are
+        the ability to run services like daemons instead of in
+        screens, to store logs in files and offer an automatic
+        start up after a reboot.</para>
+    
+    <para>It works with glance- services, nova- services,
+        novnc, and keystone, but not with quantum or swift as
+        of November 22 2011. Here are the basic steps.</para>
+    <orderedlist>
+        <listitem><para>Ensure you've run ./stack.sh with all the configuration you need for your systems.</para></listitem>
+        <listitem>
+            <para>Download the upstart scripts:</para>
+            <literallayout class="monospaced">git clone git://github.com/maoy/devstack/tree/upstart.git</literallayout>
+            <para>The devstack repo contains a script that installs OpenStack Compute, the Image
+                Service and the Identity Service and offers templates for configuration
+                files plus data scripts. </para></listitem>
+        <listitem><para>Run the upstart install script.</para>
+            <literallayout>./upstart.sh install</literallayout></listitem>
+    </orderedlist>
+    <para>Now the services are installed. To use them, either
+        reboot to get rid of the services started by stack.sh,
+        and automatically start those services, or do killall
+        screen, then: </para><literallayout class="monospaced">./upstart.sh start</literallayout>
+</section>

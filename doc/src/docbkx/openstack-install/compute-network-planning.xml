@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="compute-network-planning"    
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"><title>Compute Network Planning</title>
+    <para>For both conserving network resources and ensuring that
+        network administrators understand the needs for networks and
+        public IP addresses for accessing the APIs and VMs as
+        necessary, this section offers recommendations and required
+        minimum sizes. Throughput of at least 1000 Mbps is suggested.
+        This walkthrough shows network configurations for a single
+        server.</para>
+    <para>For OpenStack Compute, networking is configured on
+        multi-node installations between the physical machines on
+        a single subnet. For networking between virtual machine
+        instances, three network options are available: flat,
+        DHCP, and VLAN. Two NICs (Network Interface Cards) are
+        recommended on the server running nova-network.</para>
+    <para>Management Network (RFC1918 IP Range, not publicly
+        routable): This network is utilized for all inter-server
+        communications within the cloud infrastructure. Recommended
+        size: 255 IPs (CIDR /24)</para>
+    <para>Public Network (Publicly routable IP range): This network is
+        utilized for providing Public IP accessibility to the API
+        endpoints within the cloud infrastructure. Minimum size: 8 IPs
+        (CIDR /29)</para>
+    <para>VM Network (RFC1918 IP Range, not publicly routable): This
+        network is utilized for providing primary IP addresses to the
+        cloud instances. Recommended size: 1024 IPs (CIDR /22)</para>
+    <para>Floating IP network (Publicly routable IP Range): This
+        network is utilized for providing Public IP accessibility to
+        selected cloud instances. Minimum size: 16 IPs (CIDR
+        /28)</para></section>
