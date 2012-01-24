@@ -262,10 +262,12 @@
                 <para>After downloading the source tar.gz file, install dependencies using pip,
                     unarchive the files, and cd into the directory, and install.  For example, on
                     Ubuntu: </para>
-                <literallayout class="monospaced">sudo apt-get install python-pip 
-sudo pip install -r tools/pip-requires 
-tar -xzf quantum*.tar.gz
+                <literallayout class="monospaced">sudo apt-get install python-pip libxslt python-setuptools \
+    python-lxml python-virtualenv
+tar xzf quantum*.tar.gz
 cd quantum*
+sudo pip install -r tools/pip-requires
+for x in client server common; do python setup_${x}.py build; done
 sudo python setup.py install</literallayout>
                 <para>After the install, the executables "quantum-server" and "quantum" should be in
                     your path, just as if you had installed from packages.  </para>
