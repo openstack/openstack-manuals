@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="install-keystone"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Installing and Configuring the Identity Service</title>
+    
+    <para>Install the Identity service:</para>
+    <literallayout class="monospaced">sudo apt-get install keystone</literallayout>
+    <para>Install curl, a command-line tool for running REST API
+        requests:</para>
+    <literallayout class="monospaced">sudo apt-get install curl</literallayout>
+    <para>After installing, you need to delete the sqlite database it
+        creates, then change the configuration to point to the mysql
+        database. </para>
+    <para>Delete the keystone.db file created in the
+        /var/lib/keystone/
+        directory.<literallayout class="monospaced">sudo rm /var/lib/keystone/keystone.db</literallayout></para>
+    <para>Configure the production-ready backend data store. For
+        Compute you must use a SQLAlchemy-compatible database, such as
+        MySQL or PostgreSQL. This example shows MySQL.</para>
+    <para>First, install MySQL with:
+        <literallayout class="monospaced">sudo apt-get install python-mysqldb mysql-server</literallayout></para>
+    <para>During the install, you'll be prompted for the mysql root
+    password. Enter a password of your choice and verify it.</para>
+    <para>Edit /etc/mysql/my.cnf to change "bind-address" from
+        localhost (127.0.0.1) to any (0.0.0.0) and restart the mysql
+        service: </para>
+    <para>
+        <literallayout class="monospaced">sudo sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/my.cnf
+sudo service mysql restart</literallayout></para>
+    <para>For MySQL, create a MySQL database named "keystone" and a
+        MySQL user named "keystone". Grant the "keystone" user full
+        access to the "keystone" MySQL database.</para>
+    
+    <para>Start the mysql command line client by running:</para>
+    <para><literallayout class="monospaced">mysql -u root -p</literallayout></para>
+    <para>Enter the mysql root user's password when prompted.</para>
+    <para>To configure the MySQL database, create the keystone database. </para>
+    <para><literallayout class="monospaced">mysql> CREATE DATABASE keystone;</literallayout></para>
+    <para>Create a MySQL user for the newly-created keystone database that
+        has full control of the database. </para>
+    <para><literallayout class="monospaced">mysql> GRANT ALL ON keystone.* TO 'keystone'@'%' IDENTIFIED BY 'yourpassword';</literallayout></para>
+    <para>Enter quit at the mysql> prompt to exit MySQL.</para>
+    <para><literallayout class="monospaced">mysql> quit</literallayout></para>
+    <para>Edit /etc/keystone/keystone.conf to include the
+        --sql_connection to use the backend data store you just
+        created. Ensure that it is owned by root and chmod is set to
+        0644 since it contains your mysql password. (You do leave the "default_store" as sqllite, however.) </para>
+    <literallayout class="monospaced">sudo nano /etc/keystone/keystone.conf</literallayout>
+    <para>Here is an
+        example section:</para>
+        <literallayout class="monospaced">[keystone.backends.sqlalchemy]
+# SQLAlchemy connection string for the reference implementation registry
+# server. Any valid SQLAlchemy connection string is fine.
+# See: http://bit.ly/ideIpI
+sql_connection = mysql://keystone:yourpassword@192.168.206.130/keystone
+backend_entities = ['UserRoleAssociation', 'Endpoints', 'Role', 'Tenant',
+                    'User', 'Credentials', 'EndpointTemplates', 'Token',
+                    'Service']</literallayout>
+    <para>Edit /etc/keystone/keystone.conf to use the IP address and
+        ports for your environment. Here is an example keystone.conf. Ensure that the ports for keystone are correct, since the default keystone auth port changed from 5001 to 35357 
+        and the packages install a conf file with 5001 for the auth_port setting.
+        <literallayout class="monospaced"><xi:include parse="text" href="samples/keystone.conf"></xi:include></literallayout></para>
+    <para>Restart the Identity Service. </para>
+    <literallayout class="monospaced">sudo service keystone restart</literallayout>
+<para>Next, you configure the Identity Service by defining roles and
+        users. </para>
+</section>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="compute-create-network"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Creating the Network for Compute VMs</title>
+    <!--<para>To avoid confusion, you can also remove the unnecessary virtual network that libvirt creates. </para><literallayout class="monospaced">sudo virsh net-destroy default; rm  /etc/libvirt/qemu/networks/autostart/default.xml</literallayout>-->
+    <para>You must run the command that creates the network and the bridge using the br100 specified in the nova.conf file to create the network that the virtual machines
+        use. This example shows the 
+        network range using 192.168.100.0/24 as the fixed range for our guest VMs, but you can substitute the range for the network you have
+    available. We're labeling it with "private" in this case.</para>
+    <literallayout class="monospaced">nova-manage network create private --multi_host=T --fixed_range_v4=192.168.100.0/24 --num_networks=1 --network_size=256</literallayout>
+
+   
+
+</section>   

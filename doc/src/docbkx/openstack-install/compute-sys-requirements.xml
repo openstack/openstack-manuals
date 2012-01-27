@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="compute-system-requirements"    
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Compute and Image System Requirements</title>
+    <para><emphasis role="bold">Hardware</emphasis>: OpenStack
+        components are intended to run on standard hardware.
+        Recommended hardware configurations for a minimum
+        production deployment are as follows for the cloud
+        controller nodes and compute nodes for Compute and the
+        Image Service, and object, account, container, and proxy
+        servers for Object Storage. </para>
+    <table rules="all">
+        <caption>Hardware Recommendations </caption>
+        <col width="20%"/>
+        <col width="23%"/>
+        <col width="57%"/>
+        
+        <thead>
+            <tr>
+                <td>Server</td>
+                <td>Recommended Hardware</td>
+                <td>Notes</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Cloud Controller node (runs network, volume, API, scheduler and image
+                    services) </td>
+                <td>
+                    <para>Processor: 64-bit x86</para>
+                    <para>Memory: 12 GB RAM </para>
+                    <para>Disk space: 30 GB (SATA or SAS or SSD) </para>
+                    <para>Volume storage: two disks with 2 TB (SATA) for volumes attached to the
+                        compute nodes </para>
+                    <para>Network: one 1 GB Network Interface Card (NIC)</para>
+                </td>
+                <td>
+                    <para>Two NICS are recommended but not required. A quad core server with 12
+                        GB RAM would be more than sufficient for a cloud controller node.</para>
+                    <para>32-bit processors will work for the cloud controller node. </para>
+                    <para>The package repositories referred to in this
+                        guide do not contain i386 packages.</para>
+                </td>
+            </tr>
+            <tr>
+                <td>Compute nodes (runs virtual instances)</td>
+                <td>
+                    <para>Processor: 64-bit x86</para>
+                    <para>Memory: 32 GB RAM</para>
+                    <para>Disk space: 30 GB (SATA)</para>
+                    <para>Network: two 1 GB NICs</para>
+                </td>
+                <td>
+                    <para>Note that you cannot run 64-bit VM instances
+                        on a 32-bit compute node. A 64-bit compute
+                        node can run either 32- or 64-bit VMs,
+                        however. </para>
+                    <para>With 2 GB RAM you can run one m1.small instance on a node or three
+                        m1.tiny instances without memory swapping, so 2 GB RAM would be a
+                        minimum for a test-environment compute node. As an example, Rackspace
+                        Cloud Builders use 96 GB RAM for compute nodes in OpenStack
+                        deployments.</para>
+                    <para>Specifically for virtualization on certain hypervisors on the node or
+                        nodes running nova-compute, you need a x86 machine with an AMD processor
+                        with SVM extensions (also called AMD-V) or an Intel processor with VT
+                        (virtualization technology) extensions. </para>
+                    <para>For Xen-based hypervisors, the Xen wiki contains a list of compatible
+                        processors on the <link
+                            xlink:href="http://wiki.xensource.com/xenwiki/HVM_Compatible_Processors"
+                            >HVM Compatible Processors</link> page. For XenServer-compatible
+                        Intel processors, refer to the <link
+                            xlink:href="http://ark.intel.com/VTList.aspx">Intel® Virtualization
+                            Technology List</link>. </para>
+                    <para>For LXC, the VT extensions are not required.</para>
+                    <para>The packages referred to in this guide do not
+                        contain i386 packages.</para>
+                </td>
+            </tr>
+            
+        </tbody>
+    </table>
+    <para><emphasis role="bold">Operating System</emphasis>: OpenStack
+        currently has packages for the following distributions:
+        Ubuntu, RHEL, SUSE, Debian, and Fedora. These packages are
+        maintained by community members, refer to <link
+            xlink:href="http://wiki.openstack.org/Packaging"
+            >http://wiki.openstack.org/Packaging</link> for additional
+        links. This guide refers to packages from two community
+        sources: Rackspace Cloud Builder packages for Ubuntu Maverick,
+        Natty, or Oneiric and Managed IT packages for Oneiric.</para>
+    <para><emphasis role="bold">Database</emphasis>: For
+        OpenStack Compute, you need access to either a PostgreSQL
+        or MySQL database, or you can install it as part of the
+        OpenStack Compute installation process. For Object
+        Storage, the container and account servers use SQLite, and
+        you can install it as part of the installation
+        process.</para>
+    <para><emphasis role="bold">Permissions</emphasis>: You can
+        install OpenStack Compute, the Image Service, or Object
+        Storage either as root or as a user with sudo permissions
+        if you configure the sudoers file to enable all the
+        permissions. </para>
+    <para><emphasis role="bold">Network Time Protocol</emphasis>:
+        You must install a time synchronization program such as
+        NTP. For Compute, time synchronization keeps your cloud
+        controller and compute nodes talking to the same time
+        server to avoid problems scheduling VM launches on compute
+        nodes. For Object Storage, time synchronization ensure the
+        object replications are accurately updating objects when
+        needed so that the freshest content is served.</para>
+</section>

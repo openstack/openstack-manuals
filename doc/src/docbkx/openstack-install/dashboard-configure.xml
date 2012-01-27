@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="configure-dashboard"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Configuring the Dashboard</title>
+    <para>Start the mysql command line client by running:</para>
+    <para><literallayout class="monospaced">mysql -u root -p</literallayout></para>
+    <para>Enter the mysql root user's password when prompted.</para>
+    <para>To configure the MySQL database, create the dash database. </para>
+    <para><literallayout class="monospaced">mysql> CREATE DATABASE dash;</literallayout></para>
+    <para>Create a MySQL user for the newly-created dash database that
+        has full control of the database. </para>
+    <para><literallayout class="monospaced">mysql> GRANT ALL ON dash.* TO 'dash'@'%' IDENTIFIED BY
+        'yourpassword';</literallayout></para>
+    <para>Enter quit at the mysql> prompt to exit MySQL.</para>
+    <para>After configuring the local_settings.py as shown below, you can run the syncdb command to populate this newly-created database.</para>
+    <para>Now you can configure the dashboard application by modifying
+        the local_settings.py file. With the Cloud Builders packages,
+        an example is provided that you can copy to local_settings.py
+        and then modify for your environment. </para>
+    <para>If you are using Cloud Builders packages, copy the
+        /var/lib/dash/local/local_settings.py.example file to
+        local_settings.py. If you are using Managed IT packages, edit
+        the /etc/openstack-dashboard/local_settings.py file. A full
+        example <link linkend="local-settings-py-file">local_settings.py file</link> is included in the
+        Appendix.</para>
+    <para>In the /local/local_settings.py file, change these
+        options:</para>
+     <itemizedlist><listitem><para>DATABASES: Change the database section to point to the Mysql
+                database named dash:</para>
+    <literallayout class="monospaced">DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'dash',
+        'USER': 'dash',
+        'PASSWORD': 'yourpassword',
+        'HOST': 'localhost',
+        'default-character-set': 'utf8'
+    },
+}</literallayout></listitem>
+       <listitem>
+            <para>SWIFT_ENABLED: If an Object Storage (Swift) endpoint
+                is available and configured in the Identity service
+                catalog, set SWIFT_ENABLED = True. </para>
+        </listitem>
+        <listitem>
+            <para>QUANTUM_ENABLED: For now, the Network Connection
+                (Quantum) service is enabled in local_settings.py, but
+                the project is still in incubation for Diablo and
+                should be available in the Essex release. You can set
+                QUANTUM_ENABLED = False.</para>
+        </listitem>
+        </itemizedlist>
+        <para>Run the syncdb command to initialize the database. </para>
+    <literallayout class="monospaced"># If using Cloud Builders packages, do this:
+cd /var/lib/dash
+PYTHONPATH=/var/lib/dash/ python dashboard/manage.py syncdb
+
+# If using Managed IT packages, do this:
+ /usr/share/openstack-dashboard/dashboard/manage.py syncdb </literallayout>
+    <para>As a result, you should see the following at the end of what returns:</para>
+    <literallayout class="monospaced">Installing custom SQL ...
+Installing indexes ...
+DEBUG:django.db.backends:(0.008) CREATE INDEX `django_session_c25c2c28` ON `django_session` (`expire_date`);; args=()
+No fixtures found.
+    </literallayout>
+    <para>If you want to avoid a warning when restarting apache2, create a blackhole directory in the dashboard directory like so:</para>
+    <literallayout class="monospaced">sudo mkdir -p /var/lib/dash/.blackhole</literallayout>
+   <para>Restart Apache to pick up the default site and symbolic link settings.</para>
+    <literallayout class="monospaced">sudo /etc/init.d/apache2 restart</literallayout>
+    <para>Restart the nova-api service to ensure the API server can
+        connect to the Dashboard and to avoid an error displayed in
+        the dashboard. </para>
+    <literallayout class="monospaced">sudo restart nova-api</literallayout>
+</section>

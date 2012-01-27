@@ -73,13 +73,21 @@
             With that brief introduction, let’s delve into a conceptual architecture and then
             examine how OpenStack Compute could map to it. </para>
         <section xml:id="cloud-provider-conceptual-architecture">
-            <info><author><personname><firstname>Ken</firstname><lineage>Pepple</lineage></personname></author><title>Cloud Provider Conceptual Architecture</title></info><para>Imagine that we are going to build our own IaaS cloud and offer it to customers. To achieve this, we would need to provide several high level features:</para><orderedlist><listitem><para>Allow application owners to register for our cloud services, view their usage and see their bill (basic customer relations management functionality)</para></listitem><listitem><para>Allow Developers/DevOps folks to create and store custom images for their applications (basic build-time functionality)</para></listitem><listitem><para>Allow DevOps/Developers to launch, monitor and terminate instances (basic run-time functionality)</para></listitem><listitem><para>Allow the Cloud Operator to configure and operate the cloud infrastructure</para></listitem></orderedlist><para>While there are certainly many, many other features that we would need to offer (especially if we were to follow are more complete industry framework like <link xlink:href="http://www.tmforum.org/BusinessProcessFramework/1647/home.html">eTOM</link>), these four get to the very heart of providing IaaS. Now assuming that you agree with these four top level features, you might put together a conceptual architecture that looks something like this:</para>
+            <info><author><personname><firstname>Ken</firstname><lineage>Pepple</lineage></personname></author><title>Cloud Provider Conceptual Architecture</title></info><para>Imagine that we are going to build our own IaaS cloud and offer it to customers. To achieve this, we would need to provide several high level features:</para><orderedlist><listitem><para>Allow application owners to register for our cloud services, view their usage and see their bill (basic customer relations management functionality)</para></listitem><listitem><para>Allow Developers/DevOps folks to create and store custom images for their applications (basic build-time functionality)</para></listitem><listitem><para>Allow DevOps/Developers to launch, monitor and terminate instances (basic run-time functionality)</para></listitem><listitem><para>Allow the Cloud Operator to configure and operate the cloud infrastructure</para></listitem></orderedlist><para>While there are certainly many, many other features that we
+                would need to offer (especially if we were to follow a
+                more complete industry framework like <link
+                    xlink:href="http://www.tmforum.org/BusinessProcessFramework/1647/home.html"
+                    >eTOM</link>), these four get to the very heart of
+                providing IaaS. Now assuming that you agree with these
+                four top level features, you might put together a
+                conceptual architecture that looks something like
+                this:</para>
                 <informalfigure><mediaobject><imageobject><imagedata scale="70" fileref="figures/nova-cactus-conceptual.png"/></imageobject></mediaobject></informalfigure>
                 <para>In this model, I’ve imagined four sets of users (developers, devops, owners and operators)
                 that need to interact with the cloud and then separated out the functionality needed
                 for each. From there, I’ve followed a pretty common tiered approach to the
                 architecture (presentation, logic and resources) with two orthogonal areas
-                (integration and management). Let’s explore each a little further: </para><itemizedlist><listitem><para>As with presentation layers in more typical application architectures, components here interact with users to accept and present information. In this layer, you will find web portals to provide graphical interfaces for non-developers and API endpoints for developers. For more advanced architectures, you might find load balancing, console proxies, security and naming services present here also.</para></listitem><listitem><para>The logic tier would provide the intelligence and control functionality for our cloud. This tier would house orchestration (workflow for complex tasks), scheduling (determining mapping of jobs to resources), policy (quotas and such) , image registry (metadata about instance images), logging (events and metering). </para></listitem><listitem><para>There will need to integration functions within the architecture. It is assumed that most service providers will already have a customer identity and billing systems. Any cloud architecture would need to integrate with these systems.</para></listitem><listitem><para>As with any complex environment, we will need a management tier to operate the environment. This should include an API to access the cloud administration features as well as some forms of monitoring. It is likely that the monitoring functionality will take the form of integration into an existing tool. While I’ve highlighted monitoring and an admin API for our fictional provider, in a more complete architecture you would see a vast array of operational support functions like provisioning and configuration management.</para></listitem><listitem><para>Finally, since this is a compute cloud, we will need actual compute, network and storage resources to provide to our customers. This tier provides these services, whether they be servers, network switches, network attached storage or other resources.</para></listitem></itemizedlist><para>With this model in place, let’s shift gears and look at OpenStack Compute’s logical
+                (integration and management). Let’s explore each a little further: </para><itemizedlist><listitem><para>As with presentation layers in more typical application architectures, components here interact with users to accept and present information. In this layer, you will find web portals to provide graphical interfaces for non-developers and API endpoints for developers. For more advanced architectures, you might find load balancing, console proxies, security and naming services present here also.</para></listitem><listitem><para>The logic tier would provide the intelligence and control functionality for our cloud. This tier would house orchestration (workflow for complex tasks), scheduling (determining mapping of jobs to resources), policy (quotas and such) , image registry (metadata about instance images), logging (events and metering). </para></listitem><listitem><para>There will need to be integration functions within the architecture. It is assumed that most service providers will already have a customer identity and billing systems. Any cloud architecture would need to integrate with these systems.</para></listitem><listitem><para>As with any complex environment, we will need a management tier to operate the environment. This should include an API to access the cloud administration features as well as some forms of monitoring. It is likely that the monitoring functionality will take the form of integration into an existing tool. While I’ve highlighted monitoring and an admin API for our fictional provider, in a more complete architecture you would see a vast array of operational support functions like provisioning and configuration management.</para></listitem><listitem><para>Finally, since this is a compute cloud, we will need actual compute, network and storage resources to provide to our customers. This tier provides these services, whether they be servers, network switches, network attached storage or other resources.</para></listitem></itemizedlist><para>With this model in place, let’s shift gears and look at OpenStack Compute’s logical
                     architecture.</para></section><section xml:id="openstack-nova-logical-architecture"><title>OpenStack Compute Logical Architecture</title><para>Now that we’ve looked at a proposed conceptual architecture, let’s see how OpenStack Compute
                 is logically architected. At the time of this writing, Cactus was the newest release
                 (which means if you are viewing this after around July 2011, this may be out of
@@ -155,7 +163,7 @@
                         (which are supported) to quality of service (QoS) to privacy controls can
                         fall under this. I’ve given OpenStack Nova partial coverage here, but that
                         might vary depending on the intricacies of the providers needs. For the
-                        record, the Catus release of OpenStack Compute provides quotas for instances
+                        record, the Cactus release of OpenStack Compute provides quotas for instances
                         (number and cores used, volumes (size and number), floating IP addresses and
                         metadata.</para></listitem><listitem><para>Scheduling within OpenStack Compute is fairly rudimentary for larger installations today. The
                         pluggable scheduler supports chance (random host assignment), simple (least
@@ -221,15 +229,19 @@
         <para>Clouds can also be described as hybrid. A hybrid cloud can be a deployment model, as a
             composition of both public and private clouds, or a hybrid model for cloud computing may
             involve both virtual and physical servers. </para>
-        <para>What have people done with cloud computing? Cloud computing can help with large-scale
-            computing needs or can lead consolidation efforts by virtualizing servers to make more
-            use of existing hardware and potentially release old hardware from service. People also
-            use cloud computing for collaboration because of its high availability through networked
-            computers. Productivity suites for word processing, number crunching, and email
-            communications, and more are also available through cloud computing. Cloud computing
-            also avails additional storage to the cloud user, avoiding the need for additional hard
-            drives on each users's desktop and enabling access to huge data storage capacity online
-            in the cloud. </para>
+        <para>What have people done with cloud computing? Cloud
+            computing can help with large-scale computing needs or can
+            lead consolidation efforts by virtualizing servers to make
+            more use of existing hardware and potentially release old
+            hardware from service. People also use cloud computing for
+            collaboration because of its high availability through
+            networked computers. Productivity suites for word
+            processing, number crunching, and email communications,
+            and more are also available through cloud computing. Cloud
+            computing also avails additional storage to the cloud
+            user, avoiding the need for additional hard drives on each
+            user's desktop and enabling access to huge data storage
+            capacity online in the cloud. </para>
         <para>For a more detailed discussion of cloud computing's essential
             characteristics and its models of service and deployment, see <link
                 xlink:href="http://www.nist.gov/itl/cloud/"

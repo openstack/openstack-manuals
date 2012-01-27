@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="example-object-storage-installation-architecture"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Example Object Storage Installation Architecture</title>
+    <itemizedlist>
+        <listitem>
+            <para>node - a host machine running one or more OpenStack
+                Object Storage services</para>
+        </listitem>
+        <listitem>
+            <para>Proxy node - node that runs Proxy services</para>
+        </listitem>
+        <listitem>
+            <para>Auth node - an optionally separate node that runs the Auth
+                service separately from the Proxy services</para>
+        </listitem>
+        <listitem>
+            <para>Storage node - node that runs Account, Container, and
+                Object services</para>
+        </listitem>
+        <listitem>
+            <para>Ring - a set of mappings of OpenStack Object Storage
+                data to physical devices</para>
+        </listitem>
+    </itemizedlist>
+    <para>To increase reliability, you may want to add additional Proxy servers
+        for performance. </para>
+    <para>This document describes each Storage node as a separate zone in the
+        ring. It is recommended to have a minimum of 5 zones. A zone is a
+        group of nodes that is as isolated as possible from other nodes
+        (separate servers, network, power, even geography). The ring
+        guarantees that every replica is stored in a separate zone. This
+        diagram shows one possible configuration for a minimal
+        installation.</para>
+    <para><inlinemediaobject>
+        <imageobject>
+            <imagedata fileref="figures/swift_install_arch.png"
+            />
+        </imageobject>
+    </inlinemediaobject></para>
+</section>

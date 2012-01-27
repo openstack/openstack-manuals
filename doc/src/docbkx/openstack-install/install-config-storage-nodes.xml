@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="installing-and-configuring-storage-nodes"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" >
+    <title>Installing and Configuring the Storage Nodes</title>
+    
+    <note><title>Note</title>
+        <para>OpenStack Object Storage should work on any modern filesystem that supports
+            Extended Attributes (XATTRS). We currently recommend XFS as it
+            demonstrated the best overall performance for the swift use case after
+            considerable testing and benchmarking at Rackspace. It is also the
+            only filesystem that has been thoroughly tested.</para>
+    </note>
+    <orderedlist>
+        
+        <listitem><para>Install Storage node packages:</para>
+            <para><literallayout class="monospaced">apt-get install swift-account swift-container swift-object xfsprogs</literallayout></para>
+        </listitem>
+        <listitem><para>For every device on the node, setup the XFS volume (/dev/sdb is used
+            as an example):</para>
+            <para><literallayout class="monospaced">fdisk /dev/sdb  (set up a single partition)
+mkfs.xfs -i size=1024 /dev/sdb1
+echo "/dev/sdb1 /srv/node/sdb1 xfs noatime,nodiratime,nobarrier,logbufs=8 0 0" &gt;&gt; /etc/fstab
+mkdir -p /srv/node/sdb1
+mount /srv/node/sdb1
+chown -R swift:swift /srv/node</literallayout></para>
+        </listitem>
+        <listitem><para>Create /etc/rsyncd.conf:</para>
+            <para><literallayout class="monospaced">uid = swift
+gid = swift
+log file = /var/log/rsyncd.log
+pid file = /var/run/rsyncd.pid
+address = &lt;STORAGE_LOCAL_NET_IP&gt;
+
+[account]
+max connections = 2
+path = /srv/node/
+read only = false
+lock file = /var/lock/account.lock
+
+[container]
+max connections = 2
+path = /srv/node/
+read only = false
+lock file = /var/lock/container.lock
+
+[object]
+max connections = 2
+path = /srv/node/
+read only = false
+lock file = /var/lock/object.lock</literallayout></para>
+        </listitem>
+        <listitem><para>Edit the following line in /etc/default/rsync:</para>
+            <para><literallayout class="monospaced">RSYNC_ENABLE = true</literallayout></para>
+            
+        </listitem>
+        <listitem><para>Start rsync daemon:</para>
+            <para><literallayout class="monospaced">service rsync start</literallayout></para>
+            
+            <note><title>Note</title>
+                <para>The rsync daemon requires no authentication, so it should be run on
+                    a local, private network.</para></note>
+            
+        </listitem>
+        <listitem><para>Create /etc/swift/account-server.conf:</para>
+            <para><literallayout class="monospaced">[DEFAULT]
+bind_ip = &lt;STORAGE_LOCAL_NET_IP&gt;
+workers = 2
+
+[pipeline:main]
+pipeline = account-server
+
+[app:account-server]
+use = egg:swift#account
+
+[account-replicator]
+
+[account-auditor]
+
+[account-reaper]</literallayout></para>
+            
+        </listitem>
+        
+        <listitem><para>Create /etc/swift/container-server.conf:</para>
+            <para><literallayout class="monospaced">[DEFAULT]
+bind_ip = &lt;STORAGE_LOCAL_NET_IP&gt;
+workers = 2
+
+[pipeline:main]
+pipeline = container-server
+
+[app:container-server]
+use = egg:swift#container
+
+[container-replicator]
+
+[container-updater]
+
+[container-auditor]</literallayout></para>
+            
+        </listitem>
+        <listitem><para>Create /etc/swift/object-server.conf:</para>
+            <para><literallayout class="monospaced">[DEFAULT]
+bind_ip = &lt;STORAGE_LOCAL_NET_IP&gt;
+workers = 2
+
+[pipeline:main]
+pipeline = object-server
+
+[app:object-server]
+use = egg:swift#object
+
+[object-replicator]
+
+[object-updater]
+
+[object-auditor]</literallayout></para>
+            
+            
+        </listitem>
+        <listitem><para>Start the storage services:</para>
+            <para><literallayout class="monospaced">swift-init object-server start
+swift-init object-replicator start
+swift-init object-updater start
+swift-init object-auditor start
+swift-init container-server start
+swift-init container-replicator start
+swift-init container-updater start
+swift-init container-auditor start
+swift-init account-server start
+swift-init account-replicator start
+swift-init account-auditor start</literallayout></para>
+            
+        </listitem>
+    </orderedlist>
+</section>

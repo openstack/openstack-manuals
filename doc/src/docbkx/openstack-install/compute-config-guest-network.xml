@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="compute-configuring-guest-network"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Pre-configuring the network</title>
+    <para>These instructions are for using the FlatDHCP networking mode with a single network interface. More complex configurations are described in the networking section, but this configuration is known to work. 
+    </para>
+    <para>First, setup your /etc/network/interfaces file with these settings: </para>
+    <itemizedlist><listitem><para>eth0: public IP, gateway</para></listitem>
+        <listitem><para>br100: no ports, stp off, fd 0, first address from --fixed_range
+            set in nova.conf files.</para></listitem></itemizedlist> 
+    <para>Here's an example:</para>
+    <para><literallayout class="monospaced"># The loopback network interface
+auto lo
+iface lo inet loopback
+
+# The primary network interface
+auto eth0
+iface eth0 inet dhcp
+                    
+# Bridge network interface for VM networks 
+auto br100 
+iface br100 inet static 
+address 192.168.100.1 
+netmask 255.255.255.0 
+bridge_stp off
+bridge_fd 0</literallayout></para>
+    <para>Also install bridge-utils:</para>
+    <literallayout class="monospaced">sudo apt-get install bridge-utils</literallayout>
+    <para>Ensure that you set up the bridge, although if you use
+        -\-flat_network_bridge=br100 in your nova.conf file, nova
+        will set up the bridge for you when you run the
+        nova-manage network command. </para>
+    <literallayout class="monospaced">sudo brctl addbr br100</literallayout>
+    <para>Lastly, restart networking to have these changes take
+        effect. (This method is deprecated but "<code>restart
+            networking</code>" doesn't always work.)</para>
+    <literallayout class="monospaced">sudo /etc/init.d/networking restart</literallayout></section>

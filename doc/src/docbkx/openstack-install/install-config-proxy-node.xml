@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="installing-and-configuring-the-proxy-node"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" >
+    <title>Installing and Configuring the Proxy Node</title>
+    <para>The proxy server takes each request and looks up locations for the
+        account, container, or object and routes the requests correctly. The
+        proxy server also handles API requests. You enable account
+        management by configuring it in the proxy-server.conf file.  </para>
+    <note>
+        <para>It is assumed that all commands are run as the root user.</para>
+    </note>
+    <orderedlist>
+        <listitem>
+            <para>Install swift-proxy service:</para>
+            <para><literallayout class="monospaced">apt-get install swift-proxy memcached</literallayout></para>
+        </listitem>
+        <listitem>
+            <para>Create self-signed cert for SSL:</para>
+            <para>
+                <literallayout class="monospaced">cd /etc/swift
+openssl req -new -x509 -nodes -out cert.crt -keyout cert.key</literallayout>
+            </para>
+        </listitem>
+        <listitem>
+            <para>Modify memcached to listen on the default interfaces.
+                Preferably this should be on a local, non-public network.
+                Edit the following line in /etc/memcached.conf,
+                changing:</para>
+            <para>
+                <literallayout class="monospaced">-l 127.0.0.1
+to
+-l &lt;PROXY_LOCAL_NET_IP&gt;</literallayout>
+            </para>
+        </listitem>
+        <listitem>
+            <para>Restart the memcached server:</para>
+            <para><literallayout class="monospaced">service memcached restart</literallayout></para>
+        </listitem>
+        <listitem>
+            <para>Create /etc/swift/proxy-server.conf:</para>
+            <para>
+                <literallayout class="monospaced">[DEFAULT]
+# Enter these next two values if using SSL certifications
+cert_file = /etc/swift/cert.crt
+key_file = /etc/swift/cert.key
+bind_port = 8080
+workers = 8
+user = swift
+
+[pipeline:main]
+# keep swauth in the line below if you plan to use swauth for authentication
+pipeline = healthcheck cache swauth proxy-server
+
+[app:proxy-server]
+use = egg:swift#proxy
+allow_account_management = true
+
+[filter:swauth]
+# the line below points to swauth as a separate project from swift
+use = egg:swauth#swauth
+# Highly recommended to change this.
+super_admin_key = swauthkey
+
+[filter:healthcheck]
+use = egg:swift#healthcheck
+
+[filter:cache]
+use = egg:swift#memcache
+memcache_servers = &lt;PROXY_LOCAL_NET_IP&gt;:11211</literallayout>
+            </para>
+            <note>
+                <para>If you run multiple memcache servers, put the multiple
+                    IP:port listings in the [filter:cache] section of
+                    the proxy-server.conf file like:
+                    <literallayout class="monospaced">10.1.2.3:11211,10.1.2.4:11211</literallayout>Only
+                    the proxy server uses memcache.</para>
+            </note>
+        </listitem>
+        <listitem>
+            <para>Create the account, container and object rings:</para>
+            <para>
+                <literallayout class="monospaced">cd /etc/swift
+swift-ring-builder account.builder create 18 3 1
+swift-ring-builder container.builder create 18 3 1
+swift-ring-builder object.builder create 18 3 1</literallayout>
+            </para>
+            
+        </listitem>
+        <listitem>
+            <para>For every storage device on each node add entries to each
+                ring:</para>
+            <para>
+                <literallayout class="monospaced">swift-ring-builder account.builder add z&lt;ZONE&gt;-&lt;STORAGE_LOCAL_NET_IP&gt;:6002/&lt;DEVICE&gt; 100
+swift-ring-builder container.builder add z&lt;ZONE&gt;-&lt;STORAGE_LOCAL_NET_IP_1&gt;:6001/&lt;DEVICE&gt; 100
+swift-ring-builder object.builder add z&lt;ZONE&gt;-&lt;STORAGE_LOCAL_NET_IP_1&gt;:6000/&lt;DEVICE&gt; 100</literallayout>
+            </para>
+            <para>For example, if you were setting up a storage node with a partition of /dev/sdb1 in Zone 1 on IP 10.0.0.1, the DEVICE would be sdb1 and the commands would look like:
+                
+                <literallayout class="monospaced">swift-ring-builder account.builder add z1-10.0.0.1:6002/sdb1 100
+swift-ring-builder container.builder add z1-10.0.0.1:6001/sdb1 100
+swift-ring-builder object.builder add z1-10.0.0.1:6000/sdb1 100</literallayout></para>
+            <note>
+                <para>Assuming there are 5 zones with 1 node per zone, ZONE
+                    should start at 1 and increment by one for each
+                    additional node.</para>
+            </note>
+        </listitem>
+        <listitem>
+            <para>Verify the ring contents for each ring:</para>
+            <para>
+                <literallayout class="monospaced">swift-ring-builder account.builder
+swift-ring-builder container.builder
+swift-ring-builder object.builder</literallayout>
+            </para>
+        </listitem>
+        <listitem>
+            <para>Rebalance the rings:</para>
+            <para>
+                <literallayout class="monospaced">swift-ring-builder account.builder rebalance
+swift-ring-builder container.builder rebalance
+swift-ring-builder object.builder rebalance</literallayout>
+            </para>
+            <note>
+                <title>Note</title>
+                <para>Rebalancing rings can take some time.</para>
+            </note>
+        </listitem>
+        <listitem>
+            <para>Copy the account.ring.gz, container.ring.gz, and
+                object.ring.gz files to each of the Proxy and Storage nodes
+                in /etc/swift.</para>
+        </listitem>
+        <listitem>
+            <para>Make sure all the config files are owned by the swift
+                user:</para>
+            <para><literallayout class="monospaced">chown -R swift:swift /etc/swift</literallayout></para>
+        </listitem>
+        <listitem>
+            <para>Start Proxy services:</para>
+            <para><literallayout class="monospaced">swift-init proxy start</literallayout></para>
+        </listitem>
+    </orderedlist>
+    
+    
+    
+</section>

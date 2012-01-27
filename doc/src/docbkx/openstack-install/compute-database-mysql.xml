@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="setting-up-sql-database-mysql"    
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Configuring the SQL Database (MySQL) on the Cloud Controller</title>
+    
+    <para>Start the mysql command line client by running:</para>
+    <para><literallayout class="monospaced">mysql -u root -p</literallayout></para>
+    <para>Enter the mysql root user's password when prompted.</para>
+    <para>To configure the MySQL database, create the nova database. </para>
+    <para><literallayout class="monospaced">mysql> CREATE DATABASE nova;</literallayout></para>
+    <para>Create a MySQL user for the newly-created nova database that
+        has full control of the database. </para>
+    <para><literallayout class="monospaced">mysql> GRANT ALL ON nova.* TO 'nova'@'%' IDENTIFIED BY
+        'yourpassword';</literallayout></para>
+    <para>Enter quit at the mysql> prompt to exit MySQL.</para>
+    <para><literallayout class="monospaced">mysql> quit</literallayout></para>
+    
+    <para>The database will be populated after running the nova-manage db sync command.</para>
+</section>

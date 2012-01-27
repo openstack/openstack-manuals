@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="configuring-openstack-object-storage"    
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+                <title>Configuring OpenStack Object Storage </title>
+                
+        <!--<section xml:id="verify-swift-installation">
+                <title>Verify the Installation</title>
+                <para>You can run these commands from the proxy server or any server with access to the Identity Service. Look for
+                        the default_swift_cluster setting in the
+                        proxy-server.conf and match the URLs
+                        (including http or https) when issuing auth
+                        commands.</para>
+                <orderedlist>
+                        <listitem>
+                                <para>Prepare the system for
+                                   authorization commands by telling
+                                   it the key and the URL for auth. </para>
+                                <para>
+                                   <literallayout class="monospaced">swauth-prep -K key -A http://&lt;AUTH_HOSTNAME&gt;:8080/auth/</literallayout>
+                                </para>
+                        </listitem>
+                        <listitem>
+                                <para>Create a user with
+                                   administrative privileges (account
+                                   = system, username = root, password
+                                   = testpass). Make sure to replace
+                                   <code>key</code> in the
+                                   swauth-add-user command below with
+                                   whatever super_admin key you
+                                   assigned in the proxy-server.conf
+                                   file above. None of the values of
+                                   account, username, or password are
+                                   special - they can be
+                                   anything.</para>
+                                <para>
+                                   <literallayout class="monospaced">swauth-add-user -K key -A http://&lt;AUTH_HOSTNAME&gt;:8080/auth/ -a system root testpass</literallayout>
+                                </para>
+                        </listitem>
+                        <listitem>
+                                <para>Get an X-Storage-Url and
+                                   X-Auth-Token:</para>
+                                <para>
+                                   <literallayout class="monospaced">curl -k -v -H 'X-Storage-User: system:root' -H 'X-Storage-Pass: testpass' http://&lt;AUTH_HOSTNAME&gt;:8080/auth/v1.0</literallayout>
+                                </para>
+                        </listitem>
+                        <listitem>
+                                <para>Check that you can HEAD the
+                                   account:</para>
+                                <para>
+                                   <literallayout class="monospaced">curl -k -v -H 'X-Auth-Token: &lt;token-from-x-auth-token-above&gt;' &lt;url-from-x-storage-url-above&gt;</literallayout>
+                                </para>
+                        </listitem>
+                        <listitem>
+                                <para>Check that the Swift Tool,
+                                   swift, works: </para>
+                                <para>
+                                   <literallayout class="monospaced">swift -A http://&lt;AUTH_HOSTNAME&gt;:8080/auth/v1.0 -U system:root -K testpass stat</literallayout>
+                                </para>
+                        </listitem>
+                        <listitem>
+                                <para>Use swift to upload a few files
+                                   named
+                                   &#8216;bigfile[1-2].tgz&#8217; to a
+                                   container named
+                                   &#8216;myfiles&#8217;:</para>
+                                <para>
+                                   <literallayout class="monospaced">swift -A http://&lt;AUTH_HOSTNAME&gt;:8080/auth/v1.0 -U system:root -K testpass upload myfiles bigfile1.tgz
+swift -A http://&lt;AUTH_HOSTNAME&gt;:8080/auth/v1.0 -U system:root -K testpass upload myfiles bigfile2.tgz</literallayout>
+                                </para>
+                        </listitem>
+                        <listitem>
+                                <para>Use swift to download all files
+                                   from the &#8216;myfiles&#8217;
+                                   container:</para>
+                                <para>
+                                   <literallayout class="monospaced">swift -A http://&lt;AUTH_HOSTNAME&gt;:8080/auth/v1.0 -U system:root -K testpass download myfiles</literallayout>
+                                </para>
+                        </listitem>
+                </orderedlist>
+        </section>-->
+        <section xml:id="adding-proxy-server">
+                <title>Adding an Additional Proxy Server</title>
+                <para>For reliability&#8217;s sake you may want to
+                        have more than one proxy server. You can set
+                        up the additional proxy node in the same
+                        manner that you set up the first proxy node
+                        but with additional configuration
+                        steps.</para>
+                <para>Once you have more than two proxies, you also
+                        want to load balance between the two, which
+                        means your storage endpoint also changes. You
+                        can select from different strategies for load
+                        balancing. For example, you could use round
+                        robin dns, or an actual load balancer (like
+                        pound) in front of the two proxies, and point
+                        your storage url to the load balancer.</para>
+                <para>See Configure the Proxy node for the initial
+                        setup, and then follow these additional
+                        steps.</para>
+                <orderedlist>
+                        <listitem>
+                                <para>Update the list of memcache
+                                   servers in
+                                   /etc/swift/proxy-server.conf for
+                                   all the added proxy servers. If you
+                                   run multiple memcache servers, use
+                                   this pattern for the multiple
+                                   IP:port listings:
+                                   <literallayout class="monospaced">10.1.2.3:11211,10.1.2.4:11211</literallayout>
+                                   in each proxy server&#8217;s conf
+                                   file.:</para>
+                                <para>
+                                   <literallayout class="monospaced">
+[filter:cache]
+use = egg:swift#memcache
+memcache_servers = &lt;PROXY_LOCAL_NET_IP&gt;:11211
+</literallayout>
+                                </para>
+                        </listitem>
+                        <listitem>
+                                <para>Change the default_cluster_url
+                                   to point to the load balanced url,
+                                   rather than the first proxy server
+                                   you created in
+                                   /etc/swift/proxy-server.conf:</para>
+                                <para>
+                                   <literallayout class="monospaced">[app:auth-server]
+use = egg:swift#auth
+default_cluster_url = https://&lt;LOAD_BALANCER_HOSTNAME&gt;/v1
+# Highly recommended to change this key to something else!
+super_admin_key = devauth</literallayout>
+                                </para>
+                        </listitem>
+                        <listitem>
+                                <para>After you change the
+                                   default_cluster_url setting, you
+                                   have to delete the auth database
+                                   and recreate the OpenStack Object
+                                   Storage users, or manually update
+                                   the auth database with the correct
+                                   URL for each account.</para>
+                        </listitem>
+                        <listitem>
+                                <para>Next, copy all the ring
+                                   information to all the nodes,
+                                   including your new proxy nodes, and
+                                   ensure the ring info gets to all
+                                   the storage nodes as well.</para>
+                        </listitem>
+                        <listitem>
+                                <para>After you sync all the nodes,
+                                   make sure the admin has the keys in
+                                   /etc/swift and the ownership for
+                                   the ring file is correct.</para>
+                        </listitem>
+                </orderedlist>
+        </section>
+        <section xml:id="object-storage-troubleshooting-notes">
+                <title>Troubleshooting Notes</title>
+                <para>If you see problems, look in var/log/syslog (or
+                        messages on some distros).</para>
+                <para>Also, at Rackspace we have seen hints at drive
+                        failures by looking at error messages in
+                        /var/log/kern.log.</para>
+        </section></section>
