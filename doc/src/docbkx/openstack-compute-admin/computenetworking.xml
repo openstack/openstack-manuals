@@ -213,13 +213,13 @@
                 you can manually update the ip with something like the following (use the right ip
                 for the project): </para>
             <literallayout class="monospaced">
-                euca-terminate-instances &lt;instance_id&gt;
-                    mysql nova -e "update fixed_ips set allocated=0, leased=0, instance_id=NULL where fixed_ip='10.0.0.2'"
+euca-terminate-instances &lt;instance_id&gt;
+mysql nova -e "update fixed_ips set allocated=0, leased=0, instance_id=NULL where fixed_ip='10.0.0.2' "
             </literallayout>
             <para>You also will need to terminate the dnsmasq running for the user (make sure you use the right pid file):</para>
             <literallayout class="monospaced">sudo kill `cat /var/lib/nova/br100.pid`</literallayout>
             <para>Now you should be able to re-run the vpn:</para>
-            <literallayout class="monospaced">nova-manage vpn run &lt;project_id&gt;</literallayout>
+            <literallayout class="monospaced">nova-manage vpn run --project &lt;project> --user &lt;user></literallayout>
             <para>The keypair that was used to launch the cloudpipe  instance should be in the keys/&lt;project_id&gt; folder. You can use this key to log into the cloudpipe instance for debugging purposes.</para>
         </section>
     </section>
