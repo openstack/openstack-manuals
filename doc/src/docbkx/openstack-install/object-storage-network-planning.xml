@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="object-storage-network-planning"    
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"><title>Object Storage Network Planning</title>
+    <para>For both conserving network resources and ensuring that
+        network administrators understand the needs for networks and
+        public IP addresses for providing access to the APIs and
+        storage network as necessary, this section offers
+        recommendations and required minimum sizes. Throughput of at
+        least 1000 Mbps is suggested. </para>
+  <para>This document refers to two networks. One is a Public Network for
+        connecting to the Proxy server, and the second is a Storage Network that is not
+        accessible from outside the cluster, to which all of the nodes are
+        connected. All of the OpenStack Object Storage services, as well as
+        the rsync daemon on the Storage nodes are configured to listen on
+        their STORAGE_LOCAL_NET IP addresses.</para>
+    <para>Public Network (Publicly routable IP range): This network is utilized for providing Public IP accessibility to the API endpoints within the cloud infrastructure.
+    </para>
+        <para>Minimum size: 8 IPs (CIDR /29)</para>
+    <para>Storage Network (RFC1918 IP Range, not publicly routable):
+        This network is utilized for all inter-server communications
+        within the Object Storage infrastructure. </para>
+    <para>Recommended size: 255 IPs (CIDR /24)</para></section>

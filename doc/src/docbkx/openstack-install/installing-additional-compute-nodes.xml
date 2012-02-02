@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="installing-additional-compute-nodes"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Installing Additional Compute Nodes</title>
+    <para>There are many different ways to perform a multinode install of Compute. In
+        this case, you can install all the nova- packages and dependencies as you did
+        for the Cloud Controller node, or just install nova-network and nova-compute.
+        Your installation can run any nova- services anywhere, so long as the service
+        can access nova.conf so it knows where the rabbitmq server is installed.</para>
+    <para>The Compute Node is where you configure the Compute network, the networking
+        between your instances. </para>
+    <para>On the additional Compute nodes, install the required
+        nova- packages, and dependencies are automatically
+        installed. Add the deb http://ops.rcb.me/packages natty
+        diablo-final packages to your sources and run apt-get
+        update to get consistent packages.</para>
+    <literallayout class="monospaced">sudo apt-key adv --keyserver hkp://subkeys.pgp.net --recv F87CBDE0</literallayout>
+    <para>Now, create a new sources.list and add a pointer to the
+        Rackspace Cloud Builders packages for a finalized Diablo
+        release.</para>
+    <literallayout class="monospaced">sudo nano /etc/apt/sources.list.d/rcb-sources.list           </literallayout>
+    <para>Paste the following line into the newly created
+        rcb-sources.list file. The options are maverick, natty, or
+        oneiric for the operating system and diablo-d5 or
+        diablo-final:</para>
+    <literallayout class="monospaced">deb http://ops.rcb.me/packages natty diablo-final</literallayout>
+    <para>Now update to pick up this repository.</para>
+    <literallayout class="monospaced">sudo apt-get update        </literallayout>
+    <para>Because you may need to query the database from the Compute node and learn more information about instances, euca2ools and MySQL client or PostgresSQL client packages should be installed on any additional Compute nodes.</para>
+    <literallayout class="monospaced">sudo apt-get install nova-network nova-compute euca2ools mysql-client</literallayout>
+    <para>Copy the nova.conf from your controller node to all additional compute nodes.</para>
+</section>

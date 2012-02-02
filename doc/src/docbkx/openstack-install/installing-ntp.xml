@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="installing-ntp"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Installing Network Time Protocol (NTP)</title>
+    <para>To keep all the services in sync, you need to install NTP, and if you do a multi-node configuration you will configure one server
+    to be the reference server.</para>
+    <literallayout class="monospaced">sudo apt-get install -y ntp</literallayout>
+
+    <para>Set up the NTP server on your controller node so that it receives data by modifying the ntp.conf file and restarting the service.</para>
+    <literallayout class="monospaced">sudo sed -i 's/server ntp.ubuntu.com/server ntp.ubuntu.com\nserver 127.127.1.0\nfudge 127.127.1.0 stratum 10/g' /etc/ntp.conf  
+sudo service ntp restart</literallayout></section>

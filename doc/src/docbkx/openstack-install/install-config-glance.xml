@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="install-glance"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Installing and Configuring the Image Service</title>
+    
+    <para>Install the Image service:</para>
+    <literallayout class="monospaced">sudo apt-get install glance</literallayout>
+    <para xmlns:svg="http://www.w3.org/2000/svg"
+        xmlns:html="http://www.w3.org/1999/xhtml">After installing,
+        you need to delete the sqlite database it creates, then change
+        the configuration to point to the mysql database. </para>
+    <para xmlns:svg="http://www.w3.org/2000/svg"
+        xmlns:html="http://www.w3.org/1999/xhtml">Delete the glance.db
+        file created in the /var/lib/glance/
+        directory.<literallayout class="monospaced">sudo rm /var/lib/glance/glance.sqlite</literallayout></para>
+ <section xml:id="configure-glance"><title>Configuring the Image Service</title>
+    <para>Configure the backend data store. For MySQL, create a glance MySQL database and a glance MySQL user. Grant the "glance" user full 
+    access to the glance MySQL database.</para><para>Start the MySQL command line client by running:</para>
+     <para><literallayout class="monospaced">mysql -u root -p</literallayout></para><para>Enter the mysql root user's password when prompted.</para>
+     <para>To configure the MySQL database, create the glance database. </para><para><literallayout class="monospaced">mysql> CREATE DATABASE glance;</literallayout>
+     </para><para>Create a MySQL user for the newly-created glance database that has full control of the database. </para>
+     <para><literallayout class="monospaced">mysql> GRANT ALL ON glance.* TO 'glance'@'%' IDENTIFIED BY 'yourpassword';</literallayout></para>
+     <para>Enter quit at the mysql> prompt to exit MySQL.</para><para><literallayout class="monospaced">mysql> quit</literallayout></para>
+     
+    <para>Edit /etc/glance/glance-registry.conf: </para>
+        <literallayout class="monospaced">sudo nano /etc/glance/glance-registry.conf</literallayout>
+     <para>An example <link linkend="glance-registry-conf-file">glance-registry.conf file</link> is included in the
+            Appendix.</para>
+        <para>At the bottom of the glance-registry.conf file, change
+            the admin_token to the one you created with Keystone
+            previously. </para>
+        <para>Edit /etc/glance/glance-api.conf: </para>
+        <literallayout class="monospaced">sudo nano /etc/glance/glance-api.conf</literallayout>
+        <para>Ensure that the auth sections match the ones in the
+            included <link linkend="glance-api-conf-file">glance-api.conf example file</link> found in the
+            Appendix. </para>
+        <para>Restart the glance service after changing the settings
+            in the glance-registry.conf and glance-api.conf. </para>
+        <para>If you change the database you also update
+            <link linkend="glance-scrubber-conf-file">glance-scrubber.conf</link> to point to the MySQL database. </para>
+        
+            <literallayout class="monospaced">sudo nano /etc/glance/glance-scrubber.conf</literallayout>
+       
+        <para>Any time you change the .conf files, restart the
+            corresponding service:</para>
+      <literallayout class="monospaced">sudo restart glance-registry
+sudo restart glance-api</literallayout>
+     <para>The database tables are created when you restart glance-registry, so there is no need to run a database sync command.</para>
+<!--<para>Create the tables in your backend data
+        store:</para>
+    <literallayout class="monospaced">sudo glance-manage db_sync</literallayout>
+    <para>Now you can load your initial image. </para>--></section>   
+</section>

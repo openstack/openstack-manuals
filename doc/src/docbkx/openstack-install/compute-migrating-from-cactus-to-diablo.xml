@@ -1,0 +1,926 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="migrating-from-cactus-to-diablo"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"><title>Migrating from Cactus to Diablo</title>
+            <para>If you have an installation already installed and running, is is possible to run
+                smoothly an uprade from Cactus Stable (2011.2) to Diablo Stable (2011.3), without
+                losing any of your running instances, but also keep the current network, volumes,
+                and images available. </para>
+            <para>In order to update, we will start by updating the Image Service(<emphasis
+                    role="bold">Glance</emphasis>), then update the Compute Service (<emphasis
+                    role="bold">Nova</emphasis>). We will finally make sure the client-tools
+                (euca2ools and novaclient) are properly integrated.</para>
+            <para>For Nova, Glance and euca2ools, we will use the PPA repositories, while we will
+                use the latest version of novaclient from Github, due to important updates.</para>
+            <note>
+                <para> That upgrade guide does not integrate Keystone. If you want to integrate
+                    Keystone, please read the section "Installing the Identity Service" </para>
+            </note>
+            <para/>
+            <simplesect>
+                <title>A- Glance upgrade</title>
+                <para>In order to update Glance, we will start by stopping all running services :
+                    <literallayout class="monospaced">glance-control all stop</literallayout>Make
+                    sure the services are stopped, you can check by running ps :
+                    <literallayout class="monospaced">ps axl |grep glance</literallayout>If the
+                    commands doesn't output any Glance process, it means you can continue ;
+                    otherwise, simply kill the PID's.</para>
+                <para>While the Cactus release of Glance uses one glance.conf file (usually located
+                    at "/etc/glance/glance.conf"), the Diablo release brings up new configuration
+                    files. (Look into them, they are pretty self-explanatory). </para>
+                <orderedlist>
+                    <listitem>
+                        <para><emphasis role="bold">Update the repositories</emphasis></para>
+                        <para> The first thing to do is to update the packages. Update your
+                            "/etc/apt/sources.list", or create a
+                            "/etc/apt/sources.list.d/openstack_diablo.list file :
+                            <programlisting>
+deb http://ppa.launchpad.net/openstack-release/2011.<emphasis role="bold">3</emphasis>/ubuntu maverick main
+deb-src http://ppa.launchpad.net/openstack-release/2011.<emphasis role="bold">3</emphasis>/ubuntu maverick main
+                        </programlisting>If
+                            you are running Ubuntu Lucid, point to Lucid, otherwise to another
+                            version (Maverick, or Natty). You can now update the repository :
+                            <literallayout class="monospaced">aptitude update
+aptitude upgrade</literallayout></para>
+                        <para>You could encounter the message "<emphasis role="italic">The following
+                                signatures couldn't be verified because the public key is not
+                                available: NO_PUBKEY XXXXXXXXXXXX</emphasis>", simply run :
+                            <programlisting>
+gpg --keyserver pgpkeys.mit.edu --recv-key XXXXXXXXXXXX
+gpg -a --export XXXXXXXXXXXX | sudo apt-key add -
+(Where XXXXXXXXXXXX is the key)
+                       </programlisting>Then
+                            re-run the two steps, which should work proceed without error. The
+                            package system should propose you to upgrade you Glance installation to
+                            the Diablo one, accept the upgrade, and you will have successfully
+                            performed the package upgrade. In the next step, we will reconfigure the
+                            service. </para>
+                        <para/>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">Update Glance configuration files</emphasis>
+                        </para>
+                        <para> You need now to update the configuration files. The main file you
+                            will need to update is
+                            <literallayout class="monospaced">etc/glance/glance-registry.conf</literallayout>In
+                            that one you will specify the database backend. If you used a MySQL
+                            backend under Cactus ; replace the <literallayout class="monospaced">sql_connection</literallayout> with the entry you
+                            have into the /etc/glance/glance.conf.</para>
+                        <para>Here is how the configuration files should look like : </para>
+                        <literallayout class="monospaced">glance-api.conf</literallayout>
+                       <programlisting>
+[DEFAULT]
+# Show more verbose log output (sets INFO log level output)
+verbose = True
+
+# Show debugging output in logs (sets DEBUG log level output)
+debug = False
+
+# Which backend store should Glance use by default is not specified
+# in a request to add a new image to Glance? Default: &apos;file&apos;
+# Available choices are &apos;file&apos;, &apos;swift&apos;, and &apos;s3&apos;
+default_store = file
+
+# Address to bind the API server
+bind_host = 0.0.0.0
+
+# Port the bind the API server to
+bind_port = 9292
+
+# Address to find the registry server
+registry_host = 0.0.0.0
+
+# Port the registry server is listening on
+registry_port = 9191
+
+# Log to this file. Make sure you do not set the same log
+# file for both the API and registry servers!
+log_file = /var/log/glance/api.log
+
+# Send logs to syslog (/dev/log) instead of to file specified by `log_file`
+use_syslog = False
+
+# ============ Notification System Options =====================
+
+# Notifications can be sent when images are create, updated or deleted.
+# There are three methods of sending notifications, logging (via the
+# log_file directive), rabbit (via a rabbitmq queue) or noop (no
+# notifications sent, the default)
+notifier_strategy = noop
+
+# Configuration options if sending notifications via rabbitmq (these are
+# the defaults)
+rabbit_host = localhost
+rabbit_port = 5672
+rabbit_use_ssl = false
+rabbit_userid = guest
+rabbit_password = guest
+rabbit_virtual_host = /
+rabbit_notification_topic = glance_notifications
+
+# ============ Filesystem Store Options ========================
+
+# Directory that the Filesystem backend store
+# writes image data to
+filesystem_store_datadir = /var/lib/glance/images/
+
+# ============ Swift Store Options =============================
+
+# Address where the Swift authentication service lives
+swift_store_auth_address = 127.0.0.1:8080/v1.0/
+
+# User to authenticate against the Swift authentication service
+swift_store_user = jdoe
+
+# Auth key for the user authenticating against the
+# Swift authentication service
+swift_store_key = a86850deb2742ec3cb41518e26aa2d89
+
+# Container within the account that the account should use
+# for storing images in Swift
+swift_store_container = glance
+
+# Do we create the container if it does not exist?
+swift_store_create_container_on_put = False
+
+# What size, in MB, should Glance start chunking image files
+# and do a large object manifest in Swift? By default, this is
+# the maximum object size in Swift, which is 5GB
+swift_store_large_object_size = 5120
+
+# When doing a large object manifest, what size, in MB, should
+# Glance write chunks to Swift? This amount of data is written
+# to a temporary disk buffer during the process of chunking
+# the image file, and the default is 200MB
+swift_store_large_object_chunk_size = 200
+
+# Whether to use ServiceNET to communicate with the Swift storage servers.
+# (If you aren&apos;t RACKSPACE, leave this False!)
+#
+# To use ServiceNET for authentication, prefix hostname of
+# `swift_store_auth_address` with &apos;snet-&apos;.
+# Ex. https://example.com/v1.0/ -&gt; https://snet-example.com/v1.0/
+swift_enable_snet = False
+
+# ============ S3 Store Options =============================
+
+# Address where the S3 authentication service lives
+s3_store_host = 127.0.0.1:8080/v1.0/
+
+# User to authenticate against the S3 authentication service
+s3_store_access_key = &lt;20-char AWS access key&gt;
+
+# Auth key for the user authenticating against the
+# S3 authentication service
+s3_store_secret_key = &lt;40-char AWS secret key&gt;
+
+# Container within the account that the account should use
+# for storing images in S3. Note that S3 has a flat namespace,
+# so you need a unique bucket name for your glance images. An
+# easy way to do this is append your AWS access key to &quot;glance&quot;.
+# S3 buckets in AWS *must* be lowercased, so remember to lowercase
+# your AWS access key if you use it in your bucket name below!
+s3_store_bucket = &lt;lowercased 20-char aws access key&gt;glance
+
+# Do we create the bucket if it does not exist?
+s3_store_create_bucket_on_put = False
+
+# ============ Image Cache Options ========================
+
+image_cache_enabled = False
+
+# Directory that the Image Cache writes data to
+# Make sure this is also set in glance-pruner.conf
+image_cache_datadir = /var/lib/glance/image-cache/
+
+# Number of seconds after which we should consider an incomplete image to be
+# stalled and eligible for reaping
+image_cache_stall_timeout = 86400
+
+# ============ Delayed Delete Options =============================
+
+# Turn on/off delayed delete
+delayed_delete = False
+
+[pipeline:glance-api]
+pipeline = versionnegotiation context apiv1app
+# NOTE: use the following pipeline for keystone
+# pipeline = versionnegotiation authtoken context apiv1app
+
+# To enable Image Cache Management API replace pipeline with below:
+# pipeline = versionnegotiation context imagecache apiv1app
+# NOTE: use the following pipeline for keystone auth (with caching)
+# pipeline = versionnegotiation authtoken context imagecache apiv1app
+
+[pipeline:versions]
+pipeline = versionsapp
+
+[app:versionsapp]
+paste.app_factory = glance.api.versions:app_factory
+
+[app:apiv1app]
+paste.app_factory = glance.api.v1:app_factory
+
+[filter:versionnegotiation]
+paste.filter_factory = glance.api.middleware.version_negotiation:filter_factory
+
+[filter:imagecache]
+paste.filter_factory = glance.api.middleware.image_cache:filter_factory
+
+[filter:context]
+paste.filter_factory = glance.common.context:filter_factory
+
+[filter:authtoken]
+paste.filter_factory = keystone.middleware.auth_token:filter_factory
+service_protocol = http
+service_host = 127.0.0.1
+service_port = 5000
+auth_host = 127.0.0.1
+auth_port = 5001
+auth_protocol = http
+auth_uri = http://127.0.0.1:5000/
+admin_token = 999888777666
+                       </programlisting>
+                        <literallayout class="monospaced">glance-registry.conf</literallayout>
+                        <programlisting>
+[DEFAULT]
+# Show more verbose log output (sets INFO log level output)
+verbose = True
+
+# Show debugging output in logs (sets DEBUG log level output)
+debug = False
+
+# Address to bind the registry server
+bind_host = 0.0.0.0
+
+# Port the bind the registry server to
+bind_port = 9191
+
+# Log to this file. Make sure you do not set the same log
+# file for both the API and registry servers!
+log_file = /var/log/glance/registry.log
+
+# Send logs to syslog (/dev/log) instead of to file specified by `log_file`
+use_syslog = False
+
+# SQLAlchemy connection string for the reference implementation
+# registry server. Any valid SQLAlchemy connection string is fine.
+# See: http://www.sqlalchemy.org/docs/05/reference/sqlalchemy/connections.html#sqlalchemy.create_engine
+#sql_connection = sqlite:////var/lib/glance/glance.sqlite
+sql_connection = mysql://glance_user:glance_pass@glance_host/glance
+
+# Period in seconds after which SQLAlchemy should reestablish its connection
+# to the database.
+#
+# MySQL uses a default `wait_timeout` of 8 hours, after which it will drop
+# idle connections. This can result in &apos;MySQL Gone Away&apos; exceptions. If you
+# notice this, you can lower this value to ensure that SQLAlchemy reconnects
+# before MySQL can drop the connection.
+sql_idle_timeout = 3600
+
+# Limit the api to return `param_limit_max` items in a call to a container. If
+# a larger `limit` query param is provided, it will be reduced to this value.
+api_limit_max = 1000
+
+# If a `limit` query param is not provided in an api request, it will
+# default to `limit_param_default`
+limit_param_default = 25
+
+[pipeline:glance-registry]
+pipeline = context registryapp
+# NOTE: use the following pipeline for keystone
+# pipeline = authtoken keystone_shim context registryapp
+
+[app:registryapp]
+paste.app_factory = glance.registry.server:app_factory
+
+[filter:context]
+context_class = glance.registry.context.RequestContext
+paste.filter_factory = glance.common.context:filter_factory
+
+[filter:authtoken]
+paste.filter_factory = keystone.middleware.auth_token:filter_factory
+service_protocol = http
+service_host = 127.0.0.1
+service_port = 5000
+auth_host = 127.0.0.1
+auth_port = 5001
+auth_protocol = http
+auth_uri = http://127.0.0.1:5000/
+admin_token = 999888777666
+
+[filter:keystone_shim]
+paste.filter_factory = keystone.middleware.glance_auth_token:filter_factory
+                       </programlisting>
+                    </listitem>
+                    <listitem>
+                       <para><emphasis role="bold">Fire up Glance</emphasis></para>
+                        <para> You should now be able to start glance (glance-control runs bothh
+                            glance-api and glance-registry services :
+                            <literallayout class="monospaced">glance-controll all start</literallayout>
+                            You can now make sure the new version of Glance is running :
+                            <literallayout class="monospaced">
+ps axl |grep glance
+                            </literallayout>But
+                            also make sure you are running the Diablo version :
+                            <literallayout class="monospaced">glance --version
+
+which should output : 
+
+glance 2011.3                </literallayout>
+                            If you do not see the two process running, an error occured somewhere.
+                            You can check for errors by running : </para>
+                        <para><literallayout class="monospaced"> glance-api /etc/glance/glance-api.conf and :
+ glance-registry /etc/glance/glance-registry.conf</literallayout>
+                            You are now ready to upgrade the database scheme. </para>
+                        <para/>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">Update Glance database</emphasis></para>
+                        <para>Before running any upgrade, make sure you backup the database. If you
+                            have a MySQL backend :
+                            <literallayout class="monospaced">
+mysqldump -u $glance_user -p$glance_password glance &gt; glance_backup.sql
+                      </literallayout>If
+                            you use the default backend, SQLite, simply copy the database's file.
+                            You are now ready to update the database scheme. In order to update the
+                            Glance service, just run :
+                            <literallayout class="monospaced"> glance-manage db_sync       </literallayout></para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">Validation test</emphasis></para>
+                        <para>
+                            In order to make sure Glance has been properly updated, simply run : 
+                            <literallayout class="monospaced">glance index</literallayout>
+which should display your registered images : 
+<programlisting>
+    ID               Name                           Disk Format          Container Format     Size          
+---------------- ------------------------------ -------------------- -------------------- --------------
+94               Debian 6.0.3 amd64             raw                  bare                     1067778048
+</programlisting>
+                        </para>
+                    </listitem>
+                </orderedlist>
+            </simplesect>
+            <simplesect>
+                <title>B- Nova upgrade</title>
+                <para>In order to successfully go through the upgrade process, it is advised to
+                    follow the exact order of the process' steps. By doing so, you make sure you
+                    don't miss any mandatory step.</para>
+                <orderedlist>
+                    <listitem>
+                        <para><emphasis role="bold">Update the repositoiries</emphasis></para>
+                        <para> Update your "/etc/apt/sources.list", or create a
+                            "/etc/apt/sources.list.d/openstack_diablo.list file :
+                            <programlisting>
+deb http://ppa.launchpad.net/openstack-release/2011.<emphasis role="bold">3</emphasis>/ubuntu maverick main
+deb-src http://ppa.launchpad.net/openstack-release/2011.<emphasis role="bold">3</emphasis>/ubuntu maverick main
+                        </programlisting>If
+                            you are running Ubuntu Lucid, point to Lucid, otherwise to another
+                            version (Maverick, or Natty). You can now update the repository (do not
+                            upgrade the packages at the moment) :
+                            <literallayout class="monospaced">aptitude update</literallayout></para>
+                    </listitem>
+<listitem>
+    <para><emphasis role="bold">Stop all nova services</emphasis></para>
+    <para>By stopping all nova services, that would make our instances unreachables (for instance,
+                            stopping the nova-network service will make all the routing rules
+                            flushed) ; but they won't neither be terminated, nor deleted. </para>
+    <itemizedlist>
+        <listitem>
+            <para> We first stop nova services</para>
+            <para><literallayout>cd /etc/init.d &amp;&amp; for i in $(ls nova-*); do service $i stop; done</literallayout></para>
+        </listitem>
+        <listitem>
+        <para> We stop rabbitmq; used by nova-scheduler</para>
+<para><literallayout class="monospaced">service rabbitmq-server stop</literallayout></para>
+        </listitem>
+        <listitem>
+            <para>We finally killl dnsmasq, used by nova-network</para>
+            <para><literallayout class="monospaced">killall dnsmasq</literallayout></para>
+        </listitem>
+    </itemizedlist>
+    <para>You can make sure not any services used by nova are still running via : </para>
+    <para><literallayout class="monospaced">ps axl | grep nova</literallayout>
+    that should not output any service, if so, simply kill the PIDs
+    </para>
+                        <para/>
+</listitem>
+                    <listitem>
+                        <para><emphasis role="bold">MySQL pre-requisites</emphasis></para>
+                        <para>
+                            Before running the upgrade, make sure the following tables don't already exist (They could, if you ran tests, or by mistake an upgrade) : 
+                            <simplelist>
+                                <member>block_device_mapping</member>
+                                <member>snapshots</member>
+                                <member>provider_fw_rules</member>
+                                <member>instance_type_extra_specs</member>
+                                <member>virtual_interfaces</member>
+                                <member>volume_types</member>
+                                <member>volume_type_extra_specs</member>
+                                <member>volume_metadata;</member>
+                                <member>virtual_storage_arrays</member>
+                            </simplelist>
+                            If so, you can safely remove them; since they are not used at all by Cactus (2011.2) : 
+                        </para>
+                        <para>
+                            <programlisting>
+drop table block_device_mapping;
+drop table snapshots;
+drop table provider_fw_rules;
+drop table instance_type_extra_specs;
+drop table virtual_interfaces;	
+drop table volume_types;
+drop table volume_type_extra_specs;
+drop table volume_metadata;
+drop table virtual_storage_arrays;  
+                            </programlisting>
+                        </para>
+                        <para/>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">Upgrade nova packages</emphasis></para>
+                        <para> You can now perform an upgrade :
+                            <literallayout class="monospaced">aptitude upgrade</literallayout>
+                            During the upgrade process, you would see :
+                            <programlisting>
+    Configuration file '/etc/nova/nova.conf'
+ ==> Modified (by you or by a script) since installation.
+ ==> Package distributor has shipped an updated version.
+   What would you like to do about it ?  Your options are:
+    Y or I  : install the package maintainer's version
+    N or O  : keep your currently-installed version
+      D     : show the differences between the versions
+      Z     : start a shell to examine the situation
+ The default action is to keep your current version.
+*** /etc/nova/nova.conf (Y/I/N/O/D/Z) [default=N] ?
+</programlisting>
+                            Type "N" or validate in order to keep your current configuration file.
+                            We will manually update in order to use some of new Diablo settings. </para>
+                        <para/>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">Update the configuration files</emphasis></para>
+                        <para>Diablo introduces several new files : </para>
+                        <para>api-paste.ini, which contains all api-related settings</para>
+                        <para>nova-compute.conf, a configuration file dedicated to the compte-node
+                            settings.</para>
+                        <para>Here are the settings you would add into nova.conf : </para>
+                        <programlisting>
+--multi_host=T
+--api_paste_config=/etc/nova/api-paste.ini
+                        </programlisting>
+<para> and that one if you plan to integrate Keystone to your environment, with euca2ools : </para>
+                        <programlisting>
+--keystone_ec2_url=http://$NOVA-API-IP.11:5000/v2.0/ec2tokens
+                        </programlisting>
+                        <para>Here is how the files should look like : </para>
+                        <literallayout class="monospaced">nova.conf</literallayout>
+                        <programlisting>
+--dhcpbridge_flagfile=/etc/nova/nova.conf
+--dhcpbridge=/usr/bin/nova-dhcpbridge
+--logdir=/var/log/nova
+--state_path=/var/lib/nova
+--lock_path=/var/lock/nova
+--flagfile=/etc/nova/nova-compute.conf
+--force_dhcp_release=True
+--verbose
+--daemonize=1
+--s3_host=172.16.40.11
+--rabbit_host=172.16.40.11
+--cc_host=172.16.40.11
+--keystone_ec2_url=http://172.16.40.11:5000/v2.0/ec2tokens
+--ec2_url=http://172.16.40.11:8773/services/Cloud
+--ec2_host=172.16.40.11
+--ec2_dmz_host=172.16.40.11
+--ec2_port=8773
+--fixed_range=192.168.0.0/12
+--FAKE_subdomain=ec2
+--routing_source_ip=10.0.10.14
+--sql_connection=mysql://nova:nova-pass@172.16.40.11/nova
+--glance_api_servers=172.16.40.13:9292
+--image_service=nova.image.glance.GlanceImageService
+--image_decryption_dir=/var/lib/nova/tmp
+--network_manager=nova.network.manager.VlanManager
+--public_interface=eth0
+--vlan_interface=eth0
+--iscsi_ip_prefix=172.16.40.12
+--vnc_enabled
+--multi_host=T
+--debug
+--api_paste_config=/etc/nova/api-paste.ini
+                        </programlisting>
+                        <para><literallayout class="monospaced">api-paste.ini</literallayout></para>
+                        <programlisting>
+#######
+# EC2 #
+#######
+
+[composite:ec2]
+use = egg:Paste#urlmap
+/: ec2versions
+/services/Cloud: ec2cloud
+/services/Admin: ec2admin
+/latest: ec2metadata
+/2007-01-19: ec2metadata
+/2007-03-01: ec2metadata
+/2007-08-29: ec2metadata
+/2007-10-10: ec2metadata
+/2007-12-15: ec2metadata
+/2008-02-01: ec2metadata
+/2008-09-01: ec2metadata
+/2009-04-04: ec2metadata
+/1.0: ec2metadata
+
+[pipeline:ec2cloud]
+# pipeline = logrequest ec2noauth cloudrequest authorizer ec2executor
+# NOTE(vish): use the following pipeline for deprecated auth
+pipeline = logrequest authenticate cloudrequest authorizer ec2executor
+
+[pipeline:ec2admin]
+# pipeline = logrequest ec2noauth adminrequest authorizer ec2executor
+# NOTE(vish): use the following pipeline for deprecated auth
+pipeline = logrequest authenticate adminrequest authorizer ec2executor
+
+[pipeline:ec2metadata]
+pipeline = logrequest ec2md
+
+[pipeline:ec2versions]
+pipeline = logrequest ec2ver
+
+[filter:logrequest]
+paste.filter_factory = nova.api.ec2:RequestLogging.factory
+
+[filter:ec2lockout]
+paste.filter_factory = nova.api.ec2:Lockout.factory
+
+[filter:ec2noauth]
+paste.filter_factory = nova.api.ec2:NoAuth.factory
+
+[filter:authenticate]
+paste.filter_factory = nova.api.ec2:Authenticate.factory
+
+[filter:cloudrequest]
+controller = nova.api.ec2.cloud.CloudController
+paste.filter_factory = nova.api.ec2:Requestify.factory
+
+[filter:adminrequest]
+controller = nova.api.ec2.admin.AdminController
+paste.filter_factory = nova.api.ec2:Requestify.factory
+
+[filter:authorizer]
+paste.filter_factory = nova.api.ec2:Authorizer.factory
+
+[app:ec2executor]
+paste.app_factory = nova.api.ec2:Executor.factory
+
+[app:ec2ver]
+paste.app_factory = nova.api.ec2:Versions.factory
+
+[app:ec2md]
+paste.app_factory = nova.api.ec2.metadatarequesthandler:MetadataRequestHandler.factory
+
+#############
+# Openstack #
+#############
+
+[composite:osapi]
+use = egg:Paste#urlmap
+/: osversions
+/v1.0: openstackapi10
+/v1.1: openstackapi11
+
+[pipeline:openstackapi10]
+# pipeline = faultwrap noauth ratelimit osapiapp10
+# NOTE(vish): use the following pipeline for deprecated auth
+pipeline = faultwrap auth ratelimit osapiapp10
+
+[pipeline:openstackapi11]
+# pipeline = faultwrap noauth ratelimit extensions osapiapp11
+# NOTE(vish): use the following pipeline for deprecated auth
+pipeline = faultwrap auth ratelimit extensions osapiapp11
+
+[filter:faultwrap]
+paste.filter_factory = nova.api.openstack:FaultWrapper.factory
+
+[filter:auth]
+paste.filter_factory = nova.api.openstack.auth:AuthMiddleware.factory
+
+[filter:noauth]
+paste.filter_factory = nova.api.openstack.auth:NoAuthMiddleware.factory
+
+[filter:ratelimit]
+paste.filter_factory = nova.api.openstack.limits:RateLimitingMiddleware.factory
+
+[filter:extensions]
+paste.filter_factory = nova.api.openstack.extensions:ExtensionMiddleware.factory
+
+[app:osapiapp10]
+paste.app_factory = nova.api.openstack:APIRouterV10.factory
+
+[app:osapiapp11]
+paste.app_factory = nova.api.openstack:APIRouterV11.factory
+
+[pipeline:osversions]
+pipeline = faultwrap osversionapp
+
+[app:osversionapp]
+paste.app_factory = nova.api.openstack.versions:Versions.factory
+
+##########
+# Shared #
+##########
+[filter:keystonecontext]
+paste.filter_factory = keystone.middleware.nova_keystone_context:NovaKeystoneContext.factory
+
+[filter:authtoken]
+paste.filter_factory = keystone.middleware.auth_token:filter_factory
+service_protocol = http
+service_host = 127.0.0.1
+service_port = 5000
+auth_host = 127.0.0.1
+auth_port = 5001
+auth_protocol = http
+auth_uri = http://127.0.0.1:5000/
+admin_token = 999888777666
+                        </programlisting>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">Database update</emphasis></para>
+                        <para>You are now ready to upgrade the database, by running : <literallayout class="monospaced">nova-manage db sync</literallayout></para>
+                    </listitem>
+                    <listitem><para><emphasis role="bold">Restart the services</emphasis></para>
+                    <para>After the database upgrade, services can be restarted : </para>
+                        <itemizedlist>
+                            <listitem>
+                                <para>
+                                    Rabbitmq-server
+                            <literallayout class="monospaced">service rabbitmq-server start</literallayout>
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para> Nova services
+                                    <literallayout class="monospaced">cd /etc/init.d &amp;&amp; for i $(ls nova-*); do service $i start; done</literallayout>
+                                    You can check the version you are running :
+                                    <literallayout class="monospaced">nova-manage version</literallayout>Should
+                                    ouput :
+                                    <literallayout class="monospaced">2011.3 </literallayout>
+                                </para>
+                            </listitem>
+                        </itemizedlist>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">Validation test</emphasis></para>
+                        <para>The first thing to check is all the services are all running : </para>
+                        <literallayout class="monospaced">ps axl | grep nova</literallayout>
+                        <para>should output all the services running. If some services are missing, check their appropriate log files (e.g /var/log/nova/nova-api.log).
+                        You would then use nova-manage :
+                        <literallayout class="monospaced">nova-manage service list</literallayout>
+                        </para>
+                        <para>
+                            If all the services are up, you can now validate the migration by : 
+                            <simplelist>
+                                <member>Launching a new instance</member>
+                                <member>Terminate a running instance</member>
+                                <member>Attach a floating IP to an "old" and a "new" instance</member>
+                            </simplelist>
+                        </para>
+                    </listitem>
+                </orderedlist>
+            </simplesect>
+            <simplesect>
+                <title>C- Client tools upgrade</title>
+                <para>
+                    In this part we will see how to make sure our management tools will be correctly integrated to the new environment's version : 
+                    <simplelist>
+                        <member><link xlink:href="http://nova.openstack.org/2011.2/runnova/euca2ools.html?highlight=euca2ools">euca2ools</link></member>
+                        <member><link xlink:href="https://github.com/rackspace/python-novaclient">novaclient</link></member>
+                    </simplelist>
+                </para>
+                <orderedlist>
+                    <listitem>
+                        <para><emphasis role="bold">euca2ools</emphasis></para>
+                        <para>The euca2ools settings do not change from the client side : </para>
+                        <programlisting>
+# Euca2ools
+
+export NOVA_KEY_DIR=/root/creds/
+export EC2_ACCESS_KEY="EC2KEY:USER"
+export EC2_SECRET_KEY="SECRET_KEY"
+export EC2_URL="http://$NOVA-API-IP:8773/services/Cloud"
+export S3_URL="http://$NOVA-API-IP:3333"
+export EC2_USER_ID=42 # nova does not use user id, but bundling requires it
+export EC2_PRIVATE_KEY=${NOVA_KEY_DIR}/pk.pem
+export EC2_CERT=${NOVA_KEY_DIR}/cert.pem
+export NOVA_CERT=${NOVA_KEY_DIR}/cacert.pem
+export EUCALYPTUS_CERT=${NOVA_CERT} # euca-bundle-image seems to require this set
+alias ec2-bundle-image="ec2-bundle-image --cert ${EC2_CERT} --privatekey ${EC2_PRIVATE_KEY} --user 42 --ec2cert ${NOVA_CERT}"
+alias ec2-upload-bundle="ec2-upload-bundle -a ${EC2_ACCESS_KEY} -s ${EC2_SECRET_KEY} --url ${S3_URL} --ec2cert ${NOVA_CERT}"
+                        </programlisting>
+                        <para>
+                            On server-side, there are also not any changes to make, since we don't use keystone.
+                             Here are some commands you should be able to run : 
+                        <literallayout class="monospaced">
+                            euca-describe-instances
+                            euca-describe-adresses
+                            euca-terminate-instance $instance_id
+                            euca-create-volume -s 5 -z $zone
+                            euca-attach-volume -i $instance_id -d $device $volume_name
+                            euca-associate-address -i $instance_id $address 
+                        </literallayout>
+                            If all these commands work flawlessly, it means the tools in properly integrated.
+                        </para>
+                        <para/>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">python-novaclient</emphasis></para>
+                        <para> This tool requires a recent version on order to use all the service
+                            the OSAPI offers (floating-ip support, volumes support, etc..). In order
+                            to upgrade it :
+                            <literallayout class="monospaced">git clone https://github.com/rackspace/python-novaclient.git &amp;&amp; cd python-novaclient
+                            python setup.py build
+                            python setup.py install
+                            </literallayout>
+                            Make sure you have the correct settings into your .bashrc (or any
+                            source-able file) :
+                            <programlisting>
+# Python-novaclient
+
+export NOVA_API_KEY="SECRET_KEY"
+export NOVA_PROJECT_ID="PROJECT-NAME"
+export NOVA_USERNAME="USER"
+export NOVA_URL="http://$NOVA-API-IP:8774/v1.1"
+export NOVA_VERSION=1.1
+                            </programlisting>
+                            He are some nova commands you should be able to run :
+                            <literallayout class="monospaced">
+                            nova list
+                            nova image-show
+                            nova boot $flavor_id --image $image_id --key_name $key_name $instance_name
+                            nova volume-create --display_name $name $size
+                        </literallayout>
+                            Again, if the commands run without any error, the tools is then properly
+                            integrated.</para>
+                    </listitem>
+                </orderedlist>
+            </simplesect>
+            <simplesect>
+                <title>D- Why is Keystone not integrated ?</title>
+                <para>Keystone introduces a new identity management, instead of having users into
+                    nova's database, they are now fully relagated to Keystone. While nova deals with
+                    "users as IDs" (eg : the project name is the project id), Keystones makes a
+                    difference between a name and an ID. ; thus, the integration breaks a running
+                    Cactus cloud. Since we were looking for a smooth integration on a running
+                    platform, Keystone has not been integrated. </para>
+                <para>If you want to integrate Keystone, here are the
+            steps you would follow : </para>
+                <orderedlist>
+                    <listitem>
+                        <para><emphasis role="bold">Export the current project</emphasis></para>
+                        <para>The first thing to do is export all credentials-related settings from nova : </para>
+                        <literallayout class="monospaced">nova-manage shell export --filename=nova_export.txt</literallayout>
+                        <para>The created file contains keystone commands (via keystone-manage tool) ; you can import simply import the settings with a loop :</para>
+                        <literallayout class="monospaced">while read line; do $line; done &lt; nova_export.txt</literallayout>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">Enable the pipelines</emphasis></para>
+                        <para>
+                        Pipelines are like "communication links" between components. In our case we need to enable pipelines from all the components to Keystone.
+                        </para>
+                        <itemizedlist>
+                            <listitem>
+                                <para>
+                                    <emphasis>Glance Pipeline</emphasis>
+                                    <literallayout class="monospaced">glance-api.conf</literallayout>
+                                    <programlisting>
+[pipeline:glance-api]
+
+pipeline = versionnegotiation authtoken context apiv1app
+
+# To enable Image Cache Management API replace pipeline with below:
+# pipeline = versionnegotiation context imagecache apiv1app
+# NOTE: use the following pipeline for keystone auth (with caching)
+pipeline = versionnegotiation authtoken context imagecache apiv1app
+                         
+[...]
+
+# Keystone
+[filter:authtoken]
+paste.filter_factory = keystone.middleware.auth_token:filter_factory
+service_protocol = http
+service_host = 127.0.0.1
+service_port = 5000
+auth_host = 127.0.0.1
+auth_port = 5001
+auth_protocol = http
+auth_uri = http://127.0.0.1:5000/
+admin_token = 999888777666
+                                    </programlisting>
+                                <literallayout class="monospaced">glance-registry.conf</literallayout>
+                                <programlisting>
+[pipeline:glance-registry]
+# pipeline = context registryapp
+# NOTE: use the following pipeline for keystone
+pipeline = authtoken keystone_shim context registryapp
+                         
+[...]
+
+# Keystone
+[filter:authtoken]
+paste.filter_factory = keystone.middleware.auth_token:filter_factory
+service_protocol = http
+service_host = 127.0.0.1
+service_port = 5000
+auth_host = 127.0.0.1
+auth_port = 5001
+auth_protocol = http
+auth_uri = http://127.0.0.1:5000/
+admin_token = 999888777666
+
+[filter:keystone_shim]
+paste.filter_factory = keystone.middleware.glance_auth_token:filter_factory      
+                                </programlisting>
+                                </para>
+                            </listitem>
+                            <listitem>
+                            <para>
+                                    <emphasis> Nova Pipeline </emphasis>
+                                    <literallayout class="monospaced">nova-api.conf</literallayout>
+                                    <programlisting>
+--keystone_ec2_url=http://$NOVA-API-IP:5000/v2.0/ec2tokens
+                                </programlisting>
+                            </para>
+                                <literallayout class="monospaced">api-paste.ini</literallayout>
+                                <programlisting>
+# EC2 API
+[pipeline:ec2cloud]
+pipeline = logrequest ec2noauth cloudrequest authorizer ec2executor
+# NOTE(vish): use the following pipeline for deprecated auth
+# pipeline = logrequest authenticate cloudrequest authorizer ec2executor
+
+[pipeline:ec2admin]
+pipeline = logrequest ec2noauth adminrequest authorizer ec2executor
+# NOTE(vish): use the following pipeline for deprecated auth
+# pipeline = logrequest authenticate adminrequest authorizer ec2executor
+
+# OSAPI
+[pipeline:openstackapi10]
+pipeline = faultwrap noauth ratelimit osapiapp10
+# NOTE(vish): use the following pipeline for deprecated auth
+# pipeline = faultwrap auth ratelimit osapiapp10
+
+[pipeline:openstackapi11]
+pipeline = faultwrap noauth ratelimit extensions osapiapp11
+# NOTE(vish): use the following pipeline for deprecated auth
+# pipeline = faultwrap auth ratelimit extensions osapiapp11
+
+
+##########
+# Shared #
+##########
+[filter:keystonecontext]
+paste.filter_factory = keystone.middleware.nova_keystone_context:NovaKeystoneContext.factory
+
+[filter:authtoken]
+paste.filter_factory = keystone.middleware.auth_token:filter_factory
+service_protocol = http
+service_host = 127.0.0.1
+service_port = 5000
+auth_host = 127.0.0.1
+auth_port = 5001
+auth_protocol = http
+auth_uri = http://127.0.0.1:5000/
+admin_token = 999888777666
+                                </programlisting>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    <emphasis>euca2ools</emphasis>
+                                    <literallayout class="monospaced">.bashrc</literallayout>
+                                    <programlisting>
+# Euca2ools
+[...]
+export EC2_URL="http://$KEYSTONE-IP:5000/services/Cloud"
+[...]
+                                    </programlisting>
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    <emphasis>novaclient</emphasis>
+                                    <literallayout class="monospaced">novaclient</literallayout>
+                                    <programlisting>
+# Novaclient
+[...]
+export NOVA_URL=http://$KEYSTONe-IP:5000/v.20/
+export NOVA_REGION_NAME="$REGION"
+[...]
+                                    </programlisting>
+                                </para>
+                            </listitem>
+                        </itemizedlist>
+                    </listitem> 
+                </orderedlist>
+            </simplesect>
+        </section>

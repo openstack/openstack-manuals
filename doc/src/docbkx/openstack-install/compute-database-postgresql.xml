@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="setting-up-sql-database-postgresql"    
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Setting Up PostgreSQL as the Database on the Cloud Controller</title>
+    
+    <para>OpenStack can use PostgreSQL as an alternative database. This is a matter of substituting the MySQL steps with PostgreSQL equivalents, as outlined here.</para>
+    
+    <para>First, install PostgreSQL on the controller node.</para>
+    <literallayout class="monospaced">apt-fast install postgresql postgresql-server-dev-8.4 python-dev python-psycopg2</literallayout>
+    
+    <para>Edit /etc/postgresql/8.4/main/postgresql.conf and change the listen_address to listen to all appropriate addresses, PostgreSQL listen only to localhost by default. For example:</para>
+    <para>To listen on a specific IP address:</para>
+    <literallayout class="monospaced"># - Connection Settings -
+listen_address = '10.1.1.200,192.168.100.2'</literallayout>
+    <para>To listen on all addresses:</para>
+    <literallayout class="monospaced"># - Connection Settings -
+listen_address = '*'</literallayout>
+    
+    <para>Add appropriate addresses and networks to /etc/postgresql/8.4/main/pg_hba.conf to allow remote access to PostgreSQL, this should include all servers hosting OpenStack (but not neccessarily those hosted by Openstack). As an example, append the following lines:</para>
+    <literallayout class="monospaced">host all all 192.168.0.0/16
+host all all 10.1.0.0/16
+                    </literallayout>
+    <para>Change the default PostgreSQL user's password:</para>
+    <literallayout class="monospaced">
+sudo -u postgres psql template1
+template1=#\password
+Enter Password:
+Enter again:
+template1=#\q</literallayout>
+    
+    <para>Restart PostgreSQL:</para>
+    <literallayout class="monospaced">service postgresql restart</literallayout>
+    
+    <para>Create nova databases:</para>
+    <literallayout class="monospaced">sudo -u postgres createdb nova
+sudo -u postgres createdb glance</literallayout>
+    
+    <para>Create nova database user which will be used for all OpenStack services, note the adduser and createuser steps will prompt for the user's password ($PG_PASS):</para>
+    <literallayout class="monospaced">
+adduser nova
+sudo -u postgres createuser -PSDR nova
+sudo -u postgres psql template1
+template1=#GRANT ALL PRIVILEGES ON DATABASE nova TO nova
+template1=#GRANT ALL PRIVILEGES ON DATABASE glance TO nova
+template1=#\q
+                    </literallayout>
+    
+    <para>For the Cactus version of Nova, the following fix is required for the PostgreSQL database schema. You don't need to do this for Diablo:</para>
+    <literallayout class="monospaced">
+sudo -u postgres psql template1
+template1=#alter table instances alter instance_type_id type integer using cast(instance_type_id as integer);
+template1=#\q</literallayout>
+    <para>For Nova components that require access to this database the required configuration in /etc/nova/nova.conf should be (replace $PG_PASS with password):</para>
+    
+    <literallayout class="monospaced">--sql_connection=postgresql://nova:$PG_PASS@control.example.com/nova</literallayout>
+    <para>At this stage the databases are empty and contain no content. These will be initialised when you do the nova-manage db sync command. </para>
+</section>

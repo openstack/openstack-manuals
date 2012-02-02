@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="example-compute-installation-architecture"    
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Example Compute Installation Architectures</title>
+    <para>OpenStack architecture consists of these major
+        components: Compute, Object Storage, Identity, and Images.
+        A common Identity component provides authentication for
+        users to have access to these components. The Image
+        service stores and serves images to run virtual machines.
+        Compute uses a shared-nothing, messaging-based
+        architecture. While very flexible, the fact that you can
+        install each nova- service on an independent server means
+        there are many possible methods for installing OpenStack
+        Compute. The only co-dependency between possible
+        multi-node installations is that the Dashboard must be
+        installed on a server running the nova-api service. Here
+        are the types of installation architectures for OpenStack
+        Compute with the Image and Identity Services:</para>
+    
+    <itemizedlist>
+        <listitem>
+            <para xmlns="http://docbook.org/ns/docbook"
+                >Single node, Compute-only: Only one server runs
+                all nova- services and also drives all the virtual
+                instances. Use this configuration only for trying
+                out OpenStack Compute, or for development
+                purposes.</para></listitem>
+        <listitem><para>Two nodes, Compute-only: A cloud controller node runs the nova-
+            services except for nova-compute, and a compute
+            node runs nova-compute. A client computer is
+            likely needed to bundle images and interfacing to
+            the servers, but a client is not required. Use
+            this configuration for proof of concepts or
+            development environments. </para></listitem>
+        <listitem>
+            <para xmlns="http://docbook.org/ns/docbook">Multiple
+                nodes, Compute-only: You can add more compute
+                nodes to the two node installation by simply
+                installing nova-compute on an additional server
+                and copying a nova.conf file to the added node.
+                This would result in a multiple node installation.
+                You can also add a volume controller and a network
+                controller as additional nodes in a more complex
+                multiple node installation. A minimum of 4 nodes
+                is best for running multiple virtual instances
+                that require a lot of processing power.</para>
+        </listitem>
+    </itemizedlist>
+    
+    <para>This is an illustration of one possible multiple server installation of OpenStack
+        Compute; virtual server networking in the cluster may vary.</para>
+    
+    <para><inlinemediaobject>
+        <imageobject>
+            <imagedata scale="80" fileref="figures/NOVA_install_arch.png"/></imageobject>
+        
+    </inlinemediaobject></para>
+    <para>An alternative architecture would be to add more messaging servers if you notice a lot
+        of back up in the messaging queue causing performance problems. In that case you would
+        add an additional RabbitMQ server in addition to or instead of scaling up the database
+        server. Your installation can run any nova- service on any server as long as the
+        nova.conf is configured to point to the RabbitMQ server and the server can send messages
+        to the server.</para>
+    <para>Multiple installation architectures are possible, here is another example
+        illustration. </para>
+    <para><inlinemediaobject>
+        <imageobject>
+            <imagedata scale="40" fileref="figures/NOVA_compute_nodes.png"/></imageobject>
+        
+    </inlinemediaobject></para>
+</section>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="ch_installing-openstack-overview">
+    <title>Installing OpenStack Walk-through</title>
+    <para>The OpenStack Compute and Image services work together to
+        provide access to virtual servers and images through REST
+        APIs. The Identity Service provides a common authorization
+        layer for all OpenStack services. You must use the Identity
+        Service to install the OpenStack Dashboard, which offers a
+        web-based user interface for OpenStack components. The
+        OpenStack Object Storage service provides not only a storage
+        method for virtual images but also a cloud-based object
+        storage system with a REST API to store and retrieve objects
+        such as images or videos. This walk-through starts with
+        Compute and related services and we will add Object Storage at
+        a later date.</para>
+    <para>This installation walk-through goes through a very specific
+        path for installing OpenStack on Ubuntu 11.04 or 11.10 with
+        root access and specific configuration settings using MySQL
+        for related databases. Here are the overall steps:</para>
+        <orderedlist>
+            <listitem><para>Select a set of packages for your repository.</para></listitem>
+        <listitem>
+            <para>Install the Identity Service (Keystone).</para>
+        </listitem>
+        <listitem>
+            <para>Configure the Identity Service.</para>
+        </listitem>
+        <listitem>
+            <para>Install the Image Service (Glance).</para>
+        </listitem>
+        <listitem>
+            <para>Configure the Image Service.</para>
+        </listitem>
+            <listitem>
+            <para>Install Compute (Nova).</para>
+        </listitem>
+        <listitem>
+            <para>Configure Compute with FlatDHCP networking
+                using192.168.100.0/24 as the fixed range for our guest
+                VMs on a bridge named br100. </para>
+        </listitem>
+        <listitem>
+            <para>Create and initialize the Compute database with
+                MySQL.</para>
+        </listitem>
+        <listitem>
+            <para>Add images.</para>
+        </listitem>
+        <listitem>
+            <para>Install the OpenStack Dashboard. </para>
+        </listitem>
+        <listitem>
+            <para>Launch the Dashboard.</para>
+        </listitem>
+        <listitem>
+            <para>Add a keypair through the Dashboard.</para>
+        </listitem>
+        <listitem>
+            <para>Launch an image through the Dashboard to verify the
+                entire installation.</para>
+        </listitem>
+        </orderedlist>
+    <xi:include href="compute-sys-requirements.xml" />
+    <xi:include href="compute-network-planning.xml" />
+    <xi:include href="preconfig-rcb-packages.xml" />
+    <xi:include href="preconfig-managedit-packages.xml" />
+    <xi:include href="installing-ntp.xml" />
+</chapter>

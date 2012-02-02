@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="preconfiguring-for-cloud-builders-packages"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Preconfiguring for Cloud Builders Packages</title>
+    <para>These packages are unsupported but known to work and are used by the Crowbar project and Rackspace Cloud Builders deployments. First, you need to add a signing key for the Cloud
+        Builders repository that contains packages that are known
+        and tested to work together, such as diablo-d5 or
+        diablo-final. Once you add the signing key, you add a
+        repository entry pointing to it and update your repo
+        pointer with an apt-get command. </para>
+    <literallayout class="monospaced">sudo apt-key adv --keyserver hkp://subkeys.pgp.net --recv F87CBDE0</literallayout>
+    <para>Now, create a new sources.list and add a pointer to the
+        Rackspace Cloud Builders packages for a finalized Diablo
+        release containing Compute, Object Storage, Image Service,
+        the Dashboard, and Identity Service.</para>
+    <literallayout class="monospaced">sudo nano /etc/apt/sources.list.d/rcb-sources.list           </literallayout>
+    <para>Paste the following line into the newly created
+        rcb-sources.list file. The options are maverick (10.11), natty
+        (11.04), or oneiric (11.10) for the operating system and
+        diablo-d5 or diablo-final for the related release
+        parts:</para>
+    <literallayout class="monospaced">deb http://ops.rcb.me/packages natty diablo-final</literallayout>
+    <para>Now update to pick up this repository.</para>
+    <literallayout class="monospaced">sudo apt-get update</literallayout>
+</section>

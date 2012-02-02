@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="installing-openstack-compute-on-rhel6"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Installing OpenStack Compute on Red Hat Enterprise Linux 6 </title>
+    <para>This section documents a multi-node installation using RHEL 6. RPM repos for the Bexar
+        release, the Cactus release, milestone releases of Diablo, and also per-commit trunk
+        builds for OpenStack Nova are available at <link
+            xlink:href="http://yum.griddynamics.net">http://yum.griddynamics.net</link>. The
+        final release of Diablo is available at <link
+            xlink:href="http://yum.griddynamics.net/yum/diablo/"
+            >http://yum.griddynamics.net/yum/diablo/</link>, but is not yet tested completely
+        (as of Oct 4, 2011). Check this page for updates: <link
+            xlink:href="http://wiki.openstack.org/NovaInstall/RHEL6Notes"
+            >http://wiki.openstack.org/NovaInstall/RHEL6Notes</link>.</para>
+    
+    <para>Known considerations for RHEL version 6 installations: </para>
+    
+    <itemizedlist><listitem>
+        <para>iSCSI LUN not supported due to tgtadm versus ietadm differences</para>
+    </listitem>
+        <listitem>
+            <para>GuestFS is used for files injection</para>
+        </listitem>
+        <listitem>
+            <para>Files injection works with libvirt</para>
+        </listitem>
+        <listitem>
+            <para>Static network configuration can detect OS type for RHEL and Ubuntu</para>
+        </listitem>
+        <listitem><para>Only KVM hypervisor has been tested with this installation</para></listitem></itemizedlist>
+    <para>To install Nova on RHEL v.6 you need access to two repositories, one available on the
+        yum.griddynamics.net website and the RHEL DVD image connected as repo. </para>
+    
+    <para>First, install RHEL 6.0, preferrably with a minimal set of packages.</para>
+    <para>Disable SELinux in /etc/sysconfig/selinux and then reboot. </para>
+    <para>Connect the RHEL 3. 6.0 x86_64 DVD as a repository in YUM. </para>
+    
+    <literallayout class="monospaced">
+sudo mount /dev/cdrom /mnt/cdrom
+/etc/yum.repos.d/rhel.repo 
+            </literallayout>
+    <programlisting>
+[rhel]
+name=RHEL 6.0
+baseurl=file:///mnt/cdrom/Server
+enabled=1
+gpgcheck=0
+            </programlisting>
+    <para>Download and install repo config and key. The cloud controller plus compute node is
+        installed with the example rpm below. You can use <link
+            xlink:href="http://yum.griddynamics.net/yum/diablo/openstack-nova-node-compute-2011.3-b609.noarch.rpm"
+            >http://yum.griddynamics.net/yum/diablo/openstack-nova-node-compute-2011.3-b609.noarch.rpm</link>
+        for a compute node only.</para>
+    <literallayout class="monospaced">
+wget http://yum.griddynamics.net/yum/diablo/openstack-nova-node-full-2011.3-b609.noarch.rpm
+sudo rpm -i openstack-repo-2011.1-3.noarch.rpm
+        </literallayout>
+    <para>Install the libvirt package (these instructions are tested only on KVM). </para>
+    <literallayout class="monospaced">
+sudo yum install libvirt
+sudo chkconfig libvirtd on
+sudo service libvirtd start
+        </literallayout>
+    <para>Repeat the basic installation steps to put the pre-requisites on all cloud controller and compute nodes. Nova has many different possible configurations. You can install Nova services on separate servers as needed but these are the basic pre-reqs.</para>
+    <para>These are the basic packages to install for a cloud controller node:</para>
+    <literallayout class="monospaced">sudo yum install euca2ools openstack-nova-node-full</literallayout>
+    <para>These are the basic packages to install compute nodes. Repeat for each compute node (the node that runs the VMs) that you want to install.</para>
+    <literallayout class="monospaced">sudo yum install openstack-nova-compute </literallayout>
+    <para>On the cloud controller node, create a MySQL database named nova. </para>
+    <literallayout class="monospaced">
+sudo service mysqld start
+sudo chkconfig mysqld on
+sudo service rabbitmq-server start
+sudo chkconfig rabbitmq-server on
+mysqladmin -u root password nova
+</literallayout>
+    <para>You can use this script to create the database. </para>
+    <programlisting>
+#!/bin/bash
+
+DB_NAME=nova
+DB_USER=nova
+DB_PASS=nova
+PWD=nova
+
+CC_HOST="A.B.C.D" # IPv4 address
+HOSTS='node1 node2 node3' # compute nodes list
+
+mysqladmin -uroot -p$PWD -f drop nova
+mysqladmin -uroot -p$PWD create nova
+
+for h in $HOSTS localhost; do
+        echo "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'$h' IDENTIFIED BY '$DB_PASS';" | mysql -u root -p$DB_PASS mysql
+done
+echo "GRANT ALL PRIVILEGES ON $DB_NAME.* TO $DB_USER IDENTIFIED BY '$DB_PASS';" | mysql -u root -p$DB_PASS mysql
+echo "GRANT ALL PRIVILEGES ON $DB_NAME.* TO root IDENTIFIED BY '$DB_PASS';" | mysql -u root -p$DB_PASS mysql 
+        </programlisting>
+    <para>Now, ensure the database version matches the version of nova that you are installing:</para>
+    <literallayout class="monospaced">nova-manage db sync</literallayout>
+    <para>For iptables configuration, update your firewall configuration to allow incoming
+        requests on ports 5672 (RabbitMQ), 3306 (MySQL DB), 9292 (Glance), 6080 (noVNC web
+        console), API (8773, 8774) and DHCP traffic from instances. For non-production
+        environments the easiest way to fix any firewall problems is removing final REJECT in
+        INPUT chain of filter table. </para>
+    <literallayout class="monospaced">
+sudo iptables -I INPUT 1 -p tcp --dport 5672 -j ACCEPT
+sudo iptables -I INPUT 1 -p tcp --dport 3306 -j ACCEPT
+sudo iptables -I INPUT 1 -p tcp --dport 9292 -j ACCEPT
+sudo iptables -I INPUT 1 -p tcp --dport 6080 -j ACCEPT
+sudo iptables -I INPUT 1 -p tcp --dport 8773 -j ACCEPT
+sudo iptables -I INPUT 1 -p tcp --dport 8774 -j ACCEPT
+sudo iptables -I INPUT 1 -p udp --dport 67 -j ACCEPT
+            </literallayout>
+    
+    <para>On every node when you have nova-compute running ensure that unencrypted VNC access is allowed only from Cloud Controller node:</para> 
+    
+    <literallayout class="monospaced">sudo iptables -I INPUT 1 -p tcp -s &lt;CLOUD_CONTROLLER_IP_ADDRESS&gt; --dport 5900:6400 -j ACCEPT
+        </literallayout><para>On each node, set up the configuration file in /etc/nova/nova.conf.</para>
+    <para>Start the Nova services after configuring and you then are running an OpenStack
+        cloud!</para>
+    <literallayout class="monospaced">
+for n in api compute network objectstore scheduler vncproxy; do 
+              sudo service openstack-nova-$n start; done
+              sudo service openstack-glance-api start
+              sudo service openstack-glance-registry start
+for n in node1 node2 node3; do 
+              ssh $n sudo service openstack-nova-compute start; done
+        </literallayout>
+</section>
