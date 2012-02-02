@@ -999,5 +999,153 @@ ps -ef | grep libvirt</literallayout>
             </tbody></table>
     </section>
     
-    </chapter>
+    <section xml:id="configuring-compute-rate-limiting">
+        <title>Configuring Compute API Rate Limiting </title>
+
+            <para>OpenStack Compute supports API rate limiting for the
+            OpenStack API.  The rate limiting allows an administrator to
+            configure limits on the type and number of API calls that
+            can be made in a specific time interval.    
+            </para>
+
+            <para>When API rate limits are exceeded, HTTP requests will
+            return a error with a status code of 413 "Request entity
+            too large", and will also include a 'Retry-After' HTTP
+            header. The response body will include the error details,
+            and the delay before the request should be retried.</para>
+
+            <para>Rate limiting is not available for the EC2 API.
+            </para>
+
+            <simplesect><title>Specifying Limits</title>
+            <para>Limits are specified using five values:
+            </para>    
+
+            <itemizedlist>
+                <listitem>
+                    <para>The <emphasis role="bold">HTTP method</emphasis>
+                    used in the API call, typically one of GET, PUT, POST, or DELETE.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>A <emphasis role="bold">human readable URI</emphasis>
+                    that is used as a friendly description of where the limit is applied.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>A <emphasis role="bold">regular expression</emphasis>. The limit
+                    will be applied to all URI's that match the regular expression and 
+                    HTTP Method.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>A <emphasis role="bold">limit value </emphasis> that specifies the
+                    maximum count of units before the limit takes effect. 
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>An <emphasis role="bold">interval</emphasis> that specifies time frame
+                    the limit is applied to. The interval can be SECOND, MINUTE, HOUR, or DAY. 
+                    </para>
+                </listitem>
+            </itemizedlist>
+
+            <para> Rate limits are applied in order, relative to the HTTP method, 
+            going from least to most specific. For example, although the default 
+            threshold for POST to */servers is 50 per day, one cannot
+            POST to */servers more than 10 times within a single minute
+            because the rate limits for any POST is 10/min.
+            </para>    
+            </simplesect>
+
+            <simplesect><title>Default Limits </title>
+            <para>
+               OpenStack compute is normally installed with the following limits enabled:
+            </para>
+            <table rules="all">
+            <caption>Default API Rate Limits </caption>
+            <thead>
+                <tr>
+                    <td>HTTP method</td>
+                    <td>API URI</td>
+                    <td>API regular expression</td>
+                    <td>Limit</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>POST</td>
+                    <td>any URI (*)</td> 
+                    <td>.* </td> 
+                    <td>10 per minute</td>
+                </tr>
+                <tr>
+                    <td>POST</td>
+                    <td>/servers </td> 
+                    <td>^/servers </td> 
+                    <td>50 per day </td>
+                </tr>
+                <tr>
+                    <td>PUT</td>
+                    <td>any URI (*)</td> 
+                    <td>.*</td> 
+                    <td>10 per minute</td>
+                </tr>
+                <tr>
+                    <td>GET</td>
+                    <td>*changes-since*</td> 
+                    <td>.*changes-since.*</td> 
+                    <td>3 per minute</td>
+                </tr>
+                <tr>
+                    <td>DELETE</td>
+                    <td>any URI (*)</td> 
+                    <td>.* </td> 
+                    <td>100 per minute</td>
+                </tr>
+            </tbody>
+            </table>
+            </simplesect>
+
+            <simplesect><title>Configuring and Changing Limits </title>
+            <para>
+            The actual limits are specified in the file etc/nova/api-paste.ini, 
+            as part of the WSGI pipeline.
+            </para>
+
+            <para>To enable limits, ensure the 'ratelimit' filter is included in the
+            API pipeline specification.  If the 'ratelimit' filter is removed from the
+            pipeline, limiting will be disabled.  There should also be a definition for
+            the ratelimit filter. The lines will appear as follows:
+            </para>
+            <programlisting>
+
+[pipeline:openstack_compute_api_v2]
+pipeline = faultwrap authtoken keystonecontext ratelimit osapi_compute_app_v2
+
+[pipeline:openstack_volume_api_v1]
+pipeline = faultwrap authtoken keystonecontext ratelimit osapi_volume_app_v1
+
+[filter:ratelimit]
+paste.filter_factory = nova.api.openstack.compute.limits:RateLimitingMiddleware.factory
+
+            </programlisting>
+
+            <para>To modify the limits, add a 'limits' specification to
+            the [filter:ratelimit] section of the file.  The limits are 
+            specified in the order HTTP method, friendly URI, regex, limit, and
+            interval.  The following example specifies the default rate limiting values:
+            </para>
+            <programlisting>
+
+[filter:ratelimit]
+paste.filter_factory = nova.api.openstack.compute.limits:RateLimitingMiddleware.factory
+limits =("POST", "*", ".*", 10, MINUTE);("POST", "*/servers", "^/servers", 50, DAY);("PUT", "*", ".*", 10, MINUTE);("GET", "*changes-since*", ".*changes-since.*", 3, MINUTE);("DELETE", "*", ".*", 100, MINUTE)
+
+            </programlisting>
+            </simplesect>
+
+        </section>
+
+</chapter>
      
