@@ -25,7 +25,7 @@
         </copyright>
         <releaseinfo>Quantum 1.0 Administrator Guide</releaseinfo>
         <productname>OpenStack Quantum (virtual network service)</productname>
-        <pubdate>2011-12-15</pubdate>
+        <pubdate>2012-01-31</pubdate>
         <legalnotice role="apache2">
             <annotation>
                 <remark>Copyright details are filled in by the template.</remark>
@@ -37,15 +37,24 @@
         </abstract>
 
         <revhistory>
-            <revision>
                 <!-- ... continue addding more revisions here as you change this document using the markup shown below... -->
+            <revision>
+                <date>2012-01-31</date>
+                <revdescription>
+                    <itemizedlist spacing="compact">
+                        <listitem>
+                            <para>Essex-3 update (2).</para>
+                        </listitem>
+                    </itemizedlist>
+                </revdescription>
+            </revision>
+            <revision>
                 <date>2011-12-15</date>
                 <revdescription>
                     <itemizedlist spacing="compact">
                         <listitem>
                             <para>Essex-2 update.</para>
                         </listitem>
-
                     </itemizedlist>
                 </revdescription>
             </revision>
@@ -253,46 +262,72 @@
             </section>
             <section xml:id="Source-Install-d1e445">
                 <title>Installing from Source</title>
-                <note><para>Installing from source is only supported for essex-2 or any more recent release. </para> </note>
+                <note><para>Quantum packaging changed significantly for Essex-3, with the CLI and API client
+                     code being separated into a different package.  The instructions below will work only
+                     for releases Essex-3 and beyond. </para> </note>
                 <para>If you cannot install Quantum from distribution packages, you can download the
-                    Quantum source release from <link>https://launchpad.net/quantum/+download</link>
-                    . On this page you can choose among all of the recent Quantum releases. 
-                    Since Quantum is still evolving
-                    rapidly, if you want all of the features described in this document, the latest
-                    milestone release is suggested. </para>
-                <para>After downloading the source tar.gz file, install dependencies using pip,
-                    unarchive the files, and cd into the directory, and install.  For example, on
-                    Ubuntu: </para>
-                <literallayout class="monospaced">sudo apt-get install python-pip libxslt python-setuptools \
-    python-lxml python-virtualenv
-tar xzf quantum*.tar.gz
-cd quantum*
-sudo pip install -r tools/pip-requires
-for x in client server common; do python setup_${x}.py build; done
+                      both the python-quantumclient-&lt;version&gt;.tar.gz
+                      and quantum-&lt;version&gt;.tar.gz files from
+                     <link>https://launchpad.net/quantum/+download</link>.
+                </para>
+                <note><para> The Quantum server code currently depends on code in python-quantumclient,
+                       so the client code must always be downloaded and installed. </para></note>
+                <para> First, install python setup tools. For example, on Ubuntu: </para>
+                <literallayout class="monospaced">sudo apt-get install python-setuptools python-dev libxslt1-dev</literallayout>
+                <note> <para> Due to a problem with the Essex-3 tarball, there is an extra step in the instructions below
+                              to copy a missing __init__.py file into the python-quantumclient directory. </para> </note>
+                <para>  Then install the client and server packages using setup tools.  For example, on Ubuntu:</para>
+                       <literallayout class="monospaced">tar xzf python-quantumclient-&lt;version&gt;.tar.gz
+tar xzf quantum-&lt;version&gt;.tar.gz
+cp quantum-&lt;version&gt;/quantum/__init__.py python-quantumclient-&lt;version&gt;/quantum/__init__.py
+cd python-quantumclient-&lt;version&gt;
+sudo python setup.py install
+cd ..
+cd quantum-&lt;version&gt;
 sudo python setup.py install</literallayout>
                 <para>After the install, the executables "quantum-server" and "quantum" should be in
                     your path, just as if you had installed from packages.  </para>
                 <para>Run setup.py with the "-h" option to see other install options. </para>
-                <para>After installing from source, $QUANTUM_CONF_DIR is /etc/quantum.</para>
+                <para>After installing from source, files normally placed in /etc are instead placed in
+                /usr/local/lib/python2.7/dist-packages/quantum-2012.1-py2.7.egg/etc/ .
+                As a result, you MUST copy these files to /etc: </para>
+                       <literallayout class="monospaced">sudo cp -r /usr/local/lib/python2.7/dist-packages/quantum-2012.1-py2.7.egg/etc/quantum /etc
+sudo cp /usr/local/lib/python2.7/dist-packages/quantum-2012.1-py2.7.egg/etc/init.d/quantum-server /etc/init.d
+sudo chmod +x /etc/init.d/quantum-server
+</literallayout>
             </section>
             <section xml:id="Source-Run-dle445">
                 <title>No Installation (Running from Source)</title>
-                <para>If you with to run Quantum from the source directory without installing, you
-                    will need to download a Quantum tarball and install dependencies, as described above in
-                    the <link linkend="Source-Install-d1e445">Source Install</link> section.
-                </para>
-                <para>Then, from within the Quantum source directory, you can 
+                <note><para>Running from source with no installation is primarily useful for developers and
+                      is usually not relevant to users.
+                </para></note>
+                <para> You only need to download the main quantum-&lt;version&gt;.tar.gz file
+                     from <link>https://launchpad.net/quantum/+download</link>,
+                  as the python-quantumclient code will be installed as a dependency.</para>
+                <para> First, install dependencies.  For example, on Ubuntu: </para>
+                <literallayout class="monospaced">sudo apt-get install python-setuptools python-pip python-virtualenv</literallayout>
+                <note> <para> Due to a problem with the Essex-3 tarballs, the pip-requires file is not available
+                        in the tarball itself.  It can be downloaded from
+                        <link>https://github.com/openstack/quantum/blob/9a1823d72ba84f6f98a9870970a7cd6eab25822d/tools/pip-requires </link>
+                        and manually placed in the tools directory referenced below.  </para> </note>
+                <para> Next, untar the code and install dependencies using pip.  On Ubuntu: </para>
+                       <literallayout class="monospaced">tar xzf quantum-&lt;version&gt;.tar.gz
+cd quantum-&lt;version&gt;
+sudo pip install -r tools/pip-requires</literallayout>
+                <para>Then, from within the Quantum source directory, you can
                     run the unit tests to confirm that the dependencies are correctly installed:</para>
-                <literallayout>./run_tests.sh -N</literallayout>
+                <literallayout class="monospaced">./run_tests.sh -N</literallayout>
                 <para>All tests should print a green 'OK'. The end of the test output may print a
                     few pep8 errors depending on your version of pep8 installed. These can be safely
                     ignored. </para>
                 <para>When running from source, be sure source that your PYTHONPATH environment variable includes the
                 root directory of the Quantum source tree, and that the executables in the bin/ directory of the source
                 tree are in your PATH environment variable.</para>
+                <para> The quantum-server binary will be run from the local bin/ directory within the source, and
+                the quantum CLI client will be installed as part of the pip install. </para>
                 <para>When running from source, $QUANTUM_CONF_DIR is the etc/ directory within the
                 Quantum source directory. For example, from the top of the Quantum source directory, run:</para>
-                <literallayout>./bin/quantum-server</literallayout>
+                <literallayout class="monospaced">./bin/quantum-server</literallayout>
             </section>
         </section>
 
@@ -321,22 +356,25 @@ sudo python setup.py install</literallayout>
         </section>
         <section xml:id="Running-d1e447">
             <title>Running the Service</title>
-            <para>To start the service, simply run: </para>
-            <literallayout class="monospaced">quantum-server           </literallayout>
+            <para>To start the service, the recommend approach is to use the init script: </para>
+            <literallayout class="monospaced">/etc/init.d/quantum-server start</literallayout>
+            <para>The service can also be invoked directly:</para>
+            <literallayout class="monospaced">quantum-server</literallayout>
             <para>A successful start of the Quantum service with default settings will have output
-                that ends with a line similar to: </para>
+                that ends with a line similar to.  If running from an init script, this output will be
+                in the file /var/log/quantum/quantum-server.log .</para>
             <literallayout class="monospaced">DEBUG [eventlet.wsgi.server] (2094) wsgi starting up on http://0.0.0.0:9696/            </literallayout>
             <para>By default the service uses TCP port 9696 and listens on all IP addresses. To edit
                 this and other Quantum Service settings, edit quantum.conf in the Quantum
                 configuration directory. Editing this file can also be used to enable any extensions
                 supported by the plugin. See your plugin documentation for more details. </para>
-            <para>To use a non-standard location for quantum.conf, provide it as an argument when
-                running the server: </para>
+            <para>To use a non-standard location for quantum.conf, run quantum-server directly and
+                provide it as an argument when running the server: </para>
             <literallayout class="monospaced">quantum-server /path/to/quantum.conf</literallayout>
         </section>
         <section xml:id="Validation-d1e447">
             <title>Validating the Setup</title>
-            <para>You can use the basic API client CLI that ships with Quantum to validate your
+            <para>You can use the basic Quantum API client CLI to validate your
                 setup. While still running the Quantum service, run the following command from the
                 same host to confirm that the client can communicate with Quantum service API
                 running your plugin: </para>
@@ -453,11 +491,14 @@ list_ports [tenant-id] [net-id]            </literallayout>
                     to create a corresponding Quantum network, and likewise will create an IPAM
                     subnet using the specified fixed range. </para>
             <para>By default, networks are ''global'' in the sense that they are shared by all
-                    projects. To create a project-specific network, specify the ''project_id'' flag
+                    tenants (i.e. projects in Nova). To create a tenant-specific network, specify the ''project_id'' flag
                     when creating the network. For example: </para>
-            <literallayout class="monospaced">nova-manage network create --label=tenantA-private --fixed_range_v4=10.0.0.0/24 --project_id=tenantA            </literallayout>
+            <literallayout class="monospaced">nova-manage network create --label=tenant2-private --fixed_range_v4=10.0.0.0/24 --project_id=2            </literallayout>
+            <para>This project_id should be the integer 'tenant-id' value from keystone.  To view a tenant's
+            ID, run: </para>
+            <literallayout class="monospaced">keystone-manage tenant list</literallayout>
             <para>When a new VM is created, it is given a vNIC for each global network, as well as a
-                    vNIC for each network owned by the project associated with the VM. This lets
+                    vNIC for each network owned by the tenant associated with the VM. This lets
                     users create hybrid scenarios where a VM has a vNIC both on a shared public
                     network and on a private tenant-specific network. </para>
             </section>
@@ -472,16 +513,27 @@ list_ports [tenant-id] [net-id]            </literallayout>
                     to a private tenant network. </para>
             <para>To do this, first create the shared network: </para>
             <literallayout class="monospaced">nova-manage network create --label=public --fixed_range_v4=8.8.8.0/24 --priority=0            </literallayout>
-            <para>Then, for each projectX, create a private network: </para>
-            <literallayout class="monospaced">nova-manage network create --label=projectX-private --fixed_range_v4=10.0.0.0/24 --project_id=projectX --priority=1            </literallayout>
+            <para>Then, for each with tenant with ID X, create a private network: </para>
+            <literallayout class="monospaced">nova-manage network create --label=tenantX-private --fixed_range_v4=10.0.0.0/24 --project_id=X --priority=1            </literallayout>
+            <note><para> To allow the CIDR address range for different networks to overlap, you must be using
+                    Melange for IP Address Management (see: Using Melange IPAM below). </para></note>
             <para>If a network is created with no ''priority'', the network has priority 0. Networks
                     should be created such that a VM is never associated with multiple networks of
                     the same priority, as the order of vNICs will be undefined. </para>
             </section>
             <section xml:id="Net-Gateways-dle455">
-                <title>Network Gateway Routers</title>
-            <para>Optionally, each Quantum network can have a gateway router attached, to provide
-                    VMs on private networks with access to a public network. Currently, this gateway
+                <title>Network Gateway Routers and Floating IPs</title>
+            <note><para> For Essex-3, Quantum Manager will only implement gateway routers and
+                         floating IPs if DHCP is enabled.  Quantum Manager will not reject calls
+                         to configure gateway routers or floating IPs, the the underlying forwarding
+                         will not happen.  This will be fixed in Essex-4.
+            </para></note>
+            <para>Optionally, each Quantum network can have a gateway router attached.  Similar to
+                    a nova-network deployment with VLANManager, this gateway router functionality provide
+                    VMs on private networks with access to a public network. This gateway provides SNAT
+                    to a public network, as well as ''floating IPs''.
+            </para>
+            <para>  Currently, this gateway
                     capability is implemented using the nova-network process that is running on one
                     or more "network controller" nodes. This is essentially the same mechanism as
                     used by Nova's "VLAN Manager". In this model, a network controller node has two
@@ -489,11 +541,13 @@ list_ports [tenant-id] [net-id]            </literallayout>
                     and an "external" network (e.g., used for Internet access).</para>
             <para>With Quantum Manager, a gateway will be attached to a network if the "--gateway"
                     flag is included in the nova-manage call to create the network. For example: </para>
-                <literallayout class="monospaced">nova-manage network create --label=projectX-private --fixed_range_v4=10.0.0.0/24 --project_id=projectX --priority=1 --gateway=10.0.0.1</literallayout>
+                <literallayout class="monospaced">nova-manage network create --label=tenantX-private --fixed_range_v4=10.0.0.0/24 --project_id=X --priority=1 --gateway=10.0.0.1</literallayout>
                 <para>Similar to the VLAN Manager, the gateway implemented by the Quantum Manager
                     also performs the rewriting of HTTP requests destined to the Metadata server IP
                     address (169.254.169.254) to instead reach the IP address of Nova's meta-data
                     service.</para>
+                <para> Floating IPs should be configured using the standard Nova commands for floating IPs.
+                       See: <link xlink:href="http://docs.openstack.org/cactus/openstack-compute/admin/content/allocating-associating-ip-addresses.html"> Nova Admin Manual on Floating IPs</link>.</para>
             </section>
            <section xml:id="Existing-Net-dle454">
                 <title> Leveraging Existing Quantum Networks </title>
@@ -507,6 +561,8 @@ list_ports [tenant-id] [net-id]            </literallayout>
             </section>
             <section xml:id="specifying-vm-network-connectivity-on-boot">
                 <title> Specifying VM Network Connectivity on Boot </title>
+                <note> <para> This capability is broken due to a bug in the Essex-3 milestone, but is
+                        fixed in Essex-4. </para> </note>
                 <para>Quantum Manager already supports more flexible vNIC-to-network associations
                     using the 'os-create-server-ext' extension.  The Quantum Manager supports the
                     network association portion of this extension, but ignores any IP address data
@@ -542,21 +598,18 @@ list_ports [tenant-id] [net-id]            </literallayout>
         </section>
         <section xml:id="Limits-dle455">
             <title> Quantum Manager Limitations </title>
-            <para>During the "essex" release cycle, Quantum is gaining capabilities to bring it to
-                full parity with the networking capabilities already provided within Nova. As of the
-                most recent "essex" milestone, the following limitations still exist: </para>
+            <para> During Essex, Quantum has added many capabilities toward achieving "nova-network parity".
+                   The following limitations exist: </para>
             <itemizedlist spacing="compact">
                 <listitem>
-                    <para>Floating IP addresses are not supported. </para>
-                </listitem>
-                <listitem>
                     <para>Multi-host nova-network HA is not supported (i.e., running nova-network on
-                        each compute node for HA purposes).</para>
+                        each compute node for HA purposes).  It is unlikely that Quantum Manager will
+                        support this mode in Essex. </para>
                 </listitem>
-                <listitem><para>CloudPipe VPNs do not work when using Quantum Manager.</para></listitem>
+                <listitem><para>CloudPipe VPNs do not work when using Quantum Manager.
+                                Nova is developing an alternative to CloudPipe for Essex
+                                that should be compatible with Quantum Manager.</para></listitem>
             </itemizedlist>
-            <para>We expect most of these limitations to be addressed by enhancements to Quantum
-                Manager during the Essex time-frame. </para>
         </section>
         <section xml:id="quantum-and-nova-flatmanager">
             <title> Quantum and Nova FlatManager </title>
@@ -595,7 +648,10 @@ list_ports [tenant-id] [net-id]            </literallayout>
     <chapter xml:id="ch_quantum-keystone-authn-authz">
             <title> Quantum Keystone Authentication and Authorization</title>
             <para>Requests to the Quantum API can be authenticated with the OpenStack Keystone
-            identity service using a token-based authentication protocol.  </para>
+            identity service using a token-based authentication protocol.  This is optional, and
+            is only needed for production deployments that expose the Quantum API directly to tenants.
+            Deployments where tenants only contact the Nova API, and Nova communicates with Quantum
+            using the Quantum Manager (see above), do not require Quantum to use Keystone.</para>
             <para>Keystone integration is disabled by default, as Quantum does not yet provide
             authorization, meaning that NOTHING IS DONE with existing Keystone identities by
             Quantum. We expect this to change in future Essex Milestones, but for the time being
@@ -610,11 +666,11 @@ list_ports [tenant-id] [net-id]            </literallayout>
             <para>2.Enabling Authentication and Authorization within Quantum</para>
             <para>Authentication and Authorization middleware should be enabled in the Quantum
             pipeline. To this aim, uncomment the following line in quantum.conf: </para>
-            <literallayout>pipeline = authN extensions quantumapiapp</literallayout>
+            <literallayout class="monospaced">pipeline = authN extensions quantumapiapp</literallayout>
         <para>3. Configuring Quantum to Connect to Keystone</para>
             <para>The final step concerns configuring access to Keystone. The following attributes
             must be specified in the [filter:authN] section of quantum.conf: </para>
-            <literallayout>auth_host              IP address or host name of the server where Keystone is running
+            <literallayout class="monospaced">auth_host              IP address or host name of the server where Keystone is running
 auth_port              Port where the Keystone Admin API is listening
 auth_protocol       Protocol used for communicating with Keystone (http/https)
 auth_version         Keystone API version (default: 2.0) </literallayout>
@@ -628,9 +684,9 @@ auth_version         Keystone API version (default: 2.0) </literallayout>
                 Keystone user with administrative rights auth_admin_password Password for the user
                 specified with auth_admin_user</para>
             <para>For example, using password:</para>
-            <literallayout>auth_admin_user = admin auth_admin_password = secrete</literallayout>
+            <literallayout class="monospaced">auth_admin_user = admin auth_admin_password = secrete</literallayout>
             <para>Or using a token:</para>
-            <literallayout>auth_admin_token = 9a82c95a-99e9-4c3a-b5ee-199f6ba7ff04</literallayout>
+            <literallayout class="monospaced">auth_admin_token = 9a82c95a-99e9-4c3a-b5ee-199f6ba7ff04</literallayout>
             <note><para>auth_admin_token and auth_admin_user/password are exclusive. If both are specified,
                     auth_admin_token has priority.</para></note>
         </section>
