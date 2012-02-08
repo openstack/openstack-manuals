@@ -45,12 +45,11 @@ sudo service mysql restart</literallayout></para>
     <para><literallayout class="monospaced">mysql> quit</literallayout></para>
     <para>Edit /etc/keystone/keystone.conf to include the
         --sql_connection to use the backend data store you just
-        created. Ensure that it is owned by root and chmod is set to
-        0640 since it contains your mysql password. (You do leave the "default_store" as sqllite, however.) </para>
+        created. Ensure that it is owned by keystone and protect the
+        MySQL password stored in it. </para>
     <literallayout class="monospaced">sudo nano /etc/keystone/keystone.conf
-sudo chown root:root /etc/keystone/keystone.conf
-sudo chmod 0640 /etc/keystone/keystone.conf
-    </literallayout>
+sudo chown keystone /etc/keystone/keystone.conf
+sudo chmod 0640 /etc/keystone/keystone.conf </literallayout>
     <para>Here is an
         example section:</para>
         <literallayout class="monospaced">[keystone.backends.sqlalchemy]
