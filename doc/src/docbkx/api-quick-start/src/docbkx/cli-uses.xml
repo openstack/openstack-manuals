@@ -11,13 +11,10 @@
     Compute API interactions from the command line. You install the client, and then provide
     your username and password, set as environment variables for convenience, and then you
     can have the ability to send commands to your cloud on the command-line.</para>
-    <para>To install python-novaclient, download the tarball from
-        <link xlink:href="http://pypi.python.org/pypi/python-novaclient/2.6.3#downloads">http://pypi.python.org/pypi/python-novaclient/2.6.3#downloads</link> and then install it in your favorite python environment. </para>
+    <para>To install python-novaclient, grab the stable/nova version
+        like so. </para>
     <programlisting>
-$ curl -O http://pypi.python.org/packages/source/p/python-novaclient/python-novaclient-2.6.3.tar.gz
-$ tar -zxvf python-novaclient-2.6.3.tar.gz
-$ cd python-novaclient-2.6.3
-$ sudo python setup.py install
+$ pip install -e git+https://github.com/openstack/python-novaclient.git#egg=python-novaclient
     </programlisting>
     <para>Now that you have installed the python-novaclient, confirm the installation by entering:</para><programlisting>
 $ nova help
@@ -26,25 +23,24 @@ usage: nova [--username USERNAME] [--apikey APIKEY] [--projectid PROJECTID]
             [--url URL] [--version VERSION]
             &lt;subcommand&gt; ...
 </programlisting>
-    <para>In return, you will get a listing of all the commands and parameters for the nova command line client. By setting up the required parameters as environment variables, you can fly through these commands on the command line. You can add --username on the nova command, or set them as environment variables: </para>
+    <para>In return, you will get a listing of all the commands and parameters for the nova command line client. 
+        By setting up the required parameters as environment variables, you can fly through these commands on the command line. 
+        You can add --username on the nova command, or set them as environment variables. Using the Free Cloud, you are supplied with an endpoint, 
+        which the nova client recognizes as the NOVA_URL. </para>
     <para><programlisting>
 export NOVA_USERNAME=joecool
 export NOVA_API_KEY=coolword
 export NOVA_PROJECT_ID=coolu
-</programlisting>
-    </para><para>Using the Identity Service, you are supplied with an authentication endpoint, which nova recognizes as the NOVA_URL. </para>
-    <para>
-        <programlisting>
-export NOVA_URL=http://hostname:5000/v2.0
+export NOVA_URL=http://thefreecloud.org:5000/v2.0
 export NOVA_VERSION=1.1
 </programlisting>
     </para>
+    
 <section xml:id="Launching-Images-a09140"><title>Listing Images</title><para>Before you can go about the business of building your cloud, you want to know what images are
     available to you by asking the image service what kinds of configurations are available.
     The image service could be compared to iTunes for your cloud - you can view the playlist
     of images before using your favorite image to create a new instance in the cloud. To get
-    the list of images, their names, status, and ID, use this
-    command:
+    the list of images, their names, status, and ID, use this command:
     <programlisting>
 $ nova image-list
 
