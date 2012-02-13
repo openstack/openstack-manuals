@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter xmlns="http://docbook.org/ns/docbook"
+<section xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" 
     xml:id="Compute_API_Quick_Start"
@@ -35,7 +35,7 @@
         <listitem><para>Begin API requests by asking for an authorization token from the endpoint your cloud
                     administrator gave you, typically http://hostname:5000/v2.0/tokens. You send your
                     username, password, and what group or account you are with (the "tenant" in auth-speak). </para>
-        <para><programlisting>curl -X 'POST' -v http://freecloud.org:5000/v2.0/tokens -d '{"passwordCredentials":{"username": "joecool", "password":"coolword"}, "tenantId":"5"}' -H 'Content-type: application/json'</programlisting></para></listitem>
+        <para><programlisting>curl -X 'POST' -v http://thefreecloud.org:5000/v2.0/tokens -d '{"auth":{"passwordCredentials":{"username": "joecool", "password":"coolword"}, "tenantId":"5"}' -H 'Content-type: application/json'</programlisting></para></listitem>
         <listitem><para>The server returns a response in which the 24-hours token is
                     contained.  Use that token to send API requests
                     with the X-Auth-Token included as an header
@@ -55,7 +55,7 @@
     <para>For a typical OpenStack deployment running the Identity
             Service you can request a token with this command in
             cURL:<programlisting>
-$ curl -X 'POST' -v http://freecloud.org:5000/v2.0/tokens -d '{"auth":{"passwordCredentials":{"username": "joecool", "password":"coolword"}, "tenantId":"5"}}' -H 'Content-type: application/json'
+$ curl -X 'POST' -v http://thefreecloud.org:5000/v2.0/tokens -d '{"auth":{"passwordCredentials":{"username": "joecool", "password":"coolword"}, "tenantId":"5"}}' -H 'Content-type: application/json'
          </programlisting></para>
         <para>In return, you should get a 200 OK response with a token in the form of "id": "cd427a33-bb4a-4079-a6d7-0ae148bdeda9" and an expiration date 24 hours from now. Here's what it looks like:</para>
     <para>
@@ -158,4 +158,4 @@ $ curl -X 'POST' -v http://freecloud.org:5000/v2.0/tokens -d '{"auth":{"password
     </section>
     
     
-    </chapter>
+    </section>
