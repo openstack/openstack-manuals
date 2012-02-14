@@ -1,0 +1,171 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <!-- POM Build file for the Keystone Developer Guide -->
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.openstack.identity</groupId>
+  <artifactId>docs</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+  <name>OpenStack API Page Test Project</name>
+  <profiles>                                                                                              
+    <profile>                                                                                           
+      <id>Rackspace Research Repositories</id>                                                        
+      <activation>                                                                                    
+        <activeByDefault>true</activeByDefault>                                                     
+      </activation>                                                                                   
+      <repositories>                                                                                  
+        <repository>                                                                                
+          <id>rackspace-research</id>                                                             
+          <name>Rackspace Research Repository</name>                                              
+          <url>http://maven.research.rackspacecloud.com/content/groups/public/</url>              
+        </repository>                                                                               
+      </repositories>                                                                                 
+      <pluginRepositories>                                                                            
+        <pluginRepository>                                                                          
+          <id>rackspace-research</id>                                                             
+          <name>Rackspace Research Repository</name>                                              
+          <url>http://maven.research.rackspacecloud.com/content/groups/public/</url>              
+        </pluginRepository>                                                                         
+      </pluginRepositories>                                                                           
+    </profile> 
+  </profiles>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <doctools.version>1.0.11-SNAPSHOT</doctools.version>
+  </properties>
+
+  <dependencies>
+    <!-- We need Saxon 9 and clouddocs-maven-plugin here to normalize wadls -->
+    <dependency>
+      <groupId>net.sourceforge.saxon</groupId>
+      <artifactId>saxon</artifactId>
+      <version>9.1.0.8</version>
+    </dependency>
+    <dependency>
+      <groupId>com.rackspace.cloud.api</groupId>
+      <artifactId>clouddocs-maven-plugin</artifactId>
+      <version>${doctools.version}</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <!-- Unpack the wadl normalization xslts -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>unpack-shared-resources</id>
+            <goals>
+              <goal>unpack-dependencies</goal>
+            </goals>
+            <phase>generate-sources</phase>
+            <configuration>
+              <outputDirectory>${project.build.directory}/generated-resources</outputDirectory>
+              <includeGroupIds>com.rackspace.cloud.api</includeGroupIds>
+              <includeArtifactIds>clouddocs-maven-plugin</includeArtifactIds>
+              <!-- <includeClassifiers>ns-resources</includeClassifiers> -->
+              <excludeTransitive>true</excludeTransitive>
+              <includes>**/normalizeWadl/*.xsl</includes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>xml-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>transform</goal>
+            </goals>
+	   <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+	   <!-- Comment out this phase and uncomment the phase for the -->
+	   <!--	plugin above to switch to grabbing the wadl from the   -->
+	   <!--	web.                                                   -->
+	   <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+            <phase>generate-sources</phase>
+          </execution>
+        </executions>
+        <configuration>
+          <transformationSets>
+            <transformationSet>
+              <dir>src/wadls/image-api/src</dir>
+              <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+              <!-- Add other wadls to be normalized here -->
+              <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+              <includes>
+                <include>os-image-*.wadl</include>
+              </includes>
+              <stylesheet>${project.build.directory}/generated-resources/cloud/normalizeWadl/normalizeWadl.xsl</stylesheet>
+              <!--
+                  This is optional. By default, the xslts look for the samples relative the to wadl.
+              -->
+              <!--
+                  <parameters>
+                  <parameter>
+                  <name>samples.path</name>
+                  <value>${project.build.directory}/../src/docbkx</value>
+                  </parameter>
+                  </parameters>
+              -->
+            </transformationSet>
+            <transformationSet>
+              <dir>src/wadls/identity-api/src/service</dir>
+              <includes>
+                <include>identity.wadl</include>
+              </includes>
+              <stylesheet>${project.build.directory}/generated-resources/cloud/normalizeWadl/normalizeWadl.xsl</stylesheet>
+            </transformationSet>
+            <transformationSet>
+              <dir>src/wadls/compute-api/src</dir>
+              <includes>
+                <include>*.wadl</include>
+              </includes>
+              <stylesheet>${project.build.directory}/generated-resources/cloud/normalizeWadl/normalizeWadl.xsl</stylesheet>
+            </transformationSet>
+          </transformationSets>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>net.sf.saxon</groupId>
+            <artifactId>saxon</artifactId>
+            <version>8.7</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+      <plugin>
+        <groupId>com.rackspace.cloud.api</groupId>
+        <artifactId>clouddocs-maven-plugin</artifactId>
+        <version>${doctools.version}</version>
+        <executions>
+          <execution>
+            <id>g1</id>
+            <goals>
+              <goal>generate-html</goal>
+            </goals>
+            <phase>generate-sources</phase>
+            <configuration>
+              <highlightSource>false</highlightSource>
+              <enableGoogleAnalytics>1</enableGoogleAnalytics>
+              <googleAnalyticsId>UA-17511903-8</googleAnalyticsId>
+            </configuration>
+          </execution>
+        </executions>
+        <configuration>
+          <!-- These parameters apply to pdf and webhelp -->
+          <xincludeSupported>true</xincludeSupported>
+          <sourceDirectory>src/docbkx</sourceDirectory>
+          <includes>
+	    index.xml
+          </includes>
+          <profileSecurity>reviewer</profileSecurity>
+          <branding>rackspace</branding>
+          <trimWadlUriCount>1</trimWadlUriCount>
+        </configuration>
+      </plugin>
+        </plugins>
+    </build>
+</project>

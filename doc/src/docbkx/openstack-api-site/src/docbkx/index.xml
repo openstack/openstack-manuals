@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book 
+    xmlns="http://docbook.org/ns/docbook" 
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" 
+    xmlns:wadl="http://wadl.dev.java.net/2009/02"
+    version="5.0-extension RackBook-2.0" 
+    xml:id="api.openstack.org">
+  <info>
+    <title>OpenStack APIs</title>
+    <copyright>
+      <year>2010-2012</year>
+    </copyright>
+    <legalnotice role="apache2">
+      <para/>
+    </legalnotice>
+  </info>
+  <preface xml:id="Overview">
+    <title>OpenStack API Reference</title>
+
+    <para>The OpenStack system has several key projects that are
+    separate installations but can work together depending on your
+    cloud needs: OpenStack Compute, OpenStack Object Storage,
+    OpenStack Identity Service, and OpenStack Image Service.</para>
+
+    <para>This page covers the basics for working with your OpenStack
+    cloud through the Compute API and Image API after authorizing with
+    the Identity Service API. You can then build a cloud by launching
+    images and assigning metadata to instances, all through an
+    API. Refer to the <link
+    xlink:href="http://docs.openstack.org/api/quick-start/content/">API Quick Start
+    Guide</link> for details about using the APIs referenced here, and
+    go to <link
+    xlink:href="http://docs.openstack.org/api/">docs.openstack.org/api</link>
+    for specifications of each API.
+    </para>
+  </preface>
+  <chapter xml:id="identity">
+    <title>Identity</title>
+    <para>With the Identity API, you obtain a token that lasts 24 hours so you can gain access to the Compute API. The version of the Identity API is 2.0.</para>
+    <wadl:resources 
+      href="identity.wadl" 
+      xmlns:wadl="http://wadl.dev.java.net/2009/02"/>      
+  </chapter>
+  <chapter xml:id="compute">
+    <title>Compute</title>
+    <para>With the Compute API, you launch virtual machines based on
+      the images uploaded to the system. You can reboot the server
+      when needed, resize it larger or smaller, and connect to the
+      server securely through SSH once it is started. The v1.1 API is
+      identical to the v2 API.</para>
+      <wadl:resources 
+        href="os-compute-1.1.wadl" 
+        xmlns:wadl="http://wadl.dev.java.net/2009/02"/>      
+  </chapter>
+  <chapter xml:id="files">
+    <title>Image</title>
+    <para>With the Image API, you load images for use at launch time
+      by the Compute API. Some cloud implementations do not expose
+      this API and offer pre-tested images only. You can also assign
+      metadata to images with this API. </para>
+    <wadl:resources 
+        href="os-image-1.0.wadl" 
+        xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
+  </chapter>
+</book>

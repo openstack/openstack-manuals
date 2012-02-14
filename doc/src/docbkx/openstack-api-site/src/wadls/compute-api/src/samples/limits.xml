@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<limits xmlns="http://docs.openstack.org/common/api/v1.0">
+  <rates>
+      <rate uri="*" regex=".*">
+          <limit value="10" verb="POST" remaining="2"
+                 unit="MINUTE"
+                 next-available="2011-12-15T22:42:45Z"/>
+          <limit value="10" verb="PUT" remaining="2"
+                 unit="MINUTE"
+                 next-available="2011-12-15T22:42:45Z"/>
+          <limit value="100" verb="DELETE" remaining="100"
+                 unit="MINUTE"
+                 next-available="2011-12-15T22:42:45Z"/>
+      </rate>
+      <rate uri="*changes-since*" regex="changes-since">
+          <limit value="3" verb="GET" remaining="3"
+                 unit="MINUTE"
+                 next-available="2011-12-15T22:42:45Z"/>
+      </rate>
+      <rate uri="*/servers" regex="^/servers">
+          <limit verb="POST" value="25" remaining="24"
+                 unit="DAY"
+                 next-available="2011-12-15T22:42:45Z"/>
+      </rate>
+  </rates>
+  <absolute>
+    <limit name="maxTotalRAMSize" value="51200"/>
+    <limit name="maxServerMeta" value="5"/>
+    <limit name="maxImageMeta" value="5"/>
+    <limit name="maxPersonality" value="5"/>
+    <limit name="maxPersonalitySize" value="10240"/>
+  </absolute>
+</limits>

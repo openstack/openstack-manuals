@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- (C) 2012 OpenStack LLC., All Rights Reserved -->
+
+<!--*******************************************************-->
+<!--         Import Common XML Entities                    -->
+<!--                                                       -->
+<!--     You can resolve the entites with xmllint          -->
+<!--                                                       -->
+<!--        xmllint -noent os-image-1.0.wadl             -->
+<!--*******************************************************-->
+<!DOCTYPE application [<!ENTITY % common  SYSTEM "common.ent">
+%common;]>
+
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+   xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+   xmlns="http://wadl.dev.java.net/2009/02"
+   xmlns:wadl="http://wadl.dev.java.net/2009/02"
+   xmlns:imageapi="http://docs.openstack.org/image/api/v1.0"
+   xmlns:common="http://docs.openstack.org/common/api/v1.0"
+   xmlns:atom="http://www.w3.org/2005/Atom"
+   xsi:schemaLocation="http://docs.openstack.org/image/api/v1.0
+                       xsd/api.xsd
+                       http://docs.openstack.org/common/api/v1.0
+                       xsd/api-common.xsd
+                       ">
+
+    <grammars>
+        <include href="xsd/api.xsd" />
+        <include href="xsd/api-common.xsd" />
+    </grammars>
+
+    <!--*******************************************************-->
+    <!--             All Resources                             -->
+    <!--*******************************************************-->
+
+    <resources base="https://glance.example.com/">
+	    <resource id="Images" type="#ImageList" path="images">
+	        <method href="#createImage" />
+	        <resource path="detail" type="#DetailImageList"/>
+	        <resource path="{imageId}">
+		        <param name="imageId" style="template" type="xsd:string">
+		            <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="Image ID"><p>Identifier for an image stored via the Image API, typically a uuid.</p></wadl:doc>
+	            </param>
+		        <method href="#getImage"/>
+		        <method href="#updateImage"/>
+		        <method href="#deleteImage"/>
+		        <resource id="members" path="members" type="#memberList" >
+		            <method href="#replaceMember" />
+		            <resource path="{tenantId}">
+		              <param name="tenantId" style="template" type="xsd:string">
+		                  <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="Image ID"><p>Identifier for a tenant managed by the Identity service. The Tenant ID can also be labeled as your account number.</p></wadl:doc>
+		            </param>
+                  <method href="#addMember" />
+                  <method href="#removeMember" />
+		          </resource>
+		    </resource>
+	        </resource>
+	    </resource>
+	    <resource id="shared-images" path="shared-images">
+	        <resource path="{tenantId}">
+		    <param name="tenantId" style="template" type="xsd:string"/>
+		    <method href="#getSharedImages" />
+	        </resource>
+	    </resource>
+    </resources>
+
+    <!--*******************************************************-->
+    <!--               Resource Types                          -->
+    <!--*******************************************************-->
+
+    <resource_type id="ImageList">
+        <method href="#listImage"/>
+    </resource_type>
+    <resource_type id="DetailImageList">
+        <method href="#listDetailImage"/>
+    </resource_type>
+    <resource_type id="memberList">
+        <method href="#listMember"/>
+    </resource_type>
+    <!--*******************************************************-->
+    <!--               All Methods                             -->
+    <!--*******************************************************-->
+
+    <method name="POST" id="createImage">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="create Image">
+            <p>
+                Register a New Virtual Machine Image.
+            </p>
+        </wadl:doc>
+        <request>
+            <representation mediaType="application/json"  element="image">
+                <param name="name" style="plain" type="xsd:string" required="true">
+                <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="Images name">
+                    <p>Name for the image. Note that the name of an image is not unique to a Glance node. The API cannot expect users to know all the unique names of all other user’s images.</p>
+                </wadl:doc>
+                </param>
+                <param name="disk_format" style="plain" type="xsd:string" required="true">
+                <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="Image disk format">
+                    <p>Valid values are one of aki, ari, ami, raw, iso, vhd, vdi, qcow2, or vmdk.</p>
+                    <p>The disk format of a virtual machine image is the format of the underlying
+                        disk image. Virtual appliance vendors have different formats for laying out
+                        the information contained in a virtual machine disk image.</p>
+                    <p>You can set your image’s container format to one of the following:</p>
+                    <ul>
+                        <li><p><strong>raw</strong></p>
+                            <p>This is an unstructured disk image format</p>
+                        </li>
+                        <li><p><strong>vhd</strong></p>
+                            <p>This is the VHD disk format, a common disk format used by virtual machine
+                                monitors from VMWare, Xen, Microsoft, VirtualBox, and others</p>
+                        </li>
+                        <li><p><strong>vmdk</strong></p>
+                            <p>Another common disk format supported by many common virtual machine monitors</p>
+                        </li>
+                        <li><p><strong>vdi</strong></p>
+                            <p>A disk format supported by VirtualBox virtual machine monitor and the QEMU
+                                emulator</p>
+                        </li>
+                        <li><p><strong>iso</strong></p>
+                            <p>An archive format for the data contents of an optical disc (e.g. CDROM).</p>
+                        </li>
+                        <li><p><strong>qcow2</strong></p>
+                            <p>A disk format supported by the QEMU emulator that can expand dynamically and
+                                supports Copy on Write</p>
+                        </li>
+                        <li><p><strong>aki</strong></p>
+                            <p>This indicates what is stored in Glance is an Amazon kernel image</p>
+                        </li>
+                        <li><p><strong>ari</strong></p>
+                            <p>This indicates what is stored in Glance is an Amazon ramdisk image</p>
+                        </li>
+                        <li><p><strong>ami</strong></p>
+                            <p>This indicates what is stored in Glance is an Amazon machine image</p></li></ul></wadl:doc>
+                            </param>
+                <param name="container_format" style="plain" type="xsd:string" required="true">
+                       <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="Container Formats">
+                           <p>The container format refers to whether the virtual machine image is in a
+                               file format that also contains metadata about the actual virtual machine.</p>
+                           <p>There are two main types of container formats: OVF and Amazon’s AMI. In
+                               addition, a virtual machine image may have no container format at all –
+                               basically, it’s just a blob of unstructured data.</p>
+                           <p>You can set your image’s container format to one of the following:</p>
+                           <ul>
+                               <li><p><strong>ovf</strong></p>
+                                   <p>This is the OVF container format</p>
+                               </li>
+                               <li><p><strong>bare</strong></p>
+                                   <p>This indicates there is no container or metadata envelope for the image</p>
+                               </li>
+                               <li><p><strong>aki</strong></p>
+                                   <p>This indicates what is stored in Glance is an Amazon kernel image</p>
+                               </li>
+                               <li><p><strong>ari</strong></p>
+                                   <p>This indicates what is stored in Glance is an Amazon ramdisk image</p>
+                               </li>
+                               <li><p><strong>ami</strong></p>
+                                   <p>This indicates what is stored in Glance is an Amazon machine image</p></li></ul>
+                       </wadl:doc>
+                </param>    
+                <param name="createImage" type="ImageForCreate"
+                    path="/images"/>
+            </representation>
+        </request>
+        <response status="202">
+            <representation mediaType="application/xml" element="common:version">
+                <param name="location" style="plain" type="xsd:anyURI"
+                       required="true"
+                       path="/common:version/atom:link[@rel='self']/@href">
+                    <link resource_type="#createImage" rel="self"/>
+                    <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="Image Location">
+                        <p>A location for the image identified by a URI. </p></wadl:doc>
+                </param>
+            </representation>
+            <representation mediaType="application/json" />
+        </response>
+    </method>
+    <method name="PUT" id="updateImage">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="update Image">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                Updating an Image/Uploading an Image File or Updating Image Metadata
+            </p>
+        </wadl:doc>
+        <response status="200">
+            <representation mediaType="application/xml" element="common:version">
+                <param name="location" style="plain" type="xsd:anyURI"
+                       required="true"
+                       path="/common:version/atom:link[@rel='self']/@href">
+                    <link resource_type="#createImage" rel="self"/>
+                </param>
+            </representation>
+            <representation mediaType="application/json" />
+        </response>
+    </method>
+    <method name="GET" id="getImage">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="Get Image Details">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                List details of the specified image.
+            </p>
+        </wadl:doc>
+        <response status="200">
+            <representation mediaType="application/xml" element="imageapi:image"/>
+            <representation mediaType="application/json" >
+            <doc xml:lang="EN">
+                <xsdxt:code href="samples/imagedetails.json" />
+            </doc></representation>
+        </response>
+        
+    </method>
+
+    <method name="DELETE" id="deleteImage">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="Delete Image">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                Deletes the specified image.
+            </p>
+        </wadl:doc>
+        <response status="204"/>
+    </method>
+    
+    <method name="GET" id="getSharedImages">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="E" title="List Shared Images">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                Requesting a List of VM Images shared with a given tenant.
+            </p>
+        </wadl:doc>
+        <request>
+            <param name="image_id" style="plain" required="true"
+                type="ImageForSharing"
+                path="/images/shared-images/{tenant_id}"/>
+        </request>
+        <response status="200">
+            <representation mediaType="application/xml" element="imageapi:images"/>
+            <representation mediaType="application/json" />
+        </response>
+    </method>
+    <method name="GET" id="listImage">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="List Image">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                Requesting a List of Public VM Images
+            </p>
+        </wadl:doc>
+        <request>
+            <param xmlns="http://wadl.dev.java.net/2009/02" name="name" style="query" required="false" type="xsd:string"><doc><p xmlns="http://www.w3.org/1999/xhtml">Name of the image as a string.</p></doc></param>
+            <param xmlns="http://wadl.dev.java.net/2009/02" name="container_format" style="query" required="false" type="imageapi:ImageStatus"><doc><p xmlns="http://www.w3.org/1999/xhtml">Value of the container format, such as ovf, bare, aki, ari, or ami.</p></doc></param>
+            <param xmlns="http://wadl.dev.java.net/2009/02" name="disk_format" style="query" required="false" type="imageapi:UUID"><doc><p xmlns="http://www.w3.org/1999/xhtml">Value of the disk format.</p></doc></param>
+            <param xmlns="http://wadl.dev.java.net/2009/02" name="status"  style="query" required="false" type="xsd:int"><doc><p xmlns="http://www.w3.org/1999/xhtml">Filter on the status of the image, such as queued, saving, active, killed, deleted, and pending_delete..</p></doc></param>
+            <param xmlns="http://wadl.dev.java.net/2009/02" name="size_min" style="query" required="false" type="xsd:string" default="ALL"><doc><p xmlns="http://www.w3.org/1999/xhtml">Value of the minimum size of the image in bytes.</p></doc></param>
+            <param xmlns="http://wadl.dev.java.net/2009/02" name="size_min" style="query" required="false" type="xsd:string" default="ALL"><doc><p xmlns="http://www.w3.org/1999/xhtml">Value of the maximum size of the image in bytes.</p></doc>    
+            </param>
+        </request>
+        <response status="200">
+            <representation mediaType="application/xml" element="imageapi:images"/>
+            <representation mediaType="application/json" >
+            <doc xml:lang="EN">
+                <xsdxt:code href="samples/imagelist.json" />
+            </doc>
+            </representation>
+        </response>
+    </method>
+    
+    <method name="GET" id="listDetailImage">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="List Detail Image">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                List available images (all details).
+            </p>
+        </wadl:doc>
+        <request>
+            <param xmlns="http://wadl.dev.java.net/2009/02" name="name" style="query" required="false" type="xsd:string"><doc><p xmlns="http://www.w3.org/1999/xhtml">Name of the image as a string.</p></doc></param>
+            <param xmlns="http://wadl.dev.java.net/2009/02" name="container_format" style="query" required="false" type="imageapi:ImageStatus"><doc><p xmlns="http://www.w3.org/1999/xhtml">Value of the container format, such as ovf, bare, aki, ari, or ami.</p></doc></param>
+            <param xmlns="http://wadl.dev.java.net/2009/02" name="disk_format" style="query" required="false" type="imageapi:UUID"><doc><p xmlns="http://www.w3.org/1999/xhtml">Value of the disk format.</p></doc></param>
+            <param xmlns="http://wadl.dev.java.net/2009/02" name="status"  style="query" required="false" type="xsd:int"><doc><p xmlns="http://www.w3.org/1999/xhtml">Filter on the status of the image, such as queued, saving, active, killed, deleted, and pending_delete.</p></doc></param>
+            <param xmlns="http://wadl.dev.java.net/2009/02" name="size_min" style="query" required="false" type="xsd:string" default="ALL"><doc><p xmlns="http://www.w3.org/1999/xhtml">Value of the minimum size of the image in bytes.</p></doc></param>
+            <param xmlns="http://wadl.dev.java.net/2009/02" name="size_min" style="query" required="false" type="xsd:string" default="ALL"><doc><p xmlns="http://www.w3.org/1999/xhtml">Value of the maximum size of the image in bytes.</p></doc></param>
+        </request>
+        <response status="200">
+            <representation mediaType="application/xml" element="imageapi:images">
+                <param name="next" style="plain" type="xsd:anyURI"
+                       path="/imageapi:images/atom:link[@rel='next']/@href">
+                    <link resource_type="#DetailImageList" rel="next"/>
+                    <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="Next"><p>Show the next item in the list.</p></wadl:doc>
+                </param>
+                <param name="previous" style="plain" type="xsd:anyURI"
+                       path="/imageapi:images/atom:link[@rel='previous']/@href">
+                    <link resource_type="#DetailImageList" rel="previous"/>
+                    <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="Previous"><p>Show the previous item in the list.</p></wadl:doc>
+                </param>
+            </representation>
+            <representation mediaType="application/json" />
+        </response>
+    </method>
+    <method name="PUT" id="addMember">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="Delete Image">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                Adding a Member to an Image
+            </p>
+        </wadl:doc>
+        <request>
+            <representation mediaType="application/json"  element="image">
+                <param name="can_share" style="plain" required="true"
+                       type="ImageForCreate"
+                       path="/images/{image_id}/members">
+                    <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="can_share">
+                    <p>Set to true if you want to authorize a tenant access to a private image.</p> 
+                    <p>With no body, this will add the membership to the image, leaving existing 
+                        memberships unmodified and defaulting new memberships to have can_share set to false. </p></wadl:doc>
+                </param>
+                <xsdxt:code href="samples/imagememberships.json" />
+            </representation>
+        </request>
+        <response status="204"/>
+    </method>
+    <method name="PUT" id="replaceMember">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="Replace Member">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                Replacing a Membership List for an Image
+            </p>
+        </wadl:doc>
+        <request>
+            <representation mediaType="application/json"  element="image">
+                <param name="memberships" style="plain" required="true"/>
+                <param name="can_share" style="plain" required="true"
+                       type="ImageForCreate"
+                       path="/images/{image_id}/members"/>
+                <wadl:doc><xsdxt:code href="samples/imagemembershiplist.json" /></wadl:doc>
+            </representation>
+        </request>
+        <response status="204"/>
+    </method>
+    
+    <method name="DELETE" id="removeMember">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="Delete Image">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                Removing a Member from an Image
+            </p>
+        </wadl:doc>
+        <request>
+            <representation mediaType="application/json"  element="image">
+                <param name="member_id" style="plain" required="true"
+                       type="ImageForCreate"
+                       path="/images/{image_id}/members/{member_id}">
+                <wadl:doc><p>The member_id field identifies a tenant with which the image is shared. </p></wadl:doc></param>
+            </representation>
+        </request>
+        <response status="204"/>
+    </method>
+</application>
