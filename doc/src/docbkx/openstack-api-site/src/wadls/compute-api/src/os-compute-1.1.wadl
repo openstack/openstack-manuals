@@ -52,7 +52,7 @@
                     <method href="#createServer" />
                     <resource path="detail" type="#DetailServerList"/>
                     <resource path="{serverId}">
-                        <param name="serverId" style="template" type="csapi:UUID"><doc><p xmlns="http://www.w3.org/1999/xhtml">The UUID for the server of interest to you.</p></doc></param>
+                        <param name="server_id" style="template" type="csapi:UUID"><doc><p xmlns="http://www.w3.org/1999/xhtml">The UUID for the server of interest to you.</p></doc></param>
                         <method href="#getServer"/>
                         <method href="#updateServer"/>
                         <method href="#deleteServer"/>
@@ -67,7 +67,10 @@
                         </resource>
                         <resource path="ips" type="#Addresses">
                             <resource path="{networkId}" type="#NetworkAddressList">
-                                <param name="networkId" style="template" type="xsd:string"/>
+                                <param name="network_id" style="template" type="xsd:string"><doc xml:lang="EN" title="network_id">
+                                    <p xmlns="http://www.w3.org/1999/xhtml">
+                                        Network address list.
+                                    </p></doc></param>
                             </resource>
                         </resource>
                         <resource path="metadata" type="#Metadata #MetadataList"/>
@@ -76,7 +79,12 @@
                 <resource id="Images" type="#ImageList" path="images">
                     <resource path="detail" type="#DetailImageList"/>
                     <resource path="{imageId}">
-                        <param name="imageId" style="template" type="csapi:UUID"/>
+                        <param name="image_id" style="template" type="csapi:UUID">
+                            <doc xml:lang="EN" title="image_id">
+                                <p xmlns="http://www.w3.org/1999/xhtml">
+                                    UUID for the specific image.
+                                </p></doc>
+                        </param>
                         <method href="#getImage"/>
                         <method href="#deleteImage"/>
                         <resource path="metadata" type="#Metadata #MetadataList"/>
@@ -85,7 +93,10 @@
                 <resource id="Flavors" type="#FlavorList" path="flavors">
                     <resource path="detail" type="#DetailFlavorList"/>
                     <resource path="{flavorId}">
-                        <param name="flavorId" style="template" type="csapi:UUID"/>
+                        <param name="flavor_id" style="template" type="csapi:UUID"><doc xml:lang="EN" title="flavor_id">
+                            <p xmlns="http://www.w3.org/1999/xhtml">
+                                UUID for the specific flavor (combination of memory, disk size, and CPUs).
+                            </p></doc></param>
                         <method href="#getFlavor"/>
                     </resource>
                 </resource>
@@ -399,8 +410,9 @@
             <param name="Location" style="header"
                    required="true" type="xsd:anyURI"/>
             <representation mediaType="application/xml" element="csapi:server"/>
-            <representation mediaType="application/json" />
+            <representation mediaType="application/json" >
             <doc xml:lang="EN" title="Location"><db:para>Full URL to a server created by the service.</db:para></doc>
+            </representation>
         </response>
         <!-- All other common faults except build in progess -->
         &commonFaults;
@@ -490,7 +502,13 @@
             <representation mediaType="application/xml" element="csapi:server">
                 <param name="server" style="plain" required="true"
                        type="csapi:ServerForUpdate"
-                       path="/csapi:server"/>
+                       path="/csapi:server">
+                    <doc xml:lang="EN">
+                        <p xmlns="http://www.w3.org/1999/xhtml">
+                            Name of the server you want to update.
+                        </p>
+                    </doc>
+                </param>
             </representation>
             <representation mediaType="application/json" />
         </request>
@@ -567,7 +585,12 @@
         </request>
         <response status="202">
             <param name="Location" style="header"
-                   required="true" type="xsd:anyURI"/>
+                   required="true" type="xsd:anyURI">
+                <doc xml:lang="EN" title="Location">
+                    <p xmlns="http://www.w3.org/1999/xhtml">
+                        Specific URL of the server you want to rebuild.
+                    </p></doc>
+            </param>
             <representation mediaType="application/xml" element="csapi:server"/>
             <representation mediaType="application/json" />
         </response>
