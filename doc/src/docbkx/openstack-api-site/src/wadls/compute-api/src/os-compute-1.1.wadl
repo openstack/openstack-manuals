@@ -51,7 +51,7 @@
                 <resource id="Servers" type="#ServerList" path="servers">
                     <method href="#createServer" />
                     <resource path="detail" type="#DetailServerList"/>
-                    <resource path="{serverId}">
+                    <resource path="{server_id}">
                         <param name="server_id" style="template" type="csapi:UUID"><doc><p xmlns="http://www.w3.org/1999/xhtml">The UUID for the server of interest to you.</p></doc></param>
                         <method href="#getServer"/>
                         <method href="#updateServer"/>
@@ -66,7 +66,7 @@
                             <method href="#createImage"/>
                         </resource>
                         <resource path="ips" type="#Addresses">
-                            <resource path="{networkId}" type="#NetworkAddressList">
+                            <resource path="{network_id}" type="#NetworkAddressList">
                                 <param name="network_id" style="template" type="xsd:string"><doc xml:lang="EN" title="network_id">
                                     <p xmlns="http://www.w3.org/1999/xhtml">
                                         Network address list.
@@ -78,7 +78,7 @@
                 </resource>
                 <resource id="Images" type="#ImageList" path="images">
                     <resource path="detail" type="#DetailImageList"/>
-                    <resource path="{imageId}">
+                    <resource path="{image_id}">
                         <param name="image_id" style="template" type="csapi:UUID">
                             <doc xml:lang="EN" title="image_id">
                                 <p xmlns="http://www.w3.org/1999/xhtml">
@@ -92,7 +92,7 @@
                 </resource>
                 <resource id="Flavors" type="#FlavorList" path="flavors">
                     <resource path="detail" type="#DetailFlavorList"/>
-                    <resource path="{flavorId}">
+                    <resource path="{flavor_id}">
                         <param name="flavor_id" style="template" type="csapi:UUID"><doc xml:lang="EN" title="flavor_id">
                             <p xmlns="http://www.w3.org/1999/xhtml">
                                 UUID for the specific flavor (combination of memory, disk size, and CPUs).
@@ -437,10 +437,12 @@
                        path="/csapi:servers" />
                 <param name="next" style="plain" type="xsd:anyURI"
                        path="/csapi:servers/atom:link[@rel='next']/@href">
+                    <doc><p xmlns="http://www.w3.org/1999/xhtml">Move to the next item in the list.</p></doc>
                     <link resource_type="#ServerList" rel="next"/>
                 </param>
                 <param name="previous" style="plain" type="xsd:anyURI"
                        path="/csapi:servers/atom:link[@rel='previous']/@href">
+                    <doc><p xmlns="http://www.w3.org/1999/xhtml">Move to the previous item in the list.</p></doc>
                     <link resource_type="#ServerList" rel="previous"/>
                 </param>
             </representation>
@@ -464,9 +466,11 @@
                 <param name="next" style="plain" type="xsd:anyURI"
                        path="/csapi:servers/atom:link[@rel='next']/@href">
                     <link resource_type="#DetailServerList" rel="next"/>
+                    <doc><p xmlns="http://www.w3.org/1999/xhtml">Move to the next item in the list.</p></doc>
                 </param>
                 <param name="previous" style="plain" type="xsd:anyURI"
                        path="/csapi:servers/atom:link[@rel='previous']/@href">
+                    <doc><p xmlns="http://www.w3.org/1999/xhtml">Move to the previous item in the list.</p></doc>
                     <link resource_type="#DetailServerList" rel="previous"/>
                 </param>
             </representation>
@@ -715,10 +719,12 @@
             <representation mediaType="application/xml" element="csapi:addresses">
                 <param name="next" style="plain" type="xsd:anyURI"
                        path="/csapi:addresses/atom:link[@rel='next']/@href">
+                    <doc><p xmlns="http://www.w3.org/1999/xhtml">Move to the next item in the list.</p></doc>
                     <link resource_type="#Addresses" rel="next"/>
                 </param>
                 <param name="previous" style="plain" type="xsd:anyURI"
                        path="/csapi:addresses/atom:link[@rel='previous']/@href">
+                    <doc><p xmlns="http://www.w3.org/1999/xhtml">Move to the previous item in the list.</p></doc>
                     <link resource_type="#Addresses" rel="previous"/>
                 </param>
             </representation>
@@ -743,10 +749,12 @@
             <representation mediaType="application/xml" element="csapi:network">
                 <param name="next" style="plain" type="xsd:anyURI"
                        path="/csapi:network/atom:link[@rel='next']/@href">
+                    <doc><p xmlns="http://www.w3.org/1999/xhtml">Move to the next item in the list.</p></doc>
                     <link resource_type="#NetworkAddressList" rel="next"/>
                 </param>
                 <param name="previous" style="plain" type="xsd:anyURI"
                        path="/csapi:network/atom:link[@rel='previous']/@href">
+                    <doc><p xmlns="http://www.w3.org/1999/xhtml">Move to the previous item in the list.</p></doc>
                     <link resource_type="#NetworkAddressList" rel="previous"/>
                 </param>
             </representation>
@@ -775,10 +783,12 @@
                        path="/csapi:flavors" ><doc><p xmlns="http://www.w3.org/1999/xhtml">Flavors are known combinations of memory, disk space, and number of CPUs.</p></doc></param>
                 <param name="next" style="plain" type="xsd:anyURI"
                        path="/csapi:flavors/atom:link[@rel='next']/@href">
+                    <doc><p xmlns="http://www.w3.org/1999/xhtml">Move to the next item in the list.</p></doc>
                     <link resource_type="#FlavorList" rel="next"/>
                 </param>
                 <param name="previous" style="plain" type="xsd:anyURI"
                        path="/csapi:flavors/atom:link[@rel='previous']/@href">
+                    <doc><p xmlns="http://www.w3.org/1999/xhtml">Move to the previous item in the list.</p></doc>
                     <link resource_type="#FlavorList" rel="previous"/>
                 </param>
             </representation>
@@ -801,10 +811,12 @@
             <representation mediaType="application/xml" element="csapi:flavors">
                 <param name="next" style="plain" type="xsd:anyURI"
                        path="/csapi:flavors/atom:link[@rel='next']/@href">
+                    <doc><p xmlns="http://www.w3.org/1999/xhtml">Move to the next item in the list.</p></doc>
                     <link resource_type="#DetailFlavorList" rel="next"/>
                 </param>
                 <param name="previous" style="plain" type="xsd:anyURI"
                        path="/csapi:flavors/atom:link[@rel='previous']/@href">
+                    <doc><p xmlns="http://www.w3.org/1999/xhtml">Move to the previous item in the list.</p></doc>
                     <link resource_type="#DetailFlavorList" rel="previous"/>
                 </param>
             </representation>
@@ -843,10 +855,12 @@
                 </doc>
                 <param name="next" style="plain" type="xsd:anyURI"
                        path="/csapi:metadata/atom:link[@rel='next']/@href">
+                    <doc><p xmlns="http://www.w3.org/1999/xhtml">Move to the next item in the list.</p></doc>
                     <link resource_type="#MetadataList" rel="next"/>
                 </param>
                 <param name="previous" style="plain" type="xsd:anyURI"
                        path="/csapi:metadata/atom:link[@rel='previous']/@href">
+                    <doc><p xmlns="http://www.w3.org/1999/xhtml">Move to the previous item in the list.</p></doc>
                     <link resource_type="#MetadataList" rel="previous"/>
                 </param>
             </representation>
@@ -894,10 +908,12 @@
                 </doc>
                 <param name="next" style="plain" type="xsd:anyURI"
                        path="/csapi:metadata/atom:link[@rel='next']/@href">
+                    <doc><p xmlns="http://www.w3.org/1999/xhtml">Move to the next item in the list.</p></doc>
                     <link resource_type="#MetadataList" rel="next"/>
                 </param>
                 <param name="previous" style="plain" type="xsd:anyURI"
                        path="/csapi:metadata/atom:link[@rel='previous']/@href">
+                    <doc><p xmlns="http://www.w3.org/1999/xhtml">Move to the previous item in the list.</p></doc>
                     <link resource_type="#MetadataList" rel="previous"/>
                 </param>
             </representation>
@@ -952,10 +968,12 @@
                 </doc>
                 <param name="next" style="plain" type="xsd:anyURI"
                        path="/csapi:metadata/atom:link[@rel='next']/@href">
+                    <doc><p xmlns="http://www.w3.org/1999/xhtml">Move to the next item in the list.</p></doc>
                     <link resource_type="#MetadataList" rel="next"/>
                 </param>
                 <param name="previous" style="plain" type="xsd:anyURI"
                        path="/csapi:metadata/atom:link[@rel='previous']/@href">
+                    <doc><p xmlns="http://www.w3.org/1999/xhtml">Move to the previous item in the list.</p></doc>
                     <link resource_type="#MetadataList" rel="previous"/>
                 </param>
             </representation>

@@ -38,9 +38,14 @@
   <chapter xml:id="identity">
     <title>Identity</title>
     <para>With the Identity API, you obtain a token that lasts 24 hours so you can gain access to the Compute API. The version of the Identity API is 2.0.</para>
-    <wadl:resources 
-      href="identity.wadl" 
-      xmlns:wadl="http://wadl.dev.java.net/2009/02"/>      
+    <wadl:resources xmlns:wadl="http://wadl.dev.java.net/2009/02">
+      <wadl:resource href="identity.wadl#tokens" >
+        <wadl:method href="#authenticate"/>
+      </wadl:resource>
+      <wadl:resource href="identity.wadl#tenants" >
+        <wadl:method href="#listTenants"/>
+      </wadl:resource>
+    </wadl:resources>     
   </chapter>
   <chapter xml:id="compute">
     <title>Compute</title>
@@ -49,9 +54,10 @@
       when needed, resize it larger or smaller, and connect to the
       server securely through SSH once it is started. The v1.1 API is
       identical to the v2 API.</para>
-      <wadl:resources 
-        href="os-compute-1.1.wadl" 
-        xmlns:wadl="http://wadl.dev.java.net/2009/02"/>      
+     
+    <wadl:resources 
+      href="os-compute-1.1.wadl" 
+      xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
   </chapter>
   <chapter xml:id="files">
     <title>Image</title>
