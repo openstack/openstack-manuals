@@ -46,7 +46,7 @@
 		        <method href="#getImage"/>
 		        <method href="#updateImage"/>
 		        <method href="#deleteImage"/>
-		        <resource id="members" path="members" type="#memberList" >
+		        <resource id="members" path="members">
 		            <method href="#replaceMember" />
 		            <resource path="{tenant_id}">
 		              <param name="tenant_id" style="template" type="xsd:string">
@@ -76,9 +76,9 @@
     <resource_type id="DetailImageList">
         <method href="#listDetailImage"/>
     </resource_type>
-    <resource_type id="memberList">
+<!--    <resource_type id="memberList">
         <method href="#listMember"/>
-    </resource_type>
+    </resource_type>-->
     <!--*******************************************************-->
     <!--               All Methods                             -->
     <!--*******************************************************-->
@@ -168,9 +168,9 @@
                 <param name="location" style="plain" type="xsd:anyURI"
                        required="true"
                        path="/common:version/atom:link[@rel='self']/@href">
-                    <link resource_type="#createImage" rel="self"/>
                     <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="Image Location">
                         <p>A location for the image identified by a URI. </p></wadl:doc>
+                    <link resource_type="#createImage" rel="self"/>
                 </param>
             </representation>
             <representation mediaType="application/json" />
@@ -277,13 +277,13 @@
             <representation mediaType="application/xml" element="imageapi:images">
                 <param name="next" style="plain" type="xsd:anyURI"
                        path="/imageapi:images/atom:link[@rel='next']/@href">
-                    <link resource_type="#DetailImageList" rel="next"/>
                     <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="Next"><p>Show the next item in the list.</p></wadl:doc>
+                    <link resource_type="#DetailImageList" rel="next"/>
                 </param>
                 <param name="previous" style="plain" type="xsd:anyURI"
                        path="/imageapi:images/atom:link[@rel='previous']/@href">
-                    <link resource_type="#DetailImageList" rel="previous"/>
                     <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="Previous"><p>Show the previous item in the list.</p></wadl:doc>
+                    <link resource_type="#DetailImageList" rel="previous"/>
                 </param>
             </representation>
             <representation mediaType="application/json" />
@@ -322,7 +322,7 @@
                 <param name="can_share" style="plain" required="true"
                        type="ImageForCreate"
                        path="/images/{image_id}/members"/>
-                <wadl:doc><xsdxt:code href="samples/imagemembershiplist.json" /></wadl:doc>
+                <xsdxt:code href="samples/imagemembershiplist.json" />
             </representation>
         </request>
         <response status="204"/>
@@ -339,7 +339,8 @@
                 <param name="member_id" style="plain" required="true"
                        type="ImageForCreate"
                        path="/images/{image_id}/members/{member_id}">
-                <wadl:doc><p>The member_id field identifies a tenant with which the image is shared. </p></wadl:doc></param>
+                    <wadl:doc xmlns="http://www.w3.org/1999/xhtml"><p>The member_id field identifies a tenant with which the image is shared. </p></wadl:doc>
+                </param>
             </representation>
         </request>
         <response status="204"/>
