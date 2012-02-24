@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- (C) 2012 OpenStack LLC., All Rights Reserved -->
+
+<application xmlns="http://wadl.dev.java.net/2009/02"
+             xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+             xmlns:wadl="http://wadl.dev.java.net/2009/02">
+
+    <resources base="https://volume.example.com/">
+        <resource id="version" path="v1">
+            <resource id="tenant_id" path="{tenant_id}">
+                <param name="tenant_id" style="template">
+                    <doc>
+                        <p xmlns="http://www.w3.org/1999/xhtml">
+                            The unique identifier of the tenant or account.
+                        </p>
+                    </doc>
+                </param>
+
+                <resource id="volumes" path="volumes">
+                    <method href="#createVolume" />
+                    <method href="#getVolumesSimple" />
+
+                    <resource path="detail">
+                        <method href="#getVolumesDetail" />
+                    </resource>
+
+                    <resource path="{volume_id}">
+                        <param name="volume_id" style="template" required="true">
+                            <doc><p xmlns="http://www.w3.org/1999/xhtml">
+                                The unique identifier of an existing Volume.
+                            </p></doc>
+                        </param>
+
+                        <method href="#getVolume" />
+                        <method href="#deleteVolume" />
+
+                    </resource>
+                </resource>
+
+                <resource id="volume_types" path="volume_types">
+                    <method href="#getVolumeTypes" />
+
+                    <resource path="{volume_type_id}">
+                        <param name="volume_type_id" style="template" required="true">
+                            <doc><p xmlns="http://www.w3.org/1999/xhtml">
+                                The unique identifier of an existing Volume Type.
+                            </p></doc>
+                        </param>
+
+                        <method href="#getVolumeType" />
+                    </resource>
+                </resource>
+
+                <resource id="snapshots" path="snapshots">
+                    <method href="#createSnapshot" />
+                    <method href="#getSnapshotsSimple" />
+
+                    <resource path="detail">
+                        <method href="#getSnapshotsDetail" />
+                    </resource>
+
+                    <resource path="{snapshot_id}">
+                        <param name="snapshot_id" style="template" required="true">
+                            <doc><p xmlns="http://www.w3.org/1999/xhtml">
+                                The unique identifier of an existing Snapshot.
+                            </p></doc>
+                        </param>
+
+                        <method href="#getSnapshot" />
+                        <method href="#deleteSnapshot" />
+
+                    </resource>
+                </resource>
+
+          </resource>
+        </resource>
+    </resources>
+
+    <method name="POST" id="createVolume">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="Create Volume">
+            <p xmlns="http://www.w3.org/1999/xhtml">Create a Volume.</p>
+        </wadl:doc>
+        <request>
+            <param name="volume" style="plain" required="true">
+                <doc><p xmlns="http://www.w3.org/1999/xhtml">
+                    A partial representation of a volume used in the creation process.
+                </p></doc>
+            </param>
+            <representation mediaType="application/xml">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/volume_create.xml" />
+                </doc>
+            </representation>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/volume_create.json" />
+                </doc>
+            </representation>
+        </request>
+        <response status="201">
+            <representation mediaType="application/xml">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/volume_show.xml" />
+                </doc>
+            </representation>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/volume_show.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+    <method name="GET" id="getVolumesSimple">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="E" title="List Volumes">
+            <p xmlns="http://www.w3.org/1999/xhtml">View a list of simple Volume entities.</p>
+        </wadl:doc>
+        <response status="200">
+            <representation mediaType="application/xml">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/volume_list_simple.xml" />
+                </doc>
+            </representation>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/volume_list_simple.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+    <method name="GET" id="getVolumesDetail">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="E"
+            title="List Volumes (Detailed)">
+            <p xmlns="http://www.w3.org/1999/xhtml">View a list of detailed Volume entities.</p>
+        </wadl:doc>
+        <response status="200">
+            <representation mediaType="application/xml">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/volume_list_simple.xml" />
+                </doc>
+            </representation>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/volume_list_simple.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+
+    <method name="GET" id="getVolume">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="E" title="Describe Volume">
+            <p xmlns="http://www.w3.org/1999/xhtml">View all information about a single Volume.</p>
+        </wadl:doc>
+        <response status="200">
+            <representation mediaType="application/xml">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/volume_show.xml" />
+                </doc>
+            </representation>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/volume_show.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+    <method name="DELETE" id="deleteVolume">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="E" title="Delete Volume">
+            <p xmlns="http://www.w3.org/1999/xhtml">Delete a single Volume.</p>
+        </wadl:doc>
+        <response status="202" />
+    </method>
+
+    <method name="GET" id="getVolumeTypes">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="E" title="List Volume Types">
+            <p xmlns="http://www.w3.org/1999/xhtml">Request a list of Volume Types.</p>
+        </wadl:doc>
+        <response status="200">
+            <representation mediaType="application/xml">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/volume_type_list.xml" />
+                </doc>
+            </representation>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/volume_type_list.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+    <method name="GET" id="getVolumeType">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="E" title="Describe Volume Type">
+            <p xmlns="http://www.w3.org/1999/xhtml">Request a single Volume Type.</p>
+        </wadl:doc>
+        <response status="200">
+            <representation mediaType="application/xml">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/volume_type_show.xml" />
+                </doc>
+            </representation>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/volume_type_show.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+    <method name="POST" id="createSnapshot">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="E" 
+            title="Create Snapshot">
+            <p xmlns="http://www.w3.org/1999/xhtml">Create a Snapshot.</p>
+        </wadl:doc>
+        <request>
+            <param name="snapshot" style="plain" required="true">
+                <doc><p xmlns="http://www.w3.org/1999/xhtml">
+                    A partial representation of a snapshot used in the creation process.
+                </p></doc>
+            </param>
+            <representation mediaType="application/xml">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/snapshot_create.xml" />
+                </doc>
+            </representation>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/snapshot_create.json" />
+                </doc>
+            </representation>
+        </request>
+        <response status="201">
+            <representation mediaType="application/xml">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/snapshot_show.xml" />
+                </doc>
+            </representation>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/snapshot_show.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+    <method name="GET" id="getSnapshotsSimple">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="E" 
+            title="List Snapshots">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                View a list of simple Snapshot entities.
+            </p>
+        </wadl:doc>
+        <response status="200">
+            <representation mediaType="application/xml">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/snapshot_list_simple.xml" />
+                </doc>
+            </representation>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/snapshot_list_simple.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+    <method name="GET" id="getSnapshotsDetail">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="E" 
+            title="List Snapshots (Detailed)">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                View a list of detailed Snapshot entities.
+            </p>
+        </wadl:doc>
+        <response status="200">
+            <representation mediaType="application/xml">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/snapshot_list_simple.xml" />
+                </doc>
+            </representation>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/snapshot_list_simple.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+
+    <method name="GET" id="getSnapshot">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="E" 
+            title="Describe Snapshot">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                View all information about a single Snapshot.
+            </p>
+        </wadl:doc>
+        <response status="200">
+            <representation mediaType="application/xml">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/snapshot_show.xml" />
+                </doc>
+            </representation>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/snapshot_show.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+    <method name="DELETE" id="deleteSnapshot">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="E" 
+            title="Delete Snapshot">
+            <p xmlns="http://www.w3.org/1999/xhtml">Delete a single Snapshot.</p>
+        </wadl:doc>
+        <response status="202" />
+    </method>
+
+</application>
