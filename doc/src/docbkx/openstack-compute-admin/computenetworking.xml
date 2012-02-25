@@ -536,9 +536,9 @@ euca-authorize -P tcp -p 22 default</literallayout>If
             <para>There are nova-manage commands that also help you manage the floating IPs.</para>
             <para>nova-manage floating list - This command lists the floating IP addresses in the
                 pool. </para>
-            <para>nova-manage floating create [hostname] [cidr] - This command creates specific
-                floating IPs for a specific network host and either a single address or a subnet. </para>
-            <para>nova-manage floating destroy [hostname] [cidr] - This command removes floating IP
+            <para>nova-manage floating create [cidr] - This command creates specific
+                floating IPs for either a single address or a subnet. </para>
+            <para>nova-manage floating destroy [cidr] - This command removes floating IP
                 addresses using the same parameters as the create command.</para></section><section xml:id="associating-public-ip"><title>Associating a Public IP Address</title>
                 <para>OpenStack Compute uses NAT for public IPs. If you plan to use public IP
                 addresses for your virtual instances, you must configure --public_interface=vlan100'
@@ -552,7 +552,7 @@ euca-authorize -P tcp -p 22 default</literallayout>If
                     <para>These are the basic overall steps and checkpoints. </para>
                 <para>First, set up the public address.</para>
                     
-                    <literallayout class="monospaced">nova-manage floating create my-hostname 68.99.26.170/31
+                    <literallayout class="monospaced">nova-manage floating create 68.99.26.170/31
 euca-allocate-address 68.99.26.170
 euca-associate-address -i i-1 68.99.26.170</literallayout>
                     
