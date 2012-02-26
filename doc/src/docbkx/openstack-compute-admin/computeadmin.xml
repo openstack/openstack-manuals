@@ -182,9 +182,39 @@ chmod 600 test.pem
             look it up with euca-describe-instances):</para>
                 
                 <para><literallayout class="monospaced">nova delete $server-id</literallayout></para></section>
-    <section xml:id="creating-custom-images">
-   
-        <info><author>
+    <section xml:id="pausing-and-suspending-instances">
+        
+        <title>Pausing and Suspending Instances</title>
+        <para>Since the release of the API in its 1.1 version, it is possible to pause and suspend
+            instances.</para>
+        <warning>
+            <para>
+                Pausing and Suspending instances only apply to KVM-based hypervisors and XenServer/XCP Hypervisors.
+            </para>
+        </warning>
+        <para> Pause/ Unpause : Stores the content of the VM in memory (RAM).</para>
+        <para>Suspend/ Resume : Stores the content of the VM on disk.</para>
+        <para>It can be interesting for an administrator to suspend instances, if a maintenance is
+            planned; or if the instance are not frequently used. Suspending an instance frees up
+            memory and vCPUS, while pausing keeps the instance running, in a "frozen" state.
+            Suspension could be compared to an "hibernation" mode.</para>
+    <section>
+        <title>Pausing instance</title>
+        <para>To pause an instance :</para>
+        <literallayout class="monospaced">nova pause $server-id </literallayout>
+        <para>To resume a paused instance :</para>
+        <literallayout class="monospaced">nova unpause $server-id </literallayout>
+    </section>
+        <section>
+            <title>Suspending instance</title>
+            <para> To suspend an instance :</para>
+            <literallayout class="monospaced">nova suspend $server-id </literallayout>
+            <para>To resume a suspended instance :</para>
+            <literallayout class="monospaced">nova resume $server-id </literallayout>
+        </section>
+    </section>
+        <section xml:id="creating-custom-images">
+           <info><author>
             <orgname>CSS Corp-  Open Source Services</orgname>
         </author><title>Image management</title></info>
         <para>by <link xlink:href="http://www.csscorp.com/">CSS Corp Open Source Services</link> </para>
