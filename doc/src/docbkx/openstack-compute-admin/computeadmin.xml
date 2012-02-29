@@ -931,20 +931,22 @@ vgcreate nova-volumes /dev/sda5 </literallayout>
                         going further that your nodes can communicate with you nova-volumes server.
                         If you have a firewall running on it, make sure that the port 3260 (tcp)
                         accepts incoming connections. </para>
-                    <para>First install the open-iscsi package on the initiators, so the
-                        compute-nodes <emphasis role="bold">only</emphasis> : <code>apt-get install
-                            open-iscsi </code>
-                        <literallayout>Then on the target, which is in our case the cloud-controller, the iscsitarget package :                        </literallayout>
-                        <code>apt-get install iscsitarget </code>
-                        <literallayout>This package could refuse to start with a "FATAL: Module iscsi_trgt not found" error. </literallayout><literallayout>This error is caused by the kernel which does not contain the iscsi module's source into it ; you can install the kernel modules by installing an extra package : </literallayout>
-                        <code> apt-get install iscsitarget-dkms</code>
-                        <literallayout>(the Dynamic Kernel Module Support is a framework used for created modules with non-existent sources into the current kernel)</literallayout></para>
-                    <para>You have to enable it so the startut script (/etc/init.d/iscsitarget) can
-                        start the daemon :
+                    <para>First install the open-iscsi package on the initiators, so on the
+                        compute-nodes <emphasis role="bold">only</emphasis></para>
+                    <literallayout class="monospaced">apt-get install open-iscsi </literallayout>
+                        <para>Then on the target, which is in our case the cloud-controller, the iscsitarget package :</para>
+                        <literallayout class="monospaced">apt-get install iscsitarget </literallayout>
+                        <para>This package could refuse to start with a "FATAL: Module iscsi_trgt not found" error. </para>
+                        <para>This error is caused by the kernel which does not contain the iscsi module's source into it ; 
+                            you can install the kernel modules by installing an extra package : </para>
+                        <literallayout class="monospaced"> apt-get install iscsitarget-dkms</literallayout>
+                        <para>(the Dynamic Kernel Module Support is a framework used for created modules with non-existent sources into the current kernel)</para>
+                        <para>You have to enable it so the startut script (/etc/init.d/iscsitarget) can start the daemon:</para>
                         <literallayout class="monospaced">sed -i 's/false/true/g' /etc/default/iscsitarget</literallayout>
-                        Then run on the nova-controller (iscsi target) :
-                            <literallayout class="monospaced">service iscsitarget start</literallayout><literallayout>And on the compute-nodes (iscsi initiators) :</literallayout>service
-                            open-iscsi start</para>
+                        <para>Then run on the nova-controller (iscsi target) :</para>
+                            <literallayout class="monospaced">service iscsitarget start</literallayout>
+                            <para>And on the compute-nodes (iscsi initiators) :</para>
+                            <literallayout class="monospaced">service open-iscsi start</literallayout>
                 </listitem>
                 <listitem>
                     <para><emphasis role="bold">Configure nova.conf flag file</emphasis></para>
