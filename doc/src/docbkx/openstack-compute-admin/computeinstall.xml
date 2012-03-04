@@ -25,7 +25,8 @@
     nova- service on an independent server means there are many possible
     methods for installing OpenStack Compute. The only co-dependency between
     possible multi-node installations is that the Dashboard must be installed
-    nova-api server. Here are the types of installation architectures:</para>
+    on the <command>nova-api</command> server. Here are the types of
+    installation architectures:</para>
 
     <itemizedlist>
       <listitem>
@@ -36,20 +37,22 @@
 
       <listitem>
         <para>Two nodes: A cloud controller node runs the nova- services
-        except for nova-compute, and a compute node runs nova-compute. A
-        client computer is likely needed to bundle images and interfacing to
-        the servers, but a client is not required. Use this configuration for
-        proof of concepts or development environments.</para>
+        except for <command>nova-compute</command>, and a compute node runs
+        <command>nova-compute</command>. A client computer is likely needed to
+        bundle images and interfacing to the servers, but a client is not
+        required. Use this configuration for proof of concepts or development
+        environments.</para>
       </listitem>
 
       <listitem>
         <para>Multiple nodes: You can add more compute nodes to the two node
-        installation by simply installing nova-compute on an additional server
-        and copying a nova.conf file to the added node. This would result in a
-        multiple node installation. You can also add a volume controller and a
-        network controller as additional nodes in a more complex multiple node
-        installation. A minimum of 4 nodes is best for running multiple
-        virtual instances that require a lot of processing power.</para>
+        installation by simply installing <command>nova-compute</command> on
+        an additional server and copying a <filename>nova.conf</filename> file
+        to the added node. This would result in a multiple node installation.
+        You can also add a volume controller and a network controller as
+        additional nodes in a more complex multiple node installation. A
+        minimum of 4 nodes is best for running multiple virtual instances that
+        require a lot of processing power.</para>
       </listitem>
     </itemizedlist>
 
@@ -68,8 +71,8 @@
     problems. In that case you would add an additional RabbitMQ server in
     addition to or instead of scaling up the database server. Your
     installation can run any nova- service on any server as long as the
-    nova.conf is configured to point to the RabbitMQ server and the server can
-    send messages to the server.</para>
+    <filename>nova.conf</filename> is configured to point to the RabbitMQ
+    server and the server can send messages to the server.</para>
 
     <para>Multiple installation architectures are possible, here is another
     example illustration.</para>
@@ -110,8 +113,9 @@
       Linux Server 10.04 LTS distribution containing only the components
       needed to run OpenStack Compute. See <link
       xlink:href="http://sourceforge.net/projects/stackops/files/">http://sourceforge.net/projects/stackops/files/</link>
-      for download files and information, license information, and a README
-      file. For documentation on the StackOps distro, see <link
+      for download files and information, license information, and a
+      <filename>README</filename> file. For documentation on the StackOps
+      distro, see <link
       xlink:href="http://docs.stackops.org">http://docs.stackops.org</link>.
       For free support, go to <link
       xlink:href="http://getsatisfaction.com/stackops">http://getsatisfaction.com/stackops</link>.</para>
@@ -139,7 +143,7 @@
         <listitem>
           <para>Download DevStack:</para>
 
-          <literallayout class="monospaced">git clone git://github.com/cloudbuilders/devstack.git</literallayout>
+          <screen><prompt>$</prompt> <userinput>git clone git://github.com/cloudbuilders/devstack.git</userinput></screen>
 
           <para>The devstack repo contains a script that installs OpenStack
           Compute, the Image Service and the Identity Service and offers
@@ -149,7 +153,7 @@
         <listitem>
           <para>Start the install:</para>
 
-          <literallayout class="monospaced">cd devstack; ./stack.sh</literallayout>
+          <screen><prompt>$</prompt> <userinput>cd devstack; ./stack.sh</userinput></screen>
 
           <para>It takes a few minutes, we recommend <link
           xlink:href="http://devstack.org/stack.sh.html">reading the
@@ -358,21 +362,23 @@ for n in node1 node2 node3; do
   <section xml:id="configuring-openstack-compute-basics">
     <title>Post-Installation Configuration for OpenStack Compute</title>
 
-    <para>Configuring your Compute installation involves nova-manage commands
-    plus editing the nova.conf file to ensure the correct flags are set. This
-    section contains the basics for a simple multi-node installation, but
+    <para>Configuring your Compute installation involves
+    <command>nova-manage</command> commands plus editing the
+    <filename>nova.conf</filename> file to ensure the correct flags are set.
+    This section contains the basics for a simple multi-node installation, but
     Compute can be configured many ways. You can find networking options and
     hypervisor options described in separate chapters, and you will read about
     additional configuration information in a separate chapter as well.</para>
 
     <section xml:id="setting-flags-in-nova-conf-file">
-      <title>Setting Flags in the nova.conf File</title>
+      <title>Setting Flags in the <filename>nova.conf</filename> File</title>
 
-      <para>The configuration file nova.conf is installed in /etc/nova by
-      default. You only need to do these steps when installing manually, the
-      scripted installation above does this configuration during the
-      installation. A default set of options are already configured in
-      nova.conf when you install manually. The defaults are as follows:</para>
+      <para>The configuration file <filename>nova.conf</filename> is installed
+      in <filename>/etc/nova</filename> by default. You only need to do these
+      steps when installing manually. The scripted installation above does
+      this configuration during the installation. A default set of options are
+      already configured in <filename>nova.conf</filename> when you install
+      manually. The defaults are as follows:</para>
 
       <programlisting>
 --daemonize=1
@@ -383,14 +389,16 @@ for n in node1 node2 node3; do
             </programlisting>
 
       <para>Starting with the default file, you must define the following
-      required items in /etc/nova/nova.conf. The flag variables are described
-      below. You can place comments in the nova.conf file by entering a new
-      line with a # sign at the beginning of the line. To see a listing of all
-      possible flag settings, see the output of running /bin/nova-api
-      --help.</para>
+      required items in <filename>/etc/nova/nova.conf</filename>. The flag
+      variables are described below. You can place comments in the
+      <filename>nova.conf</filename> file by entering a new line with a
+      <literal>#</literal> sign at the beginning of the line. To see a listing
+      of all possible flag settings, see the output of running
+      <command>/bin/nova-api --help</command>.</para>
 
       <table rules="all">
-        <caption>Description of nova.conf flags (not comprehensive)</caption>
+        <caption>Description of <filename>nova.conf</filename> flags (not
+        comprehensive)</caption>
 
         <thead>
           <tr>
@@ -402,14 +410,14 @@ for n in node1 node2 node3; do
 
         <tbody>
           <tr>
-            <td>--sql_connection</td>
+            <td><literal>--sql_connection</literal></td>
 
             <td>SQL Alchemy connect string (reference); Location of OpenStack
             Compute SQL database</td>
           </tr>
 
           <tr>
-            <td>--s3_host</td>
+            <td><literal>--s3_host</literal></td>
 
             <td>IP address; Location where OpenStack Compute is hosting the
             objectstore service, which will contain the virtual machine images
@@ -417,38 +425,44 @@ for n in node1 node2 node3; do
           </tr>
 
           <tr>
-            <td>--rabbit_host</td>
+            <td><literal>--rabbit_host</literal></td>
 
             <td>IP address; Location of RabbitMQ server</td>
           </tr>
 
           <tr>
-            <td>--verbose</td>
+            <td><literal>--verbose</literal></td>
 
-            <td>Set to 1 to turn on; Optional but helpful during initial
-            setup</td>
+            <td>Set to <literal>1</literal> to turn on; Optional but helpful
+            during initial setup</td>
           </tr>
 
           <tr>
-            <td>--network_manager</td>
+            <td><literal>--network_manager</literal></td>
 
             <td><para>Configures how your controller will communicate with
-            additional OpenStack Compute nodes and virtual machines. Options:
-            </para> <itemizedlist>
+            additional OpenStack Compute nodes and virtual machines.
+            Options:</para><itemizedlist>
                 <listitem>
-                  <para>nova.network.manager.FlatManager</para>
+                  <para>
+                    <literal>nova.network.manager.FlatManager</literal>
+                  </para>
 
                   <para>Simple, non-VLAN networking</para>
                 </listitem>
 
                 <listitem>
-                  <para>nova.network.manager.FlatDHCPManager</para>
+                  <para>
+                    <literal>nova.network.manager.FlatDHCPManager</literal>
+                  </para>
 
                   <para>Flat networking with DHCP</para>
                 </listitem>
 
                 <listitem>
-                  <para>nova.network.manager.VlanManager</para>
+                  <para>
+                    <literal>nova.network.manager.VlanManager</literal>
+                  </para>
 
                   <para>VLAN networking with DHCP; This is the Default if no
                   network manager is defined here in nova.conf.</para>
@@ -457,47 +471,47 @@ for n in node1 node2 node3; do
           </tr>
 
           <tr>
-            <td>--fixed_range</td>
+            <td><literal>--fixed_range</literal></td>
 
             <td>IP address/range; Network prefix for the IP network that all
             the projects for future VM guests reside on. Example:
-            192.168.0.0/12</td>
+            <literal>192.168.0.0/12</literal></td>
           </tr>
 
           <tr>
-            <td>--ec2_host</td>
+            <td><literal>--ec2_host</literal></td>
 
-            <td>IP address; Indicates where the nova-api service is
-            installed.</td>
+            <td>IP address; Indicates where the <command>nova-api</command>
+            service is installed.</td>
           </tr>
 
           <tr>
-            <td>--ec2_url</td>
+            <td><literal>--ec2_url</literal></td>
 
             <td>Url; Indicates the service for EC2 requests.</td>
           </tr>
 
           <tr>
-            <td>--osapi_host</td>
+            <td><literal>--osapi_host</literal></td>
 
-            <td>IP address; Indicates where the nova-api service is
-            installed.</td>
+            <td>IP address; Indicates where the <command>nova-api</command>
+            service is installed.</td>
           </tr>
 
           <tr>
-            <td>--network_size</td>
+            <td><literal>--network_size</literal></td>
 
             <td>Number value; Number of addresses in each private subnet.</td>
           </tr>
 
           <tr>
-            <td>--glance_api_servers</td>
+            <td><literal>--glance_api_servers</literal></td>
 
             <td>IP and port; Address for Image Service.</td>
           </tr>
 
           <tr>
-            <td>--use_deprecated_auth</td>
+            <td><literal>--use_deprecated_auth</literal></td>
 
             <td>If this flag is present, the Cactus method of authentication
             is used with the novarc file containing credentials.</td>
@@ -505,9 +519,9 @@ for n in node1 node2 node3; do
         </tbody>
       </table>
 
-      <para>Here is a simple example nova.conf file for a small private cloud,
-      with all the cloud controller services, database server, and messaging
-      server on the same server.</para>
+      <para>Here is a simple example <filename>nova.conf</filename> file for a
+      small private cloud, with all the cloud controller services, database
+      server, and messaging server on the same server.</para>
 
       <programlisting>
 --dhcpbridge_flagfile=/etc/nova/nova.conf
@@ -531,18 +545,19 @@ for n in node1 node2 node3; do
       <para>Create a “nova” group, so you can set permissions on the
       configuration file:</para>
 
-      <literallayout class="monospaced">sudo addgroup nova</literallayout>
+      <screen><prompt>$</prompt> <userinput>sudo addgroup nova</userinput></screen>
 
-      <para>The nova.config file should have its owner set to root:nova, and
-      mode set to 0640, since the file contains your MySQL server’s username
-      and password. You also want to ensure that the nova user belongs to the
-      nova group.</para>
+      <para>The <filename>nova.config</filename> file should have its owner
+      set to <literal>root:nova</literal>, and mode set to
+      <literal>0640</literal>, since the file contains your MySQL server’s
+      username and password. You also want to ensure that the
+      <literal>nova</literal> user belongs to the <literal>nova</literal>
+      group.</para>
 
-      <literallayout class="monospaced">
-sudo usermod -g nova nova
-chown -R root:nova /etc/nova
-chmod 640 /etc/nova/nova.conf
-            </literallayout>
+      <screen><prompt>$</prompt> <userinput>sudo usermod -g nova nova</userinput>
+<prompt>$</prompt> <userinput>chown -R root:nova /etc/nova</userinput>
+<prompt>$</prompt> <userinput>chmod 640 /etc/nova/nova.conf</userinput>
+</screen>
     </section>
 
     <section xml:id="setting-up-openstack-compute-environment-on-the-compute-node">
@@ -551,41 +566,40 @@ chmod 640 /etc/nova/nova.conf
 
       <para>These are the commands you run to ensure the database schema is
       current, and then set up a user and project, if you are using built-in
-      auth with the <literallayout class="monospaced">--use_deprecated_auth flag</literallayout>
-      rather than the Identity Service:</para>
+      auth with the <literal>--use_deprecated_auth</literal> flag rather than
+      the Identity Service:</para>
 
-      <para><literallayout class="monospaced">
-nova-manage db sync
-nova-manage user admin &lt;user_name&gt;
-nova-manage project create &lt;project_name&gt; &lt;user_name&gt;
-nova-manage network create &lt;network-label&gt; &lt;project-network&gt; &lt;number-of-networks-in-project&gt; &lt;addresses-in-each-network&gt;
-</literallayout></para>
+      <screen><prompt>$</prompt> <userinput>nova-manage db sync</userinput>
+<prompt>$</prompt> <userinput>nova-manage user admin <replaceable>&lt;user_name&gt;</replaceable></userinput>
+<prompt>$</prompt> <userinput>nova-manage project create <replaceable>&lt;project_name&gt; &lt;user_name&gt;</replaceable></userinput>
+<prompt>$</prompt> <userinput>nova-manage network create <replaceable>&lt;network-label&gt; &lt;project-network&gt; &lt;number-of-networks-in-project&gt; &lt;addresses-in-each-network&gt;</replaceable></userinput>
+</screen>
 
       <para>Here is an example of what this looks like with real values
       entered:</para>
 
-      <literallayout class="monospaced">
-nova-manage db sync
-nova-manage user admin dub
-nova-manage project create dubproject dub
-nova-manage network create novanet 192.168.0.0/24 1 256 
-                </literallayout>
+      <screen><prompt>$</prompt> <userinput>nova-manage db sync</userinput>
+<prompt>$</prompt> <userinput>nova-manage user admin dub</userinput>
+<prompt>$</prompt> <userinput>nova-manage project create dubproject dub</userinput>
+<prompt>$</prompt> <userinput>nova-manage network create novanet 192.168.0.0/24 1 256</userinput></screen>
 
-      <para>For this example, the number of IPs is /24 since that falls inside
-      the /16 range that was set in ‘fixed-range’ in nova.conf. Currently,
-      there can only be one network, and this set up would use the max IPs
-      available in a /24. You can choose values that let you use any valid
-      amount that you would like.</para>
+      <para>For this example, the number of IPs is <literal>/24</literal>
+      since that falls inside the <literal>/16</literal> range that was set in
+      <literal>fixed-range</literal> in <filename>nova.conf</filename>.
+      Currently, there can only be one network, and this set up would use the
+      max IPs available in a <literal>/24</literal>. You can choose values
+      that let you use any valid amount that you would like.</para>
 
       <para>The nova-manage service assumes that the first IP address is your
       network (like 192.168.0.0), that the 2nd IP is your gateway
       (192.168.0.1), and that the broadcast is the very last IP in the range
       you defined (192.168.0.255). If this is not the case you will need to
-      manually edit the sql db ‘networks’ table.o.</para>
+      manually edit the sql db <literal>networks</literal> table.</para>
 
-      <para>When you run the nova-manage network create command, entries are
-      made in the ‘networks’ and ‘fixed_ips’ table. However, one of the
-      networks listed in the ‘networks’ table needs to be marked as bridge in
+      <para>When you run the <command>nova-manage network create</command>
+      command, entries are made in the <literal>networks</literal> and
+      <literal>fixed_ips</literal> tables. However, one of the networks listed
+      in the <literal>networks</literal> table needs to be marked as bridge in
       order for the code to know that a bridge exists. The network in the Nova
       networks table is marked as bridged automatically for Flat
       Manager.</para>
@@ -598,111 +612,111 @@ nova-manage network create novanet 192.168.0.0/24 1 256
       will use to launch instances, bundle images, and all the other assorted
       API functions.</para>
 
-      <para><literallayout class="monospaced">
-mkdir –p /root/creds
-/usr/bin/python /usr/bin/nova-manage project zipfile $NOVA_PROJECT $NOVA_PROJECT_USER /root/creds/novacreds.zip
-                    </literallayout></para>
+      <screen><prompt>#</prompt> <userinput>mkdir –p /root/creds</userinput>
+<prompt>#</prompt> <userinput>nova-manage project zipfile <replaceable>$NOVA_PROJECT $NOVA_PROJECT_USER</replaceable> /root/creds/novacreds.zip</userinput></screen>
 
       <para>If you are using one of the Flat modes for networking, you may see
-      a Warning message "No vpn data for project &lt;project_name&gt;" which
-      you can safely ignore.</para>
+      a Warning message "<literal>No vpn data for project
+      <replaceable>&lt;project_name&gt;</replaceable></literal>" which you can
+      safely ignore.</para>
 
       <para>Unzip them in your home directory, and add them to your
       environment.</para>
 
-      <literallayout class="monospaced">
-unzip /root/creds/novacreds.zip -d /root/creds/
-cat /root/creds/novarc &gt;&gt; ~/.bashrc
-source ~/.bashrc 
-                </literallayout>
+      <screen><prompt>#</prompt> <userinput>unzip /root/creds/novacreds.zip -d /root/creds/</userinput>
+<prompt>#</prompt> <userinput>cat /root/creds/novarc &gt;&gt; ~/.bashrc</userinput>
+<prompt>#</prompt> <userinput>source ~/.bashrc</userinput></screen>
 
       <para>If you already have Nova credentials present in your environment,
       you can use a script included with Glance the Image Service,
-      tools/nova_to_os_env.sh, to create Glance-style credentials. This script
-      adds OS_AUTH credentials to the environment which are used by the Image
-      Service to enable private images when the Identity Service is configured
-      as the authentication system for Compute and the Image Service.</para>
+      <filename>tools/nova_to_os_env.sh</filename>, to create Glance-style
+      credentials. This script adds <literal>OS_AUTH</literal> credentials to
+      the environment which are used by the Image Service to enable private
+      images when the Identity Service is configured as the authentication
+      system for Compute and the Image Service.</para>
     </section>
 
     <section xml:id="enabling-access-to-vms-on-the-compute-node">
       <title>Enabling Access to VMs on the Compute Node</title>
 
       <para>One of the most commonly missed configuration areas is not
-      allowing the proper access to VMs. Use the ‘euca-authorize’ command to
-      enable access. Below, you will find the commands to allow 'ping' and
-      'ssh' to your VMs :</para>
+      allowing the proper access to VMs. Use the
+      <command>euca-authorize</command> command to enable access. Below, you
+      will find the commands to allow <command>ping</command> and
+      <command>ssh</command> to your VMs :</para>
 
       <note>
         <para>These commands need to be run as root only if the credentials
-        used to interact with nova-api have been put under /root/.bashrc. If
-        the EC2 credentials have been put into another user's .bashrc file,
-        then, it is necessary to run these commands as the user.</para>
+        used to interact with <command>nova-api</command> have been put under
+        <filename>/root/.bashrc</filename>. If the EC2 credentials have been
+        put into another user's <filename>.bashrc</filename> file, then, it is
+        necessary to run these commands as the user.</para>
       </note>
 
-      <literallayout class="monospaced">
- nova  secgroup-add-rule default  icmp - 1 -1 0.0.0.0/0 
- nova  secgroup-add-rule default  tcp 22 22 0.0.0.0/0 
-                </literallayout>
+      <screen><prompt>$</prompt> <userinput>nova  secgroup-add-rule default  icmp - 1 -1 0.0.0.0/0</userinput>
+<prompt>$</prompt> <userinput>nova  secgroup-add-rule default  tcp 22 22 0.0.0.0/0</userinput></screen>
 
-      <para>Another common issue is you cannot ping or SSH your instances
-      after issuing the ‘euca-authorize’ commands. Something to look at is the
-      amount of ‘dnsmasq’ processes that are running. If you have a running
-      instance, check to see that TWO "dnsmasq’" processes are running. If
-      not, perform the following:</para>
+      <para>Another common issue is you cannot ping or SSH to your instances
+      after issuing the <command>euca-authorize</command> commands. Something
+      to look at is the amount of <command>dnsmasq</command> processes that
+      are running. If you have a running instance, check to see that TWO
+      <command>dnsmasq</command> processes are running. If not, perform the
+      following:</para>
 
-      <literallayout class="monospaced">
-sudo killall dnsmasq 
-sudo service nova-network restart
-                        </literallayout>
+      <screen><prompt>$</prompt> <userinput>sudo killall dnsmasq</userinput>
+<prompt>$</prompt> <userinput>sudo service nova-network restart</userinput></screen>
 
-      <para>If you get the <literallayout class="monospaced">instance not found</literallayout>
-      message while performing the restart, that means the service was not
-      previously running. You simply need to start it instead of restarting it
-      : <literallayout class="monospaced">sudo service nova-network start</literallayout></para>
+      <para>If you get the <literal>instance not found</literal> message while
+      performing the restart, that means the service was not previously
+      running. You simply need to start it instead of restarting it : </para>
+
+      <screen><prompt>$</prompt> <userinput>sudo service nova-network start</userinput></screen>
     </section>
 
     <section xml:id="configuring-multiple-compute-nodes">
       <title>Configuring Multiple Compute Nodes</title>
 
       <para>If your goal is to split your VM load across more than one server,
-      you can connect an additional nova-compute node to a cloud controller
-      node. This configuring can be reproduced on multiple compute servers to
-      start building a true multi-node OpenStack Compute cluster.</para>
+      you can connect an additional <command>nova-compute</command> node to a
+      cloud controller node. This configuring can be reproduced on multiple
+      compute servers to start building a true multi-node OpenStack Compute
+      cluster.</para>
 
       <para>To build out and scale the Compute platform, you spread out
       services amongst many servers. While there are additional ways to
       accomplish the build-out, this section describes adding compute nodes,
-      and the service we are scaling out is called 'nova-compute.'</para>
+      and the service we are scaling out is called
+      <command>nova-compute</command>.</para>
 
-      <para>For a multi-node install you only make changes to nova.conf and
-      copy it to additional compute nodes. Ensure each nova.conf file points
-      to the correct IP addresses for the respective services. Customize the
-      nova.conf example below to match your environment. The CC_ADDR is the
-      Cloud Controller IP Address.</para>
+      <para>For a multi-node install you only make changes to
+      <filename>nova.conf</filename> and copy it to additional compute nodes.
+      Ensure each <filename>nova.conf</filename> file points to the correct IP
+      addresses for the respective services. Customize the
+      <filename>nova.conf</filename> example below to match your environment.
+      The <literal><replaceable>CC_ADDR</replaceable></literal> is the Cloud
+      Controller IP Address.</para>
 
-      <programlisting>
---dhcpbridge_flagfile=/etc/nova/nova.conf
+      <programlisting>--dhcpbridge_flagfile=/etc/nova/nova.conf
 --dhcpbridge=/usr/bin/nova-dhcpbridge
 --flat_network_bridge=br100
 --logdir=/var/log/nova
 --state_path=/var/lib/nova
 --verbose
---sql_connection=mysql://root:nova@CC_ADDR/nova
---s3_host=CC_ADDR
---rabbit_host=CC_ADDR
---ec2_api=CC_ADDR
+--sql_connection=mysql://root:nova@<replaceable>CC_ADDR</replaceable>/nova
+--s3_host=<replaceable>CC_ADDR</replaceable>
+--rabbit_host=<replaceable>CC_ADDR</replaceable>
+--ec2_api=<replaceable>CC_ADDR</replaceable>
 --ec2_url=http://CC_ADDR:8773/services/Cloud
 --network_manager=nova.network.manager.FlatManager
 --fixed_range= network/CIDR
---network_size=number of addresses
-                  </programlisting>
+--network_size=number of addresses</programlisting>
 
       <para>By default, Nova sets the bridge device based on the setting in
-      --flat_network_bridge. Now you can edit /etc/network/interfaces with the
-      following template, updated with your IP information.</para>
+      <literal>--flat_network_bridge</literal>. Now you can edit
+      <filename>/etc/network/interfaces</filename> with the following
+      template, updated with your IP information.</para>
 
-      <programlisting>
-# The loopback network interface
+      <programlisting># The loopback network interface
 auto lo
     iface lo inet loopback
 
@@ -713,52 +727,51 @@ iface br100 inet static
     bridge_stp      off
     bridge_maxwait  0
     bridge_fd       0
-    address xxx.xxx.xxx.xxx
-    netmask xxx.xxx.xxx.xxx
-    network xxx.xxx.xxx.xxx
-    broadcast xxx.xxx.xxx.xxx
-    gateway xxx.xxx.xxx.xxx
+    address <replaceable>xxx.xxx.xxx.xxx</replaceable>
+    netmask <replaceable>xxx.xxx.xxx.xxx</replaceable>
+    network <replaceable>xxx.xxx.xxx.xxx</replaceable>
+    broadcast <replaceable>xxx.xxx.xxx.xxx</replaceable>
+    gateway <replaceable>xxx.xxx.xxx.xxx</replaceable>
     # dns-* options are implemented by the resolvconf package, if installed
-    dns-nameservers xxx.xxx.xxx.xxx
+    dns-nameservers <replaceable>xxx.xxx.xxx.xxx</replaceable>
 </programlisting>
 
       <para>Restart networking:</para>
 
-      <literallayout class="monospaced">/etc/init.d/networking restart</literallayout>
+      <screen><prompt>$</prompt> <userinput>sudo service networking restart</userinput></screen>
 
-      <para>With nova.conf updated and networking set, configuration is nearly
-      complete. First, bounce the relevant services to take the latest
-      updates:</para>
+      <para>With <filename>nova.conf</filename> updated and networking set,
+      configuration is nearly complete. First, bounce the relevant services to
+      take the latest updates:</para>
 
-      <literallayout class="monospaced">restart libvirt-bin; service nova-compute restart</literallayout>
+      <screen><prompt>$</prompt> <userinput>sudo service libvirtd restart</userinput>
+$ <userinput>sudo service nova-compute restart</userinput></screen>
 
       <para>To avoid issues with KVM and permissions with Nova, run the
       following commands to ensure we have VM's that are running
       optimally:</para>
 
-      <literallayout class="monospaced">
-chgrp kvm /dev/kvm
-chmod g+rwx /dev/kvm
-</literallayout>
+      <screen><prompt>#</prompt> <userinput>chgrp kvm /dev/kvm</userinput>
+<prompt>#</prompt> <userinput>chmod g+rwx /dev/kvm</userinput></screen>
 
       <para>If you want to use the 10.04 Ubuntu Enterprise Cloud images that
       are readily available at
       http://uec-images.ubuntu.com/releases/10.04/release/, you may run into
-      delays with booting. Any server that does not have nova-api running on
-      it needs this iptables entry so that UEC images can get metadata info.
-      On compute nodes, configure the iptables with this next step:</para>
+      delays with booting. Any server that does not have
+      <command>nova-api</command> running on it needs this iptables entry so
+      that UEC images can get metadata info. On compute nodes, configure the
+      iptables with this next step:</para>
 
-      <literallayout class="monospaced">iptables -t nat -A PREROUTING -d 169.254.169.254/32 -p tcp -m tcp --dport 80 -j DNAT --to-destination $NOVA_API_IP:8773</literallayout>
+      <screen><prompt>#</prompt> <userinput>iptables -t nat -A PREROUTING -d 169.254.169.254/32 -p tcp -m tcp --dport 80 -j DNAT --to-destination <replaceable>$NOVA_API_IP</replaceable>:8773</userinput></screen>
 
       <para>Lastly, confirm that your compute node is talking to your cloud
       controller. From the cloud controller, run this database query:</para>
 
-      <literallayout class="monospaced">mysql -u$MYSQL_USER -p$MYSQL_PASS nova -e 'select * from services;'</literallayout>
+      <screen><prompt>$</prompt> <userinput>mysql -u<replaceable>$MYSQL_USER</replaceable> -p<replaceable>$MYSQL_PASS</replaceable> nova -e 'select * from services;'</userinput></screen>
 
       <para>In return, you should see something similar to this:</para>
 
-      <programlisting>
-+---------------------+---------------------+------------+---------+----+----------+----------------+-----------+--------------+----------+-------------------+
+      <screen><computeroutput>+---------------------+---------------------+------------+---------+----+----------+----------------+-----------+--------------+----------+-------------------+
 | created_at          | updated_at          | deleted_at | deleted | id | host     | binary         | topic     | report_count | disabled | availability_zone |
 +---------------------+---------------------+------------+---------+----+----------+----------------+-----------+--------------+----------+-------------------+
 | 2011-01-28 22:52:46 | 2011-02-03 06:55:48 | NULL       |       0 |  1 | osdemo02 | nova-network   | network   |        46064 |        0 | nova              |
@@ -767,21 +780,21 @@ chmod g+rwx /dev/kvm
 | 2011-01-29 23:49:29 | 2011-02-03 06:54:26 | NULL       |       0 |  4 | osdemo01 | nova-compute   | compute   |        37050 |        0 | nova              |
 | 2011-01-30 23:42:24 | 2011-02-03 06:55:44 | NULL       |       0 |  9 | osdemo04 | nova-compute   | compute   |        28484 |        0 | nova              |
 | 2011-01-30 21:27:28 | 2011-02-03 06:54:23 | NULL       |       0 |  8 | osdemo05 | nova-compute   | compute   |        29284 |        0 | nova              |
-+---------------------+---------------------+------------+---------+----+----------+----------------+-----------+--------------+----------+-------------------+
-            </programlisting>
++---------------------+---------------------+------------+---------+----+----------+----------------+-----------+--------------+----------+-------------------+</computeroutput>       </screen>
 
-      <para>You can see that 'osdemo0{1,2,4,5} are all running 'nova-compute.'
-      When you start spinning up instances, they will allocate on any node
-      that is running nova-compute from this list.</para>
+      <para>You can see that <literal>osdemo0{1,2,4,5}</literal> are all
+      running <command>nova-compute</command>. When you start spinning up
+      instances, they will allocate on any node that is running
+      <command>nova-compute</command> from this list.</para>
     </section>
 
     <section xml:id="determining-version-of-compute">
       <title>Determining the Version of Compute</title>
 
       <para>You can find the version of the installation by using the
-      nova-manage command:</para>
+      <command>nova-manage</command> command:</para>
 
-      <literallayout class="monospaced">nova-manage version list</literallayout>
+      <screen><prompt>$</prompt> <userinput>nova-manage version list</userinput></screen>
     </section>
 
     <section xml:id="migrating-from-cactus-to-diablo">
