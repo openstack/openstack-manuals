@@ -1,208 +1,296 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter xmlns="http://docbook.org/ns/docbook"
-    xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
-    xml:id="ch_installing-openstack-compute">
-        <title>Installing OpenStack Compute</title>
-        <para>The OpenStack system has several key projects that are separate installations but can
-        work together depending on your cloud needs: OpenStack Compute, OpenStack Object Storage,
-        and OpenStack Image Service. You can install any of these projects separately and then
-        configure them either as standalone or connected entities.</para>
-    <xi:include href="../openstack-install/compute-sys-requirements.xml" />
-    <section xml:id="example-installation-architecture">
-        <title>Example Installation Architectures</title>
-        <para>OpenStack Compute uses a shared-nothing, messaging-based architecture. While very
-            flexible, the fact that you can install each nova- service on an independent server
-            means there are many possible methods for installing OpenStack Compute. The only
-            co-dependency between possible multi-node installations is that the Dashboard must be
-            installed nova-api server. Here are the types of installation architectures:</para>
-       
-            <itemizedlist>
-                <listitem>
-                        <para xmlns="http://docbook.org/ns/docbook">Single node: Only one server
-                    runs all nova- services and also drives all the virtual instances. Use this
-                    configuration only for trying out OpenStack Compute, or for development
-                    purposes.</para></listitem>
-                <listitem><para>Two nodes: A cloud controller node runs the nova- services except for nova-compute, and a
-                    compute node runs nova-compute. A client computer is likely needed to bundle
-                    images and interfacing to the servers, but a client is not required. Use this
-                    configuration for proof of concepts or development environments. </para></listitem>
-                        <listitem><para xmlns="http://docbook.org/ns/docbook">Multiple nodes: You can add more compute nodes to the
-                    two node installation by simply installing nova-compute on an additional server
-                    and copying a nova.conf file to the added node. This would result in a multiple
-                    node installation. You can also add a volume controller and a network controller
-                    as additional nodes in a more complex multiple node installation.  A minimum of
-                    4 nodes is best for running multiple virtual instances that require a lot of
-                    processing power.</para>
-                </listitem>
-            </itemizedlist>
-      
-        <para>This is an illustration of one possible multiple server installation of OpenStack
-            Compute; virtual server networking in the cluster may vary.</para>
-        
-        <para><inlinemediaobject>
-            <imageobject>
-                <imagedata scale="80" fileref="figures/NOVA_install_arch.png"/></imageobject>
-            
-        </inlinemediaobject></para>
-        <para>An alternative architecture would be to add more messaging servers if you notice a lot
-            of back up in the messaging queue causing performance problems. In that case you would
-            add an additional RabbitMQ server in addition to or instead of scaling up the database
-            server. Your installation can run any nova- service on any server as long as the
-            nova.conf is configured to point to the RabbitMQ server and the server can send messages
-            to the server.</para>
-        <para>Multiple installation architectures are possible, here is another example
-        illustration. </para>
-        <para><inlinemediaobject>
-            <imageobject>
-                <imagedata scale="40" fileref="figures/NOVA_compute_nodes.png"/></imageobject>
-            
-        </inlinemediaobject></para>
-    </section>
-    
-    <section xml:id="service-architecture"><title>Service Architecture</title>
-        <para>Because Compute has multiple services and many configurations are possible, here is a diagram showing the overall service architecture and communication systems between the services.</para>
-        <para><inlinemediaobject>
-            <imageobject>
-                <imagedata scale="80" fileref="figures/NOVA_ARCH.png"/></imageobject>
-            
-        </inlinemediaobject></para></section>
-    <section xml:id="installing-openstack-compute-on-ubuntu">
-        <title>Installing OpenStack Compute on Ubuntu </title>
-        <para>How you go about installing OpenStack Compute depends on your goals for the
-            installation. You can use an ISO image, you can use a scripted installation, and you can
-            manually install with a step-by-step installation.</para>
-        
-        
-        <section xml:id="iso-ubuntu-installation">
-            <title>ISO Distribution Installation</title>
-            <para>You can download and use an ISO image that is based on a Ubuntu Linux Server 10.04
-                LTS distribution containing only the components needed to run OpenStack Compute. See
-                    <link xlink:href="http://sourceforge.net/projects/stackops/files/"
-                    >http://sourceforge.net/projects/stackops/files/</link> for download files and
-                information, license information, and a README file. For documentation on the
-                StackOps distro, see <link xlink:href="http://docs.stackops.org">http://docs.stackops.org</link>. For free support, go to
-                <link xlink:href="http://getsatisfaction.com/stackops">http://getsatisfaction.com/stackops</link>.</para></section>
-        <section xml:id="scripted-ubuntu-installation">
-            <title>Scripted Installation</title>
-            <para>You can download a script for a standalone install for proof-of-concept, learning, or for development purposes for Ubuntu 11.04 at <link
-                    xlink:href="http://devstack.org"
-                >https://devstack.org</link>.</para>
-            
-            <orderedlist>
-                <listitem><para>Install Ubuntu 11.04 (Natty):</para> <para>In order to correctly install all the dependencies, we assume a specific version of Ubuntu to
-                        make it as easy as possible. OpenStack works on other flavors of Linux (and
-                        some folks even run it on Windows!) We recommend using a minimal install of
-                        Ubuntu server in a VM if this is your first time.</para></listitem>
-            
-           
-          
-            <listitem><para>Download DevStack:</para>
-                <literallayout class="monospaced">git clone git://github.com/cloudbuilders/devstack.git</literallayout>
-                <para>The devstack repo contains a script that installs OpenStack Compute, the Image
-                        Service and the Identity Service and offers templates for configuration
-                        files plus data scripts. </para></listitem>
-            
-                        
-            
-                <listitem><para>Start the install:</para><literallayout class="monospaced">cd devstack; ./stack.sh</literallayout><para>It takes a few minutes, we recommend <link xlink:href="http://devstack.org/stack.sh.html"
-                            >reading the well-documented script</link> while it is building to learn
-                        more about what is going on. </para>
-                </listitem>
+<chapter version="5.0" xml:id="ch_installing-openstack-compute"
+         xmlns="http://docbook.org/ns/docbook"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:ns5="http://www.w3.org/2000/svg"
+         xmlns:ns4="http://www.w3.org/1998/Math/MathML"
+         xmlns:ns3="http://www.w3.org/1999/xhtml"
+         xmlns:ns="http://docbook.org/ns/docbook">
+  <title>Installing OpenStack Compute</title>
 
-            </orderedlist>
-        </section>
-        <section xml:id="manual-ubuntu-installation">
-            <title>Manual Installation on Ubuntu</title>
-            <para>The manual installation involves installing from
-                packages on Ubuntu 11.10 or 11.04 as a user with root
-                (or sudo) permission. The <link xlink:href="http://docs.openstack.org/diablo/openstack-compute/starter/content/">OpenStack Starter Guide</link>
-                provides instructions for a manual installation using
-                the packages shipped with Ubuntu 11.10. The <link xlink:href="http://docs.openstack.org/diablo/openstack-compute/install/content/">OpenStack
-                Install and Deploy Manual</link> provides instructions for
-                installing using packages provided by OpenStack
-                community members. Refer to those manuals for detailed
-                instructions by going to
-                <link xlink:href="http://docs.openstack.org">http://docs.openstack.org</link> and
-                clicking the links next to the manual title.</para>
-        </section>
-    </section>
-    <section xml:id="installing-openstack-compute-on-rhel6">
-        <title>Installing OpenStack Compute on Red Hat Enterprise Linux 6 </title>
-        <para>This section documents a multi-node installation using RHEL 6. RPM repos for the Bexar
-            release, the Cactus release, milestone releases of Diablo, and also per-commit trunk
-            builds for OpenStack Nova are available at <link
-                xlink:href="http://yum.griddynamics.net">http://yum.griddynamics.net</link>. The
-            final release of Diablo is available at <link
-                xlink:href="http://yum.griddynamics.net/yum/diablo/"
-                >http://yum.griddynamics.net/yum/diablo/</link>, but is not yet tested completely
-            (as of Oct 4, 2011). Check this page for updates: <link
-                xlink:href="http://wiki.openstack.org/NovaInstall/RHEL6Notes"
-                >http://wiki.openstack.org/NovaInstall/RHEL6Notes</link>.</para>
-        
-        <para>Known considerations for RHEL version 6 installations: </para>
+  <para>The OpenStack system has several key projects that are separate
+  installations but can work together depending on your cloud needs: OpenStack
+  Compute, OpenStack Object Storage, and OpenStack Image Service. You can
+  install any of these projects separately and then configure them either as
+  standalone or connected entities. </para>
 
-<itemizedlist><listitem>
-                <para>iSCSI LUN not supported due to tgtadm versus ietadm differences</para>
-            </listitem>
-            <listitem>
-                <para>GuestFS is used for files injection</para>
-            </listitem>
-            <listitem>
-                <para>Files injection works with libvirt</para>
-            </listitem>
-            <listitem>
-                <para>Static network configuration can detect OS type for RHEL and Ubuntu</para>
-            </listitem>
-<listitem><para>Only KVM hypervisor has been tested with this installation</para></listitem></itemizedlist>
-        <para>To install Nova on RHEL v.6 you need access to two repositories, one available on the
-            yum.griddynamics.net website and the RHEL DVD image connected as repo. </para>
-        
-        <para>First, install RHEL 6.0, preferrably with a minimal set of packages.</para>
-        <para>Disable SELinux in /etc/sysconfig/selinux and then reboot. </para>
-        <para>Connect the RHEL 3. 6.0 x86_64 DVD as a repository in YUM. </para>
-            
-            <literallayout class="monospaced">
+  <xi:include href="../openstack-install/compute-sys-requirements.xml"/>
+
+  <section xml:id="example-installation-architecture">
+    <title>Example Installation Architectures</title>
+
+    <para>OpenStack Compute uses a shared-nothing, messaging-based
+    architecture. While very flexible, the fact that you can install each
+    nova- service on an independent server means there are many possible
+    methods for installing OpenStack Compute. The only co-dependency between
+    possible multi-node installations is that the Dashboard must be installed
+    nova-api server. Here are the types of installation architectures:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>Single node: Only one server runs all nova- services and also
+        drives all the virtual instances. Use this configuration only for
+        trying out OpenStack Compute, or for development purposes.</para>
+      </listitem>
+
+      <listitem>
+        <para>Two nodes: A cloud controller node runs the nova- services
+        except for nova-compute, and a compute node runs nova-compute. A
+        client computer is likely needed to bundle images and interfacing to
+        the servers, but a client is not required. Use this configuration for
+        proof of concepts or development environments.</para>
+      </listitem>
+
+      <listitem>
+        <para>Multiple nodes: You can add more compute nodes to the two node
+        installation by simply installing nova-compute on an additional server
+        and copying a nova.conf file to the added node. This would result in a
+        multiple node installation. You can also add a volume controller and a
+        network controller as additional nodes in a more complex multiple node
+        installation. A minimum of 4 nodes is best for running multiple
+        virtual instances that require a lot of processing power.</para>
+      </listitem>
+    </itemizedlist>
+
+    <para>This is an illustration of one possible multiple server installation
+    of OpenStack Compute; virtual server networking in the cluster may
+    vary.</para>
+
+    <para><inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="figures/NOVA_install_arch.png" scale="80"/>
+        </imageobject>
+      </inlinemediaobject></para>
+
+    <para>An alternative architecture would be to add more messaging servers
+    if you notice a lot of back up in the messaging queue causing performance
+    problems. In that case you would add an additional RabbitMQ server in
+    addition to or instead of scaling up the database server. Your
+    installation can run any nova- service on any server as long as the
+    nova.conf is configured to point to the RabbitMQ server and the server can
+    send messages to the server.</para>
+
+    <para>Multiple installation architectures are possible, here is another
+    example illustration.</para>
+
+    <para><inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="figures/NOVA_compute_nodes.png" scale="40"/>
+        </imageobject>
+      </inlinemediaobject></para>
+  </section>
+
+  <section xml:id="service-architecture">
+    <title>Service Architecture</title>
+
+    <para>Because Compute has multiple services and many configurations are
+    possible, here is a diagram showing the overall service architecture and
+    communication systems between the services.</para>
+
+    <para><inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="figures/NOVA_ARCH.png" scale="80"/>
+        </imageobject>
+      </inlinemediaobject></para>
+  </section>
+
+  <section xml:id="installing-openstack-compute-on-ubuntu">
+    <title>Installing OpenStack Compute on Ubuntu</title>
+
+    <para>How you go about installing OpenStack Compute depends on your goals
+    for the installation. You can use an ISO image, you can use a scripted
+    installation, and you can manually install with a step-by-step
+    installation.</para>
+
+    <section xml:id="iso-ubuntu-installation">
+      <title>ISO Distribution Installation</title>
+
+      <para>You can download and use an ISO image that is based on a Ubuntu
+      Linux Server 10.04 LTS distribution containing only the components
+      needed to run OpenStack Compute. See <link
+      xlink:href="http://sourceforge.net/projects/stackops/files/">http://sourceforge.net/projects/stackops/files/</link>
+      for download files and information, license information, and a README
+      file. For documentation on the StackOps distro, see <link
+      xlink:href="http://docs.stackops.org">http://docs.stackops.org</link>.
+      For free support, go to <link
+      xlink:href="http://getsatisfaction.com/stackops">http://getsatisfaction.com/stackops</link>.</para>
+    </section>
+
+    <section xml:id="scripted-ubuntu-installation">
+      <title>Scripted Installation</title>
+
+      <para>You can download a script for a standalone install for
+      proof-of-concept, learning, or for development purposes for Ubuntu 11.04
+      at <link
+      xlink:href="http://devstack.org">https://devstack.org</link>.</para>
+
+      <orderedlist>
+        <listitem>
+          <para>Install Ubuntu 11.04 (Natty):</para>
+
+          <para>In order to correctly install all the dependencies, we assume
+          a specific version of Ubuntu to make it as easy as possible.
+          OpenStack works on other flavors of Linux (and some folks even run
+          it on Windows!) We recommend using a minimal install of Ubuntu
+          server in a VM if this is your first time.</para>
+        </listitem>
+
+        <listitem>
+          <para>Download DevStack:</para>
+
+          <literallayout class="monospaced">git clone git://github.com/cloudbuilders/devstack.git</literallayout>
+
+          <para>The devstack repo contains a script that installs OpenStack
+          Compute, the Image Service and the Identity Service and offers
+          templates for configuration files plus data scripts.</para>
+        </listitem>
+
+        <listitem>
+          <para>Start the install:</para>
+
+          <literallayout class="monospaced">cd devstack; ./stack.sh</literallayout>
+
+          <para>It takes a few minutes, we recommend <link
+          xlink:href="http://devstack.org/stack.sh.html">reading the
+          well-documented script</link> while it is building to learn more
+          about what is going on.</para>
+        </listitem>
+      </orderedlist>
+    </section>
+
+    <section xml:id="manual-ubuntu-installation">
+      <title>Manual Installation on Ubuntu</title>
+
+      <para>The manual installation involves installing from packages on
+      Ubuntu 11.10 or 11.04 as a user with root (or sudo) permission. The
+      <link
+      xlink:href="http://docs.openstack.org/diablo/openstack-compute/starter/content/">OpenStack
+      Starter Guide</link> provides instructions for a manual installation
+      using the packages shipped with Ubuntu 11.10. The <link
+      xlink:href="http://docs.openstack.org/diablo/openstack-compute/install/content/">OpenStack
+      Install and Deploy Manual</link> provides instructions for installing
+      using packages provided by OpenStack community members. Refer to those
+      manuals for detailed instructions by going to <link
+      xlink:href="http://docs.openstack.org">http://docs.openstack.org</link>
+      and clicking the links next to the manual title.</para>
+    </section>
+  </section>
+
+  <section xml:id="installing-openstack-compute-on-rhel6">
+    <title>Installing OpenStack Compute on Red Hat Enterprise Linux 6</title>
+
+    <para>This section documents a multi-node installation using RHEL 6. RPM
+    repos for the Bexar release, the Cactus release, milestone releases of
+    Diablo, and also per-commit trunk builds for OpenStack Nova are available
+    at <link
+    xlink:href="http://yum.griddynamics.net">http://yum.griddynamics.net</link>.
+    The final release of Diablo is available at <link
+    xlink:href="http://yum.griddynamics.net/yum/diablo/">http://yum.griddynamics.net/yum/diablo/</link>,
+    but is not yet tested completely (as of Oct 4, 2011). Check this page for
+    updates: <link
+    xlink:href="http://wiki.openstack.org/NovaInstall/RHEL6Notes">http://wiki.openstack.org/NovaInstall/RHEL6Notes</link>.</para>
+
+    <para>Known considerations for RHEL version 6 installations:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>iSCSI LUN not supported due to tgtadm versus ietadm
+        differences</para>
+      </listitem>
+
+      <listitem>
+        <para>GuestFS is used for files injection</para>
+      </listitem>
+
+      <listitem>
+        <para>Files injection works with libvirt</para>
+      </listitem>
+
+      <listitem>
+        <para>Static network configuration can detect OS type for RHEL and
+        Ubuntu</para>
+      </listitem>
+
+      <listitem>
+        <para>Only KVM hypervisor has been tested with this
+        installation</para>
+      </listitem>
+    </itemizedlist>
+
+    <para>To install Nova on RHEL v.6 you need access to two repositories, one
+    available on the yum.griddynamics.net website and the RHEL DVD image
+    connected as repo.</para>
+
+    <para>First, install RHEL 6.0, preferrably with a minimal set of
+    packages.</para>
+
+    <para>Disable SELinux in /etc/sysconfig/selinux and then reboot.</para>
+
+    <para>Connect the RHEL 3. 6.0 x86_64 DVD as a repository in YUM.</para>
+
+    <literallayout class="monospaced">
 sudo mount /dev/cdrom /mnt/cdrom
 /etc/yum.repos.d/rhel.repo 
             </literallayout>
-        <programlisting>
+
+    <programlisting>
 [rhel]
 name=RHEL 6.0
 baseurl=file:///mnt/cdrom/Server
 enabled=1
 gpgcheck=0
             </programlisting>
-        <para>Download and install repo config and key. The cloud controller plus compute node is
-            installed with the example rpm below. You can use <link
-                xlink:href="http://yum.griddynamics.net/yum/diablo/openstack-nova-node-compute-2011.3-b609.noarch.rpm"
-                >http://yum.griddynamics.net/yum/diablo/openstack-nova-node-compute-2011.3-b609.noarch.rpm</link>
-            for a compute node only.</para>
-        <literallayout class="monospaced">
+
+    <para>Download and install repo config and key. The cloud controller plus
+    compute node is installed with the example rpm below. You can use <link
+    xlink:href="http://yum.griddynamics.net/yum/diablo/openstack-nova-node-compute-2011.3-b609.noarch.rpm">http://yum.griddynamics.net/yum/diablo/openstack-nova-node-compute-2011.3-b609.noarch.rpm</link>
+    for a compute node only.</para>
+
+    <literallayout class="monospaced">
 wget http://yum.griddynamics.net/yum/diablo/openstack-nova-node-full-2011.3-b609.noarch.rpm
 sudo rpm -i openstack-repo-2011.1-3.noarch.rpm
         </literallayout>
-        <para>Install the libvirt package (these instructions are tested only on KVM). </para>
-        <literallayout class="monospaced">
+
+    <para>Install the libvirt package (these instructions are tested only on
+    KVM).</para>
+
+    <literallayout class="monospaced">
 sudo yum install libvirt
 sudo chkconfig libvirtd on
 sudo service libvirtd start
         </literallayout>
-        <para>Repeat the basic installation steps to put the pre-requisites on all cloud controller and compute nodes. Nova has many different possible configurations. You can install Nova services on separate servers as needed but these are the basic pre-reqs.</para>
-        <para>These are the basic packages to install for a cloud controller node:</para>
-        <literallayout class="monospaced">sudo yum install euca2ools openstack-nova-node-full</literallayout>
-        <para>These are the basic packages to install compute nodes. Repeat for each compute node (the node that runs the VMs) that you want to install.</para>
-        <literallayout class="monospaced">sudo yum install openstack-nova-compute </literallayout>
-        <para>On the cloud controller node, create a MySQL database named nova. </para>
-        <literallayout class="monospaced">
+
+    <para>Repeat the basic installation steps to put the pre-requisites on all
+    cloud controller and compute nodes. Nova has many different possible
+    configurations. You can install Nova services on separate servers as
+    needed but these are the basic pre-reqs.</para>
+
+    <para>These are the basic packages to install for a cloud controller
+    node:</para>
+
+    <literallayout class="monospaced">sudo yum install euca2ools openstack-nova-node-full</literallayout>
+
+    <para>These are the basic packages to install compute nodes. Repeat for
+    each compute node (the node that runs the VMs) that you want to
+    install.</para>
+
+    <literallayout class="monospaced">sudo yum install openstack-nova-compute </literallayout>
+
+    <para>On the cloud controller node, create a MySQL database named
+    nova.</para>
+
+    <literallayout class="monospaced">
 sudo service mysqld start
 sudo chkconfig mysqld on
 sudo service rabbitmq-server start
 sudo chkconfig rabbitmq-server on
 mysqladmin -u root password nova
 </literallayout>
-        <para>You can use this script to create the database. </para>
-        <programlisting>
+
+    <para>You can use this script to create the database.</para>
+
+    <programlisting>
 #!/bin/bash
 
 DB_NAME=nova
@@ -222,14 +310,20 @@ done
 echo "GRANT ALL PRIVILEGES ON $DB_NAME.* TO $DB_USER IDENTIFIED BY '$DB_PASS';" | mysql -u root -p$DB_PASS mysql
 echo "GRANT ALL PRIVILEGES ON $DB_NAME.* TO root IDENTIFIED BY '$DB_PASS';" | mysql -u root -p$DB_PASS mysql 
         </programlisting>
-        <para>Now, ensure the database version matches the version of nova that you are installing:</para>
-        <literallayout class="monospaced">nova-manage db sync</literallayout>
-        <para>For iptables configuration, update your firewall configuration to allow incoming
-            requests on ports 5672 (RabbitMQ), 3306 (MySQL DB), 9292 (Glance), 6080 (noVNC web
-            console), API (8773, 8774) and DHCP traffic from instances. For non-production
-            environments the easiest way to fix any firewall problems is removing final REJECT in
-            INPUT chain of filter table. </para>
-            <literallayout class="monospaced">
+
+    <para>Now, ensure the database version matches the version of nova that
+    you are installing:</para>
+
+    <literallayout class="monospaced">nova-manage db sync</literallayout>
+
+    <para>For iptables configuration, update your firewall configuration to
+    allow incoming requests on ports 5672 (RabbitMQ), 3306 (MySQL DB), 9292
+    (Glance), 6080 (noVNC web console), API (8773, 8774) and DHCP traffic from
+    instances. For non-production environments the easiest way to fix any
+    firewall problems is removing final REJECT in INPUT chain of filter
+    table.</para>
+
+    <literallayout class="monospaced">
 sudo iptables -I INPUT 1 -p tcp --dport 5672 -j ACCEPT
 sudo iptables -I INPUT 1 -p tcp --dport 3306 -j ACCEPT
 sudo iptables -I INPUT 1 -p tcp --dport 9292 -j ACCEPT
@@ -238,14 +332,20 @@ sudo iptables -I INPUT 1 -p tcp --dport 8773 -j ACCEPT
 sudo iptables -I INPUT 1 -p tcp --dport 8774 -j ACCEPT
 sudo iptables -I INPUT 1 -p udp --dport 67 -j ACCEPT
             </literallayout>
-            
-            <para>On every node when you have nova-compute running ensure that unencrypted VNC access is allowed only from Cloud Controller node:</para> 
-            
-            <literallayout class="monospaced">sudo iptables -I INPUT 1 -p tcp -s &lt;CLOUD_CONTROLLER_IP_ADDRESS&gt; --dport 5900:6400 -j ACCEPT
-        </literallayout><para>On each node, set up the configuration file in /etc/nova/nova.conf.</para>
-        <para>Start the Nova services after configuring and you then are running an OpenStack
-            cloud!</para>
-        <literallayout class="monospaced">
+
+    <para>On every node when you have nova-compute running ensure that
+    unencrypted VNC access is allowed only from Cloud Controller node:</para>
+
+    <literallayout class="monospaced">sudo iptables -I INPUT 1 -p tcp -s &lt;CLOUD_CONTROLLER_IP_ADDRESS&gt; --dport 5900:6400 -j ACCEPT
+        </literallayout>
+
+    <para>On each node, set up the configuration file in
+    /etc/nova/nova.conf.</para>
+
+    <para>Start the Nova services after configuring and you then are running
+    an OpenStack cloud!</para>
+
+    <literallayout class="monospaced">
 for n in api compute network objectstore scheduler vncproxy; do 
               sudo service openstack-nova-$n start; done
               sudo service openstack-glance-api start
@@ -253,119 +353,163 @@ for n in api compute network objectstore scheduler vncproxy; do
 for n in node1 node2 node3; do 
               ssh $n sudo service openstack-nova-compute start; done
         </literallayout>
-        </section>
-    <section xml:id="configuring-openstack-compute-basics">
-        <title>Post-Installation Configuration for OpenStack Compute</title>
-        <para>Configuring your Compute installation involves nova-manage commands plus editing the
-            nova.conf file to ensure the correct flags are set. This section contains the basics for
-            a simple multi-node installation, but Compute can be configured many ways. You can find
-            networking options and hypervisor options described in separate chapters, and you will
-            read about additional configuration information in a separate chapter as well.</para>
-        <section xml:id="setting-flags-in-nova-conf-file">
-            <title>Setting Flags in the nova.conf File</title>
-            <para>The configuration file nova.conf is installed in /etc/nova by default. You only
-                need to do these steps when installing manually, the scripted installation above
-                does this configuration during the installation. A default set of options are
-                already configured in nova.conf when you install manually. The defaults are as
-                follows:</para>
-            <programlisting>
+  </section>
+
+  <section xml:id="configuring-openstack-compute-basics">
+    <title>Post-Installation Configuration for OpenStack Compute</title>
+
+    <para>Configuring your Compute installation involves nova-manage commands
+    plus editing the nova.conf file to ensure the correct flags are set. This
+    section contains the basics for a simple multi-node installation, but
+    Compute can be configured many ways. You can find networking options and
+    hypervisor options described in separate chapters, and you will read about
+    additional configuration information in a separate chapter as well.</para>
+
+    <section xml:id="setting-flags-in-nova-conf-file">
+      <title>Setting Flags in the nova.conf File</title>
+
+      <para>The configuration file nova.conf is installed in /etc/nova by
+      default. You only need to do these steps when installing manually, the
+      scripted installation above does this configuration during the
+      installation. A default set of options are already configured in
+      nova.conf when you install manually. The defaults are as follows:</para>
+
+      <programlisting>
 --daemonize=1
 --dhcpbridge_flagfile=/etc/nova/nova.conf
 --dhcpbridge=/bin/nova-dhcpbridge
 --logdir=/var/log/nova
 --state_path=/var/lib/nova               
             </programlisting>
-            <para>Starting with the default file, you must define the following required items in
-                /etc/nova/nova.conf. The flag variables are described below. You can place
-                comments in the nova.conf file by entering a new line with a # sign at the beginning of the line. To see a listing of all possible flag settings, see
-                the output of running /bin/nova-api --help.</para>
-            <table rules="all">
-                <caption>Description of nova.conf flags (not comprehensive)</caption>
-                <thead>
-                    <tr>
-                        <td>Flag</td>
-                        <td>Description</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>--sql_connection</td>
-                        <td>SQL Alchemy connect string (reference); Location of OpenStack Compute
-                            SQL database</td>
-                    </tr>
-                    <tr>
-                        <td>--s3_host</td>
-                        <td>IP address; Location where OpenStack Compute is hosting the objectstore
-                            service, which will contain the virtual machine images and buckets</td>
-                    </tr>
-                    <tr>
-                        <td>--rabbit_host</td>
-                        <td>IP address; Location of RabbitMQ server</td>
-                    </tr>
-                   
-                    <tr>
-                        <td>--verbose</td>
-                        <td>Set to 1 to turn on; Optional but helpful during initial setup</td>
-                    </tr>
-                   
-                    <tr>
-                        <td>--network_manager</td>
-                        <td>
-                            <para>Configures how your controller will communicate with additional
-                                OpenStack Compute nodes and virtual machines. Options: </para>
-                            <itemizedlist>
-                                <listitem>
-                                    <para>nova.network.manager.FlatManager</para>
-                                    <para>Simple, non-VLAN networking</para>
-                                </listitem>
-                                <listitem>
-                                    <para>nova.network.manager.FlatDHCPManager</para>
-                                    <para>Flat networking with DHCP</para>
-                                </listitem>
-                                <listitem>
-                                    <para>nova.network.manager.VlanManager</para>
-                                    <para>VLAN networking with DHCP; This is the Default if no
-                                        network manager is defined here in nova.conf. </para>
-                                </listitem>
-                            </itemizedlist>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>--fixed_range</td>
-                        <td>IP address/range; Network prefix for the IP network that all the
-                            projects for future VM guests reside on. Example: 192.168.0.0/12</td>
-                    </tr>
-                    <tr>
-                        <td>--ec2_host</td>
-                        <td>IP address; Indicates where the nova-api service is installed.</td>
-                    </tr>
-                    <tr>
-                        <td>--ec2_url</td>
-                        <td>Url; Indicates the service for EC2 requests.</td>
-                    </tr>
-                    <tr>
-                        <td>--osapi_host</td>
-                        <td>IP address; Indicates where the nova-api service is installed.</td>
-                    </tr>
-                    <tr>
-                        <td>--network_size</td>
-                        <td>Number value; Number of addresses in each private subnet.</td>
-                    </tr>
-                    <tr>
-                        <td>--glance_api_servers </td>
-                        <td>IP and port; Address for Image Service.</td>
-                    </tr>
-                    <tr>
-                        <td>--use_deprecated_auth </td>
-                        <td>If this flag is present, the Cactus method of authentication is used with the novarc file containing credentials.</td>
-                    </tr>
 
-                </tbody>
-            </table>
-            <para>Here is a simple example nova.conf file for a small private cloud, with all the
-                cloud controller services, database server, and messaging server on the same
-                server.</para>
-            <programlisting>
+      <para>Starting with the default file, you must define the following
+      required items in /etc/nova/nova.conf. The flag variables are described
+      below. You can place comments in the nova.conf file by entering a new
+      line with a # sign at the beginning of the line. To see a listing of all
+      possible flag settings, see the output of running /bin/nova-api
+      --help.</para>
+
+      <table rules="all">
+        <caption>Description of nova.conf flags (not comprehensive)</caption>
+
+        <thead>
+          <tr>
+            <td>Flag</td>
+
+            <td>Description</td>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>--sql_connection</td>
+
+            <td>SQL Alchemy connect string (reference); Location of OpenStack
+            Compute SQL database</td>
+          </tr>
+
+          <tr>
+            <td>--s3_host</td>
+
+            <td>IP address; Location where OpenStack Compute is hosting the
+            objectstore service, which will contain the virtual machine images
+            and buckets</td>
+          </tr>
+
+          <tr>
+            <td>--rabbit_host</td>
+
+            <td>IP address; Location of RabbitMQ server</td>
+          </tr>
+
+          <tr>
+            <td>--verbose</td>
+
+            <td>Set to 1 to turn on; Optional but helpful during initial
+            setup</td>
+          </tr>
+
+          <tr>
+            <td>--network_manager</td>
+
+            <td><para>Configures how your controller will communicate with
+            additional OpenStack Compute nodes and virtual machines. Options:
+            </para> <itemizedlist>
+                <listitem>
+                  <para>nova.network.manager.FlatManager</para>
+
+                  <para>Simple, non-VLAN networking</para>
+                </listitem>
+
+                <listitem>
+                  <para>nova.network.manager.FlatDHCPManager</para>
+
+                  <para>Flat networking with DHCP</para>
+                </listitem>
+
+                <listitem>
+                  <para>nova.network.manager.VlanManager</para>
+
+                  <para>VLAN networking with DHCP; This is the Default if no
+                  network manager is defined here in nova.conf.</para>
+                </listitem>
+              </itemizedlist></td>
+          </tr>
+
+          <tr>
+            <td>--fixed_range</td>
+
+            <td>IP address/range; Network prefix for the IP network that all
+            the projects for future VM guests reside on. Example:
+            192.168.0.0/12</td>
+          </tr>
+
+          <tr>
+            <td>--ec2_host</td>
+
+            <td>IP address; Indicates where the nova-api service is
+            installed.</td>
+          </tr>
+
+          <tr>
+            <td>--ec2_url</td>
+
+            <td>Url; Indicates the service for EC2 requests.</td>
+          </tr>
+
+          <tr>
+            <td>--osapi_host</td>
+
+            <td>IP address; Indicates where the nova-api service is
+            installed.</td>
+          </tr>
+
+          <tr>
+            <td>--network_size</td>
+
+            <td>Number value; Number of addresses in each private subnet.</td>
+          </tr>
+
+          <tr>
+            <td>--glance_api_servers</td>
+
+            <td>IP and port; Address for Image Service.</td>
+          </tr>
+
+          <tr>
+            <td>--use_deprecated_auth</td>
+
+            <td>If this flag is present, the Cactus method of authentication
+            is used with the novarc file containing credentials.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <para>Here is a simple example nova.conf file for a small private cloud,
+      with all the cloud controller services, database server, and messaging
+      server on the same server.</para>
+
+      <programlisting>
 --dhcpbridge_flagfile=/etc/nova/nova.conf
 --dhcpbridge=/bin/nova-dhcpbridge
 --logdir=/var/log/nova
@@ -383,118 +527,160 @@ for n in node1 node2 node3; do
 --routing_source_ip=184.106.239.134
 --sql_connection=mysql://nova:notnova@184.106.239.134/nova            
             </programlisting>
-            <para>Create a “nova” group, so you can set permissions on the configuration file: </para>
-            <literallayout class="monospaced">sudo addgroup nova</literallayout>
-            <para>The nova.config file should have its owner set to root:nova, and mode set to 0640,
-                since the file contains your MySQL server’s username and password. You also want to
-                ensure that the nova user belongs to the nova group.</para>
-            <literallayout class="monospaced">
+
+      <para>Create a “nova” group, so you can set permissions on the
+      configuration file:</para>
+
+      <literallayout class="monospaced">sudo addgroup nova</literallayout>
+
+      <para>The nova.config file should have its owner set to root:nova, and
+      mode set to 0640, since the file contains your MySQL server’s username
+      and password. You also want to ensure that the nova user belongs to the
+      nova group.</para>
+
+      <literallayout class="monospaced">
 sudo usermod -g nova nova
 chown -R root:nova /etc/nova
 chmod 640 /etc/nova/nova.conf
             </literallayout>
-        </section><section xml:id="setting-up-openstack-compute-environment-on-the-compute-node">
-                <title>Setting Up OpenStack Compute Environment on the Compute Node</title>
-                <para>
-                    These are the commands you run to ensure the database schema is current, and
-                then set up a user and project, if you are using built-in auth with the
-                <literallayout class="monospaced">--use_deprecated_auth flag</literallayout> rather than the Identity Service: 
-                </para>
-                <para>
-<literallayout class="monospaced">
+    </section>
+
+    <section xml:id="setting-up-openstack-compute-environment-on-the-compute-node">
+      <title>Setting Up OpenStack Compute Environment on the Compute
+      Node</title>
+
+      <para>These are the commands you run to ensure the database schema is
+      current, and then set up a user and project, if you are using built-in
+      auth with the <literallayout class="monospaced">--use_deprecated_auth flag</literallayout>
+      rather than the Identity Service:</para>
+
+      <para><literallayout class="monospaced">
 nova-manage db sync
-nova-manage user admin &lt;user_name>
-nova-manage project create &lt;project_name> &lt;user_name>
-nova-manage network create &lt;network-label> &lt;project-network> &lt;number-of-networks-in-project> &lt;addresses-in-each-network>
-</literallayout>
-                </para>
-                <para>Here is an example of what this looks like with real values entered: </para>
-                <literallayout class="monospaced">
+nova-manage user admin &lt;user_name&gt;
+nova-manage project create &lt;project_name&gt; &lt;user_name&gt;
+nova-manage network create &lt;network-label&gt; &lt;project-network&gt; &lt;number-of-networks-in-project&gt; &lt;addresses-in-each-network&gt;
+</literallayout></para>
+
+      <para>Here is an example of what this looks like with real values
+      entered:</para>
+
+      <literallayout class="monospaced">
 nova-manage db sync
 nova-manage user admin dub
 nova-manage project create dubproject dub
 nova-manage network create novanet 192.168.0.0/24 1 256 
                 </literallayout>
-                <para>For this example, the number of IPs is /24 since that falls inside the /16
-                    range that was set in ‘fixed-range’ in nova.conf. Currently, there can only be
-                    one network, and this set up would use the max IPs available in a /24. You can
-                    choose values that let you use any valid amount that you would like. </para>
-                <para>The nova-manage service assumes that the first IP address is your network
-                (like 192.168.0.0), that the 2nd IP is your gateway (192.168.0.1), and that the
-                broadcast is the very last IP in the range you defined (192.168.0.255). If this is
-                not the case you will need to manually edit the sql db ‘networks’ table.o. </para>
-            <para>When you run the nova-manage network create command, entries are made
-                in the ‘networks’ and ‘fixed_ips’ table. However, one of the networks listed in the
-                ‘networks’ table needs to be marked as bridge in order for the code to know that a
-                bridge exists. The network in the Nova networks table is marked as bridged
-                automatically for Flat Manager.</para>
-            </section>
-        <section xml:id="creating-certifications">
-                <title>Creating Credentials</title>
-                <para>Generate the credentials as a zip file. These are the certs you will use to
-                launch instances, bundle images, and all the other assorted API functions. </para>
-                <para>
-                    <literallayout class="monospaced">
+
+      <para>For this example, the number of IPs is /24 since that falls inside
+      the /16 range that was set in ‘fixed-range’ in nova.conf. Currently,
+      there can only be one network, and this set up would use the max IPs
+      available in a /24. You can choose values that let you use any valid
+      amount that you would like.</para>
+
+      <para>The nova-manage service assumes that the first IP address is your
+      network (like 192.168.0.0), that the 2nd IP is your gateway
+      (192.168.0.1), and that the broadcast is the very last IP in the range
+      you defined (192.168.0.255). If this is not the case you will need to
+      manually edit the sql db ‘networks’ table.o.</para>
+
+      <para>When you run the nova-manage network create command, entries are
+      made in the ‘networks’ and ‘fixed_ips’ table. However, one of the
+      networks listed in the ‘networks’ table needs to be marked as bridge in
+      order for the code to know that a bridge exists. The network in the Nova
+      networks table is marked as bridged automatically for Flat
+      Manager.</para>
+    </section>
+
+    <section xml:id="creating-certifications">
+      <title>Creating Credentials</title>
+
+      <para>Generate the credentials as a zip file. These are the certs you
+      will use to launch instances, bundle images, and all the other assorted
+      API functions.</para>
+
+      <para><literallayout class="monospaced">
 mkdir –p /root/creds
 /usr/bin/python /usr/bin/nova-manage project zipfile $NOVA_PROJECT $NOVA_PROJECT_USER /root/creds/novacreds.zip
-                    </literallayout>
-                </para>
-            <para>If you are using one of the Flat modes for networking, you may see a Warning
-                message "No vpn data for project &lt;project_name>" which you can safely
-                ignore.</para>
-                <para>Unzip them in your home directory, and add them to your environment. </para>
-                <literallayout class="monospaced">
+                    </literallayout></para>
+
+      <para>If you are using one of the Flat modes for networking, you may see
+      a Warning message "No vpn data for project &lt;project_name&gt;" which
+      you can safely ignore.</para>
+
+      <para>Unzip them in your home directory, and add them to your
+      environment.</para>
+
+      <literallayout class="monospaced">
 unzip /root/creds/novacreds.zip -d /root/creds/
-cat /root/creds/novarc >> ~/.bashrc
+cat /root/creds/novarc &gt;&gt; ~/.bashrc
 source ~/.bashrc 
                 </literallayout>
-            <para>
-            If you already have Nova credentials present in your environment, you can use a script included with Glance the Image Service, tools/nova_to_os_env.sh, to create Glance-style credentials. This script adds OS_AUTH credentials to the environment which are used by the Image Service to enable private images when the Identity Service is configured as the authentication system for Compute and the Image Service.</para>
-            </section>
-        <section xml:id="enabling-access-to-vms-on-the-compute-node">
-                <title>Enabling Access to VMs on the Compute Node</title>
-                <para>One of the most commonly missed configuration areas is not allowing the proper
-                access to VMs. Use the ‘euca-authorize’ command to enable access. Below, you will
-                find the commands to allow 'ping' and 'ssh' to your VMs : </para>
-            <note>
-                <para>
-These commands need to be run as root only if the credentials used to interact with nova-api have been put under /root/.bashrc.
-If the EC2 credentials have been put into another user's .bashrc file, then, it is necessary to run these commands as the user.
-                </para>
-            </note>
-                <literallayout class="monospaced">
+
+      <para>If you already have Nova credentials present in your environment,
+      you can use a script included with Glance the Image Service,
+      tools/nova_to_os_env.sh, to create Glance-style credentials. This script
+      adds OS_AUTH credentials to the environment which are used by the Image
+      Service to enable private images when the Identity Service is configured
+      as the authentication system for Compute and the Image Service.</para>
+    </section>
+
+    <section xml:id="enabling-access-to-vms-on-the-compute-node">
+      <title>Enabling Access to VMs on the Compute Node</title>
+
+      <para>One of the most commonly missed configuration areas is not
+      allowing the proper access to VMs. Use the ‘euca-authorize’ command to
+      enable access. Below, you will find the commands to allow 'ping' and
+      'ssh' to your VMs :</para>
+
+      <note>
+        <para>These commands need to be run as root only if the credentials
+        used to interact with nova-api have been put under /root/.bashrc. If
+        the EC2 credentials have been put into another user's .bashrc file,
+        then, it is necessary to run these commands as the user.</para>
+      </note>
+
+      <literallayout class="monospaced">
  nova  secgroup-add-rule default  icmp - 1 -1 0.0.0.0/0 
  nova  secgroup-add-rule default  tcp 22 22 0.0.0.0/0 
                 </literallayout>
-                <para>Another
-                    common issue is you cannot ping or SSH your instances after issuing the
-                    ‘euca-authorize’ commands. Something to look at is the amount of ‘dnsmasq’
-                    processes that are running. If you have a running instance, check to see that
-                    TWO "dnsmasq’" processes are running. If not, perform the following:
-                </para>
-                        <literallayout class="monospaced">
+
+      <para>Another common issue is you cannot ping or SSH your instances
+      after issuing the ‘euca-authorize’ commands. Something to look at is the
+      amount of ‘dnsmasq’ processes that are running. If you have a running
+      instance, check to see that TWO "dnsmasq’" processes are running. If
+      not, perform the following:</para>
+
+      <literallayout class="monospaced">
 sudo killall dnsmasq 
 sudo service nova-network restart
                         </literallayout>
-<para>If you get the <literallayout class="monospaced">instance not found</literallayout> message
-                while performing the restart, that means the service was not previously running. You
-                simply need to start it instead of restarting it :
-                <literallayout class="monospaced">sudo service nova-network start</literallayout>
-            </para>
-            </section>
-        <section xml:id="configuring-multiple-compute-nodes">
-            <title>Configuring Multiple Compute Nodes</title><para>If your goal is to split your VM load across more than one server, you can connect an
-                additional nova-compute node to a cloud controller node. This configuring can be
-                reproduced on multiple compute servers to start building a true multi-node OpenStack
-                Compute cluster. </para><para>To build out and scale the Compute platform, you spread out services amongst many servers.
-                While there are additional ways to accomplish the build-out, this section describes
-                adding compute nodes, and the service we are scaling out is called
-                'nova-compute.'</para>
-            <para>For a multi-node install you only make changes to nova.conf and copy it to
-                additional compute nodes. Ensure each nova.conf file points to the correct IP
-                addresses for the respective services. Customize the nova.conf example below to
-                match your environment. The CC_ADDR is the Cloud Controller IP Address. </para>
-                  <programlisting>
+
+      <para>If you get the <literallayout class="monospaced">instance not found</literallayout>
+      message while performing the restart, that means the service was not
+      previously running. You simply need to start it instead of restarting it
+      : <literallayout class="monospaced">sudo service nova-network start</literallayout></para>
+    </section>
+
+    <section xml:id="configuring-multiple-compute-nodes">
+      <title>Configuring Multiple Compute Nodes</title>
+
+      <para>If your goal is to split your VM load across more than one server,
+      you can connect an additional nova-compute node to a cloud controller
+      node. This configuring can be reproduced on multiple compute servers to
+      start building a true multi-node OpenStack Compute cluster.</para>
+
+      <para>To build out and scale the Compute platform, you spread out
+      services amongst many servers. While there are additional ways to
+      accomplish the build-out, this section describes adding compute nodes,
+      and the service we are scaling out is called 'nova-compute.'</para>
+
+      <para>For a multi-node install you only make changes to nova.conf and
+      copy it to additional compute nodes. Ensure each nova.conf file points
+      to the correct IP addresses for the respective services. Customize the
+      nova.conf example below to match your environment. The CC_ADDR is the
+      Cloud Controller IP Address.</para>
+
+      <programlisting>
 --dhcpbridge_flagfile=/etc/nova/nova.conf
 --dhcpbridge=/usr/bin/nova-dhcpbridge
 --flat_network_bridge=br100
@@ -510,13 +696,12 @@ sudo service nova-network restart
 --fixed_range= network/CIDR
 --network_size=number of addresses
                   </programlisting>
-            <para>
-                By default, Nova sets the bridge device based on the setting in --flat_network_bridge. Now you
-                can edit /etc/network/interfaces with the following template, updated with your IP
-                information. 
-            </para>
 
-<programlisting>
+      <para>By default, Nova sets the bridge device based on the setting in
+      --flat_network_bridge. Now you can edit /etc/network/interfaces with the
+      following template, updated with your IP information.</para>
+
+      <programlisting>
 # The loopback network interface
 auto lo
     iface lo inet loopback
@@ -536,28 +721,43 @@ iface br100 inet static
     # dns-* options are implemented by the resolvconf package, if installed
     dns-nameservers xxx.xxx.xxx.xxx
 </programlisting>
-            <para>Restart networking:</para>
 
-            <literallayout class="monospaced">/etc/init.d/networking restart</literallayout>
-            <para>With nova.conf updated and networking set, configuration is nearly complete.
-                First, bounce the relevant services to take the latest updates:</para>
+      <para>Restart networking:</para>
 
-            <literallayout class="monospaced">restart libvirt-bin; service nova-compute restart</literallayout>
-            <para>To avoid issues with KVM and permissions with Nova, run the following commands to ensure we have VM's that are running optimally:</para>
+      <literallayout class="monospaced">/etc/init.d/networking restart</literallayout>
 
-<literallayout class="monospaced">
+      <para>With nova.conf updated and networking set, configuration is nearly
+      complete. First, bounce the relevant services to take the latest
+      updates:</para>
+
+      <literallayout class="monospaced">restart libvirt-bin; service nova-compute restart</literallayout>
+
+      <para>To avoid issues with KVM and permissions with Nova, run the
+      following commands to ensure we have VM's that are running
+      optimally:</para>
+
+      <literallayout class="monospaced">
 chgrp kvm /dev/kvm
 chmod g+rwx /dev/kvm
 </literallayout>
-            <para>If you want to use the 10.04 Ubuntu Enterprise Cloud images that are readily available at http://uec-images.ubuntu.com/releases/10.04/release/, you may run into delays with booting. Any server that does not have nova-api running on it needs this iptables entry so that UEC images can get metadata info. On compute nodes, configure the iptables with this next step:</para>
 
-           <literallayout class="monospaced">iptables -t nat -A PREROUTING -d 169.254.169.254/32 -p tcp -m tcp --dport 80 -j DNAT --to-destination $NOVA_API_IP:8773</literallayout>
+      <para>If you want to use the 10.04 Ubuntu Enterprise Cloud images that
+      are readily available at
+      http://uec-images.ubuntu.com/releases/10.04/release/, you may run into
+      delays with booting. Any server that does not have nova-api running on
+      it needs this iptables entry so that UEC images can get metadata info.
+      On compute nodes, configure the iptables with this next step:</para>
 
-            <para>Lastly, confirm that your compute node is talking to your cloud controller. From the cloud controller, run this database query:</para>
-            <literallayout class="monospaced">mysql -u$MYSQL_USER -p$MYSQL_PASS nova -e 'select * from services;'</literallayout>
-            <para>In return, you should see something similar to this:</para>
+      <literallayout class="monospaced">iptables -t nat -A PREROUTING -d 169.254.169.254/32 -p tcp -m tcp --dport 80 -j DNAT --to-destination $NOVA_API_IP:8773</literallayout>
 
-            <programlisting>
+      <para>Lastly, confirm that your compute node is talking to your cloud
+      controller. From the cloud controller, run this database query:</para>
+
+      <literallayout class="monospaced">mysql -u$MYSQL_USER -p$MYSQL_PASS nova -e 'select * from services;'</literallayout>
+
+      <para>In return, you should see something similar to this:</para>
+
+      <programlisting>
 +---------------------+---------------------+------------+---------+----+----------+----------------+-----------+--------------+----------+-------------------+
 | created_at          | updated_at          | deleted_at | deleted | id | host     | binary         | topic     | report_count | disabled | availability_zone |
 +---------------------+---------------------+------------+---------+----+----------+----------------+-----------+--------------+----------+-------------------+
@@ -570,84 +770,112 @@ chmod g+rwx /dev/kvm
 +---------------------+---------------------+------------+---------+----+----------+----------------+-----------+--------------+----------+-------------------+
             </programlisting>
 
-            <para>You can see that 'osdemo0{1,2,4,5} are all running 'nova-compute.'  When you start spinning up instances, they will allocate on any node that is running nova-compute from this list.</para>
-            
-        </section>
-        <section xml:id="determining-version-of-compute">
-            
-            <title>Determining the Version of Compute</title>
-            <para>You can find the version of the installation by using the nova-manage
-                command:</para>
-            <literallayout class="monospaced">nova-manage version list</literallayout>
-        </section>
-        <section xml:id="migrating-from-cactus-to-diablo"><title>Migrating from Cactus to Diablo</title>
-            <para>If you have an installation already installed and running, is is possible to run
-                smoothly an uprade from Cactus Stable (2011.2) to Diablo Stable (2011.3), without
-                losing any of your running instances, but also keep the current network, volumes,
-                and images available. </para>
-            <para>In order to update, we will start by updating the Image Service(<emphasis
-                    role="bold">Glance</emphasis>), then update the Compute Service (<emphasis
-                    role="bold">Nova</emphasis>). We will finally make sure the client-tools
-                (euca2ools and novaclient) are properly integrated.</para>
-            <para>For Nova, Glance and euca2ools, we will use the PPA repositories, while we will
-                use the latest version of novaclient from Github, due to important updates.</para>
-            <note>
-                <para> That upgrade guide does not integrate Keystone. If you want to integrate
-                    Keystone, please read the section "Installing the Identity Service" </para>
-            </note>
-            <para/>
-            <simplesect>
-                <title>A- Glance upgrade</title>
-                <para>In order to update Glance, we will start by stopping all running services :
-                    <literallayout class="monospaced">glance-control all stop</literallayout>Make
-                    sure the services are stopped, you can check by running ps :
-                    <literallayout class="monospaced">ps axl |grep glance</literallayout>If the
-                    commands doesn't output any Glance process, it means you can continue ;
-                    otherwise, simply kill the PID's.</para>
-                <para>While the Cactus release of Glance uses one glance.conf file (usually located
-                    at "/etc/glance/glance.conf"), the Diablo release brings up new configuration
-                    files. (Look into them, they are pretty self-explanatory). </para>
-                <orderedlist>
-                    <listitem>
-                        <para><emphasis role="bold">Update the repositories</emphasis></para>
-                        <para> The first thing to do is to update the packages. Update your
-                            "/etc/apt/sources.list", or create a
-                            "/etc/apt/sources.list.d/openstack_diablo.list file :
-                            <programlisting>
+      <para>You can see that 'osdemo0{1,2,4,5} are all running 'nova-compute.'
+      When you start spinning up instances, they will allocate on any node
+      that is running nova-compute from this list.</para>
+    </section>
+
+    <section xml:id="determining-version-of-compute">
+      <title>Determining the Version of Compute</title>
+
+      <para>You can find the version of the installation by using the
+      nova-manage command:</para>
+
+      <literallayout class="monospaced">nova-manage version list</literallayout>
+    </section>
+
+    <section xml:id="migrating-from-cactus-to-diablo">
+      <title>Migrating from Cactus to Diablo</title>
+
+      <para>If you have an installation already installed and running, is is
+      possible to run smoothly an uprade from Cactus Stable (2011.2) to Diablo
+      Stable (2011.3), without losing any of your running instances, but also
+      keep the current network, volumes, and images available.</para>
+
+      <para>In order to update, we will start by updating the Image
+      Service(<emphasis role="bold">Glance</emphasis>), then update the
+      Compute Service (<emphasis role="bold">Nova</emphasis>). We will finally
+      make sure the client-tools (euca2ools and novaclient) are properly
+      integrated.</para>
+
+      <para>For Nova, Glance and euca2ools, we will use the PPA repositories,
+      while we will use the latest version of novaclient from Github, due to
+      important updates.</para>
+
+      <note>
+        <para>That upgrade guide does not integrate Keystone. If you want to
+        integrate Keystone, please read the section "Installing the Identity
+        Service"</para>
+      </note>
+
+      <para/>
+
+      <simplesect>
+        <title>A- Glance upgrade</title>
+
+        <para>In order to update Glance, we will start by stopping all running
+        services : <literallayout class="monospaced">glance-control all stop</literallayout>Make
+        sure the services are stopped, you can check by running ps :
+        <literallayout class="monospaced">ps axl |grep glance</literallayout>If
+        the commands doesn't output any Glance process, it means you can
+        continue ; otherwise, simply kill the PID's.</para>
+
+        <para>While the Cactus release of Glance uses one glance.conf file
+        (usually located at "/etc/glance/glance.conf"), the Diablo release
+        brings up new configuration files. (Look into them, they are pretty
+        self-explanatory).</para>
+
+        <orderedlist>
+          <listitem>
+            <para><emphasis role="bold">Update the
+            repositories</emphasis></para>
+
+            <para>The first thing to do is to update the packages. Update your
+            "/etc/apt/sources.list", or create a
+            "/etc/apt/sources.list.d/openstack_diablo.list file :
+            <programlisting>
 deb http://ppa.launchpad.net/openstack-release/2011.<emphasis role="bold">3</emphasis>/ubuntu maverick main
 deb-src http://ppa.launchpad.net/openstack-release/2011.<emphasis role="bold">3</emphasis>/ubuntu maverick main
-                        </programlisting>If
-                            you are running Ubuntu Lucid, point to Lucid, otherwise to another
-                            version (Maverick, or Natty). You can now update the repository :
-                            <literallayout class="monospaced">aptitude update
+                        </programlisting>If you are running Ubuntu Lucid,
+            point to Lucid, otherwise to another version (Maverick, or Natty).
+            You can now update the repository : <literallayout
+            class="monospaced">aptitude update
 aptitude upgrade</literallayout></para>
-                        <para>You could encounter the message "<emphasis role="italic">The following
-                                signatures couldn't be verified because the public key is not
-                                available: NO_PUBKEY XXXXXXXXXXXX</emphasis>", simply run :
-                            <programlisting>
+
+            <para>You could encounter the message "<emphasis role="italic">The
+            following signatures couldn't be verified because the public key
+            is not available: NO_PUBKEY XXXXXXXXXXXX</emphasis>", simply run :
+            <programlisting>
 gpg --keyserver pgpkeys.mit.edu --recv-key XXXXXXXXXXXX
 gpg -a --export XXXXXXXXXXXX | sudo apt-key add -
 (Where XXXXXXXXXXXX is the key)
-                       </programlisting>Then
-                            re-run the two steps, which should work proceed without error. The
-                            package system should propose you to upgrade you Glance installation to
-                            the Diablo one, accept the upgrade, and you will have successfully
-                            performed the package upgrade. In the next step, we will reconfigure the
-                            service. </para>
-                        <para/>
-                    </listitem>
-                    <listitem>
-                        <para><emphasis role="bold">Update Glance configuration files</emphasis>
-                        </para>
-                        <para> You need now to update the configuration files. The main file you
-                            will need to update is
-                            <literallayout class="monospaced">etc/glance/glance-registry.conf</literallayout>In
-                            that one you will specify the database backend. If you used a MySQL
-                            backend under Cactus ; replace the <literallayout class="monospaced">sql_connection</literallayout> with the entry you
-                            have into the /etc/glance/glance.conf.</para>
-                        <para>Here is how the configuration files should look like : </para>
-                        <literallayout class="monospaced">glance-api.conf</literallayout>
-                       <programlisting>
+                       </programlisting>Then re-run the two steps, which
+            should work proceed without error. The package system should
+            propose you to upgrade you Glance installation to the Diablo one,
+            accept the upgrade, and you will have successfully performed the
+            package upgrade. In the next step, we will reconfigure the
+            service.</para>
+
+            <para/>
+          </listitem>
+
+          <listitem>
+            <para><emphasis role="bold">Update Glance configuration
+            files</emphasis></para>
+
+            <para>You need now to update the configuration files. The main
+            file you will need to update is <literallayout class="monospaced">etc/glance/glance-registry.conf</literallayout>In
+            that one you will specify the database backend. If you used a
+            MySQL backend under Cactus ; replace the <literallayout
+            class="monospaced">sql_connection</literallayout> with the entry
+            you have into the /etc/glance/glance.conf.</para>
+
+            <para>Here is how the configuration files should look like
+            :</para>
+
+            <literallayout class="monospaced">glance-api.conf</literallayout>
+
+            <programlisting>
 [DEFAULT]
 # Show more verbose log output (sets INFO log level output)
 verbose = True
@@ -656,8 +884,8 @@ verbose = True
 debug = False
 
 # Which backend store should Glance use by default is not specified
-# in a request to add a new image to Glance? Default: &apos;file&apos;
-# Available choices are &apos;file&apos;, &apos;swift&apos;, and &apos;s3&apos;
+# in a request to add a new image to Glance? Default: 'file'
+# Available choices are 'file', 'swift', and 's3'
 default_store = file
 
 # Address to bind the API server
@@ -734,10 +962,10 @@ swift_store_large_object_size = 5120
 swift_store_large_object_chunk_size = 200
 
 # Whether to use ServiceNET to communicate with the Swift storage servers.
-# (If you aren&apos;t RACKSPACE, leave this False!)
+# (If you aren't RACKSPACE, leave this False!)
 #
 # To use ServiceNET for authentication, prefix hostname of
-# `swift_store_auth_address` with &apos;snet-&apos;.
+# `swift_store_auth_address` with 'snet-'.
 # Ex. https://example.com/v1.0/ -&gt; https://snet-example.com/v1.0/
 swift_enable_snet = False
 
@@ -756,7 +984,7 @@ s3_store_secret_key = &lt;40-char AWS secret key&gt;
 # Container within the account that the account should use
 # for storing images in S3. Note that S3 has a flat namespace,
 # so you need a unique bucket name for your glance images. An
-# easy way to do this is append your AWS access key to &quot;glance&quot;.
+# easy way to do this is append your AWS access key to "glance".
 # S3 buckets in AWS *must* be lowercased, so remember to lowercase
 # your AWS access key if you use it in your bucket name below!
 s3_store_bucket = &lt;lowercased 20-char aws access key&gt;glance
@@ -820,8 +1048,10 @@ auth_protocol = http
 auth_uri = http://127.0.0.1:5000/
 admin_token = 999888777666
                        </programlisting>
-                        <literallayout class="monospaced">glance-registry.conf</literallayout>
-                        <programlisting>
+
+            <literallayout class="monospaced">glance-registry.conf</literallayout>
+
+            <programlisting>
 [DEFAULT]
 # Show more verbose log output (sets INFO log level output)
 verbose = True
@@ -852,7 +1082,7 @@ sql_connection = mysql://glance_user:glance_pass@glance_host/glance
 # to the database.
 #
 # MySQL uses a default `wait_timeout` of 8 hours, after which it will drop
-# idle connections. This can result in &apos;MySQL Gone Away&apos; exceptions. If you
+# idle connections. This can result in 'MySQL Gone Away' exceptions. If you
 # notice this, you can lower this value to ensure that SQLAlchemy reconnects
 # before MySQL can drop the connection.
 sql_idle_timeout = 3600
@@ -891,119 +1121,150 @@ admin_token = 999888777666
 [filter:keystone_shim]
 paste.filter_factory = keystone.middleware.glance_auth_token:filter_factory
                        </programlisting>
-                    </listitem>
-                    <listitem>
-                       <para><emphasis role="bold">Fire up Glance</emphasis></para>
-                        <para> You should now be able to start glance (glance-control runs bothh
-                            glance-api and glance-registry services :
-                            <literallayout class="monospaced">glance-controll all start</literallayout>
-                            You can now make sure the new version of Glance is running :
-                            <literallayout class="monospaced">
+          </listitem>
+
+          <listitem>
+            <para><emphasis role="bold">Fire up Glance</emphasis></para>
+
+            <para>You should now be able to start glance (glance-control runs
+            bothh glance-api and glance-registry services : <literallayout
+            class="monospaced">glance-controll all start</literallayout> You
+            can now make sure the new version of Glance is running :
+            <literallayout class="monospaced">
 ps axl |grep glance
-                            </literallayout>But
-                            also make sure you are running the Diablo version :
-                            <literallayout class="monospaced">glance --version
+                            </literallayout>But also make sure you are running
+            the Diablo version : <literallayout class="monospaced">glance --version
 
 which should output : 
 
-glance 2011.3                </literallayout>
-                            If you do not see the two process running, an error occured somewhere.
-                            You can check for errors by running : </para>
-                        <para><literallayout class="monospaced"> glance-api /etc/glance/glance-api.conf and :
- glance-registry /etc/glance/glance-registry.conf</literallayout>
-                            You are now ready to upgrade the database scheme. </para>
-                        <para/>
-                    </listitem>
-                    <listitem>
-                        <para><emphasis role="bold">Update Glance database</emphasis></para>
-                        <para>Before running any upgrade, make sure you backup the database. If you
-                            have a MySQL backend :
-                            <literallayout class="monospaced">
+glance 2011.3                </literallayout> If you do not see the two
+            process running, an error occured somewhere. You can check for
+            errors by running :</para>
+
+            <para><literallayout class="monospaced"> glance-api /etc/glance/glance-api.conf and :
+ glance-registry /etc/glance/glance-registry.conf</literallayout> You are now
+            ready to upgrade the database scheme.</para>
+
+            <para/>
+          </listitem>
+
+          <listitem>
+            <para><emphasis role="bold">Update Glance
+            database</emphasis></para>
+
+            <para>Before running any upgrade, make sure you backup the
+            database. If you have a MySQL backend : <literallayout
+            class="monospaced">
 mysqldump -u $glance_user -p$glance_password glance &gt; glance_backup.sql
-                      </literallayout>If
-                            you use the default backend, SQLite, simply copy the database's file.
-                            You are now ready to update the database scheme. In order to update the
-                            Glance service, just run :
-                            <literallayout class="monospaced"> glance-manage db_sync       </literallayout></para>
-                    </listitem>
-                    <listitem>
-                        <para><emphasis role="bold">Validation test</emphasis></para>
-                        <para>
-                            In order to make sure Glance has been properly updated, simply run : 
-                            <literallayout class="monospaced">glance index</literallayout>
-which should display your registered images : 
-<programlisting>
+                      </literallayout>If you use the default backend, SQLite,
+            simply copy the database's file. You are now ready to update the
+            database scheme. In order to update the Glance service, just run :
+            <literallayout class="monospaced"> glance-manage db_sync       </literallayout></para>
+          </listitem>
+
+          <listitem>
+            <para><emphasis role="bold">Validation test</emphasis></para>
+
+            <para>In order to make sure Glance has been properly updated,
+            simply run : <literallayout class="monospaced">glance index</literallayout>
+            which should display your registered images : <programlisting>
     ID               Name                           Disk Format          Container Format     Size          
 ---------------- ------------------------------ -------------------- -------------------- --------------
 94               Debian 6.0.3 amd64             raw                  bare                     1067778048
-</programlisting>
-                        </para>
-                    </listitem>
-                </orderedlist>
-            </simplesect>
-            <simplesect>
-                <title>B- Nova upgrade</title>
-                <para>In order to successfully go through the upgrade process, it is advised to
-                    follow the exact order of the process' steps. By doing so, you make sure you
-                    don't miss any mandatory step.</para>
-                <orderedlist>
-                    <listitem>
-                        <para><emphasis role="bold">Update the repositoiries</emphasis></para>
-                        <para> Update your "/etc/apt/sources.list", or create a
-                            "/etc/apt/sources.list.d/openstack_diablo.list file :
-                            <programlisting>
+</programlisting></para>
+          </listitem>
+        </orderedlist>
+      </simplesect>
+
+      <simplesect>
+        <title>B- Nova upgrade</title>
+
+        <para>In order to successfully go through the upgrade process, it is
+        advised to follow the exact order of the process' steps. By doing so,
+        you make sure you don't miss any mandatory step.</para>
+
+        <orderedlist>
+          <listitem>
+            <para><emphasis role="bold">Update the
+            repositoiries</emphasis></para>
+
+            <para>Update your "/etc/apt/sources.list", or create a
+            "/etc/apt/sources.list.d/openstack_diablo.list file :
+            <programlisting>
 deb http://ppa.launchpad.net/openstack-release/2011.<emphasis role="bold">3</emphasis>/ubuntu maverick main
 deb-src http://ppa.launchpad.net/openstack-release/2011.<emphasis role="bold">3</emphasis>/ubuntu maverick main
-                        </programlisting>If
-                            you are running Ubuntu Lucid, point to Lucid, otherwise to another
-                            version (Maverick, or Natty). You can now update the repository (do not
-                            upgrade the packages at the moment) :
-                            <literallayout class="monospaced">aptitude update</literallayout></para>
-                    </listitem>
-<listitem>
-    <para><emphasis role="bold">Stop all nova services</emphasis></para>
-    <para>By stopping all nova services, that would make our instances unreachables (for instance,
-                            stopping the nova-network service will make all the routing rules
-                            flushed) ; but they won't neither be terminated, nor deleted. </para>
-    <itemizedlist>
-        <listitem>
-            <para> We first stop nova services</para>
-            <para><literallayout>cd /etc/init.d &amp;&amp; for i in $(ls nova-*); do service $i stop; done</literallayout></para>
-        </listitem>
-        <listitem>
-        <para> We stop rabbitmq; used by nova-scheduler</para>
-<para><literallayout class="monospaced">service rabbitmq-server stop</literallayout></para>
-        </listitem>
-        <listitem>
-            <para>We finally killl dnsmasq, used by nova-network</para>
-            <para><literallayout class="monospaced">killall dnsmasq</literallayout></para>
-        </listitem>
-    </itemizedlist>
-    <para>You can make sure not any services used by nova are still running via : </para>
-    <para><literallayout class="monospaced">ps axl | grep nova</literallayout>
-    that should not output any service, if so, simply kill the PIDs
-    </para>
-                        <para/>
-</listitem>
-                    <listitem>
-                        <para><emphasis role="bold">MySQL pre-requisites</emphasis></para>
-                        <para>
-                            Before running the upgrade, make sure the following tables don't already exist (They could, if you ran tests, or by mistake an upgrade) : 
-                            <simplelist>
-                                <member>block_device_mapping</member>
-                                <member>snapshots</member>
-                                <member>provider_fw_rules</member>
-                                <member>instance_type_extra_specs</member>
-                                <member>virtual_interfaces</member>
-                                <member>volume_types</member>
-                                <member>volume_type_extra_specs</member>
-                                <member>volume_metadata;</member>
-                                <member>virtual_storage_arrays</member>
-                            </simplelist>
-                            If so, you can safely remove them; since they are not used at all by Cactus (2011.2) : 
-                        </para>
-                        <para>
-                            <programlisting>
+                        </programlisting>If you are running Ubuntu Lucid,
+            point to Lucid, otherwise to another version (Maverick, or Natty).
+            You can now update the repository (do not upgrade the packages at
+            the moment) : <literallayout class="monospaced">aptitude update</literallayout></para>
+          </listitem>
+
+          <listitem>
+            <para><emphasis role="bold">Stop all nova
+            services</emphasis></para>
+
+            <para>By stopping all nova services, that would make our instances
+            unreachables (for instance, stopping the nova-network service will
+            make all the routing rules flushed) ; but they won't neither be
+            terminated, nor deleted.</para>
+
+            <itemizedlist>
+              <listitem>
+                <para>We first stop nova services</para>
+
+                <para><literallayout>cd /etc/init.d &amp;&amp; for i in $(ls nova-*); do service $i stop; done</literallayout></para>
+              </listitem>
+
+              <listitem>
+                <para>We stop rabbitmq; used by nova-scheduler</para>
+
+                <para><literallayout class="monospaced">service rabbitmq-server stop</literallayout></para>
+              </listitem>
+
+              <listitem>
+                <para>We finally killl dnsmasq, used by nova-network</para>
+
+                <para><literallayout class="monospaced">killall dnsmasq</literallayout></para>
+              </listitem>
+            </itemizedlist>
+
+            <para>You can make sure not any services used by nova are still
+            running via :</para>
+
+            <para><literallayout class="monospaced">ps axl | grep nova</literallayout>
+            that should not output any service, if so, simply kill the
+            PIDs</para>
+
+            <para/>
+          </listitem>
+
+          <listitem>
+            <para><emphasis role="bold">MySQL pre-requisites</emphasis></para>
+
+            <para>Before running the upgrade, make sure the following tables
+            don't already exist (They could, if you ran tests, or by mistake
+            an upgrade) : <simplelist>
+                <member>block_device_mapping</member>
+
+                <member>snapshots</member>
+
+                <member>provider_fw_rules</member>
+
+                <member>instance_type_extra_specs</member>
+
+                <member>virtual_interfaces</member>
+
+                <member>volume_types</member>
+
+                <member>volume_type_extra_specs</member>
+
+                <member>volume_metadata;</member>
+
+                <member>virtual_storage_arrays</member>
+              </simplelist> If so, you can safely remove them; since they are
+            not used at all by Cactus (2011.2) :</para>
+
+            <para><programlisting>
 drop table block_device_mapping;
 drop table snapshots;
 drop table provider_fw_rules;
@@ -1013,19 +1274,21 @@ drop table volume_types;
 drop table volume_type_extra_specs;
 drop table volume_metadata;
 drop table virtual_storage_arrays;  
-                            </programlisting>
-                        </para>
-                        <para/>
-                    </listitem>
-                    <listitem>
-                        <para><emphasis role="bold">Upgrade nova packages</emphasis></para>
-                        <para> You can now perform an upgrade :
-                            <literallayout class="monospaced">aptitude upgrade</literallayout>
-                            During the upgrade process, you would see :
-                            <programlisting>
+                            </programlisting></para>
+
+            <para/>
+          </listitem>
+
+          <listitem>
+            <para><emphasis role="bold">Upgrade nova
+            packages</emphasis></para>
+
+            <para>You can now perform an upgrade : <literallayout
+            class="monospaced">aptitude upgrade</literallayout> During the
+            upgrade process, you would see : <programlisting>
     Configuration file '/etc/nova/nova.conf'
- ==> Modified (by you or by a script) since installation.
- ==> Package distributor has shipped an updated version.
+ ==&gt; Modified (by you or by a script) since installation.
+ ==&gt; Package distributor has shipped an updated version.
    What would you like to do about it ?  Your options are:
     Y or I  : install the package maintainer's version
     N or O  : keep your currently-installed version
@@ -1033,29 +1296,44 @@ drop table virtual_storage_arrays;
       Z     : start a shell to examine the situation
  The default action is to keep your current version.
 *** /etc/nova/nova.conf (Y/I/N/O/D/Z) [default=N] ?
-</programlisting>
-                            Type "N" or validate in order to keep your current configuration file.
-                            We will manually update in order to use some of new Diablo settings. </para>
-                        <para/>
-                    </listitem>
-                    <listitem>
-                        <para><emphasis role="bold">Update the configuration files</emphasis></para>
-                        <para>Diablo introduces several new files : </para>
-                        <para>api-paste.ini, which contains all api-related settings</para>
-                        <para>nova-compute.conf, a configuration file dedicated to the compte-node
-                            settings.</para>
-                        <para>Here are the settings you would add into nova.conf : </para>
-                        <programlisting>
+</programlisting> Type "N" or validate in order to keep your current
+            configuration file. We will manually update in order to use some
+            of new Diablo settings.</para>
+
+            <para/>
+          </listitem>
+
+          <listitem>
+            <para><emphasis role="bold">Update the configuration
+            files</emphasis></para>
+
+            <para>Diablo introduces several new files :</para>
+
+            <para>api-paste.ini, which contains all api-related
+            settings</para>
+
+            <para>nova-compute.conf, a configuration file dedicated to the
+            compte-node settings.</para>
+
+            <para>Here are the settings you would add into nova.conf :</para>
+
+            <programlisting>
 --multi_host=T
 --api_paste_config=/etc/nova/api-paste.ini
                         </programlisting>
-<para> and that one if you plan to integrate Keystone to your environment, with euca2ools : </para>
-                        <programlisting>
+
+            <para>and that one if you plan to integrate Keystone to your
+            environment, with euca2ools :</para>
+
+            <programlisting>
 --keystone_ec2_url=http://$NOVA-API-IP.11:5000/v2.0/ec2tokens
                         </programlisting>
-                        <para>Here is how the files should look like : </para>
-                        <literallayout class="monospaced">nova.conf</literallayout>
-                        <programlisting>
+
+            <para>Here is how the files should look like :</para>
+
+            <literallayout class="monospaced">nova.conf</literallayout>
+
+            <programlisting>
 --dhcpbridge_flagfile=/etc/nova/nova.conf
 --dhcpbridge=/usr/bin/nova-dhcpbridge
 --logdir=/var/log/nova
@@ -1089,8 +1367,10 @@ drop table virtual_storage_arrays;
 --debug
 --api_paste_config=/etc/nova/api-paste.ini
                         </programlisting>
-                        <para><literallayout class="monospaced">api-paste.ini</literallayout></para>
-                        <programlisting>
+
+            <para><literallayout class="monospaced">api-paste.ini</literallayout></para>
+
+            <programlisting>
 #######
 # EC2 #
 #######
@@ -1223,14 +1503,18 @@ auth_protocol = http
 auth_uri = http://127.0.0.1:5000/
 admin_token = 999888777666
                         </programlisting>
-                    </listitem>
-                    <listitem>
-                        <para><emphasis role="bold">Database update</emphasis></para>
-                        <para>You are now ready to upgrade the database, by running : <literallayout class="monospaced">nova-manage db sync</literallayout></para>
-                        <para>You will also need to update the field "bridge_interface" for your
-                            network into your database, and make sure that field contains the
-                            inteface used for the brige (in our case eth1) :
-                            <programlisting>
+          </listitem>
+
+          <listitem>
+            <para><emphasis role="bold">Database update</emphasis></para>
+
+            <para>You are now ready to upgrade the database, by running :
+            <literallayout class="monospaced">nova-manage db sync</literallayout></para>
+
+            <para>You will also need to update the field "bridge_interface"
+            for your network into your database, and make sure that field
+            contains the inteface used for the brige (in our case eth1) :
+            <programlisting>
          created_at: 2011-06-08 07:45:23
          updated_at: 2011-06-08 07:46:06
          deleted_at: NULL
@@ -1258,63 +1542,78 @@ vpn_private_address: 192.168.2.2
          multi_host: 0
                dns2: NULL
                uuid: 852fa14
-                            </programlisting>Without 
-                            the update of that field, nova-network won't start since it won't be
-                            able to create the bridges per network. </para>
-                    </listitem>
-                    <listitem><para><emphasis role="bold">Restart the services</emphasis></para>
-                    <para>After the database upgrade, services can be restarted : </para>
-                        <itemizedlist>
-                            <listitem>
-                                <para>
-                                    Rabbitmq-server
-                            <literallayout class="monospaced">service rabbitmq-server start</literallayout>
-                                </para>
-                            </listitem>
-                            <listitem>
-                                <para> Nova services
-                                    <literallayout class="monospaced">cd /etc/init.d &amp;&amp; for i $(ls nova-*); do service $i start; done</literallayout>
-                                    You can check the version you are running :
-                                    <literallayout class="monospaced">nova-manage version</literallayout>Should
-                                    ouput :
-                                    <literallayout class="monospaced">2011.3 </literallayout>
-                                </para>
-                            </listitem>
-                        </itemizedlist>
-                    </listitem>
-                    <listitem>
-                        <para><emphasis role="bold">Validation test</emphasis></para>
-                        <para>The first thing to check is all the services are all running : </para>
-                        <literallayout class="monospaced">ps axl | grep nova</literallayout>
-                        <para>should output all the services running. If some services are missing, check their appropriate log files (e.g /var/log/nova/nova-api.log).
-                        You would then use nova-manage :
-                        <literallayout class="monospaced">nova-manage service list</literallayout>
-                        </para>
-                        <para>
-                            If all the services are up, you can now validate the migration by : 
-                            <simplelist>
-                                <member>Launching a new instance</member>
-                                <member>Terminate a running instance</member>
-                                <member>Attach a floating IP to an "old" and a "new" instance</member>
-                            </simplelist>
-                        </para>
-                    </listitem>
-                </orderedlist>
-            </simplesect>
-            <simplesect>
-                <title>C- Client tools upgrade</title>
-                <para>
-                    In this part we will see how to make sure our management tools will be correctly integrated to the new environment's version : 
-                    <simplelist>
-                        <member><link xlink:href="http://nova.openstack.org/2011.2/runnova/euca2ools.html?highlight=euca2ools">euca2ools</link></member>
-                        <member><link xlink:href="https://github.com/rackspace/python-novaclient">novaclient</link></member>
-                    </simplelist>
-                </para>
-                <orderedlist>
-                    <listitem>
-                        <para><emphasis role="bold">euca2ools</emphasis></para>
-                        <para>The euca2ools settings do not change from the client side : </para>
-                        <programlisting>
+                            </programlisting>Without the update of that field,
+            nova-network won't start since it won't be able to create the
+            bridges per network.</para>
+          </listitem>
+
+          <listitem>
+            <para><emphasis role="bold">Restart the services</emphasis></para>
+
+            <para>After the database upgrade, services can be restarted
+            :</para>
+
+            <itemizedlist>
+              <listitem>
+                <para>Rabbitmq-server <literallayout class="monospaced">service rabbitmq-server start</literallayout></para>
+              </listitem>
+
+              <listitem>
+                <para>Nova services <literallayout class="monospaced">cd /etc/init.d &amp;&amp; for i $(ls nova-*); do service $i start; done</literallayout>
+                You can check the version you are running : <literallayout
+                class="monospaced">nova-manage version</literallayout>Should
+                ouput : <literallayout class="monospaced">2011.3 </literallayout></para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+
+          <listitem>
+            <para><emphasis role="bold">Validation test</emphasis></para>
+
+            <para>The first thing to check is all the services are all running
+            :</para>
+
+            <literallayout class="monospaced">ps axl | grep nova</literallayout>
+
+            <para>should output all the services running. If some services are
+            missing, check their appropriate log files (e.g
+            /var/log/nova/nova-api.log). You would then use nova-manage :
+            <literallayout class="monospaced">nova-manage service list</literallayout></para>
+
+            <para>If all the services are up, you can now validate the
+            migration by : <simplelist>
+                <member>Launching a new instance</member>
+
+                <member>Terminate a running instance</member>
+
+                <member>Attach a floating IP to an "old" and a "new"
+                instance</member>
+              </simplelist></para>
+          </listitem>
+        </orderedlist>
+      </simplesect>
+
+      <simplesect>
+        <title>C- Client tools upgrade</title>
+
+        <para>In this part we will see how to make sure our management tools
+        will be correctly integrated to the new environment's version :
+        <simplelist>
+            <member><link
+            xlink:href="http://nova.openstack.org/2011.2/runnova/euca2ools.html?highlight=euca2ools">euca2ools</link></member>
+
+            <member><link
+            xlink:href="https://github.com/rackspace/python-novaclient">novaclient</link></member>
+          </simplelist></para>
+
+        <orderedlist>
+          <listitem>
+            <para><emphasis role="bold">euca2ools</emphasis></para>
+
+            <para>The euca2ools settings do not change from the client side
+            :</para>
+
+            <programlisting>
 # Euca2ools
 
 export NOVA_KEY_DIR=/root/creds/
@@ -1330,32 +1629,34 @@ export EUCALYPTUS_CERT=${NOVA_CERT} # euca-bundle-image seems to require this se
 alias ec2-bundle-image="ec2-bundle-image --cert ${EC2_CERT} --privatekey ${EC2_PRIVATE_KEY} --user 42 --ec2cert ${NOVA_CERT}"
 alias ec2-upload-bundle="ec2-upload-bundle -a ${EC2_ACCESS_KEY} -s ${EC2_SECRET_KEY} --url ${S3_URL} --ec2cert ${NOVA_CERT}"
                         </programlisting>
-                        <para> On server-side, there are also not any changes to make, since we
-                            don't use keystone. Here are some commands you should be able to run :
-                            <literallayout class="monospaced">
+
+            <para>On server-side, there are also not any changes to make,
+            since we don't use keystone. Here are some commands you should be
+            able to run : <literallayout class="monospaced">
 euca-describe-instances
 euca-describe-adresses
 euca-terminate-instance $instance_id
 euca-create-volume -s 5 -z $zone
 euca-attach-volume -i $instance_id -d $device $volume_name
 euca-associate-address -i $instance_id $address 
-                        </literallayout>
-                            If all these commands work flawlessly, it means the tools in properly
-                            integrated. </para>
-                        <para/>
-                    </listitem>
-                    <listitem>
-                        <para><emphasis role="bold">python-novaclient</emphasis></para>
-                        <para> This tool requires a recent version on order to use all the service
-                            the OSAPI offers (floating-ip support, volumes support, etc..). In order
-                            to upgrade it :
-                            <literallayout class="monospaced">git clone https://github.com/rackspace/python-novaclient.git &amp;&amp; cd python-novaclient
+                        </literallayout> If all these commands work
+            flawlessly, it means the tools in properly integrated.</para>
+
+            <para/>
+          </listitem>
+
+          <listitem>
+            <para><emphasis role="bold">python-novaclient</emphasis></para>
+
+            <para>This tool requires a recent version on order to use all the
+            service the OSAPI offers (floating-ip support, volumes support,
+            etc..). In order to upgrade it : <literallayout
+            class="monospaced">git clone https://github.com/rackspace/python-novaclient.git &amp;&amp; cd python-novaclient
                             python setup.py build
                             python setup.py install
-                            </literallayout>
-                            Make sure you have the correct settings into your .bashrc (or any
-                            source-able file) :
-                            <programlisting>
+                            </literallayout> Make sure you have the correct
+            settings into your .bashrc (or any source-able file) :
+            <programlisting>
 # Python-novaclient
 
 export NOVA_API_KEY="SECRET_KEY"
@@ -1363,72 +1664,88 @@ export NOVA_PROJECT_ID="PROJECT-NAME"
 export NOVA_USERNAME="USER"
 export NOVA_URL="http://$NOVA-API-IP:8774/v1.1"
 export NOVA_VERSION=1.1
-                            </programlisting>
-                            He are some nova commands you should be able to run :
-                            <literallayout class="monospaced">
+                            </programlisting> He are some nova commands you
+            should be able to run : <literallayout class="monospaced">
 nova list
  nova image-show
 nova boot $flavor_id --image $image_id --key_name $key_name $instance_name
 nova volume-create --display_name $name $size
-                        </literallayout>
-                            Again, if the commands run without any error, the tools is then properly
-                            integrated.</para>
-                    </listitem>
-                </orderedlist>
-            </simplesect>
-            <simplesect>
-                <title>D- Known issues</title>
-                <para>
-                    <itemizedlist>
-                        <listitem>
-                            <para>UnicodeEncodeError: 'ascii' codec can't encode character u'\xe9' in position 11: ordinal not in range(128)</para>
-                            <para>
-                                This error could be found into nova-network.log. It is due to libvirt which doesn't know how to deal with encoded characters. That will happen if the locale of your system differs from "C" or "POSIX".
-                            </para>
-                            <para> In order to resolve that issue, while the system is running, you
-                                will have to do :
-                                <literallayout class="monospaced">sudo nova -c "export LANG C" &amp;&amp; export LANG=C</literallayout>That
-                                changes the locale for the running user, and for the nova user. In
-                                order to make these changes permanent, you will need to edit the
-                                default locale file : (/etc/default/locale) :
-                                <literallayout class="monospaced">LANG="C"</literallayout>Note that
-                                you will need to reboot the server in order to validate the changes
-                                you just made to the file, hence our previous command (which
-                                directly fixes the locale issue).</para>
-                        </listitem>
-                    </itemizedlist>
-                </para>
-            </simplesect>
-            <simplesect>
-                <title>D- Why is Keystone not integrated ?</title>
-                <para>Keystone introduces a new identity management, instead of having users into
-                    nova's database, they are now fully relegated to Keystone. While nova deals with
-                    "users as IDs" (eg : the project name is the project id), Keystones makes a
-                    difference between a name and an ID. ; thus, the integration breaks a running
-                    Cactus cloud. Since we were looking for a smooth integration on a running
-                    platform, Keystone has not been integrated. </para>
-                <para>
-                    If you want to integrate Keystone, here are the steps you would follow : 
-                </para>
-                <orderedlist>
-                    <listitem>
-                        <para><emphasis role="bold">Export the current project</emphasis></para>
-                        <para>The first thing to do is export all credentials-related settings from nova : </para>
-                        <literallayout class="monospaced">nova-manage shell export --filename=nova_export.txt</literallayout>
-                        <para>The created file contains keystone commands (via keystone-manage tool) ; you can import simply import the settings with a loop :</para>
-                        <literallayout class="monospaced">while read line; do $line; done &lt; nova_export.txt</literallayout>
-                    </listitem>
-                    <listitem>
-                        <para><emphasis role="bold">Enable the pipelines</emphasis></para>
-                        <para>
-                        Pipelines are like "communication links" between components. In our case we need to enable pipelines from all the components to Keystone.
-                        </para>
-                        <itemizedlist>
-                            <listitem>
-                                <para>
-                                    <emphasis>Glance Pipeline</emphasis>
-                                    <literallayout class="monospaced">glance-api.conf</literallayout>
-                                    <programlisting>
+                        </literallayout> Again, if the commands run without
+            any error, the tools is then properly integrated.</para>
+          </listitem>
+        </orderedlist>
+      </simplesect>
+
+      <simplesect>
+        <title>D- Known issues</title>
+
+        <para><itemizedlist>
+            <listitem>
+              <para>UnicodeEncodeError: 'ascii' codec can't encode character
+              u'\xe9' in position 11: ordinal not in range(128)</para>
+
+              <para>This error could be found into nova-network.log. It is due
+              to libvirt which doesn't know how to deal with encoded
+              characters. That will happen if the locale of your system
+              differs from "C" or "POSIX".</para>
+
+              <para>In order to resolve that issue, while the system is
+              running, you will have to do : <literallayout
+              class="monospaced">sudo nova -c "export LANG C" &amp;&amp; export LANG=C</literallayout>That
+              changes the locale for the running user, and for the nova user.
+              In order to make these changes permanent, you will need to edit
+              the default locale file : (/etc/default/locale) : <literallayout
+              class="monospaced">LANG="C"</literallayout>Note that you will
+              need to reboot the server in order to validate the changes you
+              just made to the file, hence our previous command (which
+              directly fixes the locale issue).</para>
+            </listitem>
+          </itemizedlist></para>
+      </simplesect>
+
+      <simplesect>
+        <title>D- Why is Keystone not integrated ?</title>
+
+        <para>Keystone introduces a new identity management, instead of having
+        users into nova's database, they are now fully relegated to Keystone.
+        While nova deals with "users as IDs" (eg : the project name is the
+        project id), Keystones makes a difference between a name and an ID. ;
+        thus, the integration breaks a running Cactus cloud. Since we were
+        looking for a smooth integration on a running platform, Keystone has
+        not been integrated.</para>
+
+        <para>If you want to integrate Keystone, here are the steps you would
+        follow :</para>
+
+        <orderedlist>
+          <listitem>
+            <para><emphasis role="bold">Export the current
+            project</emphasis></para>
+
+            <para>The first thing to do is export all credentials-related
+            settings from nova :</para>
+
+            <literallayout class="monospaced">nova-manage shell export --filename=nova_export.txt</literallayout>
+
+            <para>The created file contains keystone commands (via
+            keystone-manage tool) ; you can import simply import the settings
+            with a loop :</para>
+
+            <literallayout class="monospaced">while read line; do $line; done &lt; nova_export.txt</literallayout>
+          </listitem>
+
+          <listitem>
+            <para><emphasis role="bold">Enable the pipelines</emphasis></para>
+
+            <para>Pipelines are like "communication links" between components.
+            In our case we need to enable pipelines from all the components to
+            Keystone.</para>
+
+            <itemizedlist>
+              <listitem>
+                <para><emphasis>Glance Pipeline</emphasis> <literallayout
+                class="monospaced">glance-api.conf</literallayout>
+                <programlisting>
 [pipeline:glance-api]
 
 pipeline = versionnegotiation authtoken context apiv1app
@@ -1451,9 +1768,9 @@ auth_port = 5001
 auth_protocol = http
 auth_uri = http://127.0.0.1:5000/
 admin_token = 999888777666
-                                    </programlisting>
-                                <literallayout class="monospaced">glance-registry.conf</literallayout>
-                                <programlisting>
+                                    </programlisting> <literallayout
+                class="monospaced">glance-registry.conf</literallayout>
+                <programlisting>
 [pipeline:glance-registry]
 # pipeline = context registryapp
 # NOTE: use the following pipeline for keystone
@@ -1475,19 +1792,18 @@ admin_token = 999888777666
 
 [filter:keystone_shim]
 paste.filter_factory = keystone.middleware.glance_auth_token:filter_factory      
-                                </programlisting>
-                                </para>
-                            </listitem>
-                            <listitem>
-                            <para>
-                                    <emphasis> Nova Pipeline </emphasis>
-                                    <literallayout class="monospaced">nova.conf</literallayout>
-                                    <programlisting>
+                                </programlisting></para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis> Nova Pipeline </emphasis> <literallayout
+                class="monospaced">nova.conf</literallayout> <programlisting>
 --keystone_ec2_url=http://$KEYSTONE-IP:5000/v2.0/ec2tokens
-                                </programlisting>
-                                </para>
-                                <literallayout class="monospaced">api-paste.ini</literallayout>
-                                <programlisting>
+                                </programlisting></para>
+
+                <literallayout class="monospaced">api-paste.ini</literallayout>
+
+                <programlisting>
 # EC2 API
 [pipeline:ec2cloud]
 pipeline = logrequest totoken authtoken keystonecontext cloudrequest authorizer ec2executor 
@@ -1528,36 +1844,32 @@ auth_protocol = http
 auth_uri = http://127.0.0.1:5000/
 admin_token = 999888777666
                                 </programlisting>
-                            </listitem>
-                            <listitem>
-                                <para>
-                                    <emphasis>euca2ools</emphasis>
-                                    <literallayout class="monospaced">.bashrc</literallayout>
-                                    <programlisting>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>euca2ools</emphasis> <literallayout
+                class="monospaced">.bashrc</literallayout> <programlisting>
 # Euca2ools
 [...]
 export EC2_URL="http://$NOVA-API-IP:8773/services/Cloud"
 [...]
-                                    </programlisting>
-                                </para>
-                            </listitem>
-                            <listitem>
-                                <para>
-                                    <emphasis>novaclient</emphasis>
-                                    <literallayout class="monospaced">novaclient</literallayout>
-                                    <programlisting>
+                                    </programlisting></para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>novaclient</emphasis> <literallayout
+                class="monospaced">novaclient</literallayout> <programlisting>
 # Novaclient
 [...]
 export NOVA_URL=http://$KEYSTONe-IP:5000/v.20/
 export NOVA_REGION_NAME="$REGION"
 [...]
-                                    </programlisting>
-                                </para>
-                            </listitem>
-                        </itemizedlist>
-                    </listitem> 
-                </orderedlist>
-            </simplesect>
-        </section>
+                                    </programlisting></para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+        </orderedlist>
+      </simplesect>
     </section>
-    </chapter>
+  </section>
+</chapter>
