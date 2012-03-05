@@ -15,6 +15,10 @@ Prereqs
 `Apache Maven <http://maven.apache.org/>`_ must be installed to build the
 documentation.
 
+To install Maven for Ubuntu::
+
+    apt-get install maven2
+
 Building
 ========
 To build the Compute Admin Manual, Object Storage Admin Manual, and Image
