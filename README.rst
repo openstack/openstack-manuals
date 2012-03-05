@@ -6,6 +6,10 @@ well as the Dashboard.
 For more details, see the `OpenStack Documentation HowTo wiki page
 <http://wiki.openstack.org/Documentation/HowTo>`_.
 
+In addtion to the guides, this repostiory contains:
+ * api.openstack.org site: doc/src/docbkx/openstack-api-site
+ * index & resources for docs.openstack.org: www
+
 Prereqs
 =======
 `Apache Maven <http://maven.apache.org/>`_ must be installed to build the
