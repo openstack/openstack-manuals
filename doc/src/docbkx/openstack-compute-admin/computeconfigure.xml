@@ -1394,7 +1394,59 @@ ps -ef | grep libvirt</literallayout>
     </table>
   </section>
 
-  <section xml:id="configuring-compute-rate-limiting">
+  <section xml:id="configuring-compute-API">
+  <title>Configuring the Compute API</title>
+  <simplesect>
+    <title>Configuring Compute API password handling</title>
+
+    <para> The OpenStack Compute API allows the user to specify an admin
+    password when creating (or rebuilding) a server instance.  If no
+    password is specified, a randomly generated password is used. The
+    password is returned in the API response.</para>
+
+    <para>In practice, the handling of the admin password depends on the
+    hypervisor in use, and may require additional configuration of the
+    instance, such as installing an agent to handle the password setting.
+    If the hypervisor and instance configuration do not support the
+    setting of a password at server create time, then the password
+    returned by the create API call will be misleading, since it was
+    ignored.
+    </para>
+
+    <para>To prevent this confusion, the configuration flag
+    <literal>--enable_instance_password</literal> can be used to disable
+    the return of the admin password for installations that don't support
+    setting instance passwords.</para>
+
+    <table rules="all">
+      <caption>Description of nova.conf API related flags</caption>
+
+      <thead>
+        <tr>
+          <td>Flag</td>
+
+          <td>Default</td>
+
+          <td>Description</td>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td><literal>--enable_instance_password</literal></td>
+
+          <td><literal>true</literal></td>
+
+          <td>When true, the create and rebuild compute API calls return the server admin password.  When false,
+          the server admin password is not included in API responses.</td>
+        </tr>
+
+      </tbody>
+    </table>
+
+  </simplesect>
+
+  <simplesect>
     <title>Configuring Compute API Rate Limiting</title>
 
     <para>OpenStack Compute supports API rate limiting for the OpenStack API.
@@ -1563,5 +1615,6 @@ limits =("POST", "*", ".*", 10, MINUTE);("POST", "*/servers", "^/servers", 50, D
 
             </programlisting>
     </simplesect>
+  </simplesect>
   </section>
 </chapter>
