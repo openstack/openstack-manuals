@@ -1,17 +1,26 @@
-This repository contains the cloud administrator documentation for the 
-OpenStack project. It includes documentation for OpenStack Compute, OpenStack
-Identity Service, OpenStack Image Service, and OpenStack Object Storage as
-well as the Dashboard.
+Openstack Manuals
++++++++++++++++++
+
+This repository contains the cloud administrator documentation for the
+OpenStack project. It includes documentation for:
+
+ * OpenStack Compute
+ * OpenStack Identity Service
+ * OpenStack Image Service
+ * OpenStack Object Storage
+ * OpenStack Dashboard
 
 For more details, see the `OpenStack Documentation HowTo wiki page
 <http://wiki.openstack.org/Documentation/HowTo>`_.
 
-In addtion to the guides, this repostiory contains:
- * api.openstack.org site: doc/src/docbkx/openstack-api-site
- * index & resources for docs.openstack.org: www
+In addtion to the guides, this repository contains:
 
-Prereqs
-=======
+ * api.openstack.org: ``doc/src/docbkx/openstack-api-site``
+ * docs.openstack.org: ``www``
+
+
+Prerequisites
+=============
 `Apache Maven <http://maven.apache.org/>`_ must be installed to build the
 documentation.
 
@@ -19,21 +28,23 @@ To install Maven for Ubuntu::
 
     apt-get install maven2
 
+
 Building
 ========
-To build the Compute Admin Manual, Object Storage Admin Manual, and Image
-Service Manual::
+To build the *Compute Admin Manual*, *Object Storage Admin Manual*, and
+*Image Service Manual*::
 
     cd openstack-manuals/doc
     mvn clean generate-sources
 
 The different manuals are in subdirectories of the
-``openstack-manuals/doc/src/docbkx`` directory. For example, the root
-directory of the `OpenStack Compute Administration Guide` is
-``openstack-manuals/doc/src/docbkx/openstack-compute-admin``.
+``openstack-manuals/doc/src/docbkx`` directory.
 
-To build a specific guide, look for a pom.xml file within a subdirectory, then
-run the mvn command in that directory. For example::
+For example, the root directory of the *OpenStack Compute Administration Guide*
+is ``openstack-manuals/doc/src/docbkx/openstack-compute-admin``.
+
+To build a specific guide, look for a ``pom.xml`` file within a subdirectory,
+then run the ``mvn`` command in that directory. For example::
 
     cd openstack-manuals/doc/src/docbkx/openstack-compute-admin
     mvn clean generate-sources
@@ -46,14 +57,18 @@ The root of the generated HTML documentation is::
 
     openstack-manuals/doc/src/docbkx/openstack-compute-admin/target/docbkx/webhelp/os-compute-adminguide/content/index.html
 
+
 Contributing
 ============
 Our community welcomes all people interested in open source cloud computing,
 and there are no formal membership requirements. The best way to join the
 community is to talk with others online or at a meetup and offer contributions
-through Launchpad, the OpenStack wiki, or blogs. We welcome all types of
-contributions, from blueprint designs to documentation to testing to 
-deployment scripts.
+through Launchpad, the `OpenStack wiki <http://wiki.openstack.org>`_, blogs,
+or on IRC at ``#openstack`` on ``irc.freenode.net``.
+
+We welcome all types of contributions, from blueprint designs to documentation
+to testing to deployment scripts.
+
 
 Installing
 ==========
