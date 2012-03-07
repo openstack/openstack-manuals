@@ -27,7 +27,7 @@ format="SVG" scale="60"/>
     <title>System Administration</title>
     <para>By understanding how the different installed nodes interact with each other you can
         administer the OpenStack Compute installation. OpenStack Compute offers many ways to install
-        using multiple servers but the general idea is that you can have multiple compute nodes that 
+        using multiple servers but the general idea is that you can have multiple compute nodes that
         control the virtual servers and a cloud controller node that contains the remaining Nova services. </para>
     <para>The OpenStack Compute cloud works via the interaction of a series of daemon processes
         named nova-* that reside persistently on the host machine or machines. These binaries can
@@ -75,14 +75,14 @@ format="SVG" scale="60"/>
                 strategies are available to the service by changing the network_manager flag to
                 FlatManager, FlatDHCPManager, or VlanManager (default is VLAN if no other is
                 specified).</para>
-            
+
         </listitem>
     </itemizedlist>
     <section xml:id="starting-images">
         <title>Starting Images</title><para>Once you have an installation, you want to get images that you can use in your Compute cloud.
             We've created a basic Ubuntu image for testing your installation. First you'll download
             the image, then use "uec-publish-tarball" to publish it:</para>
-            
+
            <para><literallayout class="monospaced">
 image="ubuntu1010-UEC-localuser-image.tar.gz"
 wget http://c0179148.cdn1.cloudfiles.rackspacecloud.com/ubuntu1010-UEC-localuser-image.tar.gz
@@ -106,25 +106,25 @@ uec-publish-tarball $image [bucket-name] [hardware-arch]
                </listitem>
            </itemizedlist>
            </para>
-                
+
                <para>Here's an example of what this command looks like with data:</para>
-                
+
                <para><literallayout class="monospaced">uec-publish-tarball ubuntu1010-UEC-localuser-image.tar.gz dub-bucket amd64</literallayout></para>
-                
+
         <para>The command in return should output three references:<emphasis role="italic">
                 emi</emphasis>, <emphasis role="italic">eri</emphasis> and <emphasis role="italic"
                 >eki</emphasis>. You will next run nova image-list in order to obtain the ID of the
             image you just uploaded.</para>
-                
-       
+
+
         <para>Now you can schedule, launch and connect to the instance, which you do with the "nova"
             command line. The ID of the image will be used with the <literallayout class="monospaced">nova boot</literallayout>command.</para>
                 <para>One thing to note here, once you publish the tarball, it has to untar before
             you can launch an image from it. Using the 'nova list' command, and make sure the image
             has it's status as "ACTIVE".</para>
-                
+
                 <para><literallayout class="monospaced">nova image-list</literallayout></para>
-                
+
         <para>Depending on the image that you're using, you need a public key to connect to it. Some
             images have built-in accounts already created. Images can be shared by many users, so it
             is dangerous to put passwords into the images. Nova therefore supports injecting ssh
@@ -139,12 +139,12 @@ uec-publish-tarball $image [bucket-name] [hardware-arch]
             instance. They can be created on the command line using the following command :
             <literallayout class="monospaced">nova keypair-add</literallayout>In order to list all the available options, you would run :<literallayout class="monospaced">nova help </literallayout>
             Example usage:</para>
-                    
+
                     <literallayout class="monospaced">
 nova keypair-add test > test.pem
 chmod 600 test.pem
                     </literallayout>
-        
+
         <para>Now, you can run the instances:</para>
                     <literallayout class="monospaced">nova boot --image 1 --flavor 1 --key_name test my-first-server</literallayout>
         <para>Here's a description of the parameters used above:</para>
@@ -159,7 +159,7 @@ chmod 600 test.pem
                     <emphasis role="bold">-key_ name</emphasis> name of the key to inject in to the
                     image at launch. </para>
             </listitem>
-        </itemizedlist>          
+        </itemizedlist>
                 <para> The instance will go from “BUILD” to “ACTIVE” in a short time, and you should
             be able to connect via SSH using the 'ubuntu' account, with the password 'ubuntu':
             (replace $ipaddress with the one you got from nova list): </para>
@@ -174,16 +174,16 @@ chmod 600 test.pem
                </para>
                 </section>
     <section xml:id="deleting-instances">
-                  
+
                     <title>Deleting Instances</title>
-                
+
                 <para>When you are done playing with an instance, you can tear the instance down
             using the following command (replace $instanceid with the instance IDs from above or
             look it up with euca-describe-instances):</para>
-                
+
                 <para><literallayout class="monospaced">nova delete $server-id</literallayout></para></section>
     <section xml:id="pausing-and-suspending-instances">
-        
+
         <title>Pausing and Suspending Instances</title>
         <para>Since the release of the API in its 1.1 version, it is possible to pause and suspend
             instances.</para>
@@ -223,17 +223,17 @@ chmod 600 test.pem
         <para>There are some minor differences in the way you would bundle a Linux image, based on the distribution. Ubuntu makes it very easy by providing cloud-init package, which can be used to take care of the instance configuration at the time of launch. cloud-init handles importing ssh keys for password-less login, setting hostname etc. The instance acquires the instance specific configuration from Nova-compute by connecting to a meta data interface running on 169.254.169.254.</para>
         <para>While creating the image of a distro that does not have cloud-init or an equivalent package, you may need to take care of importing the keys etc. by running a set of commands at boot time from rc.local.</para>
         <para>The process used for Ubuntu and Fedora is largely the same with a few minor differences, which are explained below.</para>
-        
+
         <para>In both cases, the documentation below assumes that you have a working KVM installation to use for creating the images. We are using the machine called &#8216;client1&#8242; as explained in the chapter on &#8220;Installation and Configuration&#8221; for this purpose.</para>
         <para>The approach explained below will give you disk images that represent a disk without any partitions. Nova-compute can resize such disks ( including resizing the file system) based on the instance type chosen at the time of launching the instance. These images cannot have &#8216;bootable&#8217; flag and hence it is mandatory to have associated kernel and ramdisk images. These kernel and ramdisk images need to be used by nova-compute at the time of launching the instance.</para>
         <para>However, we have also added a small section towards the end of the chapter about creating bootable images with multiple partitions that can be be used by nova to launch an instance without the need for  kernel and ramdisk images. The caveat is that while nova-compute can re-size such disks at the time of launching the instance, the file system size is not altered and hence, for all practical purposes, such disks are not re-sizable.</para>
         <section xml:id="creating-a-linux-image"><title>Creating a Linux Image &#8211; Ubuntu &amp; Fedora</title>
-            
+
             <para>The first step would be to create a raw image on Client1. This will represent the main HDD of the virtual machine, so make sure to give it as much space as you will need.</para>
             <literallayout class="monospaced">
 kvm-img create -f raw server.img 5G
 </literallayout>
-            
+
             <simplesect><title>OS Installation</title>
                 <para>Download the iso file of the Linux distribution you want installed in the image. The instructions below are tested on Ubuntu 11.04 Natty Narwhal 64-bit server and Fedora 14 64-bit. Most of the instructions refer to Ubuntu. The points of difference between Ubuntu and Fedora are mentioned wherever required.</para>
                 <literallayout class="monospaced">
@@ -250,7 +250,7 @@ sudo kvm -m 256 -cdrom ubuntu-11.04-server-amd64.iso -drive   file=server.img,if
 </literallayout>
                 <para>During the installation of Ubuntu, create a single ext4 partition mounted on &#8216;/&#8217;. Do not create a swap partition.</para>
                 <para>In the case of Fedora 14, the installation will not progress unless you create a swap partition. Please go ahead and create a swap partition.</para>
-                
+
                 <para>After finishing the installation, relaunch the VM by executing the following command.</para>
                 <literallayout class="monospaced">
 sudo kvm -m 256 -drive file=server.img,if=scsi,index=0,boot=on -boot c -net nic -net user -nographic -vnc :0
@@ -291,7 +291,7 @@ sudo losetup -a
 sudo fdisk -cul /dev/loop0
 </literallayout>
                 <para>You should see an output like this:</para>
-                
+
                 <literallayout class="monospaced">
 Disk /dev/loop0: 5368 MB, 5368709120 bytes
 149 heads, 8 sectors/track, 8796 cylinders, total 10485760 sectors
@@ -322,7 +322,7 @@ sudo losetup -a
 sudo dd if=/dev/loop0 of=serverfinal.img
 </literallayout>
                 <para>Now we have our ext4 filesystem image i.e serverfinal.img</para>
-                
+
                 <para>Unmount the loop0 device</para>
                 <literallayout class="monospaced">
 sudo losetup -d /dev/loop0
@@ -335,7 +335,7 @@ sudo losetup -d /dev/loop0
 sudo mount -o loop serverfinal.img /mnt
 </literallayout>
                 <para>Edit /mnt/etc/fstab and modify the line for mounting root partition(which may look like the following)</para>
-                
+
                 <programlisting>
 UUID=e7f5af8d-5d96-45cc-a0fc-d0d1bde8f31c  /               ext4    errors=remount-ro  0       1
 </programlisting>
@@ -364,7 +364,7 @@ echo &quot;************************&quot;
 </programlisting>
             </simplesect></section>
         <simplesect><title>Kernel and Initrd for OpenStack</title>
-            
+
             <para>Copy the kernel and the initrd image from /mnt/boot to user home directory. These will be used later for creating and uploading a complete virtual image to OpenStack.</para>
             <literallayout class="monospaced">
 sudo cp /mnt/boot/vmlinuz-2.6.38-7-server /home/localadmin
@@ -432,7 +432,7 @@ nova-manage image image_register windowsserver.img --public=T --arch=x86
         <title>Creating images from running instances with KVM and Xen</title>
         <para>
             It is possible to create an image from a running instance on KVM and Xen. This is a convenient way to spawn pre-configured instances; update them according to your needs ; and re-image the instances.
-            The process to create an image from a running instance is quite simple : 
+            The process to create an image from a running instance is quite simple :
             <itemizedlist>
                 <listitem>
                     <para>
@@ -457,7 +457,7 @@ ii  qemu-kvm                        0.14.0~rc1+noroms-0ubuntu4~ppalucid1        
                         Before creating the image, we need to make sure we are not missing any
                         buffered content that wouldn't have been written to the instance's disk. In
                         order to resolve that ; connect to the instance and run
-                        <command>sync</command> then exit. 
+                        <command>sync</command> then exit.
                     </para>
                 </listitem>
                 <listitem>
@@ -474,7 +474,7 @@ ii  qemu-kvm                        0.14.0~rc1+noroms-0ubuntu4~ppalucid1        
                        </programlisting>
                         Based on the output, we run :
                         <literallayout class="monospaced">nova image-create 116 Image-116</literallayout>
-                        The command will then perform the image creation (by creating qemu snapshot) and will automatically upload the image to your repository. 
+                        The command will then perform the image creation (by creating qemu snapshot) and will automatically upload the image to your repository.
                         <note>
                             <para>
                                 The image that will be created will be flagged as "Private" (For glance : is_public=False). Thus, the image will be available only for the tenant.
@@ -528,11 +528,11 @@ ii  qemu-kvm                        0.14.0~rc1+noroms-0ubuntu4~ppalucid1        
         </para>
     </section>
     <section xml:id="understanding-the-compute-service-architecture">
-      
+
         <title>Understanding the Compute Service Architecture</title>
         <para>These basic categories describe the service architecture and what's going on within the cloud controller.</para>
         <simplesect><title>API Server</title>
-            
+
             <para>At the heart of the cloud framework is an API Server. This API Server makes command and control of the hypervisor, storage, and networking programmatically available to users in realization of the definition of cloud computing.
             </para>
             <para>The API endpoints are basic http web services which handle authentication, authorization, and basic command and control functions using various API interfaces under the Amazon, Rackspace, and related models. This enables API compatibility with multiple existing tool sets created for interaction with offerings from other vendors. This broad compatibility prevents vendor lock-in.
@@ -540,14 +540,14 @@ ii  qemu-kvm                        0.14.0~rc1+noroms-0ubuntu4~ppalucid1        
         <simplesect><title>Message Queue</title>
             <para>
             A messaging queue brokers the interaction between compute nodes (processing), volumes (block storage), the networking controllers (software which controls network infrastructure), API endpoints, the scheduler (determines which physical hardware to allocate to a virtual resource), and similar components. Communication to and from the cloud controller is by HTTP requests through multiple API endpoints.</para>
-            
+
 <para>            A typical message passing event begins with the API server receiving a request from a user. The API server authenticates the user and ensures that the user is permitted to issue the subject command. Availability of objects implicated in the request is evaluated and, if available, the request is routed to the queuing engine for the relevant workers. Workers continually listen to the queue based on their role, and occasionally their type hostname. When such listening produces a work request, the worker takes assignment of the task and begins its execution. Upon completion, a response is dispatched to the queue which is received by the API server and relayed to the originating user. Database entries are queried, added, or removed as necessary throughout the process.
-</para>            
+</para>
 </simplesect>
         <simplesect><title>Compute Worker</title>
-            
+
             <para>Compute workers manage computing instances on host machines. Through the API, commands are dispatched to compute workers to:</para>
-            
+
             <itemizedlist>
             <listitem><para>Run instances</para></listitem>
             <listitem><para>Terminate instances</para></listitem>
@@ -557,22 +557,22 @@ ii  qemu-kvm                        0.14.0~rc1+noroms-0ubuntu4~ppalucid1        
             <listitem><para>Get console output</para></listitem></itemizedlist>
             </simplesect>
             <simplesect><title>Network Controller</title>
-            
+
             <para>The Network Controller manages the networking resources on host machines. The API server dispatches commands through the message queue, which are subsequently processed by Network Controllers. Specific operations include:</para>
-            
+
             <itemizedlist><listitem><para>Allocate fixed IP addresses</para></listitem>
             <listitem><para>Configuring VLANs for projects</para></listitem>
             <listitem><para>Configuring networks for compute nodes</para></listitem></itemizedlist>
             </simplesect>
 <simplesect><title>Volume Workers</title>
-            
+
             <para>Volume Workers interact with iSCSI storage to manage LVM-based instance volumes. Specific functions include:
             </para>
             <itemizedlist>
                 <listitem><para>Create volumes</para></listitem>
             <listitem><para>Delete volumes</para></listitem>
             <listitem><para>Establish Compute volumes</para></listitem></itemizedlist>
-            
+
     <para>Volumes may easily be transferred between instances, but may be attached to only a single instance at a time.</para></simplesect></section>
     <section xml:id="managing-compute-users">
         <title>Managing Compute Users</title>
@@ -664,7 +664,7 @@ ii  qemu-kvm                        0.14.0~rc1+noroms-0ubuntu4~ppalucid1        
         </simplesect>
     </section>
     <section xml:id="managing-the-cloud">
-       
+
         <title>Managing the Cloud</title><para>There are three main tools that a system administrator will find useful to manage their cloud;
             the nova-manage command, and the novaclient or the Euca2ools commands. </para>
         <para>The nova-manage command may only be run by users with admin privileges. Both
@@ -672,16 +672,15 @@ ii  qemu-kvm                        0.14.0~rc1+noroms-0ubuntu4~ppalucid1        
             restricted by Role Based Access Control in the deprecated nova auth system. </para>
         <simplesect><title>Using the nova-manage command</title>
         <para>The nova-manage command may be used to perform many essential functions for
-                administration and ongoing maintenance of nova, such as user creation, vpn
-                management, and much more.</para>
-        
+                administration and ongoing maintenance of nova, such as network creation.</para>
+
         <para>The standard pattern for executing a nova-manage command is: </para>
             <literallayout class="monospaced">nova-manage category command [args]</literallayout>
-            
+
             <para>For example, to obtain a list of all projects: nova-manage project list</para>
-            
+
             <para>Run without arguments to see a list of available command categories: nova-manage</para>
-            
+
             <para>Command categories are: <simplelist>
                     <member>account</member>
                     <member>agent</member>
@@ -967,7 +966,7 @@ vgcreate nova-volumes /dev/sda5 </literallayout>
                         <para>Then on the target, which is in our case the cloud-controller, the iscsitarget package :</para>
                         <literallayout class="monospaced">apt-get install iscsitarget </literallayout>
                         <para>This package could refuse to start with a "FATAL: Module iscsi_trgt not found" error. </para>
-                        <para>This error is caused by the kernel which does not contain the iscsi module's source into it ; 
+                        <para>This error is caused by the kernel which does not contain the iscsi module's source into it ;
                             you can install the kernel modules by installing an extra package : </para>
                         <literallayout class="monospaced"> apt-get install iscsitarget-dkms</literallayout>
                         <para>(the Dynamic Kernel Module Support is a framework used for created modules with non-existent sources into the current kernel)</para>
@@ -1138,7 +1137,7 @@ portal:10.192.12.34,3260]: openiscsiadm: initiator reported error (15 - already 
 (nova.root): TRACE: Command: sudo iscsiadm -m discovery -t sendtargets -p ubuntu03c
 (nova.root): TRACE: Exit code: 255
 (nova.root): TRACE: Stdout: ''
-(nova.root): TRACE: Stderr: 'iscsiadm: Cannot resolve host ubuntu03c. getaddrinfo error: [Name or service not known]\n\niscsiadm: 
+(nova.root): TRACE: Stderr: 'iscsiadm: Cannot resolve host ubuntu03c. getaddrinfo error: [Name or service not known]\n\niscsiadm:
 cannot resolve host name ubuntu03c\niscsiadm: Could not perform SendTargets discovery.\n'
 (nova.root): TRACE:</programlisting>This
                             error happens when the compute node is unable to resolve the nova-volume
@@ -1274,7 +1273,7 @@ tcp: [9] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000014         
                         An LVM snapshot is the exact copy of a logicial volume, which contains
                         datas, at a frozen state. Thus, data corruption is avoided (preventing data
                         manipulation during the process of creating the volume itself). Remember the
-                        EBS-like volumes created through a : $ euca-create-volume 
+                        EBS-like volumes created through a : $ euca-create-volume
                         consists in an LVM's logical volume. </para>
                     <para><emphasis role="italic">Make sure you have enough space (a security is
                             twice the size for a volume snapshot) before creating the snapshot,
@@ -1327,7 +1326,7 @@ tcp: [9] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000014         
   Read ahead sectors     auto
   - currently set to     256
   Block device           251:13
-   
+
   --- Logical volume ---
   LV Name                /dev/nova-volumes/volume-00000001-snap
   VG Name                nova-volumes
@@ -1340,7 +1339,7 @@ tcp: [9] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000014         
   Current LE             3840
   COW-table size         10,00 GiB
   COW-table LE           2560
-  Allocated to snapshot  0,00% 
+  Allocated to snapshot  0,00%
   Snapshot chunk size    4,00 KiB
   Segments               1
   Allocation             inherit
@@ -1463,15 +1462,15 @@ tcp: [9] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000014         
             <para>Here is how a mail report looks like : </para>
             <programlisting>
 Backup Start Time - 07/10 at 01:00:01
-Current retention - 7 days 
+Current retention - 7 days
 
 The backup volume is mounted. Proceed...
 Removing old backups...  : /BACKUPS/EBS-VOL/volume-00000019/volume-00000019_28_09_2011.tar.gz
-	 /BACKUPS/EBS-VOL/volume-00000019 - 0 h 1 m and 21 seconds. Size - 3,5G 
+	 /BACKUPS/EBS-VOL/volume-00000019 - 0 h 1 m and 21 seconds. Size - 3,5G
 
 The backup volume is mounted. Proceed...
 Removing old backups...  : /BACKUPS/EBS-VOL/volume-0000001a/volume-0000001a_28_09_2011.tar.gz
-	 /BACKUPS/EBS-VOL/volume-0000001a - 0 h 4 m and 15 seconds. Size - 6,9G 
+	 /BACKUPS/EBS-VOL/volume-0000001a - 0 h 4 m and 15 seconds. Size - 6,9G
 ---------------------------------------
 Total backups size - 267G - Used space : 35%
 Total execution time - 1 h 75 m and 35 seconds
@@ -1485,7 +1484,7 @@ Total execution time - 1 h 75 m and 35 seconds
     </section>
     <section xml:id="xensm">
         <title>Using the Xen Storage Manager Volume Driver</title>
-        
+
         <para> The Xen Storage Manager Volume driver (xensm) is a Xen hypervisor specific volume driver, and can be used to provide basic storage functionality
             (like volume creation, and destruction) on a number of different storage back-ends. It also enables the capability of using more sophisticated storage
             back-ends for operations like cloning/snapshotting etc. The list below shows some of the storage plugins already supported in XenServer/Xen Cloud
@@ -1493,7 +1492,7 @@ Total execution time - 1 h 75 m and 35 seconds
         </para>
         <orderedlist>
             <listitem>
-                <para>NFS VHD: Storage repository (SR) plugin which stores disks as Virtual Hard Disk (VHD) 
+                <para>NFS VHD: Storage repository (SR) plugin which stores disks as Virtual Hard Disk (VHD)
                     files on a remote Network File System (NFS).
                 </para>
             </listitem>
@@ -1554,11 +1553,11 @@ Total execution time - 1 h 75 m and 35 seconds
                     <listitem>
                         <para>
                             <emphasis role="bold">Flavor:</emphasis> This term is equivalent to volume "types".
-                            A user friendly term to specify some notion of quality of service. 
+                            A user friendly term to specify some notion of quality of service.
                             For example, "gold" might mean that the volumes will use a backend where backups are possible.
-                            A flavor can be associated with multiple backends. The volume scheduler, with the help of the driver, 
-                            will decide which backend will be used to create a volume of a particular flavor. Currently, the driver uses 
-                            a simple "first-fit" policy, where the first backend that can successfully create this volume is the 
+                            A flavor can be associated with multiple backends. The volume scheduler, with the help of the driver,
+                            will decide which backend will be used to create a volume of a particular flavor. Currently, the driver uses
+                            a simple "first-fit" policy, where the first backend that can successfully create this volume is the
                             one that is used.
                         </para>
                     </listitem>
@@ -1568,10 +1567,10 @@ Total execution time - 1 h 75 m and 35 seconds
                 <title>Operation</title>
                 <para> The admin uses the the nova-manage command detailed below to add flavors and backends.
                 </para>
-                <para> One or more nova-volume service instances will be deployed per availability zone. 
-                    When an instance is started, it will create storage repositories (SRs) to connect to the backends 
-                    available within that zone. All nova-volume instances within a zone can see all the available backends. 
-                    These instances are completely symmetric and hence should be able to service any create_volume 
+                <para> One or more nova-volume service instances will be deployed per availability zone.
+                    When an instance is started, it will create storage repositories (SRs) to connect to the backends
+                    available within that zone. All nova-volume instances within a zone can see all the available backends.
+                    These instances are completely symmetric and hence should be able to service any create_volume
                     request within the zone.
                 </para>
             </simplesect>
@@ -1595,7 +1594,7 @@ Total execution time - 1 h 75 m and 35 seconds
                     </listitem>
                 </orderedlist>
             </simplesect>
-            
+
             <simplesect>
                 <title>Configuration
                 </title>
@@ -1661,20 +1660,20 @@ Total execution time - 1 h 75 m and 35 seconds
                     in a "first fit" order on the given backends.
                 </para>
                 <para>
-                    The standard euca-* or openstack API commands (such as volume extensions) 
+                    The standard euca-* or openstack API commands (such as volume extensions)
                     should be used for creating/destroying/attaching/detaching volumes.
                 </para>
             </simplesect>
         </section>
     </section>
     <section xml:id="live-migration-usage">
-        
+
         <title>Using Live Migration</title>
         <para>Before starting live migration, check "Configuring Live Migration" sections.</para>
         <para>Live migration provides a scheme to migrate running instances from one OpenStack
             Compute server to another OpenStack Compute server. No visible downtime and no
             transaction loss is the ideal goal. This feature can be used as depicted below. </para>
-        
+
         <itemizedlist>
             <listitem>
                 <para>First, make sure any instances running on a specific server.</para>
@@ -1967,7 +1966,7 @@ Migration of i-00000001 initiated. Check its progress using euca-describe-instan
                         <para>Some systems would hang on that step, which means you could loose
                             access to your cloud-controller. In order to re-run the session
                             manually, you would run :
-                            <literallayout class="monospaced">iscsiadm -m discovery -t st -p $SAN_IP $ iscsiadm -m node --target-name $IQN -p $SAN_IP -l          
+                            <literallayout class="monospaced">iscsiadm -m discovery -t st -p $SAN_IP $ iscsiadm -m node --target-name $IQN -p $SAN_IP -l
 Then perform the mount. </literallayout></para>
                     </listitem>
                     <listitem>
@@ -2001,10 +2000,10 @@ Then perform the mount. </literallayout></para>
         <title>Reference for Flags in nova.conf</title>
                 <para>For a complete list of all available flags for each OpenStack Compute service,
             run bin/nova-&lt;servicename> --help. </para>
-            
+
                 <table rules="all">
             <caption>Description of common nova.conf flags (nova-api, nova-compute)</caption>
-          
+
             <thead>
                 <tr>
                     <td>Flag</td>
@@ -2078,7 +2077,7 @@ Then perform the mount. </literallayout></para>
                     <td>default: 'cacert.pem') </td>
                     <td>File name; File name of root CA</td>
                 </tr>
-                
+
                 <tr>
                     <td>--cnt_vpn_clients</td>
                     <td>default: '0'</td>
@@ -2094,28 +2093,28 @@ Then perform the mount. </literallayout></para>
                     <td>default: '5'</td>
                     <td>String value; Number of attempts to create unique mac
                         address</td>
-                </tr> 
+                </tr>
                 <tr>
                     <td>--credential_cert_file</td>
                     <td>default: 'cert.pem'</td>
                     <td>Filename; Filename of certificate in credentials zip</td>
-                </tr> 
+                </tr>
                 <tr>
                     <td>--credential_key_file</td>
                     <td>default: 'pk.pem'</td>
                     <td>Filename; Filename of private key in credentials zip</td>
-                </tr> 
+                </tr>
                 <tr>
                     <td>--credential_rc_file</td>
                     <td>default: '%src'</td>
                     <td>File name; Filename of rc in credentials zip, %src will be replaced
                         by name of the region (nova by default).</td>
-                </tr> 
+                </tr>
                 <tr>
                     <td>--credential_vpn_file</td>
                     <td>default: 'nova-vpn.conf'</td>
                     <td>File name; Filename of certificate in credentials zip</td>
-                </tr> 
+                </tr>
                 <tr>
                     <td>--crl_file</td>
                     <td>default: 'crl.pem') </td>
@@ -2221,7 +2220,7 @@ Then perform the mount. </literallayout></para>
                     <td>default: 'cloudadmin,itsec'</td>
                     <td>Comma separated list; Roles that apply to all projects (or tenants)</td>
                 </tr>
-                
+
                 <tr>
                     <td>--flat_injected</td>
                     <td>default: 'false'</td>
@@ -2275,7 +2274,7 @@ Then perform the mount. </literallayout></para>
                     <td>default: '4.4.4.0/24'</td>
                     <td>Floating IP address block </td>
                 </tr>
-              
+
                 <tr>
                     <td>--[no]fake_network</td>
                     <td>default: 'false'</td>
@@ -2698,24 +2697,24 @@ Then perform the mount. </literallayout></para>
                 </tr>
                 <tr>
                     <td>--vpn_image_id</td>
-                    <td>default: 'ami-cloudpipe'</td>
-                    <td>AMI (Amazon Machine Image) for cloudpipe VPN server</td>
+                    <td>default: None</td>
+                    <td>Glance id for cloudpipe VPN server</td>
                 </tr>
                 <tr>
                     <td>--vpn_client_template</td>
-                    <td>default: '-vpn'</td>
+                    <td>default: '/usr/lib/pymodules/python2.6/nova/cloudpipe/client.ovpn.template'</td>
                     <td>String value; Template for creating users vpn file.</td>
                 </tr>
                 <tr>
                     <td>--vpn_key_suffix</td>
-                    <td>default: '/root/nova/nova/nova/cloudpipe/client.ovpn.template'</td>
-                    <td>This is the interface that VlanManager uses to bind bridges and VLANs to.</td>
+                    <td>default: '-vpn'</td>
+                    <td>String value; This suffix is added to keys and security groups created by the cloudpipe extension.</td>
                 </tr>
             </tbody>
                 </table>
                 <table rules="all">
                     <caption>Description of nova.conf flags specific to nova-volume</caption>
-                    
+
                     <thead>
                         <tr>
                             <td>Flag</td>
@@ -2726,10 +2725,10 @@ Then perform the mount. </literallayout></para>
                     <tbody>
                         <tr><td>--iscsi_ip_prefix</td>
                             <td>default: ''</td>
-                            
+
                             <td>IP address or partial IP address; Value that differentiates the IP
                                 addresses using simple string matching, so if all of your hosts are on the 192.168.1.0/24 network you could use --iscsi_ip_prefix=192.168.1</td></tr>
-                        
+
                         <tr>
                             <td>--volume_manager</td>
                             <td>default: 'nova.volume.manager.VolumeManager'</td>
