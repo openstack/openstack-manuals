@@ -470,37 +470,77 @@
       networks table is marked as bridged automatically for Flat
       Manager.</para>
     </section>
-
-    <section xml:id="creating-certifications">
-      <title>Creating Credentials</title>
-
-      <para>Generate the credentials as a zip file. These are the certs you
-      will use to launch instances, bundle images, and all the other assorted
-      API functions.</para>
-
-      <screen><prompt>#</prompt> <userinput>mkdir –p /root/creds</userinput>
-<prompt>#</prompt> <userinput>nova-manage project zipfile <replaceable>$NOVA_PROJECT $NOVA_PROJECT_USER</replaceable> /root/creds/novacreds.zip</userinput></screen>
-
-      <para>If you are using one of the Flat modes for networking, you may see
-      a Warning message "<literal>No vpn data for project
-      <replaceable>&lt;project_name&gt;</replaceable></literal>" which you can
-      safely ignore.</para>
-
-      <para>Unzip them in your home directory, and add them to your
-      environment.</para>
-
-      <screen><prompt>#</prompt> <userinput>unzip /root/creds/novacreds.zip -d /root/creds/</userinput>
-<prompt>#</prompt> <userinput>cat /root/creds/novarc &gt;&gt; ~/.bashrc</userinput>
-<prompt>#</prompt> <userinput>source ~/.bashrc</userinput></screen>
-
-      <para>If you already have Nova credentials present in your environment,
-      you can use a script included with Glance the Image Service,
-      <filename>tools/nova_to_os_env.sh</filename>, to create Glance-style
-      credentials. This script adds <literal>OS_AUTH</literal> credentials to
-      the environment which are used by the Image Service to enable private
-      images when the Identity Service is configured as the authentication
-      system for Compute and the Image Service.</para>
+    <section xml:id="creating-credentials"><title>Creating Credentials</title>
+      <para>The credentials you will use to launch
+        instances, bundle images, and all the other assorted
+        API functions can be sourced in a single file, such as
+        creating one called /creds/openrc. </para>
+      <para>Here's an example openrc file you can download from
+        the Dashboard in Settings > Project Settings >
+        Download RC File. </para>
+      <para>
+        <programlisting>#!/bin/bash
+# *NOTE*: Using the 2.0 *auth api* does not mean that compute api is 2.0.  We
+# will use the 1.1 *compute api*
+export OS_AUTH_URL=http://50.56.12.206:5000/v2.0
+export OS_TENANT_ID=27755fd279ce43f9b17ad2d65d45b75c
+export OS_USERNAME=vish
+export OS_PASSWORD=$OS_PASSWORD_INPUT
+export OS_AUTH_USER=norm
+export OS_AUTH_KEY=$OS_PASSWORD_INPUT
+export OS_AUTH_TENANT=27755fd279ce43f9b17ad2d65d45b75c
+export OS_AUTH_STRATEGY=keystone
+</programlisting>
+      </para>
+      <para>You also may want to enable EC2 access for the
+        euca2ools. Here is an example ec2rc file for enabling
+        EC2 access with the required credentials.</para>
+      <para>
+        <programlisting>export NOVA_KEY_DIR=/root/creds/
+export EC2_ACCESS_KEY="EC2KEY:USER"
+export EC2_SECRET_KEY="SECRET_KEY"
+export EC2_URL="http://$NOVA-API-IP:8773/services/Cloud"
+export S3_URL="http://$NOVA-API-IP:3333"
+export EC2_USER_ID=42 # nova does not use user id, but bundling requires it
+export EC2_PRIVATE_KEY=${NOVA_KEY_DIR}/pk.pem
+export EC2_CERT=${NOVA_KEY_DIR}/cert.pem
+export NOVA_CERT=${NOVA_KEY_DIR}/cacert.pem
+export EUCALYPTUS_CERT=${NOVA_CERT} # euca-bundle-image seems to require this set
+alias ec2-bundle-image="ec2-bundle-image --cert ${EC2_CERT} --privatekey ${EC2_PRIVATE_KEY} --user 42 --ec2cert ${NOVA_CERT}"
+alias ec2-upload-bundle="ec2-upload-bundle -a ${EC2_ACCESS_KEY} -s ${EC2_SECRET_KEY} --url ${S3_URL} --ec2cert ${NOVA_CERT}"</programlisting>
+      </para>
+      <para>Lastly, here is an example openrc file that works
+        with nova client and ec2
+        tools.</para><programlisting>export NOVA_PASSWORD=${ADMIN_PASSWORD:-secrete}
+export OS_PASSWORD=${NOVA_PASSWORD}
+export NOVA_URL=${NOVA_URL:-http://$SERVICE_HOST:5000/v2.0}
+export OS_AUTH_URL=${NOVA_URL}
+export NOVA_VERSION=${NOVA_VERSION:-1.1}
+export NOVA_REGION_NAME=${NOVA_REGION_NAME:-RegionOne}
+export EC2_URL=${EC2_URL:-http://$SERVICE_HOST:8773/services/Cloud}
+export EC2_ACCESS_KEY=${DEMO_ACCESS}
+export EC2_SECRET_KEY=${DEMO_SECRET}
+export S3_URL=http://$SERVICE_HOST:3333
+export EC2_USER_ID=42 # nova does not use user id, but bundling requires it
+export EC2_PRIVATE_KEY=${NOVA_KEY_DIR}/pk.pem
+export EC2_CERT=${NOVA_KEY_DIR}/cert.pem
+export NOVA_CERT=${NOVA_KEY_DIR}/cacert.pem
+export EUCALYPTUS_CERT=${NOVA_CERT} # euca-bundle-image seems to require this set</programlisting>
+      <para>Next, add these credentials to your environment
+        prior to running any nova client commands or nova
+        commands. </para>
+      <literallayout class="monospaced">cat /root/creds/openrc >> ~/.bashrc
+source ~/.bashrc                 </literallayout>
     </section>
+    <section xml:id="creating-certifications">
+      <title>Creating Certificates</title>
+      <para>You can create certificates contained within pem
+        files using these nova client
+        commands, ensuring you have set up your environment variables for the nova client:
+        <screen><prompt>#</prompt> <userinput>nova x509-get-root-cert</userinput>
+        <prompt>#</prompt> <userinput>nova x509-create-cert </userinput></screen>
+      </para>
+     </section>
 
     <section xml:id="enabling-access-to-vms-on-the-compute-node">
       <title>Enabling Access to VMs on the Compute Node</title>
