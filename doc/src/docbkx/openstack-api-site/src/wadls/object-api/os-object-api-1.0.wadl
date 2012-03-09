@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- (C) 2012 OpenStack LLC., All Rights Reserved -->
+<application xmlns="http://wadl.dev.java.net/2009/02"
+    xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+    xmlns:wadl="http://wadl.dev.java.net/2009/02">
+    
+    <resources base="https://storage.swiftdrive.com/">
+        <resource id="version" path="v1">
+            <resource id="tenant_id" path="{tenant_id}">
+                <param name="tenant_id" style="template">
+                    <doc>
+                        <p xmlns="http://www.w3.org/1999/xhtml">
+                            The unique identifier of the tenant or account.
+                        </p>
+                    </doc>
+                </param>
+                
+                <resource id="object" path="container/object">
+                    <method href="#createObject" />
+                    <resource path="{container_id}">
+                        <param name="container_id" style="template" required="true">
+                            <doc><p xmlns="http://www.w3.org/1999/xhtml">
+                                The unique identifier of an existing container.
+                            </p></doc>
+                        </param>
+                        
+                        <method href="#getObject" />
+                        <method href="#deleteObject" />
+                        
+                    </resource>
+                </resource>
+                
+            </resource>
+        </resource>
+    </resources>
+</application>

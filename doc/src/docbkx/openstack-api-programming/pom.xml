@@ -50,7 +50,7 @@
             <plugin>
                 <groupId>com.rackspace.cloud.api</groupId>
                 <artifactId>clouddocs-maven-plugin</artifactId>
-                <version>1.0.8-SNAPSHOT</version>
+                <version>1.0.10</version>
                 <executions>
                     <execution>
                         <id>goal1</id>
@@ -74,7 +74,7 @@
                         <configuration>
                             <!-- These parameters only apply to webhelp -->
                             <enableDisqus>1</enableDisqus>
-                            <disqusShortname>os-identitydevguide</disqusShortname>
+                            <disqusShortname>openstackcomputeapiprogrammer</disqusShortname>
                             <enableGoogleAnalytics>1</enableGoogleAnalytics>
                             <googleAnalyticsId>UA-17511903-6</googleAnalyticsId>
                             <generateToc>
@@ -96,23 +96,18 @@
                             <postProcess>
                                 <!-- Copies the figures to the correct location for webhelp -->
                                 
-                                <copy todir="${basedir}/target/docbkx/webhelp/os-identity-starter-guide/content/figures">
+                                <!--<copy todir="${basedir}/target/docbkx/webhelp/trunk/openstack-compute/install/content/figures">
                                     <fileset dir="${basedir}/figures">
-                                        <include name="**/*.png" />
-                                    </fileset>
-                                </copy>
-                                
-                               <!-- <copy todir="${basedir}/target/docbkx/webhelp/openstack-identity-service-starter/figures">
-                                    <fileset dir="${basedir}/figures">
-                                        <include name="**/*.jpg" />
+                                        <include name="**/*.*" />
                                     </fileset>
                                 </copy>-->
+                                
                                 <!-- Copies webhelp (HTML output) to desired URL location on docs.openstack.org -->
                                                    
                                 <copy
-                                    todir="${basedir}/target/docbkx/webhelp/trunk/openstack-identity/admin">
+                                    todir="${basedir}/target/docbkx/webhelp/api/openstack-compute/programmer">
                                     <fileset
-                                        dir="${basedir}/target/docbkx/webhelp/os-identity-starter-guide/">
+                                        dir="${basedir}/target/docbkx/webhelp/openstackapi-programming/">
                                         <include name="**/*" />
                                     </fileset>
                                 </copy>
@@ -120,13 +115,12 @@
                                 <!--Moves PDFs to the needed placement -->
                                
                                 <move failonerror="false"
-                                    file="${basedir}/target/docbkx/pdf/os-identity-starter-guide.pdf"
-                                    tofile="${basedir}/target/docbkx/webhelp/trunk/openstack-identity/admin/os-identity-starter-guide-trunk.pdf"/>                
+                                    file="${basedir}/target/docbkx/pdf/openstackapi-programming.pdf"
+                                    tofile="${basedir}/target/docbkx/webhelp/api/openstack-compute/programmer/openstackapi-programming.pdf"/>                
                                                        
                                 <!--Deletes leftover uneeded directories -->
-                                
-                                <delete dir="${basedir}/target/docbkx/webhelp/os-identity-starter-guide"/>
-                                                                
+                               
+                                <delete dir="${basedir}/target/docbkx/webhelp/openstackapi-programming/"/>                        
                             </postProcess>
                         </configuration>
                     </execution>
@@ -136,7 +130,7 @@
                     <xincludeSupported>true</xincludeSupported>
                     <sourceDirectory>.</sourceDirectory>
                     <includes>
-                        os-identity-starter-guide.xml
+                        openstackapi-programming.xml
                     </includes>
                     <profileSecurity>reviewer</profileSecurity>
                     <branding>openstack</branding>
