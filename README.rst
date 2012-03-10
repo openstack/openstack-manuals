@@ -9,6 +9,7 @@ OpenStack project. It includes documentation for:
  * OpenStack Image Service
  * OpenStack Object Storage
  * OpenStack Dashboard
+ * OpenStack Network Connectivity
 
 For more details, see the `OpenStack Documentation HowTo wiki page
 <http://wiki.openstack.org/Documentation/HowTo>`_.
@@ -26,7 +27,7 @@ documentation.
 
 To install Maven for Ubuntu::
 
-    apt-get install maven2
+    apt-get install maven3
 
 
 Building
