@@ -2,7 +2,7 @@
 <chapter xmlns="http://docbook.org/ns/docbook"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
-  xml:id="ch-identity-mgmt">
+  xml:id="ch-identity-mgmt-config">
   <title>Identity Management</title>
   <para>
     The default identity management system for OpenStack is the OpenStack Identity Service, code-named Keystone.
@@ -880,7 +880,7 @@ keystone service-delete 08741d8ed88242ca88d1f61484a0fe3b
   <?dbhtml stop-chunking?>
   <title>Configuring Services to work with Keystone</title>
   <para>
-    Once Keystone is installed and running (see :doc:`configuration`),
+    Once Keystone is installed and running,
     services need to be configured to work with it. To do this, we
     primarily install and configure middleware for the OpenStack service
     to handle authentication tasks or otherwise interact with Keystone.
@@ -889,13 +889,11 @@ keystone service-delete 08741d8ed88242ca88d1f61484a0fe3b
     In general: * Clients making calls to the service will pass in an
     authentication token. * The Keystone middleware will look for and
     validate that token, taking the appropriate action. * It will also
-    retrive additional information from the token such as user name, id,
+    retrieve additional information from the token such as user name, id,
     tenant name, id, roles, etc...
   </para>
   <para>
     The middleware will pass those data down to the service as headers.
-    More details on the architecture of that setup is described in
-    :doc:`middleware_architecture`
   </para>
   <section xml:id="setting-up-credentials">
     <title>Setting up credentials</title>
@@ -927,9 +925,7 @@ keystone service-delete 08741d8ed88242ca88d1f61484a0fe3b
       <para>
         You need to minimally define a tenant, user, and role to link
         the tenant and user as the most basic set of details to get
-        other services authenticating and authorizing with keystone. See
-        doc:`configuration` for a walk through on how to create tenants,
-        users, and roles.
+        other services authenticating and authorizing with keystone. 
       </para>
     </section>
   </section>
@@ -996,7 +992,6 @@ keystone service-create --name=swift \
         When configuring Nova, it is important to create a admin service
         token for the service (from the Configuration step above) and
         include that as the key 'admin_token' in the nova-api-paste.ini.
-        See the documented :doc:`nova-api-paste` file for references.
       </para>
     </section>
     <section xml:id="configuring-swift-to-use-keystone">

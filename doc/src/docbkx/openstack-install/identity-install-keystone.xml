@@ -4,69 +4,239 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
     <title>Installing and Configuring the Identity Service</title>
-    
-    <para>Install the Identity service:</para>
+    <para>Install the Identity service on any server that is
+    accessible to the other servers you intend to use for OpenStack
+    services:</para>
     <literallayout class="monospaced">sudo apt-get install keystone</literallayout>
-    <para>Install curl, a command-line tool for running REST API
-        requests:</para>
-    <literallayout class="monospaced">sudo apt-get install curl</literallayout>
-    <para>After installing, you need to delete the sqlite database it
-        creates, then change the configuration to point to the mysql
-        database. </para>
-    <para>Delete the keystone.db file created in the
-        /var/lib/keystone/
-        directory.<literallayout class="monospaced">sudo rm /var/lib/keystone/keystone.db</literallayout></para>
-    <para>Configure the production-ready backend data store. For
-        Compute you must use a SQLAlchemy-compatible database, such as
-        MySQL or PostgreSQL. This example shows MySQL.</para>
-    <para>First, install MySQL with:
-        <literallayout class="monospaced">sudo apt-get install python-mysqldb mysql-server</literallayout></para>
-    <para>During the install, you'll be prompted for the mysql root
+  <para>After installing, you need to delete the sqlite database it
+    creates, then change the configuration to point to the mysql
+    database. </para>
+  <para>Delete the keystone.db file created in the
+    /var/lib/keystone/
+    directory.<literallayout class="monospaced">sudo rm /var/lib/keystone/keystone.db</literallayout></para>
+  <para>Configure the production-ready backend data store. For
+    Compute you must use a SQLAlchemy-compatible database, such as
+    MySQL or PostgreSQL. This example shows MySQL.</para>
+  <para>First, install MySQL with:
+    <literallayout class="monospaced">sudo apt-get install python-mysqldb mysql-server</literallayout></para>
+  <para>During the install, you'll be prompted for the mysql root
     password. Enter a password of your choice and verify it.</para>
-    <para>Edit /etc/mysql/my.cnf to change "bind-address" from
-        localhost (127.0.0.1) to any (0.0.0.0) and restart the mysql
-        service: </para>
-    <para>
-        <literallayout class="monospaced">sudo sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/my.cnf
+  <para>Edit /etc/mysql/my.cnf to change "bind-address" from
+    localhost (127.0.0.1) to any (0.0.0.0) and restart the mysql
+    service: </para>
+  <para>
+    <literallayout class="monospaced">sudo sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/my.cnf
 sudo service mysql restart</literallayout></para>
-    <para>For MySQL, create a MySQL database named "keystone" and a
-        MySQL user named "keystone". Grant the "keystone" user full
-        access to the "keystone" MySQL database.</para>
-    
-    <para>Start the mysql command line client by running:</para>
-    <para><literallayout class="monospaced">mysql -u root -p</literallayout></para>
-    <para>Enter the mysql root user's password when prompted.</para>
-    <para>To configure the MySQL database, create the keystone database. </para>
-    <para><literallayout class="monospaced">mysql> CREATE DATABASE keystone;</literallayout></para>
-    <para>Create a MySQL user for the newly-created keystone database that
-        has full control of the database. </para>
-    <para><literallayout class="monospaced">mysql> GRANT ALL ON keystone.* TO 'keystone'@'%' IDENTIFIED BY 'yourpassword';</literallayout></para>
-    <para>Enter quit at the mysql> prompt to exit MySQL.</para>
-    <para><literallayout class="monospaced">mysql> quit</literallayout></para>
-    <para>Edit /etc/keystone/keystone.conf to include the
-        --sql_connection to use the backend data store you just
-        created. Ensure that it is owned by root and chmod is set to
-        0640 since it contains your mysql password. (You do leave the "default_store" as sqlite, however.) </para>
-    <literallayout class="monospaced">sudo nano /etc/keystone/keystone.conf
-sudo chown keystone:root /etc/keystone/keystone.conf
-sudo chmod 0640 /etc/keystone/keystone.conf
-    </literallayout>
-    <para>Here is an
-        example section:</para>
-        <literallayout class="monospaced">[keystone.backends.sqlalchemy]
-# SQLAlchemy connection string for the reference implementation registry
-# server. Any valid SQLAlchemy connection string is fine.
-# See: http://bit.ly/ideIpI
-sql_connection = mysql://keystone:yourpassword@192.168.206.130/keystone
-backend_entities = ['UserRoleAssociation', 'Endpoints', 'Role', 'Tenant',
-                    'User', 'Credentials', 'EndpointTemplates', 'Token',
-                    'Service']</literallayout>
-    <para>Edit /etc/keystone/keystone.conf to use the IP address and
-        ports for your environment. Here is an example keystone.conf. Ensure that the ports for keystone are correct, since the default keystone auth port changed from 5001 to 35357 
-        and the packages install a conf file with 5001 for the auth_port setting.
-        <literallayout class="monospaced"><xi:include parse="text" href="samples/keystone.conf"></xi:include></literallayout></para>
-    <para>Restart the Identity Service. </para>
-    <literallayout class="monospaced">sudo service keystone restart</literallayout>
-<para>Next, you configure the Identity Service by defining roles and
-        users. </para>
-</section>
+  <para>For MySQL, create a MySQL database named "keystone" and a
+    MySQL user named "keystone". Grant the "keystone" user full
+    access to the "keystone" MySQL database.</para>
+  
+  <para>Start the mysql command line client by running:</para>
+  <para><literallayout class="monospaced">mysql -u root -p</literallayout></para>
+  <para>Enter the mysql root user's password when prompted.</para>
+  <para>To configure the MySQL database, create the keystone database. </para>
+  <para><literallayout class="monospaced">mysql> CREATE DATABASE keystone;</literallayout></para>
+  <para>Create a MySQL user for the newly-created keystone database that
+    has full control of the database. </para>
+  <para><literallayout class="monospaced">mysql> GRANT ALL ON keystone.* TO 'keystone'@'%' IDENTIFIED BY 'yourpassword';</literallayout></para>
+  <para>Enter quit at the mysql> prompt to exit MySQL.</para>
+  <para><literallayout class="monospaced">mysql> quit</literallayout></para>
+    <para>Once Keystone is installed, it is configured via a primary
+    configuration file
+    (<literal>etc/keystone/keystone.conf</literal>), and by
+    initializing data into keystone using the command line client. By
+    default, Keystone's data store is sqlite. To change the data store
+    to mysql, change the line defining "connection" in
+      <filename>etc/keystone/keystone.conf</filename> like
+    so:<screen>connection = mysql://keystone:yourpassword@localhost/keystone</screen></para>
+  <para>Next, restart the keystone service so that it picks up the new
+    database configuration.
+    <screen>sudo service keystone restart</screen></para>
+  <para>Lastly, initialize the new keystone
+    database:<screen>sudo keystone-manage db_sync</screen></para>
+    <section xml:id="configure-keystone">
+    <title>Configuring Services to work with Keystone</title>
+  <para> Once Keystone is installed and running, you set up users and
+      tenants and services to be configured to work with it.  </para>
+    <section xml:id="setting-up-tenants-users-and-roles">
+      <title>Setting up tenants, users, and roles</title>
+      <para>
+        You need to minimally define a tenant, user, and role to link
+        the tenant and user as the most basic set of details to get
+        other services authenticating and authorizing with keystone.
+      </para>
+      <para> First, create a default tenant, we'll name it
+        openstackDemo in this example.</para>
+      <screen><prompt>$ </prompt><userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 tenant-create --name openstackDemo --description "Default Tenant" --enabled true</userinput></screen>
+<programlisting>      +-------------+----------------------------------+
+      |   Property  |              Value               |
+      +-------------+----------------------------------+
+      | description | Default Tenant                   |
+      | enabled     | true                             |
+      | id          | 9ae969031816484a8e2172c3700cbfcc |
+      | name        | openstackDemo                    |
+      +-------------+----------------------------------+</programlisting>
+      
+      <para>Create a default user named adminUser. </para>
+      <screen><prompt>$</prompt><userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 user-create --tenant_id $tenant_id_from_value_above --name adminUser --pass secretword --enabled true</userinput></screen>
+<programlisting>      +----------+-------------------------------------------------------------------------------------------------------------------------+
+      | Property |                                                          Value                                                          |
+      +----------+-------------------------------------------------------------------------------------------------------------------------+
+      | email    | None                                                                                                                    |
+      | enabled  | true                                                                                                                    |
+      | id       | a4c2d43f80a549a19864c89d759bb3fe                                                                                        |
+      | name     | admin                                                                                                                   |
+      | password | $6$rounds=40000$MsFWIgIfbAHnhUH8$vvSK9/Uy3P5BTdH0kn.0MH.xFHAR2pWQCpTRLTENPs.3w53jb5BbbkIKHnkTbzWW3xVwqsb3W5e./3EIaNPeP0 |
+      | tenantId | b5815b046cfe47bb891a7b64119e7f80                                                                                        |
+      +----------+-------------------------------------------------------------------------------------------------------------------------+</programlisting>
+      
+      <para>Create the default roles, adminRole and memberRole.</para>
+      <screen><prompt>$</prompt><userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 role-create --name adminRole</userinput></screen>
+<programlisting>      +----------+----------------------------------+
+      | Property |              Value               |
+      +----------+----------------------------------+
+      | id       | e3d9d157cc95410ea45d23bbbc2e5c10 |
+      | name     | adminRole                        |
+      +----------+----------------------------------+</programlisting>
+      <screen><prompt>$</prompt><userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 role-create --name memberRole</userinput></screen>
+<programlisting>      +----------+----------------------------------+
+      | Property |              Value               |
+      +----------+----------------------------------+
+      | id       | cffc2edea9c74b4a8779cc0d7a22fc21 |
+      | name     | memberRole                       |
+      +----------+----------------------------------+</programlisting>
+      
+      <para>Grant the 'adminRole' role to the 'adminUser' user in the
+        'openstack' tenant with "user-role-add".</para>
+      <screen><prompt>$</prompt><userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 user-role-add --user a4c2d43f80a549a19864c89d759bb3fe --tenant_id b5815b046cfe47bb891a7b64119e7f80 --role e3d9d157cc95410ea45d23bbbc2e5c10</userinput></screen>
+      <para>There is no output to this command.</para>
+      <para>Create a Service Tenant. This tenant contains all the
+        services that we make known to the service catalog. </para>
+      <screen><prompt>$</prompt><userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 tenant-create --name service --description "Service Tenant" --enabled true</userinput></screen>
+      <programlisting>      +-------------+----------------------------------+
+      |   Property  |              Value               |
+      +-------------+----------------------------------+
+      | description | Service Tenant                   |
+      | enabled     | true                             |
+      | id          | eb7e0c10a99446cfa14c244374549e9d |
+      | name        | service                          |
+      +-------------+----------------------------------+</programlisting>
+      
+      <para>Create a Glance Service User in the Service Tenant. You'll do this for any service you add to be in the Keystone service catalog.</para>
+      <screen><prompt>$</prompt><userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 user-create --tenant_id eb7e0c10a99446cfa14c244374549e9d --name glance --pass glance --enabled true</userinput></screen>
+<programlisting>      +----------+-------------------------------------------------------------------------------------------------------------------------+
+      | Property |                                                          Value                                                          |
+      +----------+-------------------------------------------------------------------------------------------------------------------------+
+      | email    | None                                                                                                                    |
+      | enabled  | true                                                                                                                    |
+      | id       | 46b2667a7807483d983e0b4037a1623b                                                                                        |
+      | name     | glance                                                                                                                  |
+      | password | $6$rounds=40000$kf1ENaCoy7wOfRjx$LKQtsQbBqSBr2ZH7fwToAut0EYYz6M278N16Xg4Va2vTEOFabvTVXCdCP4hA5ikdCQO8Mh1nJvuFMEvGHaht3/ |
+      | tenantId | eb7e0c10a99446cfa14c244374549e9d                                                                                        |
+      +----------+-------------------------------------------------------------------------------------------------------------------------+</programlisting>
+      
+      <para>Grant the 'admin' role to the 'glance' user in the 'service' tenant.</para>
+      <screen><prompt>$</prompt><userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 user-role-add --user 46b2667a7807483d983e0b4037a1623b --tenant_id eb7e0c10a99446cfa14c244374549e9d --role e3d9d157cc95410ea45d23bbbc2e5c10</userinput></screen>
+      <para>There is no output to this command. 
+      </para>
+      <para>Create a Nova Service User in the Service Tenant. </para>
+      <screen><prompt>$</prompt><userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 user-create --tenant_id eb7e0c10a99446cfa14c244374549e9d --name nova --pass nova --enabled true</userinput></screen>
+      <programlisting>      +----------+-------------------------------------------------------------------------------------------------------------------------+
+      | Property |                                                          Value                                                          |
+      +----------+-------------------------------------------------------------------------------------------------------------------------+
+      | email    | None                                                                                                                    |
+      | enabled  | true                                                                                                                    |
+      | id       | 54b3776a8707834d983e0b4037b1345c                                                                                        |
+      | name     | nova                                                                                                                  |
+      | password | $6$rounds=40000$kf1ENaCoy7wOfRjx$LKQtsQbBqSBr2ZH7fwToAut0EYYz6M278N16Xg4Va2vTEOFabvTVXCdCP4hA5ikdCQO8Mh1nJvuFMEvGHaht3/ |
+      | tenantId | eb7e0c10a99446cfa14c244374549e9d                                                                                        |
+      +----------+-------------------------------------------------------------------------------------------------------------------------+</programlisting>
+      
+      <para>Grant the 'admin' role to the 'nova' user in the 'service' tenant.</para>
+      <screen><prompt>$</prompt><userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 user-role-add --user 46b2667a7807483d983e0b4037a1623b --tenant_id eb7e0c10a99446cfa14c244374549e9d --role e3d9d157cc95410ea45d23bbbc2e5c10</userinput></screen>
+      <para>There is no output to this command. 
+      </para>
+      <para>Create an EC2 Service User in the Service Tenant. </para>
+      <screen><prompt>$</prompt><userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 user-create --tenant_id eb7e0c10a99446cfa14c244374549e9d --name ec2 --pass ec2 --enabled true</userinput></screen>
+      <programlisting>      +----------+-------------------------------------------------------------------------------------------------------------------------+
+      | Property |                                                          Value                                                          |
+      +----------+-------------------------------------------------------------------------------------------------------------------------+
+      | email    | None                                                                                                                    |
+      | enabled  | true                                                                                                                    |
+      | id       | 32e7668b8707834d983e0b4037b1345c                                                                                        |
+      | name     | ec2                                                                                                                  |
+      | password | $6$rounds=40000$kf1ENaCoy7wOfRjx$LKQtsQbBqSBr2ZH7fwToAut0EYYz6M278N16Xg4Va2vTEOFabvTVXCdCP4hA5ikdCQO8Mh1nJvuFMEvGHaht3/ |
+      | tenantId | eb7e0c10a99446cfa14c244374549e9d                                                                                        |
+      +----------+-------------------------------------------------------------------------------------------------------------------------+</programlisting>
+      <para>Grant the 'admin' role to the 'nova' user in the 'service'
+        tenant.</para>
+      <screen><prompt>$</prompt><userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 user-role-add --user 46b2667a7807483d983e0b4037a1623b --tenant_id eb7e0c10a99446cfa14c244374549e9d --role e3d9d157cc95410ea45d23bbbc2e5c10</userinput></screen>
+      <para>There is no output to this command.</para>
+      <para>Next you create definitions for the services.</para>
+    </section>
+  </section>
+    <section xml:id="defining-services">
+      <title>Defining Services</title>
+      <para>Keystone also acts as a service catalog to let other
+      OpenStack systems know where relevant API endpoints exist for
+      OpenStack Services. The OpenStack Dashboard, in particular, uses
+      the service catalog heavily - and this <emphasis role="strong"
+        >must</emphasis> be configured for the OpenStack Dashboard to
+      properly function. </para>
+    <para>The endpoints for these services are defined in a template,
+      an example of which is in the project as the file
+        <literal>etc/default_catalog.templates</literal>, which you
+      can edit yourself or configure your keystone.conf file to use
+      SQL as a backend for the endpoint templates. </para>
+      <para> Here's how we define the services when using SQL as a
+      backend, which we are doing for this walkthrough: </para>
+      <screen>
+keystone  --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 service-create --name=nova \
+                               --type=compute \
+                               --description=&quot;Nova Compute Service&quot;
+keystone  --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 service-create --name=ec2 \
+                               --type=ec2 \
+                               --description=&quot;EC2 Compatibility Layer&quot;
+keystone  --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 service-create --name=glance \
+                               --type=image \
+                               --description=&quot;Glance Image Service&quot;
+keystone  --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 service-create --name=keystone \
+                               --type=identity \
+                               --description=&quot;Keystone Identity Service&quot;</screen>
+    <para>In return for each of these commands, you see a listing of
+      property and value for each creation.
+      <programlisting>+-------------+----------------------------------+
+|   Property  |              Value               |
++-------------+----------------------------------+
+| description | Nova Compute Service             |
+| id          | abc0f03c02904c24abdcc3b7910e2eed |
+| name        | nova                             |
+| type        | compute                          |
++-------------+----------------------------------+</programlisting>Next,
+      create an endpoint for each service you just created using the
+      id values returned by each service-create command. Here's an
+      example for the nova service endpoint.
+      <screen>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 endpoint-create \
+                       --region RegionOne \
+                       --service_id=abc0f03c02904c24abdcc3b7910e2eed \
+                       --publicurl http://192.168.206.130:5000/v2 \
+                       --adminurl http://192.168.206.130:5000/v2 \
+                       --internalurl http://192.168.206.130:5000/v2</screen>
+      In return for each of these commands, you see a listing of
+      property and value for each creation.
+      <programlisting>+-------------+----------------------------------+
+|   Property  |              Value               |
++-------------+----------------------------------+
+| adminurl    | http://192.168.206.130:5000/v2   |
+| id          | 935fd37b6fa74b2f9fba6d907fa95825 |
+| internalurl | http://192.168.206.130:5000/v2   |
+| publicurl   | http://192.168.206.130:5000/v2   |
+| region      | RegionOne                        |
+| service_id  | abc0f03c02904c24abdcc3b7910e2eed |
++-------------+----------------------------------+</programlisting>
+      Substitute the service IDs for each in the --service_id
+      parameter, and ensure the URLs contain correct port values and
+      the correct version number of the API. </para>
+
+    </section>
+    </section>

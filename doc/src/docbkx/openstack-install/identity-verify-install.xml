@@ -4,7 +4,9 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
     <title>Verifying the Identity Service Installation</title>
-    
+    <para>Install curl, a command-line tool for running REST API
+        requests:</para>
+    <literallayout class="monospaced">sudo apt-get install curl</literallayout>
     <para>Here is a curl command you can use to ensure that the Identity service is working:</para>
     <literallayout class="monospaced">curl -d '{"auth": {"tenantName": "adminTenant", "passwordCredentials":{"username": "adminUser", "password": "secretword"}}}' -H "Content-type: application/json" http://192.168.206.130:35357/v2.0/tokens | python -mjson.tool</literallayout>
     <para>In return, you should receive the token you created for the
