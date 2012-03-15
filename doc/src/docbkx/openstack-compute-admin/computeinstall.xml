@@ -511,12 +511,10 @@ alias ec2-upload-bundle="ec2-upload-bundle -a ${EC2_ACCESS_KEY} -s ${EC2_SECRET_
       </para>
       <para>Lastly, here is an example openrc file that works
         with nova client and ec2
-        tools.</para><programlisting>export NOVA_PASSWORD=${ADMIN_PASSWORD:-secrete}
-export OS_PASSWORD=${NOVA_PASSWORD}
-export NOVA_URL=${NOVA_URL:-http://$SERVICE_HOST:5000/v2.0}
-export OS_AUTH_URL=${NOVA_URL}
+        tools.</para><programlisting>export OS_PASSWORD=${ADMIN_PASSWORD:-secrete}
+export OS_AUTH_URL=${OS_AUTH_URL:-http://$SERVICE_HOST:5000/v2.0}
 export NOVA_VERSION=${NOVA_VERSION:-1.1}
-export NOVA_REGION_NAME=${NOVA_REGION_NAME:-RegionOne}
+export OS_REGION_NAME=${OS_REGION_NAME:-RegionOne}
 export EC2_URL=${EC2_URL:-http://$SERVICE_HOST:8773/services/Cloud}
 export EC2_ACCESS_KEY=${DEMO_ACCESS}
 export EC2_SECRET_KEY=${DEMO_SECRET}
@@ -1578,10 +1576,10 @@ euca-associate-address -i $instance_id $address
             <programlisting>
 # Python-novaclient
 
-export NOVA_API_KEY="SECRET_KEY"
-export NOVA_PROJECT_ID="PROJECT-NAME"
-export NOVA_USERNAME="USER"
-export NOVA_URL="http://$NOVA-API-IP:8774/v1.1"
+export OS_PASSWORD="SECRET_KEY"
+export OS_TENANT_NAME="PROJECT-NAME"
+export OS_USERNAME="USER"
+export OS_AUTH_URL="http://$NOVA-API-IP:5000/v2.0"
 export NOVA_VERSION=1.1
                             </programlisting> He are some nova commands you
             should be able to run : <literallayout class="monospaced">
@@ -1780,8 +1778,8 @@ export EC2_URL="http://$NOVA-API-IP:8773/services/Cloud"
                 class="monospaced">novaclient</literallayout> <programlisting>
 # Novaclient
 [...]
-export NOVA_URL=http://$KEYSTONe-IP:5000/v.20/
-export NOVA_REGION_NAME="$REGION"
+export OS_AUTH_URL=http://$KEYSTONE-IP:5000/v2.0/
+export OS_REGION_NAME="$REGION"
 [...]
                                     </programlisting></para>
               </listitem>
