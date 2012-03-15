@@ -478,15 +478,32 @@ force_dhcp_release=True
         </section></section>
     <section xml:id="enabling-ping-and-ssh-on-vms">
         <title>Enabling Ping and SSH on VMs</title>
-        <para>Be sure you enable access to your VMs by using the ‘secgroup-add-rule’ command. Below,
-            you will find the commands to allow ‘ping’ and ‘ssh’ to your VMs: </para>
-        <para><literallayout>nova  secgroup-add-rule default icmp -1 -1 0.0.0.0/0
-nova  secgroup-add-rule default tcp 22 22 0.0.0.0/0 </literallayout>If
-            you still cannot ping or SSH your instances after issuing the ‘nova
-            secgroup-add-rule’ commands, look at the number of ‘dnsmasq’ processes that are
-            running. If you have a running instance, check to see that TWO ‘dnsmasq’ processes
-            are running. If not, perform the following: <code>killall dnsmasq; service
-                nova-network restart</code></para></section>
+        <para>Be sure you enable access to your VMs by using the "euca-authorize" or "nova
+            secgroup-add-rule" command. Below, you will find the commands to allow ‘"ping" and
+            "ssh" to your VMs: </para>
+        <note>
+            <para>These commands need to be run as root only if the credentials used to interact
+                with nova-api have been put under /root/.bashrc. If the EC2 credentials have
+                been put into another user's .bashrc file, then, it is necessary to run these
+                commands as the user. </para>
+        </note>
+        <para><literallayout class="monospaced">
+            Using euca2ools : 
+            <code>
+                euca-authorize -P icmp -t -1:-1 -s 0.0.0.0/0 default 
+                euca-authorize -P tcp -p 22 -s 0.0.0.0/0 default
+            </code>
+            Using nova :
+            <code>
+                nova secgroup-add-rule default icmp -1 -1 -s 0.0.0.0/0 
+               nova secgroup-add-rule default tcp 22 22 -s 0.0.0.0/0 
+            </code>
+
+        </literallayout>If
+            you still cannot ping or SSH your instances after issuing the ‘nova secgroup-add-rule’
+            commands, look at the number of ‘dnsmasq’ processes that are running. If you have a
+            running instance, check to see that TWO ‘dnsmasq’ processes are running. If not, perform
+            the following: <code>killall dnsmasq; service nova-network restart</code></para></section>
     <section xml:id="associating-public-ip"><title>Associating a Public IP Address</title>
         <para>OpenStack Compute uses NAT for public IPs. If you plan to use public IP
             addresses for your virtual instances, you must configure --public_interface=vlan100'
