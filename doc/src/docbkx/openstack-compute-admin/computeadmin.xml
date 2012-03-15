@@ -37,7 +37,7 @@ format="SVG" scale="60"/>
         easier. </para>
     <para>Currently, Services are nova-api, nova-objectstore (which can be replaced with Glance, the
         OpenStack Image Service), nova-compute, nova-volume, and nova-network. Managers and Drivers
-        are specified by flags and loaded using utils.load_object(). Managers are responsible for a
+        are specified by configuration options and loaded using utils.load_object(). Managers are responsible for a
         certain aspect of the system. It is a logical grouping of code relating to a portion of the
         system. In general other components should be using the manager to make changes to the
         components that it is responsible for. </para>
@@ -72,7 +72,7 @@ format="SVG" scale="60"/>
             <para>nova-network - The nova-network service is responsible for managing floating and
                 fixed IPs, DHCP, bridging and VLANs. It loads a Service object which exposes the
                 public methods on one of the subclasses of NetworkManager. Different networking
-                strategies are available to the service by changing the network_manager flag to
+                strategies are available to the service by changing the network_manager configuration option to
                 FlatManager, FlatDHCPManager, or VlanManager (default is VLAN if no other is
                 specified).</para>
 
@@ -981,9 +981,9 @@ vgcreate nova-volumes /dev/sda5 </literallayout>
                             <literallayout class="monospaced">service open-iscsi start</literallayout>
                 </listitem>
                 <listitem>
-                    <para><emphasis role="bold">Configure nova.conf flag file</emphasis></para>
-                    <para>Edit your nova.conf to include a new flag, "–iscsi_ip_prefix=192.168." The
-                        flag will be used by the compute node when the iSCSI discovery will be
+                    <para><emphasis role="bold">Configure nova.conf configuration option file</emphasis></para>
+                    <para>Edit your nova.conf to include a new configuration option, "–iscsi_ip_prefix=192.168." The
+                        configuration option will be used by the compute node when the iSCSI discovery will be
                         performed and the session created. The prefix based on the two first bytes
                         will allows the iSCSI discovery to use all the available routes (also known
                         as multipathing) to the iSCSI server (eg. nova-volumes) into your network.
@@ -1128,7 +1128,7 @@ portal:10.192.12.34,3260]: openiscsiadm: initiator reported error (15 - already 
                             running on the compute node :
                             <literallayout class="monospaced">iscsiadm -m discovery -t st -p $ip_of_nova-volumes</literallayout>
                             You should see for a volume multiple addresses to reach it. The only
-                            known workaround to that is to change the "–iscsi_ip_prefix" flag and
+                            known workaround to that is to change the "–iscsi_ip_prefix" configuration option and
                             use the 4 bytes (full IP) of the nova-volumes server, eg : </para>
                         <para><literallayout class="monospaced">"–iscsi_ip_prefix=192.168.2.1</literallayout>
                             You'll have then to restart both nova-compute and nova-volume services.
@@ -1296,7 +1296,7 @@ tcp: [9] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000014         
                         <literallayout class="monospaced">$ lvcreate --size 10G --snapshot --name volume-00000001-snapshot /dev/nova-volumes/volume-00000001</literallayout>
                     </para>
                     <para> We indicate LVM we want a snapshot of an already existing volumes via the
-                            "<emphasis role="italic">--snapshot</emphasis>" flag, plus the path of
+                            "<emphasis role="italic">--snapshot</emphasis>" configuration option, plus the path of
                         an already existing volume (In most cases, the path will be
                         /dev/nova-volumes/$volume_name, the name we want to give to our snapshot,
                         and a size.</para>
@@ -1604,8 +1604,8 @@ Total execution time - 1 h 75 m and 35 seconds
                 <itemizedlist>
                     <listitem>
                         <para>
-                            <emphasis role="bold">Set the following flags for the nova volume service:
-                                (nova-compute also requires the volume_driver flag.)
+                            <emphasis role="bold">Set the following configuration options for the nova volume service:
+                                (nova-compute also requires the volume_driver configuration option.)
                             </emphasis>
                         </para>
                         <programlisting>
@@ -1649,7 +1649,7 @@ Total execution time - 1 h 75 m and 35 seconds
                     </listitem>
                     <listitem>
                         <para>
-                            <emphasis role="bold">Start nova-volume and nova-compute with the new flags.
+                            <emphasis role="bold">Start nova-volume and nova-compute with the new configuration options.
                             </emphasis>
                         </para>
                     </listitem>
@@ -1959,7 +1959,7 @@ Migration of i-00000001 initiated. Check its progress using euca-describe-instan
                         <para> Use the parameter errors=remount,ro into you fstab file,
                             that would prevent data corruption.</para>
                         <para> The system would lock any write to the disk if it detects an I/O
-                            error. This flag should be added into the nova-volume server (the one
+                            error. This configuration option should be added into the nova-volume server (the one
                             which performs the ISCSI connection to the SAN), but also into the
                             intances' fstab file.</para>
                     </listitem>
@@ -1999,44 +1999,44 @@ Then perform the mount. </literallayout></para>
                     sessions</emphasis> !!</para>
         </simplesect>
     </section>
-    <section xml:id="reference-for-flags-in-nova-conf">
-        <title>Reference for Flags in nova.conf</title>
-                <para>For a complete list of all available flags for each OpenStack Compute service,
+    <section xml:id="reference-for-options-in-nova-conf">
+        <title>Reference for Configuration Options in nova.conf</title>
+                <para>For a complete list of all available configuration options for each OpenStack Compute service,
             run bin/nova-&lt;servicename> --help. </para>
 
                 <table rules="all">
-            <caption>Description of common nova.conf flags (nova-api, nova-compute)</caption>
+            <caption>Description of common nova.conf configuration options (nova-api, nova-compute)</caption>
 
             <thead>
                 <tr>
-                    <td>Flag</td>
+                    <td>Configuration option</td>
                     <td>Default</td>
                     <td>Description</td>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>--ajax_console_proxy_port</td>
+                    <td>ajax_console_proxy_port</td>
                     <td>default: '8000'</td>
                     <td>Port value; port to which the ajax console proxy server binds</td>
                 </tr>
                 <tr>
-                    <td>--ajax_console_proxy_topic</td>
+                    <td>ajax_console_proxy_topic</td>
                     <td>default: 'ajax_proxy'</td>
                     <td>String value; Topic that the ajax proxy nodes listen on</td>
                 </tr>
                 <tr>
-                    <td>--ajax_console_proxy_url</td>
+                    <td>ajax_console_proxy_url</td>
                     <td>default: 'http://127.0.0.1:8000'</td>
                     <td>IP address plus port value; Location of the ajax console proxy and port</td>
                 </tr>
                 <tr>
-                    <td>--allowed_roles</td>
+                    <td>allowed_roles</td>
                     <td>default: 'cloudadmin,itsec,sysadmin,netadmin,developer'</td>
                     <td>Comma separated list: List of allowed roles for a project (or tenant).</td>
                 </tr>
                 <tr>
-                    <td>--auth_driver</td>
+                    <td>auth_driver</td>
                     <td>default:'nova.auth.dbdriver.DbDriver'</td>
                     <td>
                         <para>String value; Name of the driver for authentication</para>
@@ -2054,249 +2054,249 @@ Then perform the mount. </literallayout></para>
                     </td>
                 </tr>
                 <tr>
-                    <td>--auth_token_ttl</td>
+                    <td>auth_token_ttl</td>
                     <td>default: '3600'</td>
                     <td>Seconds; Amount of time for auth tokens to linger, must be an integer
                         value</td>
                 </tr>
                 <tr>
-                    <td>--auto_assign_floating_ip</td>
+                    <td>auto_assign_floating_ip</td>
                     <td>default: 'false'</td>
                     <td>true or false; Enables auto-assignment of IP addresses to VMs</td>
                 </tr>
                 <tr>
-                    <td>--aws_access_key_id</td>
+                    <td>aws_access_key_id</td>
                     <td>default: 'admin'</td>
                     <td>Username; ID that accesses AWS if necessary</td>
                 </tr>
                 <tr>
-                    <td>--aws_secret_access_key</td>
+                    <td>aws_secret_access_key</td>
                     <td>default: 'admin'</td>
                     <td>Password key; The secret access key that pairs with the AWS ID for
                         connecting to AWS if necessary</td>
                 </tr>
                 <tr>
-                    <td>--ca_file</td>
+                    <td>ca_file</td>
                     <td>default: 'cacert.pem') </td>
                     <td>File name; File name of root CA</td>
                 </tr>
 
                 <tr>
-                    <td>--cnt_vpn_clients</td>
+                    <td>cnt_vpn_clients</td>
                     <td>default: '0'</td>
                     <td>Integer; Number of addresses reserved for VPN clients</td>
                 </tr>
                 <tr>
-                    <td>--compute_manager</td>
+                    <td>compute_manager</td>
                     <td>default: 'nova.compute.manager.ComputeManager'</td>
                     <td>String value; Manager for Compute which handles remote procedure calls relating to creating instances</td>
                 </tr>
                 <tr>
-                    <td>--create_unique_mac_address_attempts</td>
+                    <td>create_unique_mac_address_attempts</td>
                     <td>default: '5'</td>
                     <td>String value; Number of attempts to create unique mac
                         address</td>
                 </tr>
                 <tr>
-                    <td>--credential_cert_file</td>
+                    <td>credential_cert_file</td>
                     <td>default: 'cert.pem'</td>
                     <td>Filename; Filename of certificate in credentials zip</td>
                 </tr>
                 <tr>
-                    <td>--credential_key_file</td>
+                    <td>credential_key_file</td>
                     <td>default: 'pk.pem'</td>
                     <td>Filename; Filename of private key in credentials zip</td>
                 </tr>
                 <tr>
-                    <td>--credential_rc_file</td>
+                    <td>credential_rc_file</td>
                     <td>default: '%src'</td>
                     <td>File name; Filename of rc in credentials zip, %src will be replaced
                         by name of the region (nova by default).</td>
                 </tr>
                 <tr>
-                    <td>--credential_vpn_file</td>
+                    <td>credential_vpn_file</td>
                     <td>default: 'nova-vpn.conf'</td>
                     <td>File name; Filename of certificate in credentials zip</td>
                 </tr>
                 <tr>
-                    <td>--crl_file</td>
+                    <td>crl_file</td>
                     <td>default: 'crl.pem') </td>
                     <td>File name; File name of Certificate Revocation List</td>
                 </tr>
                 <tr>
-                    <td>--compute_topic</td>
+                    <td>compute_topic</td>
                     <td>default: 'compute'</td>
                     <td>String value; Names the topic that compute nodes listen on</td>
                 </tr>
                 <tr>
-                    <td>--connection_type</td>
+                    <td>connection_type</td>
                     <td>default: 'libvirt'</td>
                     <td>String value libvirt, xenapi or fake; Virtualization driver for spawning
                         instances</td>
                 </tr>
                 <tr>
-                    <td>--console_manager</td>
+                    <td>console_manager</td>
                     <td>default: 'nova.console.manager.ConsoleProxyManager'</td>
                     <td>String value; Manager for console proxy</td>
                 </tr>
                 <tr>
-                    <td>--console_topic</td>
+                    <td>console_topic</td>
                     <td>default: 'console'</td>
                     <td>String value; The topic console proxy nodes listen on</td>
                 </tr>
                 <tr>
-                    <td>--control_exchange</td>
+                    <td>control_exchange</td>
                     <td>default:nova</td>
                     <td>String value; Name of the main exchange to connect to</td>
                 </tr>
                 <tr>
-                    <td>--default_image</td>
+                    <td>default_image</td>
                     <td>default: 'ami-11111'</td>
                     <td>Name of an image; Names the default image to use, testing purposes only</td>
                 </tr>
                 <tr>
-                    <td>--db_backend</td>
+                    <td>db_backend</td>
                     <td>default: 'sqlalchemy'</td>
                     <td>The backend selected for the database connection</td>
                 </tr>
                 <tr>
-                    <td>--db_driver</td>
+                    <td>db_driver</td>
                     <td>default: 'nova.db.api'</td>
                     <td>The drive to use for database access</td>
                 </tr>
                 <tr>
-                    <td>--default_instance_type</td>
+                    <td>default_instance_type</td>
                     <td>default: 'm1.small'</td>
                     <td>Name of an image; Names the default instance type to use, testing purposes
                         only</td>
                 </tr>
                 <tr>
-                    <td>--default_log_levels</td>
+                    <td>default_log_levels</td>
                     <td>default: 'amqplib=WARN,sqlalchemy=WARN,eventlet.wsgi.server=WARN'</td>
                     <td>Pair of named loggers and level of message to be logged; List of
                         logger=LEVEL pairs</td>
                 </tr>
                 <tr>
-                    <td>--default_project</td>
+                    <td>default_project</td>
                     <td>default: 'openstack'</td>
                     <td>Name of a project; Names the default project for openstack</td>
                 </tr>
                 <tr>
-                    <td>--ec2_dmz_host</td>
+                    <td>ec2_dmz_host</td>
                     <td>default: '$my_ip'</td>
                     <td>IP Address; Internal IP of API server (a DMZ is shorthand for a
                         demilitarized zone)</td>
                 </tr>
                 <tr>
-                    <td>--ec2_host</td>
+                    <td>ec2_host</td>
                     <td>default: '$my_ip'</td>
                     <td>IP Address; External-facing IP of API server</td>
                 </tr>
                 <tr>
-                    <td>--ec2_listen_port</td>
+                    <td>ec2_listen_port</td>
                     <td>default: '8773'</td>
                     <td>Port value; Port that the server is listening on so you can specify a listen_host / port value for the server (not for clients).</td>
                 </tr>
                 <tr>
-                    <td>--ec2_path</td>
+                    <td>ec2_path</td>
                     <td>default: '/services/Cloud'</td>
                     <td>String value; Suffix for EC2-style URL where nova-api resides</td>
                 </tr>
                 <tr>
-                    <td>--ec2_port</td>
+                    <td>ec2_port</td>
                     <td>default: '8773'</td>
                     <td>Port value; Cloud controller port (where nova-api resides)</td>
                 </tr>
                 <tr>
-                    <td>--ec2_scheme</td>
+                    <td>ec2_scheme</td>
                     <td>default: 'http'</td>
                     <td>Protocol; Prefix for EC2-style URLs where nova-api resides</td>
                 </tr>
                 <tr>
-                    <td>--ec2_url</td>
+                    <td>ec2_url</td>
                     <td>none</td>
                     <td>Deprecated - HTTP URL; Location to interface nova-api. Example:
                         http://184.106.239.134:8773/services/Cloud</td>
                 </tr>
                 <tr>
-                    <td>--global_roles</td>
+                    <td>global_roles</td>
                     <td>default: 'cloudadmin,itsec'</td>
                     <td>Comma separated list; Roles that apply to all projects (or tenants)</td>
                 </tr>
 
                 <tr>
-                    <td>--flat_injected</td>
+                    <td>flat_injected</td>
                     <td>default: 'false'</td>
                     <td>Indicates whether Compute (Nova) should use attempt to inject IPv6 network configuration information into the guest. It attempts to modify /etc/network/interfaces and currently only works on Debian-based systems.  </td>
                 </tr>
                 <tr>
-                    <td>--fixed_ip_disassociate_timeout</td>
+                    <td>fixed_ip_disassociate_timeout</td>
                     <td>default: '600'</td>
                     <td>Integer: Number of seconds after which a deallocated ip is disassociated. </td>
                 </tr>
                 <tr>
-                    <td>--fixed_range</td>
+                    <td>fixed_range</td>
                     <td>default: '10.0.0.0/8'</td>
                     <td>Fixed IP address block of addresses from which a set of iptables rules is created</td>
                 </tr>
                 <tr>
-                    <td>--fixed_range_v6</td>
+                    <td>fixed_range_v6</td>
                     <td>default: 'fd00::/48'</td>
                     <td>Fixed IPv6 address block of addresses</td>
                 </tr>
                 <tr>
-                    <td>--[no]flat_injected</td>
+                    <td>[no]flat_injected</td>
                     <td>default: 'true'</td>
                     <td>Indicates whether to attempt to inject network setup into guest; network injection only works for Debian systems</td>
                 </tr>
                 <tr>
-                    <td>--flat_interface</td>
+                    <td>flat_interface</td>
                     <td>default: ''</td>
                     <td>FlatDhcp will bridge into this interface</td>
                 </tr>
                 <tr>
-                    <td>--flat_network_bridge</td>
+                    <td>flat_network_bridge</td>
                     <td>default: ''</td>
                     <td>Bridge for simple network instances, formerly defaulted to br100; required
                         setting for Flat DHCP</td>
                 </tr>
                 <tr>
-                    <td>--flat_network_dhcp_start</td>
+                    <td>flat_network_dhcp_start</td>
                     <td>default: '10.0.0.2'</td>
                     <td>(Deprecated in Diablo release, only applies to Cactus and earlier) Starting
                         IP address for the DHCP server to start handing out IP addresses when using
                         FlatDhcp </td>
                 </tr>
                 <tr>
-                    <td>--flat_network_dns</td>
+                    <td>flat_network_dns</td>
                     <td>default: '8.8.4.4'</td>
                     <td>DNS for simple network </td>
                 </tr>
                 <tr>
-                    <td>--floating_range</td>
+                    <td>floating_range</td>
                     <td>default: '4.4.4.0/24'</td>
                     <td>Floating IP address block </td>
                 </tr>
 
                 <tr>
-                    <td>--[no]fake_network</td>
+                    <td>[no]fake_network</td>
                     <td>default: 'false'</td>
                     <td>Indicates whether Compute (Nova) should use fake network devices and
                         addresses</td>
                 </tr>
                 <tr>
-                    <td>--[no]enable_new_services</td>
+                    <td>[no]enable_new_services</td>
                     <td>default: 'true'</td>
                     <td>Services to be added to the available pool when creating services using
                         nova-manage</td>
                 </tr>
                 <tr>
-                    <td>--[no]fake_rabbit</td>
+                    <td>[no]fake_rabbit</td>
                     <td>default: 'false'</td>
                     <td>Indicates whether Compute (Nova) should use a fake rabbit server</td>
                 </tr>
                 <tr>
-                    <td>--glance_api_servers</td>
+                    <td>glance_api_servers</td>
                     <td>default: '$my_ip:9292'</td>
                     <td>List of Glance API hosts. Each item may contain a host (or IP address) and
                         port of an OpenStack Compute Image Service server (project's name is
@@ -2308,22 +2308,22 @@ Then perform the mount. </literallayout></para>
                     <td>Show this help.</td>
                 </tr>
                 <tr>
-                    <td>--[no]helpshort</td>
+                    <td>[no]helpshort</td>
                     <td/>
                     <td>Show usage only for this module.</td>
                 </tr>
                 <tr>
-                    <td>--[no]helpxml</td>
+                    <td>[no]helpxml</td>
                     <td/>
                     <td>Show this help, but with XML output instead of text</td>
                 </tr>
                 <tr>
-                    <td>--host</td>
+                    <td>host</td>
                     <td>default: ''</td>
                     <td>String value; Name of the node where the cloud controller is hosted</td>
                 </tr>
                 <tr>
-                    <td>--image_service</td>
+                    <td>image_service</td>
                     <td>default: 'nova.image.s3.S3ImageService'</td>
                     <td><para>The service to use for retrieving and searching for images. Images must be registered using
                             euca2ools. Options: </para><itemizedlist>
@@ -2344,89 +2344,89 @@ Then perform the mount. </literallayout></para>
                         </itemizedlist></td>
                 </tr>
                 <tr>
-                    <td>--image_decryption_dir</td>
+                    <td>image_decryption_dir</td>
                     <td>default: 'tmp/'</td>
                     <td>Parent directory for the temporary directory used for image decryption. Ensure the user has correct permissions to access this directory when decrypting images.</td>
                 </tr>
                 <tr>
-                    <td>--instance_name_template</td>
+                    <td>instance_name_template</td>
                     <td>default: 'instance-%08x'</td>
                     <td>Template string to be used to generate instance names.</td>
                 </tr>
                 <tr>
-                    <td>--keys_path</td>
+                    <td>keys_path</td>
                     <td>default: '$state_path/keys') </td>
                     <td>Directory; Where Nova keeps the keys</td>
                 </tr>
                 <tr>
-                    <td>--libvirt_type</td>
+                    <td>libvirt_type</td>
                     <td>default: kvm</td>
                     <td>String: Name of connection to a hypervisor through libvirt. Supported options are kvm, qemu, uml, and xen.</td>
                 </tr>
                 <tr>
-                    <td>--lock_path</td>
+                    <td>lock_path</td>
                     <td>default: none</td>
                     <td>Directory path: Writeable path to store lock files.</td>
                 </tr>
                 <tr>
-                    <td>--lockout_attempts</td>
+                    <td>lockout_attempts</td>
                     <td>default: 5</td>
                     <td>Integer value: Allows this number of failed EC2 authorizations before lockout.</td>
                 </tr>
                 <tr>
-                    <td>--lockout_minutes</td>
+                    <td>lockout_minutes</td>
                     <td>default: 15</td>
                     <td>Integer value: Number of minutes to lockout if triggered.</td>
                 </tr>
                 <tr>
-                    <td>--lockout_window</td>
+                    <td>lockout_window</td>
                     <td>default: 15</td>
                     <td>Integer value: Number of minutes for lockout window.</td>
                 </tr>
                 <tr>
-                    <td>--logfile</td>
+                    <td>logfile</td>
                     <td>default: none</td>
                     <td>Output to named file.</td>
                 </tr>
                 <tr>
-                    <td>--logging_context_format_string</td>
+                    <td>logging_context_format_string</td>
                     <td>default: '%(asctime)s %(levelname)s %(name)s [%(request_id)s %(user)s
                         %(project)s] %(message)s'</td>
                     <td>The format string to use for log messages with additional context.</td>
                 </tr>
                 <tr>
-                    <td>--logging_debug_format_suffix</td>
+                    <td>logging_debug_format_suffix</td>
                     <td>default: 'from %(processName)s (pid=%(process)d) %(funcName)s
                         %(pathname)s:%(lineno)d'</td>
                     <td>The data to append to the log format when level is DEBUG.</td>
                 </tr>
                 <tr>
-                    <td>--logging_default_format_string</td>
+                    <td>logging_default_format_string</td>
                     <td>default: '%(asctime)s %(levelname)s %(name)s [-] %(message)s'</td>
                     <td>The format string to use for log messages without context.</td>
                 </tr>
                 <tr>
-                    <td>--logging_exception_prefix</td>
+                    <td>logging_exception_prefix</td>
                     <td>default: '(%(name)s): TRACE: '</td>
                     <td>String value; Prefix each line of exception output with this format.</td>
                 </tr>
                 <tr>
-                    <td>--max_cores</td>
+                    <td>max_cores</td>
                     <td>default: '16'</td>
                     <td>Integer value; Maximum number of instance cores to allow per compute host.</td>
                 </tr>
                 <tr>
-                    <td>--my_ip</td>
+                    <td>my_ip</td>
                     <td>default: ''</td>
                     <td>IP address; Cloud controller host IP address.</td>
                 </tr>
                 <tr>
-                    <td>--multi-host</td>
+                    <td>multi-host</td>
                     <td>default: 'false'</td>
                     <td>Boolean true or false; When true, it enables the system to send all network related commands to the host that the VM is on.</td>
                 </tr>
                 <tr>
-                    <td>--network_manager</td>
+                    <td>network_manager</td>
                     <td>default: 'nova.network.manager.VlanManager'</td>
                     <td>
                         <para>Configures how your controller will communicate with additional
@@ -2449,310 +2449,310 @@ Then perform the mount. </literallayout></para>
                     </td>
                 </tr>
                 <tr>
-                    <td>--network_driver</td>
+                    <td>network_driver</td>
                     <td>default: 'nova.network.linux_net'</td>
                     <td>String value; Driver to use for network creation.</td>
                 </tr>
                 <tr>
-                    <td>--network_host</td>
+                    <td>network_host</td>
                     <td>default: 'preciousroy.hsd1.ca.comcast.net'</td>
                     <td>String value; Network host to use for ip allocation in flat modes.</td>
                 </tr>
                 <tr>
-                    <td>--network_size</td>
+                    <td>network_size</td>
                     <td>default: '256'</td>
                     <td>Integer value; Number of addresses in each private subnet.</td>
                 </tr>
                 <tr>
-                    <td>--num_networks</td>
+                    <td>num_networks</td>
                     <td>default: '1000'</td>
                     <td>Integer value; Number of networks to support.</td>
                 </tr>
                 <tr>
-                    <td>--network_topic</td>
+                    <td>network_topic</td>
                     <td>default: 'network'</td>
                     <td>String value; The topic network nodes listen on.</td>
                 </tr>
                 <tr>
-                    <td>--node_availability_zone</td>
+                    <td>node_availability_zone</td>
                     <td>default: 'nova'</td>
                     <td>String value; Availability zone of this node.</td>
                 </tr>
                 <tr>
-                    <td>--null_kernel</td>
+                    <td>null_kernel</td>
                     <td>default: 'nokernel'</td>
                     <td>String value; Kernel image that indicates not to use a kernel, but to use a
                         raw disk image instead.</td>
                 </tr>
                 <tr>
-                    <td>--osapi_volume_extension</td>
+                    <td>osapi_volume_extension</td>
                     <td>default: 'nova.api.openstack.volume.contrib.standard_extensions'</td>
                     <td>OpenStack API (osapi) volume extension to load</td>
                 </tr>
                 <tr>
-                    <td>--osapi_compute_extension</td>
+                    <td>osapi_compute_extension</td>
                     <td>default: 'nova.api.openstack.compute.contrib.standard_extensions'</td>
                     <td>OpenStack API (osapi) Compute extension to load</td>
                 </tr>
                 <tr>
-                    <td>--osapi_host</td>
+                    <td>osapi_host</td>
                     <td>default: '$my_ip'</td>
                     <td>IP address; IP address of the API server.</td>
                 </tr>
                 <tr>
-                    <td>--osapi_listen_port</td>
+                    <td>osapi_listen_port</td>
                     <td>default: '8774'</td>
                     <td>Port value; Port for the OpenStack Compute API to listen on.</td>
                 </tr>
                 <tr>
-                    <td>--osapi_path</td>
+                    <td>osapi_path</td>
                     <td>default: '/v1.0/'</td>
                     <td/>
                 </tr>
                 <tr>
-                    <td>--osapi_port</td>
+                    <td>osapi_port</td>
                     <td>default: '8774'</td>
                     <td>Integer value; Port open for the OpenStack API server.</td>
                 </tr>
                 <tr>
-                    <td>--osapi_scheme</td>
+                    <td>osapi_scheme</td>
                     <td>default: 'http'</td>
                     <td>Protocol; Prefix for the OpenStack API URL.</td>
                 </tr>
                 <tr>
-                    <td>--periodic_interval</td>
+                    <td>periodic_interval</td>
                     <td>default: '60'</td>
                     <td>Integer value; Seconds between running periodic tasks.</td>
                 </tr>
                 <tr>
-                    <td>--pidfile</td>
+                    <td>pidfile</td>
                     <td>default: ''</td>
                     <td>String value; Name of pid file to use for this service (such as the
                         nova-compute service).</td>
                 </tr>
                 <tr>
-                    <td>--quota_cores</td>
+                    <td>quota_cores</td>
                     <td>default: '20'</td>
                     <td>Integer value; Number of instance cores allowed per project (or tenant)</td>
                 </tr>
                 <tr>
-                    <td>--quota_floating_ips</td>
+                    <td>quota_floating_ips</td>
                     <td>default: '10'</td>
                     <td>Integer value; Number of floating ips allowed per project (or tenant)</td>
                 </tr>
                 <tr>
-                    <td>--quota_gigabytes</td>
+                    <td>quota_gigabytes</td>
                     <td>default: '1000'</td>
                     <td>Integer value; Number of volume gigabytes allowed per project (or tenant)</td>
                 </tr>
                 <tr>
-                    <td>--quota_instances</td>
+                    <td>quota_instances</td>
                     <td>default: '10'</td>
                     <td>Integer value; Number of instances allowed per project (or tenant)</td>
                 </tr>
                 <tr>
-                    <td>--quota_max_injected_file_content_bytes</td>
+                    <td>quota_max_injected_file_content_bytes</td>
                     <td>default: '10240'</td>
                     <td>Integer value; Number of bytes allowed per injected file</td>
                 </tr>
                 <tr>
-                    <td>--quota_max_injected_file_path_bytes</td>
+                    <td>quota_max_injected_file_path_bytes</td>
                     <td>default: '255'</td>
                     <td>Integer value; Number of bytes allowed per injected file path</td>
                 </tr>
                 <tr>
-                    <td>--quota_max_injected_files</td>
+                    <td>quota_max_injected_files</td>
                     <td>default: '5'</td>
                     <td>Integer value; Number of injected files allowed</td>
                 </tr>
                 <tr>
-                    <td>--quota_metadata_items</td>
+                    <td>quota_metadata_items</td>
                     <td>default: '128'</td>
                     <td>Integer value; Number of metadata items allowed per instance</td>
                 </tr>
                 <tr>
-                    <td>--quota_ram</td>
+                    <td>quota_ram</td>
                     <td>default: '51200'</td>
                     <td>Integer value; Number of megabytes of instance ram allowed per project (or tenant)</td>
                 </tr>
                 <tr>
-                    <td>--quota_volumes</td>
+                    <td>quota_volumes</td>
                     <td>default: '10'</td>
                     <td>Integer value; Number of volumes allowed per project (or tenant)</td>
                 </tr>
                 <tr>
-                    <td>--rabbit_host</td>
+                    <td>rabbit_host</td>
                     <td>default: 'localhost'</td>
                     <td>IP address; Location of rabbitmq installation.</td>
                 </tr>
                 <tr>
-                    <td>--rabbit_max_retries</td>
+                    <td>rabbit_max_retries</td>
                     <td>default: '12'</td>
                     <td>Integer value; Rabbit connection attempts.</td>
                 </tr>
                 <tr>
-                    <td>--rabbit_password</td>
+                    <td>rabbit_password</td>
                     <td>default: 'guest'</td>
                     <td>String value; Password for the Rabbitmq server.</td>
                 </tr>
                 <tr>
-                    <td>--rabbit_port</td>
+                    <td>rabbit_port</td>
                     <td>default: '5672'</td>
                     <td>Integer value; Port where Rabbitmq server is running/listening.</td>
                 </tr>
                 <tr>
-                    <td>--rabbit-retry-interval</td>
+                    <td>rabbit-retry-interval</td>
                     <td>default: '10'</td>
                     <td>Integer value: Rabbit connection retry interval.</td>
                 </tr>
                 <tr>
-                    <td>--rabbit_userid</td>
+                    <td>rabbit_userid</td>
                     <td>default: 'guest'</td>
                     <td>String value; User ID used for Rabbit connections.</td>
                 </tr>
                 <tr>
-                    <td>--region_list</td>
+                    <td>region_list</td>
                     <td>default: ''</td>
                     <td>Comma-delimited pairs; List of region = fully qualified domain name pairs
                         separated by commas.</td>
                 </tr>
                 <tr>
-                    <td>--report_interval</td>
+                    <td>report_interval</td>
                     <td>default: '10'</td>
                     <td>Integer value; Seconds between nodes reporting state to the data store.</td>
                 </tr>
                 <tr>
-                    <td>--routing_source_ip</td>
+                    <td>routing_source_ip</td>
                     <td>default: '10'</td>
                     <td>IP address; Public IP of network host. When instances without a floating IP hit the Internet, traffic is snatted to this IP address.</td>
                 </tr>
                 <tr>
-                    <td>--s3_dmz</td>
+                    <td>s3_dmz</td>
                     <td>default: '$my_ip'</td>
                     <td>IP address; For instances internal IP (a DMZ is shorthand for a
                         demilitarized zone)</td>
                 </tr>
                 <tr>
-                    <td>--s3_host</td>
+                    <td>s3_host</td>
                     <td>default: '$my_ip'</td>
                     <td>IP address: IP address of the S3 host for infrastructure. Location where
                         OpenStack Compute is hosting the objectstore service, which will contain the
                         virtual machine images and buckets.</td>
                 </tr>
                 <tr>
-                    <td>--s3_port</td>
+                    <td>s3_port</td>
                     <td>default: '3333'</td>
                     <td>Integer value; Port where S3 host is running</td>
                 </tr>
                 <tr>
-                    <td>--scheduler_manager</td>
+                    <td>scheduler_manager</td>
                     <td>default: 'nova.scheduler.manager.SchedulerManager'</td>
                     <td>Manager for the scheduler for Compute (Nova)</td>
                 </tr>
                 <tr>
-                    <td>--scheduler_topic</td>
+                    <td>scheduler_topic</td>
                     <td>default: 'scheduler'</td>
                     <td>String value; The topic scheduler nodes listen on.</td>
                 </tr>
                 <tr>
-                    <td>--sql_connection</td>
+                    <td>sql_connection</td>
                     <td>default: 'sqlite:///$state_path/nova.sqlite'</td>
                     <td>IP address; Location of OpenStack Compute SQL database</td>
                 </tr>
                 <tr>
-                    <td>--sql_idle_timeout</td>
+                    <td>sql_idle_timeout</td>
                     <td>default: '3600'</td>
                     <td/>
                 </tr>
                 <tr>
-                    <td>--sql_max_retries</td>
+                    <td>sql_max_retries</td>
                     <td>default: '12'</td>
                     <td>Integer value; Number of attempts on the SQL connection</td>
                 </tr>
                 <tr>
-                    <td>--sql_retry_interval</td>
+                    <td>sql_retry_interval</td>
                     <td>default: '10'</td>
                     <td>Integer value; Retry interval for SQL connections</td>
                 </tr>
                 <tr>
-                    <td>--state_path</td>
+                    <td>state_path</td>
                     <td>default: '/usr/lib/pymodules/python2.6/nova/../'</td>
                     <td>Top-level directory for maintaining Nova's state</td>
                 </tr>
                 <tr>
-                    <td>--superuser_roles</td>
+                    <td>superuser_roles</td>
                     <td>default: 'cloudadmin'</td>
                     <td>Comma separate list; Roles that ignore authorization checking completely</td>
                 </tr>
-                <tr><td>--use_deprecated_auth</td>
+                <tr><td>use_deprecated_auth</td>
                     <td>default: 'false'</td>
                     <td>Set to 1 or true to turn on; Determines whether to use the deprecated nova auth system or Keystone as the auth system </td></tr>
-                <tr><td>--use_ipv6</td>
+                <tr><td>use_ipv6</td>
                     <td>default: 'false'</td>
                     <td>Set to 1 or true to turn on; Determines whether to use IPv6 network addresses </td></tr>
-                <tr><td>--use_s3</td>
+                <tr><td>use_s3</td>
                     <td>default: 'true'</td>
                     <td>Set to 1 or true to turn on; Determines whether to get images from s3 or use a local copy </td></tr>
                 <tr>
-                    <td>--verbose</td>
+                    <td>verbose</td>
                     <td>default: 'false'</td>
                     <td>Set to 1 or true to turn on; Optional but helpful during initial setup</td>
                 </tr>
                 <tr>
-                    <td>--vlan_interface</td>
+                    <td>vlan_interface</td>
                     <td>default: 'eth0'</td>
                     <td>This is the interface that VlanManager uses to bind bridges and vlans to. </td>
                 </tr>
                 <tr>
-                    <td>--vlan_start</td>
+                    <td>vlan_start</td>
                     <td>default: '100'</td>
                     <td>Integer; First VLAN for private networks.</td>
                 </tr>
                 <tr>
-                    <td>--vpn_image_id</td>
+                    <td>vpn_image_id</td>
                     <td>default: None</td>
                     <td>Glance id for cloudpipe VPN server</td>
                 </tr>
                 <tr>
-                    <td>--vpn_client_template</td>
+                    <td>vpn_client_template</td>
                     <td>default: '/usr/lib/pymodules/python2.6/nova/cloudpipe/client.ovpn.template'</td>
                     <td>String value; Template for creating users vpn file.</td>
                 </tr>
                 <tr>
-                    <td>--vpn_key_suffix</td>
+                    <td>vpn_key_suffix</td>
                     <td>default: '-vpn'</td>
                     <td>String value; This suffix is added to keys and security groups created by the cloudpipe extension.</td>
                 </tr>
             </tbody>
                 </table>
                 <table rules="all">
-                    <caption>Description of nova.conf flags specific to nova-volume</caption>
+                    <caption>Description of nova.conf configuration options specific to nova-volume</caption>
 
                     <thead>
                         <tr>
-                            <td>Flag</td>
+                            <td>Configuration option</td>
                             <td>Default</td>
                             <td>Description</td>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>--iscsi_ip_prefix</td>
+                        <tr><td>iscsi_ip_prefix</td>
                             <td>default: ''</td>
 
                             <td>IP address or partial IP address; Value that differentiates the IP
                                 addresses using simple string matching, so if all of your hosts are on the 192.168.1.0/24 network you could use --iscsi_ip_prefix=192.168.1</td></tr>
 
                         <tr>
-                            <td>--volume_manager</td>
+                            <td>volume_manager</td>
                             <td>default: 'nova.volume.manager.VolumeManager'</td>
                             <td>String value; Manager to use for nova-volume</td>
                         </tr>
                         <tr>
-                            <td>--volume_name_template</td>
+                            <td>volume_name_template</td>
                             <td>default: 'volume-%08x'</td>
                             <td>String value; Template string to be used to generate volume names</td>
                         </tr><tr>
-                            <td>--volume_topic</td>
+                            <td>volume_topic</td>
                             <td>default: 'volume'</td>
                             <td>String value; Name of the topic that volume nodes listen on</td>
                         </tr></tbody></table></section>

@@ -19,24 +19,28 @@
     <title>General Compute Configuration Overview</title>
 
     <para>Most configuration information is available in the
-    <filename>nova.conf</filename> flag file. Here are some general purpose
-    flags that you can use to learn more about the flag file and the node. The
-    configuration file nova.conf is typically stored in
-    <filename>/etc/nova/nova.conf</filename>.</para>
+        <filename>nova.conf</filename> configuration option file. Here
+      are some general purpose configuration options that you can use
+      to learn more about the configuration option file and the node.
+      The configuration file nova.conf is typically stored in
+        <filename>/etc/nova/nova.conf</filename>.</para>
 
-    <para>You can use a particular flag file by using the
-    <literal>--flagfile</literal> (<filename>nova.conf</filename>) parameter
-    when running one of the nova- services. This inserts flag definitions from
-    the given configuration file name, which may be useful for debugging or
-    performance tuning. Here are some general purpose flags.</para>
+    <para>You can use a particular configuration option file by using
+      the <literal>option</literal> (<filename>nova.conf</filename>)
+      parameter when running one of the nova- services. This inserts
+      configuration option definitions from the given configuration
+      file name, which may be useful for debugging or performance
+      tuning. Here are some general purpose configuration
+      options.</para>
 
     <table rules="all">
-      <caption>Description of general purpose <filename>nova.conf</filename>
-      flags</caption>
+      <caption>Description of general purpose
+          <filename>nova.conf</filename> configuration
+        options</caption>
 
       <thead>
         <tr>
-          <td>Flag</td>
+          <td>Configuration option</td>
 
           <td>Default</td>
 
@@ -46,7 +50,7 @@
 
       <tbody>
         <tr>
-          <td><literal>--my_ip</literal></td>
+          <td><literal>my_ip</literal></td>
 
           <td>None</td>
 
@@ -54,7 +58,7 @@
         </tr>
 
         <tr>
-          <td><literal>--host</literal></td>
+          <td><literal>host</literal></td>
 
           <td>None</td>
 
@@ -63,7 +67,7 @@
         </tr>
 
         <tr>
-          <td><literal>-?, --[no]help</literal></td>
+          <td><literal>-?, [no]help</literal></td>
 
           <td>None</td>
 
@@ -71,7 +75,7 @@
         </tr>
 
         <tr>
-          <td><literal>--[no]helpshort</literal></td>
+          <td><literal>[no]helpshort</literal></td>
 
           <td>None</td>
 
@@ -79,7 +83,7 @@
         </tr>
 
         <tr>
-          <td><literal>--[no]helpxml</literal></td>
+          <td><literal>[no]helpxml</literal></td>
 
           <td>None</td>
 
@@ -88,19 +92,20 @@
       </tbody>
     </table>
 
-    <para>If you want to maintain the state of all the services, you can use
-    the --state_path flag to indicate a top-level directory for storing data
-    related to the state of Compute including images if you are using the
-    Compute object store. Here are additional flags that apply to all nova-
-    services.</para>
+    <para>If you want to maintain the state of all the services, you
+      can use the state_path configuration option to indicate a
+      top-level directory for storing data related to the state of
+      Compute including images if you are using the Compute object
+      store. Here are additional configuration options that apply to
+      all nova- services.</para>
 
     <table rules="all">
-      <caption>Description of <filename>nova.conf</filename> flags for all
-      services</caption>
+      <caption>Description of <filename>nova.conf</filename>
+        configuration options for all services</caption>
 
       <thead>
         <tr>
-          <td>Flag</td>
+          <td>Configuration option</td>
 
           <td>Default</td>
 
@@ -110,7 +115,7 @@
 
       <tbody>
         <tr>
-          <td><literal>--state_path</literal></td>
+          <td><literal>state_path</literal></td>
 
           <td><filename>/Users/username/p/nova/nova/../</filename></td>
 
@@ -119,7 +124,7 @@
         </tr>
 
         <tr>
-          <td><literal>--periodic_interval</literal></td>
+          <td><literal>periodic_interval</literal></td>
 
           <td><literal>60</literal></td>
 
@@ -127,7 +132,7 @@
         </tr>
 
         <tr>
-          <td><literal>--report_interval</literal></td>
+          <td><literal>report_interval</literal></td>
 
           <td><literal>10</literal></td>
 
@@ -141,10 +146,12 @@
   <section xml:id="sample-nova-configuration-files">
     <title>Example <filename>nova.conf</filename> Configuration Files</title>
 
-    <para>The following sections describe many of the flag settings that can
-    go into the <filename>nova.conf</filename> files. These need to be copied
-    to each compute node. Here are some sample <filename>nova.conf</filename>
-    files that offer examples of specific configurations.</para>
+    <para>The following sections describe many of the configuration
+      option settings that can go into the
+        <filename>nova.conf</filename> files. These need to be copied
+      to each compute node. Here are some sample
+        <filename>nova.conf</filename> files that offer examples of
+      specific configurations.</para>
 
     <simplesect>
       <title>Configuration using KVM, FlatDHCP, MySQL, Glance, LDAP, and
@@ -157,40 +164,40 @@
 
       <programlisting>
 # configured using KVM, FlatDHCP, MySQL, Glance, LDAP, and optionally sheepdog, API is EC2
---verbose
---daemonize=1
---logdir=/var/log/nova
---state_path=/var/lib/nova
---lock_path=/var/lock/nova
---sql_connection=mysql://$nova_db_user:$nova_db_pass@$nova_db_host/$nova_db_name
---image_service=nova.image.glance.GlanceImageService
---s3_host=$nova_glance_host
---glance_api_servers=$nova_glance_host
---rabbit_host=$nova_rabbit_host
---network_host=$nova_network_host
---ec2_url=http://$nova_api_host:8773/services/Cloud
---libvirt_type=kvm
---dhcpbridge=/usr/bin/nova-dhcpbridge
---flat_network_bridge=br100
---network_manager=nova.network.manager.FlatDHCPManager
---flat_interface=$nova_network_flat_interface
---public_interface=$nova_network_public_interface
---routing_source_ip=$nova_network_public_ip
---ajax_console_proxy_url=$nova_ajax_proxy_url
---volume_driver=nova.volume.driver.SheepdogDriver
---auth_driver=nova.auth.ldapdriver.LdapDriver
---ldap_url=ldap://$nova_ldap_host
---ldap_password=$nova_ldap_user_pass
---ldap_user_dn=$nova_ldap_user_dn
---ldap_user_unit=people
---ldap_user_subtree=ou=people,$nova_ldap_base_dn
---ldap_project_subtree=ou=groups,$nova_ldap_base_dn
---role_project_subtree=ou=groups,$nova_ldap_base_dn
---ldap_cloudadmin=cn=cloudadmins,ou=groups,$nova_ldap_base_dn
---ldap_itsec=cn=itsec,ou=groups,$nova_ldap_base_dn
---ldap_sysadmin=cn=sysadmins,$nova_ldap_base_dn
---ldap_netadmin=cn=netadmins,$nova_ldap_base_dn
---ldap_developer=cn=developers,$nova_ldap_base_dn
+verbose
+daemonize=1
+logdir=/var/log/nova
+state_path=/var/lib/nova
+lock_path=/var/lock/nova
+sql_connection=mysql://$nova_db_user:$nova_db_pass@$nova_db_host/$nova_db_name
+image_service=nova.image.glance.GlanceImageService
+s3_host=$nova_glance_host
+glance_api_servers=$nova_glance_host
+rabbit_host=$nova_rabbit_host
+network_host=$nova_network_host
+ec2_url=http://$nova_api_host:8773/services/Cloud
+libvirt_type=kvm
+dhcpbridge=/usr/bin/nova-dhcpbridge
+flat_network_bridge=br100
+network_manager=nova.network.manager.FlatDHCPManager
+flat_interface=$nova_network_flat_interface
+public_interface=$nova_network_public_interface
+routing_source_ip=$nova_network_public_ip
+ajax_console_proxy_url=$nova_ajax_proxy_url
+volume_driver=nova.volume.driver.SheepdogDriver
+auth_driver=nova.auth.ldapdriver.LdapDriver
+ldap_url=ldap://$nova_ldap_host
+ldap_password=$nova_ldap_user_pass
+ldap_user_dn=$nova_ldap_user_dn
+ldap_user_unit=people
+ldap_user_subtree=ou=people,$nova_ldap_base_dn
+ldap_project_subtree=ou=groups,$nova_ldap_base_dn
+role_project_subtree=ou=groups,$nova_ldap_base_dn
+ldap_cloudadmin=cn=cloudadmins,ou=groups,$nova_ldap_base_dn
+ldap_itsec=cn=itsec,ou=groups,$nova_ldap_base_dn
+ldap_sysadmin=cn=sysadmins,$nova_ldap_base_dn
+ldap_netadmin=cn=netadmins,$nova_ldap_base_dn
+ldap_developer=cn=developers,$nova_ldap_base_dn
             </programlisting>
 
       <figure xml:id="Nova_conf_KVM_LDAP">
@@ -214,24 +221,24 @@
 
       <programlisting>
 # configured using KVM, Flat, MySQL, and Glance, API is OpenStack (or EC2)
---daemonize=1
---dhcpbridge_flagfile=/etc/nova/nova.conf
---dhcpbridge=/usr/bin/nova-dhcpbridge
---flat_network_bridge=br100
---lock_path=/var/lock/nova
---logdir=/var/log/nova
---state_path=/var/lib/nova
---verbose
---network_manager=nova.network.manager.FlatManager
---sql_connection=mysql://$nova_db_user:$nova_db_pass@$nova_db_host/$nova_db_name
---osapi_host=$nova_api_host
---rabbit_host=$rabbit_api_host
---ec2_host=$nova_api_host
---image_service=nova.image.glance.GlanceImageService
---glance_api_servers=$nova_glance_host
+daemonize=1
+dhcpbridge_flagfile=/etc/nova/nova.conf
+dhcpbridge=/usr/bin/nova-dhcpbridge
+flat_network_bridge=br100
+lock_path=/var/lock/nova
+logdir=/var/log/nova
+state_path=/var/lib/nova
+verbose
+network_manager=nova.network.manager.FlatManager
+sql_connection=mysql://$nova_db_user:$nova_db_pass@$nova_db_host/$nova_db_name
+osapi_host=$nova_api_host
+rabbit_host=$rabbit_api_host
+ec2_host=$nova_api_host
+image_service=nova.image.glance.GlanceImageService
+glance_api_servers=$nova_glance_host
 
 # first 3 octets of the network your volume service is on, substitute with real numbers
---iscsi_ip_prefix=nnn.nnn.nnn 
+iscsi_ip_prefix=nnn.nnn.nnn 
         </programlisting>
 
       <figure xml:id="Nova_conf_KVM_Flat">
@@ -254,28 +261,28 @@
       internal Rackspace test system.</para>
 
       <programlisting>
---verbose
---nodaemon
---sql_connection=mysql://root:&lt;password&gt;@127.0.0.1/nova
---network_manager=nova.network.manager.FlatManager
---image_service=nova.image.glance.GlanceImageService
---flat_network_bridge=xenbr0
---connection_type=xenapi
---xenapi_connection_url=https://&lt;XenServer IP&gt;
---xenapi_connection_username=root
---xenapi_connection_password=supersecret
---rescue_timeout=86400
---allow_admin_api=true
---xenapi_inject_image=false
---use_ipv6=true
+verbose
+nodaemon
+sql_connection=mysql://root:&lt;password&gt;@127.0.0.1/nova
+network_manager=nova.network.manager.FlatManager
+image_service=nova.image.glance.GlanceImageService
+flat_network_bridge=xenbr0
+connection_type=xenapi
+xenapi_connection_url=https://&lt;XenServer IP&gt;
+xenapi_connection_username=root
+xenapi_connection_password=supersecret
+rescue_timeout=86400
+allow_admin_api=true
+xenapi_inject_image=false
+use_ipv6=true
 
 # To enable flat_injected, currently only works on Debian-based systems
---flat_injected=true
---ipv6_backend=account_identifier
---ca_path=./nova/CA
+flat_injected=true
+ipv6_backend=account_identifier
+ca_path=./nova/CA
 
-# Add the following to your flagfile if you're running on Ubuntu Maverick
---xenapi_remap_vbd_dev=true
+# Add the following to your conf file if you're running on Ubuntu Maverick
+xenapi_remap_vbd_dev=true
             </programlisting>
 
       <figure xml:id="Nova_conf_XEN_Flat">
@@ -294,16 +301,17 @@
   <section xml:id="configuring-logging">
     <title>Configuring Logging</title>
 
-    <para>You can use <filename>nova.conf</filename> flags to indicate where
-    Compute will log events, the level of logging, and customize log
-    formats.</para>
+    <para>You can use <filename>nova.conf</filename> configuration
+      options to indicate where Compute will log events, the level of
+      logging, and customize log formats.</para>
 
     <table rules="all">
-      <caption>Description of nova.conf flags for logging</caption>
+      <caption>Description of nova.conf configuration options for
+        logging</caption>
 
       <thead>
         <tr>
-          <td>Flag</td>
+          <td>Configuration option</td>
 
           <td>Default</td>
 
@@ -313,7 +321,7 @@
 
       <tbody>
         <tr>
-          <td><literal>--logdir</literal></td>
+          <td><literal>logdir</literal></td>
 
           <td><literal>/var/logs/nova</literal></td>
 
@@ -322,7 +330,7 @@
         </tr>
 
         <tr>
-          <td><literal>--logfile</literal></td>
+          <td><literal>logfile</literal></td>
 
           <td>Based on service name.</td>
 
@@ -330,7 +338,7 @@
         </tr>
 
         <tr>
-          <td><literal>--[no]use_syslog</literal></td>
+          <td><literal>[no]use_syslog</literal></td>
 
           <td><literal>False</literal></td>
 
@@ -338,7 +346,7 @@
         </tr>
 
         <tr>
-          <td><literal>--default_log_levels</literal></td>
+          <td><literal>default_log_levels</literal></td>
 
           <td><literal>amqplib=WARN,sqlalchemy=WARN,eventlet.wsgi.server=WARN</literal></td>
 
@@ -347,7 +355,7 @@
         </tr>
 
         <tr>
-          <td><literal>--verbose</literal></td>
+          <td><literal>verbose</literal></td>
 
           <td><literal>False</literal></td>
 
@@ -357,16 +365,16 @@
       </tbody>
     </table>
 
-    <para>To customize log formats for OpenStack Compute, use these flag
-    settings.</para>
+    <para>To customize log formats for OpenStack Compute, use these
+      configuration option settings.</para>
 
     <table rules="all">
-      <caption>Description of nova.conf flags for customized log
-      formats</caption>
+      <caption>Description of nova.conf configuration options for
+        customized log formats</caption>
 
       <thead>
         <tr>
-          <td>Flag</td>
+          <td>Configuration option</td>
 
           <td>Default</td>
 
@@ -376,7 +384,7 @@
 
       <tbody>
         <tr>
-          <td><literal>--logging_context_format_string</literal></td>
+          <td><literal>logging_context_format_string</literal></td>
 
           <td><literal>%(asctime)s %(levelname)s %(name)s [%(request_id)s
           %(user)s %(project)s] %(message)s</literal></td>
@@ -386,7 +394,7 @@
         </tr>
 
         <tr>
-          <td><literal>--logging_debug_format_suffix</literal></td>
+          <td><literal>logging_debug_format_suffix</literal></td>
 
           <td><literal>from %(processName)s (pid=%(process)d) %(funcName)s
           %(pathname)s:%(lineno)d</literal></td>
@@ -395,7 +403,7 @@
         </tr>
 
         <tr>
-          <td><literal>--logging_default_format_string</literal></td>
+          <td><literal>logging_default_format_string</literal></td>
 
           <td><literal>%(asctime)s %(levelname)s %(name)s [-]
           %(message)s</literal></td>
@@ -404,7 +412,7 @@
         </tr>
 
         <tr>
-          <td><literal>--logging_exception_prefix</literal></td>
+          <td><literal>logging_exception_prefix</literal></td>
 
           <td><literal>(%(name)s): TRACE:</literal></td>
 
@@ -419,32 +427,35 @@
     <title>Configuring Hypervisors</title>
 
     <para>OpenStack Compute requires a hypervisor and supports several
-    hypervisors and virtualization standards. Configuring and running
-    OpenStack Compute to use a particular hypervisor takes several
-    installation and configuration steps. The
-    <literal>--libvirt_type</literal> flag indicates which hypervisor will be
-    used. Refer <xref linkend="hypervisor-configuration-basics">
-         Hypervisor configuration basics 
-      </xref> for more details.</para>
+      hypervisors and virtualization standards. Configuring and
+      running OpenStack Compute to use a particular hypervisor takes
+      several installation and configuration steps. The
+        <literal>libvirt_type</literal> configuration option
+      indicates which hypervisor will be used. Refer <xref
+        linkend="hypervisor-configuration-basics"> Hypervisor
+        configuration basics </xref> for more details.</para>
   </section>
 
   <section xml:id="configuring-authentication-authorization">
     <title>Configuring Authentication and Authorization</title>
 
-    <para>There are different methods of authentication for the OpenStack
-    Compute project. The default setting is to use the
-    <filename>novarc</filename> file that contains credentials. To do so, set
-    the <literal>--use_deprecated_auth</literal> flag in your
-    <filename>nova.conf</filename>, which is <literal>True</literal> by
-    default. For no auth, modify the <filename>paste.ini</filename> that is
-    included in the <filename>etc/nova</filename> directory. With additional
-    configuration, you can use the OpenStack Identity Service, code-named
-    Keystone. In Compute, the settings for using Keystone are commented lines
-    in <filename>etc/nova/api-paste.ini</filename>, and Keystone also provides
-    an example file in
-    <filename>keystone/examples/paste/nova-api-paste.ini</filename>. Restart
-    the nova-api service for these settings to be configured. Refer to the
-    Identity Service Starter Guide for additional information.</para>
+    <para>There are different methods of authentication for the
+      OpenStack Compute project. The default setting is to use the
+        <filename>novarc</filename> file that contains credentials. To
+      do so, set the <literal>use_deprecated_auth</literal>
+      configuration option in your <filename>nova.conf</filename>,
+      which is <literal>True</literal> by default. For no auth, modify
+      the <filename>paste.ini</filename> that is included in the
+        <filename>etc/nova</filename> directory. With additional
+      configuration, you can use the OpenStack Identity Service,
+      code-named Keystone. In Compute, the settings for using Keystone
+      are commented lines in
+        <filename>etc/nova/api-paste.ini</filename>, and Keystone also
+      provides an example file in
+        <filename>keystone/examples/paste/nova-api-paste.ini</filename>.
+      Restart the nova-api service for these settings to be
+      configured. Refer to the Identity Service Starter Guide for
+      additional information.</para>
 
     <para>OpenStack Compute uses an implementation of an authentication system
     structured with an Active Directory or other federated LDAP user store
@@ -460,12 +471,12 @@
     or configure the Identity Service.</para>
 
     <table rules="all">
-      <caption>Description of <filename>nova.conf</filename> flags for
-      Authentication</caption>
+      <caption>Description of <filename>nova.conf</filename>
+        configuration options for Authentication</caption>
 
       <thead>
         <tr>
-          <td>Flag</td>
+          <td>Configuration option</td>
 
           <td>Default</td>
 
@@ -475,7 +486,7 @@
 
       <tbody>
         <tr>
-          <td><literal>--auth_driver</literal></td>
+          <td><literal>auth_driver</literal></td>
 
           <td><literal>nova.auth.dbdriver.DbDriver</literal></td>
 
@@ -497,7 +508,7 @@
         </tr>
 
         <tr>
-          <td><literal>--use_deprecated_auth</literal></td>
+          <td><literal>use_deprecated_auth</literal></td>
 
           <td><literal>False</literal></td>
 
@@ -509,12 +520,13 @@
     </table>
 
     <table rules="all">
-      <caption>Description of <filename>nova.conf</filename> flags for
-      customizing roles in deprecated auth</caption>
+      <caption>Description of <filename>nova.conf</filename>
+        configuration options for customizing roles in deprecated
+        auth</caption>
 
       <thead>
         <tr>
-          <td>Flag</td>
+          <td>Configuration option</td>
 
           <td>Default</td>
 
@@ -524,7 +536,7 @@
 
       <tbody>
         <tr>
-          <td><literal>--allowed_roles</literal></td>
+          <td><literal>allowed_roles</literal></td>
 
           <td><literal>cloudadmin,itsec,sysadmin,netadmin,developer</literal></td>
 
@@ -532,7 +544,7 @@
         </tr>
 
         <tr>
-          <td><literal>--global_roles</literal></td>
+          <td><literal>global_roles</literal></td>
 
           <td><literal>cloudadmin,itsec</literal></td>
 
@@ -540,7 +552,7 @@
         </tr>
 
         <tr>
-          <td><literal>--superuser_roles</literal></td>
+          <td><literal>superuser_roles</literal></td>
 
           <td><literal>cloudadmin</literal></td>
 
@@ -551,12 +563,13 @@
     </table>
 
     <table rules="all">
-      <caption>Description of <filename>nova.conf</filename> flags for
-      credentials in deprecated auth</caption>
+      <caption>Description of <filename>nova.conf</filename>
+        configuration options for credentials in deprecated
+        auth</caption>
 
       <thead>
         <tr>
-          <td>Flag</td>
+          <td>Configuration option</td>
 
           <td>Default</td>
 
@@ -566,7 +579,7 @@
 
       <tbody>
         <tr>
-          <td><literal>--credentials_template</literal></td>
+          <td><literal>credentials_template</literal></td>
 
           <td>None</td>
 
@@ -574,7 +587,7 @@
         </tr>
 
         <tr>
-          <td><literal>--credential_rc_file</literal></td>
+          <td><literal>credential_rc_file</literal></td>
 
           <td><literal>%src</literal></td>
 
@@ -582,7 +595,7 @@
         </tr>
 
         <tr>
-          <td><literal>--credential_cert_file</literal></td>
+          <td><literal>credential_cert_file</literal></td>
 
           <td><literal>cert.pem</literal></td>
 
@@ -590,7 +603,7 @@
         </tr>
 
         <tr>
-          <td><literal>--credential_key_file</literal></td>
+          <td><literal>credential_key_file</literal></td>
 
           <td><literal>pk.pem</literal></td>
 
@@ -598,7 +611,7 @@
         </tr>
 
         <tr>
-          <td><literal>--vpn_client_template</literal></td>
+          <td><literal>vpn_client_template</literal></td>
 
           <td><literal>nova/cloudpipe/client/ovpn.template</literal></td>
 
@@ -607,7 +620,7 @@
         </tr>
 
         <tr>
-          <td><literal>--credential_vpn_file</literal></td>
+          <td><literal>credential_vpn_file</literal></td>
 
           <td><literal>nova-vpn.conf</literal></td>
 
@@ -618,12 +631,12 @@
     </table>
 
     <table rules="all">
-      <caption>Description of <filename>nova.conf</filename> flags for CA
-      (Certificate Authority)</caption>
+      <caption>Description of <filename>nova.conf</filename>
+        configuration options for CA (Certificate Authority)</caption>
 
       <thead>
         <tr>
-          <td>Flag</td>
+          <td>Configuration option</td>
 
           <td>Default</td>
 
@@ -633,7 +646,7 @@
 
       <tbody>
         <tr>
-          <td><literal>--keys_path</literal></td>
+          <td><literal>keys_path</literal></td>
 
           <td><literal><replaceable>$state_path</replaceable>/keys</literal></td>
 
@@ -641,7 +654,7 @@
         </tr>
 
         <tr>
-          <td><literal>--ca_file</literal></td>
+          <td><literal>ca_file</literal></td>
 
           <td><literal>cacert.pem</literal></td>
 
@@ -649,7 +662,7 @@
         </tr>
 
         <tr>
-          <td><literal>--crl_file</literal></td>
+          <td><literal>crl_file</literal></td>
 
           <td><literal>crl.pem</literal></td>
 
@@ -657,7 +670,7 @@
         </tr>
 
         <tr>
-          <td><literal>--key_file</literal></td>
+          <td><literal>key_file</literal></td>
 
           <td><literal>private/cakey.pem</literal></td>
 
@@ -665,7 +678,7 @@
         </tr>
 
         <tr>
-          <td><literal>--use_project_ca</literal></td>
+          <td><literal>use_project_ca</literal></td>
 
           <td><literal>false</literal></td>
 
@@ -674,7 +687,7 @@
         </tr>
 
         <tr>
-          <td><literal>--project_cert_subject</literal></td>
+          <td><literal>project_cert_subject</literal></td>
 
           <td><literal>/C=US/ST=California/L=MountainView/O=AnsoLabs/OU=NovaDev/CN=proje
           ct-ca-%s-%s</literal></td>
@@ -684,7 +697,7 @@
         </tr>
 
         <tr>
-          <td><literal>--user_cert_subject</literal></td>
+          <td><literal>user_cert_subject</literal></td>
 
           <td><literal>/C=US/ST=California/L=MountainView/O=AnsoLabs/OU=NovaDev/CN=%s-%s-%s</literal></td>
 
@@ -693,7 +706,7 @@
         </tr>
 
         <tr>
-          <td><literal>--vpn_cert_subject</literal></td>
+          <td><literal>vpn_cert_subject</literal></td>
 
           <td><literal>/C=US/ST=California/L=MountainView/O=AnsoLabs/OU=NovaDev/CN=project-vpn-%s-%s</literal></td>
 
@@ -735,8 +748,9 @@
 sudo bash -c "echo 1 &gt; /proc/sys/net/ipv6/conf/all/forwarding" 
 sudo bash -c "echo 0 &gt; /proc/sys/net/ipv6/conf/all/accept_ra"</literallayout>
 
-    <para>Edit the <filename>nova.conf</filename> file on all nodes to set the
-    --use_ipv6 flag to True. Restart all nova- services.</para>
+    <para>Edit the <filename>nova.conf</filename> file on all nodes to
+      set the use_ipv6 configuration option to True. Restart all
+      nova- services.</para>
 
     <para>When using the command 'nova-manage network create' you can add a
     fixed range for IPv6 addresses. You must specify public or private after
@@ -763,12 +777,12 @@ sudo bash -c "echo 0 &gt; /proc/sys/net/ipv6/conf/all/accept_ra"</literallayout>
     FlatDHCPManager.</para>
 
     <table rules="all">
-      <caption>Description of <filename>nova.conf</filename> flags for
-      configuring IPv6</caption>
+      <caption>Description of <filename>nova.conf</filename>
+        configuration options for configuring IPv6</caption>
 
       <thead>
         <tr>
-          <td>Flag</td>
+          <td>Configuration option</td>
 
           <td>Default</td>
 
@@ -778,7 +792,7 @@ sudo bash -c "echo 0 &gt; /proc/sys/net/ipv6/conf/all/accept_ra"</literallayout>
 
       <tbody>
         <tr>
-          <td><literal>--use_ipv6</literal></td>
+          <td><literal>use_ipv6</literal></td>
 
           <td><literal>false</literal></td>
 
@@ -787,7 +801,7 @@ sudo bash -c "echo 0 &gt; /proc/sys/net/ipv6/conf/all/accept_ra"</literallayout>
         </tr>
 
         <tr>
-          <td><literal>--flat_injected</literal></td>
+          <td><literal>flat_injected</literal></td>
 
           <td><literal>false</literal></td>
 
@@ -803,24 +817,26 @@ sudo bash -c "echo 0 &gt; /proc/sys/net/ipv6/conf/all/accept_ra"</literallayout>
   <section xml:id="configuring-compute-to-use-the-image-service">
     <title>Configuring Image Service and Storage for Compute</title>
 
-    <para>Diablo uses <application>Glance</application> for storing and
-    retrieving images. After you have installed a
-    <application>Glance</application> server, you can configure
-    <command>nova-compute</command> to use <application>Glance</application>
-    for image storage and retrieval. You must ensure the
-    <literal>--image_service</literal> flag is defined with the
-    <application>Glance</application> service :
-    '<literal>nova.image.glance.GlanceImageService</literal>' uses
-    <application>Glance</application> to store and retrieve images for
-    OpenStack Compute.</para>
+    <para>Diablo uses <application>Glance</application> for storing
+      and retrieving images. After you have installed a
+        <application>Glance</application> server, you can configure
+        <command>nova-compute</command> to use
+        <application>Glance</application> for image storage and
+      retrieval. You must ensure the
+        <literal>image_service</literal> configuration option is
+      defined with the <application>Glance</application> service :
+        '<literal>nova.image.glance.GlanceImageService</literal>' uses
+        <application>Glance</application> to store and retrieve images
+      for OpenStack Compute.</para>
 
     <table rules="all">
-      <caption>Description of <filename>nova.conf</filename> flags for the
-      Glance image service and storage</caption>
+      <caption>Description of <filename>nova.conf</filename>
+        configuration options for the Glance image service and
+        storage</caption>
 
       <thead>
         <tr>
-          <td>Flag</td>
+          <td>Configuration option</td>
 
           <td>Default</td>
 
@@ -830,7 +846,7 @@ sudo bash -c "echo 0 &gt; /proc/sys/net/ipv6/conf/all/accept_ra"</literallayout>
 
       <tbody>
         <tr>
-          <td><literal>--image_service</literal></td>
+          <td><literal>image_service</literal></td>
 
           <td><literal>nova.image.local.GlanceImageService</literal></td>
 
@@ -856,7 +872,7 @@ sudo bash -c "echo 0 &gt; /proc/sys/net/ipv6/conf/all/accept_ra"</literallayout>
         </tr>
 
         <tr>
-          <td><literal>--glance_api_servers</literal></td>
+          <td><literal>glance_api_servers</literal></td>
 
           <td><literal><replaceable>$my_ip</replaceable>:9292</literal></td>
 
@@ -866,7 +882,7 @@ sudo bash -c "echo 0 &gt; /proc/sys/net/ipv6/conf/all/accept_ra"</literallayout>
         </tr>
 
         <tr>
-          <td><literal>--s3_dmz</literal></td>
+          <td><literal>s3_dmz</literal></td>
 
           <td><literal><replaceable>$my_ip</replaceable></literal></td>
 
@@ -875,7 +891,7 @@ sudo bash -c "echo 0 &gt; /proc/sys/net/ipv6/conf/all/accept_ra"</literallayout>
         </tr>
 
         <tr>
-          <td><literal>--s3_host</literal></td>
+          <td><literal>s3_host</literal></td>
 
           <td><literal><replaceable>$my_ip</replaceable></literal></td>
 
@@ -885,7 +901,7 @@ sudo bash -c "echo 0 &gt; /proc/sys/net/ipv6/conf/all/accept_ra"</literallayout>
         </tr>
 
         <tr>
-          <td><literal>--s3_port</literal></td>
+          <td><literal>s3_port</literal></td>
 
           <td><literal>3333</literal></td>
 
@@ -893,7 +909,7 @@ sudo bash -c "echo 0 &gt; /proc/sys/net/ipv6/conf/all/accept_ra"</literallayout>
         </tr>
 
         <tr>
-          <td><literal>--use_s3</literal></td>
+          <td><literal>use_s3</literal></td>
 
           <td><literal>true</literal></td>
 
@@ -1099,18 +1115,19 @@ ps -ef | grep libvirt</literallayout>
         </listitem>
 
         <listitem>
-          <para>Flag configuration. usually, you do not have to configure any
-          flags. Below chart is only for advanced usage.</para>
+          <para>Configuration option configuration. usually, you do
+            not have to configure any configuration options. Below
+            chart is only for advanced usage.</para>
         </listitem>
       </orderedlist></para>
 
     <table rules="all">
-      <caption>Description of <filename>nova.conf</filename> flags for live
-      migration</caption>
+      <caption>Description of <filename>nova.conf</filename>
+        configuration options for live migration</caption>
 
       <thead>
         <tr>
-          <td>Flag</td>
+          <td>Configuration option</td>
 
           <td>Default</td>
 
@@ -1120,7 +1137,7 @@ ps -ef | grep libvirt</literallayout>
 
       <tbody>
         <tr>
-          <td><literal>--live_migration_retry_count</literal></td>
+          <td><literal>live_migration_retry_count</literal></td>
 
           <td><literal>30</literal></td>
 
@@ -1129,7 +1146,7 @@ ps -ef | grep libvirt</literallayout>
         </tr>
 
         <tr>
-          <td><literal>--live_migration_uri</literal></td>
+          <td><literal>live_migration_uri</literal></td>
 
           <td><literal>qemu+tcp://%s/system</literal></td>
 
@@ -1139,7 +1156,7 @@ ps -ef | grep libvirt</literallayout>
         </tr>
 
         <tr>
-          <td><literal>--live_migration_bandwidth</literal></td>
+          <td><literal>live_migration_bandwidth</literal></td>
 
           <td><literal>0</literal></td>
 
@@ -1147,12 +1164,13 @@ ps -ef | grep libvirt</literallayout>
         </tr>
 
         <tr>
-          <td><literal>--live_migration_flag</literal></td>
+          <td><literal>live_migration_flag</literal></td>
 
           <td><literal>VIR_MIGRATE_UNDEFINE_SOURCE,
           VIR_MIGRATE_PEER2PEER</literal></td>
 
-          <td>Define libvirt flag for live migration.</td>
+          <td>Define libvirt configuration option for live
+            migration.</td>
         </tr>
       </tbody>
     </table>
@@ -1168,11 +1186,12 @@ ps -ef | grep libvirt</literallayout>
     connection string for the nova database.</para>
 
     <table rules="all">
-      <caption>Description of nova.conf flags for database access</caption>
+      <caption>Description of nova.conf configuration options for
+        database access</caption>
 
       <thead>
         <tr>
-          <td>Flag</td>
+          <td>Configuration option</td>
 
           <td>Default</td>
 
@@ -1182,7 +1201,7 @@ ps -ef | grep libvirt</literallayout>
 
       <tbody>
         <tr>
-          <td><literal>--sql_connection</literal></td>
+          <td><literal>sql_connection</literal></td>
 
           <td><literal>sqlite:///<replaceable>$state_path</replaceable>/nova.sqlite</literal></td>
 
@@ -1190,7 +1209,7 @@ ps -ef | grep libvirt</literallayout>
         </tr>
 
         <tr>
-          <td><literal>--sql_idle_timeout</literal></td>
+          <td><literal>sql_idle_timeout</literal></td>
 
           <td><literal>3600</literal></td>
 
@@ -1199,7 +1218,7 @@ ps -ef | grep libvirt</literallayout>
         </tr>
 
         <tr>
-          <td><literal>--sql_max_retries</literal></td>
+          <td><literal>sql_max_retries</literal></td>
 
           <td><literal>12</literal></td>
 
@@ -1207,7 +1226,7 @@ ps -ef | grep libvirt</literallayout>
         </tr>
 
         <tr>
-          <td><literal>--sql_retry_interval</literal></td>
+          <td><literal>sql_retry_interval</literal></td>
 
           <td><literal>10</literal></td>
 
@@ -1215,7 +1234,7 @@ ps -ef | grep libvirt</literallayout>
         </tr>
 
         <tr>
-          <td><literal>--db_backend</literal></td>
+          <td><literal>db_backend</literal></td>
 
           <td><literal>sqlalchemy</literal></td>
 
@@ -1223,7 +1242,7 @@ ps -ef | grep libvirt</literallayout>
         </tr>
 
         <tr>
-          <td><literal>--db_driver</literal></td>
+          <td><literal>db_driver</literal></td>
 
           <td><literal>nova.db.api</literal></td>
 
@@ -1243,18 +1262,18 @@ ps -ef | grep libvirt</literallayout>
     <application>RabbitMQ</application> and
     <application>Qpid</application>.</para>
 
-    <section>
+    <section xml:id="configuration-rabbitmq">
       <title>Configuration for RabbitMQ</title>
 
       <para>OpenStack Compute uses <application>RabbitMQ</application> by
       default. This section discusses the configuration options that are
       relevant when <application>RabbitMQ</application> is used. The
-      <literal>--rpc_backend</literal> option is not required as long as
+      <literal>rpc_backend</literal> option is not required as long as
       <application>RabbitMQ</application> is the default messaging system.
       However, if it is included the configuration, it must be set to
       <literal>nova.rpc.impl_kombu</literal>.</para>
 
-      <programlisting>--rpc_backend=nova.rpc.impl_kombu</programlisting>
+      <programlisting>rpc_backend=nova.rpc.impl_kombu</programlisting>
 
       <para>The following tables describe the rest of the options that can be
       used when <application>RabbitMQ</application> is used as the messaging
@@ -1263,12 +1282,13 @@ ps -ef | grep libvirt</literallayout>
       of the RPC thread pool.</para>
 
       <table rules="all">
-        <caption>Description of <filename>nova.conf</filename> flags for
-        Remote Procedure Calls and RabbitMQ Messaging</caption>
+        <caption>Description of <filename>nova.conf</filename>
+          configuration options for Remote Procedure Calls and
+          RabbitMQ Messaging</caption>
 
         <thead>
           <tr>
-            <td>Flag</td>
+            <td>Configuration option</td>
 
             <td>Default</td>
 
@@ -1278,7 +1298,7 @@ ps -ef | grep libvirt</literallayout>
 
         <tbody>
           <tr>
-            <td><literal>--rabbit_host</literal></td>
+            <td><literal>rabbit_host</literal></td>
 
             <td><literal>localhost</literal></td>
 
@@ -1287,7 +1307,7 @@ ps -ef | grep libvirt</literallayout>
           </tr>
 
           <tr>
-            <td><literal>--rabbit_password</literal></td>
+            <td><literal>rabbit_password</literal></td>
 
             <td><literal>guest</literal></td>
 
@@ -1296,7 +1316,7 @@ ps -ef | grep libvirt</literallayout>
           </tr>
 
           <tr>
-            <td><literal>--rabbit_port</literal></td>
+            <td><literal>rabbit_port</literal></td>
 
             <td><literal>5672</literal></td>
 
@@ -1305,7 +1325,7 @@ ps -ef | grep libvirt</literallayout>
           </tr>
 
           <tr>
-            <td><literal>--rabbit_userid</literal></td>
+            <td><literal>rabbit_userid</literal></td>
 
             <td><literal>guest</literal></td>
 
@@ -1314,7 +1334,7 @@ ps -ef | grep libvirt</literallayout>
           </tr>
 
           <tr>
-            <td><literal>--rabbit_virtual_host</literal></td>
+            <td><literal>rabbit_virtual_host</literal></td>
 
             <td><literal>/</literal></td>
 
@@ -1325,12 +1345,13 @@ ps -ef | grep libvirt</literallayout>
       </table>
 
       <table rules="all">
-        <caption>Description of <filename>nova.conf</filename> flags for
-        Tuning RabbitMQ Messaging</caption>
+        <caption>Description of <filename>nova.conf</filename>
+          configuration options for Tuning RabbitMQ
+          Messaging</caption>
 
         <thead>
           <tr>
-            <td>Flag</td>
+            <td>Configuration option</td>
 
             <td>Default</td>
 
@@ -1349,7 +1370,7 @@ ps -ef | grep libvirt</literallayout>
           </tr>
 
           <tr>
-            <td><literal>--rabbit-retry-interval</literal></td>
+            <td><literal>rabbit-retry-interval</literal></td>
 
             <td><literal>10</literal></td>
 
@@ -1358,7 +1379,7 @@ ps -ef | grep libvirt</literallayout>
           </tr>
 
           <tr>
-            <td><literal>--rpc_thread_pool_size</literal></td>
+            <td><literal>rpc_thread_pool_size</literal></td>
 
             <td><literal>1024</literal></td>
 
@@ -1368,21 +1389,21 @@ ps -ef | grep libvirt</literallayout>
       </table>
     </section>
 
-    <section>
+    <section xml:id="configuration-qpid">
       <title>Configuration for Qpid</title>
 
       <para>This section discusses the configuration options that are relevant
       if <application>Qpid</application> is used as the messaging system for
       OpenStack Compute. <application>Qpid</application> is not the default
       messaging system, so it must be enabled by setting the
-      <literal>--rpc_backend</literal> option in
+      <literal>rpc_backend</literal> option in
       <filename>nova.conf</filename>.</para>
 
-      <programlisting>--rpc_backend=nova.rpc.impl_qpid</programlisting>
+      <programlisting>rpc_backend=nova.rpc.impl_qpid</programlisting>
 
       <para>This next critical option points the compute nodes to the
       <application>Qpid</application> broker (server). Set
-      <literal>--qpid_hostname</literal> in <filename>nova.conf</filename> to
+      <literal>qpid_hostname</literal> in <filename>nova.conf</filename> to
       be the hostname where the broker is running.</para>
 
       <note>
@@ -1390,37 +1411,37 @@ ps -ef | grep libvirt</literallayout>
         the form of either a hostname or an IP address.</para>
       </note>
 
-      <programlisting>--qpid_hostname=hostname.example.com</programlisting>
+      <programlisting>qpid_hostname=hostname.example.com</programlisting>
 
       <para>If the <application>Qpid</application> broker is listening on a
       port other than the AMQP default of <literal>5672</literal>, you will
-      need to set the <literal>--qpid_port</literal> option:</para>
+      need to set the <literal>qpid_port</literal> option:</para>
 
-      <programlisting>--qpid_port=12345</programlisting>
+      <programlisting>qpid_port=12345</programlisting>
 
       <para>If you configure the <application>Qpid</application> broker to
       require authentication, you will need to add a username and password to
       the configuration:</para>
 
-      <programlisting>--qpid_username=username
---qpid_password=password</programlisting>
+      <programlisting>qpid_username=username
+qpid_password=password</programlisting>
 
       <para>By default, TCP is used as the transport. If you would like to
-      enable SSL, set the <literal>--qpid_protocol</literal> option:</para>
+      enable SSL, set the <literal>qpid_protocol</literal> option:</para>
 
-      <programlisting>--qpid_protocol=ssl</programlisting>
+      <programlisting>qpid_protocol=ssl</programlisting>
 
       <para>The following table lists the rest of the options used by the Qpid
       messaging driver for OpenStack Compute. It is not common that these
       options are used.</para>
 
       <table rules="all">
-        <caption>Remaining <filename>nova.conf</filename> flags for Qpid
-        support</caption>
+        <caption>Remaining <filename>nova.conf</filename>
+          configuration options for Qpid support</caption>
 
         <thead>
           <tr>
-            <td>Flag</td>
+            <td>Configuration option</td>
 
             <td>Default</td>
 
@@ -1430,7 +1451,7 @@ ps -ef | grep libvirt</literallayout>
 
         <tbody>
           <tr>
-            <td><literal>--qpid_sasl_mechanisms</literal></td>
+            <td><literal>qpid_sasl_mechanisms</literal></td>
 
             <td><literal>(Qpid default)</literal></td>
 
@@ -1439,7 +1460,7 @@ ps -ef | grep libvirt</literallayout>
           </tr>
 
           <tr>
-            <td><literal>--qpid_reconnect_timeout</literal></td>
+            <td><literal>qpid_reconnect_timeout</literal></td>
 
             <td><literal>(Qpid default)</literal></td>
 
@@ -1448,7 +1469,7 @@ ps -ef | grep libvirt</literallayout>
           </tr>
 
           <tr>
-            <td><literal>--qpid_reconnect_limit</literal></td>
+            <td><literal>qpid_reconnect_limit</literal></td>
 
             <td><literal>(Qpid default)</literal></td>
 
@@ -1457,7 +1478,7 @@ ps -ef | grep libvirt</literallayout>
           </tr>
 
           <tr>
-            <td><literal>--qpid_reconnect_interval_min</literal></td>
+            <td><literal>qpid_reconnect_interval_min</literal></td>
 
             <td><literal>(Qpid default)</literal></td>
 
@@ -1466,7 +1487,7 @@ ps -ef | grep libvirt</literallayout>
           </tr>
 
           <tr>
-            <td><literal>--qpid_reconnect_interval_max</literal></td>
+            <td><literal>qpid_reconnect_interval_max</literal></td>
 
             <td><literal>(Qpid default)</literal></td>
 
@@ -1475,18 +1496,18 @@ ps -ef | grep libvirt</literallayout>
           </tr>
 
           <tr>
-            <td><literal>--qpid_reconnect_interval</literal></td>
+            <td><literal>qpid_reconnect_interval</literal></td>
 
             <td><literal>(Qpid default)</literal></td>
 
             <td>Integer value: Equivalent to setting
-            <literal>--qpid_reconnect_interval_min</literal> and
-            <literal>--qpid_reconnect_interval_max</literal> to the same
+            <literal>qpid_reconnect_interval_min</literal> and
+            <literal>qpid_reconnect_interval_max</literal> to the same
             value.</td>
           </tr>
 
           <tr>
-            <td><literal>--qpid_heartbeat</literal></td>
+            <td><literal>qpid_heartbeat</literal></td>
 
             <td><literal>5</literal></td>
 
@@ -1495,7 +1516,7 @@ ps -ef | grep libvirt</literallayout>
           </tr>
 
           <tr>
-            <td><literal>--qpid_tcp_nodelay</literal></td>
+            <td><literal>qpid_tcp_nodelay</literal></td>
 
             <td><literal>True</literal></td>
 
@@ -1505,20 +1526,21 @@ ps -ef | grep libvirt</literallayout>
       </table>
     </section>
 
-    <section>
-      <title>Common Configuration</title>
+    <section xml:id="common-messaging-configuration">
+      <title>Common Configuration for Messaging</title>
 
       <para>This section lists options that are common between both the
       <application>RabbitMQ</application> and <application>Qpid</application>
       messaging drivers.</para>
 
       <table rules="all">
-        <caption>Description of <filename>nova.conf</filename> flags for
-        Customizing Exchange or Topic Names</caption>
+        <caption>Description of <filename>nova.conf</filename>
+          configuration options for Customizing Exchange or Topic
+          Names</caption>
 
         <thead>
           <tr>
-            <td>Flag</td>
+            <td>Configuration option</td>
 
             <td>Default</td>
 
@@ -1528,7 +1550,7 @@ ps -ef | grep libvirt</literallayout>
 
         <tbody>
           <tr>
-            <td><literal>--control_exchange</literal></td>
+            <td><literal>control_exchange</literal></td>
 
             <td><literal>nova</literal></td>
 
@@ -1536,7 +1558,7 @@ ps -ef | grep libvirt</literallayout>
           </tr>
 
           <tr>
-            <td><literal>--ajax_console_proxy_topic</literal></td>
+            <td><literal>ajax_console_proxy_topic</literal></td>
 
             <td><literal>ajax_proxy</literal></td>
 
@@ -1544,7 +1566,7 @@ ps -ef | grep libvirt</literallayout>
           </tr>
 
           <tr>
-            <td><literal>--console_topic</literal></td>
+            <td><literal>console_topic</literal></td>
 
             <td><literal>console</literal></td>
 
@@ -1552,7 +1574,7 @@ ps -ef | grep libvirt</literallayout>
           </tr>
 
           <tr>
-            <td><literal>--network_topic</literal></td>
+            <td><literal>network_topic</literal></td>
 
             <td><literal>network</literal></td>
 
@@ -1560,7 +1582,7 @@ ps -ef | grep libvirt</literallayout>
           </tr>
 
           <tr>
-            <td><literal>--scheduler_topic</literal></td>
+            <td><literal>scheduler_topic</literal></td>
 
             <td><literal>scheduler</literal></td>
 
@@ -1568,7 +1590,7 @@ ps -ef | grep libvirt</literallayout>
           </tr>
 
           <tr>
-            <td><literal>--volume_topic</literal></td>
+            <td><literal>volume_topic</literal></td>
 
             <td><literal>volume</literal></td>
 
@@ -1599,17 +1621,19 @@ ps -ef | grep libvirt</literallayout>
     ignored.
     </para>
 
-    <para>To prevent this confusion, the configuration flag
-    <literal>--enable_instance_password</literal> can be used to disable
-    the return of the admin password for installations that don't support
-    setting instance passwords.</para>
+    <para>To prevent this confusion, the configuration configuration
+        option <literal>enable_instance_password</literal> can be
+        used to disable the return of the admin password for
+        installations that don't support setting instance
+        passwords.</para>
 
     <table rules="all">
-      <caption>Description of nova.conf API related flags</caption>
+      <caption>Description of nova.conf API related configuration
+          options</caption>
 
       <thead>
         <tr>
-          <td>Flag</td>
+          <td>Configuration option</td>
 
           <td>Default</td>
 
@@ -1619,7 +1643,7 @@ ps -ef | grep libvirt</literallayout>
 
       <tbody>
         <tr>
-          <td><literal>--enable_instance_password</literal></td>
+          <td><literal>enable_instance_password</literal></td>
 
           <td><literal>true</literal></td>
 
@@ -1646,7 +1670,7 @@ ps -ef | grep libvirt</literallayout>
     error details, and the delay before the request should be retried.</para>
 
     <para>Rate limiting is not available for the EC2 API.</para>
-
+  </simplesect>
     <simplesect>
       <title>Specifying Limits</title>
 
@@ -1803,6 +1827,5 @@ limits =("POST", "*", ".*", 10, MINUTE);("POST", "*/servers", "^/servers", 50, D
 
             </programlisting>
     </simplesect>
-  </simplesect>
   </section>
 </chapter>
