@@ -287,7 +287,7 @@ mysql nova -e "update fixed_ips set allocated=0, leased=0, instance_id=NULL wher
                 that bridge. To do this, edit your network interfaces configuration to look like the
                 following example: </para>
             <para>
-                <literallayout class="monospaced">&lt; begin /etc/network/interfaces > 
+                <programlisting>
 # The loopback network interface 
 auto lo 
 iface lo inet loopback 
@@ -296,11 +296,11 @@ iface lo inet loopback
 auto br100 
 
 iface br100 inet dhcp 
-    bridge_ports        eth0 
+    bridge_ports         eth0 
     bridge_stp           off 
-    bridge_maxwait   0 
+    bridge_maxwait       0 
     bridge_fd            0 
-&lt; end /etc/network/interfaces > </literallayout>
+                </programlisting>
             </para>
             <para>Next, restart networking to apply the changes: <code>sudo /etc/init.d/networking
                     restart</code></para>
@@ -377,14 +377,16 @@ iface br100 inet dhcp
                 br100 manually and not set flat_interface. If this is the case for you, edit your
                 nova.conf file to contain the following lines: </para>
             <para>
-                <literallayout>--dhcpbridge_flagfile=/etc/nova/nova.conf
+                <literallayout>
+--dhcpbridge_flagfile=/etc/nova/nova.conf
 --dhcpbridge=/usr/bin/nova-dhcpbridge
 --network_manager=nova.network.manager.FlatDHCPManager
 --flat_network_dhcp_start=10.0.0.2
 --flat_network_bridge=br100
 --flat_interface=eth2
 --flat_injected=False
---public_interface=eth0</literallayout>
+--public_interface=eth0
+                </literallayout>
             </para>
             <para>Integrate your network interfaces to match this configuration.</para></section>
         <section xml:id="outbound-traffic-flow-with-any-flat-networking"><title>Outbound Traffic Flow with Any Flat Networking</title><para>In any set up with FlatNetworking, the host with nova-network on it is responsible for forwarding traffic from the private network configured with the {{--fixed_range=...} directive in nova.conf. This host needs to have br100 configured and talking to any other nodes that are hosting VMs. With either of the Flat Networking options, the default gateway for the virtual machines is set to the host which is running nova-network.</para>
@@ -448,10 +450,12 @@ iface br100 inet dhcp
                             are reserved</para></listitem>
                 </itemizedlist>
             <para>First, create the networks that Compute can pull from using nova-manage commands:</para>
-                    <literallayout class="monospaced">nova-manage --flagfile=/etc/nova/nova.conf network create private 10.1.171.0/24 1 256
+                    <literallayout class="monospaced">
+nova-manage --flagfile=/etc/nova/nova.conf network create private 10.1.171.0/24 1 256
 nova-manage --flagfile=/etc/nova/nova.conf network create private 10.1.172.0/24 1 256
 nova-manage --flagfile=/etc/nova/nova.conf network create private 10.1.173.0/24 1 256
-nova-manage --flagfile=/etc/nova/nova.conf network create private 10.1.174.0/24 1 256</literallayout>
+nova-manage --flagfile=/etc/nova/nova.conf network create private 10.1.174.0/24 1 256
+                    </literallayout>
                     
                 <para>Log in to the nova database to determine the network ID assigned to each VLAN:</para>    
                     <literallayout class="monospaced">select id,cidr from networks;</literallayout>
@@ -512,16 +516,34 @@ brctl delbr br_NNN</literallayout>
                 (every hour). You set the --use_project_ca flag in nova.conf for cloudpipes to work
                 securely so that each project has its own Certificate Authority (CA).</para></section>
         <section xml:id="enabling-ping-and-ssh-on-vms">
-                    <title>Enabling Ping and SSH on VMs</title>
-        <para>Be sure you enable access to your VMs by using the ‘euca-authorize’ command. Below,
-            you will find the commands to allow ‘ping’ and ‘ssh’ to your VMs: </para>
-        <para><literallayout>euca-authorize -P icmp -t -1:-1 default 
-euca-authorize -P tcp -p 22 default</literallayout>If
-            you still cannot ping or SSH your instances after issuing the ‘euca-authorize’ commands,
-            look at the number of ‘dnsmasq’ processes that are running. If you have a running
-            instance, check to see that TWO ‘dnsmasq’ processes are running. If not, perform the
-            following: <code>killall dnsmasq; service nova-network restart</code></para></section><section xml:id="allocating-associating-ip-addresses"><title>Allocating and Associating IP Addresses with Instances</title><para>You can use Euca2ools commands to manage floating IP addresses used with Flat DHCP or VLAN
-                networking. </para>
+            <title>Enabling Ping and SSH on VMs</title>
+            <para>Be sure you enable access to your VMs by using the "euca-authorize" or "nova
+                secgroup-add-rule" command. Below, you will find the commands to allow ‘"ping" and
+                "ssh" to your VMs: </para>
+            <note>
+                <para>These commands need to be run as root only if the credentials used to interact
+                    with nova-api have been put under /root/.bashrc. If the EC2 credentials have
+                    been put into another user's .bashrc file, then, it is necessary to run these
+                    commands as the user. </para>
+            </note>
+            <para><literallayout class="monospaced">
+Using euca2ools : 
+<code>
+euca-authorize -P icmp -t -1:-1 -s 0.0.0.0/0 default 
+euca-authorize -P tcp -p 22 -s 0.0.0.0/0 default
+</code>
+Using nova :
+<code>
+nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0 
+nova secgroup-add-rule default tcp 22 22 0.0.0.0/0 
+</code>
+        </literallayout>
+                If you still cannot ping or SSH your instances after issuing the ‘euca-authorize’
+                commands, look at the number of ‘dnsmasq’ processes that are running. If you have a
+                running instance, check to see that TWO ‘dnsmasq’ processes are running. If not,
+                perform the following: <code>killall dnsmasq; service nova-network
+                    restart</code></para></section><section xml:id="allocating-associating-ip-addresses"><title>Allocating and Associating IP Addresses with Instances</title><para>You can use Euca2ools commands to manage floating IP addresses used with Flat DHCP or VLAN
+                        networking. </para>
                 
                 <para>To assign a reserved IP address to your project, removing it from the pool of
                 available floating IP addresses, use <code>euca-allocate-address</code>. It'll
