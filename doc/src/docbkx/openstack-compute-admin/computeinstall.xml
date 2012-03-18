@@ -96,89 +96,47 @@
       </inlinemediaobject></para>
   </section>
 
-  <section xml:id="installing-openstack-compute-on-ubuntu">
-    <title>Installing on Ubuntu</title>
-
-    <para>How you go about installing OpenStack Compute depends on your goals
-    for the installation. You can use an ISO image, you can use a scripted
-    installation, and you can manually install with a step-by-step
-    installation.</para>
-
-    <section xml:id="iso-ubuntu-installation">
-      <title>ISO Distribution Installation</title>
-
-      <para>You can download and use an ISO image that is based on a Ubuntu
-      Linux Server 10.04 LTS distribution containing only the components
-      needed to run OpenStack Compute. See <link
-      xlink:href="http://sourceforge.net/projects/stackops/files/">http://sourceforge.net/projects/stackops/files/</link>
-      for download files and information, license information, and a
-      <filename>README</filename> file. For documentation on the StackOps
-      distro, see <link
-      xlink:href="http://docs.stackops.org">http://docs.stackops.org</link>.
-      For free support, go to <link
-      xlink:href="http://getsatisfaction.com/stackops">http://getsatisfaction.com/stackops</link>.</para>
-    </section>
-
-    <section xml:id="scripted-ubuntu-installation">
-      <title>Scripted Installation</title>
-
-      <para>You can download a script for a standalone install for
-      proof-of-concept, learning, or for development purposes for Ubuntu 11.04
-      at <link
-      xlink:href="http://devstack.org">https://devstack.org</link>.</para>
-
-      <orderedlist>
-        <listitem>
-          <para>Install Ubuntu 11.04 (Natty):</para>
-
-          <para>In order to correctly install all the dependencies, we assume
-          a specific version of Ubuntu to make it as easy as possible.
-          OpenStack works on other flavors of Linux (and some folks even run
-          it on Windows!) We recommend using a minimal install of Ubuntu
-          server in a VM if this is your first time.</para>
-        </listitem>
-
-        <listitem>
-          <para>Download DevStack:</para>
-
-          <screen><prompt>$</prompt> <userinput>git clone git://github.com/openstack-dev/devstack.git</userinput></screen>
-
-          <para>The devstack repo contains a script that installs OpenStack
-          Compute, the Image Service and the Identity Service and offers
-          templates for configuration files plus data scripts.</para>
-        </listitem>
-
-        <listitem>
-          <para>Start the install:</para>
-
-          <screen><prompt>$</prompt> <userinput>cd devstack; ./stack.sh</userinput></screen>
-
-          <para>It takes a few minutes, we recommend <link
-          xlink:href="http://devstack.org/stack.sh.html">reading the
-          well-documented script</link> while it is building to learn more
-          about what is going on.</para>
-        </listitem>
-      </orderedlist>
-    </section>
-
-    <section xml:id="manual-ubuntu-installation">
-      <title>Manual Installation on Ubuntu</title>
-
-      <para>The manual installation involves installing from packages on
-      Ubuntu 11.10 or 11.04 as a user with root (or sudo) permission. The
-      <link
-      xlink:href="http://docs.openstack.org/diablo/openstack-compute/starter/content/">OpenStack
-      Starter Guide</link> provides instructions for a manual installation
-      using the packages shipped with Ubuntu 11.10. The <link
-      xlink:href="http://docs.openstack.org/diablo/openstack-compute/install/content/">OpenStack
-      Install and Deploy Manual</link> provides instructions for installing
-      using packages provided by OpenStack community members. Refer to those
-      manuals for detailed instructions by going to <link
-      xlink:href="http://docs.openstack.org">http://docs.openstack.org</link>
-      and clicking the links next to the manual title.</para>
-    </section>
+  <section xml:id="installing-openstack-compute-on-debian">
+    <title>Installing OpenStack Compute on Debian</title>
+    <para>Starting with Debian 7.0 "Wheezy", the OpenStack packages are 
+      provided as part of the distribution.</para>
+    <para>
+      For the management or controller node install the following packages: (via <command>apt-get install</command>)
+      
+<itemizedlist>
+  <listitem><para><literal>nova-api</literal></para></listitem>
+<listitem><para><literal>nova-scheduler</literal></para></listitem>
+<listitem><para><literal>glance</literal></para></listitem>
+<listitem><para><literal>keystone</literal></para></listitem>
+<listitem><para><literal>mysql-server</literal></para></listitem>
+<listitem><para><literal>rabbitmq</literal></para></listitem>
+<listitem><para><literal>memcached</literal></para></listitem>
+<listitem><para><literal>openstack-dashboard</literal></para></listitem>
+</itemizedlist>
+        
+    </para>
+    <para>
+      For the compute node(s) install the following packages:
+      <itemizedlist>
+<listitem><para><literal>nova-compute</literal></para></listitem>
+<listitem><para><literal>nova-network</literal></para></listitem>
+<listitem><para><literal>nova-api</literal></para></listitem>            
+        </itemizedlist>
+    </para>
+    <note>
+      <para>
+        Because this manual takes active advantage of the "sudo" command,
+        it would be easier for you to add to it your Debian system, by doing:</para>
+        
+<screen><prompt>#</prompt> <userinput>usermod -a -G sudo "myuser"</userinput></screen>
+              
+        <para>then re-login.
+        Otherwise you will have to replace every "<command>sudo</command>" call by executing from
+        root account.
+      </para>
+    </note>
   </section>
-
+  
   <section xml:id="installing-openstack-compute-on-rhel6">
     <title>Installing on Fedora or Red Hat Enterprise Linux 6</title>
 
@@ -224,7 +182,91 @@
       </varlistentry>
     </variablelist>
   </section>
-
+  <section xml:id="installing-openstack-compute-on-ubuntu">
+    <title>Installing on Ubuntu</title>
+    
+    <para>How you go about installing OpenStack Compute depends on your goals
+      for the installation. You can use an ISO image, you can use a scripted
+      installation, and you can manually install with a step-by-step
+      installation.</para>
+    
+    <section xml:id="iso-ubuntu-installation">
+      <title>ISO Distribution Installation</title>
+      
+      <para>You can download and use an ISO image that is based on a Ubuntu
+        Linux Server 10.04 LTS distribution containing only the components
+        needed to run OpenStack Compute. See <link
+          xlink:href="http://sourceforge.net/projects/stackops/files/">http://sourceforge.net/projects/stackops/files/</link>
+        for download files and information, license information, and a
+        <filename>README</filename> file. For documentation on the StackOps
+        distro, see <link
+          xlink:href="http://docs.stackops.org">http://docs.stackops.org</link>.
+        For free support, go to <link
+          xlink:href="http://getsatisfaction.com/stackops">http://getsatisfaction.com/stackops</link>.</para>
+    </section>
+    
+    <section xml:id="scripted-ubuntu-installation">
+      <title>Scripted Installation</title>
+      
+      <para>You can download a script for a standalone install for
+        proof-of-concept, learning, or for development purposes for Ubuntu 11.04
+        at <link
+          xlink:href="http://devstack.org">https://devstack.org</link>.</para>
+      
+      <orderedlist>
+        <listitem>
+          <para>Install Ubuntu 11.04 (Natty):</para>
+          
+          <para>In order to correctly install all the dependencies, we assume
+            a specific version of Ubuntu to make it as easy as possible.
+            OpenStack works on other flavors of Linux (and some folks even run
+            it on Windows!) We recommend using a minimal install of Ubuntu
+            server in a VM if this is your first time.</para>
+        </listitem>
+        
+        <listitem>
+          <para>Download DevStack:</para>
+          
+          <screen><prompt>$</prompt> <userinput>git clone git://github.com/openstack-dev/devstack.git</userinput></screen>
+          
+          <para>The devstack repo contains a script that installs OpenStack
+            Compute, the Image Service and the Identity Service and offers
+            templates for configuration files plus data scripts.</para>
+        </listitem>
+        
+        <listitem>
+          <para>Start the install:</para>
+          
+          <screen><prompt>$</prompt> <userinput>cd devstack; ./stack.sh</userinput></screen>
+          
+          <para>It takes a few minutes, we recommend <link
+            xlink:href="http://devstack.org/stack.sh.html">reading the
+            well-documented script</link> while it is building to learn more
+            about what is going on.</para>
+        </listitem>
+      </orderedlist>
+    </section>
+    
+    <section xml:id="manual-ubuntu-installation">
+      <title>Manual Installation on Ubuntu</title>
+      
+      <para>The manual installation involves installing from packages
+        shipped on Ubuntu 12.04 as a user with root (or sudo)
+        permission. The <link
+          xlink:href="http://docs.openstack.org/diablo/openstack-compute/starter/content/"
+          >Oneiric OpenStack Starter Guide</link> provides
+        instructions for a manual installation using the packages
+        shipped with Ubuntu 11.10. The <link
+          xlink:href="http://docs.openstack.org/diablo/openstack-compute/install/content/"
+          >OpenStack Install and Deploy Manual</link> provides
+        instructions for installing using Ubuntu 12.04 packages. Refer
+        to those manuals for detailed instructions by going to <link
+          xlink:href="http://docs.openstack.org"
+          >http://docs.openstack.org</link> and clicking the links
+        next to the manual title.</para>
+    </section>
+  </section>
+  
   <section xml:id="configuring-openstack-compute-basics">
     <title>Post-Installation Configuration for OpenStack Compute</title>
 
