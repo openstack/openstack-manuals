@@ -1,0 +1,4623 @@
+<book xmlns="http://docbook.org/ns/docbook"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:svg="http://www.w3.org/2000/svg"
+  xmlns:html="http://www.w3.org/1999/xhtml"
+  version="5.0"
+  xml:id="programming-openstack-compute-api-with-shell-and-python-1st-ed">
+  <?rax pdf.url="../openstackapi-programming.pdf"?>
+  <title>Programming OpenStack Compute API</title>
+  <info>
+    <author>
+      <personname>
+        <firstname>Jacek</firstname>
+        <surname>Artymiak</surname>
+      </personname>
+      <affiliation>
+        <orgname>Rackspace</orgname>
+      </affiliation>
+    </author>
+    <edition>1st</edition>
+    <copyright>
+      <year>2011</year>
+      <year>2012</year>
+      <holder>OpenStack LLC</holder>
+    </copyright>
+    <releaseinfo>1.1</releaseinfo>
+    <productname>OpenStack Compute</productname>
+    <pubdate>2012-03-21</pubdate>
+    <legalnotice role="apache2">
+      <annotation>
+        <remark>Copyright details are filled in by the template.</remark>
+      </annotation>
+    </legalnotice>
+    <abstract>
+      <para>This is a book about programming the OpenStack Compute Nova API,
+        v1.1. It is meant to be read by both programmers and system
+        administrators familiar with programming the Unix shell (Bash, sh)
+        or writing code in the Python programming language. As such it
+        will be of interest to any system administrator and programmer
+        using BSD, Linux, Unix, Mac OS X, and Microsoft Windows operating
+        systems.</para>
+    </abstract>
+  </info>
+    <chapter xml:id="why-should-you-use-cloud-computing">
+      <title>Why Should You Use Cloud Computing?</title>
+      <para>
+        Cloud computing is a way to build flexible server farms that can
+        augment or replace the old-style server farms with their high
+        maintenance cost and inflexible hardware configuration. They
+        make it possible to do the things that are impossible with
+        traditional hardware.
+      </para>
+      <para>
+        Thanks to cloud computing, things like replacing Microsoft
+        Windows Server with Linux on 100+ machines; replacing 10 1-core
+        servers with 10 4-core servers; or, doubling the number of the
+        front-end servers to handle the periodic increase in traffic and
+        then taking them off-line when traffic drops off, can be done in
+        a couple of minutes. And since you can rent cloud servers by the
+        hour, you could boot 100 of them to do in one hour a data
+        processing job that would otherwise take one server 100 hours to
+        complete. The price for that job will be the same. Try doing
+        that with your traditional data center! (And don't forget to
+        compare the pricing.)
+      </para>
+    <section xml:id="how-will-you-manage-it-all">
+      <title>How Will You Manage It All?</title>
+      <para>
+        One of the first things you may think of is how on Earth are you
+        supposed to manage all those computing and storage resources?
+        All cloud computing services providers offer basic web-based
+        control panels, which are good enough as general administration
+        dashboards, but most probably won't meet your needs, if you want
+        to create a dynamically reconfigurable virtual server farm.
+      </para>
+      <para>
+        A better way to manage your cloud is via a set of scripts that
+        communicate with your cloud provider's infrastructure. This is
+        done via a Programming Application Interface (API), which is
+        offered by virtually any cloud computing provider.
+      </para>
+      <para>
+        The problem with APIs is that there are so many of them. Every
+        cloud provider's infrastructure is different and that fact is
+        reflected in the functionality exposedvia their APIs. Although
+        the fragmentation of the cloud management APIs is genuinely
+        justified, it doesn't make any easier for cloud server farm
+        administrators to deploy their servers on different cloud
+        infrastructures.
+      </para>
+    </section>
+    <section xml:id="the-solution-openstack-compute-api">
+      <title>The Solution: OpenStack Compute API</title>
+      <para>
+        Fortunately, you are not alone with this problem. The
+        fanatically helpful people at Rackspace have decided that it
+        would be beneficial for their customers and themselves if they
+        created an open standard for common cloud services along with an
+        accompanying open cloud management API. That was the beginning
+        of the OpenStack project and the OpenStack Compute API. Being
+        open, it can be used by other hosting companies.
+      </para>
+      <para>
+        When other cloud computing providers adopt the OpenStack Compute
+        API, you will be able to deploy your servers with different
+        providers using the same set of tools by changing only three
+        pieces of information in your code:
+      </para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            the URL of the endpoint for the calls to the API;
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            the username of the authorized user;
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            the password of the authorized user.
+          </para>
+        </listitem>
+      </itemizedlist>
+      <para>
+        From the programmer's point of view, OpenStack Compute API looks
+        like another web API, similar to the Flickr API or the Twitter
+        API—if someone decides to clone the Flickr API you will not have
+        to change anything in your own code. Similarly, if your cloud
+        infrastructure provider offers OpenStack Compute cloud servers,
+        storage, and APIs, you do not have to learn the new ways of
+        doing similar things, you just change the endpoint URL and your
+        user credentials.
+      </para>
+    </section></chapter>
+  <chapter xml:id="the-basics">
+    <title>The Basics</title>
+    <para>
+      There are two ways to start learning OpenStack Compute API
+      programming—you can get an account with an OpenStack cloud
+      infrastructure provider or you can download a test virtual machine
+      environment from the OpenStack project's servers by following the
+      instructions published at this URL:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          <emphasis><link xlink:href="http://wiki.openstack.org/SingleNodeNovaVagrantChef">http://wiki.openstack.org/SingleNodeNovaVagrantChef</link></emphasis>
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      Please bear in mind that the OpenStack project is moving at a
+      fairly rapid pace and things sometimes don't work or need to be
+      fixed by hand. For example, the trainig environment configuration
+      may have to be adjusted a little. When you hit a snag, ask for
+      help on the OpenStack site.
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          <emphasis><link xlink:href="http://openstack.org">http://openstack.org</link></emphasis>
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      Sometimes you won't have to ask. The OpenStack project is
+      well-documented and you can find all of the necessary information
+      at the following URL:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          <emphasis><link xlink:href="http://docs.openstack.org">http://docs.openstack.org</link></emphasis>
+        </para>
+      </listitem>
+    </itemizedlist>
+    <section xml:id="getting-python">
+      <title>Getting Python</title>
+      <para>
+        The OpenStack Compute Nova API can be accessed in any
+        programming language. In this book we present examples written
+        in the Python programming languge and if you want to follow them
+        on your own, you will need a Python interpreter.
+      </para>
+      <para>
+        Ideally, you should be using the latest Python interpreter from
+        the 2.x branch, which can be any version starting with number
+        2.6.1 upwards. The Python interpreter does not have to be
+        installed on you virtual server machines, just the ones you will
+        be using to communicate with the OpenStack Compute Application
+        Programming Interface (API).
+      </para>
+      <para>
+        Let's walk through the installation process.
+      </para>
+    </section>
+    <section xml:id="installing-python-on-your-machine">
+      <title>Installing Python on Your Machine</title>
+      <para>
+        Python is a popular scripting language that ships pre-installed
+        on Mac OS X and some Linux distributions. You can verify if and
+        which version of the Python interpreter you have installed on
+        your system with the following command (must be issued on the
+        command line, do not type the dollar sign):
+      </para>
+      <screen>
+$ python --version
+</screen>
+      <para>
+        The version you need is at least 2.6.1. (Please use the latest
+        2.<emphasis>x</emphasis>.<emphasis>x</emphasis> version.)
+      </para>
+      <para>
+        If you are working in a graphical user interface environment and
+        you are not sure how to get to the command line, try the
+        following advice:
+      </para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            <emphasis role="strong">Linux</emphasis> — click on the
+            toolbar located along one of the edges of the screen and
+            locate the <emphasis role="strong">Terminal</emphasis> menu
+            option in the <emphasis role="strong">Accessories</emphasis>
+            menu. On Ubuntu Linux you will find it in
+            <emphasis>Applications &gt; Accessories &gt;
+            Terminal</emphasis>.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis role="strong">Mac OS X</emphasis> — press
+            Ctrl+Space to display the
+            <emphasis role="strong">Spotlight</emphasis> search field.
+            Type <emphasis role="strong">terminal</emphasis> and select
+            the <emphasis role="strong">Terminal</emphasis> application
+            from the list of results.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis role="strong">Microsoft Windows</emphasis> — click
+            the <emphasis role="strong">Start</emphasis> menu button,
+            select <emphasis role="strong">Run</emphasis>, type
+            <emphasis role="strong">cmd</emphasis> and hit the
+            Enter/Return key.
+          </para>
+        </listitem>
+      </itemizedlist>
+      <para>
+        If you do not have Python installed on your system or it is a
+        version earlier than 2.6.1, you will need to add a Python
+        interpreter to your system by hand.
+      </para>
+      <para>
+        Python installation packages exist for all popular operating
+        systems, and if you cannot get one for your favorite work
+        environment, you can usually build it from the sources. You can
+        download the Python interpreter binaries or sources from the
+        official Python download page:
+      </para>
+      <para>
+        <emphasis><link xlink:href="http://www.python.org/getit/">http://www.python.org/getit/</link></emphasis>
+      </para>
+      <para>
+        If your favorite operating system is not listed on that page,
+        refer to your system's documentation for information on adding
+        external packages. Various variants of Unix have their own
+        packaging systems that make sure the software you install is
+        properly configured on your system. For example, the right way
+        to add Python on Ubuntu Linux is via the
+        <emphasis role="strong">apt-get</emphasis> command:
+      </para>
+      <screen>
+$ sudo apt-get install python
+</screen>
+      <para>
+        Whenever possible, use pre-made Python 2.<emphasis>x</emphasis>
+        packages. You can always build software from the sources, but it
+        should be your last choice, if you are looking for convenience.
+      </para>
+      <para>
+        If you are installing Python on a computer running Microsoft
+        Windows, you may have to add the path to the Python interpreter
+        to the <emphasis role="strong">Path</emphasis> environment
+        variable. On a Microsoft Windows 7 system, you will need to open
+        the <emphasis role="strong">Environment Variables</emphasis>
+        dialog. You can do it in the following way:
+      </para>
+      <orderedlist numeration="arabic">
+        <listitem>
+          <para>
+            Click the <emphasis role="strong">Start</emphasis> button.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Right-click the <emphasis role="strong">Computer</emphasis>
+            menu item.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Select <emphasis role="strong">Properties</emphasis>.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Select <emphasis role="strong">Advanced System
+            Settings</emphasis>.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Click the <emphasis role="strong">Environment
+            Variables</emphasis> button.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Click the <emphasis role="strong">Path</emphasis> entry on
+            the <emphasis role="strong">System Variables</emphasis>
+            list.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Click the <emphasis role="strong">Edit</emphasis> button.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Add <emphasis role="strong">;C:26</emphasis> (or
+            <emphasis role="strong">;C:27</emphasis> for Python
+            2.7.<emphasis>x</emphasis>) to the end of the string shown
+            in the text field of the edit dialog.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Click the <emphasis role="strong">OK</emphasis> button.
+          </para>
+        </listitem>
+      </orderedlist>
+      <para>
+        Please check the real path to the Python interpreter on your
+        system. You can do that by browsing the system disk. Look for
+        the topmost folder/path whose name begins with
+        <emphasis role="strong">Python</emphasis>.
+      </para>
+    </section>
+    <section xml:id="examples">
+      <title>Examples</title>
+      <para>
+        Examples from this book can be found in the repository found at
+        the following URL:
+      </para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            <emphasis><link xlink:href="http://devguide.net/books/openstackapi">http://devguide.net/books/openstackapi</link></emphasis>
+          </para>
+        </listitem>
+      </itemizedlist>
+      <para>
+        Please note that all examples in this book have been written in
+        a way that is meant to explain the concepts and the interactions
+        between your code and the OpenStack Compute API. In real life,
+        you will want to use additional error handling and data
+        processing code.
+      </para>
+    </section>
+    <section xml:id="getting-the-keys-to-the-kingdom">
+      <title>Getting the Keys to the Kingdom</title>
+      <para>
+        Depending on the setup you are going to use, there could be
+        three ways to authenticate yourself with an OpenStack Compute
+        v1.1 API:
+      </para>
+      <orderedlist numeration="arabic">
+        <listitem>
+          <para>
+            Username/password — needs to be given with every call to the
+            OpenStack Compute API. Not very convenient nor secure.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            An authentication token — typically OAuth, but could be any
+            kind of a secret string of bits with an expiry date and
+            time. This is the preferred way to authenticate yourself
+            when calling the OpenStack Compute API. You obtain your
+            authentication token from the authentication server using
+            your username and password, which has to be given only once
+            during the lifetime of the token.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            An API key — works just like the authentication token, but
+            does not have an expiry date/time. You or your OpenStack
+            provider's administrator/support staff can revoke it and
+            generate a new one. It is not as safe as an authentication
+            token, which can have a short lifespan, but at least you
+            don't have to send your username and password with every API
+            call. You don't have to send those credentials at all, in
+            fact.
+          </para>
+        </listitem>
+      </orderedlist>
+      <para>
+        When you decide to use the username/password authentication, you
+        will have to send it with every request; when you use a token,
+        you will need to send username/password once and you will get a
+        secret string of bytes which can be reused until it expires on
+        its own or when the OpenStack cloud provider's administrator
+        revokes it. With the API key you do not have to send your
+        username/password credentials, but you are responsible for
+        expiring the key.
+      </para>
+    </section>
+    <section xml:id="remembering-basic-security-hygiene">
+      <title>Remembering Basic Security Hygiene</title>
+      <para>
+        Please make sure that the scripts you are pasting your
+        credentials into are not readable by other users because the
+        authentication tokens, the API keys, as well as your username
+        and password are literally the key to your account and with it
+        anyone who gets a hold of it will be able to wreak havoc with
+        your cloud.
+      </para>
+      <para>
+        If you suspect that the worst might have happened, revoke the
+        compromised credentials and generate new ones by folowing the
+        instructions provided by your OpenStack cloud provider. It will
+        make all scripts, rouge and legitimate, inoperable, so once you
+        cut them off, you'll need to fix the security holes and then
+        replace the compromised credentials in your scripts with the new
+        ones.
+      </para>
+    </section>
+    <section xml:id="getting-the-authentication-token">
+      <title>Getting the Authentication Token</title>
+      <para>
+        In order to obtain an API token you will need to request it from
+        your OpenStack cloud provider's authentication server. Your
+        provider will have to give you the URL of their authentication
+        server as well as your username and password.
+      </para>
+      <para>
+        The OpenStack Compute API is implemented using a convention
+        known as &quot;representational state transfer&quot; (REST),
+        which is a way of using various HTTP methods (GET, POST, PUT,
+        DELETE) to manage resources described using paths to those
+        resources. It sounds more complex than it is in reality.
+      </para>
+      <para>
+        The following example shows how to use the
+        <emphasis role="strong">curl</emphasis> command to obtain the
+        authentication token using the HTTP GET method:
+      </para>
+      <screen>
+$ curl -d '{&quot;passwordCredentials&quot;: {&quot;username&quot;: &quot;joe&quot;, &quot;password&quot;: &quot;shhh&quot;}}' -H &quot;Content-type: application/json&quot; http://localhost:5000/v2.0/tokens
+</screen>
+      <itemizedlist>
+        <listitem>
+          <para>
+            <emphasis role="strong">joe</emphasis> — your username,
+            replace <emphasis role="strong">joe</emphasis> without your
+            username, unless it is
+            <emphasis role="strong">joe</emphasis>.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis role="strong">shhh</emphasis> — the password for
+            your OpenStack account, please do not use
+            <emphasis role="strong">shhh</emphasis>.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis role="strong">localhost:5000</emphasis> — the URL
+            of the authentication server,
+            <emphasis role="strong">localhost</emphasis> is just a
+            placeholder, please use an IP address or a full hostname
+            (e.g. <emphasis>somehost.example.com</emphasis>). Please pay
+            attention to the port number, it does matter. If your
+            provider fails to tell you which port should be used, try
+            <emphasis role="strong">5000</emphasis> and
+            <emphasis role="strong">5001</emphasis> as these are
+            typically used by the OpenStack authentication servers to
+            listen for authentication requests.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis role="strong">/v2.0/tokens</emphasis> — the path
+            to the token provider.
+          </para>
+        </listitem>
+      </itemizedlist>
+      <para>
+        What you will get in return should look like the following
+        stream of code:
+      </para>
+      <screen>
+{&quot;auth&quot;: {&quot;token&quot;: {&quot;expires&quot;: &quot;2015-02-05T00:00:00&quot;, &quot;id&quot;: &quot;999888777666&quot;}, &quot;serviceCatalog&quot;: {&quot;glance&quot;: [{&quot;adminURL&quot;: &quot;http://10.0.2.15:9292/v1&quot;, &quot;region&quot;: &quot;RegionOne&quot;, &quot;internalURL&quot;: &quot;http://10.0.2.15:9292/v1&quot;, &quot;publicURL&quot;: &quot;http://10.0.2.15:9292/v1&quot;}], &quot;identity&quot;: [{&quot;adminURL&quot;: &quot;http://10.0.2.15:5001/v2.0&quot;, &quot;region&quot;: &quot;RegionOne&quot;, &quot;internalURL&quot;: &quot;http://10.0.2.15:5000/v2.0&quot;, &quot;publicURL&quot;: &quot;http://10.0.2.15:5000/v2.0&quot;}], &quot;nova&quot;: [{&quot;adminURL&quot;: &quot;http://10.0.2.15:8774/v1.1/openstack&quot;, &quot;region&quot;: &quot;RegionOne&quot;, &quot;internalURL&quot;: &quot;http://10.0.2.15:8774/v1.1/openstack&quot;, &quot;publicURL&quot;: &quot;http://10.0.2.15:8774/v1.1/openstack&quot;}]}}}
+</screen>
+      <para>
+        It is hard to read, so here's the same output formatted for your
+        convenience:
+      </para>
+      <screen>
+{
+  &quot;auth&quot;: {
+    &quot;token&quot;: {
+      &quot;expires&quot;: &quot;2015-02-05T00:00:00&quot;, 
+      &quot;id&quot;: &quot;999888777666&quot;
+    }, 
+    &quot;serviceCatalog&quot;: {
+      &quot;glance&quot;: [
+        {
+          &quot;adminURL&quot;: &quot;http://10.0.2.15:9292/v1&quot;, 
+          &quot;region&quot;: &quot;RegionOne&quot;, 
+          &quot;internalURL&quot;: &quot;http://10.0.2.15:9292/v1&quot;, 
+          &quot;publicURL&quot;: &quot;http://10.0.2.15:9292/v1&quot;
+        }
+      ], 
+      &quot;nova&quot;: [
+        {
+          &quot;adminURL&quot;: &quot;http://10.0.2.15:8774/v1.1/openstack&quot;, 
+          &quot;region&quot;: &quot;RegionOne&quot;, 
+          &quot;internalURL&quot;: &quot;http://10.0.2.15:8774/v1.1/openstack&quot;, 
+          &quot;publicURL&quot;: &quot;http://10.0.2.15:8774/v1.1/openstack&quot;
+        }
+      ], 
+      &quot;identity&quot;: [
+        {
+          &quot;adminURL&quot;: &quot;http://10.0.2.15:5001/v2.0&quot;, 
+          &quot;region&quot;: &quot;RegionOne&quot;, 
+          &quot;internalURL&quot;: &quot;http://10.0.2.15:5000/v2.0&quot;, 
+          &quot;publicURL&quot;: &quot;http://10.0.2.15:5000/v2.0&quot;
+        }
+      ]
+    }
+  }
+}
+</screen>
+      <para>
+        The reponse contains the token itself (the
+        <emphasis role="strong">id</emphasis> key in the
+        <emphasis role="strong">token</emphasis> dictionary), the token
+        expiry date/time and the catalog of services you can talk to
+        that accept the token. The catalog lists the names of the
+        services you can access together with their region names, the
+        administration URL, the internal URL and the public URL for each
+        region. Regions are groups of servers, server farms, etc.
+        usually located in the same geogrphical area.
+      </para>
+      <para>
+        Each region is represented as a separate dictionary and those
+        dictionaries are items in a list that groups region information
+        for each service. This is an important exception to the overall
+        composition of the JSON response which is arranged in a form of
+        a nested key/value directory.
+      </para>
+      <para>
+        Although this is not going to be a frequent occurence in the
+        real world, you may get bitten by server misconfiguration in
+        test environments. If your code extracts the endpoint URLs
+        automatically, and later hangs or starts reporting strange
+        network errors, check if the URLs and port numbers returned by
+        the authentication server match the reality. It is easy to
+        forget to set the right hostname/port. The OpenStack
+        configuration is a fairly complex process and it is easy to get
+        confused. If you get an OpenStack training environment in the
+        form of a VirtualBox or VMware virtual machine, try replacing
+        whatever IP addresses or hostnames are returned by the
+        authentication server with
+        <emphasis role="strong">localhost</emphasis> or run
+        <emphasis role="strong">ifconfig</emphasis> to see which IP
+        addresses have been assigned to the virtual machine.
+      </para>
+      <section xml:id="what-about-https">
+        <title>What About HTTPS?</title>
+        <para>
+          All calls to the OpenStack Compute API presented in the
+          examples included in this book use unencrypted HTTP
+          connections for the convenience of testing things. In real
+          life you will most likely be using encrypted HTTPS
+          connections, which need some additional care.
+        </para>
+        <para>
+          When you want to call your OpenStack provider's API servers
+          you will most likely need to use a secure HTTPS connection.
+          You will recognize it by the
+          <emphasis role="strong">https</emphasis> prefix. If you are
+          given an <emphasis role="strong">http</emphasis> URL, try
+          replacing it with <emphasis role="strong">https</emphasis> and
+          see if that one works.
+        </para>
+        <para>
+          If you run into problems with SSL certificates while using
+          <emphasis role="strong">curl</emphasis>, read the instructions
+          published at the following URL:
+        </para>
+        <itemizedlist>
+          <listitem>
+            <para>
+              <emphasis><link xlink:href="http://curl.haxx.se/docs/sslcerts.html">http://curl.haxx.se/docs/sslcerts.html</link></emphasis>
+            </para>
+          </listitem>
+        </itemizedlist>
+        <para>
+          Most problems with SSL are caused by SSL certificate
+          misconfiguration on the server side or by the use of
+          self-generated SSL certificates.
+        </para>
+        <para>
+          Using HTTPS in Python scripts is explained later in this
+          chapter.
+        </para>
+      </section>
+    </section>
+    <section xml:id="using-python-to-obtain-the-authentication-token">
+      <title>Using Python to Obtain the Authentication Token</title>
+      <para>
+        When you want to obtain an API token you can do it using two
+        standard Python modules:
+        <emphasis role="strong">httplib</emphasis> and
+        <emphasis role="strong">json</emphasis>. Both are available in
+        all major branches of Python: 2.6.<emphasis>x</emphasis>,
+        2.7.<emphasis>x</emphasis>, and
+        3.<emphasis>x</emphasis>.<emphasis>x</emphasis>. If you don't
+        like them, you can always use
+        <emphasis role="strong">requests</emphasis> and
+        <emphasis role="strong">simplejson</emphasis>.
+      </para>
+      <screen>
+#!/usr/bin/python
+
+import httplib
+import json
+
+# arguments
+
+## make sure that url is set to the actual hostname/IP address,
+## port number
+
+url = &quot;192.168.10.1:5000&quot;
+
+## make sure that osuser is set to your actual username, &quot;admin&quot;
+## works for test installs on virtual machines, but it's a hack
+
+osuser = &quot;joe&quot;
+
+## use something else than &quot;shhh&quot; for you password
+
+ospassword = &quot;shhh&quot;
+
+params = '{&quot;passwordCredentials&quot;:{&quot;username&quot;:osuser, &quot;password&quot;:ospassword}}'
+
+headers = {&quot;Content-Type&quot;: &quot;application/json&quot;}
+
+# HTTP connection
+
+conn = httplib.HTTPConnection(url)
+conn.request(&quot;POST&quot;, &quot;/v2.0/tokens&quot;, params, headers)
+
+# HTTP response
+
+response = conn.getresponse()
+data = response.read()
+dd = json.loads(data)
+
+conn.close()
+
+apitoken = dd['auth']['token']['id']
+
+print &quot;Your token is: %s&quot; % apitoken
+</screen>
+      <para>
+        When you run <emphasis role="strong">gettoken.py</emphasis> you
+        should see the following output (the token will hopefully be
+        different):
+      </para>
+      <screen>
+$ python ./gettoken.py
+Your token is: 999888777666
+</screen>
+    </section>
+    <section xml:id="getting-the-api-endpoint-url">
+      <title>Getting the API Endpoint URL</title>
+      <para>
+        The API token is only one essential piece of information you
+        need to know to use the OpenStack Compute API. Another is the
+        URL of the Nova API end point. That's where you will send your
+        calls to the OpenStack Compute API accompanied by the token you
+        just obtained. That information may be given to you by your
+        OpenStack cloud provider or you may be able to extract that
+        information from the authentication server's response:
+      </para>
+      <screen>
+#!/usr/bin/python
+
+import httplib
+import json
+
+# arguments
+
+## change to False when you are using the test environment
+
+usehttps = True
+
+## make sure that url is set to the actual hostname/IP address,
+## port number
+
+url = &quot;192.168.10.1:5000&quot;
+
+## make sure that osuser is set to your actual username, &quot;admin&quot;
+## works for test installs on virtual machines, but it's a hack
+
+osuser = &quot;joe&quot;
+
+## use something else than &quot;shhh&quot; for you password
+
+ospassword = &quot;shhh&quot;
+
+params = '{&quot;passwordCredentials&quot;:{&quot;username&quot;:osuser, &quot;password&quot;:ospassword}}'
+
+headers = {&quot;Content-Type&quot;: &quot;application/json&quot;}
+
+# HTTP connection
+
+if (usehttps == True):
+    conn = httplib.HTTPSConnection(url, key_file='../cert/priv.pem', cert_file='../cert/srv_test.crt')
+else:
+    conn = httplib.HTTPConnection(url)
+
+conn.request(&quot;POST&quot;, &quot;/v2.0/tokens&quot;, params, headers)
+
+# HTTP response
+
+response = conn.getresponse()
+data = response.read()
+dd = json.loads(data)
+
+conn.close()
+
+apitoken = dd['auth']['token']['id']
+apiurl = dd['auth']['serviceCatalog']['nova'][0]['publicURL']
+
+print &quot;Your token is: %s&quot; % apitoken
+print &quot;Your Nova URL is: %s&quot; % apiurl
+</screen>
+      <para>
+        When you run that script, you should see the following output.
+        The token will most likely be something different than
+        <emphasis role="strong">999888777666</emphasis> and the Nova URL
+        will not always contain
+        <emphasis role="strong">10.0.2.15</emphasis>:
+      </para>
+      <screen>
+$ ./gettokenurl.py 
+Your token is: 999888777666
+Your Nova URL is: http://10.0.2.15:8774/v1.1/openstack
+</screen>
+      <section xml:id="getting-your-nova-credentials----the-drop-in-script-snippet-for-your-python-scripts">
+        <title>Getting Your Nova Credentials -- The Drop-In Script
+        Snippet for Your Python Scripts</title>
+        <para>
+          You will be coming back to the token and API URL extraction
+          code over and over again, which is why I decided to place it
+          in a separate section of this book. That way I can make the
+          examples shorter and you can focus of the important stuff.
+          Here's the code in all it's glory:
+        </para>
+        <screen>
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+
+### Get OpenStack Credentials
+
+# arguments
+
+## change to False when you are using the test environment
+
+usehttps = True
+
+## make sure that url1 is set to the actual hostname/IP address,
+## port number
+
+url1 = &quot;localhost:5000&quot;
+
+## make sure that osuser is set to your actual username, &quot;admin&quot;
+## works for test installs on virtual machines, but it's a hack
+
+osuser = &quot;joe&quot;
+
+## use something else than &quot;shhh&quot; for you password
+
+ospassword = &quot;shhh&quot;
+
+params1 = '{&quot;passwordCredentials&quot;:{&quot;username&quot;:osuser, &quot;password&quot;:ospassword}}'
+headers1 = {&quot;Content-Type&quot;: &quot;application/json&quot;}
+
+# HTTP connection #1
+
+if (usehttps == True):
+    # set key_file and cert_file to wherever the key and cert files
+    # are located
+    conn1 = httplib.HTTPSConnection(url1, key_file='../cert/priv.pem', cert_file='../cert/srv_test.crt')
+else:
+    conn1 = httplib.HTTPConnection(url1)
+
+conn1.request(&quot;POST&quot;, &quot;/v2.0/tokens&quot;, params1, headers1)
+
+# HTTP response #1
+
+response1 = conn1.getresponse()
+data1 = response1.read()
+dd1 = json.loads(data1)
+
+conn1.close()
+
+# extract token and url
+
+apitoken = dd1['auth']['token']['id']
+apiurl = dd1['auth']['serviceCatalog']['nova'][0]['publicURL']
+apiurlt = urlparse(dd1['auth']['serviceCatalog']['nova'][0]['publicURL'])
+
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+</screen>
+      </section>
+    </section>
+  </chapter>
+  <chapter xml:id="servers">
+    <title>Servers</title>
+    <para>
+      Servers are the cornerstone of the OpenStack Compute cloud
+      infrastructure. While the future implementation of OpenStack will
+      most likely offer independent file storage, content delivery
+      networks, or cloud networking components, servers are what we have
+      right now.
+    </para>
+    <section xml:id="creating-servers">
+      <title>Creating Servers</title>
+      <para>
+        When you create an account with your OpenStack Compute provider
+        you will need to create your servers yourself, either by booting
+        them via a web interface or with an API call. The call to create
+        a server must use the POST method and the body of the request
+        must be a JSON bundle that contains three essential arguments:
+      </para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            <emphasis role="strong">name</emphasis> — the name of the
+            new server.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis role="strong">imageRef</emphasis> — the URL of the
+            server image.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis role="strong">flavorRef</emphasis> — the URL of
+            the server flavor.
+          </para>
+        </listitem>
+      </itemizedlist>
+      <para>
+        A short explanation is in order. <emphasis>Flavors</emphasis>
+        contain definitions of the virtual hardware that will be used to
+        run the server system installed from an
+        <emphasis>image</emphasis>. Images can be clean operating
+        systems, or they can be modified by yourself in order to use
+        them as virtual cookie cutters. For example, you could use
+        Ubuntu to configure a web server and save the contents of the
+        filesystem as an image that will be used to create as many
+        additional web servers as necessary. This is faster, easier and
+        more reliable than booting a clean system and configuring it
+        from scratch every time you want to add a new web server.
+      </para>
+      <para>
+        Images are not tied to any particular virtual hardware flavor.
+        The only limit is the size of the storage and the amount of RAM
+        available for a particular flavor.
+      </para>
+      <para>
+        Whenever one of those three components are missing, the
+        OpenStack Compute API will complain with the following messages:
+      </para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            missing <emphasis role="strong">name</emphasis>
+          </para>
+        </listitem>
+      </itemizedlist>
+      <para>
+        You forgot to name the new server:
+      </para>
+      <screen>
+{
+  &quot;badRequest&quot;: {
+    &quot;message&quot;: &quot;Server name is an empty string&quot;, 
+    &quot;code&quot;: 400
+  }
+}
+</screen>
+      <itemizedlist>
+        <listitem>
+          <para>
+            missing <emphasis role="strong">imageRef</emphasis>
+          </para>
+        </listitem>
+      </itemizedlist>
+      <para>
+        You forgot the URL of the server image or used the wrong one:
+      </para>
+      <screen>
+{
+  &quot;badRequest&quot;: {
+    &quot;message&quot;: &quot;Cannot find requested image : Image 0 could not be found.&quot;, 
+    &quot;code&quot;: 400
+  }
+}
+</screen>
+      <itemizedlist>
+        <listitem>
+          <para>
+            missing <emphasis role="strong">flavorRef</emphasis>
+          </para>
+        </listitem>
+      </itemizedlist>
+      <para>
+        You forgot the URL of the virtual machine flavor or used the
+        wrong one:
+      </para>
+      <screen>
+{
+  &quot;badRequest&quot;: {
+    &quot;message&quot;: &quot;Invalid flavorRef provided.&quot;, 
+    &quot;code&quot;: 400
+  }
+}
+</screen>
+      <para>
+        The value of <emphasis role="strong">name</emphasis> is easy to
+        figure out, it is what you want to call your server. Typically
+        that would be some sort of a shortcut for a function that the
+        server performs, e.g. when I create web servers using the
+        Tornado Web server, I usually call the hosts
+        <emphasis role="strong">tornado001</emphasis>,
+        <emphasis role="strong">tornado002</emphasis>, etc. or I might
+        call them <emphasis role="strong">web000</emphasis>,
+        <emphasis role="strong">www000</emphasis>, whatever.
+      </para>
+      <para>
+        But <emphasis role="strong">imageRef</emphasis> and
+        <emphasis role="strong">flavorRef</emphasis> cannot be just any
+        URL. You need to ask the OpenStack Compute API for the list of
+        images and flavors. That list will contain the URLs accompanied
+        by some additional information that you can use to automate
+        things like switching to a flavor that offers more storage or
+        higher CPU performance.
+      </para>
+      <section xml:id="listing-images">
+        <title>Listing Images</title>
+        <para>
+          How do you know what images are available for building new
+          servers?
+        </para>
+        <para>
+          You can list available server images by sending your request
+          to the <emphasis>/images</emphasis> URL using the GET method.
+          The following example shows how it is done using the
+          <emphasis role="strong">curl</emphasis> command:
+        </para>
+        <screen>
+$ curl -v -H &quot;X-Auth-Token:999888777666&quot; http://localhost:8774/v1.1/openstack/images 
+</screen>
+        <para>
+          As you can see, you must include the
+          <emphasis role="strong">X-Auth-Token</emphasis> header with a
+          valid token otherwise the OpenStack Compute API will return
+          the <emphasis role="strong">401 Unauthorized</emphasis> error.
+        </para>
+        <para>
+          When all goes well, you will get a lump of JSON that looks a
+          bit like this:
+        </para>
+        <screen>
+{&quot;images&quot;: [{&quot;id&quot;: 3, &quot;links&quot;: [{&quot;href&quot;: &quot;http://localhost:8774/v1.1/openstack/images/3&quot;, &quot;rel&quot;: &quot;self&quot;}, {&quot;href&quot;: &quot;http://localhost:8774/openstack/images/3&quot;, &quot;rel&quot;: &quot;bookmark&quot;}], &quot;name&quot;: &quot;ubuntu-11.04-server&quot;}, {&quot;id&quot;: 2, &quot;links&quot;: [{&quot;href&quot;: &quot;http://localhost:8774/v1.1/openstack/images/2&quot;, &quot;rel&quot;: &quot;self&quot;}, {&quot;href&quot;: &quot;http://localhost:8774/openstack/images/2&quot;, &quot;rel&quot;: &quot;bookmark&quot;}], &quot;name&quot;: &quot;ubuntu-11.04-initrd&quot;}, {&quot;id&quot;: 1, &quot;links&quot;: [{&quot;href&quot;: &quot;http://localhost:8774/v1.1/openstack/images/1&quot;, &quot;rel&quot;: &quot;self&quot;}, {&quot;href&quot;: &quot;http://localhost:8774/openstack/images/1&quot;, &quot;rel&quot;: &quot;bookmark&quot;}], &quot;name&quot;: &quot;ubuntu-11.04-kernel&quot;}]}
+</screen>
+        <para>
+          Here is a version that is easier to read:
+        </para>
+        <screen>
+{
+  &quot;images&quot;: [
+    {
+      &quot;id&quot;: 3, 
+      &quot;links&quot;: [
+        {
+          &quot;href&quot;: &quot;http://localhost:8774/v1.1/openstack/images/3&quot;, 
+          &quot;rel&quot;: &quot;self&quot;
+        }, 
+        {
+          &quot;href&quot;: &quot;http://localhost:8774/openstack/images/3&quot;, 
+          &quot;rel&quot;: &quot;bookmark&quot;
+        }
+      ], 
+      &quot;name&quot;: &quot;ubuntu-11.04-server&quot;
+    }, 
+    {
+      &quot;id&quot;: 2, 
+      &quot;links&quot;: [
+        {
+          &quot;href&quot;: &quot;http://localhost:8774/v1.1/openstack/images/2&quot;, 
+          &quot;rel&quot;: &quot;self&quot;
+        }, 
+        {
+          &quot;href&quot;: &quot;http://localhost:8774/openstack/images/2&quot;, 
+          &quot;rel&quot;: &quot;bookmark&quot;
+        }
+      ], 
+      &quot;name&quot;: &quot;ubuntu-11.04-initrd&quot;
+    }, 
+    {
+      &quot;id&quot;: 1, 
+      &quot;links&quot;: [
+        {
+          &quot;href&quot;: &quot;http://localhost:8774/v1.1/openstack/images/1&quot;, 
+          &quot;rel&quot;: &quot;self&quot;
+        }, 
+        {
+          &quot;href&quot;: &quot;http://localhost:8774/openstack/images/1&quot;, 
+          &quot;rel&quot;: &quot;bookmark&quot;
+        }
+      ], 
+      &quot;name&quot;: &quot;ubuntu-11.04-kernel&quot;
+    }
+  ]
+}
+</screen>
+        <para>
+          Each item on the <emphasis role="strong">images</emphasis>
+          list represents a single server image. It is a dictionary with
+          three keys:
+        </para>
+        <itemizedlist>
+          <listitem>
+            <para>
+              <emphasis role="strong">id</emphasis> — the numeric ID of
+              the server image.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">links</emphasis> — the list of the
+              URLs of the locations where you can find the image.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">name</emphasis> — a descriptive
+              name of the image.
+            </para>
+          </listitem>
+        </itemizedlist>
+        <para>
+          Here's how one server image is represented in that response:
+        </para>
+        <screen>
+{
+  &quot;id&quot;: 1, 
+  &quot;links&quot;: [
+    {
+      &quot;href&quot;: &quot;http://localhost:8774/v1.1/openstack/images/1&quot;, 
+      &quot;rel&quot;: &quot;self&quot;
+    }, 
+    {
+      &quot;href&quot;: &quot;http://localhost:8774/openstack/images/1&quot;, 
+      &quot;rel&quot;: &quot;bookmark&quot;
+    }
+  ], 
+  &quot;name&quot;: &quot;ubuntu-11.04-kernel&quot;
+}
+</screen>
+        <para>
+          Please note that this is not a complete set of information
+          about server images that you can extract using the OpenStack
+          Compute API, but it is enough to create a server unless you
+          are trying to use a freshly created image, which hasn't been
+          activated yet. For more information about handling such cases
+          and how to work with server images in general, read the
+          <emphasis>Images</emphasis> chapter later in this book.
+        </para>
+        <para>
+          One question that programmers sometimes ask is which kind of
+          server image identification is more reliable to rely upon, the
+          server image <emphasis role="strong">id</emphasis> or its
+          <emphasis role="strong">name</emphasis>? Personally, I rely on
+          the names of server images, assuming that should some
+          administrative mishap happen and the server image store got
+          reorganized, names are less likely to be altered than the
+          numeric IDs.
+        </para>
+        <para>
+          Another argument for using names to identify server images is
+          handling errors and ensuring operational continuity. If you
+          want to make sure that the region or the provider you want to
+          boot your server with has the right server image, you will
+          want to use a unique name instead of a numeric ID, which can
+          differ between OpenStack regions and providers. As always,
+          check and double-check these things in your code. The best
+          strategy is to use automation to create and save same server
+          images in each region and with each OpenStack provider you
+          plan to use. This is necessary, because you cannot transfer
+          server images between OpenStack regions or providers. The
+          automation tool of choice for Python programmers is
+          <emphasis role="strong">Fabric</emphasis>, which you can
+          download from the following site:
+        </para>
+        <itemizedlist>
+          <listitem>
+            <para>
+              <emphasis><link xlink:href="http://fabfile.org">http://fabfile.org</link></emphasis>
+            </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section xml:id="listing-flavors">
+        <title>Listing Flavors</title>
+        <para>
+          Once you have the server image URL, you will need the URL of
+          the virtual machine flavor. You can list available flavors by
+          sending your request to the <emphasis>/flavors</emphasis> URL
+          using the GET method. The following example shows how it is
+          done using the <emphasis role="strong">curl</emphasis>
+          command:
+        </para>
+        <screen>
+$ curl -v -H &quot;X-Auth-Token:999888777666&quot; http://localhost:8774/v1.1/openstack/flavors
+</screen>
+        <para>
+          As with every call you make to the OpenStack Compute API you
+          must include the
+          <emphasis role="strong">X-Auth-Token</emphasis> header with a
+          valid token otherwise the OpenStack Compute API will return
+          the <emphasis role="strong">401 Unauthorized</emphasis> error.
+        </para>
+        <para>
+          When all goes well, you will get a JSON string that looks like
+          the one below:
+        </para>
+        <screen>
+{&quot;flavors&quot;: [{&quot;id&quot;: 3, &quot;links&quot;: [{&quot;href&quot;: &quot;http://localhost:8774/v1.1/openstack/flavors/3&quot;, &quot;rel&quot;: &quot;self&quot;}, {&quot;href&quot;: &quot;http://localhost:8774/openstack/flavors/3&quot;, &quot;rel&quot;: &quot;bookmark&quot;}], &quot;name&quot;: &quot;m1.medium&quot;}, {&quot;id&quot;: 4, &quot;links&quot;: [{&quot;href&quot;: &quot;http://localhost:8774/v1.1/openstack/flavors/4&quot;, &quot;rel&quot;: &quot;self&quot;}, {&quot;href&quot;: &quot;http://localhost:8774/openstack/flavors/4&quot;, &quot;rel&quot;: &quot;bookmark&quot;}], &quot;name&quot;: &quot;m1.large&quot;}, {&quot;id&quot;: 1, &quot;links&quot;: [{&quot;href&quot;: &quot;http://localhost:8774/v1.1/openstack/flavors/1&quot;, &quot;rel&quot;: &quot;self&quot;}, {&quot;href&quot;: &quot;http://localhost:8774/openstack/flavors/1&quot;, &quot;rel&quot;: &quot;bookmark&quot;}], &quot;name&quot;: &quot;m1.tiny&quot;}, {&quot;id&quot;: 5, &quot;links&quot;: [{&quot;href&quot;: &quot;http://localhost:8774/v1.1/openstack/flavors/5&quot;, &quot;rel&quot;: &quot;self&quot;}, {&quot;href&quot;: &quot;http://localhost:8774/openstack/flavors/5&quot;, &quot;rel&quot;: &quot;bookmark&quot;}], &quot;name&quot;: &quot;m1.xlarge&quot;}, {&quot;id&quot;: 2, &quot;links&quot;: [{&quot;href&quot;: &quot;http://localhost:8774/v1.1/openstack/flavors/2&quot;, &quot;rel&quot;: &quot;self&quot;}, {&quot;href&quot;: &quot;http://localhost:8774/openstack/flavors/2&quot;, &quot;rel&quot;: &quot;bookmark&quot;}], &quot;name&quot;: &quot;m1.small&quot;}]}
+</screen>
+        <para>
+          Here is a version that is easier to read:
+        </para>
+        <screen>
+{
+  &quot;flavors&quot;: [
+    {
+      &quot;id&quot;: 3, 
+      &quot;links&quot;: [
+        {
+          &quot;href&quot;: &quot;http://localhost:8774/v1.1/openstack/flavors/3&quot;, 
+          &quot;rel&quot;: &quot;self&quot;
+        }, 
+        {
+          &quot;href&quot;: &quot;http://localhost:8774/openstack/flavors/3&quot;, 
+          &quot;rel&quot;: &quot;bookmark&quot;
+        }
+      ], 
+      &quot;name&quot;: &quot;m1.medium&quot;
+    }, 
+    {
+      &quot;id&quot;: 4, 
+      &quot;links&quot;: [
+        {
+          &quot;href&quot;: &quot;http://localhost:8774/v1.1/openstack/flavors/4&quot;, 
+          &quot;rel&quot;: &quot;self&quot;
+        }, 
+        {
+          &quot;href&quot;: &quot;http://localhost:8774/openstack/flavors/4&quot;, 
+          &quot;rel&quot;: &quot;bookmark&quot;
+        }
+      ], 
+      &quot;name&quot;: &quot;m1.large&quot;
+    }, 
+    {
+      &quot;id&quot;: 1, 
+      &quot;links&quot;: [
+        {
+          &quot;href&quot;: &quot;http://localhost:8774/v1.1/openstack/flavors/1&quot;, 
+          &quot;rel&quot;: &quot;self&quot;
+        }, 
+        {
+          &quot;href&quot;: &quot;http://localhost:8774/openstack/flavors/1&quot;, 
+          &quot;rel&quot;: &quot;bookmark&quot;
+        }
+      ], 
+      &quot;name&quot;: &quot;m1.tiny&quot;
+    }, 
+    {
+      &quot;id&quot;: 5, 
+      &quot;links&quot;: [
+        {
+          &quot;href&quot;: &quot;http://localhost:8774/v1.1/openstack/flavors/5&quot;, 
+          &quot;rel&quot;: &quot;self&quot;
+        }, 
+        {
+          &quot;href&quot;: &quot;http://localhost:8774/openstack/flavors/5&quot;, 
+          &quot;rel&quot;: &quot;bookmark&quot;
+        }
+      ], 
+      &quot;name&quot;: &quot;m1.xlarge&quot;
+    }, 
+    {
+      &quot;id&quot;: 2, 
+      &quot;links&quot;: [
+        {
+          &quot;href&quot;: &quot;http://localhost:8774/v1.1/openstack/flavors/2&quot;, 
+          &quot;rel&quot;: &quot;self&quot;
+        }, 
+        {
+          &quot;href&quot;: &quot;http://localhost:8774/openstack/flavors/2&quot;, 
+          &quot;rel&quot;: &quot;bookmark&quot;
+        }
+      ], 
+      &quot;name&quot;: &quot;m1.small&quot;
+    }
+  ]
+}
+</screen>
+        <para>
+          The list of virtual machine flavors is arranged in a way
+          similar to the list of server images. Each item on the
+          <emphasis role="strong">flavors</emphasis> list represents a
+          single virtual machine flavor. It is a dictionary with three
+          keys:
+        </para>
+        <itemizedlist>
+          <listitem>
+            <para>
+              <emphasis role="strong">id</emphasis> — the numeric ID of
+              the flavor.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">links</emphasis> — the list of the
+              URLs of the locations where you can find the flavor.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">name</emphasis> — a descriptve
+              name of the flavor.
+            </para>
+          </listitem>
+        </itemizedlist>
+        <para>
+          Here's how one virtual machine flavor is represented in that
+          response:
+        </para>
+        <screen>
+{
+  &quot;id&quot;: 1, 
+  &quot;links&quot;: [
+    {
+      &quot;href&quot;: &quot;http://localhost:8774/v1.1/openstack/flavors/1&quot;, 
+      &quot;rel&quot;: &quot;self&quot;
+    }, 
+    {
+      &quot;href&quot;: &quot;http://localhost:8774/openstack/flavors/1&quot;, 
+      &quot;rel&quot;: &quot;bookmark&quot;
+    }
+  ], 
+  &quot;name&quot;: &quot;m1.tiny&quot;
+}, 
+</screen>
+      </section>
+      <section xml:id="booting-a-new-server">
+        <title>Booting a New Server</title>
+        <para>
+          You already know how to obtain the authentication token, the
+          URL of the OpenStack Compute API, and the URLs of both the
+          server image and the flavor. You already know all you need to
+          know to make the basic POST request to create a server. We
+          will now create now a Python script that does that job for us.
+          First, we need to obtain the authentication token and the URL
+          of the OpenStack Compute API (aka.
+          <emphasis role="strong">nova</emphasis>):
+        </para>
+        <screen>
+#!/usr/bin/python
+
+import base64
+import urllib
+import httplib
+import json
+import os
+from urlparse import urlparse
+
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+###
+###  insert the 'Get OpenStack Credentials' snippet here
+###
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+</screen>
+        <para>
+          With the token and the URL we can now ask the OpenStack
+          Compute API server for the image reference:
+        </para>
+        <screen>
+###
+### Get server image reference
+###
+
+# HTTP connection #2
+
+url2 = apiurlt[1]
+params2 = urllib.urlencode({})
+headers2 = { &quot;X-Auth-Token&quot;:apitoken, &quot;Content-type&quot;:&quot;application/json&quot; }
+
+if (usehttps == True):
+    conn2 = httplib.HTTPSConnection(url2, key_file='../cert/priv.pem', cert_file='../cert/srv_test.crt')
+else:
+    conn2 = httplib.HTTPConnection(url2)
+
+conn2.request(&quot;GET&quot;, &quot;%s/images&quot; % apiurlt[2], params2, headers2)
+
+# HTTP response
+
+response2 = conn2.getresponse()
+data2 = response2.read()
+dd2 = json.loads(data2)
+
+conn2.close()
+
+###
+### Server parameters
+###
+
+# Server name
+
+sname = &quot;tornado001&quot;
+
+# Server image URL
+
+n = len(dd2[&quot;images&quot;])
+m = range(n)
+
+for i in m:
+    if dd2[&quot;images&quot;][i][&quot;id&quot;] == 1:
+        sImageRef = dd2[&quot;images&quot;][i][&quot;links&quot;][0][&quot;href&quot;]
+</screen>
+        <para>
+          All we need now is the flavor URL:
+        </para>
+        <screen>
+# Flavor URL
+
+# HTTP connection #3
+
+params3 = urllib.urlencode({})
+headers3 = { &quot;X-Auth-Token&quot;:apitoken, &quot;Content-type&quot;:&quot;application/json&quot; }
+
+if (usehttps == True):
+    conn3 = httplib.HTTPSConnection(url2, key_file='../cert/priv.pem', cert_file='../cert/srv_test.crt')
+else:
+    conn3 = httplib.HTTPConnection(url2)
+
+conn3.request(&quot;GET&quot;, &quot;%s/flavors&quot; % apiurlt[2], params3, headers3)
+
+# HTTP response #3
+
+response3 = conn3.getresponse()
+data3 = response3.read()
+dd3 = json.loads(data3)
+
+conn3.close()
+
+n = len(dd3[&quot;flavors&quot;])
+m = range(n)
+
+for i in m:
+    if dd3[&quot;flavors&quot;][i][&quot;id&quot;] == 1:
+        sFlavorRef = dd3[&quot;flavors&quot;][i][&quot;links&quot;][0][&quot;href&quot;]
+</screen>
+        <para>
+          We can leave other parameters empty for now:
+        </para>
+        <screen>
+###
+### server metadata
+###
+
+sMetadata = {}
+
+###
+### server personalization
+###
+
+sPersonalityPath = &quot;&quot;
+sPersonalityContents = &quot;&quot;
+sPersonality = [ { &quot;path&quot;:sPersonalityPath, &quot;contents&quot;:base64.b64encode( sPersonalityContents ) } ]
+</screen>
+        <para>
+          All that's left to do is a call to the OpenStack Compute API
+          to create a new server:
+        </para>
+        <screen>
+s = { &quot;server&quot;: { &quot;name&quot;: sname, &quot;imageRef&quot;: sImageRef, &quot;flavorRef&quot;: sFlavorRef, &quot;metadata&quot;: sMetadata, &quot;personality&quot;: sPersonality } }
+
+sj = json.dumps(s)
+
+# HTTP connection #4
+
+params4 = sj
+headers4 = { &quot;X-Auth-Token&quot;:apitoken, &quot;Content-type&quot;:&quot;application/json&quot; }
+
+conn4 = httplib.HTTPConnection(&quot;localhost:8774&quot;)
+conn4.request(&quot;POST&quot;, &quot;%s/servers&quot; % apiurlt[2], params4, headers4)
+
+# HTTP response #4
+
+response4 = conn4.getresponse()
+data4 = response4.read()
+dd4 = json.loads(data4)
+
+conn4.close()
+
+print json.dumps(dd4, indent=2)
+</screen>
+        <para>
+          When you run that script, you will get back a JSON string that
+          looks simiar to the one below (shown expanded for better
+          readability):
+        </para>
+        <screen>
+{
+  &quot;server&quot;: {
+    &quot;status&quot;: &quot;BUILD&quot;, 
+    &quot;updated&quot;: &quot;2011-12-04T21:18:55Z&quot;, 
+    &quot;hostId&quot;: &quot;&quot;, 
+    &quot;user_id&quot;: &quot;admin&quot;, 
+    &quot;name&quot;: &quot;tornado001&quot;, 
+    &quot;links&quot;: [
+      {
+        &quot;href&quot;: &quot;http://localhost:8774/v1.1/openstack/servers/1&quot;, 
+        &quot;rel&quot;: &quot;self&quot;
+      }, 
+      {
+        &quot;href&quot;: &quot;http://localhost:8774/openstack/servers/1&quot;, 
+        &quot;rel&quot;: &quot;bookmark&quot;
+      }
+    ], 
+    &quot;created&quot;: &quot;2011-12-04T21:18:55Z&quot;, 
+    &quot;tenant_id&quot;: &quot;openstack&quot;, 
+    &quot;image&quot;: {
+      &quot;id&quot;: &quot;1&quot;, 
+      &quot;links&quot;: [
+        {
+          &quot;href&quot;: &quot;http://localhost:8774/openstack/images/1&quot;, 
+          &quot;rel&quot;: &quot;bookmark&quot;
+        }
+      ]
+    }, 
+    &quot;adminPass&quot;: &quot;MrhcNkNqAeVnnUE7&quot;, 
+    &quot;uuid&quot;: &quot;8fec45a8-92fb-4840-8f2a-c64e1be49dee&quot;, 
+    &quot;accessIPv4&quot;: &quot;&quot;, 
+    &quot;metadata&quot;: {
+      &quot;Server Name&quot;: &quot;Tornado&quot;
+    }, 
+    &quot;accessIPv6&quot;: &quot;&quot;, 
+    &quot;key_name&quot;: null, 
+    &quot;progress&quot;: 0, 
+    &quot;flavor&quot;: {
+      &quot;id&quot;: &quot;1&quot;, 
+      &quot;links&quot;: [
+        {
+          &quot;href&quot;: &quot;http://localhost:8774/openstack/flavors/1&quot;, 
+          &quot;rel&quot;: &quot;bookmark&quot;
+        }
+      ]
+    }, 
+    &quot;config_drive&quot;: &quot;&quot;, 
+    &quot;id&quot;: 1, 
+    &quot;addresses&quot;: {}
+  }
+}
+</screen>
+        <para>
+          Congratulations! You have a new server.
+        </para>
+        <para>
+          When you create a new server you are going to get a lot of
+          interesting information about it in return:
+        </para>
+        <itemizedlist>
+          <listitem>
+            <para>
+              <emphasis role="strong">status</emphasis>: set initially
+              to <emphasis role="strong">BUILD</emphasis>, later set to
+              <emphasis role="strong">ACTIVE</emphasis> when the server
+              is ready to use.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">updated</emphasis>: set initially
+              to the server creation date, will be updated every time
+              you modify the server.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">hostId</emphasis>: undocumented.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">user_id</emphasis>: the username
+              of the user who created the server.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">name</emphasis>: a short server
+              name assigned by whoever created the server (you), in this
+              case it is <emphasis role="strong">tornado001</emphasis>.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">links</emphasis>: the URLs
+              pointing to the server.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">created</emphasis>: set to the
+              server creation date.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">tenant_id</emphasis>: the name of
+              the tenant that the server lives with, in this case it's
+              <emphasis role="strong">openstack</emphasis>.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">image</emphasis>: basics data
+              information about the operating system image used to build
+              the server.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">adminPass</emphasis>: the initial
+              <emphasis role="strong">root</emphasis>/<emphasis role="strong">Administrator</emphasis>
+              password, set automatically for you. It is possible to
+              change it afterwards.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">uuid</emphasis>: the Universally
+              Unique Identifier (UUID) of the server.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">accessIPv4</emphasis>: the
+              <emphasis>public</emphasis> IPv4 address of the server.
+              You will use it to access your server.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">metadata</emphasis>: a dictionary
+              that stores server metadata. This can be edited by
+              yourself as explained later in this book.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">accessIPv6</emphasis>: the
+              <emphasis>public</emphasis> IPv6 address of the server.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">key_name</emphasis>: undocumented.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">progress</emphasis>: an integer
+              value of 0 through 100. It starts with 0 and increases as
+              the server is getting created. It is usually enough to
+              monitor the <emphasis role="strong">status</emphasis>
+              property of a new server, but if it takes longer than a
+              couple of miutes to build, the
+              <emphasis role="strong">progress</emphasis> indicator can
+              provide additional information that may help debug the
+              problem.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">flavor</emphasis>: basic data
+              information about the virtual hardware flavor used to
+              build the server.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">config_drive</emphasis>:
+              undocumented.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">id</emphasis> — the
+              <emphasis role="strong">id</emphasis> of the server within
+              your own OpenStack account realm. The numbering starts
+              with 1.
+            </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section xml:id="using-curl-to-boot-a-new-server">
+        <title>Using Curl to Boot a New Server</title>
+        <para>
+          If you want to use <emphasis role="strong">curl</emphasis> to
+          create a new server, this is how you'd structure your request:
+        </para>
+        <screen>
+$ curl -v -X POST -H &quot;X-Auth-Token:999888777666&quot; -H &quot;Content-type:application/json&quot; -d '{&quot;server&quot;: {&quot;flavorRef&quot;: &quot;http://localhost:8774/v1.1/openstack/flavors/1&quot;, &quot;personality&quot;: [{&quot;path&quot;: &quot;&quot;, &quot;contents&quot;: &quot;&quot;}], &quot;name&quot;: &quot;tornado001&quot;, &quot;imageRef&quot;: &quot;http://localhost:8774/v1.1/openstack/images/1&quot;, &quot;metadata&quot;: {&quot;Server Name&quot;: &quot;Tornado&quot;}}}' http://localhost:8774/v1.1/openstack/servers
+</screen>
+        <para>
+          The result on that request will be a new server, whose
+          description will be similar to the one discussed in the
+          previous section.
+        </para>
+      </section>
+      <section xml:id="customizing-your-server-adding-metadata">
+        <title>Customizing Your Server: Adding Metadata</title>
+        <para>
+          Short server names like
+          <emphasis role="strong">tornado000</emphasis> may be good
+          enough to describe a small set of servers, but they become
+          insufficient when you need to manage dozens of machines.
+          OpenStack Compute API allows us to add a number of metadata
+          entries to each server at the time of its creation.
+        </para>
+        <para>
+          If you go back to the section with the example of using Python
+          to create a new server, you will see the following snippet of
+          code:
+        </para>
+        <screen>
+...
+
+###
+### server metadata
+###
+
+sMetadata = {}
+
+###
+### server personalization
+###
+
+sPersonalityPath = &quot;&quot;
+sPersonalityContents = &quot;&quot;
+sPersonality = [ { &quot;path&quot;:sPersonalityPath, &quot;contents&quot;:base64.b64encode( sPersonalityContents ) } ]
+
+s = { &quot;server&quot;: { &quot;name&quot;: sname, &quot;imageRef&quot;: sImageRef, &quot;flavorRef&quot;: sFlavorRef, &quot;metadata&quot;: sMetadata, &quot;personality&quot;: sPersonality } }
+
+sj = json.dumps(s)
+
+...
+</screen>
+        <para>
+          Because providing server metadata is optional, the example
+          sets it to an empty dictionary. When you want to add metadata
+          at server creation time, you will need to provide a dictionary
+          of upto 5 key/value pairs. For example, if you wanted to add
+          more information about the Tornado web server you plan to
+          create you could set
+          <emphasis role="strong">sMetadata</emphasis> to something like
+          this:
+        </para>
+        <screen>
+...
+
+###
+### server metadata
+###
+
+sMetadata = {&quot;function&quot;:&quot;dynamic content&quot;, &quot;master&quot;:&quot;no&quot;, &quot;belongs-to&quot;:&quot;load balanced group no 1&quot;, &quot;admin&quot;:&quot;Joe Speedoo&quot;, &quot;backup&quot;:&quot;no&quot;}
+
+###
+### server personalization
+###
+
+sPersonalityPath = &quot;&quot;
+sPersonalityContents = &quot;&quot;
+sPersonality = [ { &quot;path&quot;:sPersonalityPath, &quot;contents&quot;:base64.b64encode( sPersonalityContents ) } ]
+
+s = { &quot;server&quot;: { &quot;name&quot;: sname, &quot;imageRef&quot;: sImageRef, &quot;flavorRef&quot;: sFlavorRef, &quot;metadata&quot;: sMetadata, &quot;personality&quot;: sPersonality } }
+
+sj = json.dumps(s)
+
+...
+</screen>
+        <para>
+          The keys and values you choose can be anything you like, but
+          it is a good idea to develop a schema that can be reused. For
+          example, in the code fragment shown above, I use
+          <emphasis role="strong">function</emphasis> to store a short
+          description of what the server does;
+          <emphasis role="strong">master</emphasis> to indicate if the
+          server is a copy of the master server or the master server
+          itself; <emphasis role="strong">belongs-to</emphasis> to
+          indicate, which group of load-balanced servers the new machine
+          will belog to; <emphasis role="strong">admin</emphasis> to
+          store the name of the server administrator; and,
+          <emphasis role="strong">backup</emphasis> to indicate if this
+          server needs to be backed up.
+        </para>
+        <para>
+          The amount of metadata information assigned to each OpenStack
+          server is currently limited to: 5 keys each holding values no
+          larger than 10240 bytes.
+        </para>
+      </section>
+      <section xml:id="customizing-your-server-adding-custom-files">
+        <title>Customizing Your Server: Adding Custom Files</title>
+        <para>
+          There are three ways of customizing newly created servers:
+        </para>
+        <itemizedlist>
+          <listitem>
+            <para>
+              log into a server and customize it by hand (not very
+              efficient).
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              create a
+              <link xlink:href="http://docs.fabfile.org/">Fabric</link>
+              script and customize it automatically.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              preload server configuration scripts and (optionally)
+              reboot it, wait, test if everything went fine.
+            </para>
+          </listitem>
+        </itemizedlist>
+        <para>
+          While you have to take care of the first two solutions,
+          OpenStack Compute API can help with the last one. You can
+          write up to 5 files, each no larger than 10KB (10240 bytes) to
+          the freshly installed filesystem. They can be located
+          anywhere, e.g. you could do something trivial like change the
+          contents of <emphasis>/etc/motd</emphasis>, or you could add a
+          system configuration script to
+          <emphasis>/etc/init.d</emphasis> just remember to include
+          logic that does the installation once and not at every reboot,
+          unless that's what you want.
+        </para>
+        <para>
+          However you want to use server personalization, you need to
+          put the personalization files into a dictionary whose keys are
+          paths to the files located on the server. Each key has a
+          value, which in this case is the contents of the destination
+          file, which needs to be encoded as Base64.
+        </para>
+        <para>
+          To learn how it works in practice, we need to go back to the
+          example showing how to create a new server and focus our
+          attention of the following snippet of code:
+        </para>
+        <screen>
+...
+
+###
+### server metadata
+###
+
+sMetadata = {&quot;function&quot;:&quot;dynamic content&quot;, &quot;master&quot;:&quot;no&quot;, &quot;belongs-to&quot;:&quot;load balanced group no 1&quot;, &quot;admin&quot;:&quot;Joe Speedoo&quot;, &quot;backup&quot;:&quot;no&quot;}
+
+###
+### server personalization
+###
+
+sPersonalityPath = &quot;&quot;
+sPersonalityContents = &quot;&quot;
+sPersonality = [ { &quot;path&quot;:sPersonalityPath, &quot;contents&quot;:base64.b64encode( sPersonalityContents ) } ]
+
+s = { &quot;server&quot;: { &quot;name&quot;: sname, &quot;imageRef&quot;: sImageRef, &quot;flavorRef&quot;: sFlavorRef, &quot;metadata&quot;: sMetadata, &quot;personality&quot;: sPersonality } }
+
+sj = json.dumps(s)
+
+...
+</screen>
+        <para>
+          If you carefully examine the value of
+          <emphasis role="strong">sPersonality</emphasis>, you will
+          notice that it is a list of dictionaries with two keys
+          (<emphasis role="strong">path</emphasis> and
+          <emphasis role="strong">contents</emphasis>) each. You can
+          define upto 5 such dictionaries. Here's how you could do it if
+          you wanted to copy to a newly created server 5 local files
+          (their names and locations do not have to match the names and
+          the locations of their destination):
+        </para>
+        <screen>
+...
+
+###
+### server metadata
+###
+
+sMetadata = {&quot;function&quot;:&quot;dynamic content&quot;, &quot;master&quot;:&quot;no&quot;, &quot;belongs-to&quot;:&quot;load balanced group no 1&quot;, &quot;admin&quot;:&quot;Joe Speedoo&quot;, &quot;backup&quot;:&quot;no&quot;}
+
+###
+### server personalization
+###
+
+sPPath1 = &quot;/home/joe/.profile&quot;
+sPContents1F = open('joe.profile')
+sPContents1 = sPContents1F.read()
+sPCont1 = base64.b64encode( sPContents1 )
+
+sPPath2 = &quot;/etc/motd&quot;
+sPContents2F = open('joe.motd')
+sPContents2 = sPContents2F.read()
+sPCont2 = base64.b64encode( sPContents2 )
+
+sPPath3 = &quot;/etc/nginx/nginx.conf&quot;
+sPContents3F = open('joe.nginx.conf')
+sPContents3 = sPContents3F.read()
+sPCont3 = base64.b64encode( sPContents3 )
+
+sPPath4 = &quot;/etc/ssh/sshd_config&quot;
+sPContents4F = open('joe.sshd_config')
+sPContents4 = sPContents4F.read()
+sPCont4 = base64.b64encode( sPContents4 )
+
+sPPath5 = &quot;/etc/sysctl.conf&quot;
+sPContents5F = open('joe.sysctl.conf')
+sPContents5 = sPContents5F.read()
+sPCont5 = base64.b64encode( sPContents5 )
+
+sPersonality = [ { &quot;path&quot;:aPPath1, &quot;contents&quot;:sPCont1 }, { &quot;path&quot;:aPPath2, &quot;contents&quot;:sPCont2 }, { &quot;path&quot;:aPPath3, &quot;contents&quot;:sPCont3 }, { &quot;path&quot;:aPPath4, &quot;contents&quot;:sPCont4 }, { &quot;path&quot;:aPPath5, &quot;contents&quot;:sPCont5 } ]
+
+s = { &quot;server&quot;: { &quot;name&quot;: sname, &quot;imageRef&quot;: sImageRef, &quot;flavorRef&quot;: sFlavorRef, &quot;metadata&quot;: sMetadata, &quot;personality&quot;: sPersonality } }
+
+sj = json.dumps(s)
+
+...
+</screen>
+        <para>
+          What if five files are not enough? You can add more after the
+          server boots. You can do it the hard way using
+          <emphasis role="strong">scp</emphasis> or you can write a
+          Fabric script. Use Fabric. It lives here:
+        </para>
+        <itemizedlist>
+          <listitem>
+            <para>
+              <emphasis><link xlink:href="http://fabfile.org">http://fabfile.org</link></emphasis>
+            </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section xml:id="server-limits">
+        <title>Server Limits</title>
+        <para>
+          Although cloud-based servers give us a lot of flexibility,
+          they still live in data centers and need to be managed in
+          order to avoid hoarding of the data center resources. This is
+          not a flaw, but the fact of life, even private server clouds
+          have their limits.
+        </para>
+        <para>
+          Every OpenStack cloud provider is free to set their own
+          limits, but the ones suggested in the official documentation
+          are:
+        </para>
+        <itemizedlist>
+          <listitem>
+            <para>
+              <emphasis role="strong">maxTotalRAMSize</emphasis> — total
+              amount of RAM of all active servers: 51200MB (50GB), this
+              could be up to two hundred 256MB instances, or any mixture
+              of other servers.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">maxServerMeta</emphasis> — maximum
+              number of metadata entries per server: 5.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">maxImageMeta</emphasis> — maximum
+              number of metadata entries per image: 5.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">maxPersonality</emphasis> —
+              maximum number of personalisation files per server: 5.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">maxPersonalitySize</emphasis> —
+              maximum size of each personalization file: 10240 bytes
+              (10KB).
+            </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+    </section>
+    <section xml:id="modifying-live-servers">
+      <title>Modifying Live Servers</title>
+      <para>
+        Once a server is created, it is by no means set in stone. Apart
+        from the obvious modifications to the operating system you can
+        also modify the virtual hardware, the server's metadata, as well
+        as perform some basic maintenance tasks.
+      </para>
+      <para>
+        How you modify the operating system is up to you and up to the
+        ways of the operating system, the rest can be done via the
+        OpenStack Compute API.
+      </para>
+      <section xml:id="listing-servers">
+        <title>Listing Servers</title>
+        <para>
+          Before you can modify anything, you should have a good look at
+          it.
+        </para>
+        <para>
+          When you want to check how many servers you have active, you
+          need to use the GET mthod when you call the
+          <emphasis>/server</emphasis> URL. When you are testing things,
+          use the <emphasis role="strong">curl</emphasis> command to get
+          the raw JSON reply:
+        </para>
+        <screen>
+$ curl -v -H &quot;X-Auth-Token:999888777666&quot; http://localhost:8774/v1.1/openstack/servers
+</screen>
+        <para>
+          When you have no active servers, the result will be a
+          dictionary with one
+          key—<emphasis role="strong">servers</emphasis>—whose value is
+          an empty list:
+        </para>
+        <screen>
+{
+  &quot;servers&quot;: []
+}
+</screen>
+        <para>
+          When there are more servers active, you will see a longer list
+          of all servers that you can manage:
+        </para>
+        <screen>
+{
+  &quot;servers&quot;: [
+    {
+      &quot;id&quot;: 2, 
+      &quot;uuid&quot;: &quot;fcdeba5b-40f7-4f51-9404-8a41951739b2&quot;, 
+      &quot;links&quot;: [
+        {
+          &quot;href&quot;: &quot;http://localhost:8774/v1.1/openstack/servers/2&quot;, 
+          &quot;rel&quot;: &quot;self&quot;
+        }, 
+        {
+          &quot;href&quot;: &quot;http://localhost:8774/openstack/servers/2&quot;, 
+          &quot;rel&quot;: &quot;bookmark&quot;
+        }
+      ], 
+      &quot;name&quot;: &quot;tornado002&quot;
+    }, 
+    {
+      &quot;id&quot;: 1, 
+      &quot;uuid&quot;: &quot;8fec45a8-92fb-4840-8f2a-c64e1be49dee&quot;, 
+      &quot;links&quot;: [
+        {
+          &quot;href&quot;: &quot;http://localhost:8774/v1.1/openstack/servers/1&quot;, 
+          &quot;rel&quot;: &quot;self&quot;
+        }, 
+        {
+          &quot;href&quot;: &quot;http://localhost:8774/openstack/servers/1&quot;, 
+          &quot;rel&quot;: &quot;bookmark&quot;
+        }
+      ], 
+      &quot;name&quot;: &quot;tornado001&quot;
+    }
+  ]
+}
+</screen>
+        <para>
+          For a better view, here is a single server entry in the
+          <emphasis role="strong">servers</emphasis> list:
+        </para>
+        <screen>
+{
+  &quot;id&quot;: 1, 
+  &quot;uuid&quot;: &quot;8fec45a8-92fb-4840-8f2a-c64e1be49dee&quot;, 
+  &quot;links&quot;: [
+    {
+      &quot;href&quot;: &quot;http://localhost:8774/v1.1/openstack/servers/1&quot;, 
+      &quot;rel&quot;: &quot;self&quot;
+    }, 
+    {
+      &quot;href&quot;: &quot;http://localhost:8774/openstack/servers/1&quot;, 
+      &quot;rel&quot;: &quot;bookmark&quot;
+    }
+  ], 
+  &quot;name&quot;: &quot;tornado001&quot;
+}
+</screen>
+        <para>
+          The keys in a dictionary that describes each server have the
+          following meaning:
+        </para>
+        <itemizedlist>
+          <listitem>
+            <para>
+              <emphasis role="strong">id</emphasis> — the numeric ID of
+              the server.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">uuid</emphasis> — the universally
+              unique identifier of the server.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">links</emphasis> — the list of
+              URLs that point to the server.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">name</emphasis> — a descriptive
+              name of the server.
+            </para>
+          </listitem>
+        </itemizedlist>
+        <para>
+          It is worth poinitng out a few things: the server
+          <emphasis role="strong">id</emphasis> is unique within your
+          account with the OpenStack cloud provider. Other users with
+          the same provider may (and will) have the same server
+          <emphasis role="strong">id</emphasis> numbers. They are
+          assigned in the order of server creation. Similarly, the the
+          value of the <emphasis role="strong">name</emphasis> key does
+          not have to be unique, even within your own account.
+        </para>
+        <para>
+          The only unique identifier of your server will be its
+          <emphasis role="strong">uuid</emphasis>. It is assigned
+          automatically by you OpenStack cloud provider's system using
+          an algorithm that is supposed to guarantee that the IDs it
+          creates do not clash. You can read more about UUIDs on
+          Wikipedia:
+        </para>
+        <itemizedlist>
+          <listitem>
+            <para>
+              <link xlink:href="http://en.wikipedia.org/wiki/Universally_unique_identifier%20UUID">http://en.wikipedia.org/wiki/Universally_unique_identifier</link>
+            </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section xml:id="listing-servers-using-python">
+        <title>Listing Servers Using Python</title>
+        <para>
+          When you want to use Python to list server information, the
+          procedure is a bit more complex, but you do get access to the
+          items returned by the OpenStack Compute API.
+        </para>
+        <screen>
+#!/usr/bin/python
+
+import base64
+import urllib
+import httplib
+import json
+import os
+from urlparse import urlparse
+
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+###
+###  insert the 'Get OpenStack Credentials' snippet here
+###
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+
+###
+### Get the list of servers
+###
+
+# HTTP connection #2
+
+url2 = apiurlt[1]
+params2 = urllib.urlencode({})
+headers2 = { &quot;X-Auth-Token&quot;:apitoken, &quot;Content-type&quot;:&quot;application/json&quot; }
+
+if (usehttps == True):
+    conn2 = httplib.HTTPSConnection(url2, key_file='../cert/priv.pem', cert_file='../cert/srv_test.crt')
+else:
+    conn2 = httplib.HTTPConnection(url2)
+
+conn2.request(&quot;GET&quot;, &quot;%s/servers&quot; % apiurlt[2], params2, headers2)
+
+# HTTP response #2
+
+response2 = conn2.getresponse()
+data2 = response2.read()
+dd2 = json.loads(data2)
+
+conn2.close()
+
+print dd2
+</screen>
+        <para>
+          When you want to access specific keys in the dictionary of
+          servers, you will need to either hard-code the paths to
+          specific pieces of information, or use some simple heuristics,
+          e.g. in the following snippet of code I assume that you
+          already have the list of server information:
+        </para>
+        <screen>
+# abort when there are no servers
+
+if dd2['servers'] == []:
+    print 'Error: No servers found'
+    exit(1)
+
+# iterate through server entries until you find the server by name and
+# then get its ID and URL
+
+dd2r = range(len(dd2['server']))
+
+for n in dd2r:
+    if dd2['servers'][n]['name'] == 'tornado001':
+        print &quot;Server ID&quot;,
+        print str(dd2['servers'][n]['id'])
+        print &quot;Server URL&quot;,
+        print dd2['servers'][n]['links'][0]['href']
+</screen>
+      </section>
+      <section xml:id="getting-detailed-server-information">
+        <title>Getting Detailed Server Information</title>
+        <para>
+          A call to <emphasis>/servers</emphasis> returns the list of
+          all servers and can be very long, which is why the JSON
+          response contain only that data which can be used in other
+          calls to update, rebuild, or delete a server.
+        </para>
+        <para>
+          You can learn much more about a particular server by calling a
+          different URL. It's <emphasis>/server/id</emphasis> where
+          <emphasis role="strong">id</emphasis> is the value of the
+          <emphasis role="strong">id</emphasis> key in the server
+          description. Try it using
+          <emphasis role="strong">curl</emphasis>:
+        </para>
+        <screen>
+$ curl -v -H &quot;X-Auth-Token:999888777666&quot; http://localhost:8774/v1.1/openstack/servers/1
+</screen>
+        <para>
+          What you will get in return is a JSON response with a lot more
+          information about server whose
+          <emphasis role="strong">id</emphasis> is set to 1:
+        </para>
+        <screen>
+{
+  &quot;server&quot;: {
+    &quot;status&quot;: &quot;ACTIVE&quot;, 
+    &quot;updated&quot;: &quot;2011-12-04T21:19:11Z&quot;, 
+    &quot;hostId&quot;: &quot;ea05d3b6c34b9baae7ad5ce482814e040305b6c8fb67034a46908720&quot;, 
+    &quot;user_id&quot;: &quot;admin&quot;, 
+    &quot;name&quot;: &quot;tornado001&quot;, 
+    &quot;links&quot;: [
+      {
+        &quot;href&quot;: &quot;http://localhost:8774/v1.1/openstack/servers/1&quot;, 
+        &quot;rel&quot;: &quot;self&quot;
+      }, 
+      {
+        &quot;href&quot;: &quot;http://localhost:8774/openstack/servers/1&quot;, 
+        &quot;rel&quot;: &quot;bookmark&quot;
+      }
+    ], 
+    &quot;created&quot;: &quot;2011-12-04T21:18:55Z&quot;, 
+    &quot;tenant_id&quot;: &quot;openstack&quot;, 
+    &quot;image&quot;: {
+      &quot;id&quot;: &quot;1&quot;, 
+      &quot;links&quot;: [
+        {
+          &quot;href&quot;: &quot;http://localhost:8774/openstack/images/1&quot;, 
+          &quot;rel&quot;: &quot;bookmark&quot;
+        }
+      ]
+    }, 
+    &quot;uuid&quot;: &quot;8fec45a8-92fb-4840-8f2a-c64e1be49dee&quot;, 
+    &quot;accessIPv4&quot;: &quot;&quot;, 
+    &quot;metadata&quot;: {
+      &quot;Server Name&quot;: &quot;Tornado&quot;
+    }, 
+    &quot;accessIPv6&quot;: &quot;&quot;, 
+    &quot;key_name&quot;: null, 
+    &quot;progress&quot;: 100, 
+    &quot;flavor&quot;: {
+      &quot;id&quot;: &quot;1&quot;, 
+      &quot;links&quot;: [
+        {
+          &quot;href&quot;: &quot;http://localhost:8774/openstack/flavors/1&quot;, 
+          &quot;rel&quot;: &quot;bookmark&quot;
+        }
+      ]
+    }, 
+    &quot;config_drive&quot;: &quot;&quot;, 
+    &quot;id&quot;: 1, 
+    &quot;addresses&quot;: {
+      &quot;public&quot;: [
+        {
+          &quot;version&quot;: 4, 
+          &quot;addr&quot;: &quot;192.168.100.2&quot;
+        }
+      ], 
+      &quot;private&quot;: [
+        {
+          &quot;version&quot;: 4, 
+          &quot;addr&quot;: &quot;192.168.200.2&quot;
+        }
+      ]
+    }
+  }
+}
+</screen>
+        <para>
+          Here is a guide to all those tasty bits of information:
+        </para>
+        <itemizedlist>
+          <listitem>
+            <para>
+              <emphasis role="strong">status</emphasis>: set initially
+              to <emphasis role="strong">BUILD</emphasis>, later set to
+              <emphasis role="strong">ACTIVE</emphasis> when the server
+              is ready to use.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">updated</emphasis>: set initially
+              to the server creation date, will be updated every time
+              you modify the server.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">hostId</emphasis>: undocumented.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">user_id</emphasis>: the username
+              of the user who created the server.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">name</emphasis>: a short server
+              name assigned by whoever created the server (you), in this
+              case it is <emphasis role="strong">tornado001</emphasis>.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">links</emphasis>: the URLs
+              pointing to the server.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">created</emphasis>: set to the
+              server creation date.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">tenant_id</emphasis>: the name of
+              the tenant that the server lives with, in this case it's
+              <emphasis role="strong">openstack</emphasis>.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">image</emphasis>: basics data
+              information about the operating system image used to build
+              the server.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">uuid</emphasis>: the Universally
+              Unique Identifier (UUID) of the server.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">accessIPv4</emphasis>: the
+              <emphasis>public</emphasis> IPv4 address of the server.
+              You will use it to access your server.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">metadata</emphasis>: a dictionary
+              that stores server metadata. This can be edited by
+              yourself as explained later in this book.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">accessIPv6</emphasis>: the
+              <emphasis>public</emphasis> IPv6 address of the server.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">key_name</emphasis>: undocumented.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">progress</emphasis>: an integer
+              value of 0 through 100. It starts with 0 and increases as
+              the server is getting created. It is usually enough to
+              monitor the <emphasis role="strong">status</emphasis>
+              property of a new server, but if it takes longer than a
+              couple of miutes to build, the
+              <emphasis role="strong">progress</emphasis> indicator can
+              provide additional information that may help debug the
+              problem.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">flavor</emphasis>: basic data
+              information about the virtual hardware flavor used to
+              build the server.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">config_drive</emphasis>:
+              undocumented.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="strong">id</emphasis> — the
+              <emphasis role="strong">id</emphasis> of the server within
+              your own OpenStack account realm. The numbering starts
+              with 1.
+            </para>
+          </listitem>
+        </itemizedlist>
+        <para>
+          The list show above is almost an exact copy of the list shown
+          in the chapter on server creation. One missing field is
+          <emphasis role="strong">adminPass</emphasis>, which is never
+          returned after the server starts. This is done for security
+          reasons. If you want to change the server
+          <emphasis role="strong">root</emphasis>/<emphasis role="strong">Administrator</emphasis>
+          password, you need to do it via the web interface or using a
+          special OpenStack Compute API call.
+        </para>
+      </section>
+      <section xml:id="getting-detailed-server-information-using-python">
+        <title>Getting Detailed Server Information Using Python</title>
+        <para>
+          What if you want to get all details of a particular server
+          using Python? Here's how you do it:
+        </para>
+        <screen>
+#!/usr/bin/python
+
+import base64
+import urllib
+import httplib
+import json
+import os
+from urlparse import urlparse
+
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+###
+###  insert the 'Get OpenStack Credentials' snippet here
+###
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+
+###
+### Get the full description of a server
+###
+
+# HTTP connection #2
+
+servID = 1      # server ID
+url2 = apiurlt[1]
+params2 = urllib.urlencode({})
+headers2 = { &quot;X-Auth-Token&quot;:apitoken, &quot;Content-type&quot;:&quot;application/json&quot; }
+
+if (usehttps == True):
+    conn2 = httplib.HTTPSConnection(url2, key_file='../cert/priv.pem', cert_file='../cert/srv_test.crt')
+else:
+    conn2 = httplib.HTTPConnection(url2)
+
+conn2.request(&quot;GET&quot;, &quot;%s/servers/%s&quot; % (apiurlt[2], servID), params2, headers2)
+
+# HTTP response #2
+
+response2 = conn2.getresponse()
+data2 = response2.read()
+dd2 = json.loads(data2)
+
+conn2.close()
+
+print dd2
+</screen>
+      </section>
+    </section>
+    <section xml:id="listing-server-addresses">
+      <title>Listing Server Addresses</title>
+      <para>
+        One piece of information that is looked up more often than
+        others is server IP address. Or addresses, as is the case with
+        all OpenStack Compute servers. Each machine has at least two
+        IPv4 addresses: one private and one public (aka. routable). It
+        is also reasonable to assume that each server will have its own
+        private and public IPv6 address.
+      </para>
+      <para>
+        You can list them using a GET request for the
+        <emphasis>/servers/id/ips</emphasis> URL. For example, if you
+        were to use <emphasis role="strong">curl</emphasis> to list the
+        IP addresses of a server whose
+        <emphasis role="strong">id</emphasis> is 1, you'd do it in the
+        following way:
+      </para>
+      <screen>
+$ curl -v -H &quot;X-Auth-Token:999888777666&quot; http://localhost:8774/v1.1/openstack/servers/1/ips
+</screen>
+      <para>
+        What you will get in return will be a JSON response similar to
+        the one below:
+      </para>
+      <screen>
+{
+  &quot;addresses&quot;: {
+    &quot;public&quot;: [
+      {
+        &quot;version&quot;: 4, 
+        &quot;addr&quot;: &quot;192.168.100.2&quot;
+      },
+      {
+        &quot;version&quot;: 6, 
+        &quot;addr&quot;: &quot;fe80:0:0:0:0:0:c0a8:6402&quot;
+      }
+    ], 
+    &quot;private&quot;: [
+      {
+        &quot;version&quot;: 4, 
+        &quot;addr&quot;: &quot;192.168.200.2&quot;
+      },
+      {
+        &quot;version&quot;: 6, 
+        &quot;addr&quot;: &quot;fe80:0:0:0:0:0:c0a8:6402&quot;
+      }
+    ]
+  }
+}
+</screen>
+      <para>
+        The <emphasis role="strong">addresses</emphasis> dictionary
+        contains two lists: <emphasis role="strong">private</emphasis>
+        and <emphasis role="strong">public</emphasis>. These lists hold
+        IPv4 and IPv6 addresses assigned to the server on private and
+        public networks. The number of addresses asigned to your server
+        may vary, but there should be at least one private IPv4 and one
+        public IPv4 address.
+      </para>
+    </section>
+    <section xml:id="listing-server-addresses-using-python">
+      <title>Listing Server Addresses Using Python</title>
+      <para>
+        When you want to extract the list of IP addresses for a server
+        using Python, use the following recipe as your starting point:
+      </para>
+      <screen>
+#!/usr/bin/python
+
+import base64
+import urllib
+import httplib
+import json
+import os
+from urlparse import urlparse
+
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+###
+###  insert the 'Get OpenStack Credentials' snippet here
+###
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+
+###
+### Get the list of server IP addresses
+###
+
+# HTTP connection #2
+
+srvID = 1       # server ID number
+url2 = apiurlt[1]
+params2 = urllib.urlencode({})
+headers2 = { &quot;X-Auth-Token&quot;:apitoken, &quot;Content-type&quot;:&quot;application/json&quot; }
+
+if (usehttps == True):
+    conn2 = httplib.HTTPSConnection(url2, key_file='../cert/priv.pem', cert_file='../cert/srv_test.crt')
+else:
+    conn2 = httplib.HTTPConnection(url2)
+
+conn2.request(&quot;GET&quot;, &quot;%s/servers/%s/ips&quot; % (apiurlt[2], srvID), params2, headers2)
+
+# HTTP response #2
+
+response2 = conn2.getresponse()
+data2 = response2.read()
+dd2 = json.loads(data2)
+
+conn2.close()
+
+print dd2
+</screen>
+      <para>
+        If you want to access a specific address you need to use a
+        dictionary/list access notation, e.g. if you want to print the
+        first public IPv4 address:
+      </para>
+      <screen>
+ipAddr = dd2[&quot;addresses&quot;][&quot;public&quot;][0]
+
+if (ipAddr[&quot;version&quot;] == 4):
+    print ipAddr[&quot;addr&quot;]
+</screen>
+    </section>
+    <section xml:id="listing-network-specific-server-addresses">
+      <title>Listing Network-Specific Server Addresses</title>
+      <para>
+        It is possible to request just private or public server
+        addresses. You can list them using a GET request for the
+        <emphasis>/servers/id/ips/network</emphasis> URL. For example,
+        if you were to use <emphasis role="strong">curl</emphasis> to
+        list the public IP addresses of a server whose
+        <emphasis role="strong">id</emphasis> is 1, you'd do it in the
+        following way:
+      </para>
+      <screen>
+$ curl -v -H &quot;X-Auth-Token:999888777666&quot; http://localhost:8774/v1.1/openstack/servers/1/ips/public
+</screen>
+      <para>
+        What you will get in return will be a JSON response similar to
+        the one below:
+      </para>
+      <screen>
+{
+  &quot;addresses&quot;: {
+    &quot;public&quot;: [
+      {
+        &quot;version&quot;: 4, 
+        &quot;addr&quot;: &quot;192.168.100.2&quot;
+      },
+      {
+        &quot;version&quot;: 6, 
+        &quot;addr&quot;: &quot;fe80:0:0:0:0:0:c0a8:6402&quot;
+      }
+    ]
+  }
+}
+</screen>
+    </section>
+    <section xml:id="listing-network-specific-server-addresses-using-python">
+      <title>Listing Network-Specific Server Addresses Using
+      Python</title>
+      <para>
+        Network-specific IP addresses can be retrieved using a Python
+        script:
+      </para>
+      <screen>
+#!/usr/bin/python
+
+import base64
+import urllib
+import httplib
+import json
+import os
+from urlparse import urlparse
+
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+###
+###  insert the 'Get OpenStack Credentials' snippet here
+###
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+
+###
+### Get the list of server IP addresses for a specific network
+###
+
+# HTTP connection #2
+
+srvID = 1       # server ID number
+networkName = &quot;public&quot;  # can be either &quot;public&quot; or &quot;private&quot;
+url2 = apiurlt[1]
+params2 = urllib.urlencode({})
+headers2 = { &quot;X-Auth-Token&quot;:apitoken, &quot;Content-type&quot;:&quot;application/json&quot; }
+
+if (usehttps == True):
+    conn2 = httplib.HTTPSConnection(url2, key_file='../cert/priv.pem', cert_file='../cert/srv_test.crt')
+else:
+    conn2 = httplib.HTTPConnection(url2)
+
+conn2.request(&quot;GET&quot;, &quot;%s/servers/%s/ips/%s&quot; % (apiurlt[2], srvID, networkName), params2, headers2)
+
+# HTTP response #2
+
+response2 = conn2.getresponse()
+data2 = response2.read()
+dd2 = json.loads(data2)
+
+conn2.close()
+
+print dd2
+</screen>
+    </section>
+  </chapter>
+  <chapter xml:id="server-metadata">
+    <title>Server Metadata</title>
+    <para>
+      Server metadata is stored in the
+      <emphasis role="strong">metadata</emphasis> dictionary within the
+      server description data structures. We already discussed adding
+      metadata during server creation, now we'll see how to list, add,
+      update, and delete metadata items associated with your servers.
+    </para>
+    <section xml:id="listing-server-metadata">
+      <title>Listing Server Metadata</title>
+      <para>
+        It is possible to access server metadata information without
+        having to list all properties of the server. For example, if you
+        want to use <emphasis role="strong">curl</emphasis> to list
+        metadata for a server whose
+        <emphasis role="strong">id</emphasis> is 1, you can do it in the
+        following way:
+      </para>
+      <screen>
+$ curl -H &quot;X-Auth-Token:999888777666&quot; http://localhost:8774/v1.1/openstack/servers/1/metadata
+</screen>
+      <para>
+        The result should look similar to the output shown below:
+      </para>
+      <screen>
+{
+  &quot;metadata&quot;: {
+    &quot;Server Name&quot;: &quot;Tornado&quot;
+  }
+}
+</screen>
+      <para>
+        Notice that the GET method must be applied to the URL that ends
+        with the <emphasis>/servers/id/metadata</emphasis> path.
+      </para>
+    </section>
+    <section xml:id="lisitng-server-metadata-using-python">
+      <title>Lisitng Server Metadata Using Python</title>
+      <para>
+        When you'd rather use Python to access metadata information, you
+        could do it in the following way:
+      </para>
+      <screen>
+#!/usr/bin/python
+
+import base64
+import urllib
+import httplib
+import json
+import os
+from urlparse import urlparse
+
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+###
+###  insert the 'Get OpenStack Credentials' snippet here
+###
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+
+###
+### Get server metadata
+###
+
+# HTTP connection #2
+
+servID = 1      # server ID
+url2 = apiurlt[1]
+params2 = urllib.urlencode({})
+headers2 = { &quot;X-Auth-Token&quot;:apitoken, &quot;Content-type&quot;:&quot;application/json&quot; }
+
+if (usehttps == True):
+    conn2 = httplib.HTTPSConnection(url2, key_file='../cert/priv.pem', cert_file='../cert/srv_test.crt')
+else:
+    conn2 = httplib.HTTPConnection(url2)
+
+conn2.request(&quot;GET&quot;, &quot;%s/servers/%s/metadata&quot; % (apiurlt[2], servID), params2, headers2)
+
+# HTTP response #2
+
+response2 = conn2.getresponse()
+data2 = response2.read()
+dd2 = json.loads(data2)
+
+conn2.close()
+
+print dd2
+</screen>
+    </section>
+    <section xml:id="listing-server-metadata-items">
+      <title>Listing Server Metadata Items</title>
+      <para>
+        Using the <emphasis>/servers/id/metadata</emphasis> URI gets you
+        the dictionary of all metadata keys. If you wanted to access a
+        specific key, you can use a four-part URI,
+        <emphasis>/servers/id/metadata/key</emphasis>, where
+        <emphasis>id</emphasis> is the numeric
+        <emphasis role="strong">id</emphasis> of the server and
+        <emphasis>key</emphasis> is the metadata key you want the value
+        of.
+      </para>
+      <para>
+        For example, if you want to get the value of the
+        <emphasis role="strong">owner</emphasis> metadata key for server
+        whose <emphasis role="strong">id</emphasis> is 1, you can do it
+        using <emphasis role="strong">curl</emphasis> in the following
+        way:
+      </para>
+      <screen>
+$ curl -H &quot;X-Auth-Token:999888777666&quot; http://localhost:8774/v1.1/openstack/servers/1/metadata/owner
+</screen>
+      <para>
+        The result should look similar to the output shown below:
+      </para>
+      <screen>
+{
+  &quot;metadata&quot;: {
+    &quot;owner&quot;: &quot;joe&quot;
+  }
+}
+</screen>
+    </section>
+    <section xml:id="listing-server-metadata-items-using-python">
+      <title>Listing Server Metadata Items Using Python</title>
+      <para>
+        If you wanted to check for a particular metadata key, you can
+        reuse the Python script from the previous section. You already
+        have the metadata dictionary, and all that's left is retrieving
+        the key you are looking for:
+      </para>
+      <screen>
+print dd2['metadata']['owner']
+</screen>
+    </section>
+    <section xml:id="setting-server-metadata">
+      <title>Setting Server Metadata</title>
+      <para>
+        Server metadata is stored in the
+        <emphasis role="strong">metadata</emphasis> dictionary, which is
+        a part of each image description. It doesn't have to be set to
+        anything, but it is often used to add a more detailed
+        description of the image's purpose than a terse
+        <emphasis role="strong">name</emphasis> of the image.
+      </para>
+      <para>
+        Server metadata can be set at server creation time or later.
+        When you want to do it after you create your server, you need to
+        use the PUT method and a URL with a three-part path,
+        <emphasis>/servers/id/metadata</emphasis>.
+      </para>
+      <para>
+        The <emphasis>id</emphasis> part is the numeric
+        <emphasis role="strong">id</emphasis> of the server. For
+        example, if you wanted to set the
+        <emphasis role="strong">owner</emphasis> metadata key of the
+        server whose <emphasis role="strong">id</emphasis> is 1, the
+        path would be <emphasis>/servers/1/metadata</emphasis>.
+      </para>
+      <para>
+        If you were to use <emphasis role="strong">curl</emphasis> to
+        set metadata keys, this is how you'd do it:
+      </para>
+      <screen>
+$ curl -X PUT -H &quot;X-Auth-Token:999888777666&quot; -H &quot;Accept: application/json&quot; -d '{&quot;metadata&quot;:{&quot;owner&quot;:&quot;joe&quot;,&quot;group&quot;:&quot;www&quot;}}' http://localhost:8774/v1.1/openstack/servers/1/metadata
+</screen>
+    </section>
+    <section xml:id="setting-server-metadata-using-python">
+      <title>Setting Server Metadata Using Python</title>
+      <para>
+        When you want to use Python to set server metadata, you could do
+        it in the following way:
+      </para>
+      <screen>
+#!/usr/bin/python
+
+import base64
+import urllib
+import httplib
+import json
+import os
+from urlparse import urlparse
+
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+###
+###  insert the 'Get OpenStack Credentials' snippet here
+###
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+
+###
+### Set server metadata
+###
+
+# HTTP connection #2
+
+servID = 1      # server ID
+url2 = apiurlt[1]
+params2 = urllib.urlencode(json.dumps({&quot;metadata&quot;:{&quot;owner&quot;:&quot;joe&quot;,&quot;group&quot;:&quot;www&quot;}}))
+headers2 = { &quot;X-Auth-Token&quot;:apitoken, &quot;Accept&quot;:&quot;application/json&quot;, &quot;Content-type&quot;:&quot;application/json&quot; }
+
+if (usehttps == True):
+    conn2 = httplib.HTTPSConnection(url2, key_file='../cert/priv.pem', cert_file='../cert/srv_test.crt')
+else:
+    conn2 = httplib.HTTPConnection(url2)
+
+conn2.request(&quot;PUT&quot;, &quot;%s/servers/%s/metadata&quot; % (apiurlt[2], servID), params2, headers2)
+
+# HTTP response #2
+
+response2 = conn2.getresponse()
+data2 = response2.read()
+dd2 = json.loads(data2)
+
+conn2.close()
+</screen>
+    </section>
+    <section xml:id="setting-server-metadata-items">
+      <title>Setting Server Metadata Items</title>
+      <para>
+        In the previous section you learned how to set multiple metadata
+        items in one go. But what if you wanted to set them one at a
+        time?
+      </para>
+      <para>
+        Once again, you need to use the PUT method and a URI that points
+        to the metadata you wish to set, e.g.
+        <emphasis>/servers/id/metadata/key</emphasis>.
+      </para>
+      <para>
+        The <emphasis>id</emphasis> part is the numeric
+        <emphasis role="strong">id</emphasis> of the server. For
+        example, if you wanted to set the
+        <emphasis role="strong">owner</emphasis> metadata key of the
+        server whose <emphasis role="strong">id</emphasis> is 1, the
+        path would be <emphasis>/servers/1/metadata/owner</emphasis>.
+      </para>
+      <para>
+        The value of the key set has to be passed to the OpenStack
+        Compute API server as a single-key
+        <emphasis role="strong">metadata</emphasis> dictionary:
+      </para>
+      <screen>
+{
+  &quot;metadata&quot;: {
+    &quot;owner&quot;: &quot;joe&quot;
+  }
+}
+</screen>
+      <para>
+        If you were to use <emphasis role="strong">curl</emphasis> to
+        set metadata keys, this is how you'd do it:
+      </para>
+      <screen>
+$ curl -X PUT -H &quot;X-Auth-Token:999888777666&quot; -H &quot;Accept: application/json&quot; -d '{&quot;metadata&quot;:{&quot;owner&quot;:&quot;joe&quot;}}' http://localhost:8774/v1.1/openstack/servers/1/metadata/owner
+</screen>
+    </section>
+    <section xml:id="setting-server-metadata-items-using-python">
+      <title>Setting Server Metadata Items Using Python</title>
+      <para>
+        When you want to use Python to set server metadata items, you
+        can do it in the following way:
+      </para>
+      <screen>
+#!/usr/bin/python
+
+import base64
+import urllib
+import httplib
+import json
+import os
+from urlparse import urlparse
+
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+###
+###  insert the 'Get OpenStack Credentials' snippet here
+###
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+
+###
+### Set server metadata
+###
+
+# HTTP connection #2
+
+servID = 1      # server ID
+metaKey = &quot;owner&quot;   # metadata key
+url2 = apiurlt[1]
+params2 = urllib.urlencode(json.dumps({&quot;metadata&quot;:{metaKey:&quot;joe&quot;}}))
+headers2 = { &quot;X-Auth-Token&quot;:apitoken, &quot;Accept&quot;:&quot;application/json&quot;, &quot;Content-type&quot;:&quot;application/json&quot; }
+
+if (usehttps == True):
+    conn2 = httplib.HTTPSConnection(url2, key_file='../cert/priv.pem', cert_file='../cert/srv_test.crt')
+else:
+    conn2 = httplib.HTTPConnection(url2)
+
+conn2.request(&quot;PUT&quot;, &quot;%s/servers/%s/metadata/%s&quot; % (apiurlt[2], servID, metaKey), params2, headers2)
+
+# HTTP response #2
+
+response2 = conn2.getresponse()
+data2 = response2.read()
+dd2 = json.loads(data2)
+
+conn2.close()
+</screen>
+    </section>
+    <section xml:id="updating-server-metadata">
+      <title>Updating Server Metadata</title>
+      <para>
+        If you want to update an existing metadata key, you need to use
+        the POST method and the same, three-part URL path,
+        <emphasis>/servers/id/metadata</emphasis>.
+      </para>
+      <para>
+        The <emphasis>id</emphasis> part is the numeric
+        <emphasis role="strong">id</emphasis> of the server. For
+        example, if you wanted to set the
+        <emphasis role="strong">owner</emphasis> metadata key of the
+        server whose <emphasis role="strong">id</emphasis> is 1, the
+        path would be <emphasis>/servers/1/metadata</emphasis>.
+      </para>
+      <para>
+        If you were to use <emphasis role="strong">curl</emphasis> to
+        set metadata keys, this is how you'd do it:
+      </para>
+      <screen>
+$ curl -X POST -H &quot;X-Auth-Token:999888777666&quot; -H &quot;Accept: application/json&quot; -d '{&quot;metadata&quot;:{&quot;owner&quot;:&quot;adam&quot;}}' http://localhost:8774/v1.1/openstack/servers/1/metadata
+</screen>
+    </section>
+    <section xml:id="updating-server-metadata-using-python">
+      <title>Updating Server Metadata Using Python</title>
+      <para>
+        When you want to use Python to update server metadata, you could
+        do it in the following way:
+      </para>
+      <screen>
+#!/usr/bin/python
+
+import base64
+import urllib
+import httplib
+import json
+import os
+from urlparse import urlparse
+
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+###
+###  insert the 'Get OpenStack Credentials' snippet here
+###
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+
+###
+### Update server metadata
+###
+
+# HTTP connection #2
+
+servID = 1      # server ID
+url2 = apiurlt[1]
+params2 = urllib.urlencode(json.dumps({&quot;metadata&quot;:{&quot;owner&quot;:&quot;adam&quot;}}))
+headers2 = { &quot;X-Auth-Token&quot;:apitoken, &quot;Accept&quot;:&quot;application/json&quot;, &quot;Content-type&quot;:&quot;application/json&quot; }
+
+if (usehttps == True):
+    conn2 = httplib.HTTPSConnection(url2, key_file='../cert/priv.pem', cert_file='../cert/srv_test.crt')
+else:
+    conn2 = httplib.HTTPConnection(url2)
+
+conn2.request(&quot;POST&quot;, &quot;%s/servers/%s/metadata&quot; % (apiurlt[2], servID), params2, headers2)
+
+# HTTP response #2
+
+response2 = conn2.getresponse()
+data2 = response2.read()
+dd2 = json.loads(data2)
+
+conn2.close()
+</screen>
+    </section>
+    <section xml:id="deleting-server-metadata-items">
+      <title>Deleting Server Metadata Items</title>
+      <para>
+        When you want to delete an existing metadata item, you will need
+        to use the DELETE method and the four-part URI,
+        <emphasis>/servers/id/metadata/key</emphasis>.
+      </para>
+      <para>
+        The <emphasis>id</emphasis> part is the numeric
+        <emphasis role="strong">id</emphasis> of the server. For
+        example, if you wanted to set the
+        <emphasis role="strong">owner</emphasis> metadata key of the
+        server whose <emphasis role="strong">id</emphasis> is 1, the
+        path would be <emphasis>/servers/1/metadata/owner</emphasis>.
+      </para>
+      <para>
+        If you were to use <emphasis role="strong">curl</emphasis> to
+        set metadata keys, this is how you'd do it:
+      </para>
+      <screen>
+$ curl -X DELETE -H &quot;X-Auth-Token:999888777666&quot; -H &quot;Accept: application/json&quot; http://localhost:8774/v1.1/openstack/servers/1/metadata/owner
+</screen>
+      <para>
+        Please note there is no data payload in a delete operation. It
+        is a common mistake to leave it in while editing scripts.
+      </para>
+    </section>
+    <section xml:id="deleting-server-metadata-items-using-python">
+      <title>Deleting Server Metadata Items Using Python</title>
+      <para>
+        Deleting server metadata items using Python can be done in the
+        way shown below:
+      </para>
+      <screen>
+#!/usr/bin/python
+
+import base64
+import urllib
+import httplib
+import json
+import os
+from urlparse import urlparse
+
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+###
+###  insert the 'Get OpenStack Credentials' snippet here
+###
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+
+###
+### Deleting server metadata items
+###
+
+# HTTP connection #2
+
+servID = 1      # server ID
+metaKey = &quot;owner&quot;   # metadata key
+url2 = apiurlt[1]
+params2 = urllib.urlencode(json.dumps({&quot;metadata&quot;:{&quot;owner&quot;:&quot;adam&quot;}}))
+headers2 = { &quot;X-Auth-Token&quot;:apitoken, &quot;Accept&quot;:&quot;application/json&quot;, &quot;Content-type&quot;:&quot;application/json&quot; }
+
+if (usehttps == True):
+    conn2 = httplib.HTTPSConnection(url2, key_file='../cert/priv.pem', cert_file='../cert/srv_test.crt')
+else:
+    conn2 = httplib.HTTPConnection(url2)
+
+conn2.request(&quot;DELETE&quot;, &quot;%s/servers/%s/metadata/%s&quot; % (apiurlt[2], servID, metaKey), params2, headers2)
+
+# HTTP response #2
+
+response2 = conn2.getresponse()
+data2 = response2.read()
+dd2 = json.loads(data2)
+
+conn2.close()
+</screen>
+    </section>
+  </chapter>
+  <chapter xml:id="server-image-metadata">
+    <title>Server Image Metadata</title>
+    <para>
+      Server image metadata is not the same as the server image data,
+      but the way you use it, modify it, or delete it is very similar.
+    </para>
+    <para>
+      Server image metadata is stored in the
+      <emphasis role="strong">metadata</emphasis> dictionary within the
+      server image description data structures. We already discussed
+      adding metadata during server image ### FIXME ### creation, now
+      we'll see how to list, add, update, and delete metadata items
+      associated with your server images.
+    </para>
+    <section xml:id="listing-server-image-metadata">
+      <title>Listing Server Image Metadata</title>
+      <para>
+        It is possible to access server image metadata information
+        without having to list all properties of the server image. For
+        example, if you want to use
+        <emphasis role="strong">curl</emphasis> to list metadata for a
+        server image whose <emphasis role="strong">id</emphasis> is 1,
+        you can do it in the following way:
+      </para>
+      <screen>
+$ curl -H &quot;X-Auth-Token:999888777666&quot; http://localhost:8774/v1.1/openstack/images/1/metadata
+</screen>
+      <para>
+        The result should look similar to the output shown below:
+      </para>
+      <screen>
+{
+  &quot;metadata&quot;: {
+    &quot;imageName&quot;: &quot;App Server&quot;
+  }
+}
+</screen>
+      <para>
+        Notice that the GET method must be applied to the URL that ends
+        with the <emphasis>/images/id/metadata</emphasis> path.
+      </para>
+    </section>
+    <section xml:id="lisitng-server-image-metadata-using-python">
+      <title>Lisitng Server Image Metadata Using Python</title>
+      <para>
+        When you'd rather use Python to access metadata information, you
+        could do it in the following way:
+      </para>
+      <screen>
+#!/usr/bin/python
+
+import base64
+import urllib
+import httplib
+import json
+import os
+from urlparse import urlparse
+
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+###
+###  insert the 'Get OpenStack Credentials' snippet here
+###
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+
+###
+### Get server image metadata
+###
+
+# HTTP connection #2
+
+imgID = 1       # server image ID
+url2 = apiurlt[1]
+params2 = urllib.urlencode({})
+headers2 = { &quot;X-Auth-Token&quot;:apitoken, &quot;Content-type&quot;:&quot;application/json&quot; }
+
+if (usehttps == True):
+    conn2 = httplib.HTTPSConnection(url2, key_file='../cert/priv.pem', cert_file='../cert/srv_test.crt')
+else:
+    conn2 = httplib.HTTPConnection(url2)
+
+conn2.request(&quot;GET&quot;, &quot;%s/images/%s/metadata&quot; % (apiurlt[2], imgID), params2, headers2)
+
+# HTTP response #2
+
+response2 = conn2.getresponse()
+data2 = response2.read()
+dd2 = json.loads(data2)
+
+conn2.close()
+
+print dd2
+</screen>
+    </section>
+    <section xml:id="listing-server-image-metadata-items">
+      <title>Listing Server Image Metadata Items</title>
+      <para>
+        Using the <emphasis>/images/id/metadata</emphasis> URI gets you
+        the dictionary of all metadata keys. If you wanted to access a
+        specific key, you can use a four-part URI,
+        <emphasis>/images/id/metadata/key</emphasis>, where
+        <emphasis>id</emphasis> is the numeric
+        <emphasis role="strong">id</emphasis> of the server image and
+        <emphasis>key</emphasis> is the metadata key you want the value
+        of.
+      </para>
+      <para>
+        For example, if you want to get the value of the
+        <emphasis role="strong">owner</emphasis> metadata key for server
+        image whose <emphasis role="strong">id</emphasis> is 1, you can
+        do it using <emphasis role="strong">curl</emphasis> in the
+        following way:
+      </para>
+      <screen>
+$ curl -H &quot;X-Auth-Token:999888777666&quot; http://localhost:8774/v1.1/openstack/images/1/metadata/owner
+</screen>
+      <para>
+        The result should look similar to the output shown below:
+      </para>
+      <screen>
+{
+  &quot;metadata&quot;: {
+    &quot;owner&quot;: &quot;joe&quot;
+  }
+}
+</screen>
+    </section>
+    <section xml:id="listing-server-metadata-items-using-python-1">
+      <title>Listing Server Metadata Items Using Python</title>
+      <para>
+        If you wanted to check for a particular metadata key, you can
+        reuse the Python script from the previous section. You already
+        have the metadata dictionary, and all that's left is retrieving
+        the key you are looking for:
+      </para>
+      <screen>
+print dd2['metadata']['owner']
+</screen>
+    </section>
+    <section xml:id="setting-server-image-metadata">
+      <title>Setting Server Image Metadata</title>
+      <para>
+        Server image metadata is stored in the
+        <emphasis role="strong">metadata</emphasis> dictionary, which is
+        a part of each image description. It doesn't have to be set to
+        anything, but it is often used to add a more detailed
+        description of the image's purpose than a terse
+        <emphasis role="strong">name</emphasis> of the image.
+      </para>
+      <para>
+        Server image metadata can be set at server image creation time
+        or later. When you want to do it after you create your server
+        image, you need to use the PUT method and a URL with a
+        three-part path, <emphasis>/images/id/metadata</emphasis>.
+      </para>
+      <para>
+        The <emphasis>id</emphasis> part is the numeric
+        <emphasis role="strong">id</emphasis> of the server image. For
+        example, if you wanted to set the
+        <emphasis role="strong">owner</emphasis> metadata key of the
+        server image whose <emphasis role="strong">id</emphasis> is 1,
+        the path would be <emphasis>/images/1/metadata</emphasis>.
+      </para>
+      <para>
+        If you were to use <emphasis role="strong">curl</emphasis> to
+        set metadata keys, this is how you'd do it:
+      </para>
+      <screen>
+$ curl -X PUT -H &quot;X-Auth-Token:999888777666&quot; -H &quot;Accept: application/json&quot; -d '{&quot;metadata&quot;:{&quot;owner&quot;:&quot;joe&quot;,&quot;group&quot;:&quot;www&quot;}}' http://localhost:8774/v1.1/openstack/images/1/metadata
+</screen>
+    </section>
+    <section xml:id="setting-server-image-metadata-using-python">
+      <title>Setting Server Image Metadata Using Python</title>
+      <para>
+        When you want to use Python to set server image metadata, you
+        could do it in the following way:
+      </para>
+      <screen>
+#!/usr/bin/python
+
+import base64
+import urllib
+import httplib
+import json
+import os
+from urlparse import urlparse
+
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+###
+###  insert the 'Get OpenStack Credentials' snippet here
+###
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+
+###
+### Set server image metadata
+###
+
+# HTTP connection #2
+
+imgID = 1       # server image ID
+url2 = apiurlt[1]
+params2 = urllib.urlencode(json.dumps({&quot;metadata&quot;:{&quot;owner&quot;:&quot;joe&quot;,&quot;group&quot;:&quot;www&quot;}}))
+headers2 = { &quot;X-Auth-Token&quot;:apitoken, &quot;Accept&quot;:&quot;application/json&quot;, &quot;Content-type&quot;:&quot;application/json&quot; }
+
+if (usehttps == True):
+    conn2 = httplib.HTTPSConnection(url2, key_file='../cert/priv.pem', cert_file='../cert/srv_test.crt')
+else:
+    conn2 = httplib.HTTPConnection(url2)
+
+conn2.request(&quot;PUT&quot;, &quot;%s/images/%s/metadata&quot; % (apiurlt[2], imgID), params2, headers2)
+
+# HTTP response #2
+
+response2 = conn2.getresponse()
+data2 = response2.read()
+dd2 = json.loads(data2)
+
+conn2.close()
+</screen>
+    </section>
+    <section xml:id="setting-server-image-metadata-items">
+      <title>Setting Server Image Metadata Items</title>
+      <para>
+        In the previous section you learned how to set multiple metadata
+        items in one go. But what if you wanted to set them one at a
+        time?
+      </para>
+      <para>
+        Once again, you need to use the PUT method and a URI that points
+        to the metadata you wish to set, e.g.
+        <emphasis>/images/id/metadata/key</emphasis>.
+      </para>
+      <para>
+        The <emphasis>id</emphasis> part is the numeric
+        <emphasis role="strong">id</emphasis> of the server image. For
+        example, if you wanted to set the
+        <emphasis role="strong">owner</emphasis> metadata key of the
+        server image whose <emphasis role="strong">id</emphasis> is 1,
+        the path would be <emphasis>/images/1/metadata/owner</emphasis>.
+      </para>
+      <para>
+        The value of the key set has to be passed to the OpenStack
+        Compute API server as a single-key
+        <emphasis role="strong">metadata</emphasis> dictionary:
+      </para>
+      <screen>
+{
+  &quot;metadata&quot;: {
+    &quot;owner&quot;: &quot;joe&quot;
+  }
+}
+</screen>
+      <para>
+        If you were to use <emphasis role="strong">curl</emphasis> to
+        set metadata keys, this is how you'd do it:
+      </para>
+      <screen>
+$ curl -X PUT -H &quot;X-Auth-Token:999888777666&quot; -H &quot;Accept: application/json&quot; -d '{&quot;metadata&quot;:{&quot;owner&quot;:&quot;joe&quot;}}' http://localhost:8774/v1.1/openstack/images/1/metadata/owner
+</screen>
+    </section>
+    <section xml:id="setting-server-image-metadata-items-using-python">
+      <title>Setting Server Image Metadata Items Using Python</title>
+      <para>
+        When you want to use Python to set server image metadata items,
+        you can do it in the following way:
+      </para>
+      <screen>
+#!/usr/bin/python
+
+import base64
+import urllib
+import httplib
+import json
+import os
+from urlparse import urlparse
+
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+###
+###  insert the 'Get OpenStack Credentials' snippet here
+###
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+
+###
+### Set server image metadata
+###
+
+# HTTP connection #2
+
+imgID = 1       # server image ID
+metaKey = &quot;owner&quot;   # metadata key
+url2 = apiurlt[1]
+params2 = urllib.urlencode(json.dumps({&quot;metadata&quot;:{metaKey:&quot;joe&quot;}}))
+headers2 = { &quot;X-Auth-Token&quot;:apitoken, &quot;Accept&quot;:&quot;application/json&quot;, &quot;Content-type&quot;:&quot;application/json&quot; }
+
+if (usehttps == True):
+    conn2 = httplib.HTTPSConnection(url2, key_file='../cert/priv.pem', cert_file='../cert/srv_test.crt')
+else:
+    conn2 = httplib.HTTPConnection(url2)
+
+conn2.request(&quot;PUT&quot;, &quot;%s/image/%s/metadata/%s&quot; % (apiurlt[2], imgID, metaKey), params2, headers2)
+
+# HTTP response #2
+
+response2 = conn2.getresponse()
+data2 = response2.read()
+dd2 = json.loads(data2)
+
+conn2.close()
+</screen>
+    </section>
+    <section xml:id="updating-server-image-metadata">
+      <title>Updating Server Image Metadata</title>
+      <para>
+        If you want to update an existing metadata key, you need to use
+        the POST method and the same, three-part URL path,
+        <emphasis>/images/id/metadata</emphasis>.
+      </para>
+      <para>
+        The <emphasis>id</emphasis> part is the numeric
+        <emphasis role="strong">id</emphasis> of the server image. For
+        example, if you wanted to set the
+        <emphasis role="strong">owner</emphasis> metadata key of the
+        server image whose <emphasis role="strong">id</emphasis> is 1,
+        the path would be <emphasis>/images/1/metadata</emphasis>.
+      </para>
+      <para>
+        If you were to use <emphasis role="strong">curl</emphasis> to
+        set metadata keys, this is how you'd do it:
+      </para>
+      <screen>
+$ curl -X POST -H &quot;X-Auth-Token:999888777666&quot; -H &quot;Accept: application/json&quot; -d '{&quot;metadata&quot;:{&quot;owner&quot;:&quot;adam&quot;}}' http://localhost:8774/v1.1/openstack/images/1/metadata
+</screen>
+    </section>
+    <section xml:id="updating-server-image-metadata-using-python">
+      <title>Updating Server Image Metadata Using Python</title>
+      <para>
+        When you want to use Python to update server image metadata, you
+        could do it in the following way:
+      </para>
+      <screen>
+#!/usr/bin/python
+
+import base64
+import urllib
+import httplib
+import json
+import os
+from urlparse import urlparse
+
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+###
+###  insert the 'Get OpenStack Credentials' snippet here
+###
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+
+###
+### Update server image metadata
+###
+
+# HTTP connection #2
+
+imgID = 1       # server image ID
+url2 = apiurlt[1]
+params2 = urllib.urlencode(json.dumps({&quot;metadata&quot;:{&quot;owner&quot;:&quot;adam&quot;}}))
+headers2 = { &quot;X-Auth-Token&quot;:apitoken, &quot;Accept&quot;:&quot;application/json&quot;, &quot;Content-type&quot;:&quot;application/json&quot; }
+
+if (usehttps == True):
+    conn2 = httplib.HTTPSConnection(url2, key_file='../cert/priv.pem', cert_file='../cert/srv_test.crt')
+else:
+    conn2 = httplib.HTTPConnection(url2)
+
+conn2.request(&quot;POST&quot;, &quot;%s/images/%s/metadata&quot; % (apiurlt[2], imgID), params2, headers2)
+
+# HTTP response #2
+
+response2 = conn2.getresponse()
+data2 = response2.read()
+dd2 = json.loads(data2)
+
+conn2.close()
+</screen>
+    </section>
+    <section xml:id="deleting-server-image-metadata-items">
+      <title>Deleting Server Image Metadata Items</title>
+      <para>
+        When you want to delete an existing metadata item, you will need
+        to use the DELETE method and the four-part URI,
+        <emphasis>/images/id/metadata/key</emphasis>.
+      </para>
+      <para>
+        The <emphasis>id</emphasis> part is the numeric
+        <emphasis role="strong">id</emphasis> of the server image. For
+        example, if you wanted to set the
+        <emphasis role="strong">owner</emphasis> metadata key of the
+        server image whose <emphasis role="strong">id</emphasis> is 1,
+        the path would be <emphasis>/images/1/metadata/owner</emphasis>.
+      </para>
+      <para>
+        If you were to use <emphasis role="strong">curl</emphasis> to
+        set metadata keys, this is how you'd do it:
+      </para>
+      <screen>
+$ curl -X DELETE -H &quot;X-Auth-Token:999888777666&quot; -H &quot;Accept: application/json&quot; http://localhost:8774/v1.1/openstack/images/1/metadata/owner
+</screen>
+      <para>
+        Please note there is no data payload in a delete operation. It
+        is a common mistake to leave it in while editing scripts.
+      </para>
+    </section>
+    <section xml:id="deleting-server-image-metadata-items-using-python">
+      <title>Deleting Server Image Metadata Items Using Python</title>
+      <para>
+        Deleting server image metadata items using Python can be done in
+        the way shown below:
+      </para>
+      <screen>
+#!/usr/bin/python
+
+import base64
+import urllib
+import httplib
+import json
+import os
+from urlparse import urlparse
+
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+###
+###  insert the 'Get OpenStack Credentials' snippet here
+###
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+
+###
+### Deleting server image metadata items
+###
+
+# HTTP connection #2
+
+imgID = 1       # server image ID
+metaKey = &quot;owner&quot;   # metadata key
+url2 = apiurlt[1]
+params2 = urllib.urlencode(json.dumps({&quot;metadata&quot;:{&quot;owner&quot;:&quot;adam&quot;}}))
+headers2 = { &quot;X-Auth-Token&quot;:apitoken, &quot;Accept&quot;:&quot;application/json&quot;, &quot;Content-type&quot;:&quot;application/json&quot; }
+
+if (usehttps == True):
+    conn2 = httplib.HTTPSConnection(url2, key_file='../cert/priv.pem', cert_file='../cert/srv_test.crt')
+else:
+    conn2 = httplib.HTTPConnection(url2)
+
+conn2.request(&quot;DELETE&quot;, &quot;%s/images/%s/metadata/%s&quot; % (apiurlt[2], imgID, metaKey), params2, headers2)
+
+# HTTP response #2
+
+response2 = conn2.getresponse()
+data2 = response2.read()
+dd2 = json.loads(data2)
+
+conn2.close()
+</screen>
+    </section>
+    <section xml:id="updating-servers-changing-server-name">
+      <title>Updating Servers: Changing Server Name</title>
+      <para>
+        Contrary to what some users of cloud server think, it is not
+        necessary to delete a server and create a new one when you want
+        to change something about it. Some small modifications, like
+        changing server name or server access address can be done
+        without such drastic measures.
+      </para>
+      <para>
+        If you want to change the server name, you will need to use a
+        PUT request directed at <emphasis>/servers/id</emphasis>, where
+        <emphasis role="strong">id</emphasis> is the numeric ID of the
+        server you wish to update. You need to include a JSON payload:
+      </para>
+      <screen>
+{
+  &quot;server&quot; : {
+    &quot;name&quot; : &quot;nginx000&quot;
+  }
+}
+</screen>
+      <para>
+        If you were to use <emphasis role="strong">curl</emphasis> to
+        change the server name, this is how you can do it:
+      </para>
+      <screen>
+$ curl -X PUT -H &quot;X-Auth-Token:999888777666&quot; -H &quot;Accept: application/json&quot; -d '{&quot;server&quot;: {&quot;name&quot;: &quot;nginx000&quot;}}' http://localhost:8774/v1.1/openstack/servers/1
+</screen>
+      <para>
+        The response to this request will be a long JSON string similar
+        to the one you get when you create a new server.
+      </para>
+    </section>
+    <section xml:id="updating-servers-changing-server-name-using-python">
+      <title>Updating Servers: Changing Server Name Using Python</title>
+      <screen>
+#!/usr/bin/python
+
+import base64
+import urllib
+import httplib
+import json
+import os
+from urlparse import urlparse
+
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+###
+###  insert the 'Get OpenStack Credentials' snippet here
+###
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+
+###
+### Changing server name
+###
+
+# HTTP connection #2
+
+imgID = 1       # server image ID
+srvName = &quot;nginx000&quot;    # server name
+url2 = apiurlt[1]
+params2 = urllib.urlencode(json.dumps({&quot;server&quot;: {&quot;name&quot;:srvName}}))
+headers2 = { &quot;X-Auth-Token&quot;:apitoken, &quot;Accept&quot;:&quot;application/json&quot;, &quot;Content-type&quot;:&quot;application/json&quot; }
+
+if (usehttps == True):
+    conn2 = httplib.HTTPSConnection(url2, key_file='../cert/priv.pem', cert_file='../cert/srv_test.crt')
+else:
+    conn2 = httplib.HTTPConnection(url2)
+
+conn2.request(&quot;DELETE&quot;, &quot;%s/servers/%s&quot; % (apiurlt[2], imgID), params2, headers2)
+
+# HTTP response #2
+
+response2 = conn2.getresponse()
+data2 = response2.read()
+dd2 = json.loads(data2)
+
+conn2.close()
+
+print dd2
+</screen>
+    </section>
+    <section xml:id="updating-servers-changing-server-access-address">
+      <title>Updating Servers: Changing Server Access Address</title>
+      <para>
+        If you want to change server access IPv4 and/or IPv6, you can do
+        it using a PUT request directed at
+        <emphasis>/servers/id</emphasis>, where
+        <emphasis role="strong">id</emphasis> is the numeric ID of the
+        server you wish to update. You need to include a JSON payload:
+      </para>
+      <screen>
+{
+  &quot;server&quot; : {
+    &quot;accessIPv4&quot; : &quot;192.168.100.2&quot;,
+    &quot;accessIPv6&quot; : &quot;fe80:0:0:0:0:0:c0a8:6402&quot;
+  }
+}
+</screen>
+      <para>
+        If you were to use <emphasis role="strong">curl</emphasis> to
+        change the server access addresses, this is how you can do it:
+      </para>
+      <screen>
+$ curl -X PUT -H &quot;X-Auth-Token:999888777666&quot; -H &quot;Accept: application/json&quot; -d '{&quot;server&quot;: {&quot;accessIPv4&quot;: &quot;192.168.100.2&quot;, &quot;accessIPv6&quot;: &quot;fe80:0:0:0:0:0:c0a8:6402&quot;}}' http://localhost:8774/v1.1/openstack/servers/1
+</screen>
+      <para>
+        The response to this request will be a long JSON string similar
+        to the one you get when you create a new server.
+      </para>
+    </section>
+    <section xml:id="updating-servers-changing-server-access-address-using-python">
+      <title>Updating Servers: Changing Server Access Address Using
+      Python</title>
+      <para>
+        If you want to use Python to change server access IP addresses,
+        you could start with the following script:
+      </para>
+      <screen>
+#!/usr/bin/python
+
+import base64
+import urllib
+import httplib
+import json
+import os
+from urlparse import urlparse
+
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+###
+###  insert the 'Get OpenStack Credentials' snippet here
+###
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+
+###
+### Changing server name
+###
+
+# HTTP connection #2
+
+imgID = 1               # server image ID
+srvIPv4 = &quot;192.168.100.2&quot;       # server access IPv4
+srvIPv6 = &quot;fe80:0:0:0:0:0:c0a8:6402&quot;    # server access IPv6
+url2 = apiurlt[1]
+params2 = urllib.urlencode(json.dumps({&quot;server&quot;: {&quot;accessIPv4&quot;: srvIPv4, &quot;accessIPv6&quot;: srvIPv6}}))
+headers2 = { &quot;X-Auth-Token&quot;:apitoken, &quot;Accept&quot;:&quot;application/json&quot;, &quot;Content-type&quot;:&quot;application/json&quot; }
+
+if (usehttps == True):
+    conn2 = httplib.HTTPSConnection(url2, key_file='../cert/priv.pem', cert_file='../cert/srv_test.crt')
+else:
+    conn2 = httplib.HTTPConnection(url2)
+
+conn2.request(&quot;DELETE&quot;, &quot;%s/servers/%s&quot; % (apiurlt[2], imgID), params2, headers2)
+
+# HTTP response #2
+
+response2 = conn2.getresponse()
+data2 = response2.read()
+dd2 = json.loads(data2)
+
+conn2.close()
+
+print dd2
+</screen>
+    </section>
+    <section xml:id="changing-root-administrator-password">
+      <title>Changing Root (Administrator) Password</title>
+      <para>
+        The <emphasis role="strong">root</emphasis>
+        (<emphasis role="strong">Administrator</emphasis>) password is
+        the most important of all passwords on any server. You should
+        never log in as <emphasis role="strong">root</emphasis> or
+        <emphasis role="strong">Administrator</emphasis>, but you
+        sometimes have to do it for basic initial administrative tasks
+        like adding users, setting up
+        <emphasis role="strong">sudo</emphasis> priviledges, etc. Your
+        cloud infrastructure provider will most likely provide a web
+        interface for changing the
+        <emphasis role="strong">root</emphasis> password, but you can
+        also do it via the OpenStack Compute API.
+      </para>
+      <para>
+        What you need to do is use a POST request directed at
+        <emphasis>/servers/id/action</emphasis>, where
+        <emphasis role="strong">id</emphasis> is the numeric server ID.
+        You also need to include a payload with the description of the
+        action you want to perform on your server
+        (<emphasis role="strong">changePassword</emphasis>), the
+        parameters of those actions, and their values. It has to be a
+        JSON dictionary structure:
+      </para>
+      <screen>
+{
+  &quot;changePassword&quot; : {
+    &quot;adminPass&quot; : &quot;dontusesshhhforpassword&quot;
+  }
+}
+</screen>
+      <para>
+        If you want to use <emphasis role="strong">curl</emphasis> to
+        reset <emphasis role="strong">root</emphasis> or
+        <emphasis role="strong">Administrator</emphasis>, here's how you
+        can do it:
+      </para>
+      <screen>
+$ curl -s -X POST -H &quot;X-Auth-Token:999888777666&quot; -d '{&quot;changePassword&quot;: {&quot;adminPass&quot;: &quot;dontusesshhhforpassword&quot;}}' http://localhost:8774/v1.1/openstack/servers/3/action
+</screen>
+    </section>
+    <section xml:id="changing-root-administrator-password-using-python">
+      <title>Changing Root (Administrator) Password Using Python</title>
+      <para>
+        If you want to delete a server using Python, here's how it can
+        be done:
+      </para>
+      <screen>
+#!/usr/bin/python
+
+import base64
+import urllib
+import httplib
+import json
+import os
+from urlparse import urlparse
+
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+###
+###  insert the 'Get OpenStack Credentials' snippet here
+###
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+
+###
+### Get the list of server IP addresses for a specific network
+###
+
+# HTTP connection #2
+
+srvID = 1               # server ID number
+passStr = &quot;dontusesshhhforpassword&quot;
+
+url2 = apiurlt[1]
+params2 = urllib.urlencode(json.dumps({&quot;changePassword&quot;: {&quot;adminPass&quot;: passStr}}))
+headers2 = { &quot;X-Auth-Token&quot;:apitoken, &quot;Content-type&quot;:&quot;application/json&quot; }
+
+if (usehttps == True):
+    conn2 = httplib.HTTPSConnection(url2, key_file='../cert/priv.pem', cert_file='../cert/srv_test.crt')
+else:
+    conn2 = httplib.HTTPConnection(url2)
+
+conn2.request(&quot;POST&quot;, &quot;%s/servers/%s/action&quot; % (apiurlt[2], srvID), params2, headers2)
+
+# HTTP response #2
+
+response2 = conn2.getresponse()
+data2 = response2.read()
+conn2.close()
+</screen>
+    </section>
+    <section xml:id="rebooting-servers">
+      <title>Rebooting Servers</title>
+      <para>
+        One of the most common administrative tasks is server reboot.
+        You can log into a server as
+        <emphasis role="strong">root</emphasis>
+        (<emphasis role="strong">Administrator</emphasis>) and use the
+        <emphasis role="strong">shutdown</emphasis> command:
+      </para>
+      <screen>
+# shutdown -r now
+</screen>
+      <para>
+        But what if you cannot log into the server or when you have a
+        couple of dozens of servers to reboot? The answer is a POST
+        request directed at <emphasis>/servers/id/action</emphasis>,
+        where <emphasis role="strong">id</emphasis> is the numeric
+        server ID. You also need to include a payload with the
+        description of the action you want to perform on your server
+        (<emphasis role="strong">reboot</emphasis>), the parameters of
+        those actions, and their values. It has to be a JSON string:
+      </para>
+      <screen>
+{
+  &quot;reboot&quot; : {
+    &quot;type&quot; : &quot;HARD&quot;
+  }
+}
+</screen>
+      <para>
+        There are two types of reboot:
+      </para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            <emphasis role="strong">HARD</emphasis> — the equivalent of
+            turning power off and on again.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis role="strong">SOFT</emphasis> — a gentle kind of
+            reboot, think <emphasis role="strong">shutdown -r
+            now</emphasis>.
+          </para>
+        </listitem>
+      </itemizedlist>
+      <para>
+        If you want to use <emphasis role="strong">curl</emphasis> to
+        reboot a server, you can do it in the following way:
+      </para>
+      <screen>
+$ curl -s -X POST -H &quot;X-Auth-Token:999888777666&quot; -d '{&quot;reboot&quot;: {&quot;type&quot;: &quot;HARD&quot;}}' http://localhost:8774/v1.1/openstack/servers/3/action
+</screen>
+    </section>
+    <section xml:id="rebooting-servers-using-python">
+      <title>Rebooting Servers Using Python</title>
+      <para>
+        If you want to reboot a server using Python, here's how it can
+        be done:
+      </para>
+      <screen>
+#!/usr/bin/python
+
+import base64
+import urllib
+import httplib
+import json
+import os
+from urlparse import urlparse
+
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+###
+###  insert the 'Get OpenStack Credentials' snippet here
+###
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+
+###
+### Get the list of server IP addresses for a specific network
+###
+
+# HTTP connection #2
+
+srvID = 1       # server ID number
+rebootType = &quot;HARD&quot; # can be either &quot;SOFT&quot; or &quot;HARD&quot;
+
+url2 = apiurlt[1]
+params2 = urllib.urlencode(json.dumps({&quot;reboot&quot;: {&quot;type&quot;: rebootType}}))
+headers2 = { &quot;X-Auth-Token&quot;:apitoken, &quot;Content-type&quot;:&quot;application/json&quot; }
+
+if (usehttps == True):
+    conn2 = httplib.HTTPSConnection(url2, key_file='../cert/priv.pem', cert_file='../cert/srv_test.crt')
+else:
+    conn2 = httplib.HTTPConnection(url2)
+
+conn2.request(&quot;POST&quot;, &quot;%s/servers/%s/action&quot; % (apiurlt[2], srvID), params2, headers2)
+
+# HTTP response #2
+
+response2 = conn2.getresponse()
+data2 = response2.read()
+conn2.close()
+</screen>
+    </section>
+    <section xml:id="rebuilding-servers">
+      <title>Rebuilding Servers</title>
+      <para>
+        When things go wrong, e.g. you log in as
+        <emphasis role="strong">root</emphasis> and overwrite
+        <emphasis>/bin</emphasis>, you can simply rebuild the server.
+        This operation will delete all data and install a fresh copy of
+        the operating system, which does not have to be the system you
+        used to create the original server. What you get after
+        rebuilding a server is a new machine with the old machine's
+        reference URL and IP addresses.
+      </para>
+      <para>
+        The POST request sent to <emphasis>/servers/id/action</emphasis>
+        should carry a JSON payload that includes the
+        <emphasis role="strong">rebuild</emphasis> command, server image
+        reference, name,
+        <emphasis role="strong">root</emphasis>/(<emphasis role="strong">Administration</emphasis>)
+        password, server metadata, and personalization files. The
+        <emphasis role="strong">id</emphasis> is the numeric ID of the
+        server you want to renuild.
+      </para>
+      <para>
+        You do not need to provide the flavor reference, because the
+        virtual hardware your rebuilt server will run on does not
+        change. If you want to alter that, rebuild your server and
+        resize it afterwards (see the next section).
+      </para>
+      <para>
+        The following script demonstrates how to rebuild a server using
+        Python. I skipped the metadata and personalization setup for
+        clarity, but you can find out how to use it if you read earlier
+        sections on that subject.
+      </para>
+      <screen>
+#!/usr/bin/python
+
+import base64
+import urllib
+import httplib
+import json
+import os
+from urlparse import urlparse
+
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+###
+###  insert the 'Get OpenStack Credentials' snippet here
+###
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+
+###
+### Get server image reference
+###
+
+# HTTP connection #2
+
+url2 = apiurlt[1]
+params2 = urllib.urlencode({})
+headers2 = { &quot;X-Auth-Token&quot;:apitoken, &quot;Content-type&quot;:&quot;application/json&quot; }
+
+if (usehttps == True):
+    conn2 = httplib.HTTPSConnection(url2, key_file='../cert/priv.pem', cert_file='../cert/srv_test.crt')
+else:
+    conn2 = httplib.HTTPConnection(url2)
+
+conn2.request(&quot;GET&quot;, &quot;%s/images&quot; % apiurlt[2], params2, headers2)
+
+# HTTP response
+
+response2 = conn2.getresponse()
+data2 = response2.read()
+dd2 = json.loads(data2)
+
+conn2.close()
+
+###
+### Server parameters
+###
+
+# Server name
+
+sname = &quot;tornado001&quot;
+
+# Server image URL
+
+n = len(dd2[&quot;images&quot;])
+m = range(n)
+
+for i in m:
+    if dd2[&quot;images&quot;][i][&quot;id&quot;] == 1:
+        sImageRef = dd2[&quot;images&quot;][i][&quot;links&quot;][0][&quot;href&quot;]
+
+###
+### server metadata
+###
+
+sMetadata = {}
+
+###
+### server personalization
+###
+
+sPersonalityPath = &quot;&quot;
+sPersonalityContents = &quot;&quot;
+sPersonality = [ { &quot;path&quot;:sPersonalityPath, &quot;contents&quot;:base64.b64encode( sPersonalityContents ) } ]
+
+s = { &quot;rebuild&quot;: { &quot;name&quot;: sname, &quot;imageRef&quot;: sImageRef, &quot;metadata&quot;: sMetadata, &quot;personality&quot;: sPersonality } }
+
+sj = json.dumps(s)
+
+# HTTP connection #3
+
+params3 = sj
+headers3 = { &quot;X-Auth-Token&quot;:apitoken, &quot;Content-type&quot;:&quot;application/json&quot; }
+
+conn3 = httplib.HTTPConnection(&quot;localhost:8774&quot;)
+conn3.request(&quot;POST&quot;, &quot;%s/servers&quot; % apiurlt[2], params3, headers3)
+
+# HTTP response #3
+
+response3 = conn3.getresponse()
+data3 = response3.read()
+dd3 = json.loads(data3)
+
+conn3.close()
+
+print json.dumps(dd3, indent=2)
+</screen>
+    </section>
+    <section xml:id="resizing-servers">
+      <title>Resizing Servers</title>
+      <para>
+        When you need more memory or more storage space (or both), you
+        can resize the virtual hardware your server runs on.
+      </para>
+      <para>
+        The POST request sent to <emphasis>/servers/id/action</emphasis>
+        must carry a simple JSON payload with the name of the operation,
+        <emphasis role="strong">resize</emphasis>, and the new server
+        flavor URL like the one below (it points to the server flavor
+        number 5):
+      </para>
+      <screen>
+{
+  &quot;resize&quot;: {
+    &quot;flavorRef&quot;: &quot;http://localhost:8774/v1.1/openstack/flavors/5&quot;
+  }
+}
+</screen>
+      <para>
+        If you want to use <emphasis role="strong">curl</emphasis>, the
+        server resize request would look like this:
+      </para>
+      <screen>
+$ curl -s -X POST -H &quot;X-Auth-Token:999888777666&quot; -d '{&quot;resize&quot;: {&quot;flavorRef&quot;: &quot;http://localhost:8774/v1.1/openstack/flavors/5&quot;}}' http://localhost:8774/v1.1/openstack/servers/3/action
+</screen>
+      <para>
+        It is possible to resize your server down, but it is up to you
+        to make sure that your data fits on the new, smaller disks.
+      </para>
+    </section>
+    <section xml:id="resizing-servers-using-python">
+      <title>Resizing Servers Using Python</title>
+      <para>
+        The following example shows how to resize a server using Python.
+        It looks more complex than the
+        <emphasis role="strong">curl</emphasis> example, but that's only
+        because it also shows how to exrtact the flavor URL:
+      </para>
+      <screen>
+#!/usr/bin/python
+
+import base64
+import urllib
+import httplib
+import json
+import os
+from urlparse import urlparse
+
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+###
+###  insert the 'Get OpenStack Credentials' snippet here
+###
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+
+###
+### Resize a server
+###
+
+# HTTP connection #2
+
+srvID = 1       # server ID number
+flavorID = 3        # flavor ID number
+
+url2 = apiurlt[1]
+
+# Flavor URL
+
+# HTTP connection #2
+
+params2 = urllib.urlencode({})
+headers2 = { &quot;X-Auth-Token&quot;:apitoken, &quot;Content-type&quot;:&quot;application/json&quot; }
+
+if (usehttps == True):
+    conn2 = httplib.HTTPSConnection(url2, key_file='../cert/priv.pem', cert_file='../cert/srv_test.crt')
+else:
+    conn2 = httplib.HTTPConnection(url2)
+
+conn2.request(&quot;GET&quot;, &quot;%s/flavors&quot; % apiurlt[2], params2, headers2)
+
+# HTTP response #2
+
+response2 = conn2.getresponse()
+data2 = response2.read()
+dd2 = json.loads(data2)
+
+conn2.close()
+
+n = len(dd2[&quot;flavors&quot;])
+m = range(n)
+
+for i in m:
+    if dd2[&quot;flavors&quot;][i][&quot;id&quot;] == flavorID:
+        sFlavorRef = dd2[&quot;flavors&quot;][i][&quot;links&quot;][0][&quot;href&quot;]
+
+# HTTP connection #3
+
+params3 = urllib.urlencode(json.dumps({&quot;resize&quot;: {&quot;flavorRef&quot;: sFlavorRef}}))
+headers3 = { &quot;X-Auth-Token&quot;:apitoken, &quot;Content-type&quot;:&quot;application/json&quot; }
+
+if (usehttps == True):
+    conn3 = httplib.HTTPSConnection(url2, key_file='../cert/priv.pem', cert_file='../cert/srv_test.crt')
+else:
+    conn3 = httplib.HTTPConnection(url2)
+
+conn3.request(&quot;POST&quot;, &quot;%s/servers/%s/action&quot; % (apiurlt[2], srvID), params3, headers3)
+
+# HTTP response #3
+
+response3 = conn3.getresponse()
+data3 = response3.read()
+conn3.close()
+</screen>
+    </section>
+    <section xml:id="confirming-server-resize">
+      <title>Confirming Server Resize</title>
+      <para>
+        The OpenStack Compute cloud will wait for 24 hours before making
+        changes permanent. This gives you a chance to test things and go
+        back to the old flavor if needed. It is up to you if you want to
+        confirm the resize, the OpenStack Compute cloud will do it
+        anyway after 24 hours, but if you are happy, you can do it by
+        sending a POST request to
+        <emphasis>/servers/id/action</emphasis>. The
+        <emphasis role="strong">id</emphasis> parameter is the numeric
+        ID of the server you resized.
+      </para>
+      <para>
+        Don't forget the JSON payload:
+      </para>
+      <screen>
+{
+  &quot;confirmResize&quot;: null
+}
+</screen>
+      <para>
+        If you want to use <emphasis role="strong">curl</emphasis>, the
+        server resize request would look like this:
+      </para>
+      <screen>
+$ curl -s -X POST -H &quot;X-Auth-Token:999888777666&quot; -d '{&quot;confirmResize&quot;: null}' http://localhost:8774/v1.1/openstack/servers/3/action
+</screen>
+    </section>
+    <section xml:id="confirming-server-resize-using-python">
+      <title>Confirming Server Resize Using Python</title>
+      <para>
+        If you want to use Python to confirm server resize, use this as
+        your inspiration:
+      </para>
+      <screen>
+#!/usr/bin/python
+
+import base64
+import urllib
+import httplib
+import json
+import os
+from urlparse import urlparse
+
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+###
+###  insert the 'Get OpenStack Credentials' snippet here
+###
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+
+###
+### Confirm server resize
+###
+
+# HTTP connection #2
+
+srvID = 1       # server ID number
+
+url2 = apiurlt[1]
+params2 = urllib.urlencode(json.dumps({&quot;confirmResize&quot;: null}))
+headers2 = { &quot;X-Auth-Token&quot;:apitoken, &quot;Content-type&quot;:&quot;application/json&quot; }
+
+if (usehttps == True):
+    conn2 = httplib.HTTPSConnection(url2, key_file='../cert/priv.pem', cert_file='../cert/srv_test.crt')
+else:
+    conn2 = httplib.HTTPConnection(url2)
+
+conn2.request(&quot;POST&quot;, &quot;%s/servers/%s/action&quot; % (apiurlt[2], srvID), params2, headers2)
+
+# HTTP response #2
+
+response2 = conn2.getresponse()
+data2 = response2.read()
+conn2.close()
+</screen>
+    </section>
+    <section xml:id="reverting-server-resize">
+      <title>Reverting Server Resize</title>
+      <para>
+        If you are not happy with your reszied server, you can revert to
+        the old flavor using the
+        <emphasis role="strong">revertResize</emphasis> command.
+      </para>
+      <para>
+        You can do it by sending a POST request to
+        <emphasis>/servers/id/action</emphasis>. The
+        <emphasis role="strong">id</emphasis> parameter is the numeric
+        ID of the server you resized.
+      </para>
+      <para>
+        Don't forget the JSON payload:
+      </para>
+      <screen>
+{
+  &quot;revertResize&quot;: null
+}
+</screen>
+      <para>
+        If you want to use <emphasis role="strong">curl</emphasis>, the
+        server resize request would look like this:
+      </para>
+      <screen>
+$ curl -s -X POST -H &quot;X-Auth-Token:999888777666&quot; -d '{&quot;revertResize&quot;: null}' http://localhost:8774/v1.1/openstack/servers/3/action
+</screen>
+    </section>
+    <section xml:id="reverting-server-resize-using-python">
+      <title>Reverting Server Resize Using Python</title>
+      <para>
+        If you want to use Python to revert server resize, use this as
+        your inspiration:
+      </para>
+      <screen>
+#!/usr/bin/python
+
+import base64
+import urllib
+import httplib
+import json
+import os
+from urlparse import urlparse
+
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+###
+###  insert the 'Get OpenStack Credentials' snippet here
+###
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+
+###
+### Revert server resize
+###
+
+# HTTP connection #2
+
+srvID = 1       # server ID number
+
+url2 = apiurlt[1]
+params2 = urllib.urlencode(json.dumps({&quot;revertResize&quot;: null}))
+headers2 = { &quot;X-Auth-Token&quot;:apitoken, &quot;Content-type&quot;:&quot;application/json&quot; }
+
+if (usehttps == True):
+    conn2 = httplib.HTTPSConnection(url2, key_file='../cert/priv.pem', cert_file='../cert/srv_test.crt')
+else:
+    conn2 = httplib.HTTPConnection(url2)
+
+conn2.request(&quot;POST&quot;, &quot;%s/servers/%s/action&quot; % (apiurlt[2], srvID), params2, headers2)
+
+# HTTP response #2
+
+response2 = conn2.getresponse()
+data2 = response2.read()
+conn2.close()
+</screen>
+    </section>
+  </chapter>
+  <chapter xml:id="server-images">
+    <title>Server Images</title>
+    <para>
+      Servers can be created using default templates, but you can also
+      create your own server images that will be later reused to quickly
+      replicate your working setup. Server images preserve the
+      customiztions and the data from the original server. This allows
+      you to pre-load one server with data and replicate it to divide
+      the data processing job between as many machines as you need.
+    </para>
+    <section xml:id="creating-server-images">
+      <title>Creating Server Images</title>
+      <para>
+        The server image creation operation is quite simple, all you
+        need to do is send a POST request to
+        <emphasis>/servers/id/action</emphasis>. The
+        <emphasis role="strong">id</emphasis> is the numeric ID of the
+        server that you want to preserve.
+      </para>
+      <para>
+        The JSON payload that accompanies the
+        <emphasis role="strong">createImage</emphasis> command must
+        include the name of the server image and optional metadata. That
+        metadata is independent of the server metadata.
+      </para>
+      <screen>
+{
+  &quot;createImage&quot;: {
+    &quot;name&quot;: &quot;tornado-app-server&quot;,
+    &quot;metadata&quot;: {
+      &quot;version&quot;: &quot;1.0.0&quot;,
+      &quot;creator&quot;: &quot;joe&quot;
+    }
+      }
+}
+</screen>
+      <para>
+        If you want to use <emphasis role="strong">curl</emphasis>, the
+        server image creation request would look like this:
+      </para>
+      <screen>
+$ curl -s -X POST -H &quot;X-Auth-Token:999888777666&quot; -d '{&quot;createImage&quot;: {&quot;name&quot;: &quot;tornado-app-server&quot;, &quot;metadata&quot;: {&quot;version&quot;: &quot;1.0.0&quot;, &quot;creator&quot;: &quot;joe&quot;}}}' http://localhost:8774/v1.1/openstack/servers/3/action
+</screen>
+    </section>
+    <section xml:id="creating-server-images-using-python">
+      <title>Creating Server Images Using Python</title>
+      <para>
+        If you want to use Python to to create a server image, use this
+        as your inspiration:
+      </para>
+      <screen>
+#!/usr/bin/python
+
+import base64
+import urllib
+import httplib
+import json
+import os
+from urlparse import urlparse
+
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+###
+###  insert the 'Get OpenStack Credentials' snippet here
+###
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+
+###
+### Revert server resize
+###
+
+# HTTP connection #2
+
+srvID = 1               # server ID number
+imgName = &quot;tornado-app-server&quot;
+metaDict = {&quot;version&quot;: &quot;1.0.0&quot;, &quot;creator&quot;: &quot;joe&quot;}
+
+url2 = apiurlt[1]
+params2 = urllib.urlencode(json.dumps({&quot;createImage&quot;: {&quot;name&quot;: imgName, &quot;metadata&quot;: metaDict}}))
+headers2 = { &quot;X-Auth-Token&quot;:apitoken, &quot;Content-type&quot;:&quot;application/json&quot; }
+
+if (usehttps == True):
+    conn2 = httplib.HTTPSConnection(url2, key_file='../cert/priv.pem', cert_file='../cert/srv_test.crt')
+else:
+    conn2 = httplib.HTTPConnection(url2)
+
+conn2.request(&quot;POST&quot;, &quot;%s/servers/%s/action&quot; % (apiurlt[2], srvID), params2, headers2)
+
+# HTTP response #2
+
+response2 = conn2.getresponse()
+data2 = response2.read()
+conn2.close()
+</screen>
+    </section>
+    <section xml:id="deleting-servers">
+      <title>Deleting Servers</title>
+      <para>
+        When a server is no longer necessary you can simply delete it.
+        One REST call and the server is gone. You will need to add the
+        server <emphasis role="strong">id</emphasis> number after
+        <emphasis>/servers</emphasis> and you must use the DELETE
+        method, as in:
+      </para>
+      <screen>
+$ curl -s -X DELETE -H &quot;X-Auth-Token:999888777666&quot; http://localhost:8774/v1.1/openstack/servers/3
+</screen>
+      <para>
+        The OpenStack Compute API server will not return a JSON object
+        when the operation is successful, but it will return an error
+        message when the server you are trying to delete does not exist:
+      </para>
+      <screen>
+{
+  &quot;itemNotFound&quot;: {
+    &quot;message&quot;: &quot;The resource could not be found.&quot;, 
+    &quot;code&quot;: 404
+  }
+}
+</screen>
+    </section>
+    <section xml:id="deleting-servers-using-python">
+      <title>Deleting Servers Using Python</title>
+      <para>
+        When you use Python, server deletion procedure can be done in a
+        fairly simple way:
+      </para>
+      <screen>
+#!/usr/bin/python
+
+import base64
+import urllib
+import httplib
+import json
+import os
+from urlparse import urlparse
+
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+###
+###  insert the 'Get OpenStack Credentials' snippet here
+###
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+
+###
+### Get the list of server IP addresses for a specific network
+###
+
+# HTTP connection #2
+
+srvID = 1       # server ID number
+url2 = apiurlt[1]
+params2 = urllib.urlencode({})
+headers2 = { &quot;X-Auth-Token&quot;:apitoken, &quot;Content-type&quot;:&quot;application/json&quot; }
+
+if (usehttps == True):
+    conn2 = httplib.HTTPSConnection(url2, key_file='../cert/priv.pem', cert_file='../cert/srv_test.crt')
+else:
+    conn2 = httplib.HTTPConnection(url2)
+
+conn2.request(&quot;GET&quot;, &quot;%s/servers/%s/delete&quot; % (apiurlt[2], srvID), params2, headers2)
+
+# HTTP response #2
+
+response2 = conn2.getresponse()
+data2 = response2.read()
+conn2.close()
+</screen>
+    </section>
+    <section xml:id="deleting-server-images">
+      <title>Deleting Server Images</title>
+      <para>
+        When a server image is no longer necessary you can get rid of
+        it. You will need to send a DELETE request to
+        <emphasis>/servers/id</emphasis>, where
+        <emphasis role="strong">id</emphasis> is the numeric ID of the
+        server image you want to remove:
+      </para>
+      <screen>
+$ curl -s -X DELETE -H &quot;X-Auth-Token:999888777666&quot; http://localhost:8774/v1.1/openstack/images/3
+</screen>
+      <para>
+        The OpenStack Compute API server will not return a JSON object
+        when the operation is successful, but it will return an error
+        message when the server you are trying to delete does not exist:
+      </para>
+      <screen>
+{
+  &quot;itemNotFound&quot;: {
+    &quot;message&quot;: &quot;The resource could not be found.&quot;, 
+    &quot;code&quot;: 404
+  }
+}
+</screen>
+    </section>
+    <section xml:id="deleting-servers-images-using-python">
+      <title>Deleting Servers Images Using Python</title>
+      <para>
+        When you use Python, server image deletion procedure can be done
+        in a fairly simple way:
+      </para>
+      <screen>
+#!/usr/bin/python
+
+import base64
+import urllib
+import httplib
+import json
+import os
+from urlparse import urlparse
+
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+###
+###  insert the 'Get OpenStack Credentials' snippet here
+###
+### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
+
+###
+### Delete server image
+###
+
+# HTTP connection #2
+
+srvID = 1       # server ID number
+url2 = apiurlt[1]
+params2 = urllib.urlencode({})
+headers2 = { &quot;X-Auth-Token&quot;:apitoken, &quot;Content-type&quot;:&quot;application/json&quot; }
+
+if (usehttps == True):
+    conn2 = httplib.HTTPSConnection(url2, key_file='../cert/priv.pem', cert_file='../cert/srv_test.crt')
+else:
+    conn2 = httplib.HTTPConnection(url2)
+
+conn2.request(&quot;DELETE&quot;, &quot;%s/images/%s&quot; % (apiurlt[2], srvID), params2, headers2)
+
+# HTTP response #2
+
+response2 = conn2.getresponse()
+data2 = response2.read()
+conn2.close()
+</screen>
+    </section>
+  </chapter>
+  <chapter xml:id="additional-tools">
+    <title>Additional Tools</title>
+    <para>
+      A while ago I wrote a simple tool for pretty-printing JSON data.
+      Over time I found it handy to have around when working with
+      various applications and services that generate JSON output. You
+      might find it handy when you are working with JSON. Here it is:
+    </para>
+    <screen>
+#!/usr/bin/python
+
+import sys
+import json
+
+def main():
+
+        try:
+
+                data = sys.stdin.readline()
+                dd = json.loads(data)
+
+        except:
+
+                sys.stderr.write(&quot;Error: %s&quot; % str(sys.exc_info()[0]))
+                sys.stderr.write(&quot;\nI got no data, badly formatted JSON, or something that is not JSON.&quot;)
+
+                sys.exit()
+
+        print json.dumps(dd, indent=2)
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</screen>
+  </chapter>
+</book>

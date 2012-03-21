@@ -168,27 +168,54 @@
         </tbody>
       </table>
 
-      <para>Here is a simple example <filename>nova.conf</filename> file for a
-      small private cloud, with all the cloud controller services, database
-      server, and messaging server on the same server.</para>
+      <para>Here is a simple example <filename>nova.conf</filename>
+        file for a small private cloud, with all the cloud controller
+        services, database server, and messaging server on the same
+        server. In this case, CONTROLLER_IP represents the IP address
+        of a central server, BRIDGE_INTERFACE represents the bridge
+        such as br100, the NETWORK_INTERFACE represents an interface
+        to your VLAN setup, and passwords are represented as
+        DB_PASSWORD_COMPUTE for your Compute (nova) database password,
+        and RABBIT PASSWORD represents the password to your rabbit
+        installation.</para>
 
-      <programlisting>
---dhcpbridge_flagfile=/etc/nova/nova.conf
---dhcpbridge=/bin/nova-dhcpbridge
---logdir=/var/log/nova
---state_path=/var/lib/nova
---verbose
---use_deprecated_auth
---ec2_host=184.106.239.134
---ec2_url=http://184.106.239.134:8773/services/Cloud
---osapi_host=http://184.106.239.134
---s3_host=184.106.239.134
---rabbit_host=184.106.239.134
---fixed_range=192.168.0.0/16
---network_size=8
---glance_api_servers=184.106.239.134:9292
---routing_source_ip=184.106.239.134
---sql_connection=mysql://nova:notnova@184.106.239.134/nova            
+      <programlisting>[DEFAULT]
+verbose=True
+instances_path=/var/openstack/compute/instances
+auth_strategy=keystone
+allow_resize_to_same_host=True
+root_helper=sudo /opt/openstack/nova/bin/nova-rootwrap
+compute_scheduler_driver=nova.scheduler.filter_scheduler.FilterScheduler
+dhcpbridge_flagfile=/etc/openstack/compute.conf
+fixed_range=192.168.0.0/12
+s3_host=${CONTROLLER_IP}
+network_manager=nova.network.manager.FlatManager
+volume_group=nova-volumes
+volume_name_template=volume-%08x
+iscsi_helper=tgtadm
+osapi_compute_extension=nova.api.openstack.compute.contrib.standard_extensions
+my_ip=${MY_IP}
+public_interface=${BRIDGE_INTERFACE}
+vlan_interface=${NETWORK_INTERFACE}
+flat_network_bridge=${BRIDGE_INTERFACE}
+flat_interface=${NETWORK_INTERFACE}
+sql_connection=postgresql://openstack_compute:${DB_PASSWORD_COMPUTE}@${CONTROLLER_IP}/openstack_compute
+libvirt_type=kvm
+instance_name_template=instance-%08x
+novncproxy_base_url=http://${CONTROLLER_IP}:6080/vnc_auto.html
+xvpvncproxy_base_url=http://${CONTROLLER_IP}:6081/console
+vncserver_listen=127.0.0.1
+vncserver_proxyclient_address=127.0.0.1
+api_paste_config=/var/openstack/compute/api-paste.ini
+image_service=nova.image.glance.GlanceImageService
+ec2_dmz_host=${CONTROLLER_IP}
+rabbit_host=${CONTROLLER_IP}
+rabbit_password=${RABBIT_PASSWORD}
+glance_api_servers=${CONTROLLER_IP}:9292
+force_dhcp_release=True
+flat_injected=True
+connection_type=libvirt
+firewall_driver=nova.virt.libvirt.firewall.IptablesFirewallDriver             
             </programlisting>
 
       <para>Create a “nova” group, so you can set permissions on the
@@ -196,40 +223,35 @@
 
       <screen><prompt>$</prompt> <userinput>sudo addgroup nova</userinput></screen>
 
-      <para>The <filename>nova.config</filename> file should have its owner
-      set to <literal>root:nova</literal>, and mode set to
-      <literal>0640</literal>, since the file contains your MySQL server’s
-      username and password. You also want to ensure that the
-      <literal>nova</literal> user belongs to the <literal>nova</literal>
-      group.</para>
+      <para>The <filename>nova.config</filename> file should have its
+        owner set to <literal>root:nova</literal>, and mode set to
+          <literal>0640</literal>, since the file could contain your
+        MySQL server’s username and password. You also want to ensure
+        that the <literal>nova</literal> user belongs to the
+          <literal>nova</literal> group.</para>
 
       <screen><prompt>$</prompt> <userinput>sudo usermod -g nova nova</userinput>
 <prompt>$</prompt> <userinput>chown -R root:nova /etc/nova</userinput>
-<prompt>$</prompt> <userinput>chmod 640 /etc/nova/nova.conf</userinput>
-</screen>
+<prompt>$</prompt> <userinput>chmod 640 /etc/nova/nova.conf</userinput></screen>
     </section>
 
     <section xml:id="setting-up-openstack-compute-environment-on-the-compute-node">
       <title>Setting Up OpenStack Compute Environment on the Compute
       Node</title>
 
-      <para>These are the commands you run to ensure the database schema is
-      current, and then set up a user and project, if you are using built-in
-      auth with the <literal>--use_deprecated_auth</literal> flag rather than
-      the Identity Service:</para>
+      <para>These are the commands you run to ensure the database
+        schema is current:</para>
 
-      <screen><prompt>$</prompt> <userinput>nova-manage db sync</userinput>
-<prompt>$</prompt> <userinput>nova-manage user admin <replaceable>&lt;user_name&gt;</replaceable></userinput>
-<prompt>$</prompt> <userinput>nova-manage project create <replaceable>&lt;project_name&gt; &lt;user_name&gt;</replaceable></userinput>
-<prompt>$</prompt> <userinput>nova-manage network create <replaceable>&lt;network-label&gt; &lt;project-network&gt; &lt;number-of-networks-in-project&gt; &lt;addresses-in-each-network&gt;</replaceable></userinput>
+      <screen><prompt>$</prompt> <userinput>nova-manage db sync</userinput></screen>
+<para>You also need to populate the database with the network configuration information that Compute obtains from the <filename>nova.conf</filename> file.
+</para>
+<screen><prompt>$</prompt> <userinput>nova-manage network create <replaceable>&lt;network-label&gt; &lt;project-network&gt; &lt;number-of-networks-in-project&gt; &lt;addresses-in-each-network&gt;</replaceable></userinput>
 </screen>
 
       <para>Here is an example of what this looks like with real values
       entered:</para>
 
       <screen><prompt>$</prompt> <userinput>nova-manage db sync</userinput>
-<prompt>$</prompt> <userinput>nova-manage user admin dub</userinput>
-<prompt>$</prompt> <userinput>nova-manage project create dubproject dub</userinput>
 <prompt>$</prompt> <userinput>nova-manage network create novanet 192.168.0.0/24 1 256</userinput></screen>
 
       <para>For this example, the number of IPs is <literal>/24</literal>
@@ -883,8 +905,8 @@ xenapi_remap_vbd_dev=true
       hypervisors and virtualization standards. Configuring and
       running OpenStack Compute to use a particular hypervisor takes
       several installation and configuration steps. The
-        <literal>libvirt_type</literal> configuration option
-      indicates which hypervisor will be used. Refer <xref
+        <literal>libvirt_type</literal> configuration option indicates
+      which hypervisor will be used. Refer to <xref
         linkend="hypervisor-configuration-basics"> Hypervisor
         configuration basics </xref> for more details.</para>
   </section>
@@ -893,35 +915,11 @@ xenapi_remap_vbd_dev=true
     <title>Configuring Authentication and Authorization</title>
 
     <para>There are different methods of authentication for the
-      OpenStack Compute project. The default setting is to use the
-        <filename>novarc</filename> file that contains credentials. To
-      do so, set the <literal>use_deprecated_auth</literal>
-      configuration option in your <filename>nova.conf</filename>,
-      which is <literal>True</literal> by default. For no auth, modify
-      the <filename>paste.ini</filename> that is included in the
-        <filename>etc/nova</filename> directory. With additional
-      configuration, you can use the OpenStack Identity Service,
-      code-named Keystone. In Compute, the settings for using Keystone
-      are commented lines in
-        <filename>etc/nova/api-paste.ini</filename>, and Keystone also
-      provides an example file in
-        <filename>keystone/examples/paste/nova-api-paste.ini</filename>.
-      Restart the nova-api service for these settings to be
-      configured. Refer to the Identity Service Starter Guide for
-      additional information.</para>
-
-    <para>OpenStack Compute uses an implementation of an authentication system
-    structured with an Active Directory or other federated LDAP user store
-    that backends to an identity manager or other SAML Policy Controller that
-    then maps to groups. Credentials for API calls are stored in the project
-    zip file when using this auth system. Certificate authority is also
-    customized in nova.conf for the this built-in auth system.</para>
-
-    <para>If you see errors such as "EC2ResponseError: 403 Forbidden" it is
-    likely you are trying to use euca commands without the auth system
-    properly configured. Either install and use the default auth setting, or
-    change out the default <filename>paste.ini</filename> file to use no auth,
-    or configure the Identity Service.</para>
+      OpenStack Compute project, including no authentication,
+      keystone, or deprecated (which uses nova-manage commands to
+      create users). With additional configuration, you can use the
+      OpenStack Identity Service, code-named Keystone. Refer to
+      <xref linkend="ch_identity_mgmt">Identity Management</xref> for additional information.</para>
 
     <table rules="all">
       <caption>Description of <filename>nova.conf</filename>
@@ -961,13 +959,12 @@ xenapi_remap_vbd_dev=true
         </tr>
 
         <tr>
-          <td><literal>use_deprecated_auth</literal></td>
+          <td><literal>auth_strategy</literal></td>
 
-          <td><literal>False</literal></td>
+          <td><literal>keystone</literal></td>
 
-          <td><para><literal>True</literal> or <literal>False</literal>; Sets
-          the auth system to use the zip file provided with the project files
-          to store all credentials</para></td>
+          <td><para>The strategy to use for auth. Supports noauth, keystone, and
+              deprecated.</para></td>
         </tr>
       </tbody>
     </table>
