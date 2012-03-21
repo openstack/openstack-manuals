@@ -340,8 +340,8 @@ source ~/.bashrc                 </literallayout>
         necessary to run these commands as the user.</para>
       </note>
 
-      <screen><prompt>$</prompt> <userinput>nova  secgroup-add-rule default  icmp - 1 -1 0.0.0.0/0</userinput>
-<prompt>$</prompt> <userinput>nova  secgroup-add-rule default  tcp 22 22 0.0.0.0/0</userinput></screen>
+      <screen><prompt>$</prompt> <userinput>nova secgroup-add-rule default  icmp -1 -1 0.0.0.0/0</userinput>
+<prompt>$</prompt> <userinput>nova secgroup-add-rule default  tcp 22 22 0.0.0.0/0</userinput></screen>
 
       <para>Another common issue is you cannot ping or SSH to your instances
       after issuing the <command>euca-authorize</command> commands. Something
@@ -376,32 +376,15 @@ source ~/.bashrc                 </literallayout>
       <command>nova-compute</command>.</para>
 
       <para>For a multi-node install you only make changes to
-      <filename>nova.conf</filename> and copy it to additional compute nodes.
-      Ensure each <filename>nova.conf</filename> file points to the correct IP
-      addresses for the respective services. Customize the
-      <filename>nova.conf</filename> example below to match your environment.
-      The <literal><replaceable>CC_ADDR</replaceable></literal> is the Cloud
-      Controller IP Address.</para>
+          <filename>nova.conf</filename> and copy it to additional
+        compute nodes. Ensure each <filename>nova.conf</filename> file
+        points to the correct IP addresses for the respective
+        services. </para>
 
-      <programlisting>--dhcpbridge_flagfile=/etc/nova/nova.conf
---dhcpbridge=/usr/bin/nova-dhcpbridge
---flat_network_bridge=br100
---logdir=/var/log/nova
---state_path=/var/lib/nova
---verbose
---sql_connection=mysql://root:nova@<replaceable>CC_ADDR</replaceable>/nova
---s3_host=<replaceable>CC_ADDR</replaceable>
---rabbit_host=<replaceable>CC_ADDR</replaceable>
---ec2_api=<replaceable>CC_ADDR</replaceable>
---ec2_url=http://CC_ADDR:8773/services/Cloud
---network_manager=nova.network.manager.FlatManager
---fixed_range= network/CIDR
---network_size=number of addresses</programlisting>
-
-      <para>By default, Nova sets the bridge device based on the setting in
-      <literal>--flat_network_bridge</literal>. Now you can edit
-      <filename>/etc/network/interfaces</filename> with the following
-      template, updated with your IP information.</para>
+      <para>By default, Nova sets the bridge device based on the
+        setting in <literal>flat_network_bridge</literal>. Now you can
+        edit <filename>/etc/network/interfaces</filename> with the
+        following template, updated with your IP information.</para>
 
       <programlisting># The loopback network interface
 auto lo

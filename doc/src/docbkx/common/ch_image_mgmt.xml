@@ -1,59 +1,184 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" 
-    version="5.0"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="ch_image_mgmt">
     <title>Image Management</title>
-    <para>You can use OpenStack Image Services for discovering, registering, and retrieving virtual machine images. 
-        The service includes a RESTful API that allows users to query VM image metadata and retrieve the actual image with 
-        HTTP requests, or you can use a client class in your Python code to accomplish the same tasks.
-    </para>
-    <para>
-        VM images made available through OpenStack Image Service can be stored in a variety of locations from simple 
-        file systems to object-storage systems like the OpenStack Object Storage project, or even use S3 storage either 
-        on its own or through an OpenStack Object Storage S3 interface.</para>
-    <para>The backend stores that OpenStack Image Service can work with are as follows:</para>
-    <itemizedlist><listitem><para>OpenStack Object Storage - OpenStack Object Storage is the highly-available object storage project in OpenStack.</para></listitem> 
+    <para>You can use OpenStack Image Services for discovering,
+        registering, and retrieving virtual machine images. The
+        service includes a RESTful API that allows users to query VM
+        image metadata and retrieve the actual image with HTTP
+        requests, or you can use a client class in your Python code to
+        accomplish the same tasks. </para>
+    <para> VM images made available through OpenStack Image Service
+        can be stored in a variety of locations from simple file
+        systems to object-storage systems like the OpenStack Object
+        Storage project, or even use S3 storage either on its own or
+        through an OpenStack Object Storage S3 interface.</para>
+    <para>The backend stores that OpenStack Image Service can work
+        with are as follows:</para>
+    <itemizedlist>
+        <listitem>
+            <para>OpenStack Object Storage - OpenStack Object Storage
+                is the highly-available object storage project in
+                OpenStack.</para>
+        </listitem>
+
+        <listitem>
+            <para>Filesystem - The default backend that OpenStack
+                Image Service uses to store virtual machine images is
+                the filesystem backend. This simple backend writes
+                image files to the local filesystem.</para>
+        </listitem>
+
+        <listitem>
+            <para>S3 - This backend allows OpenStack Image Service to
+                store virtual machine images in Amazon’s S3
+                service.</para>
+        </listitem>
+
+        <listitem>
+            <para>HTTP - OpenStack Image Service can read virtual
+                machine images that are available via HTTP somewhere
+                on the Internet. This store is readonly.</para>
+        </listitem>
+    </itemizedlist>
+    <para>This chapter assumes you have a working installation of the
+        Image Service, with a working endpoint and users created in
+        the Identity service, plus you have sourced the environment
+        variables required by the nova client and glance
+        client.</para>
+    <section xml:id="starting-images">
+        <title>Starting Images</title><para>Once you have an installation, you want to get images that you can use in your Compute cloud.
+            We've created a basic Ubuntu image for testing your installation. First you'll download
+            the image, then use "uec-publish-tarball" to publish it:</para>
         
-        <listitem><para>Filesystem - The default backend that OpenStack Image Service uses to store virtual machine images is the filesystem backend. This simple backend writes image files to the local filesystem.</para></listitem>
+        <para><literallayout class="monospaced">
+image="ubuntu1010-UEC-localuser-image.tar.gz"
+wget http://c0179148.cdn1.cloudfiles.rackspacecloud.com/ubuntu1010-UEC-localuser-image.tar.gz
+uec-publish-tarball $image [bucket-name] [hardware-arch]
+           </literallayout>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <emphasis role="bold">Image</emphasis> : a tar.gz file that contains the
+                        system, its kernel and ramdisk. </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <emphasis role="bold">Bucket</emphasis> : a local repository that contains
+                        images. </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <emphasis role="bold">Hardware architecture</emphasis> : specify via "amd64"
+                        or "i386" the image's architecture (32 or 64 bits). </para>
+                </listitem>
+            </itemizedlist>
+        </para>
         
-        <listitem><para>S3 - This backend allows OpenStack Image Service to store virtual machine images in Amazon’s S3 service.</para></listitem>
+        <para>Here's an example of what this command looks like with data:</para>
         
-        <listitem><para>HTTP - OpenStack Image Service can read virtual machine images that are available via HTTP somewhere on the Internet. This store is readonly.</para></listitem></itemizedlist>
-    
+        <para><literallayout class="monospaced">uec-publish-tarball ubuntu1010-UEC-localuser-image.tar.gz dub-bucket amd64</literallayout></para>
+        
+        <para>The command in return should output three references:<emphasis role="italic">
+            emi</emphasis>, <emphasis role="italic">eri</emphasis> and <emphasis role="italic"
+                >eki</emphasis>. You will next run nova image-list in order to obtain the ID of the
+            image you just uploaded.</para>
+        
+        
+        <para>Now you can schedule, launch and connect to the instance, which you do with the "nova"
+            command line. The ID of the image will be used with the <literallayout class="monospaced">nova boot</literallayout>command.</para>
+        <para>One thing to note here, once you publish the tarball, it has to untar before
+            you can launch an image from it. Using the 'nova list' command, and make sure the image
+            has it's status as "ACTIVE".</para>
+        
+        <para><literallayout class="monospaced">nova image-list</literallayout></para>
+        
+        <para>Depending on the image that you're using, you need a public key to connect to it. Some
+            images have built-in accounts already created. Images can be shared by many users, so it
+            is dangerous to put passwords into the images. Nova therefore supports injecting ssh
+            keys into instances before they are booted. This allows a user to login to the instances
+            that he or she creates securely. Generally the first thing that a user does when using
+            the system is create a keypair. </para>
+        <para>Keypairs provide secure authentication to your instances. As part of the first boot of
+            a virtual image, the private key of your keypair is added to root’s authorized_keys
+            file. Nova generates a public and private key pair, and sends the private key to the
+            user. The public key is stored so that it can be injected into instances. </para>
+        <para>Keypairs are created through the api and you use them as a parameter when launching an
+            instance. They can be created on the command line using the following command :
+            <literallayout class="monospaced">nova keypair-add</literallayout>In order to list all the available options, you would run :<literallayout class="monospaced">nova help </literallayout>
+            Example usage:</para>
+        
+        <literallayout class="monospaced">
+nova keypair-add test > test.pem
+chmod 600 test.pem
+                    </literallayout>
+        
+        <para>Now, you can run the instances:</para>
+        <literallayout class="monospaced">nova boot --image 1 --flavor 1 --key_name test my-first-server</literallayout>
+        <para>Here's a description of the parameters used above:</para>
+        <itemizedlist>
+            <listitem>
+                <para><emphasis role="bold">--flavor</emphasis> what type of image to create. You
+                    can get all the flavors you have by running
+                    <literallayout class="monospaced">nova flavor-list</literallayout></para>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="bold">-key_ name</emphasis> name of the key to inject in to the
+                    image at launch. </para>
+            </listitem>
+        </itemizedlist>
+        <para> The instance will go from “BUILD” to “ACTIVE” in a short time, and you should
+            be able to connect via SSH using the 'ubuntu' account, with the password 'ubuntu':
+            (replace $ipaddress with the one you got from nova list): </para>
+        <para>
+            <literallayout class="monospaced">ssh ubuntu@$ipaddress</literallayout></para>
+        <para>The 'ubuntu' user is part of the sudoers group, so you can escalate to 'root'
+            via the following command:</para>
+        <para>
+            <literallayout class="monospaced">sudo -i</literallayout>
+        </para>
+    </section>
     <section xml:id="deleting-instances">
 
-                    <title>Deleting Instances</title>
+        <title>Deleting Instances</title>
 
-                <para>When you are done playing with an instance, you can tear the instance down
-            using the following command (replace $instanceid with the instance IDs from above or
-            look it up with euca-describe-instances):</para>
+        <para>When you are done playing with an instance, you can tear
+            the instance down using the following command (replace
+            $instanceid with the instance IDs from above or look it up
+            with euca-describe-instances):</para>
 
-                <para><literallayout class="monospaced">nova delete $server-id</literallayout></para></section>
+        <para><literallayout class="monospaced">nova delete $server-id</literallayout></para>
+    </section>
     <section xml:id="pausing-and-suspending-instances">
 
         <title>Pausing and Suspending Instances</title>
-        <para>Since the release of the API in its 1.1 version, it is possible to pause and suspend
-            instances.</para>
+        <para>Since the release of the API in its 1.1 version, it is
+            possible to pause and suspend instances.</para>
         <warning>
-            <para>
-                Pausing and Suspending instances only apply to KVM-based hypervisors and XenServer/XCP Hypervisors.
+            <para> Pausing and Suspending instances only apply to
+                KVM-based hypervisors and XenServer/XCP Hypervisors.
             </para>
         </warning>
-        <para> Pause/ Unpause : Stores the content of the VM in memory (RAM).</para>
-        <para>Suspend/ Resume : Stores the content of the VM on disk.</para>
-        <para>It can be interesting for an administrator to suspend instances, if a maintenance is
-            planned; or if the instance are not frequently used. Suspending an instance frees up
-            memory and vCPUS, while pausing keeps the instance running, in a "frozen" state.
-            Suspension could be compared to an "hibernation" mode.</para>
-    <section xml:id="pausing-instance">
-        <title>Pausing instance</title>
-        <para>To pause an instance :</para>
-        <literallayout class="monospaced">nova pause $server-id </literallayout>
-        <para>To resume a paused instance :</para>
-        <literallayout class="monospaced">nova unpause $server-id </literallayout>
-    </section>
+        <para> Pause/ Unpause : Stores the content of the VM in memory
+            (RAM).</para>
+        <para>Suspend/ Resume : Stores the content of the VM on
+            disk.</para>
+        <para>It can be interesting for an administrator to suspend
+            instances, if a maintenance is planned; or if the instance
+            are not frequently used. Suspending an instance frees up
+            memory and vCPUS, while pausing keeps the instance
+            running, in a "frozen" state. Suspension could be compared
+            to an "hibernation" mode.</para>
+        <section xml:id="pausing-instance">
+            <title>Pausing instance</title>
+            <para>To pause an instance :</para>
+            <literallayout class="monospaced">nova pause $server-id </literallayout>
+            <para>To resume a paused instance :</para>
+            <literallayout class="monospaced">nova unpause $server-id </literallayout>
+        </section>
         <section xml:id="suspending-instance">
             <title>Suspending instance</title>
             <para> To suspend an instance :</para>
@@ -62,70 +187,155 @@
             <literallayout class="monospaced">nova resume $server-id </literallayout>
         </section>
     </section>
-        <section xml:id="creating-custom-images">
-           <info><author>
-            <orgname>CSS Corp-  Open Source Services</orgname>
-        </author><title>Image management</title></info>
-        <para>by <link xlink:href="http://www.csscorp.com/">CSS Corp Open Source Services</link> </para>
-        <para>There are several pre-built images for OpenStack available from  various sources. You can download such images and use them to get familiar with OpenStack. You can refer to  <link xlink:href="http://docs.openstack.org/cactus/openstack-compute/admin/content/starting-images.html">http://docs.openstack.org/cactus/openstack-compute/admin/content/starting-images.html</link> for details on using such images.</para>
-        <para>For any production deployment,  you may like to have the ability to bundle custom images, with a custom set of applications or configuration. This chapter will guide you through the process of creating Linux images of Debian and Redhat based distributions from scratch. We have also covered an approach to bundling Windows images.</para>
-        <para>There are some minor differences in the way you would bundle a Linux image, based on the distribution. Ubuntu makes it very easy by providing cloud-init package, which can be used to take care of the instance configuration at the time of launch. cloud-init handles importing ssh keys for password-less login, setting hostname etc. The instance acquires the instance specific configuration from Nova-compute by connecting to a meta data interface running on 169.254.169.254.</para>
-        <para>While creating the image of a distro that does not have cloud-init or an equivalent package, you may need to take care of importing the keys etc. by running a set of commands at boot time from rc.local.</para>
-        <para>The process used for Ubuntu and Fedora is largely the same with a few minor differences, which are explained below.</para>
+    <section xml:id="creating-custom-images">
+        <info>
+            <author>
+                <orgname>CSS Corp- Open Source Services</orgname>
+            </author>
+            <title>Image management</title>
+        </info>
+        <para>by <link xlink:href="http://www.csscorp.com/">CSS Corp
+                Open Source Services</link>
+        </para>
+        <para>There are several pre-built images for OpenStack
+            available from various sources. You can download such
+            images and use them to get familiar with OpenStack. You
+            can refer to <link
+                xlink:href="http://docs.openstack.org/cactus/openstack-compute/admin/content/starting-images.html"
+                >http://docs.openstack.org/cactus/openstack-compute/admin/content/starting-images.html</link>
+            for details on using such images.</para>
+        <para>For any production deployment, you may like to have the
+            ability to bundle custom images, with a custom set of
+            applications or configuration. This chapter will guide you
+            through the process of creating Linux images of Debian and
+            Redhat based distributions from scratch. We have also
+            covered an approach to bundling Windows images.</para>
+        <para>There are some minor differences in the way you would
+            bundle a Linux image, based on the distribution. Ubuntu
+            makes it very easy by providing cloud-init package, which
+            can be used to take care of the instance configuration at
+            the time of launch. cloud-init handles importing ssh keys
+            for password-less login, setting hostname etc. The
+            instance acquires the instance specific configuration from
+            Nova-compute by connecting to a meta data interface
+            running on 169.254.169.254.</para>
+        <para>While creating the image of a distro that does not have
+            cloud-init or an equivalent package, you may need to take
+            care of importing the keys etc. by running a set of
+            commands at boot time from rc.local.</para>
+        <para>The process used for Ubuntu and Fedora is largely the
+            same with a few minor differences, which are explained
+            below.</para>
 
-        <para>In both cases, the documentation below assumes that you have a working KVM installation to use for creating the images. We are using the machine called &#8216;client1&#8242; as explained in the chapter on &#8220;Installation and Configuration&#8221; for this purpose.</para>
-        <para>The approach explained below will give you disk images that represent a disk without any partitions. Nova-compute can resize such disks ( including resizing the file system) based on the instance type chosen at the time of launching the instance. These images cannot have &#8216;bootable&#8217; flag and hence it is mandatory to have associated kernel and ramdisk images. These kernel and ramdisk images need to be used by nova-compute at the time of launching the instance.</para>
-        <para>However, we have also added a small section towards the end of the chapter about creating bootable images with multiple partitions that can be be used by nova to launch an instance without the need for  kernel and ramdisk images. The caveat is that while nova-compute can re-size such disks at the time of launching the instance, the file system size is not altered and hence, for all practical purposes, such disks are not re-sizable.</para>
-        <section xml:id="creating-a-linux-image"><title>Creating a Linux Image &#8211; Ubuntu &amp; Fedora</title>
+        <para>In both cases, the documentation below assumes that you
+            have a working KVM installation to use for creating the
+            images. We are using the machine called
+            &#8216;client1&#8242; as explained in the chapter on
+            &#8220;Installation and Configuration&#8221; for this
+            purpose.</para>
+        <para>The approach explained below will give you disk images
+            that represent a disk without any partitions. Nova-compute
+            can resize such disks ( including resizing the file
+            system) based on the instance type chosen at the time of
+            launching the instance. These images cannot have
+            &#8216;bootable&#8217; flag and hence it is mandatory to
+            have associated kernel and ramdisk images. These kernel
+            and ramdisk images need to be used by nova-compute at the
+            time of launching the instance.</para>
+        <para>However, we have also added a small section towards the
+            end of the chapter about creating bootable images with
+            multiple partitions that can be be used by nova to launch
+            an instance without the need for kernel and ramdisk
+            images. The caveat is that while nova-compute can re-size
+            such disks at the time of launching the instance, the file
+            system size is not altered and hence, for all practical
+            purposes, such disks are not re-sizable.</para>
+        <section xml:id="creating-a-linux-image">
+            <title>Creating a Linux Image &#8211; Ubuntu &amp;
+                Fedora</title>
 
-            <para>The first step would be to create a raw image on Client1. This will represent the main HDD of the virtual machine, so make sure to give it as much space as you will need.</para>
+            <para>The first step would be to create a raw image on
+                Client1. This will represent the main HDD of the
+                virtual machine, so make sure to give it as much space
+                as you will need.</para>
             <literallayout class="monospaced">
 kvm-img create -f raw server.img 5G
 </literallayout>
 
-            <simplesect><title>OS Installation</title>
-                <para>Download the iso file of the Linux distribution you want installed in the image. The instructions below are tested on Ubuntu 11.04 Natty Narwhal 64-bit server and Fedora 14 64-bit. Most of the instructions refer to Ubuntu. The points of difference between Ubuntu and Fedora are mentioned wherever required.</para>
+            <simplesect>
+                <title>OS Installation</title>
+                <para>Download the iso file of the Linux distribution
+                    you want installed in the image. The instructions
+                    below are tested on Ubuntu 11.04 Natty Narwhal
+                    64-bit server and Fedora 14 64-bit. Most of the
+                    instructions refer to Ubuntu. The points of
+                    difference between Ubuntu and Fedora are mentioned
+                    wherever required.</para>
                 <literallayout class="monospaced">
 wget http://releases.ubuntu.com/natty/ubuntu-11.04-server-amd64.iso
 </literallayout>
-                <para>Boot a KVM Instance with the OS installer ISO in the virtual CD-ROM. This will start the installation process. The command below also sets up a VNC display at port 0</para>
+                <para>Boot a KVM Instance with the OS installer ISO in
+                    the virtual CD-ROM. This will start the
+                    installation process. The command below also sets
+                    up a VNC display at port 0</para>
                 <literallayout class="monospaced">
 sudo kvm -m 256 -cdrom ubuntu-11.04-server-amd64.iso -drive   file=server.img,if=scsi,index=0 -boot d -net nic -net user -nographic  -vnc :0
 </literallayout>
-                <para>Connect to the VM through VNC (use display number :0) and finish the installation.</para>
-                <para>For Example,  where 10.10.10.4 is the IP address of client1:</para>
+                <para>Connect to the VM through VNC (use display
+                    number :0) and finish the installation.</para>
+                <para>For Example, where 10.10.10.4 is the IP address
+                    of client1:</para>
                 <literallayout class="monospaced">
  vncviewer 10.10.10.4 :0
 </literallayout>
-                <para>During the installation of Ubuntu, create a single ext4 partition mounted on &#8216;/&#8217;. Do not create a swap partition.</para>
-                <para>In the case of Fedora 14, the installation will not progress unless you create a swap partition. Please go ahead and create a swap partition.</para>
+                <para>During the installation of Ubuntu, create a
+                    single ext4 partition mounted on &#8216;/&#8217;.
+                    Do not create a swap partition.</para>
+                <para>In the case of Fedora 14, the installation will
+                    not progress unless you create a swap partition.
+                    Please go ahead and create a swap
+                    partition.</para>
 
-                <para>After finishing the installation, relaunch the VM by executing the following command.</para>
+                <para>After finishing the installation, relaunch the
+                    VM by executing the following command.</para>
                 <literallayout class="monospaced">
 sudo kvm -m 256 -drive file=server.img,if=scsi,index=0,boot=on -boot c -net nic -net user -nographic -vnc :0
 </literallayout>
-                <para>At this point, you can add all the packages you want to have installed, update the installation, add users and make any configuration changes you want in your image.</para>
-                <para>At the minimum, for Ubuntu you may run the following commands</para>
+                <para>At this point, you can add all the packages you
+                    want to have installed, update the installation,
+                    add users and make any configuration changes you
+                    want in your image.</para>
+                <para>At the minimum, for Ubuntu you may run the
+                    following commands</para>
                 <literallayout class="monospaced">
 sudo apt-get update
 sudo apt-get upgrade
 sudo apt-get install openssh-server cloud-init
 </literallayout>
-                <para>For Fedora run the following commands as root</para>
+                <para>For Fedora run the following commands as
+                    root</para>
                 <literallayout class="monospaced">
 
 yum update
 yum install openssh-server
 chkconfig sshd on
 </literallayout>
-                <para>Also remove the network persistence rules from /etc/udev/rules.d as their presence will result in the network interface in the instance coming up as an interface other than eth0.</para>
+                <para>Also remove the network persistence rules from
+                    /etc/udev/rules.d as their presence will result in
+                    the network interface in the instance coming up as
+                    an interface other than eth0.</para>
                 <literallayout class="monospaced">
 sudo rm -rf /etc/udev/rules.d/70-persistent-net.rules
 </literallayout>
-                <para>Shutdown the Virtual machine and proceed with the next steps.</para>
+                <para>Shutdown the Virtual machine and proceed with
+                    the next steps.</para>
             </simplesect>
-            <simplesect><title>Extracting the EXT4 partition</title>
-                <para>The image that needs to be uploaded to OpenStack needs to be an ext4 filesystem image. Here are the steps to create a ext4 filesystem image from the raw image i.e server.img</para>
+            <simplesect>
+                <title>Extracting the EXT4 partition</title>
+                <para>The image that needs to be uploaded to OpenStack
+                    needs to be an ext4 filesystem image. Here are the
+                    steps to create a ext4 filesystem image from the
+                    raw image i.e server.img</para>
                 <literallayout class="monospaced">
 sudo losetup  -f  server.img
 sudo losetup -a
@@ -134,8 +344,11 @@ sudo losetup -a
                 <literallayout class="monospaced">
 /dev/loop0: [0801]:16908388 ($filepath)
 </literallayout>
-                <para>Observe the name of the loop device ( /dev/loop0 in our setup) when $filepath is the path to the mounted .raw file.</para>
-                <para>Now we need to find out the starting sector of the partition. Run:</para>
+                <para>Observe the name of the loop device ( /dev/loop0
+                    in our setup) when $filepath is the path to the
+                    mounted .raw file.</para>
+                <para>Now we need to find out the starting sector of
+                    the partition. Run:</para>
                 <literallayout class="monospaced">
 sudo fdisk -cul /dev/loop0
 </literallayout>
@@ -151,12 +364,19 @@ Disk identifier: 0x00072bd4
 Device Boot      Start         End      Blocks   Id  System
 /dev/loop0p1   *        2048    10483711     5240832   83  Linux
 </literallayout>
-                <para>Make a note of the starting sector of the /dev/loop0p1 partition i.e the partition whose ID is 83. This number should be multiplied by 512 to obtain the correct value. In this case: 2048 x 512 = 1048576</para>
+                <para>Make a note of the starting sector of the
+                    /dev/loop0p1 partition i.e the partition whose ID
+                    is 83. This number should be multiplied by 512 to
+                    obtain the correct value. In this case: 2048 x 512
+                    = 1048576</para>
                 <para>Unmount the loop0 device:</para>
                 <literallayout class="monospaced">
 sudo losetup -d /dev/loop0
 </literallayout>
-                <para>Now mount only the partition(/dev/loop0p1) of server.img which we had previously noted down, by adding the -o parameter with value previously calculated value</para>
+                <para>Now mount only the partition(/dev/loop0p1) of
+                    server.img which we had previously noted down, by
+                    adding the -o parameter with value previously
+                    calculated value</para>
                 <literallayout class="monospaced">
 sudo losetup -f -o 1048576 server.img
 sudo losetup -a
@@ -165,25 +385,39 @@ sudo losetup -a
                 <literallayout class="monospaced">
 /dev/loop0: [0801]:16908388 ($filepath) offset 1048576
 </literallayout>
-                <para>Make a note of the mount point of our device(/dev/loop0 in our setup) when $filepath is the path to the mounted .raw file.</para>
-                <para>Copy the entire partition to a new .raw file</para>
+                <para>Make a note of the mount point of our
+                    device(/dev/loop0 in our setup) when $filepath is
+                    the path to the mounted .raw file.</para>
+                <para>Copy the entire partition to a new .raw
+                    file</para>
                 <literallayout class="monospaced">
 sudo dd if=/dev/loop0 of=serverfinal.img
 </literallayout>
-                <para>Now we have our ext4 filesystem image i.e serverfinal.img</para>
+                <para>Now we have our ext4 filesystem image i.e
+                    serverfinal.img</para>
 
                 <para>Unmount the loop0 device</para>
                 <literallayout class="monospaced">
 sudo losetup -d /dev/loop0
 </literallayout>
             </simplesect>
-            <simplesect><title>Tweaking /etc/fstab</title>
-                <para>You will need to tweak /etc/fstab to make it suitable for a cloud instance. Nova-compute may resize the disk at the time of launch of instances based on the instance type chosen. This can make the UUID of the disk invalid. Hence we have to use File system label as the identifier for the partition instead of the UUID.</para>
-                <para>Loop mount the serverfinal.img, by running</para>
+            <simplesect>
+                <title>Tweaking /etc/fstab</title>
+                <para>You will need to tweak /etc/fstab to make it
+                    suitable for a cloud instance. Nova-compute may
+                    resize the disk at the time of launch of instances
+                    based on the instance type chosen. This can make
+                    the UUID of the disk invalid. Hence we have to use
+                    File system label as the identifier for the
+                    partition instead of the UUID.</para>
+                <para>Loop mount the serverfinal.img, by
+                    running</para>
                 <literallayout class="monospaced">
 sudo mount -o loop serverfinal.img /mnt
 </literallayout>
-                <para>Edit /mnt/etc/fstab and modify the line for mounting root partition(which may look like the following)</para>
+                <para>Edit /mnt/etc/fstab and modify the line for
+                    mounting root partition(which may look like the
+                    following)</para>
 
                 <programlisting>
 UUID=e7f5af8d-5d96-45cc-a0fc-d0d1bde8f31c  /               ext4    errors=remount-ro  0       1
@@ -194,9 +428,15 @@ UUID=e7f5af8d-5d96-45cc-a0fc-d0d1bde8f31c  /               ext4    errors=remoun
 LABEL=uec-rootfs              /          ext4           defaults     0    0
                 </programlisting>
             </simplesect>
-            <simplesect><title>Fetching Metadata in Fedora</title>
-                <para>Since, Fedora does not ship with cloud-init or an equivalent, you will need to take a few steps to have the instance  fetch the meta data like ssh keys etc.</para>
-                <para>Edit the /etc/rc.local file and add the following lines before the line “touch /var/lock/subsys/local”</para>
+            <simplesect>
+                <title>Fetching Metadata in Fedora</title>
+                <para>Since, Fedora does not ship with cloud-init or
+                    an equivalent, you will need to take a few steps
+                    to have the instance fetch the meta data like ssh
+                    keys etc.</para>
+                <para>Edit the /etc/rc.local file and add the
+                    following lines before the line “touch
+                    /var/lock/subsys/local”</para>
                 <programlisting>
 
 depmod -a
@@ -211,10 +451,15 @@ echo &quot;************************&quot;
 cat /root/.ssh/authorized_keys
 echo &quot;************************&quot;
 </programlisting>
-            </simplesect></section>
-        <simplesect><title>Kernel and Initrd for OpenStack</title>
+            </simplesect>
+        </section>
+        <simplesect>
+            <title>Kernel and Initrd for OpenStack</title>
 
-            <para>Copy the kernel and the initrd image from /mnt/boot to user home directory. These will be used later for creating and uploading a complete virtual image to OpenStack.</para>
+            <para>Copy the kernel and the initrd image from /mnt/boot
+                to user home directory. These will be used later for
+                creating and uploading a complete virtual image to
+                OpenStack.</para>
             <literallayout class="monospaced">
 sudo cp /mnt/boot/vmlinuz-2.6.38-7-server /home/localadmin
 sudo cp /mnt/boot/initrd.img-2.6.38-7-server /home/localadmin
@@ -223,30 +468,59 @@ sudo cp /mnt/boot/initrd.img-2.6.38-7-server /home/localadmin
             <literallayout class="monospaced">
 sudo umount  /mnt
 </literallayout>
-            <para>Change the filesystem label of serverfinal.img to &#8216;uec-rootfs&#8217;</para>
+            <para>Change the filesystem label of serverfinal.img to
+                &#8216;uec-rootfs&#8217;</para>
             <literallayout class="monospaced">
 sudo tune2fs -L uec-rootfs serverfinal.img
 </literallayout>
-            <para>Now, we have all the components of the image ready to be uploaded to OpenStack imaging server.</para>
+            <para>Now, we have all the components of the image ready
+                to be uploaded to OpenStack imaging server.</para>
         </simplesect>
-        <simplesect><title>Registering with OpenStack</title>
-            <para>The last step would be to upload the images to Openstack Imaging Server glance. The files that need to be uploaded for the above sample setup of Ubuntu are: vmlinuz-2.6.38-7-server, initrd.img-2.6.38-7-server, serverfinal.img</para>
+        <simplesect>
+            <title>Registering with OpenStack</title>
+            <para>The last step would be to upload the images to
+                Openstack Imaging Server glance. The files that need
+                to be uploaded for the above sample setup of Ubuntu
+                are: vmlinuz-2.6.38-7-server,
+                initrd.img-2.6.38-7-server, serverfinal.img</para>
             <para>Run the following command</para>
             <literallayout class="monospaced">
 uec-publish-image -t image --kernel-file vmlinuz-2.6.38-7-server --ramdisk-file initrd.img-2.6.38-7-server amd64 serverfinal.img bucket1
 </literallayout>
-            <para>For Fedora, the process will be similar. Make sure that you use the right kernel and initrd files extracted above.</para>
-            <para>uec-publish-image, like  several other commands from euca2ools, returns the prompt back immediately. However,  the upload process takes some time and the images will be usable only after the process is complete. You can keep checking the status using the command &#8216;euca-describe-images&#8217; as mentioned below.</para>
+            <para>For Fedora, the process will be similar. Make sure
+                that you use the right kernel and initrd files
+                extracted above.</para>
+            <para>uec-publish-image, like several other commands from
+                euca2ools, returns the prompt back immediately.
+                However, the upload process takes some time and the
+                images will be usable only after the process is
+                complete. You can keep checking the status using the
+                command &#8216;euca-describe-images&#8217; as
+                mentioned below.</para>
         </simplesect>
-        <simplesect><title>Bootable Images</title>
-            <para>You can register bootable disk images without associating kernel and ramdisk images. When you do not want the flexibility of using the same disk image with different kernel/ramdisk images, you can go for bootable disk images. This greatly simplifies the process of bundling and registering the images. However, the caveats mentioned in the introduction to this chapter apply.  Please note that the instructions below use server.img and you can skip all the cumbersome steps related to extracting the single ext4 partition.</para>
+        <simplesect>
+            <title>Bootable Images</title>
+            <para>You can register bootable disk images without
+                associating kernel and ramdisk images. When you do not
+                want the flexibility of using the same disk image with
+                different kernel/ramdisk images, you can go for
+                bootable disk images. This greatly simplifies the
+                process of bundling and registering the images.
+                However, the caveats mentioned in the introduction to
+                this chapter apply. Please note that the instructions
+                below use server.img and you can skip all the
+                cumbersome steps related to extracting the single ext4
+                partition.</para>
             <literallayout class="monospaced">
 nova-manage image image_register server.img --public=T --arch=amd64
 </literallayout>
         </simplesect>
-    <simplesect><title>Image Listing</title>
-        <para>The status of the images that have been uploaded can be viewed by using euca-describe-images command. The output should like this:</para>
-        <literallayout class="monospaced">nova image-list</literallayout>
+        <simplesect>
+            <title>Image Listing</title>
+            <para>The status of the images that have been uploaded can
+                be viewed by using euca-describe-images command. The
+                output should like this:</para>
+            <literallayout class="monospaced">nova image-list</literallayout>
             <programlisting>
 +----+---------------------------------------------+--------+
 | ID |                     Name                    | Status |
@@ -256,42 +530,72 @@ nova-manage image image_register server.img --public=T --arch=amd64
 | 8  | ttylinux-uec-amd64-12.1_2.6.35-22_1.img     | ACTIVE |
 +----+---------------------------------------------+--------+
 </programlisting>
-    </simplesect></section>
-    <section xml:id="creating-a-windows-image"><title>Creating a Windows Image</title>
-            <para>The first step would be to create a raw image on Client1, this will represent the main HDD of the virtual machine, so make sure to give it as much space as you will need.</para>
-            <literallayout class="monospaced">
+        </simplesect>
+    </section>
+    <section xml:id="creating-a-windows-image">
+        <title>Creating a Windows Image</title>
+        <para>The first step would be to create a raw image on
+            Client1, this will represent the main HDD of the virtual
+            machine, so make sure to give it as much space as you will
+            need.</para>
+        <literallayout class="monospaced">
 kvm-img create -f raw windowsserver.img 20G
 </literallayout>
-            <para>OpenStack presents the disk using aVIRTIO interface while launching the instance. Hence the OS needs to have drivers for VIRTIO. By default, the Windows Server 2008 ISO does not have the drivers for VIRTIO. Sso download a virtual floppy drive containing VIRTIO drivers from the following location</para>
-            <para><link xlink:href="http://alt.fedoraproject.org/pub/alt/virtio-win/latest/images/bin/">http://alt.fedoraproject.org/pub/alt/virtio-win/latest/images/bin/</link></para>
-            <para>and attach it during the installation</para>
-            <para>Start the installation by running</para>
-            <literallayout class="monospaced">
+        <para>OpenStack presents the disk using aVIRTIO interface
+            while launching the instance. Hence the OS needs to have
+            drivers for VIRTIO. By default, the Windows Server 2008
+            ISO does not have the drivers for VIRTIO. Sso download a
+            virtual floppy drive containing VIRTIO drivers from the
+            following location</para>
+        <para><link
+                xlink:href="http://alt.fedoraproject.org/pub/alt/virtio-win/latest/images/bin/"
+                >http://alt.fedoraproject.org/pub/alt/virtio-win/latest/images/bin/</link></para>
+        <para>and attach it during the installation</para>
+        <para>Start the installation by running</para>
+        <literallayout class="monospaced">
 sudo kvm -m 1024 -cdrom win2k8_dvd.iso -drive file=windowsserver.img,if=virtio,boot=on -fda virtio-win-1.1.16.vfd -boot d -nographic -vnc :0
 </literallayout>
-            <para>When the installation prompts you to choose  a hard disk device you won’t see any devices available. Click on “Load drivers” at the bottom left and load the drivers from A:\i386\Win2008</para>
-            <para>After the Installation is over, boot into it once and install any additional applications you need to install and make any configuration changes you need to make.  Also ensure that RDP is enabled as that would be the only way you can connect to a running instance of Windows. Windows firewall needs to be configured to allow incoming ICMP and RDP connections.</para>
-            <para>For OpenStack to allow incoming RDP Connections, use euca-authorize command to open up port 3389 as described in the chapter  on &#8220;Security&#8221;.</para>
-            <para>Shut-down the VM and upload the image to OpenStack</para>
-            <literallayout class="monospaced">
+        <para>When the installation prompts you to choose a hard disk
+            device you won’t see any devices available. Click on “Load
+            drivers” at the bottom left and load the drivers from
+            A:\i386\Win2008</para>
+        <para>After the Installation is over, boot into it once and
+            install any additional applications you need to install
+            and make any configuration changes you need to make. Also
+            ensure that RDP is enabled as that would be the only way
+            you can connect to a running instance of Windows. Windows
+            firewall needs to be configured to allow incoming ICMP and
+            RDP connections.</para>
+        <para>For OpenStack to allow incoming RDP Connections, use
+            euca-authorize command to open up port 3389 as described
+            in the chapter on &#8220;Security&#8221;.</para>
+        <para>Shut-down the VM and upload the image to
+            OpenStack</para>
+        <literallayout class="monospaced">
 nova-manage image image_register windowsserver.img --public=T --arch=x86
 </literallayout>
     </section>
     <section xml:id="creating-images-from-running-instances">
-        <title>Creating images from running instances with KVM and Xen</title>
-        <para>
-            It is possible to create an image from a running instance on KVM and Xen. This is a convenient way to spawn pre-configured instances; update them according to your needs ; and re-image the instances.
-            The process to create an image from a running instance is quite simple :
-            <itemizedlist>
+        <title>Creating images from running instances with KVM and
+            Xen</title>
+        <para> It is possible to create an image from a running
+            instance on KVM and Xen. This is a convenient way to spawn
+            pre-configured instances; update them according to your
+            needs ; and re-image the instances. The process to create
+            an image from a running instance is quite simple : <itemizedlist>
                 <listitem>
                     <para>
-                        <emphasis role="bold">Pre-requisites</emphasis>
+                        <emphasis role="bold"
+                            >Pre-requisites</emphasis>
                     </para>
-                    <para> In order to use the feature properly, you will need qemu-img on it's 0.14
-                        version. The imaging feature uses the copy from a snapshot for image files.
-                        (e.g qcow-img convert -f qcow2 -O qcow2 -s $snapshot_name
+                    <para> In order to use the feature properly, you
+                        will need qemu-img on it's 0.14 version. The
+                        imaging feature uses the copy from a snapshot
+                        for image files. (e.g qcow-img convert -f
+                        qcow2 -O qcow2 -s $snapshot_name
                         $instance-disk).</para>
-                    <para>On Debian-like distros, you can check the version by running :
+                    <para>On Debian-like distros, you can check the
+                        version by running :
                         <literallayout class="monospaced">dpkg -l | grep qemu</literallayout></para>
                     <programlisting>
 ii  qemu                            0.14.0~rc1+noroms-0ubuntu4~ppalucid1            dummy transitional pacakge from qemu to qemu
@@ -301,19 +605,22 @@ ii  qemu-kvm                        0.14.0~rc1+noroms-0ubuntu4~ppalucid1        
                 </listitem>
                 <listitem>
                     <para>
-                        <emphasis role="bold">Write data to disk</emphasis></para>
-                    <para>
-                        Before creating the image, we need to make sure we are not missing any
-                        buffered content that wouldn't have been written to the instance's disk. In
-                        order to resolve that ; connect to the instance and run
-                        <command>sync</command> then exit.
-                    </para>
+                        <emphasis role="bold">Write data to
+                            disk</emphasis></para>
+                    <para> Before creating the image, we need to make
+                        sure we are not missing any buffered content
+                        that wouldn't have been written to the
+                        instance's disk. In order to resolve that ;
+                        connect to the instance and run
+                            <command>sync</command> then exit. </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <emphasis role="bold">Create the image</emphasis>
+                        <emphasis role="bold">Create the
+                            image</emphasis>
                     </para>
-                    <para> In order to create the image, we first need obtain the server id :
+                    <para> In order to create the image, we first need
+                        obtain the server id :
                         <literallayout class="monospaced">nova list</literallayout><programlisting>
 +-----+------------+--------+--------------------+
 |  ID |    Name    | Status |      Networks      |
@@ -323,21 +630,27 @@ ii  qemu-kvm                        0.14.0~rc1+noroms-0ubuntu4~ppalucid1        
                        </programlisting>
                         Based on the output, we run :
                         <literallayout class="monospaced">nova image-create 116 Image-116</literallayout>
-                        The command will then perform the image creation (by creating qemu snapshot) and will automatically upload the image to your repository.
-                        <note>
-                            <para>
-                                The image that will be created will be flagged as "Private" (For glance : is_public=False). Thus, the image will be available only for the tenant.
+                        The command will then perform the image
+                        creation (by creating qemu snapshot) and will
+                        automatically upload the image to your
+                        repository. <note>
+                            <para> The image that will be created will
+                                be flagged as "Private" (For glance :
+                                is_public=False). Thus, the image will
+                                be available only for the tenant.
                             </para>
                         </note>
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <emphasis role="bold">Check image status</emphasis>
+                        <emphasis role="bold">Check image
+                            status</emphasis>
                     </para>
-                    <para> After a while the image will turn from a "SAVING" state to an "ACTIVE"
-                        one. <literallayout class="monospaced">nova image-list</literallayout> will
-                        allow you to check the progress :
+                    <para> After a while the image will turn from a
+                        "SAVING" state to an "ACTIVE" one.
+                        <literallayout class="monospaced">nova image-list</literallayout>
+                        will allow you to check the progress :
                         <literallayout class="monospaced">nova image-list </literallayout><programlisting>
 +----+---------------------------------------------+--------+
 | ID |                     Name                    | Status |
@@ -352,26 +665,34 @@ ii  qemu-kvm                        0.14.0~rc1+noroms-0ubuntu4~ppalucid1        
                 </listitem>
                 <listitem>
                     <para>
-                        <emphasis role="bold">Create an instance from the image</emphasis>
+                        <emphasis role="bold">Create an instance from
+                            the image</emphasis>
                     </para>
-                    <para>You can now create an instance based on this image as you normally do for other images :<literallayout class="monospaced">nova boot --flavor 1 --image20 New_server</literallayout>
+                    <para>You can now create an instance based on this
+                        image as you normally do for other images
+                        :<literallayout class="monospaced">nova boot --flavor 1 --image20 New_server</literallayout>
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <emphasis role="bold">
-                            Troubleshooting
+                        <emphasis role="bold"> Troubleshooting
                         </emphasis>
                     </para>
-                    <para> Mainly, it wouldn't take more than 5 minutes in order to go from a
-                        "SAVING" to the "ACTIVE" state. If this takes longer than five minutes, here are several hints: </para>
-                    <para>- The feature doesn't work while you have attached a volume (via
-                        nova-volume) to the instance. Thus, you should dettach the volume first,
-                        create the image, and re-mount the volume.</para>
-                    <para>- Make sure the version of qemu you are using is not older than the 0.14
-                        version. That would create "unknown option -s" into nova-compute.log.</para>
-                    <para>- Look into nova-api.log and nova-compute.log for extra
-                        information.</para>
+                    <para> Mainly, it wouldn't take more than 5
+                        minutes in order to go from a "SAVING" to the
+                        "ACTIVE" state. If this takes longer than five
+                        minutes, here are several hints: </para>
+                    <para>- The feature doesn't work while you have
+                        attached a volume (via nova-volume) to the
+                        instance. Thus, you should dettach the volume
+                        first, create the image, and re-mount the
+                        volume.</para>
+                    <para>- Make sure the version of qemu you are
+                        using is not older than the 0.14 version. That
+                        would create "unknown option -s" into
+                        nova-compute.log.</para>
+                    <para>- Look into nova-api.log and
+                        nova-compute.log for extra information.</para>
                 </listitem>
             </itemizedlist>
         </para>

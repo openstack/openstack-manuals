@@ -11,24 +11,15 @@
         <para>In this OpenStack Compute tutorial, we’ll walk through the creation of an elastic,
             scalable cloud running a WordPress installation on a few virtual machines.</para>
 
-        <para>The tutorial assumes you have OpenStack Compute already installed on Ubuntu 10.04. You
-            can tell OpenStack Compute is installed by running "sudo nova-manage service list" to
-            ensure it is installed and the necessary services are running and ready. You should see
-            a set of nova- services in a response, and they should have a sideways smiley face in
-            each row, indicating they're running. You should run the tutorial as a root user or a
-            user with sudo access.</para>
-
-        <para>If you haven't installed OpenStack Compute yet, you can use an ISO image that is based
-            on a Ubuntu Linux Server 10.04 LTS distribution containing only the components needed to
-            run OpenStack Compute. See <link
-                xlink:href="http://sourceforge.net/projects/stackops/files/"
-                >http://sourceforge.net/projects/stackops/files/</link> for download files and
-            information, license information, and a README file to get started.</para>
+        <para>The tutorial assumes you have obtained a TryStack
+            account at http://trystack.org. It has a working
+            installation of OpenStack Compute, or you can install your
+            own using the installation guides. </para>
 
         <para>We'll go through this tutorial in parts:</para>
         <itemizedlist>
 
-            <listitem><para>Setting up a user, project, and network for this cloud.</para></listitem>
+            <listitem><para>Setting up a user on the TryStack cloud.</para></listitem>
 
             <listitem><para>Getting images for your application servers.</para></listitem>
 
@@ -36,233 +27,152 @@
 
         </itemizedlist>
         <section xml:id="part-i-setting-up-cloud-infrastructure">
-            <title>Part I: Setting Up the Cloud Infrastructure</title>
-            <para>In this part, we'll get the networking layer set up based on what we think most
-                networks would work like. We'll also create a user and a project to house our cloud
-                and its network. Onward, brave cloud pioneers! </para>
-            <simplesect>
-                <title>Configuring the network</title>
-                <para>Ideally on large OpenStack Compute deployments, each project is in a protected
-                    network segment. Our project in this case is a LAMP stack running Wordpress with
-                    the Memcached plugin for added database efficiency. So we need a public IP
-                    address for the Wordpress server but we can use flat networking for this. Here's
-                    how you set those network settings. </para>
-                <para>Usually networking is set in nova.conf, but VLAN-based networking with DHCP is
-                    the default setting when no network manager is defined in nova.conf. To check
-                    this network setting, open your nova.conf, typically in /etc/nova/nova.conf and
-                    look for -network_manager. The possible options are:</para>
-                <itemizedlist>
-                    <listitem>
-                        <para>-network_manager=nova.network.manager.FlatManager for a simple,
-                            no-VLAN networking type, </para>
-                    </listitem>
-                    <listitem>
-                        <para>-network_manager=nova.network.manager.FlatDHCPManager for flat
-                            networking with a built-in DHCP server, </para>
-                    </listitem>
-                    <listitem>
-                        <para>-network_manager= nova.network.manager.VlanManager, which is the most
-                            tested in production but requires network hardware with VLAN
-                            tagging.</para>
-                    </listitem>
-                </itemizedlist>
-                <para>Here is an example nova.conf for a single node installation of OpenStack
-                    Compute.</para>
-                <programlisting>
-                    # Sets the network type
---network_manager=nova.network.manager.FlatManager
-
-# Sets whether to use IPV6 addresses
---use_ipv6=false
-
-# DHCP bridge information
---dhcpbridge_flagfile=/etc/nova/nova.conf
---dhcpbridge=nova-dhcpbridge
---flat_network_bridge=br100
---logdir=/var/log/nova
-
-# Top-level directory for maintaining nova's state 
---state_path=/var/lib/nova
-
-# These indicate where nova-api services are installed
---s3_host=184.106.239.134
---rabbit_host=184.106.239.134
---ec2_api=184.106.239.134
---ec2_url=http://184.106.239.134:8773/services/Cloud
-
-# Block of IP addresses that are fixed IPs
---fixed_range=192.168.0.0/12
-
-# Number of addresses in each private subnet
---network_size=24
-
-# FlatDHCP bridges to this interface if set, be very careful setting it on an interface that does not already have an IP associated with it
---flat_interface=eth0
-
-# Public IP of the server running nova-network, when instances without a floating IP hit the internet, traffic is snatted to this IP
---routing_source_ip=184.106.239.134
-
-# Not required, but handy for debugging
---verbose
-
-# Tells nova where to connect for database
---sql_connection=mysql://nova:notnova@184.106.239.134/nova
-                </programlisting>
-                <para>Now that we know the networking configuration, let's set up the network for
-                    our project. With Flat DHCP, the host running nova-network acts as the gateway
-                    to the virtual nodes, so ideally this will have a public IP address for our
-                    tutorial. Be careful when setting up --flat_interface in nova.conf, if you
-                    specify an interface that already has an IP it will break and if this is the
-                    interface you are connecting through with SSH, you cannot fix it unless you have
-                    ipmi/console access. Also the --flat_network_bridge is now required.</para>
-                <para>For this tutorial, we set a 24 value for network_size, the number of addresses
-                    in each private subnet, since that falls inside the /12 CIDR-notated range
-                    that's set in ‘fixed-range’ in nova.conf. We probably won't use that many at
-                    first, but it's good to have the room to scale.</para>
-                <para>Currently, there can only be one network set in nova.conf. When you issue the
-                    nova-manage network create command, it uses the settings in the nova.conf flag
-                    file. From the --fixed_range setting, iptables are set. Those iptables are
-                    regenerated each time the nova-network service restarts, also. </para>
-                <note>
-                    <para>The nova-manage service assumes that the first IP address is your network
-                        (like 192.168.0.0), that the 2nd IP is your gateway (192.168.0.1), and that
-                        the broadcast is the very last IP in the range you defined (192.168.0.255).
-                        If this is not the case you will need to manually edit the sql db ‘networks’
-                        table.o but that scenario shouldn't happen for this tutorial.</para>
-                </note>
-                <para>Run this command as root or sudo:</para>
-                <literallayout class="monospaced">nova-manage network create public 192.168.3.0/12 1 256</literallayout>
-                <para>On running this command, entries are made in the ‘networks’ and ‘fixed_ips’
-                    table in the nova database. However, one of the networks listed in the
-                    ‘networks’ table needs to be marked as bridge in order for the code to know that
-                    a bridge exists. The Network is marked as bridged automatically based on the
-                    type of network manager selected. </para>
-                <para>Next you want to integrate this network bridge, named <emphasis role="bold"
-                        >br100</emphasis>, into your network. A bridge connects two Ethernet
-                    segments together.</para>
-                <para/>
-            </simplesect>
-            <simplesect>
-                <title>Ensure the Database is Up-to-date</title>
-                <para>The first command you run using nova-manage is one called db sync, which
-                    ensures that your database is updated. You must run this as root.</para>
-                <literallayout class="monospaced">nova-manage db sync</literallayout>
-            </simplesect>
-            <simplesect>
-                <title>Creating a user</title>
-                <para>OpenStack Compute can run many projects for many users, so for our tutorial
-                    we'll create a user and project just for this scenario. </para>
-                <para>We control the actions a user can take through roles, such as admin for
-                    Administrator who has complete system access, itsec for IT Security, netadmin
-                    for Network Administrator, and so on.</para>
-                <para>In addition to these roles controlling access to the Eucalyptus API,
-                    credentials are supplied and bundled by OpenStack compute in a zip file when you
-                    create a project. The user accessing the cloud infrastructure through ec2
-                    commands are given an access and secret key through the project itself. Let's
-                    create a user that has the access we want for this project.</para>
-                <para>To add an admin user named cloudypants, use:</para>
-                <literallayout class="monospaced">nova-manage user admin cloudypants</literallayout>
-            </simplesect>
-            <simplesect>
-                <title>Creating a project and related credentials</title>
-                <para>Next we'll create the project, which in turn gives you certifications in a zip
-                    file.</para>
-                <para>Enter this command to create a project named wpscales as the admin user,
-                    cloudypants, that you created above.</para>
-                <literallayout class="monospaced">nova-manage project create wpscales cloudypants</literallayout>
-                <para>Great, now you have a project that is set apart from the rest of the clouds
-                    you might control with OpenStack Compute. Now you need to give the user some
-                    credentials so they can run commands for the instances with in that project's
-                    cloud. </para>
-                <para>These are the certs you will use to launch instances, bundle images, and all
-                    the other assorted API and command-line functions.</para>
-                <para>First, we'll create a directory that'll house these credentials, in this case
-                    in the root directory. You need to sudo here or save this to your own directory
-                    with mkdir -p ~/creds so that the credentials match the user and are stored in
-                    their home.</para>
-                <literallayout class="monospaced">mkdir –p /root/creds</literallayout>
-                <para>Now, run nova-manage to create a zip file for your project called wpscales
-                    with the user cloudypants (the admin user we created previously). </para>
-                <literallayout class="monospaced">sudo nova-manage project zipfile wpscales cloudypants /root/creds/novacreds.zip</literallayout>
-                <para>Next, you can unzip novacreds.zip in your home directory, and add these
-                    credentials to your environment. </para>
-                <literallayout class="monospaced">unzip /root/creds/novacreds.zip -d /root/creds/</literallayout>
-                <para>Sending that information and sourcing it as part of your .bashrc file
-                    remembers those credentials for next time.</para>
-                <literallayout class="monospaced">cat /root/creds/novarc >> ~/.bashrc
-source ~/.bashrc</literallayout>
-                <para>Okay, you've created the basic scaffolding for your cloud so that you can get
-                    some images and run instances. Onward to Part II!</para>
-                <para/>
-            </simplesect>
+            <title>Part I: Setting Up as a TryStack User</title>
+            <para>In this part, we'll get a TryStack account using our
+                Facebook login. Onward, brave cloud pioneers! </para>
+                <para>Go to the TryStack Facebook account at <link
+                    xlink:href="https://www.facebook.com/groups/269238013145112/"
+                    >https://www.facebook.com/groups/269238013145112/</link>
+                and request to join the group. </para>
+            <para>Once you've joined the group, go to the TryStack
+                dashboard and click <guilabel>Login using
+                    Facebook</guilabel>. </para>
+            <para>Enter your Facebook login information to receive
+                your username and password that you can use with the
+                Compute API.</para>
+            <para>Next, install the python-novaclient and set up your
+                environment variables so you can use the client with
+                your username and password already entered. Here's
+                what works well on Mac
+                OS.<screen> <prompt>$</prompt> pip install -e git+https://github.com/openstack/python-novaclient.git#egg=python-novaclient </screen>
+                Next, create a file named openrc to contain your
+                TryStack credentials, such
+                as:<programlisting>export OS_USERNAME=joecool
+export OS_PASSWORD=coolword
+export OS_TENANT_NAME=coolu
+export OS_AUTH_URL=http://trystack.org:5000/v2.0
+export NOVA_VERSION=1.1</programlisting>
+                Lastly, run this file to source your credentials.
+                <screen>$ source openrc</screen></para>
+            <para>You can always retrieve your username and password
+                from <link
+                    xlink:href="https://trystack.org/dash/api_info/"
+                    >https://trystack.org/dash/api_info/</link> after
+                logging in with Facebook. </para>
+                <para>Okay, you've created the basic scaffolding for
+                    your cloud user so that you can get some images
+                    and run instances on TryStack with your starter
+                    set of StackDollars. You're rich, man! Now to Part
+                    II!</para>
         </section>
         <section xml:id="part-ii-getting-virtual-machines">
-            <title>Part II: Getting Virtual Machines to Run the Virtual Servers</title>
-            <para>Understanding what you can do with cloud computing means you should have a grasp
-                on the concept of virtualization. With virtualization, you can run operating systems
-                and applications on virtual machines instead of physical computers. To use a virtual
-                machine, you must have an image that contains all the information about which
-                operating system to run, the user login and password, files stored on the system,
-                and so on.</para>
-            <para>For this tutorial, we've created an image that you can download that allows the
-                networking you need to run web applications and so forth. In order to use it with
-                the OpenStack Compute cloud, you download the image, then use uec-publish-tarball to
-                publish it. </para>
-            <para>Here are the commands to get your virtual image. Be aware that the download of the
-                compressed file may take a few minutes.</para>
-            <literallayout class="monospaced">image="ubuntu1010-UEC-localuser-image.tar.gz"
-wget http://c0179148.cdn1.cloudfiles.rackspacecloud.com/
-ubuntu1010-UEC-localuser-image.tar.gz
-uec-publish-tarball $image wpbucket amd64
-            </literallayout>
-            <para>What you'll get in return from this command is three references: <emphasis
-                    role="italic">emi</emphasis>, <emphasis role="italic">eri</emphasis> and
-                    <emphasis role="italic">eki</emphasis>. These are acronyms - emi stands for
-                eucalyptus machine image, eri stands for eucalyptus ramdisk image, and eki stands
-                for eucalyptus kernal image. Amazon has similar references for their images - ami,
-                ari, and aki.</para>
-            <para>You need to use the emi value when you run the instance. These look something like
-                “ami-zqkyh9th″ - basically a unique identifier.</para>
-            <para>Okay, now that you have your image and it's published, realize that it has to be
-                decompressed before you can launch an image from it. We can realize what state an
-                image is in using the 'euca-describe-instances' command. Basically, run:</para>
-            <para>nova image-list</para>
-            <para>and look for the state in the text that returns. You can also use
-                euca-describe-images to ensure the image is untarred. Wait until the state shows
-                "available" so that you know the instances is ready to roll.</para>
+            <title>Part II: Starting Virtual Machines </title>
+            <para>Understanding what you can do with cloud computing
+                means you should have a grasp on the concept of
+                virtualization. With virtualization, you can run
+                operating systems and applications on virtual machines
+                instead of physical computers. To use a virtual
+                machine, you must have an image that contains all the
+                information about which operating system to run, the
+                user login and password, files stored on the system,
+                and so on. Fortunately, TryStack provides images for
+                your use. </para>
+            <para>Basically, run:</para>
+            <para>
+                <screen>$ nova image-list</screen>
+            </para>
+            <para>and look for the images available in the text that
+                returns. Look for the ID
+                value.<programlisting>+----+--------------------------------------+--------+--------+
+| ID |                 Name                 | Status | Server |
++----+--------------------------------------+--------+--------+
+| 12 | natty-server-cloudimg-amd64-kernel   | ACTIVE |        |
+| 13 | natty-server-cloudimg-amd64          | ACTIVE |        |
+| 14 | oneiric-server-cloudimg-amd64-kernel | ACTIVE |        |
+| 15 | oneiric-server-cloudimg-amd64        | ACTIVE |        |
++----+--------------------------------------+--------+--------+</programlisting></para>
+            <para>Now get a list of the flavors you can launch:</para>
+            <para>
+                <screen>$ nova flavor-list</screen>
+            </para>
+            <para><programlisting>+----+-----------+-----------+------+-----------+------+-------+-------------+
+| ID |    Name   | Memory_MB | Disk | Ephemeral | Swap | VCPUs | RXTX_Factor |
++----+-----------+-----------+------+-----------+------+-------+-------------+
+| 1  | m1.tiny   | 512       | 0    | N/A       | 0    | 1     |             |
+| 2  | m1.small  | 2048      | 20   | N/A       | 0    | 1     |             |
+| 3  | m1.medium | 4096      | 40   | N/A       | 0    | 2     |             |
+| 4  | m1.large  | 8192      | 80   | N/A       | 0    | 4     |             |
+| 5  | m1.xlarge | 16384     | 160  | N/A       | 0    | 8     |             |
++----+-----------+-----------+------+-----------+------+-------+-------------+</programlisting>Create
+                a keypair to launch the image, in a directory where
+                you run the nova boot command later.
+                <screen>$ nova keypair-add mykeypair > mykeypair.pem</screen></para>
+            <para>Create security group that enables public IP access
+                for the webserver that will run WordPress for you. You
+                can also enable port 22 for
+                SSH.<screen>$ nova secgroup-create openpub "Open for public"
+$ nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0 
+$ nova secgroup-add-rule default tcp 22 22 0.0.0.0/0  </screen></para>
+            <para>Next, with the ID value of the server you want to
+                launch and the ID of the flavor you want to launch,
+                use your credentials to start up the instance with the
+                identifier you got by looking at the image
+                list.</para>
+            <screen>nova boot --image 15 --flavor 2 --key_name mykeypair --security_groups openpub testtutorial</screen>
+            <para><programlisting>+--------------+--------------------------------------+
+|   Property   |                Value                 |
++--------------+--------------------------------------+
+| accessIPv4   |                                      |
+| accessIPv6   |                                      |
+| adminPass    | StuacCpAr7evnz5Q                     |
+| config_drive |                                      |
+| created      | 2012-03-21T20:31:40Z                 |
+| flavor       | m1.small                             |
+| hostId       |                                      |
+| id           | 1426                                 |
+| image        | oneiric-server-cloudimg-amd64        |
+| key_name     | testkey2                             |
+| metadata     | {}                                   |
+| name         | testtut                              |
+| progress     | 0                                    |
+| status       | BUILD                                |
+| tenant_id    | 296                                  |
+| updated      | 2012-03-21T20:31:40Z                 |
+| user_id      | facebook521113267                    |
+| uuid         | be9f80e8-7b20-49e8-83cf-fa059a36c9f8 |
++--------------+--------------------------------------+</programlisting>Now
+                you can look at the state of the running instances by
+                using nova list.
+                <screen>$ nova list</screen><programlisting>+------+----------------+--------+----------------------+
+|  ID  |      Name      | Status |       Networks       |
++------+----------------+--------+----------------------+
+| 1426 | testtut        | ACTIVE | internet=8.22.27.251 |
++------+----------------+--------+----------------------+</programlisting></para>
+            <para>The instance goes from “launching” to “running” in a
+                short time, and you should be able to connect via SSH.
+                Look at the IP addresses so that you can connect to
+                the instance once it starts running.</para>
         </section>
         <section xml:id="installing-needed-software-for-web-scale">
             <title>Part III: Installing the Needed Software for the Web-Scale Scenario</title>
-            <para>Once that state is "ACTIVE" you can enter this command, which will use your
-                credentials to start up the instance with the identifier you got by publishing the
-                image.</para>
-            <literallayout class="monospaced">
-nova boot --image 1 --flavor 1 --key_path /root/creds/
-            </literallayout>
-            <para>Now you can look at the state of the running instances by using
-                euca-describe-instances again. The instance will go from “launching” to “running” in
-                a short time, and you should be able to connect via SSH. Look at the IP addresses so
-                that you can connect to the instance once it starts running.</para>
             <para>Basically launch a terminal window from any computer, and enter: </para>
-            <literallayout class="monospaced">ssh -i mykey ubuntu@10.127.35.119</literallayout>
+            <screen>ssh -i mykeypair ubuntu@10.127.35.119</screen>
             <para>On this particular image, the 'ubuntu' user has been set up as part of the sudoers
                 group, so you can escalate to 'root' via the following command:</para>
-            <literallayout class="monospaced">sudo -i</literallayout>
-            <literallayout/>
+            <screen>sudo -i</screen>
             <simplesect>
                 <title>On the first VM, install WordPress</title>
                 <para>Now, you can install WordPress. Create and then switch to a blog
                     directory:</para>
-                <literallayout class="monospaced">mkdir blog
-cd blog</literallayout>
+                <screen>mkdir blog
+cd blog</screen>
                 <para>Download WordPress directly to you by using wget:</para>
-                <literallayout class="monospaced">wget http://wordpress.org/latest.tar.gz</literallayout>
+                <screen>wget http://wordpress.org/latest.tar.gz</screen>
                 <para>Then unzip the package using: </para>
-                <literallayout class="monospaced">tar -xzvf latest.tar.gz</literallayout>
+                <screen>tar -xzvf latest.tar.gz</screen>
                 <para>The WordPress package will extract into a folder called wordpress in the same
                     directory that you downloaded latest.tar.gz. </para>
                 <para>Next, enter "exit" and disconnect from this SSH session.</para>
-                <para/>
             </simplesect>
             <simplesect>
                 <title>On a second VM, install MySQL</title>
@@ -270,15 +180,13 @@ cd blog</literallayout>
                     instructions to install the WordPress database using the MySQL Client from a
                     command line: <link xlink:href="http://codex.wordpress.org/Installing_WordPress#Using_the_MySQL_Client">Using the MySQL Client - Wordpress Codex.</link>
                 </para>
-                <para/>
             </simplesect>
 
             <simplesect><title>On a third VM, install Memcache</title><para>Memcache makes Wordpress database reads and writers more efficient, so your virtual servers
                     can go to work for you in a scalable manner. SSH to a third virtual machine and
                     install Memcache:</para>
                 <para>
-                    <literallayout class="monospaced">apt-get install memcached
-</literallayout>
+                    <screen>apt-get install memcached</screen>
                 </para></simplesect><simplesect><title>Configure the Wordpress Memcache plugin</title><para>From a web browser, point to the IP address of your Wordpress server. Download and install the Memcache Plugin. Enter the IP address of your Memcache server.</para></simplesect>
         </section><section xml:id="running-a-blog-in-the-cloud">
             <title>Running a Blog in the Cloud</title><para>That's it! You're now running your blog on a cloud server in OpenStack Compute, and you've scaled it horizontally using additional virtual images to run the database and Memcache. Now if your blog gets a big boost of comments, you'll be ready for the extra reads-and-writes to the database. </para></section>

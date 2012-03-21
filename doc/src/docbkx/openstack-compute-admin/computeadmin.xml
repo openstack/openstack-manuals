@@ -78,101 +78,7 @@ format="SVG" scale="60"/>
 
         </listitem>
     </itemizedlist>
-    <section xml:id="starting-images">
-        <title>Starting Images</title><para>Once you have an installation, you want to get images that you can use in your Compute cloud.
-            We've created a basic Ubuntu image for testing your installation. First you'll download
-            the image, then use "uec-publish-tarball" to publish it:</para>
-
-           <para><literallayout class="monospaced">
-image="ubuntu1010-UEC-localuser-image.tar.gz"
-wget http://c0179148.cdn1.cloudfiles.rackspacecloud.com/ubuntu1010-UEC-localuser-image.tar.gz
-uec-publish-tarball $image [bucket-name] [hardware-arch]
-           </literallayout>
-           <itemizedlist>
-               <listitem>
-                   <para>
-                        <emphasis role="bold">Image</emphasis> : a tar.gz file that contains the
-                        system, its kernel and ramdisk. </para>
-               </listitem>
-               <listitem>
-                   <para>
-                        <emphasis role="bold">Bucket</emphasis> : a local repository that contains
-                        images. </para>
-               </listitem>
-               <listitem>
-                   <para>
-                        <emphasis role="bold">Hardware architecture</emphasis> : specify via "amd64"
-                        or "i386" the image's architecture (32 or 64 bits). </para>
-               </listitem>
-           </itemizedlist>
-           </para>
-
-               <para>Here's an example of what this command looks like with data:</para>
-
-               <para><literallayout class="monospaced">uec-publish-tarball ubuntu1010-UEC-localuser-image.tar.gz dub-bucket amd64</literallayout></para>
-
-        <para>The command in return should output three references:<emphasis role="italic">
-                emi</emphasis>, <emphasis role="italic">eri</emphasis> and <emphasis role="italic"
-                >eki</emphasis>. You will next run nova image-list in order to obtain the ID of the
-            image you just uploaded.</para>
-
-
-        <para>Now you can schedule, launch and connect to the instance, which you do with the "nova"
-            command line. The ID of the image will be used with the <literallayout class="monospaced">nova boot</literallayout>command.</para>
-                <para>One thing to note here, once you publish the tarball, it has to untar before
-            you can launch an image from it. Using the 'nova list' command, and make sure the image
-            has it's status as "ACTIVE".</para>
-
-                <para><literallayout class="monospaced">nova image-list</literallayout></para>
-
-        <para>Depending on the image that you're using, you need a public key to connect to it. Some
-            images have built-in accounts already created. Images can be shared by many users, so it
-            is dangerous to put passwords into the images. Nova therefore supports injecting ssh
-            keys into instances before they are booted. This allows a user to login to the instances
-            that he or she creates securely. Generally the first thing that a user does when using
-            the system is create a keypair. </para>
-        <para>Keypairs provide secure authentication to your instances. As part of the first boot of
-            a virtual image, the private key of your keypair is added to root’s authorized_keys
-            file. Nova generates a public and private key pair, and sends the private key to the
-            user. The public key is stored so that it can be injected into instances. </para>
-        <para>Keypairs are created through the api and you use them as a parameter when launching an
-            instance. They can be created on the command line using the following command :
-            <literallayout class="monospaced">nova keypair-add</literallayout>In order to list all the available options, you would run :<literallayout class="monospaced">nova help </literallayout>
-            Example usage:</para>
-
-                    <literallayout class="monospaced">
-nova keypair-add test > test.pem
-chmod 600 test.pem
-                    </literallayout>
-
-        <para>Now, you can run the instances:</para>
-                    <literallayout class="monospaced">nova boot --image 1 --flavor 1 --key_name test my-first-server</literallayout>
-        <para>Here's a description of the parameters used above:</para>
-        <itemizedlist>
-            <listitem>
-                <para><emphasis role="bold">--flavor</emphasis> what type of image to create. You
-                    can get all the flavors you have by running
-                    <literallayout class="monospaced">nova flavor-list</literallayout></para>
-            </listitem>
-            <listitem>
-                <para>
-                    <emphasis role="bold">-key_ name</emphasis> name of the key to inject in to the
-                    image at launch. </para>
-            </listitem>
-        </itemizedlist>
-                <para> The instance will go from “BUILD” to “ACTIVE” in a short time, and you should
-            be able to connect via SSH using the 'ubuntu' account, with the password 'ubuntu':
-            (replace $ipaddress with the one you got from nova list): </para>
-                <para>
-                    <literallayout class="monospaced">ssh ubuntu@$ipaddress</literallayout></para>
-                <para>The 'ubuntu' user is part of the sudoers group, so you can escalate to 'root'
-            via the following command:</para>
-               <para>
-                   <literallayout class="monospaced">
-                       sudo -i
-                   </literallayout>
-               </para>
-                </section>
+    
     <section xml:id="understanding-the-compute-service-architecture">
 
         <title>Understanding the Compute Service Architecture</title>
@@ -226,88 +132,8 @@ chmod 600 test.pem
             user’s access key needs to be included in the request, and the request must be signed
             with the secret key. Upon receipt of API requests, Compute will verify the signature and
             execute commands on behalf of the user. </para>
-        <para>In order to begin using nova, you will need to create a user. This can be easily
-            accomplished using the user create or user admin commands in nova-manage. user create
-            will create a regular user, whereas user admin will create an admin user. The syntax of
-            the command is nova-manage user create username [access] [secretword]. For example: </para>
-        <literallayout class="monospaced">nova-manage user create john my-access-key a-super-secret-key</literallayout>
-        <para>If you do not specify an access or secret key, a random uuid will be created
-            automatically.</para>
-        <simplesect>
-            <title>Credentials</title>
-            <para>Nova can generate a handy set of credentials for a user. These credentials include
-                a CA for bundling images and a file for setting environment variables to be used by
-                novaclient. If you don’t need to bundle images, you will only need the environment
-                script. You can export one with the project environment command. The syntax of the
-                command is nova-manage project environment project_id user_id [filename]. If you
-                don’t specify a filename, it will be exported as novarc. After generating the file,
-                you can simply source it in bash to add the variables to your environment:</para>
-            <literallayout class="monospaced">
-        nova-manage project environment john_project john
-        . novarc</literallayout>
-            <para>If you do need to bundle images, you will need to get all of the credentials using
-                a project zipfile. Note that the zipfile will give you an error message if networks
-                haven’t been created yet. Otherwise zipfile has the same syntax as environment, only
-                the default file name is nova.zip. Example usage: </para>
-            <literallayout class="monospaced">
-        nova-manage project zipfile john_project john
-        unzip nova.zip
-        . novarc
-        </literallayout>
-        </simplesect>
-        <simplesect>
-            <title>Role Based Access Control</title>
-            <para>Roles control the API actions that a user is allowed to perform. For example, a
-                user cannot allocate a public ip without the netadmin role. It is important to
-                remember that a users de facto permissions in a project is the intersection of user
-                (global) roles and project (local) roles. So for John to have netadmin permissions
-                in his project, he needs to separate roles specified. You can add roles with role
-                add. The syntax is nova-manage role add user_id role [project_id]. Let’s give a user
-                named John the netadmin role for his project:</para>
-            <literallayout class="monospaced">        nova-manage role add john netadmin
-        nova-manage role add john netadmin john_project</literallayout>
-            <para>Role-based access control (RBAC) is an approach to restricting system access to
-                authorized users based on an individual's role within an organization. Various
-                employee functions require certain levels of system access in order to be
-                successful. These functions are mapped to defined roles and individuals are
-                categorized accordingly. Since users are not assigned permissions directly, but only
-                acquire them through their role (or roles), management of individual user rights
-                becomes a matter of assigning appropriate roles to the user. This simplifies common
-                operations, such as adding a user, or changing a user’s department. </para>
-            <para>Nova’s rights management system employs the RBAC model and currently supports the
-                following five roles:</para>
-            <itemizedlist>
-                <listitem>
-                    <para>Cloud Administrator. (cloudadmin) Users of this class enjoy complete
-                        system access.</para>
-                </listitem>
-                <listitem>
-                    <para>IT Security. (itsec) This role is limited to IT security personnel. It
-                        permits role holders to quarantine instances.</para>
-                </listitem>
-                <listitem>
-                    <para>System Administrator. (sysadmin)The default for project owners, this role
-                        affords users the ability to add other users to a project, interact with
-                        project images, and launch and terminate instances.</para>
-                </listitem>
-                <listitem>
-                    <para>Network Administrator. (netadmin) Users with this role are permitted to
-                        allocate and assign publicly accessible IP addresses as well as create and
-                        modify firewall rules.</para>
-                </listitem>
-                <listitem>
-                    <para>Developer. This is a general purpose role that is assigned to users by
-                        default.</para>
-                </listitem>
-                <listitem>
-                    <para>Project Manager. (projectmanager) This is a role that is assigned upon
-                        project creation and can't be added or removed, but this role can do
-                        anything a sysadmin can do.</para>
-                </listitem>
-            </itemizedlist>
-            <para>RBAC management is exposed through the dashboard for simplified user
-                management.</para>
-        </simplesect>
+        <para>In order to begin using nova, you will need to create a
+            user with the Identity Service.  </para>
     </section>
     <section xml:id="managing-the-cloud">
 
@@ -315,7 +141,7 @@ chmod 600 test.pem
             the nova-manage command, and the novaclient or the Euca2ools commands. </para>
         <para>The nova-manage command may only be run by users with admin privileges. Both
             novaclient and euca2ools can be used by all users, though specific commands may be
-            restricted by Role Based Access Control in the deprecated nova auth system. </para>
+            restricted by Role Based Access Control in the deprecated nova auth system or in the Identity Management service. </para>
         <simplesect><title>Using the nova-manage command</title>
         <para>The nova-manage command may be used to perform many essential functions for
                 administration and ongoing maintenance of nova, such as network creation.</para>
@@ -326,31 +152,6 @@ chmod 600 test.pem
             <para>For example, to obtain a list of all projects: nova-manage project list</para>
 
             <para>Run without arguments to see a list of available command categories: nova-manage</para>
-
-            <para>Command categories are: <simplelist>
-                    <member>account</member>
-                    <member>agent</member>
-                    <member>config</member>
-                    <member>db</member>
-                    <member>drive</member>
-                    <member>fixed</member>
-                    <member>flavor</member>
-                    <member>floating</member>
-                    <member>host</member>
-                    <member>instance_type</member>
-                    <member>image</member>
-                    <member>network</member>
-                    <member>project</member>
-                    <member>role</member>
-                    <member>service</member>
-                    <member>shell</member>
-                    <member>user</member>
-                    <member>version</member>
-                    <member>vm</member>
-                    <member>volume</member>
-                    <member>vpn</member>
-                    <member>vsa</member>
-                </simplelist></para>
             <para>You can also run with a category argument such as user to see a list of all commands in that category: nova-manage user</para>
         </simplesect><simplesect><title>Using the nova command-line tool</title>
             <para>Installing the python-novaclient gives you a <code>nova</code> shell command that enables
@@ -387,7 +188,15 @@ export OS_TENANT_NAME=coolu
 export OS_AUTH_URL=http://hostname:5000/v2.0
 export NOVA_VERSION=1.1
 </programlisting>
-            </para></simplesect></section>
+            </para></simplesect>
+        <simplesect><title>Using the euca2ools commands</title>
+            <para>For a command-line interface to EC2 API calls, use
+                the euca2ools command line tool. It is documented at
+                    <link
+                    xlink:href="http://open.eucalyptus.com/wiki/Euca2oolsGuide_v1.3"
+                    >http://open.eucalyptus.com/wiki/Euca2oolsGuide_v1.3</link></para>
+        </simplesect>
+    </section>
     <section xml:id="managing-volumes">
         <title>Managing Volumes</title>
         <para>Nova-volume is the service that allows you to give extra block level storage to your
