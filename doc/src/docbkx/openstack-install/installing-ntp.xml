@@ -10,4 +10,9 @@
 
     <para>Set up the NTP server on your controller node so that it receives data by modifying the ntp.conf file and restarting the service.</para>
     <literallayout class="monospaced">sudo sed -i 's/server ntp.ubuntu.com/server ntp.ubuntu.com\nserver 127.127.1.0\nfudge 127.127.1.0 stratum 10/g' /etc/ntp.conf  
-sudo service ntp restart</literallayout></section>
+sudo service ntp restart</literallayout>
+    <para>Set up the NTP client on your compute node so that the time between controller node and compute node is synchronized. do the following as a cron job on compute node</para>
+    <literallayout class="monospaced">ntpdate 'controllernode ip'
+hwclock -w</literallayout>
+    
+</section>
