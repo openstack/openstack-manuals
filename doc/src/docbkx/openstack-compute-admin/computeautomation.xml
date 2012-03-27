@@ -131,7 +131,7 @@ cd dodai-deploy; git checkout 1.0   #only used to get dodai-deploy 1.0</literall
             <literallayout class="monospaced">sudo $home/script/stop-servers</literallayout>
         </simplesect>
         <simplesect><title>Using web UI</title>
-            <para>You can find step-by-step guidance at http://$deployment_server:3000/rest_apis/index.html.</para>
+            <para>You can find step-by-step guidance at <literal>http://<replaceable>$deployment_server</replaceable>:3000/</literal>.</para>
         </simplesect>
         <simplesect><title>Using REST APIs</title>
             <para>An API simulator can be found at http://$deployment_server:3000/rest_apis/index.html. 
@@ -139,18 +139,31 @@ cd dodai-deploy; git checkout 1.0   #only used to get dodai-deploy 1.0</literall
             in parameters and clicking the "Execute" button.</para>
         </simplesect>
         <simplesect><title>Notes</title>
-		<para>1. SSH login nova instance after test of nova </para>
-		<para>An instance will be started during the test of nova. After the test, 
-		you can login the instance by executing the following commands.</para>
-		<literallayout class="monospaced">
+            <orderedlist>
+                <listitem>
+                    <para>SSH login nova instance after test of nova </para>
+                    <para>An instance will be started during the test of nova. After the test,
+                    you can login the instance by executing the following commands.</para>
+                    <literallayout class="monospaced">
 sudo -i
 cd /tmp/nova
 . env/novarc
 euca-describe-instances
 ssh -i mykey.priv 10.0.0.3</literallayout>
-		<para>2. Nova depends on glance in default settings.</para>
-		<para>Because in /etc/nova/nova.conf the value of setting "image_service" is "nova.image.glance.GlanceImageService",
-		glance should be installed before using nova.</para>
+                </listitem>
+                <listitem>
+                    <para>Nova depends on glance in default settings.</para>
+                    <para>Because in /etc/nova/nova.conf the value of setting "image_service" is "nova.image.glance.GlanceImageService", 
+                    glance should be installed before using nova.</para>
+                </listitem>
+                <listitem>
+                    <para>Change Linux's setting <literal>net.ipv4.ip_forward</literal> to <literal>1</literal> in the machine
+                    where <command>nova-network</command> will be installed before nova installation with the following command.</para>
+                    <screen><prompt>$</prompt> <userinput>sudo sysctl -w net.ipv4.ip_forward=1</userinput></screen>
+                    <para>And you can recover the setting with the following command.</para>
+                    <screen><prompt>$</prompt> <userinput>sudo sysctl -w net.ipv4.ip_forward=0</userinput></screen>
+                </listitem>
+            </orderedlist>
         </simplesect>
     </section>
     
