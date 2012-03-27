@@ -159,7 +159,216 @@ python tools/install_venv.py
                         format="PNG" />
                 </imageobject>
             </mediaobject></section></section></section>
+
     
     <xi:include href="computevncconsole.xml"/>
+
+ <section xml:id="getting-started-with-the-vnc-proxy"><info><title>Getting Started with the VNC Proxy</title></info>
+        
+        <para>
+            The VNC Proxy is an OpenStack component that allows users of Nova to
+            access their instances through a websocket enabled browser (like
+            Google Chrome 4.0). See <link xlink:href="http://caniuse.com/#search=websocket">http://caniuse.com/#search=websocket</link> for a reference list of supported web browsers.</para>
+        <para>
+            A VNC Connection works like so:
+        </para>
+        <itemizedlist>
+            <listitem>
+                <para>
+                    User connects over an API and gets a URL like
+                    http://ip:port/?token=xyz
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    User pastes URL in browser
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Browser connects to VNC Proxy though a websocket enabled client
+                    like noVNC
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    VNC Proxy authorizes users token, maps the token to a host and
+                    port of an instance's VNC server
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    VNC Proxy initiates connection to VNC server, and continues
+                    proxying until the session ends
+                </para>
+            </listitem>
+        </itemizedlist>
+        <section xml:id="configuring-the-vnc-proxy"><info><title>Configuring the VNC Proxy</title></info>
+            
+            <para>The nova-vncproxy requires a websocket enabled html client to work properly. At this time,
+                the only tested client is a slightly modified fork of noVNC, which you can at find <link
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    xlink:href="https://github.com/openstack/noVNC"
+                    >https://github.com/openstack/noVNC</link>
+            </para>
+            <para>The noVNC tool must be in the location specified by --vncproxy_wwwroot, which defaults to
+                /var/lib/nova/noVNC. nova-vncproxy will fail to launch until this code is properly installed. </para>
+            <para>
+                By default, nova-vncproxy binds 0.0.0.0:6080. This can be
+                configured with:
+            </para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        --vncproxy_port=[port]
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        --vncproxy_host=[host]
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </section>
+        <section xml:id="enabling-vnc-consoles-in-nova"><info><title>Enabling VNC Consoles in Nova</title></info>
+            
+            <para>
+                At the moment, VNC support is supported only when using libvirt.
+                To enable VNC Console, configure the following flags in the nova.conf file:
+            </para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        --vnc_console_proxy_url=http://[proxy_host]:[proxy_port] -
+                        proxy_port defaults to 6080. This URL must point to
+                        nova-vncproxy
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        --[no]vnc_enabled - defaults to enabled. If this flag is
+                        disabled your instances will launch without VNC support.
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </section>
+        <section xml:id="getting-an-instances-vnc-console"><info><title>Getting an Instance's VNC Console</title></info>
+            
+            <para>
+                You can access an instance's VNC Console URL in the following
+                methods:
+            </para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        Using the direct api: eg: 'stack --user=admin --project=admin
+                        compute get_vnc_console instance_id=1'
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Support for Dashboard, and the Openstack API will be
+                        forthcoming
+                    </para>
+                </listitem>
+            </itemizedlist><para>
+                At the moment, VNC Consoles are only supported through the web
+                browser, but more general VNC support is in the works.
+            </para>
+        </section>
+    </section>
+    <section>
+        <title>Launching Instances using Dashboard</title>
+        <para>The Dashboard can be used to launch instances. This section explains the various steps
+            to be followed to launch a instance.</para>
+        <section>
+            <title>Modify Security Groups</title>
+            <para>Before launching a VM, first modify the Security Groups rules to allow us to
+                ping and SSH to the instances. This is done by editing the default security group or
+                adding a new security group. For ease of understanding, modify the default
+                security group.</para>
+            <para>
+		<mediaobject>
+                	<imageobject role="fo">
+                	    <imagedata fileref="figures/Security-Group.png"
+                	    format="PNG" scale="60"/>
+            		</imageobject>
+                	<imageobject role="html">
+                	    <imagedata fileref="figures/Security-Group.png"
+                	        format="PNG" />
+                	</imageobject>
+            </mediaobject>
+            </para>
+            <para>Select IP protocol TCP and enter 22 in "From Port" and "To Port" and CIDR
+                0.0.0.0/0. This opens port 22 for requests from any IP. If you want requests from particular range of IP, provide it in CIDR field.</para>
+            <para>Select IP protocol ICMP and enter -1 in "From Port" and "To Port" and CIDR
+                0.0.0.0/0. This allows ping from any IP. If you want ping requests from particular range of IP, provide it in CIDR field.</para>
+        </section>
+        <section>
+            <title>Adding Keypair</title>
+            <para>Next add a Keypair. Once a Keypair is added, the public key would be
+                downloaded. This key can be used to SSH to the launched instance.</para>
+	    <para>
+            <mediaobject>
+                <imageobject role="fo">
+                    <imagedata fileref="figures/KeyPair.png"
+                    format="PNG" scale="60"/>
+            	</imageobject>
+                <imageobject role="html">
+                    <imagedata fileref="figures/KeyPair.png"
+                        format="PNG" />
+                </imageobject>
+            </mediaobject>
+	    </para>
+            <para>Once this is done, we are now all set to launch an Instance</para>
+        </section>
+        <section>
+            <title>Launching Instance</title>
+            <para>Click Images &amp; Snapshots and launch a required  instance from the list of
+                images available.</para>
+            <para>
+	    <mediaobject>
+                <imageobject role="fo">
+                    <imagedata fileref="figures/Images.png"
+                    format="PNG" scale="60"/>
+            	</imageobject>
+                <imageobject role="html">
+                    <imagedata fileref="figures/Images.png"
+                        format="PNG" />
+                </imageobject>
+            </mediaobject>
+	</para>
+            <para>Click launch on the required image. Provide a Server Name, select the flavor, the
+                keypair added above and the default security group. Provide the number of instances
+                required. Once these details are provided, click Launch Instance.</para>
+            <para>
+		<mediaobject>
+                	<imageobject role="fo">
+                    		<imagedata fileref="figures/LaunchInstance.png"
+                    		format="PNG" scale="60"/>
+            		</imageobject>
+               		<imageobject role="html">
+                   		 <imagedata fileref="figures/LaunchInstance.png"
+                        	format="PNG" />
+                	</imageobject>
+           	 </mediaobject>
+	    </para>
+            <para>Once the status is Active, the instance is ready and we can ping and SSH to the
+                instance.</para>
+            <para>
+		<mediaobject>
+                	<imageobject role="fo">
+                	    <imagedata fileref="figures/InstanceReady.png"
+                	    format="PNG" scale="60"/>
+	                </imageobject>
+            	        <imageobject role="html">
+                    		<imagedata fileref="figures/InstanceReady.png"
+                    		format="PNG" />
+	                </imageobject>
+         	</mediaobject>
+	    </para>
+        </section>
+    </section>
+
 
 </chapter>
