@@ -66,19 +66,19 @@ sudo service mysql restart</literallayout></para>
         other services authenticating and authorizing with keystone.
       </para>
       <para> First, create a default tenant, we'll name it
-        openstackDemo in this example.</para>
+        <literal>openstackDemo</literal> in this example.</para>
       <screen><prompt>$ </prompt><userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 tenant-create --name openstackDemo --description "Default Tenant" --enabled true</userinput></screen>
 <programlisting>      +-------------+----------------------------------+
       |   Property  |              Value               |
       +-------------+----------------------------------+
       | description | Default Tenant                   |
       | enabled     | true                             |
-      | id          | 9ae969031816484a8e2172c3700cbfcc |
+      | id          | b5815b046cfe47bb891a7b64119e7f80 |
       | name        | openstackDemo                    |
       +-------------+----------------------------------+</programlisting>
       
-      <para>Create a default user named adminUser. </para>
-      <screen><prompt>$</prompt><userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 user-create --tenant_id $tenant_id_from_value_above --name adminUser --pass secretword --enabled true</userinput></screen>
+      <para>Create a default user named <literal>adminUser</literal>. </para>
+      <screen><prompt>$</prompt><userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 user-create --tenant_id b5815b046cfe47bb891a7b64119e7f80 --name adminUser --pass secretword --enabled true</userinput></screen>
 <programlisting>      +----------+-------------------------------------------------------------------------------------------------------------------------+
       | Property |                                                          Value                                                          |
       +----------+-------------------------------------------------------------------------------------------------------------------------+
@@ -90,13 +90,13 @@ sudo service mysql restart</literallayout></para>
       | tenantId | b5815b046cfe47bb891a7b64119e7f80                                                                                        |
       +----------+-------------------------------------------------------------------------------------------------------------------------+</programlisting>
       
-      <para>Create the default roles, adminRole and memberRole.</para>
-      <screen><prompt>$</prompt><userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 role-create --name adminRole</userinput></screen>
+      <para>Create the default roles, <literal>admin</literal> and <literal>memberRole</literal>.</para>
+      <screen><prompt>$</prompt><userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 role-create --name admin</userinput></screen>
 <programlisting>      +----------+----------------------------------+
       | Property |              Value               |
       +----------+----------------------------------+
       | id       | e3d9d157cc95410ea45d23bbbc2e5c10 |
-      | name     | adminRole                        |
+      | name     | admin                        |
       +----------+----------------------------------+</programlisting>
       <screen><prompt>$</prompt><userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 role-create --name memberRole</userinput></screen>
 <programlisting>      +----------+----------------------------------+
@@ -106,8 +106,8 @@ sudo service mysql restart</literallayout></para>
       | name     | memberRole                       |
       +----------+----------------------------------+</programlisting>
       
-      <para>Grant the 'adminRole' role to the 'adminUser' user in the
-        'openstack' tenant with "user-role-add".</para>
+      <para>Grant the <literal>admin</literal> role to the <literal>adminUser</literal> user in the
+        <literal>openstackDemo</literal> tenant with "user-role-add".</para>
       <screen><prompt>$</prompt><userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 user-role-add --user a4c2d43f80a549a19864c89d759bb3fe --tenant_id b5815b046cfe47bb891a7b64119e7f80 --role e3d9d157cc95410ea45d23bbbc2e5c10</userinput></screen>
       <para>There is no output to this command.</para>
       <para>Create a Service Tenant. This tenant contains all the
@@ -135,7 +135,7 @@ sudo service mysql restart</literallayout></para>
       | tenantId | eb7e0c10a99446cfa14c244374549e9d                                                                                        |
       +----------+-------------------------------------------------------------------------------------------------------------------------+</programlisting>
       
-      <para>Grant the 'admin' role to the 'glance' user in the 'service' tenant.</para>
+      <para>Grant the <literal>admin</literal> role to the <literal>glance</literal> user in the <literal>service</literal> tenant.</para>
       <screen><prompt>$</prompt><userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 user-role-add --user 46b2667a7807483d983e0b4037a1623b --tenant_id eb7e0c10a99446cfa14c244374549e9d --role e3d9d157cc95410ea45d23bbbc2e5c10</userinput></screen>
       <para>There is no output to this command. 
       </para>
@@ -152,8 +152,8 @@ sudo service mysql restart</literallayout></para>
       | tenantId | eb7e0c10a99446cfa14c244374549e9d                                                                                        |
       +----------+-------------------------------------------------------------------------------------------------------------------------+</programlisting>
       
-      <para>Grant the 'admin' role to the 'nova' user in the 'service' tenant.</para>
-      <screen><prompt>$</prompt><userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 user-role-add --user 46b2667a7807483d983e0b4037a1623b --tenant_id eb7e0c10a99446cfa14c244374549e9d --role e3d9d157cc95410ea45d23bbbc2e5c10</userinput></screen>
+      <para>Grant the <literal>admin</literal> role to the <literal>nova</literal> user in the <literal>service</literal> tenant.</para>
+      <screen><prompt>$</prompt><userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 user-role-add --user 54b3776a8707834d983e0b4037b1345c --tenant_id eb7e0c10a99446cfa14c244374549e9d --role e3d9d157cc95410ea45d23bbbc2e5c10</userinput></screen>
       <para>There is no output to this command. 
       </para>
       <para>Create an EC2 Service User in the Service Tenant. </para>
@@ -168,9 +168,9 @@ sudo service mysql restart</literallayout></para>
       | password | $6$rounds=40000$kf1ENaCoy7wOfRjx$LKQtsQbBqSBr2ZH7fwToAut0EYYz6M278N16Xg4Va2vTEOFabvTVXCdCP4hA5ikdCQO8Mh1nJvuFMEvGHaht3/ |
       | tenantId | eb7e0c10a99446cfa14c244374549e9d                                                                                        |
       +----------+-------------------------------------------------------------------------------------------------------------------------+</programlisting>
-      <para>Grant the 'admin' role to the 'nova' user in the 'service'
+      <para>Grant the <literal>admin</literal> role to the <literal>ec2</literal> user in the <literal>service</literal>
         tenant.</para>
-      <screen><prompt>$</prompt><userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 user-role-add --user 46b2667a7807483d983e0b4037a1623b --tenant_id eb7e0c10a99446cfa14c244374549e9d --role e3d9d157cc95410ea45d23bbbc2e5c10</userinput></screen>
+      <screen><prompt>$</prompt><userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 user-role-add --user 32e7668b8707834d983e0b4037b1345c --tenant_id eb7e0c10a99446cfa14c244374549e9d --role e3d9d157cc95410ea45d23bbbc2e5c10</userinput></screen>
       <para>There is no output to this command.</para>
       <para>Next you create definitions for the services.</para>
     </section>
