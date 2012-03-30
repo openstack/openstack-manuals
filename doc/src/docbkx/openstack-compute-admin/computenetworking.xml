@@ -490,117 +490,161 @@ force_dhcp_release=True
                 been put into another user's .bashrc file, then, it is necessary to run these
                 commands as the user. </para>
         </note>
-        <para><literallayout class="monospaced">
-            Using euca2ools : 
-            <code>
-                euca-authorize -P icmp -t -1:-1 -s 0.0.0.0/0 default 
-                euca-authorize -P tcp -p 22 -s 0.0.0.0/0 default
-            </code>
-            Using nova :
-            <code>
-                nova secgroup-add-rule default icmp -1 -1 -s 0.0.0.0/0 
-               nova secgroup-add-rule default tcp 22 22 -s 0.0.0.0/0 
-            </code>
+            <para>Using the nova command-line tool:</para>
+            <screen>
+<prompt>$</prompt> <userinput>nova secgroup-add-rule default icmp -1 -1 -s 0.0.0.0/0</userinput>
+<prompt>$</prompt> <userinput>nova secgroup-add-rule default tcp 22 22 -s 0.0.0.0/0</userinput>
+            </screen>
+        <para>Using euca2ools:</para>
+            <screen>
+<prompt>$</prompt> <userinput>euca-authorize -P icmp -t -1:-1 -s 0.0.0.0/0 default</userinput>
+<prompt>$</prompt> <userinput>euca-authorize -P tcp -p 22 -s 0.0.0.0/0 default</userinput>
+            </screen>
 
-        </literallayout>If
-            you still cannot ping or SSH your instances after issuing the ‘nova secgroup-add-rule’
-            commands, look at the number of ‘dnsmasq’ processes that are running. If you have a
-            running instance, check to see that TWO ‘dnsmasq’ processes are running. If not, perform
-            the following: <code>killall dnsmasq; service nova-network restart</code></para></section>
-    <section xml:id="associating-public-ip"><title>Associating a Public IP Address</title>
-        <para>OpenStack Compute uses NAT for public IPs. If you plan to use public IP
-            addresses for your virtual instances, you must configure --public_interface=vlan100'
-            in the nova.conf file so that Nova knows where to bind public IP addresses. Restart
-            nova-network if you change nova.conf while the service is running. Also, ensure you
-            have opened port 22 for the nova network.</para>
-        <para>You must add the IP address or block of public IP addresses to the floating IP
-            list using the <code>nova-manage floating create</code> command. When you start a
-            new virtual instance, associate one of the public addresses to the new instance
-            using the euca-associate-address command.</para>
-        <para>These are the basic overall steps and checkpoints. </para>
-        <para>First, set up the public address.</para>
+            <para>If you still cannot ping or SSH your instances after issuing the <command>nova secgroup-add-rule</command>
+            commands, look at the number of <command>dnsmasq</command> processes that are running. If you have a
+            running instance, check to see that TWO <command>dnsmasq</command> processes are running. If not, perform
+            the following as root:</para>
+            <screen>
+<prompt>#</prompt> <userinput>killall dnsmasq</userinput>
+<prompt>#</prompt> <userinput>service nova-network restart</userinput>
+           </screen>
+    </section>
+    <section xml:id="associating-public-ip">
+        <title>Configuring Public (Floating) IP Addresses</title>
+        <section>
+            <title>Private and Public IP Addresses</title>
+            <para>Every virtual instance is automatically assigned a private IP address. 
+              You may optionally assign public IP addresses to instances. OpenStack
+              uses the term "floating IP" to refer to an IP address (typically public) that
+              can be dynamically added to a running virtual instance. OpenStack Compute uses Network Address Translation (NAT) to assign floating IPs to virtual instances.
+            </para>
+            <para>If you plan to use this feature, you must add
+            the following to your nova.conf file to specify which interface
+            the nova-network service will bind public IP addresses to:</para>
+        <programlisting>--public_interface=vlan100</programlisting>
+        <para>Restart the nova-network service if you change nova.conf while the service is running.</para>
+        </section>
+        <section>
+            <title>Creating a List of Available Floating IP Addresses</title>
+        <para>Nova maintains a list of floating IP addresses that are
+             available for assigning to instances. Use the <command>nova-manage floating create</command> command
+        to add entries to this list, as root.</para>
+        <para>For example:</para>
+        <screen>
+<prompt>#</prompt> <userinput>nova-manage floating create --ip_range=68.99.26.170/31</userinput>
+        </screen>
+        <para>The following nova-manage commands apply to floating IPs.</para>
+        <itemizedlist>
+            <listitem>
+                <command>nova-manage floating list</command>: List the floating IP addresses in the
+                    pool.
+            </listitem>
+            <listitem>
+                 <command>nova-manage floating create [cidr]</command>: Create specific
+                    floating IPs for either a single address or a subnet.
+            </listitem>
+            <listitem>
+                  <command>nova-manage floating delete [cidr]</command>: Remove floating IP
+                    addresses using the same parameters as the create command.
+            </listitem>
+        </itemizedlist>
 
-        <literallayout class="monospaced">nova-manage floating create 68.99.26.170/31
-nova floating-ip-create 68.99.26.170
-nova add-floating-ip 1 68.99.26.170</literallayout>
+    </section>
+    <section>
+        <title>Adding a Floating IP to an Instance</title>
+        <para>Adding a floating IP to an instance is a two step process:</para>
+        <orderedlist>
+            <listitem><command>nova floating-ip-create</command>: Allocate a floating IP address from the list of available addresses.</listitem>
+            <listitem><command>nova add-floating-ip</command>: Add an allocated floating IP address to a running instance.</listitem>
+        </orderedlist>
 
-        <para>Make sure the security groups are open.</para>
+        <para>Here's an example of how to add a floating IP to a running
+        instance with an ID of 12</para>
+        <screen>
+<prompt>$</prompt> <userinput>nova floating-ip-create</userinput>
+<computeroutput>
++-----------------+-------------+----------+------+
+|        Ip       | Instance Id | Fixed Ip | Pool |
++-----------------+-------------+----------+------+
+|    68.99.26.170 | None        | None     |      |
++-----------------+-------------+----------+------+
+</computeroutput>
+<prompt>$</prompt> <userinput>nova add-floating-ip 12 68.99.26.170</userinput>
+        </screen>
+    
+    <para>If the instance no longer needs a public address, remove the floating
+          IP address from the instance and de-allocate the address:</para>
+    <screen>
+<prompt>$</prompt> <userinput>nova remove-floating-ip 12 68.99.26.170</userinput>
+<prompt>$</prompt> <userinput>nova floating-ip-delete 68.99.26.170</userinput>
+    </screen>
+    </section>
 
-        <literallayout class="monospaced">root@my-hostname:~# nova secgroup-list-rules default</literallayout>
-        <programlisting>
+        <section>
+            <title>Automatically adding floating IPs</title>
+            <para>The nova-network service can be configured to automatically
+allocate and assign a floating IP address to virtual instances when they are
+launched. Add the following line to nova.conf and restart the nova-network
+service</para>
+
+            <programlisting>
+--auto_assign_floating_ip=True
+            </programlisting>
+            <para>Note that if this option is enabled and all of the floating
+                IP addresses have already been allocated, the 
+                <command>nova boot</command> command will fail with an error.</para>
+        </section>
+        <section>
+            <title>Troubleshooting</title>
+            <para>If you aren't able to reach your instances via the floating IP
+            address, make sure the default security group allows ICMP (ping) and SSH (port 22),
+            so that you can reach the instances:</para>
+            <screen>
+<prompt>$</prompt> <userinput>nova secgroup-list-rules default</userinput>
+<computeroutput>
 +-------------+-----------+---------+-----------+--------------+
 | IP Protocol | From Port | To Port |  IP Range | Source Group |
 +-------------+-----------+---------+-----------+--------------+
 | icmp        | -1        | -1      | 0.0.0.0/0 |              |
 | tcp         | 22        | 22      | 0.0.0.0/0 |              |
 +-------------+-----------+---------+-----------+--------------+
-                    </programlisting>
-        <para>Ensure the NAT rules have been added to iptables.</para>
+</computeroutput>
+            </screen>
+            <para>Ensure the NAT rules have been added to iptables on the
+                node that nova-network is running on, as root:</para>
 
-        <literallayout class="monospaced">
- iptables -L -nv
-                </literallayout>
-        <programlisting>
+            <screen>
+<prompt>#</prompt> <userinput>iptables -L -nv</userinput>
+<computeroutput>
  -A nova-network-OUTPUT -d 68.99.26.170/32 -j DNAT --to-destination 10.0.0.3
-            </programlisting>
-        <literallayout class="monospaced">
-iptables -L -nv -t nat
-            </literallayout>
-        <programlisting>
+</computeroutput>
+<prompt>#</prompt> <userinput>iptables -L -nv -t nat</userinput>
+<computeroutput>
 -A nova-network-PREROUTING -d 68.99.26.170/32 -j DNAT --to-destination10.0.0.3
 -A nova-network-floating-snat -s 10.0.0.3/32 -j SNAT --to-source 68.99.26.170
-            </programlisting>
+</computeroutput>
+            </screen>
 
-        <para>Check that the public address, in this example "68.99.26.170", has been
-            added to your public interface. You should see the address in the listing when you
+            <para>Check that the public address, in this example "68.99.26.170", has been
+            added to your public interface: You should see the address in the listing when you
             enter "ip addr" at the command prompt.</para>
 
-        <programlisting>
+            <screen>
+<prompt>$</prompt> <userinput>ip addr</userinput>
+<computeroutput>
 2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP qlen 1000
 link/ether xx:xx:xx:17:4b:c2 brd ff:ff:ff:ff:ff:ff
 inet 13.22.194.80/24 brd 13.22.194.255 scope global eth0
 inet 68.99.26.170/32 scope global eth0
 inet6 fe80::82b:2bf:fe1:4b2/64 scope link
 valid_lft forever preferred_lft forever
-                    </programlisting>
+</computeroutput>
+            </screen>
+
         <para>Note that you cannot SSH to an instance with a public IP from within the same
             server as the routing configuration won't allow it. </para>
-    </section>
-    <section xml:id="allocating-associating-ip-addresses"><title>Allocating and Associating IP Addresses with Instances</title>
-        <para>You can use nova client commands to manage floating IP addresses used with Flat DHCP or VLAN
-        networking. </para>
-
-        <para>To assign a reserved IP address to your project, removing it from the pool of
-            available floating IP addresses, use <code>nova floating-ip-create </code>. It'll
-            return an IP address, assign it to the project you own, and remove it from the pool
-            of available floating IP addresses. </para>
-        <para>To associate the floating IP to your instance, use <code>nova add-floating-ip
-            $server-name/id $floating-ip</code>.</para>
-        <para>When you want to return the floating IP to the pool, first use
-            euca-disassociate-address [floating_ip] to disassociate the IP address from your
-            instance, then use euca-deallocate-address [floating_ip] to return the IP to the
-            pool of IPs for someone else to grab.</para>
-        <para>There are nova-manage commands that also help you manage the floating IPs.</para>
-        <itemizedlist>
-            <listitem>
-                <para>
-                    nova-manage floating list - This command lists the floating IP addresses in the
-                    pool.
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    nova-manage floating create [cidr] - This command creates specific
-                    floating IPs for either a single address or a subnet.
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    nova-manage floating delete [cidr] - This command removes floating IP
-                    addresses using the same parameters as the create command.
-                </para>
-            </listitem>
-        </itemizedlist>
+         </section>
     </section>
     <section xml:id="removing-network-from-project">
         <title>Removing a Network from a Project</title><para>You will find that you cannot remove a network that has already been associated to a project by simply deleting it. You can disassociate the project from the network with a scrub command and the project name as the final parameter:
