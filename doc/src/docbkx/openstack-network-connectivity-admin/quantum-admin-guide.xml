@@ -670,29 +670,34 @@ list_ports [tenant-id] [net-id]            </literallayout>
             <para>2.Enabling Authentication and Authorization within Quantum</para>
             <para>Authentication and Authorization middleware should be enabled in the Quantum
             pipeline. To this aim, uncomment the following line in quantum.conf: </para>
-            <literallayout class="monospaced">pipeline = authN extensions quantumapiapp</literallayout>
+            <literallayout class="monospaced">pipeline = authtoken extensions quantumapiapp_v1_0</literallayout>
         <para>3. Configuring Quantum to Connect to Keystone</para>
-            <para>The final step concerns configuring access to Keystone. The following attributes
-            must be specified in the [filter:authN] section of quantum.conf: </para>
-            <literallayout class="monospaced">auth_host              IP address or host name of the server where Keystone is running
-auth_port              Port where the Keystone Admin API is listening
-auth_protocol       Protocol used for communicating with Keystone (http/https)
-auth_version         Keystone API version (default: 2.0) </literallayout>
+            <para>The final step concerns configuring access to Keystone. The correct values of the following attributes
+            must be specified in the [filter:authtoken] section of quantum.conf: </para>
+            <literallayout class="monospaced">paste.filter_factory = keystone.middleware.auth_token:filter_factory
+auth_host = 127.0.0.1
+auth_port = 35357
+auth_protocol = http
+auth_uri = http://127.0.0.1:5000/
+</literallayout>
             <para>4. Setup Keystone Admin Credentials</para>
             <para>In order to validate authentication tokens, Quantum uses Keystone's administrative
                 API. It therefore requires credentials for an administrative user, which can be
                 specified in Quantum's configuration file (quantum.conf) Either username and
                 password, or an authentication token for an administrative user can be specified in
                 the configuration file: </para>
-            <para>auth_admin_token    Keystone token for administrative access auth_admin_user
-                Keystone user with administrative rights auth_admin_password Password for the user
-                specified with auth_admin_user</para>
+            <itemizedlist spacing="compact"><listitem><para>admin_token:  Keystone token for administrative access</para></listitem>
+<listitem><para>admin_user: Keystone user with administrative rights</para></listitem>
+<listitem><para>admin_password: Password for the user specified with admin_user</para></listitem>
+<listitem><para>admin_tenant_name: Tenant for admin_user</para></listitem> </itemizedlist>
             <para>For example, using password:</para>
-            <literallayout class="monospaced">auth_admin_user = admin auth_admin_password = secrete</literallayout>
+            <literallayout class="monospaced">admin_tenant_name = service
+admin_user = nova
+admin_password = sp </literallayout>
             <para>Or using a token:</para>
-            <literallayout class="monospaced">auth_admin_token = 9a82c95a-99e9-4c3a-b5ee-199f6ba7ff04</literallayout>
-            <note><para>auth_admin_token and auth_admin_user/password are exclusive. If both are specified,
-                    auth_admin_token has priority.</para></note>
+            <literallayout class="monospaced">admin_token = 9a82c95a-99e9-4c3a-b5ee-199f6ba7ff04</literallayout>
+            <note><para>admin_token and admin_user/password are exclusive. If both are specified,
+                    admin_token has priority.</para></note>
         </section>
         <section xml:id="client-auth-requirements">
             <title>Client Authentication Requirements</title>
