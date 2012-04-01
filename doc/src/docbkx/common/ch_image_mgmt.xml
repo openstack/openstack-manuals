@@ -50,109 +50,161 @@
         variables required by the nova client and glance
         client.</para>
     <section xml:id="starting-images">
-        <title>Starting Images</title><para>Once you have an installation, you want to get images that you can use in your Compute cloud.
-            We've created a basic Ubuntu image for testing your installation. First you'll download
-            the image, then use "uec-publish-tarball" to publish it:</para>
-        
-        <para><literallayout class="monospaced">
-image="ubuntu1010-UEC-localuser-image.tar.gz"
-wget http://c0179148.cdn1.cloudfiles.rackspacecloud.com/ubuntu1010-UEC-localuser-image.tar.gz
-uec-publish-tarball $image [bucket-name] [hardware-arch]
-           </literallayout>
-            <itemizedlist>
-                <listitem>
-                    <para>
-                        <emphasis role="bold">Image</emphasis> : a tar.gz file that contains the
-                        system, its kernel and ramdisk. </para>
-                </listitem>
-                <listitem>
-                    <para>
-                        <emphasis role="bold">Bucket</emphasis> : a local repository that contains
-                        images. </para>
-                </listitem>
-                <listitem>
-                    <para>
-                        <emphasis role="bold">Hardware architecture</emphasis> : specify via "amd64"
-                        or "i386" the image's architecture (32 or 64 bits). </para>
-                </listitem>
-            </itemizedlist>
-        </para>
-        
-        <para>Here's an example of what this command looks like with data:</para>
-        
-        <para><literallayout class="monospaced">uec-publish-tarball ubuntu1010-UEC-localuser-image.tar.gz dub-bucket amd64</literallayout></para>
-        
-        <para>The command in return should output three references:<emphasis role="italic">
-            emi</emphasis>, <emphasis role="italic">eri</emphasis> and <emphasis role="italic"
-                >eki</emphasis>. You will next run nova image-list in order to obtain the ID of the
-            image you just uploaded.</para>
-        
-        
-        <para>Now you can schedule, launch and connect to the instance, which you do with the "nova"
-            command line. The ID of the image will be used with the <literallayout class="monospaced">nova boot</literallayout>command.</para>
-        <para>One thing to note here, once you publish the tarball, it has to untar before
-            you can launch an image from it. Using the 'nova list' command, and make sure the image
-            has it's status as "ACTIVE".</para>
-        
-        <para><literallayout class="monospaced">nova image-list</literallayout></para>
-        
-        <para>Depending on the image that you're using, you need a public key to connect to it. Some
-            images have built-in accounts already created. Images can be shared by many users, so it
-            is dangerous to put passwords into the images. Nova therefore supports injecting ssh
-            keys into instances before they are booted. This allows a user to login to the instances
+        <title>Getting virtual machine images</title>
+
+        <section xml:id="cirros-images">
+            <title>CirrOS (test) images</title>
+            <para>Scott Moser maintains a set of small virtual machine images
+                that are designed for testing. These images use "cirros" as the
+                login user. They are hosted under the CirrOS project on Launchpad and are available
+                for download at <link
+                xlink:href="https://launchpad.net/cirros/+download">https://launchpad.net/cirros/+download</link>.
+            </para>
+            <para>
+                If your deployment uses QEMU or KVM, we recommend using the
+                images in QCOW2 format. The most recent 64-bit qcow2 image as of this
+                writing is <link xlink:href="https://launchpad.net/cirros/trunk/0.3.0/+download/cirros-0.3.0-x86_64-disk.img">https://launchpad.net/cirros/trunk/0.3.0/+download/cirros-0.3.0-x86_64-disk.img</link>
+            </para>
+        </section>
+
+        <section xml:id="ubuntu-images">
+            <title>Ubuntu images</title>
+        <para>Canonical maintains an official set of Ubuntu-based images for download at <link
+                xlink:href="http://uec-images.ubuntu.com">http://uec-images.ubuntu.com</link> These
+                accounts use "ubuntu" as the login user.</para>
+        <para>If your deployment uses QEMU or KVM, we recommend using the images in QCOW2 format.
+        The most recent version of the 64-bit QCOW2 image for Ubuntu 12.04 is available for download at
+        <link xlink:href="http://uec-images.ubuntu.com">http://uec-images.ubuntu.com/precise/current/precise-server-cloudimg-amd64-disk1.img</link>.</para>
+        </section>
+
+        <section xml:id="fedora-images">
+            <title>Fedora images</title>
+            <para>The Fedora project maintains prebuilt Fedora JEOS
+                (Just Enough OS) images for download at <link
+                xlink:href="http://berrange.fedorapeople.org/images">http://berrange.fedorapeople.org/images
+            </link>.</para>
+            <para>A 64-bit QCOW2 image for Fedora 16 is available for download
+                at <link xlink:href="http://berrange.fedorapeople.org/images/2012-02-29/f16-x86_64-openstack-sda.qcow2">http://berrange.fedorapeople.org/images/2012-02-29/f16-x86_64-openstack-sda.qcow2</link>.
+            </para>
+        </section>
+        <section xml:id="suse-sles-images">
+            <title>OpenSUSE and SLES 11 images</title>
+            <para>SUSE Studio at <link xlink:href="http://susestudio.com">http://susestudio.com</link>
+            is an easy way to build virtual appliances for OpenSUSE and SLES 11 (SUSE
+            Linux Enterprise Server) that are compatible with OpenStack. Free
+            registration is required to download or build images.</para>
+
+            <para>For example, Christian Berendt used OpenSUSE to create a test OpenSUSE 12.1
+            (JeOS) image, which is available for download at <link xlink:href="http://susestudio.com/a/YRUrwO/testing-instance-for-openstack-opensuse-121">http://susestudio.com/a/YRUrwO/testing-instance-for-openstack-opensuse-121</link>.</para>
+        </section>
+        <section xml:id="rcb-images">
+            <title>Rackspace Cloud Builders (multiple distros) images</title>
+            <para>Rackspace Cloud Builders maintains a list of pre-built images
+            from various distributions (RedHat, CentOS, Fedora, Ubuntu) at
+            <link xlink:href="https://github.com/rackerjoe/oz-image-build">https://github.com/rackerjoe/oz-image-build</link>.</para>
+        </section>
+    </section>
+         <section xml:id="booting-a-test-image">
+            <title>Booting a test image</title>
+            <para>The following assumes you are using QEMU or KVM in your
+            deployment.</para>
+            <para>Download a CirrOS test image:</para>
+            <screen>
+<prompt>$</prompt> <userinput>wget https://launchpad.net/cirros/trunk/0.3.0/+download/cirros-0.3.0-x86_64-disk.img</userinput>
+            </screen>
+            <para>Add the image to glance:</para>
+            <screen>
+<prompt>$</prompt> <userinput>name=cirros-0.3-x86_64</userinput>
+<prompt>$</prompt> <userinput>image=cirros-0.3.0-x86_64-disk.img</userinput>
+<prompt>$</prompt> <userinput>glance add name=$name is_public=true container_format=bare disk_format=qcow2 &lt; $image</userinput>
+            </screen>
+            <para>Check that adding the image was successful (Status should
+                be ACTIVE when the operation is complete):</para>
+            <screen>
+<prompt>$</prompt> <userinput>nova image-list</userinput>
+<computeroutput>
++--------------------------------------+---------------------+--------+--------+
+|                  ID                  |         Name        | Status | Server |
++--------------------------------------+---------------------+--------+--------+
+| 254c15e1-78a9-4b30-9b9e-2a39b985001c | cirros-0.3.0-x86_64 | ACTIVE |        |
++--------------------------------------+---------------------+--------+--------+
+</computeroutput>
+            </screen>
+            <para>Create a keypair so you can ssh to the instance:
+            </para>
+            <screen>
+<prompt>$</prompt> <userinput>nova keypair-add test > test.pem</userinput>
+<prompt>$</prompt> <userinput>chmod 600 test.pem</userinput>
+            </screen>
+        <para>In general, you need to use an ssh keypair to log in to a running instance, although some
+            images have built-in accounts created with associated passwords. However, since images are
+            often shared by many users, it is not advised to put passwords into the images. Nova
+            therefore supports injecting ssh keys into instances before they are booted. This allows a user to login to the instances
             that he or she creates securely. Generally the first thing that a user does when using
             the system is create a keypair. </para>
         <para>Keypairs provide secure authentication to your instances. As part of the first boot of
-            a virtual image, the private key of your keypair is added to root’s authorized_keys
-            file. Nova generates a public and private key pair, and sends the private key to the
-            user. The public key is stored so that it can be injected into instances. </para>
-        <para>Keypairs are created through the api and you use them as a parameter when launching an
-            instance. They can be created on the command line using the following command :
-            <literallayout class="monospaced">nova keypair-add</literallayout>In order to list all the available options, you would run :<literallayout class="monospaced">nova help </literallayout>
-            Example usage:</para>
-        
-        <literallayout class="monospaced">
-nova keypair-add test > test.pem
-chmod 600 test.pem
-                    </literallayout>
-        
-        <para>Now, you can run the instances:</para>
-        <literallayout class="monospaced">nova boot --image 1 --flavor 1 --key_name test my-first-server</literallayout>
+            a virtual image, the private key of your keypair is added to authorized_keys
+            file of the login account. Nova generates a public and private key pair, and sends the private key to the user. The public key is stored so that it can be injected into instances. </para>
+            <para>Run (boot) a test instance:</para>
+            <screen>
+<prompt>$</prompt> <userinput>nova boot --image cirros-0.3.0-x86_64 --flavor m1.small --key_name test my-first-server</userinput>
+            </screen>
         <para>Here's a description of the parameters used above:</para>
         <itemizedlist>
-            <listitem>
-                <para><emphasis role="bold">--flavor</emphasis> what type of image to create. You
-                    can get all the flavors you have by running
-                    <literallayout class="monospaced">nova flavor-list</literallayout></para>
+            <listitem><para>
+                <literal>--image</literal>: the name or ID of the image we want to
+                launch, as shown in the output of <command>nova image-list</command></para>
             </listitem>
-            <listitem>
-                <para>
-                    <emphasis role="bold">-key_ name</emphasis> name of the key to inject in to the
-                    image at launch. </para>
+            <listitem><para>
+                <literal>--flavor</literal>: the name or ID of the size of the instance to create
+                (number of vcpus, available RAM, available storage). View the
+                list of available flavors by running
+                    <command>nova flavor-list</command></para>
+            </listitem>
+            <listitem><para>
+                    <literal>-key_name</literal>: the name of the key to inject in to the
+                    instance at launch.</para>
             </listitem>
         </itemizedlist>
-        <para> The instance will go from “BUILD” to “ACTIVE” in a short time, and you should
-            be able to connect via SSH using the 'ubuntu' account, with the password 'ubuntu':
-            (replace $ipaddress with the one you got from nova list): </para>
-        <para>
-            <literallayout class="monospaced">ssh ubuntu@$ipaddress</literallayout></para>
-        <para>The 'ubuntu' user is part of the sudoers group, so you can escalate to 'root'
-            via the following command:</para>
-        <para>
-            <literallayout class="monospaced">sudo -i</literallayout>
-        </para>
+            <para>Check the status of the instance you launched:</para>
+            <screen>
+<prompt>$</prompt> <userinput>nova list</userinput>
+            </screen>
+        <para> The instance will go from BUILD to ACTIVE in a short time, and you should
+            be able to connect via ssh as 'cirros' user, using the private key
+            you created. If your ssh keypair fails for some reason, you can also log in with the
+            default cirros password: <literal>cubswin:)</literal></para>
+        <screen>
+<prompt>$</prompt> <userinput>ipaddress=... # Get IP address from "nova list"</userinput>
+<prompt>$</prompt> <userinput>ssh -i test.pem -l cirros $ipaddress</userinput>
+        </screen>
+        <para>The 'cirros' user is part of the sudoers group, so you can escalate to 'root'
+            via the following command when logged in to the instance:</para>
+        <screen>
+<prompt>$</prompt> <userinput>sudo -i</userinput>
+        </screen>
     </section>
 
     <section xml:id="deleting-instances">
 
-        <title>Deleting Instances</title>
+        <title>Tearing down (deleting) Instances</title>
 
-        <para>When you are done playing with an instance, you can tear
-            the instance down using the following command (replace
-            $instanceid with the instance IDs from above or look it up
-            with euca-describe-instances):</para>
-
-        <para><literallayout class="monospaced">nova delete $server-id</literallayout></para>
+        <para>When you are done with an instance, you can tear
+            it down using the <command>nova delete</command> command, passing
+            either the instance name or instance ID as the argument. You can
+            get a listing of the names and IDs of all running instances using the
+            <command>nova list</command>. For example:</para>
+            <screen>
+<prompt>$</prompt> <userinput>nova list</userinput>
+<computeroutput>
++--------------------------------------+-----------------+--------+----------+
+|                  ID                  |       Name      | Status | Networks |
++--------------------------------------+-----------------+--------+----------+
+| 8a5d719a-b293-4a5e-8709-a89b6ac9cee2 | my-first-server | ACTIVE |          |
++--------------------------------------+-----------------+--------+----------+
+</computeroutput>
+<prompt>$</prompt> <userinput>nova delete my-first-server</userinput>
+        </screen>
     </section>
     <section xml:id="pausing-and-suspending-instances">
 
