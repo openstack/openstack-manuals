@@ -31,7 +31,10 @@
            admin_tenant_name = service
            admin_user = glance
            admin_password = glance</screen>
-           
+        <para>Ensure that the glance-api pipeline section includes
+            authtoken:</para>
+           <screen>[pipeline:glance-api]
+pipeline = versionnegotiation authtoken auth-context apiv1app</screen>
            <para>Add this to the end of <filename>/etc/glance/glance-api.conf</filename>.</para>
            <screen>[paste_deploy]
            flavor = keystone</screen>
@@ -48,9 +51,14 @@
            admin_tenant_name = service
            admin_user = glance
            admin_password = glance</screen>
-           
+           <para>Ensure that the glance-registry pipeline section includes authtoken:</para>
+        <screen>[pipeline:glance-registry]
+#pipeline = context registryapp
+# NOTE: use the following pipeline for keystone
+pipeline = authtoken auth-context context registryapp</screen>
            <para>Restart glance-registry and glance-api services.</para>
-           <screen>service glance-registry restart &amp;&amp; service glance-api restart</screen>
+           <screen>sudo service glance-registry restart 
+sudo service glance-api restart</screen>
         <note><para>Any time you change the .conf files, restart the
             corresponding service.</para></note>
      <para>The database tables are created when you restart
