@@ -117,7 +117,7 @@
                    <tr>
                        <td>--libvirt_inject_password</td>
                        <td>default: 'false'</td>
-                       <td>When set, libvirt will will inject the admin password into instances before startup.
+                       <td>When set, libvirt will inject the admin password into instances before startup.
                        An agent is not required in the instance.
                        The admin password is specified as part of the server create API call.  If no password is
                        specified, then a randomly generated password is used.</td>
@@ -141,6 +141,14 @@
                        <td>--rescue_ramdisk_id</td>
                        <td>default: 'ari-rescue'</td>
                        <td>String; ARI image to use for rescue</td>
+                   </tr>
+                   <tr>
+                       <td>--libvirt_nonblocking</td>
+                       <td>default: 'false'</td>
+                       <td>When set to 'true', libvirt APIs will be called in a seperate OS thread pool to avoid blocking the main thread.
+                       This feature is especially desirable if you use the snapshot feature, which has a notably long execution time, or have many instances in a given compute node.
+                       The feature is experimental and is disabled by default.
+                       </td>
                    </tr>
                </tbody></table>
            
