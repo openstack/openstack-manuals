@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <book 
-    xmlns="http://docbook.org/ns/docbook" 
-    xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" 
-    xmlns:wadl="http://wadl.dev.java.net/2009/02"
-    version="5.0-extension RackBook-2.0" 
-    xml:id="api.openstack.org">
+  xmlns="http://docbook.org/ns/docbook" 
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" 
+  xmlns:wadl="http://wadl.dev.java.net/2009/02"
+  version="5.0-extension RackBook-2.0" 
+  xml:id="api.openstack.org">
   <info>
     <title>OpenStack APIs</title>
     <copyright>
@@ -17,22 +17,22 @@
   </info>
   <preface xml:id="Overview">
     <title>OpenStack API Reference</title>
-
+    
     <para>The OpenStack system has several key projects that are
-    separate installations but can work together depending on your
-    cloud needs: OpenStack Compute, OpenStack Object Storage,
-    OpenStack Identity Service, and OpenStack Image Service.</para>
-
+      separate installations but can work together depending on your
+      cloud needs: OpenStack Compute, OpenStack Object Storage,
+      OpenStack Identity Service, and OpenStack Image Service.</para>
+    
     <para>This page covers the basics for working with your OpenStack
-    cloud through the Compute API and Image API after authorizing with
-    the Identity Service API. You can then build a cloud by launching
-    images and assigning metadata to instances, all through an
-    API. Refer to the <link
-    xlink:href="http://docs.openstack.org/api/quick-start/content/">API Quick Start
-    Guide</link> for details about using the APIs referenced here, and
-    go to <link
-    xlink:href="http://docs.openstack.org/api/">docs.openstack.org/api</link>
-    for specifications of each API.
+      cloud through the Compute API and Image API after authorizing with
+      the Identity Service API. You can then build a cloud by launching
+      images and assigning metadata to instances, all through an
+      API. Refer to the <link
+        xlink:href="http://docs.openstack.org/api/quick-start/content/">API Quick Start
+        Guide</link> for details about using the APIs referenced here, and
+      go to <link
+        xlink:href="http://docs.openstack.org/api/">docs.openstack.org/api</link>
+      for specifications of each API.
     </para>
   </preface>
   <chapter xml:id="identity">
@@ -53,30 +53,44 @@
       the images uploaded to the system. You can reboot the server
       when needed, resize it larger or smaller, and connect to the
       server securely through SSH once it is started. The v1.1 API is
-      identical to the v2 API.</para>
-     
+      identical to the v2 API.</para>     
     <wadl:resources 
       href="os-compute-1.1.wadl" 
       xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
   </chapter>
-  <chapter xml:id="files">
+  <chapter xml:id="compute-ext">
+    <title>Compute API Extensions</title>
+    <para>An extension adds capabilities to an API beyond those
+      defined in the core API. The introduction of new features, MIME
+      types, actions, states, headers, parameters, and resources can
+      all be accomplished by means of extensions to the core API. You
+      can query the Compute API to find out which extensions are
+      available with a GET request to v1.1/extensions.</para>
+    <section xml:id="ext-os-console-output"><title>Console Output</title>
+      <para></para><wadl:resources 
+        href="ext/os-console-output.wadl" 
+        xmlns:wadl="http://wadl.dev.java.net/2009/02"/></section>
+    <section xml:id="ext-floating-ip-pools"><title>Floating IP Pools</title>
+      <para></para></section>
+    <section xml:id="ext-os-cloudpipe"><title>Cloudpipe</title>
+      <para></para></section>
+  </chapter>
+  <chapter xml:id="image">
     <title>Image</title>
     <para>With the Image API, you load images for use at launch time
       by the Compute API. Some cloud implementations do not expose
       this API and offer pre-tested images only. You can also assign
       metadata to images with this API. </para>
     <wadl:resources 
-        href="os-image-1.0.wadl" 
-        xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
+      href="os-image-1.0.wadl" 
+      xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
   </chapter>
-
   <chapter xml:id="volume">
     <title>Volume</title>
     <para>The Volume API allows you to manage volumes and snapshots
       that can be used with the Compute API.</para>
     <wadl:resources 
-        href="os-volume-1.wadl" 
-        xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
+      href="os-volume-1.wadl" 
+      xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
   </chapter>
-
 </book>
