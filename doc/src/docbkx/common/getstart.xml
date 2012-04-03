@@ -82,461 +82,465 @@ xml:id="ch_getting-started-with-openstack">
   </section>
   <section xml:id="openstack-architecture-overview">
     <title>OpenStack Project Architecture Overview</title>
-    <para>by 
-    <link xlink:href="http://ken.pepple.info">Ken
-    Pepple</link></para>
-    <para>Before we dive into the conceptual and logic architecture,
-    let&#226;&#8364;&#8482;s take a second to explain the OpenStack
-    project:</para>
-    <blockquote>
-      <para>OpenStack is a collection of open source technologies
-      delivering a massively scalable cloud operating system.</para>
-    </blockquote>
-    <para>You can think of it as software to power your own
-    Infrastructure as a Service (IaaS) offering like 
-    <link xlink:href="http://aws.amazon.com">Amazon Web
-    Services</link>. It currently encompasses three main
-    projects:</para>
+    <para>by <link xlink:href="http://ken.pepple.info">Ken
+        Pepple</link></para>
+
+    <para>I thought it would be a good chance to revisit my earlier
+      blog post on <link
+        xlink:href="http://ken.pepple.info/openstack/2011/04/22/openstack-nova-architecture/"
+        >OpenStack Compute ("Nova") architecture</link>. This time
+      around, instead of detailing the architecture of just a single
+      service, I'll look at all the pieces of the OpenStack project
+      working together.</para>
+
+    <para>To level-set everyone's understanding, let's briefly review
+      the OpenStack project components and history. Founded in 2010 by
+      Rackspace and NASA, the project has <link
+        xlink:href="http://wiki.openstack.org/Releases">released four
+        versions</link> and is set to release the fifth ("Essex" or
+      2012.1) <link
+        xlink:href="http://wiki.openstack.org/EssexReleaseSchedule">in
+        April</link>. Originally, it consisted of a trio of "core"
+      services:</para>
+
     <itemizedlist>
       <listitem>
-        <para>
-        <link xlink:href="https://launchpad.net/swift">
-        Swift</link>which provides object/blob storage. This is
-        roughly analogous to Rackspace Cloud Files (from which it is
-        derived) or Amazon S3.</para>
+        <para>Object Store (<link
+            xlink:href="http://swift.openstack.org">"Swift"</link>)
+          provides object storage. It allows you to store or retrieve
+          files (but not mount directories like a fileserver). Several
+          companies provide commercial storage services based on
+          Swift. These include KT, Rackspace (from which Swift
+          originated) and my company <link
+            xlink:href="http://www.internap.com/flexible-cloud-hosting-solutions/cloud-storage/"
+            >Internap</link>. In fact, the images for this blog post
+          are being served via the Internap Swift
+          implementation.</para>
       </listitem>
       <listitem>
-        <para>
-        <link xlink:href="https://launchpad.net/glance">
-        Glance</link>which provides discovery, storage and retrieval
-        of virtual machine images for OpenStack Nova.</para>
+        <para>Image (<link xlink:href="http://glance.openstack.org"
+            >"Glance"</link>) provides a catalog and repository for
+          virtual disk images. These disk images are mostly commonly
+          used in OpenStack Compute. While this service is technically
+          optional, any cloud of size will require it.</para>
       </listitem>
       <listitem>
-        <para>
-        <link xlink:href="https://launchpad.net/nova">
-        Nova</link>which provides virtual servers upon demand. This
-        is similar to Rackspace Cloud Servers or Amazon EC2.</para>
+        <para>Compute (<link xlink:href="http://nova.openstack.org/"
+            >"Nova"</link>) provides virtual servers upon demand.
+          Similar to Amazon's EC2 service, it also provides volume
+          services analogous to Elastic Block Services (EBS). <link
+            xlink:href="http://www.internap.com/flexible-cloud-hosting-solutions/enterprise-public-cloud-solutions/open-public-cloud-solutions/"
+            >Internap</link> provide a commercial compute service
+          built on Nova and it is used internally at <link
+            xlink:href="http://openstack.org/user-stories/mercadolibre-inc/"
+            >Mercado Libre</link> and NASA (where it
+          originated).</para>
       </listitem>
     </itemizedlist>
-    <para>While these three projects provide the core of the cloud
-    infrastructure, OpenStack is open and evolving
-    &#226;&#8364;&#8221; 
-    <link xlink:href="http://wiki.openstack.org/Projects">there will
-    be more projects</link>(there are already related projects for 
-    <link xlink:href="https://launchpad.net/horizon">web
-    interfaces</link>and a 
-    <link xlink:href="http://wiki.openstack.org/QueueService">queue
-    service</link>). With that brief introduction,
-    let&#226;&#8364;&#8482;s delve into a conceptual architecture and
-    then examine how OpenStack Compute could map to it.</para>
-    <section xml:id="cloud-provider-conceptual-architecture">
-      <info>
-        <author>
-          <personname>
-            <firstname>Ken</firstname>
-            <lineage>Pepple</lineage>
-          </personname>
-        </author>
-        <title>Cloud Provider Conceptual Architecture</title>
-      </info>
-      <para>Imagine that we are going to build our own IaaS cloud and
-      offer it to customers. To achieve this, we would need to
-      provide several high level features:</para>
-      <orderedlist>
-        <listitem>
-          <para>Allow application owners to register for our cloud
-          services, view their usage and see their bill (basic
-          customer relations management functionality)</para>
-        </listitem>
-        <listitem>
-          <para>Allow Developers/DevOps folks to create and store
-          custom images for their applications (basic build-time
-          functionality)</para>
-        </listitem>
-        <listitem>
-          <para>Allow DevOps/Developers to launch, monitor and
-          terminate instances (basic run-time functionality)</para>
-        </listitem>
-        <listitem>
-          <para>Allow the Cloud Operator to configure and operate the
-          cloud infrastructure</para>
-        </listitem>
-      </orderedlist>
-      <para>While there are certainly many, many other features that
-      we would need to offer (especially if we were to follow a more
-      complete industry framework like 
-      <link xlink:href="http://www.tmforum.org/BusinessProcessFramework/1647/home.html">
-      eTOM</link>), these four get to the very heart of providing
-      IaaS. Now assuming that you agree with these four top level
-      features, you might put together a conceptual architecture that
-      looks something like this:</para>
+
+
+    <para>The upcoming release promotes two new projects to "core"
+      project status:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>Dashboard (<link
+            xlink:href="http://horizon.openstack.org/"
+            >"Horizon"</link>) provides a modular web-based user
+          interface for all the OpenStack services.</para>
+      </listitem>
+      <listitem>
+        <para>Identity (<link
+            xlink:href="http://keystone.openstack.org/"
+            >"Keystone"</link>) provides authentication and
+          authorization for all the OpenStack services. It also
+          provides a service catalog of services within a particular
+          deployment.</para>
+      </listitem>
+    </itemizedlist>
+
+
+    <para>These new projects provide additional infrastructure to
+      support the original three projects.</para>
+
+    <section xml:id="conceptual-architecture">
+      <title>Conceptual Architecture</title>
+
+      <para>The OpenStack project as a whole is designed to
+        "deliver(ing) a massively scalable cloud operating system." To
+        achieve this, each of the constituent services are designed to
+        work together to provide a complete Infrastructure as a
+        Service (IaaS). This integration is facilitated through public
+        application programming interfaces (APIs) that each service
+        offers (and in turn can consume). While these APIs allow each
+        of the services to use another service, it also allows an
+        implementer to switch out any service as long as they maintain
+        the API. These are (mostly) the same APIs that are available
+        to end users of the cloud.</para>
+
+      <para>Conceptually, you can picture the relationships between
+        the services as so:</para>
+
+
       <informalfigure>
         <mediaobject>
           <imageobject>
-            <imagedata scale="70"
-            fileref="figures/nova-cactus-conceptual.png" />
+            <imagedata scale="60"
+              fileref="figures/nova-concept-int-essex.jpg"/>
           </imageobject>
         </mediaobject>
       </informalfigure>
-      <para>In this model, I&#226;&#8364;&#8482;ve imagined four sets
-      of users (developers, devops, owners and operators) that need
-      to interact with the cloud and then separated out the
-      functionality needed for each. From there,
-      I&#226;&#8364;&#8482;ve followed a pretty common tiered
-      approach to the architecture (presentation, logic and
-      resources) with two orthogonal areas (integration and
-      management). Let&#226;&#8364;&#8482;s explore each a little
-      further:</para>
+
       <itemizedlist>
         <listitem>
-          <para>As with presentation layers in more typical
-          application architectures, components here interact with
-          users to accept and present information. In this layer, you
-          will find web portals to provide graphical interfaces for
-          non-developers and API endpoints for developers. For more
-          advanced architectures, you might find load balancing,
-          console proxies, security and naming services present here
-          also.</para>
+          <para>Horizon provides a web front end to the other
+            OpenStack services</para>
         </listitem>
         <listitem>
-          <para>The logic tier would provide the intelligence and
-          control functionality for our cloud. This tier would house
-          orchestration (workflow for complex tasks), scheduling
-          (determining mapping of jobs to resources), policy (quotas
-          and such) , image registry (metadata about instance
-          images), logging (events and metering).</para>
+          <para>Nova stores and retrieves virtual disks ("images") and
+            associated metadata in Glance</para>
         </listitem>
         <listitem>
-          <para>There will need to be integration functions within
-          the architecture. It is assumed that most service providers
-          will already have a customer identity and billing systems.
-          Any cloud architecture would need to integrate with these
-          systems.</para>
+          <para>Glance can store the actual virtual disk files in
+            Swift</para>
         </listitem>
         <listitem>
-          <para>As with any complex environment, we will need a
-          management tier to operate the environment. This should
-          include an API to access the cloud administration features
-          as well as some forms of monitoring. It is likely that the
-          monitoring functionality will take the form of integration
-          into an existing tool. While I&#226;&#8364;&#8482;ve
-          highlighted monitoring and an admin API for our fictional
-          provider, in a more complete architecture you would see a
-          vast array of operational support functions like
-          provisioning and configuration management.</para>
-        </listitem>
-        <listitem>
-          <para>Finally, since this is a compute cloud, we will need
-          actual compute, network and storage resources to provide to
-          our customers. This tier provides these services, whether
-          they be servers, network switches, network attached storage
-          or other resources.</para>
+          <para>All the services (<emphasis>will
+            eventually</emphasis>) authenticate with Keystone</para>
         </listitem>
       </itemizedlist>
-      <para>With this model in place, let&#226;&#8364;&#8482;s shift
-      gears and look at OpenStack Compute&#226;&#8364;&#8482;s
-      logical architecture.</para>
+
+      <para>This is a stylized and simplified view of the
+        architecture, assuming that the implementer is using all of
+        the services together in the most common configuration. It
+        also only shows the "operator" side of the cloud -- it does
+        not picture how consumers of the cloud may actually use it.
+        For example, many compute users will use object storage
+        heavily (and directly).</para>
     </section>
-    <section xml:id="openstack-nova-logical-architecture">
-      <title>OpenStack Compute Logical Architecture</title>
-      <para>Now that we&#226;&#8364;&#8482;ve looked at a proposed
-      conceptual architecture, let&#226;&#8364;&#8482;s see how
-      OpenStack Compute is logically architected. At the time of this
-      writing, Cactus was the newest release (which means if you are
-      viewing this after around July 2011, this may be out of date).
-      There are several logical components of OpenStack Compute
-      architecture but the majority of these components are custom
-      written python daemons of two varieties:</para>
-      <itemizedlist>
-        <listitem>
-          <para>WSGI applications to receive and mediate API calls (
-          <code>nova-api</code>, 
-          <code>glance-api</code>, etc.)</para>
-        </listitem>
-        <listitem>
-          <para>Worker daemons to carry out orchestration tasks (
-          <code>nova-compute</code>, 
-          <code>nova-network</code>, 
-          <code>nova-schedule</code>, etc.)</para>
-        </listitem>
-      </itemizedlist>
-      <para>However, there are two essential pieces of the logical
-      architecture are neither custom written nor Python based: the
-      messaging queue and the database. These two components
-      facilitate the asynchronous orchestration of complex tasks
-      through message passing and information sharing. Putting this
-      all together we get a picture like this:</para>
+    <section xml:id="logical-architecture">
+      <title>Logical Architecture</title>
+
+      <para>As you can imagine, the actual logical architecture is far
+        more complicated than the conceptual architecture shown above.
+        As with any service-oriented architecture, diagrams quickly
+        become "messy" trying to illustrate all the possible
+        combinations of service communications. In the diagram below,
+        I illustrate what I believe will be the most common,
+        "integrated" architecture of an OpenStack-based cloud.</para>
+
       <informalfigure>
         <mediaobject>
           <imageobject>
-            <imagedata scale="70"
-            fileref="figures/nova-cactus-logical.png" />
+            <imagedata scale="30"
+              fileref="figures/nova-logical-arch-essex.jpg"/>
           </imageobject>
         </mediaobject>
       </informalfigure>
-      <para>This complicated, but not overly informative, diagram as
-      it can be summed up in three sentences:</para>
+
+      <para>This picture is consistent with the description above in
+        that:</para>
+
       <itemizedlist>
         <listitem>
-          <para>End users (DevOps, Developers and even other
-          OpenStack components) talk to 
-          <code>nova-api</code>to interface with OpenStack
-          Compute</para>
+          <para>End users can interact through a common web interface
+            (Horizon) or directly to each service through their
+            API</para>
         </listitem>
         <listitem>
-          <para>OpenStack Compute daemons exchange info through the
-          queue (actions) and database (information) to carry out API
-          requests</para>
+          <para>All services authenticate through a common source
+            (facilitated through Keystone)</para>
         </listitem>
         <listitem>
-          <para>OpenStack Glance is basically a completely separate
-          infrastructure which OpenStack Compute interfaces through
-          the Glance API</para>
+          <para>Individual services interact with each other through
+            their public APIs (except where privileged administrator
+            commands are necessary)</para>
         </listitem>
       </itemizedlist>
-      <para>Now that we see the overview of the processes and their
-      interactions, let&#226;&#8364;&#8482;s take a closer look at
-      each component.</para>
-      <itemizedlist>
-        <listitem>
-          <para>The 
-          <code>nova-api</code>daemon is the heart of the OpenStack
-          Compute. You may see it illustrated on many pictures of
-          OpenStack Compute as API and &#226;&#8364;&#339;Cloud
-          Controller&#226;&#8364;. While this is partly true, cloud
-          controller is really just a class (specifically the
-          CloudController in trunk/nova/api/ec2/cloud.py) within the 
-          <code>nova-api</code>daemon. It provides an endpoint for
-          all API queries (either 
-          <link xlink:href="http://docs.rackspacecloud.com/api/">
-          OpenStack API</link>or 
-          <link xlink:href="http://docs.amazonwebservices.com/AWSEC2/latest/APIReference/">
-          EC2 API</link>), initiates most of the orchestration
-          activities (such as running an instance) and also enforces
-          some policy (mostly quota checks).</para>
-        </listitem>
-        <listitem>
-          <para>The 
-          <code>nova-schedule</code>process is conceptually the
-          simplest piece of code in OpenStack Compute: take a virtual
-          machine instance request from the queue and determines
-          where it should run (specifically, which compute server
-          host it should run on). In practice however, I am sure this
-          will grow to be the most complex as it needs to factor in
-          current state of the entire cloud infrastructure and apply
-          complicated algorithm to ensure efficient usage. To that
-          end, 
-          <code>nova-schedule</code>implements a pluggable
-          architecture that let&#226;&#8364;&#8482;s you choose (or
-          write) your own algorithm for scheduling. Currently, there
-          are several to choose from (simple, chance, etc) and it is
-          a area of hot development for the future releases of
-          OpenStack Compute.</para>
-        </listitem>
-        <listitem>
-          <para>The 
-          <code>nova-compute</code>process is primarily a worker
-          daemon that creates and terminates virtual machine
-          instances. The process by which it does so is fairly
-          complex (
-          <link xlink:href="http://www.laurentluce.com/?p=227">see
-          this blog post by Laurence Luce for the gritty
-          details</link>) but the basics are simple: accept actions
-          from the queue and then perform a series of system commands
-          (like launching a KVM instance) to carry them out while
-          updating state in the database.</para>
-        </listitem>
-        <listitem>
-          <para>As you can gather by the name, 
-          <code>nova-volume</code>manages the creation, attaching and
-          detaching of persistent volumes to compute instances
-          (similar functionality to 
-          <link xlink:href="http://aws.amazon.com/ebs/">
-          Amazon&#226;&#8364;&#8482;s Elastic Block Storage</link>).
-          It can use volumes from a variety of providers, such as
-          iSCSI.</para>
-        </listitem>
-        <listitem>
-          <para>The 
-          <code>nova-network</code>worker daemon is very similar to 
-          <code>nova-compute</code>and 
-          <code>nova-volume</code>. It accepts networking tasks from
-          the queue and then performs tasks to manipulate the network
-          (such as setting up bridging interfaces or changing 
-          <code>iptables</code>rules).</para>
-        </listitem>
-        <listitem>
-          <para>The queue provides a central hub for passing messages
-          between daemons. This is currently implemented with 
-          <link xlink:href="http://www.rabbitmq.com/">
-          RabbitMQ</link>today, but theoretically could be any 
-          <link xlink:href="http://www.amqp.org/confluence/display/AMQP/Advanced+Message+Queuing+Protocol">
-          AMPQ message queue</link>supported by the python 
-          <link xlink:href="http://barryp.org/software/py-amqplib/">
-          ampqlib</link>.</para>
-        </listitem>
-        <listitem>
-          <para>The 
-          <link xlink:href="http://en.wikipedia.org/wiki/SQL">SQL
-          database</link>stores most of the build-time and run-time
-          state for a cloud infrastructure. This includes the
-          instance types that are available for use, instances in
-          use, networks available and projects. Theoretically,
-          OpenStack Compute can support any database supported by 
-          <link xlink:href="http://www.sqlalchemy.org/">
-          SQL-Alchemy</link>but the only databases currently being
-          widely used are 
-          <link xlink:href="http://www.sqlite.org/">
-          sqlite3</link>(only appropriate for test and development
-          work), 
-          <link xlink:href="http://mysql.com/">MySQL</link>and 
-          <link xlink:href="http://www.postgresql.org/">
-          PostgreSQL</link>.</para>
-        </listitem>
-        <listitem>
-          <para>OpenStack Glance is a separate project from OpenStack
-          Compute, but as shown above, complimentary. While it is an
-          optional part of the overall compute architecture, I
-          can&#226;&#8364;&#8482;t imagine that most OpenStack
-          Compute installations will not be using it (or a
-          complimentary product). There are three pieces to Glance: 
-          <code>glance-api</code>, 
-          <code>glance-registry</code>and the image store. As you can
-          probably guess, 
-          <code>glance-api</code>accepts API calls, much like 
-          <code>nova-api</code>, and the actual image blobs are
-          placed in the image store. The 
-          <code>glance-registry</code>stores and retrieves metadata
-          about images. The image store can be a number of different
-          object stores, include OpenStack Object Storage
-          (Swift).</para>
-        </listitem>
-        <listitem>
-          <para>Finally, another optional project that we will need
-          for our fictional service provider is an user dashboard. I
-          have picked the OpenStack Dashboard here, but there are
-          also several other web front ends available for OpenStack
-          Compute. The OpenStack Dashboard provides a web interface
-          into OpenStack Compute to give application developers and
-          devops staff similar functionality to the API. It is
-          currently implemented as a 
-          <link xlink:href="http://www.djangoproject.com/">
-          Django</link>web application.</para>
-        </listitem>
-      </itemizedlist>
-      <para>This logical architecture represents just one way to
-      architect OpenStack Compute. With its pluggable architecture,
-      we could easily swap out OpenStack Glance with another image
-      service or use another dashboard. In the coming releases of
-      OpenStack, expect to see more modularization of the code
-      especially in the network and volume areas.</para>
+
+
+      <para>In the sections below, we'll delve into the architecture
+        for each of the services.</para>
     </section>
-    <section xml:id="nova-conceptual-mapping">
-      <title>Nova Conceptual Mapping</title>
-      <para>Now that we&#226;&#8364;&#8482;ve seen a conceptual
-      architecture for a fictional cloud provider and examined the
-      logical architecture of OpenStack Nova, it is fairly easy to
-      map the OpenStack components to the conceptual areas to see
-      what we are lacking:</para>
+    <section xml:id="overview-dashboard-arch">
+      <title>Dashboard</title>
+
+      <para>Horizon is a modular <link
+          xlink:href="https://www.djangoproject.com/">Django web
+          application</link> that provides an end user and
+        administrator interface to OpenStack services.</para>
+
+
       <informalfigure>
         <mediaobject>
           <imageobject>
             <imagedata scale="50"
-            fileref="figures/nova-cactus-conceptual-coverage.png" />
+              fileref="figures/horizon-screenshot.jpg"/>
           </imageobject>
         </mediaobject>
       </informalfigure>
-      <para>As you can see from the illustration,
-      I&#226;&#8364;&#8482;ve overlaid logical components of
-      OpenStack Nova, Glance and Dashboard to denote functional
-      coverage. For each of the overlays, I&#226;&#8364;&#8482;ve
-      added the name of the logical component within the project that
-      provides the functionality. While all of these judgements are
-      highly subjective, you can see that we have a majority coverage
-      of the functional areas with a few notable exceptions:</para>
+
+      <para>As with most web applications, the architecture is fairly
+        simple:</para>
+
       <itemizedlist>
         <listitem>
-          <para>The largest gap in our functional coverage is logging
-          and billing. At the moment, OpenStack Nova
-          doesn&#226;&#8364;&#8482;t have a billing component that
-          can mediate logging events, rate the logs and
-          create/present bills. That being said, most service
-          providers will already have one (or 
-          <emphasis>many</emphasis>) of these so the focus is really
-          on the logging and integration with billing. This could be
-          remedied in a variety of ways: augmentations of the code
-          (which should happen in the next release
-          &#226;&#8364;&#339;Diablo&#226;&#8364;), integration with
-          commercial products or services (perhaps 
-          <link xlink:href="http://www.zuora.com/">Zuora</link>) or
-          custom log parsing.</para>
+          <para>Horizon is usually deployed via <link
+              xlink:href="http://code.google.com/p/modwsgi/"
+              >mod_wsgi</link> in Apache. The code itself is seperated
+            into a reusable python module with most of the logic
+            (interactions with various OpenStack APIs) and
+            presentation (to make it easily customizable for different
+            sites).</para>
         </listitem>
         <listitem>
-          <para>Identity is also a point which will likely need to be
-          augmented. Unless we are running a stock LDAP for our
-          identity system, we will need to integrate our solution
-          with OpenStack Compute. Having said that, this is true of
-          almost all cloud solutions.</para>
-        </listitem>
-        <listitem>
-          <para>The customer portal will also be an integration
-          point. While OpenStack Compute provides a user dashboard
-          (to see running instance, launch new instances, etc.), it
-          doesn&#226;&#8364;&#8482;t provide an interface to allow
-          application owners to signup for service, track their bills
-          and lodge trouble tickets. Again, this is probably
-          something that it is already in place at our imaginary
-          service provider.</para>
-        </listitem>
-        <listitem>
-          <para>Ideally, the Admin API would replicate all
-          functionality that we&#226;&#8364;&#8482;d be able to do
-          via the command line interface (which in this case is
-          mostly exposed through the nova-manage command). This will
-          get better in the Diablo release with the 
-          <link xlink:href="http://wiki.openstack.org/NovaAdminAPI">
-          Admin API</link>work.</para>
-        </listitem>
-        <listitem>
-          <para>Cloud monitoring and operations will be an important
-          area of focus for our service provider. A key to any good
-          operations approach is good tooling. While OpenStack
-          Compute provides nova-instancemonitor, which tracks compute
-          node utilization, we&#226;&#8364;&#8482;re really going to
-          need a number of third party tools for monitoring.</para>
-        </listitem>
-        <listitem>
-          <para>Policy is an extremely important area but very
-          provider specific. Everything from quotas (which are
-          supported) to quality of service (QoS) to privacy controls
-          can fall under this. I&#226;&#8364;&#8482;ve given
-          OpenStack Nova partial coverage here, but that might vary
-          depending on the intricacies of the providers needs. For
-          the record, the Cactus release of OpenStack Compute
-          provides quotas for instances (number and cores used,
-          volumes (size and number), floating IP addresses and
-          metadata.</para>
-        </listitem>
-        <listitem>
-          <para>Scheduling within OpenStack Compute is fairly
-          rudimentary for larger installations today. The pluggable
-          scheduler supports chance (random host assignment), simple
-          (least loaded) and zone (random nodes within an
-          availability zone). As within most areas on this list, this
-          will be greatly augmented in Diablo. In development are
-          distributed schedulers and schedulers that understand
-          heterogeneous hosts (for support of GPUs and differing CPU
-          architectures).</para>
+          <para>A database (configurable to which one). As it relies
+            mostly on the other services for data, it stores very
+            little data of it's own.</para>
         </listitem>
       </itemizedlist>
-      <para>As you can see, OpenStack Compute provides a fair basis
-      for our mythical service provider, as long as the mythical
-      service providers are willing to do some integration here and
-      there.</para>
-      <para>Note that since the time of this writing, OpenStack
-      Identity Service has been added.</para>
+
+
+      <para>From a network architecture point of view, this service
+        will need to customer accessible as well as be able to talk to
+        each services public APIs. If you wish to use the
+        administrator functionality (i.e. for other services), it will
+        also need connectivity to their Admin API endpoints (which
+        should be non-customer accessible).</para>
+    </section>
+    <section xml:id="overview-compute-arch">
+      <title>Compute</title>
+
+      <para>Not much has really changed with Nova's architecture. They
+        have added a few new helper services for EC2 compatibility and
+        console services.</para>
+
+      <itemizedlist>
+        <listitem>
+          <para><code>nova-api</code> accepts and responds to end user
+            compute and volume API calls. It supports OpenStack API,
+            Amazon's EC2 API and a special Admin API (for privileged
+            users to perform administrative actions). It also
+            initiates most of the orchestration activities (such as
+            running an instance) as well as enforces some policy
+            (mostly quota checks). In the Essex release, nova-api has
+            been modularized, allowing for implementers to run only
+            specific APIs.</para>
+        </listitem>
+        <listitem>
+          <para>The <code>nova-compute</code> process is primarily a
+            worker daemon that creates and terminates virtual machine
+            instances via hypervisor's APIs (XenAPI for XenServer/XCP,
+            libvirt for KVM or QEMU, VMwareAPI for VMware, etc.). The
+            process by which it does so is fairly complex but the
+            basics are simple: accept actions from the queue and then
+            perform a series of system commands (like launching a KVM
+            instance) to carry them out while updating state in the
+            database.</para>
+        </listitem>
+        <listitem>
+          <para><code>nova-volume</code> manages the creation,
+            attaching and detaching of persistent volumes to compute
+            instances (similar functionality to Amazon’s Elastic Block
+            Storage). It can use volumes from a variety of providers
+            such as iSCSI or <link
+              xlink:href="http://ceph.newdream.net/">Rados Block
+              Device in Ceph</link>.</para>
+        </listitem>
+        <listitem>
+          <para>The <code>nova-networ</code>k worker daemon is very
+            similar to <code>nova-compute</code> and
+              <code>nova-volume</code>. It accepts networking tasks
+            from the queue and then performs tasks to manipulate the
+            network (such as setting up bridging interfaces or
+            changing iptables rules).</para>
+        </listitem>
+        <listitem>
+          <para>The <code>nova-schedule</code> process is conceptually
+            the simplest piece of code in OpenStack Nova: take a
+            virtual machine instance request from the queue and
+            determines where it should run (specifically, which
+            compute server host it should run on).</para>
+        </listitem>
+        <listitem>
+          <para>The queue provides a central hub for passing messages
+            between daemons. This is usually implemented with <link
+              xlink:href="http://www.rabbitmq.com/">RabbitMQ</link>
+            today, but could be any AMPQ message queue (such as <link
+              xlink:href="http://qpid.apache.org/">Apache
+            Qpid</link>).</para>
+        </listitem>
+        <listitem>
+          <para>The SQL database stores most of the build-time and
+            run-time state for a cloud infrastructure. This includes
+            the instance types that are available for use, instances
+            in use, networks available and projects. Theoretically,
+            OpenStack Nova can support any database supported by
+            SQL-Alchemy but the only databases currently being widely
+            used are sqlite3 (only appropriate for test and
+            development work), MySQL and PostgreSQL.</para>
+        </listitem>
+      </itemizedlist>
+
+
+      <para>During the last two releases, Nova has augmented it's
+        console services. Console services allow end users to access
+        their virtual instance's console through a proxy. This
+        involves a pair of new daemons (nova-console and
+        nova-consoleauth).</para>
+
+      <para>Nova interacts with all of the usual suspects: Keystone
+        for authentication, Glance for images and Horizon for web
+        interface. The Glance interacts is interesting, though. The
+        API process can upload and query Glance while nova-compute
+        will download images for use in launching images.</para>
+    </section>
+    <section xml:id="overview-object-store-arch">
+      <title>Object Store</title>
+
+      <para>The swift architecture is very distributed to prevent any
+        single point of failure as well as to scale horizontally. It
+        includes the following components:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>Proxy server accepts incoming requests via the
+            OpenStack Object API or just raw HTTP. It accepts files to
+            upload, modifications to metadata or container creation.
+            In addition, it will also serve files or container listing
+            to web browsers. The proxy server may utilize an optional
+            cache (usually deployed with memcache) to improve
+            performance.</para>
+        </listitem>
+        <listitem>
+          <para>Account servers manage accounts defined with the
+            object storage service.</para>
+        </listitem>
+        <listitem>
+          <para>Container servers manage a mapping of containers (i.e
+            folders) within the object store service.</para>
+        </listitem>
+        <listitem>
+          <para>Object servers manage actual objects (i.e. files) on
+            the storage nodes.</para>
+        </listitem>
+        <listitem>
+          <para>There are also a number of periodic process which run
+            to perform housekeeping tasks on the large data store. The
+            most important of these is the replication services, which
+            ensures consistency and availability through the cluster.
+            Other periodic processes include auditors, updaters and
+            reapers.</para>
+        </listitem>
+      </itemizedlist>
+
+
+      <para>Authentication is handled through configurable WSGI
+        middleware (which will usually be Keystone).</para>
+    </section>
+    <section xml:id="overview-image-store-arch">
+      <title>Image Store</title>
+
+      <para>The Glance architecture has stayed relatively stable since
+        the Cactus release. The biggest architectural change has been
+        the addition of authentication, which was added in the Diablo
+        release. Just as a quick reminder, Glance has four main parts
+        to it:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para><code>glance-api</code> accepts Image API calls for
+            image discovery, image retrieval and image storage</para>
+        </listitem>
+        <listitem>
+          <para><code>glance-registry</code> stores, processes and
+            retrieves metadata about images (size, type, etc.)</para>
+        </listitem>
+        <listitem>
+          <para>A database to store the image metadata. Like Nova, you
+            can choose your database depending on your preference (but
+            most people use MySQL or SQlite).</para>
+        </listitem>
+        <listitem>
+          <para>A storage repository for the actual image files. In
+            the diagram, I have shown the most likely configuration
+            (using Swift as the image repository), but this is
+            configurable. In addition to Swift, Glance supports normal
+            filesystems, RADOS block devices, Amazon S3 and HTTP. Be
+            aware that some of these choices are limited to read-only
+            usage.</para>
+        </listitem>
+      </itemizedlist>
+
+
+      <para>There are also a number of periodic process which run on
+        Glance to support caching. The most important of these is the
+        replication services, which ensures consistency and
+        availability through the cluster. Other periodic processes
+        include auditors, updaters and reapers.</para>
+
+      <para>As you can see from the diagram, Glance serves a central
+        role to the overall IaaS picture. It accepts API requests for
+        images (or image metadata) from end users or Nova components
+        and can store it's disk files in</para>
+    </section>
+    <section xml:id="overview-identity-arch">
+      <title>Identity</title>
+
+      <para>Keystone provides a single point of integration for
+        OpenStack policy, catalog, token and authentication.</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>Keystone handles API requests as well as providing
+            configurable catalog, policy, token and identity
+            services.</para>
+        </listitem>
+        <listitem>
+          <para>Each keystone function has a pluggable backend which
+            allows different ways to use the particular service. Most
+            support standard backends like LDAP or SQL, as well as Key
+            Value Stores (KVS).</para>
+        </listitem>
+      </itemizedlist>
+
+
+      <para>Most people will use this as a point of customization for
+        their current authentication services.</para>
+    </section>
+    <section xml:id="overview-future-projects">
+      <title>Future Projects</title>
+
+      <para>This completes the tour of the OpenStack Essex
+        architecture. However, OpenStack will not be stopping here -
+        the following OpenStack release ("Folsom") <link
+          xlink:href="http://eavesdrop.openstack.org/meetings/openstack-meeting/2012/openstack-meeting.2012-02-21-19.59.html"
+          >will welcome another core service to the
+        fold</link>:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>Network (<link
+              xlink:href="http://docs.openstack.org/incubation/openstack-network/admin/content/"
+              >Quantum</link>) provides "network connectivity as a
+            service" between interface devices managed by other
+            Openstack services (most likely Nova). The service works
+            by allowing users to create their own networks and then
+            attach interfaces to them.</para>
+        </listitem>
+      </itemizedlist>
+
+
+      <para>Although the <link
+          xlink:href="http://www.openstack.org/conference/san-francisco-2012/"
+          >release schedule for Folsom</link> is not yet set (probably
+        Fall 2012), I won't wait six months to update the picture for
+        this.</para>
     </section>
   </section>
+          
+        
+
   <section xml:id="why-cloud">
     <title>Why Cloud?</title>
     <para>In data centers today, many computers suffer the same
