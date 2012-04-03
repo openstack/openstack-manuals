@@ -584,6 +584,78 @@ valid_lft forever preferred_lft forever</literallayout>
                 server as the routing configuration won't allow it. </para>
             
                 </section></section>
+    <section xml:id="using-multi-nics">
+        <title>Using multiple interfaces for your instances (multinic)</title>
+        <section xml:id="using-multiple-nics-introduction"><title>Introduction</title>
+            <para>
+                The Diablo release has introduced a new feature : multi-nic. It basically allows to plug more than one interface to your instances, making possible to make several usecases available : 
+                <itemizedlist>
+                    <listitem><para>SSL Configurations (VIPs)</para></listitem>
+                    <listitem><para>Services failover/ HA</para></listitem>
+                    <listitem><para>Bandwidth Allocation</para></listitem>
+                    <listitem><para>Administrative/ Public acess to your instances</para></listitem>
+                </itemizedlist>
+                Each VIF is representative of a separate network with it's own IP block.
+                Every network mode introduces it's own set of changes regarding the mulitnic usage :
+                <figure>
+                    <title>multinic flat manager</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata scale="50"
+                                fileref="figures/SCH_5007_V00_NUAC-multi_nic_OpenStack-Flat-manager.jpg"/>
+                        </imageobject>
+                    </mediaobject>
+                </figure>
+                <figure>
+                    <title>multinic flatdhcp manager</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata scale="50"
+                                fileref="figures/SCH_5007_V00_NUAC-multi_nic_OpenStack-Flat-DHCP-manager.jpg"/>
+                        </imageobject>
+                    </mediaobject>
+                </figure>
+                <figure>
+                    <title>multinic VLAN manager</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata scale="50"
+                                fileref="figures/SCH_5007_V00_NUAC-multi_nic_OpenStack-VLAN-manager.jpg"/>
+                        </imageobject>
+                    </mediaobject>
+                </figure>
+            </para>
+        </section>
+        <section xml:id="multiple-nics-usage">
+            <title>Using the multinic feature</title>
+            <para> The first thing to do is to create a new network and attach it to your project :
+                <screen><prompt>$</prompt> <userinput>nova-manage network create --fixed_range_v4=20.20.0.0/24 --num_networks=1 --network_size=256 --label=test --project=$your-project</userinput></screen>
+                Now everytime you spawn a new instance, it gets two IP adresses from the DHCP
+                respective DHCP servers : <screen><prompt>$</prompt> <userinput>nova list</userinput>
+<computeroutput>+-----+------------+--------+----------------------------------------+
+|  ID |    Name    | Status |                Networks                |
++-----+------------+--------+----------------------------------------+
+| 124 | Server 124 | ACTIVE | network2=20.20.0.3; private=20.10.0.14 |
++-----+------------+--------+----------------------------------------+</computeroutput></screen>
+                <note>
+                    <para>Make sure to power up the second interface on the instance, otherwise that
+                        last won't be reacheable via it's second IP. Here is an example of how to
+                        setup the interfaces within the instance : </para>
+                    <para><filename>/etc/network/interfaces</filename>
+                        <programlisting># The loopback network interface
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet dhcp
+
+auto eth1
+iface eth1 inet dhcp                </programlisting>
+                    </para>
+                </note>
+            </para>
+        </section>
+    </section>
     <section xml:id="removing-network-from-project">
         <title>Removing a Network from a Project</title><para>You will find that you cannot remove a network that has already been associated to a project by simply deleting it. You can disassociate the project from the network with a scrub command and the project name as the final parameter:
         </para><literallayout class="monospaced">nova-manage project scrub projectname</literallayout></section>
