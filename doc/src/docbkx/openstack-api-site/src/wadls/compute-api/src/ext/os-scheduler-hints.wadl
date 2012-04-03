@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- (C) 2012 OpenStack LLC., All Rights Reserved -->
+
+<application xmlns="http://wadl.dev.java.net/2009/02"
+             xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+             xmlns:wadl="http://wadl.dev.java.net/2009/02">
+
+    <resources base="https://servers.api.openstack.com">
+        <resource id="version" type="#VersionDetails" path="v1.1/">
+            <resource id="tenantID" path="{tenant_id}">
+                <param name="tenant_id" style="template" type="xsd:string">
+                    <doc><p xmlns="http://www.w3.org/1999/xhtml">
+                      The ID for the tenant or account in a multi-tenancy cloud.
+                    </p></doc>
+                </param>
+                <resource id="Servers" path="servers">
+                   <method href="#createServerWithSchedulerHints"/>
+                </resource>
+           </resource>
+       </resource>
+    </resources>
+
+    <method name="POST" id="createServerWithSchedulerHints">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                Create a server using scheduler hints.
+            </p>
+        </wadl:doc>
+        <request>
+            <param name="os:scheduler_hints" style="plain" required="true">
+                <doc><p xmlns="http://www.w3.org/1999/xhtml">
+                  Dictionary of data to send to the scheduler.
+                </p></doc>
+            </param>
+
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/scheduler-hints-request.json" />
+                </doc>
+            </representation>
+        </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/scheduler-hints-response.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+</application>
