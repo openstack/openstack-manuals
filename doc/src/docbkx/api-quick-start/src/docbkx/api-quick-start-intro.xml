@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xml:id="Compute_API_Quick_Start" version="5.0">
+    <title>OpenStack API Quick Start</title>
+    <para>The OpenStack system has several key projects that are
+        separate installations but can work together depending on your
+        cloud needs: OpenStack Compute, OpenStack Object Storage,
+        OpenStack Identity Service, and OpenStack Image Store. With
+        the TryStack OpenStack installation, the OpenStack Compute,
+        OpenStack Identity, and OpenStack Image Store projects are all
+        working together in the background of the installation. </para>
+    <section xml:id="Openstack-API-Concepts-a09234">
+
+        <title>OpenStack API Introduction</title>
+        <para>This page covers the basics for talking to your
+            OpenStack cloud through the Compute API after authorizing
+            with the Identity Service API. You can then build a cloud
+            by launching images and assigning metadata to instances,
+            all through the API. For an API reference of all the
+            possible commands, see the <link
+                xlink:href="http://docs.openstack.org/api/openstack-compute/1.1/content/"
+                >OpenStack Compute API 1.1 specification</link> and
+            the <link
+                xlink:href="http://docs.openstack.org/api/openstack-identity-service/2.0/content/"
+                >Identity Service 2.0 specification</link> published
+            at <link xlink:href="http://docs.openstack.org/api"
+                >docs.openstack.org/api</link>. </para>
+    </section>
+    <section xml:id="Getting-Credentials-a00665">
+        <title>Getting Credentials</title>
+        <para>Credentials are a combination of your username,
+            password, and what tenant (or project) your cloud is
+            running under. You only need to generate an additional
+            token if you are interacting with your cloud directly with
+            API endpoints, and not with a client. Your cloud
+            administrator can give you a username and a password as
+            well as your tenant identifier so you can generate
+            authorization tokens. You can also get the tenant ID from
+            the Dashboard URLs, for example
+            https://trystack.org/dash/296/images/ indicates a tenant
+            ID of 296. </para>
+        <para>These tokens are typically good for 24 hours, and when
+            the token expires, you will find out with a 401
+            (Unauthorized) error and can request another token
+            programmatically. The general workflow goes something like
+            this: </para>
+        <orderedlist>
+            <listitem>
+                <para>Begin API requests by asking for an
+                    authorization token from the endpoint your cloud
+                    administrator gave you, typically
+                    http://hostname:port/v2.0/tokens. You send your
+                    username, password, and what group or account you
+                    are with (the "tenant" in auth-speak). </para>
+                <para><programlisting>curl -k -X 'POST' -v https://nova-api.trystack.org:5443/v2.0/tokens -d '{"auth":{"passwordCredentials":{"username": "joecool", "password":"coolword"}, "tenantId":"5"}}' -H 'Content-type: application/json'</programlisting></para>
+            </listitem>
+            <listitem>
+                <para>The server returns a response in which the
+                    24-hours token is contained. Use that token to
+                    send API requests with the X-Auth-Token included
+                    as an header field.</para>
+                <para><programlisting>curl -k -D - -H "X-Auth-Token: 7d2f63fd-4dcc-4752-8e9b-1d08f989cc00" -X 'GET' -v https://nova-api.trystack.org:9774/v1.1/296/extensions  -H 'Content-type: application/json' </programlisting></para>
+            </listitem>
+
+            <listitem>
+                <para>Repeatedly send API requests with that token in
+                    the x-auth-token header until either: 1) the job's
+                    done or 2) you get a 401 (Unauthorized) code in
+                    return. </para>
+            </listitem>
+            <listitem>
+                <para>Request a token again when you get a 401
+                    response until the script's job is done.</para>
+            </listitem>
+
+        </orderedlist>
+        <para>For a typical OpenStack deployment running the Identity
+            Service you can request a token with this command in
+            cURL:<programlisting>
+$ curl -X 'POST' -v https://nova-api.trystack.org:5443/v2.0/tokens -d '{"auth":{"passwordCredentials":{"username": "joecool", "password":"coolword"}, "tenantId":"5"}}' -H 'Content-type: application/json'
+         </programlisting></para>
+        <para>In return, you should get a 200 OK response with a token
+            in the form of "id":
+            "cd427a33-bb4a-4079-a6d7-0ae148bdeda9" and an expiration
+            date 24 hours from now. Here's what it looks like:</para>
+        <para>
+            <programlisting>
+{
+    "access": {
+        "serviceCatalog": [
+            {
+                "endpoints": [
+                    {
+                        "adminURL": "https://nova-api.trystack.org:9774/v1.1/1", 
+                        "internalURL": "https://nova-api.trystack.org:9774/v1.1/1", 
+                        "publicURL": "https://nova-api.trystack.org:9774/v1.1/1", 
+                        "region": "RegionOne"
+                    }
+                ], 
+                "name": "nova", 
+                "type": "compute"
+            }, 
+            {
+                "endpoints": [
+                    {
+                        "adminURL": "https://GLANCE_API_IS_NOT_DISCLOSED/v1.1/1", 
+                        "internalURL": "https://GLANCE_API_IS_NOT_DISCLOSED/v1.1/1", 
+                        "publicURL": "https://GLANCE_API_IS_NOT_DISCLOSED/v1.1/1", 
+                        "region": "RegionOne"
+                    }
+                ], 
+                "name": "glance", 
+                "type": "image"
+            }, 
+            {
+                "endpoints": [
+                    {
+                        "adminURL": "https://nova-api.trystack.org:5443/v2.0", 
+                        "internalURL": "https://keystone.trystack.org:5000/v2.0", 
+                        "publicURL": "https://keystone.trystack.org:5000/v2.0", 
+                        "region": "RegionOne"
+                    }
+                ], 
+                "name": "keystone", 
+                "type": "identity"
+            }
+        ], 
+        "token": {
+            "expires": "2012-02-15T19:32:21", 
+            "id": "5df9d45d-d198-4222-9b4c-7a280aa35666", 
+            "tenant": {
+                "id": "1", 
+                "name": "admin"
+            }
+        }, 
+        "user": {
+            "id": "14", 
+            "name": "annegentle", 
+            "roles": [
+                {
+                    "id": "2", 
+                    "name": "Member", 
+                    "tenantId": "1"
+                }
+            ]
+        }
+    }
+}
+
+    </programlisting></para>
+    </section>
+    <section xml:id="Sending-Requests-to-API-a09879">
+        <title>Sending Requests to the API</title>
+        <para>You have a couple of options for sending requests to
+            OpenStack through an API. Developers and testers may
+            prefer to use cURL, the command-line tool from <link
+                xlink:href="http://curl.haxx.se/"
+                >http://curl.haxx.se/</link>. With cURL you can send
+            HTTP requests and receive responses back from the command
+            line. </para>
+        <para>If you like to use a more graphical interface, the REST
+            client for Firefox also works well for testing and trying
+            out commands, see <link
+                xlink:href="https://addons.mozilla.org/en-US/firefox/addon/restclient/"
+                >https://addons.mozilla.org/en-US/firefox/addon/restclient/</link>.
+            You can also download and install rest-client, a Java
+            application to test RESTful web services, from <link
+                xlink:href="http://code.google.com/p/rest-client/"
+                >http://code.google.com/p/rest-client/</link>. </para>
+        <para>You need to generate a token as shown above if you use
+            cURL or a REST client. </para>
+    </section>
+
+
+</section>
