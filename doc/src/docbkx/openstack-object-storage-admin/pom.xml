@@ -10,6 +10,12 @@
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>OpenStack Guides</name>
+
+    <properties>
+        <!-- This is set by Jenkins according to the branch. -->
+        <release.path.name>unknown</release.path.name>
+        <comments.enabled>1</comments.enabled>
+    </properties>
     <!-- ################################################ -->
     <!-- USE "mvn clean generate-sources" to run this POM -->
     <!-- ################################################ -->
@@ -73,7 +79,7 @@
                         <phase>generate-sources</phase>
                         <configuration>
                             <!-- These parameters only apply to webhelp -->
-                            <enableDisqus>1</enableDisqus>
+                            <enableDisqus>${comments.enabled}</enableDisqus>
                             <disqusShortname>openstackdocs</disqusShortname>
                             <enableGoogleAnalytics>1</enableGoogleAnalytics>
                             <googleAnalyticsId>UA-17511903-6</googleAnalyticsId>
@@ -105,7 +111,7 @@
                                 <!-- Copies webhelp (HTML output) to desired URL location on docs.openstack.org -->
                                                    
                                 <copy
-                                    todir="${basedir}/target/docbkx/webhelp/trunk/openstack-object-storage/admin">
+                                    todir="${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-object-storage/admin">
                                     <fileset
                                         dir="${basedir}/target/docbkx/webhelp/bk-objectstorage-adminguide/">
                                         <include name="**/*" />
@@ -117,7 +123,7 @@
                                
                                 <move failonerror="false"
                                     file="${basedir}/target/docbkx/pdf/bk-objectstorage-adminguide.pdf"
-                                    tofile="${basedir}/target/docbkx/webhelp/trunk/openstack-object-storage/admin/bk-objectstorage-adminguide-trunk.pdf"/>                
+                                    tofile="${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-object-storage/admin/bk-objectstorage-adminguide-trunk.pdf"/>                
                                                        
                                 <!--Deletes leftover uneeded directories -->
                                 
@@ -134,7 +140,7 @@
                     <includes>
                        bk-objectstorage-adminguide.xml
                     </includes>
-                    <canonicalUrlBase>http://docs.openstack.org/trunk/openstack-object-storage/admin/content/</canonicalUrlBase>
+                    <canonicalUrlBase>http://docs.openstack.org/${release.path.name}/openstack-object-storage/admin/content/</canonicalUrlBase>
                     <profileSecurity>reviewer</profileSecurity>
                     <branding>openstack</branding>
                 </configuration>
