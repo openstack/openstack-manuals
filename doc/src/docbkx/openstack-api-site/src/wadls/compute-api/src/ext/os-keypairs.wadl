@@ -8,18 +8,15 @@
 
     <resources base="https://servers.api.openstack.com">
         <resource id="version" type="#VersionDetails" path="v1.1/">
-            <resource id="os_keypair" path="os_keypairs">
+            <resource id="os-keypairs" path="os-keypairs">
                 <method href="#getKeypair" />
                 <method href="#createKeypair" />
-                <method href="#createKeypairWithPublicKey" />
                   
                 <resource path="{keypair_name}">
                     <param name="keypair_name" style="template" required="true">
-                        <doc>
-                            <p xmlns="http://www.w3.org/1999/xhtml">
-                              The name associated with a keypair.
-                            </p>
-                        </doc>
+                        <doc><p xmlns="http://www.w3.org/1999/xhtml">
+                          The name associated with a keypair.
+                        </p></doc>
                     </param>
 
                     <method href="#deleteKeypair" />
@@ -30,8 +27,10 @@
     </resources>
 
     <method name="GET" id="getKeypair">
-        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="E" title="Keypairs Listing">
-            <p xmlns="http://www.w3.org/1999/xhtml">View a lists of Keypairs associated with the account.</p>
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+              View a lists of keypairs associated with the account.
+            </p>
         </wadl:doc>
         <response status="200">
             <representation mediaType="application/json">
@@ -43,63 +42,28 @@
     </method>
     
     <method name="DELETE" id="deleteKeypair">
-        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="E" 
-            title="Delete Keypair">
-            <p xmlns="http://www.w3.org/1999/xhtml">Delete a Keypair.</p>
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">Delete a keypair.</p>
         </wadl:doc>
         <response status="202" />
     </method>
     
     <method name="POST" id="createKeypair">
-        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="E" 
-            title="Create a new Keypair">
-            <p xmlns="http://www.w3.org/1999/xhtml">Create a new Keypair.</p>
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+              Generate or import a keypair.
+            </p>
         </wadl:doc>
         <request>
-            <param name="name" style="template" required="true">
+            <param name="name" style="plain" required="true">
                 <doc><p xmlns="http://www.w3.org/1999/xhtml">
                     The name to be associated with the keypair.
                 </p></doc>
             </param>
-            <representation mediaType="application/xml">
-                <doc xml:lang="EN">
-                    <xsdxt:code href="samples/keypair_create_request.xml" />
-                </doc>
-            </representation>
-            <representation mediaType="application/json">
-                <doc xml:lang="EN">
-                    <xsdxt:code href="samples/keypair_create_request.json" />
-                </doc>
-            </representation>
-        </request>
-        <response status="200">
-            <representation mediaType="application/xml">
-                <doc xml:lang="EN">
-                    <xsdxt:code href="samples/keypair_create_response.xml" />
-                </doc>
-            </representation>
-            <representation mediaType="application/json">
-                <doc xml:lang="EN">
-                    <xsdxt:code href="samples/keypair_create_response.json" />
-                </doc>
-            </representation>
-        </response>
-    </method>
-    
-    <method name="POST" id="createKeypairWithPublicKey">
-        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="E" 
-            title="Create a new Keypair with Public Key">
-            <p xmlns="http://www.w3.org/1999/xhtml">Create a new Keypair with Public Key.</p>
-        </wadl:doc>
-        <request>
-            <param name="name" style="template" required="true">
+            <param name="public_key" style="plain">
                 <doc><p xmlns="http://www.w3.org/1999/xhtml">
-                    The name to be associated with the keypair.
-                </p></doc>
-            </param>
-            <param name="public key" style="template">
-                <doc><p xmlns="http://www.w3.org/1999/xhtml">
-                     The tenant or account's public key. 
+                  The public ssh key to import. If not provided, one will 
+                  be generated. 
                 </p></doc>
             </param>
             <representation mediaType="application/xml">
