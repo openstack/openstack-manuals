@@ -468,11 +468,11 @@ list_ports [tenant-id] [net-id]            </literallayout>
                 Nova supports plugging in different implementation of ''managers'' for this network
                 service, and Quantum takes advantage of this by creating a standard Quantum Manager
                 that communicates with Quantum to allow Nova and Quantum to integrate. </para>
-            <para>To enable the Quantum Manager,  your nova-network service  must specify the
-                following flag: </para>
-            <literallayout class="monospaced">--network_manager=nova.network.quantum.manager.QuantumManager            </literallayout>
+            <para>To enable the Quantum Manager, your nova-network service must specify the
+                following option: </para>
+            <literallayout class="monospaced">network_manager=nova.network.quantum.manager.QuantumManager            </literallayout>
             <para>Nova defaults to connecting to Quantum on localhost using the standard port. The
-                "--quantum_connection_host" and "--quantum_connection_port" flags can override these
+                "quantum_connection_host" and "quantum_connection_port" options can override these
                 defaults. </para>
         </section>
         <section xml:id="Vifplugging-d1e453">
@@ -485,12 +485,12 @@ list_ports [tenant-id] [net-id]            </literallayout>
             </para>
             <para> In Nova, this is done by specifying that the nova-compute service use a type of
                 ''vif-plugging'' that is compatible with your Quantum plugin. A Quantum plugin's
-                documentation should specify the nova-compute flags it requires for vif-plugging.
-                Usually this will include setting the vif-driver flag for your virt-layer (e.g.,
+                documentation should specify the nova-compute options it requires for vif-plugging.
+                Usually this will include setting the vif-driver option for your virt-layer (e.g.,
                 ''libvirt_vif_driver'' or ''xenapi_vif_driver'') to point to a vif-driver class that
                 is specified in your plugin documentation. Depending on the vif-driver selected, the
-                plugin documentation may require that additional configuration flags are set as well
-                (e.g., ''libvirt_vif_type'').   </para>
+                plugin documentation may require that additional configuration options are set as
+                well (e.g., ''libvirt_vif_type''). </para>
         </section>
         <section xml:id="Using-dle455">
             <title> Defining VM Network Connectivity </title>
@@ -526,9 +526,9 @@ list_ports [tenant-id] [net-id]            </literallayout>
             <para>When this command is invoked, the Quantum Manager will contact the Quantum Service
                     to create a corresponding Quantum network, and likewise will create an IPAM
                     subnet using the specified fixed range. </para>
-            <para>By default, networks are "global" in the sense that they are shared by all
-                    tenants (i.e. projects in Nova). To create a tenant-specific network, specify the "--project_id" flag
-                    when creating the network. For example: </para>
+            <para>By default, networks are "global" in the sense that they are shared by all tenants
+                    (i.e. projects in Nova). To create a tenant-specific network, specify the
+                    "--project_id" argument when creating the network. For example: </para>
             <literallayout class="monospaced">nova-manage network create --label=tenant2-private --fixed_range_v4=10.0.0.0/24 --project_id=10daaef1-b481-42a6-8653-7a42e982e409</literallayout>
             <para>This project_id should be the tenant UUID from keystone.  To view all keystone tenant UUIDs,
                    run the following command as a keystone admin user:</para>
@@ -571,7 +571,7 @@ list_ports [tenant-id] [net-id]            </literallayout>
                     NICs and acts as a NAT gateway between an "internal" network with compute hosts
                     and an "external" network (e.g., used for Internet access).</para>
             <para>With Quantum Manager, a gateway will be attached to a network if the "--gateway"
-                    flag is included in the nova-manage call to create the network. For example: </para>
+                    argument is included in the nova-manage call to create the network. For example: </para>
                 <literallayout class="monospaced">nova-manage network create --label=tenantX-private --fixed_range_v4=10.0.0.0/24 --project_id=X --priority=1 --gateway=10.0.0.1</literallayout>
                 <para>Similar to the VLAN Manager, the gateway implemented by the Quantum Manager
                     also performs the rewriting of HTTP requests destined to the Metadata server IP
@@ -616,8 +616,8 @@ list_ports [tenant-id] [net-id]            </literallayout>
                 basic use.</para>
 
             <section xml:id="enabling-nova-dhcp"><title>Enabling Nova DHCP</title><para>Quantum Manager can leverage the same dnsmasq DHCP mechanism supported by other Nova Network
-                    Managers.  DHCP is not enabled by default.  It can be enabled system-wide with
-                    the following flag:</para>
+                    Managers. DHCP is not enabled by default. It can be enabled system-wide with the
+                    following option:</para>
                 <literallayout class="monospaced">--quantum_use_dhcp=True</literallayout></section>
             <section xml:id="Melange-dle454">
             <title>Using Melange IPAM</title>
@@ -626,11 +626,11 @@ list_ports [tenant-id] [net-id]            </literallayout>
                 provides expert users with more flexibility in terms of managing how IP addresses
                 are assigned to VMs or other devices on the network.  </para>
             <para>Using Melange requires downloading the Melange code (it is a separate project from
-                both Quantum and Nova) and running the Melange service. To tell Nova to use Melange
-                IPAM instead of the default, set the following flag:</para>
-            <literallayout class="monospaced">--quantum_ipam_lib=nova.network.quantum.melange_ipam_lib</literallayout>
-            <para>Nova defaults to connecting to Melange on localhost using the standard port.  The
-            "--melange_host" and "--melange_port" flags can override these defaults. </para>
+                    both Quantum and Nova) and running the Melange service. To tell Nova to use
+                    Melange IPAM instead of the default, set the following option:</para>
+            <literallayout class="monospaced">quantum_ipam_lib=nova.network.quantum.melange_ipam_lib</literallayout>
+            <para>Nova defaults to connecting to Melange on localhost using the standard port. The
+                    "melange_host" and "melange_port" options can override these defaults. </para>
                 <note> <para> Using Melange is incompatible with using Floating IPs. </para> </note>
             </section>
         </section>

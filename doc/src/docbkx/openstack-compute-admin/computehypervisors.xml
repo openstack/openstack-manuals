@@ -42,80 +42,81 @@
        <para>The node where the nova-compute service is installed and running is the machine that
             runs all the virtual machines, referred to as the compute node in this guide. </para>
         <para>By default, the selected hypervisor is KVM. To change to another hypervisor, change
-            the --libvirt_type flag in nova.conf and restart the nova-compute service. </para>
-        <para>Here are the nova.conf flags that are used to configure the compute node.</para>
+            the libvirt_type option in nova.conf and restart the nova-compute service. </para>
+        <para>Here are the nova.conf options that are used to configure the compute node.</para>
        
            <table rules="all">
-               <caption>Description of nova.conf flags for the compute node</caption>
+               <caption>Description of nova.conf configuration options for the compute
+                node</caption>
                
                <thead>
                    <tr>
-                       <td>Flag</td>
+                       <td>Configuration Option</td>
                        <td>Default</td>
                        <td>Description</td>
                    </tr>
                </thead>
                <tbody>
-                   <tr><td>--connection_type</td>
+                   <tr><td>connection_type</td>
                        <td>default: 'libvirt'</td>
                        <td>libvirt, xenapi, or fake; Value that indicates the virtualization
                         connection type</td></tr>
                    
                    <tr>
-                       <td>--compute_manager</td>
+                       <td>compute_manager</td>
                        <td>default: 'nova.compute.manager.ComputeManager'</td>
                        <td>String value; Manager to use for nova-compute</td>
                    </tr>
                    <tr>
-                       <td>--compute_driver</td>
+                       <td>compute_driver</td>
                        <td>default: 'nova.virt.connection.get_connection'</td>
                        <td>String value; Driver to use for controlling virtualization</td>
                    </tr>
                    <tr>
-                       <td>--images_path</td>
+                       <td>images_path</td>
                        <td>default: '$state_path/images'</td>
                        <td>Directory; Location where decrypted images are stored on disk (when not
                         using Glance)</td>
                    </tr>
                    <tr>
-                       <td>--instances_path</td>
+                       <td>instances_path</td>
                        <td>default: '$state_path/instances'</td>
                        <td>Directory; Location where instances are stored on disk (when not using
                         Glance)</td>
                    </tr>
                    <tr>
-                       <td>--libvirt_type</td>
+                       <td>libvirt_type</td>
                        <td>default: 'kvm'</td>
                        <td>String; Libvirt domain type (valid options are: kvm, qemu, uml, xen) </td>
                    </tr>
                    <tr>
-                       <td>--allow_project_net_traffic</td>
+                       <td>allow_project_net_traffic</td>
                        <td>default: 'true'</td>
                        <td>True or false; Indicates whether to allow in-project network traffic </td>
                    </tr>
                    <tr>
-                       <td>--firewall_driver</td>
+                       <td>firewall_driver</td>
                        <td>default: 'nova.virt.libvirt_conn.IptablesFirewallDriver'</td>
                        <td>String; Firewall driver for instances, defaults to iptables</td>
                    </tr>
                    <tr>
-                       <td>--injected_network_template</td>
+                       <td>injected_network_template</td>
                        <td>default: ''</td>
                        <td>Directory and file name; Template file for injected network
                         information</td>
                    </tr>
                    <tr>
-                       <td>--libvirt_uri</td>
+                       <td>libvirt_uri</td>
                        <td>default: empty string</td>
                        <td>String; Override the default libvirt URI (which is dependent on libvirt_type)</td>
                    </tr>
                    <tr>
-                       <td>--libvirt_xml_template</td>
+                       <td>libvirt_xml_template</td>
                        <td>default: ''</td>
                        <td>Directory and file name; Libvirt XML template</td>
                    </tr>
                    <tr>
-                       <td>--libvirt_inject_password</td>
+                       <td>libvirt_inject_password</td>
                        <td>default: 'false'</td>
                        <td>When set, libvirt will inject the admin password into instances before startup.
                        An agent is not required in the instance.
@@ -123,27 +124,27 @@
                        specified, then a randomly generated password is used.</td>
                    </tr>
                    <tr>
-                       <td>--use_cow_images</td>
+                       <td>use_cow_images</td>
                        <td>default: 'true'</td>
                        <td>True or false; Indicates whether to use cow images</td>
                    </tr>
                    <tr>
-                       <td>--rescue_image_id</td>
+                       <td>rescue_image_id</td>
                        <td>default: 'ami-rescue'</td>
                        <td>String; AMI image to use for rescue</td>
                    </tr>
                    <tr>
-                       <td>--rescue_kernel_id</td>
+                       <td>rescue_kernel_id</td>
                        <td>default: 'aki-rescue'</td>
                        <td>String; AKI image to use for rescue</td>
                    </tr>
                    <tr>
-                       <td>--rescue_ramdisk_id</td>
+                       <td>rescue_ramdisk_id</td>
                        <td>default: 'ari-rescue'</td>
                        <td>String; ARI image to use for rescue</td>
                    </tr>
                    <tr>
-                       <td>--libvirt_nonblocking</td>
+                       <td>libvirt_nonblocking</td>
                        <td>default: 'false'</td>
                        <td>When set to 'true', libvirt APIs will be called in a seperate OS thread pool to avoid blocking the main thread.
                        This feature is especially desirable if you use the snapshot feature, which has a notably long execution time, or have many instances in a given compute node.

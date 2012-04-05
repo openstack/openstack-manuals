@@ -73,7 +73,7 @@
 
                     <orderedlist>
                             <listitem>
-                                <para>Set the "--network-manager" flag in nova.conf.</para>
+                                <para>Set the "network-manager" option in nova.conf.</para>
                             </listitem>
                         <listitem>
                         <para>Use the <code>nova-manage network create label CIDR n n</code> command
@@ -87,23 +87,23 @@
             virtual instances in the nova.conf file. Here are the three possible options: </para>
         <itemizedlist>
             <listitem>
-                <para>--network_manager=nova.network.manager.FlatManager</para>
+                <para>network_manager=nova.network.manager.FlatManager</para>
                 <para>Simple, non-VLAN networking</para>
             </listitem>
             <listitem>
-                <para>--network_manager=nova.network.manager.FlatDHCPManager</para>
-                <para>Flat networking with DHCP,  you must set a bridge using the
-                    --flat_network_bridge flag</para>
+                <para>network_manager=nova.network.manager.FlatDHCPManager</para>
+                <para>Flat networking with DHCP, you must set a bridge using the flat_network_bridge
+                    option</para>
             </listitem>
             <listitem>
-                <para>--network_manager=nova.network.manager.VlanManager</para>
+                <para>network_manager=nova.network.manager.VlanManager</para>
                 <para>VLAN networking with DHCP. This is the Default if no network manager is
                     defined in nova.conf. </para>
             </listitem>
         </itemizedlist>
         <para>Also, when you issue the nova-manage network create command, it uses the settings from
-            the nova.conf flag file. Use the following command to create the subnet that your VMs
-            will run on :
+            the nova.conf configuration options file. Use the following command to create the subnet
+            that your VMs will run on :
             <literallayout class="monospaced">nova-manage network create private 192.168.0.0/24 1 256           </literallayout>
         </para>
         <section xml:id="configuring-flat-networking"><title>Configuring Flat Networking</title>
@@ -118,7 +118,7 @@
             <para>To configure flat networking, ensure that your nova.conf file contains the
                 line:</para>
             <para>
-                <literallayout>--network_manager=nova.network.manager.FlatManager</literallayout>
+                <literallayout>network_manager=nova.network.manager.FlatManager</literallayout>
             </para>
             <para>Compute defaults to a bridge device named ‘br100’ which is stored in the Nova
                 database, so you can change the name of the bridge device by modifying the entry in
@@ -186,7 +186,7 @@ iface br100 inet dhcp
             </section>
         <section xml:id="configuring-flat-dhcp-networking">
                     <title>Configuring Flat DHCP Networking</title><para>With Flat DHCP, the host running nova-network acts as the gateway to the virtual nodes. You
-                can run one nova-network per cluster. Set the flag "--network_host" on the nova.conf
+                can run one nova-network per cluster. Set the option "network_host" on the nova.conf
                 stored on the nova-compute node to tell it which host the nova-network is running on
                 so it can communicate with nova-network. You must also set the
                 "--flat_network_bridge" setting to the name of the bridge (no default is set for
@@ -221,20 +221,20 @@ iface br100 inet dhcp
                 your initial network, as an entry for each IP will be created in the database. </para>
             <para>If you have an unused interface on your hosts that has connectivity with no IP
                 address, you can simply tell FlatDHCP to bridge into the interface by specifying
-                "--flat_interface=&lt;interface>" in your flagfile. The network host will
+                "flat_interface=&lt;interface>" in your configuration file. The network host will
                 automatically add the gateway ip to this bridge. You can also add the interface to
                 br100 manually and not set flat_interface. If this is the case for you, edit your
                 nova.conf file to contain the following lines: </para>
             <para>
                 <programlisting>
---dhcpbridge_flagfile=/etc/nova/nova.conf
---dhcpbridge=/usr/bin/nova-dhcpbridge
---network_manager=nova.network.manager.FlatDHCPManager
---flat_network_dhcp_start=10.0.0.2
---flat_network_bridge=br100
---flat_interface=eth2
---flat_injected=False
---public_interface=eth0
+dhcpbridge_flagfile=/etc/nova/nova.conf
+dhcpbridge=/usr/bin/nova-dhcpbridge
+network_manager=nova.network.manager.FlatDHCPManager
+flat_network_dhcp_start=10.0.0.2
+flat_network_bridge=br100
+flat_interface=eth2
+flat_injected=False
+public_interface=eth0
                 </programlisting>
             </para>
             <para>Integrate your network interfaces to match this configuration.</para></section>
@@ -276,17 +276,20 @@ iface br100 inet dhcp
                 network mode to work.</para>
 
                     <para>Obtain the parameters for each network. You may need to ask a network administrator for this information, including netmask, broadcast, gateway, ethernet device and VLAN ID.</para> <para>You need to have networking hardware that supports VLAN tagging.</para>
-                <para>Please note that currently eth0 is hardcoded as the vlan_interface in the default flags. If you need to attach your bridges to a device other than eth0, you will need to add following flag to /etc/nova/nova.conf:</para>
+                <para>Please note that currently eth0 is hardcoded as the vlan_interface in the
+                default options. If you need to attach your bridges to a device other than eth0, you
+                will need to add following option to /etc/nova/nova.conf:</para>
 
-                <literallayout>--vlan_interface=eth1</literallayout>
+                <literallayout>vlan_interface=eth1</literallayout>
             <para>In VLAN mode, the setting for --network_size is the number of IPs per project as
                 opposed to the FlatDHCP mode where --network_size indicates number of IPs in the
                 entire fixed range. For VLAN, the settings in nova.conf that affect networking are
                 also --fixed_range, where the space is divided up into subnets of
                 --network_size.</para>
                     <para>VLAN is the default networking mode for Compute, so if you have no
-                    --network_manager entry in your nova.conf file, you are set up for VLAN. To set your nova.conf file to VLAN, use this flag in /etc/nova/nova.conf:</para>
-                    <literallayout>--network_manager=nova.network.manager.VlanManager</literallayout>
+                --network_manager entry in your nova.conf file, you are set up for VLAN. To set your
+                nova.conf file to VLAN, use this option in /etc/nova/nova.conf:</para>
+                    <literallayout>network_manager=nova.network.manager.VlanManager</literallayout>
                 <para>For the purposes of this example walk-through, we will use the following settings. These are intentionally complex in an attempt to cover most situations:</para>
 
                 <itemizedlist>
@@ -366,7 +369,7 @@ brctl delbr br_NNN</literallayout>
                 periodically download the metadata and copy the new Certificate Revocation List
                 (CRL). This will keep revoked users from connecting and disconnects any users that
                 are connected with revoked certificates when their connection is re-negotiated
-                (every hour). You set the --use_project_ca flag in nova.conf for cloudpipes to work
+                (every hour). You set the use_project_ca option in nova.conf for cloudpipes to work
                 securely so that each project has its own Certificate Authority (CA).</para></section>
         <section xml:id="cloudpipe-per-project-vpns">
             <title>Cloudpipe — Per Project Vpns</title>
@@ -432,8 +435,8 @@ force_dhcp_release=True
                         <para> zips up the info and puts it b64 encoded as user data </para>
                     </listitem>
                     <listitem>
-                        <para> launches an [vpn_instance_type] instance with the above settings using the
-                            flag-specified vpn image</para>
+                        <para> launches an [vpn_instance_type] instance with the above settings
+                            using the option-specified vpn image</para>
                     </listitem>
                 </orderedlist>
             </section>
@@ -522,7 +525,7 @@ force_dhcp_release=True
             <para>If you plan to use this feature, you must add
             the following to your nova.conf file to specify which interface
             the nova-network service will bind public IP addresses to:</para>
-        <programlisting>--public_interface=vlan100</programlisting>
+        <programlisting>public_interface=vlan100</programlisting>
         <para>Restart the nova-network service if you change nova.conf while the service is running.</para>
         </section>
         <section>
@@ -589,7 +592,7 @@ launched. Add the following line to nova.conf and restart the nova-network
 service</para>
 
             <programlisting>
---auto_assign_floating_ip=True
+auto_assign_floating_ip=True
             </programlisting>
             <para>Note that if this option is enabled and all of the floating
                 IP addresses have already been allocated, the 
@@ -681,8 +684,10 @@ valid_lft forever preferred_lft forever
             </mediaobject>
         </figure></para>
     <para>In contrast with the earlier diagram, all the hosts in the system are running both nova-compute and nova-network. Each host does DHCP and does NAT for public traffic for the VMs running on that particular host. In this model every compute host requires a connection to the public internet and each host is also assigned an address from the VM network where it listens for dhcp traffic.</para>
-        <para>The requirements for configuring are the following: --multi_host flag must be in place for network creation and nova-network must be run on every compute host. These created multi hosts networks will send all network related commands to the host that the VM is on.
-        </para></simplesect>
+        <para>The requirements for configuring are the following: multi_host option must be in place
+                for network creation and nova-network must be run on every compute host. These
+                created multi hosts networks will send all network related commands to the host that
+                the VM is on. </para></simplesect>
 
     <simplesect><title>Future of Networking</title>
     <para>With the existing multi-nic code and the HA networking code, we have a pretty robust system with a lot of deployment options. This should be enough to provide deployers enough room to solve todays networking problems. Ultimately, we want to provide users the ability to create arbitrary networks and have real and virtual network appliances managed automatically. The efforts underway in the Quantum and Melange projects will help us reach this lofty goal, but with the current additions we should have enough flexibility to get us by until those projects can take over.</para></simplesect></section>
