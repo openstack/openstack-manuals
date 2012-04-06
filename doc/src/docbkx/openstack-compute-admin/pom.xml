@@ -10,6 +10,12 @@
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>OpenStack Guides</name>
+
+    <properties>
+        <!-- This is set by Jenkins according to the branch. -->
+        <release.path.name>unknown</release.path.name>
+        <comments.enabled>1</comments.enabled>
+    </properties>
     <!-- ################################################ -->
     <!-- USE "mvn clean generate-sources" to run this POM -->
     <!-- ################################################ -->
@@ -50,7 +56,7 @@
             <plugin>
                 <groupId>com.rackspace.cloud.api</groupId>
                 <artifactId>clouddocs-maven-plugin</artifactId>
-                <version>1.0.5-SNAPSHOT</version>
+                <version>1.0.9</version>
                 <executions>
                     <execution>
                         <id>goal1</id>
@@ -73,7 +79,7 @@
                         <phase>generate-sources</phase>
                         <configuration>
                             <!-- These parameters only apply to webhelp -->
-                            <enableDisqus>1</enableDisqus>
+                            <enableDisqus>${comments.enabled}</enableDisqus>
                             <disqusShortname>openstackdocs</disqusShortname>
                             <enableGoogleAnalytics>1</enableGoogleAnalytics>
                             <googleAnalyticsId>UA-17511903-6</googleAnalyticsId>
@@ -96,21 +102,16 @@
                             <postProcess>
                                 <!-- Copies the figures to the correct location for webhelp -->
                                 
-                                <copy todir="${basedir}/target/docbkx/webhelp/os-compute-adminguide/figures">
+                                <copy todir="${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-compute/admin/content/figures">
                                     <fileset dir="${basedir}/figures">
-                                        <include name="**/*.png" />
+                                        <include name="**/*.*" />
                                     </fileset>
                                 </copy>
                                 
-                                <copy todir="${basedir}/target/docbkx/webhelp/os-compute-adminguide/figures">
-                                    <fileset dir="${basedir}/figures">
-                                        <include name="**/*.jpg" />
-                                    </fileset>
-                                </copy>
                                 <!-- Copies webhelp (HTML output) to desired URL location on docs.openstack.org -->
                                                    
                                 <copy
-                                    todir="${basedir}/target/docbkx/webhelp/trunk/openstack-compute/admin">
+                                    todir="${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-compute/admin">
                                     <fileset
                                         dir="${basedir}/target/docbkx/webhelp/os-compute-adminguide/">
                                         <include name="**/*" />
@@ -121,11 +122,11 @@
                                
                                 <move failonerror="false"
                                     file="${basedir}/target/docbkx/pdf/os-compute-adminguide.pdf"
-                                    tofile="${basedir}/target/docbkx/webhelp/trunk/openstack-compute/admin/os-compute-adminguide-diablo.pdf"/>                
+                                    tofile="${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-compute/admin/os-compute-adminguide-trunk.pdf"/>                
                                                        
                                 <!--Deletes leftover uneeded directories -->
                                 
-                                <delete dir="${basedir}/target/docbkx/webhelp/openstack-compute-admin/os-compute-adminguide"/>
+                                <delete dir="${basedir}/target/docbkx/webhelp/os-compute-adminguide"/>
                                                                 
                             </postProcess>
                         </configuration>
@@ -138,6 +139,7 @@
                     <includes>
                        os-compute-adminguide.xml
                     </includes>
+                    <canonicalUrlBase>http://docs.openstack.org/${release.path.name}/openstack-compute/admin/content/</canonicalUrlBase>
                     <profileSecurity>reviewer</profileSecurity>
                     <branding>openstack</branding>
                 </configuration>
