@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- (C) 2012 OpenStack LLC., All Rights Reserved -->
+
+<application xmlns="http://wadl.dev.java.net/2009/02"
+    xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+    xmlns:wadl="http://wadl.dev.java.net/2009/02"
+    xmlns:csapi="http://docs.openstack.org/compute/api/v1.1">
+    
+    <resources base="https://servers.api.openstack.com">
+        <resource id="version" type="#VersionDetails" path="v1.1/">
+            <resource id="tenantID" path="{tenant_id}">
+                <param name="tenant_id" style="template" type="xsd:string">
+                    <doc><p xmlns="http://www.w3.org/1999/xhtml">
+                      The ID for the tenant or account in a multi-tenancy cloud.
+                    </p></doc>
+                </param>
+
+                <resource id="Flavors" path="flavors">
+                    <method href="#createFlavor"/>
+
+                    <resource path="{flavor_id}">
+                        <param name="flavor_id" style="template">
+                          <doc><p xmlns="http://www.w3.org/1999/xhtml">
+                            The ID of the flavor of interest to you.
+                          </p></doc>
+                        </param>
+
+                        <method href="#getFlavor"/>
+
+                    </resource>
+
+                    <resource path="detail">
+                        <method href="#getFlavorsDetailed"/>
+                    </resource>
+
+                </resource>
+            </resource>
+        </resource>
+    </resources>
+    
+    <method name="POST" id="createFlavor">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                Create a flavor with extra attributes.
+            </p>
+        </wadl:doc>
+
+        <request>
+            <param style="plain" name="swap" required="true">
+                <doc>
+                    <p xmlns="http://www.w3.org/1999/xhtml">
+                        Amount of swap disk space to allocate to a
+                        server (in GB).
+                    </p>
+                </doc>
+            </param>
+            <param style="plain" name="rxtx_factor" required="true">
+                <doc><p xmlns="http://www.w3.org/1999/xhtml">
+                    This property allows created servers to have a
+                    different bandwidth cap than that defined
+                    in the network they are attached to.
+                    This factor is multiplied by the rxtx_base
+                    property of the network.
+                </p></doc>
+            </param>
+            <param style="plain" name="OS-FLV-EXT-DATA:ephemeral"
+                required="true">
+                <doc>
+                    <p xmlns="http://www.w3.org/1999/xhtml">
+                        Size of secondary drive to attach to
+                        a server (in GB).
+                    </p>
+                </doc>
+            </param>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/os-flavorextradata-single-response.json"/>
+                </doc>
+            </representation>
+        </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/os-flavorextradata-single-response.json"/>
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+    <method name="GET" id="getFlavor">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                Describe a single flavor with extra attributes.
+            </p>
+        </wadl:doc>
+        <response status="200">
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code 
+                        href="samples/os-flavorextradata-single-response.json"/>
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+    <method name="GET" id="getFlavorsDetailed">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                List flavors with extra attributes.
+            </p>
+        </wadl:doc>
+        <response status="200">
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code 
+                        href="samples/os-flavorextradata-list-response.json"/>
+                </doc>
+            </representation>
+        </response>
+    </method>
+    
+</application>
