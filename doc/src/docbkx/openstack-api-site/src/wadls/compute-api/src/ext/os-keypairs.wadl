@@ -8,19 +8,26 @@
 
     <resources base="https://servers.api.openstack.com">
         <resource id="version" type="#VersionDetails" path="v1.1/">
-            <resource id="os-keypairs" path="os-keypairs">
-                <method href="#getKeypair" />
-                <method href="#createKeypair" />
-                  
-                <resource path="{keypair_name}">
-                    <param name="keypair_name" style="template" required="true">
-                        <doc><p xmlns="http://www.w3.org/1999/xhtml">
-                          The name associated with a keypair.
-                        </p></doc>
-                    </param>
+            <resource id="tenantID" path="{tenant_id}">
+                <param name="tenant_id" style="template" type="xsd:string">
+                    <doc><p xmlns="http://www.w3.org/1999/xhtml">
+                      The ID for the tenant or account in a multi-tenancy cloud.
+                    </p></doc>
+                </param>
+                <resource id="os-keypairs" path="os-keypairs">
+                    <method href="#getKeypair" />
+                    <method href="#createKeypair" />
+                      
+                    <resource path="{keypair_name}">
+                        <param name="keypair_name" style="template" required="true">
+                            <doc><p xmlns="http://www.w3.org/1999/xhtml">
+                              The name associated with a keypair.
+                            </p></doc>
+                        </param>
 
-                    <method href="#deleteKeypair" />
+                        <method href="#deleteKeypair" />
 
+                    </resource>
                 </resource>
             </resource>
         </resource>

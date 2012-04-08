@@ -9,15 +9,23 @@
     
     <resources base="https://servers.api.openstack.com">
         <resource id="version" type="#VersionDetails" path="v1.1/">
-            <resource id="Servers" path="servers">
-                <resource path="{server_id}">
-                    <param name="server_id" style="template" type="csapi:UUID">
-                        <doc>
-                            <p xmlns="http://www.w3.org/1999/xhtml">The UUID for the server of interest to you.</p>
-                        </doc>
-                    </param>
-                    <resource path="action">
-                        <method href="#getConsoleOutput"/>
+            <resource id="tenantID" path="{tenant_id}">
+                <param name="tenant_id" style="template" type="xsd:string">
+                    <doc><p xmlns="http://www.w3.org/1999/xhtml">
+                      The ID for the tenant or account in a multi-tenancy cloud.
+                    </p></doc>
+                </param>
+                <resource id="Servers" path="servers">
+                    <resource path="{server_id}">
+                        <param name="server_id" style="template" type="csapi:UUID">
+                            <doc><p xmlns="http://www.w3.org/1999/xhtml">
+                              The UUID for the server of interest to you.
+                            </p>
+                            </doc>
+                        </param>
+                        <resource path="action">
+                            <method href="#getConsoleOutput"/>
+                        </resource>
                     </resource>
                 </resource>
             </resource>
