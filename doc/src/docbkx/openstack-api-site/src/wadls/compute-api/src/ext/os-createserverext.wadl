@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- (C) 2012 OpenStack LLC., All Rights Reserved -->
+
+<application xmlns="http://wadl.dev.java.net/2009/02"
+             xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+             xmlns:wadl="http://wadl.dev.java.net/2009/02">
+
+    <resources base="https://servers.api.openstack.com">
+        <resource id="version" type="#VersionDetails" path="v1.1/">
+            <resource id="tenantID" path="{tenant_id}">
+                <param name="tenant_id" style="template" type="xsd:string">
+                    <doc><p xmlns="http://www.w3.org/1999/xhtml">
+                      The ID for the tenant or account in a multi-tenancy cloud.
+                    </p></doc>
+                </param>
+                <resource id="Servers" path="servers">
+                    <method href="#createServer"/>
+
+                    <resource path="{server_id}">
+                        <param name="server_id" style="template" type="csapi:UUID">
+                            <doc><p xmlns="http://www.w3.org/1999/xhtml">
+                              The UUID for the server of interest to you.
+                            </p>
+                            </doc>
+                        </param>
+
+                        <method href="#getServer"/>
+
+                    </resource>
+
+                    <resource id="ServersDetail" path="detail">
+                        <method href="#getServersDetailed"/>
+                    </resource>
+
+                </resource>
+           </resource>
+       </resource>
+    </resources>
+
+    <method name="POST" id="createServer">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                Create a server with extra attributes.
+            </p>
+        </wadl:doc>
+        <request>
+            <param name="security_groups" style="plain">
+                <doc><p xmlns="http://www.w3.org/1999/xhtml">
+                  List of security groups the server should be created within.
+                </p></doc>
+            </param>
+            <param name="config_drive" style="plain">
+                <doc><p xmlns="http://www.w3.org/1999/xhtml">
+                  ID of image to mount within server as a config drive.
+                </p></doc>
+            </param>
+
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/createserverext-request.json" />
+                </doc>
+            </representation>
+        </request>
+        <response status="202">
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/createserverext-response.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+    <method name="GET" id="getServer">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                Display extra attributes when describing a single server.
+            </p>
+        </wadl:doc>
+        <response status="202">
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/createserverext-show-response.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+    <method name="GET" id="getServersDetailed">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                Display extra attributes when describing all servers.
+            </p>
+        </wadl:doc>
+        <response status="202">
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/createserverext-list-response.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+</application>
