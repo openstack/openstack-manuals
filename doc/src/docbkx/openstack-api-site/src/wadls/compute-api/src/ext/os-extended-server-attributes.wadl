@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- (C) 2012 OpenStack LLC., All Rights Reserved -->
+
+<application xmlns="http://wadl.dev.java.net/2009/02"
+             xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+             xmlns:wadl="http://wadl.dev.java.net/2009/02">
+
+    <resources base="https://servers.api.openstack.com">
+        <resource id="version" type="#VersionDetails" path="v1.1/">
+            <resource id="Servers" path="servers">
+               <method href="#extended_server_attributes_detail" />
+                <resource path="{server_id}">
+                    <method href="#extended_server_attributes_show" />
+                    <param name="server_id" style="template" type="csapi:UUID">
+                        <doc>
+                            <p xmlns="http://www.w3.org/1999/xhtml">The UUID for the server of interest to you.</p>
+                        </doc>
+                    </param>
+                </resource>
+           </resource>
+       </resource>
+    </resources>
+
+    <method name="GET" id="extended_server_attributes_show">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="Extended attributes for server show">
+            <p xmlns="http://www.w3.org/1999/xhtml">Adds host and hypervisor name to the returned server object.</p>
+        </wadl:doc>
+        <response status="200">
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/os-extended-server-attributes-show-response.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+    <method name="GET" id="extended_server_attributes_detail">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="Extended attributes for server detail">
+            <p xmlns="http://www.w3.org/1999/xhtml">Adds host and hypervisor name to each returned server object.</p>
+        </wadl:doc>
+        <response status="200">
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/os-extended-server-attributes-detail-response.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+</application>
