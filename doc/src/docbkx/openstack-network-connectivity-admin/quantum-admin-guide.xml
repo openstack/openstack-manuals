@@ -45,12 +45,12 @@
                         <listitem>
                             <para>Essex-4 update </para>
                             <itemizedlist spacing="compact">
-                            <listitem>remove workarounds for E-3 install issues </listitem>
-                            <listitem>fix dependencies for source install </listitem>
-                            <listitem>mention new plugins </listitem>
-                            <listitem>change nova link to floating ip docs from catcus to diablo docs </listitem>
-                            <listitem>add example of using --nic</listitem>
-                            <listitem>update keystone example to work with new CLI syntax</listitem>
+                            <listitem><para>remove workarounds for E-3 install issues</para> </listitem>
+                            <listitem><para>fix dependencies for source install</para> </listitem>
+                            <listitem><para>mention new plugins</para> </listitem>
+                            <listitem><para>change nova link to floating ip docs from catcus to diablo docs</para> </listitem>
+                            <listitem><para>add example of using --nic</para></listitem>
+                            <listitem><para>update keystone example to work with new CLI syntax</para></listitem>
                             </itemizedlist>
                         </listitem>
                     </itemizedlist>
@@ -92,7 +92,7 @@
         <title>Preface</title>
         <para>
             Quantum is a project to provide "network connectivity as a
-            service" between devices managed by other OpenStack services
+            service" between entities managed by other OpenStack services
             (e.g., vNICs from the OpenStack Nova compute service).
             For the 2012.1 Essex release, Quantum is an "incubated" OpenStack project.
         </para>
@@ -118,7 +118,7 @@
             <para>
             The user should also have access to a plugin providing the
             implementation of the Quantum service.
-            Two plugins are included in the Quantum distribution:
+            Several plugins are included in the Quantum distribution:
 			</para>
             <itemizedlist spacing="compact">
                 <listitem>
@@ -261,7 +261,7 @@
             <para>
             If you are building a host from scratch to use for Quantum, we recommend using a
             recent versions of
-            Ubuntu (10.10 or newer) or Red Hat Enterprise Linux (version 6.x) as these are the
+            Ubuntu (11.10 or newer) or Red Hat Enterprise Linux (version 6.x) as these are the
             best-tested platforms.
             </para>
         </section>
@@ -377,9 +377,12 @@ sudo pip install -r tools/pip-requires</literallayout>
                             >http://www.openvswitch.org/openstack/documentation</link>
                     </para> </listitem>
 
-                <listitem> <para> Cisco: quantum/plugins/cisco/README
+                <listitem> <para> Cisco: quantum/plugins/cisco/README and <link xlink:href="http://wiki.openstack.org/cisco-quantum"
+                                                    >http://wiki.openstack.org/cisco-quantum</link>
                                   </para> </listitem>
-                <listitem> <para> Linux Bridge: quantum/plugins/linuxbridge/README
+                <listitem> <para> Linux Bridge: quantum/plugins/linuxbridge/README and
+                        <link xlink:href="http://wiki.openstack.org/Quantum-Linux-Bridge-Plugin"
+                            >http://wiki.openstack.org/Quantum-Linux-Bridge-Plugin</link>
                 </para> </listitem>
 
                 <listitem> <para> Nicira NVP: quantum/plugins/nicira/nicira_nvp_plugin/README and
@@ -434,18 +437,23 @@ for Tenant: quantum-fake-tenant            </literallayout>
             To experiment more with basic Quantum API commands, invoke the CLI utility with
             no arguments to see all available commands:
             </para>
-            <literallayout class="monospaced">list_nets [tenant-id]
-rename_net [tenant-id] [net-id] [new-name]
-show_port [tenant-id] [net-id] [port-id]
-unplug_iface [tenant-id] [net-id] [port-id]
-plug_iface [tenant-id] [net-id] [port-id] [iface-id]
-show_net [tenant-id] [net-id]
-delete_port [tenant-id] [net-id] [port-id]
-delete_net [tenant-id] [net-id]
-set_port_state [tenant-id] [net-id] [port-id] [new_state]
-create_net [tenant-id] [net-name]
-create_port [tenant-id] [net-id]
-list_ports [tenant-id] [net-id]            </literallayout>
+            <literallayout class="monospaced">list_nets &lt;tenant-id&gt; [filterspec ...]
+create_net &lt;tenant-id&gt; &lt;net-name&gt;
+unplug_iface &lt;tenant-id&gt; &lt;net-id&gt; &lt;port-id&gt;
+plug_iface &lt;tenant-id&gt; &lt;net-id&gt; &lt;port-id&gt; &lt;iface-id&gt;
+update_port &lt;tenant-id&gt; &lt;net-id&gt; &lt;port-id&gt; &lt;params&gt;
+show_port_detail &lt;tenant-id&gt; &lt;net-id&gt; &lt;port-id&gt;
+show_net &lt;tenant-id&gt; &lt;net-id&gt;
+delete_port &lt;tenant-id&gt; &lt;net-id&gt; &lt;port-id&gt;
+delete_net &lt;tenant-id&gt; &lt;net-id&gt;
+list_nets_detail &lt;tenant-id&gt; [filterspec ...]
+show_net_detail &lt;tenant-id&gt; &lt;net-id&gt;
+show_iface &lt;tenant-id&gt; &lt;net-id&gt; &lt;port-id&gt;
+update_net &lt;tenant-id&gt; &lt;net-id&gt; &lt;new-name&gt;
+show_port &lt;tenant-id&gt; &lt;net-id&gt; &lt;port-id&gt;
+list_ports_detail &lt;tenant-id&gt; &lt;net-id&gt; [filterspec ...]
+create_port &lt;tenant-id&gt; &lt;net-id&gt;
+list_ports &lt;tenant-id&gt; &lt;net-id&gt; [filterspec ...]</literallayout>
             <para> Invoking the CLI utility with no arguments displays additional command-line
                 options to, for example, specify an alternate Quantum server IP address or port. </para>
         </section>
@@ -468,11 +476,11 @@ list_ports [tenant-id] [net-id]            </literallayout>
                 Nova supports plugging in different implementation of ''managers'' for this network
                 service, and Quantum takes advantage of this by creating a standard Quantum Manager
                 that communicates with Quantum to allow Nova and Quantum to integrate. </para>
-            <para>To enable the Quantum Manager, your nova-network service must specify the
-                following option: </para>
+            <para>To enable the Quantum Manager,  your nova-network service  must specify the
+                following flag: </para>
             <literallayout class="monospaced">network_manager=nova.network.quantum.manager.QuantumManager            </literallayout>
             <para>Nova defaults to connecting to Quantum on localhost using the standard port. The
-                "quantum_connection_host" and "quantum_connection_port" options can override these
+                "quantum_connection_host" and "quantum_connection_port" flags can override these
                 defaults. </para>
         </section>
         <section xml:id="Vifplugging-d1e453">
@@ -596,14 +604,14 @@ list_ports [tenant-id] [net-id]            </literallayout>
                     using the 'os-create-server-ext' extension. The Quantum Manager supports the
                     network association portion of this extension, but ignores any IP address data
                     in the request.  </para>
-                <para>This extension can be invoked using the nova client utilities --nic option.  A virtual 
+                <para>This extension can be invoked using the nova client utilities --nic option.  A virtual
                     server will get a vNIC for each --nic is specified.  For example, to connect to two networks
                     with UUIDs of 99b1d65e-34ae-4658-8387-ce97245ec4b4 and d6b7c997-d76d-4131-90a0-fc3408f921a4, use
                     a command like:</para>
                 <literallayout class="monospaced">nova boot --image ed8b2a37-5535-4a5f-a615-443513036d71 --flavor 1 --nic net-id=99b1d65e-34ae-4658-8387-ce97245ec4b4 --nic net-id=d6b7c997-d76d-4131-90a0-fc3408f921a4 test-vm1  </literallayout>
                 <para>The vNICs in the VM will appear in the order specified (e.g., eth0 is connected to the first network, eth1
-                        connected to the second).  A VM will only be connected to networks that are either global networks or 
-                        networks owned by that tenant.  An API request to connect to any other network will fail with a 
+                        connected to the second).  A VM will only be connected to networks that are either global networks or
+                        networks owned by that tenant.  An API request to connect to any other network will fail with a
                         networkNotFound error.</para>
         </section>
         </section>
@@ -616,28 +624,27 @@ list_ports [tenant-id] [net-id]            </literallayout>
                 basic use.</para>
 
             <section xml:id="enabling-nova-dhcp"><title>Enabling Nova DHCP</title><para>Quantum Manager can leverage the same dnsmasq DHCP mechanism supported by other Nova Network
-                    Managers. DHCP is not enabled by default. It can be enabled system-wide with the
-                    following option:</para>
-                <literallayout class="monospaced">--quantum_use_dhcp=True</literallayout></section>
+                    Managers.  DHCP is not enabled by default.  It can be enabled system-wide with
+                    the following configuration option:</para>
+                <literallayout class="monospaced">quantum_use_dhcp=True</literallayout>
+            </section>
             <section xml:id="Melange-dle454">
             <title>Using Melange IPAM</title>
-            <para>Quantum Manager also supports using the new standalone IPAM service from the <link
+            <para>Quantum Manager also has experimental support for using the new standalone IPAM service from the <link
                     xlink:href="http://launchpad.net/melange"> Melange Project </link>. Melange
                 provides expert users with more flexibility in terms of managing how IP addresses
                 are assigned to VMs or other devices on the network.  </para>
             <para>Using Melange requires downloading the Melange code (it is a separate project from
-                    both Quantum and Nova) and running the Melange service. To tell Nova to use
-                    Melange IPAM instead of the default, set the following option:</para>
+                both Quantum and Nova) and running the Melange service. To tell Nova to use Melange
+                IPAM instead of the default, set the following configuration option:</para>
             <literallayout class="monospaced">quantum_ipam_lib=nova.network.quantum.melange_ipam_lib</literallayout>
-            <para>Nova defaults to connecting to Melange on localhost using the standard port. The
-                    "melange_host" and "melange_port" options can override these defaults. </para>
+            <para>Nova defaults to connecting to Melange on localhost using the standard port.  The
+            "melange_host" and "melange_port" options can override these defaults. </para>
                 <note> <para> Using Melange is incompatible with using Floating IPs. </para> </note>
             </section>
         </section>
         <section xml:id="Limits-dle455">
             <title> Quantum Manager Limitations </title>
-            <para> During Essex, Quantum has added many capabilities toward achieving "nova-network parity".
-                   The following limitations exist: </para>
             <itemizedlist spacing="compact">
                 <listitem>
                     <para>Multi-host nova-network HA is not supported (i.e., running nova-network on
