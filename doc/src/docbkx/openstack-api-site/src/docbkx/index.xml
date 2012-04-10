@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<book 
-  xmlns="http://docbook.org/ns/docbook" 
+<book
+  xmlns="http://docbook.org/ns/docbook"
   xmlns:xi="http://www.w3.org/2001/XInclude"
-  xmlns:xlink="http://www.w3.org/1999/xlink" 
+  xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:wadl="http://wadl.dev.java.net/2009/02"
-  version="5.0-extension RackBook-2.0" 
+  version="5.0-extension RackBook-2.0"
   xml:id="api.openstack.org">
   <info>
     <title>OpenStack APIs</title>
@@ -17,12 +17,12 @@
   </info>
   <preface xml:id="Overview">
     <title>OpenStack API Reference</title>
-    
+
     <para>The OpenStack system has several key projects that are
       separate installations but can work together depending on your
       cloud needs: OpenStack Compute, OpenStack Object Storage,
       OpenStack Identity Service, and OpenStack Image Service.</para>
-    
+
     <para>This page covers the basics for working with your OpenStack
       cloud through the Compute API and Image API after authorizing with
       the Identity Service API. You can then build a cloud by launching
@@ -45,7 +45,7 @@
       <wadl:resource href="identity.wadl#tenants" >
         <wadl:method href="#listTenants"/>
       </wadl:resource>
-    </wadl:resources>     
+    </wadl:resources>
   </chapter>
   <chapter xml:id="compute">
     <title>Compute</title>
@@ -53,9 +53,9 @@
       the images uploaded to the system. You can reboot the server
       when needed, resize it larger or smaller, and connect to the
       server securely through SSH once it is started. The v1.1 API is
-      identical to the v2 API.</para>     
-    <wadl:resources 
-      href="os-compute-1.1.wadl" 
+      identical to the v2 API.</para>
+    <wadl:resources
+      href="os-compute-1.1.wadl"
       xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
   </chapter>
   <chapter xml:id="compute-ext">
@@ -76,22 +76,22 @@
     <section xml:id="ext-os-console-output">
       <title>Server Console Output</title>
       <para>Get the output from a server's console log.</para>
-      <wadl:resources 
-        href="ext/os-console-output.wadl" 
+      <wadl:resources
+        href="ext/os-console-output.wadl"
         xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
     </section>
     <section xml:id="ext-os-consoles">
       <title>Server VNC Console</title>
       <para>Gain access to a VNC console for a specific server.</para>
-      <wadl:resources 
-        href="ext/os-consoles.wadl" 
+      <wadl:resources
+        href="ext/os-consoles.wadl"
         xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
     </section>
     <section xml:id="ext-os-server-start-stop">
       <title>Server Start/Stop</title>
       <para>Start and stop a server.</para>
-      <wadl:resources 
-        href="os-server-start-stop.wadl" 
+      <wadl:resources
+        href="os-server-start-stop.wadl"
         xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
     </section>
     <section xml:id="ext-floating-ip-addresses">
@@ -100,15 +100,15 @@
         The Floating IPs extension enables assigning and allocation of
         floating IP addresses to instances running in an OpenStack cloud.
       </para>
-      <wadl:resources 
-        href="os-floating-ips.wadl" 
+      <wadl:resources
+        href="os-floating-ips.wadl"
         xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
     </section>
     <section xml:id="ext-floating-ip-pools">
       <title>Floating IP Pools</title>
       <para>Manage groups of Floating IPs.</para>
-      <wadl:resources 
-        href="ext/os-floating-ip-pools.wadl" 
+      <wadl:resources
+        href="ext/os-floating-ip-pools.wadl"
         xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
     </section>
     <section xml:id="ext-os-floating-ip-dns">
@@ -119,8 +119,19 @@
         by the Floating Ips extension. Requests are dispatched to a
         DNS driver selected at startup.
       </para>
-      <wadl:resources 
-        href="ext/os-floating-ip-dns.wadl" 
+      <wadl:resources
+        href="ext/os-floating-ip-dns.wadl"
+        xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
+    </section>
+    <section xml:id="ext-os-networks">
+      <title>Networks</title>
+      <para>
+        The Networks extension allows you to view and delete networks. It
+        also provides an action to disassociate a network from a project
+        if you are using vlan mode.
+      </para>
+      <wadl:resources
+        href="ext/os-networks.wadl"
         xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
     </section>
     <section xml:id="ext-os-scheduler-hints">
@@ -128,15 +139,15 @@
       <para>
         Provide information directly to the scheduler when creating a server.
       </para>
-      <wadl:resources 
-        href="ext/os-scheduler-hints.wadl" 
+      <wadl:resources
+        href="ext/os-scheduler-hints.wadl"
         xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
     </section>
     <section xml:id="ext-os-keypairs">
       <title>Keypairs</title>
       <para>Generate, import and delete SSH keys..</para>
-      <wadl:resources 
-        href="ext/os-keypairs.wadl" 
+      <wadl:resources
+        href="ext/os-keypairs.wadl"
         xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
     </section>
     <section xml:id="ext-os-security-groups">
@@ -149,8 +160,8 @@
     <section xml:id="ext-os-cloudpipe">
       <title>Cloudpipe</title>
       <para>Manage virtual vpns for projects.</para>
-      <wadl:resources 
-        href="ext/os-cloudpipe.wadl" 
+      <wadl:resources
+        href="ext/os-cloudpipe.wadl"
         xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
     </section>
   </chapter>
@@ -160,16 +171,16 @@
       by the Compute API. Some cloud implementations do not expose
       this API and offer pre-tested images only. You can also assign
       metadata to images with this API. </para>
-    <wadl:resources 
-      href="os-image-1.0.wadl" 
+    <wadl:resources
+      href="os-image-1.0.wadl"
       xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
   </chapter>
   <chapter xml:id="volume">
     <title>Volume</title>
     <para>The Volume API allows you to manage volumes and snapshots
       that can be used with the Compute API.</para>
-    <wadl:resources 
-      href="os-volume-1.wadl" 
+    <wadl:resources
+      href="os-volume-1.wadl"
       xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
   </chapter>
 

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- (C) 2012 OpenStack LLC., All Rights Reserved -->
+
+<application xmlns="http://wadl.dev.java.net/2009/02"
+             xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+             xmlns:wadl="http://wadl.dev.java.net/2009/02">
+
+    <resources base="https://servers.api.openstack.com">
+        <resource id="version" type="#VersionDetails" path="v1.1">
+            <resource id="tenant_id" path="{tenant_id}">
+                <param name="tenant_id" style="template">
+                    <doc>
+                        <p xmlns="http://www.w3.org/1999/xhtml">
+                            The unique identifier of the tenant or account.
+                        </p>
+                    </doc>
+                </param>
+
+                <resource id="os-networks" path="os-networks">
+                    <method href="#ListNetworks" />
+
+                    <resource path="{id}">
+                        <param name="id" style="template" required="true">
+                            <doc><p xmlns="http://www.w3.org/1999/xhtml">
+                                 The unique identifier associated with the network.
+                            </p></doc>
+                        </param>
+
+                        <method href="#GetNetwork" />
+                        <method href="#DeleteNetwork" />
+                        <resource path="action">
+                            <method href="#DisassociateNetwork" />
+                        </resource>
+                    </resource>
+                </resource>
+
+          </resource>
+        </resource>
+    </resources>
+
+    <method name="GET" id="ListNetworks">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="List Networks">
+            <p xmlns="http://www.w3.org/1999/xhtml">Lists networks.</p>
+        </wadl:doc>
+        <response status="200">
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/os-networks-list.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+    <method name="GET" id="GetNetwork">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="Get Network Detail">
+            <p xmlns="http://www.w3.org/1999/xhtml">Gets information about an individual network.</p>
+        </wadl:doc>
+        <response status="200">
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/os-networks-get.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+    <method name="DELETE" id="DeleteNetwork">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="Delete Network">
+            <p xmlns="http://www.w3.org/1999/xhtml">Delete a network.</p>
+        </wadl:doc>
+        <response status="202" />
+    </method>
+
+    <method name="POST" id="DisassociateNetwork">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="Disassocaite Network">
+            <p xmlns="http://www.w3.org/1999/xhtml">Disassociate a network from a project so it can be reused.</p>
+        </wadl:doc>
+        <request>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/os-networks-disassociate.json" />
+                </doc>
+            </representation>
+        </request>
+        <response status="202" />
+    </method>
+
+</application>
