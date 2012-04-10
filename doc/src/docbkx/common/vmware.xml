@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+xmlns:xi="http://www.w3.org/2001/XInclude"
+xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+xml:id="vmware">
+  <title>VMware ESX/ESXi Server Support</title>
+  <section xml:id="vmware-intro">
+    <title>Introduction</title>
+    <para>OpenStack Compute supports the VMware ESX hypervisor. This section
+      describes the additional configuration required to launch VMWare-based
+     virtual machine images.</para>
+        <informalfigure>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="figures/vmwareapi_blockdiagram.jpg" />
+        </imageobject>
+      </mediaobject>
+    </informalfigure>
+
+  </section>
+  <section xml:id="vmware-prereqs">
+    <title>Prerequisities</title>
+    <para>You will need to install the following software:</para>
+    <itemizedlist>
+      <listitem><para>python-suds: This software is needed by the nova-compute service. If not installed, the "nova-compute" service shuts down with the message: "Unable to import suds".</para>
+    </listitem>
+    <listitem><para>SSH server</para></listitem>
+    <listitem><para>Tomcat server</para></listitem>
+   </itemizedlist>
+   <para>On ubuntu, these packages can be installed by doing (as root):</para>
+<screen><prompt>#</prompt> apt-get install python-suds openssh-server tomcat6
+</screen>
+</section>
+  <section xml:id="vmware-wsdl">
+    <title>Configure Tomcat to serve WSDL files</title>
+  <para>Download the WSDLs from <link xlink:href="http://www.vmware.com/support/developer/vc-sdk/">http://www.vmware.com/support/developer/vc-sdk/</link> and copy the <filename>wsdl</filename> folder into 
+ <filename>/var/lib/tomcat6/webapps</filename>.</para>
+  </section>
+  <section>
+    <title>VMWare configuration options</title>
+<para>Configure nova.conf with the following VMWare-specific config options:
+</para>
+
+<programlisting>vmwareapi_host_ip=&lt;ESX hypervisor machine IP&gt;
+vmwareapi_host_username=&lt; ESX hypervisor username&gt;
+vmwareapi_host_password=&lt; ESX hypervisor password&gt;
+vmwareapi_wsdl_loc=http://127.0.0.1:8080/wsdl/vim25/vimService.wsdl
+</programlisting>
+
+</section>
+</section>
