@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- (C) 2012 OpenStack LLC., All Rights Reserved -->
+
+<application xmlns="http://wadl.dev.java.net/2009/02"
+             xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+             xmlns:wadl="http://wadl.dev.java.net/2009/02">
+
+    <resources base="https://servers.api.openstack.com">
+        <resource id="version" type="#VersionDetails" path="v1.1/">
+            <resource id="tenantID" path="{tenant_id}">
+                <param name="tenant_id" style="template" type="xsd:string">
+                    <doc><p xmlns="http://www.w3.org/1999/xhtml">
+                      The ID for the tenant or account in a multi-tenancy cloud.
+                    </p></doc>
+                </param>
+                <resource id="Servers" path="servers">
+                    <method href="#createServer"/>
+
+                    <resource path="{server_id}">
+                        <param name="server_id" style="template" type="csapi:UUID">
+                            <doc><p xmlns="http://www.w3.org/1999/xhtml">
+                              The UUID for the server of interest to you.
+                            </p></doc>
+                        </param>
+                        <param name="OS-DCF:diskConfig" style="plain">
+                          <doc><p xmlns="http://www.w3.org/1999/xhtml">
+                            Acceptable values are 'AUTO' and 'MANUAL'.
+                          </p></doc>
+                        </param>
+                        <method href="#getServer"/>
+                        <method href="#updateServer"/>
+
+                        <resource path="action">
+                            <method href="#resize"/>
+                            <method href="#rebuild"/>
+                        </resource>
+
+                    </resource>
+
+                    <resource path="details">
+                        <method href="#getServersDetailed"/>
+                    </resource>
+                </resource>
+
+                <resource id="images" path="images">
+                    <resource path="{image_id}">
+                        <param name="image_id" style="template">
+                            <doc>
+                                <p xmlns="http://www.w3.org/1999/xhtml">
+                                  The UUID for the image of interest to you.
+                                </p>
+                            </doc>
+                        </param>
+                        <method href="#getImage"/>
+                    </resource>
+
+                    <resource path="details">
+                        <method href="#getImagesDetailed"/>
+                    </resource>
+                </resource>
+
+            </resource>
+        </resource>
+    </resources>
+
+    <method name="POST" id="createServer">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                Create a server.
+            </p>
+        </wadl:doc>
+        <request>
+            <param name="OS-DCF:diskConfig" style="plain">
+              <doc><p xmlns="http://www.w3.org/1999/xhtml">
+                Acceptable values are 'AUTO' and 'MANUAL'.
+              </p></doc>
+            </param>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/os-disk-config-server-create-request.json" />
+                </doc>
+            </representation>
+        </request>
+        <response status="202">
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/os-disk-config-server-create-response.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+    <method name="PUT" id="updateServer">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                Update a server.
+            </p>
+        </wadl:doc>
+        <request>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/os-disk-config-server-update-request.json" />
+                </doc>
+            </representation>
+        </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/os-disk-config-server-show.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+    <method name="POST" id="resize">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                Resize a server.
+            </p>
+        </wadl:doc>
+        <request>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/os-disk-config-server-resize.json" />
+                </doc>
+            </representation>
+        </request>
+        <response status="202">
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/os-disk-config-server-show.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+    <method name="PUT" id="rebuild">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                Rebuild a server.
+            </p>
+        </wadl:doc>
+        <request>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/os-disk-config-server-rebuild.json" />
+                </doc>
+            </representation>
+        </request>
+        <response status="202">
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/os-disk-config-server-show.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+    <method name="GET" id="getServer">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+              Describe a specific server.
+            </p>
+        </wadl:doc>
+        <response status="200">
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/os-disk-config-server-show.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+    <method name="GET" id="getServersDetailed">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+              List servers.
+            </p>
+        </wadl:doc>
+        <response status="200">
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/os-disk-config-server-list.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+    <method name="GET" id="getImage">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+              Describe a specific image.
+            </p>
+        </wadl:doc>
+        <response status="200">
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/os-disk-config-image-show.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+    <method name="GET" id="getImagesDetailed">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+              List images.
+            </p>
+        </wadl:doc>
+        <response status="200">
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/os-disk-config-image-list.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+
+</application>
