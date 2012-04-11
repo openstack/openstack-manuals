@@ -5,92 +5,55 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
     <title>Verifying the Identity Service Installation</title>
     <para>Install curl, a command-line tool for running REST API
-        requests:</para>
-    <literallayout class="monospaced">sudo apt-get install curl</literallayout>
+        requests along with openssl for meeting a dependency
+        requirement:</para>
+    <literallayout class="monospaced">sudo apt-get install curl openssl</literallayout>
     <para>Here is a curl command you can use to ensure that the Identity service is working:</para>
     <literallayout class="monospaced">curl -d '{"auth": {"tenantName": "adminTenant", "passwordCredentials":{"username": "adminUser", "password": "secretword"}}}' -H "Content-type: application/json" http://192.168.206.130:35357/v2.0/tokens | python -mjson.tool</literallayout>
-    <para>In return, you should receive the token you created for the
-        adminUser user. </para>
-    <literallayout class="monospaced">...
-"token": {
-            "expires": "2015-02-05T00:00:00", 
-            "id": "11121314151617181920", 
-            "tenant": {
-                "id": "2", 
-                "name": "adminTenant"
-            }
+    <para>In return, you should receive a token for the adminUser
+        user. </para>
+    <literallayout class="monospaced">{
+    "access": {
+        "serviceCatalog": {}, 
+        "token": {
+            "expires": "2012-04-12T00:40:12Z", 
+            "id": "cec68088d08747639c682ee5228106d1"
+        }, 
+        "user": {
+            "id": "6b0141904f09480d810a5949d79ea0f3", 
+            "name": "adminUser", 
+            "roles": [], 
+            "roles_links": [], 
+            "username": "adminUser"
         }
-        ...</literallayout>
+    }
+}</literallayout>
     <para>You can also get a token that expires in 24 hours using the
         adminUser account:</para>
     <literallayout class="monospaced">curl -d '{"auth": {"tenantName": "openstackDemo", "passwordCredentials":{"username": "adminUser", "password": "secretword"}}}' -H "Content-type: application/json" http://192.168.206.130:35357/v2.0/tokens | python -mjson.tool</literallayout>
-    <para>In return, you get the endpoints and token listed.</para>
+    <para>In return, you get the token listing shown below.</para>
     <literallayout class="monospaced">
-        {
+{
     "access": {
-        "serviceCatalog": [
-            {
-                "endpoints": [
-                    {
-                        "adminURL": "http://192.168.206.130:8774/v1.1/1", 
-                        "internalURL": "http://192.168.206.130:8774/v1.1/1", 
-                        "publicURL": "http://192.168.206.130:8774/v1.1/1", 
-                        "region": "RegionOne"
-                    }
-                ], 
-                "name": "nova", 
-                "type": "compute"
-            }, 
-            {
-                "endpoints": [
-                    {
-                        "adminURL": "http://192.168.206.130:9292/v1", 
-                        "internalURL": "http://192.168.206.130:9292/v1", 
-                        "publicURL": "http://192.168.206.130:9292/v1", 
-                        "region": "RegionOne"
-                    }
-                ], 
-                "name": "glance", 
-                "type": "image"
-            }, 
-            {
-                "endpoints": [
-                    {
-                        "adminURL": "http://192.168.206.130:35357/v2.0", 
-                        "internalURL": "http://192.168.206.130:5000/v2.0", 
-                        "publicURL": "http://192.168.206.130:5000/v2.0", 
-                        "region": "RegionOne"
-                    }
-                ], 
-                "name": "keystone", 
-                "type": "identity"
-            }
-        ], 
+        "serviceCatalog": {}, 
         "token": {
-            "expires": "2012-01-12T12:27:39.966676", 
-            "id": "6c2085d2-c226-429a-829b-8e313fe79c73", 
+            "expires": "2012-04-12T00:41:21Z", 
+            "id": "a220bfdf313b404fa5e063fcc7cc1f3e", 
             "tenant": {
-                "id": "1", 
+                "description": "Default Tenant", 
+                "enabled": true, 
+                "id": "50af8cc655c24ada96f73010c96b70a2", 
                 "name": "openstackDemo"
             }
         }, 
         "user": {
-            "id": "2", 
-            "name": "demoUser", 
-            "roles": [
-                {
-                    "id": "2", 
-                    "name": "Member", 
-                    "tenantId": "1"
-                }, 
-                {
-                    "id": "2", 
-                    "name": "Member"
-                }
-            ]
+            "id": "6b0141904f09480d810a5949d79ea0f3", 
+            "name": "adminUser", 
+            "roles": [], 
+            "roles_links": [], 
+            "username": "adminUser"
         }
     }
 }
-
     </literallayout>
 </section>

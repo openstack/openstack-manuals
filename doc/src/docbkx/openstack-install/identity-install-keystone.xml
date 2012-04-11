@@ -9,9 +9,15 @@
     services:</para>
   <literallayout class="monospaced">sudo apt-get install keystone</literallayout>
   <para>After installing, you need to delete the sqlite database it
-    creates, then change the configuration to point to the mysql
-    database. </para>
-  <para>Delete the keystone.db file created in the /var/lib/keystone/
+    creates, then change the configuration to point to a MySQL
+    database. This configuration enables easier scaling scenarios
+    since you can bring up multiple Keystone front ends when needed,
+    and configure them all to point back to the same database. Plus a
+    database backend has built-in data replication features and
+    documentation surrounding high availability and data redundancy
+    configurations. </para>
+  <para>Delete the <filename>keystone.db</filename> file created in
+    the /var/lib/keystone/
     directory.<literallayout class="monospaced">sudo rm /var/lib/keystone/keystone.db</literallayout></para>
   <para>Configure the production-ready backend data store rather than
     using the catalog supplied by default for the ability to backup
@@ -46,7 +52,7 @@ sudo service mysql restart</literallayout></para>
     default, Keystone's data store is sqlite. To change the data store
     to mysql, change the line defining "connection" in
       <filename>etc/keystone/keystone.conf</filename> like
-    so:<screen>connection = mysql://keystone:yourpassword@localhost/keystone</screen></para>
+    so:<screen>connection = mysql://keystone:yourpassword@192.168.206.130/keystone</screen></para>
   <para>Also, ensure that the proper service token is used in the
     keystone.conf file. An example is provided in the Appendix.
     <screen>admin_token = 012345SECRET99TOKEN012345</screen></para>
@@ -188,91 +194,301 @@ sudo service mysql restart</literallayout></para>
     <para>Keystone also acts as a service catalog to let other
       OpenStack systems know where relevant API endpoints exist for
       OpenStack Services. The OpenStack Dashboard, in particular, uses
-      the service catalog heavily - and this <emphasis role="strong"
-        >must</emphasis> be configured for the OpenStack Dashboard to
-      properly function. </para>
-    <para>The endpoints for these services are defined in a template,
-      an example of which is in the project as the file
-        <literal>etc/default_catalog.templates</literal>, which you
-      can edit yourself or configure your keystone.conf file to use
-      SQL as a backend for the endpoint templates. Be aware of both
-      the IP address and port value and version number of each API
-      endpoint you need to create. Here are values for each
-      service:</para>
-    <table rules="all">
-      <caption>Service Endpoints </caption>
-      <col width="20%"/>
-      <col width="23%"/>
-      <col width="57%"/>
-      
-      <thead>
-        <tr>
-          <td>Service</td>
-          <td>Port value</td>
-          <td>API version</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Identity service (Keystone) </td>
-          <td><para>5000 (public/service port)</para>
-          <para>35357 (admin port)</para></td>
-          <td>v2.0</td>
-        </tr>
-        <tr>
-          <td>Image service (Glance) </td>
-          <td>9292</td>
-          <td>v1</td>
-        </tr>
-        <tr>
-          <td>Compute service (Nova)</td>
-          <td>8774</td>
-          <td>v2</td>
-        </tr>
-        <tr>
-          <td>Volume service (within Nova)</td>
-          <td>8776</td>
-          <td>v1</td>
-        </tr>
-        <tr>
-          <td>EC2 service (within Nova)</td>
-          <td><para>8773/services/Cloud (public)</para><para>8773/services/Admin
-              (admin)</para></td>
-          <td><para>N/A</para><para>N/A</para></td>
-        </tr>
-      </tbody>
-    </table>
-    <para> Here's how we define the services when using SQL as a
-      backend, which we are doing for this walkthrough: </para>
-    <screen>
-keystone  --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 service-create --name=nova \
-                               --type=compute \
-                               --description=&quot;Nova Compute Service&quot;
-keystone  --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 service-create --name=ec2 \
-                               --type=ec2 \
-                               --description=&quot;EC2 Compatibility Layer&quot;
-keystone  --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 service-create --name=glance \
-                               --type=image \
-                               --description=&quot;Glance Image Service&quot;
-keystone  --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 service-create --name=volume \
-                               --type=volume \
-                               --description=&quot;Volume Service&quot;
-keystone  --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 service-create --name=keystone \
-                               --type=identity \
-                               --description=&quot;Keystone Identity Service&quot;</screen>
-    <para>In return for each of these commands, you see a listing of
-      property and value for each creation.</para>
+      the service catalog heavily - and this <emphasis role="strong">
+      must</emphasis> be configured for the OpenStack Dashboard to
+      properly function.</para>
+      <para>There are two alternative ways of defining services with
+      keystone: <orderedlist>
+        <listitem>
+          <para>Using a template file</para>
+        </listitem>
+        <listitem>
+          <para>Using a database backend</para>
+        </listitem>
+      </orderedlist> While using a template file is simpler, it is not
+      recommended except for development environments such as <link
+        xlink:href="http://www.devstack.org">DevStack</link>, as a
+      database backend can provide better reliability, availability,
+      and data redundancy. This section describes how to populate the
+      Keystone service catalog using the database backend. Your
+        <filename>/etc/keystone.conf</filename> file should contain
+      the following lines if it is properly configured to use the
+      database backend.</para>
+
       <programlisting>
+[catalog]
+driver = keystone.catalog.backends.sql.Catalog
+      </programlisting>
+      <section xml:id="elements-of-keystone-service-catalog-entry">
+        <title>Elements of a Keystone service catalog entry</title>
+        <para>For each service in the catalog, you must perform two keystone
+          operations:
+          <orderedlist>
+            <listitem>
+            <para>Use the <command>keystone service-create</command>
+          command to create a database entry for the service, with the
+          following attributes:
+            <variablelist>
+              <varlistentry>
+                <term><literal>--name</literal></term>
+                <listitem><para>Name of the service (e.g., nova, ec2, glance, keystone)</para></listitem>
+              </varlistentry>
+              <varlistentry>
+                <term><literal>--type</literal></term>
+                <listitem><para>Type of service (e.g., compute, ec2, image, identity)</para></listitem>
+              </varlistentry>
+              <varlistentry>
+                <term><literal>--description</literal></term>
+                <listitem><para>A description of the service, (e.g., "Nova Compute Service")</para></listitem>
+              </varlistentry>
+            </variablelist>
+          </para>
+        </listitem>
+        <listitem>
+          <para>Use the <command>keystone endpoint-create</command> command
+          to create a database entry that describes how different types of
+          clients can connect to the service, with the following attributes:</para>
+          <variablelist>
+            <varlistentry>
+              <term><literal>--region</literal></term>
+              <listitem><para>the region name you've given to the OpenStack cloud
+                you are deploying (e.g., RegionOne)</para></listitem>
+            </varlistentry>
+            <varlistentry>
+              <term><literal>--service_id</literal></term>
+              <listitem><para>The ID field returned by the <command>keystone
+                service-create</command> (e.g., 935fd37b6fa74b2f9fba6d907fa95825)</para></listitem>
+            </varlistentry>
+            <varlistentry>
+              <term><literal>--publicurl</literal></term>
+              <listitem><para>The URL of the public-facing endpoint for the service (e.g., <literal>http://192.168.206.130:9292/v1</literal> or <literal>http://192.168.206.130:8774/v2/eb7e0c10a99446cfa14c244374549e9d</literal>) </para></listitem>
+            </varlistentry>
+            <varlistentry>
+              <term><literal>--internalurl</literal></term>
+              <listitem><para>The URL of an internal-facing endpoint for the service.</para>
+                <para>This typically has the same value as <literal>publicurl</literal>.</para></listitem>
+            </varlistentry>
+            <varlistentry>
+              <term><literal>--adminurl</literal></term>
+              <listitem><para>The URL for the admin endpoint for the service. The
+                Keystone and EC2 services use different endpoints for
+                <literal>adminurl</literal> and <literal>publicurl</literal>,
+                but for other services these endpoints will be the same.</para></listitem>
+            </varlistentry>
+          </variablelist>
+        </listitem>
+        </orderedlist>
+        </para>
+      </section>
+
+      <section xml:id="keystone-service-endpoint-create">
+        <title>Creating keystone services and service endpoint</title>
+
+<para>Here we define the services and their endpoints.</para>
+
+<para>Define the Identity service:</para>
+
+<screen>
+<prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 \
+ --endpoint http://192.168.206.130:35357/v2.0
+ service-create \
+ --name=keystone \
+ --type=identity \
+ --description=&quot;Keystone Identity Service&quot;
+</userinput>
+<computeroutput>+-------------+----------------------------------+
+|   Property  |              Value               |
 +-------------+----------------------------------+
+| description | Keystone Identity Service        |
+| id          | 15c11a23667e427e91bc31335b45f4bd |
+| name        | keystone                         |
+| type        | identity                         |
++-------------+----------------------------------+</computeroutput>
+<prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 \
+ --endpoint http://192.168.206.130:35357/v2.0
+ endpoint-create \
+ --region RegionOne \
+ --service_id=15c11a23667e427e91bc31335b45f4bd \
+ --publicurl=http://192.168.206.130:5000/v2.0 \
+ --internalurl=http://192.168.206.130:5000/v2.0 \
+ --adminurl=http://192.168.206.130:35357/v2.0</userinput>
+<computeroutput>+-------------+-----------------------------------+
+|   Property  |             Value                 |
++-------------+-----------------------------------+
+| adminurl    | http://192.168.206.130:35357/v2.0 |
+| id          | 11f9c625a3b94a3f8e66bf4e5de2679f  |
+| internalurl | http://192.168.206.130:5000/v2.0  |
+| publicurl   | http://192.168.206.130:5000/v2.0  |
+| region      | RegionOne                         |
+| service_id  | 15c11a23667e427e91bc31335b45f4bd  |
++-------------+-----------------------------------+
+</computeroutput>
+</screen>
+
+<para>Define the Compute service, which requires a separate endpoint
+for each tenant. Here we use the <literal>service</literal> tenant from
+the previous section</para>
+
+<screen>
+<prompt>$</prompt> <userinput>keystone--token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 service-create \
+ --name=nova \
+ --type=compute \
+ --description=&quot;Nova Compute Service&quot;</userinput>
+<computeroutput>+-------------+----------------------------------+
 |   Property  |              Value               |
 +-------------+----------------------------------+
 | description | Nova Compute Service             |
 | id          | abc0f03c02904c24abdcc3b7910e2eed |
 | name        | nova                             |
 | type        | compute                          |
-+-------------+----------------------------------+</programlisting>
-      <para>Next,
-      create an endpoint for each service you just created using the
++-------------+----------------------------------+
+</computeroutput>
+<prompt>$</prompt> <userinput>TENANT=eb7e0c10a99446cfa14c244374549e9d</userinput> 
+<prompt>$</prompt> <userinput>
+keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 endpoint-create \
+ --region RegionOne \
+ --service_id=abc0f03c02904c24abdcc3b7910e2eed \
+ --publicurl="http://192.168.206.130:8774/v2/$TENANT" \
+ --internalurl="http://192.168.206.130:8774/v2/$TENANT" \
+ --adminurl="http://192.168.206.130:8774/v2/$TENANT"</userinput>
+<computeroutput>+-------------+-----------------------------------------------------------------+
+|   Property  |                               Value                             |
++-------------+-----------------------------------------------------------------+
+| adminurl    | http://192.168.206.130:8774/v2/eb7e0c10a99446cfa14c244374549e9d |
+| id          | 935fd37b6fa74b2f9fba6d907fa95825                                |
+| internalurl | http://192.168.206.130:8774/v2/eb7e0c10a99446cfa14c244374549e9d |
+| publicurl   | http://192.168.206.130:8774/v2/eb7e0c10a99446cfa14c244374549e9d |
+| region      | RegionOne                                                       |
+| service_id  | abc0f03c02904c24abdcc3b7910e2eed                                |
++-------------+-----------------------------------------------------------------+
+</computeroutput>
+</screen>
+
+<para>Define the Volume service, which also requires a separate endpoint for each
+tenant.</para>
+<screen>
+<prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 \
+ --endpoint http://192.168.206.130:35357/v2.0
+ service-create \
+ --name=volume \
+ --type=volume \
+ --description=&quot;Nova Volume Service&quot;
+</userinput>
+<computeroutput>
++-------------+----------------------------------+
+|   Property  |              Value               |
++-------------+----------------------------------+
+| description | Nova Volume Service              |
+| id          | 1ff4ece13c3e48d8a6461faebd9cd38f |
+| name        | volume                           |
+| type        | volume                           |
++-------------+----------------------------------+
+</computeroutput>
+<prompt>$</prompt> <userinput>TENANT=eb7e0c10a99446cfa14c244374549e9d</userinput> 
+<prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 \
+ --endpoint http://192.168.206.130:35357/v2.0 \
+ endpoint-create \
+ --region RegionOne \
+ --service_id=15c11a23667e427e91bc31335b45f4bd \
+ --publicurl=http://192.168.206.130:8776/v1/$TENANT" \
+ --internalurl=http://192.168.206.130:8776/v1/$TENANT" \
+ --adminurl=http://192.168.206.130:8776/v1/$TENANT" 
+</userinput>
+<computeroutput>
++-------------+-----------------------------------------------------------------+
+|   Property  |                             Value                               |
++-------------+-----------------------------------------------------------------+
+| adminurl    | http://192.168.206.130:8776/v1/eb7e0c10a99446cfa14c244374549e9d |
+| id          | 1ff4ece13c3e48d8a6461faebd9cd38f                                |
+| internalurl | http://192.168.206.130:8776/v1/eb7e0c10a99446cfa14c244374549e9d |
+| publicurl   | http://192.168.206.130:8776/v1/eb7e0c10a99446cfa14c244374549e9d |
+| region      | RegionOne                                                       |
+| service_id  | 8a70cd235c7d4a05b43b2dffb9942cc0                                |
++-------------+-----------------------------------------------------------------+
+</computeroutput>
+</screen>
+
+<para>Define the Image service:</para>
+<screen>
+<prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 \
+ --endpoint http://192.168.206.130:35357/v2.0 \
+ service-create \
+ --name=glance \
+ --type=image \
+ --description="Glance Image Service"
+</userinput>
+<computeroutput>
++-------------+----------------------------------+
+|   Property  |              Value               |
++-------------+----------------------------------+
+| description | Glance Image Service             |
+| id          | 7d5258c490144c8c92505267785327c1 |
+| name        | glance                           |
+| type        | image                            |
++-------------+----------------------------------+
+</computeroutput>
+<prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 \
+ --endpoint http://192.168.206.130:35357/v2.0
+ endpoint-create \
+ --region RegionOne \
+ --service_id=7d5258c490144c8c92505267785327c1 \
+ --publicurl=http://192.168.206.130:9292/v1 \
+ --internalurl=http://192.168.206.130:9292/v1 \
+ --adminurl=http://192.168.206.130:9292/v1
+</userinput>
+<computeroutput>
++-------------+-----------------------------------+
+|   Property  |             Value                 |
++-------------+-----------------------------------+
+| adminurl    | http://192.168.206.130:9292/v1    |
+| id          | 3c8c0d749f21490b90163bfaed9befe7  |
+| internalurl | http://192.168.206.130:9292/v1    |
+| publicurl   | http://192.168.206.130:9292/v1    |
+| region      | RegionOne                         |
+| service_id  | 7d5258c490144c8c92505267785327c1  |
++-------------+-----------------------------------+
+</computeroutput>
+</screen>
+<para>Define the EC2 compatibility service:</para>
+<screen>
+<prompt>$</prompt> <userinput>keystone  --token 012345SECRET99TOKEN012345 \
+ --endpoint http://192.168.206.130:35357/v2.0\
+ service-create \
+ --name=ec2 \
+ --type=ec2 \
+ --description=&quot;EC2 Compatibility Layer&quot;</userinput>
+<computeroutput>+-------------+----------------------------------+
+|   Property  |              Value               |
++-------------+----------------------------------+
+| description | EC2 Compatibility Layer          |
+| id          | 181cdad1d1264387bcc411e1c6a6a5fd |
+| name        | ec2                              |
+| type        | ec2                              |
++-------------+----------------------------------+
+</computeroutput>
+<prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 \
+ --endpoint http://192.168.206.130:35357/v2.0
+ endpoint-create \
+ --region RegionOne \
+ --service_id=7d5258c490144c8c92505267785327c1 \
+ --publicurl=http://192.168.206.130:8773/services/Cloud \
+ --internalurl=http://192.168.206.130:8773/services/Cloud \
+ --adminurl=http://192.168.206.130:8773/services/Admin
+</userinput>
+<computeroutput>
++-------------+--------------------------------------------+
+|   Property  |                  Value                     |
++-------------+--------------------------------------------+
+| adminurl    | http://192.168.206.130:8773/services/Cloud |
+| id          | d2a3d7490c61442f9b2c8c8a2083c4b6           |
+| internalurl | http://192.168.206.130:8773/services/Cloud |
+| publicurl   | http://192.168.206.130:8773/services/Admin |
+| region      | RegionOne                                  |
+| service_id  | 7d5258c490144c8c92505267785327c1           |
++-------------+--------------------------------------------+
+</computeroutput>
+</screen>
+<para>Next, create an endpoint for each service you just created using the
       id values returned by each service-create command. Here's an
       example for the nova service endpoint.</para>
       <screen>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 endpoint-create \
@@ -297,6 +513,7 @@ keystone  --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35
       <para>Substitute the service IDs for each in the --service_id
       parameter, and ensure the URLs contain correct port values and
       the correct version number of the API. </para>
+
     <para>For the Image service, here's the command, though you need
       to substitute the service_id with the id received from the
       results of the keystone endpoint-create command. </para>
@@ -335,13 +552,15 @@ keystone  --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35
   <section xml:id="troubleshooting-identity-service">
     <title>Troubleshooting the Identity Service (Keystone)</title>
     <para>To begin troubleshooting, look at the logs in the
-      /var/log/keystone.log file (the location of log files is
-      configured in the keystone.conf file). It shows all the
-      components that have come in to the WSGI request, and will
-      ideally have an error in that log that explains why an
-      authorization request failed. If you're not seeing the request
-      at all in those logs, then run keystone with "--debug" where
-      --debug is passed in directly after the CLI command prior to
-      parameters.</para>
+        /var/log/keystone.log file (the location of log files is
+        configured in the <filename>keystone.conf</filename> file). It
+        shows all the components that have come in to the WSGI
+        request, and will ideally have an error in that log that
+        explains why an authorization request failed. If you're not
+        seeing the request at all in those logs, then run keystone
+        with "--debug" where --debug is passed in directly after the
+        CLI command prior to parameters.</para>
+  </section>
   </section>
 </section>
+

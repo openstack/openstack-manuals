@@ -22,7 +22,7 @@
     <para>You can get a token in order to upload images using this
         curl command. </para>
     <para>
-        <literallayout class="monospaced">curl -d '{"auth":{"passwordCredentials":{"username": "adminUser", "password": "secretword"}}}' -H "Content-type: application/json" http://192.168.206.130:35357/v2.0/tokens | python -mjson.tool</literallayout>
+        <literallayout class="monospaced">curl -d '{"auth": {"tenantName": "openstackDemo", "passwordCredentials":{"username": "adminUser", "password": "secretword"}}}' -H "Content-type: application/json" http://192.168.206.130:35357/v2.0/tokens | python -mjson.tool</literallayout>
     </para>
    
     <para>Now add the kernel image to the Image Service with glance
@@ -51,9 +51,10 @@ ID               Name                           Disk Format          Container F
 2                tty-ramdisk                    ari                  ari                         5882349
 1                tty-kernel                     aki                  aki                         4404752
     </literallayout>
-    <para>If you see an ECONNREFUSED error in return, it means your
-        glance-registry.conf file is incorrectly configured.
-        Double-check and compare to the file in the Appendix. If you
-        get a 401 Unauthorized error, check your environment
+    <para>If you see an ECONNREFUSED error or "NotAuthenticated: You
+        are not authenticated" message in return, it means one of your
+        glance-*.conf files is incorrectly configured. Double-check
+        and compare to the files listed in the Appendix. If you get a
+        401 Unauthorized error, check your environment
         variables.</para>
 </chapter>
