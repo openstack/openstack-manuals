@@ -515,7 +515,7 @@ force_dhcp_release=True
     </section>
     <section xml:id="associating-public-ip">
         <title>Configuring Public (Floating) IP Addresses</title>
-        <section>
+        <section xml:id="Private_and_Public_IP_Addresses">
             <title>Private and Public IP Addresses</title>
             <para>Every virtual instance is automatically assigned a private IP address. 
               You may optionally assign public IP addresses to instances. OpenStack
@@ -528,7 +528,7 @@ force_dhcp_release=True
         <programlisting>public_interface=vlan100</programlisting>
         <para>Restart the nova-network service if you change nova.conf while the service is running.</para>
         </section>
-        <section>
+        <section xml:id="Creating_a_List_of_Available_Floating_IP_Addresses">
             <title>Creating a List of Available Floating IP Addresses</title>
         <para>Nova maintains a list of floating IP addresses that are
              available for assigning to instances. Use the <command>nova-manage floating create</command> command
@@ -540,26 +540,26 @@ force_dhcp_release=True
         <para>The following nova-manage commands apply to floating IPs.</para>
         <itemizedlist>
             <listitem>
-                <command>nova-manage floating list</command>: List the floating IP addresses in the
-                    pool.
+                <para><command>nova-manage floating list</command>: List the floating IP addresses in the
+                    pool.</para>
             </listitem>
             <listitem>
-                 <command>nova-manage floating create [cidr]</command>: Create specific
-                    floating IPs for either a single address or a subnet.
+                 <para><command>nova-manage floating create [cidr]</command>: Create specific
+                    floating IPs for either a single address or a subnet.</para>
             </listitem>
             <listitem>
-                  <command>nova-manage floating delete [cidr]</command>: Remove floating IP
-                    addresses using the same parameters as the create command.
+                  <para><command>nova-manage floating delete [cidr]</command>: Remove floating IP
+                    addresses using the same parameters as the create command.</para>
             </listitem>
         </itemizedlist>
 
     </section>
-    <section>
+    <section xml:id="Adding_a_Floating_IP_to_an_Instance">
         <title>Adding a Floating IP to an Instance</title>
         <para>Adding a floating IP to an instance is a two step process:</para>
         <orderedlist>
-            <listitem><command>nova floating-ip-create</command>: Allocate a floating IP address from the list of available addresses.</listitem>
-            <listitem><command>nova add-floating-ip</command>: Add an allocated floating IP address to a running instance.</listitem>
+            <listitem><para><command>nova floating-ip-create</command>: Allocate a floating IP address from the list of available addresses.</para></listitem>
+            <listitem><para><command>nova add-floating-ip</command>: Add an allocated floating IP address to a running instance.</para></listitem>
         </orderedlist>
 
         <para>Here's an example of how to add a floating IP to a running
@@ -584,7 +584,7 @@ force_dhcp_release=True
     </screen>
     </section>
 
-        <section>
+        <section xml:id="Automatically_adding_floating_IPs">
             <title>Automatically adding floating IPs</title>
             <para>The nova-network service can be configured to automatically
 allocate and assign a floating IP address to virtual instances when they are
@@ -598,7 +598,7 @@ auto_assign_floating_ip=True
                 IP addresses have already been allocated, the 
                 <command>nova boot</command> command will fail with an error.</para>
         </section>
-        <section>
+        <section xml:id="Troubleshooting">
             <title>Troubleshooting</title>
             <para>If you aren't able to reach your instances via the floating IP
             address, make sure the default security group allows ICMP (ping) and SSH (port 22),
