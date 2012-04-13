@@ -282,7 +282,8 @@ driver = keystone.catalog.backends.sql.Catalog
       </section>
 
       <section xml:id="keystone-service-endpoint-create">
-        <title>Creating keystone services and service endpoint</title>
+        <title>Creating keystone services and service
+        endpoints</title>
 
 <para>Here we define the services and their endpoints.</para>
 
@@ -309,9 +310,9 @@ driver = keystone.catalog.backends.sql.Catalog
  endpoint-create \
  --region RegionOne \
  --service_id=15c11a23667e427e91bc31335b45f4bd \
- --publicurl=http://192.168.206.130:5000/v2.0 \
+ --publicurl=http://192.168.206.130:35357/v2.0 \
  --internalurl=http://192.168.206.130:5000/v2.0 \
- --adminurl=http://192.168.206.130:35357/v2.0</userinput>
+ --adminurl=http://192.168.206.130:5000/v2.0</userinput>
 <computeroutput>+-------------+-----------------------------------+
 |   Property  |             Value                 |
 +-------------+-----------------------------------+
@@ -326,8 +327,13 @@ driver = keystone.catalog.backends.sql.Catalog
 </screen>
 
 <para>Define the Compute service, which requires a separate endpoint
-for each tenant. Here we use the <literal>service</literal> tenant from
-the previous section</para>
+        for each tenant. Here we use the <literal>service</literal>
+        tenant from the previous section. <note>
+          <para>Note that the %(tenant_id)s and single quotes around
+            the publicurl, internalurl, and adminurl must be typed
+            exactly as shown for both the Compute endpoint and the
+            Volume endpoint.</para>
+        </note></para>
 
 <screen>
 <prompt>$</prompt> <userinput>keystone--token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 service-create \
@@ -348,9 +354,9 @@ the previous section</para>
 keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 endpoint-create \
  --region RegionOne \
  --service_id=abc0f03c02904c24abdcc3b7910e2eed \
- --publicurl="http://192.168.206.130:8774/v2/$TENANT" \
- --internalurl="http://192.168.206.130:8774/v2/$TENANT" \
- --adminurl="http://192.168.206.130:8774/v2/$TENANT"</userinput>
+ --publicurl='http://192.168.206.130:8774/v2/%(tenant_id)s' \
+ --internalurl='http://192.168.206.130:8774/v2/%(tenant_id)s' \
+ --adminurl='http://192.168.206.130:8774/v2/%(tenant_id)s'</userinput>
 <computeroutput>+-------------+-----------------------------------------------------------------+
 |   Property  |                               Value                             |
 +-------------+-----------------------------------------------------------------+
@@ -390,9 +396,9 @@ tenant.</para>
  endpoint-create \
  --region RegionOne \
  --service_id=15c11a23667e427e91bc31335b45f4bd \
- --publicurl=http://192.168.206.130:8776/v1/$TENANT" \
- --internalurl=http://192.168.206.130:8776/v1/$TENANT" \
- --adminurl=http://192.168.206.130:8776/v1/$TENANT" 
+ --publicurl='http://192.168.206.130:8776/v1/%(tenant_id)s' \
+ --internalurl='http://192.168.206.130:8776/v1/%(tenant_id)s' \
+ --adminurl='http://192.168.206.130:8776/v1/%(tenant_id)s' 
 </userinput>
 <computeroutput>
 +-------------+-----------------------------------------------------------------+
@@ -488,66 +494,6 @@ tenant.</para>
 +-------------+--------------------------------------------+
 </computeroutput>
 </screen>
-<para>Next, create an endpoint for each service you just created using the
-      id values returned by each service-create command. Here's an
-      example for the nova service endpoint.</para>
-      <screen>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 endpoint-create \
-                       --region RegionOne \
-                       --service_id=abc0f03c02904c24abdcc3b7910e2eed \
-                       --publicurl http://192.168.206.130:8774/v2 \
-                       --adminurl http://192.168.206.130:8774/v2 \
-                       --internalurl http://192.168.206.130:8774/v2</screen>
-      <para>In return for each of these commands, you see a listing of
-      property and value for each creation.</para>
-      <programlisting>
-+-------------+----------------------------------+
-|   Property  |              Value               |
-+-------------+----------------------------------+
-| adminurl    | http://192.168.206.130:8774/v2   |
-| id          | 935fd37b6fa74b2f9fba6d907fa95825 |
-| internalurl | http://192.168.206.130:8774/v2   |
-| publicurl   | http://192.168.206.130:8774/v2   |
-| region      | RegionOne                        |
-| service_id  | abc0f03c02904c24abdcc3b7910e2eed |
-+-------------+----------------------------------+</programlisting>
-      <para>Substitute the service IDs for each in the --service_id
-      parameter, and ensure the URLs contain correct port values and
-      the correct version number of the API. </para>
-
-    <para>For the Image service, here's the command, though you need
-      to substitute the service_id with the id received from the
-      results of the keystone endpoint-create command. </para>
-    <screen>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 endpoint-create \
-                       --region RegionOne \
-                       --service_id=&lt;id returned from endpoint creation&gt; \
-                       --publicurl http://192.168.206.130:9292/v1 \
-                       --adminurl http://192.168.206.130:9292/v1 \
-                       --internalurl http://192.168.206.130:9292/v1</screen>
-    
-    <para>For the volume service, use commands like the following.
-    </para>
-    <screen>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 endpoint-create \
-                       --region RegionOne \
-                       --service_id=&lt;id returned from endpoint creation&gt; \
-                       --publicurl http://192.168.206.130:8776/v1 \
-                       --adminurl http://192.168.206.130:8776/v1 \
-                       --internalurl http://192.168.206.130:8776/v1</screen>
-    
-    <para>For the EC2 compatibility layer, use commands like the following.
-    </para>
-    <screen>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 endpoint-create \
-                       --region RegionOne \
-                       --service_id=&lt;id returned from endpoint creation&gt; \
-                       --publicurl http://192.168.206.130:8773/services/Cloud \
-                       --adminurl http://192.168.206.130:8773/services/Admin \
-                       --internalurl http://192.168.206.130:8773/services/Cloud</screen>
-    <para>For the Identity service you also create an endpoint. </para>
-    <screen>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 endpoint-create \
-                       --region RegionOne \
-                       --service_id=&lt;id returned from endpoint creation&gt; \
-                       --publicurl http://192.168.206.130:35357/v2.0 \
-                       --adminurl http://192.168.206.130:5000/v2.0 \
-                       --internalurl http://192.168.206.130:35357/v2.0</screen>
   </section>
   <section xml:id="troubleshooting-identity-service">
     <title>Troubleshooting the Identity Service (Keystone)</title>

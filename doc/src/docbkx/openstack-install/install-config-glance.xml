@@ -61,15 +61,13 @@ pipeline = authtoken auth-context context registryapp</screen>
 sudo service glance-api restart</screen>
         <note><para>Any time you change the .conf files, restart the
             corresponding service.</para></note>
-     <para>The database tables are created when you restart
-            glance-registry, so there is no need to run a database
-            sync command. </para>
+     <para>On Ubuntu 12.04, the database tables are under version
+            control and you must do these steps on a new install to
+            prevent the Image service from breaking possible upgrades.
+            <screen>glance-manage version_control 0
+glance-manage db_sync</screen></para>
         <note><para>Also note that this guide does not configure image
             caching, refer to <link
                 xlink:href="http://glance.openstack.org"
                 >http://glance.openstack.org</link> for more
-            information.</para></note></section>
-<!--<para>Create the tables in your backend data
-        store:</para>
-    <literallayout class="monospaced">sudo glance-manage db_sync</literallayout>
-    <para>Now you can load your initial image. </para>--></section>
+            information.</para></note></section></section>
