@@ -511,6 +511,58 @@ brctl delbr br_NNN</literallayout>
                 are connected with revoked certificates when their connection is re-negotiated
                 (every hour). You set the --use_project_ca flag in nova.conf for cloudpipes to work
                 securely so that each project has its own Certificate Authority (CA).</para></section>
+        <section xml:id="multi-host">
+            <title>Nova multi_host mode against SPOF</title>
+            <para>The multi_host mode is a feature that would help removing the SPOF (Single Point
+                Of Failure, see : <link
+                    xlink:href="https://en.wikipedia.org/wiki/Single_point_of_failure"
+                    >https://en.wikipedia.org/wiki/Single_point_of_failure</link>)in your OpenStack
+                cloud. Essentially, the mode allows every compute node to act as a gateway for the
+                instances running on it. Without this feature, you usually run one instance of
+                nova-network for your whole cloud. If the service goes down (system error, process
+                hanging, etc..), you will at the same time lose access to all the running instances.
+                Such configuration introduces a single point of failure. By using that feature, you
+                breakdown the dependency from the compute nodes to the network. Thus, if the
+                controller (usually a server which runs most of the services) becomes unreacheable,
+                the instances would be still accessible.<emphasis role="italic">The multi_host mode
+                    removes any dependency, so the SPOF from one or multiple compute nodes, to one
+                    nova-network server.</emphasis></para>
+            <para>Here is, simply put, how the multi_host mode works : <figure>
+                <title>OpenStack multi_host mode</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata scale="50"
+                            fileref="figures/SCH_5006_V00_NUAC-multi_host_OpenStack.png"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>. </para>
+            <section xml:id="setting-up-the-multi-host-mode">
+                <title>
+                    Setting up the multi_host mode
+                </title>
+                <para> The first thing to do is to install nova-network on every compute node :
+                    <screen><prompt>#</prompt> <userinput>apt-get install nova-network</userinput></screen>
+                    On every node, add the following flags :</para>
+                <para>
+                    <filename>/etc/nova/nova.conf</filename>
+                    <programlisting>--ec2_dmz_host=$nova-api-IP
+--multi_host                    </programlisting>
+                    And remove the following flag :
+                    <programlisting> --routing_source_ip=x.x.x.x                    </programlisting>
+                    The first flag permits the creation of two extra iptables rules on your compute
+                    node :
+                    <programlisting>Chain nova-network-PREROUTING (1 references)
+pkts    bytes    target    prot    opt    in    out    source    destination         
+    0    0       DNAT      tcp      --    any   any    anywhere  169.254.169.254    tcp dpt:www to:$nova-api-IP:8773</programlisting>
+                </para>
+                <para> The next thing to do is to remove your current network and re-create it :
+                    <screen><prompt>$</prompt> <userinput>nova-manage project scrub your-project</userinput>
+<prompt>$</prompt> <userinput>nova-manage network create --fixed_range_v4=192.168.0.0/24 --num_networks=1 --network_size=256 --multi_host=T --label=test</userinput></screen>Note
+                    the new flag "--multi_host=T". Every time a new instance is spawned, the compute
+                    node provives itself and IP to the instance, and no longer acts as a router when
+                    the IP was usually assigned from the nova-network. </para>
+            </section>
+        </section>
         <section xml:id="enabling-ping-and-ssh-on-vms">
                     <title>Enabling Ping and SSH on VMs</title>
         <para>Be sure you enable access to your VMs by using the ‘euca-authorize’ command. Below,
