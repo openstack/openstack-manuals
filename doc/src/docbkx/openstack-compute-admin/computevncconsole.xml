@@ -123,56 +123,66 @@
 nova get-vnc-console [server_id] [xvpvnc|novnc]
 </screen>
 
-    <para> To enable vncproxy in your cloud, in addition to running one or both of the proxies and
-      nova-consoleauth, you need to configure the following options on your compute hosts. </para>
+    <para>
+      To enable vncproxy in your cloud, in addition to running one or
+      both of the proxies and nova-consoleauth, you need to configure
+      the following options on your compute hosts.
+    </para>
     <itemizedlist>
       <listitem>
-        <para> :option:`--[no]vnc_enabled` - defaults to enabled. If this option is disabled your
-          instances will launch without VNC support. </para>
+        <para>
+          <literal>vnc_enabled</literal> defaults to <literal>true</literal>. If this
+          flag is set to <literal>false</literal> your instances will launch without VNC
+          support.
+        </para>
       </listitem>
       <listitem>
         <para>
-          :option:`--vncserver_listen` - defaults to 127.0.0.1 This is
+          <literal>vncserver_listen</literal> defaults to <literal>127.0.0.1</literal>. This is
           the address that vncservers will bind, and should be
           overridden in production deployments as a private address.
           Applies to libvirt only. For multi-host libvirt deployments
-          this should be set to a host management ip on the same network
+          this should be set to a host management IP address on the same network
           as the proxies.
         </para>
       </listitem>
       <listitem>
         <para>
-          :option:`--vncserver_proxyclient_address` - defaults to
-          127.0.0.1 This is the address of the compute host that nova
+          <literal>vncserver_proxyclient_address</literal> defaults to
+          <literal>127.0.0.1</literal>. This is the address of the compute host that nova
           will instruct proxies to use when connecting to instance
           vncservers. For all-in-one xen server domU deployments this
-          can be set to 169.254.0.1. For multi-host xen server domU
-          deployments this can be set to a dom0 management ip on the
+          can be set to <literal>169.254.0.1</literal>. For multi-host xen server domU
+          deployments this can be set to a dom0 management IP  address on the
           same network as the proxies. For multi-host libvirt
-          deployments this can be set to a host management ip on the
+          deployments this can be set to a host management IP address on the
           same network as the proxies.
         </para>
       </listitem>
       <listitem>
         <para>
-          :option:`--novncproxy_base_url=[base url for client
-          connections]` -this is the public base url to which clients
-          will connect. &quot;?token=abc&quot; will be added to this url
+          <literal>novncproxy_base_url=<replaceable>[base url for client
+          connections]</replaceable></literal> defaults to
+          <literal>http://127.0.0.1:6080/vnc_auto.html</literal>. This is the
+          public base url to which clients will connect. 
+          <literal>?token=abc</literal> will be added to this url
           for the purposes of auth. When using the system as described
           in this document, an appropriate value is
-          &quot;<link xlink:href="http://$SERVICE_HOST:6080/vnc_auto.html">http://$SERVICE_HOST:6080/vnc_auto.html</link>&quot;
-          where SERVICE_HOST is a public hostname.
+          <literal>http://<replceable>$SERVICE_HOST</replceable>:6080/vnc_auto.html</literal>
+          where <replaceable>SERVICE_HOST</replaceable> is a public hostname.
         </para>
       </listitem>
       <listitem>
         <para>
-          :option:`--xvpvncproxy_base_url=[base url for client
-          connections]` -this is the public base url to which clients
-          will connect. &quot;?token=abc&quot; will be added to this url
+          <literal>xvpvncproxy_base_url=<replaceable>[base url for client
+          connections]</replaceable></literal> defaults to 
+          <literal>http://127.0.0.1:6081/console</literal>. This is the public
+          base url to which clients
+          will connect. <literal>?token=abc</literal> will be added to this url
           for the purposes of auth. When using the system as described
           in this document, an appropriate value is
-          &quot;<link xlink:href="http://$SERVICE_HOST:6081/console">http://$SERVICE_HOST:6081/console</link>&quot;
-          where SERVICE_HOST is a public hostname.
+          <literal>http://<replaceable>$SERVICE_HOST</replaceable>:6081/console/</literal>
+          where <replaceable>SERVICE_HOST</replaceable> is a public hostname.
         </para>
       </listitem>
     </itemizedlist>
@@ -186,14 +196,14 @@ nova get-vnc-console [server_id] [xvpvnc|novnc]
     <itemizedlist>
       <listitem>
         <para>
-          :option:`--xvpvncproxy_port=[port]` - port to bind (defaults
-          to 6081)
+          <literal>xvpvncproxy_port=<replaceable>[port]</replaceable></literal> port to bind (defaults
+          to <literal>6081</literal>)
         </para>
       </listitem>
       <listitem>
         <para>
-          :option:`--xvpvncproxy_host=[host]` - host to bind (defaults
-          to 0.0.0.0)
+          <literal>xvpvncproxy_host=<replaceable>[host]</replaceable></literal> host to bind (defaults
+          to <literal>0.0.0.0</literal>)
         </para>
       </listitem>
     </itemizedlist>
@@ -202,9 +212,9 @@ nova get-vnc-console [server_id] [xvpvnc|novnc]
       version of TightVNC slightly modified to support our token auth:
     </para>
     <screen>
-git clone https://github.com/cloudbuilders/nova-xvpvncviewer
-cd nova-xvpvncviewer/viewer
-make
+<prompt>$</prompt> <userinput>git clone https://github.com/cloudbuilders/nova-xvpvncviewer</userinput>
+<prompt>$</prompt> <userinput>cd nova-xvpvncviewer/viewer</userinput>
+<prompt>$</prompt> <userinput>make</userinput>
 </screen>
     <para>
       Then, to create a session, first request an access url using
@@ -212,9 +222,9 @@ make
     </para>
     <screen>
 # Retrieve access url
-nova get-vnc-console [server_id] xvpvnc
+<prompt>$</prompt> <userinput>nova get-vnc-console <replaceable>[server_id]</replaceable> xvpvnc</userinput>
 # Run client
-java -jar VncViewer.jar URL [access_url]
+<prompt>$</prompt> <userinput>java -jar VncViewer.jar URL <replaceable>[access_url]</replaceable></userinput>
 </screen>
   
     <note><para>Note that nova-vncproxy has been replaced with nova-novncproxy.</para>
@@ -229,27 +239,27 @@ java -jar VncViewer.jar URL [access_url]
       To use this nova-novncproxy:
     </para>
     <screen>
-git clone http://github.com/cloudbuilders/noVNC.git
-git checkout vnc_redux
-utils/nova-novncproxy --flagfile=[path to flagfile]
+<prompt>$</prompt> <userinput>git clone http://github.com/cloudbuilders/noVNC.git</userinput>
+<prompt>$</prompt> <userinput>git checkout vnc_redux</userinput>
+<prompt>$</prompt> <userinput>utils/nova-novncproxy --flagfile=<replaceable>[path to flagfile]</replaceable></userinput>
 </screen>
     <para>
       The configuration option param should point to your nova config that
       includes the rabbit server address and credentials.
     </para>
     <para>
-      By default, nova-novncproxy binds 0.0.0.0:6080. This can be
+      By default, nova-novncproxy binds <literal>0.0.0.0:6080</literal>. This can be
       configured with:
     </para>
     <itemizedlist>
       <listitem>
         <para>
-          novncproxy_port=[port]`
+          <literal>novncproxy_port=<replaceable>[port]</replaceable></literal>
         </para>
       </listitem>
       <listitem>
         <para>
-          novncproxy_host=[host]`
+          <literal>novncproxy_host=<replaceable>[host]</replaceable></literal>
         </para>
       </listitem>
     </itemizedlist>
@@ -262,7 +272,7 @@ utils/nova-novncproxy --flagfile=[path to flagfile]
     </para>
     <screen>
 # Retrieve access url
-nova get-vnc-console [server_id] novnc
+<prompt>$</prompt> <userinput>nova get-vnc-console <replaceable>[server_id]</replaceable> novnc</userinput>
 # Then, paste the url into your web browser
 </screen>
     <para>
