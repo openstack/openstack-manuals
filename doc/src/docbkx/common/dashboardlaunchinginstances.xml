@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section 
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" 
+    version="5.0"
+    xml:id="Launching_Instances_using_Dashboard">
+    <title>Launching Instances using Dashboard</title>
+    <?dbhtml stop-chunking?>
+    <para>The Dashboard can be used to launch instances. This
+        section explains the various steps to be followed to
+        launch a instance.</para>
+    <section xml:id="Modify_Security_Groups">
+        <title>Modify Security Groups</title>
+        <para>Before launching a VM, first modify the Security
+            Groups rules to allow us to ping and SSH to the
+            instances. This is done by editing the default
+            security group or adding a new security group. For
+            ease of understanding, modify the default security
+            group.</para>
+        <para>
+            <mediaobject>
+                <imageobject role="fo">
+                    <imagedata
+                        fileref="figures/Security-Group.png"
+                        format="PNG" scale="60"/>
+                </imageobject>
+                <imageobject role="html">
+                    <imagedata
+                        fileref="figures/Security-Group.png"
+                        format="PNG"/>
+                </imageobject>
+            </mediaobject>
+        </para>
+        <para>Select IP protocol TCP and enter 22 in "From Port"
+            and "To Port" and CIDR 0.0.0.0/0. This opens port 22
+            for requests from any IP. If you want requests from
+            particular range of IP, provide it in CIDR
+            field.</para>
+        <para>Select IP protocol ICMP and enter -1 in "From Port"
+            and "To Port" and CIDR 0.0.0.0/0. This allows ping
+            from any IP. If you want ping requests from particular
+            range of IP, provide it in CIDR field.</para>
+    </section>
+    <section xml:id="Adding_Keypair">
+        <title>Adding Keypair</title>
+        <para>Next add a Keypair. Once a Keypair is added, the
+            public key would be downloaded. This key can be used
+            to SSH to the launched instance.</para>
+        <para>
+            <mediaobject>
+                <imageobject role="fo">
+                    <imagedata fileref="figures/KeyPair.png"
+                        format="PNG" scale="60"/>
+                </imageobject>
+                <imageobject role="html">
+                    <imagedata fileref="figures/KeyPair.png"
+                        format="PNG"/>
+                </imageobject>
+            </mediaobject>
+        </para>
+        <para>Once this is done, we are now all set to launch an
+            Instance</para>
+    </section>
+    <section xml:id="Launching_Instance">
+        <title>Launching Instance</title>
+        <para>Click Images &amp; Snapshots and launch a required
+            instance from the list of images available.</para>
+        <para>
+            <mediaobject>
+                <imageobject role="fo">
+                    <imagedata fileref="figures/Images.png"
+                        format="PNG" scale="60"/>
+                </imageobject>
+                <imageobject role="html">
+                    <imagedata fileref="figures/Images.png"
+                        format="PNG"/>
+                </imageobject>
+            </mediaobject>
+        </para>
+        <para>Click launch on the required image. Provide a Server
+            Name, select the flavor, the keypair added above and
+            the default security group. Provide the number of
+            instances required. Once these details are provided,
+            click Launch Instance.</para>
+        <para>
+            <mediaobject>
+                <imageobject role="fo">
+                    <imagedata
+                        fileref="figures/LaunchInstance.png"
+                        format="PNG" scale="60"/>
+                </imageobject>
+                <imageobject role="html">
+                    <imagedata
+                        fileref="figures/LaunchInstance.png"
+                        format="PNG"/>
+                </imageobject>
+            </mediaobject>
+        </para>
+        <para>Once the status is Active, the instance is ready and
+            we can ping and SSH to the instance.</para>
+        <para>
+            <mediaobject>
+                <imageobject role="fo">
+                    <imagedata fileref="figures/InstanceReady.png"
+                        format="PNG" scale="60"/>
+                </imageobject>
+                <imageobject role="html">
+                    <imagedata fileref="figures/InstanceReady.png"
+                        format="PNG"/>
+                </imageobject>
+            </mediaobject>
+        </para>
+    </section>
+</section>
