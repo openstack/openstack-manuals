@@ -1464,7 +1464,7 @@ ping HostC
         <listitem>
           <para>Configure NFS at HostA by adding below to /etc/exports</para>
 
-          <literallayout class="monospaced">NOVA-INST-DIR/instances HostA/255.255.0.0(rw,sync,fsid=0,no_root_squash</literallayout>
+          <literallayout class="monospaced">NOVA-INST-DIR/instances HostA/255.255.0.0(rw,sync,fsid=0,no_root_squash)</literallayout>
 
           <para>Change "255.255.0.0" appropriate netmask, which should include
           HostB/HostC. Then restart nfs server.</para>
@@ -1474,12 +1474,20 @@ ping HostC
 /etc/init.d/idmapd restart
                             </literallayout>
         </listitem>
-
+        <listitem>
+           <para>
+           Set the 'execute/search' bit on your shared directory
+           </para>
+          <para>
+            On both compute node, make sure to enable the 'execute/search' bit for qemu being able to use the images within the directories. On both hosts : 
+          </para>
+          <literallayout class="monospaced">chmod o+x NOVA-INST-DIR/instances </literallayout>
+        </listitem>
         <listitem>
           <para>Configure NFS at HostB and HostC by adding below to
           /etc/fstab</para>
 
-          <literallayout class="monospaced">HostA:/ DIR nfs4 defaults 0 0</literallayout>
+          <literallayout class="monospaced">HostA:/NOVA-INST-DIR/instances /NOVA-INST-DIR/instances nfs4 defaults 0 0</literallayout>
 
           <para>Then mount, check exported directory can be mounted.</para>
 
