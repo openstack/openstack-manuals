@@ -30,29 +30,29 @@
             and configure the admin_* values under
             [filter:authtoken].</para>
            <screen>[filter:authtoken]
-           admin_tenant_name = service
-           admin_user = glance
-           admin_password = 012345SECRET99TOKEN012345</screen>
+admin_tenant_name = service
+admin_user = glance
+admin_password = 012345SECRET99TOKEN012345</screen>
         <para>Ensure that the glance-api pipeline section includes
             authtoken:</para>
            <screen>[pipeline:glance-api]
 pipeline = versionnegotiation authtoken auth-context apiv1app</screen>
            <para>Add this to the end of <filename>/etc/glance/glance-api.conf</filename>.</para>
            <screen>[paste_deploy]
-           flavor = keystone</screen>
+flavor = keystone</screen>
            
            <para>Restart glance-api to pick up these changed settings.</para>
            <screen>service glance-api restart</screen>
            
            <para>Add this to the end of <filename>/etc/glance/glance-registry.conf</filename>.</para>
            <screen>[paste_deploy]
-           flavor = keystone</screen>
+flavor = keystone</screen>
            
            <para>Update <filename>/etc/glance/glance-registry-paste.ini</filename>, configure the admin_* vaules under [filter:authtoken]:</para>
            <screen>[filter:authtoken]
-           admin_tenant_name = service
-           admin_user = glance
-           admin_password = glance</screen>
+admin_tenant_name = service
+admin_user = glance
+admin_password = glance</screen>
            <para>Ensure that the glance-registry pipeline section includes authtoken:</para>
         <screen>[pipeline:glance-registry]
 #pipeline = context registryapp
