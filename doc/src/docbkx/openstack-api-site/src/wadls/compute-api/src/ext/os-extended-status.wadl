@@ -8,22 +8,31 @@
 
     <resources base="https://servers.api.openstack.com">
         <resource id="version" type="#VersionDetails" path="v1.1/">
+            <resource id="tenantID" path="{tenant_id}">
+                <param name="tenant_id" style="template" type="xsd:string">
+                    <doc><p xmlns="http://www.w3.org/1999/xhtml">
+                        The ID for the tenant or account in a multi-tenancy cloud.
+                    </p></doc>
+                </param>
             <resource id="Servers" path="servers">
-               <method href="#extended_server_attributes_detail" />
-                <resource path="{server_id}">
-                    <method href="#extended_server_attributes_show" />
                     <param name="server_id" style="template" type="csapi:UUID">
                         <doc>
                             <p xmlns="http://www.w3.org/1999/xhtml">The UUID for the server of interest to you.</p>
                         </doc>
                     </param>
-                </resource>
-           </resource>
-       </resource>
+                    <resource path="action">
+                        <method href="#os-extended-status-show"/>
+                    </resource>
+                    <resource path="detail">
+                        <method href="#os-extended-status-detail"/>
+                    </resource>
+            </resource>
+            </resource>
+        </resource>
     </resources>
 
     <method name="GET" id="os-extended-status-show">
-        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="E" title="Extended status for server show">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="Extended status for server show">
             <p xmlns="http://www.w3.org/1999/xhtml">Adds vm_state, power_state, and task_state to a server response object.</p>
         </wadl:doc>
         <response status="200">
@@ -36,7 +45,7 @@
     </method>
 
     <method name="GET" id="os-extended-status-detail">
-        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="E" title="Extended attributes for server detail">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="Extended attributes for server detail">
             <p xmlns="http://www.w3.org/1999/xhtml">Adds vm_state, power_state, and task_state to each returned server object.</p>
         </wadl:doc>
         <response status="200">
