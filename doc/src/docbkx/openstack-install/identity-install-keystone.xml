@@ -291,7 +291,7 @@ driver = keystone.catalog.backends.sql.Catalog
 
 <screen>
 <prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 \
- --endpoint http://192.168.206.130:35357/v2.0
+ --endpoint http://192.168.206.130:35357/v2.0/ \
  service-create \
  --name=keystone \
  --type=identity \
@@ -306,7 +306,7 @@ driver = keystone.catalog.backends.sql.Catalog
 | type        | identity                         |
 +-------------+----------------------------------+</computeroutput>
 <prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 \
- --endpoint http://192.168.206.130:35357/v2.0
+ --endpoint http://192.168.206.130:35357/v2.0/ \
  endpoint-create \
  --region RegionOne \
  --service_id=15c11a23667e427e91bc31335b45f4bd \
@@ -336,7 +336,9 @@ driver = keystone.catalog.backends.sql.Catalog
         </note></para>
 
 <screen>
-<prompt>$</prompt> <userinput>keystone--token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 service-create \
+<prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 \
+--endpoint http://192.168.206.130:35357/v2.0/ \
+service-create \
  --name=nova \
  --type=compute \
  --description=&quot;Nova Compute Service&quot;</userinput>
@@ -351,7 +353,9 @@ driver = keystone.catalog.backends.sql.Catalog
 </computeroutput>
 <prompt>$</prompt> <userinput>TENANT=eb7e0c10a99446cfa14c244374549e9d</userinput> 
 <prompt>$</prompt> <userinput>
-keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 endpoint-create \
+keystone --token 012345SECRET99TOKEN012345 \
+--endpoint http://192.168.206.130:35357/v2.0/ \
+endpoint-create \
  --region RegionOne \
  --service_id=abc0f03c02904c24abdcc3b7910e2eed \
  --publicurl='http://192.168.206.130:8774/v2/%(tenant_id)s' \
@@ -374,8 +378,8 @@ keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:353
 tenant.</para>
 <screen>
 <prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 \
- --endpoint http://192.168.206.130:35357/v2.0
- service-create \
+ --endpoint http://192.168.206.130:35357/v2.0/ \
+service-create \
  --name=volume \
  --type=volume \
  --description=&quot;Nova Volume Service&quot;
@@ -392,7 +396,7 @@ tenant.</para>
 </computeroutput>
 <prompt>$</prompt> <userinput>TENANT=eb7e0c10a99446cfa14c244374549e9d</userinput> 
 <prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 \
- --endpoint http://192.168.206.130:35357/v2.0 \
+ --endpoint http://192.168.206.130:35357/v2.0/ \
  endpoint-create \
  --region RegionOne \
  --service_id=1ff4ece13c3e48d8a6461faebd9cd38f \
@@ -417,7 +421,7 @@ tenant.</para>
 <para>Define the Image service:</para>
 <screen>
 <prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 \
- --endpoint http://192.168.206.130:35357/v2.0 \
+ --endpoint http://192.168.206.130:35357/v2.0/ \
  service-create \
  --name=glance \
  --type=image \
@@ -434,7 +438,7 @@ tenant.</para>
 +-------------+----------------------------------+
 </computeroutput>
 <prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 \
- --endpoint http://192.168.206.130:35357/v2.0
+ --endpoint http://192.168.206.130:35357/v2.0/
  endpoint-create \
  --region RegionOne \
  --service_id=7d5258c490144c8c92505267785327c1 \
@@ -458,7 +462,7 @@ tenant.</para>
 <para>Define the EC2 compatibility service:</para>
 <screen>
 <prompt>$</prompt> <userinput>keystone  --token 012345SECRET99TOKEN012345 \
- --endpoint http://192.168.206.130:35357/v2.0\
+ --endpoint http://192.168.206.130:35357/v2.0/ \
  service-create \
  --name=ec2 \
  --type=ec2 \
@@ -473,7 +477,7 @@ tenant.</para>
 +-------------+----------------------------------+
 </computeroutput>
 <prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 \
- --endpoint http://192.168.206.130:35357/v2.0
+ --endpoint http://192.168.206.130:35357/v2.0/ \
  endpoint-create \
  --region RegionOne \
  --service_id=7d5258c490144c8c92505267785327c1 \
