@@ -25,12 +25,14 @@
      <para><literallayout class="monospaced">mysql> GRANT ALL ON glance.* TO 'glance'@'%' IDENTIFIED BY 'yourpassword';</literallayout></para>
      <para>Enter quit at the mysql> prompt to exit MySQL.</para><para><literallayout class="monospaced">mysql> quit</literallayout></para></section>
     <section xml:id="configure-glance-files"><title>Edit the Glance configuration files and paste ini middleware files</title>
-       <para>
-           Update <filename>/etc/glance/glance-api-paste.ini</filename>, configure the admin_* values under [filter:authtoken].</para>
+       <para> Update
+                <filename>/etc/glance/glance-api-paste.ini</filename>
+            and configure the admin_* values under
+            [filter:authtoken].</para>
            <screen>[filter:authtoken]
            admin_tenant_name = service
            admin_user = glance
-           admin_password = glance</screen>
+           admin_password = 012345SECRET99TOKEN012345</screen>
         <para>Ensure that the glance-api pipeline section includes
             authtoken:</para>
            <screen>[pipeline:glance-api]

@@ -113,8 +113,15 @@
         </para>
       </listitem>
     </itemizedlist>
-  
-    <para>
+  <para>You must install the nova-consoleauth component:</para>
+  <screen>sudo apt-get install nova-consoleauth</screen>
+  <para>Also, ensure these configuration options are included in your nova.conf file and restart all the nova services.</para>
+  <programlisting>novncproxy_base_url=http://192.168.206.130:6080/vnc_auto.html
+vncserver_proxyclient_address=192.168.206.130
+vncserver_listen=192.168.206.130
+  </programlisting>
+  <para>These options are described below.</para>
+  <para>
       Nova provides the ability to create access_urls through the
       os-consoles extension. Support for accessing this url is provided
       by novaclient:
@@ -168,7 +175,7 @@ nova get-vnc-console [server_id] [xvpvnc|novnc]
           <literal>?token=abc</literal> will be added to this url
           for the purposes of auth. When using the system as described
           in this document, an appropriate value is
-          <literal>http://<replceable>$SERVICE_HOST</replceable>:6080/vnc_auto.html</literal>
+          <literal>http://<replaceable>$SERVICE_HOST</replaceable>:6080/vnc_auto.html</literal>
           where <replaceable>SERVICE_HOST</replaceable> is a public hostname.
         </para>
       </listitem>
