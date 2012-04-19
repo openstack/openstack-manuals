@@ -1275,22 +1275,15 @@ sudo bash -c "echo 0 &gt; /proc/sys/net/ipv6/conf/all/accept_ra"</literallayout>
   <section xml:id="configuring-compute-to-use-the-image-service">
     <title>Configuring Image Service and Storage for Compute</title>
 
-    <para>Diablo uses <application>Glance</application> for storing
-      and retrieving images. After you have installed a
-        <application>Glance</application> server, you can configure
-        <command>nova-compute</command> to use
-        <application>Glance</application> for image storage and
-      retrieval. You must ensure the
-        <literal>image_service</literal> configuration option is
-      defined with the <application>Glance</application> service :
-        '<literal>nova.image.glance.GlanceImageService</literal>' uses
-        <application>Glance</application> to store and retrieve images
-      for OpenStack Compute.</para>
+    <para>Compute relies on an external image service to store virtual
+      machine images and maintain a catalog of available images. Compute
+      is configured by default to use the OpenStack Image service (Glance),
+      which is the only currently supported image service</para>
+
 
     <table rules="all">
       <caption>Description of <filename>nova.conf</filename>
-        configuration options for the Glance image service and
-        storage</caption>
+        configuration options for the image service backend</caption>
 
       <thead>
         <tr>
@@ -1306,26 +1299,18 @@ sudo bash -c "echo 0 &gt; /proc/sys/net/ipv6/conf/all/accept_ra"</literallayout>
         <tr>
           <td><literal>image_service</literal></td>
 
-          <td><literal>nova.image.local.GlanceImageService</literal></td>
+          <td><literal>nova.image.GlanceImageService</literal></td>
 
           <td><para>The service to use for retrieving and searching for
-          images. Images must be registered using euca2ools. Options:
+          images. Options (only one currently supported):
           </para><itemizedlist>
-              <listitem>
-                <para><literal>nova.image.s3.S3ImageService</literal></para>
-
-                <para>S3 backend for the Image Service.</para>
-              </listitem>
-
               <listitem>
                 <para><emphasis
                 role="bold"><literal>nova.image.glance.GlanceImageService</literal></emphasis></para>
 
-                <para>Glance back end for storing and retrieving images; See
-                <link
-                xlink:href="http://glance.openstack.org">http://glance.openstack.org</link>
-                for more info.</para>
+                <para>Use Glance for storing and retrieving images. </para>
               </listitem>
+
             </itemizedlist></td>
         </tr>
 
@@ -1338,7 +1323,31 @@ sudo bash -c "echo 0 &gt; /proc/sys/net/ipv6/conf/all/accept_ra"</literallayout>
           address) and port of an OpenStack Compute Image Service server
           (project's name is Glance)</td>
         </tr>
+      </tbody>
+    </table>
 
+    <para>If your installation requires the use of euca2ools for registering
+      new images, you will need to run the <literal>nova-objectstore</literal> service.
+      This service provides an Amazon S3 frontend for Glance, which is needed
+      because euca2ools can only upload images to an S3-compatible image
+      store.</para>
+
+
+    <table rules="all">
+      <caption>Description of <filename>nova.conf</filename>
+        configuration options for the nova-objectstore service</caption>
+
+      <thead>
+        <tr>
+          <td>Configuration option</td>
+
+          <td>Default</td>
+
+          <td>Description</td>
+        </tr>
+      </thead>
+
+      <tbody>
         <tr>
           <td><literal>s3_dmz</literal></td>
 
@@ -1366,14 +1375,6 @@ sudo bash -c "echo 0 &gt; /proc/sys/net/ipv6/conf/all/accept_ra"</literallayout>
           <td>Integer value; Port where S3 host is running</td>
         </tr>
 
-        <tr>
-          <td><literal>use_s3</literal></td>
-
-          <td><literal>true</literal></td>
-
-          <td>Set to 1 or true to turn on; Determines whether to get images
-          from s3 or use a local copy</td>
-        </tr>
       </tbody>
     </table>
   </section>
