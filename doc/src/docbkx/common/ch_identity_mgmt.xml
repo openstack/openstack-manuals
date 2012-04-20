@@ -6,17 +6,15 @@
   <title>Identity Management</title>
   <para>
     The default identity management system for OpenStack is the OpenStack Identity Service, code-named Keystone.
-    Refer to <link xlink:href="http://keystone.openstack.org">http://keystone.openstack.org</link> 
-    for the most updated information about Keystone installation. 
-    Once Keystone is installed, it is configured via a primary
-    configuration file (<literal>etc/keystone.conf</literal>), possibly
+    Once Identity is installed, it is configured via a primary
+    configuration file (<filename>etc/keystone.conf</filename>), possibly
     a separate logging configuration file, and initializing data into
     keystone using the command line client.
   </para>
   <section xml:id="keystone-configuration-file">
-    <title>Keystone Configuration File</title>
+    <title>Configuration File</title>
     <para>
-      The keystone configuration file is an 'ini' file format with
+      The Identity configuration file is an 'ini' file format with
       sections, extended from
       <link xlink:href="http://pythonpaste.org/">Paste</link>, a common
       system used to configure python WSGI based applications. In
@@ -27,17 +25,21 @@
       individual sections.
     </para>
     <para>
-      The services include: * <literal>[identity]</literal> - the python
-      module that backends the identity system *
-      <literal>[catalog]</literal> - the python module that backends the
-      service catalog * <literal>[token]</literal> - the python module
-      that backends the token providing mechanisms *
-      <literal>[policy]</literal> - the python module that drives the
-      policy system for RBAC
+      The services include:
+      <itemizedlist>
+        <listitem><para><literal>[identity]</literal> - the python
+        module that backends the identity system</para></listitem>
+        <listitem><para><literal>[catalog]</literal> - the python module that
+        backends the service catalog</para></listitem>
+        <listitem><para><literal>[token]</literal> - the python module
+      that backends the token providing mechanisms</para></listitem>
+        <listitem><para><literal>[policy]</literal> - the python module that
+        drives the policy system for RBAC</para></listitem>
+      </itemizedlist>
     </para>
     <para>
-      The keystone configuration file is expected to be named
-      <literal>keystone.conf</literal>. When starting up Keystone, you
+      The configuration file is expected to be named
+      <literal>keystone.conf</literal>. When starting up Identity, you
       can specify a different configuration file to use with
       <literal>--config-file</literal>. If you do
       <emphasis role="strong">not</emphasis> specify a configuration
@@ -67,23 +69,24 @@
       </listitem>
     </itemizedlist>
     <para>
-      Logging is configured externally to the rest of keystone, the file
-      specifying the logging configuration is in the [DEFAULT] section
+      Logging is configured externally to the rest of Identity, the file
+      specifying the logging configuration is in the <literal>[DEFAULT]</literal>
+       section
       of the keystone conf file under <literal>log_config</literal>. If
-      you wish to route all your logging through syslog, there is a
-      <literal>use_syslog</literal> option also in the [DEFAULT] section
-      that easy.
+      you wish to route all your logging through syslog, set
+      <literal>use_syslog=true</literal> option in the
+      <literal>[DEFAULT]</literal> section.
     </para>
     <para>
       A sample logging file is available with the project in the
-      directory <literal>etc/logging.conf.sample</literal>. Like other
-      OpenStack projects, keystone uses the `python logging module`,
+      directory <filename>etc/logging.conf.sample</filename>. Like other
+      OpenStack projects, Identity uses the `python logging module`,
       which includes extensive configuration options for choosing the
       output levels and formats.
     </para>
     <para>
       In addition to this documentation page, you can check the
-      <literal>etc/keystone.conf</literal> sample configuration files
+      <filename>etc/keystone.conf</filename> sample configuration files
       distributed with keystone for example configuration files for each
       server application.
     </para>
@@ -104,9 +107,9 @@
     </section>
   </section>
   <section xml:id="running-keystone">
-    <title>Running Keystone</title>
+    <title>Running</title>
     <para>
-      Running keystone is simply starting the services by using the
+      Running Identity is simply starting the services by using the
       command:
     </para>
     <screen>
@@ -151,7 +154,7 @@ keystone-all
       </listitem>
     </itemizedlist>
     <para>
-      To migrate from legacy versions of keystone, use the following
+      To migrate from legacy versions of Identity, use the following
       steps:
     </para>
     <section xml:id="step-1-configure-keystone.conf">
@@ -208,11 +211,11 @@ keystone-manage export_legacy_catalog \
   </section>
   <section xml:id="migrating-from-nova-auth">
     <?dbhtml stop-chunking?>
-    <title>Migrating from Nova Auth</title>
+    <title>Migrating from Legacy Authentication</title>
     <para>
       Migration of users, projects (aka tenants), roles and EC2
       credentials is supported for the Diablo and Essex releases of
-      Nova. To migrate your auth data from Nova, use the following
+      Nova. To migrate your auth data from Compute, use the following
       steps:
     </para>
     <section xml:id="step-1-export-your-data-from-nova">
@@ -232,7 +235,7 @@ nova-manage export auth &gt; /path/to/dump
       <title>Step 2: db_sync your new, empty database</title>
       <para>
         Run the following command to configure the most recent schema in
-        your new keystone installation:
+        your new installation:
       </para>
       <screen>
 keystone-manage db_sync
@@ -241,18 +244,18 @@ keystone-manage db_sync
     <section xml:id="step-3-import-your-data-to-keystone">
       <title>Step 3: Import your data to Keystone</title>
       <para>
-        To import your Nova auth data from a dump file created with
-        nova-manage, run this command:
+        To import your Compute auth data from a dump file created with
+        <command>nova-manage</command>, run this command:
       </para>
       <screen>
-keystone-manage import_nova_auth [dump_file, e.g. /path/to/dump]
+<prompt>$</prompt> <userinput>keystone-manage import_nova_auth <replaceable>[dump_file, e.g. /path/to/dump]</replaceable></userinput>
 </screen>
     </section>
   </section>
   <section xml:id="initializing-keystone">
     <title>Initializing Keystone</title>
     <para>
-      keystone-manage is designed to execute commands that cannot be
+      <command>keystone-manage</command> is designed to execute commands that cannot be
       administered through the normal REST api. At the moment, the
       following calls are supported:
     </para>
@@ -903,11 +906,15 @@ keystone service-delete 08741d8ed88242ca88d1f61484a0fe3b
     to handle authentication tasks or otherwise interact with Keystone.
   </para>
   <para>
-    In general: * Clients making calls to the service will pass in an
-    authentication token. * The Keystone middleware will look for and
-    validate that token, taking the appropriate action. * It will also
-    retrieve additional information from the token such as user name, id,
-    tenant name, id, roles, etc...
+    In general:
+    <itemizedlist>
+      <listitem><para>Clients making calls to the service will pass in an
+    authentication token.</para></listitem>
+    <listitem><para>The Keystone middleware will look for and
+    validate that token, taking the appropriate action.</para></listitem>
+    <listitem><para>It will also retrieve additional information from the
+      token such as user name, id, tenant name, id, roles, etc.</para></listitem>
+    </itemizedlist>
   </para>
   <para>
     The middleware will pass those data down to the service as headers.
@@ -924,11 +931,10 @@ keystone service-delete 08741d8ed88242ca88d1f61484a0fe3b
         provided with the keystone project, the line defining this token
         is
       </para>
-      <blockquote>
-        <para>
-          [DEFAULT] admin_token = ADMIN
-        </para>
-      </blockquote>
+      <programlisting>
+[DEFAULT]
+admin_token = ADMIN
+      </programlisting>
       <para>
         This configured token is a &quot;shared secret&quot; between
         keystone and other openstack services (for example: nova, swift,
@@ -949,7 +955,7 @@ keystone service-delete 08741d8ed88242ca88d1f61484a0fe3b
   <section xml:id="setting-up-services">
     <title>Setting up services</title>
     <section xml:id="defining-services">
-      <title>Defining Services</title>
+      <title>Defining services</title>
       <para>
         Keystone also acts as a service catalog to let other OpenStack
         systems know where relevant API endpoints exist for OpenStack
@@ -977,28 +983,74 @@ keystone service-create --name=swift \
                                --type=object-store \
                                --description=&quot;Swift Service&quot;
 </screen>
-      <para>
-        The endpoints for these services are defined in a template, an
-        example of which is in the project as the file
-        <literal>etc/default_catalog.templates</literal>.
-      </para>
+</section>
+<section xml:id="keystone-defining-endpoints">
+  <title>Defining endpoints</title>
+  <para>Every service konwn to Identity must have a corresponding service
+    endpoint that specifies the URL(s) where requests can be made against
+    those services. Identity supports two alternative mechanisms for
+    defining service endpoints:</para>
+    <orderedlist>
+      <listitem><para>Using a database backend</para></listitem>
+      <listitem><para>Using a template file</para></listitem>
+    </orderedlist>
+
+    <para>The database backend is intended for production deployments, as
+      it provides better reliability, availability, and data redundancy.
+      The template file is simpler to use and is typically used by developers
+      when running only on a single node.</para>
+
+      <section xml:id="keystone-endpoint-database">
+        <title>Database backend</title>
+        <para>To use the database backend to track service endpoints, your
+          <filename>keystone.conf</filename> must contain the following:</para>
+<programlisting>
+[catalog]
+driver = keystone.catalog.backends.sql.Catalog
+</programlisting>
+
+        <para>You must also manually create an endpoint associated with each
+          service using the <command>keystone endpoint-create</command> command.
+          See the <link xlink:href="http://docs.openstack.org">OpenStack
+          Install and Deploy Guide</link> for more details on how to create
+          the endpoints for each service.</para>
+      </section>
+      <section xml:id="keystone-endpoint-template">
+        <title>Template file</title>
+        <para>To use the template file to track service endpoints, your
+          <filename>keystone.conf</filename> must contain the following:</para>
+<programlisting>
+[catalog]
+driver = keystone.catalog.backends.templated.TemplatedCatalog
+template_file = /etc/keystone/default_catalog.templates
+</programlisting>
+
+        <para>The location of your <literal>template_file</literal> may vary
+        depending on your particular setup. You also may need to edit it if you
+        are using any non-standard ports for any of the services.</para>
+
+        <para>Note that you do not need to manually add the service endpoints 
+          using <command>keystone endpoint-create</command> when using the
+          template file, as Identity will automatically populate the catalog
+          with endpoint information by reading from the template file.</para>
+      </section>
     </section>
   </section>
   <section xml:id="setting-up-middleware">
-    <title>Setting Up Middleware</title>
+    <title>Setting up middleware</title>
     <section xml:id="keystone-auth-token-middleware">
       <title>Keystone Auth-Token Middleware</title>
       <para>
-        The Keystone auth_token middleware is a WSGI component that can
+        The Identity auth_token middleware is a WSGI component that can
         be inserted in the WSGI pipeline to handle authenticating tokens
-        with Keystone.
+        with Identity.
       </para>
     </section>
     <section xml:id="configuring-nova-to-use-keystone">
-      <title>Configuring Nova to use Keystone</title>
+      <title>Configuring Compute to use Identity</title>
       <para>
-        To configure Nova to use Keystone for authentication, the Nova
-        API service can be run against the api-paste file provided by
+        To configure Compute to use Identity for authentication, the Nova
+        API service can be run against the <filename>api-paste</filename> file provided by
         Keystone. This is most easily accomplished by setting the
         `--api_paste_config` flag in nova.conf to point to
         `examples/paste/nova-api-paste.ini` from Keystone. This paste
@@ -1006,7 +1058,7 @@ keystone service-create --name=swift \
         provided with the keystone installation.
       </para>
       <para>
-        When configuring Nova, it is important to create a admin service
+        When configuring Compute, it is important to create a admin service
         token for the service (from the Configuration step above) and
         include that as the key 'admin_token' in the nova-api-paste.ini.
       </para>
