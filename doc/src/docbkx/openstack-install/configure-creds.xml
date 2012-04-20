@@ -4,20 +4,42 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
     <title>Defining Compute and Image Service Credentials</title>
-    <para>Create an openrc file that can contain these variables that
-        are used by the nova (Compute) and glance (Image) command-line
-        interface clients. Make a directory to house these.</para>
+    <para>Create an <filename>openrc</filename> file that can contain these variables that
+        are used by the <command>nova</command> (Compute) and
+        <command>glance</command> (Image) command-line
+        interface clients. In this document, we store the <filename>openrc</filename>
+        file in the <filename>~/creds</filename> directory:</para>
 
-<literallayout class="monospaced">mkdir ~/creds
-sudo nano ~/creds/openrc</literallayout>
-    
-    <para>In the openrc file you create, paste these values:</para>
-<literallayout class="monospaced"><xi:include parse="text" href="samples/openrc.txt"/></literallayout>
+<screen>
+<prompt>$</prompt> <userinput>mkdir ~/creds</userinput>
+<prompt>$</prompt> <userinput>nano ~/creds/openrc</userinput>
+</screen>
+
+    <para>In the <filename>openrc</filename> file you create, paste these values:</para>
+<programlisting><xi:include parse="text" href="samples/openrc.txt"/></programlisting>
     <para>Next, ensure these are used in your environment. If you see
         401 Not Authorized errors on commands using tokens, ensure
         that you have properly sourced your credentials and that all
         the pipelines are accurate in the configuration files.</para>
-        <literallayout class="monospaced">source ~/creds/openrc</literallayout>
-    
+
+<screen>
+<prompt>$</prompt> <userinput>source ~/creds/openrc</userinput>
+</screen>
+
+<para>Verify your credentials are working by using the <command>nova</command>
+client to list the available images:</para>
+<screen>
+<prompt>$</prompt> <userinput>nova image-list</userinput>
+<computeroutput>
++--------------------------------------+-------------------+--------+--------+
+|                  ID                  |        Name       | Status | Server |
++--------------------------------------+-------------------+--------+--------+
+| 58b71381-1d8a-4cbb-94f2-c67bfced35f5 | tty-linux-kernel  | ACTIVE |        |
+| 5ca3d2fa-fd89-4edb-af41-ae96136e48ef | tty-linux-ramdisk | ACTIVE |        |
+| cc63afc1-9a83-4978-8d75-f19d874fdf94 | tty-linux         | ACTIVE |        |
++--------------------------------------+-------------------+--------+--------+
+</computeroutput>
+</screen>
+<para>Note that the ID values on your installation will be different.</para>
 </section>
-        
+
