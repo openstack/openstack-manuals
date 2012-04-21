@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="terminology"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>OpenStack Terminology</title>
+
+    <section xml:id="version">
+        <title>
+            Version Names
+        </title>
+        <para>Each OpenStack release has a name, in increasing alphabetical
+            order (e.g., Essex follows Diablo). There are also version numbers
+            corresponding to these releases, but the numbering schemes are
+            different for OpenStack Compute and OpenStack Object Storage, as
+            shown in the table below:
+
+            <table rules="all">
+                <caption>
+                    OpenStack version names
+                </caption>
+                <thead>
+                    <tr>
+                        <td>Release name</td>
+                        <td>Release date</td>
+                        <td>OpenStack Compute version number</td>
+                        <td>OpenStack Object Storage version number</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><link xlink:href="http://wiki.openstack.org/ReleaseNotes/Essex">Essex</link></td>
+                        <td>April 2012</td>
+                        <td>2012.1</td>
+                        <td>1.4.8</td>
+                    </tr>
+                    <tr>
+                        <td><link xlink:href="http://wiki.openstack.org/ReleaseNotes/Diablo">Diablo</link></td>
+                        <td>October 2011</td>
+                        <td>2011.3</td>
+                        <td>1.4.3</td>
+                    </tr>
+                    <tr>
+                        <td><link xlink:href="http://wiki.openstack.org/ReleaseNotes/Cactus">Cactus</link></td>
+                        <td>April 2011</td>
+                        <td>2011.2</td>
+                        <td>1.3.0</td>
+                    </tr>
+                    <tr>
+                        <td><link xlink:href="http://wiki.openstack.org/ReleaseNotes/Bexar">Bexar</link></td>
+                        <td>March 2011</td>
+                        <td>2011.1</td>
+                        <td>1.2.0</td>
+                    </tr>
+                    <tr>
+                        <td><link xlink:href="http://wiki.openstack.org/ReleaseNotes/Austin">Austin</link></td>
+                        <td>October 2010</td>
+                        <td>0.9.0</td>
+                        <td>1.0.0</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            Beginning with the Cactus release, OpenStack adopted a six
+            month release schedule. The Folsom release is scheduled for
+            October 2012.
+        </para>
+    </section>
+
+
+    <section xml:id="terminology-codenames">
+        <title>Code Names</title>
+        <para>Each OpenStack service has a code name. For example, the Image
+            Service is codenamed Glance.The full list is shown in the table
+            below:
+            <table rules="all">
+                <caption>Code names</caption>
+                <thead>
+                    <tr>
+                        <td>Service name</td>
+                        <td>Code name</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><para>Identity</para></td>
+                        <td><para>Keystone</para></td>
+                    </tr>
+                    <tr>
+                        <td><para>Compute</para></td>
+                        <td><para>Nova</para></td>
+                    </tr>
+                    <tr>
+                        <td><para>Image</para></td>
+                        <td><para>Glance</para></td>
+                    </tr>
+                    <tr>
+                        <td><para>Dashboard</para></td>
+                        <td><para>Horizon</para></td>
+                    </tr>
+                    <tr>
+                        <td><para>Object Storage</para></td>
+                        <td><para>Swift</para></td>
+                    </tr>
+                </tbody>
+            </table>
+        </para>
+        <para>These code names are reflected in the names of configuration
+            files and command-line utility programs. For example, the Identity
+            service has a configuration file called
+            <filename>keystone.conf</filename>.
+        </para>
+    </section>
+    <section xml:id="terminology-services">
+        <title>OpenStack Services and Linux Services</title>
+        <para>In the Linux world, a service (also known as a daemon) refers to
+            a single program that runs in the background and typically listens
+            on a port to respond to service requests. An OpenStack service, on
+            the other hand, refers to a collection of Linux services working
+            in concert.</para>
+        <para>OpenStack services are implemented by multiple Linux services.
+            For example, <command>nova-compute</command> and <command>nova-scheduler</command>
+            are two of the Linux services that implement the Compute service.
+            OpenStack also depends on several third-party services, such as a
+            database (typically MySQL) and a message broker (typically RabbitMQ
+            or Qpid).
+        </para>
+        <para>In this document, we generally use the term "service" to refer
+            both to lower-level Linux services and higher-level OpenStack
+            services. It should be clear from the context whether we are
+            referring to a high-level OpenStack service (e.g., Image), or a
+            low-level Linux service (e.g., <command>glance-api</command>).</para>
+    </section>
+</chapter>

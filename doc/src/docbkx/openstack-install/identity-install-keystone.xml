@@ -6,8 +6,8 @@
   <title>Installing and Configuring the Identity Service</title>
   <para>Install the Identity service on any server that is accessible
     to the other servers you intend to use for OpenStack
-    services:</para>
-  <literallayout class="monospaced">sudo apt-get install keystone</literallayout>
+    services, as root:</para>
+  <screen><prompt>#</prompt> <userinput>apt-get install keystone</userinput></screen>
   <para>After installing, you need to delete the sqlite database it
     creates, then change the configuration to point to a MySQL
     database. This configuration enables easier scaling scenarios
@@ -17,50 +17,62 @@
     documentation surrounding high availability and data redundancy
     configurations. </para>
   <para>Delete the <filename>keystone.db</filename> file created in
-    the /var/lib/keystone/
-    directory.<literallayout class="monospaced">sudo rm /var/lib/keystone/keystone.db</literallayout></para>
+    the <filename>/var/lib/keystone</filename>
+    directory.<screen><prompt>#</prompt> <userinput>rm /var/lib/keystone/keystone.db</userinput></screen></para>
   <para>Configure the production-ready backend data store rather than
     using the catalog supplied by default for the ability to backup
     the service and endpoint data. This example shows MySQL.</para>
-  <para>First, install MySQL with:
-    <literallayout class="monospaced">sudo apt-get install python-mysqldb mysql-server</literallayout></para>
+  <para>First, install MySQL as root:
+    <screen><prompt>#</prompt> <userinput>apt-get install python-mysqldb mysql-server</userinput></screen></para>
   <para>During the install, you'll be prompted for the mysql root
     password. Enter a password of your choice and verify it.</para>
-  <para>Edit /etc/mysql/my.cnf to change "bind-address" from localhost
-    (127.0.0.1) to any (0.0.0.0) and restart the mysql service: </para>
+  <para>Use <command>sed</command> to edit <filename>/etc/mysql/my.cnf</filename> to change <literal>bind-address</literal> from localhost
+    (127.0.0.1) to any (0.0.0.0) and restart the mysql service, as root: </para>
   <para>
-    <literallayout class="monospaced">sudo sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/my.cnf
-sudo service mysql restart</literallayout></para>
-  <para>For MySQL, create a MySQL database named "keystone" and a
-    MySQL user named "keystone". Grant the "keystone" user full access
+    <screen><prompt>#</prompt> <userinput>sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/my.cnf</userinput>
+<prompt>#</prompt> <userinput>service mysql restart</userinput></screen></para>
+  <para>The following sequence of commands will create a MySQL database named
+    "keystone" and a MySQL user named "keystone" with full access
     to the "keystone" MySQL database.</para>
 
-  <para>Start the mysql command line client by running:</para>
-  <para><literallayout class="monospaced">mysql -u root -p</literallayout></para>
+  <para>Start the <command>mysql</command> command line client by
+  running:</para>
+  <screen><prompt>$</prompt> <userinput>mysql -u root -p</userinput></screen>
   <para>Enter the mysql root user's password when prompted.</para>
-  <para>To configure the MySQL database, create the keystone database. </para>
-  <para><literallayout class="monospaced">mysql> CREATE DATABASE keystone;</literallayout></para>
+  <para>To configure the MySQL database, create the keystone database.</para>
+  <screen><prompt>mysql&gt;</prompt> <userinput>CREATE DATABASE keystone;</userinput></screen>
   <para>Create a MySQL user for the newly-created keystone database
-    that has full control of the keystone database. </para>
-  <para><literallayout class="monospaced">mysql> GRANT ALL ON keystone.* TO 'keystone'@'%' IDENTIFIED BY 'yourpassword';</literallayout></para>
-  <para>Enter quit at the mysql> prompt to exit MySQL.</para>
-  <para><literallayout class="monospaced">mysql> quit</literallayout></para>
+    that has full control of the keystone database.</para>
+  <note>
+      <title>Note</title>
+      <para>Choose a secure password for the keystone user and replace all
+        references to <replaceable>[YOUR_KEYSTONE_PASSWORD]</replaceable> with
+        this password.</para>
+  </note>
+
+  <screen><prompt>mysql&gt;</prompt> <userinput>GRANT ALL ON keystone.* TO 'keystone'@'%' IDENTIFIED BY '<replaceable>[YOUR_KEYSTONE_PASSWORD]</replaceable>';</userinput></screen>
+  <para>Enter quit at the <literal>mysql></literal> prompt to exit MySQL.</para>
+  <screen><prompt>mysql&gt;</prompt> <userinput>quit</userinput></screen>
+  <note><title>Reminder</title>
+  <para>Recall that this document assumes the Cloud Controller node has an
+    IP address of <literal>192.168.206.130</literal>.</para></note>
   <para>Once Keystone is installed, it is configured via a primary
     configuration file
-    (<literal>etc/keystone/keystone.conf</literal>), and by
+    (<filename>/etc/keystone/keystone.conf</filename>), and by
     initializing data into keystone using the command line client. By
     default, Keystone's data store is sqlite. To change the data store
     to mysql, change the line defining "connection" in
-      <filename>etc/keystone/keystone.conf</filename> like
-    so:<screen>connection = mysql://keystone:yourpassword@192.168.206.130/keystone</screen></para>
+      <filename>/etc/keystone/keystone.conf</filename> like so:</para>
+    <programlisting>connection = mysql://keystone:<replaceable>[YOUR_KEYSTONE_PASSWORD]</replaceable>@192.168.206.130/keystone</programlisting>
   <para>Also, ensure that the proper service token is used in the
-    keystone.conf file. An example is provided in the Appendix.
-    <screen>admin_token = 012345SECRET99TOKEN012345</screen></para>
+    keystone.conf file. An example is provided in the Appendix.</para>
+    <programlisting>admin_token = 012345SECRET99TOKEN012345</programlisting>
   <para>Next, restart the keystone service so that it picks up the new
-    database configuration.
-    <screen>sudo service keystone restart</screen></para>
+    database configuration.</para>
+    <screen><prompt>#</prompt> <userinput>service keystone restart</userinput></screen>
   <para>Lastly, initialize the new keystone
-    database:<screen>sudo keystone-manage db_sync</screen></para>
+    database, as root:</para>
+    <screen><prompt>#</prompt> <userinput>keystone-manage db_sync</userinput></screen>
   <section xml:id="configure-keystone">
     <title>Configuring Services to work with Keystone</title>
     <para> Once Keystone is installed and running, you set up users
