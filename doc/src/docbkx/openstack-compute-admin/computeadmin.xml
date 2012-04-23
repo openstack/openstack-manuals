@@ -1164,24 +1164,46 @@ Total execution time - 1 h 75 m and 35 seconds
     <section xml:id="live-migration-usage">
 
         <title>Using Live Migration</title>
-        <para>Before starting live migration, check "Configuring Live Migration" sections.</para>
+        <para>Before starting live migration, check the "Configuring Live Migration" section.</para>
         <para>Live migration provides a scheme to migrate running instances from one OpenStack
             Compute server to another OpenStack Compute server. No visible downtime and no
-            transaction loss is the ideal goal. This feature can be used as depicted below. </para>
+            transaction loss is the ideal goal. This feature can be used as described below. </para>
 
         <itemizedlist>
             <listitem>
-                <para>First, make sure any instances running on a specific server.</para>
+               <para>First, look at the running instances, to get the ID of the instance you wish
+to live migrate.</para>
                 <programlisting><![CDATA[
-# euca-describe-instances
-Reservation:r-2raqmabo
-RESERVATION   r-2raqmabo    admin   default
-INSTANCE      i-00000003    ami-ubuntu-lucid      a.b.c.d  e.f.g.h      running     testkey (admin, HostB)  0             m1.small     2011-02-15 07:28:32   nova
+# nova-list
++--------------------------------------+------+--------+-----------------+
+|                  ID                  | Name | Status |Networks         |
++--------------------------------------+------+--------+-----------------+
+| d1df1b5a-70c4-4fed-98b7-423362f2c47c | vm1  | ACTIVE | private=a.b.c.d |
+| d693db9e-a7cf-45ef-a7c9-b3ecb5f22645 | vm2  | ACTIVE | private=e.f.g.h |
++--------------------------------------+------+--------+-----------------+
                  ]]></programlisting>
-                 <para> In this example, i-00000003 is running on HostB.</para>
+               <para>Second, look at information associated with that instance - our example is vm1
+from above.</para>
+                <programlisting><![CDATA[
+# nova show d1df1b5a-70c4-4fed-98b7-423362f2c47c
++-------------------------------------+----------------------------------------------------------+
+|               Property              |                          Value                           |
++-------------------------------------+----------------------------------------------------------+
+...
+| OS-EXT-SRV-ATTR:host                | HostB                                                    |
+...
+| flavor                              | m1.tiny                                                  |
+| id                                  | d1df1b5a-70c4-4fed-98b7-423362f2c47c                     |
+| name                                | vm1                                                      |
+| private network                     | a.b.c.d                                                  |
+| status                              | ACTIVE                                                   |
+...
++-------------------------------------+----------------------------------------------------------+
+                 ]]></programlisting>
+                 <para> In this example, vm1 is running on HostB.</para>
             </listitem>
             <listitem>
-                <para>Second, pick up other server where instances are migrated to.</para>
+                <para>Third, select the server to migrate instances to.</para>
                 <programlisting><![CDATA[
 # nova-manage service list
 HostA nova-scheduler enabled  :-) None
@@ -1190,22 +1212,20 @@ HostA nova-network enabled  :-) None
 HostB nova-compute enabled  :-) None
 HostC nova-compute enabled  :-) None
                  ]]></programlisting>
-                 <para> In this example, HostC can be picked up because nova-compute is running onto it.</para>
+                 <para> In this example, HostC can be picked up because nova-compute is running on it.</para>
             </listitem>
             <listitem>
                 <para>Third, check HostC has enough resource for live migration.</para>
                 <programlisting><![CDATA[
-# nova-manage service update_resource HostC
 # nova-manage service describe_resource HostC
-HOST             PROJECT     cpu   mem(mb) disk(gb)
+HOST             PROJECT     cpu   mem(mb)     hdd
 HostC(total)                  16     32232     878
-HostC(used)                   13     21284     442
+HostC(used_now)               13     21284     442
+HostC(used_max)               13     21284     442
 HostC            p1            5     10240     150
 HostC            p2            5     10240     150
 .....
                  ]]></programlisting>
-                 <para>Remember to use update_resource first, then describe_resource. Otherwise,
-                    Host(used) is not updated.</para>
                  <itemizedlist>
                      <listitem>
                          <para><emphasis role="bold">cpu:</emphasis>the nuber of cpu</para>
@@ -1214,7 +1234,7 @@ HostC            p2            5     10240     150
                          <para><emphasis role="bold">mem(mb):</emphasis>total amount of memory (MB)</para>
                      </listitem>
                      <listitem>
-                         <para><emphasis role="bold">disk(gb)</emphasis>total amount of NOVA-INST-DIR/instances(GB)</para>
+                         <para><emphasis role="bold">hdd</emphasis>total amount of NOVA-INST-DIR/instances(GB)</para>
                      </listitem>
                      <listitem>
                          <para><emphasis role="bold">1st line shows </emphasis>total amount of resource physical server has.</para>
@@ -1223,19 +1243,22 @@ HostC            p2            5     10240     150
                          <para><emphasis role="bold">2nd line shows </emphasis>current used resource.</para>
                      </listitem>
                      <listitem>
-                         <para><emphasis role="bold">3rd line and under</emphasis> is used resource per project.</para>
+                         <para><emphasis role="bold">3rd line shows </emphasis>maximum used resource.</para>
+                     </listitem>
+                     <listitem>
+                         <para><emphasis role="bold">4th line and under</emphasis> is used resource per project.</para>
                      </listitem>
                  </itemizedlist>
             </listitem>
             <listitem>
                 <para>Finally, live migration</para>
                 <programlisting><![CDATA[
-# nova-manage vm live_migration i-00000003 HostC
-Migration of i-00000001 initiated. Check its progress using euca-describe-instances.
+# nova live-migration bee83dd3-5cc9-47bc-a1bd-6d11186692d0 HostC
+Migration of bee83dd3-5cc9-47bc-a1bd-6d11186692d0 initiated.
                  ]]></programlisting>
-                 <para>Make sure instances are migrated successfully with euca-describe-instances.
+                 <para>Make sure instances are migrated successfully with nova list.
                     If instances are still running on HostB, check logfiles ( src/dest nova-compute
-                    and nova-scheduler)</para>
+                    and nova-scheduler) to determine why</para>
             </listitem>
         </itemizedlist>
 
