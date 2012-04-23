@@ -39,6 +39,20 @@
         <revhistory>
                 <!-- ... continue addding more revisions here as you change this document using the markup shown below... -->
             <revision>
+                <date>2012-04-23</date>
+                <revdescription>
+                    <itemizedlist spacing="compact">
+                        <listitem>
+                            <para>Essex-final Update </para>
+                            <itemizedlist spacing="compact">
+                            <listitem><para>Clarify limitations around nova-manage, Melange, mulit_host, and L3/NAT
+                                            gateways.</para> </listitem>
+                            </itemizedlist>
+                        </listitem>
+                    </itemizedlist>
+                </revdescription>
+            </revision>
+            <revision>
                 <date>2012-02-29</date>
                 <revdescription>
                     <itemizedlist spacing="compact">
@@ -470,7 +484,7 @@ list_ports &lt;tenant-id&gt; &lt;net-id&gt; [filterspec ...]</literallayout>
             Nova that does not require Quantum Manager, but requires manually associating vNICs with
             Quantum networks. </para>
         <section xml:id="EnablingQuantumManager-d1e453">
-            <title>Enabling Quantum Manager</title>
+            <title>Running nova-network with Quantum Manager</title>
             <para>Within Nova, the nova-network process manages VM network connectivity and related
                 network capabilities (e.g., IP Address management, DHCP, L3 + NAT forwarding, VPN).
                 Nova supports plugging in different implementation of ''managers'' for this network
@@ -482,6 +496,13 @@ list_ports &lt;tenant-id&gt; &lt;net-id&gt; [filterspec ...]</literallayout>
             <para>Nova defaults to connecting to Quantum on localhost using the standard port. The
                 "quantum_connection_host" and "quantum_connection_port" flags can override these
                 defaults. </para>
+            <para>With Quantum Manager, you can run only one instance of the nova-network process at a time.
+                  In particular, this means that a "multi_host" configuration where nova-network runs on each
+                  compute host is not supported.
+                  A common configuration is to run nova-network on a "nova controller" host along with
+                  nova-schedule, and have an active-passive high-availability strategy that restarts nova-network
+                  on another host if the main controller host fails.
+            </para>
         </section>
         <section xml:id="Vifplugging-d1e453">
             <title>Quantum Compatible Vif-Plugging in Nova</title>
@@ -529,6 +550,11 @@ list_ports &lt;tenant-id&gt; &lt;net-id&gt; [filterspec ...]</literallayout>
                 destroy the associated Quantum port. </para>
             <section xml:id="Net-Create-dle455">
                 <title>Creating Networks</title>
+            <note><para> When creating networks, nova-manage must be run on the host that nova-network is running on.
+                         This is different from how network creation works for other network managers. </para></note>
+            <note><para> The content in this section is specific to how Quantum integrates with Nova in the Essex (2012.1)
+                         release.
+                         In future releases, networks will be created by calling the Quantum API directly. </para></note>
             <para>To create a network using Quantum Manager, run: </para>
             <literallayout class="monospaced">nova-manage network create --label=public --fixed_range_v4=8.8.8.0/24</literallayout>
             <para>When this command is invoked, the Quantum Manager will contact the Quantum Service
@@ -567,21 +593,26 @@ list_ports &lt;tenant-id&gt; &lt;net-id&gt; [filterspec ...]</literallayout>
             </section>
             <section xml:id="Net-Gateways-dle455">
                 <title>Network Gateway Routers and Floating IPs</title>
-            <para>Optionally, each Quantum network can have a gateway router attached.  Similar to
+            <para>Each Quantum network can have a gateway router attached.  Similar to
                     a nova-network deployment with VLANManager, this gateway router functionality provide
                     VMs on private networks with access to a public network. This gateway provides SNAT
                     to a public network, as well as ''floating IPs''.
             </para>
-            <para>  Currently, this gateway
-                    capability is implemented using the nova-network process that is running on one
-                    or more "network controller" nodes. This is essentially the same mechanism as
-                    used by Nova's "VLAN Manager". In this model, a network controller node has two
+            <para>
+            <para>With Quantum Manager, a NAT gateway will be attached to each network if the the
+                    Nova configuration specifies a valid "L3 driver".  Nova defaults to specifying the
+                    'nova.network.l3.LinuxNetL3' driver, which corresponds to the same L3 + NAT implementation
+                    used by the nova-network process configured to use VlanManager.
+                    In this model, a "network controller" host has two
                     NICs and acts as a NAT gateway between an "internal" network with compute hosts
-                    and an "external" network (e.g., used for Internet access).</para>
-            <para>With Quantum Manager, a gateway will be attached to a network if the "--gateway"
-                    argument is included in the nova-manage call to create the network. For example: </para>
-                <literallayout class="monospaced">nova-manage network create --label=tenantX-private --fixed_range_v4=10.0.0.0/24 --project_id=X --priority=1 --gateway=10.0.0.1</literallayout>
-                <para>Similar to the VLAN Manager, the gateway implemented by the Quantum Manager
+                    and an "external" network (e.g., used for Internet access).  Quantum allows a model
+                    where nova-network is deployed in an "active-backup" high-availability model, but does
+                    not support the "multi_host" mode where nova-network runs actively on each compute host. </para>
+            </para>
+            <para> Specifying a Null L3 driver will mean no gateway devices are
+                    connected to any Quantum networks:</para>
+                <literallayout class="monospaced">l3_lib=nova.network.l3.NullL3</literallayout>
+                <para>Similar to the VlanManager, the gateway implemented by the Quantum Manager
                     also performs the rewriting of HTTP requests destined to the Metadata server IP
                     address (169.254.169.254) to instead reach the IP address of Nova's meta-data
                     service.</para>
@@ -594,8 +625,8 @@ list_ports &lt;tenant-id&gt; &lt;net-id&gt; [filterspec ...]</literallayout>
                     existing Quantum network. The ''uuid'' flag passes an existing Quantum Network
                     UUID to nova-manage, meaning that Quantum Manager does not need to contact the
                     Quantum service to create a network. Instead the Quantum Manager will just
-                    create and delete ports on the network when VMs are created/deleted. For
-                    example: </para>
+                    create a corresponding IPAM subnet, and then create and delete ports on the network
+                    when VMs are created/deleted. For example: </para>
                 <literallayout class="monospaced">nova-manage network create --label=public --fixed_range_v4=8.8.8.0/24 --priority=0 --uuid=0a649eca-3764-417c-91a7-eb51291d4bb9    </literallayout>
             </section>
             <section xml:id="specifying-vm-network-connectivity-on-boot">
@@ -642,6 +673,13 @@ list_ports &lt;tenant-id&gt; &lt;net-id&gt; [filterspec ...]</literallayout>
             "melange_host" and "melange_port" options can override these defaults. </para>
                 <note> <para> Using Melange is incompatible with using Floating IPs. </para> </note>
             </section>
+            <note><para>
+             DHCP is not supported when Melange is used as the IPAM library.
+            </para></note>
+            <note><para>
+             In releases beyond Essex, Melange will be folded into the Quantum project, likely as part of a v2.0
+             Quantum API.  Thus, using Melange as a stand-alone service will not be supported in future releases.
+            </para></note>
         </section>
         <section xml:id="Limits-dle455">
             <title> Quantum Manager Limitations </title>
