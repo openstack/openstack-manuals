@@ -41,34 +41,52 @@ to
         <listitem>
             <para>Create /etc/swift/proxy-server.conf:</para>
             <para>
-                <literallayout class="monospaced">[DEFAULT]
-# Enter these next two values if using SSL certifications
-cert_file = /etc/swift/cert.crt
-key_file = /etc/swift/cert.key
+                <literallayout class="monospaced"> [DEFAULT]
 bind_port = 8080
-workers = 8
 user = swift
-
+ 
 [pipeline:main]
-# keep swauth in the line below if you plan to use swauth for authentication
-pipeline = healthcheck cache swauth proxy-server
-
+pipeline = catch_errors healthcheck cache authtoken swiftauth proxy-server
+ 
 [app:proxy-server]
 use = egg:swift#proxy
 allow_account_management = true
-
-[filter:swauth]
-# the line below points to swauth as a separate project from swift
-use = egg:swauth#swauth
-# Highly recommended to change this.
-super_admin_key = swauthkey
-
+account_autocreate = true
+set log_name = swift-proxy-server
+set log_facility = LOG_LOCAL0
+set log_level = DEBUG
+set access_log_name = swift-proxy-server
+set access_log_facility = LOG_LOCAL0
+set access_log_level = DEBUG
+set log_headers = True
+ 
 [filter:healthcheck]
 use = egg:swift#healthcheck
-
+ 
+[filter:catch_errors]
+use = egg:swift#catch_errors
+ 
 [filter:cache]
 use = egg:swift#memcache
-memcache_servers = &lt;PROXY_LOCAL_NET_IP&gt;:11211</literallayout>
+set log_name = cache
+ 
+[filter:swiftauth]
+paste.filter_factory = keystone.middleware.swift_auth:filter_factory
+operator_roles = admin, SwiftOperator
+is_admin = true
+ 
+[filter:authtoken]
+paste.filter_factory = keystone.middleware.auth_token:filter_factory
+service_protocol = http
+service_host = 127.0.0.1
+service_port = 5000
+auth_protocol = http
+auth_host = 127.0.0.1
+auth_port = 35357
+admin_tenant_name = service
+admin_user = adminUser
+admin_password = 012345SECRET99TOKEN012345
+delay_auth_decision = 0 </literallayout>
             </para>
             <note>
                 <para>If you run multiple memcache servers, put the multiple
@@ -79,7 +97,16 @@ memcache_servers = &lt;PROXY_LOCAL_NET_IP&gt;:11211</literallayout>
             </note>
         </listitem>
         <listitem>
-            <para>Create the account, container and object rings:</para>
+            <para>Create the account, container and object rings. The
+                builder command is basically creating a builder file
+                with a few parameters. The parameter with the value of
+                18 represents 2 ^ 18th, the value that the partition
+                will be sized to. Set this “partition power” value
+                based on the total amount of storage you expect your
+                entire ring to use. The value of 3 represents the
+                number of replicas of each object, with the last value
+                being the number of hours to restrict moving a
+                partition more than once.</para>
             <para>
                 <literallayout class="monospaced">cd /etc/swift
 swift-ring-builder account.builder create 18 3 1

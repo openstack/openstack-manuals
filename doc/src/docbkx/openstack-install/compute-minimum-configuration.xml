@@ -34,12 +34,22 @@
         <literal>sql_connection=mysql://<replaceable>[user]</replaceable>:<replaceable>[pass]</replaceable>@<replaceable>[primary IP]</replaceable>/<replaceable>[db
         name]</replaceable></literal>, such as
         <literal>sql_connection=mysql://nova:yourpassword@192.168.206.130/nova</literal>.</para>
-    <para>Add these settings to <filename>/etc/nova/nova.conf</filename> for the network
+    <para>Add these settings to
+            <filename>/etc/nova/nova.conf</filename> for the network
         configuration assumptions made for this installation scenario.
-        You can place comments in the <filename>nova.conf</filename> file by entering a new
-        line with a <literal>#</literal> sign at the beginning of the line. To see a
-        listing of all possible configuration option settings, see
-        <link xlink:href="http://wiki.openstack.org/NovaConfigOptions">http://wiki.openstack.org/NovaConfigOptions</link>.</para>
+        You can place comments in the <filename>nova.conf</filename>
+        file by entering a new line with a <literal>#</literal> sign
+        at the beginning of the line. To see a listing of all possible
+        configuration option settings, see <link
+            xlink:href="http://wiki.openstack.org/NovaConfigOptions"
+            >http://wiki.openstack.org/NovaConfigOptions</link>.<note>
+            <para>While Fedora uses the new INI style configuration
+                options, we have found that Ubuntu needs the
+                Diablo-style double-dash (--) in front of each
+                configuration option. This guide is meant to be a
+                generic walk-through eventually so the double-dashes
+                are not included in this guide.</para>
+        </note></para>
     <programlisting>
 auth_strategy=keystone
 network_manager=nova.network.manager.FlatDHCPManager

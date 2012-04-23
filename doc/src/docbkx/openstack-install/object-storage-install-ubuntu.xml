@@ -5,10 +5,13 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
     <title>Installing OpenStack Object Storage on Ubuntu</title>
     <para>Though you can install OpenStack Object Storage for development or testing purposes on a single server, a multiple-server installation enables the high availability and redundancy you want in a production distributed object storage system.</para>
-    <para>If you would like to perform a single node installation on Ubuntu for
-        development purposes from source code, use the Swift All In One
-        instructions. See
-        <link xlink:href="http://swift.openstack.org/development_saio.html">http://swift.openstack.org/development_saio.html</link>.</para>
+    <para>If you would like to perform a single node installation on
+        Ubuntu for development purposes from source code, use the
+        Swift All In One instructions or DevStack. See <link
+            xlink:href="http://swift.openstack.org/development_saio.html"
+            >http://swift.openstack.org/development_saio.html</link>
+        for manual instructions or <link xlink:href="http://devstack.org">http://devstack.org</link> for all-in-one
+        including authentication and a dashboard.</para>
     <section xml:id="before-you-begin-swift-install">
         <title>Before You Begin</title>
         <para>Have a copy of the Ubuntu Server installation media on hand
@@ -18,9 +21,11 @@
         <itemizedlist>
             <listitem>
                 <para>One Proxy node which runs the swift-proxy-server
-                    processes and may also run optional swauth services.
-                    It serves proxy requests to the appropriate Storage
-                    nodes.</para>
+                    processes and may also run the optional swauth or
+                    tempauth services, this walkthrough uses the
+                    Identity service code-named Keystone. The proxy
+                    server serves proxy requests to the appropriate
+                    Storage nodes.</para>
             </listitem>
             <listitem>
                 <para>Five Storage nodes that run the swift-account-server,
@@ -41,22 +46,16 @@
         <title>General Installation Steps </title>
         <orderedlist>
             <listitem>
-                <para>Install the baseline Ubuntu Server (either 10.10 maverick, 11.04 natty, or 11.10 oneiric) on all
-                    nodes.</para>
+                <para>Install the baseline Ubuntu Server (10.04
+                    through 12.04) on all nodes.</para>
             </listitem>
             <listitem>
-                <para>First, you need to add a signing key for the
-                    Cloud Builders repository that contains packages
-                    that are known and tested to work together, such
-                    as diablo-d5 or diablo-final. Once you add the
-                    signing key, you add a repository entry pointing
-                    to it and update your repo pointer with an apt-get
-                    command. </para>
-                <literallayout class="monospaced">sudo apt-key adv --keyserver hkp://subkeys.pgp.net --recv F87CBDE0</literallayout>
-                <literallayout class="monospaced">sudo echo "deb http://ops.rcb.me/packages maverick diablo-final" > /etc/apt/sources.list.d/rcb-sources.list</literallayout>
+                <para>First, you need to get the stable release
+                    package for Object Storage. </para>
+                <literallayout class="monospaced">add-apt-repository ppa:swift-core/release</literallayout>
             </listitem>
             <listitem><para>Now, install the swift service and openSSH. </para>
-                <literallayout class="monospaced">sudo apt-get install swift openssh-server</literallayout>
+                <literallayout class="monospaced">sudo apt-get install swift openssh-server  rsync memcached python-netifaces python-xattr python-memcache </literallayout>
                 </listitem>
             <listitem><para>Create and populate configuration directories on all nodes:</para>
                 <para><literallayout class="monospaced">mkdir -p /etc/swift

@@ -115,7 +115,7 @@
       | Property |              Value               |
       +----------+----------------------------------+
       | id       | e3d9d157cc95410ea45d23bbbc2e5c10 |
-      | name     | admin                        |
+      | name     | admin                            |
       +----------+----------------------------------+</programlisting>
       <screen><prompt>$</prompt><userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 role-create --name memberRole</userinput></screen>
       <programlisting>      +----------+----------------------------------+
@@ -171,7 +171,7 @@
       | email    | None                                                                                                                    |
       | enabled  | true                                                                                                                    |
       | id       | 54b3776a8707834d983e0b4037b1345c                                                                                        |
-      | name     | nova                                                                                                                  |
+      | name     | nova                                                                                                                    |
       | password | $6$rounds=40000$kf1ENaCoy7wOfRjx$LKQtsQbBqSBr2ZH7fwToAut0EYYz6M278N16Xg4Va2vTEOFabvTVXCdCP4hA5ikdCQO8Mh1nJvuFMEvGHaht3/ |
       | tenantId | eb7e0c10a99446cfa14c244374549e9d                                                                                        |
       +----------+-------------------------------------------------------------------------------------------------------------------------+</programlisting>
@@ -189,7 +189,7 @@
       | email    | None                                                                                                                    |
       | enabled  | true                                                                                                                    |
       | id       | 32e7668b8707834d983e0b4037b1345c                                                                                        |
-      | name     | ec2                                                                                                                  |
+      | name     | ec2                                                                                                                     |
       | password | $6$rounds=40000$kf1ENaCoy7wOfRjx$LKQtsQbBqSBr2ZH7fwToAut0EYYz6M278N16Xg4Va2vTEOFabvTVXCdCP4hA5ikdCQO8Mh1nJvuFMEvGHaht3/ |
       | tenantId | eb7e0c10a99446cfa14c244374549e9d                                                                                        |
       +----------+-------------------------------------------------------------------------------------------------------------------------+</programlisting>
@@ -197,6 +197,24 @@
           <literal>ec2</literal> user in the
           <literal>service</literal> tenant.</para>
       <screen><prompt>$</prompt><userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 user-role-add --user 32e7668b8707834d983e0b4037b1345c --tenant_id eb7e0c10a99446cfa14c244374549e9d --role e3d9d157cc95410ea45d23bbbc2e5c10</userinput></screen>
+      <para>There is no output to this command.</para>
+      <para>Create an Object Storage Service User in the Service
+        Tenant. </para>
+      <screen><prompt>$</prompt><userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 user-create --tenant_id eb7e0c10a99446cfa14c244374549e9d --name swift --pass swiftpass --enabled true</userinput></screen>
+      <programlisting>      +----------+-------------------------------------------------------------------------------------------------------------------------+
+      | Property |                                                          Value                                                          |
+      +----------+-------------------------------------------------------------------------------------------------------------------------+
+      | email    | None                                                                                                                    |
+      | enabled  | true                                                                                                                    |
+      | id       | 4346677b8909823e389f0b4037b1246e                                                                                        |
+      | name     | swift                                                                                                                   |
+      | password | $6$rounds=40000$kf1ENaCoy7wOfRjx$LKQtsQbBqSBr2ZH7fwToAut0EYYz6M278N16Xg4Va2vTEOFabvTVXCdCP4hA5ikdCQO8Mh1nJvuFMEvGHaht3/ |
+      | tenantId | eb7e0c10a99446cfa14c244374549e9d                                                                                        |
+      +----------+-------------------------------------------------------------------------------------------------------------------------+</programlisting>
+      <para>Grant the <literal>admin</literal> role to the
+          <literal>swift</literal> user in the
+          <literal>service</literal> tenant.</para>
+      <screen><prompt>$</prompt><userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 user-role-add --user  --tenant_id eb7e0c10a99446cfa14c244374549e9d --role e3d9d157cc95410ea45d23bbbc2e5c10</userinput></screen>
       <para>There is no output to this command.</para>
       <para>Next you create definitions for the services.</para>
     </section>
@@ -521,6 +539,45 @@ service-create \
 | region      | RegionOne                                  |
 | service_id  | 7d5258c490144c8c92505267785327c1           |
 +-------------+--------------------------------------------+
+</computeroutput>
+</screen>
+        <para>Define the Object Storage service:</para>
+        <screen>
+<prompt>$</prompt> <userinput>keystone  --token 012345SECRET99TOKEN012345 \
+ --endpoint http://192.168.206.130:35357/v2.0/ \
+ service-create \
+ --name=swift \
+ --type=storage \
+ --description=&quot;Object Storage Service&quot;</userinput>
+<computeroutput>+-------------+----------------------------------+
+|   Property  |              Value               |
++-------------+----------------------------------+
+| description | EC2 Compatibility Layer          |
+| id          | 272efad2d1234376cbb911c1e5a5a6ed |
+| name        | swift                            |
+| type        | storage                          |
++-------------+----------------------------------+
+</computeroutput>
+<prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 \
+ --endpoint http://192.168.206.130:35357/v2.0/ \
+ endpoint-create \
+ --region RegionOne \
+ --service_id=272efad2d1234376cbb911c1e5a5a6ed \
+ --publicurl 'http://127.0.0.1:8080/v1/AUTH_$(tenant_id)s' \
+ --adminurl 'http://127.0.0.1:8080/' \
+ --internalurl 'http://127.0.0.1:8080/v1/AUTH_$(tenant_id)s' 
+</userinput>
+<computeroutput>
++-------------+----------------------------------------------------------------+
+|   Property  |                         Value                                  |
++-------------+----------------------------------------------------------------+
+| adminurl    | http://127.0.0.1:8080/                                         |
+| id          | e32b3c4780e51332f9c128a8c208a5a4                               |
+| internalurl | http://192.168.206.130:8080                                    |
+| publicurl   | http://127.0.0.1:8080/v1/AUTH_eb7e0c10a99446cfa14c244374549e9d |
+| region      | RegionOne                                                      |
+| service_id  | 272efad2d1234376cbb911c1e5a5a6ed                               |
++-------------+----------------------------------------------------------------+
 </computeroutput>
 </screen>
   </section>
