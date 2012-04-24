@@ -476,13 +476,14 @@ list_ports &lt;tenant-id&gt; &lt;net-id&gt; [filterspec ...]</literallayout>
     <chapter xml:id="QuantumManager-d1e450">
         <title>Using Quantum with Nova Compute</title>
             <para>
-            This chapter covers how to configure the OpenStack Nova compute service
-            to communicate with Quantum using a special network manager class called
-            the Quantum Manager.
+            This chapter covers how to run the OpenStack Nova compute service
+            such that Nova uses Quantum (rather than its internal L2 networking logic)
+            to implement networks.  In this configuration,
+            nova-manage calls to create/delete networks are proxied to Quantum, and Nova itself
+            automatically creates/deletes Quantum ports for each vNIC when a virtual server is
+            created or destroyed.  The result is that Quantum can be used with Nova without any need
+            for administrators or tenants to directly contact the Quantum API.
             </para>
-            <para>The final section of this chapter describes another model of using Quantum with
-            Nova that does not require Quantum Manager, but requires manually associating vNICs with
-            Quantum networks. </para>
         <section xml:id="EnablingQuantumManager-d1e453">
             <title>Running nova-network with Quantum Manager</title>
             <para>Within Nova, the nova-network process manages VM network connectivity and related
