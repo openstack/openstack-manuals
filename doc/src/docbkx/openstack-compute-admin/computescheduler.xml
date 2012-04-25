@@ -80,9 +80,10 @@ scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
                 <command>nova</command> command-line tool, use the <literal>--hint</literal>
                 flag:
 <screen>
-<prompt>$</prompt> <userinput>nova boot --image cedef40a-ed67-4d10-800e-17455edce175 --flavor 1 --hint different_host=[a0cf03a5-d921-4877-bb5c-86d26cf818e1,8c19174f-4220-44f0-824a-cd1eeef10287] server-1</userinput></screen>
+<prompt>$</prompt> <userinput>nova boot --image cedef40a-ed67-4d10-800e-17455edce175 --flavor 1 --hint different_host=[a0cf03a5-d921-4877-bb5c-86d26cf818e1,8c19174f-4220-44f0-824a-cd1eeef10287] server-1</userinput>
+</screen>
 With the API, use the <literal>os:scheduler_hints</literal> key:
-<programlisting>
+<programlisting language="json">
     {
     'server': {
         'name': 'server-1',
@@ -195,9 +196,10 @@ With the API, use the <literal>os:scheduler_hints</literal> key:
                 <command>nova</command> command-line tool, use the <literal>--hint</literal>
                 flag. For example, to specify the IP subnet <literal>192.168.1.1/24</literal></para>
 <screen>
-<prompt>$</prompt> <userinput>nova boot --image cedef40a-ed67-4d10-800e-17455edce175 --flavor 1 --hint build_near_host_ip=192.168.1.1 --hint cidr=/24 server-1</userinput></screen>
-<para>With the API, use the <literal>os:scheduler_hints</literal> key:</para>
-<programlisting>
+<prompt>$</prompt> <userinput>nova boot --image cedef40a-ed67-4d10-800e-17455edce175 --flavor 1 --hint build_near_host_ip=192.168.1.1 --hint cidr=/24 server-1</userinput>
+</screen>
+            <para>With the API, use the <literal>os:scheduler_hints</literal> key:</para>
+<programlisting language="json">
     {
     'server': {
         'name': 'server-1',

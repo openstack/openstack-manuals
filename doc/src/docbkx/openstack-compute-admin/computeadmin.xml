@@ -147,9 +147,12 @@ format="SVG" scale="60"/>
                 administration and ongoing maintenance of nova, such as network creation.</para>
 
         <para>The standard pattern for executing a nova-manage command is: </para>
-            <literallayout class="monospaced">nova-manage category command [args]</literallayout>
+            <screen>
+<prompt>$</prompt> <userinput>nova-manage category command <replaceable>[args]</replaceable></userinput>
+            </screen>
 
-            <para>For example, to obtain a list of all projects: nova-manage project list</para>
+            <para>For example, to obtain a list of all projects:
+                    <command>nova-manage project list</command></para>
 
             <para>Run without arguments to see a list of available command categories: nova-manage</para>
             <para>You can also run with a category argument such as user to see a list of all commands in that category: nova-manage user</para>
@@ -160,14 +163,16 @@ format="SVG" scale="60"/>
                 can have the ability to send commands to your cloud on the command-line.</para>
             <para>To install python-novaclient, download the tarball from
                 <link xlink:href="http://pypi.python.org/pypi/python-novaclient/2.6.3#downloads">http://pypi.python.org/pypi/python-novaclient/2.6.3#downloads</link> and then install it in your favorite python environment. </para>
-            <programlisting>
-$ curl -O http://pypi.python.org/packages/source/p/python-novaclient/python-novaclient-2.6.3.tar.gz
-$ tar -zxvf python-novaclient-2.6.3.tar.gz
-$ cd python-novaclient-2.6.3
-$ sudo python setup.py install
-    </programlisting>
+            <screen>
+<prompt>$</prompt> <userinput>curl -O http://pypi.python.org/packages/source/p/python-novaclient/python-novaclient-2.6.3.tar.gz</userinput>
+<prompt>$</prompt> <userinput>tar -zxvf python-novaclient-2.6.3.tar.gz</userinput>
+<prompt>$</prompt> <userinput>cd python-novaclient-2.6.3</userinput>
+<prompt>$</prompt> <userinput>sudo python setup.py install</userinput>
+    </screen>
             <para>Now that you have installed the python-novaclient, confirm the installation by entering:</para>
-<literallayout class="monospaced">$ nova help</literallayout>
+<screen>
+<prompt>$</prompt> <userinput>nova help</userinput>
+</screen>
 <programlisting>
 usage: nova [--debug] [--os_username OS_USERNAME] [--os_password OS_PASSWORD]
             [--os_tenant_name OS_TENANT_NAME] [--os_auth_url OS_AUTH_URL]
@@ -176,18 +181,27 @@ usage: nova [--debug] [--os_username OS_USERNAME] [--os_password OS_PASSWORD]
             [--version VERSION]
             &lt;subcommand&gt; ...
 </programlisting>
-            <para>In return, you will get a listing of all the commands and parameters for the nova command line client. By setting up the required parameters as environment variables, you can fly through these commands on the command line. You can add --os_username on the nova command, or set them as environment variables: </para>
-            <para><programlisting>
-export OS_USERNAME=joecool
-export OS_PASSWORD=coolword
-export OS_TENANT_NAME=coolu
-</programlisting>
-            </para><para>Using the Identity Service, you are supplied with an authentication endpoint, which nova recognizes as the OS_AUTH_URL. </para>
+            <para>In return, you will get a listing of all the
+                commands and parameters for the nova command line
+                client. By setting up the required parameters as
+                environment variables, you can fly through these
+                commands on the command line. You can add
+                    <literal>--os_username</literal> on the nova
+                command, or set them as environment variables: </para>
             <para>
-                <programlisting>
-export OS_AUTH_URL=http://hostname:5000/v2.0
-export NOVA_VERSION=1.1
-</programlisting>
+<screen>
+<prompt>$</prompt> <userinput>export OS_USERNAME=joecool</userinput>
+<prompt>$</prompt> <userinput>export OS_PASSWORD=coolword</userinput>
+<prompt>$</prompt> <userinput>export OS_TENANT_NAME=coolu</userinput>
+</screen>
+            </para><para>Using the Identity Service, you are supplied with an
+                authentication endpoint, which nova recognizes as the
+                    <literal>OS_AUTH_URL</literal>. </para>
+            <para>
+                <screen>
+<prompt>$</prompt> <userinput>export OS_AUTH_URL=http://hostname:5000/v2.0</userinput>
+<prompt>$</prompt> <userinput>export NOVA_VERSION=1.1</userinput>
+</screen>
             </para></simplesect>
         <simplesect><title>Using the euca2ools commands</title>
             <para>For a command-line interface to EC2 API calls, use
@@ -271,10 +285,22 @@ export NOVA_VERSION=1.1
         </para>
         <simplesect>
             <title>A- Install nova-volume on the cloud controller.</title>
-            <para> This is simply done by installing the two components on the cloud controller : <literallayout class="monospaced">apt-get install lvm2 nova-volume</literallayout><literallayout><emphasis role="bold">For Ubuntu distros, the nova-volumes component will not properly work</emphasis> (regarding the part which deals with volumes deletion) without a small fix. In dorder to fix that, do the following : </literallayout>
-                sudo visudo
-            </para>
-            <para>Then add an entry for the nova user (here is the default sudoers file with our added nova user) :</para>
+            <para> This is simply done by installing the two
+                components on the cloud controller :</para> 
+            <screen>
+<prompt>$</prompt> <userinput>apt-get install lvm2 nova-volume</userinput>
+            </screen>
+                <note>
+                    <para><emphasis role="bold">For Ubuntu distros,
+                            the nova-volumes component will not
+                            properly work</emphasis> (regarding the
+                        part which deals with volumes deletion)
+                        without a small fix. To fix that, do the
+                        following :</para>
+                 <screen>
+<prompt>$</prompt> <userinput>sudo visudo</userinput> 
+                 </screen>
+            <para>Then add an entry for the nova user. The default sudoers file with our added nova user is as follows:</para>
             <programlisting>
 # /etc/sudoers
 #
@@ -308,6 +334,7 @@ root	ALL=(ALL) ALL
             </programlisting>
             <para>That will allow the nova user to run the "dd" command (which empties a volume
                 before its deletion).</para>
+                </note>                    
             <para>
                 <itemizedlist>
                     <listitem>
@@ -319,57 +346,78 @@ root	ALL=(ALL) ALL
                             short run down of how you would create a LVM from free drive space on
                             your system. Start off by issuing an fdisk command to your drive with
                             the free space:
-                            <literallayout class="monospaced">fdisk /dev/sda</literallayout>
+                            <screen>
+<prompt>$</prompt> <userinput>fdisk /dev/sda</userinput>
+                            </screen>
                             Once in fdisk, perform the following commands: <orderedlist>
                                 <listitem>
-                                    <para>Press ‘n' to create a new disk
-                                        partition,</para>
+                                    <para>Press <command>n</command>
+                                   to create a new disk
+                                   partition,</para>
                                 </listitem>
                                 <listitem>
-                                    <para>Press 'p' to create a primary disk
-                                        partition,</para>
+                                    <para>Press <command>p</command>
+                                   to create a primary disk
+                                   partition,</para>
                                 </listitem>
                                 <listitem>
-                                    <para>Press '1' to denote it as 1st disk
-                                        partition,</para>
+                                    <para>Press <command>1</command>
+                                   to denote it as 1st disk
+                                   partition,</para>
                                 </listitem>
                                 <listitem>
-                                    <para>Either press ENTER twice to accept the default of 1st and
-                                        last cylinder – to convert the remainder of hard disk to a
-                                        single disk partition -OR- press ENTER once to accept the
-                                        default of the 1st, and then choose how big you want the
-                                        partition to be by specifying +size{K,M,G} e.g. +5G or
-                                        +6700M.</para>
+                                    <para>Either press ENTER twice to
+                                   accept the default of 1st and last
+                                   cylinder – to convert the remainder
+                                   of hard disk to a single disk
+                                   partition -OR- press ENTER once to
+                                   accept the default of the 1st, and
+                                   then choose how big you want the
+                                   partition to be by specifying
+                                   <literal>+size<replaceable>[K,M,G]</replaceable></literal>
+                                   e.g. +5G or +6700M.</para>
                                 </listitem>
                                 <listitem>
-                                    <para>Press 't', then select the new partition you
-                                        made.</para>
+                                    <para>Press <command>t</command>
+                                   and select the new partition that
+                                   you have created.</para>
                                 </listitem>
                                 <listitem>
-                                    <para>Press '8e' change your new partition to 8e,
-                                        i.e. Linux LVM partition type.</para>
+                                    <para>Press <command>8e</command>
+                                   change your new partition to 8e,
+                                   i.e. Linux LVM partition
+                                   type.</para>
                                 </listitem>
                                 <listitem>
-                                    <para>Press ‘p' to display the hard disk partition
-                                        setup. Please take note that the first partition is denoted
-                                        as /dev/sda1 in Linux.</para>
+                                    <para>Press <command>p</command>
+                                   to display the hard disk partition
+                                   setup. Please take note that the
+                                   first partition is denoted as
+                                   <filename>/dev/sda1</filename> in
+                                   Linux.</para>
                                 </listitem>
                                 <listitem>
-                                    <para>Press 'w' to write the partition table and
-                                        exit fdisk upon completion.</para>
-                                    <para>Refresh your partition table to ensure your new partition
-                                        shows up, and verify with fdisk. We then inform the OS about
-                                        the table partition update : </para>
-                                    <para>
-                                        <literallayout class="monospaced">partprobe
-
-Again :
-fdisk -l (you should see your new partition in this listing)</literallayout>
-                                    </para>
+                                    <para>Press <command>w</command>
+                                   to write the partition table and
+                                   exit fdisk upon completion.</para>
+                                    <para>Refresh your partition table
+                                   to ensure your new partition shows
+                                   up, and verify with
+                                   <command>fdisk</command>. We then
+                                   inform the OS about the table
+                                   partition update : </para>
+                                        <screen>
+<prompt>$</prompt> <userinput>partprobe</userinput>
+<prompt>$</prompt> <userinput>fdisk -l</userinput>
+                                         </screen>
+<para>You should see your new partition in this listing.</para>
+                                    
                                     <para>Here is how you can set up partitioning during the OS
                                         install to prepare for this nova-volume
                                         configuration:</para>
-                                    <para>root@osdemo03:~# fdisk -l </para>
+                                    <screen>
+<prompt>root@osdemo03:~#</prompt> <userinput>fdisk -l</userinput> 
+                                    </screen>
                                     <para>
                                         <programlisting>
 Device Boot Start End Blocks Id System
@@ -391,8 +439,10 @@ Device Boot Start End Blocks Id System
                                         and prepare it as nova-volumes. <emphasis role="bold">You
                                             must name your volume group ‘nova-volumes’ or things
                                             will not work as expected</emphasis>:</para>
-                                    <literallayout class="monospaced">pvcreate /dev/sda5
-vgcreate nova-volumes /dev/sda5 </literallayout>
+                                    <screen>
+<prompt>$</prompt> <userinput>pvcreate /dev/sda5</userinput>
+<prompt>$</prompt> <userinput>vgcreate nova-volumes /dev/sda5</userinput> 
+                                    </screen>
                                 </listitem>
                             </orderedlist></para>
                     </listitem>
@@ -400,9 +450,11 @@ vgcreate nova-volumes /dev/sda5 </literallayout>
             </para>
         </simplesect>
         <simplesect>
-            <title> B- Configuring nova-volume on the compute nodes</title>
-            <para> Since you have created the volume group, you will be able to use the following
-                tools for managing your volumes: </para>
+            <title>B- Configuring nova-volume on the compute
+                nodes</title>
+            <para>Since you have created the volume group, you will be
+                able to use the following tools for managing your
+                volumes: </para>
             <simpara>euca-create-volume</simpara>
             <simpara>euca-attach-volume</simpara>
             <simpara>euca-detach-volume</simpara>
@@ -420,30 +472,48 @@ vgcreate nova-volumes /dev/sda5 </literallayout>
                         accepts incoming connections. </para>
                     <para>First install the open-iscsi package on the initiators, so on the
                         compute-nodes <emphasis role="bold">only</emphasis></para>
-                    <literallayout class="monospaced">apt-get install open-iscsi </literallayout>
+                    <screen>
+<prompt>$</prompt> <userinput>apt-get install open-iscsi</userinput> 
+                    </screen>
                         <para>Then on the target, which is in our case the cloud-controller, the iscsitarget package :</para>
-                        <literallayout class="monospaced">apt-get install iscsitarget </literallayout>
+                        <screen>
+<prompt>$</prompt> <userinput>apt-get install iscsitarget</userinput> 
+                        </screen>
                         <para>This package could refuse to start with a "FATAL: Module iscsi_trgt not found" error. </para>
                         <para>This error is caused by the kernel which does not contain the iscsi module's source into it ;
                             you can install the kernel modules by installing an extra package : </para>
-                        <literallayout class="monospaced"> apt-get install iscsitarget-dkms</literallayout>
+                        <screen> 
+<prompt>$</prompt> <userinput>apt-get install iscsitarget-dkms</userinput>
+                        </screen>
                         <para>(the Dynamic Kernel Module Support is a framework used for created modules with non-existent sources into the current kernel)</para>
                         <para>You have to enable it so the startut script (/etc/init.d/iscsitarget) can start the daemon:</para>
-                        <literallayout class="monospaced">sed -i 's/false/true/g' /etc/default/iscsitarget</literallayout>
+                        <screen>
+<prompt>$</prompt> <userinput>sed -i 's/false/true/g' /etc/default/iscsitarget</userinput>
+                        </screen>
                         <para>Then run on the nova-controller (iscsi target) :</para>
-                            <literallayout class="monospaced">service iscsitarget start</literallayout>
+                            <screen>
+<prompt>$</prompt> <userinput>service iscsitarget start</userinput>
+                            </screen>
                             <para>And on the compute-nodes (iscsi initiators) :</para>
-                            <literallayout class="monospaced">service open-iscsi start</literallayout>
+                            <screen>
+<prompt>$</prompt> <userinput>service open-iscsi start</userinput>
+                            </screen>
                 </listitem>
                 <listitem>
                     <para><emphasis role="bold">Configure nova.conf configuration option file</emphasis></para>
-                    <para>Edit your nova.conf to include a new configuration option,
-                        "iscsi_ip_prefix=192.168." The configuration option will be used by the
-                        compute node when the iSCSI discovery will be performed and the session
-                        created. The prefix based on the two first bytes will allows the iSCSI
-                        discovery to use all the available routes (also known as multipathing) to
-                        the iSCSI server (eg. nova-volumes) into your network. We will see into the
-                        "Troubleshooting" section how to deal with ISCSI sessions.</para>
+                    <para>Edit your nova.conf to include a new
+                        configuration option,
+                            <literal>iscsi_ip_prefix=192.168.</literal>
+                        The configuration option will be used by the
+                        compute node when the iSCSI discovery will be
+                        performed and the session created. The prefix
+                        based on the two first bytes will allows the
+                        iSCSI discovery to use all the available
+                        routes (also known as multipathing) to the
+                        iSCSI server (eg. nova-volumes) into your
+                        network. We will see into the
+                        "Troubleshooting" section how to deal with
+                        ISCSI sessions.</para>
                 </listitem>
                 <listitem>
                     <para>
@@ -451,7 +521,8 @@ vgcreate nova-volumes /dev/sda5 </literallayout>
                     <para>You are now ready to fire up nova-volume, and start creating
                         volumes!</para>
                     <para>
-                        <literallayout class="monospaced">service nova-volume start</literallayout>
+                        <screen>
+<prompt>$</prompt> <userinput>service nova-volume start</userinput></screen>
                     </para>
                     <para>Once the service is started, login to your controller and ensure you’ve
                         properly sourced your ‘novarc’ file. You will be able to use the euca2ools
@@ -459,13 +530,19 @@ vgcreate nova-volumes /dev/sda5 </literallayout>
                     <para>One of the first things you should do is make sure that nova-volume is
                         checking in as expected. You can do so using nova-manage:</para>
                     <para>
-                        <literallayout class="monospaced">nova-manage service list</literallayout>
+                        <screen>
+<prompt>$</prompt> <userinput>nova-manage service list</userinput>
+                        </screen>
                     </para>
                     <para>If you see a smiling ‘nova-volume’ in there, you are looking good. Now
                         create a new volume:</para>
                     <para>
-                        <literallayout class="monospaced">euca-create-volume -s 7 -z nova  (-s refers to the size of the volume in GB, and -z is the default zone (usually nova))</literallayout>
-                    </para>
+                        <screen>
+<prompt>$</prompt> <userinput>euca-create-volume -s 7 -z nova</userinput>  
+                        </screen>
+                        <literal>-s</literal> refers to the size of
+                        the volume in GB, and <literal>-z</literal> is
+                        the default zone (usually nova).</para>
                     <para>You should get some output similar to this:</para>
                     <para>
                         <programlisting>VOLUME vol-0000000b 7 creating (wayne, None, None, None) 2011-02-11 06:58:46.941818</programlisting>
@@ -473,30 +550,43 @@ vgcreate nova-volumes /dev/sda5 </literallayout>
                     <para>You can view that status of the volumes creation using
                         ‘euca-describe-volumes’. Once that status is ‘available,’ it is ready to be
                         attached to an instance:</para>
-                    <para><literallayout class="monospaced">euca-attach-volume -i i-00000008 -d /dev/vdb vol-00000009</literallayout>
-                        (-i refers to the instance you will attach the volume to, -d is the
-                            mountpoint<emphasis role="bold"> (on the compute-node !</emphasis> and
-                        then the volume name.)</para>
+                    <para><screen>
+<prompt>$</prompt> <userinput>euca-attach-volume -i i-00000008 -d /dev/vdb vol-00000009</userinput>
+                    </screen>
+                        <literal>-i</literal> refers to the instance
+                        you will attach the volume to;
+                            <literal>-d</literal> is the
+                            mountpoint<emphasis role="bold"> on the
+                            compute-node</emphasis> followed by the
+                        volume name.</para>
                     <para>By doing that, the compute-node which runs the instance basically performs
                         an iSCSI connection and creates a session. You can ensure that the session
                         has been created by running : </para>
-                    <para>iscsiadm -m session </para>
+                    <screen>
+<prompt>$</prompt> <userinput>iscsiadm -m session</userinput>
+                    </screen>
                     <para>Which should output : </para>
                     <para>
                         <programlisting>root@nova-cn1:~# iscsiadm -m session
 tcp: [1] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-0000000b</programlisting>
                     </para>
-                    <para>If you do not get any errors, it is time to login to instance ‘i-00000008′
-                        and see if the new space is there. <emphasis role="italic"/></para>
+                    <para>If you do not get any errors, you can login
+                        to instance <literal>i-00000008</literal> and
+                        see if the new space is there. <emphasis
+                            role="italic"/></para>
                     <para><emphasis role="italic">KVM changes the device name, since it's not
                             considered to be the same type of device as the instances uses as it's
                             local one, you will find the nova-volume will be designated as
                             "/dev/vdX" devices, while local are named "/dev/sdX". </emphasis></para>
                     <para>You can check the volume attachment by running : </para>
-                    <para>dmesg | tail </para>
-                    <para>You should from there see a new disk. Here is the output from ‘fdisk -l’
+                    <para><screen>
+<prompt>$</prompt> <userinput>dmesg | tail</userinput>
+                    </screen>
+                        You should from there see a new disk. Here is
+                        the output from <command>fdisk -l</command>
                         from i-00000008:</para>
-                    <programlisting>Disk /dev/vda: 10.7 GB, 10737418240 bytes
+                    <programlisting>
+Disk /dev/vda: 10.7 GB, 10737418240 bytes
 16 heads, 63 sectors/track, 20805 cylinders
 Units = cylinders of 1008 * 512 = 516096 bytes
 Sector size (logical/physical): 512 bytes / 512 bytes
@@ -507,54 +597,72 @@ Disk /dev/vda doesn’t contain a valid partition table
 16 heads, 63 sectors/track, 41610 cylinders
 Units = cylinders of 1008 * 512 = 516096 bytes
 Sector size (logical/physical): 512 bytes / 512 bytes
-I/O size (minimum/optimal): 512 bytes / 512 bytes Disk identifier: 0×00000000 </programlisting>
+I/O size (minimum/optimal): 512 bytes / 512 bytes Disk identifier: 0×00000000 
+                    </programlisting>
                     <para>Now with the space presented, let’s configure it for use:</para>
                     <para>
-                        <literallayout class="monospaced">fdisk /dev/vdb</literallayout>
+                        <screen>
+<prompt>$</prompt> <userinput>fdisk /dev/vdb</userinput>
+                        </screen>
                     </para>
                     <orderedlist>
                         <listitem>
-                            <para>Press ‘n' to create a new disk partition.</para>
+                            <para>Press <command>n</command> to create
+                                a new disk partition.</para>
                         </listitem>
                         <listitem>
-                            <para>Press 'p' to create a primary disk partition.</para>
+                            <para>Press <command>p</command> to create
+                                a primary disk partition.</para>
                         </listitem>
                         <listitem>
-                            <para>Press '1' to denote it as 1st disk partition.</para>
-                        </listitem>
-                        <listitem>
-                            <para>Press ENTER twice to accept the default of 1st and last cylinder –
-                                to convert the remainder of hard disk to a single disk
+                            <para>Press <command>1</command> to
+                                designated it as the first disk
                                 partition.</para>
                         </listitem>
                         <listitem>
-                            <para>Press 't', then select the new partition you
+                            <para>Press ENTER twice to accept the
+                                default of first and last cylinder –
+                                to convert the remainder of hard disk
+                                to a single disk partition.</para>
+                        </listitem>
+                        <listitem>
+                            <para>Press <command>t</command>, then
+                                select the new partition you
                                 made.</para>
                         </listitem>
                         <listitem>
-                            <para>Press '83' change your new partition to 83, i.e.
-                                Linux partition type.</para>
+                            <para>Press <command>83</command> change
+                                your new partition to 83, i.e. Linux
+                                partition type.</para>
                         </listitem>
                         <listitem>
-                            <para>Press ‘p' to display the hard disk partition setup.
-                                Please take note that the first partition is denoted as /dev/vda1 in
+                            <para>Press <command>p</command> to
+                                display the hard disk partition setup.
+                                Please take note that the first
+                                partition is denoted as /dev/vda1 in
                                 your instance.</para>
                         </listitem>
                         <listitem>
-                            <para>Press 'w' to write the partition table and exit fdisk
+                            <para>Press <command>w</command> to write
+                                the partition table and exit fdisk
                                 upon completion.</para>
                         </listitem>
                         <listitem>
-                            <para>Lastly, make a file system on the partition and mount it.
-                                <programlisting>mkfs.ext3 /dev/vdb1
-mkdir /extraspace
-mount /dev/vdb1 /extraspace </programlisting></para>
+                            <para>Lastly, make a file system on the
+                                partition and mount it.
+                                <screen>
+<prompt>$</prompt> <userinput>mkfs.ext3 /dev/vdb1</userinput>
+<prompt>$</prompt> <userinput>mkdir /extraspace</userinput>
+<prompt>$</prompt> <userinput>mount /dev/vdb1 /extraspace</userinput> 
+                                </screen></para>
                         </listitem>
                     </orderedlist>
-                    <para>Your new volume has now been successfully mounted, and is ready for use!
-                        The ‘euca’ commands are pretty self-explanatory, so play around with them
-                        and create new volumes, tear them down, attach and reattach, and so on.
-                    </para>
+                    <para>Your new volume has now been successfully
+                        mounted, and is ready for use! The
+                            <command>euca</command> commands are
+                        pretty self-explanatory, so play around with
+                        them and create new volumes, tear them down,
+                        attach and reattach, and so on. </para>
                 </listitem>
             </itemizedlist>
         </simplesect>
@@ -568,57 +676,85 @@ mount /dev/vdb1 /extraspace </programlisting></para>
                 <itemizedlist>
                     <listitem>
                         <para><emphasis role="italic">ERROR "15- already exists"</emphasis>
-                            <programlisting>"ProcessExecutionError: Unexpected error while running command.\nCommand: sudo iscsiadm -m node -T iqn.2010-10.org.openstack:volume-00000001 -p
+                            <programlisting>
+"ProcessExecutionError: Unexpected error while running command.\nCommand: sudo iscsiadm -m node -T iqn.2010-10.org.openstack:volume-00000001 -p
 10.192.12.34:3260 --login\nExit code: 255\nStdout: 'Logging in to [iface: default, target: iqn.2010-10.org.openstack:volume-00000001, portal:
 10.192.12.34,3260]\\n'\nStderr: 'iscsiadm: Could not login to [iface: default, target: iqn.2010-10.org.openstack:volume-00000001,
-portal:10.192.12.34,3260]: openiscsiadm: initiator reported error (15 - already exists)\\n'\n"] </programlisting></para>
+portal:10.192.12.34,3260]: openiscsiadm: initiator reported error (15 - already exists)\\n'\n"] 
+                            </programlisting></para>
                         <para> This errors happens sometimes when you run an euca-detach-volume and
                             euca-attach-volume and/ or try to attach another volume to an instance.
                             It happens when the compute node has a running session while you try to
                             attach a volume by using the same IQN. You could check that by running : </para>
-                        <para><literallayout class="monospaced">iscsiadm -m session</literallayout>
-                            You should have a session with the same name that the compute is trying
-                            to open. Actually, it seems to be related to the several routes
-                            available for the iSCSI exposition, those routes could be seen by
+                        <para><screen>
+<prompt>$</prompt> <userinput>iscsiadm -m session</userinput>
+                        </screen>You
+                            should have a session with the same name
+                            that the compute is trying to open.
+                            Actually, it seems to be related to the
+                            several routes available for the iSCSI
+                            exposition, those routes could be seen by
                             running on the compute node :
-                            <literallayout class="monospaced">iscsiadm -m discovery -t st -p $ip_of_nova-volumes</literallayout>
-                            You should see for a volume multiple addresses to reach it. The only
-                            known workaround to that is to change the "iscsi_ip_prefix"
-                            configuration option and use the 4 bytes (full IP) of the nova-volumes
-                            server, eg : </para>
-                        <para><literallayout class="monospaced">"iscsi_ip_prefix=192.168.2.1</literallayout>
-                            You'll have then to restart both nova-compute and nova-volume services. </para>
+                            <screen>
+<prompt>$</prompt> <userinput>iscsiadm -m discovery -t st -p $ip_of_nova-volumes</userinput>
+                            </screen>
+                            For a volume, you should see multiple
+                            addresses to reach it. The only known
+                            workaround to that is to change the
+                                <literal>iscsi_ip_prefix</literal>
+                            configuration option and use the 4 bytes
+                            (full IP) of the nova-volumes server, eg : </para>
+                        <para><programlisting>
+iscsi_ip_prefix=192.168.2.1
+                        </programlisting>
+                            You will then have to restart both
+                            nova-compute and nova-volume services. </para>
                     </listitem>
                     <listitem>
-                        <para><emphasis role="italic">ERROR "Cannot resolve host"</emphasis>
-                            <programlisting>(nova.root): TRACE: ProcessExecutionError: Unexpected error while running command.
+                        <para><emphasis role="italic">ERROR "Cannot
+                                resolve host"</emphasis>
+                            <programlisting>
+(nova.root): TRACE: ProcessExecutionError: Unexpected error while running command.
 (nova.root): TRACE: Command: sudo iscsiadm -m discovery -t sendtargets -p ubuntu03c
 (nova.root): TRACE: Exit code: 255
 (nova.root): TRACE: Stdout: ''
 (nova.root): TRACE: Stderr: 'iscsiadm: Cannot resolve host ubuntu03c. getaddrinfo error: [Name or service not known]\n\niscsiadm:
 cannot resolve host name ubuntu03c\niscsiadm: Could not perform SendTargets discovery.\n'
-(nova.root): TRACE:</programlisting>This
-                            error happens when the compute node is unable to resolve the nova-volume
-                            server name. You could either add a record for the server if you have a
-                            DNS server; or add it into the "/etc/hosts" file of the nova-compute.
-                        </para>
+(nova.root): TRACE:
+                            </programlisting>This
+                            error happens when the compute node is
+                            unable to resolve the nova-volume server
+                            name. You could either add a record for
+                            the server if you have a DNS server; or
+                            add it into the
+                                <filename>/etc/hosts</filename> file
+                            of the nova-compute. </para>
                     </listitem>
                     <listitem>
                         <para><emphasis role="italic">ERROR "No route to host"</emphasis>
-                            <programlisting>iscsiadm: cannot make connection to 172.29.200.37: No route to host\niscsiadm: cannot make connection to 172.29.200.37</programlisting>
+                            <programlisting>
+iscsiadm: cannot make connection to 172.29.200.37: No route to host\niscsiadm: cannot make connection to 172.29.200.37
+                            </programlisting>
                             This error could be caused by several things, but<emphasis role="bold">
                                 it means only one thing : openiscsi is unable to establish a
                                 communication with your nova-volumes server</emphasis>.</para>
                         <para>The first thing you could do is running a telnet session in order to
                             see if you are able to reach the nova-volume server. From the
                             compute-node, run :</para>
-                        <literallayout class="monospaced">telnet $ip_of_nova_volumes  3260</literallayout>
-                        <para> If the session times out, check the server firewall ; or try to ping
-                            it. You could also run a tcpdump session which will likely gives you
-                            extra information : </para>
-                        <literallayout class="monospaced">tcpdump -nvv -i $iscsi_interface port dest $ip_of_nova_volumes</literallayout>
+                        <screen>
+<prompt>$</prompt> <userinput>telnet $ip_of_nova_volumes  3260</userinput>
+                        </screen>
+                        <para>If the session times out, check the
+                            server firewall ; or try to ping it. You
+                            could also run a tcpdump session which may
+                            also provide extra information : </para>
+                        <screen>
+<prompt>$</prompt> <userinput>tcpdump -nvv -i $iscsi_interface port dest $ip_of_nova_volumes</userinput>
+                        </screen>
                         <para> Again, try to manually run an iSCSI discovery via : </para>
-                        <literallayout class="monospaced">iscsiadm -m discovery -t st -p $ip_of_nova-volumes</literallayout>
+                        <screen>
+<prompt>$</prompt> <userinput>iscsiadm -m discovery -t st -p $ip_of_nova-volumes</userinput>
+                        </screen>
                     </listitem>
                     <listitem>
                         <para><emphasis role="italic">"Lost connectivity between nova-volumes and
@@ -632,8 +768,11 @@ cannot resolve host name ubuntu03c\niscsiadm: Could not perform SendTargets disc
                         <para>First, from the nova-compute, close the active (but stalled) iSCSI
                             session, refer to the volume attached to get the session, and perform
                             the following command : </para>
-                        <literallayout class="monospaced">iscsiadm -m session -r $session_id -u</literallayout>
-                        <para>Here is an iscsi -m session output : </para>
+                        <screen>
+<prompt>$</prompt> <userinput>iscsiadm -m session -r $session_id -u</userinput>
+                        </screen>
+                        <para>Here is an <command>iscsi -m</command>
+                            session output : </para>
                         <programlisting>
 tcp: [1] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-0000000e
 tcp: [2] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000010
@@ -642,16 +781,26 @@ tcp: [4] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-0000000a
 tcp: [5] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000012
 tcp: [6] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000007
 tcp: [7] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000009
-tcp: [9] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000014                        </programlisting>
-                        <para>I would close the session number 9 if I want to free the volume
-                            00000014. </para>
-                        <para>The cloud-controller is actually unaware about the iSCSI session
-                            closing, and will keeps the volume state as "in-use":
-                            <programlisting>VOLUME  vol-00000014     30     nova    in-use (nuage-and-co, nova-cc1, i-0000009a[nova-cn1], \/dev\/sdb)   2011-07-18T12:45:39Z</programlisting>You
-                            now have to inform it that the disk can be used. Nova stores the volumes
-                            info into the "volumes" table. You will have to update four fields into
-                            the database nova uses (eg. MySQL). First, conect to the database : </para>
-                        <literallayout class="monospaced">mysql -uroot -p$password nova</literallayout>
+tcp: [9] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000014                        
+                        </programlisting>
+                        <para>For example, to free volume 00000014,
+                            close the session number 9. </para>
+                        <para>The cloud-controller is actually unaware
+                            of the iSCSI session closing, and will
+                            keeps the volume state as
+                                <literal>in-use</literal>:
+                            <programlisting>
+VOLUME  vol-00000014     30     nova    in-use (nuage-and-co, nova-cc1, i-0000009a[nova-cn1], \/dev\/sdb)   2011-07-18T12:45:39Z
+                            </programlisting>You
+                            now have to inform the cloud-controller
+                            that the disk can be used. Nova stores the
+                            volumes info into the "volumes" table. You
+                            will have to update four fields into the
+                            database nova uses (eg. MySQL). First,
+                            conect to the database : </para>
+                        <screen>
+<prompt>$</prompt> <userinput>mysql -uroot -p$password nova</userinput>
+                        </screen>
                         <para>Then, we get some information from the table "volumes" : </para>
                         <programlisting>
  mysql> select id,created_at, size, instance_id, status, attach_status, display_name from volumes;
@@ -680,92 +829,120 @@ tcp: [9] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000014         
 | 19 | 2011-08-22 13:11:06 |   50 |           0 | available      | detached      | NULL         |
 | 21 | 2011-08-30 15:39:16 |    5 |        NULL | error_deleting | detached      | NULL         |
 +----+---------------------+------+-------------+----------------+---------------+--------------+
-21 rows in set (0.00 sec)</programlisting>
-                        <para> Once you get the volume id, you will have to run the following sql
-                            queries (let's say, my volume 14 as the id number 21 : </para>
+21 rows in set (0.00 sec)
+                        </programlisting>
+                        <para> Once you get the volume id, you will
+                            have to run the following sql queries; for
+                            example, my volume 14 as the id number 21
+                            : </para>
                         <programlisting>
-            mysql> update volumes set mountpoint=NULL where id=21;
-            mysql> update volumes set status="available" where status "error_deleting" where id=21;
-            mysql> update volumes set attach_status="detached" where id=21;
-            mysql> update volumes set instance_id=0 where id=21;
+mysql> update volumes set mountpoint=NULL where id=21;
+mysql> update volumes set status="available" where status "error_deleting" where id=21;
+mysql> update volumes set attach_status="detached" where id=21;
+mysql> update volumes set instance_id=0 where id=21;
                         </programlisting>
                         <para>Now if you run again euca-describe-volumesfrom the cloud
                             controller, you should see an available volume now : </para>
-                        <programlisting>VOLUME  vol-00000014     30     nova    available (nuage-and-co, nova-cc1, None, None)  2011-07-18T12:45:39Z</programlisting>
+                        <programlisting>
+VOLUME  vol-00000014     30     nova    available (nuage-and-co, nova-cc1, None, None)  2011-07-18T12:45:39Z
+                        </programlisting>
                         <para>You can now proceed to the volume attachment again!</para>
                     </listitem>
                 </itemizedlist>
             </para>
         </simplesect>
         <simplesect>
-            <title> D- Backup your nova-volume disks</title>
-            <para> While Diablo provides the snapshot functionality (using LVM snapshot), were are
-                going to see here how you can backup your EBS-volumes. The way we will do it offers
-                the advantage to make backup that don't size much, in fact, only existing data will
-                be backed up, not the whole volume. So let's suppose we create a 100 gb nova-volume
-                for an instance, while only 4 gigabytes are used ; we will only backup these 4
-                giga-bytes, here are the tools we are going to use in order to achieve that : </para>
+            <title>D- Backup your nova-volume disks</title>
+            <para>While Diablo provides the snapshot functionality
+                (using LVM snapshot), you can also back up your
+                EBS-volumes. The advantage of this method is that it
+                reduces the size of the backup; only existing data
+                will be backed up, instead of the entire volume. For
+                this example, assume that a100 GB nova-volume has been
+                created for an instance, while only 4 gigabytes are
+                used. This process will back up only those 4
+                giga-bytes, with the following tools: </para>
             <orderedlist>
                 <listitem>
-                    <para><emphasis role="italic">lvm2</emphasis>, in order to directly manipulating
-                        the volumes. </para>
+                    <para><command>lvm2</command>, directly
+                        manipulates the volumes. </para>
                 </listitem>
                 <listitem>
-                    <para><emphasis role="italic">kpartx</emphasis> which will help us to discover
-                        the partition table created inside the instance. </para>
+                    <para><command>kpartx</command> discovers the
+                        partition table created inside the instance. </para>
                 </listitem>
                 <listitem>
-                    <para><emphasis role="italic">tar</emphasis> will be used in order to create a
+                    <para><command>tar</command> creates a
                         minimum-sized backup </para>
                 </listitem>
                 <listitem>
-                    <para><emphasis role="italic">sha1sum</emphasis> for calculating our backup
-                        checksum, in order to check its consistency </para>
+                    <para><command>sha1sum</command> calculates the
+                        backup checksum, to check its consistency </para>
                 </listitem>
             </orderedlist>
             <para>
                 <emphasis role="bold">1- Create a snapshot of a used volume</emphasis></para>
             <itemizedlist>
                 <listitem>
-                    <para> In order to backup our volume, we first need to create a snapshot of it.
-                        An LVM snapshot is the exact copy of a logicial volume, which contains
-                        datas, at a frozen state. Thus, data corruption is avoided (preventing data
-                        manipulation during the process of creating the volume itself). Remember the
-                        EBS-like volumes created through a : $ euca-create-volume
-                        consists in an LVM's logical volume. </para>
-                    <para><emphasis role="italic">Make sure you have enough space (a security is
-                            twice the size for a volume snapshot) before creating the snapshot,
-                            otherwise, there is a risk the snapshot will become corrupted is not
-                            enough space is allocated to it !</emphasis></para>
-                    <para>So you should be able to list all the volumes by running :
-                        <literallayout class="monospaced">$ lvdisplay</literallayout>
-                        During our process, we will only work with a volume called "<emphasis
-                            role="italic">volume-00000001</emphasis>", which, we suppose, is a 10gb
-                        volume : but,everything discussed here applies to all volumes, not matter
-                        their size. At the end of the section, we will present a script that you
-                        could use in order to create scheduled backups. </para>
-                    <para> The script itself exploits what we discuss here. So let's create our
-                        snapshot ; this can be achieved while the volume is attached to an instance
-                        :</para>
+                    <para>In order to backup our volume, we first need
+                        to create a snapshot of it. An LVM snapshot is
+                        the exact copy of a logical volume, which
+                        contains data in a frozen state. This prevents
+                        data corruption, because data will not be
+                        manipulated during the process of creating the
+                        volume itself. Remember the EBS-like volumes
+                        created through a
+                            <command>euca-create-volume</command>
+                        exist in an LVM's logical volume. </para>
+                    <para>Before creating the
+                            snapshot, ensure that you have enough
+                            space to save it. As a precaution, you
+                            should have at least twice as much space
+                            as the potential snapshot size. If
+                            insufficient space is available, there is
+                            a risk that the snapshot could become
+                            corrupted.</para>
+                    <para>Use the following command to obtain a list
+                        of all
+                        volumes.<screen>
+<prompt>$</prompt> <userinput>lvdisplay</userinput>
+                        </screen>In
+                        this example, we will refer to a volume called
+                            <literal>volume-00000001</literal>, which
+                        is a 10GB volume. This process can be applied
+                        to all volumes, not matter their size. At the
+                        end of the section, we will present a script
+                        that you could use to create scheduled
+                        backups. The script itself exploits what we
+                        discuss here. </para>
+                    <para>First, create the snapshot; this can be
+                        achieved while the volume is attached to an
+                        instance :</para>
                     <para>
-                        <literallayout class="monospaced">$ lvcreate --size 10G --snapshot --name volume-00000001-snapshot /dev/nova-volumes/volume-00000001</literallayout>
+                        <screen>
+<prompt>$</prompt> <userinput>lvcreate --size 10G --snapshot --name volume-00000001-snapshot /dev/nova-volumes/volume-00000001</userinput>
+                        </screen>
                     </para>
-                    <para> We indicate LVM we want a snapshot of an already existing volumes via the
-                            "<emphasis role="italic">--snapshot</emphasis>" configuration option, plus the path of
-                        an already existing volume (In most cases, the path will be
-                        /dev/nova-volumes/$volume_name, the name we want to give to our snapshot,
-                        and a size.</para>
-                    <para>
-                        <emphasis role="italic">This size don't have to be the same as the volume we
-                            snapshot, in fact, it's a space that LMV will reserve to our snapshot
-                            volume, but, by safety, let's specify the same size (even if we know the
-                            whole space is not currently used). </emphasis>
-                    </para>
+                    <para>We indicate to LVM we want a snapshot of an
+                        already existing volume with the
+                            <literal>--snapshot</literal>
+                        configuration option. The command includes the
+                        size of the space reserved for the snapshot
+                        volume, the name of the snapshot, and the path
+                        of an already existing volume (In most cases,
+                        the path will be
+                                <filename>/dev/nova-volumes/<replaceable>$volume_name</replaceable></filename>).</para>
+                    <para>The size doesn't have to be the same as the
+                        volume of the snapshot. The size parameter
+                        designates the space that LVM will reserve for
+                        the snapshot volume. As a precaution, the size
+                        should be the same as that of the original
+                        volume, even if we know the whole space is not
+                        currently used by the snapshot. </para>
                     <para>We now have a full snapshot, and it only took few seconds ! </para>
-                    <para>Let's check it, by running </para>
-                    <para>
-                        <literallayout>$ lvdisplay again. You should see now your shapshot : </literallayout>
-                    </para>
+                    <para>Run <command>lvdisplay</command> again to
+                        verify the snapshot. You should see now your
+                        snapshot : </para>
                     <para>
                         <programlisting>
                   --- Logical volume ---
@@ -812,112 +989,159 @@ tcp: [9] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000014         
                 <emphasis role="bold">2- Partition table discovery </emphasis></para>
             <itemizedlist>
                 <listitem>
-                    <para> If we want to exploit that snapshot, and use the <emphasis role="italic"
-                            >tar</emphasis> program accordingly, we first need to mount our
-                        partition on the nova-volumes server. </para>
-                    <para>Kpartx is a small utility which performs table partition discoveries, and
-                        map it. This is usefull since we will need to use it if we want to see
-                        partition creates inside the instance. </para>
-                    <para>Without using the partitions created inside instances, we won' t be able
-                        to see it's content, and creating efficient backups. Let's use kpartx (a
-                        simple <emphasis role="monospaced">$ apt-get install
-                            kpartx</emphasis> would do the trick on Debian's flavor distros): </para>
+                    <para>If we want to exploit that snapshot with the
+                            <command>tar</command> program, we first
+                        need to mount our partition on the
+                        nova-volumes server. </para>
+                    <para><command>kpartx</command> is a small utility
+                        which performs table partition discoveries,
+                        and maps it. It can be used to view partitions
+                        created inside the instance. Without using the
+                        partitions created inside instances, we won' t
+                        be able to see its content and create
+                        efficient backups. </para>
                     <para>
-                        <literallayout class="monospaced">$ kpartx -av /dev/nova-volumes/volume-00000001-snapshot</literallayout>
+                        <programlisting>
+<prompt>$</prompt> <userinput>kpartx -av /dev/nova-volumes/volume-00000001-snapshot</userinput>
+                        </programlisting>
                     </para>
-                    <para>If not any errors is displayed, it means the tools has been able to find
-                        it, and map the partition table. </para>
-                    <para>You can easily check that map by running : </para>
-                    <para><literallayout class="monospaced">$ ls /dev/mapper/nova*</literallayout>
-                        You should now see a partition called
-                        "nova--volumes-volume--00000001--snapshot1" </para>
-                    <para>If you have created more than one partition on that volumes, you should
-                        have accordingly several partitions ( eg
-                        :nova--volumes-volume--00000001--snapshot2,nova--volumes-volume--00000001--snapshot3
-                        and so forth). </para>
-                    <para>We can now mount our parition : </para>
+                    <para>If no errors are displayed, it means the
+                        tools has been able to find it, and map the
+                        partition table. Note that on a Debian flavor
+                        distro, you could also use <command>apt-get
+                            install kpartx</command>.</para>
+                    <para>You can easily check the partition table map
+                        by running the following command: </para>
+                    <para><programlisting>
+<prompt>$</prompt> <userinput>ls /dev/mapper/nova*</userinput>
+                    </programlisting>You
+                        should now see a partition called
+                            <literal>nova--volumes-volume--00000001--snapshot1</literal>
+                    </para>
+                    <para>If you created more than one partition on
+                        that volumes, you should have accordingly
+                        several partitions; for example.
+                            <literal>nova--volumes-volume--00000001--snapshot2</literal>,
+                            <literal>nova--volumes-volume--00000001--snapshot3</literal>
+                        and so forth. </para>
+                    <para>We can now mount our partition : </para>
                     <para>
-                        <literallayout class="monospaced">$ mount /dev/mapper/nova--volumes-volume--volume--00000001--snapshot1 /mnt</literallayout>
+                        <programlisting>
+<prompt>$</prompt> <userinput>mount /dev/mapper/nova--volumes-volume--volume--00000001--snapshot1 /mnt</userinput>
+                        </programlisting>
                     </para>
-                    <para>If there is not any errors, it means you successfully mounted the
-                        partition ! </para>
-                    <para>You should now be able to access directly to the datas that were created
-                        inside the instance. If you have a message asking for you to specify a
-                        partition, or if you are unable to mount it (despite a well-specified
+                    <para>If there are no errors, you have
+                        successfully mounted the partition.</para>
+                    <para>You should now be able to directly access
+                        the data that were created inside the
+                        instance. If you receive a message asking you
+                        to specify a partition, or if you are unable
+                        to mount it (despite a well-specified
                         filesystem) there could be two causes :</para>
                     <para><itemizedlist>
                             <listitem>
-                                <para> You didn't allocate enough size for the snapshot </para>
+                                <para> You didn't allocate enough
+                                   space for the snapshot </para>
                             </listitem>
                             <listitem>
-                                <para> kapartx had been unable to discover the partition table. </para>
+                                <para>
+                                   <command>kpartx</command> was
+                                   unable to discover the partition
+                                   table. </para>
                             </listitem>
-                        </itemizedlist> Try to allocate more space to the snapshot and see if it
-                        works. </para>
+                        </itemizedlist>Allocate more space to the
+                        snapshot and try the process again. </para>
                 </listitem>
             </itemizedlist>
             <para>
                 <emphasis role="bold"> 3- Use tar in order to create archives</emphasis>
                 <itemizedlist>
                     <listitem>
-                        <para> Now we have our mounted volume, let's create a backup of it : </para>
+                        <para> Now that the volume has been mounted,
+                            you can create a backup of it : </para>
                         <para>
-                            <literallayout class="monospaced">$ tar --exclude={"lost+found","some/data/to/exclude"} -czf volume-00000001.tar.gz -C /mnt/ /backup/destination</literallayout>
+                            <screen>
+<prompt>$</prompt> <userinput>tar --exclude={"lost+found","some/data/to/exclude"} -czf volume-00000001.tar.gz -C /mnt/ /backup/destination</userinput>
+                            </screen>
                         </para>
-                        <para>This command will create a tar.gz file containing the datas, <emphasis
-                                role="italic">and datas only</emphasis>, so you ensure you don't
-                            waste space by backing up empty sectors !</para>
+                        <para>This command will create a tar.gz file
+                            containing the data, <emphasis
+                                role="italic">and data
+                            only</emphasis>. This ensures that you do
+                            not waste space by backing up empty
+                            sectors.</para>
                     </listitem>
                 </itemizedlist></para>
             <para>
                 <emphasis role="bold">4- Checksum calculation I</emphasis>
                 <itemizedlist>
                     <listitem>
-                        <para> It's always good to have the checksum for your backup files. The
-                            checksum is a unique identifier for a file. </para>
-                        <para>When you transfer that same file over the network ; you can run
-                            another checksum calculation. Having different checksums means the file
-                            is corrupted, so it is an interesting way to make sure your file is has
-                            not been corrupted during its transfer.</para>
-                        <para>Let's checksum our file, and save the result to a file :</para>
-                        <para><literallayout class="monospaced">$sha1sum volume-00000001.tar.gz > volume-00000001.checksum</literallayout><emphasis
-                                role="bold">Be aware</emphasis> the sha1sum should be used carefully
-                            since the required time for the calculation is proportionate to the
-                            file's size. </para>
-                        <para>For files that weight more than ~4-6 gigabytes, and depending on your
-                            CPU, it could require a lot of times.</para>
+                        <para>You should always have the checksum for
+                            your backup files. The checksum is a
+                            unique identifier for a file. </para>
+                        <para>When you transfer that same file over
+                            the network, you can run another checksum
+                            calculation. If the checksums are
+                            different, this indicates that the file is
+                            corrupted; thus, the checksum provides a
+                            method to ensure your file has not been
+                            corrupted during its transfer.</para>
+                        <para>The following command runs a checksum
+                            for our file, and saves the result to a
+                            file :</para>
+                        <para><screen>
+<prompt>$</prompt> <userinput>sha1sum volume-00000001.tar.gz > volume-00000001.checksum</userinput>
+                        </screen><emphasis
+                                role="bold">Be aware</emphasis> the
+                                <command>sha1sum</command> should be
+                            used carefully, since the required time
+                            for the calculation is directly
+                            proportional to the file's size. </para>
+                        <para>For files larger than ~4-6 gigabytes,
+                            and depending on your CPU, the process may
+                            take a long time.</para>
                     </listitem>
                 </itemizedlist>
                 <emphasis role="bold">5- After work cleaning</emphasis>
                 <itemizedlist>
                     <listitem>
-                        <para>Now we have an efficient and consistent backup ; let's clean a bit : </para>
-                        <para><orderedlist>
+                        <para>Now that we have an efficient and
+                            consistent backup, the following commands
+                            will clean up the file system.<orderedlist>
                                 <listitem>
-                                    <para> Umount the volume : $ umount /mnt </para>
+                                   <para>Unmount the volume:
+                                   <command>unmount
+                                   /mnt</command></para>
                                 </listitem>
                                 <listitem>
-                                    <para> Delete the partition table : $ kpartx -dv
-                                            /dev/nova-volumes/volume-00000001-snapshot</para>
+                                   <para>Delete the partition table:
+                                   <command>kpartx -dv
+                                   /dev/nova-volumes/volume-00000001-snapshot</command></para>
                                 </listitem>
                                 <listitem>
-                                    <para>Remove the snapshot : $lvremove -f
-                                            /dev/nova-volumes/volume-00000001-snapshot</para>
+                                   <para>Remove the snapshot:
+                                   <command>lvremove -f
+                                   /dev/nova-volumes/volume-00000001-snapshot</command></para>
                                 </listitem>
-                            </orderedlist> And voila :) You can now repeat these steps for every
-                            volume you have.</para>
+                            </orderedlist></para>
+                        <para>And voila :) You can now repeat these
+                            steps for every volume you have.</para>
                     </listitem>
                 </itemizedlist>
                 <emphasis role="bold">6- Automate your backups</emphasis>
             </para>
-            <para>You will mainly have more and more volumes allocated to your nova-volume service.
-                It might be interesting then to automate things a bit. This script <link
+            <para>Because you can expect that more and more volumes
+                will be allocated to your nova-volume service, you may
+                want to automate your backups. This script <link
                     xlink:href="https://github.com/Razique/Bash-stuff/blob/master/SCR_5005_V01_NUAC-OPENSTACK-EBS-volumes-backup.sh"
-                    >here</link> will assist you on this task. The script does the operations we
-                just did earlier, but also provides mail report and backup running (based on the "
-                backups_retention_days " setting). It is meant to be launched from the server which
-                runs the nova-volumes component.</para>
-            <para>Here is how a mail report looks like : </para>
+                    >here</link> will assist you on this task. The
+                script performs the operations from the previous
+                example, but also provides a mail report and runs the
+                backup based on the
+                    <literal>backups_retention_days</literal> setting.
+                It is meant to be launched from the server which runs
+                the nova-volumes component.</para>
+            <para>Here is an example of a mail report: </para>
             <programlisting>
 Backup Start Time - 07/10 at 01:00:01
 Current retention - 7 days
@@ -933,58 +1157,98 @@ Removing old backups...  : /BACKUPS/EBS-VOL/volume-0000001a/volume-0000001a_28_0
 Total backups size - 267G - Used space : 35%
 Total execution time - 1 h 75 m and 35 seconds
             </programlisting>
-            <para> The script also provides the ability to SSH to your instances and run a mysqldump
-                into them. In order to make this to work, make sure the connection via the nova's
-                project keys is possible. If you don't want to run the mysqldumps, then just turn
-                off this functionality by putting enable_mysql_dump=0 into the script
-                (see all settings at the top of the script)</para>
+            <para>The script also provides the ability to SSH to your
+                instances and run a mysqldump into them. In order to
+                make this to work, ensure the connection via the
+                nova's project keys is enabled. If you don't want to
+                run the mysqldumps, you can turn off this
+                functionality by adding
+                    <literal>enable_mysql_dump=0</literal> to the
+                script.</para>
         </simplesect>
     </section>
     <section xml:id="volume-drivers">
         <title>Volume drivers</title>
-        <para>The default nova-volume behaviour can be altered by using different volume drivers that are included in Nova codebase.
-            To set volume driver, use volume_driver flag:</para>
-        <programlisting>--volume_driver=nova.volume.driver.ISCSIDriver</programlisting>
-        <para>is the default one.</para>
+        <para>The default nova-volume behaviour can be altered by
+            using different volume drivers that are included in Nova
+            codebase. To set volume driver, use
+                <literal>volume_driver</literal> flag. The default is
+            as follows:</para>
+        <programlisting>
+--volume_driver=nova.volume.driver.ISCSIDriver
+        </programlisting>
+   
         <section xml:id="nexenta-driver">
             <title>Nexenta</title>
             <para>NexentaStor Appliance is NAS/SAN software platform designed for building reliable and fast network storage arrays. The NexentaStor is based on
                 the OpenSolaris and uses ZFS as a disk management system. NexentaStor can serve as a storage node for the OpenStack and provide block-level volumes
                 for the virtual servers via iSCSI protocol. </para>
-            <para>Nexenta driver allows you to use Nexenta SA to store Nova volumes. Every Nova volume is represented by a single zvol in a predefined Nexenta volume.
-                For every new volume the driver creates a iSCSI target and iSCSI target group that are used to access it from compute hosts.</para>
+            <para>The Nexenta driver allows you to use Nexenta SA to
+                store Nova volumes. Every Nova volume is represented
+                by a single zvol in a predefined Nexenta volume. For
+                every new volume the driver creates a iSCSI target and
+                iSCSI target group that are used to access it from
+                compute hosts.</para>
             <para>To use Nova with Nexenta Storage Appliance, you should:</para>
                 <itemizedlist>
-                    <listitem><para>set --volume_driver=nova.volume.nexenta.volume.NexentaDriver.</para></listitem>
-                    <listitem><para>set --nexenta_host flag to the hostname or IP of your NexentaStor</para></listitem>
-                    <listitem><para>set --nexenta_user and --nexenta_password to username and password of the user with all necessary priviledges on the appliance,
+                    <listitem><para>set
+                            <literal>--volume_driver=nova.volume.nexenta.volume.NexentaDriver</literal>.</para></listitem>
+                    <listitem><para>set <literal>--nexenta_host</literal> flag to the hostname or IP
+                        of your NexentaStor</para></listitem>
+                    <listitem><para>set <literal>--nexenta_user</literal> and
+                            <literal>--nexenta_password</literal> to
+                        the username and password of the user with all
+                        necessary privileges on the appliance,
                         including the access to REST API</para></listitem>
-                    <listitem><para>set --nexenta_volume to the name of the volume on the appliance that you would like to use in Nova, or create a volume named "nova"
-                        (it will be used by default)</para></listitem>
+                    <listitem><para>set <literal>--nexenta_volume</literal> to the name of the
+                        volume on the appliance that you would like to
+                        use in Nova, or create a volume named
+                            <literal>nova</literal> (it will be used
+                        by default)</para></listitem>
                 </itemizedlist>
             <para>Nexenta driver has a lot of tunable flags. Some of them you might want to change:</para>
                 <itemizedlist>
-                    <listitem><para>nexenta_target_prefix defines the prefix that will be prepended to volume id to form target name on Nexenta</para></listitem>
-                    <listitem><para>nexenta_target_group_prefix defines the prefix for target groups</para></listitem>
-                    <listitem><para>nexenta_blocksize can be set to the size of the blocks in newly created zvols on appliance, with the suffix, like the default
-                        8K means 8 kibibytes</para></listitem>
-                    <listitem><para>nexenta_sparse can be set (just set, it is boolean) to use sparse zvols to save space on appliance</para></listitem>
+                    <listitem><para><literal>nexenta_target_prefix</literal> defines the prefix that
+                        will be prepended to volume id to form target
+                        name on Nexenta</para></listitem>
+                    <listitem><para><literal>nexenta_target_group_prefix</literal> defines the
+                        prefix for target groups</para></listitem>
+                    <listitem><para><literal>nexenta_blocksize</literal> can be set to the size of
+                        the blocks in newly created zvols on
+                        appliance, with the suffix; for example, the
+                        default 8K means 8 kilobytes</para></listitem>
+                    <listitem><para><literal>nexenta_sparse</literal> is boolean and can be set to
+                        use sparse zvols to save space on
+                        appliance</para></listitem>
                 </itemizedlist>
-            <para>Some of them you might want to keep with the default values:</para>
+            <para>Some flags that you might want to keep with the
+                default values:</para>
                 <itemizedlist>
-                    <listitem><para>nexenta_rest_port is the port where Nexenta listens for REST requests (the same port where the NMV works)</para></listitem>
-                    <listitem><para>nexenta_rest_protocol can be set to "http" or "https", but the default is "auto" which makes it try to use HTTP and switch to HTTPS in case of
-                        failure</para></listitem>
-                    <listitem><para>nexenta_iscsi_target_portal_port is the port to connect to Nexenta over iSCSI</para></listitem>
+                    <listitem><para><literal>nexenta_rest_port</literal> is the port where Nexenta
+                        listens for REST requests (the same port where
+                        the NMV works)</para></listitem>
+                    <listitem><para><literal>nexenta_rest_protocol</literal> can be set to
+                            <literal>http</literal> or
+                            <literal>https</literal>, but the default
+                        is <literal>auto</literal> which makes the
+                        driver try to use HTTP and switch to HTTPS in
+                        case of failure</para></listitem>
+                    <listitem><para><literal>nexenta_iscsi_target_portal_port</literal> is the port
+                        to connect to Nexenta over iSCSI</para></listitem>
                 </itemizedlist>
         </section>
         <section xml:id="xensm">
             <title>Using the Xen Storage Manager Volume Driver</title>
-            <para> The Xen Storage Manager Volume driver (xensm) is a Xen hypervisor specific volume driver, and can be used to provide basic storage functionality
-                (like volume creation, and destruction) on a number of different storage back-ends. It also enables the capability of using more sophisticated storage
-                back-ends for operations like cloning/snapshotting etc. The list below shows some of the storage plugins already supported in XenServer/Xen Cloud
-                Platform (XCP):
-            </para>
+            <para>The Xen Storage Manager Volume driver (xensm) is a
+                Xen hypervisor specific volume driver, and can be used
+                to provide basic storage functionality, including
+                volume creation and destruction, on a number of
+                different storage back-ends. It also enables the
+                capability of using more sophisticated storage
+                back-ends for operations like cloning/snapshots, etc.
+                The list below shows some of the storage plugins
+                already supported in XenServer/Xen Cloud Platform
+                (XCP): </para>
             <orderedlist>
                 <listitem>
                     <para>NFS VHD: Storage repository (SR) plugin which stores disks as Virtual Hard Disk (VHD)
@@ -1034,40 +1298,54 @@ Total execution time - 1 h 75 m and 35 seconds
                     <title>Definitions</title>
                     <itemizedlist>
                         <listitem>
-                            <para>
-                                <emphasis role="bold">Backend:</emphasis> A term for a particular storage backend.
-                                This could be iSCSI, NFS, Netapp etc.
-                            </para>
+                            <para><emphasis role="bold"
+                                   >Backend:</emphasis> A term for a
+                                particular storage backend. This could
+                                be iSCSI, NFS, Netapp etc. </para>
                         </listitem>
                         <listitem>
-                            <para>
-                                <emphasis role="bold">Backend-config:</emphasis> All the parameters required to connect
-                                to a specific backend. For e.g. For NFS, this would be the server, path, etc.
-                            </para>
+                            <para><emphasis role="bold"
+                                   >Backend-config:</emphasis> All the
+                                parameters required to connect to a
+                                specific backend. For e.g. For NFS,
+                                this would be the server, path, etc. </para>
                         </listitem>
                         <listitem>
-                            <para>
-                                <emphasis role="bold">Flavor:</emphasis> This term is equivalent to volume "types".
-                                A user friendly term to specify some notion of quality of service.
-                                For example, "gold" might mean that the volumes will use a backend where backups are possible.
-                                A flavor can be associated with multiple backends. The volume scheduler, with the help of the driver,
-                                will decide which backend will be used to create a volume of a particular flavor. Currently, the driver uses
-                                a simple "first-fit" policy, where the first backend that can successfully create this volume is the
-                                one that is used.
-                            </para>
+                            <para><emphasis role="bold"
+                                   >Flavor:</emphasis> This term is
+                                equivalent to volume "types". A
+                                user0friendly term to specify some
+                                notion of quality of service. For
+                                example, "gold" might mean that the
+                                volumes will use a backend where
+                                backups are possible. A flavor can be
+                                associated with multiple backends. The
+                                volume scheduler, with the help of the
+                                driver, will decide which backend will
+                                be used to create a volume of a
+                                particular flavor. Currently, the
+                                driver uses a simple "first-fit"
+                                policy, where the first backend that
+                                can successfully create this volume is
+                                the one that is used. </para>
                         </listitem>
                     </itemizedlist>
                 </simplesect>
                 <simplesect>
                     <title>Operation</title>
-                    <para> The admin uses the the nova-manage command detailed below to add flavors and backends.
-                    </para>
-                    <para> One or more nova-volume service instances will be deployed per availability zone.
-                        When an instance is started, it will create storage repositories (SRs) to connect to the backends
-                        available within that zone. All nova-volume instances within a zone can see all the available backends.
-                        These instances are completely symmetric and hence should be able to service any create_volume
-                        request within the zone.
-                    </para>
+                    <para>The admin uses the the nova-manage command
+                        detailed below to add flavors and backends. </para>
+                    <para>One or more nova-volume service instances
+                        will be deployed per availability zone. When
+                        an instance is started, it will create storage
+                        repositories (SRs) to connect to the backends
+                        available within that zone. All nova-volume
+                        instances within a zone can see all the
+                        available backends. These instances are
+                        completely symmetric and hence should be able
+                        to service any
+                            <literal>create_volume</literal> request
+                        within the zone. </para>
                 </simplesect>
             </section>
             <section xml:id="xensmconfig">
@@ -1100,8 +1378,8 @@ Total execution time - 1 h 75 m and 35 seconds
                                 </emphasis>
                             </para>
                             <programlisting>
-        --volume_driver="nova.volume.xensm.XenSMDriver"
-        --use_local_volumes=False
+--volume_driver="nova.volume.xensm.XenSMDriver"
+--use_local_volumes=False
                                 </programlisting>
                         </listitem>
                         <listitem>
@@ -1111,31 +1389,28 @@ Total execution time - 1 h 75 m and 35 seconds
                                 </emphasis>
                             </para>
                             <programlisting>
+<prompt>$</prompt> nova-manage sm flavor_create &lt;label> &lt;description>
 
-        nova-manage sm flavor_create &lt;label> &lt;description>
+<prompt>$</prompt> nova-manage sm flavor_delete &lt;label>
 
-        nova-manage sm flavor_delete &lt;label>
+<prompt>$</prompt> nova-manage sm backend_add &lt;flavor label> &lt;SR type> [config connection parameters]
 
-        nova-manage sm backend_add &lt;flavor label> &lt;SR type> [config connection parameters]
+Note: SR type and config connection parameters are in keeping with the Xen Command Line Interface. http://support.citrix.com/article/CTX124887
 
-        Note: SR type and config connection parameters are in keeping with the Xen Command Line Interface. http://support.citrix.com/article/CTX124887
+<prompt>$</prompt> nova-manage sm backend_delete &lt;backend-id>
 
-        nova-manage sm backend_delete &lt;backend-id>
-
-                                </programlisting>
+                               </programlisting>
                             <para> Example: For the NFS storage manager plugin, the steps
                                 below may be used.
                             </para>
                             <programlisting>
+<prompt>$</prompt> nova-manage sm flavor_create gold "Not all that glitters"
 
-        nova-manage sm flavor_create gold "Not all that glitters"
+<prompt>$</prompt> nova-manage sm flavor_delete gold
 
-        nova-manage sm flavor_delete gold
+<prompt>$</prompt> nova-manage sm backend_add gold nfs name_label=mybackend server=myserver serverpath=/local/scratch/myname
 
-        nova-manage sm backend_add gold nfs name_label=mybackend server=myserver serverpath=/local/scratch/myname
-
-        nova-manage sm backend_remove 1
-
+<prompt>$</prompt> nova-manage sm backend_remove 1
                                 </programlisting>
                         </listitem>
                         <listitem>
@@ -1147,16 +1422,15 @@ Total execution time - 1 h 75 m and 35 seconds
                     </itemizedlist>
                 </simplesect>
                 <simplesect>
-                    <title> Creating and Accessing the volumes from VMs
-                    </title>
-                    <para>
-                        Currently, the flavors have not been tied to the volume types API. As a result, we simply end up creating volumes
-                        in a "first fit" order on the given backends.
-                    </para>
-                    <para>
-                        The standard euca-* or openstack API commands (such as volume extensions)
-                        should be used for creating/destroying/attaching/detaching volumes.
-                    </para>
+                    <title>Creating and Accessing the volumes from VMs </title>
+                    <para>Currently, the flavors have not been tied to
+                        the volume types API. As a result, we simply
+                        end up creating volumes in a "first fit" order
+                        on the given backends. </para>
+                    <para>The standard euca-* or openstack API
+                        commands (such as volume extensions) should be
+                        used for creating, destroying, attaching, or
+                        detaching volumes. </para>
                 </simplesect>
             </section>
         </section>
@@ -1164,7 +1438,8 @@ Total execution time - 1 h 75 m and 35 seconds
     <section xml:id="live-migration-usage">
 
         <title>Using Live Migration</title>
-        <para>Before starting live migration, check the "Configuring Live Migration" section.</para>
+        <para>Before starting live migration, review the "Configuring
+            Live Migration" section.</para>
         <para>Live migration provides a scheme to migrate running instances from one OpenStack
             Compute server to another OpenStack Compute server. No visible downtime and no
             transaction loss is the ideal goal. This feature can be used as described below. </para>
@@ -1173,9 +1448,9 @@ Total execution time - 1 h 75 m and 35 seconds
             <listitem>
                <para>First, look at the running instances, to get the ID of the instance you wish
 to live migrate.</para>
-                <programlisting><![CDATA[
-# nova-list
-+--------------------------------------+------+--------+-----------------+
+                <programlisting>
+<prompt>#</prompt> <userinput>nova-list</userinput>
+<![CDATA[+--------------------------------------+------+--------+-----------------+
 |                  ID                  | Name | Status |Networks         |
 +--------------------------------------+------+--------+-----------------+
 | d1df1b5a-70c4-4fed-98b7-423362f2c47c | vm1  | ACTIVE | private=a.b.c.d |
@@ -1184,9 +1459,9 @@ to live migrate.</para>
                  ]]></programlisting>
                <para>Second, look at information associated with that instance - our example is vm1
 from above.</para>
-                <programlisting><![CDATA[
-# nova show d1df1b5a-70c4-4fed-98b7-423362f2c47c
-+-------------------------------------+----------------------------------------------------------+
+                <programlisting>
+<prompt>#</prompt> <userinput>nova show d1df1b5a-70c4-4fed-98b7-423362f2c47c</userinput>
+<![CDATA[+-------------------------------------+----------------------------------------------------------+
 |               Property              |                          Value                           |
 +-------------------------------------+----------------------------------------------------------+
 ...
@@ -1204,9 +1479,9 @@ from above.</para>
             </listitem>
             <listitem>
                 <para>Third, select the server to migrate instances to.</para>
-                <programlisting><![CDATA[
-# nova-manage service list
-HostA nova-scheduler enabled  :-) None
+                <programlisting>
+<prompt>#</prompt> <userinput>nova-manage service list</userinput>
+<![CDATA[HostA nova-scheduler enabled  :-) None
 HostA nova-volume enabled  :-) None
 HostA nova-network enabled  :-) None
 HostB nova-compute enabled  :-) None
@@ -1215,10 +1490,11 @@ HostC nova-compute enabled  :-) None
                  <para> In this example, HostC can be picked up because nova-compute is running on it.</para>
             </listitem>
             <listitem>
-                <para>Third, check HostC has enough resource for live migration.</para>
-                <programlisting><![CDATA[
-# nova-manage service describe_resource HostC
-HOST             PROJECT     cpu   mem(mb)     hdd
+                <para>Third, ensure that  HostC has enough resource
+                    for live migration.</para>
+                <programlisting>
+<prompt>#</prompt> <userinput>nova-manage service describe_resource HostC</userinput>
+<![CDATA[HOST             PROJECT     cpu   mem(mb)     hdd
 HostC(total)                  16     32232     878
 HostC(used_now)               13     21284     442
 HostC(used_max)               13     21284     442
@@ -1252,13 +1528,15 @@ HostC            p2            5     10240     150
             </listitem>
             <listitem>
                 <para>Finally, live migration</para>
-                <programlisting><![CDATA[
-# nova live-migration bee83dd3-5cc9-47bc-a1bd-6d11186692d0 HostC
-Migration of bee83dd3-5cc9-47bc-a1bd-6d11186692d0 initiated.
+                <programlisting>
+<prompt>#</prompt> <userinput>nova live-migration bee83dd3-5cc9-47bc-a1bd-6d11186692d0 HostC</userinput>
+<![CDATA[Migration of bee83dd3-5cc9-47bc-a1bd-6d11186692d0 initiated.
                  ]]></programlisting>
-                 <para>Make sure instances are migrated successfully with nova list.
-                    If instances are still running on HostB, check logfiles ( src/dest nova-compute
-                    and nova-scheduler) to determine why</para>
+                 <para>Make sure instances are migrated successfully
+                    with <command>nova list</command>. If instances
+                    are still running on HostB, check logfiles
+                    (src/dest nova-compute and nova-scheduler) to
+                    determine why.</para>
             </listitem>
         </itemizedlist>
 
@@ -1266,87 +1544,112 @@ Migration of bee83dd3-5cc9-47bc-a1bd-6d11186692d0 initiated.
     </section>
     <section xml:id="nova-disaster-recovery-process">
         <title>Nova Disaster Recovery Process</title>
-        <para> Sometimes, things just don't go right. An incident is never planned, by its
-            definition. </para>
-        <para>In this section, we will see how to manage your cloud after a disaster, and how to
-            easily backup the persistent storage volumes, which is another approach when you face a
-            disaster. Even apart from the disaster scenario, backup ARE mandatory. While the Diablo
-            release includes the snapshot functions, both the backup procedure and the utility
-            do apply to the Cactus release. </para>
+        <para>Sometimes, things just don't go right. An incident is
+            never planned, by its definition. </para>
+        <para>In this section, we will review managing your cloud
+            after a disaster, and how to easily backup the persistent
+            storage volumes, which is another approach when you face a
+            disaster. Even apart from the disaster scenario, backup
+            ARE mandatory. While the Diablo release includes the
+            snapshot functions, both the backup procedure and the
+            utility do apply to the Cactus release. </para>
         <para>For reference, you cand find a DRP definition here : <link
                 xlink:href="http://en.wikipedia.org/wiki/Disaster_Recovery_Plan"
                 >http://en.wikipedia.org/wiki/Disaster_Recovery_Plan</link>. </para>
             <simplesect>
                 <title>A- The disaster Recovery Process presentation</title>
-           <para>A disaster could happen to several components of your architecture : a disk crash,
-                a network loss, a power cut... In our scenario, we suppose the following setup : <orderedlist>
+           <para>A disaster could happen to several components of your
+                architecture : a disk crash, a network loss, a power
+                cut, etc. In this example, we suppose the following
+                setup : <orderedlist>
                     <listitem>
-                        <para> A cloud controller (nova-api, nova-objecstore, nova-volume,
+                        <para> A cloud controller (nova-api,
+                            nova-objecstore, nova-volume,
                             nova-network) </para>
                     </listitem>
                     <listitem>
                         <para> A compute node (nova-compute) </para>
                     </listitem>
                     <listitem>
-                        <para> A Storage Area Network used by nova-volumes (aka SAN) </para>
+                        <para> A Storage Area Network used by
+                            nova-volumes (aka SAN) </para>
                     </listitem>
-                </orderedlist> Our disaster will be the worst one : a power loss. That power loss
-                applies to the three components. <emphasis role="italic">Let's see what runs and how
-                    it runs before the crash</emphasis> : <itemizedlist>
+                </orderedlist>The example disaster will be the worst
+                one : a power loss. That power loss applies to the
+                three components. <emphasis role="italic">Let's see
+                    what runs and how it runs before the
+                    crash</emphasis> : <itemizedlist>
                     <listitem>
-                        <para>From the SAN to the cloud controller, we have an active iscsi session
-                            (used for the "nova-volumes" LVM's VG). </para>
+                        <para>From the SAN to the cloud controller, we
+                            have an active iscsi session (used for the
+                            "nova-volumes" LVM's VG). </para>
                     </listitem>
                     <listitem>
-                        <para>From the cloud controller to the compute node we also have active
-                            iscsi sessions (managed by nova-volume). </para>
+                        <para>From the cloud controller to the compute
+                            node we also have active iscsi sessions
+                            (managed by nova-volume). </para>
                     </listitem>
                     <listitem>
-                        <para>For every volume an iscsi session is made (so 14 ebs volumes equals 14
+                        <para>For every volume an iscsi session is
+                            made (so 14 ebs volumes equals 14
                             sessions). </para>
                     </listitem>
                     <listitem>
-                        <para>From the cloud controller to the compute node, we also have iptables/
-                            ebtables rules which allows the acess from the cloud controller to the
-                            running instance. </para>
-                    </listitem>
-                    <listitem>
-                        <para>And at least, from the cloud controller to the compute node ; saved
-                            into database, the current state of the instances (in that case
-                            "running" ), and their volumes attachment (mountpoint, volume id, volume
-                            status, etc..) </para>
-                    </listitem>
-                </itemizedlist> Now, our power loss occurs and everything restarts (the hardware
-                parts), and here is now the situation : </para>
-            <para>
-                <itemizedlist>
-                    <listitem>
-                        <para>From the SAN to the cloud, the ISCSI session no longer exists. </para>
-                    </listitem>
-                    <listitem>
-                        <para>From the cloud controller to the compute node, the ISCSI sessions no
-                            longer exist. </para>
-                    </listitem>
-                    <listitem>
-                        <para>From the cloud controller to the compute node, the iptables/ ebtables
-                            are recreated, since, at boot, nova-network reapply the configurations.
+                        <para>From the cloud controller to the compute
+                            node, we also have iptables/ ebtables
+                            rules which allows the acess from the
+                            cloud controller to the running instance.
                         </para>
                     </listitem>
                     <listitem>
-                        <para>From the cloud controller, instances turn into a shutdown state
-                            (because they are no longer running) </para>
+                        <para>And at least, from the cloud controller
+                            to the compute node ; saved into database,
+                            the current state of the instances (in
+                            that case "running" ), and their volumes
+                            attachment (mountpoint, volume id, volume
+                            status, etc..) </para>
+                    </listitem>
+                </itemizedlist> Now, after the power loss occurs and
+                all hardware components restart, the situation is as
+                follows: </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>From the SAN to the cloud, the ISCSI
+                            session no longer exists. </para>
                     </listitem>
                     <listitem>
-                        <para>Into the datase, datas were not updated at all, since nova could not
-                            have guessed the crash. </para>
+                        <para>From the cloud controller to the compute
+                            node, the ISCSI sessions no longer exist.
+                        </para>
                     </listitem>
-                </itemizedlist> Before going further, and in order to prevent the admin to make
-                fatal mistakes,<emphasis role="bold"> the instances won't be lost</emphasis>, since
-                not any "<emphasis role="italic">destroy</emphasis>" or "<emphasis role="italic"
-                    >terminate</emphasis>" command had been invoked, so the files for the instances
-                remain on the compute node. </para>
-            <para>The plan is to perform the following tasks, in that exact order, <emphasis
-                    role="underline">any extra step would be dangerous at that stage</emphasis>
+                    <listitem>
+                        <para>From the cloud controller to the compute
+                            node, the iptables and ebtables are
+                            recreated, since, at boot, nova-network
+                            reapply the configurations. </para>
+                    </listitem>
+                    <listitem>
+                        <para>From the cloud controller, instances
+                            turn into a shutdown state (because they
+                            are no longer running) </para>
+                    </listitem>
+                    <listitem>
+                        <para>Into the database, data was not updated
+                            at all, since nova could not have guessed
+                            the crash. </para>
+                    </listitem>
+                </itemizedlist>Before going further, and in order to
+                prevent the admin to make fatal mistakes,<emphasis
+                    role="bold"> the instances won't be
+                    lost</emphasis>, since no "<command role="italic"
+                    >destroy</command>" or "<command role="italic"
+                    >terminate</command>" command had been invoked, so
+                the files for the instances remain on the compute
+                node. </para>
+            <para>The plan is to perform the following tasks, in that
+                exact order. <emphasis role="underline">Any extra step
+                    would be dangerous at this stage</emphasis>
                 :</para>
             <para>
                 <orderedlist>
@@ -1378,140 +1681,937 @@ Migration of bee83dd3-5cc9-47bc-a1bd-6d11186692d0 initiated.
             <para>
                 <itemizedlist>
                     <listitem>
-                        <para>
-                            <emphasis role="bold"> Instance to Volume relation </emphasis>
+                        <para><emphasis role="bold"> Instance to
+                                Volume relation </emphasis>
                         </para>
-                        <para> We need to get the current relation from a volume to its instance,
-                            since we will recreate the attachment : </para>
-                        <para>This relation could be figured by running an "euca-describe-volumes" :
-                            <literallayout class="monospaced">euca-describe-volumes | $AWK '{print $2,"\t",$8,"\t,"$9}' | $GREP -v "None" | $SED "s/\,//g; s/)//g; s/\[.*\]//g; s/\\\\\//g"</literallayout>
-                            That would output a three-columns table : <emphasis role="italic">VOLUME
+                        <para>We need to get the current relation from
+                            a volume to its instance, since we will
+                            recreate the attachment : </para>
+                        <para>This relation could be figured by
+                            running
+                                <command>euca-describe-volumes</command>:
+                            <screen>
+$ <userinput>euca-describe-volumes | $AWK '{print $2,"\t",$8,"\t,"$9}' | $GREP -v "None" | $SED "s/\,//g; s/)//g; s/\[.*\]//g; s/\\\\\//g"</userinput>
+                            </screen>
+                            That would output a three-column table :
+                                <emphasis role="italic">VOLUME
                                 INSTANCE MOUNTPOINT</emphasis>
                         </para>
                     </listitem>
                     <listitem>
-                        <para>
-                            <emphasis role="bold"> Database Update </emphasis>
+                        <para><emphasis role="bold"> Database Update
+                            </emphasis>
                         </para>
-                        <para> Second, we need to update the database in order to clean the stalled
-                            state. Now that we have saved for every volume the attachment we need to
-                            restore, it's time to clean the database, here are the queries that need
-                            to be run :
+                        <para>Second, we need to update the database
+                            in order to clean the stalled state. Now
+                            that we have saved the attachments we need
+                            to restore for every volume, the database
+                            can be cleaned with the following queries:
                             <programlisting>
-                mysql> use nova;
-                mysql> update volumes set mountpoint=NULL;
-                mysql> update volumes set status="available" where status &lt;&gt;"error_deleting";
-                mysql> update volumes set attach_status="detached";
-                mysql> update volumes set instance_id=0;
-                </programlisting>
-                            Now, by running an euca-describe-volumesall volumes should
-                            be available. </para>
+<prompt>mysql></prompt> <userinput>use nova;</userinput>
+<prompt>mysql></prompt> <userinput>update volumes set mountpoint=NULL;</userinput>
+<prompt>mysql></prompt> <userinput>update volumes set status="available" where status &lt;&gt;"error_deleting";</userinput>
+<prompt>mysql></prompt> <userinput>update volumes set attach_status="detached";</userinput>
+<prompt>mysql></prompt> <userinput>update volumes set instance_id=0;</userinput>
+                </programlisting>Now,
+                            when running
+                                <command>euca-describe-volumes</command>
+                            all volumes should be available. </para>
                     </listitem>
                     <listitem>
-                        <para>
-                            <emphasis role="bold"> Instances Restart </emphasis>
+                        <para><emphasis role="bold"> Instances Restart
+                            </emphasis>
                         </para>
-                        <para> We need to restart the instances ; It's time to launch a restart, so
-                            the instances will really run. This can be done via a simple
-                                euca-reboot-instances $instance
+                        <para>We need to restart the instances. This
+                            can be done via a simple
+                                <command>euca-reboot-instances
+                                   <replaceable>$instance</replaceable></command>
                         </para>
-                        <para>At that stage, depending on your image, some instances would totally
-                            reboot (thus become reacheable), while others would stop on the
-                            "plymouth" stage. </para>
-                        <para><emphasis role="bold">DO NOT reboot a second time</emphasis> the ones
-                            which are stopped at that stage (<emphasis role="italic">see below, the
-                                fourth step</emphasis>). In fact it depends on whether you added an
-                            "/etc/fstab" entry for that volume or not. Images built with the
-                                <emphasis role="italic">cloud-init</emphasis> package (More infos on
-                                <link xlink:href="https://help.ubuntu.com/community/CloudInit"
-                                >help.ubuntu.com</link>)will remain on a pending state, while others
-                            will skip the missing volume and start. But remember that the idea of
-                            that stage is only to ask nova to reboot every instance, so the stored
-                            state is preserved. </para>
-                        <para/>
+                        <para>At that stage, depending on your image,
+                            some instances will completely reboot and
+                            become reacheable, while others will stop
+                            on the "plymouth" stage. </para>
+                        <para><emphasis role="bold">DO NOT reboot a
+                                second time</emphasis> the ones which
+                            are stopped at that stage (<emphasis
+                                role="italic">see below, the fourth
+                                step</emphasis>). In fact it depends
+                            on whether you added an
+                                <filename>/etc/fstab</filename> entry
+                            for that volume or not. Images built with
+                            the <emphasis role="italic"
+                                >cloud-init</emphasis> package will
+                            remain on a pending state, while others
+                            will skip the missing volume and start.
+                            (More information is available on <link
+                                xlink:href="https://help.ubuntu.com/community/CloudInit"
+                                >help.ubuntu.com</link>) But remember
+                            that the idea of that stage is only to ask
+                            nova to reboot every instance, so the
+                            stored state is preserved. </para>
                     </listitem>
                     <listitem>
-                        <para>
-                            <emphasis role="bold"> Volume Attachment </emphasis>
+                        <para><emphasis role="bold"> Volume Attachment
+                            </emphasis>
                         </para>
-                        <para> After the restart, we can reattach the volumes to their respective
-                            instances. Now that nova has restored the right status, it is time to
-                            performe the attachments via an euca-attach-volume
-                        </para>
-                        <para>Here is a simple snippet that uses the file we created :
+                        <para>After the restart, we can reattach the
+                            volumes to their respective instances. Now
+                            that nova has restored the right status,
+                            it is time to performe the attachments via
+                            an euca-attach-volume </para>
+                        <para>Here is a simple snippet that uses the
+                            file we created :
                             <programlisting>
-                #!/bin/bash
+#!/bin/bash
 
-                while read line; do
-                    volume=`echo $line | $CUT -f 1 -d " "`
-                    instance=`echo $line | $CUT -f 2 -d " "`
-                    mount_point=`echo $line | $CUT -f 3 -d " "`
-                        echo "ATTACHING VOLUME FOR INSTANCE - $instance"
-                    euca-attach-volume -i $instance -d $mount_point $volume
-                    sleep 2
-                done &lt; $volumes_tmp_file
-                </programlisting>
-                            At that stage, instances which were pending on the boot sequence
-                                (<emphasis role="italic">plymouth</emphasis>) will automatically
-                            continue their boot, and restart normally, while the ones which booted
-                            will see the volume. </para>
+while read line; do
+    volume=`echo $line | $CUT -f 1 -d " "`
+    instance=`echo $line | $CUT -f 2 -d " "`
+    mount_point=`echo $line | $CUT -f 3 -d " "`
+        echo "ATTACHING VOLUME FOR INSTANCE - $instance"
+    euca-attach-volume -i $instance -d $mount_point $volume
+    sleep 2
+done &lt; $volumes_tmp_file
+                </programlisting>At
+                            that stage, instances which were pending
+                            on the boot sequence (<emphasis
+                                role="italic">plymouth</emphasis>)
+                            will automatically continue their boot,
+                            and restart normally, while the ones which
+                            booted will see the volume. </para>
                     </listitem>
                     <listitem>
-                        <para>
-                            <emphasis role="bold"> SSH into instances </emphasis>
+                        <para><emphasis role="bold"> SSH into
+                                instances </emphasis>
                         </para>
-                        <para> If some services depend on the volume, or if a volume has an entry
-                            into fstab, it could be good to simply restart the instance. This
-                            restart needs to be made from the instance itself, not via nova. So, we
-                            SSH into the instance and perform a reboot :
-                            <literallayout class="monospaced">shutdown -r now</literallayout>
-                        </para>
+                        <para>If some services depend on the volume,
+                            or if a volume has an entry into fstab, it
+                            could be good to simply restart the
+                            instance. This restart needs to be made
+                            from the instance itself, not via nova.
+                            So, we SSH into the instance and perform a
+                            reboot :
+                            <screen>
+<prompt>$</prompt> <userinput>shutdown -r now</userinput>
+                             </screen></para>
                     </listitem>
-                </itemizedlist> Voila! You successfully recovered your cloud after that. </para>
+                </itemizedlist>Voila! You successfully recovered your
+                cloud after that. </para>
             <para>Here are some suggestions : </para>
             <para><itemizedlist>
                     <listitem>
-                        <para> Use the parameter errors=remount,ro into you fstab file,
-                            that would prevent data corruption.</para>
-                        <para> The system would lock any write to the disk if it detects an I/O
-                            error. This configuration option should be added into the nova-volume server (the one
-                            which performs the ISCSI connection to the SAN), but also into the
-                            intances' fstab file.</para>
+                        <para> Use the <literal>parameter
+                                errors=remount</literal> in the
+                                <filename>fstab</filename> file, which
+                            will prevent data corruption.</para>
+                        <para> The system would lock any write to the
+                            disk if it detects an I/O error. This
+                            configuration option should be added into
+                            the nova-volume server (the one which
+                            performs the ISCSI connection to the SAN),
+                            but also into the instances'
+                                <filename>fstab</filename>
+                            file.</para>
                     </listitem>
                     <listitem>
-                        <para> Do not add into the nova-volume's fstab file the entry for the SAN's
-                            disks. </para>
-                        <para>Some systems would hang on that step, which means you could loose
-                            access to your cloud-controller. In order to re-run the session
-                            manually, you would run :
-                            <literallayout class="monospaced">iscsiadm -m discovery -t st -p $SAN_IP $ iscsiadm -m node --target-name $IQN -p $SAN_IP -l
-Then perform the mount. </literallayout></para>
+                        <para>Do not add the entry for the SAN's disks
+                            to the nova-volume's
+                                <filename>fstab</filename> file. </para>
+                        <para>Some systems will  hang on that step,
+                            which means you could lose access to your
+                            cloud-controller. In order to re-run the
+                            session manually, you would run the
+                            following command before performing the
+                            mount:
+                            <screen>
+<prompt>#</prompt> <userinput>iscsiadm -m discovery -t st -p $SAN_IP $ iscsiadm -m node --target-name $IQN -p $SAN_IP -l</userinput>
+ </screen></para>
                     </listitem>
                     <listitem>
-                        <para> For your instances, if you have the whole "/home/" directory on the
-                            disk, then, instead of emptying the /home directory and map the disk on
-                            it, leave a user's directory, with at least, his bash files ;  but, more
-                            importantly, the "authorized_keys" file. </para>
-                        <para>That would allow you to connect to the instance, even without the
-                            volume attached. (If you allow only connections via public keys.)
-                        </para>
+                        <para> For your instances, if you have the
+                            whole <filename>/home/</filename>
+                            directory on the disk, instead of emptying
+                            the <filename>/home</filename> directory
+                            and map the disk on it, leave a user's
+                            directory with the user's bash files and
+                            the <filename>authorized_keys</filename>
+                            file. </para>
+                        <para>This will allow you to connect to the
+                            instance, even without the volume
+                            attached, if you allow only connections
+                            via public keys. </para>
                     </listitem>
             </itemizedlist>
                 </para>
         </simplesect>
         <simplesect>
                     <title>C- Scripted DRP</title>
-            <para>You could get <link xlink:href="https://github.com/Razique/Bash-stuff/blob/master/SCR_5006_V00_NUAC-OPENSTACK-DRP-OpenStack.sh">here</link> a bash script which performs these five steps : </para>
+            <para>You can download from <link
+                    xlink:href="https://github.com/Razique/Bash-stuff/blob/master/SCR_5006_V00_NUAC-OPENSTACK-DRP-OpenStack.sh"
+                    >here</link> a bash script which performs these
+                five steps : </para>
             <para>The "test mode" allows you to perform that whole sequence for only one
                 instance.</para>
-            <para>In order to reproduce the power loss, simply connect to the compute node which
-                runs that same instance, and close the iscsi session (<emphasis role="underline">do
-                    not dettach the volume via "euca-dettach"</emphasis>, but manually close the
-                iscsi session). </para>
-            <para>Let's say this is the iscsi session number 15 for that instance :
-                    <literallayout class="monospaced">iscsiadm -m session -u -r 15</literallayout><emphasis
-                    role="bold">Do not forget the flag -r, otherwise, you would close ALL
-                    sessions</emphasis> !!</para>
+            <para>To reproduce the power loss,  connect to the compute
+                node which runs that same instance and close the iscsi
+                session. <emphasis role="underline">Do not dettach the
+                    volume via
+                    <command>euca-detach</command></emphasis>, but
+                instead manually close the iscsi session. </para>
+            <para>In the following example, the iscsi session is
+                number 15 for that instance :
+                    <screen>
+<prompt>$</prompt> <userinput>iscsiadm -m session -u -r 15</userinput>
+                    </screen><emphasis
+                    role="bold">Do not forget the flag
+                        -<literal>r</literal>; otherwise, you will
+                    close ALL sessions</emphasis>.</para>
         </simplesect>
     </section>
+
+    <section xml:id="reference-for-options-in-nova-conf">
+        <title>Reference for Configuration Options in nova.conf</title>
+                <para>For a complete list of all available
+            configuration options for each OpenStack Compute service,
+            run <command>bin/nova-&lt;servicename> --help</command>. </para>
+
+                <table rules="all">
+            <caption>Description of common nova.conf configuration options (nova-api, nova-compute)</caption>
+
+            <thead>
+                <tr>
+                    <td>Configuration option</td>
+                    <td>Default</td>
+                    <td>Description</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>ajax_console_proxy_port</td>
+                    <td>default: '8000'</td>
+                    <td>Port value; port to which the ajax console proxy server binds</td>
+                </tr>
+                <tr>
+                    <td>ajax_console_proxy_topic</td>
+                    <td>default: 'ajax_proxy'</td>
+                    <td>String value; Topic that the ajax proxy nodes listen on</td>
+                </tr>
+                <tr>
+                    <td>ajax_console_proxy_url</td>
+                    <td>default: 'http://127.0.0.1:8000'</td>
+                    <td>IP address plus port value; Location of the ajax console proxy and port</td>
+                </tr>
+                <tr>
+                    <td>allowed_roles</td>
+                    <td>default: 'cloudadmin,itsec,sysadmin,netadmin,developer'</td>
+                    <td>Comma separated list: List of allowed roles for a project (or tenant).</td>
+                </tr>
+                <tr>
+                    <td>auth_driver</td>
+                    <td>default:'nova.auth.dbdriver.DbDriver'</td>
+                    <td>
+                        <para>String value; Name of the driver for authentication</para>
+                        <itemizedlist>
+                            <listitem>
+                                <para>nova.auth.dbdriver.DbDriver - Default setting, uses
+                                    credentials stored in zip file, one per project.</para>
+                            </listitem>
+                            <listitem>
+                                <para>nova.auth.ldapdriver.FakeLdapDriver - create a replacement for
+                                    this driver supporting other backends by creating another class
+                                    that exposes the same public methods.</para>
+                            </listitem>
+                        </itemizedlist>
+                    </td>
+                </tr>
+                <tr>
+                    <td>auth_token_ttl</td>
+                    <td>default: '3600'</td>
+                    <td>Seconds; Amount of time for auth tokens to linger, must be an integer
+                        value</td>
+                </tr>
+                <tr>
+                    <td>auto_assign_floating_ip</td>
+                    <td>default: 'false'</td>
+                    <td>true or false; Enables auto-assignment of IP addresses to VMs</td>
+                </tr>
+                <tr>
+                    <td>aws_access_key_id</td>
+                    <td>default: 'admin'</td>
+                    <td>Username; ID that accesses AWS if necessary</td>
+                </tr>
+                <tr>
+                    <td>aws_secret_access_key</td>
+                    <td>default: 'admin'</td>
+                    <td>Password key; The secret access key that pairs with the AWS ID for
+                        connecting to AWS if necessary</td>
+                </tr>
+                <tr>
+                    <td>ca_file</td>
+                    <td>default: 'cacert.pem') </td>
+                    <td>File name; File name of root CA</td>
+                </tr>
+
+                <tr>
+                    <td>cnt_vpn_clients</td>
+                    <td>default: '0'</td>
+                    <td>Integer; Number of addresses reserved for VPN clients</td>
+                </tr>
+                <tr>
+                    <td>compute_manager</td>
+                    <td>default: 'nova.compute.manager.ComputeManager'</td>
+                    <td>String value; Manager for Compute which handles remote procedure calls relating to creating instances</td>
+                </tr>
+                <tr>
+                    <td>create_unique_mac_address_attempts</td>
+                    <td>default: '5'</td>
+                    <td>String value; Number of attempts to create unique mac
+                        address</td>
+                </tr>
+                <tr>
+                    <td>credential_cert_file</td>
+                    <td>default: 'cert.pem'</td>
+                    <td>Filename; Filename of certificate in credentials zip</td>
+                </tr>
+                <tr>
+                    <td>credential_key_file</td>
+                    <td>default: 'pk.pem'</td>
+                    <td>Filename; Filename of private key in credentials zip</td>
+                </tr>
+                <tr>
+                    <td>credential_rc_file</td>
+                    <td>default: '%src'</td>
+                    <td>File name; Filename of rc in credentials zip, %src will be replaced
+                        by name of the region (nova by default).</td>
+                </tr>
+                <tr>
+                    <td>credential_vpn_file</td>
+                    <td>default: 'nova-vpn.conf'</td>
+                    <td>File name; Filename of certificate in credentials zip</td>
+                </tr>
+                <tr>
+                    <td>crl_file</td>
+                    <td>default: 'crl.pem') </td>
+                    <td>File name; File name of Certificate Revocation List</td>
+                </tr>
+                <tr>
+                    <td>compute_topic</td>
+                    <td>default: 'compute'</td>
+                    <td>String value; Names the topic that compute nodes listen on</td>
+                </tr>
+                <tr>
+                    <td>connection_type</td>
+                    <td>default: 'libvirt'</td>
+                    <td>String value libvirt, xenapi or fake; Virtualization driver for spawning
+                        instances</td>
+                </tr>
+                <tr>
+                    <td>console_manager</td>
+                    <td>default: 'nova.console.manager.ConsoleProxyManager'</td>
+                    <td>String value; Manager for console proxy</td>
+                </tr>
+                <tr>
+                    <td>console_topic</td>
+                    <td>default: 'console'</td>
+                    <td>String value; The topic console proxy nodes listen on</td>
+                </tr>
+                <tr>
+                    <td>control_exchange</td>
+                    <td>default:nova</td>
+                    <td>String value; Name of the main exchange to connect to</td>
+                </tr>
+                <tr>
+                    <td>default_image</td>
+                    <td>default: 'ami-11111'</td>
+                    <td>Name of an image; Names the default image to use, testing purposes only</td>
+                </tr>
+                <tr>
+                    <td>db_backend</td>
+                    <td>default: 'sqlalchemy'</td>
+                    <td>The backend selected for the database connection</td>
+                </tr>
+                <tr>
+                    <td>db_driver</td>
+                    <td>default: 'nova.db.api'</td>
+                    <td>The drive to use for database access</td>
+                </tr>
+                <tr>
+                    <td>default_instance_type</td>
+                    <td>default: 'm1.small'</td>
+                    <td>Name of an image; Names the default instance type to use, testing purposes
+                        only</td>
+                </tr>
+                <tr>
+                    <td>default_log_levels</td>
+                    <td>default: 'amqplib=WARN,sqlalchemy=WARN,eventlet.wsgi.server=WARN'</td>
+                    <td>Pair of named loggers and level of message to be logged; List of
+                        logger=LEVEL pairs</td>
+                </tr>
+                <tr>
+                    <td>default_project</td>
+                    <td>default: 'openstack'</td>
+                    <td>Name of a project; Names the default project for openstack</td>
+                </tr>
+                <tr>
+                    <td>ec2_dmz_host</td>
+                    <td>default: '$my_ip'</td>
+                    <td>IP Address; Internal IP of API server (a DMZ is shorthand for a
+                        demilitarized zone)</td>
+                </tr>
+                <tr>
+                    <td>ec2_host</td>
+                    <td>default: '$my_ip'</td>
+                    <td>IP Address; External-facing IP of API server</td>
+                </tr>
+                <tr>
+                    <td>ec2_listen_port</td>
+                    <td>default: '8773'</td>
+                    <td>Port value; Port that the server is listening on so you can specify a listen_host / port value for the server (not for clients).</td>
+                </tr>
+                <tr>
+                    <td>ec2_path</td>
+                    <td>default: '/services/Cloud'</td>
+                    <td>String value; Suffix for EC2-style URL where nova-api resides</td>
+                </tr>
+                <tr>
+                    <td>ec2_port</td>
+                    <td>default: '8773'</td>
+                    <td>Port value; Cloud controller port (where nova-api resides)</td>
+                </tr>
+                <tr>
+                    <td>ec2_scheme</td>
+                    <td>default: 'http'</td>
+                    <td>Protocol; Prefix for EC2-style URLs where nova-api resides</td>
+                </tr>
+                <tr>
+                    <td>ec2_url</td>
+                    <td>none</td>
+                    <td>Deprecated - HTTP URL; Location to interface nova-api. Example:
+                        http://184.106.239.134:8773/services/Cloud</td>
+                </tr>
+                <tr>
+                    <td>global_roles</td>
+                    <td>default: 'cloudadmin,itsec'</td>
+                    <td>Comma separated list; Roles that apply to all projects (or tenants)</td>
+                </tr>
+
+                <tr>
+                    <td>flat_injected</td>
+                    <td>default: 'false'</td>
+                    <td>Indicates whether Compute (Nova) should use attempt to inject IPv6 network configuration information into the guest. It attempts to modify /etc/network/interfaces and currently only works on Debian-based systems.  </td>
+                </tr>
+                <tr>
+                    <td>fixed_ip_disassociate_timeout</td>
+                    <td>default: '600'</td>
+                    <td>Integer: Number of seconds after which a deallocated ip is disassociated. </td>
+                </tr>
+                <tr>
+                    <td>fixed_range</td>
+                    <td>default: '10.0.0.0/8'</td>
+                    <td>Fixed IP address block of addresses from which a set of iptables rules is created</td>
+                </tr>
+                <tr>
+                    <td>fixed_range_v6</td>
+                    <td>default: 'fd00::/48'</td>
+                    <td>Fixed IPv6 address block of addresses</td>
+                </tr>
+                <tr>
+                    <td>[no]flat_injected</td>
+                    <td>default: 'true'</td>
+                    <td>Indicates whether to attempt to inject network setup into guest; network injection only works for Debian systems</td>
+                </tr>
+                <tr>
+                    <td>flat_interface</td>
+                    <td>default: ''</td>
+                    <td>FlatDhcp will bridge into this interface</td>
+                </tr>
+                <tr>
+                    <td>flat_network_bridge</td>
+                    <td>default: ''</td>
+                    <td>Bridge for simple network instances, formerly defaulted to br100; required
+                        setting for Flat DHCP</td>
+                </tr>
+                <tr>
+                    <td>flat_network_dhcp_start</td>
+                    <td>default: '10.0.0.2'</td>
+                    <td>(Deprecated in Diablo release, only applies to Cactus and earlier) Starting
+                        IP address for the DHCP server to start handing out IP addresses when using
+                        FlatDhcp </td>
+                </tr>
+                <tr>
+                    <td>flat_network_dns</td>
+                    <td>default: '8.8.4.4'</td>
+                    <td>DNS for simple network </td>
+                </tr>
+                <tr>
+                    <td>floating_range</td>
+                    <td>default: '4.4.4.0/24'</td>
+                    <td>Floating IP address block </td>
+                </tr>
+
+                <tr>
+                    <td>[no]fake_network</td>
+                    <td>default: 'false'</td>
+                    <td>Indicates whether Compute (Nova) should use fake network devices and
+                        addresses</td>
+                </tr>
+                <tr>
+                    <td>[no]enable_new_services</td>
+                    <td>default: 'true'</td>
+                    <td>Services to be added to the available pool when creating services using
+                        nova-manage</td>
+                </tr>
+                <tr>
+                    <td>[no]fake_rabbit</td>
+                    <td>default: 'false'</td>
+                    <td>Indicates whether Compute (Nova) should use a fake rabbit server</td>
+                </tr>
+                <tr>
+                    <td>glance_api_servers</td>
+                    <td>default: '$my_ip:9292'</td>
+                    <td>List of Glance API hosts. Each item may contain a host (or IP address) and
+                        port of an OpenStack Compute Image Service server (project's name is
+                        Glance)</td>
+                </tr>
+                <tr>
+                    <td>-?, --[no]help</td>
+                    <td/>
+                    <td>Show this help.</td>
+                </tr>
+                <tr>
+                    <td>[no]helpshort</td>
+                    <td/>
+                    <td>Show usage only for this module.</td>
+                </tr>
+                <tr>
+                    <td>[no]helpxml</td>
+                    <td/>
+                    <td>Show this help, but with XML output instead of text</td>
+                </tr>
+                <tr>
+                    <td>host</td>
+                    <td>default: ''</td>
+                    <td>String value; Name of the node where the cloud controller is hosted</td>
+                </tr>
+                <tr>
+                    <td>image_service</td>
+                    <td>default: 'nova.image.glance.GlanceImageService'</td>
+                    <td><para>The service to use for retrieving and searching for images. Images must be registered using
+                            euca2ools. Options: </para><itemizedlist>
+                            <listitem>
+                                <para>nova.image.s3.S3ImageService</para>
+                                <para>S3 backend for the Image Service.</para>
+                            </listitem>
+                            <listitem>
+                                <para>nova.image.glance.GlanceImageService</para>
+                                <para>Glance back end for storing and retrieving images; See <link
+                                        xlink:href="http://glance.openstack.org"
+                                        >http://glance.openstack.org</link> for more info.</para>
+                            </listitem>
+                        </itemizedlist></td>
+                </tr>
+                <tr>
+                    <td>image_decryption_dir</td>
+                    <td>default: 'tmp/'</td>
+                    <td>Parent directory for the temporary directory used for image decryption. Ensure the user has correct permissions to access this directory when decrypting images.</td>
+                </tr>
+                <tr>
+                    <td>instance_name_template</td>
+                    <td>default: 'instance-%08x'</td>
+                    <td>Template string to be used to generate instance names.</td>
+                </tr>
+                <tr>
+                    <td>keys_path</td>
+                    <td>default: '$state_path/keys') </td>
+                    <td>Directory; Where Nova keeps the keys</td>
+                </tr>
+                <tr>
+                    <td>libvirt_type</td>
+                    <td>default: kvm</td>
+                    <td>String: Name of connection to a hypervisor through libvirt. Supported options are kvm, qemu, uml, and xen.</td>
+                </tr>
+                <tr>
+                    <td>lock_path</td>
+                    <td>default: none</td>
+                    <td>Directory path: Writeable path to store lock files.</td>
+                </tr>
+                <tr>
+                    <td>lockout_attempts</td>
+                    <td>default: 5</td>
+                    <td>Integer value: Allows this number of failed EC2 authorizations before lockout.</td>
+                </tr>
+                <tr>
+                    <td>lockout_minutes</td>
+                    <td>default: 15</td>
+                    <td>Integer value: Number of minutes to lockout if triggered.</td>
+                </tr>
+                <tr>
+                    <td>lockout_window</td>
+                    <td>default: 15</td>
+                    <td>Integer value: Number of minutes for lockout window.</td>
+                </tr>
+                <tr>
+                    <td>logfile</td>
+                    <td>default: none</td>
+                    <td>Output to named file.</td>
+                </tr>
+                <tr>
+                    <td>logging_context_format_string</td>
+                    <td>default: '%(asctime)s %(levelname)s %(name)s [%(request_id)s %(user)s
+                        %(project)s] %(message)s'</td>
+                    <td>The format string to use for log messages with additional context.</td>
+                </tr>
+                <tr>
+                    <td>logging_debug_format_suffix</td>
+                    <td>default: 'from %(processName)s (pid=%(process)d) %(funcName)s
+                        %(pathname)s:%(lineno)d'</td>
+                    <td>The data to append to the log format when level is DEBUG.</td>
+                </tr>
+                <tr>
+                    <td>logging_default_format_string</td>
+                    <td>default: '%(asctime)s %(levelname)s %(name)s [-] %(message)s'</td>
+                    <td>The format string to use for log messages without context.</td>
+                </tr>
+                <tr>
+                    <td>logging_exception_prefix</td>
+                    <td>default: '(%(name)s): TRACE: '</td>
+                    <td>String value; Prefix each line of exception output with this format.</td>
+                </tr>
+                <tr>
+                    <td>max_cores</td>
+                    <td>default: '16'</td>
+                    <td>Integer value; Maximum number of instance cores to allow per compute host.</td>
+                </tr>
+                <tr>
+                    <td>my_ip</td>
+                    <td>default: ''</td>
+                    <td>IP address; Cloud controller host IP address.</td>
+                </tr>
+                <tr>
+                    <td>multi-host</td>
+                    <td>default: 'false'</td>
+                    <td>Boolean true or false; When true, it enables the system to send all network related commands to the host that the VM is on.</td>
+                </tr>
+                <tr>
+                    <td>network_manager</td>
+                    <td>default: 'nova.network.manager.VlanManager'</td>
+                    <td>
+                        <para>Configures how your controller will communicate with additional
+                            OpenStack Compute nodes and virtual machines. Options: </para>
+                        <itemizedlist>
+                            <listitem>
+                                <para>nova.network.manager.FlatManager</para>
+                                <para>Simple, non-VLAN networking</para>
+                            </listitem>
+                            <listitem>
+                                <para>nova.network.manager.FlatDHCPManager</para>
+                                <para>Flat networking with DHCP</para>
+                            </listitem>
+                            <listitem>
+                                <para>nova.network.manager.VlanManager</para>
+                                <para>VLAN networking with DHCP; This is the Default if no network
+                                    manager is defined here in nova.conf. </para>
+                            </listitem>
+                        </itemizedlist>
+                    </td>
+                </tr>
+                <tr>
+                    <td>network_driver</td>
+                    <td>default: 'nova.network.linux_net'</td>
+                    <td>String value; Driver to use for network creation.</td>
+                </tr>
+                <tr>
+                    <td>network_host</td>
+                    <td>default: 'preciousroy.hsd1.ca.comcast.net'</td>
+                    <td>String value; Network host to use for ip allocation in flat modes.</td>
+                </tr>
+                <tr>
+                    <td>network_size</td>
+                    <td>default: '256'</td>
+                    <td>Integer value; Number of addresses in each private subnet.</td>
+                </tr>
+                <tr>
+                    <td>num_networks</td>
+                    <td>default: '1000'</td>
+                    <td>Integer value; Number of networks to support.</td>
+                </tr>
+                <tr>
+                    <td>network_topic</td>
+                    <td>default: 'network'</td>
+                    <td>String value; The topic network nodes listen on.</td>
+                </tr>
+                <tr>
+                    <td>node_availability_zone</td>
+                    <td>default: 'nova'</td>
+                    <td>String value; Availability zone of this node.</td>
+                </tr>
+                <tr>
+                    <td>null_kernel</td>
+                    <td>default: 'nokernel'</td>
+                    <td>String value; Kernel image that indicates not to use a kernel, but to use a
+                        raw disk image instead.</td>
+                </tr>
+                <tr>
+                    <td>osapi_volume_extension</td>
+                    <td>default: 'nova.api.openstack.volume.contrib.standard_extensions'</td>
+                    <td>OpenStack API (osapi) volume extension to load</td>
+                </tr>
+                <tr>
+                    <td>osapi_compute_extension</td>
+                    <td>default: 'nova.api.openstack.compute.contrib.standard_extensions'</td>
+                    <td>OpenStack API (osapi) Compute extension to load</td>
+                </tr>
+                <tr>
+                    <td>osapi_host</td>
+                    <td>default: '$my_ip'</td>
+                    <td>IP address; IP address of the API server.</td>
+                </tr>
+                <tr>
+                    <td>osapi_listen_port</td>
+                    <td>default: '8774'</td>
+                    <td>Port value; Port for the OpenStack Compute API to listen on.</td>
+                </tr>
+                <tr>
+                    <td>osapi_path</td>
+                    <td>default: '/v1.0/'</td>
+                    <td/>
+                </tr>
+                <tr>
+                    <td>osapi_port</td>
+                    <td>default: '8774'</td>
+                    <td>Integer value; Port open for the OpenStack API server.</td>
+                </tr>
+                <tr>
+                    <td>osapi_scheme</td>
+                    <td>default: 'http'</td>
+                    <td>Protocol; Prefix for the OpenStack API URL.</td>
+                </tr>
+                <tr>
+                    <td>periodic_interval</td>
+                    <td>default: '60'</td>
+                    <td>Integer value; Seconds between running periodic tasks.</td>
+                </tr>
+                <tr>
+                    <td>pidfile</td>
+                    <td>default: ''</td>
+                    <td>String value; Name of pid file to use for this service (such as the
+                        nova-compute service).</td>
+                </tr>
+                <tr>
+                    <td>quota_cores</td>
+                    <td>default: '20'</td>
+                    <td>Integer value; Number of instance cores allowed per project (or tenant)</td>
+                </tr>
+                <tr>
+                    <td>quota_floating_ips</td>
+                    <td>default: '10'</td>
+                    <td>Integer value; Number of floating ips allowed per project (or tenant)</td>
+                </tr>
+                <tr>
+                    <td>quota_gigabytes</td>
+                    <td>default: '1000'</td>
+                    <td>Integer value; Number of volume gigabytes allowed per project (or tenant)</td>
+                </tr>
+                <tr>
+                    <td>quota_instances</td>
+                    <td>default: '10'</td>
+                    <td>Integer value; Number of instances allowed per project (or tenant)</td>
+                </tr>
+                <tr>
+                    <td>quota_max_injected_file_content_bytes</td>
+                    <td>default: '10240'</td>
+                    <td>Integer value; Number of bytes allowed per injected file</td>
+                </tr>
+                <tr>
+                    <td>quota_max_injected_file_path_bytes</td>
+                    <td>default: '255'</td>
+                    <td>Integer value; Number of bytes allowed per injected file path</td>
+                </tr>
+                <tr>
+                    <td>quota_max_injected_files</td>
+                    <td>default: '5'</td>
+                    <td>Integer value; Number of injected files allowed</td>
+                </tr>
+                <tr>
+                    <td>quota_metadata_items</td>
+                    <td>default: '128'</td>
+                    <td>Integer value; Number of metadata items allowed per instance</td>
+                </tr>
+                <tr>
+                    <td>quota_ram</td>
+                    <td>default: '51200'</td>
+                    <td>Integer value; Number of megabytes of instance ram allowed per project (or tenant)</td>
+                </tr>
+                <tr>
+                    <td>quota_volumes</td>
+                    <td>default: '10'</td>
+                    <td>Integer value; Number of volumes allowed per project (or tenant)</td>
+                </tr>
+                <tr>
+                    <td>rabbit_host</td>
+                    <td>default: 'localhost'</td>
+                    <td>IP address; Location of rabbitmq installation.</td>
+                </tr>
+                <tr>
+                    <td>rabbit_max_retries</td>
+                    <td>default: '0'</td>
+                    <td>Integer value; maximum retries with trying to connect to RabbitMQ(the default of 0 implies an infinite retry count)</td>
+                </tr>
+                <tr>
+                    <td>rabbit_password</td>
+                    <td>default: 'guest'</td>
+                    <td>String value; Password for the Rabbitmq server.</td>
+                </tr>
+                <tr>
+                    <td>rabbit_port</td>
+                    <td>default: '5672'</td>
+                    <td>Integer value; Port where Rabbitmq server is running/listening.</td>
+                </tr>
+                <tr>
+                    <td>rabbit_retry_interval</td>
+                    <td>default: '1'</td>
+                    <td>Integer value: Rabbit connection retry interval.</td>
+                </tr>
+                <tr>
+                    <td>rabbit_userid</td>
+                    <td>default: 'guest'</td>
+                    <td>String value; User ID used for Rabbit connections.</td>
+                </tr>
+                <tr>
+                    <td>region_list</td>
+                    <td>default: ''</td>
+                    <td>Comma-delimited pairs; List of region = fully qualified domain name pairs
+                        separated by commas.</td>
+                </tr>
+                <tr>
+                    <td>report_interval</td>
+                    <td>default: '10'</td>
+                    <td>Integer value; Seconds between nodes reporting state to the data store.</td>
+                </tr>
+                <tr>
+                    <td>routing_source_ip</td>
+                    <td>default: '10'</td>
+                    <td>IP address; Public IP of network host. When instances without a floating IP hit the Internet, traffic is snatted to this IP address.</td>
+                </tr>
+                <tr>
+                    <td>s3_dmz</td>
+                    <td>default: '$my_ip'</td>
+                    <td>IP address; For instances internal IP (a DMZ is shorthand for a
+                        demilitarized zone)</td>
+                </tr>
+                <tr>
+                    <td>s3_host</td>
+                    <td>default: '$my_ip'</td>
+                    <td>IP address: IP address of the S3 host for infrastructure. Location where
+                        OpenStack Compute is hosting the objectstore service, which will contain the
+                        virtual machine images and buckets.</td>
+                </tr>
+                <tr>
+                    <td>s3_port</td>
+                    <td>default: '3333'</td>
+                    <td>Integer value; Port where S3 host is running</td>
+                </tr>
+                <tr>
+                    <td>scheduler_manager</td>
+                    <td>default: 'nova.scheduler.manager.SchedulerManager'</td>
+                    <td>Manager for the scheduler for Compute (Nova)</td>
+                </tr>
+                <tr>
+                    <td>scheduler_topic</td>
+                    <td>default: 'scheduler'</td>
+                    <td>String value; The topic scheduler nodes listen on.</td>
+                </tr>
+                <tr>
+                    <td>sql_connection</td>
+                    <td>default: 'sqlite:///$state_path/nova.sqlite'</td>
+                    <td>IP address; Location of OpenStack Compute SQL database</td>
+                </tr>
+                <tr>
+                    <td>sql_idle_timeout</td>
+                    <td>default: '3600'</td>
+                    <td/>
+                </tr>
+                <tr>
+                    <td>state_path</td>
+                    <td>default: '/usr/lib/pymodules/python2.6/nova/../'</td>
+                    <td>Top-level directory for maintaining Nova's state</td>
+                </tr>
+                <tr>
+                    <td>superuser_roles</td>
+                    <td>default: 'cloudadmin'</td>
+                    <td>Comma separate list; Roles that ignore authorization checking completely</td>
+                </tr>
+                <tr><td>use_deprecated_auth</td>
+                    <td>default: 'false'</td>
+                    <td>Set to 1 or true to turn on; Determines whether to use the deprecated nova auth system or Keystone as the auth system </td></tr>
+                <tr><td>use_ipv6</td>
+                    <td>default: 'false'</td>
+                    <td>Set to 1 or true to turn on; Determines whether to use IPv6 network addresses </td></tr>
+                <tr><td>use_s3</td>
+                    <td>default: 'true'</td>
+                    <td>Set to 1 or true to turn on; Determines whether to get images from s3 or use a local copy </td></tr>
+                <tr>
+                    <td>verbose</td>
+                    <td>default: 'false'</td>
+                    <td>Set to 1 or true to turn on; Optional but helpful during initial setup</td>
+                </tr>
+                <tr>
+                    <td>vlan_interface</td>
+                    <td>default: 'eth0'</td>
+                    <td>This is the interface that VlanManager uses to bind bridges and vlans to. </td>
+                </tr>
+                <tr>
+                    <td>vlan_start</td>
+                    <td>default: '100'</td>
+                    <td>Integer; First VLAN for private networks.</td>
+                </tr>
+                <tr>
+                    <td>vpn_image_id</td>
+                    <td>default: None</td>
+                    <td>Glance id for cloudpipe VPN server</td>
+                </tr>
+                <tr>
+                    <td>vpn_client_template</td>
+                    <td>default: '/usr/lib/pymodules/python2.6/nova/cloudpipe/client.ovpn.template'</td>
+                    <td>String value; Template for creating users vpn file.</td>
+                </tr>
+                <tr>
+                    <td>vpn_key_suffix</td>
+                    <td>default: '-vpn'</td>
+                    <td>String value; This suffix is added to keys and security groups created by the cloudpipe extension.</td>
+                </tr>
+            </tbody>
+                </table>
+                <table rules="all">
+                    <caption>Description of nova.conf configuration options specific to nova-volume</caption>
+
+                    <thead>
+                        <tr>
+                            <td>Configuration option</td>
+                            <td>Default</td>
+                            <td>Description</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>iscsi_ip_prefix</td>
+                            <td>default: ''</td>
+
+                            <td>IP address or partial IP address; Value that differentiates the IP
+                                addresses using simple string matching, so if all of your hosts are on the 192.168.1.0/24 network you could use --iscsi_ip_prefix=192.168.1</td></tr>
+
+                        <tr>
+                            <td>volume_manager</td>
+                            <td>default: 'nova.volume.manager.VolumeManager'</td>
+                            <td>String value; Manager to use for nova-volume</td>
+                        </tr>
+                        <tr>
+                            <td>volume_name_template</td>
+                            <td>default: 'volume-%08x'</td>
+                            <td>String value; Template string to be used to generate volume names</td>
+                        </tr><tr>
+                            <td>volume_topic</td>
+                            <td>default: 'volume'</td>
+                            <td>String value; Name of the topic that volume nodes listen on</td>
+                        </tr></tbody></table></section>
+
 </chapter>

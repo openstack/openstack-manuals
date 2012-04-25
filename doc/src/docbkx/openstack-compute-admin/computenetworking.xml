@@ -116,17 +116,19 @@
                 via the file system (or passed in via a guest agent). Metadata forwarding must be
                 configured manually on the gateway if it is required within your network. </para>
             <para>To configure flat networking, ensure that your nova.conf file contains the
-                line:</para>
+                following line:</para>
             <para>
-                <literallayout>network_manager=nova.network.manager.FlatManager</literallayout>
+                <programlisting>
+network_manager=nova.network.manager.FlatManager
+                </programlisting>
             </para>
             <para>Compute defaults to a bridge device named ‘br100’ which is stored in the Nova
                 database, so you can change the name of the bridge device by modifying the entry in
                 the database. Consult the diagrams for additional configuration options.</para>
                 <para>In any set up with FlatNetworking (either Flat or FlatDHCP), the host with
                 nova-network on it is responsible for forwarding traffic from the private network
-                configured with the --fixed_range= directive in nova.conf and the
-                --flat_network_bridge setting. This host needs to have br100 configured and talking
+                configured with the <literal>--fixed_range=</literal> directive in nova.conf and the 
+                <literal>--flat_network_bridge</literal> setting. This host needs to have br100 configured and talking
                 to any other nodes that are hosting VMs. With either of the Flat Networking options,
                 the default gateway for the virtual machines is set to the host which is running
                 nova-network. </para>
@@ -185,15 +187,21 @@ iface br100 inet dhcp
                 </figure>
             </section>
         <section xml:id="configuring-flat-dhcp-networking">
-                    <title>Configuring Flat DHCP Networking</title><para>With Flat DHCP, the host running nova-network acts as the gateway to the virtual nodes. You
-                can run one nova-network per cluster. Set the option "network_host" on the nova.conf
-                stored on the nova-compute node to tell it which host the nova-network is running on
-                so it can communicate with nova-network. You must also set the
-                "--flat_network_bridge" setting to the name of the bridge (no default is set for
-                it). The nova-network service will track leases and releases in the database so it
-                knows if a VM instance has stopped properly configuring via DHCP. Lastly, it sets up
-                iptables rules to allow the VMs to communicate with the outside world and contact a
-                special metadata server to retrieve information from the cloud.</para>
+                <title>Configuring Flat DHCP Networking</title><para>With Flat DHCP, the host running nova-network acts as the
+                gateway to the virtual nodes. You can run one
+                nova-network per cluster. Set the option
+                    <literal>network_host</literal> on the nova.conf
+                stored on the nova-compute node to tell it which host
+                the nova-network is running on so it can communicate
+                with nova-network. You must also set the
+                    <literal>--flat_network_bridge</literal> setting
+                to the name of the bridge (no default is set for it).
+                The nova-network service will track leases and
+                releases in the database so it knows if a VM instance
+                has stopped properly configuring via DHCP. Lastly, it
+                sets up iptables rules to allow the VMs to communicate
+                with the outside world and contact a special metadata
+                server to retrieve information from the cloud.</para>
             <para>Compute hosts in the FlatDHCP model are responsible for bringing up a matching
                 bridge and bridging the VM tap devices into the same ethernet device that the
                 network host is on. The compute hosts do not need an IP address on the VM network,
@@ -212,19 +220,29 @@ iface br100 inet dhcp
             <para>FlatDHCP doesn't create VLANs, it creates a bridge. This bridge works just fine on
                 a single host, but when there are multiple hosts, traffic needs a way to get out of
                 the bridge onto a physical interface. </para>
-            <para>Be careful when setting up "--flat_interface", if you specify an interface that
-                already has an IP it will break and if this is the interface you are connecting
-                through with SSH, you cannot fix it unless you have ipmi/console access. In FlatDHCP
-                mode, the setting for "--network_size" should be number of IPs in the entire fixed
-                range. If you are doing a /12 in CIDR notation, then this number would be 2^20 or
-                1,048,576 IP addresses. That said, it will take a very long time for you to create
-                your initial network, as an entry for each IP will be created in the database. </para>
-            <para>If you have an unused interface on your hosts that has connectivity with no IP
-                address, you can simply tell FlatDHCP to bridge into the interface by specifying
-                "flat_interface=&lt;interface>" in your configuration file. The network host will
-                automatically add the gateway ip to this bridge. You can also add the interface to
-                br100 manually and not set flat_interface. If this is the case for you, edit your
-                nova.conf file to contain the following lines: </para>
+            <para>Be careful when setting up
+                    <literal>--flat_interface</literal>. If you
+                specify an interface that already has an IP it will
+                break and if this is the interface you are connecting
+                through with SSH, you cannot fix it unless you have
+                ipmi/console access. In FlatDHCP mode, the setting for
+                    <literal>--network_size</literal> should be number
+                of IPs in the entire fixed range. If you are doing a
+                /12 in CIDR notation, then this number would be 2^20
+                or 1,048,576 IP addresses. That said, it will take a
+                very long time for you to create your initial network,
+                as an entry for each IP will be created in the
+                database. </para>
+            <para>If you have an unused interface on your hosts that
+                has connectivity with no IP address, you can simply
+                tell FlatDHCP to bridge into the interface by
+                specifying
+                        <literal>flat_interface=<replaceable>&lt;interface></replaceable></literal>
+                in your configuration file. The network host will
+                automatically add the gateway ip to this bridge. You
+                can also add the interface to br100 manually and not
+                set flat_interface. If this is the case for you, edit
+                your nova.conf file to contain the following lines: </para>
             <para>
                 <programlisting>
 dhcpbridge_flagfile=/etc/nova/nova.conf
@@ -239,9 +257,15 @@ public_interface=eth0
             </para>
             <para>Integrate your network interfaces to match this configuration.</para></section>
         <section xml:id="outbound-traffic-flow-with-any-flat-networking"><title>Outbound Traffic Flow with Any Flat Networking</title>
-            <para>
-                In any set up with FlatNetworking, the host with nova-network on it is responsible for forwarding traffic from the private network configured with the "--fixed_range=..." directive in nova.conf. This host needs to have br100 configured and talking to any other nodes that are hosting VMs. With either of the Flat Networking options, the default gateway for the virtual machines is set to the host which is running nova-network.
-            </para>
+            <para> In any set up with FlatNetworking, the host with
+                nova-network on it is responsible for forwarding
+                traffic from the private network configured with the
+                    <literal>--fixed_range=...</literal> directive in
+                nova.conf. This host needs to have br100 configured
+                and talking to any other nodes that are hosting VMs.
+                With either of the Flat Networking options, the
+                default gateway for the virtual machines is set to the
+                host which is running nova-network. </para>
             <para>
                 When a virtual machine sends traffic out to the public networks, it sends it first to its default gateway, which is where nova-network is configured.
             </para>
@@ -280,7 +304,9 @@ public_interface=eth0
                 default options. If you need to attach your bridges to a device other than eth0, you
                 will need to add following option to /etc/nova/nova.conf:</para>
 
-                <literallayout>vlan_interface=eth1</literallayout>
+                <programlisting>
+vlan_interface=eth1
+                </programlisting>
             <para>In VLAN mode, the setting for --network_size is the number of IPs per project as
                 opposed to the FlatDHCP mode where --network_size indicates number of IPs in the
                 entire fixed range. For VLAN, the settings in nova.conf that affect networking are
@@ -289,7 +315,9 @@ public_interface=eth0
                     <para>VLAN is the default networking mode for Compute, so if you have no
                 --network_manager entry in your nova.conf file, you are set up for VLAN. To set your
                 nova.conf file to VLAN, use this option in /etc/nova/nova.conf:</para>
-                    <literallayout>network_manager=nova.network.manager.VlanManager</literallayout>
+                    <programlisting>
+network_manager=nova.network.manager.VlanManager
+                    </programlisting>
                 <para>For the purposes of this example walk-through, we will use the following settings. These are intentionally complex in an attempt to cover most situations:</para>
 
                 <itemizedlist>
@@ -307,13 +335,17 @@ public_interface=eth0
                             are reserved</para></listitem>
                 </itemizedlist>
             <para>First, create the networks that Compute can pull from using nova-manage commands:</para>
-                    <literallayout class="monospaced">nova-manage --flagfile=/etc/nova/nova.conf network create private 10.1.171.0/24 1 256
-nova-manage --flagfile=/etc/nova/nova.conf network create private 10.1.172.0/24 1 256
-nova-manage --flagfile=/etc/nova/nova.conf network create private 10.1.173.0/24 1 256
-nova-manage --flagfile=/etc/nova/nova.conf network create private 10.1.174.0/24 1 256</literallayout>
+                    <screen>
+<prompt>$</prompt> <userinput>nova-manage --flagfile=/etc/nova/nova.conf network create private 10.1.171.0/24 1 256</userinput>
+<prompt>$</prompt> <userinput>nova-manage --flagfile=/etc/nova/nova.conf network create private 10.1.172.0/24 1 256</userinput>
+<prompt>$</prompt> <userinput>nova-manage --flagfile=/etc/nova/nova.conf network create private 10.1.173.0/24 1 256</userinput>
+<prompt>$</prompt> <userinput>nova-manage --flagfile=/etc/nova/nova.conf network create private 10.1.174.0/24 1 256</userinput>
+                    </screen>
 
                 <para>Log in to the nova database to determine the network ID assigned to each VLAN:</para>
-                    <literallayout class="monospaced">select id,cidr from networks;</literallayout>
+                    <screen>
+<prompt>$</prompt><userinput>select id,cidr from networks;</userinput>
+                    </screen>
                     <para>Update the DB to match your network settings. The following script will generate SQL based on the predetermined settings for this example. <emphasis>You will need to modify this database update to fit your environment.</emphasis></para>
                     <programlisting>
 if [ -z $1 ]; then
@@ -339,24 +371,32 @@ __EOF_
 
                     <para>Next, create a project manager for the Compute project:</para>
 
-                    <literallayout class="monospaced">nova-manage --flagfile=/etc/nova/nova.conf user admin $username</literallayout>
+                    <screen>
+<prompt>$</prompt> <userinput>nova-manage --flagfile=/etc/nova/nova.conf user admin $username</userinput>
+                    </screen>
 
                     <para>Then create a project and assign that user as the admin user:</para>
 
-                    <literallayout class="monospaced">nova-manage --flagfile=/etc/nova/nova.conf project create $projectname $username</literallayout>
+                    <screen>
+<prompt>$</prompt> <userinput>nova-manage --flagfile=/etc/nova/nova.conf project create $projectname $username</userinput>
+                    </screen>
 
                     <para>Finally, get the credentials for the user just created, which also assigns
                 one of the networks to this project:)</para>
 
-                    <literallayout class="monospaced">nova-manage --flagfile=/etc/nova/nova.conf project zipfile $projectname $username</literallayout>
+                    <screen>
+<prompt>$</prompt> <userinput>nova-manage --flagfile=/etc/nova/nova.conf project zipfile $projectname $username</userinput>
+                    </screen>
 
                     <para>When you start nova-network, the bridge devices and associated VLAN tags will be created. When you create a new VM you must determine (either manually or programatically) which VLAN it should be a part of, and start the VM in the corresponding project.</para>
 
                         <para>In certain cases, the network manager may not properly tear down bridges and VLANs when it is stopped. If you attempt to restart the network manager and it does not start, check the logs for errors indicating that a bridge device already exists. If this is the case, you will likely need to tear down the bridge and VLAN devices manually.</para>
 
-                        <literallayout class="monospaced">vconfig rem vlanNNN
-ifconfig br_NNN down
-brctl delbr br_NNN</literallayout>
+                        <screen>
+<prompt>$</prompt> <userinput>vconfig rem vlan<replaceable>NNN</replaceable></userinput>
+<prompt>$</prompt> <userinput>ifconfig br_<replaceable>NNN</replaceable> down</userinput>
+<prompt>$</prompt> <userinput>brctl delbr br_<replaceable>NNN</replaceable></userinput>
+                        </screen>
 
                 <para>Also, if users need to access the instances in their project across a VPN, a
                 special VPN instance (code named cloudpipe) needs to be created as described. You
@@ -365,12 +405,16 @@ brctl delbr br_NNN</literallayout>
                 server, b64 decode it into a zip file, and run the autorun.sh script from inside the
                 zip. The autorun script should configure and run openvpn to run using the data from
                 Compute. </para>
-            <para>For certificate management, it is also useful to have a cron script that will
-                periodically download the metadata and copy the new Certificate Revocation List
-                (CRL). This will keep revoked users from connecting and disconnects any users that
-                are connected with revoked certificates when their connection is re-negotiated
-                (every hour). You set the use_project_ca option in nova.conf for cloudpipes to work
-                securely so that each project has its own Certificate Authority (CA).</para></section>
+            <para>For certificate management, it is also useful to
+                have a cron script that will periodically download the
+                metadata and copy the new Certificate Revocation List
+                (CRL). This will keep revoked users from connecting
+                and disconnects any users that are connected with
+                revoked certificates when their connection is
+                re-negotiated (every hour). You set the
+                    <literal>use_project_ca</literal> option in
+                nova.conf for cloudpipes to work securely so that each
+                project has its own Certificate Authority (CA).</para></section>
         <section xml:id="cloudpipe-per-project-vpns">
             <title>Cloudpipe — Per Project Vpns</title>
             <para> Cloudpipe is a method for connecting end users to their project instances in VLAN
@@ -396,22 +440,26 @@ brctl delbr br_NNN</literallayout>
                     Making a cloudpipe image is relatively easy.
                 </para>
                 <itemizedlist><listitem><para>install openvpn on a base ubuntu image. </para></listitem>
-                    <listitem><para>set up a server.conf.template in /etc/openvpn/</para></listitem>
-                    <listitem><para>set up.sh in /etc/openvpn/ </para></listitem>
-                    <listitem><para>set down.sh in /etc/openvpn/ </para></listitem>
-                    <listitem><para>download and run the payload on boot from /etc/rc.local</para></listitem>
-                    <listitem><para>setup /etc/network/interfaces </para></listitem>
+                    <listitem><para>set up a server.conf.template in
+                                <filename>/etc/openvpn/</filename></para></listitem>
+                    <listitem><para>set up.sh in <filename>/etc/openvpn/</filename>
+                        </para></listitem>
+                    <listitem><para>set down.sh in <filename>/etc/openvpn/ </filename></para></listitem>
+                    <listitem><para>download and run the payload on boot from
+                                <filename>/etc/rc.local</filename></para></listitem>
+                    <listitem><para>setup <filename>/etc/network/interfaces</filename>
+                        </para></listitem>
                     <listitem><para>upload the image and set the image id in your config file: </para>
-                        <literallayout class="monospaced">
+                        <programlisting>
 vpn_image_id=[uuid from glance]
-                        </literallayout>
+                        </programlisting>
                     </listitem>
                     <listitem><para>you should set a few other config options to make vpns work properly: </para>
-                        <literallayout class="monospaced">
+                        <programlisting>
 use_project_ca=True
 cnt_vpn_clients=5
 force_dhcp_release=True
-                        </literallayout>
+                        </programlisting>
                     </listitem>
                 </itemizedlist>
                 <para>
@@ -420,23 +468,30 @@ force_dhcp_release=True
                 </para>
                 <orderedlist>
                     <listitem>
-                        <para> creates a keypair called &lt;project_id&gt;-vpn and saves it in the
-                            keys directory </para>
+                        <para> creates a keypair called
+                                   <literal><replaceable>&lt;project_id&gt;</replaceable>-vpn</literal>
+                            and saves it in the keys directory </para>
                     </listitem>
                     <listitem>
-                        <para> creates a security group &lt;project_id&gt;-vpn and opens up 1194 and
-                            icmp </para>
+                        <para> creates a security group
+                                   <literal><replaceable>&lt;project_id&gt;</replaceable>-vpn</literal>
+                            and opens up 1194 and icmp </para>
                     </listitem>
                     <listitem>
-                        <para> creates a cert and private key for the vpn instance and saves it in
-                            the CA/projects/&lt;project_id&gt;/ directory </para>
+                        <para> creates a cert and private key for the
+                            vpn instance and saves it in the
+                                   <literal>CA/projects/<replaceable>&lt;project_id&gt;</replaceable>/
+                                directory</literal>
+                        </para>
                     </listitem>
                     <listitem>
                         <para> zips up the info and puts it b64 encoded as user data </para>
                     </listitem>
                     <listitem>
-                        <para> launches an [vpn_instance_type] instance with the above settings
-                            using the option-specified vpn image</para>
+                        <para> launches an
+                                <replaceable>[vpn_instance_type]</replaceable>
+                            instance with the above settings using the
+                            option-specified vpn image</para>
                     </listitem>
                 </orderedlist>
             </section>
@@ -448,49 +503,73 @@ force_dhcp_release=True
                     network for each project is given a specific high-numbered port on the public IP
                     of the network host. This port is automatically forwarded to 1194 on the vpn
                     instance. </para>
-                <para> If specific high numbered ports do not work for your users, you can always
-                    allocate and associate a public IP to the instance, and then change the
-                    vpn_public_ip and vpn_public_port in the database. Rather than using the db
-                    directly, you can also use nova-manage vpn change [new_ip] [new_port] </para>
+                <para> If specific high numbered ports do not work for
+                    your users, you can always allocate and associate
+                    a public IP to the instance, and then change the
+                        <literal>vpn_public_ip</literal> and
+                        <literal>vpn_public_port</literal> in the
+                    database. Rather than using the db directly, you
+                    can also use <command>nova-manage vpn change
+                            <replaceable>[new_ip]</replaceable>
+                        <replaceable>[new_port]</replaceable></command>
+                </para>
             </section>
             <section xml:id="certificates-and-revocation">
                 <title>Certificates and Revocation</title>
-                <para>If the use_project_ca config option is set (required to for cloudpipes to work
-                    securely), then each project has its own ca. This ca is used to sign the
-                    certificate for the vpn, and is also passed to the user for bundling images.
-                    When a certificate is revoked using nova-manage, a new Certificate Revocation
-                    List (crl) is generated. As long as cloudpipe has an updated crl, it will block
-                    revoked users from connecting to the vpn. </para>
+                <para>If the <literal>use_project_ca config</literal>
+                    option is set (required to for cloudpipes to work
+                    securely), then each project has its own ca. This
+                    ca is used to sign the certificate for the vpn,
+                    and is also passed to the user for bundling
+                    images. When a certificate is revoked using
+                    nova-manage, a new Certificate Revocation List
+                    (crl) is generated. As long as cloudpipe has an
+                    updated crl, it will block revoked users from
+                    connecting to the vpn. </para>
                 <para> The userdata for cloudpipe isn't currently updated when certs are revoked, so
                     it is necessary to restart the cloudpipe instance if a user's credentials are
                     revoked. </para>
             </section>
             <section xml:id="restarting-and-logging-into-cloudpipe-vpn">
                 <title>Restarting and Logging into the Cloudpipe VPN</title>
-                <para>You can reboot a cloudpipe vpn through the api if something goes wrong (using
-                    "nova reboot" for example), but if you generate a new crl, you will have to
-                    terminate it and start it again using the cloudpipe extension. The cloudpipe
-                    instance always gets the first ip in the subnet and if force_dhcp_release is
-                    not set it takes some time for the ip to be recovered. If you try to start the
-                    new vpn instance too soon, the instance will fail to start because of a
-                    "NoMoreAddresses" error. It is therefore recommended to use force_dhcp_release.</para>
-                <para>The keypair that was used to launch the cloudpipe instance should be in the
-                    keys/&lt;project_id&gt; folder. You can use this key to log into the cloudpipe
-                    instance for debugging purposes. If you are running multiple copies of nova-api
-                    this key will be on whichever server used the original request. To make debugging
-                    easier, you may want to put a common administrative key into the cloudpipe image
-                    that you create</para>
+                <para>You can reboot a cloudpipe vpn through the api
+                    if something goes wrong (using <command>nova
+                        reboot</command> for example), but if you
+                    generate a new crl, you will have to terminate it
+                    and start it again using the cloudpipe extension.
+                    The cloudpipe instance always gets the first ip in
+                    the subnet and if force_dhcp_release is not set it
+                    takes some time for the ip to be recovered. If you
+                    try to start the new vpn instance too soon, the
+                    instance will fail to start because of a
+                    "NoMoreAddresses" error. It is therefore
+                    recommended to use
+                        <literal>force_dhcp_release</literal>.</para>
+                <para>The keypair that was used to launch the
+                    cloudpipe instance should be in the
+                            <filename>keys/<replaceable>&lt;project_id&gt;</replaceable></filename>
+                    folder. You can use this key to log into the
+                    cloudpipe instance for debugging purposes. If you
+                    are running multiple copies of nova-api this key
+                    will be on whichever server used the original
+                    request. To make debugging easier, you may want to
+                    put a common administrative key into the cloudpipe
+                    image that you create</para>
             </section>
         </section></section>
     <section xml:id="enabling-ping-and-ssh-on-vms">
         <title>Enabling Ping and SSH on VMs</title>
-        <para>Be sure you enable access to your VMs by using the "euca-authorize" or "nova
-            secgroup-add-rule" command. Below, you will find the commands to allow ‘"ping" and
-            "ssh" to your VMs: </para>
+        <para>Be sure you enable access to your VMs by using the
+                <command>euca-authorize</command> or <command>nova
+                secgroup-add-rule</command> command. Below, you will
+            find the commands to allow <command>ping</command> and
+                <command>ssh</command> to your VMs: </para>
         <note>
-            <para>These commands need to be run as root only if the credentials used to interact
-                with nova-api have been put under /root/.bashrc. If the EC2 credentials have
-                been put into another user's .bashrc file, then, it is necessary to run these
+            <para>These commands need to be run as root only if the
+                credentials used to interact with nova-api have been
+                put under <filename>/root/.bashrc</filename>. If the
+                EC2 credentials have been put into another user's
+                .bashrc file, then, it is necessary to run these
                 commands as the user. </para>
         </note>
             <para>Using the nova command-line tool:</para>
@@ -505,8 +584,8 @@ force_dhcp_release=True
             </screen>
 
             <para>If you still cannot ping or SSH your instances after issuing the <command>nova secgroup-add-rule</command>
-            commands, look at the number of <command>dnsmasq</command> processes that are running. If you have a
-            running instance, check to see that TWO <command>dnsmasq</command> processes are running. If not, perform
+            commands, look at the number of <literal>dnsmasq</literal> processes that are running. If you have a
+            running instance, check to see that TWO <literal>dnsmasq</literal> processes are running. If not, perform
             the following as root:</para>
             <screen>
 <prompt>#</prompt> <userinput>killall dnsmasq</userinput>
@@ -526,7 +605,9 @@ force_dhcp_release=True
             <para>If you plan to use this feature, you must add
             the following to your nova.conf file to specify which interface
             the nova-network service will bind public IP addresses to:</para>
-        <programlisting>public_interface=vlan100</programlisting>
+        <programlisting>
+public_interface=vlan100
+        </programlisting>
         <para>Restart the nova-network service if you change nova.conf while the service is running.</para>
         </section>
         <section xml:id="Creating_a_List_of_Available_Floating_IP_Addresses">
@@ -652,7 +733,9 @@ valid_lft forever preferred_lft forever
     </section>
     <section xml:id="removing-network-from-project">
         <title>Removing a Network from a Project</title><para>You will find that you cannot remove a network that has already been associated to a project by simply deleting it. You can disassociate the project from the network with a scrub command and the project name as the final parameter:
-        </para><literallayout class="monospaced">nova-manage project scrub projectname</literallayout></section>
+        </para><screen>
+<prompt>$</prompt> <userinput>nova-manage project scrub projectname</userinput>
+        </screen></section>
     <section xml:id="using-multi-nics">
         <title>Using multiple interfaces for your instances (multinic)</title>
         <?dbhtml stop-chunking?>
