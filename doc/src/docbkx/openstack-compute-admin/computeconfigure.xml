@@ -283,7 +283,8 @@ firewall_driver=nova.virt.libvirt.firewall.IptablesFirewallDriver
         the Dashboard in Settings > Project Settings >
         Download RC File. </para>
       <para>
-        <programlisting>#!/bin/bash
+        <programlisting>
+#!/bin/bash
 # *NOTE*: Using the 2.0 *auth api* does not mean that compute api is 2.0.  We
 # will use the 1.1 *compute api*
 export OS_AUTH_URL=http://50.56.12.206:5000/v2.0
@@ -300,7 +301,8 @@ export OS_AUTH_STRATEGY=keystone
         euca2ools. Here is an example ec2rc file for enabling
         EC2 access with the required credentials.</para>
       <para>
-        <programlisting>export NOVA_KEY_DIR=/root/creds/
+        <programlisting language="bash">
+export NOVA_KEY_DIR=/root/creds/
 export EC2_ACCESS_KEY="EC2KEY:USER"
 export EC2_SECRET_KEY="SECRET_KEY"
 export EC2_URL="http://$NOVA-API-IP:8773/services/Cloud"
@@ -315,7 +317,9 @@ alias ec2-upload-bundle="ec2-upload-bundle -a ${EC2_ACCESS_KEY} -s ${EC2_SECRET_
       </para>
       <para>Lastly, here is an example openrc file that works
         with nova client and ec2
-        tools.</para><programlisting>export OS_PASSWORD=${ADMIN_PASSWORD:-secrete}
+        tools.</para>
+      <programlisting language="bash">
+export OS_PASSWORD=${ADMIN_PASSWORD:-secrete}
 export OS_AUTH_URL=${OS_AUTH_URL:-http://$SERVICE_HOST:5000/v2.0}
 export NOVA_VERSION=${NOVA_VERSION:-1.1}
 export OS_REGION_NAME=${OS_REGION_NAME:-RegionOne}
@@ -331,8 +335,8 @@ export EUCALYPTUS_CERT=${NOVA_CERT} # euca-bundle-image seems to require this se
       <para>Next, add these credentials to your environment
         prior to running any nova client commands or nova
         commands. </para>
-      <literallayout class="monospaced">cat /root/creds/openrc >> ~/.bashrc
-source ~/.bashrc                 </literallayout>
+      <screen><prompt>$ </prompt><userinput>cat /root/creds/openrc >> ~/.bashrc
+source ~/.bashrc</userinput></screen>
     </section>
     <section xml:id="creating-certifications">
       <title>Creating Certificates</title>
@@ -407,7 +411,8 @@ source ~/.bashrc                 </literallayout>
         edit <filename>/etc/network/interfaces</filename> with the
         following template, updated with your IP information.</para>
 
-      <programlisting># The loopback network interface
+      <programlisting language="bash">
+# The loopback network interface
 auto lo
     iface lo inet loopback
 
@@ -1197,41 +1202,42 @@ xenapi_remap_vbd_dev=true
 
     <para>On all nova-nodes, install python-netaddr:</para>
 
-    <para><literallayout class="monospaced">sudo apt-get install -y python-netaddr</literallayout></para>
+    <screen><prompt>$</prompt> <userinput>sudo apt-get install -y python-netaddr</userinput></screen>
 
     <para>On all nova-network nodes install radvd and configure IPv6
     networking:</para>
 
-    <literallayout class="monospaced">sudo apt-get install -y radvd 
-sudo bash -c "echo 1 &gt; /proc/sys/net/ipv6/conf/all/forwarding" 
-sudo bash -c "echo 0 &gt; /proc/sys/net/ipv6/conf/all/accept_ra"</literallayout>
+    <screen><prompt>$</prompt> <userinput>sudo apt-get install -y radvd</userinput>
+<prompt>$</prompt> <userinput>sudo bash -c "echo 1 &gt; /proc/sys/net/ipv6/conf/all/forwarding"</userinput> 
+<prompt>$</prompt> <userinput>sudo bash -c "echo 0 &gt; /proc/sys/net/ipv6/conf/all/accept_ra"</userinput></screen>
 
     <para>Edit the <filename>nova.conf</filename> file on all nodes to
       set the use_ipv6 configuration option to True. Restart all
       nova- services.</para>
 
-    <para>When using the command 'nova-manage network create' you can add a
+    <para>When using the command <command>nova-manage network create</command> you can add a
     fixed range for IPv6 addresses. You must specify public or private after
     the create parameter.</para>
 
-    <para><literallayout class="monospaced">nova-manage network create public fixed_range num_networks network_size [vlan_start] [vpn_start] [fixed_range_v6]</literallayout></para>
+    <screen><prompt>$</prompt><userinput>nova-manage network create public <replaceable>fixed_range</replaceable> <replaceable>num_networks</replaceable> <replaceable>network_size</replaceable> <replaceable>vlan_start</replaceable> <replaceable>vpn_start</replaceable> <replaceable>fixed_range_v6</replaceable></userinput></screen>
 
-    <para>You can set IPv6 global routing prefix by using the fixed_range_v6
-    parameter. The default is: fd00::/48. When you use FlatDHCPManager, the
-    command uses the original value of fixed_range_v6. When you use
-    VlanManager, the command creates prefixes of subnet by incrementing subnet
-    id. Guest VMs uses this prefix for generating their IPv6 global unicast
-    address.</para>
+    <para>You can set IPv6 global routing prefix by using the
+        <literal>fixed_range_v6</literal> parameter. The default
+      is: <literal>fd00::/48</literal>. When you use FlatDHCPManager, the command uses
+      the original value of fixed_range_v6. When you use VlanManager,
+      the command creates prefixes of subnet by incrementing subnet
+      id. Guest VMs uses this prefix for generating their IPv6 global
+      unicast address.</para>
 
     <para>Here is a usage example for VlanManager:</para>
 
-    <para><literallayout class="monospaced">nova-manage network create public 10.0.1.0/24 3 32 100 1000 fd00:1::/48 </literallayout></para>
+    <screen><prompt>$</prompt> <userinput>nova-manage network create public 10.0.1.0/24 3 32 100 1000 fd00:1::/48 </userinput></screen>
 
     <para>Here is a usage example for FlatDHCPManager:</para>
 
-    <para><literallayout class="monospaced">nova-manage network create public 10.0.2.0/24 3 32 0 0 fd00:1::/48 </literallayout></para>
+    <screen><prompt>$</prompt> <userinput>nova-manage network create public 10.0.2.0/24 3 32 0 0 fd00:1::/48 </userinput></screen>
 
-    <para>Note that [vlan_start] and [vpn_start] parameters are not used by
+    <para>Note that <literal>vlan_start</literal> and <literal>vpn_start</literal> parameters are not used by
     FlatDHCPManager.</para>
 
     <table rules="all">
@@ -1254,7 +1260,7 @@ sudo bash -c "echo 0 &gt; /proc/sys/net/ipv6/conf/all/accept_ra"</literallayout>
 
           <td><literal>false</literal></td>
 
-          <td>Set to 1 or true to turn on; Determines whether to use IPv6
+          <td>Set to <literal>1</literal> or <literal>true</literal> to turn on; Determines whether to use IPv6
           network addresses</td>
         </tr>
 
@@ -1263,10 +1269,11 @@ sudo bash -c "echo 0 &gt; /proc/sys/net/ipv6/conf/all/accept_ra"</literallayout>
 
           <td><literal>false</literal></td>
 
-          <td>Cactus only:Indicates whether Compute (Nova) should use attempt
-          to inject IPv6 network configuration information into the guest. It
-          attempts to modify <filename>/etc/network/interfaces</filename> and
-          currently only works on Debian-based systems.</td>
+          <td>Cactus only: Indicates whether Compute (Nova) should use
+            attempt to inject IPv6 network configuration information
+            into the guest. It attempts to modify
+              <filename>/etc/network/interfaces</filename> and
+            currently only works on Debian-based systems.</td>
         </tr>
       </tbody>
     </table>
@@ -1382,14 +1389,15 @@ sudo bash -c "echo 0 &gt; /proc/sys/net/ipv6/conf/all/accept_ra"</literallayout>
   <section xml:id="configuring-live-migrations">
     <title>Configuring Live Migrations</title>
 
-    <para>The live migration feature is useful when you need to upgrade or
-    installing patches to hypervisors/BIOS and you need the machines to keep
-    running. For example, when one of HDD volumes RAID or one of bonded NICs
-    is out of order. Also for regular periodic maintenance, you may need to
-    migrate VM instances. When many VM instances are running on a specific
-    physical machine, you can redistribute the high load. Sometimes when VM
-    instances are scattered, you can move VM instances to a physical machine
-    to arrange them more logically.</para>
+    <para>The live migration feature is useful when you need to
+      upgrade or installing patches to hypervisors/BIOS and you need
+      the machines to keep running; for example, when one of HDD
+      volumes RAID or one of bonded NICs is out of order. Also for
+      regular periodic maintenance, you may need to migrate VM
+      instances. When many VM instances are running on a specific
+      physical machine, you can redistribute the high load. Sometimes
+      when VM instances are scattered, you can move VM instances to a
+      physical machine to arrange them more logically.</para>
 
     <para><emphasis role="bold">Environments</emphasis> <itemizedlist>
         <listitem>
@@ -1429,32 +1437,30 @@ sudo bash -c "echo 0 &gt; /proc/sys/net/ipv6/conf/all/accept_ra"</literallayout>
     <para><emphasis role="bold">Sample Nova Installation before
     starting</emphasis> <itemizedlist>
         <listitem>
-          <para>Prepare 3 servers at least, lets say, HostA, HostB and
-          HostC</para>
+          <para>Prepare 3 servers at least; for example, HostA, HostB
+            and HostC</para>
         </listitem>
 
         <listitem>
           <para>nova-api/nova-network/nova-volume/nova-objectstore/
-          nova-scheduler(and other daemon) are running on HostA.</para>
+            nova-scheduler(and other daemon) should be running on
+            HostA.</para>
         </listitem>
 
         <listitem>
-          <para>nova-compute is running on both HostB and HostC.</para>
-        </listitem>
-
-        <listitem>
-          <para>HostA export NOVA-INST-DIR/instances, HostB and HostC mount
-          it.</para>
+          <para>nova-compute should be running on both HostB and
+            HostC.</para>
         </listitem>
 
         <listitem>
           <para>To avoid any confusion, NOVA-INST-DIR is same at
-          HostA/HostB/HostC("NOVA-INST-DIR" shows top of install dir).</para>
+            HostA, HostB, and HostC ("NOVA-INST-DIR" shows top of
+            install dir).</para>
         </listitem>
 
         <listitem>
-          <para>HostA export NOVA-INST-DIR/instances, HostB and HostC mount
-          it.</para>
+          <para>HostA exports NOVA-INST-DIR/instances, and  HostB and
+            HostC mount it.</para>
         </listitem>
       </itemizedlist></para>
 
@@ -1462,77 +1468,84 @@ sudo bash -c "echo 0 &gt; /proc/sys/net/ipv6/conf/all/accept_ra"</literallayout>
 
     <para><orderedlist>
         <listitem>
-          <para>Configure /etc/hosts, Make sure 3 Hosts can do name-resolution
-          with each other. Ping with each other is better way to test.</para>
+          <para>Configure <filename>/etc/hosts</filename>. Make sure that the three hosts
+            can perform name-resolution with each other. As a test,
+            use the <command>ping</command> command to ping each host from one
+            another.</para>
 
-          <literallayout class="monospaced">                      
-ping HostA
-ping HostB
-ping HostC
-                            </literallayout>
+          <screen><prompt>$</prompt> <userinput>ping HostA</userinput>
+<prompt>$</prompt> <userinput>ping HostB</userinput>
+<prompt>$</prompt> <userinput>ping HostC</userinput></screen>
         </listitem>
 
         <listitem>
-          <para>Configure NFS at HostA by adding below to /etc/exports</para>
+          <para>Configure NFS at HostA by adding below to <filename>/etc/exports</filename></para>
 
-          <literallayout class="monospaced">NOVA-INST-DIR/instances HostA/255.255.0.0(rw,sync,fsid=0,no_root_squash)</literallayout>
+          <screen><prompt>$</prompt> <userinput>NOVA-INST-DIR/instances HostA/255.255.0.0(rw,sync,fsid=0,no_root_squash)</userinput></screen>
 
-          <para>Change "255.255.0.0" appropriate netmask, which should include
-          HostB/HostC. Then restart nfs server.</para>
+          <para>Change <literal>255.255.0.0</literal> appropriate
+            netmask, which should include HostB and HostC. Then
+            restart the NFS server.</para>
 
-          <literallayout class="monospaced">
-/etc/init.d/nfs-kernel-server restart
-/etc/init.d/idmapd restart
-                            </literallayout>
+          <screen><prompt>$</prompt> <userinput>/etc/init.d/nfs-kernel-server restart</userinput>
+<prompt>$</prompt> <userinput>/etc/init.d/idmapd restart</userinput></screen>
         </listitem>
         <listitem>
-           <para>
-           Set the 'execute/search' bit on your shared directory
-           </para>
-          <para>
-            On both compute node, make sure to enable the 'execute/search' bit for qemu being able to use the images within the directories. On both hosts : 
-          </para>
-          <literallayout class="monospaced">chmod o+x NOVA-INST-DIR/instances </literallayout>
+           <para>Set the 'execute/search' bit on your shared directory </para>
+          <para>On both compute node, make sure to enable the
+            'execute/search' bit for qemu being able to use the images
+            within the directories. On both hosts, execute the
+            following command: </para>
+          <screen><prompt>$</prompt> <userinput>chmod o+x NOVA-INST-DIR/instances</userinput> </screen>
         </listitem>
         <listitem>
           <para>Configure NFS at HostB and HostC by adding below to
           /etc/fstab</para>
 
-          <literallayout class="monospaced">HostA:/NOVA-INST-DIR/instances /NOVA-INST-DIR/instances nfs4 defaults 0 0</literallayout>
+          <screen><prompt>$</prompt> <userinput>HostA:/NOVA-INST-DIR/instances /NOVA-INST-DIR/instances nfs4 defaults 0 0</userinput></screen>
 
-          <para>Then mount, check exported directory can be mounted.</para>
+          <para>Then mount the directory and ensure that the exported
+            directory can be mounted.</para>
 
-          <literallayout class="monospaced">mount -a -v</literallayout>
+          <screen><prompt>$</prompt> <userinput>mount -a -v</userinput></screen>
 
-          <para>If fail, try this at any hosts.</para>
+          <para>If this fails, try the following command on a
+            host.</para>
 
-          <literallayout class="monospaced">iptables -F</literallayout>
+          <screen><prompt>$</prompt> <userinput>iptables -F</userinput></screen>
 
           <para>Also, check file/daemon permissions. We expect any nova
           daemons are running as root.</para>
 
-          <literallayout class="monospaced">ps -ef | grep nova                            </literallayout>
+          <screen><prompt>$</prompt> <userinput>ps -ef | grep nova </userinput></screen>
 
-          <programlisting>root 5948 5904 9 11:29 pts/4 00:00:00 python /opt/nova-2010.4//bin/nova-api
+          <programlisting language="bash">
+root 5948 5904 9 11:29 pts/4 00:00:00 python /opt/nova-2010.4//bin/nova-api
 root 5952 5908 6 11:29 pts/5 00:00:00 python /opt/nova-2010.4//bin/nova-objectstore
-... (snip)                           </programlisting>
+... (snip)
+</programlisting>
 
           <para>"<filename><replaceable>NOVA-INST-DIR</replaceable>/instances/</filename>"
           directory can be seen at HostA</para>
 
-          <literallayout class="monospaced">ls -ld <filename><replaceable>NOVA-INST-DIR</replaceable>/instances/</filename></literallayout>
+          <screen><prompt>$</prompt> <userinput>ls -ld <filename><replaceable>NOVA-INST-DIR</replaceable>/instances/</filename></userinput></screen>
 
-          <programlisting>drwxr-xr-x 2 root root 4096 2010-12-07 14:34 nova-install-dir/instances/                            </programlisting>
+          <programlisting language="bash">
+drwxr-xr-x 2 root root 4096 2010-12-07 14:34 nova-install-dir/instances/
+          </programlisting>
 
-          <para>Same check at HostB and HostC</para>
+          <para>Perform the same check at HostB and HostC</para>
 
-          <literallayout>ls -ld <filename><replaceable>NOVA-INST-DIR</replaceable>/instances/</filename></literallayout>
+          <screen><prompt>$</prompt> <userinput>ls -ld <filename><replaceable>NOVA-INST-DIR</replaceable>/instances/</filename></userinput></screen>
 
-          <programlisting>drwxr-xr-x 2 root root 4096 2010-12-07 14:34 nova-install-dir/instances/</programlisting>
+          <programlisting language="bash">
+drwxr-xr-x 2 root root 4096 2010-12-07 14:34 nova-install-dir/instances/
+          </programlisting>
 
-          <literallayout class="monospaced">df -k</literallayout>
+          <screen><prompt>$</prompt> <userinput>df -k</userinput></screen>
 
-          <programlisting>Filesystem           1K-blocks      Used Available Use% Mounted on
+          <programlisting language="bash">
+Filesystem           1K-blocks      Used Available Use% Mounted on
 /dev/sda1            921514972   4180880 870523828   1% /
 none                  16498340      1228  16497112   1% /dev
 none                  16502856         0  16502856   0% /dev/shm
@@ -1540,12 +1553,12 @@ none                  16502856       368  16502488   1% /var/run
 none                  16502856         0  16502856   0% /var/lock
 none                  16502856         0  16502856   0% /lib/init/rw
 HostA:        921515008 101921792 772783104  12% /opt  ( &lt;--- this line is important.)
-                            </programlisting>
+</programlisting>
         </listitem>
 
         <listitem>
-          <para>Libvirt configurations. Modify
-          <filename>/etc/libvirt/libvirt.conf</filename>:</para>
+          <para>Update the libvirt configurations. Modify
+              <filename>/etc/libvirt/libvirt.conf</filename>:</para>
 
           <programlisting>
 before : #listen_tls = 0
@@ -1571,20 +1584,21 @@ before :libvirtd_opts=" -d"
 after :libvirtd_opts=" -d -l"
                             </programlisting>
 
-          <para>then, restart libvirt. Make sure libvirt is restarted.</para>
+          <para>Restart libvirt. After executing the command, ensure
+            that libvirt is succesfully restarted.</para>
 
-          <literallayout class="monospaced">
-stop libvirt-bin &amp;&amp; start libvirt-bin
+          <screen><prompt>$</prompt> <userinput>stop libvirt-bin &amp;&amp; start libvirt-bin</userinput>
+<prompt>$</prompt> <userinput>ps -ef | grep libvirt</userinput></screen>
 
-ps -ef | grep libvirt</literallayout>
-
-          <programlisting>root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l                           </programlisting>
+          <programlisting language="bash">
+root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l
+          </programlisting>
         </listitem>
 
         <listitem>
-          <para>Configuration option configuration. usually, you do
-            not have to configure any configuration options. Below
-            chart is only for advanced usage.</para>
+          <para>You can now configure options for live migration. In
+            most cases, you do not need to configure any options. The
+            following chart is for advanced usage only.</para>
         </listitem>
       </orderedlist></para>
 
@@ -1724,7 +1738,9 @@ ps -ef | grep libvirt</literallayout>
       However, if it is included the configuration, it must be set to
       <literal>nova.rpc.impl_kombu</literal>.</para>
 
-      <programlisting>rpc_backend=nova.rpc.impl_kombu</programlisting>
+      <programlisting language="bash">
+rpc_backend=nova.rpc.impl_kombu
+      </programlisting>
 
       <para>The following tables describe the rest of the options that can be
       used when <application>RabbitMQ</application> is used as the messaging
@@ -1850,7 +1866,9 @@ ps -ef | grep libvirt</literallayout>
       <literal>rpc_backend</literal> option in
       <filename>nova.conf</filename>.</para>
 
-      <programlisting>rpc_backend=nova.rpc.impl_qpid</programlisting>
+      <programlisting language="bash">
+rpc_backend=nova.rpc.impl_qpid
+      </programlisting>
 
       <para>This next critical option points the compute nodes to the
       <application>Qpid</application> broker (server). Set
@@ -1862,25 +1880,33 @@ ps -ef | grep libvirt</literallayout>
         the form of either a hostname or an IP address.</para>
       </note>
 
-      <programlisting>qpid_hostname=hostname.example.com</programlisting>
+      <programlisting language="bash">
+qpid_hostname=hostname.example.com
+      </programlisting>
 
       <para>If the <application>Qpid</application> broker is listening on a
       port other than the AMQP default of <literal>5672</literal>, you will
       need to set the <literal>qpid_port</literal> option:</para>
 
-      <programlisting>qpid_port=12345</programlisting>
+      <programlisting language="bash">
+qpid_port=12345
+      </programlisting>
 
       <para>If you configure the <application>Qpid</application> broker to
       require authentication, you will need to add a username and password to
       the configuration:</para>
 
-      <programlisting>qpid_username=username
-qpid_password=password</programlisting>
+      <programlisting language="bash">
+qpid_username=username
+qpid_password=password
+      </programlisting>
 
       <para>By default, TCP is used as the transport. If you would like to
       enable SSL, set the <literal>qpid_protocol</literal> option:</para>
 
-      <programlisting>qpid_protocol=ssl</programlisting>
+      <programlisting language="bash">
+qpid_protocol=ssl
+      </programlisting>
 
       <para>The following table lists the rest of the options used by the Qpid
       messaging driver for OpenStack Compute. It is not common that these
@@ -2251,8 +2277,7 @@ qpid_password=password</programlisting>
       limiting will be disabled. There should also be a definition for the
       ratelimit filter. The lines will appear as follows:</para>
 
-      <programlisting>
-
+      <programlisting language="bash">
 [pipeline:openstack_compute_api_v2]
 pipeline = faultwrap authtoken keystonecontext ratelimit osapi_compute_app_v2
 
@@ -2261,7 +2286,6 @@ pipeline = faultwrap authtoken keystonecontext ratelimit osapi_volume_app_v1
 
 [filter:ratelimit]
 paste.filter_factory = nova.api.openstack.compute.limits:RateLimitingMiddleware.factory
-
             </programlisting>
 
       <para>To modify the limits, add a '<literal>limits</literal>'
@@ -2270,12 +2294,10 @@ paste.filter_factory = nova.api.openstack.compute.limits:RateLimitingMiddleware.
       URI, regex, limit, and interval. The following example specifies the
       default rate limiting values:</para>
 
-      <programlisting>
-
+      <programlisting language="bash">
 [filter:ratelimit]
 paste.filter_factory = nova.api.openstack.compute.limits:RateLimitingMiddleware.factory
 limits =("POST", "*", ".*", 10, MINUTE);("POST", "*/servers", "^/servers", 50, DAY);("PUT", "*", ".*", 10, MINUTE);("GET", "*changes-since*", ".*changes-since.*", 3, MINUTE);("DELETE", "*", ".*", 100, MINUTE)
-
             </programlisting>
     </simplesect>
   </section>
