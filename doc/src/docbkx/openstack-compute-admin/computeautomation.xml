@@ -32,8 +32,11 @@ format="SVG" scale="60"/>
         distributing virtualized development environments).</para>
     
     <section xml:id="openstack-compute-deployment-tool-with-puppet">
-        <title>Deployment Tool for OpenStack using Puppet(dodai-deploy)</title>
-        <para>The dodai-deploy is a software management tool. It supports OpenStack Diablo(Nova, Glance, Swift) and hadoop 0.20.2</para>
+        <title>Deployment Tool for OpenStack using Puppet
+            (dodai-deploy)</title>
+        <para>The dodai-deploy is a software management tool. It
+            supports OpenStack Diablo (Nova, Glance, Swift) and hadoop
+            0.20.2</para>
         <simplesect>
             <title>Features</title>
             <itemizedlist>
@@ -83,8 +86,9 @@ format="SVG" scale="60"/>
             </itemizedlist>
         </simplesect>
         <simplesect><title>Installation</title>
-            <para>The "$home" in the following sections is the path of the home directory of the dodai-deploy.</para>
-            <para>OSes supported</para>
+            <para>The <literal>$home</literal> in the following
+                sections is the path of the home directory of the
+                dodai-deploy.</para>
             <para>The following OSes are supported.</para>
             <itemizedlist>
                 <listitem>
@@ -96,47 +100,98 @@ format="SVG" scale="60"/>
                 <listitem>
                     <para>ubuntu 11.10</para></listitem>
             </itemizedlist>
-            <para>1. Download dodai-deploy</para>
-            <para>Execute the following commands on the deployment server and all the nodes.</para>            
-            <literallayout class="monospaced">
-sudo apt-get install git -y
-git clone https://github.com/nii-cloud/dodai-deploy.git
-cd dodai-deploy; git checkout 1.0   #only used to get dodai-deploy 1.0</literallayout>
-            <para>2. Set up the deployment server</para>
-            <para>Execute the following commands on deployment server to install necessary softwares and modify their settings.</para>
-            <literallayout class="monospaced">sudo $home/setup-env/setup.sh server</literallayout>
-            <para>3. Set up nodes</para>
-            <para>Execute the following commands on all the nodes to install necessary softwares and modify their settings.</para>
-            <literallayout class="monospaced">sudo $home/setup-env/setup.sh node $server</literallayout>
-            <para>The $server in the above command is the fully qualified domain name (fqdn) of the deployment server. You can confirm the fqdn with the following command.</para>
-            <literallayout class="monospaced">sudo hostname -f</literallayout>
-            <para>4. Set up storage device for Swift</para>
-            <para>It is necessary to set up a storage device before swift is installed.
-            You should execute the commands for a physical device or for a loopback device
-            on all nodes in which swift storage server is to be installed.</para>
-            <para>4.1 For a physical device</para>
-            <para>Use the following command when the device is a physical device.</para>
-            <literallayout class="monospaced">sudo $home/setup-env/setup-storage-for-swift.sh physical $storage_path $storage_dev</literallayout>
-            <para>For example,</para>
-            <literallayout class="monospaced">sudo $home/setup-env/setup-storage-for-swift.sh physical /srv/node sdb1</literallayout>
-            <para>4.2 For a loopback device</para>
-            <para>Use the following command when the device is a loopback device.</para>
-            <literallayout class="monospaced">sudo $home/setup-env/setup-storage-for-swift.sh loopback $storage_path $storage_dev $size</literallayout>
-            <para>For example,</para>
-            <literallayout class="monospaced">sudo $home/setup-env/setup-storage-for-swift.sh loopback /srv/node sdb1 4</literallayout>
-            <para>5. Start servers</para>
-            <para>Execute the following command on the deployment server to start the web server and job server.</para>
-            <literallayout class="monospaced">sudo $home/script/start-servers production</literallayout>
-            <para>BTW, You can stop the web server and job server with the following command.</para>
-            <literallayout class="monospaced">sudo $home/script/stop-servers</literallayout>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>Download dodai-deploy. </para>
+                        <para>Execute the following commands on the
+                            deployment server and all the nodes.
+                            <screen>
+<prompt>$</prompt> <userinput>sudo apt-get install git -y</userinput>
+<prompt>$</prompt> <userinput>git clone https://github.com/nii-cloud/dodai-deploy.git</userinput>
+<prompt>$</prompt> <userinput>cd dodai-deploy; git checkout 1.0</userinput>   #only used to get dodai-deploy 1.0     
+                        </screen></para>
+                    </listitem>
+                    <listitem>
+                        <para>Set up the deployment server.</para>
+                        <para>Execute the following commands on
+                            deployment server to install necessary
+                            softwares and modify their
+                            settings.</para>
+            <screen>
+<prompt>$</prompt> <userinput>sudo $home/setup-env/setup.sh server</userinput>
+            </screen>
+                   </listitem>
+                    
+            <listitem><para>Set up nodes.</para>
+                        <para>Execute the following commands on all
+                            the nodes to install necessary softwares
+                            and modify their settings.</para>
+                <screen>
+<prompt>$</prompt> <userinput>sudo $home/setup-env/setup.sh node $server</userinput>
+                </screen>
+                <para>The $server in the above command is the fully qualified domain name (fqdn) of the deployment server. You can confirm the fqdn with the following command.</para>
+                <screen>
+<prompt>$</prompt> <userinput>sudo hostname -f</userinput>
+                </screen></listitem>
+            <listitem><para>Set up storage device for Swift.</para>
+                <para>You must set up a storage device before swift is
+                            installed. You should execute the commands
+                            for a physical device or for a loopback
+                            device on all nodes in which swift storage
+                            server is to be installed.</para>
+                        <para>
+                            <itemizedlist>
+                                <listitem>
+                                   <para>For a physical device, use
+                                   the following command.</para>
+                                    <screen>
+<prompt>$</prompt> <userinput>sudo $home/setup-env/setup-storage-for-swift.sh physical $storage_path $storage_dev</userinput>
+                                    </screen>
+                                    <para>For example,</para>
+                                    <screen>
+<prompt>$</prompt> <userinput>sudo $home/setup-env/setup-storage-for-swift.sh physical /srv/node sdb1</userinput>
+                                    </screen>
+                                </listitem>
+                                <listitem>
+                                   <para>For a loopback device, use
+                                   the following command.</para>
+                                    <screen>
+<prompt>$</prompt> <userinput>sudo $home/setup-env/setup-storage-for-swift.sh loopback $storage_path $storage_dev $size</userinput>
+                                    </screen>
+                                    <para>For example,</para>
+                                    <screen>
+<prompt>$</prompt> <userinput>sudo $home/setup-env/setup-storage-for-swift.sh loopback /srv/node sdb1 4</userinput>
+                                    </screen>
+                                    
+                                </listitem>
+                            </itemizedlist>
+                        </para>
+
+            </listitem>
+                    
+                    <listitem>   <para>Start servers.</para>
+                <para>Execute the following command on the deployment server to start the web server and job server.</para>
+                <screen>
+<prompt>$</prompt> <userinput>sudo $home/script/start-servers production</userinput>
+                </screen>
+                <para>You can stop the web server and job server with
+                            the following command.</para>
+                <screen>
+<prompt>$</prompt> <userinput>sudo $home/script/stop-servers</userinput>
+                </screen></listitem>
+                </orderedlist>
+            </para>
         </simplesect>
         <simplesect><title>Using web UI</title>
             <para>You can find step-by-step guidance at <literal>http://<replaceable>$deployment_server</replaceable>:3000/</literal>.</para>
         </simplesect>
         <simplesect><title>Using REST APIs</title>
-            <para>An API simulator can be found at http://$deployment_server:3000/rest_apis/index.html. 
-            You can get the list of REST APIs with it. Moreover, you can execute APIs by simply filling
-            in parameters and clicking the "Execute" button.</para>
+            <para>An API simulator can be found at
+                        <literal>http://<replaceable>$deployment_server</replaceable>:3000/rest_apis/index.html</literal>.
+                You can get the list of REST APIs with it. You can
+                also execute APIs by simply filling in parameters and
+                clicking the "Execute" button.</para>
         </simplesect>
         <simplesect><title>Notes</title>
             <orderedlist>
@@ -144,24 +199,38 @@ cd dodai-deploy; git checkout 1.0   #only used to get dodai-deploy 1.0</literall
                     <para>SSH login nova instance after test of nova </para>
                     <para>An instance will be started during the test of nova. After the test,
                     you can login the instance by executing the following commands.</para>
-                    <literallayout class="monospaced">
-sudo -i
-cd /tmp/nova
-. env/novarc
-euca-describe-instances
-ssh -i mykey.priv 10.0.0.3</literallayout>
+                    <screen>
+<prompt>$</prompt> <prompt>sudo -i</prompt>
+<prompt>$</prompt> <prompt>cd /tmp/nova</prompt>
+<prompt>$</prompt> <prompt>. env/novarc</prompt>
+<prompt>$</prompt> <prompt>euca-describe-instances</prompt>
+<prompt>$</prompt> <prompt>ssh -i mykey.priv 10.0.0.3</prompt>
+                    </screen>
                 </listitem>
                 <listitem>
-                    <para>Nova depends on glance in default settings.</para>
-                    <para>Because in /etc/nova/nova.conf the value of setting "image_service" is "nova.image.glance.GlanceImageService", 
-                    glance should be installed before using nova.</para>
+                    <para>Glance should be installed before using
+                        nova, because nova depends on glance in
+                        default settings.</para>
+                    <para>In <filename>/etc/nova/nova.conf</filename>
+                        the value of setting
+                            <literal>image_service</literal> is
+                            <literal>nova.image.glance.GlanceImageService</literal>.</para>
                 </listitem>
                 <listitem>
-                    <para>Change Linux's setting <literal>net.ipv4.ip_forward</literal> to <literal>1</literal> in the machine
-                    where <command>nova-network</command> will be installed before nova installation with the following command.</para>
-                    <screen><prompt>$</prompt> <userinput>sudo sysctl -w net.ipv4.ip_forward=1</userinput></screen>
-                    <para>And you can recover the setting with the following command.</para>
-                    <screen><prompt>$</prompt> <userinput>sudo sysctl -w net.ipv4.ip_forward=0</userinput></screen>
+                    <para>Change Linux's setting
+                            <literal>net.ipv4.ip_forward</literal> to
+                            <literal>1</literal> in the machine where
+                        nova-network will be installed before nova
+                        installation with the following
+                        command.</para>
+                    <screen>
+<prompt>$</prompt> <userinput>sudo sysctl -w net.ipv4.ip_forward=1</userinput>
+                    </screen>
+                    <para>You can recover the setting with the
+                        following command.</para>
+                    <screen>
+<prompt>$</prompt> <userinput>sudo sysctl -w net.ipv4.ip_forward=0</userinput>
+                    </screen>
                 </listitem>
             </orderedlist>
         </simplesect>

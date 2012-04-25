@@ -44,16 +44,22 @@
                 environment variables so you can use the client with
                 your username and password already entered. Here's
                 what works well on Mac
-                OS.<screen> <prompt>$</prompt> pip install -e git+https://github.com/openstack/python-novaclient.git#egg=python-novaclient </screen>
+                OS.<screen> 
+<prompt>$</prompt> <userinput>pip install -e git+https://github.com/openstack/python-novaclient.git#egg=python-novaclient</userinput>
+                     </screen>
                 Next, create a file named openrc to contain your
                 TryStack credentials, such
-                as:<programlisting>export OS_USERNAME=joecool
+                as:<programlisting language="bash">
+export OS_USERNAME=joecool
 export OS_PASSWORD=coolword
 export OS_TENANT_NAME=coolu
 export OS_AUTH_URL=http://trystack.org:5000/v2.0
-export NOVA_VERSION=1.1</programlisting>
+export NOVA_VERSION=1.1
+                </programlisting>
                 Lastly, run this file to source your credentials.
-                <screen>$ source openrc</screen></para>
+                <screen>
+<prompt>$</prompt> <userinput>source openrc</userinput>
+                </screen></para>
             <para>You can always retrieve your username and password
                 from <link
                     xlink:href="https://trystack.org/dash/api_info/"
@@ -79,23 +85,30 @@ export NOVA_VERSION=1.1</programlisting>
                 your use. </para>
             <para>Basically, run:</para>
             <para>
-                <screen>$ nova image-list</screen>
+                <screen>
+<prompt>$</prompt> <userinput>nova image-list</userinput>
+                </screen>
             </para>
             <para>and look for the images available in the text that
                 returns. Look for the ID
-                value.<programlisting>+----+--------------------------------------+--------+--------+
+                value.<programlisting>
++----+--------------------------------------+--------+--------+
 | ID |                 Name                 | Status | Server |
 +----+--------------------------------------+--------+--------+
 | 12 | natty-server-cloudimg-amd64-kernel   | ACTIVE |        |
 | 13 | natty-server-cloudimg-amd64          | ACTIVE |        |
 | 14 | oneiric-server-cloudimg-amd64-kernel | ACTIVE |        |
 | 15 | oneiric-server-cloudimg-amd64        | ACTIVE |        |
-+----+--------------------------------------+--------+--------+</programlisting></para>
++----+--------------------------------------+--------+--------+
+                </programlisting></para>
             <para>Now get a list of the flavors you can launch:</para>
             <para>
-                <screen>$ nova flavor-list</screen>
+                <screen>
+<prompt>$</prompt> <userinput>nova flavor-list</userinput>
+                </screen>
             </para>
-            <para><programlisting>+----+-----------+-----------+------+-----------+------+-------+-------------+
+            <para><programlisting>
++----+-----------+-----------+------+-----------+------+-------+-------------+
 | ID |    Name   | Memory_MB | Disk | Ephemeral | Swap | VCPUs | RXTX_Factor |
 +----+-----------+-----------+------+-----------+------+-------+-------------+
 | 1  | m1.tiny   | 512       | 0    | N/A       | 0    | 1     |             |
@@ -103,23 +116,29 @@ export NOVA_VERSION=1.1</programlisting>
 | 3  | m1.medium | 4096      | 40   | N/A       | 0    | 2     |             |
 | 4  | m1.large  | 8192      | 80   | N/A       | 0    | 4     |             |
 | 5  | m1.xlarge | 16384     | 160  | N/A       | 0    | 8     |             |
-+----+-----------+-----------+------+-----------+------+-------+-------------+</programlisting>Create
++----+-----------+-----------+------+-----------+------+-------+-------------+
+            </programlisting>Create
                 a keypair to launch the image, in a directory where
                 you run the nova boot command later.
-                <screen>$ nova keypair-add mykeypair > mykeypair.pem</screen></para>
+                <screen>
+<prompt>$</prompt> <userinput>nova keypair-add mykeypair > mykeypair.pem</userinput>
+                </screen></para>
             <para>Create security group that enables public IP access
                 for the webserver that will run WordPress for you. You
                 can also enable port 22 for
-                SSH.<screen>$ nova secgroup-create openpub "Open for public"
-$ nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0 
-$ nova secgroup-add-rule default tcp 22 22 0.0.0.0/0  </screen></para>
+                SSH.<screen>
+<prompt>$</prompt> <userinput>nova secgroup-create openpub "Open for public"</userinput>
+<prompt>$</prompt> <userinput>nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0 </userinput>
+<prompt>$</prompt> <userinput>nova secgroup-add-rule default tcp 22 22 0.0.0.0/0 </userinput> 
+                </screen></para>
             <para>Next, with the ID value of the server you want to
                 launch and the ID of the flavor you want to launch,
                 use your credentials to start up the instance with the
                 identifier you got by looking at the image
                 list.</para>
-            <screen>nova boot --image 15 --flavor 2 --key_name mykeypair --security_groups openpub testtutorial</screen>
-            <para><programlisting>+--------------+--------------------------------------+
+            <screen><prompt>$</prompt> <userinput>nova boot --image 15 --flavor 2 --key_name mykeypair --security_groups openpub testtutorial</userinput></screen>
+            <para><programlisting>
++--------------+--------------------------------------+
 |   Property   |                Value                 |
 +--------------+--------------------------------------+
 | accessIPv4   |                                      |
@@ -140,14 +159,17 @@ $ nova secgroup-add-rule default tcp 22 22 0.0.0.0/0  </screen></para>
 | updated      | 2012-03-21T20:31:40Z                 |
 | user_id      | facebook521113267                    |
 | uuid         | be9f80e8-7b20-49e8-83cf-fa059a36c9f8 |
-+--------------+--------------------------------------+</programlisting>Now
++--------------+--------------------------------------+
+            </programlisting>Now
                 you can look at the state of the running instances by
                 using nova list.
-                <screen>$ nova list</screen><programlisting>+------+----------------+--------+----------------------+
+                <screen>$ nova list</screen><programlisting>
++------+----------------+--------+----------------------+
 |  ID  |      Name      | Status |       Networks       |
 +------+----------------+--------+----------------------+
 | 1426 | testtut        | ACTIVE | internet=8.22.27.251 |
-+------+----------------+--------+----------------------+</programlisting></para>
++------+----------------+--------+----------------------+
+                </programlisting></para>
             <para>The instance goes from “launching” to “running” in a
                 short time, and you should be able to connect via SSH.
                 Look at the IP addresses so that you can connect to
@@ -160,25 +182,37 @@ $ nova secgroup-add-rule default tcp 22 22 0.0.0.0/0  </screen></para>
                 usage, the memory, the disk io or network io, per instance, by running the
                     <command>nova diagnostics</command> command:</para>
 
-            <screen><prompt>$</prompt> <userinput>nova diagnostics</userinput></screen>
+            <screen>
+<prompt>$</prompt> <userinput>nova diagnostics</userinput>
+            </screen>
         </section>
         <section xml:id="installing-needed-software-for-web-scale">
             <title>Part III: Installing the Needed Software for the Web-Scale Scenario</title>
             <para>Basically launch a terminal window from any computer, and enter: </para>
-            <screen>ssh -i mykeypair ubuntu@10.127.35.119</screen>
+            <screen>
+<prompt>$</prompt> <userinput>ssh -i mykeypair ubuntu@10.127.35.119</userinput>
+            </screen>
             <para>On this particular image, the 'ubuntu' user has been set up as part of the sudoers
                 group, so you can escalate to 'root' via the following command:</para>
-            <screen>sudo -i</screen>
+            <screen>
+<prompt>$</prompt> <userinput>sudo -i</userinput>
+            </screen>
             <simplesect>
                 <title>On the first VM, install WordPress</title>
                 <para>Now, you can install WordPress. Create and then switch to a blog
                     directory:</para>
-                <screen>mkdir blog
-cd blog</screen>
+                <screen>
+<prompt>$</prompt> <userinput>mkdir blog</userinput>
+<prompt>$</prompt> <userinput>cd blog</userinput>
+                </screen>
                 <para>Download WordPress directly to you by using wget:</para>
-                <screen>wget http://wordpress.org/latest.tar.gz</screen>
+                <screen>
+<prompt>$</prompt> <userinput>wget http://wordpress.org/latest.tar.gz</userinput>
+                </screen>
                 <para>Then unzip the package using: </para>
-                <screen>tar -xzvf latest.tar.gz</screen>
+                <screen>
+<prompt>$</prompt> <userinput>tar -xzvf latest.tar.gz</userinput>
+                </screen>
                 <para>The WordPress package will extract into a folder called wordpress in the same
                     directory that you downloaded latest.tar.gz. </para>
                 <para>Next, enter "exit" and disconnect from this SSH session.</para>
@@ -195,7 +229,9 @@ cd blog</screen>
                     can go to work for you in a scalable manner. SSH to a third virtual machine and
                     install Memcache:</para>
                 <para>
-                    <screen>apt-get install memcached</screen>
+                    <screen>
+<prompt>$</prompt> <userinput>apt-get install memcached</userinput>
+                    </screen>
                 </para></simplesect><simplesect><title>Configure the Wordpress Memcache plugin</title><para>From a web browser, point to the IP address of your Wordpress server. Download and install the Memcache Plugin. Enter the IP address of your Memcache server.</para></simplesect>
         </section><section xml:id="running-a-blog-in-the-cloud">
             <title>Running a Blog in the Cloud</title><para>That's it! You're now running your blog on a cloud server in OpenStack Compute, and you've scaled it horizontally using additional virtual images to run the database and Memcache. Now if your blog gets a big boost of comments, you'll be ready for the extra reads-and-writes to the database. </para></section>
