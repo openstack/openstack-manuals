@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<para xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <table rules="all" >					       <!--xml:id="hypervisors-nova-conf"-->
+        <caption>Description of nova.conf file configuration options
+            for hypervisors</caption>
+        <col width="30%"/>
+        <col width="70%"/>
+        <thead>
+            <tr>
+                <td>Configuration option=Default value</td>
+                <td>(Type) Description</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    block_migration_flag="VIR_MIGRATE_UNDEFINE_SOURCE,
+                    VIR_MIGRATE_PEER2PEER, VIR_MIGRATE_NON_SHARED_INC" </td>
+                <td> (StrOpt) Define block migration behavior. </td>
+            </tr>
+            <tr>
+                <td> checksum_base_images=false </td>
+                <td> (BoolOpt) Write a checksum for files in _base to
+                    disk </td>
+            </tr>
+            <tr>
+                <td>libvirt_disk_prefix=&lt;None&gt; </td>
+                <td> (StrOpt) Override the default disk prefix for the
+                    devices attached to a server, which is dependent
+                    on libvirt_type. (valid options are: sd, xvd, uvd,
+                    vd) </td>
+            </tr>
+            <tr>
+                <td> libvirt_inject_key=true </td>
+                <td> (BoolOpt) Inject the ssh public key at boot time
+                </td>
+            </tr>
+            <tr>
+                <td> libvirt_inject_password=false </td>
+                <td> (BoolOpt) Inject the admin password at boot time,
+                    without an agent. </td>
+            </tr>
+            <tr>
+                <td> libvirt_nonblocking=false </td>
+                <td> (BoolOpt) Use a separated OS thread pool to
+                    realize non-blocking libvirt calls </td>
+            </tr>
+            <tr>
+                <td> libvirt_type="kvm" </td>
+                <td> (StrOpt) Libvirt domain type (valid options are:
+                    kvm, lxc, qemu, uml, xen) </td>
+            </tr>
+            <tr>
+                <td> libvirt_uri="" </td>
+                <td> (StrOpt) Override the default libvirt URI (which
+                    is dependent on libvirt_type) </td>
+            </tr>
+            <tr>
+                <td>
+                    libvirt_vif_driver="nova.virt.libvirt.vif.LibvirtBridgeDriver" </td>
+                <td> (StrOpt) The libvirt VIF driver to configure the
+                    VIFs. </td>
+            </tr>
+            <tr>
+                <td>
+                    <para>libvirt_volume_drivers="iscsi=nova.virt.libvirt.volume.LibvirtISCSIVolumeDriver,</para><para>local=nova.virt.libvirt.volume.LibvirtVolumeDriver,</para><para>fake=nova.virt.libvirt.volume.LibvirtFakeVolumeDriver,</para><para>rbd=nova.virt.libvirt.volume.LibvirtNetVolumeDriver,sheepdog=nova.virt.libvirt.volume.LibvirtNetVolumeDriver"</para> </td>
+                <td> (ListOpt) Libvirt handlers for remote volumes.
+                </td>
+            </tr>
+            <tr>
+                <td> libvirt_wait_soft_reboot_seconds=120 </td>
+                <td> (IntOpt) Number of seconds to wait for instance
+                    to shut down after soft reboot request is made. We
+                    fall back to hard reboot if instance does not
+                    shutdown within this window. </td>
+            </tr>
+            
+            <tr>
+                <td> remove_unused_base_images=false </td>
+                <td> (BoolOpt) Should unused base images be removed?
+                </td>
+            </tr>
+            <tr>
+                <td> remove_unused_original_minimum_age_seconds=86400 </td>
+                <td> (IntOpt) Unused unresized base images younger
+                    than this will not be removed </td>
+            </tr>
+            <tr>
+                <td> remove_unused_resized_minimum_age_seconds=3600 </td>
+                <td> (IntOpt) Unused resized base images younger than
+                    this will not be removed </td>
+            </tr>
+            <tr>
+                <td>rescue_image_id=&lt;None&gt; </td>
+                <td> (StrOpt) Rescue ami image </td>
+            </tr>
+            <tr>
+                <td>rescue_kernel_id=&lt;None&gt; </td>
+                <td> (StrOpt) Rescue aki image </td>
+            </tr>
+            <tr>
+                <td>rescue_ramdisk_id=&lt;None&gt; </td>
+                <td> (StrOpt) Rescue ari image </td>
+            </tr>
+            <tr>
+                <td>snapshot_image_format=&lt;None&gt; </td>
+                <td> (StrOpt) Snapshot image format (valid options are
+                    : raw, qcow2, vmdk, vdi). Defaults to same as
+                    source image </td>
+            </tr>
+            <tr>
+                <td> use_usb_tablet=true </td>
+                <td> (BoolOpt) Sync virtual and real mouse cursors in
+                    Windows VMs </td>
+            </tr>
+            <tr>
+                <td>libvirt integration</td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td> libvirt_ovs_bridge="br-int" </td>
+                <td> (StrOpt) Name of Integration Bridge used by Open
+                    vSwitch </td>
+            </tr>
+            <tr>
+                <td> libvirt_use_virtio_for_bridges=false </td>
+                <td> (BoolOpt) Use virtio for bridge interfaces </td>
+            </tr>
+            <tr>
+                <td>VMWare integration</td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td>vmwareapi_wsdl_loc=&lt;None&gt; </td>
+                <td> (StrOpt) VIM Service WSDL Location e.g
+                    http://&lt;server&gt;/vimService.wsdl, due to a
+                    bug in vSphere ESX 4.1 default wsdl.
+                     </td>
+            </tr>
+            <tr>
+                <td>
+                    vmware_vif_driver="nova.virt.vmwareapi.vif.VMWareVlanBridgeDriver" </td>
+                <td> (StrOpt) The VMWare VIF driver to configure the
+                    VIFs. </td>
+            </tr>
+            <tr>
+                <td> vmwareapi_api_retry_count=10 </td>
+                <td> (FloatOpt) The number of times we retry on
+                    failures, e.g., socket error, etc. Used only if
+                    connection_type is vmwareapi </td>
+            </tr>
+            <tr>
+                <td>vmwareapi_host_ip=&lt;None&gt; </td>
+                <td> (StrOpt) URL for connection to VMWare ESX
+                    host.Required if connection_type is vmwareapi.
+                </td>
+            </tr>
+            <tr>
+                <td>vmwareapi_host_password=&lt;None&gt; </td>
+                <td> (StrOpt) Password for connection to VMWare ESX
+                    host. Used only if connection_type is vmwareapi.
+                </td>
+            </tr>
+            <tr>
+                <td>vmwareapi_host_username=&lt;None&gt; </td>
+                <td> (StrOpt) Username for connection to VMWare ESX
+                    host. Used only if connection_type is vmwareapi.
+                </td>
+            </tr>
+            <tr>
+                <td> vmwareapi_task_poll_interval=5.0 </td>
+                <td> (FloatOpt) The interval used for polling of
+                    remote tasks. Used only if connection_type is
+                    vmwareapi </td>
+            </tr>
+            <tr>
+                <td> vmwareapi_vlan_interface="vmnic0" </td>
+                <td> (StrOpt) Physical ethernet adapter name for vlan
+                    networking </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+</para>

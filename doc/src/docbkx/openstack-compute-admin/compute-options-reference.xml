@@ -1,0 +1,1808 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="compute-options-reference"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Reference for Configuration Options in nova.conf</title>
+    <para>For a complete list of all available configuration options
+        for each OpenStack Compute service, run
+        bin/nova-&lt;servicename> --help. </para>
+    <table rules="all" xml:id="common-nova-conf">
+        <caption>Description of common nova.conf configuration options
+            for the Compute API, RabbitMQ, EC2 API, S3 API, instance
+            types</caption>
+        <col width="30%"/>
+        <col width="70%"/>
+        <thead>
+            <tr>
+                <td>Configuration option=Default value</td>
+                <td>(Type) Description</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td> allow_resize_to_same_host=false </td>
+                <td> (BoolOpt) Allow destination machine to match
+                    source for resize. Useful when testing in
+                    single-host environments. </td>
+            </tr>
+            <tr>
+                <td> api_paste_config="api-paste.ini" </td>
+                <td> (StrOpt) File name for the paste.deploy config
+                    for nova-api </td>
+            </tr>
+            <tr>
+                <td> api_rate_limit=true </td>
+                <td> (BoolOpt) whether to rate limit the Compute API
+                </td>
+            </tr>
+            <tr>
+                <td> aws_access_key_id="admin" </td>
+                <td> (StrOpt) AWS Access ID </td>
+            </tr>
+            <tr>
+                <td> aws_secret_access_key="admin" </td>
+                <td> (StrOpt) AWS Access Key </td>
+            </tr>
+            <tr>
+                <td> bandwith_poll_interval=600 </td>
+                <td> (IntOpt) interval to pull bandwidth usage info
+                </td>
+            </tr>
+            <tr>
+                <td> bindir="$pybasedir/bin" </td>
+                <td> (StrOpt) Directory where nova binaries are
+                    installed </td>
+            </tr>
+            <tr>
+                <td> cache_images=true </td>
+                <td> (BoolOpt) Cache glance images locally </td>
+            </tr>
+            <tr>
+                <td> cert_manager="nova.cert.manager.CertManager" </td>
+                <td> (StrOpt) full class name for the Manager for cert
+                </td>
+            </tr>
+            <tr>
+                <td> cert_topic="cert" </td>
+                <td> (StrOpt) the topic cert nodes listen on </td>
+            </tr>
+            <tr>
+                <td> compute_api_class="nova.compute.api.API" </td>
+                <td> (StrOpt) The full class name of the Compute API
+                    class to use </td>
+            </tr>
+            <tr>
+                <td>
+                    compute_manager="nova.compute.manager.ComputeManager" </td>
+                <td> (StrOpt) full class name for the Manager for
+                    compute </td>
+            </tr>
+            <tr>
+                <td> compute_topic="compute" </td>
+                <td> (StrOpt) the topic compute nodes listen on </td>
+            </tr>
+            <tr>
+                <td>config_file=/etc/nova/nova.conf </td>
+                <td> (MultiStrOpt) Path to a config file to use.
+                    Multiple config files can be specified, with
+                    values in later files taking precedence. The
+                    default files used are: [] </td>
+            </tr>
+            <tr>
+                <td>connection_type=&lt;None&gt; </td>
+                <td> (StrOpt) Virtualization API connection type :
+                    libvirt, xenapi, or fake </td>
+            </tr>
+            <tr>
+                <td>
+                    console_manager="nova.console.manager.ConsoleProxyManager" </td>
+                <td> (StrOpt) full class name for the Manager for
+                    console proxy </td>
+            </tr>
+            <tr>
+                <td> console_topic="console" </td>
+                <td> (StrOpt) the topic console proxy nodes listen on
+                </td>
+            </tr>
+            <tr>
+                <td> control_exchange="nova" </td>
+                <td> (StrOpt) the main RabbitMQ exchange to connect to
+                </td>
+            </tr>
+            <tr>
+                <td> debug=false </td>
+                <td> (BoolOpt) Print debugging output </td>
+            </tr>
+            <tr>
+                <td>default_access_ip_network_name=&lt;None&gt; </td>
+                <td> (StrOpt) Name of network to use to set access ips
+                    for instances </td>
+            </tr>
+            <tr>
+                <td>default_ephemeral_format=&lt;None&gt; </td>
+                <td> (StrOpt) The default format a ephemeral_volume
+                    will be formatted with on creation. </td>
+            </tr>
+            <tr>
+                <td> default_image="ami-11111" </td>
+                <td> (StrOpt) default image to use, testing only </td>
+            </tr>
+            <tr>
+                <td> default_instance_type="m1.small" </td>
+                <td> (StrOpt) default instance type to use, testing
+                    only </td>
+            </tr>
+            <tr>
+                <td> default_project="openstack" </td>
+                <td> (StrOpt) the default project to use for OpenStack
+                </td>
+            </tr>
+            <tr>
+                <td>default_schedule_zone=&lt;None&gt; </td>
+                <td> (StrOpt) availability zone to use when user
+                    doesn't specify one </td>
+            </tr>
+            <tr>
+                <td> disable_process_locking=false </td>
+                <td> (BoolOpt) Whether to disable inter-process locks
+                </td>
+            </tr>
+            <tr>
+                <td> ec2_dmz_host="$my_ip" </td>
+                <td> (StrOpt) the internal IP address of the EC2 API
+                    server </td>
+            </tr>
+            <tr>
+                <td> ec2_host="$my_ip" </td>
+                <td> (StrOpt) the IP of the ec2 api server </td>
+            </tr>
+            <tr>
+                <td> ec2_path="/services/Cloud" </td>
+                <td> (StrOpt) the path prefix used to call the EC2 API
+                    server </td>
+            </tr>
+            <tr>
+                <td> ec2_port=8773 </td>
+                <td> (IntOpt) the port of the EC2 API server </td>
+            </tr>
+            <tr>
+                <td> ec2_scheme="http" </td>
+                <td> (StrOpt) the protocol to use when connecting to
+                    the EC2 API server (http, https) </td>
+            </tr>
+            <tr>
+                <td> enable_instance_password=true </td>
+                <td> (BoolOpt) Allows use of instance password during
+                    server creation </td>
+            </tr>
+            <tr>
+                <td>
+                    enabled_apis="ec2,osapi_compute,osapi_volume,metadata" </td>
+                <td> (ListOpt) a list of APIs to enable by default
+                </td>
+            </tr>
+            <tr>
+                <td> fake_network=false </td>
+                <td> (BoolOpt) If passed, use fake network devices and
+                    addresses </td>
+            </tr>
+            <tr>
+                <td> fake_rabbit=false </td>
+                <td> (BoolOpt) If passed, use a fake RabbitMQ provider
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    firewall_driver="nova.virt.firewall.IptablesFirewallDriver" </td>
+                <td> (StrOpt) Firewall driver (defaults to iptables)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    floating_ip_dns_manager="nova.network.dns_driver.DNSDriver" </td>
+                <td> (StrOpt) full class name for the DNS Manager for
+                    floating IPs </td>
+            </tr>
+            <tr>
+                <td> glance_api_servers="$glance_host:$glance_port" </td>
+                <td> (ListOpt) A list of the glance API servers
+                    available to nova ([hostname|ip]:port) </td>
+            </tr>
+            <tr>
+                <td> glance_host="$my_ip" </td>
+                <td> (StrOpt) default glance hostname or IP </td>
+            </tr>
+            <tr>
+                <td> glance_num_retries=0 </td>
+                <td> (IntOpt) Number retries when downloading an image
+                    from glance </td>
+            </tr>
+            <tr>
+                <td> glance_port=9292 </td>
+                <td> (IntOpt) default glance port </td>
+            </tr>
+            <tr>
+                <td> host="MGG2WEDRJM" </td>
+                <td> (StrOpt) Name of this node. This can be an opaque
+                    identifier. It is not necessarily a hostname,
+                    FQDN, or IP address. </td>
+            </tr>
+            <tr>
+                <td>
+                    image_service="nova.image.glance.GlanceImageService" </td>
+                <td> (StrOpt) The service to use for retrieving and
+                    searching images. </td>
+            </tr>
+            <tr>
+                <td> instance_dns_domain="" </td>
+                <td> (StrOpt) full class name for the DNS Zone for
+                    instance IPs </td>
+            </tr>
+            <tr>
+                <td>
+                    instance_dns_manager="nova.network.dns_driver.DNSDriver" </td>
+                <td> (StrOpt) full class name for the DNS Manager for
+                    instance IPs </td>
+            </tr>
+            <tr>
+                <td> instance_usage_audit_period="month" </td>
+                <td> (StrOpt) time period to generate instance usages
+                    for. Time period must be hour, day, month or year
+                </td>
+            </tr>
+            <tr>
+                <td> isolated_hosts="" </td>
+                <td> (ListOpt) Host reserved for specific images </td>
+            </tr>
+            <tr>
+                <td> isolated_images="" </td>
+                <td> (ListOpt) Images to run on isolated host </td>
+            </tr>
+            <tr>
+                <td> lock_path="$pybasedir" </td>
+                <td> (StrOpt) Directory to use for lock files </td>
+            </tr>
+            <tr>
+                <td>log-config=&lt;None&gt; </td>
+                <td> (StrOpt) If this option is specified, the logging
+                    configuration file specified is used and overrides
+                    any other logging options specified. Please see
+                    the Python logging module documentation for
+                    details on logging configuration files. </td>
+            </tr>
+            <tr>
+                <td> log-date-format="%Y-%m-%d %H:%M:%S" </td>
+                <td> (StrOpt) Format string for %(asctime)s in log
+                    records. Default: %default </td>
+            </tr>
+            <tr>
+                <td>log-dir=&lt;None&gt; </td>
+                <td> (StrOpt) (Optional) The directory to keep log
+                    files in (will be prepended to --logfile) </td>
+            </tr>
+            <tr>
+                <td>log-file=&lt;None&gt; </td>
+                <td> (StrOpt) (Optional) Name of log file to output
+                    to. If not set, logging will go to stdout. </td>
+            </tr>
+            <tr>
+                <td> log-format="%(asctime)s %(levelname)8s [%(name)s]
+                    %(message)s" </td>
+                <td> (StrOpt) A logging.Formatter log message format
+                    string which may use any of the available
+                    logging.LogRecord attributes. Default: %default
+                </td>
+            </tr>
+            <tr>
+                <td>logdir=&lt;None&gt; </td>
+                <td> (StrOpt) Log output to a per-service log file in
+                    named directory </td>
+            </tr>
+            <tr>
+                <td>logfile=&lt;None&gt; </td>
+                <td> (StrOpt) Log output to a named file </td>
+            </tr>
+            <tr>
+                <td> logfile_mode="0644" </td>
+                <td> (StrOpt) Default file mode used when creating log
+                    files </td>
+            </tr>
+            <tr>
+                <td>memcached_servers=&lt;None&gt; </td>
+                <td> (ListOpt) Memcached servers or None for in
+                    process cache. </td>
+            </tr>
+            <tr>
+                <td> metadata_host="$my_ip" </td>
+                <td> (StrOpt) the IP for the metadata API server </td>
+            </tr>
+            <tr>
+                <td> metadata_port=8775 </td>
+                <td> (IntOpt) the port for the metadata API port </td>
+            </tr>
+            <tr>
+                <td> monkey_patch=false </td>
+                <td> (BoolOpt) Whether to log monkey patching </td>
+            </tr>
+            <tr>
+                <td>
+                    monkey_patch_modules="nova.api.ec2.cloud:nova.notifier.api.notify_decorator,nova.compute.api:nova.notifier.api.notify_decorator" </td>
+                <td> (ListOpt) List of modules/decorators to monkey
+                    patch </td>
+            </tr>
+            <tr>
+                <td> my_ip="192.168.1.82" </td>
+                <td> (StrOpt) IP address of this host </td>
+            </tr>
+            <tr>
+                <td> network_api_class="nova.network.api.API" </td>
+                <td> (StrOpt) The full class name of the network API
+                    class to use </td>
+            </tr>
+            <tr>
+                <td> network_driver="nova.network.linux_net" </td>
+                <td> (StrOpt) Driver to use for network creation </td>
+            </tr>
+            <tr>
+                <td>
+                    network_manager="nova.network.manager.VlanManager" </td>
+                <td> (StrOpt) full class name for the Manager for
+                    network </td>
+            </tr>
+            <tr>
+                <td> network_topic="network" </td>
+                <td> (StrOpt) the topic network nodes listen on </td>
+            </tr>
+            <tr>
+                <td> node_availability_zone="nova" </td>
+                <td> (StrOpt) availability zone of this node </td>
+            </tr>
+            <tr>
+                <td>
+                    notification_driver="nova.notifier.no_op_notifier" </td>
+                <td> (StrOpt) Default driver for sending notifications
+                </td>
+            </tr>
+            <tr>
+                <td> null_kernel="nokernel" </td>
+                <td> (StrOpt) kernel image that indicates not to use a
+                    kernel, but to use a raw disk image instead </td>
+            </tr>
+            <tr>
+                <td> osapi_compute_ext_list="" </td>
+                <td> (ListOpt) Specify list of extensions to load when
+                    using osapi_compute_extension option with
+                    nova.api.openstack.compute.contrib.select_extensions
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    osapi_compute_extension="nova.api.openstack.compute.contrib.standard_extensions" </td>
+                <td> (MultiStrOpt) Compute API extensions to load
+                </td>
+            </tr>
+            <tr>
+                <td>osapi_compute_link_prefix=&lt;None&gt; </td>
+                <td> (StrOpt) Base URL that will be presented to users
+                    in links to the OpenStack Compute API </td>
+            </tr>
+            <tr>
+                <td>osapi_glance_link_prefix=&lt;None&gt; </td>
+                <td> (StrOpt) Base URL that will be presented to users
+                    in links to glance resources </td>
+            </tr>
+            <tr>
+                <td> osapi_max_limit=1000 </td>
+                <td> (IntOpt) the maximum number of items returned in
+                    a single response from a collection resource </td>
+            </tr>
+            <tr>
+                <td> osapi_path="/v1.1/" </td>
+                <td> (StrOpt) the path prefix used to call the
+                    OpenStack Compute API server </td>
+            </tr>
+            <tr>
+                <td> osapi_scheme="http" </td>
+                <td> (StrOpt) the protocol to use when connecting to
+                    the OpenStack Compute API server (http, https)
+                </td>
+            </tr>
+            <tr>
+                <td> osapi_volume_ext_list="" </td>
+                <td> (ListOpt) Specify list of extensions to load when
+                    using osapi_volume_extension option with
+                    nova.api.openstack.volume.contrib.select_extensions
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    osapi_volume_extension="nova.api.openstack.volume.contrib.standard_extensions" </td>
+                <td> (MultiStrOpt) osapi volume extension to load
+                </td>
+            </tr>
+            <tr>
+                <td> password_length=12 </td>
+                <td> (IntOpt) Length of generated instance admin
+                    passwords </td>
+            </tr>
+            <tr>
+                <td> pybasedir="/usr/lib/python/site-packages" </td>
+                <td> (StrOpt) Directory where the nova python module
+                    is installed </td>
+            </tr>
+            <tr>
+                <td> rabbit_durable_queues=false </td>
+                <td> (BoolOpt) use durable queues in RabbitMQ </td>
+            </tr>
+            <tr>
+                <td> rabbit_host="localhost" </td>
+                <td> (StrOpt) the RabbitMQ host </td>
+            </tr>
+            <tr>
+                <td> rabbit_max_retries=0 </td>
+                <td> (IntOpt) maximum retries with trying to connect
+                    to RabbitMQ (the default of 0 implies an infinite
+                    retry count) </td>
+            </tr>
+            <tr>
+                <td> rabbit_password="guest" </td>
+                <td> (StrOpt) the RabbitMQ password </td>
+            </tr>
+            <tr>
+                <td> rabbit_port=5672 </td>
+                <td> (IntOpt) the RabbitMQ port </td>
+            </tr>
+            <tr>
+                <td> rabbit_retry_backoff=2 </td>
+                <td> (IntOpt) how long to backoff for between retries
+                    when connecting to RabbitMQ </td>
+            </tr>
+            <tr>
+                <td> rabbit_retry_interval=1 </td>
+                <td> (IntOpt) how frequently to retry connecting with
+                    RabbitMQ </td>
+            </tr>
+            <tr>
+                <td> rabbit_use_ssl=false </td>
+                <td> (BoolOpt) connect over SSL for RabbitMQ </td>
+            </tr>
+            <tr>
+                <td> rabbit_userid="guest" </td>
+                <td> (StrOpt) the RabbitMQ userid </td>
+            </tr>
+            <tr>
+                <td> rabbit_virtual_host="/" </td>
+                <td> (StrOpt) the RabbitMQ virtual host </td>
+            </tr>
+            <tr>
+                <td> reclaim_instance_interval=0 </td>
+                <td> (IntOpt) Interval in seconds for reclaiming
+                    deleted instances </td>
+            </tr>
+            <tr>
+                <td> region_list="" </td>
+                <td> (ListOpt) list of region=fqdn pairs separated by
+                    commas </td>
+            </tr>
+            <tr>
+                <td> resume_guests_state_on_host_boot=false </td>
+                <td> (BoolOpt) Whether to start guests that were
+                    running before the host rebooted </td>
+            </tr>
+            <tr>
+                <td> root_helper="sudo" </td>
+                <td> (StrOpt) Command prefix to use for running
+                    commands as root </td>
+            </tr>
+            <tr>
+                <td> s3_dmz="$my_ip" </td>
+                <td> (StrOpt) hostname or IP for the instances to use
+                    when accessing the S3 API </td>
+            </tr>
+            <tr>
+                <td> s3_host="$my_ip" </td>
+                <td> (StrOpt) hostname or IP for OpenStack to use when
+                    accessing the S3 API </td>
+            </tr>
+            <tr>
+                <td> s3_port=3333 </td>
+                <td> (IntOpt) port used when accessing the S3 API
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    scheduler_manager="nova.scheduler.manager.SchedulerManager" </td>
+                <td> (StrOpt) full class name for the Manager for
+                    scheduler </td>
+            </tr>
+            <tr>
+                <td> scheduler_topic="scheduler" </td>
+                <td> (StrOpt) the topic scheduler nodes listen on
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    security_group_handler="nova.network.quantum.sg.NullSecurityGroupHandler" </td>
+                <td> (StrOpt) The full class name of the security
+                    group handler class </td>
+            </tr>
+            <tr>
+                <td> service_down_time=60 </td>
+                <td> (IntOpt) maximum time since last check-in for up
+                    service </td>
+            </tr>
+            
+            <tr>
+                <td> start_guests_on_host_boot=false </td>
+                <td> (BoolOpt) Whether to restart guests when the host
+                    reboots </td>
+            </tr>
+            <tr>
+                <td> state_path="$pybasedir" </td>
+                <td> (StrOpt) Top-level directory for maintaining
+                    nova's state </td>
+            </tr>
+            <tr>
+                <td> stub_network="False" </td>
+                <td> (StrOpt) Stub network related code </td>
+            </tr>
+            <tr>
+                <td> syslog-log-facility="LOG_USER" </td>
+                <td> (StrOpt) syslog facility to receive log lines
+                </td>
+            </tr>
+            <tr>
+                <td> use_cow_images=true </td>
+                <td> (BoolOpt) Whether to use cow images </td>
+            </tr>
+            
+            <tr>
+                <td> use_stderr=true </td>
+                <td> (BoolOpt) Log output to standard error </td>
+            </tr>
+            <tr>
+                <td> use-syslog=false </td>
+                <td> (BoolOpt) Use syslog for logging. </td>
+            </tr>
+            <tr>
+                <td> verbose=false </td>
+                <td> (BoolOpt) Print more verbose output </td>
+            </tr>
+            <tr>
+                <td> volume_api_class="nova.volume.api.API" </td>
+                <td> (StrOpt) The full class name of the volume API
+                    class to use </td>
+            </tr>
+            <tr>
+                <td>
+                    volume_manager="nova.volume.manager.VolumeManager" </td>
+                <td> (StrOpt) full class name for the Manager for
+                    volume </td>
+            </tr>
+            <tr>
+                <td> volume_topic="volume" </td>
+                <td> (StrOpt) the topic volume nodes listen on </td>
+            </tr>
+            <tr>
+                <td> vpn_image_id="0" </td>
+                <td> (StrOpt) image id used when starting up a
+                    cloudpipe vpn server </td>
+            </tr>
+            <tr>
+                <td> vpn_key_suffix="-vpn" </td>
+                <td> (StrOpt) Suffix to add to project name for vpn
+                    key and secgroups </td>
+            </tr>
+            <tr>
+                <td> zombie_instance_updated_at_window=172800 </td>
+                <td> (IntOpt) Number of seconds zombie instances are
+                    cleaned up. </td>
+            </tr>
+
+        </tbody>
+    </table>
+    
+    <xi:include href="tables/database-nova-conf.xml"/>
+    <xi:include href="tables/ipv6-nova-conf.xml"/>
+    <xi:include href="tables/auth-nova-conf.xml"/>
+    <xi:include href="tables/log-file-nova-conf.xml"/>
+    
+    <table rules="all">
+        <caption>Description of nova.conf file configuration options
+            for nova- services </caption>
+        <col width="30%"/>
+        <col width="70%"/>
+        <thead>
+            <tr>
+                <td>Configuration option=Default value</td>
+                <td>(Type) Description</td>
+            </tr>
+        </thead>
+
+        <tbody>
+            
+            <tr>
+                <td> ec2_listen="0.0.0.0" </td>
+                <td> (StrOpt) IP address for EC2 API to listen </td>
+            </tr>
+            <tr>
+                <td> ec2_listen_port=8773 </td>
+                <td> (IntOpt) port for ec2 api to listen </td>
+            </tr>
+            <tr>
+                <td> enable_new_services=true </td>
+                <td> (BoolOpt) Services to be added to the available
+                    pool on create </td>
+            </tr>
+            <tr>
+                <td> instance_name_template="instance-%08x" </td>
+                <td> (StrOpt) Template string to be used to generate
+                    instance names </td>
+            </tr>
+            <tr>
+                <td> metadata_listen="0.0.0.0" </td>
+                <td> (StrOpt) IP address for metadata api to listen
+                </td>
+            </tr>
+            <tr>
+                <td> metadata_listen_port=8775 </td>
+                <td> (IntOpt) port for metadata api to listen </td>
+            </tr>
+            <tr>
+                <td>
+                    metadata_manager="nova.api.manager.MetadataManager" </td>
+                <td> (StrOpt) OpenStack metadata service manager </td>
+            </tr>
+            <tr>
+                <td> osapi_compute_listen="0.0.0.0" </td>
+                <td> (StrOpt) IP address for OpenStack API to listen
+                </td>
+            </tr>
+            <tr>
+                <td> osapi_compute_listen_port=8774 </td>
+                <td> (IntOpt) list port for osapi compute </td>
+            </tr>
+            <tr>
+                <td> osapi_volume_listen="0.0.0.0" </td>
+                <td> (StrOpt) IP address for OpenStack Volume API to
+                    listen </td>
+            </tr>
+            <tr>
+                <td> osapi_volume_listen_port=8776 </td>
+                <td> (IntOpt) port for os volume api to listen </td>
+            </tr>
+            <tr>
+                <td> periodic_fuzzy_delay=60 </td>
+                <td> (IntOpt) range of seconds to randomly delay when
+                    starting the periodic task scheduler to reduce
+                    stampeding. (Disable by setting to 0) </td>
+            </tr>
+            <tr>
+                <td> periodic_interval=60 </td>
+                <td> (IntOpt) seconds between running periodic tasks
+                </td>
+            </tr>
+            <tr>
+                <td> report_interval=10 </td>
+                <td> (IntOpt) seconds between nodes reporting state to
+                    datastore </td>
+            </tr>
+            <tr>
+                <td> rpc_backend="nova.rpc.impl_kombu" </td>
+                <td> (StrOpt) The messaging module to use, defaults to
+                    kombu. </td>
+            </tr>
+            <tr>
+                <td> snapshot_name_template="snapshot-%08x" </td>
+                <td> (StrOpt) Template string to be used to generate
+                    snapshot names </td>
+            </tr>
+            <tr>
+                <td> volume_name_template="volume-%08x" </td>
+                <td> (StrOpt) Template string to be used to generate
+                    instance names </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <xi:include href="tables/ca-nova-conf.xml"/>
+    <table rules="all">
+        <caption>Description of nova.conf file configuration options
+            for policies (policy.json) </caption>
+        <col width="30%"/>
+        <col width="70%"/>
+        <thead>
+            <tr>
+                <td>Configuration option=Default value</td>
+                <td>(Type) Description</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td> policy_default_rule="default" </td>
+                <td> (StrOpt) Rule checked when requested rule is not
+                    found </td>
+            </tr>
+            <tr>
+                <td> policy_file="policy.json" </td>
+                <td> (StrOpt) JSON file representing policy </td>
+            </tr>
+            <tr>
+                <td> allow_instance_snapshots=true </td>
+                <td> (BoolOpt) Permit instance snapshot operations.
+                </td>
+            </tr>
+            <tr>
+                <td> osapi_max_request_body_size=114688 </td>
+                <td> (BoolOpt) </td>
+            </tr>
+        </tbody>
+    </table>
+    <table rules="all">
+        <caption>Description of nova.conf file configuration options
+            for quotas </caption>
+        <col width="30%"/>
+        <col width="70%"/>
+        <thead>
+            <tr>
+                <td>Configuration option=Default value</td>
+                <td>(Type) Description</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td> quota_cores=20 </td>
+                <td> (IntOpt) number of instance cores allowed per
+                    project (tenant) </td>
+            </tr>
+            <tr>
+                <td> quota_floating_ips=10 </td>
+                <td> (IntOpt) number of floating ips allowed per
+                    project (tenant) </td>
+            </tr>
+            <tr>
+                <td> quota_gigabytes=1000 </td>
+                <td> (IntOpt) number of volume gigabytes allowed per
+                    project (tenant) </td>
+            </tr>
+            <tr>
+                <td> quota_injected_file_content_bytes=10240 </td>
+                <td> (IntOpt) number of bytes allowed per injected
+                    file </td>
+            </tr>
+            <tr>
+                <td> quota_injected_file_path_bytes=255 </td>
+                <td> (IntOpt) number of bytes allowed per injected
+                    file path </td>
+            </tr>
+            <tr>
+                <td> quota_injected_files=5 </td>
+                <td> (IntOpt) number of injected files allowed </td>
+            </tr>
+            <tr>
+                <td> quota_instances=10 </td>
+                <td> (IntOpt) number of instances allowed per project
+                    (tenant) </td>
+            </tr>
+            <tr>
+                <td> quota_metadata_items=128 </td>
+                <td> (IntOpt) number of metadata items allowed per
+                    instance </td>
+            </tr>
+            <tr>
+                <td> quota_ram=51200 </td>
+                <td> (IntOpt) megabytes of instance ram allowed per
+                    project (tenant) </td>
+            </tr>
+            <tr>
+                <td> quota_security_group_rules=20 </td>
+                <td> (IntOpt) number of security rules per security
+                    group </td>
+            </tr>
+            <tr>
+                <td> quota_security_groups=10 </td>
+                <td> (IntOpt) number of security groups per project
+                    (tenant) </td>
+            </tr>
+            <tr>
+                <td> quota_volumes=10 </td>
+                <td> (IntOpt) number of volumes allowed per project
+                    (tenant) </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table rules="all">
+        <caption>Description of nova.conf file configuration options
+            for testing purposes </caption>
+        <col width="30%"/>
+        <col width="70%"/>
+        <thead>
+            <tr>
+                <td>Configuration option=Default value</td>
+                <td>(Type) Description</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td> allowed_rpc_exception_modules=['nova.exception'] </td>
+                <td> (IntOpt) Modules of exceptions that are permitted
+                    to be recreated upon receiving exception data from
+                    an rpc call </td>
+            </tr>
+            <tr>
+                <td> consoleauth_topic="consoleauth" </td>
+                <td> (StrOpt) the topic console auth proxy nodes
+                    listen on </td>
+            </tr>
+            
+            <tr>
+                <td> fake_tests=true </td>
+                <td> (BoolOpt) should we use everything for testing
+                </td>
+            </tr>
+            <tr>
+                <td> find_host_timeout="30" </td>
+                <td> (StrOpt) Timeout after NN seconds when looking
+                    for a host </td>
+            </tr>
+            <tr>
+                <td> rpc_conn_pool_size=30 </td>
+                <td> (IntOpt) Size of RPC connection pool </td>
+            </tr>
+            <tr>
+                <td> rpc_response_timeout=60 </td>
+                <td> (IntOpt) Seconds to wait for a response from call
+                    or multicall </td>
+            </tr>
+            <tr>
+                <td> rpc_thread_pool_size=1024 </td>
+                <td> (IntOpt) Size of RPC thread pool </td>
+            </tr>
+            
+            <tr>
+                <td> storage_availability_zone="nova" </td>
+                <td> (StrOpt) availability zone of this service </td>
+            </tr>
+            <tr>
+                <td> use_local_volumes=true </td>
+                <td> (BoolOpt) if True, will not discover local
+                    volumes </td>
+            </tr>
+            <tr>
+                <td> volume_driver="nova.volume.driver.ISCSIDriver" </td>
+                <td> (StrOpt) Driver to use for volume creation </td>
+            </tr>
+            <tr>
+                <td> volume_force_update_capabilities=false </td>
+                <td> (BoolOpt) if True will force update capabilities
+                    on each check </td>
+            </tr>
+        </tbody>
+    </table>
+    <xi:include href="tables/ldap-nova-conf.xml"/>
+    <table rules="all">
+        <caption>Description of nova.conf file configuration options
+            for authentication </caption>
+        <col width="30%"/>
+        <col width="70%"/>
+        <thead>
+            <tr>
+                <td>Configuration option=Default value</td>
+                <td>(Type) Description</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    allowed_roles="cloudadmin,itsec,sysadmin,netadmin,developer" </td>
+                <td> (ListOpt) Allowed roles for project (tenant)</td>
+            </tr>
+            <tr>
+                <td> auth_driver="nova.auth.dbdriver.DbDriver" </td>
+                <td> (StrOpt) Driver that auth manager uses </td>
+            </tr>
+            <tr>
+                <td> credential_cert_file="cert.pem" </td>
+                <td> (StrOpt) Filename of certificate in credentials
+                    zip </td>
+            </tr>
+            <tr>
+                <td> credential_key_file="pk.pem" </td>
+                <td> (StrOpt) Filename of private key in credentials
+                    zip </td>
+            </tr>
+            <tr>
+                <td> credential_rc_file="%src" </td>
+                <td> (StrOpt) Filename of rc in credentials zip %s
+                    will be replaced by name of the region (nova by
+                    default) </td>
+            </tr>
+            <tr>
+                <td> credential_vpn_file="nova-vpn.conf" </td>
+                <td> (StrOpt) Filename of certificate in credentials
+                    zip </td>
+            </tr>
+            <tr>
+                <td>
+                    credentials_template="$pybasedir/nova/auth/novarc.template" </td>
+                <td> (StrOpt) Template for creating users rc file
+                </td>
+            </tr>
+            <tr>
+                <td> global_roles="cloudadmin,itsec" </td>
+                <td> (ListOpt) Roles that apply to all projects
+                    (tenants) </td>
+            </tr>
+            <tr>
+                <td> superuser_roles="cloudadmin" </td>
+                <td> (ListOpt) Roles that ignore authorization
+                    checking completely </td>
+            </tr>
+            <tr>
+                <td>
+                    vpn_client_template="$pybasedir/nova/cloudpipe/client.ovpn.template" </td>
+                <td> (StrOpt) Template for creating users vpn file
+                </td>
+            </tr>
+            <tr>
+                <td> use_forwarded_for=false </td>
+                <td> (BoolOpt) Treat X-Forwarded-For as the canonical
+                    remote address. Only enable this if you have a
+                    sanitizing proxy. </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table rules="all">
+        <caption>Description of nova.conf file configuration options
+            for EC2 API </caption>
+        <col width="30%"/>
+        <col width="70%"/>
+        <thead>
+            <tr>
+                <td>Configuration option=Default value</td>
+                <td>(Type) Description</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td> ec2_private_dns_show_ip=false </td>
+                <td> (BoolOpt) Return the IP address as private dns
+                    hostname in describe instances </td>
+            </tr>
+            <tr>
+                <td>
+                    keystone_ec2_url="http://localhost:5000/v2.0/ec2tokens" </td>
+                <td> (StrOpt) URL to get token from ec2 request </td>
+            </tr>
+            <tr>
+                <td> lockout_attempts=5 </td>
+                <td> (IntOpt) Number of failed auths before lockout.
+                </td>
+            </tr>
+            <tr>
+                <td> lockout_minutes=15 </td>
+                <td> (IntOpt) Number of minutes to lockout if
+                    triggered. </td>
+            </tr>
+            <tr>
+                <td> lockout_window=15 </td>
+                <td> (IntOpt) Number of minutes for lockout window.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table rules="all">
+        <caption>Description of nova.conf file configuration options
+            for VNC access to guest instances</caption>
+        <col width="30%"/>
+        <col width="70%"/>
+        <thead>
+            <tr>
+                <td>Configuration option=Default value</td>
+                <td>(Type) Description</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    novncproxy_base_url="http://127.0.0.1:6080/vnc_auto.html" </td>
+                <td> (StrOpt) location of vnc console proxy, in the
+                    form "http://127.0.0.1:6080/vnc_auto.html" </td>
+            </tr>
+            <tr>
+                <td> vnc_enabled=true </td>
+                <td> (BoolOpt) enable vnc related features </td>
+            </tr>
+            <tr>
+                <td> vnc_keymap="en-us" </td>
+                <td> (StrOpt) keymap for vnc </td>
+            </tr>
+            <tr>
+                <td> vncserver_listen="127.0.0.1" </td>
+                <td> (StrOpt) Ip address on which instance
+                    vncserversshould listen </td>
+            </tr>
+            <tr>
+                <td> vncserver_proxyclient_address="127.0.0.1" </td>
+                <td> (StrOpt) the address to which proxy clients (like
+                    nova-xvpvncproxy) should connect </td>
+            </tr>
+            <tr>
+                <td>
+                    xvpvncproxy_base_url="http://127.0.0.1:6081/console" </td>
+                <td> (StrOpt) location of nova xvp vnc console proxy,
+                    in the form "http://127.0.0.1:6081/console" </td>
+            </tr>
+            <tr>
+                <td> xvpvncproxy_host="0.0.0.0" </td>
+                <td> (StrOpt) Address that the XCP VNC proxy should
+                    bind to </td>
+            </tr>
+            <tr>
+                <td> xvpvncproxy_port=6081 </td>
+                <td> (IntOpt) Port that the XCP VNC proxy should bind
+                    to </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table rules="all">
+        <caption>Description of nova.conf file configuration options
+            for networking options</caption>
+        <col width="30%"/>
+        <col width="70%"/>
+        <thead>
+            <tr>
+                <td>Configuration option=Default value</td>
+                <td>(Type) Description</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td> allow_same_net_traffic=true </td>
+                <td> (BoolOpt) Whether to allow network traffic from
+                    same network </td>
+            </tr>
+            <tr>
+                <td> dhcp_lease_time=120 </td>
+                <td> (IntOpt) Lifetime of a DHCP lease in seconds
+                </td>
+            </tr>
+            <tr>
+                <td> dhcpbridge="$bindir/nova-dhcpbridge" </td>
+                <td> (StrOpt) location of nova-dhcpbridge </td>
+            </tr>
+            <tr>
+                <td>
+                    dhcpbridge_flagfile="/etc/nova/nova-dhcpbridge.conf" </td>
+                <td> (StrOpt) location of flagfile for dhcpbridge
+                </td>
+            </tr>
+            <tr>
+                <td> dmz_cidr="10.128.0.0/24" </td>
+                <td> (StrOpt) dmz range that should be accepted </td>
+            </tr>
+            <tr>
+                <td>dns_server=&lt;None&gt; </td>
+                <td> (StrOpt) if set, uses specific dns server for
+                    dnsmasq </td>
+            </tr>
+            <tr>
+                <td> dnsmasq_config_file="" </td>
+                <td> (StrOpt) Override the default dnsmasq settings
+                    with this file </td>
+            </tr>
+            <tr>
+                <td>
+                    linuxnet_interface_driver="nova.network.linux_net.LinuxBridgeInterfaceDriver" </td>
+                <td> (StrOpt) Driver used to create ethernet devices.
+                </td>
+            </tr>
+            <tr>
+                <td> linuxnet_ovs_integration_bridge="br-int" </td>
+                <td> (StrOpt) Name of Open vSwitch bridge used with
+                    linuxnet </td>
+            </tr>
+            
+            <tr>
+                <td>network_device_mtu=&lt;None&gt; </td>
+                <td> (StrOpt) MTU setting for vlan </td>
+            </tr>
+            <tr>
+                <td> networks_path="$state_path/networks" </td>
+                <td> (StrOpt) Location to keep network config files
+                </td>
+            </tr>
+            <tr>
+                <td> public_interface="eth0" </td>
+                <td> (StrOpt) Interface for public IP addresses </td>
+            </tr>
+            <tr>
+                <td> routing_source_ip="$my_ip" </td>
+                <td> (StrOpt) Public IP of network host </td>
+            </tr>
+            <tr>
+                <td> send_arp_for_ha=false </td>
+                <td> (BoolOpt) send gratuitous ARPs for HA setup </td>
+            </tr>
+            <tr>
+                <td> use_single_default_gateway=false </td>
+                <td> (BoolOpt) Use single default gateway. Only first
+                    nic of vm will get default gateway from dhcp
+                    server </td>
+            </tr>
+            <tr>
+                <td> auto_assign_floating_ip=false </td>
+                <td> (BoolOpt) Autoassigning floating IP to VM </td>
+            </tr>
+            <tr>
+                <td> cnt_vpn_clients=0 </td>
+                <td> (IntOpt) Number of addresses reserved for vpn
+                    clients </td>
+            </tr>
+            <tr>
+                <td> create_unique_mac_address_attempts=5 </td>
+                <td> (IntOpt) Number of attempts to create unique mac
+                    address </td>
+            </tr>
+            <tr>
+                <td> default_floating_pool="nova" </td>
+                <td> (StrOpt) Default pool for floating ips </td>
+            </tr>
+            <tr>
+                <td> dhcp_domain="novalocal" </td>
+                <td> (StrOpt) domain to use for building the hostnames
+                </td>
+            </tr>
+            <tr>
+                <td> fake_call=false </td>
+                <td> (BoolOpt) If True, skip using the queue and make
+                    local calls </td>
+            </tr>
+            <tr>
+                <td> fixed_ip_disassociate_timeout=600 </td>
+                <td> (IntOpt) Seconds after which a deallocated IP is
+                    disassociated </td>
+            </tr>
+            <tr>
+                <td> fixed_range="10.0.0.0/8" </td>
+                <td> (StrOpt) Fixed IP address block </td>
+            </tr>
+            
+            <tr>
+                <td> flat_injected=false </td>
+                <td> (BoolOpt) Whether to attempt to inject network
+                    setup into guest </td>
+            </tr>
+            <tr>
+                <td>flat_interface=&lt;None&gt; </td>
+                <td> (StrOpt) FlatDhcp will bridge into this interface
+                    if set </td>
+            </tr>
+            <tr>
+                <td>flat_network_bridge=&lt;None&gt; </td>
+                <td> (StrOpt) Bridge for simple network instances
+                </td>
+            </tr>
+            <tr>
+                <td> flat_network_dns="8.8.4.4" </td>
+                <td> (StrOpt) Dns for simple network </td>
+            </tr>
+            <tr>
+                <td> floating_range="4.4.4.0/24" </td>
+                <td> (StrOpt) Floating IP address block </td>
+            </tr>
+            <tr>
+                <td> force_dhcp_release=false </td>
+                <td> (BoolOpt) If True, send a dhcp release on
+                    instance termination </td>
+            </tr>
+            <tr>
+                <td>gateway=&lt;None&gt; </td>
+                <td> (StrOpt) Default IPv4 gateway </td>
+            </tr>
+            
+            <tr>
+                <td> l3_lib="nova.network.l3.LinuxNetL3" </td>
+                <td> (StrOpt) Indicates underlying L3 management
+                    library </td>
+            </tr>
+            <tr>
+                <td> multi_host=false </td>
+                <td> (BoolOpt) Default value for multi_host in
+                    networks </td>
+            </tr>
+            <tr>
+                <td> network_host="MGG2WEDRJM" </td>
+                <td> (StrOpt) Network host to use for IP allocation in
+                    flat modes </td>
+            </tr>
+            <tr>
+                <td> network_size=256 </td>
+                <td> (IntOpt) Number of addresses in each private
+                    subnet </td>
+            </tr>
+            <tr>
+                <td> num_networks=1 </td>
+                <td> (IntOpt) Number of networks to support </td>
+            </tr>
+            <tr>
+                <td>vlan_interface=&lt;None&gt; </td>
+                <td> (StrOpt) VLANs will bridge into this interface if
+                    set </td>
+            </tr>
+            <tr>
+                <td> vlan_start=100 </td>
+                <td> (IntOpt) First VLAN for private networks </td>
+            </tr>
+            <tr>
+                <td> vpn_ip="$my_ip" </td>
+                <td> (StrOpt) Public IP for the cloudpipe VPN servers
+                </td>
+            </tr>
+            <tr>
+                <td> vpn_start=1000 </td>
+                <td> (IntOpt) First VPN port for private networks
+                </td>
+            </tr>
+            <tr>
+                <td>CloudPipe specifics</td>
+                <td/>
+            </tr>
+            <tr>
+                <td>
+                    boot_script_template="$pybasedir/nova/cloudpipe/bootscript.template" </td>
+                <td> (StrOpt) Template for cloudpipe instance boot
+                    script </td>
+            </tr>
+            <tr>
+                <td> dmz_mask="255.255.255.0" </td>
+                <td> (StrOpt) Netmask to push into openvpn config
+                </td>
+            </tr>
+            <tr>
+                <td> dmz_net="10.0.0.0" </td>
+                <td> (StrOpt) Network to push into openvpn config
+                </td>
+            </tr>
+            <tr>
+                <td> vpn_instance_type="m1.tiny" </td>
+                <td> (StrOpt) Instance type for vpn instances </td>
+            </tr>
+        </tbody>
+    </table>
+    <xi:include href="tables/live-migration-nova-conf.xml"/>
+   <table rules="all">
+        <caption>Description of nova.conf file configuration options
+            for compute nodes</caption>
+        <col width="30%"/>
+        <col width="70%"/>
+        <thead>
+            <tr>
+                <td>Configuration option=Default value</td>
+                <td>(Type) Description</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    compute_driver="nova.virt.connection.get_connection" </td>
+                <td> (StrOpt) Driver to use for controlling
+                    virtualization </td>
+            </tr>
+            <tr>
+                <td> console_host="MGG2WEDRJM" </td>
+                <td> (StrOpt) Console proxy host to use to connect to
+                    instances on this host. </td>
+            </tr>
+            <tr>
+                <td> default_notification_level="INFO" </td>
+                <td> (StrOpt) Default notification level for outgoing
+                    notifications </td>
+            </tr>
+            <tr>
+                <td> default_publisher_id="$host" </td>
+                <td> (StrOpt) Default publisher_id for outgoing
+                    notifications </td>
+            </tr>
+            <tr>
+                <td> heal_instance_info_cache_interval=60 </td>
+                <td> (IntOpt) Number of seconds between instance
+                    info_cache self healing updates </td>
+            </tr>
+            <tr>
+                <td> host_state_interval=120 </td>
+                <td> (IntOpt) Interval in seconds for querying the
+                    host status </td>
+            </tr>
+            <tr>
+                <td> image_cache_manager_interval=40 </td>
+                <td> (IntOpt) Number of periodic scheduler ticks to
+                    wait between runs of the image cache manager.
+                </td>
+            </tr>
+            <tr>
+                <td> instances_path="$state_path/instances" </td>
+                <td> (StrOpt) where instances are stored on disk </td>
+            </tr>
+            
+            <tr>
+                <td> reboot_timeout=0 </td>
+                <td> (IntOpt) Automatically hard reboot an instance if
+                    it has been stuck in a rebooting state longer than
+                    N seconds. Set to 0 to disable. </td>
+            </tr>
+            <tr>
+                <td> rescue_timeout=0 </td>
+                <td> (IntOpt) Automatically unrescue an instance after
+                    N seconds. Set to 0 to disable. </td>
+            </tr>
+            <tr>
+                <td> resize_confirm_window=0 </td>
+                <td> (IntOpt) Automatically confirm resizes after N
+                    seconds. Set to 0 to disable. </td>
+            </tr>
+            <tr>
+                <td> running_deleted_instance_action="log" </td>
+                <td> (StrOpt) Action to take if a running deleted
+                    instance is detected.Valid options are 'noop',
+                    'log' and 'reap'. Set to 'noop' to disable. </td>
+            </tr>
+            <tr>
+                <td> running_deleted_instance_poll_interval=30 </td>
+                <td> (IntOpt) Number of periodic scheduler ticks to
+                    wait between runs of the cleanup task. </td>
+            </tr>
+            <tr>
+                <td> running_deleted_instance_timeout=0 </td>
+                <td> (IntOpt) Number of seconds after being deleted
+                    when a running instance should be considered
+                    eligible for cleanup. </td>
+            </tr>
+        </tbody>
+    </table>
+    <table rules="all">
+        <caption>Description of nova.conf file configuration options
+            for bare metal deployment</caption>
+        <col width="30%"/>
+        <col width="70%"/>
+        <thead>
+            <tr>
+                <td>Configuration option=Default value</td>
+                <td>(Type) Description</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td> baremetal_driver="tilera" </td>
+                <td> (StrOpt) Bare-metal driver runs on </td>
+            </tr>
+            <tr>
+                <td>
+                    tile_monitor="/usr/local/TileraMDE/bin/tile-monitor" </td>
+                <td> (StrOpt) Tilera command line program for
+                    Bare-metal driver </td>
+            </tr>
+            <tr>
+                <td> baremetal_type="baremetal" </td>
+                <td> (StrOpt) baremetal domain type </td>
+            </tr>
+            <tr>
+                <td> force_raw_images=true </td>
+                <td> (BoolOpt) Force backing images to raw format
+                </td>
+            </tr>
+            <tr>
+                <td> img_handlers="loop,nbd,guestfs" </td>
+                <td> (ListOpt) Order of methods used to mount disk
+                    images </td>
+            </tr>
+            <tr>
+                <td>
+                    injected_network_template="$pybasedir/nova/virt/interfaces.template" </td>
+                <td> (StrOpt) Template file for injected network </td>
+            </tr>
+            <tr>
+                <td> max_nbd_devices=16 </td>
+                <td> (IntOpt) maximum number of possible nbd devices
+                </td>
+            </tr>
+            <tr>
+                <td> timeout_nbd=10 </td>
+                <td> (IntOpt) time to wait for a NBD device coming up
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <para>virt_mkfs="default=mkfs.ext3 -L %(fs_label)s
+                        -F %(target)s"</para>
+                    <para>virt_mkfs="linux=mkfs.ext3 -L %(fs_label)s
+                        -F %(target)s"</para>
+                    <para>virt_mkfs="windows=mkfs.ntfs --force --fast
+                        --label %(fs_label)s %(target)s"</para>
+                </td>
+                <td> (MultiStrOpt) mkfs commands for ephemeral device.
+                    The format is &lt;os_type&gt;=&lt;mkfs command&gt;
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <xi:include href="tables/hypervisors-nova-conf.xml"/>
+
+    <table rules="all">
+        <caption>Description of nova.conf file configuration options
+            for console access to VMs on VMWare VMRC or
+            XenAPI</caption>
+        <col width="30%"/>
+        <col width="70%"/>
+        <thead>
+            <tr>
+                <td>Configuration option=Default value</td>
+                <td>(Type) Description</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td> console_driver="nova.console.xvp.XVPConsoleProxy" </td>
+                <td> (StrOpt) Driver to use for the console proxy
+                </td>
+            </tr>
+            <tr>
+                <td> console_public_hostname="MGG2WEDRJM" </td>
+                <td> (StrOpt) Publicly visible name for this console
+                    host </td>
+            </tr>
+            <tr>
+                <td> stub_compute=false </td>
+                <td> (BoolOpt) Stub calls to compute worker for tests
+                </td>
+            </tr>
+            <tr>
+                <td> console_vmrc_error_retries=10 </td>
+                <td> (IntOpt) number of retries for retrieving VMRC
+                    information </td>
+            </tr>
+            <tr>
+                <td> console_vmrc_port=443 </td>
+                <td> (IntOpt) port for VMware VMRC connections </td>
+            </tr>
+            <tr>
+                <td> console_xvp_conf="/etc/xvp.conf" </td>
+                <td> (StrOpt) generated XVP conf file </td>
+            </tr>
+            <tr>
+                <td>
+                    console_xvp_conf_template="$pybasedir/nova/console/xvp.conf.template" </td>
+                <td> (StrOpt) XVP conf template </td>
+            </tr>
+            <tr>
+                <td> console_xvp_log="/var/log/xvp.log" </td>
+                <td> (StrOpt) XVP log file </td>
+            </tr>
+            <tr>
+                <td> console_xvp_multiplex_port=5900 </td>
+                <td> (IntOpt) port for XVP to multiplex VNC
+                    connections on </td>
+            </tr>
+            <tr>
+                <td> console_xvp_pid="/var/run/xvp.pid" </td>
+                <td> (StrOpt) XVP master process pid file </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <xi:include href="tables/s3-nova-conf.xml"/>
+   <table rules="all">
+        <caption>Description of nova.conf file configuration options
+            for schedulers that use algorithms to assign VM launch on
+            particular compute hosts</caption>
+        <col width="30%"/>
+        <col width="70%"/>
+        <thead>
+            <tr>
+                <td>Configuration option=Default value</td>
+                <td>(Type) Description</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    scheduler_host_manager="nova.scheduler.host_manager.HostManager" </td>
+                <td> (StrOpt) The scheduler host manager class to use
+                </td>
+            </tr>
+            <tr>
+                <td> cpu_allocation_ratio=16.0 </td>
+                <td> (FloatOpt) Virtual CPU to Physical CPU allocation
+                    ratio </td>
+            </tr>
+            <tr>
+                <td> ram_allocation_ratio=1.5 </td>
+                <td> (FloatOpt) virtual ram to physical ram allocation
+                    ratio </td>
+            </tr>
+            <tr>
+                <td> reserved_host_disk_mb=0 </td>
+                <td> (IntOpt) Amount of disk in MB to reserve for
+                    host/dom0 </td>
+            </tr>
+            <tr>
+                <td> reserved_host_memory_mb=512 </td>
+                <td> (IntOpt) Amount of memory in MB to reserve for
+                    host/dom0 </td>
+            </tr>
+            <tr>
+                <td>
+                    scheduler_available_filters="nova.scheduler.filters.standard_filters" </td>
+                <td> (MultiStrOpt) Filter classes available to the
+                    scheduler which may be specified more than once.
+                    An entry of
+                    "nova.scheduler.filters.standard_filters" maps to
+                    all filters included with nova. </td>
+            </tr>
+            <tr>
+                <td>
+                    scheduler_default_filters="AvailabilityZoneFilter,RamFilter,ComputeFilter" </td>
+                <td> (ListOpt) Which filter class names to use for
+                    filtering hosts when not specified in the request.
+                </td>
+            </tr>
+            <tr>
+                <td> compute_fill_first_cost_fn_weight=-1.0 </td>
+                <td> (FloatOpt) How much weight to give the fill-first
+                    cost function. A negative value will reverse
+                    behavior: e.g. spread-first </td>
+            </tr>
+            <tr>
+                <td>
+                    least_cost_functions="nova.scheduler.least_cost.compute_fill_first_cost_fn" </td>
+                <td> (ListOpt) Which cost functions the
+                    LeastCostScheduler should use </td>
+            </tr>
+            <tr>
+                <td> noop_cost_fn_weight=1.0 </td>
+                <td> (FloatOpt) How much weight to give the noop cost
+                    function </td>
+            </tr>
+            <tr>
+                <td>
+                    scheduler_driver="nova.scheduler.multi.MultiScheduler" </td>
+                <td> (StrOpt) Default driver to use for the scheduler
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    compute_scheduler_driver="nova.scheduler.filter_scheduler.FilterScheduler" </td>
+                <td> (StrOpt) Driver to use for scheduling compute
+                    calls </td>
+            </tr>
+            <tr>
+                <td>
+                    volume_scheduler_driver="nova.scheduler.chance.ChanceScheduler" </td>
+                <td> (StrOpt) Driver to use for scheduling volume
+                    calls </td>
+            </tr>
+
+
+            <tr>
+                <td> scheduler_json_config_location="" </td>
+                <td> (StrOpt) Absolute path to scheduler configuration
+                    JSON file. </td>
+            </tr>
+
+
+            <tr>
+                <td> max_cores=16 </td>
+                <td> (IntOpt) maximum number of instance cores to
+                    allow per host </td>
+            </tr>
+            <tr>
+                <td> max_gigabytes=10000 </td>
+                <td> (IntOpt) maximum number of volume gigabytes to
+                    allow per host </td>
+            </tr>
+            <tr>
+                <td> max_networks=1000 </td>
+                <td> (IntOpt) maximum number of networks to allow per
+                    host </td>
+            </tr>
+            <tr>
+                <td> skip_isolated_core_check=true </td>
+                <td> (BoolOpt) Allow overcommitting vcpus on isolated
+                    hosts </td>
+            </tr>
+        </tbody>
+    </table>
+    <table rules="all">
+        <caption>Description of nova.conf file configuration options
+            for volumes attached to VMs</caption>
+        <col width="30%"/>
+        <col width="70%"/>
+        <thead>
+            <tr>
+                <td>Configuration option=Default value</td>
+                <td>(Type) Description</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td> iscsi_helper="ietadm" </td>
+                <td> (StrOpt) iscsi target user-land tool to use </td>
+            </tr>
+            <tr>
+                <td> iscsi_ip_address="$my_ip" </td>
+                <td> (StrOpt) use this ip for iscsi </td>
+            </tr>
+            <tr>
+                <td> iscsi_num_targets=100 </td>
+                <td> (IntOpt) Number of iscsi target ids per host
+                </td>
+            </tr>
+            <tr>
+                <td> iscsi_port=3260 </td>
+                <td> (IntOpt) The port that the iSCSI daemon is
+                    listening on </td>
+            </tr>
+            <tr>
+                <td> iscsi_target_prefix="iqn.2010-10.org.openstack:" </td>
+                <td> (StrOpt) prefix for iscsi volumes </td>
+            </tr>
+            <tr>
+                <td> num_iscsi_scan_tries="3" </td>
+                <td> (StrOpt) number of times to rescan iSCSI target
+                    to find volume </td>
+            </tr>
+            <tr>
+                <td> num_shell_tries="3" </td>
+                <td> (StrOpt) number of times to attempt to run flakey
+                    shell commands </td>
+            </tr>
+            <tr>
+                <td> rbd_pool="rbd" </td>
+                <td> (StrOpt) the RADOS pool in which rbd volumes are
+                    stored </td>
+            </tr>
+            <tr>
+                <td>rbd_secret_uuid=&lt;None&gt; </td>
+                <td> (StrOpt) the libvirt uuid of the secret for the
+                    rbd_uservolumes </td>
+            </tr>
+            <tr>
+                <td>rbd_user=&lt;None&gt; </td>
+                <td> (StrOpt) the RADOS client name for accessing rbd
+                    volumes </td>
+            </tr>
+            <tr>
+                <td> volume_group="nova-volumes" </td>
+                <td> (StrOpt) Name for the VG that will contain
+                    exported volumes </td>
+            </tr>
+            <tr>
+                <td>netapp_login=&lt;None&gt; </td>
+                <td> (StrOpt) User name for the DFM server </td>
+            </tr>
+            <tr>
+                <td>netapp_password=&lt;None&gt; </td>
+                <td> (StrOpt) Password for the DFM server </td>
+            </tr>
+            <tr>
+                <td>netapp_server_hostname=&lt;None&gt; </td>
+                <td> (StrOpt) Hostname for the DFM server </td>
+            </tr>
+            <tr>
+                <td> netapp_server_port=8088 </td>
+                <td> (IntOpt) Port number for the DFM server </td>
+            </tr>
+            <tr>
+                <td>netapp_storage_service=&lt;None&gt; </td>
+                <td> (StrOpt) Storage service to use for provisioning
+                </td>
+            </tr>
+            <tr>
+                <td>netapp_vfiler=&lt;None&gt; </td>
+                <td> (StrOpt) Vfiler to use for provisioning </td>
+            </tr>
+            <tr>
+                <td>netapp_wsdl_url=&lt;None&gt; </td>
+                <td> (StrOpt) URL of the WSDL file for the DFM server
+                </td>
+            </tr>
+            <tr>
+                <td> nexenta_blocksize="" </td>
+                <td> (StrOpt) block size for volumes
+                    (blank=default,8KB) </td>
+            </tr>
+            <tr>
+                <td> nexenta_host="" </td>
+                <td> (StrOpt) IP address of Nexenta SA </td>
+            </tr>
+            <tr>
+                <td> nexenta_iscsi_target_portal_port=3260 </td>
+                <td> (IntOpt) Nexenta target portal port </td>
+            </tr>
+            <tr>
+                <td> nexenta_password="nexenta" </td>
+                <td> (StrOpt) Password to connect to Nexenta SA </td>
+            </tr>
+            <tr>
+                <td> nexenta_rest_port=2000 </td>
+                <td> (IntOpt) HTTP port to connect to Nexenta REST API
+                    server </td>
+            </tr>
+            <tr>
+                <td> nexenta_rest_protocol="auto" </td>
+                <td> (StrOpt) Use http or https for REST connection
+                    (default auto) </td>
+            </tr>
+            <tr>
+                <td> nexenta_sparse=false </td>
+                <td> (BoolOpt) flag to create sparse volumes </td>
+            </tr>
+            <tr>
+                <td> nexenta_target_group_prefix="nova/" </td>
+                <td> (StrOpt) prefix for iSCSI target groups on SA
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    nexenta_target_prefix="iqn.1986-03.com.sun:02:nova-" </td>
+                <td> (StrOpt) IQN prefix for iSCSI targets </td>
+            </tr>
+            <tr>
+                <td> nexenta_user="admin" </td>
+                <td> (StrOpt) User name to connect to Nexenta SA </td>
+            </tr>
+            <tr>
+                <td> nexenta_volume="nova" </td>
+                <td> (StrOpt) pool on SA that will hold all volumes
+                </td>
+            </tr>
+            <tr>
+                <td> san_clustername="" </td>
+                <td> (StrOpt) Cluster name to use for creating volumes
+                </td>
+            </tr>
+            <tr>
+                <td> san_ip="" </td>
+                <td> (StrOpt) IP address of SAN controller </td>
+            </tr>
+            <tr>
+                <td> san_is_local=false </td>
+                <td> (BoolOpt) Execute commands locally instead of
+                    over SSH; use if the volume service is running on
+                    the SAN device </td>
+            </tr>
+            <tr>
+                <td> san_login="admin" </td>
+                <td> (StrOpt) Username for SAN controller </td>
+            </tr>
+            <tr>
+                <td> san_password="" </td>
+                <td> (StrOpt) Password for SAN controller </td>
+            </tr>
+            <tr>
+                <td> san_private_key="" </td>
+                <td> (StrOpt) Filename of private key to use for SSH
+                    authentication </td>
+            </tr>
+            <tr>
+                <td> san_ssh_port=22 </td>
+                <td> (IntOpt) SSH port to use with SAN </td>
+            </tr>
+            <tr>
+                <td> san_thin_provision=true </td>
+                <td> (BoolOpt) Use thin provisioning for SAN volumes?
+                </td>
+            </tr>
+            <tr>
+                <td> san_zfs_volume_base="rpool/" </td>
+                <td> (StrOpt) The ZFS path under which to create zvols
+                    for volumes. </td>
+            </tr>
+        </tbody>
+    </table>
+
+</chapter>
