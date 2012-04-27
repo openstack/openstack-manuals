@@ -187,27 +187,34 @@ iface br100 inet dhcp
                 </figure>
             </section>
         <section xml:id="configuring-flat-dhcp-networking">
-                <title>Configuring Flat DHCP Networking</title><para>With Flat DHCP, the host running nova-network acts as the
-                gateway to the virtual nodes. You can run one
+                    <title>Configuring Flat DHCP Networking</title>
+            <para>With Flat DHCP, the host running nova-network acts
+                as the gateway to the virtual nodes. You can run one
                 nova-network per cluster. Set the option
-                    <literal>network_host</literal> on the nova.conf
-                stored on the nova-compute node to tell it which host
-                the nova-network is running on so it can communicate
-                with nova-network. You must also set the
-                    <literal>--flat_network_bridge</literal> setting
-                to the name of the bridge (no default is set for it).
-                The nova-network service will track leases and
-                releases in the database so it knows if a VM instance
-                has stopped properly configuring via DHCP. Lastly, it
-                sets up iptables rules to allow the VMs to communicate
-                with the outside world and contact a special metadata
+                <literal>network_host</literal> on the <filename>nova.conf</filename> stored on the
+                nova-compute node to tell it which host the
+                nova-network is running on so it can communicate with
+                nova-network. In any set up with FlatNetworking, the
+                host with nova-network on it is responsible for
+                forwarding traffic from the private network configured
+                with the <literal>fixed_range=</literal> directive in <filename>nova.conf</filename> and the
+                <literal>flat_network_bridge</literal> flag which you must also set to
+                the name of the bridge (as there is no default). The
+                nova-network service will track leases and releases in
+                the database so it knows if a VM instance has stopped
+                properly configuring via DHCP. Lastly, it sets up
+                iptables rules to allow the VMs to communicate with
+                the outside world and contact a special metadata
                 server to retrieve information from the cloud.</para>
-            <para>Compute hosts in the FlatDHCP model are responsible for bringing up a matching
-                bridge and bridging the VM tap devices into the same ethernet device that the
-                network host is on. The compute hosts do not need an IP address on the VM network,
-                because the bridging puts the VMs and the network host on the same logical network.
-                When a VM boots, the VM sends out DHCP packets, and the DHCP server on the network
-                host responds with their assigned IP address.</para>
+            <para>Compute hosts in the FlatDHCP model are responsible
+                for bringing up a matching bridge and bridging the VM
+                tap devices into the same ethernet device that the
+                network host is on. The compute hosts do not need an
+                IP address on the VM network, because the bridging
+                puts the VMs and the network host on the same logical
+                network. When a VM boots, the VM sends out DHCP
+                packets, and the DHCP server on the network host
+                responds with their assigned IP address.</para>
             <para>Visually, the setup looks like the diagram below:</para>
                     <figure>
                         <title>Flat DHCP network, multiple interfaces, multiple servers</title>
@@ -248,6 +255,7 @@ iface br100 inet dhcp
 dhcpbridge_flagfile=/etc/nova/nova.conf
 dhcpbridge=/usr/bin/nova-dhcpbridge
 network_manager=nova.network.manager.FlatDHCPManager
+fixed_range=10.0.0.0/8
 flat_network_dhcp_start=10.0.0.2
 flat_network_bridge=br100
 flat_interface=eth2
