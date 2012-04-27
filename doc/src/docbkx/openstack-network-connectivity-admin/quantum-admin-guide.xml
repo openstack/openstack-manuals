@@ -25,7 +25,7 @@
         </copyright>
         <releaseinfo>Quantum 2012.1 (Essex) Administrator Guide</releaseinfo>
         <productname>OpenStack Quantum (virtual network service)</productname>
-        <pubdate>2012-02-29</pubdate>
+        <pubdate>2012-04-28</pubdate>
         <legalnotice role="apache2">
             <annotation>
                 <remark>Copyright details are filled in by the template.</remark>
@@ -38,6 +38,17 @@
 
         <revhistory>
                 <!-- ... continue addding more revisions here as you change this document using the markup shown below... -->
+            <revision>
+                <date>2012-04-28</date>
+                <revdescription>
+                    <itemizedlist spacing="compact">
+                        <listitem>
+                            <para>Add link for <citetitle>Quantum API Guide</citetitle>. </para>
+                            
+                        </listitem>
+                    </itemizedlist>
+                </revdescription>
+            </revision>
             <revision>
                 <date>2012-04-23</date>
                 <revdescription>
@@ -104,36 +115,22 @@
     </info>
     <chapter xml:id="Preface-d1e71">
         <title>Preface</title>
-        <para>
-            Quantum is a project to provide "network connectivity as a
-            service" between entities managed by other OpenStack services
-            (e.g., vNICs from the OpenStack Nova compute service).
-            For the 2012.1 Essex release, Quantum is an "incubated" OpenStack project.
-        </para>
-        <para>
-            For more information on Quantum and the other network-related
-            projects please check the Quantum home page
-            (<link xlink:href="http://wiki.openstack.org/Quantum">wiki.openstack.org/Quantum</link>)
-            and the NetStack home page
-            (<link xlink:href="http://wiki.openstack.org/Network">wiki.openstack.org/Network</link>).
-        </para>
-        <para> We welcome feedback, comments, and bug reports at <link xlink:href="http://bugs.launchpad.net/Quantum">bugs.launchpad.net/Quantum</link>.
-        </para>
+        <para>Quantum is a project to provide "network connectivity as
+            a service" between entities managed by other OpenStack
+            services (e.g., vNICs from the OpenStack Nova compute
+            service). For the 2012.1 Essex release, Quantum is an
+            "incubated" OpenStack project. </para>
         <section xml:id="Intended_Audience-d1e85">
             <title>Intended Audience</title>
-            <para> This guide is intended to assist OpenStack
-            administrators looking to run an OpenStack cloud that
-            leverages Quantum for advanced networking.
-            This document only covers the process of installing,
-            configuring, and running Quantum.  Information about
-            programming against the Quantum API is found in the Quantum API
-            Guide.
-            </para>
-            <para>
-            The user should also have access to a plugin providing the
-            implementation of the Quantum service.
-            Several plugins are included in the Quantum distribution:
-			</para>
+            <para>This guide is intended to assist OpenStack
+                administrators looking to run an OpenStack cloud that
+                leverages Quantum for advanced networking. This
+                document only covers the process of installing,
+                configuring, and running Quantum. </para>
+            <para>The user should also have access to a plugin
+                providing the implementation of the Quantum service.
+                Several plugins are included in the Quantum
+                distribution: </para>
             <itemizedlist spacing="compact">
                 <listitem>
                     <para>Openvswitch - Implementing Quantum with Open vSwitch for the KVM and
@@ -156,19 +153,32 @@
                         compute platforms. </para>
                 </listitem>
             </itemizedlist>
-            <para>
-            Plugins can also be distributed separately from Quantum.
-            </para>
-            <para>
-            You should also be familiar with running the OpenStack Nova compute service as
-            described in the Nova documentation.
-			</para>
+            <para>Plugins can also be distributed separately from
+                Quantum. </para>
+            <para>You should also be familiar with running the
+                OpenStack Nova compute service as described in the
+                Nova documentation. </para>
         </section>
         <section xml:id="Document_Change_History-d1e118">
             <title>Document Change History</title>
             <para>The most recent changes are described in the table below:</para>
             <?rax revhistory?>
         </section>
+        <section xml:id="resources"><title>Resources</title>
+            <para>For more information on Quantum and the other
+                network-related projects, see the Quantum page on the
+                OpenStack wiki (<link
+                    xlink:href="http://wiki.openstack.org/Quantum"
+                    >wiki.openstack.org/Quantum</link>). </para>
+            <para>For information about programming against the
+                Quantum API, see the <link
+                    xlink:href="http://docs.openstack.org/incubation/openstack-network/developer/quantum-api-1.0/content/"
+                        ><citetitle>Quantum API
+                    Guide</citetitle></link>.</para>
+            <para>We welcome feedback, comments, and bug reports at
+                    <link
+                    xlink:href="http://bugs.launchpad.net/Quantum"
+                    >bugs.launchpad.net/Quantum</link>. </para></section>
         <?hard-pagebreak?>
     </chapter>
     <chapter xml:id="Overview-d1e369">
@@ -178,18 +188,18 @@
         </para>
 	    <section xml:id="WhatIsQuantum">
 	    	<title>What is Quantum?</title>
-            <para>
-            Quantum is a "virtual network service" that aims to provide a powerful API to
-            define the network connectivity between devices from other OpenStack services.
-            The Quantum service has an API that presents a logical abstraction for
-            describing network connectivity.
-            The service relies on a Quantum plugin to manage virtual and/or
-            physical switches within the cloud data center to make sure those devices
-            forward packets according to the behavior defined in the logical API model.
-            This notion of a plugin
-            is similar to how Nova can use different types of hypervisors to implement
-            the same virtual server API.
-            </para>
+            <para>Quantum is a "virtual network service" that aims to
+                provide a powerful API to define the network
+                connectivity between devices from other OpenStack
+                services. The Quantum service has an API that presents
+                a logical abstraction for describing network
+                connectivity. The service relies on a Quantum plugin
+                to manage virtual and/or physical switches within the
+                cloud data center to make sure those devices forward
+                packets according to the behavior defined in the
+                logical API model. This notion of a plugin is similar
+                to how Nova can use different types of hypervisors to
+                implement the same virtual server API. </para>
             <para>
             The Quantum API utilizes the following logical abstractions:
             </para>
@@ -238,13 +248,13 @@
         </section>
         <section xml:id="QuantumService">
             <title>Quantum Service</title>
-            <para>
-            The Quantum Service is a python process that runs the Quantum API webserver
-            and is responsible for loading a Quantum plugin and passing each API call
-            to the Quantum plugin for processing.  This process is commonly run on a ''controller''
-            host along with other OpenStack services (e.g., nova-api, nova-scheduler),
-            but can also be run stand-alone.
-			</para>
+            <para> The Quantum Service is a python process that runs
+                    the Quantum API web server and is responsible for
+                    loading a Quantum plugin and passing each API call
+                    to the Quantum plugin for processing. This process
+                    is commonly run on a ''controller'' host along
+                    with other OpenStack services (e.g., nova-api,
+                    nova-scheduler), but can also be run stand-alone. </para>
         </section>
         <section xml:id="QuantumPlugin">
             <title>Quantum Plugin</title>
@@ -331,8 +341,10 @@ sudo python setup.py install</literallayout>
                 <para>After the install, the executables "quantum-server" and "quantum" should be in
                     your path, just as if you had installed from packages.  </para>
                 <para>Run setup.py with the "-h" option to see other install options. </para>
-                <para>After installing from source, quantum-server will not automatically find a config
-                file unless it is specified as a command-line paramter to the deamon, for example:</para>
+                <para>After installing from source, quantum-server
+                    will not automatically find a config file unless
+                    it is specified as a command-line parameter to the
+                    deamon, for example:</para>
                 <literallayout class="monospaced">quantum-server quantum-&lt;version&gt;/etc/quantum.conf</literallayout>
                 <para> If you wish to run quantum-server with no argument, you can copy the quantum
                 config directory in your source tarball to /etc/quantum .  For example:
@@ -600,15 +612,21 @@ list_ports &lt;tenant-id&gt; &lt;net-id&gt; [filterspec ...]</literallayout>
                     to a public network, as well as ''floating IPs''.
             </para>
             
-            <para>With Quantum Manager, a NAT gateway will be attached to each network if the the
-                    Nova configuration specifies a valid "L3 driver".  Nova defaults to specifying the
-                    'nova.network.l3.LinuxNetL3' driver, which corresponds to the same L3 + NAT implementation
-                    used by the nova-network process configured to use VlanManager.
-                    In this model, a "network controller" host has two
-                    NICs and acts as a NAT gateway between an "internal" network with compute hosts
-                    and an "external" network (e.g., used for Internet access).  Quantum allows a model
-                    where nova-network is deployed in an "active-backup" high-availability model, but does
-                    not support the "multi_host" mode where nova-network runs actively on each compute host. </para>
+            <para>With Quantum Manager, a NAT gateway will be attached
+                    to each network if the Nova configuration
+                    specifies a valid "L3 driver". Nova defaults to
+                    specifying the 'nova.network.l3.LinuxNetL3'
+                    driver, which corresponds to the same L3 + NAT
+                    implementation used by the nova-network process
+                    configured to use VlanManager. In this model, a
+                    "network controller" host has two NICs and acts as
+                    a NAT gateway between an "internal" network with
+                    compute hosts and an "external" network (e.g.,
+                    used for Internet access). Quantum allows a model
+                    where nova-network is deployed in an
+                    "active-backup" high-availability model, but does
+                    not support the "multi_host" mode where
+                    nova-network runs actively on each compute host. </para>
             
             <para> Specifying a Null L3 driver will mean no gateway devices are
                     connected to any Quantum networks:</para>
