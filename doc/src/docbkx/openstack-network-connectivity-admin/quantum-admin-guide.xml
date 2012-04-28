@@ -44,7 +44,7 @@
                     <itemizedlist spacing="compact">
                         <listitem>
                             <para>Add link for <citetitle>Quantum API Guide</citetitle>. </para>
-                            
+
                         </listitem>
                     </itemizedlist>
                 </revdescription>
@@ -564,7 +564,9 @@ list_ports &lt;tenant-id&gt; &lt;net-id&gt; [filterspec ...]</literallayout>
             <section xml:id="Net-Create-dle455">
                 <title>Creating Networks</title>
             <note><para> When creating networks, nova-manage must be run on the host that nova-network is running on.
-                         This is different from how network creation works for other network managers. </para></note>
+                         This is different from how network creation works for other network managers. When invoking
+                         nova-manage,  make sure it picks up a config file that specifies
+                         network_manager=nova.network.quantum.manager.QuantumManager  </para></note>
             <note><para> The content in this section is specific to how Quantum integrates with Nova in the Essex (2012.1)
                          release.
                          In future releases, networks will be created by calling the Quantum API directly. </para></note>
@@ -611,7 +613,7 @@ list_ports &lt;tenant-id&gt; &lt;net-id&gt; [filterspec ...]</literallayout>
                     VMs on private networks with access to a public network. This gateway provides SNAT
                     to a public network, as well as ''floating IPs''.
             </para>
-            
+
             <para>With Quantum Manager, a NAT gateway will be attached
                     to each network if the Nova configuration
                     specifies a valid "L3 driver". Nova defaults to
@@ -627,7 +629,7 @@ list_ports &lt;tenant-id&gt; &lt;net-id&gt; [filterspec ...]</literallayout>
                     "active-backup" high-availability model, but does
                     not support the "multi_host" mode where
                     nova-network runs actively on each compute host. </para>
-            
+
             <para> Specifying a Null L3 driver will mean no gateway devices are
                     connected to any Quantum networks:</para>
                 <literallayout class="monospaced">l3_lib=nova.network.l3.NullL3</literallayout>
@@ -691,7 +693,7 @@ list_ports &lt;tenant-id&gt; &lt;net-id&gt; [filterspec ...]</literallayout>
             <para>Nova defaults to connecting to Melange on localhost using the standard port.  The
             "melange_host" and "melange_port" options can override these defaults. </para>
                 <note> <para> Using Melange is incompatible with using Floating IPs. </para> </note>
-            
+
             <note><para>DHCP is not supported when Melange is used as the IPAM library.
             </para></note>
             <note><para>
@@ -708,7 +710,19 @@ list_ports &lt;tenant-id&gt; &lt;net-id&gt; [filterspec ...]</literallayout>
                 </listitem>
                 <listitem><para>CloudPipe VPNs do not work when using Quantum Manager.
                                 Nova is developing an alternative to CloudPipe for Essex
-                                that should be compatible with Quantum Manager.</para></listitem>
+                                that should be compatible with Quantum Manager.</para>
+                </listitem>
+                <listitem><para>Horizon cannot be used to create/delete networks, or view networks and ports. There was an
+                        initial version of Quantum + Horizon integration, but this was not
+                        compatible with the Quantum Manager in Essex, and was removed as a result.
+                        Likewise, Horizon does not support specifying multiple vNIC on a virtual
+                        server, or indicating what networks those vNICs should be attached to. </para>
+                            <para> If networks where created using nova-manage, you may
+                                use Horizon to create/destroy virtual servers, which will then be attached to all
+                                "global" and project-specific networks, as described above.
+                            </para>
+                            <para>In Folsom Horizon will fully support Quantum.</para>
+                </listitem>
             </itemizedlist>
         </section>
         </section>
