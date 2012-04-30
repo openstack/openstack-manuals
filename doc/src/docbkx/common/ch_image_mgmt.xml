@@ -640,10 +640,10 @@ glance add name="My WinServer" is_public=true container_format=ovf disk_format=r
                 <listitem>
                     <para>
                         <emphasis role="bold"
-                            >Pre-requisites</emphasis>
+                            >Pre-requisites (KVM)</emphasis>
                     </para>
                     <para> In order to use the feature properly, you
-                        will need qemu-img on it's 0.14 version. The
+                        will need <command>qemu-img</command> 0.14 or greater. The
                         imaging feature uses the copy from a snapshot
                         for image files. (e.g qcow-img convert -f
                         qcow2 -O qcow2 -s $snapshot_name
@@ -656,6 +656,15 @@ ii  qemu                            0.14.0~rc1+noroms-0ubuntu4~ppalucid1        
 ii  qemu-common                     0.14.0~rc1+noroms-0ubuntu4~ppalucid1            qemu common functionality (bios, documentati
 ii  qemu-kvm                        0.14.0~rc1+noroms-0ubuntu4~ppalucid1            Full virtualization on i386 and amd64 hardwa
                    </programlisting>
+                   <para>Images can only be created from running instances if
+                    Compute is configured to use qcow2 images, which is the
+                    default setting. You can explicitly enable the use of
+                    qcow2 images by adding the following line to
+                    <filename>nova.conf</filename>:
+                    <programlisting>
+use_cow_images=true
+                   </programlisting>
+                   </para>
                 </listitem>
                 <listitem>
                     <para>
