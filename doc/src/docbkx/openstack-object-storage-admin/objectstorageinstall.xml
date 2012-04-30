@@ -312,6 +312,23 @@ swift-ring-builder object.builder rebalance
                                 <para>Copy the account.ring.gz, container.ring.gz, and
                                         object.ring.gz files to each of the Proxy and Storage nodes
                                         in /etc/swift.</para>
+                                <para>For example, if you were setting up five storage nodes each with an
+                                                IP address from 10.0.0.1 to 10.0.0.5, you could use
+                                                scp and the commands would look
+                                                like:
+                                                <literallayout class="monospaced">
+                                                scp *.ring.gz 10.0.0.1:/etc/swift
+                                                scp *.ring.gz 10.0.0.2:/etc/swift
+                                                scp *.ring.gz 10.0.0.3:/etc/swift
+                                                scp *.ring.gz 10.0.0.4:/etc/swift
+                                                scp *.ring.gz 10.0.0.5:/etc/swift
+                                        </literallayout></para>
+                                 <note>
+                                        <para>There are many ways to make this copy process easier
+                                              that you might like to investigate, such as rsync or using
+                                               a web server.</para>
+                                </note>
+ 
                         </listitem>
                         <listitem>
                                 <para>Make sure all the config files are owned by the swift
