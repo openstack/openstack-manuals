@@ -7,29 +7,29 @@
     <title>Verify the Installation</title>
     <para>You can run these commands from the proxy server or any server with access to the Identity Service. Look for
         the default_swift_cluster setting in the
-        proxy-server.conf and match the URLs
+        <filename>proxy-server.conf</filename> and match the URLs
         (including http or https) when issuing auth
         commands.</para>
     <orderedlist>
         <listitem>
             <para>Run the swift CLI, swift, with the correct Identity
                 service URL. </para>
-            <para>
-                <literallayout class="monospaced"> swift -v -V 2.0 -A http://127.0.0.1:5000/v2.0/ -U adminUser:admin -K $ADMINPASS stat </literallayout>
-            </para>
+            <screen>
+<prompt>$</prompt> <userinput>swift -V 2 -A http://&lt;AUTH_HOSTNAME&gt;:5000/v2.0 -U adminUser:admin -K 012345SECRET99TOKEN012345 stat</userinput>
+            </screen>
         </listitem>
         <listitem>
             <para>Get an X-Storage-Url and
                 X-Auth-Token:</para>
             <para>
-                <literallayout class="monospaced">curl -k -v -H 'X-Storage-User: adminUser:admin' -H 'X-Storage-Pass: $ADMINPASS' http://&lt;AUTH_HOSTNAME&gt;:5000/auth/v1.0</literallayout>
+                <literallayout class="monospaced">$ curl -k -v -H 'X-Storage-User: adminUser:admin' -H 'X-Storage-Pass: $ADMINPASS' http://&lt;AUTH_HOSTNAME&gt;:5000/auth/v1.0</literallayout>
             </para>
         </listitem>
         <listitem>
             <para>Check that you can HEAD the
                 account:</para>
             <para>
-                <literallayout class="monospaced">curl -k -v -H 'X-Auth-Token: &lt;token-from-x-auth-token-above&gt;' &lt;url-from-x-storage-url-above&gt;</literallayout>
+                <literallayout class="monospaced">$ curl -k -v -H 'X-Auth-Token: &lt;token-from-x-auth-token-above&gt;' &lt;url-from-x-storage-url-above&gt;</literallayout>
             </para>
         </listitem>
         <listitem>
@@ -39,8 +39,8 @@
                 container named
                 &#8216;myfiles&#8217;:</para>
             <para>
-                <literallayout class="monospaced">swift -A http://&lt;AUTH_HOSTNAME&gt;:5000/v2.0 -U adminUser:admin -K $ADMINPASS upload myfiles bigfile1.tgz
-swift -A http://&lt;AUTH_HOSTNAME&gt;:5000/v2.0 -U adminUser:admin -K $ADMINPASS upload myfiles bigfile2.tgz</literallayout>
+                <literallayout class="monospaced">$ swift -A http://&lt;AUTH_HOSTNAME&gt;:5000/v2.0 -U adminUser:admin -K $ADMINPASS upload myfiles bigfile1.tgz
+$ swift -A http://&lt;AUTH_HOSTNAME&gt;:5000/v2.0 -U adminUser:admin -K $ADMINPASS upload myfiles bigfile2.tgz</literallayout>
             </para>
         </listitem>
         <listitem>
@@ -48,10 +48,9 @@ swift -A http://&lt;AUTH_HOSTNAME&gt;:5000/v2.0 -U adminUser:admin -K $ADMINPASS
                 from the &#8216;myfiles&#8217;
                 container:</para>
             <para>
-                <literallayout class="monospaced">swift -A http://&lt;AUTH_HOSTNAME&gt;:5000/v2.0 -U adminUser:admin -K $ADMINPASS download myfiles</literallayout>
+                <literallayout class="monospaced">$ swift -A http://&lt;AUTH_HOSTNAME&gt;:5000/v2.0 -U adminUser:admin -K $ADMINPASS download myfiles</literallayout>
             </para>
         </listitem>
     </orderedlist>
 </section>
-
 

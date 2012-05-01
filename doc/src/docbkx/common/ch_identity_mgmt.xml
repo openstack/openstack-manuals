@@ -896,8 +896,7 @@ keystone service-delete 08741d8ed88242ca88d1f61484a0fe3b
       </section>
     </section>
   </section>
-<section xml:id="configuring-services-to-work-with-keystone">
-  <?dbhtml stop-chunking?>
+  <section xml:id="configuring-services-to-work-with-keystone">
   <title>Configuring Services to work with Keystone</title>
   <para>
     Once Keystone is installed and running,
@@ -907,17 +906,30 @@ keystone service-delete 08741d8ed88242ca88d1f61484a0fe3b
   </para>
   <para>
     In general:
-    <itemizedlist>
-      <listitem><para>Clients making calls to the service will pass in an
-    authentication token.</para></listitem>
-    <listitem><para>The Keystone middleware will look for and
-    validate that token, taking the appropriate action.</para></listitem>
-    <listitem><para>It will also retrieve additional information from the
-      token such as user name, id, tenant name, id, roles, etc.</para></listitem>
-    </itemizedlist>
   </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Clients making calls to the service will pass in an
+        authentication token.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The Keystone middleware will look for and validate that token,
+        taking the appropriate action.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        It will also retrieve additional information from the token such
+        as user name, id, tenant name, id, roles, etc...
+      </para>
+    </listitem>
+  </itemizedlist>
   <para>
     The middleware will pass those data down to the service as headers.
+   
   </para>
   <section xml:id="setting-up-credentials">
     <title>Setting up credentials</title>
@@ -931,16 +943,16 @@ keystone service-delete 08741d8ed88242ca88d1f61484a0fe3b
         provided with the keystone project, the line defining this token
         is
       </para>
-      <programlisting>
-[DEFAULT]
-admin_token = ADMIN
-      </programlisting>
+      <blockquote>
+        <para>
+          [DEFAULT] admin_token = ADMIN
+        </para>
+      </blockquote>
       <para>
         This configured token is a &quot;shared secret&quot; between
-        keystone and other openstack services (for example: nova, swift,
-        glance, or horizon), and will need to be set the same between
-        those services in order for keystone services to function
-        correctly.
+        keystone and other openstack services, and is used by the client
+        to communicate with the API to create tenants, users, roles,
+        etc.
       </para>
     </section>
     <section xml:id="setting-up-tenants-users-and-roles">
@@ -948,14 +960,82 @@ admin_token = ADMIN
       <para>
         You need to minimally define a tenant, user, and role to link
         the tenant and user as the most basic set of details to get
-        other services authenticating and authorizing with keystone. 
+        other services authenticating and authorizing with keystone.
+      </para>
+      <para>
+        You will also want to create service users for Compute (nova), Image (glance),
+        Object Storage (swift), etc. to be able to use to authenticate users against
+        the Identity service (keystone). The <literal>auth_token</literal> middleware supports
+        using either the shared secret described above as `admin_token`
+        or users for each service.
+      </para>
+      <para>
+        See the configuration section for a walk through on how to create
+        tenants, users, and roles.
       </para>
     </section>
   </section>
   <section xml:id="setting-up-services">
     <title>Setting up services</title>
+    <?dbhtml stop-chunking?>
+    
+    <section xml:id="creating-service-users">
+      <title>Creating Service Users</title>
+      <para>
+        To configure the OpenStack services with service users, we need
+        to create a tenant for all the services, and then users for each
+        of the services. We then assign those service users an Admin
+        role on the service tenant. This allows them to validate tokens
+        - and authenticate and authorize other user requests.
+      </para>
+      <para>
+        Create a tenant for the services, typically named 'service'
+        (however, the name can be whatever you choose):
+      </para>
+      <screen>
+keystone tenant-create --name=service
+</screen>
+      <para>
+        This returns a UUID of the tenant - keep that, you'll need it
+        when creating the users and specifying the roles.
+      </para>
+      <para>
+        Create service users for nova, glance, swift, and quantum (or
+        whatever subset is relevant to your deployment):
+      </para>
+      <screen>
+keystone user-create --name=nova \
+                     --pass=Sekr3tPass \
+                     --tenant_id=[the uuid of the tenant] \
+                     --email=nova@nothing.com
+</screen>
+      <para>
+        Repeat this for each service you want to enable. Email is a
+        required field in keystone right now, but not used in relation
+        to the service accounts. Each of these commands will also return
+        a UUID of the user. Keep those to assign the Admin role.
+      </para>
+      <para>
+        For adding the Admin role to the service accounts, you'll need
+        to know the UUID of the role you want to add. If you don't have
+        them handy, you can look it up quickly with:
+      </para>
+      <screen>
+keystone role-list
+</screen>
+      <para>
+        Once you have it, assign the service users to the Admin role.
+        This is all assuming that you've already created the basic roles
+        and settings as described in the configuration section:
+      </para>
+      <screen>
+keystone user-role-add --tenant_id=[uuid of the service tenant] \
+                       --user=[uuid of the service account] \
+                       --role=[uuid of the Admin role]
+</screen>
+    </section>
     <section xml:id="defining-services">
-      <title>Defining services</title>
+      <title>Defining Services</title>
       <para>
         Keystone also acts as a service catalog to let other OpenStack
         systems know where relevant API endpoints exist for OpenStack
@@ -964,7 +1044,19 @@ admin_token = ADMIN
         configured for the OpenStack Dashboard to properly function.
       </para>
       <para>
-        Here's how we define the services:
+        The endpoints for these services are defined in a template, an
+        example of which is in the project as the file
+        <literal>etc/default_catalog.templates</literal>.
+      </para>
+      <para>
+        Keystone supports two means of defining the services, one is the
+        catalog template, as described above - in which case everything
+        is detailed in that template.
+      </para>
+      <para>
+        The other is a SQL backend for the catalog service, in which
+        case after keystone is online, you need to add the services to
+        the catalog:
       </para>
       <screen>
 keystone service-create --name=nova \
@@ -983,91 +1075,31 @@ keystone service-create --name=swift \
                                --type=object-store \
                                --description=&quot;Swift Service&quot;
 </screen>
-</section>
-<section xml:id="keystone-defining-endpoints">
-  <title>Defining endpoints</title>
-  <para>Every service konwn to Identity must have a corresponding service
-    endpoint that specifies the URL(s) where requests can be made against
-    those services. Identity supports two alternative mechanisms for
-    defining service endpoints:</para>
-    <orderedlist>
-      <listitem><para>Using a database backend</para></listitem>
-      <listitem><para>Using a template file</para></listitem>
-    </orderedlist>
-
-    <para>The database backend is intended for production deployments, as
-      it provides better reliability, availability, and data redundancy.
-      The template file is simpler to use and is typically used by developers
-      when running only on a single node.</para>
-
-      <section xml:id="keystone-endpoint-database">
-        <title>Database backend</title>
-        <para>To use the database backend to track service endpoints, your
-          <filename>keystone.conf</filename> must contain the following:</para>
-<programlisting>
-[catalog]
-driver = keystone.catalog.backends.sql.Catalog
-</programlisting>
-
-        <para>You must also manually create an endpoint associated with each
-          service using the <command>keystone endpoint-create</command> command.
-          See the <link xlink:href="http://docs.openstack.org">OpenStack
-          Install and Deploy Guide</link> for more details on how to create
-          the endpoints for each service.</para>
-      </section>
-      <section xml:id="keystone-endpoint-template">
-        <title>Template file</title>
-        <para>To use the template file to track service endpoints, your
-          <filename>keystone.conf</filename> must contain the following:</para>
-<programlisting>
-[catalog]
-driver = keystone.catalog.backends.templated.TemplatedCatalog
-template_file = /etc/keystone/default_catalog.templates
-</programlisting>
-
-        <para>The location of your <literal>template_file</literal> may vary
-        depending on your particular setup. You also may need to edit it if you
-        are using any non-standard ports for any of the services.</para>
-
-        <para>Note that you do not need to manually add the service endpoints 
-          using <command>keystone endpoint-create</command> when using the
-          template file, as Identity will automatically populate the catalog
-          with endpoint information by reading from the template file.</para>
-      </section>
     </section>
   </section>
   <section xml:id="setting-up-middleware">
-    <title>Setting up middleware</title>
+    <title>Setting Up Middleware</title>
     <section xml:id="keystone-auth-token-middleware">
       <title>Keystone Auth-Token Middleware</title>
       <para>
-        The Identity auth_token middleware is a WSGI component that can
+        The Keystone auth_token middleware is a WSGI component that can
         be inserted in the WSGI pipeline to handle authenticating tokens
-        with Identity.
+        with Keystone. 
       </para>
     </section>
     <section xml:id="configuring-nova-to-use-keystone">
-      <title>Configuring Compute to use Identity</title>
+      <title>Configuring Nova to use Keystone</title>
       <para>
-        To configure Compute to use Identity for authentication, the Nova
-        API service can be run against the <filename>api-paste</filename> file provided by
-        Keystone. This is most easily accomplished by setting the
-        `--api_paste_config` flag in nova.conf to point to
-        `examples/paste/nova-api-paste.ini` from Keystone. This paste
-        file included references to the WSGI authentication middleware
-        provided with the keystone installation.
-      </para>
-      <para>
-        When configuring Compute, it is important to create a admin service
+        When configuring Nova, it is important to create a admin service
         token for the service (from the Configuration step above) and
-        include that as the key 'admin_token' in the nova-api-paste.ini.
+        include that as the key 'admin_token' in Nova's api-paste.ini.
       </para>
     </section>
     <section xml:id="configuring-swift-to-use-keystone">
       <title>Configuring Swift to use Keystone</title>
       <para>
         Similar to Nova, swift can be configured to use Keystone for
-        authentication rather than it's built in 'tempauth'.
+        authentication rather than its built in 'tempauth'.
       </para>
       <orderedlist numeration="arabic">
         <listitem>
@@ -1092,7 +1124,7 @@ bind_port = 8888
 user = &lt;user&gt;
 
 [pipeline:main]
-pipeline = catch_errors healthcheck cache tokenauth keystone proxy-server
+pipeline = catch_errors healthcheck cache authtoken keystone proxy-server
 
 [app:proxy-server]
 use = egg:swift#proxy
@@ -1102,8 +1134,11 @@ account_autocreate = true
 paste.filter_factory = keystone.middleware.swift_auth:filter_factory
 operator_roles = admin, swiftoperator
 
-[filter:tokenauth]
+[filter:authtoken]
 paste.filter_factory = keystone.middleware.auth_token:filter_factory
+# Delaying the auth decision is required to support token-less
+# usage for anonymous referrers ('.r:*').
+delay_auth_decision = true
 service_port = 5000
 service_host = 127.0.0.1
 auth_port = 35357
@@ -1126,31 +1161,28 @@ use = egg:swift#healthcheck
       <orderedlist numeration="arabic">
         <listitem override="4">
           <para>
-            Restart swift
+            Restart swift services.
           </para>
         </listitem>
         <listitem>
           <para>
-            Verify that keystone is providing authentication to Swift
+            Verify that the Identity service, Keystone, is providing authentication to Object Storage (Swift).
           </para>
-          <blockquote>
-            <para>
-              $ swift -V 2 -A
-              <link xlink:href="http://localhost:5000/v2.0/tokens">http://localhost:5000/v2.0/tokens</link>
-              -U admin:admin -K ADMIN stat
-            </para>
-          </blockquote>
+          
+            <screen>
+              <prompt>$</prompt> <userinput>swift -V 2 -A http://localhost:5000/v2.0 -U admin:admin -K ADMIN stat</userinput>
+            </screen>
+          
         </listitem>
       </orderedlist>
     </section>
-    <section xml:id="configuring-swift-with-s3-emuluation-to-use-keystone">
-      <title>Configuring Swift with S3 emulation to use
-      Keystone</title>
+    <section xml:id="configuring-swift-with-s3-emulation-to-use-keystone">
+      <title>Configuring Swift with S3 emulation to use Keystone</title>
       <para>
         Keystone support validating S3 tokens using the same tokens as
-        the generated EC2 tokens. After you have generated a pair of EC2
+        the generated EC2 tokens. When you have generated a pair of EC2
         access token and secret you can access your swift cluster
-        directly with the S3 api.
+        directly with the S3 API.
       </para>
       <orderedlist numeration="arabic">
         <listitem>
@@ -1168,7 +1200,7 @@ bind_port = 8080
 user = &lt;user&gt;
 
 [pipeline:main]
-pipeline = catch_errors healthcheck cache swift3 s3token tokenauth keystone proxy-server
+pipeline = catch_errors healthcheck cache swift3 s3token authtoken keystone proxy-server
 
 [app:proxy-server]
 use = egg:swift#proxy
@@ -1192,20 +1224,17 @@ operator_roles = admin, swiftoperator
 
 [filter:s3token]
 paste.filter_factory = keystone.middleware.s3_token:filter_factory
-service_port = 5000
-service_host = 127.0.0.1
 auth_port = 35357
 auth_host = 127.0.0.1
 auth_protocol = http
-auth_token = ADMIN
-admin_token = ADMIN
 
-[filter:tokenauth]
+[filter:authtoken]
 paste.filter_factory = keystone.middleware.auth_token:filter_factory
 service_port = 5000
 service_host = 127.0.0.1
 auth_port = 35357
 auth_host = 127.0.0.1
+auth_protocol = http
 auth_token = ADMIN
 admin_token = ADMIN
 </screen>
@@ -1229,10 +1258,9 @@ connection = boto.connect_s3(
 </screen>
         </listitem>
       </orderedlist>
-      <para>
-        Auth-Token Middleware with Username and Password
-        --------------------------------
-      </para>
+    </section>
+    <section xml:id="auth-token-middleware-with-username-and-password">
+      <title>Auth-Token Middleware with Username and Password</title>
       <para>
         It is also possible to configure Keystone's auth_token
         middleware using the 'admin_user' and 'admin_password' options.
@@ -1246,20 +1274,20 @@ connection = boto.connect_s3(
         'admin_user' and 'admin_password' parameters:
       </para>
       <screen>
-[filter:tokenauth]
+[filter:authtoken]
 paste.filter_factory = keystone.middleware.auth_token:filter_factory
 service_port = 5000
 service_host = 127.0.0.1
 auth_port = 35357
 auth_host = 127.0.0.1
-auth_token = ADMIN
+auth_token = 012345SECRET99TOKEN012345
 admin_user = admin
 admin_password = keystone123
 </screen>
       <para>
-        It should be noted that when using this option an 'admin'
+        It should be noted that when using this option an admin
         tenant/role relationship is required. The admin user is granted
-        access to to the 'admin' role via the 'admin' tenant.
+        access to to the 'Admin' role to the 'admin' tenant.
       </para>
     </section>
   </section>

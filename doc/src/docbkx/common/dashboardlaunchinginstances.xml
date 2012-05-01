@@ -111,5 +111,39 @@
                 </imageobject>
             </mediaobject>
         </para>
+        
     </section>
+    <section xml:id="ssh-into-instance"><title>Make a secure connection to the launched instance</title>
+        <para>Here are the steps to SSH into an instance using the
+            downloaded keypair file. The username is ubuntu for the
+            Ubuntu cloud images on TryStack.</para>
+        
+        <para>
+            <orderedlist>
+                <listitem>
+                    <para>Download the <filename>MyKey.pem</filename> file from the OpenStack Dashboard.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>In a command line interface, modify the
+                        access to the .pem file:</para>
+                    <para>
+                        <screen><userinput><prompt>$</prompt> chmod 0600 MyKey.pem</userinput></screen>
+                    </para>
+                </listitem>
+                <listitem><para>Use the <command>ssh-add</command> command to ensure that the
+                    keypair is known to
+                    SSH:<screen><userinput><prompt>$</prompt> ssh-add MyKey.pem</userinput></screen></para></listitem>
+                <listitem>
+                    <para>Copy the IP address from the
+                        MyFirstInstance. </para>
+                </listitem>
+                <listitem>
+                    <para>Use the SSH command to make a secure
+                        connection to the
+                        instance:<screen><userinput><prompt>$</prompt> ssh -i MyKey.pem ubuntu@10.0.0.2</userinput></screen></para>
+                    <para>You should see a prompt asking "Are you sure you want to continue connection (yes/no)?" Type yes and you have successfully connected. </para>
+                </listitem>
+            </orderedlist>
+        </para></section>
 </section>
