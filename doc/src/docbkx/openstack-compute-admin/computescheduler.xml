@@ -10,19 +10,98 @@ how to dispatch compute and volume requests. For example, the
 a VM should launch on. The term "host" in the context of filters means a
 physical node that has a <command>nova-compute</command> service running on
 it. The scheduler is configurable through a variety of options.</para>
+<para>Compute is configured with the following default scheduler options:
+<programlisting>
+scheduler_driver=nova.scheduler.multi.MultiScheduler
+volume_scheduler_driver=nova.scheduler.chance.ChanceScheduler
+compute_scheduler_driver=nova.scheduler.filter_scheduler.FilterScheduler
+scheduler_available_filters=nova.scheduler.filters.standard_filters
+scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
+least_cost_functions=nova.scheduler.least_cost.compute_fill_first_cost_fn
+compute_fill_first_cost_fn_weight=-1.0
+</programlisting>
+
+Compute is configured by default to use the Multi Scheduler, which allows the
+admin to specify different scheduling behavior for compute requests versus volume
+requests. 
+</para>
+
+<para>The volume scheduler is configured by default
+as a Chance Scheduler, which picks a host at random that has the
+<command>nova-volume</command> service running.</para>
+
+<para>
+The compute scheduler is configured by default as a Filter Scheduler, described
+in detail in the next section. In the
+default configuration, this scheduler will only consider hosts that are in the
+requested availability
+zone (<literal>AvailabilityZoneFilter</literal>), that have sufficient RAM
+available (<literal>RamFilter</literal>), and that are actually capable of
+servicing the request (<literal>ComputeFilter</literal>).</para>
+
+<para> From the resulting filtered list of eligible hosts, the scheduler will
+    assign a cost to each host based on the amount of free RAM
+    (<literal>nova.scheduler.least_cost.compute_fill_first_cost_fn</literal>),
+    will multiply each cost value by -1 (<literal>compute_fill_first_cost_fn_weight</literal>),
+    and will select the host with the minimum cost. This is equivalent to
+    selecting the host with the maximum amount of RAM available.
+</para>
+
+    <section xml:id="filter-scheduler">
+        <title>Filter Scheduler</title>
+        <para>The Filter Scheduler (<literal>nova.scheduler.filter_scheduler.FilterScheduler</literal>)
+        is the default scheduler for scheduling virtual machine instances.
+        It supports filtering and weighting to make informed decisions on where a new instance should be created.
+            This Scheduler can only be used for scheduling compute requests,
+            not volume requests, i.e. it can only be used with
+            the <literal>compute_scheduler_driver</literal> configuration
+            option.
+        </para>
+    </section>
+
+
     <section xml:id="scheduler-filters">
         <title>Filters</title>
-        <para>When the scheduler receives a request for a resource, it first
-            applies filters to determine which hosts are eligible for 
+        <para>When the Filter Scheduler receives a request for a resource, it first
+            applies filters to determine which hosts are eligible for
             consideration when dispatching a resource. Filters are binary:
             either a host is accepted by the filter, or it is rejected. Hosts
             that are accepted by the filter are then processed by a different
-            algorithm to decide which hosts to use for that request. 
+            algorithm to decide which hosts to use for that request,
+            described in the <link linkend="costs-and-weights">costs and weight
+            </link> section.
+       <figure xml:id="filter-figure">
+        <title>Filtering</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="figures/filteringWorkflow1.png "
+                       scale="80"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
         </para>
+
+    <para>The <literal>scheduler_available_filters</literal> configuration option
+    in <filename>nova.conf</filename> provides the Compute service with the
+    list of the filters that will be used by the scheduler. The default setting
+    specifies all of the filter that are incldued with the Compute service:
+    <programlisting>
+scheduler_available_filters=nova.scheduler.filters.standard_filters
+    </programlisting>
+    This configuration option can be specified multiple times. For example,
+    if you implemented your own custom filter in Python called 
+    <literal>myfilter.MyFilter</literal> and you wanted to use both the
+    built-in filters and your custom filter, your <filename>nova.conf</filename> 
+    file would contain:
+    <programlisting>
+scheduler_available_filters=nova.scheduler.filters.standard_filters
+scheduler_available_filters=myfilter.MyFilter
+    </programlisting>
+</para>
      <para>The <literal>scheduler_default_filters</literal> configuration option
       in <filename>nova.conf</filename> defines the list of filters
      that will be applied by the <command>nova-scheduler</command> service.
-     The default setting is:
+     As mentioned above, the default filtes are:
      <programlisting>
 scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
      </programlisting>
@@ -50,7 +129,7 @@ scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
             ComputeFilter
         </title>
         <para>
-            Filters hosts by flavor (also knwn as instance type). The scheduler
+            Filters hosts by flavor (also known as instance type). The scheduler
             will check to ensure that a host has sufficient capabilities for
             the requested flavor. In general, this filter should always be
             enabled.
@@ -78,11 +157,11 @@ scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
                 filter is the opposite of the <literal>SameHostFilter</literal>. 
                 Using the
                 <command>nova</command> command-line tool, use the <literal>--hint</literal>
-                flag:
+                flag. For example:
 <screen>
 <prompt>$</prompt> <userinput>nova boot --image cedef40a-ed67-4d10-800e-17455edce175 --flavor 1 --hint different_host=[a0cf03a5-d921-4877-bb5c-86d26cf818e1,8c19174f-4220-44f0-824a-cd1eeef10287] server-1</userinput>
 </screen>
-With the API, use the <literal>os:scheduler_hints</literal> key:
+With the API, use the <literal>os:scheduler_hints</literal> key. For example:
 <programlisting language="json">
     {
     'server': {
@@ -212,9 +291,155 @@ With the API, use the <literal>os:scheduler_hints</literal> key:
     }
 }
 </programlisting>
-            
         </section>
 
     </section>
 
-    </chapter>
+    <section xml:id="costs-and-weights">
+        <title>Costs and Weights</title>
+        <para>
+
+       <figure xml:id="cost-figure">
+        <title>Computing weighted costs</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="figures/filteringWorkflow2.png "
+                       scale="80"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+
+            The Filter Scheduler takes the hosts that remain after the filters
+            have been applied and applies one or more cost function to each host
+            to get numerical scores for each host. Each cost score is multiplied
+            by a weighting constant specified in the <filename>nova.conf</filename>
+            config file. The weighting constant configuration option is
+            the name of the cost function, with the <literal>_weight</literal>
+            string appended. Here is an example of specifying a cost function
+            and its corresponding weight:
+            <programlisting>
+least_cost_functions=nova.scheduler.least_cost.compute_fill_first_cost_fn
+compute_fill_first_cost_fn_weight=-1.0
+            </programlisting>
+        </para>
+        <para>
+        Multiple cost functions can be specified in the <literal>least_cost_functions</literal>
+        configuration option, separated by commas. For example:
+<programlisting>
+least_cost_functions=nova.scheduler.least_cost.compute_fill_first_cost_fn,nova.scheduler.least_cost.noop_cost_fn
+compute_fill_first_cost_fn_weight=-1.0
+noop_cost_fn_weight=1.0
+</programlisting>
+
+            If there are multiple cost functions, then the weighted cost scores
+            are added together. The scheduler selects the host that has the
+            minimum weighted cost.
+
+        The Compute service comes with two cost functions:
+    </para>
+        <section xml:id="compute_fill_first_cost_fn">
+            <title>nova.scheduler.least_cost.compute_fill_first_cost_fn</title>
+            <para>This cost function calculates the amount of free memory (RAM)
+                available on the node. Because the scheduler minimizes cost,
+                if this cost function is used as a weight of +1, by doing:
+<programlisting>
+compute_fill_first_cost_fn_weight=1.0
+</programlisting>
+                then the scheduler will
+                tend to "fill up" hosts, scheduling virtual machine instances
+                to the same host until there is no longer sufficient RAM to
+                service the request, and then moving to the next node</para>
+            <para>If the user specifies a weight of -1 by doing:
+<programlisting>
+compute_fill_first_cost_fn_weight=1.0
+</programlisting>
+                then the scheduler will favor hosts that have the most amount
+                of available RAM, leading to a "spread-first" behavior.</para>
+        </section>
+        <section xml:id="noop_cost_fn">
+            <title>nova.scheduler.least_cost.noop_cost_fn</title>
+            <para>This cost function returns 1 for all hosts. It is a "no-op"
+                cost function (i.e., it does not do anything to discriminate
+                among hosts). In practice, this cost function is never used.</para>
+        </section>
+    </section>
+
+    <section xml:id="other-schedulers">
+        <title>Other Schedulers</title>
+        <para>While an administrator is likely to only need to work with
+            the Filter Scheduler, Compute comes with other schedulers as well,
+            described below.</para>
+        <section xml:id="chance-scheduler">
+            <title>Chance Scheduler</title>
+            <para>The Chance Scheduler (<literal>nova.scheduler.chance.ChanceScheduler</literal>)
+            randomly selects from the lists of filtered hosts. It is the default
+            volume scheduler.</para>
+        </section>
+        <section xml:id="multischeduler">
+            <title>Multi Scheduler</title>
+            <para>The Multi Scheduler <literal>nova.scheduler.multi.MultiScheduler</literal>
+            holds multiple sub-schedulers, one for <literal>nova-compute</literal>
+            requests and one for <literal>nova-volume</literal> requests. It
+            is the default top-level scheduler as specified by the <literal>scheduler_driver</literal>
+            configuration option.</para>
+        </section>
+        <section xml:id="simple">
+            <title>Simple Scheulder</title>
+            <para>The Simple Scheduler (<literal>nova.scheduler.simple.SimpleScheduler</literal>)
+            implements a naive scheduler that tries to find the least loaded host
+            (i.e., implements a "spread-first" algorithm). It can schedule requests
+            for both <literal>nova-compute</literal> and <literal>nova-volume</literal>.
+            </para>
+            <para>The Simple Scheduler supports the following configuration
+                options:
+    <table rules="all" xml:id="simple-scheduler-conf">
+        <caption>Description of Simple Scheduler configuration options</caption>
+        <col width="30%"/>
+        <col width="70%"/>
+        <thead>
+            <tr>
+                <td>Configuration option=Default value</td>
+                <td>(Type) Description</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <literal>max_cores=16</literal>
+                </td>
+                <td>
+                    (IntOpt) The maximum number of instance cores to allow
+                    per host. Used when servicing compute requests to determine
+                    whether a host is a valid candidate for launching a VM
+                    instance.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <literal>max_gigabytes=10000</literal>
+                </td>
+                <td>
+                    (IntOpt) Maximum number of volume gigabytes to allow per
+                    host. Used when servicing volume requests to determine
+                    whether a host is a valid candidate for creating a new
+                    volume.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <literal>
+                     skip_isolated_core_check=true
+                    </literal>
+                </td>
+                <td>
+                    (BoolOpt) If true, allow overcommitting of vcpus on
+                    <link linkend="isolatedhostsfilter">isolated hosts</link>.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+            </para>
+        </section>
+    </section>
+</chapter>
