@@ -14,8 +14,8 @@
         including authentication and a dashboard.</para>
     <section xml:id="before-you-begin-swift-install">
         <title>Before You Begin</title>
-        <para>Have a copy of the Ubuntu Server installation media on hand
-            if you are installing on a new server. The packages referred to support 10.10 maverick, 11.04 natty, or 11.10 oneiric.</para>
+        <para>Have a copy of the Ubuntu Server installation media on
+            hand if you are installing on a new server. </para>
         <para>This document demonstrates installing a cluster using the following
             types of nodes:</para>
         <itemizedlist>
@@ -49,12 +49,7 @@
                 <para>Install the baseline Ubuntu Server (10.04
                     through 12.04) on all nodes.</para>
             </listitem>
-            <listitem>
-                <para>First, you need to get the stable release
-                    package for Object Storage. </para>
-                <literallayout class="monospaced">add-apt-repository ppa:swift-core/release</literallayout>
-            </listitem>
-            <listitem><para>Now, install the swift service and openSSH. </para>
+            <listitem><para>Install the swift service and openSSH. </para>
                 <literallayout class="monospaced">sudo apt-get install swift openssh-server  rsync memcached python-netifaces python-xattr python-memcache </literallayout>
                 </listitem>
             <listitem><para>Create and populate configuration directories on all nodes:</para>
@@ -63,17 +58,17 @@ chown -R swift:swift /etc/swift/</literallayout></para>
             </listitem>
             
             <listitem><para>Create /etc/swift/swift.conf:</para>
-                <para><literallayout class="monospaced">[swift-hash]
-# random unique string that can never change, keep it secret and do NOT lose it
-swift_hash_path_suffix = changeme
+                <para><literallayout class="monospaced"><xi:include parse="text" href="samples/swift.conf.txt" />
                                 </literallayout></para>
             </listitem>
         </orderedlist>
         <note>
-            <para>The suffix value in /etc/swift/swift.conf should be set to some random
-                string of text to be used as a salt when hashing to determine
-                mappings in the ring. This file should be the same on every node in
-                the cluster!</para>
+            <para>The suffix value in
+                    <filename>/etc/swift/swift.conf</filename> should
+                be set to some random string of text to be used as a
+                salt when hashing to determine mappings in the ring.
+                This file should be the same on every node in the
+                cluster!</para>
         </note>
         <para>Next, set up your storage nodes, proxy node, and an auth
             node, in this walkthrough we'll use the OpenStack Identity

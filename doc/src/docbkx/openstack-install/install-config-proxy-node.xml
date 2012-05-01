@@ -41,52 +41,7 @@ to
         <listitem>
             <para>Create /etc/swift/proxy-server.conf:</para>
             <para>
-                <literallayout class="monospaced"> [DEFAULT]
-bind_port = 8080
-user = swift
- 
-[pipeline:main]
-pipeline = catch_errors healthcheck cache authtoken swiftauth proxy-server
- 
-[app:proxy-server]
-use = egg:swift#proxy
-allow_account_management = true
-account_autocreate = true
-set log_name = swift-proxy-server
-set log_facility = LOG_LOCAL0
-set log_level = DEBUG
-set access_log_name = swift-proxy-server
-set access_log_facility = LOG_LOCAL0
-set access_log_level = DEBUG
-set log_headers = True
- 
-[filter:healthcheck]
-use = egg:swift#healthcheck
- 
-[filter:catch_errors]
-use = egg:swift#catch_errors
- 
-[filter:cache]
-use = egg:swift#memcache
-set log_name = cache
- 
-[filter:swiftauth]
-paste.filter_factory = keystone.middleware.swift_auth:filter_factory
-operator_roles = admin, SwiftOperator
-is_admin = true
- 
-[filter:authtoken]
-paste.filter_factory = keystone.middleware.auth_token:filter_factory
-service_protocol = http
-service_host = 127.0.0.1
-service_port = 5000
-auth_protocol = http
-auth_host = 127.0.0.1
-auth_port = 35357
-admin_tenant_name = service
-admin_user = adminUser
-admin_password = 012345SECRET99TOKEN012345
-delay_auth_decision = 0 </literallayout>
+                <literallayout class="monospaced"><xi:include parse="text" href="samples/proxy-server.conf.txt" /></literallayout>
             </para>
             <note>
                 <para>If you run multiple memcache servers, put the multiple
