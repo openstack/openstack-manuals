@@ -422,15 +422,16 @@ __EOF_
                 revoked certificates when their connection is
                 re-negotiated (every hour). You set the
                     <literal>use_project_ca</literal> option in
-                nova.conf for cloudpipes to work securely so that each
+                <filename>nova.conf</filename> for cloudpipes to work securely so that each
                 project has its own Certificate Authority (CA).</para></section>
         <section xml:id="cloudpipe-per-project-vpns">
             <title>Cloudpipe — Per Project Vpns</title>
+            
             <para> Cloudpipe is a method for connecting end users to their project instances in VLAN
                 networking mode. </para>
             <para> The support code for cloudpipe implements admin commands (via an extension) to
-                automatically create a VM for a project that allows users to vpn into the private
-                network of their project. Access to this vpn is provided through a public port on
+                automatically create a VM for a project that allows users to VPN into the private
+                network of their project. Access to this VPN is provided through a public port on
                 the network host for the project. This allows users to have free access to the
                 virtual machines in their project without exposing those machines to the public
                 internet. </para>
@@ -463,7 +464,7 @@ __EOF_
 vpn_image_id=[uuid from glance]
                         </programlisting>
                     </listitem>
-                    <listitem><para>you should set a few other config options to make vpns work properly: </para>
+                    <listitem><para>you should set a few other configuration options to make VPNs work properly: </para>
                         <programlisting>
 use_project_ca=True
 cnt_vpn_clients=5
@@ -472,7 +473,7 @@ force_dhcp_release=True
                     </listitem>
                 </itemizedlist>
                 <para>
-                    When you use the cloudpipe extension to launch a vpn for a user it goes through the
+                    When you use the os-cloudpipe extension (POST v2/{tenant_id}/os-cloudpipe) or the nova client (<userinput>nova cloudpipe-create <replaceable>[project_id]</replaceable></userinput>) to launch a VPN for a user it goes through the
                     following process:
                 </para>
                 <orderedlist>
@@ -488,7 +489,7 @@ force_dhcp_release=True
                     </listitem>
                     <listitem>
                         <para> creates a cert and private key for the
-                            vpn instance and saves it in the
+                            VPN instance and saves it in the
                                    <literal>CA/projects/<replaceable>&lt;project_id&gt;</replaceable>/
                                 directory</literal>
                         </para>
@@ -500,24 +501,24 @@ force_dhcp_release=True
                         <para> launches an
                                 <replaceable>[vpn_instance_type]</replaceable>
                             instance with the above settings using the
-                            option-specified vpn image</para>
+                            option-specified VPN image</para>
                     </listitem>
                 </orderedlist>
             </section>
             <section xml:id="vpn-access">
                 <title>VPN Access</title>
-                <para> In vlan networking mode, the second IP in each private network is reserved
+                <para> In VLAN networking mode, the second IP in each private network is reserved
                     for the cloudpipe instance. This gives a consistent IP to the instance so that
                     nova-network can create forwarding rules for access from the outside world. The
                     network for each project is given a specific high-numbered port on the public IP
-                    of the network host. This port is automatically forwarded to 1194 on the vpn
+                    of the network host. This port is automatically forwarded to 1194 on the VPN
                     instance. </para>
                 <para> If specific high numbered ports do not work for
                     your users, you can always allocate and associate
                     a public IP to the instance, and then change the
                         <literal>vpn_public_ip</literal> and
                         <literal>vpn_public_port</literal> in the
-                    database. Rather than using the db directly, you
+                    database. Rather than using the database directly, you
                     can also use <command>nova-manage vpn change
                             <replaceable>[new_ip]</replaceable>
                         <replaceable>[new_port]</replaceable></command>
@@ -563,7 +564,7 @@ force_dhcp_release=True
                     will be on whichever server used the original
                     request. To make debugging easier, you may want to
                     put a common administrative key into the cloudpipe
-                    image that you create</para>
+                    image that you create.</para>
             </section>
         </section></section>
     <section xml:id="enabling-ping-and-ssh-on-vms">
@@ -578,7 +579,7 @@ force_dhcp_release=True
                 credentials used to interact with nova-api have been
                 put under <filename>/root/.bashrc</filename>. If the
                 EC2 credentials have been put into another user's
-                .bashrc file, then, it is necessary to run these
+                <filename>.bashrc</filename> file, then, it is necessary to run these
                 commands as the user. </para>
         </note>
             <para>Using the nova command-line tool:</para>
