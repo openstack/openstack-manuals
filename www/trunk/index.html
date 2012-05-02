@@ -138,11 +138,6 @@
 									<div class="dropDown">
 										<div>
 											<ul>
-												<li class="link"><a href="/cactus/" title=
-													"Go to the &quot;Cactus&quot; page">Cactus</a></li>
-												
-												<li class="link"><a href="/bexar/" title=
-													"Go to the &quot;Bexar&quot; page">Bexar</a></li>
 												
 												<li class="link"><a href="/diablo/" title=
 													"Go to the &quot;Diablo&quot; page">Diablo</a></li>
@@ -222,50 +217,41 @@
 					Openstack.org is powered by <a href=
 						"http://www.rackspacecloud.com/">Rackspace Cloud Computing</a>.</p>
 			</div>
-		</div><script type="text/javascript" src=
-  "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js">
-</script><script type="text/javascript" src="/scripts/jquery.jparallax.min.js">
-</script><script type="text/javascript" src="/scripts/jquery.ticker.js">
-</script><script type="text/javascript">
+		</div><script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script>
+		
+		<script src="http://docs.openstack.org/common/jquery/jquery.hoverIntent.minified.js" type="text/javascript" charset="utf-8">
+</script>
+		
+		
+		<script type="text/javascript" charset="utf-8">
 //<![CDATA[
-  var disqus_shortname = 'openstackblog';
-  (function () {
-  var s = document.createElement('script'); s.async = true;
-  s.src = 'http://disqus.com/forums/openstackblog/count.js';
-  (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-  }());
-  //]]>
-  </script><script type="text/javascript">
-//<![CDATA[
-  $(document).ready(function(){
-    // Add transitions for quotes
-        $('#quotes').list_ticker({
-                speed:8000,
-                effect:'fade'
-        });
-        
-        // Declare parallax on layers
-        jQuery('.parallax-layer').parallax({
-            mouseport: jQuery("#port")
-        });
-        
-        //hide job descriptions
-        $('.jobDescription').hide();
-        
-        // toggles the job descriptions  
-         $('a.jobTitle').click(function() {
-           $(this).closest('div.jobPosting').find('div.jobDescription').slideToggle(400);
-           return false;
-         });
-        
-                        
-  })
-  //]]>
-  </script><script type="text/javascript" src="/shadowbox/shadowbox.js">
-</script><script type="text/javascript">
-//<![CDATA[
-                 Shadowbox.init();
-  //]]>
-  </script>
+    $(document).ready(function() {
+      
+      function addMenu(){
+        $(".dropDown").addClass("menuHover");
+        }
+
+      function removeMenu(){
+        $(".dropDown").removeClass("menuHover");
+        }
+
+    var menuConfig = {
+         interval: 500,
+         sensitivity: 4,
+         over: addMenu,
+         timeout: 500,
+         out: removeMenu
+    };
+
+    $(".dropDownTrigger").hoverIntent(menuConfig);    
+    
+    
+      
+    });
+    
+
+
+    //]]>
+</script>
 	</body>
 </html>
