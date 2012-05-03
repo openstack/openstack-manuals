@@ -12,13 +12,14 @@
 <!DOCTYPE application [<!ENTITY % common  SYSTEM "common.ent">
 %common;]>
 
-<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-   xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-   xmlns="http://wadl.dev.java.net/2009/02"
+<application xmlns="http://wadl.dev.java.net/2009/02"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema"  
    xmlns:db="http://docbook.org/ns/docbook"
    xmlns:csapi="http://docs.openstack.org/compute/api/v1.1"
    xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
    xmlns:common="http://docs.openstack.org/common/api/v1.0"
+   xmlns:wadl="http://wadl.dev.java.net/2009/02"
    xmlns:atom="http://www.w3.org/2005/Atom"
    xsi:schemaLocation="http://docs.openstack.org/compute/api/v1.1
                        xsd/api.xsd
@@ -70,7 +71,7 @@
                             <resource path="{network_id}" type="#NetworkAddressList">
                                 <param name="network_id" style="template" type="xsd:string"><doc xml:lang="EN" title="network_id">
                                     <p xmlns="http://www.w3.org/1999/xhtml">
-                                        Network address list.
+                                        Network ID.
                                     </p></doc></param>
                             </resource>
                         </resource>
@@ -151,27 +152,7 @@
     </resource_type>
     
     
- <!-- <resource_type id="Volumes">
-        <doc xml:lang="EN" title="Volumes">
-            <p xmlns="http://www.w3.org/1999/xhtml">
-                A list of volume attachments associated with a server.
-            </p>
-        </doc>
-        <method href="#attachVolume"/>
-        <method href="#listVolumeAttachments"/>
-        
-     
-    </resource_type> 
-   
-    <resource_type id="VolumeAttachmentList">
-        <doc xml:lang="EN" title="Volume Attachment List">
-            <p xmlns="http://www.w3.org/1999/xhtml">
-                A list of volume attachments associated with a server.
-            </p>
-        </doc>
-        <method href="#getVolumeAttachmentDetails"/>
-        <method href="#deleteVolumeAttachment"/>
-    </resource_type> -->
+ 
   
     <resource_type id="NetworkAddressList">
         <doc xml:lang="EN" title="Network Address List">
@@ -236,9 +217,9 @@
         <resource id="MetadataKey" path="{key}">
             <param name="key" style="template" type="csapi:MetadataKey">
                 <doc xml:lang="EN" title="Get Volume Details">
-                    <db:para>
+                    <p xmlns="http://www.w3.org/1999/xhtml">
                         A string no longer than 255 characters.
-                    </db:para>
+                    </p>
                 </doc>
             </param>
             <method href="#getMetadataItem"/>
@@ -250,7 +231,7 @@
     <resource_type id="MetadataList">
         <doc xml:lang="EN" title="Metadata List">
             <p xmlns="http://www.w3.org/1999/xhtml">
-                A List of Metadata
+                A list of metadata.
             </p>
         </doc>
         <method href="#listMetadata"/>
@@ -270,13 +251,18 @@
         </doc>
         <response status="200 203">
             <representation mediaType="application/xml" element="common:version">
+                <doc>
+                    <xsdxt:code href="samples/version.xml"/>
+                </doc>
                 <param name="location" style="plain" type="xsd:anyURI"
                        required="true"
-                       path="/common:version/atom:link[@rel='self']/@href"><doc xml:lang="EN" title="Location"><db:para>Full URL to a service or server.</db:para></doc>
+                       path="/common:version/atom:link[@rel='self']/@href"><doc xml:lang="EN" title="Location"><p xmlns="http://www.w3.org/1999/xhtml">Full URL to a service or server.</p></doc>
                     <link resource_type="#VersionDetails" rel="self"/>
                 </param>
             </representation>
-            <representation mediaType="application/json"/>
+            <representation mediaType="application/json"> <doc>
+                <xsdxt:code href="samples/version.json"/>
+            </doc></representation>
         </response>
         <!-- Common Faults -->
         &commonFaults;
@@ -290,8 +276,14 @@
             </p>
         </doc>
         <response status="200 203">
-            <representation mediaType="application/xml" element="common:limits"/>
-            <representation mediaType="application/json"/>
+            <representation mediaType="application/xml" element="common:limits">
+                <doc>
+                    <xsdxt:code href="samples/limits.xml"/>
+                </doc>
+            </representation>
+            <representation mediaType="application/json">   <doc>
+                <xsdxt:code href="samples/limits.json"/>
+            </doc></representation>
         </response>
         <!-- Common Faults -->
         &commonFaults;
@@ -301,11 +293,14 @@
     <method name="GET" id="listExtensions">
         <doc xml:lang="EN" title="List Extensions">
             <p xmlns="http://www.w3.org/1999/xhtml">
-                List all available extensions.
+                Lists all available extensions.
             </p>
         </doc>
         <response status="200 203">
             <representation mediaType="application/xml" element="common:extensions">
+                <doc>
+                    <xsdxt:code href="samples/extensions.xml"/>
+                </doc>
                 <param name="next" style="plain" type="xsd:anyURI"
                     path="/common:extensions/atom:link[@rel='next']/@href"><doc><p xmlns="http://www.w3.org/1999/xhtml">Move to the next item in the list.</p></doc>
                     <link resource_type="#ExtensionList" rel="next"/>
@@ -315,21 +310,29 @@
                     <link resource_type="#ExtensionList" rel="previous"/>
                 </param>
             </representation>
-            <representation mediaType="application/json"/>
+            <representation mediaType="application/json"> <doc>
+                <xsdxt:code href="samples/extensions.json"/>
+            </doc></representation>
         </response>
         <!-- Common Faults -->
         &commonFaults;
     </method>
 
     <method name="GET" id="getExtension">
-        <doc xml:lang="EN" title="Get Extension">
-            <p xmlns="http://www.w3.org/1999/xhtml">
-                Get details about a specific extension. Extensions enable the introduction of new features in the API without requiring a version change and they allow the introduction of vendor-specific functionality.
-            </p>
-        </doc>
+        <wadl:doc xml:lang="EN" title="Get Extension" xmlns="http://docbook.org/ns/docbook">
+            <para role="shortdesc">
+                Gets details about a specific extension. Extensions enable the introduction of new features in the API without requiring a version change and they allow the introduction of vendor-specific functionality.
+            </para>
+        </wadl:doc>
         <response status="200 203">
-            <representation mediaType="application/xml" element="common:extension"/>
-            <representation mediaType="application/json"/>
+            <representation mediaType="application/xml" element="common:extension">
+                <doc>
+                    <xsdxt:code href="samples/extension.xml"/>
+                </doc>
+            </representation>
+            <representation mediaType="application/json"><doc>
+                <xsdxt:code href="samples/extension.json"/>
+            </doc></representation>
         </response>
         <!-- Common and GET Faults-->
         &commonFaults;
@@ -338,16 +341,19 @@
 
     <!-- Images -->
     <method name="GET" id="listDetailImages">
-        <doc xml:lang="EN" title="List Detail Images">
-            <p xmlns="http://www.w3.org/1999/xhtml">
-                List available images (all details).
-            </p>
-        </doc>
+        <wadl:doc xml:lang="EN" title="List Detail Images" xmlns="http://docbook.org/ns/docbook">
+            <para role="shortdesc">
+                Lists all details for available images.
+            </para>
+        </wadl:doc>
         <request>
             &imageListParameters;
         </request>
         <response status="200 203">
             <representation mediaType="application/xml" element="csapi:images">
+                <doc>
+                    <xsdxt:code href="samples/images.xml"/>
+                </doc>
                 <param name="next" style="plain" type="xsd:anyURI"
                     path="/csapi:images/atom:link[@rel='next']/@href"><doc><p xmlns="http://www.w3.org/1999/xhtml">Move to the next item in the list.</p></doc>
                     <link resource_type="#DetailImageList" rel="next"/>
@@ -357,7 +363,9 @@
                     <link resource_type="#DetailImageList" rel="previous"/>
                 </param>
             </representation>
-            <representation mediaType="application/json"/>
+            <representation mediaType="application/json"> <doc>
+                <xsdxt:code href="samples/images.json"/>
+            </doc></representation>
         </response>
         <!-- Common Faults -->
         &commonFaults;
@@ -366,7 +374,7 @@
     <method name="GET" id="listImages">
         <doc xml:lang="EN" title="List Images">
             <p xmlns="http://www.w3.org/1999/xhtml">
-                List available images (IDs, names, links).
+                Lists IDs, names, and links for available images.
             </p>
         </doc>
         <request>
@@ -374,11 +382,15 @@
         </request>
         <response status="200 203">
             <representation mediaType="application/xml" element="csapi:images">
+                <doc>
+                    <xsdxt:code href="samples/images.xml"/>
+                </doc>
                 <param name="images" style="plain" required="true"
                        type="csapi:ImagesWithOnlyIDsNamesLinks"
-                       path="/csapi:images"/>
+                       path="/csapi:images"><doc><p xmlns="http://www.w3.org/1999/xhtml">Image information.</p></doc></param>
                 <param name="next" style="plain" type="xsd:anyURI"
-                    path="/csapi:images/atom:link[@rel='next']/@href"><doc><p xmlns="http://www.w3.org/1999/xhtml">Move to the next item in the list.</p></doc>
+                    path="/csapi:images/atom:link[@rel='next']/@href">
+                    <doc><p xmlns="http://www.w3.org/1999/xhtml">Move to the next item in the list.</p></doc>
                     <link resource_type="#ImageList" rel="next"/>
                 </param>
                 <param name="previous" style="plain" type="xsd:anyURI"
@@ -386,7 +398,9 @@
                     <link resource_type="#ImageList" rel="previous"/>
                 </param>
             </representation>
-            <representation mediaType="application/json"/>
+            <representation mediaType="application/json"> <doc>
+                <xsdxt:code href="samples/images.json"/>
+            </doc></representation>
         </response>
         <!-- Common Faults -->
         &commonFaults;
@@ -395,12 +409,16 @@
     <method name="GET" id="getImage">
         <doc xml:lang="EN" title="Get Image Details">
             <p xmlns="http://www.w3.org/1999/xhtml">
-                List details of the specified image.
+                Lists details of the specified image.
             </p>
         </doc>
         <response status="200 203">
-            <representation mediaType="application/xml" element="csapi:image"/>
-            <representation mediaType="application/json"/>
+            <representation mediaType="application/xml" element="csapi:image"> <doc>
+                <xsdxt:code href="samples/image.xml"/>
+            </doc></representation>
+            <representation mediaType="application/json"> <doc>
+                <xsdxt:code href="samples/image.json"/>
+            </doc></representation>
         </response>
         <!-- Common and GET Faults-->
         &commonFaults;
@@ -429,18 +447,35 @@
         <request>
             &serverCreateParameters;
             <representation mediaType="application/xml" element="csapi:server">
+                <doc> 
+                    <para xmlns="http://docbook.org/ns/docbook">The following examples show XML and JSON requests:</para>
+                    <xsdxt:code href="samples/server-post-req.xml"/>
+                </doc>
                 <param name="server" style="plain" required="true"
                        type="csapi:ServerForCreate"
-                       path="/csapi:server"/>
+                       path="/csapi:server">
+                <doc xml:lang="EN" title="server">
+                    <p xmlns="http://www.w3.org/1999/xhtml">Server.</p>
+                </doc></param>
             </representation>
-            <representation mediaType="application/json"/>
+            <representation mediaType="application/json">
+                <doc>
+                <xsdxt:code href="samples/server-post-req.json"/>
+            </doc></representation>
+         
         </request>
         <response status="202">
             <param name="Location" style="header"
-                   required="true" type="xsd:anyURI"/>
-            <representation mediaType="application/xml" element="csapi:server"/>
+                required="true" type="xsd:anyURI"><doc xml:lang="EN" title="Location"><p xmlns="http://www.w3.org/1999/xhtml">Full URL to a server created by the service.</p></doc></param>
+            <representation mediaType="application/xml" element="csapi:server">
+                <doc>
+                    <xsdxt:code href="samples/server-post-resp.xml"/>
+                </doc>
+            </representation>
             <representation mediaType="application/json" >
-            <doc xml:lang="EN" title="Location"><db:para>Full URL to a server created by the service.</db:para></doc>
+                <doc>
+                    <xsdxt:code href="samples/server-post-resp.json"/>
+                </doc>   
             </representation>
         </response>
         <!-- All other common faults except build in progess -->
@@ -453,7 +488,7 @@
     <method name="GET" id="listServers">
         <doc xml:lang="EN" title="List Servers">
             <p xmlns="http://www.w3.org/1999/xhtml">
-                List all servers (IDs, names, links).
+                Lists IDs, names, and links for all servers.
             </p>
         </doc>
         <request>
@@ -461,12 +496,17 @@
         </request>
         <response status="200 203">
             <representation mediaType="application/xml" element="csapi:servers">
+              
                 <param name="servers" style="plain" required="true"
                        type="csapi:ServersWithOnlyIDsNamesLinks"
-                       path="/csapi:servers"/>
+                       path="/csapi:servers/atom:link[@rel='servers']/@href">
+                    <doc xml:lang="EN"><p xmlns="http://www.w3.org/1999/xhtml">List of servers.</p></doc>
+                    <link resource_type="#ServerList" rel="servers"/>
+                </param>
+              
                 <param name="next" style="plain" type="xsd:anyURI"
                        path="/csapi:servers/atom:link[@rel='next']/@href">
-                    <doc><p xmlns="http://www.w3.org/1999/xhtml">Move to the next item in the list.</p></doc>
+                    <doc  xml:lang="EN"><p xmlns="http://www.w3.org/1999/xhtml">Move to the next item in the list.</p></doc>
                     <link resource_type="#ServerList" rel="next"/>
                 </param>
                 <param name="previous" style="plain" type="xsd:anyURI"
@@ -475,7 +515,9 @@
                     <link resource_type="#ServerList" rel="previous"/>
                 </param>
             </representation>
-            <representation mediaType="application/json"/>
+            <representation mediaType="application/json">
+                
+            </representation>
         </response>
         <!-- Common Faults -->
         &commonFaults;
@@ -484,7 +526,7 @@
     <method name="GET" id="listDetailServers">
         <doc xml:lang="EN" title="List Detail Servers">
             <p xmlns="http://www.w3.org/1999/xhtml">
-                List all servers (all details).
+                Lists details for all servers.
             </p>
         </doc>
         <request>
@@ -492,6 +534,10 @@
         </request>
         <response status="200 203">
             <representation mediaType="application/xml" element="csapi:servers">
+                <doc>
+                    <p xmlns="http://docbook.org/ns/docbook">The following examples show the list server responses:</p>
+                    <xsdxt:code href="samples/servers.xml"/>
+                </doc>
                 <param name="next" style="plain" type="xsd:anyURI"
                        path="/csapi:servers/atom:link[@rel='next']/@href">
                     <doc><p xmlns="http://www.w3.org/1999/xhtml">Move to the next item in the list.</p></doc>
@@ -503,7 +549,10 @@
                     <link resource_type="#DetailServerList" rel="previous"/>
                 </param>
             </representation>
-            <representation mediaType="application/json"/>
+            <representation mediaType="application/json">
+                <doc>
+                <xsdxt:code href="samples/servers.json"/>
+            </doc></representation>
         </response>
         <!-- Common Faults -->
         &commonFaults;
@@ -512,12 +561,18 @@
     <method name="GET" id="getServer">
         <doc xml:lang="EN" title="Get Server Details">
             <p xmlns="http://www.w3.org/1999/xhtml">
-                List details of the specified server.
+                Lists details for the specified server.
             </p>
         </doc>
         <response status="200 203">
-            <representation mediaType="application/xml" element="csapi:server"/>
-            <representation mediaType="application/json"/>
+            <representation mediaType="application/xml" element="csapi:server">
+                <doc>
+                    <xsdxt:code href="samples/server.xml"/>
+                </doc>
+            </representation>
+            <representation mediaType="application/json"> <doc>
+                <xsdxt:code href="samples/server.json"/>
+            </doc></representation>
         </response>
         <!-- Common and GET Faults-->
         &commonFaults;
@@ -527,23 +582,28 @@
     <method name="PUT" id="updateServer">
         <doc xml:lang="EN" title="Update Server Name / Administrative Password">
             <p xmlns="http://www.w3.org/1999/xhtml">
-                Update the specified server's name and/or
-                administrative password.
+                Updates the name and/or
+                administrative password for the specified server.
             </p>
         </doc>
         <request>
             <representation mediaType="application/xml" element="csapi:server">
+                <doc>
+                    <xsdxt:code href="samples/changepassword.xml"/>
+                </doc>
                 <param name="server" style="plain" required="true"
                        type="csapi:ServerForUpdate"
                        path="/csapi:server">
                     <doc xml:lang="EN">
                         <p xmlns="http://www.w3.org/1999/xhtml">
-                            Name of the server you want to update.
+                            The name of the server that you want to update.
                         </p>
                     </doc>
                 </param>
             </representation>
-            <representation mediaType="application/json"/>
+            <representation mediaType="application/json"> <doc>
+                <xsdxt:code href="samples/changepassword.json"/>
+            </doc></representation>
         </request>
         <response status="200">
             <representation mediaType="application/xml" element="csapi:server"/>
@@ -559,7 +619,7 @@
     <method name="DELETE" id="deleteServer">
         <doc xml:lang="EN" title="Delete Server">
             <p xmlns="http://www.w3.org/1999/xhtml">
-                Terminate the specified server.
+                Terminates the specified server.
             </p>
         </doc>
         <response status="204"/>
@@ -573,12 +633,20 @@
     <method name="POST" id="changePassword">
         <doc xml:lang="EN" title="Change Password">
             <p xmlns="http://www.w3.org/1999/xhtml">
-                Change a server's password.
+                Changes the password for a server. Specify the <code>changePassword</code> action in the request body.
             </p>
         </doc>
         <request>
-            <representation mediaType="application/xml" element="csapi:changePassword"/>
-            <representation mediaType="application/json"/>
+            <representation mediaType="application/xml" element="csapi:changePassword">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/changePassword.xml"/>
+                </doc>
+            </representation>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/changePassword.json" />
+                </doc>
+            </representation>
         </request>
         <response status="202"/>
         <!-- Common, GET, postput, inProgress Faults-->
@@ -591,12 +659,17 @@
     <method name="POST" id="rebootServer">
         <doc xml:lang="EN" title="Reboot Server">
             <p xmlns="http://www.w3.org/1999/xhtml">
-                Reboot the specified server.
+                Reboots the specified server. Specify the <code>reboot</code> action in the request body.
             </p>
         </doc>
         <request>
-            <representation mediaType="application/xml" element="csapi:reboot"/>
-            <representation mediaType="application/json"/>
+            <representation mediaType="application/xml" element="csapi:reboot"> 
+                <doc xml:lang="EN">
+                <xsdxt:code href="samples/reboot.xml" />
+            </doc></representation>
+            <representation mediaType="application/json"><doc xml:lang="EN">
+                <xsdxt:code href="samples/reboot.json" />
+            </doc></representation>
         </request>
         <response status="202"/>
         <!-- Common, GET, postput, inProgress Faults-->
@@ -609,12 +682,16 @@
     <method name="POST" id="rebuildServer">
         <doc xml:lang="EN" title="Rebuild Server">
             <p xmlns="http://www.w3.org/1999/xhtml">
-                Rebuild the specified server.
+                Rebuilds the specified server. Specify the <code>rebuild</code> action in the request body.
             </p>
         </doc>
         <request>
-            <representation mediaType="application/xml" element="csapi:rebuild"/>
-            <representation mediaType="application/json"/>
+            <representation mediaType="application/xml" element="csapi:rebuild"><doc xml:lang="EN">
+                <xsdxt:code href="samples/rebuild_all.xml" />
+            </doc></representation>
+            <representation mediaType="application/json"> <doc xml:lang="EN">
+                <xsdxt:code href="samples/rebuild_all.json" />
+            </doc></representation>
         </request>
         <response status="202">
             <param name="Location" style="header"
@@ -624,8 +701,12 @@
                         Specific URL of the server you want to rebuild.
                     </p></doc>
             </param>
-            <representation mediaType="application/xml" element="csapi:server"/>
-            <representation mediaType="application/json"/>
+            <representation mediaType="application/xml" element="csapi:server"><doc xml:lang="EN">
+                <xsdxt:code href="samples/rebuild-resp.xml" />
+            </doc>  </representation>
+            <representation mediaType="application/json"> <doc xml:lang="EN">
+                <xsdxt:code href="samples/rebuild-resp.json" />
+            </doc>  </representation>
         </response>
         <!-- All other faults, build, common, get, post/put, and inProgress -->
         &commonFaults;
@@ -638,17 +719,25 @@
     <method name="POST" id="resizeServer">
         <doc xml:lang="EN" title="Resize Server">
             <p xmlns="http://www.w3.org/1999/xhtml">
-                Resize the specified server.
+                Resizes the specified server. Specify the <code>resize</code> action in the request body.
             </p>
         </doc>
         <request>
-            <representation mediaType="application/xml" element="csapi:resize"/>
-            <representation mediaType="application/json"/>
+            <representation mediaType="application/xml" element="csapi:resize"> <doc xml:lang="EN">
+                <xsdxt:code href="samples/resize.xml" />
+            </doc></representation>
+            <representation mediaType="application/json"> <doc xml:lang="EN">
+                <xsdxt:code href="samples/resize.json" />
+            </doc></representation>
         </request>
         <response status="202"/>
         <response status="403">
-            <representation mediaType="application/xml" element="csapi:resizeNotAllowed"/>
-            <representation mediaType="application/json"/>
+            <representation mediaType="application/xml" element="csapi:resizeNotAllowed"><doc xml:lang="EN">
+                <xsdxt:code href="samples/resizeNotAllowed.xml" />
+            </doc></representation>
+            <representation mediaType="application/json"><doc xml:lang="EN">
+                <xsdxt:code href="samples/resizeNotAllowed.json" />
+            </doc></representation>
         </response>
         <!-- All other faults, build, common, get, post/put, and inProgress -->
         &commonFaults;
@@ -661,17 +750,30 @@
     <method name="POST" id="confirmServer">
         <doc xml:lang="EN" title="Confirm Resized Server">
             <p xmlns="http://www.w3.org/1999/xhtml">
-                Confirm a pending resize action.
+                Confirms a pending resize action. Specify the <code>confirmResize</code> action in the request body.
             </p>
         </doc>
         <request>
-            <representation mediaType="application/xml" element="csapi:confirmResize"/>
-            <representation mediaType="application/json"/>
+            <representation mediaType="application/xml" element="csapi:confirmResize">
+                <doc xml:lang="EN">
+                <xsdxt:code href="samples/confirmResize.xml" />
+            </doc></representation>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/confirmResize.json" />
+                </doc>
+            </representation>
         </request>
         <response status="204"/>
         <response status="403">
-            <representation mediaType="application/xml" element="csapi:resizeNotAllowed"/>
-            <representation mediaType="application/json"/>
+            <representation mediaType="application/xml" element="csapi:resizeNotAllowed">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/resizeNotAllowed.xml" />
+                </doc>
+            </representation>
+            <representation mediaType="application/json"> <doc xml:lang="EN">
+                <xsdxt:code href="samples/resizeNotAllowed.json" />
+            </doc></representation>
         </response>
         <!-- All other faults, build, common, get, post/put, and inProgress -->
         &commonFaults;
@@ -684,17 +786,31 @@
     <method name="POST" id="revertServer">
         <doc xml:lang="EN" title="Revert Resized Server">
             <p xmlns="http://www.w3.org/1999/xhtml">
-                Cancel and revert a pending resize action.
+                Cancels and reverts a pending resize action. Specify the <code>revertResize</code> action in the request body.
             </p>
         </doc>
         <request>
-            <representation mediaType="application/xml" element="csapi:revertResize"/>
-            <representation mediaType="application/json"/>
+            <representation mediaType="application/xml" element="csapi:revertResize">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/revertResize.xml" />
+                </doc>
+            </representation>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/revertResize.json" />
+                </doc>
+            </representation>
         </request>
         <response status="202"/>
         <response status="403">
-            <representation mediaType="application/xml" element="csapi:resizeNotAllowed"/>
-            <representation mediaType="application/json"/>
+            <representation mediaType="application/xml" element="csapi:resizeNotAllowed">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/resizeNotAllowed.xml" />
+                </doc>
+            </representation>
+            <representation mediaType="application/json"><doc xml:lang="EN">
+                <xsdxt:code href="samples/resizeNotAllowed.json" />
+            </doc></representation>
         </response>
         <!-- All other faults, build, common, get, post/put, and inProgress -->
         &commonFaults;
@@ -707,12 +823,16 @@
     <method name="POST" id="createImage">
         <doc xml:lang="EN" title="Create Image">
             <p xmlns="http://www.w3.org/1999/xhtml">
-                Creates a new image.
+                Creates a new image. Specify the <code>createImage</code> action in the request body.
             </p>
         </doc>
         <request>
-            <representation mediaType="application/xml" element="csapi:createImage"/>
-            <representation mediaType="application/json"/>
+            <representation mediaType="application/xml" element="csapi:createImage"> <doc>
+                <xsdxt:code href="samples/createImage.xml"/>
+            </doc></representation>
+            <representation mediaType="application/json"> <doc>
+                <xsdxt:code href="samples/createImage.json"/>
+            </doc></representation>
         </request>
         <response status="202">
             <param name="Location" style="header"
@@ -739,14 +859,24 @@
     <method name="GET" id="getServerAddresses">
         <doc xml:lang="EN" title="List Addresses">
             <p xmlns="http://www.w3.org/1999/xhtml">
-                List all server addresses.
+                Lists all server addresses.
             </p>
         </doc>
         <request>
-            <param name="changes-since" style="query" required="false" type="xsd:dateTime"></param>
+            <param name="changes-since" style="query" required="false" type="xsd:dateTime"  path="/csapi:addresses/atom:link[@rel='changes-since']/@href">
+                <doc><p xmlns="http://www.w3.org/1999/xhtml">A time/date stamp for the last changed status. Checks for changes since a 
+                    previous request. 
+                    Specify the changes-since time as UNIX time (the number of seconds since January 1, 1970, 00:00:00 UTC, not counting leap seconds). 
+                    If nothing has changed since the changes-since time, 
+                    a 304 (Not Modified) response is returned. 
+                    If data has changed, only the items changed since the specified time are returned in the response.</p></doc>
+            </param>
         </request>
         <response status="200 203">
             <representation mediaType="application/xml" element="csapi:addresses">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/addresses.xml" />
+                </doc>
                 <param name="next" style="plain" type="xsd:anyURI"
                        path="/csapi:addresses/atom:link[@rel='next']/@href">
                     <doc><p xmlns="http://www.w3.org/1999/xhtml">Move to the next item in the list.</p></doc>
@@ -758,7 +888,9 @@
                     <link resource_type="#Addresses" rel="previous"/>
                 </param>
             </representation>
-            <representation mediaType="application/json"/>
+            <representation mediaType="application/json">  <doc xml:lang="EN">
+                <xsdxt:code href="samples/addresses.json" />
+            </doc></representation>
         </response>
         <!-- Common, GET, inProgress Faults-->
         &commonFaults;
@@ -769,14 +901,24 @@
     <method name="GET" id="getNetworkAddresses">
         <doc xml:lang="EN" title="List Addresses by Network">
             <p xmlns="http://www.w3.org/1999/xhtml">
-                List addresses by Network ID.
+                Lists addresses by network ID.
             </p>
         </doc>
         <request>
-            <param name="changes-since" style="query" required="false" type="xsd:dateTime"/>
+            <param name="changes-since" style="query" required="false" type="xsd:dateTime"  path="/csapi:addresses/atom:link[@rel='changes-since']/@href">
+                <doc><p xmlns="http://www.w3.org/1999/xhtml">A time/date stamp for the last changed status. Checks for changes since a 
+                    previous request. 
+                    Specify the changes-since time as UNIX time (the number of seconds since January 1, 1970, 00:00:00 UTC, not counting leap seconds). 
+                    If nothing has changed since the changes-since time, 
+                    a 304 (Not Modified) response is returned. 
+                    If data has changed, only the items changed since the specified time are returned in the response.</p></doc>
+            </param>
         </request>
         <response status="200 203">
-            <representation mediaType="application/xml" element="csapi:network">
+            <representation mediaType="application/xml" element="csapi:public">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/public.xml" />
+                </doc>
                 <param name="next" style="plain" type="xsd:anyURI"
                        path="/csapi:network/atom:link[@rel='next']/@href">
                     <doc><p xmlns="http://www.w3.org/1999/xhtml">Move to the next item in the list.</p></doc>
@@ -788,7 +930,9 @@
                     <link resource_type="#NetworkAddressList" rel="previous"/>
                 </param>
             </representation>
-            <representation mediaType="application/json"/>
+            <representation mediaType="application/json">  <doc xml:lang="EN">
+                <xsdxt:code href="samples/public.json" />
+            </doc></representation>
         </response>
         <!-- Common, GET, inProgress Faults-->
         &commonFaults;
@@ -800,7 +944,7 @@
     <method name="GET" id="listFlavors">
         <doc xml:lang="EN" title="List Flavors">
             <p xmlns="http://www.w3.org/1999/xhtml">
-                List available flavors (IDs, names, links).
+                Lists IDs, names, and links for available flavors.
             </p>
         </doc>
         <request>
@@ -808,6 +952,9 @@
         </request>
         <response status="200 203">
             <representation mediaType="application/xml" element="csapi:flavors">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/flavors.xml" />
+                </doc>   
                 <param name="flavors" style="plain" required="true"
                        type="csapi:FlavorsWithOnlyIDsNamesLinks"
                        path="/csapi:flavors" ><doc><p xmlns="http://www.w3.org/1999/xhtml">Flavors are known combinations of memory, disk space, and number of CPUs.</p></doc></param>
@@ -822,7 +969,9 @@
                     <link resource_type="#FlavorList" rel="previous"/>
                 </param>
             </representation>
-            <representation mediaType="application/json"/>
+            <representation mediaType="application/json"> <doc xml:lang="EN">
+                <xsdxt:code href="samples/flavors.json" />
+            </doc> </representation>
         </response>
         <!-- Common Faults -->
         &commonFaults;
@@ -831,7 +980,7 @@
     <method name="GET" id="listDetailFlavors">
         <doc xml:lang="EN" title="List Detail Flavors">
             <p xmlns="http://www.w3.org/1999/xhtml">
-                List available flavors (all details).
+                Lists all details for available flavors.
             </p>
         </doc>
         <request>
@@ -839,6 +988,9 @@
         </request>
         <response status="200 203">
             <representation mediaType="application/xml" element="csapi:flavors">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/flavors.xml" />
+                </doc> 
                 <param name="next" style="plain" type="xsd:anyURI"
                        path="/csapi:flavors/atom:link[@rel='next']/@href">
                     <doc><p xmlns="http://www.w3.org/1999/xhtml">Move to the next item in the list.</p></doc>
@@ -850,7 +1002,9 @@
                     <link resource_type="#DetailFlavorList" rel="previous"/>
                 </param>
             </representation>
-            <representation mediaType="application/json"/>
+            <representation mediaType="application/json"> <doc xml:lang="EN">
+                <xsdxt:code href="samples/flavors.json" />
+            </doc> </representation>
         </response>
         <!-- Common Faults -->
         &commonFaults;
@@ -859,12 +1013,16 @@
     <method name="GET" id="getFlavor">
         <doc xml:lang="EN" title="Get Flavor Details">
             <p xmlns="http://www.w3.org/1999/xhtml">
-                List details for the specified flavor.
+                Lists details for the specified flavor.
             </p>
         </doc>
         <response status="200 203">
-            <representation mediaType="application/xml" element="csapi:flavor"/>
-            <representation mediaType="application/json"/>
+            <representation mediaType="application/xml" element="csapi:flavor"> <doc xml:lang="EN">
+                <xsdxt:code href="samples/flavor.xml" />
+            </doc> </representation>
+            <representation mediaType="application/json"> <doc xml:lang="EN">
+                <xsdxt:code href="samples/flavor.json" />
+            </doc> </representation>
         </response>
         <!-- Common and GET Faults-->
         &commonFaults;
@@ -875,7 +1033,7 @@
     <method name="GET" id="listMetadata">
         <doc xml:lang="EN" title="List Metadata">
             <p xmlns="http://www.w3.org/1999/xhtml">
-                List metadata associated with the resource.
+                Lists metadata associated with the resource.
             </p>
         </doc>
         <response status="200 203">
@@ -906,19 +1064,19 @@
     </method>
 
     <method name="POST" id="updateMetadata">
-        <doc xml:lang="EN" title="Update Metadata">
-            <db:para role="shortdesc">
-                Update metadata items.
-            </db:para>
-            <db:para>
+        <wadl:doc xml:lang="EN" title="Update Metadata" xmlns="http://docbook.org/ns/docbook">
+            <para role="shortdesc">
+                Updates metadata items.
+            </para>
+            <p xmlns="http://www.w3.org/1999/xhtml">
                 Updates resource metadata. Updates will replace
                 existing metadata items with the same key. Items
                 not explicitly mentioned in the request will not be
-                modified. An overLimit (<db:errorcode>413</db:errorcode>)
+                modified. An overLimit (<errorcode>413</errorcode>)
                 fault may be thrown if the operation causes the
                 maximum number of metadata items to be exceeded.
-            </db:para>
-        </doc>
+            </p>
+        </wadl:doc>
         <request>
             <representation mediaType="application/xml" element="csapi:metadata">
                 <doc xml:lang="EN">
@@ -961,24 +1119,22 @@
     </method>
 
     <method name="PUT" id="setMetadata">
-        <doc xml:lang="EN" title="Create or Replace Metadata">
-            <db:para role="shortdesc">
-                Set metadata.
-            </db:para>
-            <db:para>
-                Sets metadata for the resource. The metadata items set
-                on the resource will be exactly those specified on the
+        <wadl:doc xml:lang="EN" title="Create or Replace Metadata"  xmlns="http://docbook.org/ns/docbook">
+            <para role="shortdesc">
+                Sets metadata for a resource.
+            </para>
+            <p xmlns="http://www.w3.org/1999/xhtml">The metadata items set
+                on the resource are those specified on the
                 requests. Existing metadata items are replaced with
                 the ones provided in the request. Metadata items, set
-                previously, but not specified in the request will
-                be removed.
-            </db:para>
-            <db:para>
-                An overLimit (<db:errorcode>413</db:errorcode>) fault
+                previously, but not specified in the request are removed.
+            </p>
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                An overLimit (<errorcode>413</errorcode>) fault
                 may be thrown if the maximum number of metadata items
                 is exceeded.
-            </db:para>
-        </doc>
+            </p>
+        </wadl:doc>
         <request>
             <representation mediaType="application/xml" element="csapi:metadata">
                 <doc xml:lang="EN">
@@ -1009,7 +1165,7 @@
             </representation>
             <representation mediaType="application/json">
                 <doc xml:lang="EN">
-                    <xsdxt:code href="samples/metadata.xml"/>
+                    <xsdxt:code href="samples/metadata.json"/>
                 </doc>
             </representation>
         </response>
@@ -1021,14 +1177,14 @@
     </method>
 
     <method name="GET" id="getMetadataItem">
-        <doc xml:lang="EN" title="Get Metadata Item">
-            <db:para role="shortdesc">
-                Get a metadata item associated with a resource.
-            </db:para>
-            <db:para>
+        <wadl:doc xml:lang="EN" title="Get Metadata Item" xmlns="http://docbook.org/ns/docbook">
+            <para role="shortdesc">
+                Gets a metadata item associated with a resource.
+            </para>
+            <p xmlns="http://www.w3.org/1999/xhtml">
                 Retrieves a single metadata item by key.
-            </db:para>
-        </doc>
+            </p>
+        </wadl:doc>
         <response status="200 203">
             <representation mediaType="application/xml" element="csapi:meta">
                 <doc xml:lang="EN">
@@ -1047,17 +1203,17 @@
     </method>
 
     <method name="PUT" id="setMetadataItem">
-        <doc xml:lang="EN" title="Create or Update Metadata Item">
-            <db:para role="shortdesc">
-                Set metadata item.
-            </db:para>
-            <db:para>
+        <wadl:doc xml:lang="EN" title="Create or Update Metadata Item"  xmlns="http://docbook.org/ns/docbook">
+            <para role="shortdesc">
+                Sets metadata item.
+            </para>
+            <p xmlns="http://www.w3.org/1999/xhtml">
                 Sets a metadata item by its key.  An overLimit
-                (<db:errorcode>413</db:errorcode>) fault may be thrown if
+                (<errorcode>413</errorcode>) fault may be thrown if
                 the operation causes the maximum number of metadata
                 items to be exceeded.
-            </db:para>
-        </doc>
+            </p>
+        </wadl:doc>
         <request>
             <representation mediaType="application/xml" element="csapi:meta">
                 <doc xml:lang="EN">
@@ -1092,7 +1248,7 @@
     <method name="DELETE" id="deleteMetadataItem">
         <doc xml:lang="EN" title="Delete Metadata Item">
             <p xmlns="http://www.w3.org/1999/xhtml">
-                Delete a metadata item.
+                Deletes a metadata item.
             </p>
         </doc>
         <response status="204"/>
