@@ -236,16 +236,19 @@
           <para>Using a database backend</para>
         </listitem>
       </orderedlist> While using a template file is simpler, it is not
-      recommended except for development environments such as <link
-        xlink:href="http://www.devstack.org">DevStack</link>, as a
-      database backend can provide better reliability, availability,
-      and data redundancy. This section describes how to populate the
-      Keystone service catalog using the database backend. Your
+        recommended except for development environments such as <link
+          xlink:href="http://www.devstack.org">DevStack</link>. 
+        The template file does not enable CRUD operations on the service 
+        catalog through keystone commands, but you can use the service-list 
+        command when using the template catalog. 
+        A database backend can provide better reliability, availability,
+        and data redundancy. This section describes how to populate the
+        Keystone service catalog using the database backend. Your
         <filename>/etc/keystone/keystone.conf</filename> file should contain
-      the following lines if it is properly configured to use the
-      database backend.</para>
-
-      <programlisting>
+        the following lines if it is properly configured to use the
+        database backend.</para>
+    
+    <programlisting>
 [catalog]
 driver = keystone.catalog.backends.sql.Catalog
       </programlisting>
