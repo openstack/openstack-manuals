@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="ch_introduction-to-openstack-object-storage-monitoring">
+    <title>OpenStack Object Storage Monitoring</title>
+    <?dbhtml stop-chunking?>
+    <para>Excerpted from a blog post by <link
+            xlink:href="http://swiftstack.com/blog/2012/04/11/swift-monitoring-with-statsd"
+            >Darrell Bishop</link></para>
+    <para>An OpenStack Object Storage cluster is a complicated beast—a
+        collection of many daemons across many nodes, all working
+        together. With so many “moving parts” it’s important to be
+        able to tell what’s going on inside the cluster. Tracking
+        server-level metrics like CPU utilization, load, memory
+        consumption, disk usage and utilization, etc. is necessary,
+        but not sufficient. We need to know what the different daemons
+        are doing on each server. What’s the volume of object
+        replication on node8? How long is it taking? Are there errors?
+        If so, when did they happen?</para>
+    <para>In such a complex ecosystem, it’s no surprise that there are
+        multiple approaches to getting the answers to these kinds of
+        questions. Let’s examine some of the existing approaches to
+        OpenStack Object Storage monitoring.</para>
+    <section xml:id="monitoring-swiftrecon">
+        <title>Swift Recon</title>
+        <para>The <link
+                xlink:href="http://swift.openstack.org/admin_guide.html#cluster-telemetry-and-monitoring"
+                >Swift Recon middleware</link> can provide general
+            machine stats (load average, socket stats,
+                <code>/proc/meminfo</code> contents, etc.) as well as
+            Swift-specific metrics:</para>
+        <itemizedlist>
+            <listitem>
+                <para>The MD5 sum of each ring file.</para>
+            </listitem>
+            <listitem>
+                <para>The most recent object replication time.</para>
+            </listitem>
+            <listitem>
+                <para>Count of each type of quarantined file: account,
+                    container, or object.</para>
+            </listitem>
+            <listitem>
+                <para>Count of “async_pendings” (deferred container
+                    updates) on disk.</para>
+            </listitem>
+        </itemizedlist>
+        <para>Swift Recon is middleware installed in the object
+            server’s pipeline and takes one required option: a local
+            cache directory. Tracking of async_pendings requires an
+            additional cron job per object server. Data is then
+            accessed by sending HTTP requests to the object server
+            directly, or by using the swift-recon command-line
+            tool.</para>
+        <para>There are some good Object Storage cluster stats in
+            there, but the general server metrics overlap with
+            existing server monitoring systems and to get the
+            Swift-specific metrics into a monitoring system, they must
+            be polled. Swift Recon is essentially acting as a
+            middle-man metrics collector. The process actually feeding
+            metrics to your stats system, like collectd, gmond, etc.,
+            is probably already running on the storage node. So it
+            could either talk to Swift Recon or just collect the
+            metrics itself.</para>
+        <para>There’s an <link
+                xlink:href="https://review.openstack.org/#change,6074"
+                >upcoming update</link> to Swift Recon which broadens
+            support to the account and container servers. The
+            auditors, replicators, and updaters can also report
+            statistics, but only for the most recent run.</para>
+    </section>
+    <section xml:id="monitoring-swift-informant">
+        <title>Swift-Informant</title>
+        <para>Florian Hines developed the <link
+                xlink:href="http://pandemicsyn.posterous.com/swift-informant-statsd-getting-realtime-telem"
+                >Swift-Informant middleware</link> to get real-time
+            visibility into Object Storage client requests. It sits in
+            the proxy server’s pipeline and after each request to the
+            proxy server, sends three metrics to a <link
+                xlink:href="http://codeascraft.etsy.com/2011/02/15/measure-anything-measure-everything/"
+                >StatsD</link> server:</para>
+        <itemizedlist>
+            <listitem><para>A counter increment for a metric like <code>obj.GET.200</code> or
+                        <code>cont.PUT.404</code>.</para></listitem>
+            <listitem><para>Timing data for a metric like <code>acct.GET.200</code> or <code>obj.GET.200</code>. [The README says the metrics will look
+                    like <code>duration.acct.GET.200</code>, but I don’t see
+                    the “duration” in the code. I’m not sure what Etsy’s server does, but our StatsD
+                    server turns timing metrics into 5 derivative metrics with new segments
+                    appended, so it probably works as coded. The first metric above would turn into
+                        <code>acct.GET.200.lower</code>, <code>acct.GET.200.upper</code>, <code>acct.GET.200.mean</code>, <code>acct.GET.200.upper_90</code>, and <code>acct.GET.200.count</code>]</para></listitem>
+            <listitem><para>A counter increase by the bytes transferred for a metric like <code>tfer.obj.PUT.201</code>.</para></listitem>
+        </itemizedlist>
+        <para>This is good for getting a feel for the quality of
+            service clients are experiencing with the timing metrics,
+            as well as getting a feel for the volume of the various
+            permutations of request server type, command, and response
+            code. Swift-Informant also requires no change to core
+            Object Storage code since it is implemented as middleware.
+            However, because of this, it gives you no insight into the
+            workings of the cluster past the proxy server. If one
+            storage node’s responsiveness degrades for some reason,
+            you’ll only see that some of your requests are bad—either
+            as high latency or error status codes. You won’t know
+            exactly why or where that request tried to go. Maybe the
+            container server in question was on a good node, but the
+            object server was on a different, poorly-performing
+            node.</para>
+        
+    </section>
+    <section xml:id="monitoring-statsdlog">
+        <title>Statsdlog</title>
+        <para>Florian’s <link
+                xlink:href="https://github.com/pandemicsyn/statsdlog"
+                >Statsdlog</link> project increments StatsD counters
+            based on logged events. Like Swift-Informant, it is also
+            non-intrusive, but statsdlog can track events from all
+            Object Storage daemons, not just proxy-server. The daemon
+            listens to a UDP stream of syslog messages and StatsD
+            counters are incremented when a log line matches a regular
+            expression. Metric names are mapped to regex match
+            patterns in a JSON file, allowing flexible configuration
+            of what metrics are extracted from the log stream.</para>
+        <para>Currently, only the first matching regex triggers a
+            StatsD counter increment, and the counter is always
+            incremented by 1. There’s no way to increment a counter by
+            more than one or send timing data to StatsD based on the
+            log line content. The tool could be extended to handle
+            more metrics per line and data extraction, including
+            timing data. But even then, there would still be a
+            coupling between the log textual format and the log
+            parsing regexes, which would themselves be more complex in
+            order to support multiple matches per line and data
+            extraction. Also, log processing introduces a delay
+            between the triggering event and sending the data to
+            StatsD. We would prefer to increment error counters where
+            they occur, send timing data as soon as it is known, avoid
+            coupling between a log string and a parsing regex, and not
+            introduce a time delay between events and sending data to
+            StatsD. And that brings us to the next method of gathering
+            Object Storage operational metrics.</para>
+    </section>
+ <section xml:id="monitoring-statsD">
+     <title>Swift StatsD Logging</title>
+     <para><link xlink:href="http://codeascraft.etsy.com/2011/02/15/measure-anything-measure-everything/">StatsD</link> was designed for application code to be deeply instrumented; metrics are sent in real-time by the code which just noticed something or did something. The overhead of sending a metric is extremely low: a <code>sendto</code> of one UDP packet. If that overhead is still too high, the StatsD client library can send only a random portion of samples and StatsD will approximate the actual number when flushing metrics upstream.</para>
+     <para>To avoid the problems inherent with middleware-based
+            monitoring and after-the-fact log processing, the sending
+            of StatsD metrics is integrated into Object Storage
+            itself. The <link
+                xlink:href="https://review.openstack.org/#change,6058"
+                >submitted change set</link> currently reports 124
+            metrics across 15 Object Storage daemons and the tempauth
+            middleware. Details of the metrics tracked are in the
+                <link
+                    xlink:href="http://swift.openstack.org/admin_guide.html"
+                >Swift Admin Guide</link>.</para>
+     <para>The sending of metrics is integrated with the logging framework. To enable, configure <code>log_statsd_host</code> in the relevant config file. You can also specify the port and a default sample rate. The specified default sample rate is used unless a specific call to a statsd logging method (see the list below) overrides it. Currently, no logging calls override the sample rate, but it’s conceivable that some metrics may require accuracy (sample_rate == 1) while others may not.</para>
+     <literallayout class="monospaced">[DEFAULT]
+     ...
+log_statsd_host = 127.0.0.1
+log_statsd_port = 8125
+log_statsd_default_sample_rate = 1</literallayout>
+     <para>Then the LogAdapter object returned by <code>get_logger()</code>, usually stored in <code>self.logger</code>, has the following new methods:</para>
+     <itemizedlist>
+         <listitem><para><code>set_statsd_prefix(self, prefix)</code> Sets the client library’s stat prefix value which gets prepended to every metric. The default prefix is the “name” of the logger (eg. “object-server”, “container-auditor”, etc.). This is currently used to turn “proxy-server” into one of “proxy-server.Account”, “proxy-server.Container”, or “proxy-server.Object” as soon as the Controller object is determined and instantiated for the request.</para></listitem>
+         <listitem><para><code>update_stats(self, metric, amount, sample_rate=1)</code> Increments the supplied metric by the given amount. This is used when you need to add or subtract more that one from a counter, like incrementing “suffix.hashes” by the number of computed hashes in the object replicator.</para></listitem>
+         <listitem><para><code>increment(self, metric, sample_rate=1)</code> Increments the given counter metric by one.</para></listitem>
+         <listitem><para><code>decrement(self, metric, sample_rate=1)</code> Lowers the given counter metric by one.</para></listitem>
+         <listitem><para><code>timing(self, metric, timing_ms, sample_rate=1)</code> Record that the given metric took the supplied number of milliseconds.</para></listitem>
+         <listitem><para><code>timing_since(self, metric, orig_time, sample_rate=1)</code> Convenience method to record a timing metric whose value is “now” minus an existing timestamp.</para></listitem>
+     </itemizedlist>
+        <para>Note that these logging methods may safely be called
+            anywhere you have a logger object. If StatsD logging has
+            not been configured, the methods are no-ops. This avoids
+            messy conditional logic each place a metric is recorded.
+            Here’s two example usages of the new logging
+            methods:</para>
+     <programlisting language="bash"># swift/obj/replicator.py
+def update(self, job):
+    # ...
+    begin = time.time()
+    try:
+        hashed, local_hash = tpool.execute(tpooled_get_hashes, job['path'],
+                do_listdir=(self.replication_count % 10) == 0,
+                reclaim_age=self.reclaim_age)
+        # See tpooled_get_hashes "Hack".
+        if isinstance(hashed, BaseException):
+            raise hashed
+        self.suffix_hash += hashed
+        self.logger.update_stats('suffix.hashes', hashed)
+        # ...
+    finally:
+        self.partition_times.append(time.time() - begin)
+        self.logger.timing_since('partition.update.timing', begin)</programlisting>
+        <programlisting language="bash"># swift/container/updater.py
+def process_container(self, dbfile):
+    # ...
+    start_time = time.time()
+    # ...
+        for event in events:
+            if 200 &lt;= event.wait() &lt; 300:
+                successes += 1
+            else:
+                failures += 1
+        if successes > failures:
+            self.logger.increment('successes')
+            # ...
+        else:
+            self.logger.increment('failures')
+            # ...
+        # Only track timing data for attempted updates:
+        self.logger.timing_since('timing', start_time)
+    else:
+        self.logger.increment('no_changes')
+        self.no_changes += 1</programlisting>
+     <para>The development team of StatsD wanted to use the <link
+                xlink:href="https://github.com/sivy/py-statsd"
+                >pystatsd</link> client library (not to be confused
+            with a <link
+                xlink:href="https://github.com/sivy/py-statsd"
+                >similar-looking project</link> also hosted on
+            GitHub), but the released version on PyPi was missing two
+            desired features the latest version in GitHub had: the
+            ability to configure a metrics prefix in the client object
+            and a convenience method for sending timing data between
+            “now” and a “start” timestamp you already have. So they
+            just implemented a simple StatsD client library from
+            scratch with the same interface. This has the nice fringe
+            benefit of not introducing another external library
+            dependency into Object Storage.</para>
+    </section>
+   
+</chapter>
