@@ -9,13 +9,28 @@
 <!--                                                       -->
 <!--        xmllint -noent os-compute-1.1.wadl             -->
 <!--*******************************************************-->
-<!DOCTYPE application [<!ENTITY % common  SYSTEM "../common.ent">
-%common;]> 
+<!DOCTYPE application [
+    <!ENTITY % common  SYSTEM "../common.ent">
+    %common;
+]>
 
 <application xmlns="http://wadl.dev.java.net/2009/02"
-    xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
     xmlns:wadl="http://wadl.dev.java.net/2009/02"
-    xmlns:csapi="http://docs.openstack.org/compute/api/v1.1">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:csapi="http://docs.openstack.org/compute/api/v1.1"
+    xsi:schemaLocation="http://docs.openstack.org/compute/api/v1.1
+    ../xsd/api.xsd
+    http://docs.openstack.org/common/api/v1.0
+    ../xsd/api-common.xsd
+    ">
+    
+    <grammars>
+        <include href="../xsd/api.xsd"/>
+        <include href="../xsd/api-common.xsd"/>
+    </grammars>
 
     <resources base="https://servers.api.openstack.com">
         <resource id="version" type="#VersionDetails" path="v1.1/">
@@ -52,6 +67,10 @@
     <!--               Resource Types                          -->
     <!--*******************************************************-->
    
+    <!-- <resource_type id="VersionDetails">
+        <method href="#versionDetails"/>
+    </resource_type> -->
+    
     <resource_type id="Volumes">
         <doc xml:lang="EN" title="Volumes">
             <p xmlns="http://www.w3.org/1999/xhtml">
@@ -78,6 +97,8 @@
     <!--               All Methods                             -->
     <!--****************************************************** -->
     
+   
+    
     <!-- Volume Actions -->
     <method name="POST" id="attachVolume">
         <doc xml:lang="EN" title="Attach Volume to Server">
@@ -86,9 +107,18 @@
             </p>
         </doc>
         <request>
-            <representation mediaType="application/xml" element="csapi:attachvolume"/>
-            <representation mediaType="application/json" element="csapi:attachvolume"/>
+            <representation mediaType="application/xml" element="csapi:attachvolume">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/attachvolume.xml" />
+                </doc>
+            </representation>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/attachvolume.json" />
+                </doc>
+            </representation>
         </request>
+        
         <response status="202"/>
         <!-- Common, GET, postput, inProgress Faults-->
         &commonFaults;
