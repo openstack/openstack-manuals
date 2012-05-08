@@ -8,8 +8,32 @@
         the <filename>/etc/nova/nova.conf</filename> file by default. Here are the
         relevant settings for getting a minimal install running.
         Refer to the OpenStack Compute Admin Manual for guidance
-        on more configuration options.</para>
-    
+        on more configuration options.
+
+        <note>
+            <para>In the Essex release, the <filename>nova.conf</filename>
+            file format changed from flags (<literal>--name=value</literal>)
+            to INI file format (<literal>name=value</literal>).
+            The Compute service will function properly with etiher format.</para>
+            <para>The default <filename>nova.conf</filename> format for
+            Essex packages varies by distribution. Fedora packages use the
+            new INI style format, and Ubuntu 12.04 packages use the
+            old flag format. By convention, this guide uses the new
+            INI style format.</para>
+            <para>You can automatically convert a <filename>nova.conf</filename>
+            file from flag format to INI format using
+            <command>nova-manage</command>:</para>
+            <screen><prompt>$</prompt> <userinput>nova-manage config convert --help</userinput>
+<computeroutput>Usage: nova-manage config convert &lt;args&gt; [options]
+
+
+Options:
+  -h, --help        show this help message and exit
+  --infile=&lt;path&gt;  old-style flagfile to convert to config
+  --outfile=&lt;path&gt;  path for output file. Writes configto stdout if not
+                    specified</computeroutput></screen>
+        </note>
+    </para>
     <para>The packages automatically do these steps for a user
         named nova, but if you are installing as another user you
         should ensure that the <filename>nova.conf</filename> file should have its
@@ -42,14 +66,8 @@
         at the beginning of the line. To see a listing of all possible
         configuration option settings, see <link
             xlink:href="http://wiki.openstack.org/NovaConfigOptions"
-            >http://wiki.openstack.org/NovaConfigOptions</link>.<note>
-            <para>While Fedora uses the new INI style configuration
-                options, we have found that Ubuntu needs the
-                Diablo-style double-dash (--) in front of each
-                configuration option. This guide is meant to be a
-                generic walk-through eventually so the double-dashes
-                are not included in this guide.</para>
-        </note></para>
+            >http://wiki.openstack.org/NovaConfigOptions</link>.
+</para>
     <programlisting>
 auth_strategy=keystone
 network_manager=nova.network.manager.FlatDHCPManager
