@@ -1177,7 +1177,25 @@ Total execution time - 1 h 75 m and 35 seconds
         <programlisting>
 --volume_driver=nova.volume.driver.ISCSIDriver
         </programlisting>
-   
+
+        <section xml:id="rados">
+            <title>Ceph RADOS block device (RBD)</title>
+            <para>If you are using KVM or QEMU as your hypervisor, the
+                Compute service can be configured to use
+                <link xlink:href="http://ceph.com/ceph-storage/block-storage/">
+                    Ceph's RADOS block devices (RBD)</link> for volumes. Add
+                    the following lines to nova.conf on the host the runs the
+                    <command>nova-volume</command> service to enable the RBD
+                    driver:
+<programlisting>
+volume_driver=nova.volume.driver.RBDDriver
+rbd_pool=nova
+</programlisting>
+            </para>
+            <para></para>
+        </section>
+
+
         <section xml:id="nexenta-driver">
             <title>Nexenta</title>
             <para>NexentaStor Appliance is NAS/SAN software platform designed for building reliable and fast network storage arrays. The NexentaStor is based on
