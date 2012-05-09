@@ -6,10 +6,9 @@
     <title>Overview of VNC Proxy</title>
   </info>
 
-  <para> The VNC Proxy is an OpenStack component that allows users of
-    Nova to access their instances through VNC clients. In Essex and
-    beyond, there is support for for both libvirt and XenServer using
-    both Java and websocket cleints. </para>
+  <para> The VNC Proxy is an OpenStack component that allows users of the Compute service to access
+    their instances through VNC clients. In Essex and beyond, there is support for for both libvirt
+    and XenServer using both Java and websocket cleints. </para>
   <para> The VNC console connection works as follows: </para>
   <itemizedlist>
     <listitem>
@@ -259,8 +258,8 @@
 <screen><prompt>$</prompt> <userinput>nova get-vnc-console <replaceable>[server_id]</replaceable> novnc</userinput></screen>
 <para>Then, paste the URL into your web browser.</para>
 
-      <para> Additionally, you can use the OpenStack Dashboard, Horizon, to access browser-based
-        VNC consoles for instances. </para>
+      <para> Additionally, you can use the OpenStack Dashboard (codenamed Horizon), to access
+        browser-based VNC consoles for instances. </para>
     </section>
   </section>
   <section xml:id="faq-about-vnc">
@@ -295,11 +294,11 @@
     <para> A: nova-xvpvncproxy which ships with nova, is a new proxy
       that supports a simple Java client. nova-novncproxy uses noVNC
       to provide vnc support through a web browser. </para>
-    <para> Q: I want VNC support in horizon. What services do I need? </para>
+    <para> Q: I want VNC support in the Dashboard. What services do I need? </para>
     <para> A: You need nova-novncproxy, nova-consoleauth, and
       correctly configured compute hosts. </para>
-    <para> Q: When I use "nova get-vnc-console" or click on the VNC
-      tab of Horizon, it hangs. Why? </para>
+    <para> Q: When I use <command>nova get-vnc-console</command> or click on the VNC tab of the Dashboard, it hangs.
+      Why? </para>
     <para> A: Make sure you are running nova-consoleauth (in addition
       to nova-novncproxy). The proxies rely on nova-consoleauth to
       validate tokens, and will wait for a reply from them until a
@@ -338,6 +337,14 @@ vncserver_listen=192.168.1.2
       required to support a newer version of the WebSocket protocol
       (HyBi-07+). Also, if you are using Diablo's nova-vncproxy, note
       that support for this protocol is not provided. </para>
+    <para> Q: How do I adjust the dimensions of the VNC window image in horizon?</para>
+    <para> A: These values are hard-coded in a Django HTML template. To alter them, you must edit
+      the template file <filename>_detail_vnc.html</filename>. The location of this file will vary
+      based on Linux distribution. On Ubuntu 12.04, the file can be found at
+        <filename>/usr/share/pyshared/horizon/dashboards/nova/templates/nova/instances_and_volumes/instances/_detail_vnc.html</filename>. </para>
+    <para>Modify the <literal>width</literal> and <literal>height</literal> parameters: </para>
+ <programlisting language="html">
+  &lt;iframe src="{{ vnc_url }}" width="720" height="430"&gt;&lt;/iframe&gt;
+ </programlisting>
   </section>
 </section>
-
