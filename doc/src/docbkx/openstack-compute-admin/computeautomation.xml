@@ -35,8 +35,21 @@ format="SVG" scale="60"/>
         <title>Deployment Tool for OpenStack using Puppet
             (dodai-deploy)</title>
         <para>The dodai-deploy is a software management tool. It
-            supports OpenStack Diablo (Nova, Glance, Swift) and hadoop
-            0.20.2</para>
+            supports the following softwares.</para>
+        <itemizedlist>
+            <listitem>
+                <para>OpenStack Essex(Nova with dashboard, Glance, Swift, Keystone)</para>
+            </listitem>
+            <listitem>
+                <para>OpenStack Diablo(Nova, Glance, Swift)</para>
+            </listitem>
+            <listitem>
+                <para>hadoop 0.20.2</para>
+            </listitem>
+            <listitem>
+                <para>sun grid engine 6.2u5</para>
+            </listitem>
+        </itemizedlist>
         <simplesect>
             <title>Features</title>
             <itemizedlist>
@@ -44,12 +57,14 @@ format="SVG" scale="60"/>
                     <para>Manage installation, uninstallation and testing of a software.</para>
                 </listitem>
                 <listitem>
-                    <para>Support OpenStack Diablo and hadoop 0.20.2</para>
+                    <para>Support deployment on multiple machines.</para>
                 </listitem>
                 <listitem>
-                    <para>Support target machines in different network segments.</para></listitem>
+                    <para>Support target machines in different network segments.</para>
+                </listitem>
                 <listitem>
-                    <para>Provide web UI to facilitate user operations.</para></listitem>
+                    <para>Provide web UI to facilitate user operations.</para>
+                </listitem>
                 <listitem>
                     <para>Provide REST API to make it possible to integrate it with other tools.</para>
                 </listitem>
@@ -59,10 +74,55 @@ format="SVG" scale="60"/>
             </itemizedlist>
         </simplesect>
         <simplesect>
+            <title>OSes supported</title>
+            <table>
+                <title>OSes supported</title>
+                <tgroup cols="5" align="center">
+                <tbody>
+                    <row>
+                       <entry></entry>
+                       <entry>ubuntu 10.10</entry>
+                       <entry>ubuntu 11.04</entry>
+                       <entry>ubuntu 11.10</entry>
+                       <entry>ubuntu 12.04</entry>
+                    </row>
+                    <row>
+                       <entry>OpenStack Essex (Nova with dashboard, Glance, Swift, Keystone)</entry>
+                       <entry></entry>
+                       <entry></entry>
+                       <entry></entry>
+                       <entry>:)</entry>
+                    </row>
+                    <row>
+                       <entry>OpenStack Diablo (Nova, Glance, Swift)</entry>
+                       <entry>:)</entry>
+                       <entry>:)</entry>
+                       <entry>:)</entry>
+                       <entry></entry>
+                    </row>
+                    <row>
+                       <entry>hadoop 0.20.2</entry>
+                       <entry>:)</entry>
+                       <entry>:)</entry>
+                       <entry>:)</entry>
+                       <entry></entry>
+                    </row>
+                    <row>
+                       <entry>sun grid engine 6.2u5</entry>
+                       <entry>:)</entry>
+                       <entry>:)</entry>
+                       <entry>:)</entry>
+                       <entry></entry>
+                    </row>
+                </tbody>
+                </tgroup>
+            </table>
+        </simplesect>
+        <simplesect>
             <title>Glossary</title>
             <itemizedlist>
                 <listitem>
-                    <para>Deployment server - The server in which Dodai is installed.</para>
+                    <para>dodai-deploy server - The server in which services of dodai-deploy is started.</para>
                 </listitem>
                 <listitem>
                     <para>Node - The machine that is the target of installation.</para>
@@ -89,33 +149,22 @@ format="SVG" scale="60"/>
             <para>The <literal>$home</literal> in the following
                 sections is the path of the home directory of the
                 dodai-deploy.</para>
-            <para>The following OSes are supported.</para>
-            <itemizedlist>
-                <listitem>
-                    <para>ubuntu 10.10</para>
-                </listitem>
-                <listitem>
-                    <para>ubuntu 11.04</para>
-                </listitem>
-                <listitem>
-                    <para>ubuntu 11.10</para></listitem>
-            </itemizedlist>
             <para>
                 <orderedlist>
                     <listitem>
-                        <para>Download dodai-deploy. </para>
+                        <para>Download dodai-deploy.</para>
                         <para>Execute the following commands on the
-                            deployment server and all the nodes.
+                            dodai-deploy server and all the nodes.
                             <screen>
 <prompt>$</prompt> <userinput>sudo apt-get install git -y</userinput>
 <prompt>$</prompt> <userinput>git clone https://github.com/nii-cloud/dodai-deploy.git</userinput>
-<prompt>$</prompt> <userinput>cd dodai-deploy; git checkout 1.0</userinput>   #only used to get dodai-deploy 1.0     
+<prompt>$</prompt> <userinput>cd dodai-deploy</userinput>
                         </screen></para>
                     </listitem>
                     <listitem>
-                        <para>Set up the deployment server.</para>
+                        <para>Set up the dodai-deploy server.</para>
                         <para>Execute the following commands on
-                            deployment server to install necessary
+                            dodai-deploy server to install necessary
                             softwares and modify their
                             settings.</para>
             <screen>
@@ -130,7 +179,7 @@ format="SVG" scale="60"/>
                 <screen>
 <prompt>$</prompt> <userinput>sudo $home/setup-env/setup.sh node $server</userinput>
                 </screen>
-                <para>The $server in the above command is the fully qualified domain name (fqdn) of the deployment server. You can confirm the fqdn with the following command.</para>
+                <para>The $server in the above command is the fully qualified domain name (fqdn) of the dodai-deploy server. You can confirm the fqdn with the following command.</para>
                 <screen>
 <prompt>$</prompt> <userinput>sudo hostname -f</userinput>
                 </screen></listitem>
@@ -169,9 +218,43 @@ format="SVG" scale="60"/>
                         </para>
 
             </listitem>
+             <listitem><para>Create volume group for nova-volume.</para>
+                <para>You must create a volume group before nova-volume is
+                            installed. You should execute the commands
+                            for a physical device or for a loopback
+                            device on the node in which nova-volume
+                            is to be installed.</para>
+                        <para>
+                            <itemizedlist>
+                                <listitem>
+                                   <para>For a physical device, use
+                                   the following command.</para>
+                                    <screen>
+<prompt>$</prompt> <userinput>sudo $home/setup-env/create-volume-group.sh physical $volume_group_name $device_path</userinput>
+                                    </screen>
+                                    <para>For example,</para>
+                                    <screen>
+<prompt>$</prompt> <userinput>sudo $home/setup-env/create-volume-group.sh physical nova-volumes /dev/sdb1</userinput>
+                                    </screen>
+                                </listitem>
+                                <listitem>
+                                   <para>For a loopback device, use
+                                   the following command.</para>
+                                    <screen>
+<prompt>$</prompt> <userinput>sudo $home/setup-env/create-volume-group.sh loopback $volume_group_name $file_path $size</userinput>
+                                    </screen>
+                                    <para>For example,</para>
+                                    <screen>
+<prompt>$</prompt> <userinput>sudo $home/setup-env/create-volume-group.sh loopback nova-volumes /root/volume.data 4</userinput>
+                                    </screen>
+                                </listitem>
+                            </itemizedlist>
+                        </para>
+
+            </listitem>
                     
                     <listitem>   <para>Start servers.</para>
-                <para>Execute the following command on the deployment server to start the web server and job server.</para>
+                <para>Execute the following command on the dodai-deploy server to start the web server and job server.</para>
                 <screen>
 <prompt>$</prompt> <userinput>sudo $home/script/start-servers production</userinput>
                 </screen>
@@ -184,11 +267,11 @@ format="SVG" scale="60"/>
             </para>
         </simplesect>
         <simplesect><title>Using web UI</title>
-            <para>You can find step-by-step guidance at <literal>http://<replaceable>$deployment_server</replaceable>:3000/</literal>.</para>
+            <para>You can find step-by-step guidance at <literal>http://<replaceable>$dodai_deploy_server</replaceable>:3000/</literal>.</para>
         </simplesect>
         <simplesect><title>Using REST APIs</title>
             <para>An API simulator can be found at
-                        <literal>http://<replaceable>$deployment_server</replaceable>:3000/rest_apis/index.html</literal>.
+                        <literal>http://<replaceable>$dodai_deploy_server</replaceable>:3000/rest_apis/index.html</literal>.
                 You can get the list of REST APIs with it. You can
                 also execute APIs by simply filling in parameters and
                 clicking the "Execute" button.</para>
@@ -199,12 +282,21 @@ format="SVG" scale="60"/>
                     <para>SSH login nova instance after test of nova </para>
                     <para>An instance will be started during the test of nova. After the test,
                     you can login the instance by executing the following commands.</para>
+                    <para>For openstack nova diablo,</para>
                     <screen>
-<prompt>$</prompt> <prompt>sudo -i</prompt>
-<prompt>$</prompt> <prompt>cd /tmp/nova</prompt>
-<prompt>$</prompt> <prompt>. env/novarc</prompt>
-<prompt>$</prompt> <prompt>euca-describe-instances</prompt>
-<prompt>$</prompt> <prompt>ssh -i mykey.priv 10.0.0.3</prompt>
+<prompt>$</prompt> <userinput>sudo -i</userinput>
+<prompt>$</prompt> <userinput>cd /tmp/nova</userinput>
+<prompt>$</prompt> <userinput>. env/novarc</userinput>
+<prompt>$</prompt> <userinput>euca-describe-instances</userinput>
+<prompt>$</prompt> <userinput>ssh -i mykey.priv 10.0.0.3</userinput>
+                    </screen>
+                    <para>For openstack nova essex,</para>
+                    <screen>
+<prompt>$</prompt> <userinput>sudo -i</userinput>
+<prompt>$</prompt> <userinput>cd /var/lib/nova</userinput>
+<prompt>$</prompt> <userinput>. novarc</userinput>
+<prompt>$</prompt> <userinput>euca-describe-instances</userinput>
+<prompt>$</prompt> <userinput>ssh -i mykey.priv 10.0.0.3</userinput>
                     </screen>
                 </listitem>
                 <listitem>
