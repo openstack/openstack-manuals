@@ -11,10 +11,9 @@
         <para>In this OpenStack Compute tutorial, we’ll walk through the creation of an elastic,
             scalable cloud running a WordPress installation on a few virtual machines.</para>
 
-        <para>The tutorial assumes you have obtained a TryStack
-            account at http://trystack.org. It has a working
-            installation of OpenStack Compute, or you can install your
-            own using the installation guides. </para>
+        <para>The tutorial assumes you have obtained a TryStack account at
+            <link xlink:href="http://trystack.org">http://trystack.org</link>. It has a working installation of OpenStack
+            Compute, or you can install your own using the installation guides. </para>
 
         <para>We'll go through this tutorial in parts:</para>
         <itemizedlist>
@@ -40,15 +39,13 @@
             <para>Enter your Facebook login information to receive
                 your username and password that you can use with the
                 Compute API.</para>
-            <para>Next, install the python-novaclient and set up your
-                environment variables so you can use the client with
-                your username and password already entered. Here's
-                what works well on Mac
-                OS.<screen> 
+            <para>Next, install the python-novaclient and set up your environment variables so you
+                can use the client with your username and password already entered. Here's what
+                works well on Mac OS
+                X.<screen> 
 <prompt>$</prompt> <userinput>pip install -e git+https://github.com/openstack/python-novaclient.git#egg=python-novaclient</userinput>
                      </screen>
-                Next, create a file named openrc to contain your
-                TryStack credentials, such
+                Next, create a file named openrc to contain your TryStack credentials, such
                 as:<programlisting language="bash">
 export OS_USERNAME=joecool
 export OS_PASSWORD=coolword
@@ -123,13 +120,12 @@ export NOVA_VERSION=1.1
                 <screen>
 <prompt>$</prompt> <userinput>nova keypair-add mykeypair > mykeypair.pem</userinput>
                 </screen></para>
-            <para>Create security group that enables public IP access
-                for the webserver that will run WordPress for you. You
-                can also enable port 22 for
+            <para>Create security group that enables public IP access for the webserver that will
+                run WordPress for you. You can also enable port 22 for
                 SSH.<screen>
 <prompt>$</prompt> <userinput>nova secgroup-create openpub "Open for public"</userinput>
-<prompt>$</prompt> <userinput>nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0 </userinput>
-<prompt>$</prompt> <userinput>nova secgroup-add-rule default tcp 22 22 0.0.0.0/0 </userinput> 
+<prompt>$</prompt> <userinput>nova secgroup-add-rule openpub icmp -1 -1 0.0.0.0/0 </userinput>
+<prompt>$</prompt> <userinput>nova secgroup-add-rule openpub tcp 22 22 0.0.0.0/0 </userinput> 
                 </screen></para>
             <para>Next, with the ID value of the server you want to
                 launch and the ID of the flavor you want to launch,
