@@ -10,35 +10,29 @@
     their instances through VNC clients. In Essex and beyond, there is support for for both libvirt
     and XenServer using both Java and websocket cleints. </para>
   <para> The VNC console connection works as follows: </para>
-  <itemizedlist>
+  <orderedlist>
     <listitem>
       <para> User connects to API and gets an access_url like
-            <literal>http://<replaceable>ip:port</replaceable>/?token=xyz</literal>.
-      </para>
+            <literal>http://<replaceable>ip:port</replaceable>/?token=xyz</literal>. </para>
     </listitem>
     <listitem>
-      <para> User pastes URL in browser or as client parameter.
-      </para>
+      <para> User pastes URL in browser or as client parameter. </para>
     </listitem>
     <listitem>
       <para> Browser/Client connects to proxy. </para>
     </listitem>
     <listitem>
-      <para> Proxy talks to nova-consoleauth to authorize the user's
-        token, and then maps the token to the
-          <emphasis>private</emphasis> host and port of an instance's
-        VNC server. The compute host specifies the what address the
-        proxy should use to connect via the
-          <filename>nova.conf</filename> option
-        vncserver_proxyclient_address. In this way, the vnc proxy
-        works as a bridge between the public network, and the private
-        host network. </para>
+      <para> Proxy talks to nova-consoleauth to authorize the user's token, and then maps the token
+        to the <emphasis>private</emphasis> host and port of an instance's VNC server. The compute
+        host specifies the what address the proxy should use to connect via the
+          <filename>nova.conf</filename> option vncserver_proxyclient_address. In this way, the vnc
+        proxy works as a bridge between the public network, and the private host network. </para>
     </listitem>
     <listitem>
-      <para> Proxy initiates connection to VNC server, and continues
-        proxying until the session ends. </para>
+      <para> Proxy initiates connection to VNC server, and continues proxying until the session
+        ends. </para>
     </listitem>
-  </itemizedlist>
+  </orderedlist>
   <para>The proxy also performs the required function of tunneling the
     VNC protocol over Websockets so that the noVNC client has a way to
     talk VNC. Note that in general, the VNC proxy performs multiple
@@ -219,21 +213,14 @@
     </section>
     <section xml:id="nova-vncproxy-replaced-with-nova-novncproxy">
       <info>
-        <title>nova-vncproxy replaced with nova-novncproxy</title>
+        <title>nova-novncproxy (novnc)</title>
       </info>
 
-      <para> The previous vnc proxy, nova-vncproxy, has been removed
-        from the nova project's source tree and replaced with an
-        improved server that can be found externally at <link
-          xmlns:xlink="http://www.w3.org/1999/xlink"
-          xlink:href="http://github.com/cloudbuilders/noVNC.git"
-          >http://github.com/cloudbuilders/noVNC.git</link>
-      </para>
-      <para> To use this nova-novncproxy: </para>
-      <screen>
-<prompt>$</prompt> <userinput>git clone http://github.com/cloudbuilders/noVNC.git</userinput>
-<prompt>$</prompt> <userinput>utils/nova-novncproxy --flagfile=<replaceable>[path to nova.conf options file]</replaceable></userinput>
-</screen>
+      <para>You will need the novnc package installed, which contains the nova-novncproxy service.
+        As
+        root:<screen><prompt>#</prompt> <userinput>apt-get install novnc</userinput></screen></para>
+      <para>The service should start automatically on install. To restart
+        it:<screen><prompt>#</prompt> <userinput>service novnc restart</userinput></screen></para>
       <para>The configuration option parameter should point to your
         <filename>nova.conf</filename> configuration file that includes the message queue server address and
         credentials. </para>
@@ -247,6 +234,7 @@
           <para> <literal>novncproxy_host</literal>=<replaceable>[host]</replaceable> </para>
         </listitem>
       </itemizedlist>
+      <note><para>Tthe previous vnc proxy implementation, called nova-vncproxy, has been deprecated</para></note>
     </section>
     <section xml:id="accessing-a-vnc-console-through-a-web-browser">
       <info>
