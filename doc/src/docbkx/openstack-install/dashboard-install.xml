@@ -14,14 +14,14 @@
             <para>Restart and run the Apache server.</para>
         </listitem>
     </orderedlist>
-    <para>Install the OpenStack Dashboard:</para>
-    <literallayout class="monospaced">sudo apt-get install -y memcached libapache2-mod-wsgi openstack-dashboard</literallayout>
-    <para>Next, modify the variable CACHE_BACKEND in
-        /etc/openstack-dashboard/local_settings.py to  match the ones
-        set in /etc/memcached.conf. Open
-        /etc/openstack-dashboard/local_settings.py and look for this
+    <para>Install the OpenStack Dashboard, as root:</para>
+    <screen><prompt>#</prompt> <userinput>apt-get install -y memcached libapache2-mod-wsgi openstack-dashboard</userinput></screen>
+    <para>Next, modify the variable <literal>CACHE_BACKEND</literal> in
+            <filename>/etc/openstack-dashboard/local_settings.py</filename> to match the ones set in
+            <filename>/etc/memcached.conf</filename>. Open
+            <filename>/etc/openstack-dashboard/local_settings.py</filename> and look for this
         line:</para>
-    <para>CACHE_BACKEND = 'memcached://127.0.0.1:11211/'</para>
+    <programlisting>CACHE_BACKEND = 'memcached://127.0.0.1:11211/'</programlisting>
     <note><para>The address and port in the new value need to be equal to
         the ones set in <filename>/etc/memcached.conf</filename>.</para></note>
     <para>If you change the memcached settings, restart the Apache web
