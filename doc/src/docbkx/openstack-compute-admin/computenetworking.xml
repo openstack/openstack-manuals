@@ -240,7 +240,7 @@ iface br100 inet dhcp
                 adapters, this diagram represents the network setup.
                 You may want to use this setup for separate admin and
                 data traffic.</para>
-            <figure>
+            <figure xml:id="flat-dhcp-diagram">
                 <title>Flat network, multiple interfaces, multiple
                     servers</title>
                 <mediaobject>
@@ -1057,25 +1057,82 @@ iface eth1 inet dhcp                </programlisting></para>
     <section xml:id="existing-ha-networking-options">
         <title>Existing High Availability Options for
             Networking</title>
-        <para>from <link
-                xlink:href="http://unchainyourbrain.com/openstack/13-networking-in-nova"
-                >Vish Ishaya</link></para>
+        <para>Adapted from a blog post by<link
+                xlink:href="http://unchainyourbrain.com/openstack/13-networking-in-nova">Vish
+                Ishaya</link></para>
 
-        <para>As you can see from the Flat DHCP diagram titled "Flat
-            DHCP network, multiple interfaces, multiple servers,"
-            traffic from the VM to the public internet has to go
-            through the host running nova network. Dhcp is handled by
-            nova-network as well, listening on the gateway address of
-            the fixed_range network. The compute hosts can optionally
-            have their own public IPs, or they can use the network
-            host as their gateway. This mode is pretty simple and it
-            works in the majority of situations, but it has one major
-            drawback: the network host is a single point of failure!
-            If the network host goes down for any reason, it is
-            impossible to communicate with the VMs. Here are some
-            options for avoiding the single point of failure.</para>
+        <para>As illustrated in the Flat DHCP diagram in Section <link
+                xlink:href="#configuring-flat-dhcp-networking">Configuring Flat DHCP
+                Networking</link> titled <link linkend="flat-dhcp-diagram">Flat DHCP network, multiple interfaces, multiple servers</link>,
+            traffic from the VM to the public internet has to go through the host running nova
+            network. DHCP is handled by nova-network as well, listening on the gateway address of
+            the fixed_range network. The compute hosts can optionally have their own public IPs, or
+            they can use the network host as their gateway. This mode is pretty simple and it works
+            in the majority of situations, but it has one major drawback: the network host is a
+            single point of failure! If the network host goes down for any reason, it is impossible
+            to communicate with the VMs. Here are some options for avoiding the single point of
+            failure.</para>
         <simplesect>
-            <title>Option 1: Failover</title>
+            <title>HA Option 1: Multi-host</title>
+            <para>To eliminate the network host as a single point of failure, Compute can be
+                configured to allow each compute host to do all of the networking jobs for its own
+                VMs. Each compute host does NAT, DHCP, and acts as a gateway for all of its own VMs.
+                While there is still a single point of failure in this scenario, it is the same
+                point of failure that applies to all virtualized systems.</para>
+
+            <para>This setup requires adding an IP on the VM network to each host in the system, and
+                it implies a little more overhead on the compute hosts. It is also possible to
+                combine this with option 4 (HW Gateway) to remove the need for your compute hosts to
+                gateway. In that hybrid version they would no longer gateway for the VMs and their
+                responsibilities would only be DHCP and NAT.</para>
+            <para>The resulting layout for the new HA networking
+                option looks the following diagram:</para>
+            <para><figure>
+                <title>High Availability Networking Option</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata scale="50"
+                            fileref="figures/ha-net.jpg"/>
+                    </imageobject>
+                </mediaobject>
+            </figure></para>
+            <para>In contrast with the earlier diagram, all the hosts in the system are running the
+                nova-compute, nova-network and nova-api services. Each host does DHCP and does NAT
+                for public traffic for the VMs running on that particular host. In this model every
+                compute host requires a connection to the public internet and each host is also
+                assigned an address from the VM network where it listens for DHCP traffic. The
+                nova-api service is needed so that it can act as a metadata server for the
+                instances.</para>
+            <para>To run in HA mode, each compute host must run the following services:<itemizedlist>
+                    <listitem>
+                        <para><command>nova-compute</command></para>
+                    </listitem>
+                    <listitem>
+                        <para><command>nova-network</command></para>
+                    </listitem>
+                    <listitem>
+                        <para><command>nova-api</command></para>
+                    </listitem>
+                </itemizedlist></para>
+            <para>The <filename>nova.conf</filename> file on your compute hosts must contain the
+                following
+                options:<programlisting>multi_host=True
+enabled_apis=metadata</programlisting></para>
+            <para>If acompute host is also an API endpoint, your <literal>enabled_apis</literal>
+                option will need to contain additional values, depending on the API services. For
+                example, if it supports compute requests, volume requests, and EC2 compatibility,
+                the <filename>nova.conf</filename> file should contain:
+                <programlisting>multi_host=True
+enabled_apis=ec2,osapi_compute,osapi_volume,metadata</programlisting></para>
+
+            <para>The <literal>multi_host</literal> option must be in place for network creation and
+                nova-network must be run on every compute host. These created multi hosts networks
+                will send all network related commands to the host that the VM is on. You need to
+                set the configuration option <literal>enabled_apis</literal> such that it includes
+                    <literal>metadata</literal> in the list of enabled APIs. </para>
+        </simplesect>
+        <simplesect>
+            <title>HA Option 2: Failover</title>
             <para>The folks at NTT labs came up with a ha-linux
                 configuration that allows for a 4 second failover to a
                 hot backup of the network host. Details on their
@@ -1087,9 +1144,14 @@ iface eth1 inet dhcp                </programlisting></para>
                 requires a second host that essentially does nothing
                 unless there is a failure. Also four seconds can be
                 too long for some real-time applications.</para>
+            <para>To enable this HA option, your <filename>nova.conf</filename> file must contain
+                the following option:<programlisting>send_arp_for_ha=True</programlisting></para>
+            <para>See <link xlink:href="https://bugs.launchpad.net/nova/+bug/782364"
+                    >https://bugs.launchpad.net/nova/+bug/782364</link> for details on why this
+                option is required when configuring for failover.</para>
         </simplesect>
         <simplesect>
-            <title>Option 2: Multi-nic</title>
+            <title>HA Option 3: Multi-nic</title>
             <para>Recently, nova gained support for multi-nic. This
                 allows us to bridge a given VM into multiple networks.
                 This gives us some more options for high availability.
@@ -1110,7 +1172,7 @@ iface eth1 inet dhcp                </programlisting></para>
                 redundancy.</para>
         </simplesect>
         <simplesect>
-            <title>Option 3: HW Gateway</title>
+            <title>Option 4: HW Gateway</title>
             <para>It is possible to tell dnsmasq to use an external
                 gateway instead of acting as the gateway for the VMs.
                 You can pass dhcpoption=3,&lt;ip of gateway&gt; to
@@ -1126,100 +1188,6 @@ iface eth1 inet dhcp                </programlisting></para>
                 natting and dhcp, so some failover strategy needs to
                 be employed for those options.</para>
         </simplesect>
-        <simplesect>
-            <title>New HA Option</title>
 
-            <para>Essentially, what the current options are lacking,
-                is the ability to specify different gateways for
-                different VMs. An agnostic approach to a better model
-                might propose allowing multiple gateways per VM.
-                Unfortunately this rapidly leads to some serious
-                networking complications, especially when it comes to
-                the natting for floating IPs. With a few assumptions
-                about the problem domain, we can come up with a much
-                simpler solution that is just as effective.</para>
-            <para>The key realization is that there is no need to
-                isolate the failure domain away from the host where
-                the VM is running. If the host itself goes down,
-                losing networking to the VM is a non-issue. The VM is
-                already gone. So the simple solution involves allowing
-                each compute host to do all of the networking jobs for
-                its own VMs. This means each compute host does NAT,
-                dhcp, and acts as a gateway for all of its own VMs.
-                While we still have a single point of failure in this
-                scenario, it is the same point of failure that applies
-                to all virtualized systems, and so it is about the
-                best we can do.</para>
-            <para>So the next question is: how do we modify the Nova
-                code to provide this option. One possibility would be
-                to add code to the compute worker to do complicated
-                networking setup. This turns out to be a bit painful,
-                and leads to a lot of duplicated code between compute
-                and network. Another option is to modify nova-network
-                slightly so that it can run successfully on every
-                compute node and change the message passing logic to
-                pass the network commands to a local network
-                worker.</para>
-            <para>Surprisingly, the code is relatively simple. A
-                couple fields needed to be added to the database in
-                order to support these new types of "multihost"
-                networks without breaking the functionality of the
-                existing system. All-in-all it is a pretty small set
-                of changes for a lot of added functionality: about 250
-                lines, including quite a bit of cleanup. You can see
-                the branch here: <link
-                    xlink:href="https://code.launchpad.net/%7Evishvananda/nova/ha-net/+merge/67078"
-                    >https://code.launchpad.net/~vishvananda/nova/ha-net/+merge/67078</link></para>
-
-            <para>The drawbacks here are relatively minor. It requires
-                adding an IP on the VM network to each host in the
-                system, and it implies a little more overhead on the
-                compute hosts. It is also possible to combine this
-                with option 3 above to remove the need for your
-                compute hosts to gateway. In that hybrid version they
-                would no longer gateway for the VMs and their
-                responsibilities would only be dhcp and nat.</para>
-            <para>The resulting layout for the new HA networking
-                option looks the following diagram:</para>
-            <para><figure>
-                    <title>High Availability Networking Option</title>
-                    <mediaobject>
-                        <imageobject>
-                            <imagedata scale="50"
-                                fileref="figures/ha-net.jpg"/>
-                        </imageobject>
-                    </mediaobject>
-                </figure></para>
-            <para>In contrast with the earlier diagram, all the hosts
-                in the system are running both nova-compute and
-                nova-network. Each host does DHCP and does NAT for
-                public traffic for the VMs running on that particular
-                host. In this model every compute host requires a
-                connection to the public internet and each host is
-                also assigned an address from the VM network where it
-                listens for dhcp traffic.</para>
-            <para>The requirements for configuring are the following:
-                multi_host option must be in place for network
-                creation and nova-network must be run on every compute
-                host. These created multi hosts networks will send all
-                network related commands to the host that the VM is
-                on. In Essex, you also need to set the configuration option <literal>enabled_apis=metadata</literal>.</para>
-        </simplesect>
-
-        <simplesect>
-            <title>Future of Networking</title>
-            <para>With the existing multi-nic code and the HA
-                networking code, we have a pretty robust system with a
-                lot of deployment options. This should be enough to
-                provide deployers enough room to solve todays
-                networking problems. Ultimately, we want to provide
-                users the ability to create arbitrary networks and
-                have real and virtual network appliances managed
-                automatically. The efforts underway in the Quantum and
-                Melange projects will help us reach this lofty goal,
-                but with the current additions we should have enough
-                flexibility to get us by until those projects can take
-                over.</para>
-        </simplesect>
     </section>
 </chapter>
