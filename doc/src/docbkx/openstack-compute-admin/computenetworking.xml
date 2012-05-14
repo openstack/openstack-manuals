@@ -12,46 +12,48 @@
         <title>Networking Options</title>
         <para>This section offers a brief overview of each concept in
             networking for Compute. </para>
-        <para>In Compute, users organize their cloud resources in
-            projects. A Compute project consists of a number of VM
-            instances created by a user. For each VM instance, Compute
-            assigns to it a private IP address. (Currently, Nova only
-            supports Linux bridge networking that allows the virtual
-            interfaces to connect to the outside network through the
-            physical interface.)</para>
+        <para>In Compute, users organize their cloud resources in projects. A Compute project
+            consists of a number of VM instances created by a user. For each VM instance, Compute
+            assigns to it a private IP address. (Currently, Compute only supports Linux bridge
+            networking that allows the virtual interfaces to connect to the outside network through
+            the physical interface.)</para>
         <para>The Network Controller provides virtual networks to
             enable compute servers to interact with each other and
             with the public network.</para>
-        <para>Currently, Nova supports three kinds of networks,
-            implemented in three “Network Manager” types respectively:
-            Flat Network Manager, Flat DHCP Network Manager, and VLAN
-            Network Manager. The three kinds of networks can co-exist
-            in a cloud system. However, since you can't yet select the
-            type of network for a given project, you cannot configure
-            more than one type of network in a given Compute
-            installation.</para>
-        <para>Nova has a concept of Fixed IPs and Floating IPs. Fixed
-            IPs are assigned to an instance on creation and stay the
-            same until the instance is explicitly terminated. Floating
-            IPs are IP addresses that can be dynamically associated
-            with an instance. This address can be disassociated and
-            associated with another instance at any time. A user can
-            reserve a floating IP for their project. </para>
-        <para>In Flat Mode, a network administrator specifies a
-            subnet. The IP addresses for VM instances are grabbed from
-            the subnet, and then injected into the image on launch.
-            Each instance receives a fixed IP address from the pool of
-            available addresses. A network administrator must
-            configure the Linux networking bridge (named br100) both
-            on the network controller hosting the network and on the
-            cloud controllers hosting the instances. All instances of
-            the system are attached to the same bridge, configured
-            manually by the network administrator.</para>
+        <para>Currently, Compute supports three kinds of networks, implemented in three “Network
+            Manager” types:<itemizedlist>
+                <listitem>
+                    <para>Flat Network Manager</para>
+                </listitem>
+                <listitem>
+                    <para>Flat DHCP Network Manager</para>
+                </listitem>
+                <listitem>
+                    <para>VLAN Network Manager</para>
+                </listitem>
+            </itemizedlist></para> <para>The three kinds of networks can co-exist in a cloud system. However,
+            since you can't yet select the type of network for a given project, you cannot configure
+            more than one type of network in a given Compute installation.</para>
+        <para>Compute makes a distinction between <emphasis role="italic">fixed IPs</emphasis> and
+                <emphasis role="italic">floating IPs</emphasis> for VM instances. Fixed IPs are IP
+            addresses that are assigned to an instance on creation and stay the same until the
+            instance is explicitly terminated. By contrast, floating IPs are addresses that can be
+            dynamically associated with an instance. A floating IP address can be disassociated and
+            associated with another instance at any time. A user can reserve a floating IP for their
+            project. </para>
+        <para>In Flat Mode, a network administrator specifies a subnet. The IP addresses for VM
+            instances are grabbed from the subnet, and then injected into the image on launch. Each
+            instance receives a fixed IP address from the pool of available addresses. A network
+            administrator must configure the Linux networking bridge (typically named
+                <literal>br100</literal>, although this configurable) both on the network controller
+            hosting the network and on the cloud controllers hosting the instances. All instances of
+            the system are attached to the same bridge, configured manually by the network
+            administrator.</para>
         <para>
             <note>
-                <para>The configuration injection currently only works
-                    on Linux-style systems that keep networking
-                    configuration in /etc/network/interfaces.</para>
+                <para>The configuration injection currently only works on Linux-style systems that
+                    keep networking configuration in
+                    <filename>/etc/network/interfaces</filename>.</para>
             </note>
         </para>
         <para>In Flat DHCP Mode, you start a DHCP server to pass out
@@ -344,15 +346,12 @@ public_interface=eth0
             xml:id="outbound-traffic-flow-with-any-flat-networking">
             <title>Outbound Traffic Flow with Any Flat
                 Networking</title>
-            <para> In any set up with FlatNetworking, the host with
-                nova-network on it is responsible for forwarding
-                traffic from the private network configured with the
-                    <literal>--fixed_range=...</literal> directive in
-                nova.conf. This host needs to have br100 configured
-                and talking to any other nodes that are hosting VMs.
-                With either of the Flat Networking options, the
-                default gateway for the virtual machines is set to the
-                host which is running nova-network. </para>
+            <para> In any set up with FlatNetworking, the host with nova-network on it is
+                responsible for forwarding traffic from the private network configured with the
+                    <literal>fixed_range=...</literal> directive in <filename>nova.conf</filename>.
+                This host needs to have a bridge interface (e.g., <literal>br100</literal>) configured and talking to any other
+                nodes that are hosting VMs. With either of the Flat Networking options, the default
+                gateway for the virtual machines is set to the host which is running nova-network. </para>
             <para> When a virtual machine sends traffic out to the
                 public networks, it sends it first to its default
                 gateway, which is where nova-network is configured. </para>
@@ -390,186 +389,206 @@ public_interface=eth0
         </section>
         <section xml:id="configuring-vlan-networking">
             <title>Configuring VLAN Networking</title>
-            <para>In some networking environments, you may have a
-                large IP space which is cut up into smaller subnets.
-                The smaller subnets are then trunked together at the
-                switch level (dividing layer 3 by layer 2) so that all
-                machines in the larger IP space can communicate. The
-                purpose of this is generally to control the size of
-                broadcast domains.</para>
-            <para>Using projects as a way to logically separate each
-                VLAN, we can setup our cloud in this environment.
-                Please note that you must have IP forwarding enabled
-                for this network mode to work.</para>
+            <para>Compute can be configured so that the virtual machine instances of different
+                projects (tenants) are in different subnets, with each subnet having a different
+                VLAN tag. This can be useful in networking environments where you have a large IP
+                space which is cut up into smaller subnets. The smaller subnets are then trunked
+                together at the switch level (dividing layer 3 by layer 2) so that all machines in
+                the larger IP space can communicate. The purpose of this is generally to control the
+                size of broadcast domains. It can also be useful to provide an additional layer of
+                isolation in a multi-tenant environment.</para>
+            <note>
+                <para>The terms <emphasis role="italic">network</emphasis> and <emphasis
+                    role="italic">subnet</emphasis> are often used interchangeably in
+                    discussions of VLAN mode. In all cases, we are referring to a range of IP
+                    addresses specified by a <emphasis role="italic">subnet </emphasis>(e.g.,
+                    <literal>172.16.20.0/24</literal>) that are on the same VLAN (layer 2
+                    <emphasis role="italic">network</emphasis>). </para>
+            </note>
+            <para>Running in VLAN mode is more complex than the other network modes. In particular:<itemizedlist>
+                    <listitem>
+                        <para>IP forwarding must be enabled</para>
+                    </listitem>
+                <listitem>
+                    <para>The hosts running nova-network and nova-compute must have the
+                                <literal>8021q</literal> kernel module loaded</para>
+                </listitem>
+                    <listitem>
+                        <para>Your networking switches must support VLAN tagging</para>
+                    </listitem>
+                    <listitem>
+                        <para>Your networking switches must be configured to enable the specific
+                            VLAN tags you specify in your Compute setup</para>
+                    </listitem>
+                    <listitem>
+                        <para>You will need information about your networking setup from your
+                            network administrator to configure Compute properly (e.g., netmask,
+                            broadcast, gateway, ethernet device, VLAN IDs)</para>
+                    </listitem>
+                </itemizedlist></para>
+            <para>To configure your nodes to support VLAN tagging, install the
+                    <literal>vlan</literal> package and load the <literal>8021q</literal> kernel
+                module, as
+                root:<screen><prompt>#</prompt> <userinput>apt-get install vlan</userinput>
+<prompt>#</prompt> <userinput>modprobe 8021q </userinput></screen></para>
+            <para>To have this kernel module loaded on boot, add the following line to
+                    <filename>/etc/modules</filename>:<programlisting>8021q</programlisting></para>
+            <para>Here is an example of settings from <filename>/etc/nova/nova.conf</filename> for a
+                host configured to run <command>nova-network</command> in VLAN mode</para>
 
-            <para>Obtain the parameters for each network. You may need
-                to ask a network administrator for this information,
-                including netmask, broadcast, gateway, ethernet device
-                and VLAN ID.</para>
-            <para>You need to have networking hardware that supports
-                VLAN tagging.</para>
-            <para>Please note that currently eth0 is hardcoded as the
-                vlan_interface in the default options. If you need to
-                attach your bridges to a device other than eth0, you
-                will need to add following option to
-                /etc/nova/nova.conf:</para>
+            <programlisting>network_manager=nova.network.manager.VlanManager
+vlan_interface=eth0
+fixed_range=172.16.0.0/12
+network_size=256                </programlisting>
+<para>The <literal>network_manager=nova.network.manager.VlanManager</literal> option specifies VLAN
+                mode, which happens to be the default networking mode. </para>
+            <para>The bridges that are created by the network manager will be attached to the
+                interface specified by <literal>vlan_interface</literal>, the example above uses the
+                    <literal>eth0</literal> interface, which is the default. </para>
+            <para>The <literal>fixed_range</literal> option is a CIDR block which describes the IP
+                address space for all of the instances: this space will be divided up into subnets.
+                This range is typically a <link
+                    xlink:href="https://en.wikipedia.org/wiki/Private_network">private
+                    network</link>. The example above uses the private range
+                    <literal>172.16.0.0/12</literal>.</para>
+            <para>The <literal>network_size</literal> option refers to the default number of IP
+                addresses in each network, although this can be overriden at network creation time .
+                The example above uses a network size of <literal>256</literal>, whicih corresponds
+                to a <literal>/24</literal> network.</para>
+            <para>Networks are created with the <command>nova-manage network create</command>
+                command. Here is an example of how to create a network consistent with the above
+                example configuration options, as
+                root:<screen><prompt>#</prompt> <userinput>nova-manage network create --label=example-net --fixed_range_v4=172.16.169.0/24 --vlan=169 --bridge=br169 --project_id=a421ae28356b4cc3a25e1429a0b02e98</userinput> </screen></para>
+            <para>This creates a network called <literal>example-net</literal> associated with
+                tenant <literal>a421ae28356b4cc3a25e1429a0b02e98</literal>. The subnet is
+                    <literal>172.16.169.0/24</literal> with a VLAN tag of <literal>169</literal>
+                (the VLAN tag does not need to match the third byte of the address, though it is a
+                useful convention to remember the association). This will create a bridge interface
+                device called <literal>br169</literal> on the host running the nova-network service.
+                This device will appear in the output of an <command>ifconfig</command>
+                command.</para>
+            <para>Each network must be associated with one tenant, specified using the
+                    <literal>--project_id</literal> flag which corresponds to the tenant ID. Use the
+                    <command>keystone tenant-list</command> command to list the tenants and
+                corresponding IDs that you have already created.</para>
+            <para>The <command>nova-manage network create</command> command supports many
+                configuration options, which are displayed when called with the
+                    <literal>--help</literal> flag:</para>
+            <programlisting>Usage: nova-manage network create &lt;args> [options]
 
-            <programlisting>
-vlan_interface=eth1
-                </programlisting>
-            <para>In VLAN mode, the setting for --network_size is the
-                number of IPs per project as opposed to the FlatDHCP
-                mode where --network_size indicates number of IPs in
-                the entire fixed range. For VLAN, the settings in
-                nova.conf that affect networking are also
-                --fixed_range, where the space is divided up into
-                subnets of --network_size.</para>
-            <para>VLAN is the default networking mode for Compute, so
-                if you have no --network_manager entry in your
-                nova.conf file, you are set up for VLAN. To set your
-                nova.conf file to VLAN, use this option in
-                /etc/nova/nova.conf:</para>
-            <programlisting>
-network_manager=nova.network.manager.VlanManager
+Options:
+  -h, --help            show this help message and exit
+  --label=&lt;label>       Label for network (ex: public)
+  --fixed_range_v4=&lt;x.x.x.x/yy>
+                        IPv4 subnet (ex: 10.0.0.0/8)
+  --num_networks=&lt;number>
+                        Number of networks to create
+  --network_size=&lt;number>
+                        Number of IPs per network
+  --vlan=&lt;vlan id>      vlan id
+  --vpn=VPN_START       vpn start
+  --fixed_range_v6=FIXED_RANGE_V6
+                        IPv6 subnet (ex: fe80::/64
+  --gateway=GATEWAY     gateway
+  --gateway_v6=GATEWAY_V6
+                        ipv6 gateway
+  --bridge=&lt;bridge>     VIFs on this network are connected to this bridge
+  --bridge_interface=&lt;bridge interface>
+                        the bridge is connected to this interface
+  --multi_host=&lt;'T'|'F'>
+                        Multi host
+  --dns1=&lt;DNS Address>  First DNS
+  --dns2=&lt;DNS Address>  Second DNS
+  --uuid=&lt;network uuid>
+                        Network UUID
+  --fixed_cidr=&lt;x.x.x.x/yy>
+                        IPv4 subnet for fixed IPS (ex: 10.20.0.0/16)
+  --project_id=&lt;project id>
+                        Project id
+  --priority=&lt;number>   Network interface priority
                     </programlisting>
-            <para>For the purposes of this example walk-through, we
-                will use the following settings. These are
-                intentionally complex in an attempt to cover most
-                situations:</para>
+            <para>In particular, flags to the <command>nova-mange network create</command> command
+                can be used to override settings from <filename>nova.conf</filename>:<variablelist>
+                    <varlistentry>
+                        <term><literal>--network_size</literal></term>
+                        <listitem>
+                            <para>Overrides the <literal>network_size</literal> configuration
+                                option</para>
+                        </listitem>
+                    </varlistentry>
+                    <varlistentry>
+                        <term><literal>--bridge_interface</literal></term>
+                        <listitem>
+                            <para>Overrides the <literal>vlan_interface</literal> configuration
+                                option</para>
+                        </listitem>
+                    </varlistentry>
+                </variablelist></para>
+            <para>To view a list of the networks that have been created, as
+                root:<screen><prompt>#</prompt> <userinput>nova-manage network list</userinput></screen></para>
+            <para>To modify an existing network, use the <command>nova-manage network
+                    modify</command> command, as
+                root:<screen><prompt>#</prompt> <userinput>nova-manage network modify --help</userinput>
+<computeroutput>Usage: nova-manage network modify &lt;args> [options]
 
-            <itemizedlist>
+Options:
+  -h, --help            show this help message and exit
+  --fixed_range=&lt;x.x.x.x/yy>
+                        Network to modify
+  --project=&lt;project name>
+                        Project name to associate
+  --host=&lt;host>         Host to associate
+  --disassociate-project
+                        Disassociate Network from Project
+  --disassociate-host   Disassociate Host from Project</computeroutput></screen></para>
+            <para>To delete a network, use <command>nova-manage network delete</command>, as
+                root:<screen><prompt>#</prompt> <userinput>nova-manage network delete --help</userinput><computeroutput>
+Usage: nova-manage network delete &lt;args> [options]
 
-                <listitem>
-                    <para>VLANs: 171, 172, 173 and 174</para>
-                </listitem>
-                <listitem>
-                    <para>IP Blocks: 10.1.171.0/24, 10.1.172.0/24,
-                        10.1.173.0/24 and 10.1.174.0/24</para>
-                </listitem>
-                <listitem>
-                    <para>Each VLAN maps to its corresponding /24 (171
-                        = 10.1.171.0/24, etc)</para>
-                </listitem>
-                <listitem>
-                    <para>Each VLAN will get its own bridge device,
-                        which is in the format br_$VLANID</para>
-                </listitem>
-                <listitem>
-                    <para>Each /24 has an upstream default gateway on
-                        .1</para>
-                </listitem>
-                <listitem>
-                    <para>The first 6 IPs in each /24 are
-                        reserved</para>
-                </listitem>
-            </itemizedlist>
-            <para>First, create the networks that Compute can pull
-                from using nova-manage commands:</para>
-            <screen>
-<prompt>$</prompt> <userinput>nova-manage --flagfile=/etc/nova/nova.conf network create private 10.1.171.0/24 1 256</userinput>
-<prompt>$</prompt> <userinput>nova-manage --flagfile=/etc/nova/nova.conf network create private 10.1.172.0/24 1 256</userinput>
-<prompt>$</prompt> <userinput>nova-manage --flagfile=/etc/nova/nova.conf network create private 10.1.173.0/24 1 256</userinput>
-<prompt>$</prompt> <userinput>nova-manage --flagfile=/etc/nova/nova.conf network create private 10.1.174.0/24 1 256</userinput>
-                    </screen>
+Options:
+  -h, --help            show this help message and exit
+  --fixed_range=&lt;x.x.x.x/yy>
+                        Network to delete
+  --uuid=&lt;uuid>         UUID of network to delete</computeroutput></screen></para>
+            <para>Note that a network must first be disassociated from a project using the
+                    <command>nova-manage network modify</command> command before it can be
+                deleted.</para>
+            <para>Creating a network will automatically cause the Compute database to populate with
+                a list of available fixed IP addresses. You can view the list of fixed IP addresses
+                and their associations with active virtual machines by doing, as
+                root:<screen><prompt>#</prompt> <userinput>nova-manage fix list</userinput></screen></para>
+            <para>
+                <warning>
+                    <para>Due to <link xlink:href="https://bugs.launchpad.net/nova/+bug/754900"
+                            >Compute bug #754900</link>, deleting a network with the
+                            <command>nova-manage network delete</command> command does not delete
+                        the associated fixed IP addresses. As a workaround, these fixed IP addresses
+                        can be deleted by connecting to the <literal>nova</literal> database and
+                        issuing the SQL query (this example assumes the deleted network id is
+                            <literal>1</literal><screen><userinput>DELETE from fixed_ips where network_id=1;</userinput></screen></para>
+                </warning>
+            </para>
 
-            <para>Log in to the nova database to determine the network
-                ID assigned to each VLAN:</para>
-            <screen>
-<prompt>$</prompt><userinput>select id,cidr from networks;</userinput>
-                    </screen>
-            <para>Update the DB to match your network settings. The
-                following script will generate SQL based on the
-                predetermined settings for this example. <emphasis>You
-                    will need to modify this database update to fit
-                    your environment.</emphasis></para>
-            <programlisting>
-if [ -z $1 ]; then
-  echo "You need to specify the vlan to modify"
-fi
+            <para>In certain cases, the network manager may not properly tear down bridges and VLANs
+                when it is stopped. If you attempt to restart the network manager and it does not
+                start, check the logs for errors indicating that a bridge device already exists. If
+                this is the case, you will likely need to tear down the bridge and VLAN devices
+                manually. It is also advisable to kill any remaining dnsmasq processes. These
+                commands would stop the service, manually tear down the bridge and VLAN from the
+                previous example, kill any remaining dnsmasq processes, and start the service up
+                again, as root:</para>
 
-if [ -z $2 ]; then
-  echo "You need to specify a network id number (check the DB for the network you want to update)"
-fi
+            <screen><prompt>#</prompt> <userinput>stop nova-network</userinput>
+<prompt>#</prompt> <userinput>vconfig rem vlan169</userinput>
+<prompt>#</prompt> <userinput>ip link set br169 down</userinput>
+<prompt>#</prompt> <userinput>brctl delbr br169</userinput>
+<prompt>#</prompt> <userinput>killall dnsmasq</userinput>
+<prompt>#</prompt> <userinput>start nova-network</userinput></screen>
 
-VLAN=$1
-ID=$2
-
-cat &gt; vlan.sql &lt;&lt; __EOF_
-update networks set vlan = '$VLAN' where id = $ID;
-update networks set bridge = 'br_$VLAN' where id = $ID;
-update networks set gateway = '10.1.$VLAN.7' where id = $ID;
-update networks set dhcp_start = '10.1.$VLAN.8' where id = $ID;
-update fixed_ips set reserved = 1 where address in ('10.1.$VLAN.1','10.1.$VLAN.2','10.1.$VLAN.3','10.1.$VLAN.4','10.1.$VLAN.5','10.1.$VLAN.6','10.1.$VLAN.7');
-__EOF_
-                    </programlisting>
-            <para>After verifying that the above SQL will work for
-                your environment, run it against the nova database,
-                once for every VLAN you have in the
-                environment.</para>
-
-            <para>Next, create a project manager for the Compute
-                project:</para>
-
-            <screen>
-<prompt>$</prompt> <userinput>nova-manage --flagfile=/etc/nova/nova.conf user admin $username</userinput>
-                    </screen>
-
-            <para>Then create a project and assign that user as the
-                admin user:</para>
-
-            <screen>
-<prompt>$</prompt> <userinput>nova-manage --flagfile=/etc/nova/nova.conf project create $projectname $username</userinput>
-                    </screen>
-
-            <para>Finally, get the credentials for the user just
-                created, which also assigns one of the networks to
-                this project:)</para>
-
-            <screen>
-<prompt>$</prompt> <userinput>nova-manage --flagfile=/etc/nova/nova.conf project zipfile $projectname $username</userinput>
-                    </screen>
-
-            <para>When you start nova-network, the bridge devices and
-                associated VLAN tags will be created. When you create
-                a new VM you must determine (either manually or
-                programatically) which VLAN it should be a part of,
-                and start the VM in the corresponding project.</para>
-
-            <para>In certain cases, the network manager may not
-                properly tear down bridges and VLANs when it is
-                stopped. If you attempt to restart the network manager
-                and it does not start, check the logs for errors
-                indicating that a bridge device already exists. If
-                this is the case, you will likely need to tear down
-                the bridge and VLAN devices manually.</para>
-
-            <screen>
-<prompt>$</prompt> <userinput>vconfig rem vlan<replaceable>NNN</replaceable></userinput>
-<prompt>$</prompt> <userinput>ifconfig br_<replaceable>NNN</replaceable> down</userinput>
-<prompt>$</prompt> <userinput>brctl delbr br_<replaceable>NNN</replaceable></userinput>
-                        </screen>
-
-            <para>Also, if users need to access the instances in their
-                project across a VPN, a special VPN instance (code
-                named cloudpipe) needs to be created as described. You
-                can create the cloudpipe instance. The image is
-                basically just a Linux instance with openvpn
-                installed. It needs a simple script to grab user data
-                from the metadata server, b64 decode it into a zip
-                file, and run the autorun.sh script from inside the
-                zip. The autorun script should configure and run
-                openvpn to run using the data from Compute. </para>
-            <para>For certificate management, it is also useful to
-                have a cron script that will periodically download the
-                metadata and copy the new Certificate Revocation List
-                (CRL). This will keep revoked users from connecting
-                and disconnects any users that are connected with
-                revoked certificates when their connection is
-                re-negotiated (every hour). You set the
-                    <literal>use_project_ca</literal> option in
-                    <filename>nova.conf</filename> for cloudpipes to
-                work securely so that each project has its own
-                Certificate Authority (CA).</para>
+            <para>If users need to access the instances in their project across a VPN, a special VPN
+                instance (code named cloudpipe) needs to be created as described in the section
+                titled <link linkend="cloudpipe-per-project-vpns">Cloudpipe — Per Project
+                    VPNs</link>. </para>
         </section>
         <section xml:id="cloudpipe-per-project-vpns">
             <title>Cloudpipe — Per Project Vpns</title>
@@ -600,7 +619,7 @@ __EOF_
             <section xml:id="creating-a-cloudpipe-image">
                 <?dbhtml stop-chunking?>
                 <title>Creating a Cloudpipe Image</title>
-                <para> Making a cloudpipe image is relatively easy. </para>
+                <para>To make a cloudpipe image: </para>
                 <itemizedlist>
                     <listitem>
                         <para>install openvpn on a base ubuntu image.
@@ -706,16 +725,19 @@ force_dhcp_release=True
             </section>
             <section xml:id="certificates-and-revocation">
                 <title>Certificates and Revocation</title>
-                <para>If the <literal>use_project_ca config</literal>
-                    option is set (required to for cloudpipes to work
-                    securely), then each project has its own ca. This
-                    ca is used to sign the certificate for the vpn,
-                    and is also passed to the user for bundling
-                    images. When a certificate is revoked using
-                    nova-manage, a new Certificate Revocation List
-                    (crl) is generated. As long as cloudpipe has an
-                    updated crl, it will block revoked users from
-                    connecting to the vpn. </para>
+                <para>For certificate management, it is also useful to have a cron script that will
+                    periodically download the metadata and copy the new Certificate Revocation List
+                    (CRL). This will keep revoked users from connecting and disconnects any users
+                    that are connected with revoked certificates when their connection is
+                    re-negotiated (every hour). You set the use_project_ca option in nova.conf for
+                    cloudpipes to work securely so that each project has its own Certificate
+                    Authority (CA).</para>
+                <para>If the <literal>use_project_ca config</literal> option is set (required to for
+                    cloudpipes to work securely), then each project has its own CA. This CA is used
+                    to sign the certificate for the vpn, and is also passed to the user for bundling
+                    images. When a certificate is revoked using nova-manage, a new Certificate
+                    Revocation List (crl) is generated. As long as cloudpipe has an updated crl, it
+                    will block revoked users from connecting to the vpn. </para>
                 <para> The userdata for cloudpipe isn't currently
                     updated when certs are revoked, so it is necessary
                     to restart the cloudpipe instance if a user's
