@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="defining-services"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" 
+    version="5.0">
+    <title>Defining Services</title>
+    <para>Keystone also acts as a service catalog to let other
+        OpenStack systems know where relevant API endpoints exist for
+        OpenStack Services. The OpenStack Dashboard, in particular, uses
+        the service catalog heavily - and this <emphasis role="strong">
+            must</emphasis> be configured for the OpenStack Dashboard to
+        properly function.</para>
+    <para>There are two alternative ways of defining services with
+        keystone: <orderedlist>
+            <listitem>
+                <para>Using a template file</para>
+            </listitem>
+            <listitem>
+                <para>Using a database backend</para>
+            </listitem>
+        </orderedlist> While using a template file is simpler, it is not
+        recommended except for development environments such as <link
+            xlink:href="http://www.devstack.org">DevStack</link>. 
+        The template file does not enable Create, Read, Update, or Delete (CRUD) operations on the service 
+        catalog through keystone commands, but you can use the service-list 
+        command when using the template catalog. 
+        A database backend can provide better reliability, availability,
+        and data redundancy. This section describes how to populate the
+        Keystone service catalog using the database backend. Your
+        <filename>/etc/keystone/keystone.conf</filename> file should contain
+        the following lines if it is properly configured to use the
+        database backend.</para>
+    
+    <programlisting>
+[catalog]
+driver = keystone.catalog.backends.sql.Catalog
+      </programlisting>
+    <section xml:id="elements-of-keystone-service-catalog-entry">
+        <title>Elements of a Keystone service catalog entry</title>
+        <para>For each service in the catalog, you must perform two keystone
+            operations:
+            <orderedlist>
+                <listitem>
+                    <para>Use the <command>keystone service-create</command>
+                        command to create a database entry for the service, with the
+                        following attributes:
+                        <variablelist>
+                            <varlistentry>
+                                <term><literal>--name</literal></term>
+                                <listitem><para>Name of the service (e.g., <literal>nova</literal>, <literal>ec2</literal>, <literal>glance</literal>, <literal>keystone</literal>)</para></listitem>
+                            </varlistentry>
+                            <varlistentry>
+                                <term><literal>--type</literal></term>
+                                <listitem><para>Type of service (e.g., <literal>compute</literal>, <literal>ec2</literal>, <literal>image</literal>, <literal>identity</literal>)</para></listitem>
+                            </varlistentry>
+                            <varlistentry>
+                                <term><literal>--description</literal></term>
+                                <listitem><para>A description of the service, (e.g., <literal>"Nova Compute Service"</literal>)</para></listitem>
+                            </varlistentry>
+                        </variablelist>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>Use the <command>keystone endpoint-create</command> command
+                        to create a database entry that describes how different types of
+                        clients can connect to the service, with the following attributes:</para>
+                    <variablelist>
+                        <varlistentry>
+                            <term><literal>--region</literal></term>
+                            <listitem><para>the region name you've given to the OpenStack cloud
+                                you are deploying (e.g., RegionOne)</para></listitem>
+                        </varlistentry>
+                        <varlistentry>
+                            <term><literal>--service_id</literal></term>
+                            <listitem><para>The ID field returned by the <command>keystone
+                                service-create</command> (e.g., <literal>935fd37b6fa74b2f9fba6d907fa95825</literal>)</para></listitem>
+                        </varlistentry>
+                        <varlistentry>
+                            <term><literal>--publicurl</literal></term>
+                            <listitem><para>The URL of the public-facing endpoint for the service (e.g., <literal>http://192.168.206.130:9292/v1</literal> or <literal>http://192.168.206.130:8774/v2/%(tenant_id)s</literal>) </para></listitem>
+                        </varlistentry>
+                        <varlistentry>
+                            <term><literal>--internalurl</literal></term>
+                            <listitem><para>The URL of an internal-facing endpoint for the service.</para>
+                                <para>This typically has the same value as <literal>publicurl</literal>.</para></listitem>
+                        </varlistentry>
+                        <varlistentry>
+                            <term><literal>--adminurl</literal></term>
+                            <listitem><para>The URL for the admin endpoint for the service. The
+                                Keystone and EC2 services use different endpoints for
+                                <literal>adminurl</literal> and <literal>publicurl</literal>,
+                                but for other services these endpoints will be the same.</para></listitem>
+                        </varlistentry>
+                    </variablelist>
+                </listitem>
+            </orderedlist>
+        </para>
+        <para>
+            Keystone allows some URLs to contain special variables,
+            which are automatically substituted with the correct value at runtime.
+            Some examples in this document employ the <literal>tenant_id</literal>
+            variable, which we use when specifying the Volume and Compute service endpoints.
+            Variables can be specified using either 
+            <literal>%(<replaceable>varname</replaceable>)s</literal> or
+            <literal>$(<replaceable>varname</replaceable>)s</literal> notation.
+            In this document, we always use the <literal>%(<replaceable>varname</replaceable>)s</literal>
+            notation (e.g., <literal>%(tenant_id)s</literal>) since 
+            <literal>$</literal> is interpeted as a special character by Unix
+            shells.
+        </para>
+    </section>
+</section>

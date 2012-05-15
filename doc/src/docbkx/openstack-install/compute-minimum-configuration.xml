@@ -11,12 +11,6 @@
         on more configuration options.
 
         <note>
-            <para>In the Essex release, the
-                    <filename>nova.conf</filename> file format changed
-                from flags (<literal>--name=value</literal>) to INI
-                file format (<literal>name=value</literal>). The
-                Compute service will function properly with either
-                format.</para>
             <para>The default <filename>nova.conf</filename> format for
             Essex packages varies by distribution. Fedora packages use the
             new INI style format, and Ubuntu 12.04 packages use the
@@ -28,11 +22,10 @@
             <screen><prompt>$</prompt> <userinput>nova-manage config convert --help</userinput>
 <computeroutput>Usage: nova-manage config convert &lt;args&gt; [options]
 
-
 Options:
   -h, --help        show this help message and exit
   --infile=&lt;path&gt;  old-style flagfile to convert to config
-  --outfile=&lt;path&gt;  path for output file. Writes configto stdout if not
+  --outfile=&lt;path&gt;  path for output file. Writes config to stdout if not
                     specified</computeroutput></screen>
         </note>
     </para>
@@ -67,8 +60,8 @@ Options:
         file by entering a new line with a <literal>#</literal> sign
         at the beginning of the line. To see a listing of all possible
         configuration option settings, see <link
-            xlink:href="http://wiki.openstack.org/NovaConfigOptions"
-            >http://wiki.openstack.org/NovaConfigOptions</link>.
+            xlink:href="http://docs.openstack.org/essex/openstack-compute/admin/content/compute-options-reference.html"
+            >the reference in the OpenStack Compute Administration Manual</link>.
 </para>
     <programlisting>
 auth_strategy=keystone
@@ -82,21 +75,27 @@ flat_network_bridge=br100</programlisting>
         sections:</para>
     <para><programlisting><xi:include parse="text" href="samples/nova.conf"/>
 </programlisting></para>
-    <para>You also need to configure the api-paste.ini file to
-        enable Keystone as the Identity service. An example
-        <link linkend="api-paste-ini-file">api-paste.ini file</link> is included in the Appendix. Update the
-        <filename>/etc/nova/api-paste.ini</filename> file according to the sample
-        file.</para>
+    <para>You also need to configure the api-paste.ini file to enable
+        Keystone as the Identity service. An example <link
+            linkend="api-paste-ini-file">api-paste.ini file</link> is
+        included in the Appendix. Update the
+            <filename>/etc/nova/api-paste.ini</filename> file
+        according to the sample file by inserting "service" for the
+        Service tenant and nova for the admin user and nova for the
+        admin password in the last three lines.</para>
     <para>Restart the nova- services prior to running db
         sync, by running as root:</para>
-    <para>
-        <screen>
+   
+        <screen os="ubuntu">
 <prompt>#</prompt> <userinput>restart nova-api</userinput>
 <prompt>#</prompt> <userinput>restart nova-compute</userinput>
 <prompt>#</prompt> <userinput>restart nova-network</userinput>
 <prompt>#</prompt> <userinput>restart nova-scheduler</userinput>
 <prompt>#</prompt> <userinput>restart nova-vncproxy</userinput>
 <prompt>#</prompt> <userinput>restart nova-volume</userinput>
-</screen>
-    </para>
+        </screen>
+    <screen os="rhel;fedora;centos">
+        <prompt>$></prompt> <userinput>for svc in api objectstore compute network volume scheduler cert; do sudo service openstack-nova-$svc start ; sudo chkconfig openstack-nova-$svc on ;  done</userinput>
+    </screen>
+    <para>Check that all the services started up correctly and look in the logs in /var/log/nova for errors.</para>
 </section>

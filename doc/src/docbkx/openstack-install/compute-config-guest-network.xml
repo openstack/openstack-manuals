@@ -28,11 +28,32 @@ bridge_fd 0</literallayout></para>
     <para>Also install bridge-utils:</para>
     <literallayout class="monospaced">sudo apt-get install bridge-utils</literallayout>
     <para>Ensure that you set up the bridge, although if you use
-        -\-flat_network_bridge=br100 in your nova.conf file, nova
+        flat_network_bridge=br100 in your <filename>nova.conf</filename> file, nova
         will set up the bridge for you when you run the
         nova-manage network command. </para>
     <literallayout class="monospaced">sudo brctl addbr br100</literallayout>
     <para>Lastly, restart networking to have these changes take
         effect. (This method is deprecated but "<code>restart
             networking</code>" doesn't always work.)</para>
-    <literallayout class="monospaced">sudo /etc/init.d/networking restart</literallayout></section>
+    <literallayout class="monospaced">sudo /etc/init.d/networking restart</literallayout>
+    <section xml:id="config-requirements-rhel" os="rhel;centos">
+        <title>Configuration requirements with
+            RHEL</title>
+        <para>Ensure auth=no is set in
+            <filename>/etc/qpidd.conf</filename>.</para>
+        <para>Set selinux in permissive mode:</para>
+        <screen><prompt>$></prompt> <userinput>sudo setenforce permissive</userinput></screen>
+        <para>Otherwise you will get issues like <link
+            xlink:href="https://bugzilla.redhat.com/show_bug.cgi?id=734346"
+            >https://bugzilla.redhat.com/show_bug.cgi?id=734346</link> /usr/bin/nova-dhcpbridge: No such file or
+            directory.</para>
+        <para>If RHEL 6.2 based, use the openstack-config package to
+            turn off force DHCP releases.</para>
+        <screen><prompt>$></prompt> <userinput>sudo openstack-config --set /etc/nova/nova.conf DEFAULT force_dhcp_release False</userinput></screen>
+        <para>If RHEL 6.3 based, install dnsmasq utilities.</para>
+        <screen><prompt>$></prompt> <userinput>sudo yum install dnsmasq-utils</userinput></screen>
+        <para os="rhel;centos;fedora">If you intend to use guest images that don't have a single partition, then allow libguestfs to inspect the image so that files can be injected, by setting:
+        </para>
+        <screen><prompt>$></prompt> <userinput>sudo openstack-config --set /etc/nova/nova.conf DEFAULT libvirt_inject_partition -1</userinput></screen>
+        
+    </section></section>

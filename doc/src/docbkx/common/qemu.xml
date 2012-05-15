@@ -38,4 +38,16 @@ libvirt_type=qemu</programlisting>
             <para>VMWare virtual machine disk format (vmdk)</para>
         </listitem>
     </itemizedlist></para>
+    <section xml:id="fixes-rhel-qemu" os="rhel;fedora;centos"><title>Tips and fixes for QEMU on RHEL</title>
+    <para>
+        If you are testing OpenStack in a virtual machine, you need to configure nova to use qemu without KVM and hardware virtualization. The second command relaxes SELinux rules to allow this mode of operation (https://bugzilla.redhat.com/show_bug.cgi?id=753589) The last 2 commands here work around a libvirt issue fixed in RHEL 6.4. Note nested virtualization will be the much slower TCG variety, and you should provide lots of memory to the top level guest, as the openstack created guests default to 2GM RAM with no overcommit.
+    </para>
+        <note><para>The second command, <command>setsebool</command>, may take a while.</para></note>
+        <screen><prompt>$></prompt> <userinput>sudo openstack-config --set /etc/nova/nova.conf DEFAULT libvirt_type qemu</userinput>
+        <prompt>$></prompt> <userinput>setsebool -P virt_use_execmem on</userinput>
+        <prompt>$></prompt> <userinput>sudo ln -s /usr/libexec/qemu-kvm /usr/bin/qemu-system-x86_64</userinput>
+        <prompt>$></prompt> <userinput>sudo service libvirtd restart</userinput></screen>
+        
+    
+    </section>
 </section>

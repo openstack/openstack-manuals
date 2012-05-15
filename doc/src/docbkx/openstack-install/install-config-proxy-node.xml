@@ -14,7 +14,8 @@
     <orderedlist>
         <listitem>
             <para>Install swift-proxy service:</para>
-            <para><literallayout class="monospaced">apt-get install swift-proxy memcached</literallayout></para>
+            <para><screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install swift-proxy memcached</userinput></screen>
+            <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-swift-proxy memcached</userinput></screen></para>
         </listitem>
         <listitem>
             <para>Create self-signed cert for SSL:</para>
@@ -37,6 +38,13 @@ to
         <listitem>
             <para>Restart the memcached server:</para>
             <para><literallayout class="monospaced">service memcached restart</literallayout></para>
+        </listitem>
+        <listitem os="rhel;centos;fedora">
+            <para>To set up Object Storage to authenticate tokens we need to set the keystone Admin token in the swift proxy file with the openstack-config command.
+                
+                <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/swift/proxy-server.conf filter:authtoken admin_token $ADMIN_TOKEN</userinput>
+            <prompt>#</prompt> sudo <userinput>openstack-config --set /etc/swift/proxy-server.conf filter:authtoken auth_token $ADMIN_TOKEN</userinput></screen>
+            </para>
         </listitem>
         <listitem>
             <para>Create /etc/swift/proxy-server.conf:</para>
