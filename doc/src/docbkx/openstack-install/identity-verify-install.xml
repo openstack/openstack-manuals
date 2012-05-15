@@ -7,7 +7,8 @@
     <para>Install curl, a command-line tool for running REST API
         requests along with openssl for meeting a dependency
         requirement:</para>
-    <literallayout class="monospaced">sudo apt-get install curl openssl</literallayout>
+    <screen os="ubuntu"><prompt>$</prompt><userinput>apt-get install curl openssl</userinput></screen>
+    <screen os="rhel;fedora;centos"><prompt>$</prompt><userinput>yum install curl openssl</userinput></screen>
     <para>Here is a curl command you can use to ensure that the Identity service is working:</para>
     <literallayout class="monospaced">curl -d '{"auth": {"tenantName": "adminTenant", "passwordCredentials":{"username": "adminUser", "password": "secretword"}}}' -H "Content-type: application/json" http://192.168.206.130:35357/v2.0/tokens | python -mjson.tool</literallayout>
     <para>In return, you should receive a token for the adminUser
@@ -56,4 +57,32 @@
     }
 }
     </literallayout>
+    
+    <para>Here is another quick test to ensure that the Keystone CLI
+        is working. First, set up a keystonerc file with the admin
+        token and the necessary password: </para>
+        
+        <programlisting language="bash">
+        export ADMIN_TOKEN=012345SECRET99TOKEN012345
+        export OS_USERNAME=adminUser
+        export OS_PASSWORD=secretword
+        export OS_TENANT_NAME=openstackDemo
+        export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/
+        </programlisting>
+        <para>Source the file.</para>
+    <screen>
+    <prompt>$</prompt> <userinput>. ./keystonerc</userinput></screen>
+    <para>You should see a listing of users after typing in <userinput>keystone user-list</userinput>.</para>
+    <screen>$&gt; keystone user-list
+nova@ubuntu:~$ keystone user-list
++----------------------------------+---------+-------+-----------+
+|                id                | enabled | email |    name   |
++----------------------------------+---------+-------+-----------+
+| 318003c9a97342dbab6ff81675d68364 | True    | None  | swift     |
+| 3a316b32f44941c0b9ebc577feaa5b5c | True    | None  | nova      |
+| ac4dd12ebad84e55a1cd964b356ddf65 | True    | None  | glance    |
+| ca951c79453d4033a7c270bc6e0860fa | True    | None  | adminUser |
+| ec47114af7014afd9a8994cbb6057a8b | True    | None  | ec2       |
++----------------------------------+---------+-------+-----------+
+</screen>
 </section>
