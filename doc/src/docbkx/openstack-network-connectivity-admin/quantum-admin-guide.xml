@@ -39,12 +39,21 @@
         <revhistory>
                 <!-- ... continue addding more revisions here as you change this document using the markup shown below... -->
             <revision>
+                <date>2012-05-14</date>
+                <revdescription>
+                    <itemizedlist spacing="compact">
+                        <listitem>
+                            <para>Add description of how to delete networks.</para>
+                        </listitem>
+                    </itemizedlist>
+                </revdescription>
+            </revision>
+            <revision>
                 <date>2012-04-28</date>
                 <revdescription>
                     <itemizedlist spacing="compact">
                         <listitem>
                             <para>Add link for <citetitle>Quantum API Guide</citetitle>. </para>
-
                         </listitem>
                     </itemizedlist>
                 </revdescription>
@@ -562,7 +571,7 @@ list_ports &lt;tenant-id&gt; &lt;net-id&gt; [filterspec ...]</literallayout>
                 network and attach the vNIC. If the VM is later terminated, Quantum Manager will
                 destroy the associated Quantum port. </para>
             <section xml:id="Net-Create-dle455">
-                <title>Creating Networks</title>
+                <title>Creating/Deleting Networks</title>
             <note><para> When creating networks, nova-manage must be run on the host that nova-network is running on.
                          This is different from how network creation works for other network managers. When invoking
                          nova-manage,  make sure it picks up a config file that specifies
@@ -586,6 +595,8 @@ list_ports &lt;tenant-id&gt; &lt;net-id&gt; [filterspec ...]</literallayout>
                     vNIC for each network owned by the tenant associated with the VM. This lets
                     users create hybrid scenarios where a VM has a vNIC both on a shared public
                     network and on a private tenant-specific network. </para>
+            <para>Networks are deleted by specifying their UUID (specifying their IP range is not sufficient):</para>
+            <literallayout class="monospaced">nova-manage network delete --uuid 174d677f-7d15-4d7f-9d93-43feaae25d4d</literallayout>
             </section>
             <section xml:id="Net-Priorities-dle455">
                 <title>Network Priorities</title>
