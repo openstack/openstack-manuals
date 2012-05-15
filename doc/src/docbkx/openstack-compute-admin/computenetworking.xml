@@ -388,6 +388,7 @@ public_interface=eth0
             </warning>
         </section>
         <section xml:id="configuring-vlan-networking">
+            <?dbhtml stop-chunking?>
             <title>Configuring VLAN Networking</title>
             <para>Compute can be configured so that the virtual machine instances of different
                 projects (tenants) are in different subnets, with each subnet having a different
@@ -589,6 +590,43 @@ Options:
                 instance (code named cloudpipe) needs to be created as described in the section
                 titled <link linkend="cloudpipe-per-project-vpns">Cloudpipe — Per Project
                     VPNs</link>. </para>
+            <section xml:id="vlan-known-issues">
+                <title>Known issue with failed DHCP leases in VLAN configuration</title>
+                <para>Text in this section was adapted from <link
+                        xlink:href="https://lists.launchpad.net/openstack/msg11696.html">an email
+                        from Vish Ishaya on the OpenStack mailing list</link>.</para>
+                <para>There is an issue with the way Compute uses <link
+                        xlink:href="http://www.thekelleys.org.uk/dnsmasq/doc.html">dnsmasq</link> in
+                    VLAN mode. Compute starts up a single copy of dnsmasq for each VLAN on the
+                    network host (or on every host in multi_host mode). <link
+                        xlink:href="http://lists.thekelleys.org.uk/pipermail/dnsmasq-discuss/2011q3/005233.html"
+                        >The problem</link> is in the way that dnsmasq binds to an IP  address and
+                    port. Both copies can respond to broadcast packets, but unicast packets can only
+                    be answered by one of the copies.</para>
+                <para>As a consequence, guests from only one project will get responses to their
+                    unicast DHCP renew requests. Unicast projects from guests in other projects get
+                    ignored. What happens next is different depending on the guest OS. Linux
+                    generally will send a broadcast packet out after the unicast fails, and so the
+                    only effect is a small (tens of ms) hiccup while the interface is reconfigured.
+                    It can be much worse than that, however. There have been observed cases where
+                    Windows just gives up and ends up with a non-configured interface.</para>
+                <para>This bug was first noticed by some users of OpenStack who rolled their own
+                    fix. In short, on Linux, if you set the <literal>SO_BINDTODEVICE</literal>
+                    socket option, it will allow different daemons to share the port and respond to
+                    unicast packets, as long as they listen on different interfaces. Simon Kelley,
+                    the maintainer of dnsmasq, <link
+                        xlink:href="http://thekelleys.org.uk/gitweb/?p=dnsmasq.git;a=commitdiff;h=9380ba70d67db6b69f817d8e318de5ba1e990b12"
+                        >has integrated a fix</link> for the issue in dnsmaq version 2.61. </para>
+                <para>If upgrading dnsmasq is out of the question, a possible workaround is to
+                    minimize lease renewals with something like the following combination of config
+                    options.
+                    <programlisting># release leases immediately on terminate
+force_dhcp_release=true
+# one week lease time
+dhcp_lease_time=604800
+# two week disassociate timeout
+fixed_ip_disassociate_timeout=1209600</programlisting></para>
+            </section>
         </section>
         <section xml:id="cloudpipe-per-project-vpns">
             <title>Cloudpipe — Per Project VPNs</title>
