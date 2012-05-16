@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="qemu">
+    <?dbhtml stop-chunking?>
+    <title>QEMU</title>
+<para>From the perspective of the Compute service, the QEMU hypervisor is very similar to the KVM
+        hypervisor. Both are controlled through libvirt, both support the same feature set, and all
+        virtual machine images that are compatible with KVM are also compatible with QEMU. The main
+        difference is that QEMU does not support native virtualization. Consequently, QEMU has worse
+        performance than KVM and is a poor choice for a production deployment.</para>
+    <para>The typical uses cases for QEMU are<itemizedlist>
+            <listitem>
+                <para>Running on older hardware that lacks virtualization support.</para>
+            </listitem>
+            <listitem>
+                <para>Running the Compute service inside of a virtual machine for development or
+                    testing purposes, where the hypervisor does not support native virtualization
+                    for guests.</para>
+            </listitem>
+        </itemizedlist>running on</para>
+    <para>KVM requires hardware support for acceleration. If hardware support is not available
+        (e.g., if you are running Compute inside of a VM and the hypervisor does not expose the
+        required hardware support), you can use QEMU instead. KVM and QEMU have the same level of
+        support in OpenStack, but KVM will provide better performance. To enable
+        QEMU:<programlisting>connection_type=libvirt
+libvirt_type=qemu</programlisting>
+
+    The QEMU hypervisor supports the following virtual machine image formats:<itemizedlist>
+        <listitem>
+            <para>Raw</para>
+        </listitem>
+        <listitem>
+            <para>QEMU Copy-on-write (qcow2)</para>
+        </listitem>
+        <listitem>
+            <para>VMWare virtual machine disk format (vmdk)</para>
+        </listitem>
+    </itemizedlist></para>
+</section>
