@@ -32,7 +32,7 @@ To install Maven for Ubuntu::
 
 Building
 ========
-To build the *Compute Admin Manual*, *Object Storage Admin Manual*, and
+To build the *Compute Administration Manual*, *Object Storage Administration Manual*, and
 *Image Service Manual*::
 
     cd openstack-manuals/doc
