@@ -570,7 +570,7 @@ can be overridden in any of the other sections.</para>
                     <tr>
                         <td>per_diff</td>
                         <td>1000</td>
-                        <td> </td>
+                        <td>Limit number of items to get per diff</td>
                     </tr>
                     <tr>
                         <td>concurrency</td>
@@ -729,6 +729,16 @@ can be overridden in any of the other sections.</para>
                         <td>swift</td>
                         <td>User to run as</td>
                     </tr>
+                    <tr>
+                        <td>backlog</td>
+                        <td>4096</td>
+                        <td>Maximum number of allowed pending TCP connections.</td>
+                    </tr>
+                    <tr>
+                        <td>db_preallocation</td>
+                        <td>true</td>
+                        <td>preallocate disk space for new SQLite databases to decrease fragmentation</td>
+                    </tr>
                 </tbody>
             </table>
             <table rules="all">
@@ -760,6 +770,16 @@ can be overridden in any of the other sections.</para>
                         <td>INFO</td>
                         <td>Logging level</td>
                     </tr>
+                    <tr>
+                        <td>log_requests</td>
+                        <td>true</td>
+                        <td>Whether or not to log each request</td>
+                    </tr>
+                    <tr>
+                        <td>auto_create_account_prefix</td>
+                        <td>.</td>
+                        <td>prefix used when automatically creating accounts</td>
+                    </tr>
                 </tbody>
             </table>
             <table rules="all">
@@ -788,8 +808,15 @@ can be overridden in any of the other sections.</para>
                     <tr>
                         <td>per_diff</td>
                         <td>1000</td>
-                        <td> </td>
+                        <td>Limit number of items to get per diff</td>
                     </tr>
+                    <tr>
+                        <td>max_diffs</td>
+                        <td>100</td>
+                        <td>Caps how long the replicator spends trying to sync a database per pass</td>
+                    </tr>
+
+
                     <tr>
                         <td>concurrency</td>
                         <td>8</td>
@@ -814,6 +841,27 @@ can be overridden in any of the other sections.</para>
                         <td>reclaim_age</td>
                         <td>604800</td>
                         <td>Time elapsed in seconds before an account can be reclaimed</td>
+                    </tr>
+                    <tr>
+                        <td>vm_test_mode</td>
+                        <td>no</td>
+                        <td>Indicates that you are using a VM environment</td>
+                    </tr>
+                    <tr>
+                        <td>interval</td>
+                        <td>30</td>
+                        <td>Minimum time for a pass to take</td>
+                    </tr>
+                    <tr>
+                        <td>error_suppression_interval</td>
+                        <td>60</td>
+                        <td>Time in seconds that must elapse since the last error for a node to be
+                            considered no longer error limited</td>
+                    </tr>
+                    <tr>
+                        <td>error_suppression_limit</td>
+                        <td>10</td>
+                        <td>Error count to consider a node error limited</td>
                     </tr>
                 </tbody>
             </table>
@@ -857,7 +905,7 @@ can be overridden in any of the other sections.</para>
                     </tr>
                     <tr>
                         <td>delay_reaping</td>
-                        <td>account-auditor</td>
+                        <td>0</td>
                         <td>Number of seconds to delay reaper from deleting account info for deleted accounts. 2592000 = 30
                             days, for example</td>
                     </tr>
