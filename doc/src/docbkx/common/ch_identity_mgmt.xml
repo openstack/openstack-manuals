@@ -1103,10 +1103,22 @@ keystone service-create --name=swift \
       </para>
       <orderedlist numeration="arabic">
         <listitem>
-          <para>
-            Add a service endpoint for Swift to Keystone
-          </para>
-        </listitem>
+            <para> Add a service endpoint for Swift to Keystone </para>
+          </listitem>
+          <listitem>
+            <para>In order to enable to S3 compatibility, add the following lines to the
+              keystone.conf file :
+            </para>
+                  <para> Add the following filter :
+              <screen>[filter:s3_extension]
+paste.filter_factory = keystone.contrib.s3:S3Extension.factory </screen></para>
+            <para> And update the "admin_api" pipeline, by updating the following line :
+                    <screen>[pipeline:admin_api]
+pipeline = token_auth admin_token_auth xml_body json_body debug ec2_extension crud_extension admin_service</screen>
+                    With :
+                    <screen>[pipeline:admin_api]
+pipeline = token_auth admin_token_auth xml_body json_body debug ec2_extension s3_extension crud_extension admin_service</screen></para>
+          </listitem>
         <listitem>
           <para>
             Configure the paste file for swift-proxy

@@ -219,6 +219,31 @@
       <para>Next you create definitions for the services.</para>
     </section>
   </section>
+  <section xml:id="enabling-s3-compatibility-keystone">
+    <title>Enable Keystone</title>
+    <para>
+      In order to enable the compatibility for Swift with the S3 API within Keystone, make sure to define a new filter and enable it. In the keystone.conf file : 
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Define the filter : 
+          <screen>
+[filter:s3_extension]
+paste.filter_factory = keystone.contrib.s3:S3Extension.factory
+          </screen>
+        </para>
+      </listitem>
+      <listitem>
+        <para> and enable it by updating the "admin_api" pipeline. Update the following line:
+          <screen>[pipeline:admin_api]
+pipeline = token_auth admin_token_auth xml_body json_body debug ec2_extension crud_extension admin_service          </screen>
+          by :
+          <screen>[pipeline:admin_api]
+pipeline = token_auth admin_token_auth xml_body json_body debug ec2_extension s3_extension crud_extension admin_service</screen></para>
+      </listitem>
+    </orderedlist>
+  </section>
   <section xml:id="defining-services">
     <title>Defining Services</title>
     <para>Keystone also acts as a service catalog to let other
