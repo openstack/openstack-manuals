@@ -8,14 +8,12 @@
     to the other servers you intend to use for OpenStack
     services, as root:</para>
   <screen><prompt>#</prompt> <userinput>apt-get install keystone</userinput></screen>
-  <para>After installing, you need to delete the sqlite database it
-    creates, then change the configuration to point to a MySQL
-    database. This configuration enables easier scaling scenarios
-    since you can bring up multiple Keystone front ends when needed,
-    and configure them all to point back to the same database. Plus a
-    database backend has built-in data replication features and
-    documentation surrounding high availability and data redundancy
-    configurations. </para>
+  <para>After installing, you need to delete the sqlite database it creates, then change the
+    configuration to point to a MySQL database. This configuration enables easier scaling scenarios
+    since you can bring up multiple Keystone front ends when needed, and configure them all to point
+    back to the same database. Plus a database backend has built-in data replication features and
+    documentation surrounding high availability and data redundancy configurations.
+    doc/src/docbkx/openstack-install/identity-install-keystone.xml</para>
   <para>Delete the <filename>keystone.db</filename> file created in
     the <filename>/var/lib/keystone</filename>
     directory.<screen><prompt>#</prompt> <userinput>rm /var/lib/keystone/keystone.db</userinput></screen></para>
@@ -439,7 +437,6 @@ service-create \
 | type        | volume                           |
 +-------------+----------------------------------+
 </computeroutput>
-<prompt>$</prompt> <userinput>TENANT=eb7e0c10a99446cfa14c244374549e9d</userinput> 
 <prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 \
  --endpoint http://192.168.206.130:35357/v2.0/ \
  endpoint-create \
@@ -483,7 +480,7 @@ service-create \
 +-------------+----------------------------------+
 </computeroutput>
 <prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 \
- --endpoint http://192.168.206.130:35357/v2.0/
+ --endpoint http://192.168.206.130:35357/v2.0/ \
  endpoint-create \
  --region RegionOne \
  --service_id=7d5258c490144c8c92505267785327c1 \
