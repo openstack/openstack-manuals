@@ -500,22 +500,6 @@ Device Boot Start End Blocks Id System
                             </screen>
                 </listitem>
                 <listitem>
-                    <para><emphasis role="bold">Configure nova.conf configuration option file</emphasis></para>
-                    <para>Edit your nova.conf to include a new
-                        configuration option,
-                            <literal>iscsi_ip_prefix=192.168.</literal>
-                        The configuration option will be used by the
-                        compute node when the iSCSI discovery will be
-                        performed and the session created. The prefix
-                        based on the two first bytes will allows the
-                        iSCSI discovery to use all the available
-                        routes (also known as multipathing) to the
-                        iSCSI server (eg. nova-volumes) into your
-                        network. We will see into the
-                        "Troubleshooting" section how to deal with
-                        ISCSI sessions.</para>
-                </listitem>
-                <listitem>
                     <para>
                         <emphasis role="bold">Start nova-volume and create volumes</emphasis></para>
                     <para>You are now ready to fire up nova-volume, and start creating
@@ -699,16 +683,8 @@ portal:10.192.12.34,3260]: openiscsiadm: initiator reported error (15 - already 
 <prompt>$</prompt> <userinput>iscsiadm -m discovery -t st -p $ip_of_nova-volumes</userinput>
                             </screen>
                             For a volume, you should see multiple
-                            addresses to reach it. The only known
-                            workaround to that is to change the
-                                <literal>iscsi_ip_prefix</literal>
-                            configuration option and use the 4 bytes
-                            (full IP) of the nova-volumes server, eg : </para>
-                        <para><programlisting>
-iscsi_ip_prefix=192.168.2.1
-                        </programlisting>
-                            You will then have to restart both
-                            nova-compute and nova-volume services. </para>
+                            addresses to reach it. There is no known
+                            workaround for this issue.</para>
                     </listitem>
                     <listitem>
                         <para><emphasis role="italic">ERROR "Cannot
@@ -2611,12 +2587,6 @@ done &lt; $volumes_tmp_file
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>iscsi_ip_prefix</td>
-                            <td>default: ''</td>
-
-                            <td>IP address or partial IP address; Value that differentiates the IP
-                                addresses using simple string matching, so if all of your hosts are on the 192.168.1.0/24 network you could use --iscsi_ip_prefix=192.168.1</td></tr>
-
                         <tr>
                             <td>volume_manager</td>
                             <td>default: 'nova.volume.manager.VolumeManager'</td>
