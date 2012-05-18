@@ -47,6 +47,16 @@
         <revhistory>
                 <!-- ... continue addding more revisions here as you change this document using the markup shown below... -->
             <revision>
+                <date>2012-05-17</date>
+                <revdescription>
+                    <itemizedlist spacing="compact">
+                        <listitem>
+                            <para>Further clarifications around using nova-manage for Quantum networks.</para>
+                        </listitem>
+                    </itemizedlist>
+                </revdescription>
+            </revision>
+            <revision>
                 <date>2012-05-14</date>
                 <revdescription>
                     <itemizedlist spacing="compact">
@@ -587,6 +597,9 @@ list_ports &lt;tenant-id&gt; &lt;net-id&gt; [filterspec ...]</literallayout>
             <note><para> The content in this section is specific to how Quantum integrates with Nova in the Essex (2012.1)
                          release.
                          In future releases, networks will be created by calling the Quantum API directly. </para></note>
+            <note><para> Networks created using other Nova network managers are not compatible with Quantum.  When using
+                         Quantum with nova, you must start with a fresh Nova database to make sure that no previous networks
+                         created using other network managers exist. </para></note>
             <para>To create a network using Quantum Manager, run: </para>
             <literallayout class="monospaced">nova-manage network create --label=public --fixed_range_v4=8.8.8.0/24</literallayout>
             <para>When this command is invoked, the Quantum Manager will contact the Quantum Service
@@ -605,6 +618,10 @@ list_ports &lt;tenant-id&gt; &lt;net-id&gt; [filterspec ...]</literallayout>
                     network and on a private tenant-specific network. </para>
             <para>Networks are deleted by specifying their UUID (specifying their IP range is not sufficient):</para>
             <literallayout class="monospaced">nova-manage network delete --uuid 174d677f-7d15-4d7f-9d93-43feaae25d4d</literallayout>
+
+            <note><para>Quantum networks can only be created or deleted via nova-manage.
+                        None of the "nova-manage network modify"
+                        commands should be used when Quantum Manager is enabled.</para> </note>
             </section>
             <section xml:id="Net-Priorities-dle455">
                 <title>Network Priorities</title>
