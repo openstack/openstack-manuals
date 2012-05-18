@@ -11,6 +11,17 @@
         (including http or https) when issuing auth
         commands.</para>
     <orderedlist>
+         <listitem>
+            <para>First, export the swift admin password (setup previously) in a variable so it can be re-used.</para>
+            <screen>
+<prompt>$</prompt> <userinput>export ADMINPASS=secretword</userinput>
+            </screen>
+<note><para>If you do not wish to have the swift admin password stored in your shell's history, you may
+perform the following: </para>
+        <screen><prompt>$</prompt><userinput>export SWIFT_PROXY_CONF="/etc/swift/proxy-server.conf export ADMINPASS=$( grep super_admin_key ${SWIFT_PROXY_CONF} | awk '{ print $NF }' )</userinput> </screen>
+        </note>
+        </listitem>
+
         <listitem>
             <para>Run the swift CLI, swift, with the correct Identity
                 service URL. </para>
