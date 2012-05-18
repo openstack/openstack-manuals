@@ -232,6 +232,37 @@ can be overridden in any of the other sections.</para>
                         <td>1</td>
                         <td>Number of workers to fork</td>
                     </tr>
+                    <tr>
+                        <td>backlog</td>
+                        <td>4096</td>
+                        <td>Maximum number of allowed pending TCP connections.</td>
+                    </tr>
+                    <tr>
+                        <td>expiring_objects_container_divisor</td>
+                        <td>86400</td>
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <td>log_name</td>
+                        <td>swift</td>
+                        <td>Label used when logging</td>
+                    </tr>
+                    <tr>
+                        <td>log_facility</td>
+                        <td>LOG_LOCAL0</td>
+                        <td>Syslog log facility</td>
+                    </tr>
+                    <tr>
+                        <td>log_level</td>
+                        <td>INFO</td>
+                        <td>Logging level</td>
+                    </tr>
+                     <tr>
+                        <td>user</td>
+                        <td>swift</td>
+                        <td>User to run as</td>
+                    </tr>
                 </tbody>
             </table>
          
@@ -305,6 +336,21 @@ can be overridden in any of the other sections.</para>
                         <td>If &gt; 0, Minimum time in seconds for a PUT or DELETE request to
                             complete</td>
                     </tr>
+                    <tr>
+                        <td>auto_create_account_prefix</td>
+                        <td>.</td>
+                        <td>prefix used when automatically creating accounts</td>
+                    </tr>
+                    <tr>
+                        <td>allowed_headers</td>
+                        <td>content-disposition,<br /> content-encoding,<br /> x-delete-at,<br /> x-object-manifest,</td>
+                        <td>comma separated list of headers that can be set in metadata of an object</td>
+                    </tr>
+                    <tr>
+                        <td>mb_per_sync</td>
+                        <td>512</td>
+                        <td>on PUTs, sync data every n MB</td>
+                    </tr>
                 </tbody>
             </table>
             <table rules="all">
@@ -352,14 +398,54 @@ can be overridden in any of the other sections.</para>
                             options</td>
                     </tr>
                     <tr>
+                        <td>http_timeout</td>
+                        <td>60</td>
+                        <td>Maximum duration for an HTTP request</td>
+                    </tr>
+                    <tr>
+                        <td>lockup_timeout</td>
+                        <td>1800</td>
+                        <td>Attempts to kill all workers if nothing replicates for lockup_timeout seconds.</td>
+                    </tr>
+                    <tr>
                         <td>stats_interval</td>
-                        <td>3600</td>
+                        <td>300</td>
                         <td>Interval in seconds between logging replication statistics</td>
                     </tr>
                     <tr>
                         <td>reclaim_age</td>
                         <td>604800</td>
                         <td>Time elapsed in seconds before an object can be reclaimed</td>
+                    </tr>
+                    <tr>
+                        <td>recon_cache_path</td>
+                        <td>/var/cache/swift</td>
+                        <td>Directory where stats for a few items will be stored</td>
+                    </tr>
+                    <tr>
+                        <td>recon_enable</td>
+                        <td>no</td>
+                        <td>Enable logging of replication stats for recon</td>
+                    </tr>
+                    <tr>
+                        <td>ring_check_interval</td>
+                        <td>15</td>
+                        <td>How often (in seconds) to check the ring</td>
+                    </tr>
+                    <tr>
+                        <td>rsync_io_timeout</td>
+                        <td>30</td>
+                        <td>Passed to rsync for max duration (seconds) of an I/O op</td>
+                    </tr>
+                    <tr>
+                        <td>rsync_timeout</td>
+                        <td>900</td>
+                        <td>Max duration (seconds) of a partition rsync</td>
+                    </tr>
+                    <tr>
+                        <td>vm_test_mode</td>
+                        <td>no</td>
+                        <td>Indicates that you are using a VM environment</td>
                     </tr>
                 </tbody>
             </table>
@@ -437,6 +523,11 @@ can be overridden in any of the other sections.</para>
                         <td>Logging level</td>
                     </tr>
                     <tr>
+                        <td>log_time</td>
+                        <td>3600</td>
+                        <td>Frequency of status logs in seconds.</td>
+                    </tr>
+                    <tr>
                         <td>files_per_second</td>
                         <td>20</td>
                         <td>Maximum files audited per second. Should be tuned according to
@@ -448,6 +539,13 @@ can be overridden in any of the other sections.</para>
                         <td>Maximum bytes audited per second. Should be tuned according to
                             individual system specs. 0 is unlimited.</td>
                     </tr>
+                    <tr>
+                        <td>zero_byte_files_per_second</td>
+                        <td>50</td>
+                        <td>Maximum zero byte files audited per second.</td>
+                    </tr>
+ 
+
                 </tbody>
             </table>
         </section>
