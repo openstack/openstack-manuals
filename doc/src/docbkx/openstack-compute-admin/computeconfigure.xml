@@ -662,16 +662,18 @@ xenapi_remap_vbd_dev=true
       when VM instances are scattered, you can move VM instances to a
       physical machine to arrange them more logically.</para>
 
-    <para><emphasis role="bold">Environments</emphasis> <itemizedlist>
+    <para><emphasis role="bold">Prerequisites</emphasis> <itemizedlist>
         <listitem>
-          <para><emphasis role="bold">OS:</emphasis> Ubuntu 10.04/10.10 for
-          both instances and host.</para>
+          <para><emphasis role="bold">OS:</emphasis>Ubuntu 10.04 or 12.04</para>
         </listitem>
 
         <listitem>
           <para><emphasis role="bold">Shared storage:</emphasis>
-          NOVA-INST-DIR/instances/ has to be mounted by shared storage (tested
-          using NFS).</para>
+          NOVA-INST-DIR/instances/ (eg /var/lib/nova/instances) has to be
+           mounted by shared storage. This guide uses NFS but other options, 
+           including the
+           <link xlink:href="http://gluster.org/community/documentation//index.php/OSConnect">OpenStack Gluster Connector</link>
+           are available.</para>
         </listitem>
 
         <listitem>
@@ -683,56 +685,49 @@ xenapi_remap_vbd_dev=true
           <para><emphasis role="bold">Hypervisor:</emphasis> KVM with
           libvirt</para>
         </listitem>
+        </itemizedlist>
+          <note><para>
+          This guide assumes the default value for instances_path in your nova.conf
+          ("NOVA-INST-DIR/instances"). If you have changed the state_path or 
+          instances_path variables, please modify accordingly
+          </para></note>
+         <note><para>This feature for cloud administrators only, since the use of nova-manage is necessary.
+          </para></note>
+      </para>
 
-        <listitem>
-          <para><emphasis role="bold">(NOTE1)</emphasis>
-          "NOVA-INST-DIR/instance" is expected that vm image is put on to. see
-          "flags.instances_path" in nova.compute.manager for the default
-          value</para>
-        </listitem>
-
-        <listitem>
-          <para><emphasis role="bold">(NOTE2)</emphasis> This feature is admin
-          only, since nova-manage is necessary.</para>
-        </listitem>
-      </itemizedlist></para>
-
-    <para><emphasis role="bold">Sample Nova Installation before
-    starting</emphasis> <itemizedlist>
+    <para><emphasis role="bold">Example Nova Installation Environment</emphasis> <itemizedlist>
         <listitem>
           <para>Prepare 3 servers at least; for example, HostA, HostB
             and HostC</para>
         </listitem>
 
         <listitem>
-          <para>nova-api/nova-network/nova-volume/nova-objectstore/
-            nova-scheduler(and other daemon) should be running on
-            HostA.</para>
+          <para>HostA is the "Cloud Controller", and should be running: nova-api, nova-scheduler,
+              nova-network, nova-volume, nova-objectstore, nova-scheduler.</para>
         </listitem>
 
         <listitem>
-          <para>nova-compute should be running on both HostB and
-            HostC.</para>
+          <para>Host B and Host C are the "compute nodes", running nova-compute.</para>
         </listitem>
 
         <listitem>
-          <para>To avoid any confusion, NOVA-INST-DIR is same at
-            HostA, HostB, and HostC ("NOVA-INST-DIR" shows top of
-            install dir).</para>
+          <para>Ensure that, NOVA-INST-DIR (set with state_path in nova.conf) is same on
+            all hosts.</para>
         </listitem>
 
         <listitem>
-          <para>HostA exports NOVA-INST-DIR/instances, and  HostB and
-            HostC mount it.</para>
+          <para>In this example, HostA will be the NFSv4 server which exports NOVA-INST-DIR/instances,
+          and HostB and HostC mount it.</para>
         </listitem>
       </itemizedlist></para>
 
-    <para><emphasis role="bold">Pre-requisite configurations</emphasis></para>
+    <para><emphasis role="bold">System configuration</emphasis></para>
 
     <para><orderedlist>
         <listitem>
-          <para>Configure <filename>/etc/hosts</filename>. Make sure that the three hosts
-            can perform name-resolution with each other. As a test,
+          <para>Configure your DNS or <filename>/etc/hosts</filename> and
+             ensure it is consistent accross all hosts. Make sure that the three hosts
+            can perform name resolution with each other. As a test,
             use the <command>ping</command> command to ping each host from one
             another.</para>
 
@@ -742,12 +737,21 @@ xenapi_remap_vbd_dev=true
         </listitem>
 
         <listitem>
-          <para>Configure NFS at HostA by adding below to <filename>/etc/exports</filename></para>
+          <para>Follow the instructions at
 
+<link xlink:href="https://help.ubuntu.com/community/SettingUpNFSHowTo">the Ubuntu NFS HowTo to
+setup an NFS server on HostA, and NFS Clients on HostB and HostC.</link> </para>
+        <para> Our aim is to export NOVA-INST-DIR/instances from HostA, 
+        and have it readable and writable by the nova user on HostB and HostC.</para>
+        </listitem>
+        <listitem>
+        <para>
+        Using your knowledge from the Ubuntu documentation, configure the 
+        NFS server at HostA by adding a line to <filename>/etc/exports</filename>
           <screen><prompt>$</prompt> <userinput>NOVA-INST-DIR/instances HostA/255.255.0.0(rw,sync,fsid=0,no_root_squash)</userinput></screen>
-
-          <para>Change <literal>255.255.0.0</literal> appropriate
-            netmask, which should include HostB and HostC. Then
+        </para>
+          <para>Change the subnet mask (<literal>255.255.0.0</literal>) to the appropriate
+            value to include the IP addresses of HostB and HostC. Then
             restart the NFS server.</para>
 
           <screen><prompt>$</prompt> <userinput>/etc/init.d/nfs-kernel-server restart</userinput>
@@ -755,9 +759,9 @@ xenapi_remap_vbd_dev=true
         </listitem>
         <listitem>
            <para>Set the 'execute/search' bit on your shared directory </para>
-          <para>On both compute node, make sure to enable the
-            'execute/search' bit for qemu being able to use the images
-            within the directories. On both hosts, execute the
+          <para>On both compute nodes, make sure to enable the
+            'execute/search' bit to allow qemu to be able to use the images
+            within the directories. On all hosts, execute the
             following command: </para>
           <screen><prompt>$</prompt> <userinput>chmod o+x NOVA-INST-DIR/instances</userinput> </screen>
         </listitem>
@@ -767,43 +771,28 @@ xenapi_remap_vbd_dev=true
 
           <screen><prompt>$</prompt> <userinput>HostA:/NOVA-INST-DIR/instances /NOVA-INST-DIR/instances nfs4 defaults 0 0</userinput></screen>
 
-          <para>Then mount the directory and ensure that the exported
+          <para>Then ensure that the exported
             directory can be mounted.</para>
 
           <screen><prompt>$</prompt> <userinput>mount -a -v</userinput></screen>
 
-          <para>If this fails, try the following command on a
-            host.</para>
-
-          <screen><prompt>$</prompt> <userinput>iptables -F</userinput></screen>
-
-          <para>Also, check file/daemon permissions. We expect any nova
-          daemons are running as root.</para>
-
-          <screen><prompt>$</prompt> <userinput>ps -ef | grep nova </userinput></screen>
-
-          <programlisting language="bash">
-root 5948 5904 9 11:29 pts/4 00:00:00 python /opt/nova-2010.4//bin/nova-api
-root 5952 5908 6 11:29 pts/5 00:00:00 python /opt/nova-2010.4//bin/nova-objectstore
-... (snip)
-</programlisting>
-
-          <para>"<filename><replaceable>NOVA-INST-DIR</replaceable>/instances/</filename>"
+          <para>Check that "<filename><replaceable>NOVA-INST-DIR</replaceable>/instances/</filename>"
           directory can be seen at HostA</para>
 
           <screen><prompt>$</prompt> <userinput>ls -ld <filename><replaceable>NOVA-INST-DIR</replaceable>/instances/</filename></userinput></screen>
 
 
           <programlisting language="bash">
-drwxr-xr-x 2 root root 4096 2010-12-07 14:34 nova-install-dir/instances/
+drwxr-xr-x 2 nova nova 4096 2012-05-19 14:34 nova-install-dir/instances/
           </programlisting>
 
-          <para>Perform the same check at HostB and HostC</para>
+          <para>Perform the same check at HostB and HostC - paying special
+           attention to the permissions (nova should be able to write)</para>
 
           <screen><prompt>$</prompt> <userinput>ls -ld <filename><replaceable>NOVA-INST-DIR</replaceable>/instances/</filename></userinput></screen>
 
           <programlisting language="bash">
-drwxr-xr-x 2 root root 4096 2010-12-07 14:34 nova-install-dir/instances/
+drwxr-xr-x 2 nova nova 4096 2012-05-07 14:34 nova-install-dir/instances/
           </programlisting>
 
           <screen><prompt>$</prompt> <userinput>df -k</userinput></screen>
@@ -816,7 +805,7 @@ none                  16502856         0  16502856   0% /dev/shm
 none                  16502856       368  16502488   1% /var/run
 none                  16502856         0  16502856   0% /var/lock
 none                  16502856         0  16502856   0% /lib/init/rw
-HostA:        921515008 101921792 772783104  12% /opt  ( &lt;--- this line is important.)
+HostA:        921515008 101921792 772783104  12% /var/lib/nova/instances  ( &lt;--- this line is important.)
 </programlisting>
         </listitem>
 
@@ -859,7 +848,14 @@ after :libvirtd_opts=" -d -l"
 root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l
           </programlisting>
         </listitem>
-
+        <listitem>
+        <para> Configure your firewall to allow libvirt to communicate between nodes.</para>
+        <para>Information about ports used with libvirt can be found at <link xlink:href="http://libvirt.org/remote.html#Remote_libvirtd_configuration">the libvirt documentation</link>
+        By default, libvirt listens on TCP port 16509 and an ephemeral TCP range from 49152 to
+        49261 is used for the KVM communications. As this guide has disabled libvirt auth, you
+        should take good care that these ports are only open to hosts within your installation.
+        </para>
+        </listitem>
         <listitem>
           <para>You can now configure options for live migration. In
             most cases, you do not need to configure any options. The
