@@ -237,15 +237,14 @@ usage: nova [--debug] [--os_username OS_USERNAME] [--os_password OS_PASSWORD]
                 </listitem>
             </orderedlist>
         </para>
-        <para>Here is what happens from the volume creation to its attachment (we use euca2ools for
-            examples, but the same explanation goes with the API): </para>
+        <para>Here is what happens from the volume creation to its attachment: </para>
         <orderedlist>
             <listitem>
-                <para>The volume is created via $euca-create-volume; which creates an LV into the
+                <para>The volume is created via <command>nova volume-create</command>; which creates an LV into the
                     volume group (VG) "nova-volumes" </para>
             </listitem>
             <listitem>
-                <para>The volume is attached to an instance via $euca-attach-volume; which creates a
+                <para>The volume is attached to an instance via <command>nova volume-attach</command>; which creates a
                     unique iSCSI IQN that will be exposed to the compute node </para>
             </listitem>
             <listitem>
@@ -290,51 +289,6 @@ usage: nova [--debug] [--os_username OS_USERNAME] [--os_password OS_PASSWORD]
             <screen>
 <prompt>$</prompt> <userinput>apt-get install lvm2 nova-volume</userinput>
             </screen>
-                <note>
-                    <para><emphasis role="bold">For Ubuntu distros,
-                            the nova-volumes component will not
-                            properly work</emphasis> (regarding the
-                        part which deals with volumes deletion)
-                        without a small fix. To fix that, do the
-                        following :</para>
-                 <screen>
-<prompt>$</prompt> <userinput>sudo visudo</userinput> 
-                 </screen>
-            <para>Then add an entry for the nova user. The default sudoers file with our added nova user is as follows:</para>
-            <programlisting>
-# /etc/sudoers
-#
-# This file MUST be edited with the 'visudo' command as root.
-#
-# See the man page for details on how to write a sudoers file.
-#
-
-Defaults	env_reset
-
-# Host alias specification
-
-# User alias specification
-
-# Cmnd alias specification
-nova ALL = (root) NOPASSWD: /bin/dd
-
-# User privilege specification
-root	ALL=(ALL) ALL
-
-# Allow members of group sudo to execute any command
-# (Note that later entries override this, so you might need to move
-# it further down)
-%sudo ALL=(ALL) ALL
-#
-#includedir /etc/sudoers.d
-
-# Members of the admin group may gain root privileges
-%admin ALL=(ALL) ALL
-
-            </programlisting>
-            <para>That will allow the nova user to run the "dd" command (which empties a volume
-                before its deletion).</para>
-                </note>                    
             <para>
                 <itemizedlist>
                     <listitem>
@@ -455,11 +409,17 @@ Device Boot Start End Blocks Id System
             <para>Since you have created the volume group, you will be
                 able to use the following tools for managing your
                 volumes: </para>
-            <simpara>euca-create-volume</simpara>
-            <simpara>euca-attach-volume</simpara>
-            <simpara>euca-detach-volume</simpara>
-            <simpara>euca-delete-volume</simpara>
-            <note><para>If you are using KVM as your hypervisor, then the actual device name in the guest will be different than the one specified in the euca-attach-volume command. You can specify a device name to the KVM hypervisor, but the actual means of attaching to the guest is over a virtual PCI bus. When the guest sees a new device on the PCI bus, it picks the next available name (which in most cases is /dev/vdc) and the disk shows up there on the guest. </para></note>
+            <simpara>nova volume-create</simpara>
+            <simpara>nova volume-attach</simpara>
+            <simpara>nova volume-detach</simpara>
+            <simpara>nova volume-delete</simpara>
+            <note><para>If you are using KVM as your hypervisor, then the actual
+             device name in the guest will be different than the one specified in 
+             the nova volume-attach command. You can specify a device name to 
+             the KVM hypervisor, but the actual means of attaching to the guest 
+             is over a virtual PCI bus. When the guest sees a new device on the
+             PCI bus, it picks the next available name (which in most cases is 
+             /dev/vdc) and the disk shows up there on the guest. </para></note>
             <itemizedlist>
                 <listitem>
                     <para>
@@ -509,8 +469,7 @@ Device Boot Start End Blocks Id System
 <prompt>$</prompt> <userinput>service nova-volume start</userinput></screen>
                     </para>
                     <para>Once the service is started, login to your controller and ensure you’ve
-                        properly sourced your ‘novarc’ file. You will be able to use the euca2ools
-                        related to volumes interactions (see above).</para>
+                        properly sourced your ‘novarc’ file.</para>
                     <para>One of the first things you should do is make sure that nova-volume is
                         checking in as expected. You can do so using nova-manage:</para>
                     <para>
@@ -522,27 +481,31 @@ Device Boot Start End Blocks Id System
                         create a new volume:</para>
                     <para>
                         <screen>
-<prompt>$</prompt> <userinput>euca-create-volume -s 7 -z nova</userinput>  
+<prompt>$</prompt> <userinput>nova volume-create --display_name myvolume 10</userinput>  
                         </screen>
-                        <literal>-s</literal> refers to the size of
-                        the volume in GB, and <literal>-z</literal> is
-                        the default zone (usually nova).</para>
+                        --display_name sets a readable name for the volume, while
+                         the final argument refers to the size of the volume in GB.</para>
                     <para>You should get some output similar to this:</para>
                     <para>
-                        <programlisting>VOLUME vol-0000000b 7 creating (wayne, None, None, None) 2011-02-11 06:58:46.941818</programlisting>
+                        <programlisting>
+                        +----+-----------+--------------+------+-------------+--------------------------------------+
+                        | ID |   Status  | Display Name | Size | Volume Type |             Attached to              |
+                        +----+-----------+--------------+------+-------------+--------------------------------------+
+                        | 1  | available | myvolume     | 10   | None        |                                      |
+                        +----+-----------+--------------+------+-------------+--------------------------------------+
+                        </programlisting>
                     </para>
                     <para>You can view that status of the volumes creation using
-                        ‘euca-describe-volumes’. Once that status is ‘available,’ it is ready to be
+                        <command>nova volume-list</command>. Once that status is ‘available,’ it is ready to be
                         attached to an instance:</para>
                     <para><screen>
-<prompt>$</prompt> <userinput>euca-attach-volume -i i-00000008 -d /dev/vdb vol-00000009</userinput>
+<prompt>$</prompt> <userinput>nova volume-attach 857d70e4-35d5-4bf6-97ed-bf4e9a4dcf5a 1 /dev/vdb</userinput>
                     </screen>
-                        <literal>-i</literal> refers to the instance
+                        The first argument refers to the instance
                         you will attach the volume to;
-                            <literal>-d</literal> is the
-                            mountpoint<emphasis role="bold"> on the
-                            compute-node</emphasis> followed by the
-                        volume name.</para>
+                            The second is the volume ID;
+                            The third is the mountpoint<emphasis role="bold"> on the
+                            compute-node</emphasis> that the volume will be attached to</para>
                     <para>By doing that, the compute-node which runs the instance basically performs
                         an iSCSI connection and creates a session. You can ensure that the session
                         has been created by running : </para>
@@ -552,11 +515,10 @@ Device Boot Start End Blocks Id System
                     <para>Which should output : </para>
                     <para>
                         <programlisting>root@nova-cn1:~# iscsiadm -m session
-tcp: [1] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-0000000b</programlisting>
+tcp: [1] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-1</programlisting>
                     </para>
                     <para>If you do not get any errors, you can login
-                        to instance <literal>i-00000008</literal> and
-                        see if the new space is there. <emphasis
+                        to the instance and see if the new space is there. <emphasis
                             role="italic"/></para>
                     <para><emphasis role="italic">KVM changes the device name, since it's not
                             considered to be the same type of device as the instances uses as it's
@@ -567,8 +529,7 @@ tcp: [1] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-0000000b</program
 <prompt>$</prompt> <userinput>dmesg | tail</userinput>
                     </screen>
                         You should from there see a new disk. Here is
-                        the output from <command>fdisk -l</command>
-                        from i-00000008:</para>
+                        the output from <command>fdisk -l</command>:</para>
                     <programlisting>
 Disk /dev/vda: 10.7 GB, 10737418240 bytes
 16 heads, 63 sectors/track, 20805 cylinders
@@ -643,7 +604,7 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes Disk identifier: 0×00000000
                     </orderedlist>
                     <para>Your new volume has now been successfully
                         mounted, and is ready for use! The
-                            <command>euca</command> commands are
+                        commands are
                         pretty self-explanatory, so play around with
                         them and create new volumes, tear them down,
                         attach and reattach, and so on. </para>
@@ -658,34 +619,6 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes Disk identifier: 0×00000000
             <para><emphasis role="bold">nova-compute.log / nova-volume.log</emphasis></para>
             <para>
                 <itemizedlist>
-                    <listitem>
-                        <para><emphasis role="italic">ERROR "15- already exists"</emphasis>
-                            <programlisting>
-"ProcessExecutionError: Unexpected error while running command.\nCommand: sudo iscsiadm -m node -T iqn.2010-10.org.openstack:volume-00000001 -p
-10.192.12.34:3260 --login\nExit code: 255\nStdout: 'Logging in to [iface: default, target: iqn.2010-10.org.openstack:volume-00000001, portal:
-10.192.12.34,3260]\\n'\nStderr: 'iscsiadm: Could not login to [iface: default, target: iqn.2010-10.org.openstack:volume-00000001,
-portal:10.192.12.34,3260]: openiscsiadm: initiator reported error (15 - already exists)\\n'\n"] 
-                            </programlisting></para>
-                        <para> This errors happens sometimes when you run an euca-detach-volume and
-                            euca-attach-volume and/ or try to attach another volume to an instance.
-                            It happens when the compute node has a running session while you try to
-                            attach a volume by using the same IQN. You could check that by running : </para>
-                        <para><screen>
-<prompt>$</prompt> <userinput>iscsiadm -m session</userinput>
-                        </screen>You
-                            should have a session with the same name
-                            that the compute is trying to open.
-                            Actually, it seems to be related to the
-                            several routes available for the iSCSI
-                            exposition, those routes could be seen by
-                            running on the compute node :
-                            <screen>
-<prompt>$</prompt> <userinput>iscsiadm -m discovery -t st -p $ip_of_nova-volumes</userinput>
-                            </screen>
-                            For a volume, you should see multiple
-                            addresses to reach it. There is no known
-                            workaround for this issue.</para>
-                    </listitem>
                     <listitem>
                         <para><emphasis role="italic">ERROR "Cannot
                                 resolve host"</emphasis>
@@ -750,23 +683,26 @@ iscsiadm: cannot make connection to 172.29.200.37: No route to host\niscsiadm: c
                         <para>Here is an <command>iscsi -m</command>
                             session output : </para>
                         <programlisting>
-tcp: [1] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-0000000e
-tcp: [2] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000010
-tcp: [3] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000011
-tcp: [4] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-0000000a
-tcp: [5] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000012
-tcp: [6] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000007
-tcp: [7] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000009
-tcp: [9] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-00000014                        
+tcp: [1] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-1
+tcp: [2] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-2
+tcp: [3] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-3
+tcp: [4] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-4
+tcp: [5] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-5
+tcp: [6] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-6
+tcp: [7] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-7
+tcp: [9] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-9
                         </programlisting>
-                        <para>For example, to free volume 00000014,
+                        <para>For example, to free volume 9,
                             close the session number 9. </para>
                         <para>The cloud-controller is actually unaware
                             of the iSCSI session closing, and will
                             keeps the volume state as
                                 <literal>in-use</literal>:
                             <programlisting>
-VOLUME  vol-00000014     30     nova    in-use (nuage-and-co, nova-cc1, i-0000009a[nova-cn1], \/dev\/sdb)   2011-07-18T12:45:39Z
+                            +----+-----------+--------------+------+-------------+--------------------------------------+
+                            | ID |   Status  | Display Name | Size | Volume Type |             Attached to              |
+                            +----+-----------+--------------+------+-------------+--------------------------------------+
+                            | 9  | in-use    | New Volume   | 20   | None        | 7db4cb64-7f8f-42e3-9f58-e59c9a31827d |
                             </programlisting>You
                             now have to inform the cloud-controller
                             that the disk can be used. Nova stores the
@@ -777,50 +713,22 @@ VOLUME  vol-00000014     30     nova    in-use (nuage-and-co, nova-cc1, i-000000
                         <screen>
 <prompt>$</prompt> <userinput>mysql -uroot -p$password nova</userinput>
                         </screen>
-                        <para>Then, we get some information from the table "volumes" : </para>
+                        <para> Using the volume id, you will
+                            have to run the following sql queries
+                            </para>
                         <programlisting>
- mysql> select id,created_at, size, instance_id, status, attach_status, display_name from volumes;
-+----+---------------------+------+-------------+----------------+---------------+--------------+
-| id | created_at          | size | instance_id | status         | attach_status | display_name |
-+----+---------------------+------+-------------+----------------+---------------+--------------+
-|  1 | 2011-06-08 09:02:49 |    5 |           0 | available      | detached      | volume1      |
-|  2 | 2011-06-08 14:04:36 |    5 |           0 | available      | detached      | NULL         |
-|  3 | 2011-06-08 14:44:55 |    5 |           0 | available      | detached      | NULL         |
-|  4 | 2011-06-09 09:09:15 |    5 |           0 | error_deleting | detached      | NULL         |
-|  5 | 2011-06-10 08:46:33 |    6 |           0 | available      | detached      | NULL         |
-|  6 | 2011-06-10 09:16:18 |    6 |           0 | available      | detached      | NULL         |
-|  7 | 2011-06-16 07:45:57 |   10 |         157 | in-use         | attached      | NULL         |
-|  8 | 2011-06-20 07:51:19 |   10 |           0 | available      | detached      | NULL         |
-|  9 | 2011-06-21 08:21:38 |   10 |         152 | in-use         | attached      | NULL         |
-| 10 | 2011-06-22 09:47:42 |   50 |         136 | in-use         | attached      | NULL         |
-| 11 | 2011-06-30 07:30:48 |   50 |           0 | available      | detached      | NULL         |
-| 12 | 2011-06-30 11:56:32 |   50 |           0 | available      | detached      | NULL         |
-| 13 | 2011-06-30 12:12:08 |   50 |           0 | error_deleting | detached      | NULL         |
-| 14 | 2011-07-04 12:33:50 |   30 |         155 | in-use         | attached      | NULL         |
-| 15 | 2011-07-06 15:15:11 |    5 |           0 | error_deleting | detached      | NULL         |
-| 16 | 2011-07-07 08:05:44 |   20 |         149 | in-use         | attached      | NULL         |
-| 20 | 2011-08-30 13:28:24 |   20 |         158 | in-use         | attached      | NULL         |
-| 17 | 2011-07-13 19:41:13 |   20 |         149 | in-use         | attached      | NULL         |
-| 18 | 2011-07-18 12:45:39 |   30 |         154 | in-use         | attached      | NULL         |
-| 19 | 2011-08-22 13:11:06 |   50 |           0 | available      | detached      | NULL         |
-| 21 | 2011-08-30 15:39:16 |    5 |        NULL | error_deleting | detached      | NULL         |
-+----+---------------------+------+-------------+----------------+---------------+--------------+
-21 rows in set (0.00 sec)
+mysql> update volumes set mountpoint=NULL where id=9;
+mysql> update volumes set status="available" where status "error_deleting" where id=9;
+mysql> update volumes set attach_status="detached" where id=9;
+mysql> update volumes set instance_id=0 where id=9;
                         </programlisting>
-                        <para> Once you get the volume id, you will
-                            have to run the following sql queries; for
-                            example, my volume 14 as the id number 21
-                            : </para>
-                        <programlisting>
-mysql> update volumes set mountpoint=NULL where id=21;
-mysql> update volumes set status="available" where status "error_deleting" where id=21;
-mysql> update volumes set attach_status="detached" where id=21;
-mysql> update volumes set instance_id=0 where id=21;
-                        </programlisting>
-                        <para>Now if you run again euca-describe-volumesfrom the cloud
+                        <para>Now if you run again <command>nova volume-list</command> from the cloud
                             controller, you should see an available volume now : </para>
                         <programlisting>
-VOLUME  vol-00000014     30     nova    available (nuage-and-co, nova-cc1, None, None)  2011-07-18T12:45:39Z
+                            +----+-----------+--------------+------+-------------+--------------------------------------+
+                            | ID |   Status  | Display Name | Size | Volume Type |             Attached to              |
+                            +----+-----------+--------------+------+-------------+--------------------------------------+
+                            | 9  | available  | New Volume   | 20   | None       |                                      |
                         </programlisting>
                         <para>You can now proceed to the volume attachment again!</para>
                     </listitem>
@@ -831,10 +739,10 @@ VOLUME  vol-00000014     30     nova    available (nuage-and-co, nova-cc1, None,
             <title>D- Backup your nova-volume disks</title>
             <para>While Diablo provides the snapshot functionality
                 (using LVM snapshot), you can also back up your
-                EBS-volumes. The advantage of this method is that it
+                volumes. The advantage of this method is that it
                 reduces the size of the backup; only existing data
                 will be backed up, instead of the entire volume. For
-                this example, assume that a100 GB nova-volume has been
+                this example, assume that a 100 GB nova-volume has been
                 created for an instance, while only 4 gigabytes are
                 used. This process will back up only those 4
                 giga-bytes, with the following tools: </para>
@@ -866,9 +774,9 @@ VOLUME  vol-00000014     30     nova    available (nuage-and-co, nova-cc1, None,
                         contains data in a frozen state. This prevents
                         data corruption, because data will not be
                         manipulated during the process of creating the
-                        volume itself. Remember the EBS-like volumes
+                        volume itself. Remember the volumes
                         created through a
-                            <command>euca-create-volume</command>
+                            <command>nova volume-create</command>
                         exist in an LVM's logical volume. </para>
                     <para>Before creating the
                             snapshot, ensure that you have enough
@@ -1683,13 +1591,7 @@ HostC            p2            5     10240     150
                             recreate the attachment : </para>
                         <para>This relation could be figured by
                             running
-                                <command>euca-describe-volumes</command>:
-                            <screen>
-$ <userinput>euca-describe-volumes | $AWK '{print $2,"\t",$8,"\t,"$9}' | $GREP -v "None" | $SED "s/\,//g; s/)//g; s/\[.*\]//g; s/\\\\\//g"</userinput>
-                            </screen>
-                            That would output a three-column table :
-                                <emphasis role="italic">VOLUME
-                                INSTANCE MOUNTPOINT</emphasis>
+                                <command>nova volume-list</command>
                         </para>
                     </listitem>
                     <listitem>
@@ -1709,7 +1611,7 @@ $ <userinput>euca-describe-volumes | $AWK '{print $2,"\t",$8,"\t,"$9}' | $GREP -
 <prompt>mysql></prompt> <userinput>update volumes set instance_id=0;</userinput>
                 </programlisting>Now,
                             when running
-                                <command>euca-describe-volumes</command>
+                                <command>nova volume-list</command>
                             all volumes should be available. </para>
                     </listitem>
                     <listitem>
@@ -1718,7 +1620,7 @@ $ <userinput>euca-describe-volumes | $AWK '{print $2,"\t",$8,"\t,"$9}' | $GREP -
                         </para>
                         <para>We need to restart the instances. This
                             can be done via a simple
-                                <command>euca-reboot-instances
+                                <command>nova reboot
                                    <replaceable>$instance</replaceable></command>
                         </para>
                         <para>At that stage, depending on your image,
@@ -1752,7 +1654,7 @@ $ <userinput>euca-describe-volumes | $AWK '{print $2,"\t",$8,"\t,"$9}' | $GREP -
                             volumes to their respective instances. Now
                             that nova has restored the right status,
                             it is time to performe the attachments via
-                            an euca-attach-volume </para>
+                            a <command>nova volume-attach</command></para>
                         <para>Here is a simple snippet that uses the
                             file we created :
                             <programlisting>
@@ -1763,7 +1665,7 @@ while read line; do
     instance=`echo $line | $CUT -f 2 -d " "`
     mount_point=`echo $line | $CUT -f 3 -d " "`
         echo "ATTACHING VOLUME FOR INSTANCE - $instance"
-    euca-attach-volume -i $instance -d $mount_point $volume
+    nova volume-attach $instance $volume $mount_point
     sleep 2
 done &lt; $volumes_tmp_file
                 </programlisting>At
@@ -1850,7 +1752,7 @@ done &lt; $volumes_tmp_file
                 node which runs that same instance and close the iscsi
                 session. <emphasis role="underline">Do not dettach the
                     volume via
-                    <command>euca-detach</command></emphasis>, but
+                    <command>nova volume-detach</command></emphasis>, but
                 instead manually close the iscsi session. </para>
             <para>In the following example, the iscsi session is
                 number 15 for that instance :
