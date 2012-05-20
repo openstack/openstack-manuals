@@ -70,11 +70,11 @@
 
     <section xml:id="terminology-codenames">
         <title>Code Names</title>
-        <para>Each OpenStack service has a code name. For example, the Image
-            Service is codenamed Glance.The full list is shown in the table
-            below:
-            <table rules="all">
+        <para>Each OpenStack service has a code name. For example, the Image Service is codenamed
+            Glance.The full list is shown in the table below: <table rules="all" width="915">
                 <caption>Code names</caption>
+                <col width="826pt"/>
+                <col width="81pt"/>
                 <thead>
                     <tr>
                         <td>Service name</td>
@@ -83,24 +83,44 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><para>Identity</para></td>
-                        <td><para>Keystone</para></td>
+                        <td>
+                            <para>Identity</para>
+                        </td>
+                        <td>
+                            <para>Keystone</para>
+                        </td>
                     </tr>
                     <tr>
-                        <td><para>Compute</para></td>
-                        <td><para>Nova</para></td>
+                        <td>
+                            <para>Compute</para>
+                        </td>
+                        <td>
+                            <para>Nova</para>
+                        </td>
                     </tr>
                     <tr>
-                        <td><para>Image</para></td>
-                        <td><para>Glance</para></td>
+                        <td>
+                            <para>Image</para>
+                        </td>
+                        <td>
+                            <para>Glance</para>
+                        </td>
                     </tr>
                     <tr>
-                        <td><para>Dashboard</para></td>
-                        <td><para>Horizon</para></td>
+                        <td>
+                            <para>Dashboard</para>
+                        </td>
+                        <td>
+                            <para>Horizon</para>
+                        </td>
                     </tr>
                     <tr>
-                        <td><para>Object Storage</para></td>
-                        <td><para>Swift</para></td>
+                        <td>
+                            <para>Object Storage</para>
+                        </td>
+                        <td>
+                            <para>Swift</para>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -130,5 +150,72 @@
             services. It should be clear from the context whether we are
             referring to a high-level OpenStack service (e.g., Image), or a
             low-level Linux service (e.g., <command>glance-api</command>).</para>
+    </section>
+    <section xml:id="terminology-storage">
+        <?dbhtml stop-chunking?>
+        <title>Storage: objects, blocks, and files</title>
+        <para>Many cloud computing use cases require persistent remote storage.  Storage solutions
+            are often divided into three categories: object storage, block storage, and file
+            storage.</para>
+        <para>Note that some storage solutions support multiple categories. For example, <link
+                xlink:href="http://nexenta.com">NexentaStor</link> supports both block storage and
+            file storage (with announcements for future support for object storage), <link
+                xlink:href="http://www.gluster.org">GlusterFS</link> supports file storage and
+            object storage, and  <link xlink:href="http://ceph.com">Ceph Storage</link> supports
+            object storage, block storage, and file storage.</para>
+        <section xml:id="terminology-object-storage">
+            <title>Object storage</title>
+            <para>In OpenStack: Object Storage service (Swift)</para>
+            <para>Related concepts: Amazon S3, Rackspace Cloud Files, Ceph Storage</para>
+            <para>With <emphasis role="italic">object storage</emphasis>, files are exposed through
+                an HTTP interface, typically with a REST API. All client data access is done at the
+                user level: the operating system is unaware of the presence of the remote storage
+                system. In OpenStack, the Object Storage service provides this type of
+                functionality. Users access and modify files by making HTTP requests. Because the
+                data accesss interface provided by an object storage system is at a low level of
+                abstraction, people often build on top of object storage to build file-based
+                applications that provide a higher level of abstraction. For example, the OpenStack
+                Image service can be configured to use the Object Storage service as a backend.
+                Another use for object storage solutions is as a content delivery network (CDN) for
+                hosting static web content (e.g., images, and media files), since object storage
+                already provides an HTTP interface. </para>
+        </section>
+        <section xml:id="terminology-block-storage">
+            <title>Block storage (SAN)</title>
+            <para>In OpenStack: Volumes (<systemitem class="service">nova-volume</systemitem>
+                service) in OpenStack Compute</para>
+            <para>Relatd concepts: Amazon Elastic Block Store (EBS), Ceph RADOS Block Device (RBD),
+                iSCSI</para>
+            <para>With <emphasis role="italic">block storage</emphasis>, files are exposed through a
+                low-level computer bus interface such as SCSI or ATA, that is accessible over the
+                network. Block storage is synonymous with SAN (storage area network). Clients access
+                data through the operating system at the device level: users access the data by
+                mounting the remote device in a similar manner to how they would mount a local,
+                physical disk (e.g., using the "mount" command in Linux). In OpenStack, the
+                    <systemitem class="service">nova-volume</systemitem> service that forms part of
+                the Compute service provides this type of functionality, and uses iSCSI to expose
+                remote data as a SCSI disk that is attached to the network. </para>
+            <para>Because the data is exposed as a physical device, the end-user is responsible for
+                creating partitions and formatting the exposed disk device. In addition, in
+                OpenStack Compute a device can only be attached to one server at a time, so block
+                storage cannot be used for to share data across virtual machine instances
+                concurrently. </para>
+        </section>
+        <section xml:id="terminology-file-storage">
+            <title>File storage (NAS)</title>
+            <para>In OpenStack: none</para>
+            <para>Related concepts: NFS, Samba/CIFS, GlusterFS, Dropbox, Google Drive</para>
+            <para>With <emphasis role="italic">file storage</emphasis>, files are exposed through a
+                distributed file system protocol. Filesystem storage is synonymous with NAS (network
+                attached storage). Clients access data through the operating system at the file
+                system level: users access the data by mounting a remote file system. Examples of
+                file storage include NFS and GlusterFS. The operating system needs to have the
+                appropriate client software installed to be able to access the remote file system. </para>
+            <para>Currently, OpenStack Compute does not have any native support for this type of
+                file storage inside of an instance. However, there is a <link
+                    xlink:href="http://gluster.org/community/documentation//index.php/OSConnect"
+                    >Gluster storage connector for OpenStack</link> that enables the use of the
+                GlusterFS file system as a back-end for the Image service.</para>
+        </section>
     </section>
 </chapter>
