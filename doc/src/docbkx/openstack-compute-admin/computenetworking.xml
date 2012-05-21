@@ -468,10 +468,20 @@ network_size=256                </programlisting>
                 device called <literal>br169</literal> on the host running the nova-network service.
                 This device will appear in the output of an <command>ifconfig</command>
                 command.</para>
-            <para>Each network must be associated with one tenant, specified using the
+            <para>Each network is associated with one tenant. As in the example above, you may
+                (optionally) specify this association at network creation time by using the
                     <literal>--project_id</literal> flag which corresponds to the tenant ID. Use the
                     <command>keystone tenant-list</command> command to list the tenants and
                 corresponding IDs that you have already created.</para>
+            <para>Instead of manually specifying a VLAN, bridge, and project id, you can create many
+                networks at once and have the Compute service automatically associate these networks
+                with tenants as needed, as well as automatically generating the VLAN IDs and bridge
+                interface names. For example, the following command would create 100 networks, from
+                    <literal>172.16.100.0/24</literal> to <literal>172.16.199.0/24</literal>. (This
+                assumes the <literal>network_size=256</literal> option has been set at nova.conf,
+                though this can also be specified by passing <literal>--network_size=256</literal>
+                as a flag to the <command>nova-manage</command>
+                command)<screen><prompt>#</prompt> nova-manage network create --num_networks=100 --fixed_range_v4=172.16.100.0/24 </screen></para>
             <para>The <command>nova-manage network create</command> command supports many
                 configuration options, which are displayed when called with the
                     <literal>--help</literal> flag:</para>
@@ -489,7 +499,7 @@ Options:
   --vlan=&lt;vlan id>      vlan id
   --vpn=VPN_START       vpn start
   --fixed_range_v6=FIXED_RANGE_V6
-                        IPv6 subnet (ex: fe80::/64
+                        IPv6 subnet (ex: fe80::/64)
   --gateway=GATEWAY     gateway
   --gateway_v6=GATEWAY_V6
                         ipv6 gateway
@@ -1233,21 +1243,52 @@ enabled_apis=ec2,osapi_compute,osapi_volume,metadata</programlisting></para>
                 redundancy.</para>
         </simplesect>
         <simplesect>
-            <title>Option 4: HW Gateway</title>
-            <para>It is possible to tell dnsmasq to use an external
-                gateway instead of acting as the gateway for the VMs.
-                You can pass dhcpoption=3,&lt;ip of gateway&gt; to
-                make the VMs use an external gateway. This will
-                require some manual setup. The metadata IP forwarding
-                rules will need to be set on the hardware gateway
-                instead of the nova-network host. You will have to
-                make sure to set up routes properly so that the subnet
-                that you use for VMs is routable.</para>
-            <para>This offloads HA to standard switching hardware and
-                it has some strong benefits. Unfortunately,
-                nova-network is still responsible for floating IP
-                natting and dhcp, so some failover strategy needs to
-                be employed for those options.</para>
+            <title>HA Option 4: Hardware gateway</title>
+            <para>The <systemitem class="service">dnsmasq</systemitem> service can be configured to
+                use an external gateway instead of acting as the gateway for the VMs. This offloads
+                HA to standard switching hardware and it has some strong benefits. Unfortunately,
+                the <systemitem class="service">nova-network</systemitem> service is still
+                responsible for floating IP natting and DHCP, so some failover strategy needs to be
+                employed for those options. To configure for hardware gateway:<orderedlist>
+                    <listitem>
+                        <para>Create a <systemitem class="service">dnsmasq</systemitem>
+                            configuration file (e.g., <filename>/etc/dnsmasq-nova.conf</filename>)
+                            that contains the IP address of the external gateway using the following
+                            syntax:<programlisting>dhcpoption=3,<replaceable>&lt;ip of gateway></replaceable></programlisting></para>
+                    </listitem>
+                    <listitem>
+                        <para>Edit <filename>/etc/nova/nova.conf</filename> to specify the location
+                            of the <systemitem class="service">dnsmasq</systemitem> configuration
+                            file:<programlisting>dnsmasq_config_file=/etc/dnsmasq-nova.conf</programlisting></para>
+                    </listitem>
+                    <listitem>
+                        <para>Configure the hardware gateway to forward metadata requests to a host
+                            that's running the <systemitem class="service">nova-api</systemitem>
+                            service with the metadata API enabled.</para>
+                        <para>The virtual machine instances access the metadata service at
+                                <literal>169.254.169.254</literal> port <literal>80</literal>. The
+                            hardware gateway should forward these requests to a host  running the
+                                <systemitem class="service">nova-api</systemitem> service on the
+                            port specified as the <literal>metadata_host</literal> config option in
+                                <filename>/etc/nova/nova.conf</filename>, which defaults to
+                                <literal>8775</literal>.</para>
+                        <para>Make sure that the list in the <literal>enabled_apis</literal>
+                            configuration option <filename>/etc/nova/nova.conf</filename> contains
+                                <literal>metadata</literal> in addition to the other APIs. An
+                            example that contains the EC2 API, the OpenStack compute API, the
+                            OpenStack volume API, and the metadata service would look like:
+                            <programlisting>enabled_apis=ec2,osapi_compute,osapi_volume,metadata</programlisting></para>
+                    </listitem>
+                    <listitem>
+                        <para>Ensure you have set up routes properly so that the subnet that you use
+                            for virtual machines is routable.</para>
+                    </listitem>
+                </orderedlist></para>
+            <warning>
+                <para>The hardware gateway option is not available when running in VLAN mode, as it
+                    can only be used to specify a single gateway for all instances, and VLAN mode
+                    requires a separate gateway for each network.</para>
+            </warning>
         </simplesect>
 
     </section>
