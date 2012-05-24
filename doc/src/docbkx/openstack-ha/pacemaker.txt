@@ -1,0 +1,22 @@
+[[ch-pacemaker]]
+== The Pacemaker Cluster Stack
+
+OpenStack high availability relies on the
+http://www.clusterlabs.org[Pacemaker] cluster stack, the
+state-of-the-art high availability and load balancing stack for the
+Linux platform. Pacemaker is storage and application agnostic, and is
+in no way specific to OpenStack.
+
+Pacemaker relies on the http://www.corosync.org[Corosync] messaging
+layer for reliable cluster communications. Corosync implements the
+Totem single-ring ordering and membership protocol and provides UDP
+and InfiniBand based messaging, quorum, and cluster membership to
+Pacemaker.
+
+Pacemaker interacts with applications through _resource agents_ (RAs),
+of which it supports over 70 natively. Pacemaker can also easily use
+third-party RAs. An OpenStack high-availability configuration uses
+existing native Pacemaker RAs (such as those managing MySQL
+databases or virtual IP addresses), existing third-party RAs (such as
+for RabbitMQ), and native OpenStack RAs (such as those managing the
+OpenStack Identity and Image Services).

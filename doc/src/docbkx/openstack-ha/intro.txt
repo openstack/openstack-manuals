@@ -1,0 +1,42 @@
+[[ch-intro]]
+== Introduction to OpenStack High Availability
+
+High Availability systems, fundamentally, seek to minimize two things:
+
+* *System downtime* -- the unavailability of a _user-facing_ service
+  beyond a specified maximum amount of time, and
+* *Data loss* -- the accidental deletion or destruction of data.
+
+It is important to understand that most high availability systems can
+_guarantee_ protection against these issues only in the face of a
+single failure event. They are also expected to protect against
+cascading failures, where an originally singular failure deteriorates
+into a series of consequential failures.
+
+A crucial aspect of high availability is thus the elimination of
+single points of failure (SPOFs). A SPOF is an individual piece of
+equipment, or software, whose failure can cause system downtime or
+data loss. Eliminating SPOFs typically includes
+
+* Redundancy of network components, such as switches and routers,
+* Redundancy of applications and automatic service migration,
+* Redundancy of storage components,
+* Redundancy of facility services such as power, air conditioning,
+  fire protection, and others.
+
+In contrast, in the face of multiple _independent_ (non-interrelated)
+failures, high availability becomes a best-effort affair. In such an
+event, most high-availability systems tend to favor protecting data
+over maintaining availability.
+
+High-availability systems typically achieve uptime of 99.99% or more,
+meaning less than roughly an hour of cumulative downtime per
+year. From this, it follows that highly-available systems are
+generally expected to keep recovery times in the face of a failure on
+the order of 1-2 minutes, sometimes significantly less.
+
+OpenStack can currently meet such availability requirements for its
+own infrastructure services, meaning that an uptime of 99.99% is
+feasible for the OpenStack infrastructure proper. At this time,
+OpenStack _cannot_ guarantee 99.99% availability for individual guest
+instances.
