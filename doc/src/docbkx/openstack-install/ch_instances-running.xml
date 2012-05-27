@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="running-an-instance" xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0">
+    <?dbhtml stop-chunking?>
+    <title>Running Virtual Machine Instances</title>
+    <section xml:id="security-groups">
+        <title>Security groups: Enabling SSH and ICMP (ping)</title>
+    <para>The Compute service uses the concept of security groups to control what network protocols
+            (TCP, UDP, ICMP), ports, and IP addresses are permitted to access instances. Each tenant
+            manages its own list of security groups and starts off with a security group called
+                <literal>default</literal>. If no security group is specified upon boot, the virtual
+            machine will be associated with the <literal>default</literal> security group. </para>
+    <para>Security groups can be listed by the <command>nova secgroup-list</command>
+            command.<screen><prompt>$</prompt> <userinput>nova secgroup-list</userinput><computeroutput>
++---------+-------------+
+|   Name  | Description |
++---------+-------------+
+| default | default     |
++---------+-------------+</computeroutput></screen></para>
+    <para>In this example, we will use the nova <command>secgroup-add-rule</command> command to
+        enable access to TCP port 22 (so we can SSH to instances) Allow access to port 22 from all
+        IP addresses (specified in CIDR notation as <literal>0.0.0.0/0</literal>) with the following
+        command:<screen><prompt>$</prompt> <userinput>nova secgroup-add-rule default tcp 22 22 0.0.0.0/0</userinput></screen></para>
+    <para>When specifying rules for TCP and UDP protocols, you may specify a range of port
+            consecutive addresses in a single rule (e.g., from port <literal>5901</literal> to port
+                <literal>5999</literal>). In this case, only a single port is being enabled, so we
+            specify the start port as <literal>22</literal> and the end port as
+                <literal>22</literal>.</para>
+    <para>To be able to ping virtual machine instances, you must specify a rule to allow ICMP
+            traffic. When specifying ICMP rules, instead of specifying a begin and end port, you
+            specify a pemitted ICMP code and ICMP type. You can also specify <literal>-1</literal>
+            for the code to enable all codes and <literal>-1</literal> for the type to enable all
+            ICMP types. Allow access to all codes and types of ICMP traffic from all IP addresses
+            with the following command:</para>
+    <para>
+        <screen><prompt>$</prompt> <userinput>nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0</userinput></screen>
+    </para>
+    </section>
+    <section xml:id="keypair">
+        <title>Adding a keypair</title>
+    <para>The Compute service can inject an SSH public key into an account on the instance, assuming
+            the virtual machine image being used supports this. To add a keypair to the Compute
+            service, use the <command>nova keypair-add</command> command. This command can be used
+            to either generate a new keypair, or to upload an existing public key. The following
+            example uploads an existing public key, located at
+                <filename>~/.ssh/id_rsa.pub</filename>, and gives the keypair the name
+                <literal>mykey</literal>.<screen><prompt>$</prompt> nova keypair-add --pub_key ~/.ssh/id_rsa.pub mykey</screen></para>
+        <para>List the keypairs by
+            doing:<screen><prompt>$</prompt> <userinput>nova keypair-list</userinput>
+<computeroutput>+-------+-------------------------------------------------+
+|  Name |                   Fingerprint                   |
+| mykey | c3:d2:b5:d3:ec:4a:29:b0:22:32:6e:34:dd:91:f9:cf |
++-------+-------------------------------------------------+</computeroutput></screen></para>
+        <para>Confirm that the uploaded keypair matches your local key by checking your key's
+            fingerprint with the <command>ssh-keygen</command>
+            command:<screen><prompt>$</prompt> <userinput>ssh-keygen -l -f ~/.ssh/id_rsa.pub</userinput>
+<computeroutput>2048 c3:d2:b5:d3:ec:4a:29:b0:22:32:6e:34:dd:91:f9:cf /home/myaccount/.ssh/id_rsa.pub (RSA)</computeroutput></screen></para>
+    </section>
+    <section xml:id="all-services-running">
+        <title>Confirm all services running</title>
+        <para>Before trying to start an instance, confirm that all of the necessary services are
+            running, in particular:<variablelist>
+                <varlistentry>
+                    <term><systemitem class="service">nova-api</systemitem></term>
+                    <listitem>
+                        <para>The <systemitem class="service">nova-api</systemitem> service must be
+                            running to respond to the request to boot an instance, as well as to
+                            serve as the metadata server so that the instance can retrieve the
+                            public key uploaded i a previous section. If the <command>nova</command>
+                            commands in the previous section succeeded, then the service is
+                            running.</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><systemitem class="service">nova-scheduler</systemitem></term>
+                    <listitem>
+                        <para>The <systemitem class="service">nova-scheduler</systemitem> service must be running in order to dispatch
+                            requests for a new virtual machine instance to a host running the
+                            <systemitem class="service">nova-compute</systemitem> service that has sufficient resources.</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><systemitem class="service">nova-compute</systemitem></term>
+                    <listitem>
+                        <para>The <systemitem class="service">nova-compute</systemitem> service must
+                            be running in order to interact with the hypervisor to bring up a
+                            virtual machine instance.</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><systemitem class="service">nova-network</systemitem></term>
+                    <listitem>
+                        <para>The <systemitem class="service">nova-network</systemitem> service must
+                            be running in order to perform networking tasks such as assigning an IP
+                            address to the virtual machine instance and implementing the security
+                            group rules.</para>
+                    </listitem>
+                </varlistentry>
+            </variablelist></para>
+        <para>The <command>nova-manage service list</command> command can be used to confirm that
+            these services are running properly.<note>
+                <para>The <command>nova-manage service list</command> command does not indicate
+                    whether the <systemitem class="service">nova-api</systemitem> service is
+                    running.</para>
+            </note></para>
+        <para>As
+            root:<screen><prompt>#</prompt> <userinput>nova-manage service list</userinput>
+<computeroutput>Binary           Host                               Zone             Status     State Updated_At
+nova-compute     myhost-1                            nova             enabled    :-)   2012-05-27 12:36:35
+nova-network     myhost-1                            nova             enabled    :-)   2012-05-27 12:36:28
+nova-scheduler   myhost-1                            nova             enabled    :-)   2012-05-27 12:36:33</computeroutput></screen></para>
+        <para>If any of the services are missing in your configuration, or the
+                <literal>State</literal> column does not show a smiley face, then your Compute
+            service will not be able to launch an instance.</para>
+    </section>
+    <section xml:id="starting-an-instance">
+        <title>Starting an instance</title>
+        <para>To start an instance, we need to specify a <emphasis role="italic">flavor</emphasis>,
+            also known as an <emphasis role="italic">instance type</emphasis>, which indicates the
+            size of an instance. Use the <command>nova flavor-list</command> command to view the
+            list of available
+            flavors:<screen><prompt>$</prompt> <userinput>nova flavor-list</userinput>
+<computeroutput>+----+-----------+-----------+------+-----------+------+-------+-------------+
+| ID |    Name   | Memory_MB | Disk | Ephemeral | Swap | VCPUs | RXTX_Factor |
++----+-----------+-----------+------+-----------+------+-------+-------------+
+| 1  | m1.tiny   | 512       | 0    | 0         |      | 1     | 1.0         |
+| 2  | m1.small  | 2048      | 15   | 15        |      | 1     | 1.0         |
+| 3  | m1.medium | 4096      | 25   | 25        |      | 2     | 1.0         |
+| 4  | m1.large  | 8192      | 45   | 45        |      | 4     | 1.0         |
+| 5  | m1.xlarge | 16384     | 85   | 85        |      | 8     | 1.0         |
++----+-----------+-----------+------+-----------+------+-------+-------------+</computeroutput></screen></para>
+        <para>We also need to specify the image. Use the <command>nova image-list</command> to
+            retrieve the ID of the CirrOS
+            image.<screen><prompt>$</prompt> <userinput>nova image-list</userinput>
+<computeroutput>+--------------------------------------+----------------------------------------+--------+--------------------------------------+
+|                  ID                  |                  Name                  | Status |                Server                |
++--------------------------------------+----------------------------------------+--------+--------------------------------------+
+| f4addd24-4e8a-46bb-b15d-fae2591f1a35 | cirros-0.3.0-x86_64                    | ACTIVE |                                      |
++--------------------------------------+----------------------------------------+--------+--------------------------------------+</computeroutput></screen></para>
+    <para>Use the <literal>nova boot</literal> command to launch a new virtual machine instance.
+            We'll use an <literal>m1.small</literal> instance in this example, using the CirrOS
+            image, and the <literal>mykey</literal> keypair we added. We also need to give this
+            virtual machine instance a name, we'll call it <literal>cirros</literal>.  We will
+            explicitly specify the <literal>default</literal> security group in this example,
+            although this isn't strictly necessary since the <literal>default</literal> group will
+            be used if no security group is
+            specified.<screen><prompt>$</prompt> <userinput>nova boot --flavor 2 --image <replaceable>f4addd24-4e8a-46bb-b15d-fae2591f1a35</replaceable> --key_name mykey --security_group default cirros</userinput>
+<computeroutput>+-------------------------------------+----------------------------------------------------------+
+|               Property              |                          Value                           |
++-------------------------------------+----------------------------------------------------------+
+| OS-DCF:diskConfig                   | MANUAL                                                   |
+| OS-EXT-SRV-ATTR:host                | host-1                                                   |
+| OS-EXT-SRV-ATTR:hypervisor_hostname | None                                                     |
+| OS-EXT-SRV-ATTR:instance_name       | instance-00000001                                        |
+| OS-EXT-STS:power_state              | 0                                                        |
+| OS-EXT-STS:task_state               | scheduling                                               |
+| OS-EXT-STS:vm_state                 | building                                                 |
+| accessIPv4                          |                                                          |
+| accessIPv6                          |                                                          |
+| adminPass                           | RG3W2bpZDbCo                                             |
+| config_drive                        |                                                          |
+| created                             | 2012-05-27T13:00:33Z                                     |
+| flavor                              | m1.small                                                 |
+| hostId                              | a2fd457e034c030506bac5c790c38d9519ea7a03b6861474a712c6b7 |
+| id                                  | c6bbbf26-b40a-47e7-8d5c-eb17bf65c485                     |
+| image                               | cirros-0.3.0-x86_64                                      |
+| key_name                            | mykey                                                    |
+| metadata                            | {}                                                       |
+| name                                | cirros                                                   |
+| progress                            | 0                                                        |
+| status                              | BUILD                                                    |
+| tenant_id                           | b5815b046cfe47bb891a7b64119e7f80                         |
+| updated                             | 2012-05-27T13:00:33Z                                     |
+| user_id                             | a4c2d43f80a549a19864c89d759bb3fe                         |
++-------------------------------------+----------------------------------------------------------+</computeroutput></screen></para>
+        <para>Check the progress of the instance with the <command>nova list</command> command. When
+            the instance has booted, the command output will look something
+            like:<screen><prompt>$</prompt> <userinput>nova list</userinput>
++--------------------------------------+-----------------------+--------+------------------------------------------+
+|                  ID                  |          Name         | Status |                 Networks                 |
++--------------------------------------+-----------------------+--------+------------------------------------------+
+| c6bbbf26-b40a-47e7-8d5c-eb17bf65c485 | cirros                | ACTIVE | private=192.168.100.5                    |
++--------------------------------------+-----------------------+--------+------------------------------------------+</screen></para>
+        <para>You can view the boot messages of the instances using the <command>nova
+                console-log</command>
+            command:<screen><prompt>$</prompt> <userinput>nova console-log</userinput>
+<computeroutput>...
+Starting network...
+udhcpc (v1.18.5) started
+Sending discover...
+Sending select for 192.168.100.5...
+Lease of 192.168.100.5 obtained, lease time 120
+deleting routers
+route: SIOCDELRT: No such process
+adding dns 192.168.100.4
+cloud-setup: checking http://169.254.169.254/2009-04-04/meta-data/instance-id
+cloud-setup: successful after 1/30 tries: up 1.45. iid=i-00000001
+Starting dropbear sshd: generating rsa key... generating dsa key... OK
+===== cloud-final: system completely up in 1.77 seconds ====
+  instance-id: i-00000001
+  public-ipv4: 
+  local-ipv4 : 192.168.100.5
+cloud-userdata: user data not a script
+  ____               ____  ____
+ / __/ __ ____ ____ / __ \/ __/
+/ /__ / // __// __// /_/ /\ \ 
+\___//_//_/  /_/   \____/___/ 
+ http://launchpad.net/cirros
+
+
+login as 'cirros' user. default password: 'cubswin:)'. use 'sudo' for root.
+cirros login: </computeroutput></screen></para>
+        <para>You should be able to ping your instance:</para>
+        <para>
+            <screen><prompt>$</prompt> <userinput>ping -c5 192.168.100.5</userinput>
+<computeroutput>PING 192.168.100.5 (192.168.100.5) 56(84) bytes of data.
+64 bytes from 192.168.100.5: icmp_req=1 ttl=64 time=0.270 ms
+64 bytes from 192.168.100.5: icmp_req=2 ttl=64 time=0.228 ms
+64 bytes from 192.168.100.5: icmp_req=3 ttl=64 time=0.244 ms
+64 bytes from 192.168.100.5: icmp_req=4 ttl=64 time=0.203 ms
+64 bytes from 192.168.100.5: icmp_req=5 ttl=64 time=0.210 ms
+
+--- 192.168.100.5 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 3999ms
+rtt min/avg/max/mdev = 0.203/0.231/0.270/0.024 ms</computeroutput></screen>
+        </para>
+        <para>You should be able to ssh to your instance as the <literal>cirros</literal> user,
+            using either the ssh keypair you uploaded or using the password
+                <literal>cubswin:)</literal><screen>$ ssh cirros@192.168.100.5
+<computeroutput>The authenticity of host '192.168.100.5 (192.168.100.5)' can't be established.
+RSA key fingerprint is c2:0a:95:d4:e7:e1:a6:a2:6a:99:4d:b8:f9:66:13:64.</computeroutput>
+<prompt>Are you sure you want to continue connecting (yes/no)?</prompt> <userinput>yes</userinput>
+<computeroutput>Warning: Permanently added '192.168.100.5' (RSA) to the list of known hosts.</computeroutput>
+<prompt>cirros@192.168.100.5's password: </prompt><userinput>cubswin:)</userinput>
+<prompt>$</prompt></screen></para>
+    </section>
+    <section xml:id="bring-down-instance">
+        <title>Bringing down an instance</title>
+        <para>Bring down your instance using the <command>nova delete</command>
+            command:<screen><prompt>$</prompt> <userinput>nova delete c6bbbf26-b40a-47e7-8d5c-eb17bf65c485</userinput></screen></para>
+    </section>
+</chapter>
