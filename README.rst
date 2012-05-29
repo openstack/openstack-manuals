@@ -35,12 +35,6 @@ On Fedora 15 and later::
 
 Building
 ========
-To build the *Compute Administration Manual*, *Object Storage Administration Manual*, and
-*Image Service Manual*::
-
-    cd openstack-manuals/doc
-    mvn clean generate-sources
-
 The different manuals are in subdirectories of the
 ``openstack-manuals/doc/src/docbkx`` directory.
 
