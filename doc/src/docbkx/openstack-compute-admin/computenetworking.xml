@@ -95,6 +95,13 @@
             bridged into the same VLAN for that project. OpenStack
             Compute creates the Linux networking bridges and VLANs
             when required.</para>
+        <note>
+            <para>The " --force_ dhcp_release" configuration option, when set, would keep you from
+                restarting the dnsmasq processes manually and refresh the leases tables everytime an
+                instance is terminated. </para>
+            <para>That configuration applies no matter the networking mode used. </para>
+        </note>
+        <para/>
     </section>
     <section xml:id="configuring-networking-on-the-compute-node">
         <title>Configuring Networking on the Compute Node</title>
@@ -631,7 +638,7 @@ Options:
                     minimize lease renewals with something like the following combination of config
                     options.
                     <programlisting># release leases immediately on terminate
-force_dhcp_release=true
+force_dhcp_release
 # one week lease time
 dhcp_lease_time=604800
 # two week disassociate timeout
@@ -709,7 +716,7 @@ vpn_image_id=[uuid from glance]
                         <programlisting>
 use_project_ca=True
 cnt_vpn_clients=5
-force_dhcp_release=True
+force_dhcp_release
                         </programlisting>
                     </listitem>
                 </itemizedlist>
