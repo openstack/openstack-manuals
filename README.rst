@@ -25,10 +25,13 @@ Prerequisites
 `Apache Maven <http://maven.apache.org/>`_ must be installed to build the
 documentation.
 
-To install Maven for Ubuntu::
+To install Maven 3 for Ubuntu 12.04 and later, and Debian wheezy and later::
 
-    apt-get install maven3
+    apt-get install maven
 
+On Fedora 15 and later::
+
+    yum install maven3
 
 Building
 ========
