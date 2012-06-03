@@ -1,65 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter xml:id="uploading-to-glance"
-    xmlns="http://docbook.org/ns/docbook"
-    xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-    <title>Uploading Images</title>
-    <para>First, download some images that are known to work with
-        OpenStack. The smallest test image is a tty testing image with
-        a username/password of root/password. You can get it from
-        http://images.ansolabs.com/tty.tgz. This is the image we'll
-        use for this walkthrough. Images downloaded from
-        cloud-images.ubuntu.com have a username of ubuntu. More
-        detailed information about how to obtain and create images can
-        be found in the <link xlink:href="http://docs.openstack.org"
-            >OpenStack Compute Administration Guide</link> in the
-        "Image Management" chapter.</para>
-    <para>Create a directory to house your image files.</para>
+<chapter xml:id="uploading-to-glance" xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0">
+    <title>Registering Virtual Machine Images</title>
+    <para>To test your deployment, download some virtual machine images that are known to work with
+        OpenStack. CirrOS is a small test image that is often used for testing OpenStack
+        deployments. You can find the most recent CirrOS image on the <link
+            xlink:href="https://launchpad.net/cirros">CirrOS Launchpad home page</link> under
+        "Downloads". As of this writing the most recent image is version 0.3.0. A 64-bit version in
+        QCOW2 format (compatible with KVM or QEMU hypervisors) can be downloaded at <link
+            xlink:href="https://launchpad.net/cirros/trunk/0.3.0/+download/cirros-0.3.0-x86_64-disk.img"
+            >https://launchpad.net/cirros/trunk/0.3.0/+download/cirros-0.3.0-x86_64-disk.img</link>.
+        Once you launch the image, log in with the following credentials:<itemizedlist>
+            <listitem>
+                <para>Username: <literal>cirros</literal></para>
+            </listitem>
+            <listitem>
+                <para>Password: <literal>cubswin:)</literal></para>
+            </listitem>
+        </itemizedlist></para>
+    <para>The 64-bit CirrOS QCOW2 image is the image we'll use for this walkthrough. More detailed
+        information about how to obtain and create images can be found in the <link
+            xlink:href="http://docs.openstack.org">OpenStack Compute Administration Guide</link> in
+        the "Image Management" chapter.</para>
+    <para>Create a directory called <filename>stackimages</filename> to house your image
+        files:</para>
     <para>
-        <literallayout class="monospaced">sudo mkdir stackimages</literallayout>
+        <screen><prompt>$</prompt> <userinput>mkdir stackimages</userinput></screen>
     </para>
-    <para>Download the tty image into your stackimages directory.</para>
+    <para>Download the CirrOS image into your <filename>stackimages</filename> directory.</para>
     <para>
-        <literallayout class="monospaced">sudo wget -c http://images.ansolabs.com/tty.tgz -O stackimages/tty.tgz</literallayout>
+        <screen><prompt>$</prompt> <userinput>wget -c https://launchpad.net/cirros/trunk/0.3.0/+download/cirros-0.3.0-x86_64-disk.img -O stackimages/cirros.img</userinput></screen>
     </para>
-    <para>Now expand the image.</para>
-    <literallayout class="monospaced">sudo tar -zxf stackimages/tty.tgz -C stackimages</literallayout>
-    <para>You can get a token in order to upload images using this
-        curl command. </para>
+    <para>Verify that your <command>glance</command> client can access the Image service by
+        requesting a list of installed
+        images:<screen><prompt>$</prompt> <userinput>glance index</userinput>
+<computeroutput>ID                                   Name                           Disk Format          Container Format     Size          
+------------------------------------ ------------------------------ -------------------- -------------------- --------------
+</computeroutput></screen></para>
+    <para>If you get the following error, make sure that the environment variables set in
+            <filename>~/openrc</filename>
+        <screen><computeroutput>Failed to show index. Got error:
+You are not authenticated.
+Details: 401 Unauthorized
+
+This server could not verify that you are authorized to access the document you requested. Either you supplied the wrong credentials (e.g., bad password), or your browser does not understand how to supply the credentials required.
+
+ Authentication required  </computeroutput></screen></para>
+    <para>Add the CirrOS image to the Image service using the <command>glance add</command> command,
+        passing the image file through standard input:</para>
     <para>
-        <literallayout class="monospaced">curl -d '{"auth": {"tenantName": "openstackDemo", "passwordCredentials":{"username": "adminUser", "password": "secretword"}}}' -H "Content-type: application/json" http://192.168.206.130:35357/v2.0/tokens | python -mjson.tool</literallayout>
+        <screen><prompt>$</prompt> <userinput>glance add name=cirros-0.3.0-x86_64 disk_format=qcow2 container_format=bare &lt; stackimages/cirros.img</userinput>
+<computeroutput>Added new image with ID: f4addd24-4e8a-46bb-b15d-fae2591f1a35</computeroutput></screen>
     </para>
-   
-    <para>Now add the kernel image to the Image Service with glance
-        add commands. In this case we're hard-coding the kernel_id and
-        ramdisk_id values in the third command, but for additional
-        images, you need to get the return values for the first two
-        commands to enter into the third command.  </para>
     <para>
-        <literallayout class="monospaced">glance add -A d1819479-be8b-451d-8682-82c654502ddb name="tty-kernel" is_public=true container_format=aki disk_format=aki &lt; stackimages/aki-tty/image 
-glance add -A d1819479-be8b-451d-8682-82c654502ddb name="tty-ramdisk" is_public=true container_format=ari disk_format=ari &lt; stackimages/ari-tty/image 
-glance add -A d1819479-be8b-451d-8682-82c654502ddb name="tty" is_public=true container_format=ami disk_format=ami kernel_id=1 ramdisk_id=2 &lt; stackimages/ami-tty/image </literallayout>
+        <note>
+            <para>The returned image ID is generated dynamically, and therefore will be different on
+                your deployment than in this example.</para>
+        </note>
     </para>
-    
-    <para>For other images, you can get Ubuntu Oneiric (11.10) at
-        http://cloud-images.ubuntu.com/oneiric/current/oneiric-server-cloudimg-amd64-disk1.img. </para>
-    <para>You can ensure that your Image service has indexed these
-        images by using the glance CLI with an authorization
-        token:</para>
-    <literallayout class="monospaced">glance -A c9640d83-ef4f-4718-a0c2-32437a931196 index</literallayout>
-    <para>In return you should see a listing of images. Here's an
-        example.</para>
-    <literallayout class="monospaced">
-ID               Name                           Disk Format          Container Format     Size          
----------------- ------------------------------ -------------------- -------------------- --------------
-3                tty                            ami                  ami                        25165824
-2                tty-ramdisk                    ari                  ari                         5882349
-1                tty-kernel                     aki                  aki                         4404752
-    </literallayout>
-    <para>If you see an ECONNREFUSED error or "NotAuthenticated: You
-        are not authenticated" message in return, it means one of your
-        glance-*.conf files is incorrectly configured. Double-check
-        and compare to the files listed in the Appendix. If you get a
-        401 Unauthorized error, check your environment
-        variables.</para>
+    <para>The rationale for the arguments is:<variablelist>
+            <varlistentry>
+                <term><literal>name=cirros-0.3.0-x86_64</literal></term>
+                <listitem>
+                    <para>The <literal>name</literal> field is an arbitrary label. In this example
+                        the name encodes the distribution, version, and architecture:
+                            <literal>cirros-0.3.0-x864_64</literal>.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><literal>disk_format=qcow2</literal></term>
+                <listitem>
+                    <para>The <literal>disk_format</literal> field specifies the format of the image
+                        file.  In this case, the image file format is QCOW2, which can be verified
+                        using the <command>file</command>
+                        command:<screen><prompt>$</prompt> <userinput>file <userinput>stackimages/cirros.img</userinput>
+<computeroutput>stackimages/cirros.img: QEMU QCOW Image (v2), 41126400 bytes</computeroutput></userinput></screen></para>
+                    <para>Other valid formats are <literal>raw</literal>, <literal>vhd</literal>,
+                            <literal>vmdk</literal>, <literal>vdi</literal>, <literal>iso</literal>,
+                            <literal>aki</literal>, <literal>ari</literal> and
+                            <literal>ami</literal>.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><literal>container_format=bare</literal></term>
+                <listitem>
+                    <para>The <literal>container_format</literal> field is required by the
+                            <command>glance add</command> command but isn't actually used by any of
+                        the OpenStack services, so the value . We specify <literal>bare</literal> to
+                        indicate that the image file is not in a file format that contains metadata
+                        about the virtual machine.</para>
+                    <para>Because the value is not used anywhere, it safe to always specify
+                            <literal>bare</literal> as the container format, although the command
+                        will accept other formats: <literal>ovf</literal>, <literal>aki</literal>,
+                            <literal>ari</literal>, <literal>ami</literal>.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>Confirm it was uploaded by listing the images in the Image
+        service:<screen><prompt>$</prompt> <userinput>glance index</userinput>
+<computeroutput>$ glance index
+ID                                   Name                           Disk Format          Container Format     Size          
+------------------------------------ ------------------------------ -------------------- -------------------- --------------
+f4addd24-4e8a-46bb-b15d-fae2591f1a35 cirros-0.3.0-x86_64            qcow2                bare                        9761280</computeroutput></screen></para>
+    <para>The <command>nova image-list</command> command will also list the images in the Image
+        service:<screen><prompt>$</prompt> <userinput>nova image-list</userinput>
+<computeroutput>+--------------------------------------+----------------------------------------+--------+--------------------------------------+
+|                  ID                  |                  Name                  | Status |                Server                |
++--------------------------------------+----------------------------------------+--------+--------------------------------------+
+| f4addd24-4e8a-46bb-b15d-fae2591f1a35 | cirros-0.3.0-x86_64                    | ACTIVE |                                      |
++--------------------------------------+----------------------------------------+--------+--------------------------------------+</computeroutput></screen></para>
 </chapter>
