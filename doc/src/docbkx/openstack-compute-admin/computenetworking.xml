@@ -95,6 +95,24 @@
             bridged into the same VLAN for that project. OpenStack
             Compute creates the Linux networking bridges and VLANs
             when required.</para>
+        <note>
+            <para>With the default Compute settings, once a virtual machine instance is destroyed,
+                it can take some time for the IP address associated with the destroyed instance to
+                become available for assignment to a new instance.</para>
+            <para>The <literal>force_dhcp_release=True</literal> configuration option, when set,
+                causes the Compute service to send out a DHCP release packet when it destroys a
+                virtual machine instance. The result is that the IP address assigned to the instance
+                is immediately released. </para>
+            <para>This configuration option applies to both Flat DHCP mode and VLAN Manager
+                mode.</para>
+            <para>Use of this option requires the <command>dhcp_release</command> program. Verify
+                that this program is installed on all hosts running the <systemitem class="service"
+                    >nova-compute</systemitem> service before enabling this option. This can be
+                checked with the <command>which</command> command, and will return the complete path
+                if the program is installed. As
+                root:<screen><prompt>#</prompt> <userinput>which dhcp_release</userinput>
+<computeroutput>/usr/bin/dhcp_release</computeroutput></screen></para>
+        </note>
     </section>
     <section xml:id="configuring-networking-on-the-compute-node">
         <title>Configuring Networking on the Compute Node</title>
