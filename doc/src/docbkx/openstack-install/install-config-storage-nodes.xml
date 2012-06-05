@@ -15,7 +15,9 @@
     <orderedlist>
         
         <listitem><para>Install Storage node packages:</para>
-            <para><literallayout class="monospaced">apt-get install swift-account swift-container swift-object xfsprogs</literallayout></para>
+            <para>
+                <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install swift-account swift-container swift-object xfsprogs</userinput></screen>
+                <screen os="ubuntu"><prompt>#</prompt> <userinput>yum install openstack-swift-account openstack-swift-container openstack-swift-object xfsprogs</userinput></screen></para>
         </listitem>
         <listitem><para>For every device on the node, setup the XFS volume (/dev/sdb is used
             as an example):</para>
@@ -115,10 +117,13 @@ use = egg:swift#object
 
 [object-updater]
 
-[object-auditor]</literallayout></para>
+[object-auditor]
+
+[object-expirer]</literallayout></para>
             
             
         </listitem>
+        
         <listitem><para>Start the storage services:</para>
             <para><literallayout class="monospaced">swift-init object-server start
 swift-init object-replicator start

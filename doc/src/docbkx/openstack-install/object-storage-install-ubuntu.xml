@@ -46,12 +46,13 @@
         <title>General Installation Steps </title>
         <orderedlist>
             <listitem>
-                <para>Install the baseline Ubuntu Server (10.04
-                    through 12.04) on all nodes.</para>
+                <para>Install the baseline operating system, such as Ubuntu Server (10.04
+                    through 12.04) or RHEL, CentOS, or Fedora, on all nodes.</para>
             </listitem>
             <listitem><para>Install the swift service and openSSH. </para>
-                <literallayout class="monospaced">sudo apt-get install swift openssh-server  rsync memcached python-netifaces python-xattr python-memcache </literallayout>
-                </listitem>
+                <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install swift openssh-server  rsync memcached python-netifaces python-xattr python-memcache</userinput> </screen>
+                <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-swift openstack-swift-proxy openstack-swift-account openstack-swift-container openstack-swift-object memcached</userinput> </screen>
+            </listitem>
             <listitem><para>Create and populate configuration directories on all nodes:</para>
                 <para><literallayout class="monospaced">mkdir -p /etc/swift
 chown -R swift:swift /etc/swift/</literallayout></para>

@@ -9,7 +9,8 @@
     <title>Installing and Configuring the Image Service</title>
     
     <para>Install the Image service, as root:</para>
-    <screen><prompt>#</prompt> <userinput>apt-get install glance</userinput></screen>
+    <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install glance</userinput></screen>
+    <screen os="rhel;centos;fedora"><prompt>$</prompt> <userinput>sudo yum  install openstack-nova openstack-glance</userinput></screen>
     <para>After installing, you need to delete the sqlite database it creates, then change the
         configuration to point to the MySQL database. </para>
     <para>Delete the <filename>glance.sqlite</filename> file created in the
@@ -21,7 +22,7 @@
      <para><screen><prompt>$</prompt> <userinput>mysql -u root -p</userinput></screen></para><para>Enter the MySQL root user's password when prompted.</para>
      <para>To configure the MySQL database, create the glance database. </para><para><screen><prompt>mysql></prompt> <userinput>CREATE DATABASE glance;</userinput></screen>
      </para><para>Create a MySQL user for the newly-created glance database that has full control of the database. </para>
-     <para><screen><prompt>mysql></prompt> <userinput>GRANT ALL ON glance.* TO 'glance'@'%' IDENTIFIED BY 'yourpassword';</userinput></screen></para>
+     <para><screen><prompt>mysql></prompt> <userinput>GRANT ALL ON glance.* TO 'glance'@'%' IDENTIFIED BY '<replaceable>[YOUR_GLANCEDB_PASSWORD]</replaceable>';</userinput></screen></para>
      <para>Enter <literal>quit </literal>at the <literal>mysql></literal> prompt to exit
             MySQL.</para><para><literallayout class="monospaced">mysql> quit</literallayout></para></section>
     <section xml:id="configure-glance-files"><title>Edit the Glance configuration files and paste ini middleware files</title>
@@ -64,13 +65,14 @@ pipeline = authtoken auth-context context registryapp</screen>
             <filename>/etc/glance/glance-scrubber.conf</filename>
             files point to the MySQL database rather than
             sqlite.<programlisting>sql_connection = mysql://glance:yourpassword@192.168.206.130/glance</programlisting></para>
-        <para>On Ubuntu 12.04, the database tables are under version control and you must do these
+        <note><para>Any time you change the .conf files, restart the
+        corresponding service.</para></note>
+        <para os="ubuntu">On Ubuntu 12.04, the database tables are under version control and you must do these
             steps on a new install to prevent the Image service from breaking possible upgrades, as
             root:
-            <screen><prompt>#</prompt> <userinput>glance-manage version_control 0</userinput>
-<prompt>#</prompt> <userinput>glance-manage db_sync</userinput></screen></para>
-        <note><para>Any time you change the .conf files, restart the
-            corresponding service.</para></note>
+            <screen><prompt>#</prompt> <userinput>glance-manage version_control 0</userinput></screen></para>
+<para>Now you can populate or migrate the database. <screen><prompt>#</prompt> <userinput>glance-manage db_sync</userinput></screen></para>
+        
         <para>Restart glance-registry and glance-api services, as root:</para>
            <screen><prompt>#</prompt> <userinput>service glance-registry restart</userinput>
 <prompt>#</prompt> <userinput>service glance-api restart</userinput></screen>
