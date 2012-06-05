@@ -488,7 +488,14 @@
             <tr>
                 <td> resume_guests_state_on_host_boot=false </td>
                 <td> (BoolOpt) Whether to start guests that were
-                    running before the host rebooted </td>
+                    running before the host rebooted.
+                    If enabled, this option causes guests assigned
+                    to the host to be restarted when
+                    <application>nova-compute</application> starts, 
+                    <emphasis>if</emphasis> they had been active on the host while
+                    <application>nova-compute</application> last ran.
+                    If such a guest is already found to be running,
+                    it is left untouched.</td>
             </tr>
             <tr>
                 <td> root_helper="sudo" </td>
@@ -535,8 +542,12 @@
             
             <tr>
                 <td> start_guests_on_host_boot=false </td>
-                <td> (BoolOpt) Whether to restart guests when the host
-                    reboots </td>
+                <td> (BoolOpt) Whether to (re-)start guests when the host
+                    reboots. If enabled, this option causes guests assigned
+                    to the host to be <emphasis>unconditionally</emphasis>
+                    restarted when <application>nova-compute</application>
+                    starts. If the guest is found to be stopped, it starts.
+                    If it is found to be running, it reboots.</td>
             </tr>
             <tr>
                 <td> state_path="$pybasedir" </td>
