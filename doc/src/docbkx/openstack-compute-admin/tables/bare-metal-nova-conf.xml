@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<para xmlns= "http://docbook.org/ns/docbook" version= "5.0">
+<table rules= "all">
+    <caption>Description of nova.conf file configuration options
+        for bare metal deployment</caption>
+    <col width= "50%"/>
+    <col width= "50%"/>
+    <thead>
+        <tr>
+            <td><para>Configuration option=Default value</para></td>
+            <td><para>(Type) Description</para></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><para> baremetal_driver= "tilera" </para></td>
+            <td><para> (StrOpt) Bare-metal driver runs on </para></td>
+        </tr>
+        <tr>
+            <td><para>
+                tile_monitor= "/usr/local/TileraMDE/bin/tile-monitor" </para></td>
+            <td><para> (StrOpt) Tilera command line program for
+                Bare-metal driver </para></td>
+        </tr>
+        <tr>
+            <td><para> baremetal_type= "baremetal" </para></td>
+            <td><para> (StrOpt) baremetal domain type </para></td>
+        </tr>
+        <tr>
+            <td><para> force_raw_images=true </para></td>
+            <td><para> (BoolOpt) Force backing images to raw format
+            </para></td>
+        </tr>
+        <tr>
+            <td><para> img_handlers= "loop,nbd,guestfs" </para></td>
+            <td><para> (ListOpt) Order of methods used to mount disk
+                images </para></td>
+        </tr>
+        <tr>
+            <td><para>
+                injected_network_template= "$pybasedir/nova/virt/interfaces.template" </para></td>
+            <td><para> (StrOpt) Template file for injected network </para></td>
+        </tr>
+        <tr>
+            <td><para> max_nbd_devices=16 </para></td>
+            <td><para> (IntOpt) maximum number of possible nbd devices
+            </para></td>
+        </tr>
+        <tr>
+            <td><para> timeout_nbd=10 </para></td>
+            <td><para> (IntOpt) time to wait for a NBD device coming up
+            </para></td>
+        </tr>
+        <tr>
+            <td>
+                <para>virt_mkfs= "default=mkfs.ext3 -L %(fs_label)s
+                    -F %(target)s"</para>
+                <para>virt_mkfs= "linux=mkfs.ext3 -L %(fs_label)s
+                    -F %(target)s"</para>
+                <para>virt_mkfs= "windows=mkfs.ntfs --force --fast
+                    --label %(fs_label)s %(target)s"</para>
+            </td>
+            <td><para> (MultiStrOpt) mkfs commands for ephemeral device.
+                The format is &lt;os_type&gt;=&lt;mkfs command&gt;
+            </para></td>
+        </tr>
+    </tbody>
+</table>
+</para>
