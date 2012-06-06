@@ -56,7 +56,7 @@
             <plugin>
                 <groupId>com.rackspace.cloud.api</groupId>
                 <artifactId>clouddocs-maven-plugin</artifactId>
-                <version>1.2.0</version>
+                <version>1.3.1</version>
                 <executions>
                     <execution>
                         <id>goal1</id>
@@ -102,11 +102,17 @@
                             <postProcess>
                                 <!-- Copies the figures to the correct location for webhelp -->
                                 
-                                <!--<copy todir="${basedir}/target/docbkx/webhelp/openstack-object-storage-admin/bk-objectstorage-adminguide/figures">
+                                <copy todir="${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-object-storage/admin/content/figures">
                                     <fileset dir="${basedir}/figures">
-                                        <include name="**/*.png" />
+                                        <include name="**/*.*" />
                                     </fileset>
-                                </copy>-->
+                                </copy>
+                                
+                                <copy todir="${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-object-storage/admin/content/figures">
+                                    <fileset dir="../common/figures">
+                                        <include name="**/*.*" />
+                                    </fileset>
+                                </copy>
                                
                                 <!-- Copies webhelp (HTML output) to desired URL location on docs.openstack.org -->
                                                    
