@@ -114,6 +114,48 @@
 <computeroutput>/usr/bin/dhcp_release</computeroutput></screen></para>
         </note>
     </section>
+    <section xml:id="metadata-service">
+        <title>Metadata service</title>
+        <para>The Compute service uses a special metadata service to enable virtual machine
+            instances to retrieve instance-specific data.  Instances access the metadata service at
+                <literal>http://169.254.169.254</literal>. For example, instances retrieve the
+            public SSH key (identified by keypair name when a user requests a new instance) by
+            making a GET request
+            to:<programlisting>http://169.254.169.254/latest/meta-data/public-keys/0/openssh-key</programlisting></para>
+        <para>Instances also retrieve user data (passed as the <literal>user_data</literal>
+            parameter in the API call or by the <literal>--user_data</literal> flag in the
+                <command>nova boot</command> command) through the metadata service, by making a GET
+            request
+            to:<programlisting>http://169.254.169.254/latest/user-data</programlisting></para>
+        <para>The Compute metadata service is compatible with the <link
+                xlink:href="http://docs.amazonwebservices.com/AWSEC2/latest/UserGuide/AESDG-chapter-instancedata.html"
+                >Amazon EC2 metadata service</link>; virtual machine images that are designed for
+            EC2 will work properly with OpenStack. </para>
+        <para>The metadata service is implemented by the <systemitem class="service"
+                >nova-api</systemitem> service, which must have <literal>metadata</literal> as one
+            of the elements of the list of the <literal>enabled_apis</literal> configuration option
+            in <filename>/etc/nova/nova.conf</filename>. The default <literal>enabled_apis</literal>
+            configuration setting includes the metadata service, so you should not need to modify
+            it.</para>
+        <para>To allow instances to reach the metadata service, the <systemitem class="service"
+                >nova-network</systemitem> service will configure iptables to NAT port
+                <literal>80</literal> of the <literal>169.254.169.254</literal> address to the IP
+            address specified in <literal>metadata_host</literal> (default
+            <literal>$my_ip</literal>, which is the IP address of the <systemitem class="service"
+                >nova-network</systemitem> service) and port specified in
+                <literal>metadata_port</literal> (default <literal>8775</literal>) in
+                <filename>/etc/nova/nova.conf</filename>.<note>
+                <para>The default Compute service settings assume that the <systemitem
+                        class="service">nova-network</systemitem> service and the <systemitem
+                        class="service">nova-api</systemitem> service are running on the same host.
+                    If this is not the case, you must make the following change in the
+                        <filename>/etc/nova/nova.conf</filename> file on the host running the
+                        <systemitem class="service">nova-network</systemitem> service:</para>
+                <para>Set the <literal>metadata_host</literal> configuration option to the IP
+                    address of the host where the <systemitem class="service">nova-api</systemitem>
+                    service is running.</para>
+            </note></para>
+    </section>
     <section xml:id="configuring-networking-on-the-compute-node">
         <title>Configuring Networking on the Compute Node</title>
         <para>To configure the Compute node's networking for the VM
