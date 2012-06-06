@@ -56,42 +56,29 @@
         </itemizedlist>
     </section>
     <section xml:id="users-and-projects">
-        <title>Users and Projects (Tenants)</title>
+        <title>Users and Tenants (Projects)</title>
         <para>The OpenStack Compute system is designed to be used by many different cloud computing
             consumers or customers, basically tenants on a shared system, using role-based access
-            assignments. With the use of the Identity Service, the issuing of a token also issues
-            the roles assigned to the user, and the Identity Service calls projects tenants. Roles
-            control the actions that a user is allowed to perform. For example, a user cannot
-            allocate a public IP without the netadmin or admin role when the system is set up
-            according to those rules. There are both global roles and per-project (tenant) role
-            assignments. A user's access to particular images is limited by project, but the access
-            key and secret key are assigned per user. Key pairs granting access to an instance are
-            enabled per user, but quotas to control resource consumption across available hardware
-            resources are per project. </para>
-        
-        <para>With the "--use_deprecated_auth" flag in place, OpenStack Compute uses a rights
-            management system that employs a Role-Based Access Control (RBAC) model and supports the
-            following five roles:</para>
-       <itemizedlist> 
-        <listitem><para>Cloud Administrator (admin): Global role. Users of this class enjoy complete system access.</para></listitem>
-        <listitem><para>IT Security (itsec): Global role. This role is limited to IT security personnel. It permits role holders to
-                    quarantine instances on any project.</para></listitem>
-        <listitem><para>Project Manager (projectmanager): Project role. The default for project owners, this role affords users the
-                    ability to add other users to a project, interact with project images, and
-                    launch and terminate instances.</para></listitem>
-        <listitem><para>Network Administrator (netadmin): Project role. Users with this role are permitted to allocate and assign
-                    publicly accessible IP addresses as well as create and modify firewall
-                    rules.</para></listitem>
-        <listitem><para>Developer (developer): Project role. This is a general purpose role that is assigned to users by
-                    default.</para></listitem></itemizedlist>
-<para>While the original EC2 API supports users, OpenStack Compute adds the concept of projects, or
-            tenants if your deployment uses the Identity Service (Keystone). Projects and tenants
-            are isolated resource containers forming the principal organizational structure within
-            Nova. They consist of a separate VLAN, volumes, instances, images, keys, and users. A
-            user can specify which project or tenant he or she wishes to be known as by appending
-            :project_id to his or her access key. If no project or tenant is specified in the API
-            request, Compute attempts to use a project with the same id as the user. </para>
-        <para>For projects (tenants), quota controls are available to limit the: <itemizedlist>
+            assignments. Roles control the actions that a user is allowed to perform. In the default
+            configuration, most actions do not require a particular role, but this is configurable
+            by the system administrator editing the appropriate <filename>policy.json</filename>
+            file that maintains the rules. For example, a rule can be defined so that a user cannot
+            allocate a public IP without the admin role. A user's access to particular images is
+            limited by tenant, but the username and password are assigned per user. Key pairs
+            granting access to an instance are enabled per user, but quotas to control resource
+            consumption across available hardware resources are per tenant. <note>
+                <para>Earlier versions of OpenStack used the term "project" instead of "tenant".
+                    Because of this legacy terminology, some command-line tools use
+                        <literal>--project_id</literal> when a tenant ID is expected.</para>
+            </note></para>
+<para>While the original EC2 API supports users, OpenStack Compute adds the concept of tenants.
+            Tenants are isolated resource containers forming the principal organizational structure
+            within the Compute service. They consist of a separate VLAN, volumes, instances, images,
+            keys, and users. A user can specify which tenant he or she wishes to be known as by
+            appending <literal>:project_id</literal> to his or her access key. If no tenant is
+            specified in the API request, Compute attempts to use a tenant with the same ID as the
+            user. </para>
+        <para>For tenants, quota controls are available to limit the:<itemizedlist>
                 <listitem>
                     <para>Number of volumes which may be created</para>
                 </listitem>
