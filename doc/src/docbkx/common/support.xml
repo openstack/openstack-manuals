@@ -81,7 +81,11 @@
         <section xml:id="handling-drive-failure">
             <title>Handling Drive Failure</title>
        <para> In the event that a drive has failed, the first step is to make sure the drive is unmounted. This will make it easier for OpenStack Object Storage to work around the failure until it has been resolved. If the drive is going to be replaced immediately, then it is just best to replace the drive, format it, remount it, and let replication fill it up.</para>
-<para>If the drive can’t be replaced immediately, then it is best to leave it unmounted, and remove the drive from the ring. This will allow all the replicas that were on that drive to be replicated elsewhere until the drive is replaced. Once the drive is replaced, it can be re-added to the ring.</para></section>
+       <para>If the drive can’t be replaced immediately, then it is best to leave it unmounted, and remove the drive from the ring. This will allow all the replicas that were on that drive to be replicated elsewhere until the drive is replaced. Once the drive is replaced, it can be re-added to the ring.</para>
+       <para>Rackspace has seen hints at drive failures by looking at error messages in /var/log/kern.log -
+        do consider checking this in your monitoring</para>
+        </section>
+
         <section xml:id="handling-server-failure">
     
     <title>Handling Server Failure</title>
