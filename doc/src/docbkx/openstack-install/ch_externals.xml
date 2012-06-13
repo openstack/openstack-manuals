@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="externals"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Underlying Technologies</title>
+    <para>You can think of OpenStack Compute as a toolkit for building a cloud computing environment
+        by stiching together existing Linux technologies.</para>
+    <para>The figures below shows two examples of how these underlying technologies can be assembled
+        to construct an OpenStack Compute cloud. The circles are Linux services that are part of
+        OpenStack Compute, and the rectangles are external (not maintained by the OpenStack project)
+        components. Solid lines show interactions between OpenStack components and external
+        components, and dashed lines show interactions between external components. All services
+        that are part of OpenStack Compute interact with a queueing backend (e.g., RabbitMQ, Qpid)
+        and a database backend (e.g., MySQL, PostgreSQL); these connections are not shown. Also not
+        shown are services that do not explicitly rely on external technologies. For example, the
+            <systemitem class="service">nova-api</systemitem> service, the Identity service, and the
+        Image service are not shown.</para>
+    <figure><title>Underlying technologies (Scenario 1)</title>
+    <mediaobject>
+        <imageobject>
+            <imagedata fileref="figures/nova-external-1.svg" scale="60" />
+        </imageobject>
+    </mediaobject>
+    </figure>
+    <figure><title>Underlying technologies (Scenario 2)</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="figures/nova-external-2.svg" scale="60" />
+            </imageobject>
+        </mediaobject>
+    </figure>
+    
+    <para>Many of the external technologies can be substituted with other components, as shown in
+        the table below.<table frame="void">
+            <caption>Technologies and supported implementations</caption>
+            <col width="25%"/>
+            <col width="75%"/>
+            <thead>
+                <tr>
+                    <th>Technology</th>
+                    <th>Supported implementations</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Message queue</td>
+                    <td>RabbitMQ, Qpid, ZeroMQ</td>
+                </tr>
+                <tr>
+                    <td>Virtualization</td>
+                    <td>xapi+XCP, xapi+XenServer, libvirt+KVM, libvirt+QEMU, libvirt+LXC,
+                        libvirt+VMWare</td>
+                </tr>
+                <tr>
+                    <td>iSCSI back-end</td>
+                    <td>LVM+IET, LVM+tgt, Xen Storage Manager, SAN (Solaris, HP, SolidFire),
+                        NexentaStor, NetApp, Ceph, Sheepdog</td>
+                </tr>
+                <tr>
+                    <td>Database</td>
+                    <td>MySQL, PostgreSQL, sqlite</td>
+                </tr>
+                <tr>
+                    <td>Web server</td>
+                    <td>Apache, Nginx</td>
+                </tr>
+            </tbody>
+        </table></para>
+    <simplesect><title>nova-compute</title><para>The <systemitem class="service">nova-compute</systemitem> service depends on a virtualization
+            driver to manage virtual machines. By default, this driver is <emphasis role="italic"
+                >libvirt</emphasis>, which is used to drive <emphasis role="italic">KVM</emphasis>.
+            However, the libvirt driver can also drive other hypervisor technologies, and there is a
+            separate Xen virtualization driver for driving Xen-based virtual machines if configured
+            to use Xen Cloud Platform (XCP) or XenServer. <emphasis role="italic"
+                >Open-iscsi</emphasis> is used to mount remote block devices, also known as volumes.
+            Open-iscsi exposes these remote devices as local device files which can be attached to
+            instances.</para></simplesect>
+    <simplesect><title>nova-network</title>
+    <para>The <systemitem class="service">nova-network</systemitem> service depends on a number of
+            Linux networking technologies. It uses <emphasis role="italic">Linux bridging</emphasis>
+            to create network bridges to connect virtual machines to the physical networks. These
+            bridges may be associated with VLANs using <emphasis role="italic">Linux networking VLAN
+                support</emphasis>, if running in the VLAN networking mode. <emphasis role="italic"
+                >Iptables</emphasis> is used to implement security rules and implement NAT
+            functionality, which is used for providing instances with access to the metadata service
+            and for supporting floating IP addresses. <emphasis role="italic">Dnsmasq</emphasis> is
+            used as a DHCP server to hand out IP addresses to virtual machine instances, as well as
+            a DNS server.</para>
+        <para>In a future OpenStack release, functionality that is currently implemented by
+                <systemitem class="service">nova-network</systemitem> will be available through a
+            separate OpenStack project, codenamed Quantum.</para></simplesect>
+    <simplesect><title>nova-volume</title><para>By default, the <systemitem class="service">nova-volume</systemitem> service uses <emphasis
+                role="italic">LVM</emphasis> to create and manage local volumes, and exports them
+            via iSCSI using <emphasis role="italic">IET</emphasis> or <emphasis role="italic"
+                >tgt</emphasis>. It can also be configured to use other iSCSI-based storage
+            technologies.</para>
+        <para>In a future OpenStack release, functionality that is currently implemented by
+                <systemitem class="service">nova-volume</systemitem> will be available through a
+            separate OpenStack project, codenamed Cinder.</para></simplesect>
+    <simplesect>
+        <title>openstack-dashboard</title>
+        <para>The <systemitem class="service">openstack-dashboard</systemitem> is a Django-based
+            application that runs behind an <emphasis role="italic">Apache</emphasis> web server by
+            default. It uses <emphasis role="italic">memcache</emphasis> to improve performance. A
+            web-based VNC client called <emphasis role="italic">novnc</emphasis> is used to provide
+            access to the VNC consoles associated with the running KVM instances.</para>
+    </simplesect>
+       
+</chapter>
