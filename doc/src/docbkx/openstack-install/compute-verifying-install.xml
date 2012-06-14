@@ -4,19 +4,26 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">            
             <title>Verifying the Compute Installation</title>
-    <para>You can ensure all the Compute services are running by using the nova-manage command:</para>        
-    <literallayout class="monospaced">sudo nova-manage service list</literallayout>
+    <para>You can ensure all the Compute services are running by using the
+            <command>nova-manage</command> command, as root:</para>
+    <screen><prompt>#</prompt> <userinput>nova-manage service list</userinput></screen>
     <para>In return you should see "smiley faces" rather than three X symbols. Here's an example.</para>
-    <literallayout class="monospaced">Binary           Host                                 Zone             Status     State Updated_At
-nova-compute     ubuntu                               nova             enabled    :-)   2012-04-02 14:06:15
-nova-cert        ubuntu                               nova             enabled    :-)   2012-04-02 14:06:16
-nova-volume      ubuntu                               nova             enabled    :-)   2012-04-02 14:06:14
-nova-scheduler   ubuntu                               nova             enabled    :-)   2012-04-02 14:06:11
-nova-network     ubuntu                               nova             enabled    :-)   2012-04-02 14:06:13
-nova-consoleauth ubuntu                               nova             enabled    :-)   2012-04-02 14:06:10</literallayout>
-    <para>You can find the version of the installation by using the nova-manage
-                command:</para>
-            <literallayout class="monospaced">sudo nova-manage version list</literallayout>
+    <screen><computeroutput>Binary           Host     Zone    Status     State Updated_At
+nova-compute     myhost    nova    enabled    :-)   2012-04-02 14:06:15
+nova-cert        myhost    nova    enabled    :-)   2012-04-02 14:06:16
+nova-volume      myhost    nova    enabled    :-)   2012-04-02 14:06:14
+nova-scheduler   myhost    nova    enabled    :-)   2012-04-02 14:06:11
+nova-network     myhost    nova    enabled    :-)   2012-04-02 14:06:13
+nova-consoleauth myhost    nova    enabled    :-)   2012-04-02 14:06:10</computeroutput></screen>
+    <para><note>
+            <para>If you see three X symbols and are running services
+                on separate hosts, ensure that ntp is synchronizing
+                time correctly and that all servers match their time.
+                Out-of-sync time stamps are the most common cause of
+                the XXX state.</para>
+        </note>You can find the version of the installation by using
+        the <command>nova-manage</command> command, as root:</para>
+            <screen><prompt>#</prompt> <userinput>nova-manage version list</userinput></screen>
         
         <para>The version number 2012.1 corresponds with the Essex
         release of Compute.</para>

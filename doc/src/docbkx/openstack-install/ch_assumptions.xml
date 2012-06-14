@@ -8,11 +8,16 @@
         options. To simplify this installation guide, we make
         a number of assumptions about the target installation.</para>
         <itemizedlist>
-            <listitem><para>You have a collection of compute nodes, each installed with a
-                    supported Linux distribution: Fedora 17, Ubuntu
-                    Server 12.04, RHEL 6.2, Scientific Linux 6.1 or
+            <listitem>
+                <para os="rhel;centos;fedora">You have a collection of compute
+                    nodes, each installed with Fedora 17, RHEL 6.2, Scientific Linux 6.1 or
                     CentOS 6 + CR distributions (continuous release ( CR ) repository).</para>
-            <note><para>Debian, openSUSE, and SLES also have OpenStack support, but are not documented here.</para></note></listitem>
+
+                <para os="ubuntu">You have a collection of compute nodes, each installed with Ubuntu
+                    Server 12.04.</para>
+            <note><para>
+                <phrase os="rhel;centos;fedora">There is also an <link xlink:href="http://docs.openstack.org/essex/openstack-compute/install/apt/content/">OpenStack Install and Deploy Manual for Ubuntu</link></phrase>
+                <phrase os="ubuntu">There is also an <link xlink:href="http://docs.openstack.org/essex/openstack-compute/install/yum/content/">OpenStack Install and Deploy Manual for RHEL, CentOS and Fedora</link></phrase> Debian, openSUSE, and SLES also have OpenStack support, but are not documented here.</para></note></listitem>
             <listitem><para>You have designated one of the nodes as the Cloud Controller,
                     which will run all of the services (RabbitMQ or
                     Qpid, MySQL, Identity, Image, nova-api,
@@ -33,8 +38,11 @@
             <listitem>
                 <para>Ensure that the server can resolve its own hostname,
                     otherwise you may have problems if you are using RabbitMQ
-                    as the messaging backend (RabbitMQ is the default messaging
-                    back-end on Ubuntu, on Fedora the default backend is Qpid).</para>
+                    as the messaging backend.
+                    <phrase os="ubuntu">RabbitMQ is the default messaging
+                    back-end on Ubuntu</phrase>
+                    <phrase os="rhel;centos;fedora">Qpid is the default messaging
+                        back-end on Fedora</phrase></para>
             </listitem>
             <listitem>
                 <para><literal>192.168.206.130</literal> is the primary IP for our host
@@ -51,9 +59,11 @@
                 <para>KVM or Xen (XenServer or XCP) as the hypervisor.</para>
             </listitem>
             <listitem>
-                <para>Ensure the operating system is up-to-date by
-                    running <command>yum update</command> or
-                        <command>apt-get update</command> and
+                <para os="rhel;fedora;centos">Ensure the operating system is up-to-date by
+                    running <command>yum update</command> prior to
+                    the installation.</para>
+                <para os="ubuntu">>Ensure the operating system is up-to-date by
+                    running <command>apt-get update</command> and
                         <command>apt-get upgrade</command> prior to
                     the installation.</para>
             </listitem>
