@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section xml:id="configuring-openstack-object-storage"    
+<section xml:id="object-storage-post-install"    
     xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-                <title>Configuring OpenStack Object Storage </title>
+                <title>OpenStack Object Storage Post Installation</title>
         <para>Now that the proxy server and storage servers are configured, you want to restart the services. </para>
         <screen>swift-init main start
 swift-init rest start</screen>
-        <para>You can fine-tune the installation by adding more proxy servers. </para>
+        <xi:include href="object-storage-verifying-install.xml" />
         <section xml:id="adding-proxy-server">
                 <title>Adding an Additional Proxy Server</title>
                 <para>For reliability&#8217;s sake you may want to
@@ -18,12 +18,14 @@ swift-init rest start</screen>
                         steps.</para>
                 <para>Once you have more than two proxies, you also
                         want to load balance between the two, which
-                        means your storage endpoint also changes. You
+                        means your storage endpoint (what clients use 
+                        to connect to your storage) also changes. You
                         can select from different strategies for load
                         balancing. For example, you could use round
-                        robin dns, or an actual load balancer (like
-                        pound) in front of the two proxies, and point
-                        your storage url to the load balancer.</para>
+                        robin dns, or a software or hardware load 
+                        balancer (like pound) in front of the two 
+                        proxies, and point your storage url to the 
+                        load balancer.</para>
                 <para>Configure an initial proxy node for the initial
                         setup, and then follow these additional steps
                         for more proxy servers.</para>
@@ -84,15 +86,6 @@ super_admin_key = devauth</literallayout>
                                         the ring file is correct.</para>
                         </listitem>
                 </orderedlist>
-        </section>
-        <xi:include href="object-storage-verifying-install.xml" />
-        <section xml:id="object-storage-troubleshooting-notes">
-                <title>Troubleshooting Notes</title>
-                <para>If you see problems, look in var/log/syslog (or
-                        messages on some distros).</para>
-                <para>Also, at Rackspace we have seen hints at drive
-                        failures by looking at error messages in
-                        /var/log/kern.log.</para>
         </section>
 </section>
 
