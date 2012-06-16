@@ -657,11 +657,11 @@ url = &quot;192.168.10.1:5000&quot;
 
 osuser = &quot;joe&quot;
 
-## use something else than &quot;shhh&quot; for you password
+## use something else than &quot;shhh&quot; for your password
 
 ospassword = &quot;shhh&quot;
 
-params = '{&quot;passwordCredentials&quot;:{&quot;username&quot;:osuser, &quot;password&quot;:ospassword}}'
+params = '{&quot;auth&quot;:{&quot;passwordCredentials&quot;:{&quot;username&quot;:&quot;' + osuser + '&quot;, &quot;password&quot;:&quot;' + ospassword + '&quot;}}}'
 
 headers = {&quot;Content-Type&quot;: &quot;application/json&quot;}
 
@@ -694,15 +694,19 @@ Your token is: 999888777666
     </section>
     <section xml:id="getting-the-api-endpoint-url">
       <title>Getting the API Endpoint URL</title>
-      <para>
-        The API token is only one essential piece of information you
-        need to know to use the OpenStack Compute API. Another is the
-        URL of the Nova API end point. That's where you will send your
-        calls to the OpenStack Compute API accompanied by the token you
-        just obtained. That information may be given to you by your
-        OpenStack cloud provider or you may be able to extract that
-        information from the authentication server's response:
-      </para>
+      <para> The API token is only one essential piece of information
+        you need to know to use the OpenStack Compute API. Another is
+        the URL of the Nova API end point. That's where you will send
+        your calls to the OpenStack Compute API accompanied by the
+        token you just obtained. That information may be given to you
+        by your OpenStack cloud provider or you may be able to extract
+        that information from the authentication server's response: </para>
+      <note>
+        <para>If the service provider is using the file-based template
+          endpoint catalog, you get an empty service catalog. For
+          example, you see <code>"serviceCatalog": {}</code> in the
+          response when using a devstack installation.</para>
+      </note>
       <screen>
 #!/usr/bin/python
 
@@ -725,11 +729,11 @@ url = &quot;192.168.10.1:5000&quot;
 
 osuser = &quot;joe&quot;
 
-## use something else than &quot;shhh&quot; for you password
+## use something else than &quot;shhh&quot; for your password
 
 ospassword = &quot;shhh&quot;
 
-params = '{&quot;passwordCredentials&quot;:{&quot;username&quot;:osuser, &quot;password&quot;:ospassword}}'
+params = '{&quot;auth&quot;:{&quot;passwordCredentials&quot;:{&quot;username&quot;:&quot;' + osuser + '&quot;, &quot;password&quot;:&quot;' + ospassword + '&quot;}}}'
 
 headers = {&quot;Content-Type&quot;: &quot;application/json&quot;}
 
@@ -756,28 +760,25 @@ apiurl = dd['auth']['serviceCatalog']['nova'][0]['publicURL']
 print &quot;Your token is: %s&quot; % apitoken
 print &quot;Your Nova URL is: %s&quot; % apiurl
 </screen>
-      <para>
-        When you run that script, you should see the following output.
-        The token will most likely be something different than
-        <emphasis role="strong">999888777666</emphasis> and the Nova URL
-        will not always contain
-        <emphasis role="strong">10.0.2.15</emphasis>:
-      </para>
+      <para> When you run that script, you should see the following
+        output. The token will most likely be something different than
+          <emphasis role="strong">999888777666</emphasis> and the Nova
+        URL will not always contain <emphasis role="strong"
+          >10.0.2.15</emphasis>: </para>
       <screen>
 $ ./gettokenurl.py 
 Your token is: 999888777666
 Your Nova URL is: http://10.0.2.15:8774/v1.1/openstack
 </screen>
-      <section xml:id="getting-your-nova-credentials----the-drop-in-script-snippet-for-your-python-scripts">
+      <section
+        xml:id="getting-your-nova-credentials----the-drop-in-script-snippet-for-your-python-scripts">
         <title>Getting Your Nova Credentials -- The Drop-In Script
-        Snippet for Your Python Scripts</title>
-        <para>
-          You will be coming back to the token and API URL extraction
-          code over and over again, which is why I decided to place it
-          in a separate section of this book. That way I can make the
-          examples shorter and you can focus of the important stuff.
-          Here's the code in all it's glory:
-        </para>
+          Snippet for Your Python Scripts</title>
+        <para> You will be coming back to the token and API URL
+          extraction code over and over again, which is why I decided
+          to place it in a separate section of this book. That way I
+          can make the examples shorter and you can focus of the
+          important stuff. Here's the code in all it's glory: </para>
         <screen>
 ### --8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--8&lt;--
 
@@ -799,11 +800,11 @@ url1 = &quot;localhost:5000&quot;
 
 osuser = &quot;joe&quot;
 
-## use something else than &quot;shhh&quot; for you password
+## use something else than &quot;shhh&quot; for your password
 
 ospassword = &quot;shhh&quot;
 
-params1 = '{&quot;passwordCredentials&quot;:{&quot;username&quot;:osuser, &quot;password&quot;:ospassword}}'
+params1 = '{&quot;auth&quot;:{&quot;passwordCredentials&quot;:{&quot;username&quot;:&quot;' + osuser + '&quot;, &quot;password&quot;:&quot;' + ospassword + '&quot;}}}'
 headers1 = {&quot;Content-Type&quot;: &quot;application/json&quot;}
 
 # HTTP connection #1

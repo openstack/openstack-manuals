@@ -132,6 +132,8 @@ The following example shows how to use the **curl** command to obtain the authen
 
 	$ curl -d '{"passwordCredentials": {"username": "joe", "password": "shhh"}}' -H "Content-type: application/json" http://localhost:5000/v2.0/tokens
 
+.. note :: For a cloud like TryStack running diablo, the command also requires 
+
 * **joe** &mdash; your username, replace **joe** without your username, unless it is **joe**.
 * **shhh** &mdash; the password for your OpenStack account, please do not use **shhh**.
 * **localhost:5000** &mdash; the URL of the authentication server, **localhost** is just a placeholder, please use an IP address or a full hostname (e.g. *somehost.example.com*).  Please pay attention to the port number, it does matter.  If your provider fails to tell you which port should be used, try **5000** and **5001** as these are typically used by the OpenStack authentication servers to listen for authentication requests.
@@ -219,11 +221,11 @@ When you want to obtain an API token you can do it using two standard Python mod
 
 	osuser = "joe"
 
-	## use something else than "shhh" for you password
+	## use something else than "shhh" for your password
 
 	ospassword = "shhh"
 
-	params = '{"passwordCredentials":{"username":osuser, "password":ospassword}}'
+	params = '{auth{"passwordCredentials":{"username":osuser, "password":ospassword}}}'
 
 	headers = {"Content-Type": "application/json"}
  
@@ -253,6 +255,8 @@ When you run **gettoken.py** you should see the following output (the token will
 
 The API token is only one essential piece of information you need to know to use the OpenStack Compute API.  Another is the URL of the Nova API end point.  That's where you will send your calls to the OpenStack Compute API accompanied by the token you just obtained.  That information may be given to you by your OpenStack cloud provider or you may be able to extract that information from the authentication server's response:
 
+**Note:** If the service provider is using the file-based template endpoint catalog, you get an empty service catalog. For example, you see "serviceCatalog": {} in the response when using a Devstack installation.
+
 	#!/usr/bin/python
 
 	import httplib
@@ -274,11 +278,11 @@ The API token is only one essential piece of information you need to know to use
 
 	osuser = "joe"
 
-	## use something else than "shhh" for you password
+	## use something else than "shhh" for your password
 
 	ospassword = "shhh"
 
-	params = '{"passwordCredentials":{"username":osuser, "password":ospassword}}'
+	params = '{auth{"passwordCredentials":{"username":osuser, "password":ospassword}}}'
 
 	headers = {"Content-Type": "application/json"}
  
@@ -335,11 +339,11 @@ You will be coming back to the token and API URL extraction code over and over a
 
 	osuser = "joe"
 
-	## use something else than "shhh" for you password
+	## use something else than "shhh" for your password
 
 	ospassword = "shhh"
 
-	params1 = '{"passwordCredentials":{"username":osuser, "password":ospassword}}'
+	params1 = '{auth{"passwordCredentials":{"username":osuser, "password":ospassword}}}'
 	headers1 = {"Content-Type": "application/json"}
 
 	# HTTP connection #1
