@@ -49,30 +49,7 @@ memcache_servers = &lt;PROXY_LOCAL_NET_IP&gt;:11211
 </literallayout>
                                 </para>
                         </listitem>
-                        <listitem>
-                                <para>Change the default_cluster_url
-                                        to point to the load balanced url,
-                                        rather than the first proxy server
-                                        you created in
-                                        /etc/swift/proxy-server.conf:</para>
-                                <para>
-                                        <literallayout class="monospaced">[app:auth-server]
-use = egg:swift#auth
-default_cluster_url = https://&lt;LOAD_BALANCER_HOSTNAME&gt;/v1
-# Highly recommended to change this key to something else!
-super_admin_key = devauth</literallayout>
-                                </para>
-                        </listitem>
-                        <listitem>
-                                <para>After you change the
-                                        default_cluster_url setting, you
-                                        have to delete the auth database
-                                        and recreate the OpenStack Object
-                                        Storage users, or manually update
-                                        the auth database with the correct
-                                        URL for each account.</para>
-                        </listitem>
-                        <listitem>
+                       <listitem>
                                 <para>Next, copy all the ring
                                         information to all the nodes,
                                         including your new proxy nodes, and
@@ -86,6 +63,16 @@ super_admin_key = devauth</literallayout>
                                         the ring file is correct.</para>
                         </listitem>
                 </orderedlist>
+		<note>
+		    <title>Note</title>
+                    <para>If you are using swauth in preference to the 
+			  OpenStack Identity service, there are additional steps
+			  to follow for the addition of a second proxy server.
+			  Please follow the <link xlink:href="http://gholt.github.com/swauth/stable/">swauth documentation</link>
+			  Installation section, paying close attention to the 
+			  <literal>default_swift_cluster</literal> variable.
+		    </para>
+		</note> 
         </section>
 </section>
 
