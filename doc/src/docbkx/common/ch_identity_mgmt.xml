@@ -11,7 +11,7 @@
     a separate logging configuration file, and initializing data into
     keystone using the command line client.
   </para>
-  <xi:include href="../common/keystone-concepts.xml" />
+  <xi:include href="../common/keystone-concepts.xml"/>
   <section xml:id="keystone-configuration-file">
     <title>Configuration File</title>
     <para>
@@ -25,19 +25,24 @@
       drivers for the various services are included under their
       individual sections.
     </para>
-    <para>
-      The services include:
-      <itemizedlist>
-        <listitem><para><literal>[identity]</literal> - the python
-        module that backends the identity system</para></listitem>
-        <listitem><para><literal>[catalog]</literal> - the python module that
-        backends the service catalog</para></listitem>
-        <listitem><para><literal>[token]</literal> - the python module
-      that backends the token providing mechanisms</para></listitem>
-        <listitem><para><literal>[policy]</literal> - the python module that
-        drives the policy system for RBAC</para></listitem>
-      </itemizedlist>
-    </para>
+    <para> The services include: <itemizedlist>
+        <listitem>
+          <para><literal>[identity]</literal> - the python module that
+            backends the identity system</para>
+        </listitem>
+        <listitem>
+          <para><literal>[catalog]</literal> - the python module that
+            backends the service catalog</para>
+        </listitem>
+        <listitem>
+          <para><literal>[token]</literal> - the python module that
+            backends the token providing mechanisms</para>
+        </listitem>
+        <listitem>
+          <para><literal>[policy]</literal> - the python module that
+            drives the policy system for RBAC</para>
+        </listitem>
+      </itemizedlist></para>
     <para>
       The configuration file is expected to be named
       <literal>keystone.conf</literal>. When starting up Identity, you
@@ -167,10 +172,8 @@ keystone-all
     </section>
     <section xml:id="step-2-db_sync-your-new-empty-database">
       <title>Step 2: db_sync your new, empty database</title>
-      <para>
-        Run the following command to configure the most recent schema in
-        your new keystone installation:
-      </para>
+      <para> Run the following command to configure the most recent
+        schema in your new Identity installation: </para>
       <screen>
 keystone-manage db_sync
 </screen>
@@ -183,19 +186,16 @@ keystone-manage db_sync
       <screen>
 keystone-manage import_legacy [db_url, e.g. 'mysql://root@foobar/keystone']
 </screen>
-      <para>
-        Specify db_url as the connection string that was present in your
-        old keystone.conf file.
-      </para>
+      <para> Specify db_url as the connection string that was present
+        in your old <filename>keystone.conf</filename> file. </para>
     </section>
     <section xml:id="step-4-import-your-legacy-service-catalog">
       <title>Step 4: Import your legacy service catalog</title>
-      <para>
-        While the older keystone stored the service catalog in the
-        database, the updated version configures the service catalog
-        using a template file. An example service catalog template file
-        may be found in etc/default_catalog.templates.
-      </para>
+      <para> While the older Identity service stored the service
+        catalog in the database, the updated version configures the
+        service catalog using a template file. An example service
+        catalog template file may be found in
+        etc/default_catalog.templates. </para>
       <para>
         To import your legacy catalog, run this command:
       </para>
@@ -220,10 +220,9 @@ keystone-manage export_legacy_catalog \
       steps:
     </para>
     <section xml:id="step-1-export-your-data-from-nova">
-      <title>Step 1: Export your data from Nova</title>
-      <para>
-        Use the following command to export your data fron Nova:
-      </para>
+      <title>Step 1: Export your data from Compute</title>
+      <para> Use the following command to export your data from
+        Compute (nova): </para>
       <screen>
 nova-manage export auth &gt; /path/to/dump
 </screen>
@@ -364,15 +363,13 @@ keystone-manage db_sync
     </section>
     <section xml:id="example-usage">
       <title>Example usage</title>
-      <para>
-        <literal>keystone</literal> is set up to expect commands in the
-        general form of <literal>keystone</literal>
-        <literal>command</literal> <literal>argument</literal>, followed
-        by flag-like keyword arguments to provide additional (often
-        optional) information. For example, the command
-        <literal>user-list</literal> and
-        <literal>tenant-create</literal> can be invoked as follows:
-      </para>
+      <para>The <literal>keystone</literal> client is set up to expect
+        commands in the general form of <literal>keystone</literal>
+        <literal>command</literal>
+        <literal>argument</literal>, followed by flag-like keyword
+        arguments to provide additional (often optional) information.
+        For example, the command <literal>user-list</literal> and
+          <literal>tenant-create</literal> can be invoked as follows: </para>
       <screen>
 # Using token auth env variables
 export SERVICE_ENDPOINT=http://127.0.0.1:5000/v2.0/
@@ -500,9 +497,7 @@ keystone tenant-disable f2b7b39c860840dfa47d9ee4adffa0b3
       <title>Users</title>
       <section xml:id="user-create">
         <title><literal>user-create</literal></title>
-        <para>
-          keyword arguments
-        </para>
+        <para> keyword arguments: </para>
         <itemizedlist>
           <listitem>
             <para>
@@ -542,9 +537,7 @@ keystone user-create
       </section>
       <section xml:id="user-delete">
         <title><literal>user-delete</literal></title>
-        <para>
-          keyword arguments
-        </para>
+        <para> keyword arguments: </para>
         <itemizedlist>
           <listitem>
             <para>
@@ -685,9 +678,7 @@ keystone user-update-password 03c84b51574841ba9a0d8db7882ac645 foo
             </para>
           </listitem>
         </itemizedlist>
-        <para>
-          exmaple:
-        </para>
+        <para> example: </para>
         <screen>
 keystone role-create --name=demo
 </screen>
@@ -704,18 +695,14 @@ keystone role-create --name=demo
             </para>
           </listitem>
         </itemizedlist>
-        <para>
-          exmaple:
-        </para>
+        <para> example: </para>
         <screen>
 keystone role-delete 19d1d3344873464d819c45f521ff9890
 </screen>
       </section>
       <section xml:id="role-list">
         <title><literal>role-list</literal></title>
-        <para>
-          exmaple:
-        </para>
+        <para> example: </para>
         <screen>
 keystone role-list
 </screen>
@@ -732,9 +719,7 @@ keystone role-list
             </para>
           </listitem>
         </itemizedlist>
-        <para>
-          exmaple:
-        </para>
+        <para> example: </para>
         <screen>
 keystone role-get role=19d1d3344873464d819c45f521ff9890
 </screen>
@@ -949,12 +934,10 @@ keystone service-delete 08741d8ed88242ca88d1f61484a0fe3b
           [DEFAULT] admin_token = ADMIN
         </para>
       </blockquote>
-      <para>
-        This configured token is a &quot;shared secret&quot; between
-        keystone and other openstack services, and is used by the client
-        to communicate with the API to create tenants, users, roles,
-        etc.
-      </para>
+      <para> This configured token is a &quot;shared secret&quot;
+          between keystone and other OpenStack services, and is used
+          by the client to communicate with the API to create tenants,
+          users, roles, etc. </para>
     </section>
     <section xml:id="setting-up-tenants-users-and-roles">
       <title>Setting up tenants, users, and roles</title>
@@ -1158,9 +1141,7 @@ use = egg:swift#catch_errors
 use = egg:swift#healthcheck
 </screen>
         </listitem>
-      </orderedlist>
-      <orderedlist numeration="arabic">
-        <listitem override="4">
+        <listitem>
           <para>
             Restart swift services.
           </para>
@@ -1260,6 +1241,119 @@ connection = boto.connect_s3(
         </listitem>
       </orderedlist>
     </section>
+    <section xml:id="configuring-keystone-for-ldap-backend">
+      <title>Configuring Keystone for an LDAP backend</title>
+      <para> It is possible to connect an LDAP backend with the Identity service Keystone. <orderedlist>
+            <listitem>
+              <para><emphasis role="bold">Setting up the LDAP backend</emphasis></para>
+              <itemizedlist>
+                <listitem>
+                  <para>Configuring Users</para>
+                  <para> The users will be stored into a collection
+                    <screen>ou=Users,$SUBTREEY</screen> that will make use of the standard LDAP
+                    objectClass<screen>inetOrgPerson</screen>(being defined in
+                      <filename>/etc/openldap/schema/inetorgperson.ldiff</filename>. You would only
+                    need two LDAP fields :<emphasis role="bold">CN</emphasis> and <emphasis role="bold">CN</emphasis>. The <emphasis role="bold">CN</emphasis> field will
+                    be used for the bind call, and is the <emphasis role="bold">ID</emphasis> field
+                    for the <emphasis role="bold">user</emphasis> object. </para>
+                </listitem>
+                <listitem>
+                  <para>Configuring Tenants</para>
+                  <para> OpenStack tenants is also a collection. They are instances of the object
+                      <emphasis role="bold">groupOfNames</emphasis> (defined in
+                      <filename>/etc/openldap/schema/core.ldiff</filename>. In order to bind tenant
+                    to users, the user's <emphasis role="bold">DN</emphasis> should be indicated
+                    into the tenant's <emphasis role="bold">members</emphasis> attribute. </para>
+                </listitem>
+                <listitem>
+                  <para>Configuring Roles</para>
+                  <para> Roles will be stored into the organizationalRole LDAP object class, into
+                      <filename>/etc/openldap/schema/core.ldiff</filename>. The assignment is
+                    indicated via the User's <emphasis role="bold">DN</emphasis> in the <emphasis role="bold">roleOccupant</emphasis> attribute. </para>
+                </listitem>
+              </itemizedlist>
+            </listitem>
+            <listitem>
+              <para><emphasis role="bold">Setting up Keystone</emphasis></para>
+              <itemizedlist>
+                <listitem>
+                  <para>The "[LDAP]" stanza in the
+                      <filename>keystone.conf</filename> file allows
+                    you to specify the parameters related to the LDAP
+                    backend. Supported values are : </para>
+                  <itemizedlist>
+                    <listitem>
+                      <para>url</para>
+                    </listitem>
+                    <listitem>
+                      <para>user</para>
+                    </listitem>
+                    <listitem>
+                      <para>password</para>
+                    </listitem>
+                    <listitem>
+                      <para>suffix</para>
+                    </listitem>
+                    <listitem>
+                      <para>use_dumb_member </para>
+                    </listitem>
+                    <listitem>
+                      <para>user_tree_dn</para>
+                    </listitem>
+                    <listitem>
+                      <para>user_objectclass </para>
+                    </listitem>
+                    <listitem>
+                      <para>user_id_attribute</para>
+                    </listitem>
+                    <listitem>
+                      <para>tenant_tree_dn</para>
+                    </listitem>
+                    <listitem>
+                      <para>tenant_objectclass</para>
+                    </listitem>
+                    <listitem>
+                      <para>tenant_id_attribute</para>
+                    </listitem>
+                    <listitem>
+                      <para>tenant_member_attribute</para>
+                    </listitem>
+                    <listitem>
+                      <para>role_tree_dn</para>
+                    </listitem>
+                    <listitem>
+                      <para>role_objectclass </para>
+                    </listitem>
+                    <listitem>
+                      <para>role_id_attribute' </para>
+                    </listitem>
+                    <listitem>
+                      <para>role_member_attribute</para>
+                    </listitem>
+                  </itemizedlist>
+                </listitem>
+              </itemizedlist>
+              <para> Here is a typical set-up : </para>
+              <screen>[ldap]
+url = ldap://localhost
+tree_dn = dc=exampledomain,dc=com
+user_tree_dn = ou=Users,dc=exampledomain,dc=com
+role_tree_dn = ou=Roles,dc=exampledomain,dc=com
+tenant_tree_dn = ou=Groups,dc=exampledomain,dc=com
+user = dc=Manager,dc=exampledomain,dc=com
+password = freeipa4all
+backend_entities = ['Tenant', 'User', 'UserRoleAssociation', 'Role']
+suffix =cn=exampledomain,cn=com
+
+[identity]
+driver = keystone.identity.backends.ldap.Identity </screen>
+            </listitem>
+          </orderedlist></para>
+    </section>
+    <section xml:id="reference-for-ldap-config-options">
+      <title>Reference for LDAP Configuration Options in keystone.conf</title>
+       <xi:include href="tables/ldap-keystone-conf.xml"/>
+    </section>
     <section xml:id="auth-token-middleware-with-username-and-password">
       <title>Auth-Token Middleware with Username and Password</title>
       <para>
@@ -1288,7 +1382,7 @@ admin_password = keystone123
       <para>
         It should be noted that when using this option an admin
         tenant/role relationship is required. The admin user is granted
-        access to to the 'Admin' role to the 'admin' tenant.
+        access to the 'Admin' role on the 'admin' tenant.
       </para>
     </section>
   </section>
