@@ -88,19 +88,19 @@ flat_network_bridge=br100</programlisting>
         according to the sample file by inserting "service" for the
         Service tenant and nova for the admin user and nova for the
         admin password in the last three lines.</para>
-    <para>Restart the nova- services prior to running db
-        sync, by running as root:</para>
+    <para>Stop the nova- services prior to running db sync, by running
+        stop commands as root. Otherwise your logs show errors because
+        the database has not yet been populated:</para>
    
         <screen os="ubuntu">
-<prompt>#</prompt> <userinput>restart nova-api</userinput>
-<prompt>#</prompt> <userinput>restart nova-compute</userinput>
-<prompt>#</prompt> <userinput>restart nova-network</userinput>
-<prompt>#</prompt> <userinput>restart nova-scheduler</userinput>
-<prompt>#</prompt> <userinput>restart nova-vncproxy</userinput>
-<prompt>#</prompt> <userinput>restart nova-volume</userinput>
+<prompt>#</prompt> <userinput>stop nova-api</userinput>
+<prompt>#</prompt> <userinput>stop nova-compute</userinput>
+<prompt>#</prompt> <userinput>stop nova-network</userinput>
+<prompt>#</prompt> <userinput>stop nova-scheduler</userinput>
+<prompt>#</prompt> <userinput>stop nova-vncproxy</userinput>
+<prompt>#</prompt> <userinput>stop nova-volume</userinput>
         </screen>
     <screen os="rhel;fedora;centos">
-        <prompt>$></prompt> <userinput>for svc in api objectstore compute network volume scheduler cert; do sudo service openstack-nova-$svc start ; sudo chkconfig openstack-nova-$svc on ;  done</userinput>
+        <prompt>$></prompt> <userinput>for svc in api objectstore compute network volume scheduler cert; do sudo service openstack-nova-$svc stop ; sudo chkconfig openstack-nova-$svc on ;  done</userinput>
     </screen>
-    <para>Check that all the services started up correctly and look in the logs in /var/log/nova for errors.</para>
 </section>

@@ -14,16 +14,19 @@
     <para>Restart all services in total, just to cover the entire
         spectrum: </para>
     <para>
-        <literallayout class="monospaced">sudo restart nova-api
-sudo restart nova-compute
-sudo restart nova-network
-sudo restart nova-scheduler
-sudo restart nova-vncproxy
-sudo restart nova-volume
-sudo restart libvirt-bin
-sudo /etc/init.d/rabbitmq-server restart </literallayout>
+        <screen os="ubuntu">sudo start nova-api
+sudo start nova-compute
+sudo start nova-network
+sudo start nova-scheduler
+sudo start nova-vncproxy
+sudo start nova-volume
+sudo start libvirt-bin
+sudo /etc/init.d/rabbitmq-server restart </screen>
     </para>
+    <screen os="rhel;fedora;centos">
+        <prompt>$></prompt> <userinput>for svc in api objectstore compute network volume scheduler cert; do sudo service openstack-nova-$svc start ; sudo chkconfig openstack-nova-$svc on ;  done</userinput>
+    </screen>
     <para>All nova services are now installed and started. If the
-        "restart" command doesn't work, your services may not be
+        "start" command doesn't work, your services may not be
         running correctly (or not at all). Review the logs in
-        /var/log/nova.</para></section>
+        /var/log/nova to look for clues.</para></section>

@@ -8,7 +8,7 @@
     to the other servers you intend to use for OpenStack services, as
     root:</para>
   <screen os="ubuntu;deb"><prompt>#</prompt> <userinput>apt-get install keystone</userinput></screen>
-  <screen os="rhel;centos;fedora"><prompt>$</prompt> <userinput>yum install openstack-utils openstack-keystone</userinput> </screen>
+  <screen os="rhel;centos;fedora"><prompt>$</prompt> <userinput>yum install openstack-utils openstack-keystone python-keystoneclient</userinput> </screen>
   <para>After installing, you need to delete the sqlite database it
     creates, then change the configuration to point to a MySQL
     database. This configuration enables easier scaling scenarios
@@ -17,7 +17,7 @@
     database backend has built-in data replication features and
     documentation surrounding high availability and data redundancy
     configurations.</para>
-  <para>Delete the <filename>keystone.db</filename> file created in
+  <para os="ubuntu">Delete the <filename>keystone.db</filename> file created in
     the <filename>/var/lib/keystone</filename>
     directory.<screen><prompt>#</prompt> <userinput>rm /var/lib/keystone/keystone.db</userinput></screen></para>
   <para>Configure the production-ready backend data store rather than
@@ -26,7 +26,7 @@
   <para>Install MySQL as
   root:</para>
   <screen os="ubuntu;deb"><prompt>#</prompt> <userinput>apt-get install python-mysqldb mysql-server</userinput></screen>
-  <screen os="rhel;fedora;centos"><prompt>$</prompt> <userinput>yum install mysql mysql-server</userinput>
+  <screen os="rhel;fedora;centos"><prompt>$</prompt> <userinput>yum install mysql mysql-server MySQL-python</userinput>
   </screen>
   <para>During the install, you'll be prompted for the mysql root
     password. Enter a password of your choice and verify it.</para>
@@ -103,9 +103,7 @@
         get other services authenticating and authorizing with the
         Identity service. </para>
       <para>Scripted configuration:</para>
-      <para>On Fedora, RHEL, and Centos, you can run this script to
-        populate with sample data.</para>
-      <screen os="rhel;centos;fedora"><prompt>$</prompt> <userinput>sudo ADMIN_PASSWORD=$OS_PASSWORD SERVICE_PASSWORD=servicepass openstack-keystone-sample-data</userinput></screen>
+      <!--<para>On Fedora, RHEL, and Centos, you can run this script to populate with sample data.</para><screen os="rhel;centos;fedora"><prompt>$</prompt> <userinput>sudo ADMIN_PASSWORD=$OS_PASSWORD SERVICE_PASSWORD=servicepass openstack-keystone-sample-data</userinput></screen>-->
       <para>The Keystone project offers a bash script for populating
         tenants, users, and roles at
         <link xlink:href="https://github.com/openstack/keystone/blob/master/tools/sample_data.sh">https://github.com/openstack/keystone/blob/master/tools/sample_data.sh</link>
