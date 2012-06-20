@@ -8,17 +8,18 @@
     xmlns:csapi="http://docs.openstack.org/compute/api/v1.1">
 
     <resources base="https://servers.api.openstack.com">
-        <resource id="version" type="#VersionDetails" path="v1.1/">
+        <resource id="version" path="v1.1/">
             <resource id="tenantID" path="{tenant_id}">
-                <param name="tenant_id" style="template" type="xsd:string">
+                <param name="tenant_id" style="template">
                     <doc><p xmlns="http://www.w3.org/1999/xhtml">
                       The ID for the tenant or account in a multi-tenancy cloud.
                     </p></doc>
                 </param>
 
                 <resource id="os-aggregates" path="os-aggregates">
+                    <method href="#list_aggregates"/>
                     <resource path="{aggregate_id}">
-                        <param name="aggregate_id" style="template" type="xsd:string">
+                        <param name="aggregate_id" style="template">
                             <doc><p xmlns="http://www.w3.org/1999/xhtml">
                               The ID associated with an aggregate.
                             </p>
@@ -35,10 +36,25 @@
         </resource>
     </resources>
 
+    <method name="GET" id="list_aggregates">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+               List all aggregates.
+            </p>
+        </wadl:doc>
+        <response status="200">
+             <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/os-aggregate-list-response.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
     <method name="POST" id="set_metadata">
         <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
             <p xmlns="http://www.w3.org/1999/xhtml">
-               Set metadata for an aggregate.
+                Set metadata for an aggregate. An aggregate provides some form of physical isolation and redundancy from other cells, such as by using separate power supply and network gears, and is set by the cloud provider. 
             </p>
         </wadl:doc>
         <request>
@@ -65,7 +81,7 @@
         <request>
             <param name="host" style="plain" required="true">
                 <doc><p xmlns="http://www.w3.org/1999/xhtml">
-                  Host ID to add to an aggregate.
+                    Host ID to add to an aggregate, which is a collection of multiple groups of hosts that share common resources like storage and network.
                 </p></doc>
             </param>
             <representation mediaType="application/json">
