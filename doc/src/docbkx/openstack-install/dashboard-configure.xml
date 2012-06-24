@@ -4,36 +4,10 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
     <title>Configuring the Dashboard</title>
-    <para>Start the mysql command line client by running:</para>
-    <screen><prompt>$ </prompt><userinput>mysql -u root -p</userinput></screen>
-    <para>Enter the MySQL root user's password when prompted.</para>
-    <para>To configure the MySQL database, create the dash database. </para>
-    <para><screen><prompt>mysql></prompt> <userinput>CREATE DATABASE dash;</userinput></screen></para>
-    <para>Create a MySQL user for the newly-created dash database that
-        has full control of the database. </para>
-    <para><screen><prompt>mysql></prompt> <userinput>GRANT ALL ON dash.* TO 'dash'@'%' IDENTIFIED BY
-        'yourpassword';</userinput></screen></para>
-    <para>Enter quit at the <literal>mysql></literal> prompt to exit MySQL.</para>
-    <para>After configuring the <filename>local_settings.py</filename> as shown below, you can run
-        the <command>manage.py syncdb</command> command to populate this newly-created
-        database.</para>
     <para>A full example <filename>local_settings.py</filename> file is <link
             linkend="local-settings-py-file">included in the Appendix</link> of the OpenStack
-        Install and Deploy manual.</para>
-    <para>In the <filename>/etc/openstack-dashboard/local_settings.py</filename> file, change these
-        options:</para>
-     <itemizedlist><listitem><para><literal>DATABASES</literal>: Change the database section to point to the MySQL database named
-                    <literal>dash</literal>:</para>
-    <programlisting>DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'dash',
-        'USER': 'dash',
-        'PASSWORD': 'yourpassword',
-        'HOST': 'localhost',
-        'default-character-set': 'utf8'
-    },
-}</programlisting></listitem>
+        Install and Deploy manual. Here are some common options:</para>
+       <itemizedlist>
        <listitem>
             <para><literal>SWIFT_ENABLED</literal>: If an Object Storage (Swift) endpoint is
                 available and configured in the Identity service catalog, set <literal>SWIFT_ENABLED
@@ -47,18 +21,4 @@
                     <literal>QUANTUM_ENABLED = False</literal>.</para>
         </listitem>
         </itemizedlist>
-        <para>Run the <command>manage.py syncdb</command> command to initialize the database. </para>
-    <screen><prompt>$</prompt> /usr/share/openstack-dashboard/manage.py syncdb </screen>
-    <para>As a result, you should see the following at the end of what returns:</para>
-    <screen><computeroutput>Installing custom SQL ...
-Installing indexes ...
-DEBUG:django.db.backends:(0.008) CREATE INDEX `django_session_c25c2c28` ON `django_session` (`expire_date`);; args=()
-No fixtures found.</computeroutput></screen>
-    <para>If you want to avoid a warning when restarting apache2, create a blackhole directory in the dashboard directory like so:</para>
-    <screen><prompt>#</prompt> <userinput> sudo mkdir -p /var/lib/dash/.blackhole</userinput></screen>
-   <para>Restart Apache to pick up the default site and symbolic link settings.</para>
-    <screen><prompt>#</prompt> <userinput>/etc/init.d/apache2 restart</userinput></screen>
-    <para>Restart the nova-api service to ensure the API server can connect to the Dashboard and to
-        avoid an error displayed in the Dashboard. </para>
-    <screen><userinput>sudo restart nova-api</userinput></screen>
 </section>
