@@ -133,12 +133,19 @@
             support. </para>
         </listitem>
         <listitem>
-          <para><literal>vncserver_listen</literal> - Defaults to <literal>127.0.0.1</literal>. This is the
-            address that vncservers will bind, and should be
-            overridden in production deployments as a private address.
-            Applies to libvirt only. For multi-host libvirt
-            deployments this should be set to a host management IP on
-            the same network as the proxies. </para>
+          <para><literal>vncserver_listen</literal> - Defaults to <literal>127.0.0.1</literal>. This
+            is the address that vncservers will bind, and should be overridden in production
+            deployments as a private address. Applies to libvirt only. For multi-host libvirt
+            deployments this should be set to a host management IP on the same network as the
+            proxies.</para>
+          <note><para>If you intend to support <link linkend="configuring-live-migrations">live migration</link>,
+              you cannot specify a specific IP address for <literal>vncserver_listen</literal>,
+              because that IP address will not exist on the destination host.  The result is that
+              live migration will fail and the following error will appear in the
+                <filename>libvirtd.log</filename> file in the destination
+              host:<programlisting>error: qemuMonitorIORead:513 : Unable to read from monitor: Connection reset by peer</programlisting>If
+              you wish to support live migration in your deployment, you must specify a value of
+                <literal>0.0.0.0</literal> for <literal>vncserver_listen</literal>. </para></note>
         </listitem>
         <listitem>
           <para><literal>vncserver_proxyclient_address</literal> - Defaults to <literal>127.0.0.1</literal>.
