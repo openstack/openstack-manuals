@@ -282,6 +282,26 @@
             <screen>nova resume $server-id </screen>
         </section>
     </section>
+    <section xml:id="specify-host-to-boot-instances-on">
+        <title>Select a specific node to boot instances on</title>
+        <para> It is possible to specify which node to run the instance on using the nova client. In
+            order to use such feature, make sure you are using an admin accont ; also, in your
+            <filename>/etc/nova/nova.conf</filename>, make sure the following configuration
+            option is set : <screen>allow_admin_api</screen></para>
+        <para>You can retrieve the current active node by running : </para>
+        <screen><prompt>$</prompt><userinput>nova-manage service list</userinput></screen>
+        <screen><computeroutput>
+server1 nova-network enabled  :- ) 2011-04-06 17:05:11
+server1 nova-compute enabled  :- ) 2011-04-06 17:05:13
+server1 nova-scheduler enabled :- ) 2011-04-06 17:05:17
+server2 nova-compute disabled  :- ) 2011-04-06 17:05:19
+</computeroutput>    </screen>
+        <para>We see here our "server2" runs as a node. You can now select the host on which the
+            instance would be spawned, using the "--hint" flag : </para>
+        <para>
+            <screen><prompt>$</prompt> <userinput>nova boot --image 1 --flavor 2 --key_name test --hint force_hosts=server2 my-first-server</userinput></screen>
+        </para>
+    </section>
     <section xml:id="creating-custom-images">
         <info>
             <author>
