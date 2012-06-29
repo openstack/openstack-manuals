@@ -4,11 +4,21 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
     <title>Installing the Cloud Controller</title>
-    <para>Install the messaging queue server, RabbitMQ. You also have
-        the option of installing Apache Qpid, refer to the Compute
-        Administration Manual for instructions.</para>
-    <literallayout class="monospaced">sudo apt-get install rabbitmq-server</literallayout>
+    <para>Install the messaging queue server. The OpenStack services
+        talk to each other using AMQP(Advanced Message Queue Protocol)
+        by communicating with a message server. </para>
+    <para>On Ubuntu, the messaging queue server that's most tested is
+        RabbitMQ. This is the default message server so no additional
+        configuration is needed if you use this server.</para>
+    <para>On Fedora, RHEL, and CentOS, the most tested messaging
+        server is Apache Qpid. Refer to the Compute Administration
+        Manual for configuration instructions, including adding
+        rpc_backend=nova.rpc.impl_qpid to your
+        <filename>nova.conf</filename>.</para>
+    <screen os="ubuntu">sudo apt-get install rabbitmq-server</screen>
+    <screen os="centos;rhel;fedora">sudo yum install openstack-utils memcached qpid-cpp-server</screen>
     <para>Install the required nova- packages, and dependencies are automatically
         installed.</para>
-    <literallayout class="monospaced">sudo apt-get install nova-compute nova-volume nova-vncproxy nova-api nova-ajax-console-proxy nova-cert nova-consoleauth nova-doc nova-scheduler nova-network</literallayout>
+    <screen os="ubuntu">sudo apt-get install nova-compute nova-volume nova-vncproxy nova-api nova-ajax-console-proxy nova-cert nova-consoleauth nova-doc nova-scheduler nova-network</screen>
+    <screen os="centos;rhel;fedora">sudo yum install openstack-nova </screen>
 </section>
