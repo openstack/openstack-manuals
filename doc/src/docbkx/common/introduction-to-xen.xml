@@ -3,15 +3,52 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="introduction-to-xen">
-<title>Introduction to using Xen, XCP and XenServer with OpenStack</title>
 <?dbhtml stop-chunking?>
-<para>In this section we will describe Xen, XCP, and XenServer, the
+<title>Xen, XenAPI, XenServer and XCP</title>
+
+<para>The recommended way to use Xen with OpenStack is through the XenAPI
+driver. To enable the XenAPI driver, add the following configuration options
+<filename>/etc/nova/nova.conf</filename>:
+<programlisting>connection_type=xenapi
+xenapi_connection_url=http://your_xenapi_management_ip_address
+xenapi_connection_username=root
+xenapi_connection_password=your_password</programlisting>
+The above connection details are used by the OpenStack Compute service
+to contact your hypervisor and are the same details you use to connect
+XenCenter, the XenServer management console, to your XenServer or XCP box.
+Note these settings are generally unique to each hypervisor host as
+the use of the host internal management network ip address
+(169.254.0.1) will cause features such as live-migration to break.
+</para>
+
+<para>
+OpenStack with XenAPI supports the following virtual machine image formats:
+    <itemizedlist>
+            <listitem>
+                <para>Raw</para>
+            </listitem>
+            <listitem>
+                <para>VHD (in a gzipped tarball)</para>
+            </listitem>
+    </itemizedlist>
+</para>
+
+<para>It is possible to manage Xen using libvirt.  This would be necessary
+for any Xen-based system that isn't using the XCP toolstack, such as SUSE
+Linux or Oracle Linux.  Unfortunately, this is not well tested or supported
+as of the Essex release.
+To experiment using Xen through libvirt add the following configuration options
+<filename>/etc/nova/nova.conf</filename>:
+<programlisting>connection_type=libvirt
+libvirt_type=xen</programlisting></para>
+
+<para>The rest of this section describes Xen, XCP, and XenServer, the
 differences between them, and how to use them with OpenStack.  Xen's
 architecture is different from KVM's in important ways, and we discuss those
 differences and when each might make sense in your OpenStack cloud.</para>
 
 <section xml:id="basic-terminology">
-<title>Basic terminology</title>
+<title>Xen terminology</title>
 
 <para><emphasis role="bold">Xen</emphasis> is a hypervisor.  It provides the
 fundamental isolation between virtual machines.  Xen is open source (GPLv2)
@@ -23,9 +60,17 @@ it is managed can be different, which can cause confusion if you're not clear
 which toolstack you are using.  Make sure you know what toolstack you want
 before you get started.</para>
 
-<para><emphasis role="bold">XCP</emphasis> is an open source (GPLv2) toolstack
-for Xen.  It is designed specifically as platform for enterprise and cloud
-computing, and is well integrated with OpenStack.</para>
+<para><emphasis role="bold">Xen Cloud Platform (XCP)</emphasis>
+is an open source (GPLv2) toolstack for Xen.
+It is designed specifically as platform for enterprise and cloud
+computing, and is well integrated with OpenStack.
+XCP is available both as a binary distribution, installed from an iso,
+and from Linux distributions, such as
+<link xlink:href="http://packages.ubuntu.com/precise/xcp-xapi">xcp-xapi</link>
+in Ubuntu.
+The current versions of XCP avalible in linux distributions
+do not yet include all the features available in the binary
+distribution of XCP.</para>
 
 <para><emphasis role="bold">Citrix XenServer</emphasis> is a commercial
 product.  It is based on XCP, and exposes the same toolstack and managment
@@ -43,8 +88,6 @@ indicate that the integration works equally well on XCP and XenServer.
 Sometimes, a careless person will refer to XenServer specifically, but you can
 be reasonably confident that anything that works on XenServer will also work
 on the latest version of XCP.</para>
-
-</section>
 
 <section xml:id="privileged-and-unprivileged-domains">
 <title>Privileged and unprivileged domains</title>
@@ -65,8 +108,9 @@ later.
 <para>There is an ongoing project to split domain 0 into multiple privileged
 domains known as <emphasis role="bold">driver domains</emphasis> and <emphasis
 role="bold">stub domains</emphasis>.  This would give even better separation
-between critical components.  This is an ongoing research project and you
-shouldn't worry about it right now.  The current architecture just has three
+between critical components.  This technology is what powers
+Citrix XenClient RT, and is likly to be added into XCP in the next few years.
+However, the current architecture just has three
 levels of separation: dom0, the OpenStack domU, and the completely
 unprivileged customer VMs.</para>
 
@@ -91,8 +135,10 @@ role="bold">must</emphasis> be running in PV mode.</para>
 
 </section>
 
+</section>
+
 <section xml:id="deployments">
-<title>Deployment architecture</title>
+<title>XenAPI deployment architecture</title>
 
 <para>When you deploy OpenStack on XCP or XenServer you will get something
 similar to this:
@@ -146,7 +192,7 @@ Some notes on the networking:
 </section>
 
 <section xml:id="pools">
-<title>XenServer pools</title>
+<title>XenAPI pools</title>
 
 <para>Before OpenStack 2012.1 ("Essex"), all XenServer machines used with
 OpenStack are standalone machines, usually only using local storage.</para>
@@ -158,30 +204,24 @@ storage.</para>
 
 </section>
 
-<section xml:id="xen-and-libvirt">
-<title>Xen and libvirt</title>
-
-<para>It may possible to manage Xen using libvirt.  This would be necessary
-for any Xen-based system that isn't using the XCP toolstack, such as SUSE
-Linux or Oracle Linux.  Unfortunately, this is not well tested or supported
-today, and using the XCP or XenServer toolstacks with the OpenStack XenAPI
-backend is the only recommended method.</para>
-
-</section>
-
 <section xml:id="further-reading">
 <title>Further reading</title>
 
-<para>What is Xen? by Xen.org: <link
-xlink:href="http://xen.org/files/Marketing/WhatisXen.pdf">
-http://xen.org/files/Marketing/WhatisXen.pdf</link>.</para>
-
-<para>Xen Hypervisor project: <link
-xlink:href="http://xen.org/products/xenhyp.html">
-http://xen.org/products/xenhyp.html</link>.</para>
-
-<para>XCP project: <link xlink:href="http://xen.org/products/cloudxen.html">
-http://xen.org/products/cloudxen.html</link>.</para>
+<para>Here are some of the resources avaiable to learn more about Xen:
+<itemizedlist>
+    <listitem><para>What is Xen? by Xen.org: <link
+    xlink:href="http://xen.org/files/Marketing/WhatisXen.pdf">
+    http://xen.org/files/Marketing/WhatisXen.pdf</link>.</para></listitem>
+    <listitem><para>Xen Hypervisor project: <link
+    xlink:href="http://xen.org/products/xenhyp.html">
+    http://xen.org/products/xenhyp.html</link>.</para></listitem>
+    <listitem><para>XCP project:
+    <link xlink:href="http://xen.org/products/cloudxen.html">
+    http://xen.org/products/cloudxen.html</link>.</para></listitem>
+    <listitem><para>Further XenServer and OpenStack information:
+    <link xlink:href="http://wiki.openstack.org/XenServer">
+    http://wiki.openstack.org/XenServer</link>.</para></listitem>
+</itemizedlist></para>
 
 </section>
 
