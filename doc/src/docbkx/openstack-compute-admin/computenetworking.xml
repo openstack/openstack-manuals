@@ -582,22 +582,9 @@ firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver
                             network administrator to configure Compute properly (e.g., netmask,
                             broadcast, gateway, ethernet device, VLAN IDs)</para>
                     </listitem>
-                </itemizedlist></para>
-            <para>To configure your nodes to support VLAN tagging, install the
-                    <literal>vlan</literal> package and load the <literal>8021q</literal> kernel
-                module, as
-                root:<screen><prompt>#</prompt> <userinput>apt-get install vlan</userinput>
-<prompt>#</prompt> <userinput>modprobe 8021q </userinput></screen></para>
-            <para>To have this kernel module loaded on boot, add the following line to
-                    <filename>/etc/modules</filename>:<programlisting>8021q</programlisting></para>
-            <para>Here is an example of settings from <filename>/etc/nova/nova.conf</filename> for a
-                host configured to run <command>nova-network</command> in VLAN mode</para>
-
-            <programlisting>network_manager=nova.network.manager.VlanManager
-vlan_interface=eth0
-fixed_range=172.16.0.0/12
-network_size=256                </programlisting>
-<para>The <literal>network_manager=nova.network.manager.VlanManager</literal> option specifies VLAN
+                </itemizedlist>
+            </para>
+            <para>The <literal>network_manager=nova.network.manager.VlanManager</literal> option specifies VLAN
                 mode, which happens to be the default networking mode. </para>
             <para>The bridges that are created by the network manager will be attached to the
                 interface specified by <literal>vlan_interface</literal>, the example above uses the
@@ -735,7 +722,27 @@ Options:
                             <literal>1</literal><screen><userinput>DELETE from fixed_ips where network_id=1;</userinput></screen></para>
                 </warning>
             </para>
+            <para>If users need to access the instances in their project across a VPN, a special VPN
+                instance (code named cloudpipe) needs to be created as described in the section
+                titled <link linkend="cloudpipe-per-project-vpns">Cloudpipe — Per Project
+                    VPNs</link>.
+            </para>
 
+          <section xml:id="libvirt-vlan-networking">
+            <title>Libvirt VLAN networking</title>
+            <para>To configure your nodes to support VLAN tagging, install the
+                    <literal>vlan</literal> package and load the <literal>8021q</literal> kernel
+                module, as
+                root:<screen><prompt>#</prompt> <userinput>apt-get install vlan</userinput>
+<prompt>#</prompt> <userinput>modprobe 8021q </userinput></screen></para>
+            <para>To have this kernel module loaded on boot, add the following line to
+                    <filename>/etc/modules</filename>:<programlisting>8021q</programlisting></para>
+            <para>Here is an example of settings from <filename>/etc/nova/nova.conf</filename> for a
+                host configured to run <command>nova-network</command> in VLAN mode</para>
+            <programlisting>network_manager=nova.network.manager.VlanManager
+vlan_interface=eth0
+fixed_range=172.16.0.0/12
+network_size=256                </programlisting>
             <para>In certain cases, the network manager may not properly tear down bridges and VLANs
                 when it is stopped. If you attempt to restart the network manager and it does not
                 start, check the logs for errors indicating that a bridge device already exists. If
@@ -744,18 +751,151 @@ Options:
                 commands would stop the service, manually tear down the bridge and VLAN from the
                 previous example, kill any remaining dnsmasq processes, and start the service up
                 again, as root:</para>
-
             <screen><prompt>#</prompt> <userinput>stop nova-network</userinput>
 <prompt>#</prompt> <userinput>vconfig rem vlan169</userinput>
 <prompt>#</prompt> <userinput>ip link set br169 down</userinput>
 <prompt>#</prompt> <userinput>brctl delbr br169</userinput>
 <prompt>#</prompt> <userinput>killall dnsmasq</userinput>
 <prompt>#</prompt> <userinput>start nova-network</userinput></screen>
-
-            <para>If users need to access the instances in their project across a VPN, a special VPN
-                instance (code named cloudpipe) needs to be created as described in the section
-                titled <link linkend="cloudpipe-per-project-vpns">Cloudpipe — Per Project
-                    VPNs</link>. </para>
+            </section>
+            <section xml:id="xenapi-vlan-networking">
+                <title>XenAPI VLAN networking</title>
+                <para>VLAN networking works quite differently with the XenAPI
+                    driver, compared to the libvit driver.
+                    The following figure shows how your setup might look:
+                </para>
+                <figure xml:id="xenapi-vlan-diagram">
+                    <title>VLAN network, multiple interfaces, multiple
+                        servers, network HA with XenAPI driver</title>
+                    <mediaobject><imageobject>
+                        <imagedata scale="80" fileref="figures/XenApiVLANMultInterfaceHA.png" />
+                    </imageobject></mediaobject>
+                </figure>
+                <para>Here is an extract from a <filename>nova.conf</filename>
+                    file in a system running the above setup:</para>
+                <para>
+                    <programlisting>network_manager=nova.network.manager.VlanManager
+network_driver=nova.virt.xenapi.vif.(XenAPIBridgeDriver or XenAPIOpenVswitchDriver)
+vlan_interface=eth1
+public_interface=eth3
+multi_host=True
+force_dhcp_release=True
+send_arp_for_ha=True
+flat_injected=False
+firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlisting>
+                </para>
+                <para>You should notice that
+                    <literal>vlan_interface</literal>
+                    refers to the network interface on the Hypervisor and
+                    the network interface on the VM running the OpenStack
+                    services.
+                    As with before <literal>public_interface</literal>
+                    refers to the network interfce on the VM running the
+                    OpenStack services.
+                </para>
+                <para>With VLAN networking and the XenAPI driver, the following
+                    things happen when you start a VM:
+                    <itemizedlist>
+                        <listitem>
+                            <para>
+                                First the XenServer network is attached to the
+                                appropriate physical interface (PIF) and VLAN
+                                unless the network already exsists.
+                            </para>
+                        </listitem>
+                        <listitem>
+                            <para>
+                               When the VM is created, its VIF is attached
+                               to the above network.
+                            </para>
+                        </listitem>
+                        <listitem>
+                            <para>
+                              The 'Openstack domU', i.e. where nova-network is running,
+                              acts as a gateway and DHCP for this instance.
+                              The DomU does this for multiple VLAN networks,
+                              so it has to be attached on a VLAN trunk.
+                              For this reason it must have an interface on the
+                              parent bridge of the VLAN bridge where VM instances are plugged.
+                            </para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+                <para>To help understand VLAN networking with the XenAPI
+                    further, here are some important things to note:
+                  <itemizedlist>
+                    <listitem>
+                        <para>
+                        A physical interface (PIF) identified either
+                        by (A) the vlan_interface flag
+                        or (B) the bridge_interface column in the networks db
+                        table will be used for creating a XenServer VLAN network.
+                        The VLAN tag is found in the vlan column, still in the
+                        networks table, and by default the first tag is 100.
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>
+                        VIF for VM instances within this network will be
+                        plugged in this VLAN network. You won't see the bridge
+                        until a VIF is plugged in it.
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>
+                        The 'Openstack domU', i.e. the VM running the nova
+                        network node, instead will not be plugged into this network;
+                        since it acts as a gateway for multiple VLAN networks,
+                        it has to be attached on a VLAN trunk.
+                        For this reason it must have an interface on the parent
+                        bridge of the VLAN bridge where VM instances are plugged.
+                        For example, if <literal>vlan_interface</literal>
+                        is eth0 it must be plugged in xenbr1, eth1 --> xenbr1, etc.
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>
+                        Within the Openstack domU, 'ip link' is then used to
+                        configure VLAN interfaces on the 'trunk' port. Each of
+                        this vlan interfaces is associated with a dnsmasq instance,
+                        which will distribute IP addresses to instances.
+                        The lease file for dnsmasq is constantly updated by
+                        nova-network, thus ensuring VMs get the IP address
+                        specified by the layer3 network driver
+                        (nova IPAM or Melange).
+                        </para>
+                    </listitem>
+                  </itemizedlist>
+                </para>
+                <para>With this configuration, VM instances should be able to
+                get the IP address assigned to them from the appropriate dnsmasq
+                instance, and should be able to communicate without any problem
+                with other VMs on the same network and with the their gateway.
+                </para>
+                <para>The above point (3) probably needs some more explanations.
+                With Open vSwitch, we don't really have distinct bridges for
+                different VLANs; even if they appear as distinct bridges to linux
+                and XenServer, they are actually the same OVS instance, which
+                runs a distinct 'fake-bridge' for each VLAN. The 'real' bridge
+                is the 'parent' of the fake one.
+                You can easily navigate fake and real bridges with ovs-vsctl.
+                </para>
+                <para>As you can see I am referring to Openvswitch only.
+                This is for a specific reason: the fake-parent mechanism
+                automatically imply that ports which are not on a fake bridge
+                are trunk ports. This does not happen with linux bridge.
+                A packet forwarded on a VLAN interfaces does not get back
+                in the xenbrX bridge for ethX.
+                For this reason, with XenAPI, you must use Open vSwitch when
+                running VLAN networking with network HA (i.e. mult-host) enabled.
+                On XenServer 6.0 and later, Open vSwitch is the default
+                network stack.
+                When using VLAN networking with XenAPI and linux bridge,
+                the default networking stack on XenServer prior to version 6.0,
+                you must run the network node on a VM on a XenServer
+                that does not host any nova-compute controlled instances.
+                </para>
+            </section>
             <section xml:id="vlan-known-issues">
                 <title>Known issue with failed DHCP leases in VLAN configuration</title>
                 <para>Text in this section was adapted from <link
