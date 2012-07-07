@@ -545,16 +545,30 @@ LABEL=uec-rootfs              /          ext4           defaults     0    0
             </simplesect>
             <simplesect>
                 <title>Fetching Metadata in Fedora</title>
-                <para>Since, Fedora does not ship with cloud-init or
-                    an equivalent, you will need to take a few steps
-                    to have the instance fetch the meta data like ssh
-                    keys etc.</para>
-                <para>Edit the /etc/rc.local file and add the
-                    following lines before the line “touch
-                    /var/lock/subsys/local”</para>
-                <programlisting>
-
-depmod -a
+                <para>An instance must perform several steps on startup by interacting with the
+                    metadata service (e.g., retrieve ssh public key, execute user data script). When
+                    building a Fedora image, there are several options for implementing this
+                    functionality, including:<itemizedlist>
+                        <listitem>
+                            <para>Install a <link
+                                    xlink:href="http://koji.fedoraproject.org/koji/packageinfo?packageID=12620"
+                                >cloud-initRPM </link> , which is a port of the Ubuntu cloud-init
+                                package.</para>
+                        </listitem>
+                        <listitem>
+                            <para>Install <link
+                                    xlink:href="https://github.com/yahoo/Openstack-Condense"
+                                    >Condenser</link>, an alternate version of cloud-init.</para>
+                        </listitem>
+                        <listitem>
+                            <para>Modify <filename>/etc/rc.local</filename> to fetch desired
+                                information from the metadata service, as described below.</para>
+                        </listitem>
+                    </itemizedlist></para>
+                <para>To fetch the ssh public key and add it to the root account, edit the
+                        <filename>/etc/rc.local</filename> file and add the following lines before
+                    the line “touch /var/lock/subsys/local”</para>
+                <programlisting>depmod -a
 modprobe acpiphp
 
 # simple attempt to get the user ssh key using the meta-data service
@@ -566,14 +580,22 @@ echo &quot;************************&quot;
 cat /root/.ssh/authorized_keys
 echo &quot;************************&quot;
 </programlisting>
+                <note><para>The above script only retrieves the ssh public key from the metadata server. It does not
+                        retrieve <emphasis role="italic">user data</emphasis>, which is optional
+                        data that can be passed by the user when requesting a new instance. User
+                        data is often used for running a custom script when an instance comes
+                        up.</para>
+                    <para>As the OpenStack metadata service is compatible with the Amazon EC2
+                        metadata service, consult the Amazon EC2 documentation on <link
+                            xlink:href="http://docs.amazonwebservices.com/AWSEC2/latest/UserGuide/AESDG-chapter-instancedata.html"
+                            >Using Instance Metadata</link> for details on how to retrieve user
+                        data.</para></note>
             </simplesect>
         </section>
-        <simplesect>
-            <title>Kernel and Initrd for OpenStack</title>
+        <simplesect><title>Kernel and Initrd for OpenStack</title>
 
-            <para>Copy the kernel and the initrd image from /mnt/boot
-                to user home directory. These will be used later for
-                creating and uploading a complete virtual image to
+            <para>Copy the kernel and the initrd image from /mnt/boot to user home directory. These
+                will be used later for creating and uploading a complete virtual image to
                 OpenStack.</para>
             <screen>
 sudo cp /mnt/boot/vmlinuz-2.6.38-7-server /home/localadmin
@@ -594,10 +616,10 @@ sudo tune2fs -L uec-rootfs serverfinal.img
         <simplesect>
             <title>Registering with OpenStack</title>
             <para>The last step would be to upload the images to
-                Openstack Imaging Server glance. The files that need
-                to be uploaded for the above sample setup of Ubuntu
-                are: vmlinuz-2.6.38-7-server,
-                initrd.img-2.6.38-7-server, serverfinal.img</para>
+                OpenStack Image Service. The files that need to be
+                uploaded for the above sample setup of Ubuntu are:
+                vmlinuz-2.6.38-7-server, initrd.img-2.6.38-7-server,
+                serverfinal.img</para>
             <para>Run the following command</para>
             <screen>
 uec-publish-image -t image --kernel-file vmlinuz-2.6.38-7-server --ramdisk-file initrd.img-2.6.38-7-server amd64 serverfinal.img bucket1
