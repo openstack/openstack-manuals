@@ -106,11 +106,11 @@
                     >rackerjoe/oz-image-build on Github</link>.</para>
         </section>
     </section>
-        <section xml:id="creating-new-images">
+        <section xml:id="tool-support-creating-new-images">
             <?dbhtml stop-chunking?>
-            <title>Creating new virtual machine images</title>
-            <para>There are several open-source third-party tools available
-                for creating new virtual machine images.</para>
+            <title>Tool support for creating images</title>
+            <para>There are several open-source third-party tools available that simplify the task
+            of creating new virtual machine images.</para>
             <section xml:id="oz">
                 <title>Oz (KVM)</title>
                 <para><link xlink:href="http://aeolusproject.org/oz.html">Oz</link> is a
@@ -143,7 +143,259 @@
                 </para>
             </section>
         </section>
-         <section xml:id="booting-a-test-image">
+    <section xml:id="manually-creating-qcow2-images">
+        <title>Creating raw or QCOW2 images</title>
+        <para>This section describes how to create a raw or QCOW2 image from a Linux installation
+            ISO file. Raw images are the simplest image file format and are supported by all of the
+            hypverisors. QCOW2 images have several advantages over raw images. They take up less
+            space than raw images (growing in size as needed), and they support snapshots.<note>
+                <para>QCOW2 images are only supported with KVM and QEMU hypervisors.</para>
+            </note></para>
+        <para>As an example, this section will describe how to create aa CentOS 6.2 image. <link
+                xlink:href="http://isoredirect.centos.org/centos/6/isos/x86_64/">64-bit ISO images
+                of CentOS 6.2</link> can be downloaded from one of the CentOS mirrors. This example
+            uses the CentOS netinstall ISO, which is a smaller ISO file that downloads packages from
+            the Internet as needed.</para>
+        <simplesect><title>Create an empty image (raw)</title>
+            <para>Here we create a a 5GB raw image using the <command>kvm-img</command> command:
+                <screen><prompt>$</prompt> <userinput>IMAGE=centos-6.2.img</userinput>
+<prompt>$</prompt> <userinput>kvm-img create -f raw $IMAGE 5G</userinput></screen></para></simplesect>
+        <simplesect><title>Create an empty image (QCOW2)</title>
+                <para>Here we create a a 5GB QCOW2 image using the <command>kvm-img</command>
+                command:
+                <screen><prompt>$</prompt> <userinput>IMAGE=centos-6.2.img</userinput>
+<prompt>$</prompt> <userinput>kvm-img create -f qcow $IMAGE 5G</userinput></screen></para></simplesect>
+            <simplesect><title>Boot the ISO using the image</title>
+                <para>First, find a spare vnc display. (Note that vnc display <literal>:N</literal>
+                correspond to TCP port 5900+N, so that <literal>:0</literal> corresponds to port
+                5900). Check which ones are currently in use with the <command>lsof</command>
+                command,  as
+                root:<screen><prompt>#</prompt> <userinput>lsof -i | grep "TCP \*:590"</userinput>
+<computeroutput>kvm        3437 libvirt-qemu   14u  IPv4 1629164      0t0  TCP *:5900 (LISTEN)
+kvm        24966 libvirt-qemu   24u  IPv4 1915470      0t0  TCP *:5901 (LISTEN)</computeroutput></screen></para>
+            <para>This shows that vnc displays <literal>:0</literal> and <literal>:1</literal> are
+                in use. In this example, we will use VNC display <literal>:2</literal>.</para>
+            <para> Also, we want a temporary file to send power signals to the VM instance. We
+                default to <filename>/tmp/file.mon</filename>, but make sure it doesn't exist yet.
+                If it does, use a different file name for the <literal>MONITOR</literal> variable
+                defined
+                below:<screen><prompt>$</prompt> <userinput>IMAGE=centos-6.2.img</userinput>
+<prompt>$</prompt> <userinput>ISO=CentOS-6.2-x86_64-netinstall.iso</userinput>
+<prompt>$</prompt> <userinput>VNCDISPLAY=:2</userinput>
+<prompt>$</prompt> <userinput>MONITOR=/tmp/file.mon</userinput>
+<prompt>$</prompt> <userinput>sudo  kvm -m 1024 -cdrom $ISO -drive file=${IMAGE},if=virtio,index=0,boot=on \
+-boot c -net nic -net user -nographic -vnc ${VNCDISPLAY} \
+-monitor unix:${MONITOR},server,nowait</userinput></screen></para>
+            </simplesect>
+            <simplesect><title>Connect to the instance via VNC</title>
+                <para>VNC is a remote desktop protocol that will give you full-screen display access
+                to the virtual machine instance, as well as let you interact with keyboard and
+                mouse. Use a VNC client (e.g., <link xlink:href="http://projects.gnome.org/vinagre/"
+                    >Vinagre</link> on Gnome, <link xlink:href="http://userbase.kde.org/Krdc"
+                    >Krdc</link> on KDE, xvnc4viewer from <link xlink:href="http://www.realvnc.com"
+                    >RealVNC</link>, xtightvncviewer from <link xlink:href="http://www.tightvnc.com"
+                    >TightVNC</link>) to connect to the machine using the display you specified. You
+                should now see a CentOS install screen.</para>
+                </simplesect>
+        <simplesect>
+            <title>Point the installer to a CentOS web server</title>
+            <para>The CentOS net installer requires that the user specify the web site and a CentOS
+                directory that corresponds to one of the CentOS mirrors. <itemizedlist>
+                    <listitem>
+                        <para>Web site name: <literal>mirror.umd.edu</literal> (consider using other
+                            mirrors as an alternative)</para>
+                    </listitem>
+                    <listitem>
+                        <para>CentOS directory: <literal>centos/6.2/os/x86_64</literal></para>
+                    </listitem>
+                </itemizedlist></para>
+            <para>See <link xlink:href="http://www.centos.org/modules/tinycontent/index.php?id=30"
+                    >CentOS mirror page</link> to get a full list of mirrors, click on the "HTTP"
+                link of a mirror to retrieve the web site name of a mirror.</para>
+        </simplesect>
+        <simplesect>
+            <title>Partition the disks</title>
+            <para>There are different options for partitioning the disks. The default installation
+                will use LVM partitions, and will create three partitions
+                    (<filename>/boot</filename>, <filename>/</filename>, swap).  The simplest
+                approach is to create a single ext4 partition, mounted to
+                "<literal>/</literal>".</para>
+        </simplesect>
+        <simplesect>
+            <title>Step through the install</title>
+            <para>The simplest thing to do is to choose the "Server" install, which will install an
+                SSH server.</para>
+        </simplesect>
+        <simplesect>
+            <title>When install completes, shut down the instance</title>
+            <para>Power down the instance using the monitor socket file to send a power down signal,
+                as
+                root:<screen><prompt>#</prompt> <userinput>MONITOR=/tmp/file.mon</userinput>
+<prompt>#</prompt> <userinput>echo 'system_powerdown' | socat - UNIX-CONNECT:$MONITOR</userinput></screen></para>
+        </simplesect>
+        <simplesect>
+            <title>Start the instance again without the ISO</title>
+            <para>
+                <screen>
+<prompt>$</prompt> <userinput>VNCDISPLAY=:2</userinput>
+<prompt>$</prompt> <userinput>MONITOR=/tmp/file.mon</userinput>
+<prompt>$</prompt> <userinput>sudo  kvm -m 1024 -drive file=${IMAGE},if=virtio,index=0,boot=on \
+-boot c -net nic -net user -nographic -vnc ${VNCDISPLAY} \
+-monitor unix:${MONITOR},server,nowait</userinput></screen>
+            </para>
+        </simplesect>
+        <simplesect>
+            <title>Connect to instance via VNC</title>
+            <para>When you boot the first time, it will ask you about authentication tools, you can
+                just choose 'Exit'. Then, log in as root using the root password you
+                specified.</para>
+        </simplesect>
+        <simplesect>
+            <title>Edit HWADDR from eth0 config file</title>
+            <para>The operating system records the MAC address of the virtual ethernet card in
+                    <filename>/etc/sysconfig/network-scripts/ifcfg-eth0</filename> during the
+                instance process. However, each time the image boots up, the virtual ethernet card
+                will have a different MAC address, so this information must be deleted from the
+                configuration file.</para>
+            <para>Edit <filename>/etc/sysconfig/network-scripts/ifcfg-eth0</filename> and remove the
+                    <literal>HWADDR=</literal> line. </para>
+        </simplesect>
+        <simplesect>
+            <title>Configure to fetch metadata</title>
+            <para>An instance must perform several steps on startup by interacting wtih the metada
+                service (e.g., retrieve ssh public key, execute user data script). There are several
+                ways to implement this functionality, inclduign:<itemizedlist>
+                    <listitem>
+                        <para>Install a <link
+                                xlink:href="http://koji.fedoraproject.org/koji/packageinfo?packageID=12620"
+                                >cloud-init RPM</link> , which is a port of the Ubuntu cloud-init
+                            package.</para>
+                    </listitem>
+                    <listitem>
+                        <para>Install <link xlink:href="https://github.com/yahoo/Openstack-Condense"
+                                >Condenser</link>, an alternate version of cloud-init.</para>
+                    </listitem>
+                    <listitem>
+                        <para>Modify <filename>/etc/rc.local</filename> to fetch desired information
+                            from the metadata service, as described below.</para>
+                    </listitem>
+                </itemizedlist></para>
+            <para>To fetch the ssh public key and add it to the root account, edit the
+                <filename>/etc/rc.local</filename> file and add the following lines before
+                the line “touch /var/lock/subsys/local”</para>
+            <programlisting>depmod -a
+modprobe acpiphp
+
+# simple attempt to get the user ssh key using the meta-data service
+mkdir -p /root/.ssh
+echo &gt;&gt; /root/.ssh/authorized_keys
+curl -m 10 -s http://169.254.169.254/latest/meta-data/public-keys/0/openssh-key | grep 'ssh-rsa' &gt;&gt; /root/.ssh/authorized_keys
+echo &quot;AUTHORIZED_KEYS:&quot;
+echo &quot;************************&quot;
+cat /root/.ssh/authorized_keys
+echo &quot;************************&quot;
+</programlisting>
+            <note><para>Some VNC clients replace : (colon) with ; (semicolon) and _ (underscore) with - (hyphen). Make sure it's http: not http; and authorized_keys not authorized-keys.</para></note>
+            <note><para>The above script only retrieves the ssh public key from the metadata server. It does not
+                retrieve <emphasis role="italic">user data</emphasis>, which is optional
+                data that can be passed by the user when requesting a new instance. User
+                data is often used for running a custom script when an instance comes
+                up.</para>
+                <para>As the OpenStack metadata service is compatible with the Amazon EC2
+                    metadata service, consult the Amazon EC2 documentation on <link
+                        xlink:href="http://docs.amazonwebservices.com/AWSEC2/latest/UserGuide/AESDG-chapter-instancedata.html"
+                        >Using Instance Metadata</link> for details on how to retrieve user
+                    data.</para></note>
+
+        </simplesect>
+        <simplesect><title>Shut down the instance</title>
+        <para>From inside the instance, as
+                root:<screen><prompt>#</prompt> <userinput>/sbin/shutdown -h now</userinput></screen></para></simplesect>
+        <simplesect>
+            <title>Modifying the image (raw)</title>
+            <para>You can make changes to the filesystem of an image without booting it, by mounting
+                the image as a file system. To mount a raw image, you need to attach it to a loop
+                device (e.g., <filename>/dev/loop0</filename>, <filename>/dev/loop1</filename>). To
+                identify the next unused loop device, as
+                root:<screen><prompt>#</prompt> <userinput>losetup -f</userinput>
+<computeroutput>/dev/loop0</computeroutput></screen>In
+                the example above, <filename>/dev/loop0</filename> is available for use. Associate
+                it to the image using <command>losetup</command>, and expose the partitions as
+                device files using <command>kpartx</command>, as root:</para>
+            <para>
+                <screen><prompt>#</prompt> <userinput>IMAGE=centos-6.2.img</userinput>
+<prompt>#</prompt> <userinput>losetup /dev/loop0 $IMAGE</userinput>
+<prompt>#</prompt> <userinput>kpartx -av /dev/loop0</userinput></screen>
+            </para>
+            <para>If the image has, say three partitions (/boot, /, /swap), there should be one new
+                device created per partition:<screen><prompt>$</prompt> <userinput>ls -l /dev/mapper/loop0p*</userinput><computeroutput>
+brw-rw---- 1 root disk 43, 49 2012-03-05 15:32 /dev/mapper/loop0p1
+brw-rw---- 1 root disk 43, 50 2012-03-05 15:32 /dev/mapper/loop0p2
+brw-rw---- 1 root disk 43, 51 2012-03-05 15:32 /dev/mapper/loop0p3</computeroutput></screen></para>
+            <para>To mount the second partition, as
+                root:<screen><prompt>#</prompt> <userinput>mkdir /mnt/image</userinput>
+<prompt>#</prompt> <userinput>mount /dev/mapper/loop0p2 /mnt/image</userinput></screen></para>
+            <para>You can now modify the files in the image by going to
+                    <filename>/mnt/image</filename>. When done, unmount the image and release the
+                loop device, as
+                root:<screen><prompt>#</prompt> <userinput>umount /mnt/image</userinput>
+<prompt>#</prompt> <userinput>losetup -d /dev/loop0</userinput></screen></para>
+        </simplesect>
+        <simplesect>
+            <title>Modifying the image (qcow2)</title>
+            <para>You can make changes to the filesystem of an image without booting it, by mounting
+                the image as a file system. To mount a QEMU image, you need the nbd kernel module to
+                be loaded. Load the nbd kernel module, as root:<screen><prompt>#</prompt> <userinput>modprobe nbd max_part=8</userinput></screen><note>
+                    <para>If nbd has already been loaded with <literal>max_part=0</literal>, you
+                        will not be able to mount an image if it has multiple partitions. In this
+                        case, you may need to first unload the nbd kernel module, and then load it.
+                        To unload it, as
+                        root:<screen><prompt>#</prompt> <userinput>rmmod nbd</userinput></screen></para>
+                </note></para>
+            <para>Connect your image to one of the network block devices (e.g.,
+                    <filename>/dev/nbd0</filename>, <filename>/dev/nbd1</filename>). In this
+                example, we use <filename>/dev/nbd3</filename>. As
+                root:<screen><prompt>#</prompt> <userinput>IMAGE=centos-6.2.img</userinput>
+<prompt>#</prompt> <userinput>qemu-nbd -c /dev/nbd3 $IMAGE</userinput></screen></para>
+            <para>If the image has, say three partitions (/boot, /, /swap), there should be one new
+                device created per partition:<screen><prompt>$</prompt> <userinput>ls -l /dev/nbd0*</userinput>
+<computeroutput>brw-rw---- 1 root disk 43, 48 2012-03-05 15:32 /dev/nbd3
+brw-rw---- 1 root disk 43, 49 2012-03-05 15:32 /dev/nbd3p1
+brw-rw---- 1 root disk 43, 50 2012-03-05 15:32 /dev/nbd3p2
+brw-rw---- 1 root disk 43, 51 2012-03-05 15:32 /dev/nbd3p3</computeroutput></screen><note>
+                    <para>If the network block device you selected was already in use, the initial
+                            <command>qemu-nbd</command> command will fail silently, and the
+                            <filename>/dev/nbd3p{1,2,3}</filename> device files will not be
+                        created.</para>
+                </note></para>
+            <para>To mount the second partition, as
+                root:<screen><prompt>#</prompt> <userinput>mkdir /mnt/image</userinput>
+<prompt>#</prompt> <userinput>mount /dev/nbd3p2 /mnt/image</userinput></screen></para>
+            <para>You can now modify the files in the image by going to
+                    <filename>/mnt/image</filename>. When done, unmount the image and release the
+                network block device, as
+                root:<screen><prompt>#</prompt> <userinput>umount /mnt/image</userinput>
+<prompt>#</prompt> <userinput>qemu-nbd -d /dev/nbd3</userinput></screen></para>
+        </simplesect>
+        <simplesect>
+            <title>Upload the image to glance (raw)</title>
+            <para>
+                <screen><prompt>$</prompt> <userinput>IMAGE=centos-6.2.img</userinput>
+<prompt>$</prompt> <userinput>NAME=centos-6.2</userinput>
+<prompt>$</prompt> <userinput>glance add name="${NAME}" is_public=true container_format=ovf disk_format=raw &lt; ${IMAGE}</userinput></screen>
+            </para>
+        </simplesect>
+        <simplesect>
+            <title>Upload the image to glance (qcow2)</title>
+            <para>
+                <screen><prompt>$</prompt> <userinput>IMAGE=centos-6.2.img</userinput>
+<prompt>$</prompt> <userinput>NAME=centos-6.2</userinput>
+<prompt>$</prompt> <userinput>glance add name="${NAME}" is_public=true container_format=ovf disk_format=qcow2 &lt; ${IMAGE}</userinput></screen>
+            </para>
+        </simplesect>
+
+    </section>
+        <section xml:id="booting-a-test-image">
             <title>Booting a test image</title>
             <para>The following assumes you are using QEMU or KVM in your
             deployment.</para>
