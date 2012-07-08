@@ -68,11 +68,18 @@
             into an ethernet device (eth0 by default). It will also
             run dnsmasq as a dhcpserver listening on this bridge.
             Instances receive their fixed IPs by doing a dhcpdiscover. </para>
-        <para>In both flat modes, the network nodes do not act as a
-            default gateway. Instances are given public IP addresses.
-            Compute nodes have iptables/ebtables entries created per
-            project and instance to protect against IP/MAC address
-            spoofing and ARP poisoning. </para>
+        <para>In any set up with flat networking, the host with
+            nova-network on it is responsible for forwarding traffic
+            from the private network configured with the
+            {{fixed_range=...} directive in
+                <filename>nova.conf</filename>. This host needs to
+            have br100 configured and talking to any other nodes that
+            are hosting VMs. You must set the flat_network_bridge flag
+            or create networks with the bridge parameter in order to
+            avoid raising an error. Compute nodes have
+            iptables/ebtables entries created per project and instance
+            to protect against IP/MAC address spoofing and ARP
+            poisoning. </para>
         <para>VLAN Network Mode is the default mode for OpenStack
             Compute. In this mode, Compute creates a VLAN and bridge
             for each project. For multiple machine installation, the
@@ -1269,60 +1276,6 @@ auto_assign_floating_ip=True
                     <command>nova boot</command> command will fail
                 with an error.</para>
         </section>
-        <section xml:id="Troubleshooting">
-            <title>Troubleshooting</title>
-            <para>If you aren't able to reach your instances via the
-                floating IP address, make sure the default security
-                group allows ICMP (ping) and SSH (port 22), so that
-                you can reach the instances:</para>
-            <screen>
-<prompt>$</prompt> <userinput>nova secgroup-list-rules default</userinput>
-<computeroutput>
-+-------------+-----------+---------+-----------+--------------+
-| IP Protocol | From Port | To Port |  IP Range | Source Group |
-+-------------+-----------+---------+-----------+--------------+
-| icmp        | -1        | -1      | 0.0.0.0/0 |              |
-| tcp         | 22        | 22      | 0.0.0.0/0 |              |
-+-------------+-----------+---------+-----------+--------------+
-</computeroutput>
-            </screen>
-            <para>Ensure the NAT rules have been added to iptables on
-                the node that nova-network is running on, as
-                root:</para>
-
-            <screen>
-<prompt>#</prompt> <userinput>iptables -L -nv</userinput>
-<computeroutput>
- -A nova-network-OUTPUT -d 68.99.26.170/32 -j DNAT --to-destination 10.0.0.3
-</computeroutput>
-<prompt>#</prompt> <userinput>iptables -L -nv -t nat</userinput>
-<computeroutput>
--A nova-network-PREROUTING -d 68.99.26.170/32 -j DNAT --to-destination10.0.0.3
--A nova-network-floating-snat -s 10.0.0.3/32 -j SNAT --to-source 68.99.26.170
-</computeroutput>
-            </screen>
-
-            <para>Check that the public address, in this example
-                "68.99.26.170", has been added to your public
-                interface: You should see the address in the listing
-                when you enter "ip addr" at the command prompt.</para>
-
-            <screen>
-<prompt>$</prompt> <userinput>ip addr</userinput>
-<computeroutput>
-2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP qlen 1000
-link/ether xx:xx:xx:17:4b:c2 brd ff:ff:ff:ff:ff:ff
-inet 13.22.194.80/24 brd 13.22.194.255 scope global eth0
-inet 68.99.26.170/32 scope global eth0
-inet6 fe80::82b:2bf:fe1:4b2/64 scope link
-valid_lft forever preferred_lft forever
-</computeroutput>
-            </screen>
-
-            <para>Note that you cannot SSH to an instance with a
-                public IP from within the same server as the routing
-                configuration won't allow it. </para>
-        </section>
     </section>
     <section xml:id="removing-network-from-project">
         <title>Removing a Network from a Project</title>
@@ -1587,4 +1540,80 @@ enabled_apis=ec2,osapi_compute,osapi_volume,metadata</programlisting></para>
         </simplesect>
 
     </section>
+    <section xml:id="network-troubleshooting">
+        <title>Troubleshooting Networking</title>
+        <simplesect><title>Can't reach floating IPs</title>
+        <para>If you aren't able to reach your instances via the
+            floating IP address, make sure the default security
+            group allows ICMP (ping) and SSH (port 22), so that
+            you can reach the instances:</para>
+        <screen>
+<prompt>$</prompt> <userinput>nova secgroup-list-rules default</userinput>
+<computeroutput>
++-------------+-----------+---------+-----------+--------------+
+| IP Protocol | From Port | To Port |  IP Range | Source Group |
++-------------+-----------+---------+-----------+--------------+
+| icmp        | -1        | -1      | 0.0.0.0/0 |              |
+| tcp         | 22        | 22      | 0.0.0.0/0 |              |
++-------------+-----------+---------+-----------+--------------+
+</computeroutput>
+            </screen>
+        <para>Ensure the NAT rules have been added to iptables on
+            the node that nova-network is running on, as
+            root:</para>
+
+        <screen>
+<prompt>#</prompt> <userinput>iptables -L -nv</userinput>
+<computeroutput>
+ -A nova-network-OUTPUT -d 68.99.26.170/32 -j DNAT --to-destination 10.0.0.3
+</computeroutput>
+<prompt>#</prompt> <userinput>iptables -L -nv -t nat</userinput>
+<computeroutput>
+-A nova-network-PREROUTING -d 68.99.26.170/32 -j DNAT --to-destination10.0.0.3
+-A nova-network-floating-snat -s 10.0.0.3/32 -j SNAT --to-source 68.99.26.170
+</computeroutput>
+            </screen>
+
+        <para>Check that the public address, in this example
+            "68.99.26.170", has been added to your public
+            interface: You should see the address in the listing
+            when you enter "ip addr" at the command prompt.</para>
+
+        <screen>
+<prompt>$</prompt> <userinput>ip addr</userinput>
+<computeroutput>
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP qlen 1000
+link/ether xx:xx:xx:17:4b:c2 brd ff:ff:ff:ff:ff:ff
+inet 13.22.194.80/24 brd 13.22.194.255 scope global eth0
+inet 68.99.26.170/32 scope global eth0
+inet6 fe80::82b:2bf:fe1:4b2/64 scope link
+valid_lft forever preferred_lft forever
+</computeroutput>
+            </screen>
+
+        <para>Note that you cannot SSH to an instance with a
+            public IP from within the same server as the routing
+            configuration won't allow it. </para>
+            <para>You can use <command>tcpdump</command> to identify if packets are being routed to
+                the inbound interface on the compute host. If the packets are reaching the compute
+                hosts but the connection is failing, the issue may be that the packet is being
+                dropped by reverse path filtering. Try disabling reverse path filtering on the
+                inbound interface. For example, if the inbound interface is <literal>eth2</literal>,
+                as
+                root:<screen><prompt>#</prompt> <userinput>sysctl -w net.ipv4.conf.<replaceable>eth2</replaceable>.rp_filter=0</userinput></screen></para>
+            <para>If this solves your issue, add the following line to
+                    <filename>/etc/sysctl.conf</filename> so that the revesrse path filter will be
+                disabled the next time the compute host
+                reboots:<programlisting>net.ipv4.conf.rp_filter=0</programlisting></para>
+
+        </simplesect>
+        <simplesect><title>Disabling firewall</title>
+        <para>To help debug networking issues with reaching VMs, you can disable the firewall by
+            setting the following option in
+            <filename>/etc/nova/nova.conf</filename>:<programlisting>firewall_driver=nova.virt.firewall.NoopFirewallDriver</programlisting></para>
+        <para>We strongly recommend you remove the above line to re-enable the firewall once your
+            networking issues have been resolved.</para>
+        </simplesect>
+    </section>
+
 </chapter>
