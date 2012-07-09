@@ -195,12 +195,24 @@
                 </para>
             </listitem>
         </itemizedlist>
-        <para>Also, when you issue the nova-manage network create
+        <para>When you issue the nova-manage network create
             command, it uses the settings from the nova.conf
             configuration options file. Use the following command to
             create the subnet that your VMs will run on :
-            <literallayout class="monospaced">nova-manage network create private 192.168.0.0/24 1 256           </literallayout>
+            <literallayout class="monospaced">nova-manage network create private 192.168.0.0/24 1 256</literallayout>
         </para>
+        <para>When using the XenAPI compute driver, the OpenStack services run
+            in a virtual machine. This means networking is
+            significantly different when compared to the networking
+            with the libvirt compute driver.
+            Before reading how to configure networking using the XenAPI compute
+            driver, you may find it useful to read the Citrix article on
+            <link xlink:href="http://support.citrix.com/article/CTX117915">
+            Understanding XenServer Networking</link> and the section of this
+            document that describes
+            <link linkend="introduction-to-xen">XenAPI and OpenStack</link>.
+        </para>
+
         <section xml:id="configuring-flat-networking">
             <title>Configuring Flat Networking</title>
             <para>FlatNetworking uses ethernet adapters configured as
@@ -223,6 +235,15 @@
 network_manager=nova.network.manager.FlatManager
                 </programlisting>
             </para>
+            <note>
+                <para>When configuring Flat Networking, failing to enable
+                        <literal>flat_injection</literal> can prevent
+                    guest VMs from receiving their IP information at
+                    boot time.</para>
+            </note>
+
+          <section xml:id="libvirt-flat-networking">
+          <title>Libvirt Flat Networking</title>
             <para>Compute defaults to a bridge device named ‘br100’
                 which is stored in the Nova database, so you can
                 change the name of the bridge device by modifying the
@@ -240,12 +261,6 @@ network_manager=nova.network.manager.FlatManager
                 of the Flat Networking options, the default gateway
                 for the virtual machines is set to the host which is
                 running nova-network. </para>
-            <note>
-                <para>When configuring FlatDHCP, failing to enable
-                        <literal>flat_injection</literal> can prevent
-                    guest VMs from receiving their IP information at
-                    boot time.</para>
-            </note>
             <para>Set the compute node's external IP address to be on
                 the bridge and add eth0 to that bridge. To do this,
                 edit your network interfaces configuration to look
@@ -313,7 +328,19 @@ iface br100 inet dhcp
                     </imageobject>
                 </mediaobject>
             </figure>
+          </section>
+
+          <section xml:id="xenapi-flat-networking">
+            <title xml:id="xenapi-flat-networking.title">XenAPI Flat Networking</title>
+            <para>When using the XenAPI driver, the virtual machines creates
+                OpenStack are attached to the XenServer bridge configured in
+                the <literal>flat_network_bridge</literal> setting.
+                Otherwise, flat networking works in a very similar way with
+                both the libvirt driver and the XenAPI driver.
+            </para>
+          </section>
         </section>
+
         <section xml:id="configuring-flat-dhcp-networking">
             <title>Configuring Flat DHCP Networking</title>
             <para>With Flat DHCP, the host running nova-network acts
@@ -345,13 +372,19 @@ iface br100 inet dhcp
                 puts the VMs and the network host on the same logical
                 network. When a VM boots, the VM sends out DHCP
                 packets, and the DHCP server on the network host
-                responds with their assigned IP address.</para>
+                responds with their assigned IP address.</para> 
+            <para>FlatDHCP doesn't create VLANs, it creates a bridge.
+                This bridge works just fine on a single host, but when
+                there are multiple hosts, traffic needs a way to get
+                out of the bridge onto a physical interface. </para>
 
-            <para>Visually, the setup looks like the diagram
-                below:</para>
+          <section xml:id="libvirt-flat-dhcp-networking">
+            <title>Libvirt Flat DHCP Networking</title>
+            <para>When using the libvirt driver, the setup will look like
+            the figure below:</para>
             <figure>
                 <title>Flat DHCP network, multiple interfaces,
-                    multiple servers</title>
+                    multiple servers with libvirt driver</title>
                 <mediaobject>
                     <imageobject>
                         <imagedata scale="50"
@@ -359,10 +392,6 @@ iface br100 inet dhcp
                     </imageobject>
                 </mediaobject>
             </figure>
-            <para>FlatDHCP doesn't create VLANs, it creates a bridge.
-                This bridge works just fine on a single host, but when
-                there are multiple hosts, traffic needs a way to get
-                out of the bridge onto a physical interface. </para>
             <para>Be careful when setting up
                     <literal>--flat_interface</literal>. If you
                 specify an interface that already has an IP it will
@@ -401,7 +430,74 @@ public_interface=eth0
             </para>
             <para>Integrate your network interfaces to match this
                 configuration.</para>
+          </section>
+          <section xml:id="xenapi-flat-dhcp-networking">
+            <title xml:id="xenapi-flat-dhcp-networking.title">XenAPI Flat DHCP Networking</title>
+            <para>The following figure shows a setup with
+            Flat DHCP networking, network HA, and using multiple interfaces.
+            For simplicity, the management network (on XenServer
+            eth0 and eth2 of the VM running the OpenStack services)
+            has been omitted from the figure below.</para>
+            <figure xml:id="xenapi-flat-dhcp-diagram">
+                <title>Flat DHCP network, multiple interfaces, multiple
+                    servers, network HA with XenAPI driver</title>
+                <mediaobject><imageobject>
+                    <imagedata scale="80" fileref="figures/XenApiFlatDHCPMultInterfaceHA.png" />
+                </imageobject></mediaobject>
+            </figure>            
+            <para>Here is an extract from a <filename>nova.conf</filename>
+                file in a system running the above setup:</para>
+            <para>
+                <programlisting>
+network_manager=nova.network.manager.FlatDHCPManager
+flat_interface=eth1
+flat_network_bridge=xenbr2
+public_interface=eth3
+multi_host=True
+dhcpbridge_flagfile=/etc/nova/nova.conf
+fixed_range=10.0.0.0/24
+flat_network_dhcp_start=10.0.0.2
+force_dhcp_release=True
+send_arp_for_ha=True
+flat_injected=False
+firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver
+                </programlisting>
+            </para>
+            <para>You should notice that
+                <literal>flat_interface</literal>
+                and
+                <literal>public_interface</literal>
+                refer to the network interface on the VM running the OpenStack
+                services, not the network interface on the Hypervisor.
+            </para>
+            <para>Secondly
+                <literal>flat_network_bridge</literal>
+                refers to the name of XenAPI network that you wish to have
+                your instance traffic on, i.e. the network on which the VMs
+                will be attached. You can either specify the bridge name,
+                such an <literal>xenbr2</literal>, or the name label,
+                such as <literal>vmbr</literal>.
+                Specifying the name-label is very useful in cases where your
+                networks are not uniform across your XenServer hosts.
+            </para>
+            <para>When you have a limited number of network cards on your
+                server, it is possible to use networks isolated using VLANs for
+                the public and network traffic. For example, if you have two
+                XenServer networks <literal>xapi1</literal> and
+                <literal>xapi2</literal> attached on VLAN 102 and 103
+                on <literal>eth0</literal>, respectively,
+                you could use these for eth1 and eth3 on
+                your VM, and pass the appropriate one to
+                <literal>flat_network_bridge</literal>.
+             </para>
+            <para>When using XenServer, it is best to use the firewall driver
+                written specifically for XenServer. This pushes the firewall
+                rules down to the hypervisor, rather than running them in the
+                VM that is running <literal>nova-network</literal>.
+            </para>
+          </section>
         </section>
+        
         <section
             xml:id="outbound-traffic-flow-with-any-flat-networking">
             <title>Outbound Traffic Flow with Any Flat
