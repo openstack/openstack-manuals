@@ -33,10 +33,6 @@
 admin_tenant_name = service
 admin_user = glance
 admin_password = glance</screen>
-        <para>Ensure that the glance-api pipeline section includes
-            <literal>authtoken</literal>:</para>
-           <screen>[pipeline:glance-api]
-pipeline = versionnegotiation authtoken auth-context apiv1app</screen>
            <para>Add this to the end of <filename>/etc/glance/glance-api.conf</filename>.</para>
            <screen>[paste_deploy]
 flavor = keystone</screen>
@@ -61,9 +57,8 @@ admin_password = glance</screen>
 #pipeline = context registryapp
 # NOTE: use the following pipeline for keystone
 pipeline = authtoken auth-context context registryapp</screen>
-        <para>Ensure that the <filename>/etc/glance/glance-registry.conf</filename> and
-            <filename>/etc/glance/glance-scrubber.conf</filename>
-            files point to the MySQL database rather than
+        <para>Ensure that <filename>/etc/glance/glance-registry.conf</filename>
+            points to the MySQL database rather than
             sqlite.<programlisting>sql_connection = mysql://glance:yourpassword@192.168.206.130/glance</programlisting></para>
         <note><para>Any time you change the .conf files, restart the
         corresponding service.</para></note>
