@@ -154,6 +154,31 @@
         </xsd:documentation>
       </annotation>
     </attribute>
+    <attribute type="xsd:int"    name="swap" use="optional">
+      <annotation>
+        <xsd:documentation
+            xml:lang="EN"
+            xmlns="http://www.w3.org/1999/xhtml">
+          <p>
+            The amount of swap space to allocate to a server (in GB).
+          </p>
+        </xsd:documentation>
+      </annotation>
+    </attribute>
+    <attribute type="xsd:float"    name="rxtx_factor" use="optional">
+      <annotation>
+        <xsd:documentation
+            xml:lang="EN"
+            xmlns="http://www.w3.org/1999/xhtml">
+          <p>
+            This property allows created servers to have a different
+            bandwidth cap than that defined in the network they are
+            attached to. This factor is multiplied by the rxtx_base
+            property of the network.
+          </p>
+        </xsd:documentation>
+      </annotation>
+    </attribute>
     <anyAttribute namespace="##other" processContents="lax"/>
   </complexType>
 
@@ -180,6 +205,8 @@
               <attribute type="xsd:int"    name="ram"  use="prohibited" />
               <attribute type="xsd:int"    name="disk" use="prohibited"/>
               <attribute type="xsd:int"    name="vcpus" use="prohibited"/>
+              <attribute type="xsd:int"    name="swap" use="prohibited"/>
+              <attribute type="xsd:float"    name="rxtx_factor" use="prohibited"/>
               <anyAttribute namespace="##other" processContents="lax"/>
               <assert vc:minVersion="1.1" test="atom:link[@rel='self']/@href and atom:link[@rel='bookmark']/@href">
                   <annotation>
