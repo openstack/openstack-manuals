@@ -77,7 +77,10 @@ product.  It is based on XCP, and exposes the same toolstack and managment
 API.  As an analogy, think of XenServer being based on XCP in the way that Red
 Hat Enterprise Linux is based on Fedora.  XenServer has a free version (which
 is very similar to XCP) and paid-for versions with additional features
-enabled.</para>
+enabled. Citrix provide support for XenServer, but as of July 2012, they
+do not provide any support for XCP. For a comparison between these products
+see the <link xlink:href="http://wiki.xen.org/wiki/XCP/XenServer_Feature_Matrix">
+XCP Feature Matrix</link>.</para>
 
 <para>Both XenServer and XCP include Xen, Linux, and the primary control
 daemon known as <emphasis role="bold">xapi</emphasis>.</para>
@@ -87,7 +90,11 @@ role="bold">XenAPI</emphasis>.  OpenStack usually refers to XenAPI, to
 indicate that the integration works equally well on XCP and XenServer.
 Sometimes, a careless person will refer to XenServer specifically, but you can
 be reasonably confident that anything that works on XenServer will also work
-on the latest version of XCP.</para>
+on the latest version of XCP.
+Read the
+<link xlink:href="http://docs.vmd.citrix.com/XenServer/6.0.0/1.0/en_gb/sdk.html#object_model_overview">
+XenAPI Object Model Overview</link>
+for definitions of XenAPI specifc terms such as SR, VDI, VIF and PIF.</para>
 
 <section xml:id="privileged-and-unprivileged-domains">
 <title>Privileged and unprivileged domains</title>
@@ -204,11 +211,122 @@ storage.</para>
 
 </section>
 
+<section xml:id="xenapi-install">
+<title>Installing XenServer and XCP</title>
+
+<para>When you want to run OpenStack with XCP or XenServer, you first
+need to install the software on
+<link xlink:href="http://docs.vmd.citrix.com/XenServer/6.0.0/1.0/en_gb/installation.html#sys_requirements">
+an appropriate server</link>.
+Please note, Xen is a type 1 hypervisor. This means when your server starts
+the first software that runs is Xen.
+This means the software you install on your compute host is XenServer or XCP,
+not the operating system you wish to run the OpenStack code on.
+The OpenStack services will run in a VM you install on top of XenServer.</para>
+
+<para>
+Before you can install your system
+you must decide if you want to install Citrix XenServer
+(either the free edition, or one of the paid editions)
+or Xen Cloud Platform from Xen.org.
+You can download the software from the following locations:
+<itemizedlist>
+    <listitem><para><link
+        xlink:href="http://www.citrix.com/XenServer/download">
+        http://www.citrix.com/XenServer/download
+    </link></para></listitem>
+    <listitem><para><link
+        xlink:href="http://www.xen.org/download/xcp/index.html">
+        http://www.xen.org/download/xcp/index.html
+    </link></para></listitem>
+</itemizedlist>
+When installing many servers, you may find it easier to perform
+<link xlink:href="http://docs.vmd.citrix.com/XenServer/6.0.0/1.0/en_gb/installation.html#pxe_boot_install">
+PXE boot installations of XenServer or XCP</link>.
+You can also package up any post install changes you wish to make
+to your XenServer by
+<link xlink:href="http://docs.vmd.citrix.com/XenServer/6.0.0/1.0/en_gb/supplemental_pack_ddk.html">
+creating your own XenServer supplimental pack</link>.</para>
+
+<para>It is also possible to get XCP by installing the
+<emphasis role="bold">xcp-xenapi</emphasis>
+package on Debian based distributions.
+However, this is not as mature or feature complete as above distributions.
+This will modify your boot loader to first boot Xen, then boot your
+exsiting OS on top of Xen as Dom0. It is in Dom0 that the xapi deamon will run.
+You can find more details on the Xen.org wiki:
+<link xlink:href="http://wiki.xen.org/wiki/Project_Kronos">
+http://wiki.xen.org/wiki/Project_Kronos
+</link></para>
+
+<section xml:id="xenapi-post-install">
+<title>Post install steps</title>
+
+<para>Now you have installed XenServer or XCP, it is time to start running
+OpenStack. Before you can start running OpenStack you must ensure:
+<itemizedlist>
+    <listitem>
+        <para>Ensure you are using the EXT type of storage repository (SR).
+        Features that require access to VHD files (such as copy on write,
+        snapshot and migration) do not work when using the LVM SR.
+        Storage repositry (SR) is a XenAPI specific term relating to the
+        physical storage on which virtual disks are stored.</para>
+    </listitem>
+    <listitem>
+        <para>Enable passwordless SSH login between all your XenServer hosts
+        if you want to use the resize or migration functionality.</para>
+    </listitem>
+    <listitem>
+        <para>Create the directory "/images" if you want resize or migration
+        to work.</para>
+    </listitem>
+</itemizedlist></para>
+
+<para>You are now ready to install OpenStack onto your XenServer system.
+This process involves the following steps:
+<itemizedlist>
+    <listitem>
+        <para>Install the VIF isolation rules to help prevent mac and ip address
+        spoofing.</para>
+    </listitem>
+    <listitem>
+        <para>Install the XenAPI plugins.</para>
+    </listitem>
+    <listitem>
+        <para>Create a Paravirtualised virtual machine that can run
+        the OpenStack compute code.</para>
+    </listitem>
+    <listitem>
+        <para>Install and configure the nova-compute in the above
+        virtual machine.</para>
+    </listitem>
+</itemizedlist>
+For further information on how to perform these steps
+look at how DevStack performs the last three steps
+when doing developer deployments.
+For more information on DevStack, take a look at the
+<link xlink:href="https://github.com/openstack-dev/devstack/blob/master/tools/xen/README.md">
+DevStack and XenServer Readme</link>.
+More information on the first step can be found in the
+<link xlink:href="https://github.com/openstack/nova/blob/master/plugins/xenserver/doc/networking.rst">
+XenServer mutli-tenancy protection doc</link>.
+More information on how to install the XenAPI plugins can be found in the
+<link xlink:href="https://github.com/openstack/nova/blob/master/plugins/xenserver/xenapi/README">
+XenAPI plugins Readme</link>.
+</para>
+
+</section>
+
+</section>
+
 <section xml:id="further-reading">
 <title>Further reading</title>
 
 <para>Here are some of the resources avaiable to learn more about Xen:
 <itemizedlist>
+    <listitem><para>Citrix XenServer official documentation:<link
+    xlink:href="http://docs.vmd.citrix.com/XenServer/6.0.0/1.0/en_gb/">
+    http://docs.vmd.citrix.com/XenServer</link>.</para></listitem>
     <listitem><para>What is Xen? by Xen.org: <link
     xlink:href="http://xen.org/files/Marketing/WhatisXen.pdf">
     http://xen.org/files/Marketing/WhatisXen.pdf</link>.</para></listitem>
