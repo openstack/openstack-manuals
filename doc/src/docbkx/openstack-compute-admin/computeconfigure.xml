@@ -11,10 +11,10 @@
 
   <para>The OpenStack system has several key projects that are separate
   installations but can work together depending on your cloud needs: OpenStack
-  Compute, OpenStack Object Storage, and OpenStack Image Store. There are basic configuration 
-  decisions to make, and the <link xlink:href="http://docs.openstack.org/trunk/openstack-compute/install/content/">OpenStack Install Guide</link> 
+  Compute, OpenStack Object Storage, and OpenStack Image Store. There are basic configuration
+  decisions to make, and the <link xlink:href="http://docs.openstack.org/trunk/openstack-compute/install/content/">OpenStack Install Guide</link>
     covers a basic walkthrough.</para>
-  
+
     <section xml:id="configuring-openstack-compute-basics">
     <?dbhtml stop-chunking?>
     <title>Post-Installation Configuration for OpenStack Compute</title>
@@ -332,10 +332,10 @@ $ <userinput>sudo service nova-compute restart</userinput></screen>
 
       <screen><prompt>$</prompt> <userinput>nova-manage version list</userinput></screen>
     </section>
-      
+
       <section xml:id="diagnose-compute">
         <title>Diagnose your compute nodes</title>
-        
+
         <para>You can obtain extra informations about the running
         virtual machines : their CPU usage, the memory, the disk io or
         network io, per instance, by running the <command>nova
@@ -493,7 +493,7 @@ sql_connection=mysql://root:&lt;password&gt;@127.0.0.1/nova
 network_manager=nova.network.manager.FlatManager
 image_service=nova.image.glance.GlanceImageService
 flat_network_bridge=xenbr0
-connection_type=xenapi
+compute_driver=xenapi.XenAPIDriver
 xenapi_connection_url=https://&lt;XenServer IP&gt;
 xenapi_connection_username=root
 xenapi_connection_password=supersecret
@@ -561,7 +561,7 @@ xenapi_remap_vbd_dev=true
       <xref linkend="ch-identity-mgmt-config"/> for additional information. </para>
     <para>To customize authorization settings for Compute, see these
       configuration settings in <filename>nova.conf</filename>.</para>
-    
+
     <xi:include href="tables/auth-nova-conf.xml"/>
     <para>To customize certificate authority settings for Compute, see these configuration settings in <filename>nova.conf</filename>.</para>
     <xi:include href="tables/ca-nova-conf.xml"/>
@@ -597,7 +597,7 @@ xenapi_remap_vbd_dev=true
     networking:</para>
 
     <screen><prompt>$</prompt> <userinput>sudo apt-get install -y radvd</userinput>
-<prompt>$</prompt> <userinput>sudo bash -c "echo 1 &gt; /proc/sys/net/ipv6/conf/all/forwarding"</userinput> 
+<prompt>$</prompt> <userinput>sudo bash -c "echo 1 &gt; /proc/sys/net/ipv6/conf/all/forwarding"</userinput>
 <prompt>$</prompt> <userinput>sudo bash -c "echo 0 &gt; /proc/sys/net/ipv6/conf/all/accept_ra"</userinput></screen>
 
     <para>Edit the <filename>nova.conf</filename> file on all nodes to
@@ -628,7 +628,7 @@ xenapi_remap_vbd_dev=true
 
     <para>Note that <literal>vlan_start</literal> and <literal>vpn_start</literal> parameters are not used by
     FlatDHCPManager.</para>
-    
+
     <xi:include href="tables/ipv6-nova-conf.xml"/>
   </section>
 
@@ -669,7 +669,7 @@ xenapi_remap_vbd_dev=true
         <listitem>
           <para><emphasis role="bold">Shared storage:</emphasis>
           NOVA-INST-DIR/instances/ (eg /var/lib/nova/instances) has to be
-           mounted by shared storage. This guide uses NFS but other options, 
+           mounted by shared storage. This guide uses NFS but other options,
            including the
            <link xlink:href="http://gluster.org/community/documentation//index.php/OSConnect">OpenStack Gluster Connector</link>
            are available.</para>
@@ -687,7 +687,7 @@ xenapi_remap_vbd_dev=true
         </itemizedlist>
           <note><para>
           This guide assumes the default value for instances_path in your nova.conf
-          ("NOVA-INST-DIR/instances"). If you have changed the state_path or 
+          ("NOVA-INST-DIR/instances"). If you have changed the state_path or
           instances_path variables, please modify accordingly
           </para></note>
          <note><para>This feature for cloud administrators only, since the use of nova-manage is necessary.
@@ -742,12 +742,12 @@ xenapi_remap_vbd_dev=true
 
 <link xlink:href="https://help.ubuntu.com/community/SettingUpNFSHowTo">the Ubuntu NFS HowTo to
 setup an NFS server on HostA, and NFS Clients on HostB and HostC.</link> </para>
-        <para> Our aim is to export NOVA-INST-DIR/instances from HostA, 
+        <para> Our aim is to export NOVA-INST-DIR/instances from HostA,
         and have it readable and writable by the nova user on HostB and HostC.</para>
         </listitem>
         <listitem>
         <para>
-        Using your knowledge from the Ubuntu documentation, configure the 
+        Using your knowledge from the Ubuntu documentation, configure the
         NFS server at HostA by adding a line to <filename>/etc/exports</filename>
           <screen><prompt>$</prompt> <userinput>NOVA-INST-DIR/instances HostA/255.255.0.0(rw,sync,fsid=0,no_root_squash)</userinput></screen>
         </para>
@@ -864,7 +864,7 @@ root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l
         </listitem>
       </orderedlist></para>
     <xi:include href="tables/live-migration-nova-conf.xml"/>
- 
+
   </section>
 
   <section xml:id="configuring-database-connections">
@@ -1463,3 +1463,4 @@ limits =(POST, "*", .*, 10, MINUTE);(POST, "*/servers", ^/servers, 50, DAY);(PUT
     </simplesect>
   </section>
 </chapter>
+

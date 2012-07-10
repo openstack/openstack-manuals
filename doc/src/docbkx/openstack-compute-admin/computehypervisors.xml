@@ -7,7 +7,7 @@
     <para>This section assumes you have a working installation of OpenStack Compute and want to
         select a particular hypervisor or run with multiple hypervisors. Before you try to get a VM
         running within OpenStack Compute, be sure you have installed a hypervisor and used the
-        hypervisor's documentation to run a test VM and get it working.</para>   
+        hypervisor's documentation to run a test VM and get it working.</para>
     <section xml:id="selecting-a-hypervisor">
       <title>Selecting a Hypervisor</title>
         <para>OpenStack Compute supports many hypervisors, an array of which must provide a bit of
@@ -34,132 +34,17 @@
             <listitem><para><link xlink:href="http://www.vmware.com/products/vsphere-hypervisor/support.html">VMWare
                         ESX/ESXi</link> 4.1 update 1, runs VMWare-based Linux and Windows images
                     through a connection with the ESX server.</para></listitem>
-            <listitem><para><link xlink:href="http://www.xen.org">Xen</link> - XenServer, 
+            <listitem><para><link xlink:href="http://www.xen.org">Xen</link> - XenServer,
                     Xen Cloud Platform (XCP), use to run Linux or Windows virtual machines. You must
                     install the nova-compute service in a para-virtualized VM.</para></listitem></itemizedlist>
-    </section>       
+    </section>
     <section xml:id="hypervisor-configuration-basics"><title>Hypervisor Configuration Basics</title>
        <para>The node where the nova-compute service is installed and running is the machine that
             runs all the virtual machines, referred to as the compute node in this guide. </para>
         <para>By default, the selected hypervisor is KVM. To change to another hypervisor, change
             the libvirt_type option in nova.conf and restart the nova-compute service. </para>
         <para>Here are the nova.conf options that are used to configure the compute node.</para>
-       
-           <table rules="all">
-               <caption>Description of nova.conf configuration options for the compute
-                node</caption>
-               
-               <thead>
-                   <tr>
-                       <td>Configuration Option</td>
-                       <td>Default</td>
-                       <td>Description</td>
-                   </tr>
-               </thead>
-               <tbody>
-                   <tr><td>connection_type</td>
-                       <td>default: 'libvirt'</td>
-                       <td>libvirt, xenapi, or fake; Value that indicates the virtualization
-                        connection type</td></tr>
-                   
-                   <tr>
-                       <td>compute_manager</td>
-                       <td>default: 'nova.compute.manager.ComputeManager'</td>
-                       <td>String value; Manager to use for nova-compute</td>
-                   </tr>
-                   <tr>
-                       <td>compute_driver</td>
-                       <td>default: 'nova.virt.connection.get_connection'</td>
-                       <td>String value; Driver to use for controlling virtualization</td>
-                   </tr>
-                   <tr>
-                       <td>images_path</td>
-                       <td>default: '$state_path/images'</td>
-                       <td>Directory; Location where decrypted images are stored on disk (when not
-                        using Glance)</td>
-                   </tr>
-                   <tr>
-                       <td>instances_path</td>
-                       <td>default: '$state_path/instances'</td>
-                       <td>Directory; Location where instances are stored on disk (when not using
-                        Glance)</td>
-                   </tr>
-                   <tr>
-                       <td>libvirt_type</td>
-                       <td>default: 'kvm'</td>
-                       <td>String; Libvirt domain type (valid options are: kvm, qemu, uml, xen) </td>
-                   </tr>
-                   <tr>
-                       <td>allow_project_net_traffic</td>
-                       <td>default: 'true'</td>
-                       <td>true or false; Indicates whether to allow in-project network traffic </td>
-                   </tr>
-                   <tr>
-                       <td>firewall_driver</td>
-                       <td>default: 'nova.virt.libvirt_conn.IptablesFirewallDriver'</td>
-                       <td>String; Firewall driver for instances, defaults to iptables</td>
-                   </tr>
-                   <tr>
-                       <td>injected_network_template</td>
-                       <td>default: ''</td>
-                       <td>Directory and file name; Template file for injected network
-                        information</td>
-                   </tr>
-                   <tr>
-                       <td>libvirt_uri</td>
-                       <td>default: empty string</td>
-                       <td>String; Override the default libvirt URI (which is dependent on libvirt_type)</td>
-                   </tr>
-                   <tr>
-                       <td>libvirt_xml_template</td>
-                       <td>default: ''</td>
-                       <td>Directory and file name; Libvirt XML template</td>
-                   </tr>
-                   <tr>
-                       <td>libvirt_inject_password</td>
-                       <td>default: 'false'</td>
-                       <td>When set, libvirt will inject the admin password into instances before startup.
-                       An agent is not required in the instance.
-                       The admin password is specified as part of the server create API call.  If no password is
-                       specified, then a randomly generated password is used.</td>
-                   </tr>
-                   <tr>
-                       <td>use_cow_images</td>
-                       <td>default: 'true'</td>
-                       <td>true or false; Indicates whether to use copy-on-write (qcow2) images.
-                        If set to false and using qemu or kvm, backing files will not be used.</td>
-                   </tr>
-                   <tr>
-                        <td>force_raw_images</td>
-                        <td>default: 'true'</td>
-                        <td>true or false; If true, backing image files will be converted to
-                          raw image format.</td>
-                  </tr>
-                   <tr>
-                       <td>rescue_image_id</td>
-                       <td>default: 'ami-rescue'</td>
-                       <td>String; AMI image to use for rescue</td>
-                   </tr>
-                   <tr>
-                       <td>rescue_kernel_id</td>
-                       <td>default: 'aki-rescue'</td>
-                       <td>String; AKI image to use for rescue</td>
-                   </tr>
-                   <tr>
-                       <td>rescue_ramdisk_id</td>
-                       <td>default: 'ari-rescue'</td>
-                       <td>String; ARI image to use for rescue</td>
-                   </tr>
-                   <tr>
-                       <td>libvirt_nonblocking</td>
-                       <td>default: 'false'</td>
-                       <td>When set to 'true', libvirt APIs will be called in a seperate OS thread pool to avoid blocking the main thread.
-                       This feature is especially desirable if you use the snapshot feature, which has a notably long execution time, or have many instances in a given compute node.
-                       The feature is experimental and is disabled by default.
-                       </td>
-                   </tr>
-               </tbody></table>
-           
+        <xi:include href="tables/hypervisors-nova-conf.xml"/>
        </section>
 
     <xi:include href="../common/kvm.xml" />
@@ -168,3 +53,4 @@
     <xi:include href="../common/lxc.xml" />
     <xi:include href="../common/vmware.xml" />
 </chapter>
+

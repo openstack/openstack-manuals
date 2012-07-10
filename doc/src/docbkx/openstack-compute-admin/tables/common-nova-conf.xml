@@ -83,9 +83,28 @@
                     default files used are: [] </para></td>
             </tr>
             <tr>
-                <td><para>connection_type=&lt;None&gt; </para></td>
-                <td><para> (StrOpt) Virtualization API connection type :
-                    libvirt, xenapi, or fake </para></td>
+                <td>compute_driver</td>
+                <td>default: 'nova.virt.connection.get_connection'</td>
+                <td>String value; Driver to use for controlling
+                    virtualization. For convenience if the driver
+                    exists under the nove.virt namespace, nova.virt
+                    can be removed. There are 5 drivers in core
+                    openstack: fake.FakeDriver,
+                    libvirt.LibvirtDriver,
+                    baremetal.BareMetalDriver, xenapi.XenAPIDriver,
+                    vmwareapi.VMWareESXDriver. If nothing is
+                    specified the older connection_type mechanism
+                    will be used. Be aware that method will be
+                    removed post Folsom release.
+                </td>
+            </tr>
+            <tr>
+                <td>connection_type (Deprecated)</td>
+                <td>default: 'libvirt'</td>
+                <td>libvirt, xenapi, or fake; Value that
+                    indicates the virtualization connection
+                    type. Deprecated as of Folsom, will be removed in
+                    G release.</td>
             </tr>
             <tr>
                 <td><para>
