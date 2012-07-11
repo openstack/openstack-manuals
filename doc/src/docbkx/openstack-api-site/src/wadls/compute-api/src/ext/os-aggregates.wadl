@@ -18,6 +18,7 @@
 
                 <resource id="os-aggregates" path="os-aggregates">
                     <method href="#list_aggregates"/>
+                    <method href="#create_aggregate"/>
                     <resource path="{aggregate_id}">
                         <param name="aggregate_id" style="template">
                             <doc><p xmlns="http://www.w3.org/1999/xhtml">
@@ -29,6 +30,7 @@
                             <method href="#set_metadata"/>
                             <method href="#add_host"/>
                             <method href="#remove_host"/>
+                            <method href="#delete_aggregate"/>
                         </resource>
                     </resource>
                 </resource>
@@ -51,10 +53,50 @@
         </response>
     </method>
 
+
+    <method name="POST" id="create_aggregate">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                Create an aggregate
+            </p>
+        </wadl:doc>
+        <request>
+            <param name="name" style="plain" required="true">
+                <doc><p xmlns="http://www.w3.org/1999/xhtml">
+                  Name of aggregate
+                </p></doc>
+            </param>
+            <param name="availability_zone" style="plain" required="true">
+                <doc><p xmlns="http://www.w3.org/1999/xhtml">
+                  Name of aggregate
+                </p></doc>
+            </param>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/os-aggregate-create.json" />
+                </doc>
+            </representation>
+        </request>
+        <response status="200" />
+    </method>
+ 
+    <method name="DELETE" id="delete_aggregate">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                Delete an aggregate
+            </p>
+        </wadl:doc>
+        <request>
+            <representation mediaType="application/json"/>
+        </request>
+        <response status="200" />
+    </method>
+ 
+
     <method name="POST" id="set_metadata">
         <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
             <p xmlns="http://www.w3.org/1999/xhtml">
-                Set metadata for an aggregate. An aggregate provides some form of physical isolation and redundancy from other cells, such as by using separate power supply and network gears, and is set by the cloud provider. 
+                Set metadata for an aggregate. 
             </p>
         </wadl:doc>
         <request>
