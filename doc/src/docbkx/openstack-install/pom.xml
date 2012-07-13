@@ -10,7 +10,7 @@
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>OpenStack Guides</name>
-
+    
     <properties>
         <!-- This is set by Jenkins according to the branch. -->
         <release.path.name>local</release.path.name>
@@ -69,6 +69,7 @@
                         </goals>
                         <phase>generate-sources</phase>
                         <configuration>
+                            <pdfUrl>../openstack-install-guide-${operating.system}-${release.path.name}.pdf</pdfUrl>
                             <highlightSource>false</highlightSource>
                             <!-- The following elements sets the autonumbering of sections in output for chapter numbers but no numbered sections-->
                             <sectionAutolabel>0</sectionAutolabel>
@@ -83,6 +84,7 @@
                         <phase>generate-sources</phase>
                         <configuration>
                             <!-- These parameters only apply to webhelp -->
+                            <pdfUrl>../openstack-install-guide-${operating.system}-${release.path.name}.pdf</pdfUrl>
                             <enableDisqus>${comments.enabled}</enableDisqus>
                             <disqusShortname>os-install-${operating.system}</disqusShortname>
                             <enableGoogleAnalytics>1</enableGoogleAnalytics>
@@ -113,7 +115,7 @@
                                 </copy>
                                 
                                 <!-- Copies webhelp (HTML output) to desired URL location on docs.openstack.org -->
-                                                   
+                                
                                 <copy
                                     todir="${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-compute/install/${operating.system}">
                                     <fileset
@@ -123,12 +125,13 @@
                                 </copy>
                                 
                                 <!--Moves PDFs to the needed placement -->
-                               
+                                
                                 <move failonerror="false"
                                     file="${basedir}/target/docbkx/pdf/bk_openstackinstallguide.pdf"
-                                    tofile="${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-compute/install/${operating.system}/openstack-install-guide-${release.path.name}.pdf"/>                
+                                    tofile="${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-compute/install/${operating.system}/openstack-install-guide-${operating.system}-${release.path.name}.pdf"/>                
+                                
                                 <!--Deletes leftover uneeded directories -->
-                               
+                                
                                 <delete dir="${basedir}/target/docbkx/webhelp/bk_openstackinstallguide/"/>                        
                             </postProcess>
                         </configuration>
@@ -143,7 +146,7 @@
                     </includes>
                     <profileSecurity>reviewer</profileSecurity>
                     <branding>openstack</branding>
-		            <profileOs>${profile.os}</profileOs>
+                    <profileOs>${profile.os}</profileOs>
                 </configuration>
             </plugin>
             
