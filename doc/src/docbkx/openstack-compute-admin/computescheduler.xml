@@ -146,6 +146,20 @@ scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
             a host based on cores (i.e., the virtual cores running on an instance
             may exceed the physical cores).
         </para>
+        <para>This filter can be configured to allow a fixed amount of
+         vCPU overcommitment by using the <literal>cpu_allocation_ratio
+    </literal> Configuration option in <filename>nova.conf</filename>.
+     The default setting is:
+      <programlisting>
+      cpu_allocation_ratio=16.0
+      </programlisting>
+       With this setting, if there are 8 vCPUs on a node, the scheduler will
+       allow instances up to 128 vCPU to be run on that node.
+        </para>
+        <para>To disallow vCPU overcommitment set:</para>
+         <programlisting>
+         cpu_allocation_ratio=1.0
+         </programlisting>
     </section>
 
     <section xml:id="differenthostfilter">
