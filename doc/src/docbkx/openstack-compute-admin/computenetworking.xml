@@ -1615,6 +1615,45 @@ valid_lft forever preferred_lft forever
         <para>We strongly recommend you remove the above line to re-enable the firewall once your
             networking issues have been resolved.</para>
         </simplesect>
+        <simplesect><title>Packet loss from instances to nova-network server (VLANManager mode)</title>
+            <para>If you can SSH to your instances but you find that the network interactions to
+                your instance is slow, or if you find that running certain operations are slower
+                than they should be (e.g., <command>sudo</command>), then there may be packet loss
+                occurring on the connection to the instance.</para>
+            <para>Packet loss can be caused by Linux networking configuration settings related to
+                bridges. Certain settings can cause packets to be dropped between the VLAN interface
+                (e.g., <literal>vlan100</literal>) and the associated bridge interface (e.g.,
+                    <literal>br100</literal>) on the host running the nova-network service.</para>
+            <para>One way to check if this is the issue in your setup is to open up three terminals
+                and run the following commands:</para>
+            <para>In the first terminal, on the host running nova-network, use
+                    <command>tcpdump</command> to monitor DNS-related traffic (UDP, port 53) on the
+                VLAN interface. As
+                root:<screen><prompt>#</prompt> <userinput>tcpdump -K -p -i vlan100 -v -vv udp port 53</userinput></screen></para>
+            <para>In the second terminal, also on the host running nova-network, use
+                    <command>tcpdump</command> to monitor DNS-related traffic on the bridge
+                interface. As
+                root:<screen><prompt>#</prompt> <userinput>tcpdump -K -p -i br100 -v -vv udp port 53</userinput></screen></para>
+            <para>In the third terminal, SSH inside of the instance and generate DNS requests by
+                using the <command>nslookup</command>
+                command:<screen><prompt>$</prompt> <userinput>nslookup www.google.com</userinput></screen></para>
+            <para>The symptoms may be intermittent, so try running <command>nslookup</command>
+                multiple times. If the network configuration is correct, the command should return
+                immediately each time. If it is not functioning properly, the command will hang for
+                several seconds.</para>
+            <para>If the <command>nslookup</command> command somteimes hangs, and there are packets
+                that appear in the first terminal but not the second, then the problem may be due to
+                filtering done on the bridges. Try to disable filtering, as
+                root:<screen><prompt>#</prompt> <userinput>sysctl -w net.bridge.bridge-nf-call-arptables=0</userinput>
+<prompt>#</prompt> <userinput>sysctl -w net.bridge.bridge-nf-call-iptables=0</userinput>
+<prompt>#</prompt> <userinput>sysctl -w net.bridge.bridge-nf-call-ip6tables=0</userinput></screen></para>
+            <para>If this solves your issue, add the following line to
+                    <filename>/etc/sysctl.conf</filename> so that these changes will take effect the
+                next time the host
+                reboots:<programlisting>net.bridge.bridge-nf-call-arptables=0
+net.bridge.bridge-nf-call-iptables=0
+net.bridge.bridge-nf-call-ip6tables=0</programlisting></para>
+        </simplesect>
     </section>
 
 </chapter>
