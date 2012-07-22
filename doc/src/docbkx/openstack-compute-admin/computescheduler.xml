@@ -5,8 +5,8 @@
     xml:id="ch_scheduling">
     <title>Scheduling</title>
     <para>Compute uses the <command>nova-scheduler</command> service to determine
-how to dispatch compute and volume requests. For example, the 
-<command>nova-scheduler</command> service determines which host 
+how to dispatch compute and volume requests. For example, the
+<command>nova-scheduler</command> service determines which host
 a VM should launch on. The term "host" in the context of filters means a
 physical node that has a <command>nova-compute</command> service running on
 it. The scheduler is configurable through a variety of options.</para>
@@ -23,7 +23,7 @@ compute_fill_first_cost_fn_weight=-1.0
 
 Compute is configured by default to use the Multi Scheduler, which allows the
 admin to specify different scheduling behavior for compute requests versus volume
-requests. 
+requests.
 </para>
 
 <para>The volume scheduler is configured by default
@@ -89,9 +89,9 @@ servicing the request (<literal>ComputeFilter</literal>).</para>
 scheduler_available_filters=nova.scheduler.filters.standard_filters
     </programlisting>
     This configuration option can be specified multiple times. For example,
-    if you implemented your own custom filter in Python called 
+    if you implemented your own custom filter in Python called
     <literal>myfilter.MyFilter</literal> and you wanted to use both the
-    built-in filters and your custom filter, your <filename>nova.conf</filename> 
+    built-in filters and your custom filter, your <filename>nova.conf</filename>
     file would contain:
     <programlisting>
 scheduler_available_filters=nova.scheduler.filters.standard_filters
@@ -154,7 +154,7 @@ scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
                 set of instances. To take advantage of this filter, the requester
                 must pass a scheduler hint, using  <literal>different_host</literal>
                 as the keyand a list of instance uuids as the value. This
-                filter is the opposite of the <literal>SameHostFilter</literal>. 
+                filter is the opposite of the <literal>SameHostFilter</literal>.
                 Using the
                 <command>nova</command> command-line tool, use the <literal>--hint</literal>
                 flag. For example:
@@ -177,7 +177,7 @@ With the API, use the <literal>os:scheduler_hints</literal> key. For example:
 </programlisting>
             </para>
         </section>
-        
+
     <section xml:id="isolatedhostsfilter">
         <title>
             IsolatedHostsFilter
@@ -190,7 +190,7 @@ With the API, use the <literal>os:scheduler_hints</literal> key. For example:
         </para>
         <para>
             The admin must specify the isolated set of images and hosts in
-            the <filename>nova.conf</filename> file using the <literal>isolated_hosts</literal> 
+            the <filename>nova.conf</filename> file using the <literal>isolated_hosts</literal>
             and <literal>isolated_images</literal> configuration options. For
             example:
             <programlisting>
@@ -217,6 +217,16 @@ ram_allocation_ratio=1.5
             allow instances up to size 1.5GB to be run on that instance.
         </para>
     </section>
+
+        <section xml:id="retryfilter">
+            <title>RetryFilter</title>
+            <para>Filter out hosts that have already been attempted for scheduling purposes. If the
+                scheduler selects a host to respond to a service request, and the host fails to
+                respond to the request, this filter will prevent the scheduler from retrying that
+                host for the service request.</para>
+            <para>This filter is only useful if the <literal>scheduler_max_attempts</literal>
+                configuration option is set to a value greater than zero.</para>
+        </section>
 
         <section xml:id="samehostfilter">
             <title>SameHostFilter</title>
@@ -255,7 +265,7 @@ With the API, use the <literal>os:scheduler_hints</literal> key:
             </warning>
             <para>Schedule the instance based on host IP subnet range. To
                 take advantage of this filter, the requester must specify a
-                range of valid IP address in CIDR format, by passing two 
+                range of valid IP address in CIDR format, by passing two
                 scheduler hints:
             <variablelist>
               <varlistentry>
