@@ -197,7 +197,7 @@
         <orderedlist>
             <listitem>
                 <para>Set the "network-manager" option in
-                    nova.conf.</para>
+                        <filename>nova.conf</filename>.</para>
             </listitem>
             <listitem>
                 <para>Use the <code>nova-manage network create label
@@ -262,7 +262,8 @@
                 configured manually on the gateway if it is required
                 within your network. </para>
             <para>To configure flat networking, ensure that your
-                nova.conf file contains the following line:</para>
+                    <filename>nova.conf</filename> file contains the
+                following line:</para>
             <para>
                 <programlisting>
 network_manager=nova.network.manager.FlatManager
@@ -793,10 +794,9 @@ network_size=256                </programlisting>
             </section>
             <section xml:id="xenapi-vlan-networking">
                 <title>XenAPI VLAN networking</title>
-                <para>VLAN networking works quite differently with the XenAPI
-                    driver, compared to the libvit driver.
-                    The following figure shows how your setup might look:
-                </para>
+                <para>VLAN networking works quite differently with the
+                    XenAPI driver, compared to the libvirt driver. The
+                    following figure shows how your setup might look: </para>
                 <figure xml:id="xenapi-vlan-diagram">
                     <title>VLAN network, multiple interfaces, multiple
                         servers, network HA with XenAPI driver</title>
@@ -1613,14 +1613,15 @@ ca_path = /var/lib/nova/CA
                 Address Translation (NAT) to assign floating IPs to
                 virtual instances. </para>
             <para>If you plan to use this feature, you must add the
-                following to your nova.conf file to specify which
-                interface the nova-network service will bind public IP
-                addresses to:</para>
+                following to your <filename>nova.conf</filename> file
+                to specify which interface the nova-network service
+                will bind public IP addresses to:</para>
             <programlisting>
 public_interface=vlan100
         </programlisting>
             <para>Restart the nova-network service if you change
-                nova.conf while the service is running.</para>
+                    <filename>nova.conf</filename> while the service
+                is running.</para>
         </section>
         <section
             xml:id="Creating_a_List_of_Available_Floating_IP_Addresses">
@@ -2050,6 +2051,47 @@ valid_lft forever preferred_lft forever
             <filename>/etc/nova/nova.conf</filename>:<programlisting>firewall_driver=nova.virt.firewall.NoopFirewallDriver</programlisting></para>
         <para>We strongly recommend you remove the above line to re-enable the firewall once your
             networking issues have been resolved.</para>
+        </simplesect>
+        <simplesect><title>Packet loss from instances to nova-network server (VLANManager mode)</title>
+            <para>If you can SSH to your instances but you find that the network interactions to
+                your instance is slow, or if you find that running certain operations are slower
+                than they should be (e.g., <command>sudo</command>), then there may be packet loss
+                occurring on the connection to the instance.</para>
+            <para>Packet loss can be caused by Linux networking configuration settings related to
+                bridges. Certain settings can cause packets to be dropped between the VLAN interface
+                (e.g., <literal>vlan100</literal>) and the associated bridge interface (e.g.,
+                    <literal>br100</literal>) on the host running the nova-network service.</para>
+            <para>One way to check if this is the issue in your setup is to open up three terminals
+                and run the following commands:</para>
+            <para>In the first terminal, on the host running nova-network, use
+                    <command>tcpdump</command> to monitor DNS-related traffic (UDP, port 53) on the
+                VLAN interface. As
+                root:<screen><prompt>#</prompt> <userinput>tcpdump -K -p -i vlan100 -v -vv udp port 53</userinput></screen></para>
+            <para>In the second terminal, also on the host running nova-network, use
+                    <command>tcpdump</command> to monitor DNS-related traffic on the bridge
+                interface. As
+                root:<screen><prompt>#</prompt> <userinput>tcpdump -K -p -i br100 -v -vv udp port 53</userinput></screen></para>
+            <para>In the third terminal, SSH inside of the instance and generate DNS requests by
+                using the <command>nslookup</command>
+                command:<screen><prompt>$</prompt> <userinput>nslookup www.google.com</userinput></screen></para>
+            <para>The symptoms may be intermittent, so try running <command>nslookup</command>
+                multiple times. If the network configuration is correct, the command should return
+                immediately each time. If it is not functioning properly, the command will hang for
+                several seconds.</para>
+            <para>If the <command>nslookup</command> command sometimes
+                hangs, and there are packets that appear in the first
+                terminal but not the second, then the problem may be
+                due to filtering done on the bridges. Try to disable
+                filtering, as
+                root:<screen><prompt>#</prompt> <userinput>sysctl -w net.bridge.bridge-nf-call-arptables=0</userinput>
+<prompt>#</prompt> <userinput>sysctl -w net.bridge.bridge-nf-call-iptables=0</userinput>
+<prompt>#</prompt> <userinput>sysctl -w net.bridge.bridge-nf-call-ip6tables=0</userinput></screen></para>
+            <para>If this solves your issue, add the following line to
+                    <filename>/etc/sysctl.conf</filename> so that these changes will take effect the
+                next time the host
+                reboots:<programlisting>net.bridge.bridge-nf-call-arptables=0
+net.bridge.bridge-nf-call-iptables=0
+net.bridge.bridge-nf-call-ip6tables=0</programlisting></para>
         </simplesect>
     </section>
 
