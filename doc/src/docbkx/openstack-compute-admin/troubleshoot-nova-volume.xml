@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="troubleshoot-nova-volume"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" 
+    version="5.0">
+    <title>Troubleshoot your nova-volume installation</title>
+    <para>If the volume attachment doesn't work, you should be able to perform different
+        checks in order to see where the issue is. The nova-volume.log and nova-compute.log
+        will help you to diagnosis the errors you could encounter : </para>
+    <para><emphasis role="bold">nova-compute.log / nova-volume.log</emphasis></para>
+    <para>
+        <itemizedlist>
+            <listitem>
+                <para><emphasis role="italic">ERROR "Cannot
+                    resolve host"</emphasis>
+                    <programlisting>
+(nova.root): TRACE: ProcessExecutionError: Unexpected error while running command.
+(nova.root): TRACE: Command: sudo iscsiadm -m discovery -t sendtargets -p ubuntu03c
+(nova.root): TRACE: Exit code: 255
+(nova.root): TRACE: Stdout: ''
+(nova.root): TRACE: Stderr: 'iscsiadm: Cannot resolve host ubuntu03c. getaddrinfo error: [Name or service not known]\n\niscsiadm:
+cannot resolve host name ubuntu03c\niscsiadm: Could not perform SendTargets discovery.\n'
+(nova.root): TRACE:
+                            </programlisting>This
+                    error happens when the compute node is
+                    unable to resolve the nova-volume server
+                    name. You could either add a record for
+                    the server if you have a DNS server; or
+                    add it into the
+                    <filename>/etc/hosts</filename> file
+                    of the nova-compute. </para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="italic">ERROR "No route to host"</emphasis>
+                    <programlisting>
+iscsiadm: cannot make connection to 172.29.200.37: No route to host\niscsiadm: cannot make connection to 172.29.200.37
+                            </programlisting>
+                    This error could be caused by several things, but<emphasis role="bold">
+                        it means only one thing : openiscsi is unable to establish a
+                        communication with your nova-volumes server</emphasis>.</para>
+                <para>The first thing you could do is running a telnet session in order to
+                    see if you are able to reach the nova-volume server. From the
+                    compute-node, run :</para>
+                <screen>
+<prompt>$</prompt> <userinput>telnet $ip_of_nova_volumes  3260</userinput>
+                        </screen>
+                <para>If the session times out, check the
+                    server firewall ; or try to ping it. You
+                    could also run a tcpdump session which may
+                    also provide extra information : </para>
+                <screen>
+<prompt>$</prompt> <userinput>tcpdump -nvv -i $iscsi_interface port dest $ip_of_nova_volumes</userinput>
+                        </screen>
+                <para> Again, try to manually run an iSCSI discovery via : </para>
+                <screen>
+<prompt>$</prompt> <userinput>iscsiadm -m discovery -t st -p $ip_of_nova-volumes</userinput>
+                        </screen>
+            </listitem>
+            <listitem>
+                <para><emphasis role="italic">"Lost connectivity between nova-volumes and
+                    node-compute ; how to restore a clean state ?"</emphasis>
+                </para>
+                <para>Network disconnection can happens, from an "iSCSI view", losing
+                    connectivity could be seen as a physical removal of a server's disk. If
+                    the instance runs a volume while you loose the network between them, you
+                    won't be able to detach the volume. You would encounter several errors.
+                    Here is how you could clean this : </para>
+                <para>First, from the nova-compute, close the active (but stalled) iSCSI
+                    session, refer to the volume attached to get the session, and perform
+                    the following command : </para>
+                <screen>
+<prompt>$</prompt> <userinput>iscsiadm -m session -r $session_id -u</userinput>
+                        </screen>
+                <para>Here is an <command>iscsi -m</command>
+                    session output : </para>
+                <programlisting>
+tcp: [1] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-1
+tcp: [2] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-2
+tcp: [3] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-3
+tcp: [4] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-4
+tcp: [5] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-5
+tcp: [6] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-6
+tcp: [7] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-7
+tcp: [9] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-9
+                        </programlisting>
+                <para>For example, to free volume 9,
+                    close the session number 9. </para>
+                <para>The cloud-controller is actually unaware
+                    of the iSCSI session closing, and will
+                    keeps the volume state as
+                    <literal>in-use</literal>:
+                    <programlisting>
+                            +----+-----------+--------------+------+-------------+--------------------------------------+
+                            | ID |   Status  | Display Name | Size | Volume Type |             Attached to              |
+                            +----+-----------+--------------+------+-------------+--------------------------------------+
+                            | 9  | in-use    | New Volume   | 20   | None        | 7db4cb64-7f8f-42e3-9f58-e59c9a31827d |
+                            </programlisting>You
+                    now have to inform the cloud-controller
+                    that the disk can be used. Nova stores the
+                    volumes info into the "volumes" table. You
+                    will have to update four fields into the
+                    database nova uses (eg. MySQL). First,
+                    conect to the database : </para>
+                <screen>
+<prompt>$</prompt> <userinput>mysql -uroot -p$password nova</userinput>
+                        </screen>
+                <para> Using the volume id, you will
+                    have to run the following sql queries
+                </para>
+                <programlisting>
+mysql> update volumes set mountpoint=NULL where id=9;
+mysql> update volumes set status="available" where status "error_deleting" where id=9;
+mysql> update volumes set attach_status="detached" where id=9;
+mysql> update volumes set instance_id=0 where id=9;
+                        </programlisting>
+                <para>Now if you run again <command>nova volume-list</command> from the cloud
+                    controller, you should see an available volume now : </para>
+                <programlisting>
+                            +----+-----------+--------------+------+-------------+--------------------------------------+
+                            | ID |   Status  | Display Name | Size | Volume Type |             Attached to              |
+                            +----+-----------+--------------+------+-------------+--------------------------------------+
+                            | 9  | available  | New Volume   | 20   | None       |                                      |
+                        </programlisting>
+                <para>You can now proceed to the volume attachment again!</para>
+            </listitem>
+        </itemizedlist>
+    </para>
+</section>

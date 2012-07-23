@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="configure-nova-volume"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" 
+    version="5.0">
+    <title>Configuring nova-volume on the compute
+        nodes</title>
+    <para>Since you have created the volume group, you will be
+        able to use the following tools for managing your
+        volumes: </para>
+    <simpara>nova volume-create</simpara>
+    <simpara>nova volume-attach</simpara>
+    <simpara>nova volume-detach</simpara>
+    <simpara>nova volume-delete</simpara>
+    <note><para>If you are using KVM as your hypervisor, then the actual
+        device name in the guest will be different than the one specified in 
+        the nova volume-attach command. You can specify a device name to 
+        the KVM hypervisor, but the actual means of attaching to the guest 
+        is over a virtual PCI bus. When the guest sees a new device on the
+        PCI bus, it picks the next available name (which in most cases is 
+        /dev/vdc) and the disk shows up there on the guest. </para></note>
+    <itemizedlist>
+        <listitem>
+            <para>
+                <emphasis role="bold">Installing and configuring the iSCSI
+                    initiator</emphasis></para>
+            <para> Remember that every node will act as the iSCSI initiator while the server
+                running nova-volumes will act as the iSCSI target. So make sure, before
+                going further that your nodes can communicate with you nova-volumes server.
+                If you have a firewall running on it, make sure that the port 3260 (tcp)
+                accepts incoming connections. </para>
+            <para>First install the open-iscsi package on the initiators, so on the
+                compute-nodes <emphasis role="bold">only</emphasis></para>
+            <screen>
+<prompt>$</prompt> <userinput>apt-get install open-iscsi</userinput> 
+                    </screen>
+            <para>Then on the target, which is in our case the cloud-controller, the iscsitarget package :</para>
+            <screen>
+<prompt>$</prompt> <userinput>apt-get install iscsitarget</userinput> 
+                        </screen>
+            <para>This package could refuse to start with a "FATAL: Module iscsi_trgt not found" error. </para>
+            <para>This error is caused by the kernel which does not contain the iscsi module's source into it ;
+                you can install the kernel modules by installing an extra package : </para>
+            <screen> 
+<prompt>$</prompt> <userinput>apt-get install iscsitarget-dkms</userinput>
+                        </screen>
+            <para>(the Dynamic Kernel Module Support is a framework used for created modules with non-existent sources into the current kernel)</para>
+            <para>You have to enable it so the startup
+                script (/etc/init.d/iscsitarget) can start the
+                daemon:</para>
+            <screen>
+<prompt>$</prompt> <userinput>sed -i 's/false/true/g' /etc/default/iscsitarget</userinput>
+                        </screen>
+            <para>Then run on the nova-controller (iscsi target) :</para>
+            <screen>
+<prompt>$</prompt> <userinput>service iscsitarget start</userinput>
+                            </screen>
+            <para>And on the compute-nodes (iscsi initiators) :</para>
+            <screen>
+<prompt>$</prompt> <userinput>service open-iscsi start</userinput>
+                            </screen>
+        </listitem>
+        <listitem>
+            <para>
+                <emphasis role="bold">Start nova-volume and create volumes</emphasis></para>
+            <para>You are now ready to fire up nova-volume, and start creating
+                volumes!</para>
+            <para>
+                <screen>
+<prompt>$</prompt> <userinput>service nova-volume start</userinput></screen>
+            </para>
+            <para>Once the service is started, login to your controller and ensure you’ve
+                properly sourced your ‘novarc’ file.</para>
+            <para>One of the first things you should do is make sure that nova-volume is
+                checking in as expected. You can do so using nova-manage:</para>
+            <para>
+                <screen>
+<prompt>$</prompt> <userinput>nova-manage service list</userinput>
+                        </screen>
+            </para>
+            <para>If you see a smiling ‘nova-volume’ in there, you are looking good. Now
+                create a new volume:</para>
+            <para>
+                <screen>
+<prompt>$</prompt> <userinput>nova volume-create --display_name myvolume 10</userinput>  
+                        </screen>
+                --display_name sets a readable name for the volume, while
+                the final argument refers to the size of the volume in GB.</para>
+            <para>You should get some output similar to this:</para>
+            <para>
+                <programlisting>
+                        +----+-----------+--------------+------+-------------+--------------------------------------+
+                        | ID |   Status  | Display Name | Size | Volume Type |             Attached to              |
+                        +----+-----------+--------------+------+-------------+--------------------------------------+
+                        | 1  | available | myvolume     | 10   | None        |                                      |
+                        +----+-----------+--------------+------+-------------+--------------------------------------+
+                        </programlisting>
+            </para>
+            <para>You can view that status of the volumes creation using
+                <command>nova volume-list</command>. Once that status is ‘available,’ it is ready to be
+                attached to an instance:</para>
+            <para><screen>
+<prompt>$</prompt> <userinput>nova volume-attach 857d70e4-35d5-4bf6-97ed-bf4e9a4dcf5a 1 /dev/vdb</userinput>
+                    </screen>
+                The first argument refers to the instance
+                you will attach the volume to;
+                The second is the volume ID;
+                The third is the mountpoint<emphasis role="bold"> on the
+                    compute-node</emphasis> that the volume will be attached to</para>
+            <para>By doing that, the compute-node which runs the instance basically performs
+                an iSCSI connection and creates a session. You can ensure that the session
+                has been created by running : </para>
+            <screen>
+<prompt>$</prompt> <userinput>iscsiadm -m session</userinput>
+                    </screen>
+            <para>Which should output : </para>
+            <para>
+                <programlisting>root@nova-cn1:~# iscsiadm -m session
+tcp: [1] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-1</programlisting>
+            </para>
+            <para>If you do not get any errors, you can login
+                to the instance and see if the new space is there. <emphasis
+                    role="italic"/></para>
+            <para><emphasis role="italic">KVM changes the device name, since it's not
+                considered to be the same type of device as the instances uses as it's
+                local one, you will find the nova-volume will be designated as
+                "/dev/vdX" devices, while local are named "/dev/sdX". </emphasis></para>
+            <para>You can check the volume attachment by running : </para>
+            <para><screen>
+<prompt>$</prompt> <userinput>dmesg | tail</userinput>
+                    </screen>
+                You should from there see a new disk. Here is
+                the output from <command>fdisk -l</command>:</para>
+            <programlisting>
+Disk /dev/vda: 10.7 GB, 10737418240 bytes
+16 heads, 63 sectors/track, 20805 cylinders
+Units = cylinders of 1008 * 512 = 516096 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0×00000000
+Disk /dev/vda doesn’t contain a valid partition table
+<emphasis role="bold">Disk /dev/vdb: 21.5 GB, 21474836480 bytes &lt;—–Here is our new volume!</emphasis>
+16 heads, 63 sectors/track, 41610 cylinders
+Units = cylinders of 1008 * 512 = 516096 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes Disk identifier: 0×00000000 
+                    </programlisting>
+            <para>Now with the space presented, let’s configure it for use:</para>
+            <para>
+                <screen>
+<prompt>$</prompt> <userinput>fdisk /dev/vdb</userinput>
+                        </screen>
+            </para>
+            <orderedlist>
+                <listitem>
+                    <para>Press <command>n</command> to create
+                        a new disk partition.</para>
+                </listitem>
+                <listitem>
+                    <para>Press <command>p</command> to create
+                        a primary disk partition.</para>
+                </listitem>
+                <listitem>
+                    <para>Press <command>1</command> to
+                        designated it as the first disk
+                        partition.</para>
+                </listitem>
+                <listitem>
+                    <para>Press ENTER twice to accept the
+                        default of first and last cylinder –
+                        to convert the remainder of hard disk
+                        to a single disk partition.</para>
+                </listitem>
+                <listitem>
+                    <para>Press <command>t</command>, then
+                        select the new partition you
+                        made.</para>
+                </listitem>
+                <listitem>
+                    <para>Press <command>83</command> change
+                        your new partition to 83, i.e. Linux
+                        partition type.</para>
+                </listitem>
+                <listitem>
+                    <para>Press <command>p</command> to
+                        display the hard disk partition setup.
+                        Please take note that the first
+                        partition is denoted as /dev/vda1 in
+                        your instance.</para>
+                </listitem>
+                <listitem>
+                    <para>Press <command>w</command> to write
+                        the partition table and exit fdisk
+                        upon completion.</para>
+                </listitem>
+                <listitem>
+                    <para>Lastly, make a file system on the
+                        partition and mount it.
+                        <screen>
+<prompt>$</prompt> <userinput>mkfs.ext3 /dev/vdb1</userinput>
+<prompt>$</prompt> <userinput>mkdir /extraspace</userinput>
+<prompt>$</prompt> <userinput>mount /dev/vdb1 /extraspace</userinput> 
+                                </screen></para>
+                </listitem>
+            </orderedlist>
+            <para>Your new volume has now been successfully
+                mounted, and is ready for use! The
+                commands are
+                pretty self-explanatory, so play around with
+                them and create new volumes, tear them down,
+                attach and reattach, and so on. </para>
+        </listitem>
+    </itemizedlist>
+</section>

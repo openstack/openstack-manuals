@@ -1,0 +1,129 @@
+<section xml:id="install-nova-volume"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" 
+    version="5.0">
+    <title>Install nova-volume on the cloud controller</title>
+    <para>While nova-volume does not directly use the network, you must have networking set up for Compute prior to configuring the volumes. </para> 
+    <para>On Ubuntu, install nova-volume and lvm2.</para>
+    <screen os="ubuntu">
+<prompt>$</prompt> <userinput>apt-get install lvm2 nova-volume</userinput>
+    </screen>
+    <para os="centos;rhel;fedora">
+On RHEL and derivatives, the nova-volume service should already be installed. 
+            </para>
+    <para>
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <emphasis role="bold">Configure Volumes for use with
+                        nova-volume</emphasis></para>
+                <para>The openstack-nova-volume service requires an LVM Volume Group called nova-volumes to exist. 
+                    If you do not already have LVM volumes on hand, but have free drive
+                    space, you will need to create a LVM volume before proceeding. Here is a
+                    short run down of how you would create a LVM from free drive space on
+                    your system. Start off by issuing an fdisk command to your drive with
+                    the free space:
+                    <screen>
+<prompt>$</prompt> <userinput>fdisk /dev/sda</userinput>
+                            </screen>
+                    Once in fdisk, perform the following commands: <orderedlist>
+                        <listitem>
+                            <para>Press <command>n</command>
+                                to create a new disk
+                                partition,</para>
+                        </listitem>
+                        <listitem>
+                            <para>Press <command>p</command>
+                                to create a primary disk
+                                partition,</para>
+                        </listitem>
+                        <listitem>
+                            <para>Press <command>1</command>
+                                to denote it as 1st disk
+                                partition,</para>
+                        </listitem>
+                        <listitem>
+                            <para>Either press ENTER twice to
+                                accept the default of 1st and last
+                                cylinder – to convert the remainder
+                                of hard disk to a single disk
+                                partition -OR- press ENTER once to
+                                accept the default of the 1st, and
+                                then choose how big you want the
+                                partition to be by specifying
+                                <literal>+size<replaceable>[K,M,G]</replaceable></literal>
+                                e.g. +5G or +6700M.</para>
+                        </listitem>
+                        <listitem>
+                            <para>Press <command>t</command>
+                                and select the new partition that
+                                you have created.</para>
+                        </listitem>
+                        <listitem>
+                            <para>Press <command>8e</command>
+                                change your new partition to 8e,
+                                i.e. Linux LVM partition
+                                type.</para>
+                        </listitem>
+                        <listitem>
+                            <para>Press <command>p</command>
+                                to display the hard disk partition
+                                setup. Please take note that the
+                                first partition is denoted as
+                                <filename>/dev/sda1</filename> in
+                                Linux.</para>
+                        </listitem>
+                        <listitem>
+                            <para>Press <command>w</command>
+                                to write the partition table and
+                                exit fdisk upon completion.</para>
+                            <para>Refresh your partition table
+                                to ensure your new partition shows
+                                up, and verify with
+                                <command>fdisk</command>. We then
+                                inform the OS about the table
+                                partition update : </para>
+                            <screen>
+<prompt>$</prompt> <userinput>partprobe</userinput>
+<prompt>$</prompt> <userinput>fdisk -l</userinput>
+                                         </screen>
+                            <para>You should see your new partition in this listing.</para>
+                            
+                            <para>Here is how you can set up partitioning during the OS
+                                install to prepare for this nova-volume
+                                configuration:</para>
+                            <screen>
+<prompt>root@osdemo03:~#</prompt> <userinput>fdisk -l</userinput> 
+                                    </screen>
+                            <para>
+                                <programlisting>
+Device Boot Start End Blocks Id System
+
+/dev/sda1 * 1 12158 97280 83 Linux
+/dev/sda2 12158 24316 97655808 83 Linux
+
+/dev/sda3 24316 24328 97654784 83 Linux
+/dev/sda4 24328 42443 145507329 5 Extended
+
+<emphasis role="bold">/dev/sda5 24328 32352 64452608 8e Linux LVM</emphasis>
+<emphasis role="bold">/dev/sda6 32352 40497 65428480 8e Linux LVM</emphasis>
+
+/dev/sda7 40498 42443 15624192 82 Linux swap / Solaris
+</programlisting>
+                            </para>
+                            <para>Now that you have identified a partition has been labeled
+                                for LVM use, perform the following steps to configure LVM
+                                and prepare it as nova-volumes. <emphasis role="bold">You
+                                    must name your volume group ‘nova-volumes’ or things
+                                    will not work as expected</emphasis>:</para>
+                            <screen>
+<prompt>$</prompt> <userinput>pvcreate /dev/sda5</userinput>
+<prompt>$</prompt> <userinput>vgcreate nova-volumes /dev/sda5</userinput> 
+                                    </screen>
+                        </listitem>
+                    </orderedlist></para>
+            </listitem>
+        </itemizedlist>
+    </para>
+</section>

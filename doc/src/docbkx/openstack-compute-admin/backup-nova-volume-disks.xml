@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="backup-nova-volume-disks" 
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" 
+    version="5.0">
+            <title>Backup your nova-volume disks</title>
+            <para>While Diablo provides the snapshot functionality
+                (using LVM snapshot), you can also back up your
+                volumes. The advantage of this method is that it
+                reduces the size of the backup; only existing data
+                will be backed up, instead of the entire volume. For
+                this example, assume that a 100 GB nova-volume has been
+                created for an instance, while only 4 gigabytes are
+                used. This process will back up only those 4
+                giga-bytes, with the following tools: </para>
+            <orderedlist>
+                <listitem>
+                    <para><command>lvm2</command>, directly
+                        manipulates the volumes. </para>
+                </listitem>
+                <listitem>
+                    <para><command>kpartx</command> discovers the
+                        partition table created inside the instance. </para>
+                </listitem>
+                <listitem>
+                    <para><command>tar</command> creates a
+                        minimum-sized backup </para>
+                </listitem>
+                <listitem>
+                    <para><command>sha1sum</command> calculates the
+                        backup checksum, to check its consistency </para>
+                </listitem>
+            </orderedlist>
+            <para>
+                <emphasis role="bold">1- Create a snapshot of a used volume</emphasis></para>
+            <itemizedlist>
+                <listitem>
+                    <para>In order to backup our volume, we first need
+                        to create a snapshot of it. An LVM snapshot is
+                        the exact copy of a logical volume, which
+                        contains data in a frozen state. This prevents
+                        data corruption, because data will not be
+                        manipulated during the process of creating the
+                        volume itself. Remember the volumes
+                        created through a
+                            <command>nova volume-create</command>
+                        exist in an LVM's logical volume. </para>
+                    <para>Before creating the
+                            snapshot, ensure that you have enough
+                            space to save it. As a precaution, you
+                            should have at least twice as much space
+                            as the potential snapshot size. If
+                            insufficient space is available, there is
+                            a risk that the snapshot could become
+                            corrupted.</para>
+                    <para>Use the following command to obtain a list
+                        of all
+                        volumes.<screen>
+<prompt>$</prompt> <userinput>lvdisplay</userinput>
+                        </screen>In
+                        this example, we will refer to a volume called
+                            <literal>volume-00000001</literal>, which
+                        is a 10GB volume. This process can be applied
+                        to all volumes, not matter their size. At the
+                        end of the section, we will present a script
+                        that you could use to create scheduled
+                        backups. The script itself exploits what we
+                        discuss here. </para>
+                    <para>First, create the snapshot; this can be
+                        achieved while the volume is attached to an
+                        instance :</para>
+                    <para>
+                        <screen>
+<prompt>$</prompt> <userinput>lvcreate --size 10G --snapshot --name volume-00000001-snapshot /dev/nova-volumes/volume-00000001</userinput>
+                        </screen>
+                    </para>
+                    <para>We indicate to LVM we want a snapshot of an
+                        already existing volume with the
+                            <literal>--snapshot</literal>
+                        configuration option. The command includes the
+                        size of the space reserved for the snapshot
+                        volume, the name of the snapshot, and the path
+                        of an already existing volume (In most cases,
+                        the path will be
+                                <filename>/dev/nova-volumes/<replaceable>$volume_name</replaceable></filename>).</para>
+                    <para>The size doesn't have to be the same as the
+                        volume of the snapshot. The size parameter
+                        designates the space that LVM will reserve for
+                        the snapshot volume. As a precaution, the size
+                        should be the same as that of the original
+                        volume, even if we know the whole space is not
+                        currently used by the snapshot. </para>
+                    <para>We now have a full snapshot, and it only took few seconds ! </para>
+                    <para>Run <command>lvdisplay</command> again to
+                        verify the snapshot. You should see now your
+                        snapshot : </para>
+                    <para>
+                        <programlisting>
+                  --- Logical volume ---
+  LV Name                /dev/nova-volumes/volume-00000001
+  VG Name                nova-volumes
+  LV UUID                gI8hta-p21U-IW2q-hRN1-nTzN-UC2G-dKbdKr
+  LV Write Access        read/write
+  LV snapshot status     source of
+                         /dev/nova-volumes/volume-00000026-snap [active]
+  LV Status              available
+  # open                 1
+  LV Size                15,00 GiB
+  Current LE             3840
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     256
+  Block device           251:13
+
+  --- Logical volume ---
+  LV Name                /dev/nova-volumes/volume-00000001-snap
+  VG Name                nova-volumes
+  LV UUID                HlW3Ep-g5I8-KGQb-IRvi-IRYU-lIKe-wE9zYr
+  LV Write Access        read/write
+  LV snapshot status     active destination for /dev/nova-volumes/volume-00000026
+  LV Status              available
+  # open                 0
+  LV Size                15,00 GiB
+  Current LE             3840
+  COW-table size         10,00 GiB
+  COW-table LE           2560
+  Allocated to snapshot  0,00%
+  Snapshot chunk size    4,00 KiB
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     256
+  Block device           251:14
+            </programlisting>
+                    </para>
+                </listitem>
+            </itemizedlist>
+            <para>
+                <emphasis role="bold">2- Partition table discovery </emphasis></para>
+            <itemizedlist>
+                <listitem>
+                    <para>If we want to exploit that snapshot with the
+                            <command>tar</command> program, we first
+                        need to mount our partition on the
+                        nova-volumes server. </para>
+                    <para><command>kpartx</command> is a small utility
+                        which performs table partition discoveries,
+                        and maps it. It can be used to view partitions
+                        created inside the instance. Without using the
+                        partitions created inside instances, we won' t
+                        be able to see its content and create
+                        efficient backups. </para>
+                    <para>
+                        <programlisting>
+<prompt>$</prompt> <userinput>kpartx -av /dev/nova-volumes/volume-00000001-snapshot</userinput>
+                        </programlisting>
+                    </para>
+                    <para>If no errors are displayed, it means the
+                        tools has been able to find it, and map the
+                        partition table. Note that on a Debian flavor
+                        distro, you could also use <command>apt-get
+                            install kpartx</command>.</para>
+                    <para>You can easily check the partition table map
+                        by running the following command: </para>
+                    <para><programlisting>
+<prompt>$</prompt> <userinput>ls /dev/mapper/nova*</userinput>
+                    </programlisting>You
+                        should now see a partition called
+                            <literal>nova--volumes-volume--00000001--snapshot1</literal>
+                    </para>
+                    <para>If you created more than one partition on
+                        that volumes, you should have accordingly
+                        several partitions; for example.
+                            <literal>nova--volumes-volume--00000001--snapshot2</literal>,
+                            <literal>nova--volumes-volume--00000001--snapshot3</literal>
+                        and so forth. </para>
+                    <para>We can now mount our partition : </para>
+                    <para>
+                        <programlisting>
+<prompt>$</prompt> <userinput>mount /dev/mapper/nova--volumes-volume--volume--00000001--snapshot1 /mnt</userinput>
+                        </programlisting>
+                    </para>
+                    <para>If there are no errors, you have
+                        successfully mounted the partition.</para>
+                    <para>You should now be able to directly access
+                        the data that were created inside the
+                        instance. If you receive a message asking you
+                        to specify a partition, or if you are unable
+                        to mount it (despite a well-specified
+                        filesystem) there could be two causes :</para>
+                    <para><itemizedlist>
+                            <listitem>
+                                <para> You didn't allocate enough
+                                   space for the snapshot </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                   <command>kpartx</command> was
+                                   unable to discover the partition
+                                   table. </para>
+                            </listitem>
+                        </itemizedlist>Allocate more space to the
+                        snapshot and try the process again. </para>
+                </listitem>
+            </itemizedlist>
+            <para>
+                <emphasis role="bold"> 3- Use tar in order to create archives</emphasis>
+                <itemizedlist>
+                    <listitem>
+                        <para> Now that the volume has been mounted,
+                            you can create a backup of it : </para>
+                        <para>
+                            <screen>
+<prompt>$</prompt> <userinput>tar --exclude={"lost+found","some/data/to/exclude"} -czf volume-00000001.tar.gz -C /mnt/ /backup/destination</userinput>
+                            </screen>
+                        </para>
+                        <para>This command will create a tar.gz file
+                            containing the data, <emphasis
+                                role="italic">and data
+                            only</emphasis>. This ensures that you do
+                            not waste space by backing up empty
+                            sectors.</para>
+                    </listitem>
+                </itemizedlist></para>
+            <para>
+                <emphasis role="bold">4- Checksum calculation I</emphasis>
+                <itemizedlist>
+                    <listitem>
+                        <para>You should always have the checksum for
+                            your backup files. The checksum is a
+                            unique identifier for a file. </para>
+                        <para>When you transfer that same file over
+                            the network, you can run another checksum
+                            calculation. If the checksums are
+                            different, this indicates that the file is
+                            corrupted; thus, the checksum provides a
+                            method to ensure your file has not been
+                            corrupted during its transfer.</para>
+                        <para>The following command runs a checksum
+                            for our file, and saves the result to a
+                            file :</para>
+                        <para><screen>
+<prompt>$</prompt> <userinput>sha1sum volume-00000001.tar.gz > volume-00000001.checksum</userinput>
+                        </screen><emphasis
+                                role="bold">Be aware</emphasis> the
+                                <command>sha1sum</command> should be
+                            used carefully, since the required time
+                            for the calculation is directly
+                            proportional to the file's size. </para>
+                        <para>For files larger than ~4-6 gigabytes,
+                            and depending on your CPU, the process may
+                            take a long time.</para>
+                    </listitem>
+                </itemizedlist>
+                <emphasis role="bold">5- After work cleaning</emphasis>
+                <itemizedlist>
+                    <listitem>
+                        <para>Now that we have an efficient and
+                            consistent backup, the following commands
+                            will clean up the file system.<orderedlist>
+                                <listitem>
+                                   <para>Unmount the volume:
+                                   <command>unmount
+                                   /mnt</command></para>
+                                </listitem>
+                                <listitem>
+                                   <para>Delete the partition table:
+                                   <command>kpartx -dv
+                                   /dev/nova-volumes/volume-00000001-snapshot</command></para>
+                                </listitem>
+                                <listitem>
+                                   <para>Remove the snapshot:
+                                   <command>lvremove -f
+                                   /dev/nova-volumes/volume-00000001-snapshot</command></para>
+                                </listitem>
+                            </orderedlist></para>
+                        <para>And voila :) You can now repeat these
+                            steps for every volume you have.</para>
+                    </listitem>
+                </itemizedlist>
+                <emphasis role="bold">6- Automate your backups</emphasis>
+            </para>
+            <para>Because you can expect that more and more volumes
+                will be allocated to your nova-volume service, you may
+                want to automate your backups. This script <link
+                    xlink:href="https://github.com/Razique/BashStuff/blob/master/SYSTEMS/OpenStack/SCR_5005_V01_NUAC-OPENSTACK-EBS-volumes-backup.sh"
+                    >here</link> will assist you on this task. The
+                script performs the operations from the previous
+                example, but also provides a mail report and runs the
+                backup based on the
+                    <literal>backups_retention_days</literal> setting.
+                It is meant to be launched from the server which runs
+                the nova-volumes component.</para>
+            <para>Here is an example of a mail report: </para>
+            <programlisting>
+Backup Start Time - 07/10 at 01:00:01
+Current retention - 7 days
+
+The backup volume is mounted. Proceed...
+Removing old backups...  : /BACKUPS/EBS-VOL/volume-00000019/volume-00000019_28_09_2011.tar.gz
+     /BACKUPS/EBS-VOL/volume-00000019 - 0 h 1 m and 21 seconds. Size - 3,5G
+
+The backup volume is mounted. Proceed...
+Removing old backups...  : /BACKUPS/EBS-VOL/volume-0000001a/volume-0000001a_28_09_2011.tar.gz
+     /BACKUPS/EBS-VOL/volume-0000001a - 0 h 4 m and 15 seconds. Size - 6,9G
+---------------------------------------
+Total backups size - 267G - Used space : 35%
+Total execution time - 1 h 75 m and 35 seconds
+            </programlisting>
+            <para>The script also provides the ability to SSH to your
+                instances and run a mysqldump into them. In order to
+                make this to work, ensure the connection via the
+                nova's project keys is enabled. If you don't want to
+                run the mysqldumps, you can turn off this
+                functionality by adding
+                    <literal>enable_mysql_dump=0</literal> to the
+                script.</para>
+        </section>
