@@ -20,8 +20,8 @@
         <listitem>
             <para>Create self-signed cert for SSL:</para>
             <para>
-                <literallayout class="monospaced">cd /etc/swift
-openssl req -new -x509 -nodes -out cert.crt -keyout cert.key</literallayout>
+                <screen><prompt>#</prompt><userinput>cd /etc/swift</userinput>
+<prompt>#</prompt><userinput>openssl req -new -x509 -nodes -out cert.crt -keyout cert.key</userinput>                </screen>
             </para>
         </listitem>
         <listitem>
@@ -30,20 +30,21 @@ openssl req -new -x509 -nodes -out cert.crt -keyout cert.key</literallayout>
                 Edit the following line in /etc/memcached.conf,
                 changing:</para>
             <para>
-                <literallayout class="monospaced">-l 127.0.0.1
+                <literallayout class="monospaced">-l 127.0.0.1 
 to
 -l &lt;PROXY_LOCAL_NET_IP&gt;</literallayout>
             </para>
         </listitem>
         <listitem>
             <para>Restart the memcached server:</para>
-            <para><literallayout class="monospaced">service memcached restart</literallayout></para>
+            <para>
+                <screen><prompt>#</prompt><userinput>service memcached restart</userinput></screen></para>
         </listitem>
         <listitem os="rhel;centos;fedora">
-            <para>To set up Object Storage to authenticate tokens we need to set the keystone Admin token in the swift proxy file with the openstack-config command.
-                
+            <para>To set up Object Storage to authenticate tokens we need to set the keystone Admin
+                token in the swift proxy file with the openstack-config command.
                 <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/swift/proxy-server.conf filter:authtoken admin_token $ADMIN_TOKEN</userinput>
-            <prompt>#</prompt> sudo <userinput>openstack-config --set /etc/swift/proxy-server.conf filter:authtoken auth_token $ADMIN_TOKEN</userinput></screen>
+<prompt>#</prompt> sudo <userinput>openstack-config --set /etc/swift/proxy-server.conf filter:authtoken auth_token $ADMIN_TOKEN</userinput></screen>
             </para>
         </listitem>
         <listitem>
@@ -71,26 +72,31 @@ to
                 being the number of hours to restrict moving a
                 partition more than once.</para>
             <para>
-                <literallayout class="monospaced">cd /etc/swift
-swift-ring-builder account.builder create 18 3 1
-swift-ring-builder container.builder create 18 3 1
-swift-ring-builder object.builder create 18 3 1</literallayout>
+                <screen>
+<prompt>#</prompt> <userinput>cd /etc/swift</userinput>
+<prompt>#</prompt> <userinput>swift-ring-builder account.builder create 18 3 1</userinput>
+<prompt>#</prompt> <userinput>swift-ring-builder container.builder create 18 3 1</userinput>
+<prompt>#</prompt> <userinput>swift-ring-builder object.builder create 18 3 1</userinput>            </screen>
             </para>
-            
         </listitem>
         <listitem>
             <para>For every storage device on each node add entries to each
                 ring:</para>
             <para>
-                <literallayout class="monospaced">swift-ring-builder account.builder add z&lt;ZONE&gt;-&lt;STORAGE_LOCAL_NET_IP&gt;:6002/&lt;DEVICE&gt; 100
-swift-ring-builder container.builder add z&lt;ZONE&gt;-&lt;STORAGE_LOCAL_NET_IP_1&gt;:6001/&lt;DEVICE&gt; 100
-swift-ring-builder object.builder add z&lt;ZONE&gt;-&lt;STORAGE_LOCAL_NET_IP_1&gt;:6000/&lt;DEVICE&gt; 100</literallayout>
+                <screen>
+<prompt>#</prompt> <userinput>swift-ring-builder account.builder add z&lt;ZONE&gt;-&lt;STORAGE_LOCAL_NET_IP&gt;:6002/&lt;DEVICE&gt; 100</userinput>
+<prompt>#</prompt> <userinput>swift-ring-builder container.builder add z&lt;ZONE&gt;-&lt;STORAGE_LOCAL_NET_IP_1&gt;:6001/&lt;DEVICE&gt; 100</userinput>
+<prompt>#</prompt> <userinput>swift-ring-builder object.builder add z&lt;ZONE&gt;-&lt;STORAGE_LOCAL_NET_IP_1&gt;:6000/&lt;DEVICE&gt; 100</userinput></screen>
             </para>
-			<para>For example, if you were setting up a storage node with a partition in Zone 1 on IP 10.0.0.1. The mount point of this partition is /srv/node/sdb1, and the path in rsyncd.conf is /srv/node/, the DEVICE would be sdb1 and the commands would look like:
-                
-                <literallayout class="monospaced">swift-ring-builder account.builder add z1-10.0.0.1:6002/sdb1 100
-swift-ring-builder container.builder add z1-10.0.0.1:6001/sdb1 100
-swift-ring-builder object.builder add z1-10.0.0.1:6000/sdb1 100</literallayout></para>
+			<para>For example, if you were setting up a storage node with a partition in Zone 1 on IP
+                10.0.0.1. The mount point of this partition is /srv/node/sdb1, and the path in
+                rsyncd.conf is /srv/node/, the DEVICE would be sdb1 and the commands would look
+                like:
+                <screen>
+<prompt>#</prompt> <userinput>swift-ring-builder account.builder add z1-10.0.0.1:6002/sdb1 100</userinput>
+<prompt>#</prompt> <userinput>swift-ring-builder container.builder add z1-10.0.0.1:6001/sdb1 100</userinput>
+<prompt>#</prompt> <userinput>swift-ring-builder object.builder add z1-10.0.0.1:6000/sdb1 100</userinput>
+			</screen></para>
             <note>
                 <para>Assuming there are 5 zones with 1 node per zone, ZONE
                     should start at 1 and increment by one for each
@@ -100,17 +106,21 @@ swift-ring-builder object.builder add z1-10.0.0.1:6000/sdb1 100</literallayout><
         <listitem>
             <para>Verify the ring contents for each ring:</para>
             <para>
-                <literallayout class="monospaced">swift-ring-builder account.builder
-swift-ring-builder container.builder
-swift-ring-builder object.builder</literallayout>
+                <screen>
+<prompt>#</prompt> <userinput>swift-ring-builder account.builder</userinput>
+<prompt>#</prompt> <userinput>swift-ring-builder container.builder</userinput>
+<prompt>#</prompt> <userinput>swift-ring-builder object.builder</userinput>
+                </screen>
             </para>
         </listitem>
         <listitem>
             <para>Rebalance the rings:</para>
             <para>
-                <literallayout class="monospaced">swift-ring-builder account.builder rebalance
-swift-ring-builder container.builder rebalance
-swift-ring-builder object.builder rebalance</literallayout>
+                <screen>
+<prompt>#</prompt> <userinput>swift-ring-builder account.builder rebalance</userinput>
+<prompt>#</prompt> <userinput>swift-ring-builder container.builder rebalance</userinput>
+<prompt>#</prompt> <userinput>swift-ring-builder object.builder rebalance</userinput>
+                </screen>
             </para>
             <note>
                 <title>Note</title>
@@ -125,14 +135,11 @@ swift-ring-builder object.builder rebalance</literallayout>
         <listitem>
             <para>Make sure all the config files are owned by the swift
                 user:</para>
-            <para><literallayout class="monospaced">chown -R swift:swift /etc/swift</literallayout></para>
+            <para><screen><prompt>#</prompt> <userinput>chown -R swift:swift /etc/swift</userinput></screen></para>
         </listitem>
         <listitem>
             <para>Start Proxy services:</para>
-            <para><literallayout class="monospaced">swift-init proxy start</literallayout></para>
+            <para><screen><prompt>#</prompt> <userinput>swift-init proxy start</userinput></screen></para>
         </listitem>
     </orderedlist>
-    
-    
-    
 </section>
