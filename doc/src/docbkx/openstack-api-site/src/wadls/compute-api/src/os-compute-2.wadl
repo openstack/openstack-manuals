@@ -16,12 +16,12 @@
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
    xmlns:xsd="http://www.w3.org/2001/XMLSchema"  
    xmlns:db="http://docbook.org/ns/docbook"
-   xmlns:csapi="http://docs.openstack.org/compute/api/v1.1"
+   xmlns:csapi="http://docs.openstack.org/compute/api/v2"
    xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
    xmlns:common="http://docs.openstack.org/common/api/v1.0"
    xmlns:wadl="http://wadl.dev.java.net/2009/02"
    xmlns:atom="http://www.w3.org/2005/Atom"
-   xsi:schemaLocation="http://docs.openstack.org/compute/api/v1.1
+   xsi:schemaLocation="http://docs.openstack.org/compute/api/v2
                        xsd/api.xsd
                        http://docs.openstack.org/common/api/v1.0
                        xsd/api-common.xsd
@@ -37,7 +37,7 @@
     <!--*******************************************************-->
 
     <resources base="https://servers.api.openstack.com">
-        <resource id="version" type="#VersionDetails" path="v1.1/">
+        <resource id="version" type="#VersionDetails" path="v2/">
             <resource id="extensions" type="#ExtensionList" path="extensions">
                 <resource id="extension" path="{alias}">
                     <param name="alias" style="template" type="xsd:string"><doc><p xmlns="http://www.w3.org/1999/xhtml">An alias is a name for a pointer to a resource, such as a named extension.</p></doc></param>
@@ -457,7 +457,26 @@
                         <p xmlns="http://www.w3.org/1999/xhtml"
                             >Server.</p>
                     </doc></param>
-            </representation>
+            <param name="imageRef" style="plain" required="true">
+                <doc xml:lang="EN" title="imageRef">
+                    <p xmlns="http://www.w3.org/1999/xhtml">The image reference for the desired image for your server instance. </p>
+                    <p xmlns="http://www.w3.org/1999/xhtml">Specify as an ID or full URL.</p></doc></param>
+            <param name="flavorRef" style="plain" required="true">
+                <doc xml:lang="EN" title="flavorRef">
+                    <p xmlns="http://www.w3.org/1999/xhtml">The flavor reference for the desired flavor for your server instance.</p>
+                    <p xmlns="http://www.w3.org/1999/xhtml">Specify as an ID or full URL.</p></doc></param>
+            <param name="name" style="plain" required="true">
+                <doc xml:lang="EN" title="name">
+                    <p xmlns="http://www.w3.org/1999/xhtml">The name for your created server.</p></doc></param>
+            <param name="metadata" style="plain" required="false">
+                <doc xml:lang="EN" title="metadata">
+                    <p xmlns="http://www.w3.org/1999/xhtml">Metadata key and value pairs. The maximum size of the metadata key and value is 255 bytes each.</p></doc></param>
+            <param name="personality" style="plain" required="false">
+                <doc xml:lang="EN" title="personality">
+                    <p xmlns="http://www.w3.org/1999/xhtml">File path and contents (text only) to inject into the server at launch. 
+                        The maximum size of the file path data is 255 bytes. The maximum limit refers to the number of bytes in the 
+                        decoded data and not the number of characters in the encoded data.</p></doc></param>
+        </representation>
             <representation mediaType="application/json">
                 <doc>
                     <xsdxt:code href="samples/server-post-req.json"/>
