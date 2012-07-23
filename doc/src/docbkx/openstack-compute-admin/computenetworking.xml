@@ -944,7 +944,7 @@ dhcp_lease_time=604800
 fixed_ip_disassociate_timeout=1209600</programlisting></para>
             </section>
         </section>
-        <section xml:id="cloudpipe-per-project-vpns">
+                <section xml:id="cloudpipe-per-project-vpns">
             <title>Cloudpipe — Per Project Vpns</title>
 
             <para> Cloudpipe is a method for connecting end users to
@@ -964,98 +964,249 @@ fixed_ip_disassociate_timeout=1209600</programlisting></para>
                 script from inside the zip. The autorun script will
                 configure and run openvpn to run using the data from
                 nova. </para>
-            <para> It is also useful to have a cron script that will
-                periodically redownload the metadata and copy the new
-                crl. This will keep revoked users from connecting and
-                will disconnect any users that are connected with
-                revoked certificates when their connection is
-                renegotiated (every hour). </para>
-            <section xml:id="creating-a-cloudpipe-image">
+            <para>It is also useful to have a cron script that will periodically redownload the
+                metadata and copy the new Certificate Revocation List (CRL). This list is contained
+                withing the payload file and will keeps revoked users from connecting and will
+                disconnect any users that are connected with revoked certificates when their
+                connection is renegotiated (every hour).  (More infos about revocation can be found
+                in the following section : "Certificates and Revocation").</para>
+            <para>In this how-to, we are going to create our cloud-pipe image from a running Ubuntu
+                instance which will serve as a template. When all the components will be installed
+                and configured, we will create an image from that instance that will be uploaded to
+                the Glance repositories.</para>
+            <section xml:id="cloudpipe-create-image">
                 <?dbhtml stop-chunking?>
-                <title>Creating a Cloudpipe Image</title>
-                <para>To make a cloudpipe image: </para>
-                <itemizedlist>
-                    <listitem>
-                        <para>install openvpn on a base ubuntu image.
-                        </para>
-                    </listitem>
-                    <listitem>
-                        <para>set up a server.conf.template in
-                                <filename>/etc/openvpn/</filename></para>
-                    </listitem>
-                    <listitem>
-                        <para>set up.sh in
-                                <filename>/etc/openvpn/</filename>
-                        </para>
-                    </listitem>
-                    <listitem>
-                        <para>set down.sh in <filename>/etc/openvpn/
-                            </filename></para>
-                    </listitem>
-                    <listitem>
-                        <para>download and run the payload on boot
-                            from
-                            <filename>/etc/rc.local</filename></para>
-                    </listitem>
-                    <listitem>
-                        <para>setup
-                                <filename>/etc/network/interfaces</filename>
-                        </para>
-                    </listitem>
-                    <listitem>
-                        <para>upload the image and set the image id in
-                            your config file: </para>
-                        <programlisting>
-vpn_image_id=[uuid from glance]
-                        </programlisting>
-                    </listitem>
-                    <listitem>
-                        <para>you should set a few other configuration
-                            options to make VPNs work properly: </para>
-                        <programlisting>
-use_project_ca=True
-cnt_vpn_clients=5
-force_dhcp_release=True
-                        </programlisting>
-                    </listitem>
-                </itemizedlist>
-                <para> When you use the os-cloudpipe extension (POST
-                    v2/{tenant_id}/os-cloudpipe) or the nova client
-                        (<userinput>nova cloudpipe-create
-                            <replaceable>[project_id]</replaceable></userinput>)
-                    to launch a VPN for a user it goes through the
-                    following process: </para>
+                <title>Creating a Cloudpipe Image Template</title>
                 <orderedlist>
                     <listitem>
-                        <para> creates a keypair called
-                                   <literal><replaceable>&lt;project_id&gt;</replaceable>-vpn</literal>
-                            and saves it in the keys directory </para>
+                        <para>Installing the required packages</para>
+                        <para> We start by installing the required packages on our instance :
+                            <screen><prompt>#</prompt> <userinput>apt-get update &amp;&amp; apt-get upgrade &amp;&amp; apt-get install openvpn bridge-utils unzip -y</userinput></screen></para>
                     </listitem>
                     <listitem>
-                        <para> creates a security group
-                                   <literal><replaceable>&lt;project_id&gt;</replaceable>-vpn</literal>
-                            and opens up 1194 and icmp </para>
-                    </listitem>
-                    <listitem>
-                        <para> creates a cert and private key for the
-                            VPN instance and saves it in the
-                                   <literal>CA/projects/<replaceable>&lt;project_id&gt;</replaceable>/
-                                directory</literal>
+                        <para> Creating the server configuration template</para>
+                        <para> Create a configuration for Openvpn, and save it under
+                                <filename>/etc/openvpn/server.conf</filename> : </para>
+                        <para>
+                            <programlisting>port 1194
+proto udp
+dev tap0
+up "/etc/openvpn/up.sh br0"
+down "/etc/openvpn/down.sh br0"
+script-security 3 system
+
+persist-key
+persist-tun
+
+ca ca.crt
+cert server.crt
+key server.key  # This file should be kept secret
+
+dh dh1024.pem
+ifconfig-pool-persist ipp.txt
+
+server-bridge VPN_IP DHCP_SUBNET DHCP_LOWER DHCP_UPPER
+
+client-to-client
+keepalive 10 120
+comp-lzo
+
+max-clients 1
+
+user nobody
+group nogroup
+
+persist-key
+persist-tun
+
+status openvpn-status.log
+
+verb 3
+mute 20</programlisting>
                         </para>
                     </listitem>
                     <listitem>
-                        <para> zips up the info and puts it b64
-                            encoded as user data </para>
+                        <para>Create the network scripts</para>
+                        <para> The next step is to create both scripts that will be used when the
+                            network components will start up and shut down. The scripts will be
+                            respectively saved under <filename>/etc/openvpn.up.sh</filename> and
+                                <filename>/etc/openvpn/down.sh</filename> :</para>
+                        <para>
+                            <filename> /etc/openvpn/up/sh </filename>
+                            <programlisting>#!/bin/sh
+# Openvpn startup script. 
+
+BR=$1
+DEV=$2
+MTU=$3
+/sbin/ifconfig $DEV mtu $MTU promisc up
+/sbin/brctl addif $BR $DEV                      </programlisting>
+                            <filename>/etc/openvpn/down.sh</filename>
+                            <programlisting>#!/bin/sh
+# Openvpn shutdown script
+BR=$1
+DEV=$2
+
+/usr/sbin/brctl delif $BR $DEV
+/sbin/ifconfig $DEV down                  </programlisting>
+                        </para>
+                        <para>Make these two scripts executables by running the following command :
+                            <screen><prompt>#</prompt> <userinput>chmod +x /etc/openvpn/{up.sh,down.sh}</userinput></screen></para>
                     </listitem>
                     <listitem>
-                        <para> launches an
-                                <replaceable>[vpn_instance_type]</replaceable>
-                            instance with the above settings using the
-                            option-specified VPN image</para>
+                        <para>Edit the network interface configuration file</para>
+                        <para> Update the <filename>/etc/network/interfaces</filename> accordingly
+                            (We tear down the main interface and enable the bridged interface)
+                            :</para>
+                        <programlisting># This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# The primary network interface
+auto eth0
+iface eth0 inet manual
+  up ifconfig $IFACE 0.0.0.0 up
+  down ifconfig $IFACE down
+
+auto br0
+iface br0 inet dhcp
+bridge_ports eth0                     </programlisting>
+                    </listitem>
+                    <listitem>
+                        <para>Edit the rc.local file</para>
+                        <para> The next step consists in updating the
+                                <filename>/etc/rc.local</filename> file. We will ask our image to
+                            retrive the payload, decrypt it, and use both key  and CRL for our
+                            Openvpn service : <filename>/etc/rc.local</filename>
+                            <programlisting>#!/bin/sh -e
+#
+# rc.local
+#
+# This script is executed at the end of each multiuser runlevel.
+# Make sure that the script will "exit 0" on success or any other
+# value on error.
+#
+# In order to enable or disable this script just change the execution
+# bits.
+#
+# By default this script does nothing.
+####### These lines go at the end of /etc/rc.local #######
+. /lib/lsb/init-functions
+
+echo Downloading payload from userdata
+wget http://169.254.169.254/latest/user-data -O /tmp/payload.b64
+echo Decrypting base64 payload
+openssl enc -d -base64 -in /tmp/payload.b64 -out /tmp/payload.zip
+
+mkdir -p /tmp/payload
+echo Unzipping payload file
+unzip -o /tmp/payload.zip -d /tmp/payload/
+
+# if the autorun.sh script exists, run it
+if [ -e /tmp/payload/autorun.sh ]; then
+    echo Running autorun.sh
+    cd /tmp/payload
+    chmod 700 /etc/openvpn/server.key
+    sh /tmp/payload/autorun.sh
+    if [ ! -e /etc/openvpn/dh1024.pem ]; then
+        openssl dhparam -out /etc/openvpn/dh1024.pem 1024
+    fi
+else
+  echo rc.local : No autorun script to run
+fi
+
+
+exit 0 </programlisting>
+                            The called script (<filename>autorun.sh</filename>) is a script which
+                            mainly parses the network settings of the running instances in order to
+                            set up the initial routes. Your instance is now ready to be used as a
+                            cloudpipe image. In the next step, we will update that instance to
+                            Glance.</para>
                     </listitem>
                 </orderedlist>
             </section>
-            <section xml:id="vpn-access">
+            <section xml:id="cloudpipe-upload-image">
+                <title>Upload your instance to Glance</title>
+                <para> We will make use of the <systemitem class="service">nova</systemitem>
+                    snapshot feature in order to create an image from our running instance. We
+                    start by retrieving the instance ID : </para>
+                <para>
+                    <screen><prompt>$</prompt> <userinput>nova list</userinput></screen>
+                </para>
+                <programlisting>
++--------------------------------------+------------+--------+---------------------+
+|                  ID                  |  Name      | Status |       Networks      |
++--------------------------------------+------------+--------+---------------------+
+| 739079ab-0f8e-404a-ae6e-a91f4fe99c94 | cloud-pipe | ACTIVE | vlan1=192.168.22.43 |
++--------------------------------------+------------+--------+---------------------+
+                </programlisting>
+                <para> We create an image with, using the instance ID :
+                    <screen><prompt>$</prompt> <userinput>nova image-create 739079a-b-0f8e-404a-ae6e-a91f4fe99c94</userinput></screen>
+                    Make sure the instance has been upload to the Glance repository :
+                    <screen><prompt>$</prompt> <userinput>nova image-list</userinput></screen><programlisting>
++--------------------------------------+---------------+--------+--------------------------------------+
+|                  ID                  |      Name     | Status |                Server                |
++--------------------------------------+---------------+--------+--------------------------------------+
+| 0bfc8fd3-1590-463b-b178-bce30be5ef7b | cloud-pipance | ACTIVE | fb93eda8-4eb8-42f7-b53c-91c6d83cface |
++--------------------------------------+---------------+--------+--------------------------------------+              
+                    </programlisting>
+                    Make that image public (snapshot-based images are private by default):
+                    <screen><prompt>$</prompt> <userinput>glance update 0bfc8fd3-1590-463b-b178-bce30be5ef7b is_public=true</userinput></screen>
+                    You can ensure the image is now public, running <screen><prompt>$</prompt> <userinput>glance show 0bfc8fd3-1590-463b-b178-bce30be5ef7b | grep Public</userinput></screen>
+                    <computeroutput>Public : Yes </computeroutput>
+                </para>
+            </section>
+            <section xml:id="cloudpipe-update-nova-conf">
+            <title>Update /etc/nova.conf</title>
+            <para>Some settings need to be added into <filename>/etc/nova.conf</filename>file in
+                    order to make nova able to use our image : <filename>/etc/nova.conf</filename>
+                    <programlisting>
+## cloud-pipe vpn client ##
+--vpn_image_id=0bfc8fd3-1590-463b-b178-bce30be5ef7b
+--use_project_ca-true
+--cnt_vpn_clients=5 
+                </programlisting>
+                    You can now restart all the services :
+                    <screen><prompt>#</prompt> <userinput>cd /etc/int.d &amp;&amp; for i in $( ls nova-*); do service $i restart; done</userinput></screen></para>
+            </section>
+            <section xml:id="cloudpipe-start-instance">
+                <title>Power-up your instance</title>
+                <para> Use the <systemitem class="service">nova cloudpipe</systemitem> feature the
+                    following way :
+                    <screen><prompt>$</prompt> <userinput>nova cloud-pipe create $tenant_id</userinput></screen>
+                    Retrive all the tenants :
+                    <screen><prompt>$</prompt> <userinput>keystone tenant-list</userinput></screen><programlisting>
++----------------------------------+---------+---------+
+|                id                |   name  | enabled |
++----------------------------------+---------+---------+
+| 071ffb95837e4d509cb7153f21c57c4d | stone   | True    |
+| 520b6689e344456cbb074c83f849914a | service | True    |
+| d1f5d27ccf594cdbb034c8a4123494e9 | admin   | True    |
+| dfb0ef4ab6d94d5b9e9e0006d0ac6706 | demo    | True    |
++----------------------------------+---------+---------+                       
+                    </programlisting>
+                    Let's create our cloudpipe project using the tenant"s ID :
+                    <screen><prompt>$</prompt> <userinput>nova cloudpipe-create d1f5d27ccf594cdbb034c8a4123494e9</userinput></screen>
+                    We can check the service availability :
+                    <screen><prompt>$</prompt> <userinput>nova cloudpipe-list</userinput></screen><programlisting>
++----------------------------------+------------+-------------+---------------+
+|            Project Id            | Public IP  | Public Port |  Internal IP  |
++----------------------------------+------------+-------------+---------------+
+| d1f5d27ccf594cdbb034c8a4123494e9 | 172.17.1.3 | 1000        | 192.168.22.34 |
++----------------------------------+------------+-------------+---------------+
+                    </programlisting>
+                    The output basically shows our instance is started. Nova will create the
+                    necessary rules for our cloudpipe instance (icmp and OpenVPN port) :
+                    <programlisting>
+ALLOW 1194:1194 from 0.0.0.0/0
+ALLOW -1:-1 from 0.0.0.0/0
+                    </programlisting>
+                </para>
+            </section>
+            <section xml:id="cloudpipe-vpn-access">
                 <title>VPN Access</title>
                 <para> In VLAN networking mode, the second IP in each
                     private network is reserved for the cloudpipe
@@ -1076,8 +1227,9 @@ force_dhcp_release=True
                             <replaceable>[new_ip]</replaceable>
                         <replaceable>[new_port]</replaceable></command>
                 </para>
+                <para/>
             </section>
-            <section xml:id="certificates-and-revocation">
+            <section xml:id="cloudpipe-certificates-and-revocation">
                 <title>Certificates and Revocation</title>
                 <para>For certificate management, it is also useful to have a cron script that will
                     periodically download the metadata and copy the new Certificate Revocation List
@@ -1096,9 +1248,10 @@ force_dhcp_release=True
                     updated when certs are revoked, so it is necessary
                     to restart the cloudpipe instance if a user's
                     credentials are revoked. </para>
+                <para/>
             </section>
             <section
-                xml:id="restarting-and-logging-into-cloudpipe-vpn">
+                xml:id="cloudpipe-restarting-and-logging-into-vpn">
                 <title>Restarting and Logging into the Cloudpipe
                     VPN</title>
                 <para>You can reboot a cloudpipe vpn through the api
@@ -1124,6 +1277,264 @@ force_dhcp_release=True
                     request. To make debugging easier, you may want to
                     put a common administrative key into the cloudpipe
                     image that you create.</para>
+                <para/>
+            </section>
+            <section xml:id="cloudpipe-remote-acceess">
+                <title> Remote access to your cloudpipe instance from an OpenVPN client</title>
+                <para> Now your cloudpipe instance is running, you can use your favorite OpenVPN
+                    client in order to access your instances within their private network cloudpipe
+                    is connected to. In these sections we will present both ways of using cloudpipe,
+                    the first using a configuration file for clients without interfaces, and for
+                    clients using an interface. </para>
+                <para><emphasis role="bold">Connect to your cloudpipe instance without an interface
+                        (CLI)</emphasis></para>
+                <orderedlist>
+                    <listitem>
+                        <para>Generate your certificates</para>
+                        <para> Start by generating a private key and a certificate for your project:
+                            <screen><prompt>$</prompt> <userinput>nova x509-create-cert</userinput></screen>
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>Create the openvpn configuration file</para>
+                        <para> The following template, which can be found under
+                                <filename>nova/cloudpipe/client.ovpn.template</filename> contains
+                            the necessary instructions for establishing a connection : </para>
+                        <programlisting># NOVA user connection
+# Edit the following lines to point to your cert files:
+cert <emphasis role="bold">/path/to/the/cert/file</emphasis>
+key <emphasis role="bold">/path/to/the/key/file</emphasis>
+
+ca cacert.pem
+
+client
+dev tap
+proto udp
+
+remote <emphasis role="bold">$cloudpipe-public-ip $cloudpipe-port</emphasis>
+resolv-retry infinite
+nobind
+
+# Downgrade privileges after initialization (non-Windows only)
+user nobody
+group nogroup
+comp-lzo
+
+# Set log file verbosity.
+verb 2
+
+keepalive 10 120
+ping-timer-rem
+persist-tun
+persist-key             </programlisting>
+                        <para> Update the file accordingly. In order to get the public IP and port
+                            of your cloudpipe instance, you can run the following command :
+                            <screen><prompt>$</prompt> <userinput>nova cloudpipe-list</userinput></screen><programlisting>
++----------------------------------+------------+-------------+---------------+
+|            Project Id            | Public IP  | Public Port |  Internal IP  |
++----------------------------------+------------+-------------+---------------+
+| d1f5d27ccf594cdbb034c8a4123494e9 | 172.17.1.3 | 1000        | 192.168.22.34 |
++----------------------------------+------------+-------------+---------------+
+                            </programlisting>
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>
+                            Start your OpenVPN client
+                        </para>
+                        <para> Depending on the client you are using, make sure to save the
+                            configuration file under the directory it should be, so the certificate
+                            file and the private key. Usually, the file is saved under <filename>/etc/openvpn/clientconf/client.conf</filename> </para>
+                    </listitem>
+                </orderedlist>
+                <para><emphasis role="bold">Connect to your cloudpipe instance using an
+                        interface</emphasis><orderedlist>
+                        <listitem>
+                            <para> Download an OpenVPN client </para>
+                            <para> In order to connect to the project's network, you will need an
+                                OpenVPN client for your computer. Here are several clients <itemizedlist>
+                                    <listitem>
+                                        <para> For Ubuntu : </para>
+                                        <para><link xlink:href="apt://openvpn">OpenVPN</link>
+                                        </para>
+                                        <para>
+                                            <link xlink:href="apt://network-manager-openvpn"
+                                                >network-manager-openvpn</link>
+                                        </para>
+                                        <para>
+                                            <link xlink:href="apt://kvpnc">kvpnc</link> (For
+                                            Kubuntu)</para>
+                                        <para>
+                                            <link xlink:href="apt://gopenvpn">gopenvpn</link></para>
+                                    </listitem>
+                                    <listitem>
+                                        <para> For Mac OsX : </para>
+                                        <para>
+                                            <link xlink:href="http://openvpn.net/">OpenVPN (Official
+                                                Client)</link>
+                                        </para>
+                                        <para>
+                                            <link
+                                                xlink:href="http://www.thesparklabs.com/viscosity/"
+                                                >Viscosity</link>
+                                        </para>
+                                        <para>
+                                            <link xlink:href="http://code.google.com/p/tunnelblick/"
+                                                >Tunnelblick</link>
+                                        </para>
+                                    </listitem>
+                                    <listitem>
+                                        <para> For Windows : </para>
+                                        <para>
+                                            <link xlink:href="http://openvpn.net/">OpenVPN (Official
+                                                Client)</link>
+                                        </para>
+                                    </listitem>
+                                </itemizedlist></para>
+                        </listitem>
+                        <listitem>
+                            <para> Configure your client </para>
+                            <para> In this example we will use Viscosity, but the same settings
+                                apply to any client. Start by filling the public ip and the public
+                                port of the cloudpipe instance.</para>
+                            <para>These informations can be found by running a
+                                <screen><prompt>$</prompt> <userinput>nova cloudpipe-list</userinput></screen></para>
+                            <programlisting>
++----------------------------------+------------+-------------+---------------+
+|            Project Id            | Public IP  | Public Port |  Internal IP  |
++----------------------------------+------------+-------------+---------------+
+| d1f5d27ccf594cdbb034c8a4123494e9 | 172.17.1.3 | 1000        | 192.168.22.34 |
++----------------------------------+------------+-------------+---------------+
+                            </programlisting>
+                            <figure xml:id="cloudpipe-viscosity-configuration">
+                                <title>Configuring Viscosity</title>
+                                <itemizedlist>
+                                    <listitem>
+                                        <para>Connection Name : "Openstack-cloudpipe"</para>
+                                        <para>Remote server : "172.17.1.3" </para>
+                                        <para>Port : "1000"</para>
+                                        <para>Protocol : "udp"</para>
+                                        <para>Device Type : "tap"</para>
+                                    </listitem>
+                                </itemizedlist>
+                                <mediaobject>
+                                    <imageobject>
+                                        <imagedata scale="80"
+                                            fileref="figures/cloudpipe/cloudpipe-viscosity-step1.jpg"
+                                        />
+                                    </imageobject>
+                                </mediaobject>
+                                <itemizedlist>
+                                    <listitem>
+                                        <para> Certificate : The generated certificate</para>
+                                        <para>Key : The private key </para>
+                                    </listitem>
+                                </itemizedlist>
+                                <mediaobject>
+                                    <imageobject>
+                                        <imagedata scale="80"
+                                            fileref="figures/cloudpipe/cloudpipe-viscosity-step2.jpg"
+                                        />
+                                    </imageobject>
+                                </mediaobject>
+                                <itemizedlist>
+                                    <listitem>
+                                        <para>Persistence options : "Persistent TUN" and "Persistent
+                                            key"</para>
+                                        <para>Other :" No bind"</para>
+                                    </listitem>
+                                </itemizedlist>
+                                <mediaobject>
+                                    <imageobject>
+                                        <imagedata scale="80"
+                                            fileref="figures/cloudpipe/cloudpipe-viscosity-step3.jpg"
+                                        />
+                                    </imageobject>
+                                </mediaobject>
+                                <itemizedlist>
+                                    <listitem>
+                                        <para>Advanced</para>
+                                        <para>Extra settings : "nobind" and "resolv-retry infinite"
+                                        </para>
+                                    </listitem>
+                                </itemizedlist>
+                                <mediaobject>
+                                    <imageobject>
+                                        <imagedata scale="80"
+                                            fileref="figures/cloudpipe/cloudpipe-viscosity-step4.jpg"
+                                        />
+                                    </imageobject>
+                                </mediaobject>
+                            </figure>
+                        </listitem>
+                    </orderedlist>You can now save the configuration and establish the connection! </para>
+                <para/>
+            </section>
+            <section xml:id="cloudpipe-misc">
+                <title>Cloudpipe Troubleshooting and Automation</title>
+                <itemizedlist>
+                <listitem>
+                    <para><emphasis role="bold">Troubleshoot your cloudpipe
+                            instance</emphasis></para>
+                <para> A periodic task disassociates the fixed ip address for the cloudpipe
+                            instance. Into <filename>/var/log/nova/nova-network.log</filename>, the
+                            following line should appear :
+                            <programlisting>Running periodic task VlanManager._disassociate_stale_fixed_ips from (pid=21578) periodic_tasks /usr/lib/python2.7/dist-packages/nova/manager.py:152   </programlisting>
+                            Once the job has been run, <prompt>$</prompt><userinput> nova
+                                cloudpipe-list</userinput>should not return anything ; but if the
+                            cloudpipe instance is respawned too quickly; the following error could
+                            be encountered :
+                            <programlisting>ERROR nova.rpc.amqp Returning exception Fixed IP address 192.168.22.34 is already in use.</programlisting>
+                            In order to resolve that issue, log into the mysql server and update the
+                            ip address status :
+                            <screen><prompt>(mysql)</prompt> <userinput>use nova;</userinput></screen><screen><prompt>(mysql)</prompt> <userinput>SELECT * FROM fixed_ips WHERE address='192.168.22.34';</userinput></screen><programlisting>
++---------------------+---------------------+------------+---------+-----+---------------+------------+-------------+-----------+--------+----------+----------------------+------+
+| created_at          | updated_at          | deleted_at | deleted | id  | address       | network_id | instance_id | allocated | leased | reserved | virtual_interface_id | host |
++---------------------+---------------------+------------+---------+-----+---------------+------------+-------------+-----------+--------+----------+----------------------+------+
+| 2012-05-21 12:06:18 | 2012-06-18 09:26:25 | NULL       |       0 | 484 | 192.168.22.34 |         13 |         630 |         0 |      0 |        1 |                 NULL | NULL |
++---------------------+---------------------+------------+---------+-----+---------------+------------+-------------+-----------+--------+----------+----------------------+------+
+                    </programlisting><screen><prompt>(mysql)</prompt> <userinput>UPDATE fixed_ips SET allocated=0, leased=0, instance_id=NULL WHERE address='192.168.22.34';</userinput></screen><screen><prompt>(mysql)</prompt> <userinput>SELECT * FROM fixed_ips WHERE address='192.168.22.34';</userinput></screen><programlisting> +---------------------+---------------------+------------+---------+-----+---------------+------------+-------------+-----------+--------+----------+----------------------+------+
+| created_at          | updated_at          | deleted_at | deleted | id  | address       | network_id | instance_id | allocated | leased | reserved | virtual_interface_id |      |                 +---------------------+---------------------+------------+---------+-----+---------------+------------+-------------+-----------+--------+----------+----------------------+------+
+| 2012-05-21 12:06:18 | 2012-06-18 09:26:25 | NULL       |       0 | 484 | 192.168.22.34 |         13 |        NULL |         0 |      0 |        1 |                 NULL | NULL |
++---------------------+---------------------+------------+---------+-----+---------------+------------+-------------+-----------+--------+----------+----------------------+------+
+                    </programlisting>
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">Cloudpipe-related configuration option
+                                reference</emphasis></para>
+                        <programlisting>
+vpn_ip = COMPUTE_NODE_IP
+vpn_start = 1000
+vpn_key_suffix = -vpn
+vpn_client_template = /usr/lib/python2.7/dist-packages/nova/cloudpipe/client.ovpn.template
+credential_vpn_file = nova-vpn.conf
+vpn_image_id = IMAGE_ID
+cnt_vpn_clients = 5
+keys_path = /var/lib/nova/keys
+ca_path = /var/lib/nova/CA
+                        </programlisting>
+                        <para/>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">Cloudpipe-related files</emphasis></para>
+                        <para>Nova stores cloudpipe keys into
+                                <filename>/var/lib/nova/keys</filename>. </para>
+                        <para>Certificates are stored into <filename>/var/lib/nova/CA</filename>. </para>
+                        <para>Credentials are stored into
+                                <filename>/var/lib/nova/CA/projects/</filename>
+                        </para>
+                        <para/>
+                    </listitem>
+                    <listitem>
+                       <para><emphasis role="bold">Automate the cloudpipe image
+                                installation</emphasis></para>
+                        <para>
+                            You can automate the image creation by download that script and running it from inside the instance : 
+                            <link xlink:href="https://github.com/leseb/cloudpipe-image-auto-creation/blob/master/cloudpipeconf.sh">Get the script from Github</link>
+                        </para>
+                    </listitem>
+                </itemizedlist>
             </section>
         </section>
     </section>
