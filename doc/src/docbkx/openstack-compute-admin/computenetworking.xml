@@ -61,25 +61,21 @@
             addition to manually configuring the networking bridge. IP
             addresses for VM instances are grabbed from a subnet
             specified by the network administrator. </para>
-        <para>Like Flat Mode, all instances are attached to a single
-            bridge on the compute node. In addition a DHCP server is
-            running to configure instances. In this mode, Compute does
-            a bit more configuration in that it attempts to bridge
-            into an ethernet device (eth0 by default). It will also
-            run dnsmasq as a dhcpserver listening on this bridge.
-            Instances receive their fixed IPs by doing a dhcpdiscover. </para>
-        <para>In any set up with flat networking, the host with
-            nova-network on it is responsible for forwarding traffic
-            from the private network configured with the
-            {{fixed_range=...} directive in
-                <filename>nova.conf</filename>. This host needs to
-            have br100 configured and talking to any other nodes that
-            are hosting VMs. You must set the flat_network_bridge flag
-            or create networks with the bridge parameter in order to
-            avoid raising an error. Compute nodes have
-            iptables/ebtables entries created per project and instance
-            to protect against IP/MAC address spoofing and ARP
-            poisoning. </para>
+        <para>Like Flat Mode, all instances are attached to a single bridge on the compute node. In
+            addition a DHCP server is running to configure instances. In this mode, Compute does a
+            bit more configuration in that it attempts to bridge into an ethernet device (eth0 by
+            default). It will also run dnsmasq as a DHCP server listening on this bridge (see <link
+                linkend="dnsmasq">DHCP server: dnsmasq</link>). Instances receive their fixed IPs by
+            doing a dhcpdiscover. </para>
+        <para>In any set up with flat networking, the host with nova-network on it is responsible
+            for forwarding traffic from the private network configured with the
+                <literal>fixed_range</literal> configuration option in
+                <filename>nova.conf</filename>. This host needs to have <literal>br100</literal>
+            configured and talking to any other nodes that are hosting VMs. You must set the
+                <literal>flat_network_bridge</literal> option or create networks with the bridge
+            parameter in order to avoid raising an error. Compute nodes have iptables/ebtables
+            entries created per project and instance to protect against IP/MAC address spoofing and
+            ARP poisoning. </para>
         <para>VLAN Network Mode is the default mode for OpenStack
             Compute. In this mode, Compute creates a VLAN and bridge
             for each project. For multiple machine installation, the
@@ -120,6 +116,33 @@
                 root:<screen><prompt>#</prompt> <userinput>which dhcp_release</userinput>
 <computeroutput>/usr/bin/dhcp_release</computeroutput></screen></para>
         </note>
+    </section>
+    <section xml:id="dnsmasq">
+        <title>DHCP server: dnsmasq</title>
+        <para>The Compute service uses <link
+                xlink:href="http://www.thekelleys.org.uk/dnsmasq/doc.html">dnsmasq</link> as the
+            DHCP server when running with either that Flat DHCP Network Manager or the VLAN Network
+            Manager. The <systemitem class="service">nova-network</systemitem> service is
+            responsible for starting up dnsmasq processes.</para>
+        <para>The behavior of dnsmasq can be customized by creating a dnsmasq configuration file.
+            Specify the config file using the <literal>dnsmasq_config_file</literal> configuration
+            option. For
+            example:<programlisting>dnsmasq_config_file=/etc/dnsmasq-nova.conf</programlisting>See
+            the <link linkend="existing-ha-networking-options">high availability section</link> for
+            an example of how to change the behavior of dnsmasq using a dnsmasq configuration file.
+            The dnsmasq documentation has a more comprehensive <link
+                xlink:href="http://www.thekelleys.org.uk/dnsmasq/docs/dnsmasq.conf.example">dnsmasq
+                configuration file example</link>.</para>
+        <para>Dnsmasq also acts as a caching DNS server for instances. You can explicitly specify
+            the DNS server that dnsmasq should use by setting the <literal>dns_server</literal>
+            configuration option in <filename>/etc/nova/nova.conf</filename>. The following example
+            would configure dnsmasq to use Google's public DNS
+            server:<programlisting>dns_server=8.8.8.8</programlisting></para>
+        <para>Dnsmasq logging output goes to the syslog (typically
+                <filename>/var/log/syslog</filename> or <filename>/var/log/messages</filename>,
+            depending on Linux distribution). The dnsmasq logging output can be useful for
+            troubleshooting if VM instances boot successfully but are not reachable over the
+            network.</para>
     </section>
     <section xml:id="metadata-service">
         <title>Metadata service</title>
@@ -382,7 +405,7 @@ iface br100 inet dhcp
                 puts the VMs and the network host on the same logical
                 network. When a VM boots, the VM sends out DHCP
                 packets, and the DHCP server on the network host
-                responds with their assigned IP address.</para> 
+                responds with their assigned IP address.</para>
             <para>FlatDHCP doesn't create VLANs, it creates a bridge.
                 This bridge works just fine on a single host, but when
                 there are multiple hosts, traffic needs a way to get
@@ -454,7 +477,7 @@ public_interface=eth0
                 <mediaobject><imageobject>
                     <imagedata scale="80" fileref="figures/XenApiFlatDHCPMultInterfaceHA.png" />
                 </imageobject></mediaobject>
-            </figure>            
+            </figure>
             <para>Here is an extract from a <filename>nova.conf</filename>
                 file in a system running the above setup:</para>
             <para>
@@ -507,7 +530,7 @@ firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver
             </para>
           </section>
         </section>
-        
+
         <section
             xml:id="outbound-traffic-flow-with-any-flat-networking">
             <title>Outbound Traffic Flow with Any Flat
