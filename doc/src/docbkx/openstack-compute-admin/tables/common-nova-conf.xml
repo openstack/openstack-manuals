@@ -210,6 +210,17 @@
             </tr>
             <tr>
                 <td><para>
+                        filters_path=/etc/nova/rootwrap.d,/usr/share/nova/rootwrap
+                    </para></td>
+                <td><para> (ListOpt) Comma-separated list of
+                        directories containing filter definition
+                        files. Defines where filters for root wrap are
+                        stored. Directories defined on this line
+                        should all exist, be owned and writeable only
+                        by the root user. </para></td>
+            </tr>
+            <tr>
+                <td><para>
                     floating_ip_dns_manager=nova.network.dns_driver.DNSDriver </para></td>
                 <td><para> (StrOpt) full class name for the DNS Manager for
                     floating IPs </para></td>
@@ -508,9 +519,14 @@
                     it is left untouched. </para></td>
             </tr>
             <tr>
-                <td><para> root_helper=sudo </para></td>
+                <td><para> root_helper=sudo nova-rootwrap
+                        /etc/nova/rootwrap.conf</para></td>
                 <td><para> (StrOpt) Command prefix to use for running
-                    commands as root </para></td>
+                        commands as root. Note that the configuration
+                        file (and executable) used here must match the
+                        one defined in the sudoers entry from packagers,
+                        otherwise the commands are rejected.
+                    </para></td>
             </tr>
             <tr>
                 <td><para> s3_dmz=$my_ip </para></td>
