@@ -20,17 +20,12 @@
         
         <para>We'll go through this tutorial in parts:</para>
         <itemizedlist>
-            
             <listitem>
                 <para>Setting up secure access to Object Storage.</para></listitem>
-            
-            <listitem><para>Configuring Cyberduck for connecting to OpenStack Object Storage.</para></listitem>
-            
+            <listitem><para>Configuring Cyberduck for connecting to OpenStack Object Storage.</para></listitem>            
             <listitem><para>Copying files to the cloud.</para></listitem>
-            
         </itemizedlist>
         <section xml:id="part-i-setting-up-secure-access">
-            
             <title>Part I: Setting Up Secure Access</title>
             <para>In this part, we'll get the proxy server running with SSL on the Object Storage
                 installation. It's a requirement for using Cyberduck as a client interface to Object
@@ -39,13 +34,13 @@
                 self-signed for the tutorial since we can do the extra steps to have Cyberduck
                 accept it. Creating a self-signed cert can usually be done with these commands on
                 the proxy server: </para>
-                <literallayout class="monospaced">cd /etc/swift
-openssl req -new -x509 -nodes -out cert.crt -keyout cert.key</literallayout> 
+                <screen><prompt>$</prompt><userinput>cd /etc/swift</userinput>
+<prompt>$</prompt><userinput>openssl req -new -x509 -nodes -out cert.crt -keyout cert.key</userinput>     </screen> 
                 
             <para>Ensure these generated files are in /etc/swift/cert.crt and /etc/swift/cert.key. </para>
             <para>You also should configure your iptables to enable https traffic. Here's an example
                 setup that works.</para>
-            <literallayout class="monospaced">Chain INPUT (policy ACCEPT 0 packets, 0 bytes)
+            <programlisting>Chain INPUT (policy ACCEPT 0 packets, 0 bytes)
  pkts bytes target     prot opt in     out     source               destination         
 76774 1543M ACCEPT     all  --  lo     any     localhost            anywhere            
  416K  537M ACCEPT     all  --  any    any     anywhere             anywhere            state RELATED,ESTABLISHED 
@@ -59,19 +54,21 @@ Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
     0     0 DROP       all  --  any    any     anywhere             anywhere            
 
 Chain OUTPUT (policy ACCEPT 397K packets, 1561M bytes)
- pkts bytes target     prot opt in     out     source               destination   </literallayout>
+ pkts bytes target     prot opt in     out     source               destination               </programlisting>
             <para>If you don't have access to the Object Storage installation to configure these
                 settings, ask your service provider to set up secure access for you. </para><para>Then, edit your proxy-server.conf file to include the following in the [DEFAULT] sections. </para>
-            <literallayout class="monospaced">[DEFAULT]                           
+            <programlisting>
+[DEFAULT]                           
 bind_port = 443
 cert_file = /etc/swift/cert.crt
-key_file = /etc/swift/cert.key </literallayout>
+key_file = /etc/swift/cert.key 
+            </programlisting>
             <para>Also, make sure you use https: for all references to the URL for the server in the
                 .conf files as needed.</para>
             <para>Verify that you can connect using the Public URL to Object Storage by using the
                 "swift" tool:</para>
             <para>
-                <literallayout class="monospaced">swift -A https://yourswiftinstall.com:11000/v1.0 -U test:tester -K testing stat</literallayout>
+                <screen><prompt>$</prompt><userinput>swift -A https://yourswiftinstall.com:11000/v1.0 -U test:tester -K testing stat</userinput></screen>
             </para>
           
                 <para>Okay, you've created the access that Cyberduck expects for your Object Storage
@@ -81,6 +78,13 @@ key_file = /etc/swift/cert.key </literallayout>
         <section xml:id="part-ii-configuring-cyberduck">
             
             <title>Part II: Configuring Cyberduck</title>
+            <note>
+                <para> You can ensure to have the latest instructions for Cyberduck configuration by
+                    reading the official tutorial from the <link
+                        xlink:href="http://trac.cyberduck.ch/wiki/help/en/howto/openstack">Cyberduck
+                        website</link>
+                </para>
+            </note>
             <para>Next, you want to change the context of the URL from the default /v1.0 by opening
                 a Terminal window and using <code>defaults write ch.sudo.cyberduck
                     cf.authentication.context &lt;string></code> to change the URL. Substitute
