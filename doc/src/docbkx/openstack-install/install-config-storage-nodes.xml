@@ -21,15 +21,18 @@
         </listitem>
         <listitem><para>For every device on the node, setup the XFS volume (/dev/sdb is used
             as an example):</para>
-            <para><literallayout class="monospaced">fdisk /dev/sdb  (set up a single partition)
-mkfs.xfs -i size=1024 /dev/sdb1
+            <para><screen><prompt>#</prompt><userinput>fdisk /dev/sdb</userinput></screen>(set up a
+                single partition)
+                <programlisting>mkfs.xfs -i size=1024 /dev/sdb1
 echo "/dev/sdb1 /srv/node/sdb1 xfs noatime,nodiratime,nobarrier,logbufs=8 0 0" &gt;&gt; /etc/fstab
 mkdir -p /srv/node/sdb1
 mount /srv/node/sdb1
-chown -R swift:swift /srv/node</literallayout></para>
+chown -R swift:swift /srv/node</programlisting>
+            </para>
         </listitem>
         <listitem><para>Create /etc/rsyncd.conf:</para>
-            <para><literallayout class="monospaced">uid = swift
+            <para>
+                <programlisting>uid = swift
 gid = swift
 log file = /var/log/rsyncd.log
 pid file = /var/run/rsyncd.pid
@@ -51,22 +54,24 @@ lock file = /var/lock/container.lock
 max connections = 2
 path = /srv/node/
 read only = false
-lock file = /var/lock/object.lock</literallayout></para>
+lock file = /var/lock/object.lock         </programlisting>
+            </para>
         </listitem>
-        <listitem><para>Edit the following line in /etc/default/rsync:</para>
-            <para><literallayout class="monospaced">RSYNC_ENABLE = true</literallayout></para>
-            
+        <listitem>
+            <para>Edit the following line in /etc/default/rsync:</para>
+            <para>
+                <literallayout class="monospaced">RSYNC_ENABLE = true</literallayout></para>
         </listitem>
         <listitem><para>Start rsync daemon:</para>
-            <para><literallayout class="monospaced">service rsync start</literallayout></para>
-            
+            <para><screen><prompt>#</prompt><userinput>service rsync start</userinput></screen></para>
             <note><title>Note</title>
                 <para>The rsync daemon requires no authentication, so it should be run on
                     a local, private network.</para></note>
-            
         </listitem>
-        <listitem><para>Create /etc/swift/account-server.conf:</para>
-            <para><literallayout class="monospaced">[DEFAULT]
+        <listitem>
+            <para>Create /etc/swift/account-server.conf:</para>
+            <para>
+                <programlisting>[DEFAULT]
 bind_ip = &lt;STORAGE_LOCAL_NET_IP&gt;
 workers = 2
 
@@ -80,12 +85,13 @@ use = egg:swift#account
 
 [account-auditor]
 
-[account-reaper]</literallayout></para>
+[account-reaper]</programlisting></para>
             
         </listitem>
-        
-        <listitem><para>Create /etc/swift/container-server.conf:</para>
-            <para><literallayout class="monospaced">[DEFAULT]
+        <listitem>
+            <para>Create /etc/swift/container-server.conf:</para>
+            <para>
+                <programlisting>[DEFAULT]
 bind_ip = &lt;STORAGE_LOCAL_NET_IP&gt;
 workers = 2
 
@@ -99,11 +105,13 @@ use = egg:swift#container
 
 [container-updater]
 
-[container-auditor]</literallayout></para>
-            
+[container-auditor]</programlisting>
+            </para>
         </listitem>
-        <listitem><para>Create /etc/swift/object-server.conf:</para>
-            <para><literallayout class="monospaced">[DEFAULT]
+        <listitem>
+            <para>Create /etc/swift/object-server.conf:</para>
+            <para>
+                <programlisting>[DEFAULT]
 bind_ip = &lt;STORAGE_LOCAL_NET_IP&gt;
 workers = 2
 
@@ -119,13 +127,13 @@ use = egg:swift#object
 
 [object-auditor]
 
-[object-expirer]</literallayout></para>
-            
-            
+[object-expirer]</programlisting>
+            </para>
         </listitem>
-        
-        <listitem><para>Start the storage services:</para>
-            <para><literallayout class="monospaced">swift-init object-server start
+        <listitem>
+            <para>Start the storage services:</para>
+            <para>
+                <programlisting>swift-init object-server start
 swift-init object-replicator start
 swift-init object-updater start
 swift-init object-auditor start
@@ -135,8 +143,8 @@ swift-init container-updater start
 swift-init container-auditor start
 swift-init account-server start
 swift-init account-replicator start
-swift-init account-auditor start</literallayout></para>
-            
+swift-init account-auditor start</programlisting>
+            </para>
         </listitem>
     </orderedlist>
 </section>

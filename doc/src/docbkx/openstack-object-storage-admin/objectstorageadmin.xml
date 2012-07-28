@@ -1702,7 +1702,7 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
             <para>The quickest way to try out this feature is use the included swift OpenStack
                 Object Storage client tool. You can use the -S option to specify the segment size to use
                 when splitting a large file. For example:</para>
-            <literallayout>swift upload test_container -S 1073741824 large_file</literallayout>
+            <screen><prompt>#</prompt><userinput>swift upload test_container -S 1073741824 large_file</userinput></screen>
             
             <para>This would split the large_file into 1G segments and begin uploading those
                 segments in parallel. Once all the segments have been uploaded, swift will then
@@ -1750,23 +1750,17 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                 upload of the new segments, the original manifest will still be available to
                 download the first set of segments.</para>
             <para>Here's an example using curl with tiny 1-byte segments:</para>
-            <literallayout>
-            # First, upload the segments
-curl -X PUT -H 'X-Auth-Token: &lt;token&gt;' \
-    http://&lt;storage_url&gt;/container/myobject/1 --data-binary '1'
-curl -X PUT -H 'X-Auth-Token: &lt;token&gt;' \
-    http://&lt;storage_url&gt;/container/myobject/2 --data-binary '2'
-curl -X PUT -H 'X-Auth-Token: &lt;token&gt;' \
-    http://&lt;storage_url&gt;/container/myobject/3 --data-binary '3'
-
-# Next, create the manifest file
-curl -X PUT -H 'X-Auth-Token: &lt;token&gt;' \
-    -H 'X-Object-Manifest: container/myobject/' \
-    http://&lt;storage_url&gt;/container/myobject --data-binary ''
-
-# And now we can download the segments as a single object
-curl -H 'X-Auth-Token: &lt;token&gt;' \
-    http://&lt;storage_url&gt;/container/myobject</literallayout>
+            <para> # First, upload the segments
+                <screen>
+<prompt>$</prompt><userinput>curl -X PUT -H 'X-Auth-Token: &lt;token&gt;' http://&lt;storage_url&gt;/container/myobject/1 --data-binary '1'</userinput>
+<prompt>$</prompt><userinput>curl -X PUT -H 'X-Auth-Token: &lt;token&gt;' http://&lt;storage_url&gt;/container/myobject/2 --data-binary '2'</userinput>
+<prompt>$</prompt><userinput>curl -X PUT -H 'X-Auth-Token: &lt;token&gt;' http://&lt;storage_url&gt;/container/myobject/3 --data-binary '3'</userinput>
+</screen>
+                # Next, create the manifest file curl -X PUT -H 'X-Auth-Token: &lt;token&gt;' \ -H
+                'X-Object-Manifest: container/myobject/' \
+                http://&lt;storage_url&gt;/container/myobject --data-binary '' # And now we can
+                download the segments as a single object curl -H 'X-Auth-Token: &lt;token&gt;' \
+                http://&lt;storage_url&gt;/container/myobject</para>
                 
         </section>
         <section xml:id="additional-notes-on-large-objects">
@@ -1973,30 +1967,34 @@ curl -H 'X-Auth-Token: &lt;token&gt;' \
             <listitem><para>PUT Object</para></listitem>
             <listitem><para>PUT Object (Copy)</para></listitem></itemizedlist>
             
-            <para>To add this middleware to your configuration, add the swift3 middleware in front of the auth middleware, and before any other middleware that look at swift requests (like rate limiting).
-            </para>
+            <para>To add this middleware to your configuration, add the swift3 middleware in front
+            of the auth middleware, and before any other middleware that look at swift requests
+            (like rate limiting). </para>
     <para>Ensure that your proxy-server.conf file contains swift3 in the pipeline and the
             [filter:swift3] section, as shown below:</para>
-        <literallayout class="monospaced">[pipeline:main]
-        pipeline = healthcheck cache swift3 swauth proxy-server
-       
-        [filter:swift3]
-        use = egg:swift#swift3
-        </literallayout>
-    <para>Next, configure the tool that you use to connect to the S3 API. For S3curl, for example, you'll need to add your host IP information by adding y our host IP to the @endpoints array (line 33 in s3curl.pl):</para>
+        <programlisting>
+[pipeline:main]
+pipeline = healthcheck cache swift3 swauth proxy-server
+      
+[filter:swift3]
+use = egg:swift#swift3
+        </programlisting>
+    <para>Next, configure the tool that you use to connect to the S3 API. For S3curl, for example,
+            you'll need to add your host IP information by adding y our host IP to the @endpoints
+            array (line 33 in s3curl.pl):</para>
        
         <literallayout class="monospaced">my @endpoints = ( '1.2.3.4');</literallayout>
         <para>Now you can send commands to the endpoint, such as:</para>
-        <literallayout class="monospaced">
-        ./s3curl.pl - 'myacc:myuser' -key mypw -get - -s -v http://1.2.3.4:8080
-        </literallayout>
+        <screen>
+<prompt>$</prompt><userinput>./s3curl.pl - 'myacc:myuser' -key mypw -get - -s -v http://1.2.3.4:8080</userinput>
+        </screen>
         <para>To set up your client, the access key will be the concatenation of the account and user
             strings that should look like test:tester, and the secret access key is the account
             password. The host should also point to the Swift storage node's hostname. It also will
             have to use the old-style calling format, and not the hostname-based container format.
             Here is an example client setup using the Python boto library on a locally installed
             all-in-one Swift installation. </para>
-        <literallayout class="monospaced">
+        <programlisting>
 connection = boto.s3.Connection(
     aws_access_key_id='test:tester',
     aws_secret_access_key='testing',
@@ -2004,8 +2002,8 @@ connection = boto.s3.Connection(
     host='127.0.0.1',
     is_secure=False,
     calling_format=boto.s3.connection.OrdinaryCallingFormat())
-        </literallayout></section>
-    
+        </programlisting>
+    </section>
     <section xml:id="managing-openstack-object-storage-with-swift-cli">
         
         <title>Managing OpenStack Object Storage with CLI Swift</title><para>In the Object Store (swift) project there is a tool that can perform a variety of tasks on
@@ -2074,131 +2072,132 @@ connection = boto.s3.Connection(
                 some quick log file analysis. First let’s use swift to setup some data for the
                 examples. The “logtest” directory contains four log files with the following line
                 format.</para>
+                <para>
+                    <literallayout>Files:
+ 2010-11-16-21_access.log
+ 2010-11-16-22_access.log
+ 2010-11-15-21_access.log
+ 2010-11-15-22_access.log
                 
-                <para><literallayout>files:
-                2010-11-16-21_access.log
-                2010-11-16-22_access.log
-                2010-11-15-21_access.log
-                2010-11-15-22_access.log
-                
-                log lines:
-                Nov 15 21:53:52 lucid64 proxy-server - 127.0.0.1 15/Nov/2010/22/53/52 DELETE /v1/AUTH_cd4f57824deb4248a533f2c28bf156d3/2eefc05599d44df38a7f18b0b42ffedd HTTP/1.0 204 - - test%3Atester%2CAUTH_tkcdab3c6296e249d7b7e2454ee57266ff - - - txaba5984c-aac7-460e-b04b-afc43f0c6571 - 0.0432</literallayout></para>
-                
-                
+ Log lines:
+ Nov 15 21:53:52 lucid64 proxy-server - 127.0.0.1 15/Nov/2010/22/53/52 DELETE /v1/AUTH_cd4f57824deb4248a533f2c28bf156d3/2eefc05599d44df38a7f18b0b42ffedd HTTP/1.0 204 - \
+- test%3Atester%2CAUTH_tkcdab3c6296e249d7b7e2454ee57266ff - - - txaba5984c-aac7-460e-b04b-afc43f0c6571 - 0.0432
+                   </literallayout>
+                </para>
                 <para>The swift tool can easily upload the four log files into a container named
-                “logtest”:</para><para>
-                <literallayout>
-                $ cd logs
-                $ swift -A http://swift-auth.com:11000/v1.0 -U test:tester -K \
-                testing upload logtest *.log
-                2010-11-16-21_access.log
-                2010-11-16-22_access.log
-                2010-11-15-21_access.log
-                2010-11-15-22_access.log
+                “logtest”:</para>
+            <para><screen>
+<prompt>$</prompt><userinput>cd logs</userinput>
+<prompt>$</prompt><userinput>swift -A http://swift-auth.com:11000/v1.0 -U test:tester -K testing upload logtest *.log</userinput>
+                </screen>
+                <programlisting>
+2010-11-16-21_access.log
+2010-11-16-22_access.log
+2010-11-15-21_access.log
+2010-11-15-22_access.log
+                </programlisting>
                 
-                get statistics on the account:
-                $ swift -A http://swift-auth.com:11000/v1.0 -U test:tester -K \
-                testing -q stat
-                Account: AUTH_cd4f57824deb4248a533f2c28bf156d3
-                Containers: 1
-                Objects: 4
-                Bytes: 5888268
+                Get statistics on the account:
+                <screen><prompt>$</prompt><userinput>swift -A http://swift-auth.com:11000/v1.0 -U test:tester -K testing -q stat</userinput></screen>
+                <programlisting>
+Account: AUTH_cd4f57824deb4248a533f2c28bf156d3
+Containers: 1
+Objects: 4
+Bytes: 5888268
+                </programlisting>
                 
-                get statistics on the container:
-                $ swift -A http://swift-auth.com:11000/v1.0 -U test:tester -K \
-                testing stat logtest
-                Account: AUTH_cd4f57824deb4248a533f2c28bf156d3
-                Container: logtest
-                Objects: 4
-                Bytes: 5864468
-                Read ACL:
-                Write ACL:
-                
-                list all the objects in the container:
-                $ swift -A http:///swift-auth.com:11000/v1.0 -U test:tester -K \
-                testing list logtest
-                2010-11-15-21_access.log
-                2010-11-15-22_access.log
-                2010-11-16-21_access.log
-                2010-11-16-22_access.log</literallayout></para>
-            <para>These next three examples use the -o —output option with (-) to help answer
+                Get statistics on the container:
+                <screen><prompt>$</prompt><userinput>swift -A http://swift-auth.com:11000/v1.0 -U test:tester -K testing stat logtest</userinput> </screen><programlisting>Account: AUTH_cd4f57824deb4248a533f2c28bf156d3
+Container: logtest
+Objects: 4
+Bytes: 5864468
+Read ACL:
+Write ACL:
+                </programlisting>
+                List all the objects in the container:
+                <screen><prompt>$</prompt><userinput>swift -A http:///swift-auth.com:11000/v1.0 -U test:tester -K testing list logtest</userinput></screen><programlisting>2010-11-15-21_access.log
+2010-11-15-22_access.log
+2010-11-16-21_access.log
+2010-11-16-22_access.log</programlisting>
+            </para>
+            <para>
+                These next three examples use the -o —output option with (-) to help answer
                 questions about the uploaded log files. The swift command will download an object,
                 stream it to awk to determine the breakdown of requests by return code for
                 everything during 2200 on November 16th, 2010. Based on the log line format column 9
                 is the type of request and column 12 is the return code. After awk processes the
                 data stream it is piped to sort and then uniq -c to sum up the number of occurrences
                 for each combination of request type and return code.</para>
-                    
-                    <para><literallayout>$ swift -A http://swift-auth.com:11000/v1.0 -U test:tester -K \
-                    testing download -o - logtest 2010-11-16-22_access.log \
-                    | awk ‘{ print $9”-“$12}’ | sort | uniq -c
-                    
-                    805 DELETE-204
-                    12 DELETE-404
-                    2 DELETE-409
-                    723 GET-200
-                    142 GET-204
-                    74 GET-206
-                    80 GET-304
-                    34 GET-401
-                    5 GET-403
-                    18 GET-404
-                    166 GET-412
-                    2 GET-416
-                    50 HEAD-200
-                    17 HEAD-204
-                    20 HEAD-401
-                    8 HEAD-404
-                    30 POST-202
-                    25 POST-204
-                    22 POST-400
-                    6 POST-404
-                    842 PUT-201
-                    2 PUT-202
-                    32 PUT-400
-                    4 PUT-403
-                    4 PUT-404
-                    2 PUT-411
-                    6 PUT-412
-                    6 PUT-413
-                    2 PUT-422
-                    8 PUT-499
-                    </literallayout></para>
-                    
-                    <para>This example uses a bash for loop with awk, swift with its -o —output
+            <para><screen>
+<prompt>$</prompt><userinput>swift -A http://swift-auth.com:11000/v1.0 -U test:tester -K testing download -o - logtest 2010-11-16-22_access.log | awk ‘{ print $9”-“$12}’ | sort | uniq -c</userinput>
+            </screen>
+                <programlisting>
+805 DELETE-204
+12 DELETE-404
+2 DELETE-409
+723 GET-200
+142 GET-204
+74 GET-206
+80 GET-304
+34 GET-401
+5 GET-403
+18 GET-404
+166 GET-412
+2 GET-416
+50 HEAD-200
+17 HEAD-204
+20 HEAD-401
+8 HEAD-404
+30 POST-202
+25 POST-204
+22 POST-400
+6 POST-404
+842 PUT-201
+2 PUT-202
+32 PUT-400
+4 PUT-403
+4 PUT-404
+2 PUT-411
+6 PUT-412
+6 PUT-413
+2 PUT-422
+8 PUT-499
+                    </programlisting>
+                    </para>
+            <para>This example uses a bash for loop with awk, swift with its -o —output
                 option with a hyphen (-) to find out how many PUT requests are in each log file.
                 First create a list of objects by running swift with the list command on the
                 “logtest” container; then for each item in the list run swift with download -o -
                 then pipe the output into grep to filter the put requests and finally into wc -l to
-                count the lines.</para>
-            <para><literallayout>$ for f in `swift -A http://swift-auth.com:11000/v1.0 -U test:tester -K testing list logtest` ; \
-                        do  echo -ne “PUTS - ” ; swift -A http://swift-auth.com:11000/v1.0 -U test:tester -K \
-                        testing download -o -  logtest $f | grep PUT | wc -l ; done
-                        
-                        2010-11-15-21_access.log - PUTS - 402
-                        2010-11-15-22_access.log - PUTS - 1091
-                        2010-11-16-21_access.log - PUTS - 892
-                        2010-11-16-22_access.log - PUTS - 910
-                        </literallayout></para>
-                        
-                        <para>By adding the -p —prefix option a prefix query is performed on the
+                count the lines.
+            </para>
+            <para>
+                <screen><prompt>$</prompt><userinput>for f in `swift -A http://swift-auth.com:11000/v1.0 -U test:tester -K testing list logtest` ; \
+        do  echo -ne “PUTS - ” ; swift -A http://swift-auth.com:11000/v1.0 -U test:tester -K testing download -o -  logtest $f | grep PUT | wc -l ; \
+    done</userinput></screen>
+                <programlisting>
+2010-11-15-21_access.log - PUTS - 402
+2010-11-15-22_access.log - PUTS - 1091
+2010-11-16-21_access.log - PUTS - 892
+2010-11-16-22_access.log - PUTS - 910
+                </programlisting>
+            </para>
+            <para>By adding the -p —prefix option a prefix query is performed on the
                 list to return only the object names that begin with a specific string. Let’s
                 determine out how many PUT requests are in each object with a name beginning with
                 “2010-11-15”. First create a list of objects by running swift with the list command
                 on the “logtest” container with the prefix option -p 2010-11-15. Then on each of
                 item(s) returned run swift with the download -o - then pipe the output to grep and
                 wc as in the previous example. The echo command is added to display the object
-                name.</para>
-                        
-                        <para><literallayout>$ for f in `swift -A http://swift-auth.com:11000/v1.0 -U test:tester -K testing list  \
-                        -p 2010-11-15 logtest` ; do  echo -ne “$f - PUTS - ” ;  \
-                        swift -A http://127.0.0.1:11000/v1.0 -U test:tester -K testing  \
-                        download -o - logtest $f | grep PUT | wc -l ; done
-                        
-                        2010-11-15-21_access.log - PUTS - 402
-                        2010-11-15-22_access.log - PUTS - 910
-                        
-                        </literallayout></para>
+                name.
+            </para>
+            <para>
+                <screen><prompt>$</prompt><userinput> for f in `swift -A http://swift-auth.com:11000/v1.0 -U test:tester -K testing list -p 2010-11-15 logtest` ; \
+        do  echo -ne “$f - PUTS - ” ; swift -A http://127.0.0.1:11000/v1.0 -U test:tester -K testing download -o - logtest $f | grep PUT | wc -l ; \
+      done</userinput></screen>
+                <programlisting>2010-11-15-21_access.log - PUTS - 402
+2010-11-15-22_access.log - PUTS - 910                </programlisting>
+            </para>
                         <para>The swift utility is simple, scalable, flexible and provides useful
                 solutions all of which are core principles of cloud computing; with the -o output
                 option being just one of its many features. </para></section></section>
