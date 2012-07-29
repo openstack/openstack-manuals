@@ -146,8 +146,81 @@
         
         <para>To achieve the shared-nothing property with multiple copies of the same component, OpenStack Compute keeps all the cloud system state in a database.</para></section>
     <section xml:id="storage-and-openstack-compute">
-            <title>Block Storage and OpenStack Compute</title><para>A ‘volume’ is a detachable block storage device. You can think of it as a USB hard drive. It
-            can only be attached to one instance at a time, so it does not work like a SAN. If you
-            wish to expose the same volume to multiple instances, you will have to use an NFS or
-            SAMBA share from an existing instance. </para><para>Every instance larger than m1.tiny starts with some local storage (up to 160GB for m1.xlarge).
-            This storage is currently the second partition on the root drive. </para></section></chapter>
+      <title>Block Storage and OpenStack Compute</title> 
+
+      <para>OpenStack provides two classes of block storage,
+      "ephemeral" storage and persistent "volumes".  Ephemeral storage
+      exists only for the life of an instance, it will persist across
+      reboots of the guest operating system but when the instance is
+      deleted so is the associated storage.  All instances have some
+      ephemeral storage.  Volumes are persistent virtualized block
+      devices independent of any particular instance.  Volumes may be
+      attached to a single instance at a time, but may be detached or
+      reattached to a different instance while retaining all data,
+      much like a USB drive.</para>
+      
+      <simplesect xml:id="about-ephemeral-storage">
+	<title>Ephemeral Storage</title>
+
+	<para>Ephemeral storage is associated with a single unique
+	instance.  Its size is defined by the flavor of the
+	instance.</para>
+
+	<para>Data on ephemeral storage ceases to exist when the
+	instance it is associated with goes away. In the typical use
+	case an instance's root filesystem is stored on ephemeral
+	storage. This is often an unpleasant surprise for people
+	unfamiliar with the cloud model of computing.</para>
+
+	<para>In addition to the ephemeral root volume all flavors
+	except the smallest, m1.tiny, provide an additional ephemeral
+	block device varying from 20G for the m1.small through 160G
+	for the m1.xlarge by default - these sizes are configurable.
+	This is presented as a raw block device with no partition
+	table or filesystem.  Cloud aware operating system images may
+	discover, format, and mount this device.  For example the
+	cloud-init package included in Ubuntu's stock cloud images
+	will format this space as an ext3 filesystem and mount it on
+	/mnt. It is important to note this a feature of the guest
+	operating system. OpenStack only provisions the raw
+	storage.</para>
+
+      </simplesect>
+
+      <simplesect xml:id="about-persistent-storage">
+	<title>Volume Storage</title>
+
+	<para>Volume storage is independent or any particular instance
+	and is persistent. Volumes are user created and within quota
+	and availability limits may be of any arbitrary size.</para>
+
+	<para>When first created volumes are raw block devices with no
+	partition table and no filesystem.  They must be attached to
+	an instance to be partitioned and/or formatted.  Once this is
+	done they may be used much like an external disk drive.
+	Volumes may attached to only one instance at a time, but may
+	be detached and reattached to either the same or different
+	instances.</para>
+
+	<para>It is possible to configure a volume so that it is
+	bootable and provides a persistent virtual instance similar to
+	traditional non-cloud based virtualization systems.  In this
+	use case the resulting instance may sill have ephemeral
+	storage depending on the flavor selected, but the root
+	filesystem (and possibly others) will be on the persistent
+	volume and thus state will be maintained even if the instance
+	it shutdown.  Details of this configuration are discussed in
+	the <link linkend="boot-from-volume">Boot From Volume</link>
+	section of this manual.</para>
+
+	<para>Volumes do not provide concurrent access from multiple
+	instances.  For that you need either a traditional network
+	filesystem like NFS or CIFS or a cluster filesystem such as
+	GlusterFS.  These may be built within an OpenStack cluster or
+	provisioned out side of it, but are not features provided by
+	the OpenStack software.</para>
+
+      </simplesect>
+
+    </section>
+</chapter>
