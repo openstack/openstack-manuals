@@ -438,15 +438,13 @@ iface br100 inet dhcp
                 very long time for you to create your initial network,
                 as an entry for each IP will be created in the
                 database. </para>
-            <para>If you have an unused interface on your hosts that
+            <para>If you have an unused interface on your hosts (eg eth2) that
                 has connectivity with no IP address, you can simply
                 tell FlatDHCP to bridge into the interface by
                 specifying
                         <literal>flat_interface=<replaceable>&lt;interface></replaceable></literal>
                 in your configuration file. The network host will
-                automatically add the gateway ip to this bridge. You
-                can also add the interface to br100 manually and not
-                set flat_interface. If this is the case for you, edit
+                automatically add the gateway ip to this bridge. If this is the case for you, edit
                 your nova.conf file to contain the following lines: </para>
             <para>
                 <programlisting>
@@ -460,6 +458,8 @@ flat_interface=eth2
 flat_injected=False
 public_interface=eth0
                 </programlisting>
+                You can also add the unused interface to br100 manually and not
+                set flat_interface. 
             </para>
             <para>Integrate your network interfaces to match this
                 configuration.</para>
