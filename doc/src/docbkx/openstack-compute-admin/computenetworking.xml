@@ -744,17 +744,6 @@ Options:
                 a list of available fixed IP addresses. You can view the list of fixed IP addresses
                 and their associations with active virtual machines by doing, as
                 root:<screen><prompt>#</prompt> <userinput>nova-manage fix list</userinput></screen></para>
-            <para>
-                <warning>
-                    <para>Due to <link xlink:href="https://bugs.launchpad.net/nova/+bug/754900"
-                            >Compute bug #754900</link>, deleting a network with the
-                            <command>nova-manage network delete</command> command does not delete
-                        the associated fixed IP addresses. As a workaround, these fixed IP addresses
-                        can be deleted by connecting to the <literal>nova</literal> database and
-                        issuing the SQL query (this example assumes the deleted network id is
-                            <literal>1</literal><screen><userinput>DELETE from fixed_ips where network_id=1;</userinput></screen></para>
-                </warning>
-            </para>
             <para>If users need to access the instances in their project across a VPN, a special VPN
                 instance (code named cloudpipe) needs to be created as described in the section
                 titled <link linkend="cloudpipe-per-project-vpns">Cloudpipe — Per Project
