@@ -1517,8 +1517,25 @@ enabled_apis=ec2,osapi_compute,osapi_volume,metadata</programlisting></para>
                     <listitem>
                         <para>Create a <systemitem class="service">dnsmasq</systemitem>
                             configuration file (e.g., <filename>/etc/dnsmasq-nova.conf</filename>)
-                            that contains the IP address of the external gateway using the following
-                            syntax:<programlisting>dhcp-option=3,<replaceable>&lt;ip of gateway></replaceable></programlisting></para>
+                            that contains the IP address of the external gateway. If running in
+                            FlatDHCP mode, assuming the IP address of the hardware gateway was
+                            172.16.100.1, the file would contain the
+                            line:<programlisting>dhcp-option=option:router,<replaceable>172.16.100.1</replaceable></programlisting></para>
+                        <para>If running in VLAN mode, a separate router must be specified for each
+                            network. The networks are identified by the <literal>--label</literal>
+                            argument when calling <command>nova-manage network create</command> to
+                            create the networks as documented in the <link
+                                linkend="configuring-vlan-networking">Configuring VLAN Networking
+                                subsection</link>. Assuming you have three VLANs, that are labeled
+                                <literal>red</literal>, <literal>green</literal>, and
+                                <literal>blue</literal>, with corresponding hardware routers at
+                                <literal>172.16.100.1</literal>, <literal>172.16.101.1</literal> and
+                                <literal>172.16.102.1</literal>, the <systemitem class="service"
+                                >dnsmasq</systemitem>configuration file  (e.g.,
+                                <filename>/etc/dnsmasq-nova.conf</filename>) would contain the
+                            following:<programlisting>dhcp-option=tag:'red',option:router,172.16.100.1
+dhcp-option=tag:'green',option:router,172.16.101.1
+dhcp-option=tag:'blue',option:router,172.16.102.1</programlisting></para>
                     </listitem>
                     <listitem>
                         <para>Edit <filename>/etc/nova/nova.conf</filename> to specify the location
@@ -1548,11 +1565,6 @@ enabled_apis=ec2,osapi_compute,osapi_volume,metadata</programlisting></para>
                             for virtual machines is routable.</para>
                     </listitem>
                 </orderedlist></para>
-            <warning>
-                <para>The hardware gateway option is not available when running in VLAN mode, as it
-                    can only be used to specify a single gateway for all instances, and VLAN mode
-                    requires a separate gateway for each network.</para>
-            </warning>
         </simplesect>
 
     </section>
