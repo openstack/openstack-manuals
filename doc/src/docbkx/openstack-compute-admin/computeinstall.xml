@@ -284,4 +284,39 @@
         next to the manual title.</para>
     </section>
   </section>
+
+  <section xml:id="manual-install-on-xenserver">
+    <title>Installing on Citrix XenServer</title>
+
+    <para>When using OpenStack Compute with Citrix XenServer or XCP hypervisor,
+    OpenStack Compute should be installed in a virtual machine running on
+    your hypervisor, rather than installed directly on the hypervisor,
+    as you would do when using the Libvirt driver.
+    For more information see:
+    <quote><link linkend="xenapi-install" endterm="xenapi-install.title"/></quote>.
+    </para>
+    
+    <para>
+    Given how you should deploy OpenStack with XenServer, the first step when
+    setting up the compute nodes in your OpenStack cloud
+    is to install XenServer and install the required XenServer plugins.
+    You can install XCP by installing Debian or Ubuntu, but generally rather
+    than installing the operating system of your choice on your compute nodes,
+    you should first install XenServer. 
+    For more information see:
+    <quote><link linkend="xenapi-deployment-architecture" endterm="xenapi-deployment-architecture.title"/></quote>.
+    </para>
+
+    <para>Once you have installed XenServer and the XenAPI plugins
+    on all your compute nodes, you next need to create a virtual machine
+    on each of those compute nodes.
+    This must be a Linux virtual machine running in para-virtualized mode.
+    It is inside each of these VMs that you will run the OpenStack components.
+    You can follow the previous distribution specific instructions to get the
+    OpenStack code running in your Virtual Machine.
+    Once installed, you will need to configure OpenStack Compute to talk to
+    your XenServer or XCP installation. For more information see:
+    <quote><link linkend="introduction-to-xen" endterm="introduction-to-xen.title"/></quote>.
+    </para>
+  </section>
 </chapter>
