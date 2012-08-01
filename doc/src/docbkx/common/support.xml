@@ -146,6 +146,27 @@
             Next, check the /var/log/libvirt/qemu/i-ze0bnh1q.log file to see if it exists and has any useful error messages in it.</para>
             
             <para>Finally, from the instances/i-ze0bnh1q directory, try <code>virsh create libvirt.xml</code> and see if you get an error there.</para>
-    </section></section>
+    </section>
+        <section xml:id="reset-state">
+            <title>Manually reset the state of an instance</title>
+            <para>If an instance gets stuck in an intermediate state (e.g., "deleting"), you can
+                manually reset the state of an instance using the <command>nova
+                    reset-state</command> command. This will reset it to an error state, which you
+                can then delete. For
+                example:<screen><prompt>$</prompt> <userinput>nova reset-state c6bbbf26-b40a-47e7-8d5c-eb17bf65c485</userinput>
+<prompt>$</prompt> <userinput>nova delete c6bbbf26-b40a-47e7-8d5c-eb17bf65c485</userinput></screen></para>
+            <para>You can also use the <literal>--active</literal> to force the instance back into
+                an active state instead of an error state, for example:<screen><prompt>$</prompt> <userinput>nova reset-state --active c6bbbf26-b40a-47e7-8d5c-eb17bf65c485</userinput></screen>
+                <note>
+                    <para>The version of the <command>nova</command> client that ships with Essex on
+                        most distributions does not support the <literal>reset-state</literal>
+                        command. You can download a more recent version of the
+                            <command>nova</command> client from PyPI. The package name is <link
+                            xlink:href="http://pypi.python.org/pypi/python-novaclient/"
+                            >python-novaclient</link>, which can be installed using a Python package
+                        tool such as pip.</para>
+                </note></para>
+        </section>
+ </section>
     
 </chapter>
