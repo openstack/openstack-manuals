@@ -481,8 +481,8 @@ public_interface=eth0
             <para>Here is an extract from a <filename>nova.conf</filename>
                 file in a system running the above setup:</para>
             <para>
-                <programlisting>
-network_manager=nova.network.manager.FlatDHCPManager
+                <programlisting>network_manager=nova.network.manager.FlatDHCPManager
+xenapi_vif_driver=nova.virt.xenapi.vif.(XenAPIBridgeDriver or XenAPIOpenVswitchDriver)
 flat_interface=eth1
 flat_network_bridge=xenbr2
 public_interface=eth3
@@ -493,8 +493,7 @@ flat_network_dhcp_start=10.0.0.2
 force_dhcp_release=True
 send_arp_for_ha=True
 flat_injected=False
-firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver
-                </programlisting>
+firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlisting>
             </para>
             <para>You should notice that
                 <literal>flat_interface</literal>
@@ -797,7 +796,7 @@ network_size=256                </programlisting>
                     file in a system running the above setup:</para>
                 <para>
                     <programlisting>network_manager=nova.network.manager.VlanManager
-network_driver=nova.virt.xenapi.vif.(XenAPIBridgeDriver or XenAPIOpenVswitchDriver)
+xenapi_vif_driver=nova.virt.xenapi.vif.(XenAPIBridgeDriver or XenAPIOpenVswitchDriver)
 vlan_interface=eth1
 public_interface=eth3
 multi_host=True
