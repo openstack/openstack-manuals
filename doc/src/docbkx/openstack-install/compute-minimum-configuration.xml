@@ -4,12 +4,11 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
     <title>Configuring OpenStack Compute</title>
-    <para>Many of the settings for Compute services are stored in
-        the <filename>/etc/nova/nova.conf</filename> file by default. Here are the
-        relevant settings for getting a minimal install running.
-        Refer to the OpenStack Compute Administration Manual for guidance
-        on more configuration options.
-
+    <para>Many of the settings for Compute services are stored in the
+            <filename>/etc/nova/nova.conf</filename> file by default on every node running any of
+        the nova-* services. This section describes the relevant settings for getting a minimal
+        install running. Refer to the OpenStack Compute Administration Manual for guidance on more
+        configuration options.</para>
         <note>
             <para>The default <filename>nova.conf</filename> format for
             Essex packages varies by distribution. Fedora packages use the
@@ -28,6 +27,10 @@ Options:
   --outfile=&lt;path&gt;  path for output file. Writes config to stdout if not
                     specified</computeroutput></screen>
         </note>
+
+    <para>In general, you can use the same nova.conf file across the controller and compute nodes.
+        The one exception is the <literal>my_ip</literal> configuration option, which must specify
+        the IP address of the specific host, as described below.
     </para>
     <para>The packages automatically do these steps for a user
         named nova, but if you are installing as another user you
@@ -75,14 +78,14 @@ flat_network_bridge=br100</programlisting>
         sections:</para>
     <para><programlisting><xi:include parse="text" href="samples/nova.conf"/>
 </programlisting></para>
-    <para>You also need to configure the api-paste.ini file to enable
-        Keystone as the Identity service. An example <link
-            linkend="api-paste-ini-file">api-paste.ini file</link> is
-        included in the Appendix. Update the
-            <filename>/etc/nova/api-paste.ini</filename> file
-        according to the sample file by inserting "service" for the
-        Service tenant and nova for the admin user and nova for the
-        admin password in the last three lines.</para>
+    <para><note>
+            <para>The <literal>my_ip</literal> configuration option will be different for each host,
+                edit it accordingly.</para>
+        </note>You also need to configure the api-paste.ini file to enable Keystone as the Identity
+        service. An example <link linkend="api-paste-ini-file">api-paste.ini file</link> is included
+        in the Appendix. Update the <filename>/etc/nova/api-paste.ini</filename> file according to
+        the sample file by inserting "service" for the Service tenant and nova for the admin user
+        and nova for the admin password in the last three lines.</para>
     <para>Stop the nova- services prior to running db sync, by running
         stop commands as root. Otherwise your logs show errors because
         the database has not yet been populated:</para>
