@@ -9,6 +9,7 @@
         the nova-* services. This section describes the relevant settings for getting a minimal
         install running. Refer to the OpenStack Compute Administration Manual for guidance on more
         configuration options.</para>
+
         <note>
             <para>The default <filename>nova.conf</filename> format for
             Essex packages varies by distribution. Fedora packages use the
@@ -17,7 +18,7 @@
             INI style format.</para>
             <para>You can automatically convert a <filename>nova.conf</filename>
             file from flag format to INI format using
-            <command>nova-manage</command>:</para>
+            <command>nova-manage</command>:
             <screen><prompt>$</prompt> <userinput>nova-manage config convert --help</userinput>
 <computeroutput>Usage: nova-manage config convert &lt;args&gt; [options]
 
@@ -26,12 +27,22 @@ Options:
   --infile=&lt;path&gt;  old-style flagfile to convert to config
   --outfile=&lt;path&gt;  path for output file. Writes config to stdout if not
                     specified</computeroutput></screen>
+        </para>
         </note>
-
     <para>In general, you can use the same nova.conf file across the controller and compute nodes.
-        The one exception is the <literal>my_ip</literal> configuration option, which must specify
-        the IP address of the specific host, as described below.
-    </para>
+        However, the following configuration options need to be changed on each comptue host: <itemizedlist>
+            <listitem>
+                <para><literal>my_ip</literal></para>
+            </listitem>
+            <listitem>
+                <para><literal>vncserver_listen</literal></para>
+            </listitem>
+            <listitem>
+                <para><literal>vncserver_proxyclient_address</literal></para>
+            </listitem>
+        </itemizedlist>For the above configuration options, you must use the IP address of the
+        specific compute host, not the cloud controller.</para>
+
     <para>The packages automatically do these steps for a user
         named nova, but if you are installing as another user you
         should ensure that the <filename>nova.conf</filename> file should have its
@@ -89,7 +100,7 @@ flat_network_bridge=br100</programlisting>
     <para>Stop the nova- services prior to running db sync, by running
         stop commands as root. Otherwise your logs show errors because
         the database has not yet been populated:</para>
-   
+
         <screen os="ubuntu">
 <prompt>#</prompt> <userinput>stop nova-api</userinput>
 <prompt>#</prompt> <userinput>stop nova-compute</userinput>
