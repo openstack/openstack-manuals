@@ -10,8 +10,18 @@
         install running. Refer to the OpenStack Compute Administration Manual for guidance on more
         configuration options.</para>
     <para>In general, you can use the same nova.conf file across the controller and compute nodes.
-        The one exception is the <literal>my_ip</literal> configuration option, which must specify
-        the IP address of the specific host, as described below.<note>
+        However, the following configuration options need to be changed on each comptue host: <itemizedlist>
+            <listitem>
+                <para><literal>my_ip</literal></para>
+            </listitem>
+            <listitem>
+                <para><literal>vncserver_listen</literal></para>
+            </listitem>
+            <listitem>
+                <para><literal>vncserver_proxyclient_address</literal></para>
+            </listitem>
+        </itemizedlist>For the above configuration options, you must use the IP address of the
+        specific compute host, not the cloud controller.<note>
             <para>In the Essex release, the <filename>nova.conf</filename> file format changed from
                 flags (<literal>--name=value</literal>) to INI file format
                     (<literal>name=value</literal>). The Compute service will function properly with
