@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- (C) 2012 OpenStack LLC., All Rights Reserved -->
+
+<application xmlns="http://wadl.dev.java.net/2009/02"
+             xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+             xmlns:wadl="http://wadl.dev.java.net/2009/02">
+
+    <resources base="https://servers.api.openstack.com/">
+        <resource id="version" path="v1.1">
+            <resource id="tenant_id" path="{tenant_id}">
+                <param name="tenant_id" style="template">
+                    <doc>
+                        <p xmlns="http://www.w3.org/1999/xhtml">
+                            The unique identifier of the tenant or account.
+                        </p>
+                    </doc>
+                </param>
+
+                <resource id="flavors" path="flavors">
+                    <method href="#createFlavor" />
+
+                    <resource id="flavor" path="{flavor_id}">
+                        <param name="flavor_id" style="template">
+                            <doc><p xmlns="http://www.w3.org/1999/xhtml">
+                              The unique identifier of the flavor.
+                            </p></doc>
+                        </param>
+                        <method href="#deleteFlavor" />
+                    </resource>
+
+                </resource>
+
+          </resource>
+        </resource>
+    </resources>
+
+    <method name="POST" id="createFlavor">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                Create a flavor.
+            </p>
+        </wadl:doc>
+
+        <request>
+            <param style="plain" name="name" required="true"> 
+                    <doc><p xmlns="http://www.w3.org/1999/xhtml">Enter a name for the new flavor you want to create</p></doc>
+                </param>
+                <param style="plain" name="ram" required="true">
+                    <doc><p xmlns="http://www.w3.org/1999/xhtml">Enter a MB value for the amount of RAM for this flavor.</p></doc>
+                </param>
+                <param style="plain" name="vcpus" required="true">
+                    <doc><p xmlns="http://www.w3.org/1999/xhtml">Enter a whole integer value for the virtual CPUs for the new flavor you want to create.</p></doc>
+                </param>
+                <param style="plain" name="disk" required="true">
+                    <doc><p xmlns="http://www.w3.org/1999/xhtml">Enter a GB value for the amount of disk space.</p></doc>
+                </param>
+                <param style="plain" name="id" required="true">
+                    <doc><p xmlns="http://www.w3.org/1999/xhtml">Enter a unique integer value for the identifier for the new flavor.</p></doc>
+                </param>
+            <representation mediaType="application/json">  
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/os-flavormanage-request.json" />
+                </doc>
+            </representation>
+        </request>
+
+        <response status="200">
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/os-flavormanage-response.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+    <method name="DELETE" id="deleteFlavor">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">Delete a flavor.</p>
+        </wadl:doc>
+        <response status="204" />
+    </method>
+
+</application>

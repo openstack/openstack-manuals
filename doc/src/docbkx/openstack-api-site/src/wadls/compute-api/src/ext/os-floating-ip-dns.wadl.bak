@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- (C) 2012 OpenStack LLC., All Rights Reserved -->
+
+<application xmlns="http://wadl.dev.java.net/2009/02"
+             xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+             xmlns:wadl="http://wadl.dev.java.net/2009/02">
+
+    <resources base="https://servers.api.openstack.com">
+        <resource id="version" type="#VersionDetails" path="v1.1">
+            <resource id="tenant_id" path="{tenant_id}">
+                <param name="tenant_id" style="template">
+                    <doc>
+                        <p xmlns="http://www.w3.org/1999/xhtml">
+                            The unique identifier of the tenant or account.
+                        </p>
+                    </doc>
+                </param>
+
+                <resource id="os-floating-ip-dns" path="os-floating-ip-dns">
+                    <method href="#ListDomains" />
+
+                    <resource path="{domain}">
+                        <param name="domain" style="template" required="true">
+                            <doc><p xmlns="http://www.w3.org/1999/xhtml">
+                                 Registered DNS Domain published by the DNS drivers.
+                            </p></doc>
+                        </param>
+                        <method href="#CreateDomain" />
+                        <method href="#DeleteDomain" />
+                        <resource id="entries" path="entries">
+                             <resource path="{name}">
+                                <param name="name" style="template" required="true">
+                                   <doc><p xmlns="http://www.w3.org/1999/xhtml">
+                                       DNS entry name assigned under a domain.
+                                   </p></doc>
+                                </param>
+                                <method href="#CreateEntry" />
+                                <method href="#FindUniqueEntry" />
+                                <method href="#DeleteEntry" />
+                             </resource>
+                             <resource path="{ip}">
+                                <method href="#FindEntriesbyIP" />
+                             </resource>
+                               
+                        </resource>
+                    </resource>
+                </resource>
+
+          </resource>
+        </resource>
+    </resources>
+
+    <method name="GET" id="ListDomains">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="List DNS Domains">
+            <p xmlns="http://www.w3.org/1999/xhtml">Get a list of registered DNS Domains published by the DNS drivers.</p>
+        </wadl:doc>
+        <response status="200">
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/floating_ip_dns_list_response.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+    <method name="PUT" id="CreateDomain">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="Create a Domain">
+            <p xmlns="http://www.w3.org/1999/xhtml">Create or modify a DNS domain.</p>
+        </wadl:doc>
+        <request>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/floating_ip_dns_create_domain_request.json" />
+                </doc>
+            </representation>
+        </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/floating_ip_dns_create_domain_response.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+    <method name="DELETE" id="DeleteDomain">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="Delete a Domain">
+            <p xmlns="http://www.w3.org/1999/xhtml">Delete a DNS domain and all associated host entries.</p>
+        </wadl:doc>
+        <response status="200" />
+    </method>
+
+    <method name="PUT" id="CreateEntry">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="Create DNS Entry">
+            <p xmlns="http://www.w3.org/1999/xhtml">Create or modify a DNS entry.</p>
+        </wadl:doc>
+        <request>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/floating_ip_dns_create_dns_request.json" />
+                </doc>
+            </representation>
+        </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/floating_ip_dns_create_dns_response.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+    <method name="GET" id="FindUniqueEntry">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="Find Unique DNS Entry">
+            <p xmlns="http://www.w3.org/1999/xhtml">Find unique DNS entry for a given domain and name.</p>
+        </wadl:doc>
+        <response status="200">
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/floating_ip_dns_finduniqentry_response.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+    <method name="GET" id="FindEntriesbyIP">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="Find DNS Entries">
+            <p xmlns="http://www.w3.org/1999/xhtml">Find DNS entries for a given domain and IP.</p>
+        </wadl:doc>
+        <response status="200">
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/floating_ip_dns_findentries_response.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+    <method name="DELETE" id="DeleteEntry">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="Delete a DNS entry">
+            <p xmlns="http://www.w3.org/1999/xhtml">Delete a DNS entry.</p>
+        </wadl:doc>
+        <response status="200" />
+    </method>
+
+</application>

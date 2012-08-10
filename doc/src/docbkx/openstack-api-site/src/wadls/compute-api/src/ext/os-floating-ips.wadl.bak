@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- (C) 2012 OpenStack LLC., All Rights Reserved -->
+
+<application xmlns="http://wadl.dev.java.net/2009/02"
+             xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+             xmlns:wadl="http://wadl.dev.java.net/2009/02">
+
+    <resources base="https://servers.api.openstack.com">
+        <resource id="version" type="#VersionDetails" path="v1.1">
+            <resource id="tenant_id" path="{tenant_id}">
+                <param name="tenant_id" style="template">
+                    <doc>
+                        <p xmlns="http://www.w3.org/1999/xhtml">
+                            The unique identifier of the tenant or account.
+                        </p>
+                    </doc>
+                </param>
+
+                <resource id="os-floating-ips" path="os-floating-ips">
+                    <method href="#ListFloatingIPs" />
+                    <method href="#AllocateFloatingIP" />
+
+                    <resource path="{id}">
+                        <param name="id" style="template" required="true">
+                            <doc><p xmlns="http://www.w3.org/1999/xhtml">
+                                 The unique identifier associated with allocated floating IP address.
+                            </p></doc>
+                        </param>
+
+                        <method href="#DetailFloatingIP" />
+                        <method href="#DeallocateFloatingIP" />
+                    </resource>
+                </resource>
+
+          </resource>
+        </resource>
+    </resources>
+
+    <method name="GET" id="ListFloatingIPs">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="List Floating IPs">
+            <p xmlns="http://www.w3.org/1999/xhtml">Lists floating IP addresses associated with the tenant or account.</p>
+        </wadl:doc>
+        <response status="200">
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/list_floating_ips.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+    <method name="POST" id="AllocateFloatingIP">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="Allocate Floating IP">
+            <p xmlns="http://www.w3.org/1999/xhtml">Allocate a new floating IP address to a tenant or account.</p>
+        </wadl:doc>
+        <request>
+            <param name="pool" style="plain">
+                <doc>
+                    <p xmlns="http://www.w3.org/1999/xhtml">
+                        Pool to allocate ip from. Will use default pool if not specified.
+                    </p>
+                </doc>
+            </param>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/allocate_floating_ip_request.json" />
+                </doc>
+            </representation>
+        </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/allocate_floating_ip_response.json" />
+                </doc>
+            </representation>
+        </response>
+        <response status="400"><doc xml:lang="EN"><p xmlns="http://www.w3.org/1999/xhtml">If there are no floating IPs available, the
+            extension returns an error code 400 with a message indicating that no more floating IPs are available.</p></doc></response>
+    </method>
+
+    <method name="GET" id="DetailFloatingIP">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="List Floating IP Detail">
+            <p xmlns="http://www.w3.org/1999/xhtml">Lists details of the floating IP address associated with floating_IP_address_ID.</p>
+        </wadl:doc>
+        <response status="200">
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/floating_ip_detail.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+    <method name="DELETE" id="DeallocateFloatingIP">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="Deallocate Floating IP">
+            <p xmlns="http://www.w3.org/1999/xhtml">Deallocates the floating IP address associated with floating_IP_address_ID.</p>
+        </wadl:doc>
+        <response status="202" />
+    </method>
+
+</application>
