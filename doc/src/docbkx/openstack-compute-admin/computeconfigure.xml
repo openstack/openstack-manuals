@@ -684,53 +684,56 @@ xenapi_remap_vbd_dev=true
     <xi:include href="tables/s3-nova-conf.xml"/>
   </section>
 
-  <section xml:id="configuring-live-migrations">
-    <title>Configuring Live Migrations</title>
+  <section xml:id="configuring-migrations">
+    <?dbhtml stop-chunking?>
+    <title>Configuring Migrations</title>
 
-    <para>The live migration feature is useful when you need to
-      upgrade or installing patches to hypervisors/BIOS and you need
-      the machines to keep running; for example, when one of HDD
-      volumes RAID or one of bonded NICs is out of order. Also for
-      regular periodic maintenance, you may need to migrate VM
-      instances. When many VM instances are running on a specific
-      physical machine, you can redistribute the high load. Sometimes
-      when VM instances are scattered, you can move VM instances to a
-      physical machine to arrange them more logically.</para>
+    <para>Migration allows an administrator to move a virtual machine instance from one compute host
+      to another. This feature is useful when a compute host requires maintenance but the instances
+      running on the host must be kept running. Migration can also be useful to redistribute the
+      load when many VM instances are running on a specific physical machine. </para>
+    <para>The following section describes how to configure for migrations using the KVM
+      hypervisor. The Xen hypervisor supports migrations as well, including live migration. See the
+      <link xlink:href="http://wiki.openstack.org/XenServer/LiveMigration">XenServer Live Migration</link> OpenStack wiki page for more details.</para>
 
-    <para><emphasis role="bold">Prerequisites</emphasis> <itemizedlist>
+    <para><emphasis role="bold">Prerequisites</emphasis>
+      <itemizedlist>
         <listitem>
-          <para><emphasis role="bold">OS:</emphasis>Ubuntu 10.04 or 12.04</para>
+          <para><emphasis role="bold">Hypervisor:</emphasis> KVM with libvirt</para>
         </listitem>
-
         <listitem>
-          <para><emphasis role="bold">Shared storage:</emphasis>
-          NOVA-INST-DIR/instances/ (eg /var/lib/nova/instances) has to be
-           mounted by shared storage. This guide uses NFS but other options,
-           including the
-           <link xlink:href="http://gluster.org/community/documentation//index.php/OSConnect">OpenStack Gluster Connector</link>
-           are available.</para>
+          <para><emphasis role="bold">Shared storage:</emphasis> NOVA-INST-DIR/instances/ (eg
+            /var/lib/nova/instances) has to be mounted by shared storage. This guide uses NFS but
+            other options, including the <link
+              xlink:href="http://gluster.org/community/documentation//index.php/OSConnect">OpenStack
+              Gluster Connector</link> are available.</para>
         </listitem>
-
         <listitem>
-          <para><emphasis role="bold">Instances:</emphasis> Instance can be
-          migrated with ISCSI based volumes</para>
+          <para><emphasis role="bold">Instances:</emphasis> Instance can be migrated with ISCSI
+            based volumes</para>
         </listitem>
-
-        <listitem>
-          <para><emphasis role="bold">Hypervisor:</emphasis> KVM with
-          libvirt</para>
-        </listitem>
-        </itemizedlist>
-          <note><para>
-          This guide assumes the default value for instances_path in your nova.conf
-          ("NOVA-INST-DIR/instances"). If you have changed the state_path or
-          instances_path variables, please modify accordingly
-          </para></note>
-         <note><para>This feature for cloud administrators only, since the use of nova-manage is necessary.
-          </para></note>
-      <note><para>You must specify <literal>vncserver_listen=0.0.0.0</literal> or live migration will not work
-        correctly. See <link linkend="important-nova-compute-options">important nova-compute options</link> for more details on this option.</para></note>
-      </para>
+      </itemizedlist>
+      <note>
+        <para>This feature for cloud administrators only, since the use of nova-manage is necessary.
+        </para>
+      </note>
+      <note>
+        <para>Migrations done by the Compute service do not use libvirt's live migration
+          functionality by default. Because of this, guests are suspended before migration and may
+          therefore experience several minutes of downtime. See <link linkend="true-live-migration">
+            Enabling true live migration</link> for more details.</para>
+      </note>
+      <note>
+        <para> This guide assumes the default value for instances_path in your nova.conf
+          ("NOVA-INST-DIR/instances"). If you have changed the state_path or instances_path
+          variables, please modify accordingly </para>
+      </note>
+      <note>
+        <para>You must specify <literal>vncserver_listen=0.0.0.0</literal> or live migration will
+          not work correctly. See <link linkend="important-nova-compute-options">important
+            nova-compute options</link> for more details on this option.</para>
+      </note>
+    </para>
 
     <para><emphasis role="bold">Example Nova Installation Environment</emphasis> <itemizedlist>
         <listitem>
@@ -900,6 +903,16 @@ root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l
         </listitem>
       </orderedlist></para>
     <xi:include href="tables/live-migration-nova-conf.xml"/>
+
+    <section xml:id="true-live-migration">
+      <title>Enabling true live migration</title>
+      <para>By default, the Compute service does not use libvirt's live migration functionality. To
+        enable this functionality, add the following line to <filename>nova.conf</filename>:
+        <programlisting>live_migration_flag=VIR_MIGRATE_UNDEFINE_SOURCE,VIR_MIGRATE_PEER2PEER,VIR_MIGRATE_LIVE</programlisting>The
+        Compute service does not use libvirt's live miration by default because there is a risk that
+        the migration process will never terminate. This can happen if the guest operating system
+        dirties blocks on the disk faster than they can migrated. </para>
+    </section>
 
   </section>
   <section xml:id="installing-moosefs-as-backend">
