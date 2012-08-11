@@ -336,12 +336,48 @@ $ <userinput>sudo service nova-compute restart</userinput></screen>
       <section xml:id="diagnose-compute">
         <title>Diagnose your compute nodes</title>
 
-        <para>You can obtain extra informations about the running
-        virtual machines : their CPU usage, the memory, the disk io or
-        network io, per instance, by running the <command>nova
+        <para>You can obtain extra informations about the running virtual machines: their CPU usage,
+        the memory, the disk IO or network IO, per instance, by running the <command>nova
           diagnostics</command> command with a server ID:</para>
 
         <screen><prompt>$</prompt> <userinput>nova diagnostics &lt;serverID&gt;</userinput></screen>
+        <para>The output of this command will vary depending on the hypervisor. Example output when
+        the hypervisor is Xen:
+        <screen><computeroutput>+----------------+-----------------+
+|    Property    |      Value      |
++----------------+-----------------+
+| cpu0           | 4.3627          |
+| memory         | 1171088064.0000 |
+| memory_target  | 1171088064.0000 |
+| vbd_xvda_read  | 0.0             |
+| vbd_xvda_write | 0.0             |
+| vif_0_rx       | 3223.6870       |
+| vif_0_tx       | 0.0             |
+| vif_1_rx       | 104.4955        |
+| vif_1_tx       | 0.0             |
++----------------+-----------------+</computeroutput></screen>
+        While the command should work with any hypervisor that is controlled through libvirt (e.g.,
+        KVM, QEMU, LXC), it has only been tested with KVM. Example output when the hypervisor is
+        KVM:</para>
+        <screen><computeroutput>+------------------+------------+
+| Property         | Value      |
++------------------+------------+
+| cpu0_time        | 2870000000 |
+| memory           | 524288     |
+| vda_errors       | -1         |
+| vda_read         | 262144     |
+| vda_read_req     | 112        |
+| vda_write        | 5606400    |
+| vda_write_req    | 376        |
+| vnet0_rx         | 63343      |
+| vnet0_rx_drop    | 0          |
+| vnet0_rx_errors  | 0          |
+| vnet0_rx_packets | 431        |
+| vnet0_tx         | 4905       |
+| vnet0_tx_drop    | 0          |
+| vnet0_tx_errors  | 0          |
+| vnet0_tx_packets | 45         |
++------------------+------------+</computeroutput></screen>
       </section>
     </section>
 
@@ -1465,7 +1501,7 @@ limits =(POST, "*", .*, 10, MINUTE);(POST, "*/servers", ^/servers, 50, DAY);(PUT
 
   <section xml:id="configuring-ec2-API">
   <title>Configuring the EC2 API</title>
-  
+
   <para>You can use <filename>nova.conf</filename> configuration
   options to control which network address and port the EC2 API will
   listen on, the formatting of some API responses, and authentication
@@ -1475,7 +1511,6 @@ limits =(POST, "*", .*, 10, MINUTE);(POST, "*/servers", ^/servers, 50, DAY);(PUT
   configuration option settings.</para>
 
   <xi:include href="tables/nova-ec2-nova-conf.xml" />
-  
+
   </section>
 </chapter>
-
