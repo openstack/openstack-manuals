@@ -1281,10 +1281,8 @@ connection = boto.connect_s3(
               <para><emphasis role="bold">Setting up Keystone</emphasis></para>
               <itemizedlist>
                 <listitem>
-                  <para>The "[LDAP]" stanza in the
-                      <filename>keystone.conf</filename> file allows
-                    you to specify the parameters related to the LDAP
-                    backend. Supported values are : </para>
+                  <para>The "[LDAP]" stanza in the <filename>keystone.conf</filename> file allows
+                    you to specify the parameters related to the LDAP backend. Supported values are: </para>
                   <itemizedlist>
                     <listitem>
                       <para>url</para>
@@ -1311,6 +1309,9 @@ connection = boto.connect_s3(
                       <para>user_id_attribute</para>
                     </listitem>
                     <listitem>
+                      <para>user_name_attribute</para>
+                    </listitem>
+                    <listitem>
                       <para>tenant_tree_dn</para>
                     </listitem>
                     <listitem>
@@ -1318,6 +1319,9 @@ connection = boto.connect_s3(
                     </listitem>
                     <listitem>
                       <para>tenant_id_attribute</para>
+                    </listitem>
+                    <listitem>
+                      <para>tenant_name_attribute</para>
                     </listitem>
                     <listitem>
                       <para>tenant_member_attribute</para>
@@ -1329,7 +1333,7 @@ connection = boto.connect_s3(
                       <para>role_objectclass </para>
                     </listitem>
                     <listitem>
-                      <para>role_id_attribute' </para>
+                      <para>role_id_attribute </para>
                     </listitem>
                     <listitem>
                       <para>role_member_attribute</para>
@@ -1337,7 +1341,7 @@ connection = boto.connect_s3(
                   </itemizedlist>
                 </listitem>
               </itemizedlist>
-              <para> Here is a typical set-up : </para>
+              <para> Here is a typical set-up: </para>
               <screen>[ldap]
 url = ldap://localhost
 tree_dn = dc=exampledomain,dc=com
@@ -1353,6 +1357,13 @@ suffix =cn=exampledomain,cn=com
 driver = keystone.identity.backends.ldap.Identity </screen>
             </listitem>
           </orderedlist></para>
+      <para>By default, the user name in the Identity service is queried against the LDAP
+            <emphasis role="bold">SN</emphasis> (SurName) attribute type and the tenant name in the
+          Identity service will be queried against the LDAP <emphasis role="bold">OU</emphasis> (Organizational Unit)
+          attribute type. These can be changed through the <literal>user_name_attribute</literal>
+          and <literal>tenant_name_attribute</literal> configuration options in
+            <filename>keystone.conf</filename>. For example, you can configure the Identity service to 
+        use the CN (Common Name) instead of SN.</para>
     </section>
     <section xml:id="reference-for-ldap-config-options">
       <title>Reference for LDAP Configuration Options in keystone.conf</title>
