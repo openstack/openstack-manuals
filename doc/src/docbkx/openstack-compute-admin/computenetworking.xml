@@ -161,12 +161,18 @@
                 xlink:href="http://docs.amazonwebservices.com/AWSEC2/latest/UserGuide/AESDG-chapter-instancedata.html"
                 >Amazon EC2 metadata service</link>; virtual machine images that are designed for
             EC2 will work properly with OpenStack. </para>
-        <para>The metadata service is implemented by the <systemitem class="service"
-                >nova-api</systemitem> service, which must have <literal>metadata</literal> as one
-            of the elements of the list of the <literal>enabled_apis</literal> configuration option
-            in <filename>/etc/nova/nova.conf</filename>. The default <literal>enabled_apis</literal>
-            configuration setting includes the metadata service, so you should not need to modify
-            it.</para>
+        <para>The metadata service is implemented by either the <systemitem class="service"
+                >nova-api</systemitem> service or the <systemitem class="service"
+                >nova-api-metadata</systemitem> service. (The <systemitem class="service"
+                >nova-api-metadata</systemitem> service is generally only used when running in
+            multi-host mode, see the section titled <link linkend="existing-ha-networking-options"
+                >Existing High Availability Options for Networking</link>  for details). If you are
+            running the <systemitem class="service">nova-api</systemitem> service,  you must have
+                <literal>metadata</literal> as one of the elements of the list of the
+                <literal>enabled_apis</literal> configuration option in
+                <filename>/etc/nova/nova.conf</filename>. The default
+                <literal>enabled_apis</literal> configuration setting includes the metadata service,
+            so you should not need to modify it.</para>
         <para>To allow instances to reach the metadata service, the <systemitem class="service"
                 >nova-network</systemitem> service will configure iptables to NAT port
                 <literal>80</literal> of the <literal>169.254.169.254</literal> address to the IP
@@ -1868,17 +1874,18 @@ iface eth1 inet dhcp                </programlisting></para>
                         <para><command>nova-network</command></para>
                     </listitem>
                     <listitem>
-                        <para><command>nova-api</command></para>
+                        <para><command>nova-api-metadata</command> or
+                            <command>nova-api</command></para>
                     </listitem>
                 </itemizedlist></para>
-            <para>The <filename>nova.conf</filename> file on your compute hosts must contain the
-                following
-                options:<programlisting>multi_host=True
-enabled_apis=metadata</programlisting></para>
-            <para>If a compute host is also an API endpoint, your <literal>enabled_apis</literal>
-                option will need to contain additional values, depending on the API services. For
-                example, if it supports compute requests, volume requests, and EC2 compatibility,
-                the <filename>nova.conf</filename> file should contain:
+            <para>If the compute host is not an API endpoint, use the
+                    <command>nova-api-metadata</command> service. The <filename>nova.conf</filename>
+                file should contain:<programlisting>multi_host=True</programlisting></para>
+            <para>If a compute host is also an API endpoint, use the <command>nova-api</command>
+                service. Your <literal>enabled_apis</literal> option will need to contain
+                    <literal>metadata</literal>, as well as additional options depending on the API
+                services. For example, if it supports compute requests, volume requests, and EC2
+                compatibility, the <filename>nova.conf</filename> file should contain:
                 <programlisting>multi_host=True
 enabled_apis=ec2,osapi_compute,osapi_volume,metadata</programlisting></para>
 
