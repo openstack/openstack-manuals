@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="swift_client_commands">
+    <title>Command List for swift CLI</title>
+    <literallayout class="monospaced">
+Usage: swift &lt;command> [options] [args]
+
+Commands:
+  stat [container] [object]
+    Displays information for the account, container, or object depending on the
+    args given (if any).
+  list [options] [container]
+    Lists the containers for the account or the objects for a container. -p or
+    --prefix is an option that will only list items beginning with that prefix.
+    -d or --delimiter is option (for container listings only) that will roll up
+    items with the given delimiter (see Cloud Files general documentation for
+    what this means).
+  upload [options] container file_or_directory [file_or_directory] [...]
+    Uploads to the given container the files and directories specified by the
+    remaining args. -c or --changed is an option that will only upload files
+    that have changed since the last upload. -S &lt;size> or --segment-size &lt;size>
+    and --leave-segments are options as well (see --help for more).
+  post [options] [container] [object]
+    Updates meta information for the account, container, or object depending on
+    the args given. If the container is not found, it will be created
+    automatically; but this is not true for accounts and objects. Containers
+    also allow the -r (or --read-acl) and -w (or --write-acl) options. The -m
+    or --meta option is allowed on all and used to define the user meta data
+    items to set in the form Name:Value. This option can be repeated. Example:
+    post -m Color:Blue -m Size:Large
+  download --all OR download container [options] [object] [object] ...
+    Downloads everything in the account (with --all), or everything in a
+    container, or a list of objects depending on the args given. For a single
+    object download, you may use the -o [--output] &lt;filename> option to
+    redirect the output to a specific file or if "-" then just redirect to
+    stdout.
+  delete [options] --all OR delete container [options] [object] [object] ...
+    Deletes everything in the account (with --all), or everything in a
+    container, or a list of objects depending on the args given. Segments of
+    manifest objects will be deleted as well, unless you specify the
+    --leave-segments option.
+
+Example:
+  swift -A https://auth.api.rackspacecloud.com/v1.0 -U user -K key stat
+    </literallayout>
+</section>

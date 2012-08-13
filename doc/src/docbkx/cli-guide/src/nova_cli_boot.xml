@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section 
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" 
+    version="5.0"
+    xml:id="nova_create_server">
+    <title>Create Your Server with the nova Client</title>
+    <procedure xml:id="create_server_procedure">
+        <title>To create and boot your server with the nova
+            client:</title>
+        <step>
+            <para>Issue the following command. In the command,
+                specify the server name, flavor ID, and image
+                ID:</para>
+            
+            <programlisting language="bash" role="gutter: false"><prompt>$</prompt> <?db-font-size 75%?>nova boot myUbuntuServer --image "3afe97b2-26dc-49c5-a2cc-a2fc8d80c001" --flavor 6</programlisting>
+            <para>The command returns a list of server
+                properties. The status field indicates whether
+                the server is being built or is active. A
+                status of <literal>BUILD</literal> indicates
+                that your server is being built. </para>
+            <informalexample>
+                <screen><computeroutput><?db-font-size 70%?>+-------------------------+--------------------------------------+
+| Property                | Value                                |
++-------------------------+--------------------------------------+
+| OS-DCF:diskConfig       | AUTO                                 |
+| accessIPv4              |                                      |
+| accessIPv6              |                                      |
+| adminPass               | ZbaYPZf6r2an                         |
+| config_drive            |                                      |
+| created                 | 2012-07-27T19:59:31Z                 |
+| flavor                  | 8GB Standard Instance                |
+| hostId                  |                                      |
+| id                      | d8093de0-850f-4513-b202-7979de6c0d55 |
+| image                   | Ubuntu 11.10                         |
+| metadata                | {}                                   |
+| name                    | myUbuntuServer                       |
+| progress                | 0                                    |
+| status                  | BUILD                                |
+| tenant_id               | 345789                               |
+| updated                 | 2012-07-27T19:59:31Z                 |
+| user_id                 | 170454                               |
++-------------------------+--------------------------------------+</computeroutput></screen>
+            </informalexample>
+            
+        </step>
+        <step>
+            <para>Copy the server ID value from the
+                    <literal>id</literal> field in the output. You use
+                this ID to get details for your server to determine if
+                it built successfully. </para>
+            <para>Copy the administrative password value from the
+                    <literal>adminPass</literal> field. You use this
+                value to log into your server.</para>
+        </step>
+    </procedure>
+</section>
