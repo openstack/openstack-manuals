@@ -183,7 +183,7 @@ kvm        24966 libvirt-qemu   24u  IPv4 1915470      0t0  TCP *:5901 (LISTEN)<
 <prompt>$</prompt> <userinput>ISO=CentOS-6.2-x86_64-netinstall.iso</userinput>
 <prompt>$</prompt> <userinput>VNCDISPLAY=:2</userinput>
 <prompt>$</prompt> <userinput>MONITOR=/tmp/file.mon</userinput>
-<prompt>$</prompt> <userinput>sudo  kvm -m 1024 -cdrom $ISO -drive file=${IMAGE},if=virtio,index=0,boot=on \
+<prompt>$</prompt> <userinput>sudo  kvm -m 1024 -cdrom $ISO -drive file=${IMAGE},if=virtio,index=0 \
 -boot c -net nic -net user -nographic -vnc ${VNCDISPLAY} \
 -monitor unix:${MONITOR},server,nowait</userinput></screen></para>
             </simplesect>
@@ -239,7 +239,7 @@ kvm        24966 libvirt-qemu   24u  IPv4 1915470      0t0  TCP *:5901 (LISTEN)<
                 <screen>
 <prompt>$</prompt> <userinput>VNCDISPLAY=:2</userinput>
 <prompt>$</prompt> <userinput>MONITOR=/tmp/file.mon</userinput>
-<prompt>$</prompt> <userinput>sudo  kvm -m 1024 -drive file=${IMAGE},if=virtio,index=0,boot=on \
+<prompt>$</prompt> <userinput>sudo  kvm -m 1024 -drive file=${IMAGE},if=virtio,index=0 \
 -boot c -net nic -net user -nographic -vnc ${VNCDISPLAY} \
 -monitor unix:${MONITOR},server,nowait</userinput></screen>
             </para>
@@ -666,7 +666,7 @@ sudo kvm -m 256 -cdrom ubuntu-11.04-server-amd64.iso -drive   file=server.img,if
                 <para>After finishing the installation, relaunch the
                     VM by executing the following command.</para>
                 <screen>
-sudo kvm -m 256 -drive file=server.img,if=scsi,index=0,boot=on -boot c -net nic -net user -nographic -vnc :0
+sudo kvm -m 256 -drive file=server.img,if=scsi,index=0 -boot c -net nic -net user -nographic -vnc :0
 </screen>
                 <para>At this point, you can add all the packages you
                     want to have installed, update the installation,
@@ -941,7 +941,7 @@ kvm-img create -f raw windowsserver.img 20G
         <para>and attach it during the installation</para>
         <para>Start the installation by running</para>
         <screen>
-sudo kvm -m 2048 -cdrom win2k8_dvd.iso -drive file=windowsserver.img,if=virtio,boot=on -boot d drive file=virtio-win-0.1-22.iso,index=3,media=cdrom -net nic,model=virtio -net user -nographic -vnc :0
+sudo kvm -m 2048 -cdrom win2k8_dvd.iso -drive file=windowsserver.img,if=virtio -boot d drive file=virtio-win-0.1-22.iso,index=3,media=cdrom -net nic,model=virtio -net user -nographic -vnc :0
 </screen>
         <para>When the installation prompts you to choose a hard disk
             device you won’t see any devices available. Click on “Load
