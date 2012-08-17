@@ -34,6 +34,39 @@
             </itemizedlist></para> <para>The three kinds of networks can co-exist in a cloud system. However,
             since you can't yet select the type of network for a given project, you cannot configure
             more than one type of network in a given Compute installation.</para>
+        <note>
+            <para>All of the networking options require network connectivity to be already set up
+                between OpenStack physical nodes. OpenStack will not create or configure any network
+                interfaces (except bridges and VM virtual interfaces). </para>
+            <para>All machines must have a <emphasis role="italic">public</emphasis> and <emphasis
+                    role="italic">internal</emphasis> network interface (controlled by the options:
+                    <literal>public_interface</literal> for the public interface, and
+                    <literal>flat_interface</literal> and <literal>vlan_interface</literal> for the
+                internal interface with flat / VLAN managers). </para>
+            <para>The internal network interface is used for communication with VMs, it shouldn't
+                have an IP address attached to it before OpenStack installation (it serves merely as
+                a fabric where the actual endpoints are VMs and dnsmasq). Also, the internal network
+                interface must be put in <emphasis role="italic">promiscuous mode</emphasis>,
+                because it will have to receive packets whose target MAC address is of the guest VM,
+                not of the host.</para>
+        </note>
+        <para>All the network managers configure the network using <emphasis role="italic">network
+                drivers</emphasis>, e.g. the linux L3 driver (<literal>l3.py</literal> and
+                <literal>linux_net.py</literal>) which makes use of <literal>iptables</literal>,
+                <literal>route</literal> and other network management facilities, and also of
+            libvirt's <link xlink:href="http://libvirt.org/formatnwfilter.html">network filtering
+                facilities</link>. The driver isn't tied to any particular network manager; all
+            network managers use the same driver. The driver usually initializes (creates bridges
+            etc.) only when the first VM lands on this host node. </para>
+        <para>All network managers operate in either <emphasis role="italic">single-host</emphasis>
+            or <emphasis role="italic">multi-host</emphasis> mode. This choice greatly influences
+            the network configuration. In single-host mode, there is just 1 instance of
+                <literal>nova-network</literal> which is used as a default gateway for VMs and hosts
+            a single DHCP server (dnsmasq), whereas in multi-host mode every compute node has its
+            own <literal>nova-network</literal>. In any case, all traffic between VMs and the outer
+            world flows through <literal>nova-network</literal>. There are pros and cons to both
+            modes, read more in <link linkend="existing-ha-networking-options">Existing High
+                Availability Options</link>.</para>
         <para>Compute makes a distinction between <emphasis role="italic">fixed IPs</emphasis> and
                 <emphasis role="italic">floating IPs</emphasis> for VM instances. Fixed IPs are IP
             addresses that are assigned to an instance on creation and stay the same until the
@@ -41,14 +74,14 @@
             dynamically associated with an instance. A floating IP address can be disassociated and
             associated with another instance at any time. A user can reserve a floating IP for their
             project. </para>
-        <para>In Flat Mode, a network administrator specifies a subnet. The IP addresses for VM
-            instances are grabbed from the subnet, and then injected into the image on launch. Each
-            instance receives a fixed IP address from the pool of available addresses. A network
-            administrator must configure the Linux networking bridge (typically named
-                <literal>br100</literal>, although this configurable) both on the network controller
-            hosting the network and on the cloud controllers hosting the instances. All instances of
-            the system are attached to the same bridge, configured manually by the network
-            administrator.</para>
+        <para>In <emphasis role="bold">Flat Mode</emphasis>, a network administrator specifies a
+            subnet. The IP addresses for VM instances are grabbed from the subnet, and then injected
+            into the image on launch. Each instance receives a fixed IP address from the pool of
+            available addresses. A network administrator must configure the Linux networking bridge
+            (typically named <literal>br100</literal>, although this configurable) both on the
+            network controller hosting the network and on the cloud controllers hosting the
+            instances. All instances of the system are attached to the same bridge, configured
+            manually by the network administrator.</para>
         <para>
             <note>
                 <para>The configuration injection currently only works on Linux-style systems that
@@ -56,40 +89,47 @@
                     <filename>/etc/network/interfaces</filename>.</para>
             </note>
         </para>
-        <para>In Flat DHCP Mode, you start a DHCP server to pass out
-            IP addresses to VM instances from the specified subnet in
-            addition to manually configuring the networking bridge. IP
-            addresses for VM instances are grabbed from a subnet
-            specified by the network administrator.</para>
+        <para>In <emphasis role="bold">Flat DHCP Mode</emphasis>, OpenStack starts a DHCP server
+            (dnsmasq) to pass out IP addresses to VM instances from the specified subnet in addition
+            to manually configuring the networking bridge. IP addresses for VM instances are grabbed
+            from a subnet specified by the network administrator. </para>
         <para>Like Flat Mode, all instances are attached to a single bridge on the compute node. In
-            addition a DHCP server is running to configure instances. In this mode, Compute does a
-            bit more configuration in that it attempts to bridge into an ethernet device (eth0 by
-            default). It will also run dnsmasq as a DHCP server listening on this bridge (see <link
-                linkend="dnsmasq">DHCP server: dnsmasq</link>). Instances receive their fixed IPs by
-            doing a dhcpdiscover. </para>
-        <para>In any set up with flat networking, the host with nova-network on it is responsible
-            for forwarding traffic from the private network configured with the
+            addition a DHCP server is running to configure instances (depending on
+            single-/multi-host mode, alongside each <literal>nova-network</literal>). In this mode,
+            Compute does a bit more configuration in that it attempts to bridge into an ethernet
+            device (<literal>flat_interface</literal>, eth0 by default). It will also run and
+            configure dnsmasq as a DHCP server listening on this bridge, usually on IP address
+            10.0.0.1 (see <link linkend="dnsmasq">DHCP server: dnsmasq</link>). For every instance,
+            nova will allocate a fixed IP address and configure dnsmasq with the MAC/IP pair for the
+            VM, i.e. dnsmasq doesn't take part in the IP address allocation process, it only hands
+            out IPs according to the mapping done by nova. Instances receive their fixed IPs by
+            doing a dhcpdiscover. These IPs are <emphasis role="italic">not</emphasis> assigned to
+            any of the host's network interfaces, only to the VM's guest-side interface.</para>
+        <para>In any setup with flat networking, the host(-s) with nova-network on it is (are)
+            responsible for forwarding traffic from the private network configured with the
                 <literal>fixed_range</literal> configuration option in
-                <filename>nova.conf</filename>. This host needs to have <literal>br100</literal>
-            configured and talking to any other nodes that are hosting VMs. You must set the
-                <literal>flat_network_bridge</literal> option or create networks with the bridge
+                <filename>nova.conf</filename>. Such host(-s) needs to have <literal>br100</literal>
+            configured and physically connected to any other nodes that are hosting VMs. You must
+            set the <literal>flat_network_bridge</literal> option or create networks with the bridge
             parameter in order to avoid raising an error. Compute nodes have iptables/ebtables
             entries created per project and instance to protect against IP/MAC address spoofing and
             ARP poisoning. </para>
-        <para>VLAN Network Mode is the default mode for OpenStack
-            Compute. In this mode, Compute creates a VLAN and bridge
-            for each project. For multiple machine installation, the
-            VLAN Network Mode requires a switch that supports VLAN
-            tagging (IEEE 802.1Q). The project gets a range of private
-            IPs that are only accessible from inside the VLAN. In
-            order for a user to access the instances in their project,
-            a special VPN instance (code named cloudpipe) needs to be
-            created. Compute generates a certificate and key for the
-            user to access the VPN and starts the VPN automatically.
-            It provides a private network segment for each project's
-            instances that can be accessed via a dedicated VPN
-            connection from the Internet. In this mode, each project
-            gets its own VLAN, Linux networking bridge, and subnet. </para>
+        <note>
+            <para>In single-host Flat DHCP mode you <emphasis role="italic">will</emphasis> be able
+                to ping VMs via their fixed IP from the nova-network node, but you <emphasis
+                    role="italic">will not</emphasis> be able to ping them from the compute nodes.
+                This is expected behavior.</para>
+        </note>
+        <para><emphasis role="bold">VLAN Network Mode is the default mode</emphasis> for OpenStack
+            Compute. In this mode, Compute creates a VLAN and bridge for each project. For multiple
+            machine installation, the VLAN Network Mode requires a switch that supports VLAN tagging
+            (IEEE 802.1Q). The project gets a range of private IPs that are only accessible from
+            inside the VLAN. In order for a user to access the instances in their project, a special
+            VPN instance (code named cloudpipe) needs to be created. Compute generates a certificate
+            and key for the user to access the VPN and starts the VPN automatically. It provides a
+            private network segment for each project's instances that can be accessed via a
+            dedicated VPN connection from the Internet. In this mode, each project gets its own
+            VLAN, Linux networking bridge, and subnet. </para>
         <para>The subnets are specified by the network administrator,
             and are assigned dynamically to a project when required. A
             DHCP Server is started for each VLAN to pass out IP
@@ -209,8 +249,7 @@
 
         <orderedlist>
             <listitem>
-                <para>Set the "network-manager" option in
-                        <filename>nova.conf</filename>.</para>
+                <para>Set the <literal>network_manager</literal> option in <filename>nova.conf</filename>.</para>
             </listitem>
             <listitem>
                 <para>Use the <code>nova-manage network create label
@@ -226,26 +265,25 @@
             the nova.conf file. Here are the three possible options: </para>
         <itemizedlist>
             <listitem>
-                <para>network_manager=nova.network.manager.FlatManager</para>
+                <para><literal>--network_manager=nova.network.manager.FlatManager</literal></para>
                 <para>Simple, non-VLAN networking</para>
             </listitem>
             <listitem>
-                <para>network_manager=nova.network.manager.FlatDHCPManager</para>
-                <para>Flat networking with DHCP, you must set a bridge
-                    using the flat_network_bridge option</para>
+                <para><literal>--network_manager=nova.network.manager.FlatDHCPManager</literal></para>
+                <para>Flat networking with DHCP, you must set a bridge using the
+                        <literal>flat_network_bridge</literal> option</para>
             </listitem>
             <listitem>
-                <para>network_manager=nova.network.manager.VlanManager</para>
+                <para><literal>--network_manager=nova.network.manager.VlanManager</literal></para>
                 <para>VLAN networking with DHCP. This is the Default
                     if no network manager is defined in nova.conf.
                 </para>
             </listitem>
         </itemizedlist>
-        <para>When you issue the nova-manage network create
-            command, it uses the settings from the nova.conf
-            configuration options file. Use the following command to
+        <para>When you issue the <literal>nova-manage network create</literal> command, it uses the
+            settings from the nova.conf configuration options file. Use the following command to
             create the subnet that your VMs will run on :
-            <literallayout class="monospaced">nova-manage network create private 192.168.0.0/24 1 256</literallayout>
+            <literallayout class="monospaced"><literal>nova-manage network create private 192.168.0.0/24 1 256</literal></literallayout>
         </para>
         <para>When using the XenAPI compute driver, the OpenStack services run
             in a virtual machine. This means networking is
@@ -390,36 +428,35 @@ iface br100 inet dhcp
 
         <section xml:id="configuring-flat-dhcp-networking">
             <title>Configuring Flat DHCP Networking</title>
-            <para>With Flat DHCP, the host running nova-network acts
-                as the gateway to the virtual nodes. You can run one
-                nova-network per cluster. Set the option
-                    <literal>network_host</literal> on the
-                    <filename>nova.conf</filename> stored on the
-                nova-compute node to tell it which host the
-                nova-network is running on so it can communicate with
-                nova-network. In any set up with FlatNetworking, the
-                host with nova-network on it is responsible for
-                forwarding traffic from the private network configured
-                with the <literal>fixed_range=</literal> directive in
-                    <filename>nova.conf</filename> and the
-                    <literal>flat_network_bridge</literal> flag which
-                you must also set to the name of the bridge (as there
-                is no default). The nova-network service will track
-                leases and releases in the database so it knows if a
-                VM instance has stopped properly configuring via DHCP.
-                Lastly, it sets up iptables rules to allow the VMs to
-                communicate with the outside world and contact a
-                special metadata server to retrieve information from
-                the cloud.</para>
-            <para>Compute hosts in the FlatDHCP model are responsible
-                for bringing up a matching bridge and bridging the VM
-                tap devices into the same ethernet device that the
-                network host is on. The compute hosts do not need an
-                IP address on the VM network, because the bridging
-                puts the VMs and the network host on the same logical
-                network. When a VM boots, the VM sends out DHCP
-                packets, and the DHCP server on the network host
-                responds with their assigned IP address.</para>
+            <para>With Flat DHCP, the host(-s) running nova-network act as the gateway to the
+                virtual nodes. If you're using single-host networking, you can optionally set
+                    <literal>network_host</literal> on the <filename>nova.conf</filename> stored on
+                the nova-compute node to tell it which host the nova-network is running on so it can
+                more efficiently communicate with nova-network. In any setup with flat networking,
+                the hosts with nova-network on it are responsible for forwarding traffic from the
+                private network configured with the <literal>fixed_range=</literal> directive in
+                    <filename>nova.conf</filename> and the <literal>flat_network_bridge</literal>
+                flag which you must also set to the name of the bridge (as there is no default). The
+                nova-network service will track leases and releases in the database, using dnsmasq's
+                    <emphasis role="italic">dhcp-script</emphasis> facility (the script <emphasis
+                    role="italic">bin/nova-dhcpbridge</emphasis> is supplied) so it knows if a VM
+                instance has stopped properly configuring via DHCP (e.g. when a DHCP lease expires,
+                the fixed IP is released from the nova database). Lastly, it sets up iptables rules
+                to allow the VMs to communicate with the outside world and contact a special
+                metadata server to retrieve information from the cloud.</para>
+            <para>Compute hosts in the FlatDHCP model are responsible for bringing up a matching
+                bridge and bridging the VM tap devices into the same ethernet device that the
+                network host is on. The compute hosts should not have an IP address on the VM
+                network, because the bridging puts the VMs and the network host on the same logical
+                network. When a VM boots, the VM sends out DHCP packets, and the DHCP server on the
+                network host responds with their assigned IP address (remember, the address is
+                actually <emphasis role="italic">assigned</emphasis> by nova and put into DHCP
+                server's configuration file, the DHCP server merely tells the VM what it is).</para>
+            <para>You can read a detailed walk-through of what exactly happens in single-host Flat
+                DHCP mode in <link
+                    xlink:href="http://www.mirantis.com/blog/openstack-networking-single-host-flatdhcpmanager/"
+                    >this blogpost</link>, parts of which are also relevant in other networking
+                modes.</para> 
             <para>FlatDHCP doesn't create VLANs, it creates a bridge.
                 This bridge works just fine on a single host, but when
                 there are multiple hosts, traffic needs a way to get
