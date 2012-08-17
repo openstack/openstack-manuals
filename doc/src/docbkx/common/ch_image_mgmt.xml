@@ -184,7 +184,7 @@ kvm        24966 libvirt-qemu   24u  IPv4 1915470      0t0  TCP *:5901 (LISTEN)<
 <prompt>$</prompt> <userinput>VNCDISPLAY=:2</userinput>
 <prompt>$</prompt> <userinput>MONITOR=/tmp/file.mon</userinput>
 <prompt>$</prompt> <userinput>sudo  kvm -m 1024 -cdrom $ISO -drive file=${IMAGE},if=virtio,index=0 \
--boot c -net nic -net user -nographic -vnc ${VNCDISPLAY} \
+-boot d -net nic -net user -nographic -vnc ${VNCDISPLAY} \
 -monitor unix:${MONITOR},server,nowait</userinput></screen></para>
             </simplesect>
             <simplesect><title>Connect to the instance via VNC</title>
@@ -959,7 +959,7 @@ sudo kvm -m 2048 -cdrom win2k8_dvd.iso -drive file=windowsserver.img,if=virtio -
         <para>Shut-down the VM and upload the image to
             OpenStack</para>
         <screen>
-glance add name="My WinServer" is_public=true container_format=ovf disk_format=raw &lt; windowsserver.img 
+glance add name="My WinServer" is_public=true container_format=ovf disk_format=raw &lt; windowsserver.img
 </screen>
     </section>
     <section xml:id="creating-images-from-running-instances">
