@@ -60,7 +60,7 @@
             IP addresses to VM instances from the specified subnet in
             addition to manually configuring the networking bridge. IP
             addresses for VM instances are grabbed from a subnet
-            specified by the network administrator. </para>
+            specified by the network administrator.</para>
         <para>Like Flat Mode, all instances are attached to a single bridge on the compute node. In
             addition a DHCP server is running to configure instances. In this mode, Compute does a
             bit more configuration in that it attempts to bridge into an ethernet device (eth0 by
@@ -143,6 +143,13 @@
             depending on Linux distribution). The dnsmasq logging output can be useful for
             troubleshooting if VM instances boot successfully but are not reachable over the
             network.</para>
+        <para>A network administrator can run <code>nova-manage fixed
+                reserve
+                --address=<replaceable>x.x.x.x</replaceable></code> to
+            specify the starting point IP address (x.x.x.x) to reserve
+            with the DHCP server, replacing the
+            flat_network_dhcp_start configuration option that was
+            available in Diablo.</para>
     </section>
     <section xml:id="metadata-service">
         <title>Metadata service</title>
@@ -461,7 +468,6 @@ dhcpbridge_flagfile=/etc/nova/nova.conf
 dhcpbridge=/usr/bin/nova-dhcpbridge
 network_manager=nova.network.manager.FlatDHCPManager
 fixed_range=10.0.0.0/8
-flat_network_dhcp_start=10.0.0.2
 flat_network_bridge=br100
 flat_interface=eth2
 flat_injected=False
@@ -496,7 +502,6 @@ public_interface=eth3
 multi_host=True
 dhcpbridge_flagfile=/etc/nova/nova.conf
 fixed_range=10.0.0.0/24
-flat_network_dhcp_start=10.0.0.2
 force_dhcp_release=True
 send_arp_for_ha=True
 flat_injected=False
