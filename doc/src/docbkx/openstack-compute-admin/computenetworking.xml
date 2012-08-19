@@ -1470,6 +1470,12 @@ enabled_apis=ec2,osapi_compute,osapi_volume,metadata</programlisting></para>
                 will send all network related commands to the host that the VM is on. You need to
                 set the configuration option <literal>enabled_apis</literal> such that it includes
                     <literal>metadata</literal> in the list of enabled APIs. </para>
+            <note><para>You must specify the <literal>multi_host</literal> option
+            on the command line when creating fixed networks. For example:
+            <screen>
+              <prompt>#</prompt> <userinput> nova-manage network create --fixed_range_v4=192.168.0.0/24 --num_networks=1 --network_size=256 --multi_host=T --label=test</userinput>
+            </screen></para>
+            </note>
         </simplesect>
 
         <simplesect>
