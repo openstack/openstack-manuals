@@ -120,29 +120,48 @@
     <section xml:id="dnsmasq">
         <title>DHCP server: dnsmasq</title>
         <para>The Compute service uses <link
-                xlink:href="http://www.thekelleys.org.uk/dnsmasq/doc.html">dnsmasq</link> as the
-            DHCP server when running with either that Flat DHCP Network Manager or the VLAN Network
-            Manager. The <systemitem class="service">nova-network</systemitem> service is
-            responsible for starting up dnsmasq processes.</para>
-        <para>The behavior of dnsmasq can be customized by creating a dnsmasq configuration file.
-            Specify the config file using the <literal>dnsmasq_config_file</literal> configuration
+                xlink:href="http://www.thekelleys.org.uk/dnsmasq/doc.html"
+                >dnsmasq</link> as the DHCP server when running with
+            either that Flat DHCP Network Manager or the VLAN Network
+            Manager. The <systemitem class="service"
+                >nova-network</systemitem> service is responsible for
+            starting up dnsmasq processes.</para>
+        <para>The behavior of dnsmasq can be customized by creating a
+            dnsmasq configuration file. Specify the config file using
+            the <literal>dnsmasq_config_file</literal> configuration
             option. For
             example:<programlisting>dnsmasq_config_file=/etc/dnsmasq-nova.conf</programlisting>See
-            the <link linkend="existing-ha-networking-options">high availability section</link> for
-            an example of how to change the behavior of dnsmasq using a dnsmasq configuration file.
-            The dnsmasq documentation has a more comprehensive <link
-                xlink:href="http://www.thekelleys.org.uk/dnsmasq/docs/dnsmasq.conf.example">dnsmasq
-                configuration file example</link>.</para>
-        <para>Dnsmasq also acts as a caching DNS server for instances. You can explicitly specify
-            the DNS server that dnsmasq should use by setting the <literal>dns_server</literal>
-            configuration option in <filename>/etc/nova/nova.conf</filename>. The following example
-            would configure dnsmasq to use Google's public DNS
+            the <link linkend="existing-ha-networking-options">high
+                availability section</link> for an example of how to
+            change the behavior of dnsmasq using a dnsmasq
+            configuration file. The dnsmasq documentation has a more
+            comprehensive <link
+                xlink:href="http://www.thekelleys.org.uk/dnsmasq/docs/dnsmasq.conf.example"
+                >dnsmasq configuration file example</link>.</para>
+        <para>Dnsmasq also acts as a caching DNS server for instances.
+            You can explicitly specify the DNS server that dnsmasq
+            should use by setting the <literal>dns_server</literal>
+            configuration option in
+                <filename>/etc/nova/nova.conf</filename>. The
+            following example would configure dnsmasq to use Google's
+            public DNS
             server:<programlisting>dns_server=8.8.8.8</programlisting></para>
         <para>Dnsmasq logging output goes to the syslog (typically
-                <filename>/var/log/syslog</filename> or <filename>/var/log/messages</filename>,
-            depending on Linux distribution). The dnsmasq logging output can be useful for
-            troubleshooting if VM instances boot successfully but are not reachable over the
+                <filename>/var/log/syslog</filename> or
+                <filename>/var/log/messages</filename>, depending on
+            Linux distribution). The dnsmasq logging output can be
+            useful for troubleshooting if VM instances boot
+            successfully but are not reachable over the
             network.</para>
+        <para>A network administrator can run <code>nova-manage fixed
+                reserve
+                --address=<replaceable>x.x.x.x</replaceable></code> to
+            specify the starting point IP address (x.x.x.x) to reserve
+            with the DHCP server, replacing the
+            flat_network_dhcp_start configuration option that was
+            available in Diablo. This reservation only affects which
+            IP address the VMs start at, not the fixed IP addresses
+            that the nova-network service places on the bridges.</para>
     </section>
     <section xml:id="metadata-service">
         <title>Metadata service</title>
@@ -458,7 +477,6 @@ dhcpbridge_flagfile=/etc/nova/nova.conf
 dhcpbridge=/usr/bin/nova-dhcpbridge
 network_manager=nova.network.manager.FlatDHCPManager
 fixed_range=10.0.0.0/8
-flat_network_dhcp_start=10.0.0.2
 flat_network_bridge=br100
 flat_interface=eth2
 flat_injected=False
@@ -495,7 +513,6 @@ public_interface=eth3
 multi_host=True
 dhcpbridge_flagfile=/etc/nova/nova.conf
 fixed_range=10.0.0.0/24
-flat_network_dhcp_start=10.0.0.2
 force_dhcp_release=True
 send_arp_for_ha=True
 flat_injected=False
