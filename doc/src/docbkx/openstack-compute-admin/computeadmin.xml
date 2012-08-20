@@ -138,25 +138,11 @@ format="SVG" scale="60"/>
     <section xml:id="managing-the-cloud">
 
         <title>Managing the Cloud</title><para>There are three main tools that a system administrator will find useful to manage their cloud;
-            the nova-manage command, and the novaclient or the Euca2ools commands. </para>
-        <para>The nova-manage command may only be run by users with admin privileges. Both
+            the nova client, the nova-manage command, and the Euca2ools commands. </para>
+        <para>The nova-manage command may only be run by cloud administrators. Both
             novaclient and euca2ools can be used by all users, though specific commands may be
             restricted by Role Based Access Control in the deprecated nova auth system or in the Identity Management service. </para>
-        <simplesect><title>Using the nova-manage command</title>
-        <para>The nova-manage command may be used to perform many essential functions for
-                administration and ongoing maintenance of nova, such as network creation.</para>
-
-        <para>The standard pattern for executing a nova-manage command is: </para>
-            <screen>
-<prompt>$</prompt> <userinput>nova-manage category command <replaceable>[args]</replaceable></userinput>
-            </screen>
-
-            <para>For example, to obtain a list of all projects:
-                    <command>nova-manage project list</command></para>
-
-            <para>Run without arguments to see a list of available command categories: nova-manage</para>
-            <para>You can also run with a category argument such as user to see a list of all commands in that category: nova-manage user</para>
-        </simplesect><simplesect><title>Using the nova command-line tool</title>
+            <simplesect><title>Using the nova command-line tool</title>
             <para>Installing the python-novaclient gives you a <code>nova</code> shell command that enables
                 Compute API interactions from the command line. You install the client, and then provide
                 your username and password, set as environment variables for convenience, and then you
@@ -203,7 +189,29 @@ usage: nova [--debug] [--os_username OS_USERNAME] [--os_password OS_PASSWORD]
 <prompt>$</prompt> <userinput>export NOVA_VERSION=1.1</userinput>
 </screen>
             </para></simplesect>
-        <simplesect><title>Using the euca2ools commands</title>
+
+        <simplesect><title>Using the nova-manage command</title>
+        <para>The nova-manage command may be used to perform many essential functions for
+                administration and ongoing maintenance of nova, such as network creation or user
+                manipulation.</para>
+        <para>The man page for nova-manage has a good explanation for each of its functions, and is
+              recommended reading for those starting out. Access it by running:
+        </para>
+            <screen>
+            <prompt>$</prompt> <userinput>man nova-manage</userinput>
+            </screen>
+
+        <para>For administrators, the standard pattern for executing a nova-manage command is: </para>
+            <screen>
+<prompt>$</prompt> <userinput>nova-manage category command <replaceable>[args]</replaceable></userinput>
+            </screen>
+
+            <para>For example, to obtain a list of all projects:
+                    <command>nova-manage project list</command></para>
+
+            <para>Run without arguments to see a list of available command categories: nova-manage</para>
+            <para>You can also run with a category argument such as user to see a list of all commands in that category: nova-manage user</para>
+        </simplesect>        <simplesect><title>Using the euca2ools commands</title>
             <para>For a command-line interface to EC2 API calls, use
                 the euca2ools command line tool. It is documented at
                     <link
