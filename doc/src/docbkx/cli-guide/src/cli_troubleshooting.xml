@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="troubleshooting_cli">
+    <title>Troubleshooting</title>
+    <para>The CLI clients are considered to be software in
+        development. </para>
+    <itemizedlist>
+        <listitem>
+            <para>If you cannot run commands successfully, make sure
+                that you entered your user name, password, and account
+                number correctly in the bash profile file or have
+                sourced the openrc.sh file correctly. To view your
+                environment variables on Mac OSX or Linux, grep to
+                search for OS_ like
+                so:
+                <screen><prompt>$</prompt> env | grep "OS"</screen><literallayout class="monospaced">
+
+OS_TENANT_ID=4e2f522b7be24d93b3c6690d2ef5a213
+OS_PASSWORD=coolword
+OS_AUTH_URL=http://50.56.13.204:5000/v2.0
+OS_USERNAME=joecool
+OS_TENANT_NAME=coolu</literallayout>
+            </para>
+        </listitem>
+        <listitem>
+            <para>If you change any environment variables,
+                either log out and back in or source your bash
+                profile again. </para>
+        </listitem>
+        <listitem>
+            <para>To override some environment variable
+                settings, you can use the options that are
+                listed at the end of the <command>nova
+                    help</command> output. For example, you
+                can override the
+                <command>OS_PASSWORD</command> setting in
+                the bash profile by specifying a password on a
+                nova command, as follows: </para>
+            <programlisting language="bash" role="gutter: false"><prompt>$</prompt> nova --password mypassword image-list </programlisting>
+        </listitem>
+    </itemizedlist>
+</section>

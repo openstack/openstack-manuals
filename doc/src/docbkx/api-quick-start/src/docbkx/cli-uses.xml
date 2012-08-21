@@ -4,7 +4,7 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" 
     xml:id="Setting-Up-Python-novaclient"
     version="5.0">
-    <title>Setting Up  python-novaclient</title>
+    <title>Setting Up python-novaclient</title>
 
 <para>For more serious scripting work, you can use a client like the python-novaclient or openstack-compute clients. The python-novaclient implements the Compute 1.1 API while the openstack-compute client works against the Rackspace Cloud Servers public cloud which is the OpenStack Compute 1.0 API. You only need a username and password to use the python-novaclient tool. </para>
     <para>Installing the python-novaclient gives you a <code>nova</code> shell command that enables
@@ -16,35 +16,11 @@
     <programlisting>
 $ pip install -e git+https://github.com/openstack/python-novaclient.git#egg=python-novaclient
     </programlisting>
-    <para>Now that you have installed the python-novaclient, confirm the installation by entering:</para><programlisting>
-$ nova help
-
-usage: nova [--debug] [--os_username OS_USERNAME] [--os_password OS_PASSWORD]
-            [--os_tenant_name OS_TENANT_NAME] [--os_auth_url OS_AUTH_URL]
-            [--os_region_name OS_REGION_NAME] [--service_type SERVICE_TYPE]
-            [--service_name SERVICE_NAME] [--endpoint_type ENDPOINT_TYPE]
-            [--version VERSION]
-            &lt;subcommand&gt; ...
-</programlisting>
-    <para>In return, you will get a listing of all the commands and
-        parameters for the nova command line client. By setting up the
-        required parameters as environment variables, you can fly
-        through these commands on the command line. You can add
-        --os_username on the nova command, or set them as environment
-        variables. When using TryStack, you are supplied with an
-        endpoint, which the nova client recognizes as the NOVA_URL. On
-        TryStack, you can retrieve these environment variables at
-        https://trystack.org/dash/api_info/ after logging in.</para>
-    <para><programlisting>
-export NOVA_USERNAME=facebook12345679       
-export NOVA_API_KEY=coolword
-export NOVA_PROJECT_ID=facebook12345679       
-export NOVA_URL=https://nova-api.trystack.org:5443/v2.0       
-export NOVA_VERSION=1.1
-</programlisting>
-    </para>
+    <para>Here are more detailed install instructions including how to
+        source your credentials.</para>
+    <xi:include href="../../../cli-guide/src/cli_install.xml" />
     
-<section xml:id="Launching-Images-a09140"><title>Listing Images</title><para>Before you can go about the business of building your cloud, you
+<section xml:id="Listing-Images-a09140"><title>Listing Images</title><para>Before you can go about the business of building your cloud, you
             want to know what images are available to you by asking
             the image service what kinds of configurations are
             available. The image service could be compared to iTunes
@@ -65,7 +41,13 @@ $ nova image-list
 +----+--------------------------------------+--------+--------+
         </programlisting></para>
     <para>Next you need to know the relative sizes of each of these. </para>
-    <para><programlisting>
+    
+    <para>With the information about what is available to you, you can choose the combination of image and flavor to create your virtual servers and launch instances. </para></section>
+    <section xml:id="Listing-Flavors"><title>Listing Flavors</title>
+        <para>You also need to know the ID of the flavor 
+        To get the list of flavors, their names,
+        status, and ID, use this command:</para>
+            <programlisting>
 $ nova flavor-list
         
 +----+-----------+-----------+------+-----------+------+-------+-------------+
@@ -77,20 +59,10 @@ $ nova flavor-list
 | 4  | m1.large  | 8192      | 80   | N/A       | 0    | 4     |             |
 | 5  | m1.xlarge | 16384     | 160  | N/A       | 0    | 8     |             |
 +----+-----------+-----------+------+-----------+------+-------+-------------+        
-    </programlisting></para>
-    <para>You can also narrow down the list by using grep to find only
-            the Ubuntu 11.04 images with a command like this: </para>
-    <para>
-        <programlisting>
-
-$ nova image-list | grep 'natty'
-
-| 12 | natty-server-cloudimg-amd64-kernel   | ACTIVE |        |
-| 13 | natty-server-cloudimg-amd64          | ACTIVE |        |
-</programlisting>
-    </para>
-    <para>With the information about what is available to you, you can choose the combination of image and flavor to create your virtual servers and launch instances. </para></section>
-<section xml:id="Listing-Images-a01518"><title>Launching Instances </title>
+    </programlisting>
+        <para>With the information about what is available to you, you can choose the combination of image and flavor to create your virtual servers and launch instances. </para></section>
+    
+    <section xml:id="Listing-Images-a01518"><title>Launching Instances </title>
     
     <para> To launch a server, you choose an image you want to match
             up to a size, find the ID for the image and the ID for the
@@ -141,7 +113,9 @@ $ nova list
             </programlisting></para>
     
     <para>There are three statuses you may see - ACTIVE, BUILDING, and UNKNOWN. The BUILDING status is transient and you likely will not see it. If you see UNKNOWN, run <code>nova list</code> again until it goes away.</para>
-    <para>To view all the information about a particular server, use nova show with the ID of the server that you got from the nova list command.</para>
+    <para>To view all the information about a particular server, use
+                <code>nova show</code> with the ID of the server that
+            you got from the nova list command.</para>
     <programlisting>
 $ nova show 1805
 
