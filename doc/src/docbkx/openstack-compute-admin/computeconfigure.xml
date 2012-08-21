@@ -917,10 +917,10 @@ root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l
         </listitem>
         <listitem>
           <para>A metalogger server (MLS) which backs up the MDS logs, including, objects, chunks,
-            sessions and object metadatas</para>
+            sessions and object metadata</para>
         </listitem>
         <listitem>
-          <para>A chunk server (CSS) which store the datas as chunks and replicate them accross the
+          <para>A chunk server (CSS) which store the datas as chunks and replicate them across the
             chunkservers</para>
         </listitem>
         <listitem>
@@ -974,13 +974,13 @@ root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l
         </mediaobject>
       </figure>
     </para>
-    <section>
+    <section xml:id="installing-moosefs-metadata-metalogger-servers">
       <title> Installing the MooseFS metadata and metalogger servers</title>
       <para>Both components could be run anywhere , as long as the MooseFS chunkservers can reach
         the MooseFS master server. </para>
       <para>In our deployment, both MooseFS master and slave run their services inside a virtual
         machine ; you just need to make sure to allocate enough memory to the MooseFS metadata
-        server, all the metadatas being stored in RAM when the service runs. </para>
+        server, all the metadata being stored in RAM when the service runs. </para>
       <para>
         <orderedlist>
           <listitem>
@@ -1006,7 +1006,7 @@ root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l
           <listitem>
             <para><emphasis role="bold">Download the sources</emphasis></para>
             <para> Go the the <link xlink:href="http://www.moosefs.org/download.html">MooseFS download page</link>
-              and fill the downlad form in order to obain your URL for the package.
+              and fill the download form in order to obtain your URL for the package.
             </para>
             <para/>
           </listitem>
@@ -1058,7 +1058,7 @@ root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l
       </para>
       <para/>
     </section>
-    <section>
+    <section xml:id="installing-moosefs-chunk-client-services">
       <title>Installing the MooseFS chunk and client services</title>
       <para> In the first part, we will install the last version of FUSE, and proceed to the
         installation of the MooseFS chunk and client in the second part. </para>
@@ -1136,9 +1136,9 @@ root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l
         </orderedlist>
       </para>
     </section>
-    <section>
+    <section xml:id="access-to-cluster-storage">
       <title>Access to your cluster storage</title>
-      <para> You can now access your cluser space from the compute node, (both acting as
+      <para> You can now access your cluster space from the compute node, (both acting as
         chunkservers) : <screen><prompt>$</prompt> <userinput>mfsmount /var/lib/nova/instances -H mfsmaster</userinput></screen>
         <computeroutput> mfsmaster accepted connection with parameters: read-write,restricted_ip ;
           root mapped to root:root </computeroutput>
