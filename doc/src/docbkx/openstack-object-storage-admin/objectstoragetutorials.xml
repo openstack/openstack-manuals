@@ -81,26 +81,89 @@ key_file = /etc/swift/cert.key </literallayout>
         <section xml:id="part-ii-configuring-cyberduck">
             
             <title>Part II: Configuring Cyberduck</title>
-            <para>Next, you want to change the context of the URL from the default /v1.0 by opening
-                a Terminal window and using <code>defaults write ch.sudo.cyberduck
-                    cf.authentication.context &lt;string></code> to change the URL. Substitute
-                /auth/v1.0 for the &lt;string> (Mac OSX). </para>
-            <para>Cyberduck 3.8.1 includes a drop-down for selecting Swift (OpenStack Object
-                Storage) when opening a connection. Launch Cyberduck, and then click the New
-                Connection toolbar button or choose File > Open Connection. </para>
-            <para>Select Swift (OpenStack Object Storage). Enter the following values:</para>
-            <para>Server: Enter the URL of the installed Swift server.</para>
-            <para>Port: Enter 443 since you are connecting via https.</para>
-            <para>Username: Enter the account name followed by a colon and then the user name, for
-                example test:tester.</para>
-            <para>Password: Enter the password for the account and user name entered above.<figure>
-                    <title>Example Cyberduck Swift Connection</title>
-                    <mediaobject>
-                        <imageobject>
-                            <imagedata fileref="figures/cyberduck_swift_connection.png"/>
-                        </imageobject>
-                    </mediaobject>
-                </figure></para>
+            <note>
+                <para>
+                  See the <link xlink:href="http://trac.cyberduck.ch/wiki/help/en/howto/openstack">Cyberduck website</link>
+                  for further details.
+                </para>
+            </note>
+            <para>
+              After installing Cyberduck you'll need to change the path/context
+              used for the authentication URL. The default value shipped with
+              Cyberduck is incorrect.
+            </para>
+            <para>
+              On OS X open a Terminal window and execute,
+              <screen><prompt>$ </prompt><userinput>defaults write ch.sudo.cyberduck cf.authentication.context /auth/v1.0</userinput></screen>
+            </para>
+            <para> On Windows open the preferences file in a text
+                editor. The exact location of this file is described
+                    <link
+                    xlink:href="http://trac.cyberduck.ch/wiki/help/en/faq#Windows1"
+                    >here</link>. If this path doesn't exist you may
+                need to start and stop Cyberduck to have it generate
+                the config file. Once you've opened the file add the
+                setting,
+                <programlisting>&lt;setting name="cf.authentication.context" value="/auth/v1.0" /&gt;</programlisting>
+            </para>
+            <para>
+              To connect to Swift start Cyberduck and click the 
+              <emphasis>Open Connection</emphasis> toolbar button or choose
+              <emphasis>File > Open Connection</emphasis>. Select
+              <emphasis>Swift (OpenStack Object Storage)</emphasis> in the
+              dropdown and enter your cluster details.
+              <variablelist>
+                <varlistentry>
+                  <term>Server</term>
+                  <listitem>
+                    <para>your proxy server's hostname or IP address</para>
+                  </listitem>
+                </varlistentry>
+                <varlistentry>
+                  <term>Port</term>
+                  <listitem><para>443</para></listitem>
+                </varlistentry>
+                <varlistentry>
+                  <term>Username</term>
+                  <listitem>
+                    <para>
+                      account name followed by a colon and then the user name,
+                      for example test:tester
+                    </para>
+                  </listitem>
+                </varlistentry>
+                <varlistentry>
+                  <term>Password</term>
+                  <listitem>
+                    <para>
+                      password for the account and user name entered above
+                    </para>
+                  </listitem>
+                </varlistentry>
+              </variablelist>
+              <figure>
+                <title>Example Cyberduck Swift Connection</title>
+                <mediaobject>
+                  <imageobject>
+                    <imagedata fileref="figures/cyberduck_swift_connection.png"/>
+                  </imageobject>
+                </mediaobject>
+              </figure>
+            </para>
+
+            <simplesect>
+            <title>Connecting to a Unsecured Swift Cluster</title>
+            <para>An Unsecured Swift Cluster does not use https
+                    connections. Download the <link
+                        xlink:href="http://trac.cyberduck.ch/raw-attachment/wiki/help/en/howto/openstack/Swift%20Unsecure.cyberduckprofile"
+                        >Unsecured Swift profile file</link> and
+                    double click it to import it into Cyberduck. </para>
+            <para>
+              When creating a new connection select <emphasis>Swift (HTTP)</emphasis>.
+              Enter your connection details as described above. You'll need
+              to change the port since presumably you won't want to use 443.
+            </para>
+            </simplesect>
         </section>
         <section xml:id="part-iii-copying-files">
             <title>Part III: Creating Containers (Folders) and Uploading Files</title>
