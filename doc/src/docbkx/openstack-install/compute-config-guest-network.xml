@@ -4,9 +4,14 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
     <title>Pre-configuring the network</title>
-    <para>These instructions are for using the FlatDHCP networking mode with a single network interface. More complex configurations are described in the networking section, but this configuration is known to work. 
-    </para>
-    <para>First, setup your /etc/network/interfaces file with these settings: </para>
+    <para>These instructions are for using the FlatDHCP networking mode with a single network
+        interface. More complex configurations are described in the networking section, but this
+        configuration is known to work. These configuration options should be set on all compute
+        nodes.</para>
+    <para>Set your network interface in promiscuous mode so that it can receive packets that are
+        intended for virtual machines. As
+        root:<screen><prompt>#</prompt> <userinput>ip link set eth0 promisc on</userinput></screen></para>
+    <para>Set up your /etc/network/interfaces file with these settings: </para>
     <itemizedlist><listitem><para>eth0: public IP, gateway</para></listitem>
         <listitem><para>br100: no ports, stp off, fd 0, first address from fixed_range set in nova.conf files.</para></listitem></itemizedlist> 
     <para>Here's an example:</para>
