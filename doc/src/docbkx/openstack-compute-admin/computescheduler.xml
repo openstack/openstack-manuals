@@ -61,6 +61,7 @@ servicing the request (<literal>ComputeFilter</literal>).</para>
 
 
     <section xml:id="scheduler-filters">
+        <?dbhtml stop-chunking?>
         <title>Filters</title>
         <para>When the Filter Scheduler receives a request for a resource, it first
             applies filters to determine which hosts are eligible for
@@ -212,6 +213,73 @@ isolated_images=342b492c-128f-4a42-8d3a-c5088cf27d13,ebd267a6-ca86-4d6c-9a0e-bd1
             </programlisting>
         </para>
     </section>
+        
+        <section xml:id="jsonfilter">
+            <title>JsonFilter</title>
+            <para>The JsonFilter allows a user to construct a custom filter by passing a scheduler hint
+                in JSON format. The following operators are supported:<itemizedlist>
+                    <listitem>
+                        <para>=</para>
+                    </listitem>
+                    <listitem>
+                        <para>&lt;</para>
+                    </listitem>
+                    <listitem>
+                        <para>></para>
+                    </listitem>
+                    <listitem>
+                        <para>in</para>
+                    </listitem>
+                    <listitem>
+                        <para>&lt;=</para>
+                    </listitem>
+                    <listitem>
+                        <para>>=</para>
+                    </listitem>
+                    <listitem>
+                        <para>not</para>
+                    </listitem>
+                    <listitem>
+                        <para>or</para>
+                    </listitem>
+                    <listitem>
+                        <para>and</para>
+                    </listitem>
+                </itemizedlist>The filter supports the following variables:<itemizedlist>
+                    <listitem>
+                        <para>$free_ram_mb</para>
+                    </listitem>
+                    <listitem>
+                        <para>$free_disk_mb</para>
+                    </listitem>
+                    <listitem>
+                        <para>$total_usable_ram_mb</para>
+                    </listitem>
+                    <listitem>
+                        <para>$vcpus_total</para>
+                    </listitem>
+                    <listitem>
+                        <para>$vcpus_used</para>
+                    </listitem>
+                </itemizedlist>Using the <command>nova</command> command-line tool, use the
+                <literal>--hint</literal> flag:
+                <screen><userinput>$</userinput> <userinput>nova boot --image 827d564a-e636-4fc4-a376-d36f7ebe1747 --flavor
+1 --hint query='[">=","$free_ram_mb",1024]' server1</userinput></screen>
+                With the API, use the <literal>os:scheduler_hints</literal> key:
+                <programlisting>
+    {
+    'server': {
+        'name': 'server-1',
+        'imageRef': 'cedef40a-ed67-4d10-800e-17455edce175',
+        'flavorRef': '1'
+    },
+    'os:scheduler_hints': {
+        'query': '[">=","$free_ram_mb",1024]',
+    }
+}
+</programlisting></para>
+        </section>
+        
 
     <section xml:id="ramfilter">
         <title>RamFilter</title>
