@@ -32,8 +32,8 @@
             href="samples/glance-api.conf"/></literallayout></section>
     
     <section xml:id="glance-api-paste-file"><title>glance-api-paste.ini</title>
-        <para>The Identity service's API middleware pipeline is found in /etc/glance/glance-api-paste.ini. This
-        file needs to be modified after installing. </para>
+        <para>The Identity service's API middleware pipeline is found in
+            /etc/glance/glance-api-paste.ini. You should not need to modify this file. </para>
         
         <literallayout class="monospaced"><xi:include parse="text"
             href="samples/glance-api-paste.ini"/></literallayout></section>
@@ -43,21 +43,11 @@
         <literallayout class="monospaced"><xi:include parse="text"
             href="samples/glance-scrubber.conf"/></literallayout></section>
     
-    <section xml:id="nova-conf-file"><title>nova.conf</title><para>The configuration file for Compute (nova) settings is stored in
-            /etc/nova/nova.conf. To see a list of all possible
-            configuration options for this file, refer to the
-            OpenStack wiki at
-        <link xlink:href="http://wiki.openstack.org/NovaConfigOptions">http://wiki.openstack.org/NovaConfigOptions</link>. </para>
-        <literallayout class="monospaced"><xi:include parse="text" href="samples/nova.conf"
-        /></literallayout></section>
-    <section xml:id="api-paste-ini-file"><title>api-paste.ini</title><para>The configuration file for Compute (Nova) for the EC2 API and
-        OpenStack Compute API is stored in
-        /etc/nova/api-paste.ini. You should check the
-        admin token in this file to ensure it matches
-        the one you created when setting up the
-        Identity service. You should also add all the
-        Keystone configuration specified in the sample
-        file below.</para>
+    <section xml:id="nova-conf-file"><title>nova.conf</title><para>The configuration file for Compute (nova) settings is stored in /etc/nova/nova.conf. To see a
+            list of all possible configuration options for this file, see the List of Tables at the
+            beginning of the <link
+                xlink:href="http://docs.openstack.org/trunk/openstack-compute/admin/content/"
+                >OpenStack Compute Admin guide</link> . </para>
         <para>This guide assumes that the IP address of the machine that runs the Identity service
             is <literal>192.168.206.130</literal>. If the IP address of the machine on your setup is
             different, change the following configuration options:<itemizedlist>
@@ -71,6 +61,10 @@
                     <para><literal>auth_uri</literal></para>
                 </listitem>
             </itemizedlist></para>
+        
+        <literallayout class="monospaced"><xi:include parse="text" href="samples/nova.conf"/></literallayout></section>
+    <section xml:id="api-paste-ini-file"><title>api-paste.ini</title><para>The  /etc/nova/api-paste.ini file is a middleware configuration file used by the EC2 API and
+            OpenStack Compute API. You should not need to edit it.</para>
         <literallayout class="monospaced">  <xi:include parse="text" href="samples/api-paste.ini"/></literallayout></section>
     <section xml:id="novarc-file"><title>Credentials (openrc)</title><para>This file contains the credentials used by Compute, Image, and
             Identity services, you can optionally store in
