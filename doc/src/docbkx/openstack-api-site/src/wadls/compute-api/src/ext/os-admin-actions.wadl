@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- (C) 2012 OpenStack LLC., All Rights Reserved -->
+
+<application xmlns="http://wadl.dev.java.net/2009/02"
+    xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+    xmlns:wadl="http://wadl.dev.java.net/2009/02"
+    xmlns:csapi="http://docs.openstack.org/compute/api/v1.1">
+    
+    <resources base="https://servers.api.openstack.com">
+        <resource id="version" type="#VersionDetails" path="v2/">
+            <resource id="tenantID" path="{tenant_id}">
+                <param name="tenant_id" style="template" type="xsd:string">
+                    <doc><p xmlns="http://www.w3.org/1999/xhtml">
+                        The ID for the tenant or account in a multi-tenancy cloud.
+                    </p></doc>
+                </param>
+                
+                <resource id="Servers" path="servers">
+                    <resource path="{server_id}">
+                        <param name="server_id" style="template" type="csapi:UUID">
+                            <doc><p xmlns="http://www.w3.org/1999/xhtml">
+                                The UUID for the server of interest to you.
+                            </p>
+                            </doc>
+                        </param>
+                        <resource path="action">
+                            <method href="#pause"/>
+                            <method href="#unpause"/>
+                            <method href="#suspend"/>
+                            <method href="#resume"/>
+                            <method href="#migrate"/>
+                            <method href="#resetNetwork"/>
+                            <method href="#injectNetworkInfo"/>
+                            <method href="#lock"/>
+                            <method href="#unlock"/>
+                        </resource>
+                    </resource>
+                </resource>
+            </resource>
+        </resource>
+    </resources>
+    
+    <method name="POST" id="pause">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                Pauses a server. Changes the status to PAUSED. 
+            </p>
+        </wadl:doc>
+        <request>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/admin_pause.json" />
+                </doc>
+            </representation>
+        </request>
+        <response status="202" />
+    </method>
+    
+    <method name="POST" id="unpause">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                Unpauses a PAUSED server. Changes the status to ACTIVE. 
+            </p>
+        </wadl:doc>
+        <request>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/admin_unpause.json" />
+                </doc>
+            </representation>
+        </request>
+        <response status="202" />
+    </method>
+    
+    <method name="POST" id="suspend">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                Suspends a server. Changes the status to SUSPENDED.
+            </p>
+        </wadl:doc>
+        <request>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/admin_suspend.json" />
+                </doc>
+            </representation>
+        </request>
+        <response status="202" />
+    </method>
+    
+    <method name="POST" id="resume">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                Resumes a SUSPENDED server. Changes the status to ACTIVE.
+            </p>
+        </wadl:doc>
+        <request>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/admin_resume.json" />
+                </doc>
+            </representation>
+        </request>
+        <response status="202" />
+    </method>
+
+    <method name="POST" id="migrate">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                Migrates a server to a new host.
+            </p>
+        </wadl:doc>
+        <request>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/admin_migrate.json" />
+                </doc>
+            </representation>
+        </request>
+        <response status="202" />
+    </method>
+
+    <method name="POST" id="resetNetwork">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                Resets networking on a server.
+            </p>
+        </wadl:doc>
+        <request>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/admin_resetNetwork.json" />
+                </doc>
+            </representation>
+        </request>
+        <response status="202" />
+    </method>
+
+    <method name="POST" id="injectNetworkInfo">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                Injects network info into a server.
+            </p>
+        </wadl:doc>
+        <request>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/admin_injectNetworkInfo.json" />
+                </doc>
+            </representation>
+        </request>
+        <response status="202" />
+    </method>
+
+    <method name="POST" id="lock">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                Locks a server.
+            </p>
+        </wadl:doc>
+        <request>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/admin_lock.json" />
+                </doc>
+            </representation>
+        </request>
+        <response status="202" />
+    </method>
+
+    <method name="POST" id="unlock">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                Unlocks a server.
+            </p>
+        </wadl:doc>
+        <request>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/admin_unlock.json" />
+                </doc>
+            </representation>
+        </request>
+        <response status="202" />
+    </method>
+
+</application>
