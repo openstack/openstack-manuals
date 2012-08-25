@@ -1995,6 +1995,246 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                 
             </section>
     </section>
+    <section xml:id="swift-additional-features">
+        
+        <title>Additional Features</title>
+          <para>This section aims to detail a number of additional features in Swift and their
+          configuration. </para>  
+        <section xml:id="swift-healthcheck">
+                
+                <title>Health Check</title>
+                <para>Health Check provides a simple way to monitor 
+                if the swift proxy server is alive. If the proxy is
+                access with the path  /healthcheck, it will respond
+                with “OK” in the body, which can be used by 
+                monitoring tools.</para>
+                <table rules="all">
+                    <caption>Configuration options for filter:healthcheck  in proxy-server.conf
+                    file</caption>
+                   <tbody>
+                        <tr><td>Option</td>
+                            <td>Default</td>
+                            <td>Description</td>
+                            
+                        </tr>
+                    <tr>
+                        <td>log_name</td>
+                        <td>swift</td>
+                        <td>Label used when logging</td>
+                    </tr>
+                    <tr>
+                        <td>log_facility</td>
+                        <td>LOG_LOCAL0</td>
+                        <td>Syslog log facility</td>
+                    </tr>
+                    <tr>
+                        <td>log_level</td>
+                        <td>INFO</td>
+                        <td>Logging level</td>
+                    </tr>
+                   </tbody>
+                </table>
+            </section>
+
+        <section xml:id="swift-domain-remap">
+                
+                <title>Domain Remap</title>
+                <para>Domain Remap is middleware that translates 
+                container and account parts of a domain to path 
+                parameters that the proxy server understands.
+                </para>
+                <table rules="all">
+                    <caption>Configuration options for filter:domain_remap in proxy-server.conf
+                    file</caption>
+                   <tbody>
+                        <tr><td>Option</td>
+                            <td>Default</td>
+                            <td>Description</td>
+                            
+                        </tr>
+                    <tr>
+                        <td>log_name</td>
+                        <td>swift</td>
+                        <td>Label used when logging</td>
+                    </tr>
+                    <tr>
+                        <td>log_facility</td>
+                        <td>LOG_LOCAL0</td>
+                        <td>Syslog log facility</td>
+                    </tr>
+                    <tr>
+                        <td>log_level</td>
+                        <td>INFO</td>
+                        <td>Logging level</td>
+                    </tr>
+                    <tr>
+                        <td>log_headers</td>
+                        <td>False</td>
+                        <td>If True, log headers in each request</td>
+                    </tr>
+                     <tr>
+                        <td>path_root</td>
+                        <td>v1</td>
+                        <td>Root path</td>
+                    </tr>
+                     <tr>
+                        <td>reseller_prefixes</td>
+                        <td>AUTH</td>
+                        <td>Reseller prefix</td>
+                    </tr>
+                     <tr>
+                        <td>storage_domain</td>
+                        <td>example.com</td>
+                        <td>Domain to use for remap</td>
+                    </tr>
+                   </tbody>
+                </table>
+            </section>
+
+        <section xml:id="swift-cname-lookup">
+                
+                <title>CNAME Lookup</title>
+                <para>CNAME Lookup is middleware that translates 
+                an unknown domain in the host header to something that
+                ends with the configured storage_domain by looking up
+                the given domain's CNAME record in DNS.
+                </para>
+                <table rules="all">
+                    <caption>Configuration options for filter:cname_lookup in proxy-server.conf
+                    file</caption>
+                   <tbody>
+                        <tr><td>Option</td>
+                            <td>Default</td>
+                            <td>Description</td>
+                            
+                        </tr>
+                    <tr>
+                        <td>log_name</td>
+                        <td>swift</td>
+                        <td>Label used when logging</td>
+                    </tr>
+                    <tr>
+                        <td>log_facility</td>
+                        <td>LOG_LOCAL0</td>
+                        <td>Syslog log facility</td>
+                    </tr>
+                    <tr>
+                        <td>log_level</td>
+                        <td>INFO</td>
+                        <td>Logging level</td>
+                    </tr>
+                    <tr>
+                        <td>log_headers</td>
+                        <td>False</td>
+                        <td>If True, log headers in each request</td>
+                    </tr>
+                     <tr>
+                        <td>lookup_depth</td>
+                        <td>1</td>
+                        <td>As CNAMEs can be recursive, how many levels to search through.</td>
+                    </tr>
+                     <tr>
+                        <td>storage_domain</td>
+                        <td>example.conf</td>
+                        <td></td>
+                    </tr>
+                   </tbody>
+                </table>
+            </section>
+        <section xml:id="swift-tempurl">
+                
+                <title>Temporary URL</title>
+                <para>
+Allows the creation of URLs to provide temporary access to objects.
+
+For example, a website may wish to provide a link to download a large
+object in Swift, but the Swift account has no public access. The
+website can generate a URL that will provide GET access for a limited
+time to the resource. When the web browser user clicks on the link,
+the browser will download the object directly from Swift, obviating
+the need for the website to act as a proxy for the request.
+
+If the user were to share the link with all his friends, or
+accidentally post it on a forum, etc. the direct access would be
+limited to the expiration time set when the website created the link.
+
+To create such temporary URLs, first an X-Account-Meta-Temp-URL-Key
+header must be set on the Swift account. Then, an HMAC-SHA1 (RFC 2104)
+signature is generated using the HTTP method to allow (GET or PUT),
+the Unix timestamp the access should be allowed until, the full path
+to the object, and the key set on the account.
+
+For example, here is code generating the signature for a GET for 60
+seconds on /v1/AUTH_account/container/object::
+<code>
+    import hmac
+    from hashlib import sha1
+    from time import time
+    method = 'GET'
+    expires = int(time() + 60)
+    path = '/v1/AUTH_account/container/object'
+    key = 'mykey'
+    hmac_body = '%s\\n%s\\n%s' % (method, expires, path)
+    sig = hmac.new(key, hmac_body, sha1).hexdigest()
+</code>
+Be certain to use the full path, from the /v1/ onward.
+
+Let's say the sig ends up equaling
+da39a3ee5e6b4b0d3255bfef95601890afd80709 and expires ends up
+1323479485. Then, for example, the website could provide a link to::
+<code>
+    https://swift-cluster.example.com/v1/AUTH_account/container/object?
+    temp_url_sig=da39a3ee5e6b4b0d3255bfef95601890afd80709&amp;
+    temp_url_expires=1323479485
+</code>
+Any alteration of the resource path or query arguments would result
+in 401 Unauthorized. Similary, a PUT where GET was the allowed method
+would 401. HEAD is allowed if GET or PUT is allowed.
+
+Using this in combination with browser form post translation
+middleware could also allow direct-from-browser uploads to specific
+locations in Swift.
+
+Note that changing the X-Account-Meta-Temp-URL-Key will invalidate
+any previously generated temporary URLs within 60 seconds (the
+memcache time for the key).
+                </para>
+                <table rules="all">
+                    <caption>Configuration options for filter:tempurl in proxy-server.conf
+                    file</caption>
+                   <tbody>
+                        <tr><td>Option</td>
+                            <td>Default</td>
+                            <td>Description</td>
+                            
+                        </tr>
+                    <tr>
+                        <td>incoming_allow_headers</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>incoming_remove_headers</td>
+                        <td>x-timestamp</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>outgoing_allow_headers</td>
+                        <td>x-object-meta-public-*</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>outgoing_remove_headers</td>
+                        <td>x-object-meta-*</td>
+                        <td></td>
+                    </tr>
+                   </tbody>
+                </table>
+            </section>
+
+
+
+    </section>
 
     <section xml:id="configuring-openstack-object-storage-with-s3_api">
     
