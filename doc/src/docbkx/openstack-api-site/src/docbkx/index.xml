@@ -66,27 +66,12 @@
       types, actions, states, headers, parameters, and resources can
       all be accomplished by means of extensions to the core API. You
       can query the Compute API to find out which extensions are
-      available with a GET request to v1.1/extensions.</para>
-    <section xml:id="ext-os-disk-config">
-      <title>Disk Config</title>
-      <para>Extends servers and images with a diskConfig
-        attribute.</para>
-      <wadl:resources
-        href="../wadls/compute-api/src/ext/os-disk-config.wadl"
-        xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
-    </section>
+      available with a GET request to v2/extensions.</para>
     <section xml:id="ext-os-createserverext">
       <title>Server - Extended Create</title>
       <para>Provides extra information when creating a server.</para>
       <wadl:resources
         href="../wadls/compute-api/src/ext/os-createserverext.wadl"
-        xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
-    </section>
-    <section xml:id="ext-os-rescue">
-      <title>Server Rescue</title>
-      <para>Rescues and unrescues a server.</para>
-      <wadl:resources
-        href="../wadls/compute-api/src/ext/os-rescue.wadl"
         xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
     </section>
     <section xml:id="ext-os-console-output">
@@ -101,6 +86,43 @@
       <para>Accesses a VNC console for a specific server.</para>
       <wadl:resources
         href="../wadls/compute-api/src/ext/os-consoles.wadl"
+        xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
+    </section>
+    <section xml:id="ext-os-server-start-stop">
+      <title>Server Start/Stop</title>
+      <para>Starts and stops a server.</para>
+      <wadl:resources
+        href="../wadls/compute-api/src/ext/os-server-start-stop.wadl"
+        xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
+    </section>
+    <section xml:id="ext-os-rescue">
+      <title>Server Rescue</title>
+      <para>Rescues and unrescues a server.</para>
+      <wadl:resources
+        href="../wadls/compute-api/src/ext/os-rescue.wadl"
+        xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
+    </section>
+    <section xml:id="ext-os-admin-actions">
+      <title>Admin Actions</title>
+      <para>Permits admin to do actions to a server.</para>
+      <wadl:resources
+        href="../wadls/compute-api/src/ext/os-admin-actions.wadl"
+        xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
+    </section>
+    <section xml:id="ext-os-disk-config">
+      <title>Disk Config</title>
+      <para>Extends servers and images with a diskConfig
+        attribute.</para>
+      <wadl:resources
+        href="../wadls/compute-api/src/ext/os-disk-config.wadl"
+        xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
+    </section>
+    <section xml:id="ext-os-deferred-delete">
+      <title>Server Force Delete/Restore</title>
+      <para> When Nova is deployed with deferred delete on, restores
+        or forces the deletion of a server. </para>
+      <wadl:resources
+        href="../wadls/compute-api/src/ext/os-deferred-delete.wadl"
         xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
     </section>
     <section xml:id="ext-os-extended-status">
@@ -119,28 +141,6 @@
         href="../wadls/compute-api/src/ext/os-extended-server-attributes.wadl"
         xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
     </section>
-    <section xml:id="ext-os-server-start-stop">
-      <title>Server Start/Stop</title>
-      <para>Starts and stops a server.</para>
-      <wadl:resources
-        href="../wadls/compute-api/src/ext/os-server-start-stop.wadl"
-        xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
-    </section>
-    <section xml:id="ext-os-admin-actions">
-      <title>Admin Actions</title>
-      <para>Permits admin to do actions to a server.</para>
-      <wadl:resources
-        href="../wadls/compute-api/src/ext/os-admin-actions.wadl"
-        xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
-    </section>
-    <section xml:id="ext-os-deferred-delete">
-      <title>Server Force Delete/Restore</title>
-      <para> When Nova is deployed with deferred delete on, restores
-        or forces the deletion of a server. </para>
-      <wadl:resources
-        href="../wadls/compute-api/src/ext/os-deferred-delete.wadl"
-        xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
-    </section>
     <section xml:id="ext-floating-ip-addresses">
       <title>Floating IPs</title>
       <para> The Floating IPs extension enables assigning and
@@ -148,13 +148,6 @@
         OpenStack cloud. </para>
       <wadl:resources
         href="../wadls/compute-api/src/ext/os-floating-ips.wadl"
-        xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
-    </section>
-    <section xml:id="ext-floating-ip-pools">
-      <title>Floating IP Pools</title>
-      <para>Manages groups of Floating IPs.</para>
-      <wadl:resources
-        href="../wadls/compute-api/src/ext/os-floating-ip-pools.wadl"
         xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
     </section>
     <section xml:id="ext-os-floating-ip-dns">
@@ -165,6 +158,70 @@
         driver selected at startup. </para>
       <wadl:resources
         href="../wadls/compute-api/src/ext/os-floating-ip-dns.wadl"
+        xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
+    </section>
+    <section xml:id="ext-floating-ip-pools">
+      <title>Floating IP Pools</title>
+      <para>Manages groups of Floating IPs.</para>
+      <wadl:resources
+        href="../wadls/compute-api/src/ext/os-floating-ip-pools.wadl"
+        xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
+    </section>
+    <section xml:id="ext-os-aggregates">
+      <title>Host Aggregates</title>
+      <para> Enables the creation and management of host aggregates.
+        An aggregate allows assigning metadata to groups of compute
+        nodes. Aggregates are only visible to the cloud provider. </para>
+      <wadl:resources
+        href="../wadls/compute-api/src/ext/os-aggregates.wadl"
+        xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
+    </section>
+    <section xml:id="ext-os-cloudpipe">
+      <title>Cloudpipe</title>
+      <para>Manages virtual vpns for projects.</para>
+      <wadl:resources
+        href="../wadls/compute-api/src/ext/os-cloudpipe.wadl"
+        xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
+    </section>
+    <section xml:id="ext-os-flavormanage">
+      <title>Flavor Management</title>
+      <para>Creates and deletes flavors.</para>
+      <wadl:resources
+        href="../wadls/compute-api/src/ext/os-flavormanage.wadl"
+        xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
+    </section>
+    <section xml:id="os-flavorextradata">
+      <title>Flavors - Extra Data</title>
+      <para> Allows extra attributes to be returned with flavor
+        objects. This includes 'swap', 'rxtx_factor' and
+        'OS-FLV-EXT-DATA:ephemeral'. </para>
+      <wadl:resources
+        href="../wadls/compute-api/src/ext/os-flavorextradata.wadl"
+        xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
+    </section>
+    <section xml:id="ext-os-keypairs">
+      <title>Keypairs</title>
+      <para>Generates, imports, and deletes SSH keys.</para>
+      <wadl:resources
+        href="../wadls/compute-api/src/ext/os-keypairs.wadl"
+        xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
+    </section>
+    <section xml:id="ext-os-hosts">
+      <title>Hosts</title>
+      <para>Manages physical hosts.</para>
+      <wadl:resources
+        href="../wadls/compute-api/src/ext/os-hosts.wadl"
+        xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
+    </section>
+    <section xml:id="ext-os-hypervisors">
+      <title>Hypervisors</title>
+      <para>
+        The Hypervisors extension enables you to view extra statistical information
+        from the machine hosting the hypervisor through the hypervisor's
+        API (XenAPI or KVM/libvirt).
+      </para>
+      <wadl:resources
+        href="../wadls/compute-api/src/ext/os-hypervisors.wadl"
         xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
     </section>
     <section xml:id="ext-os-networks">
@@ -184,20 +241,6 @@
         href="../wadls/compute-api/src/ext/os-scheduler-hints.wadl"
         xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
     </section>
-    <section xml:id="ext-os-keypairs">
-      <title>Keypairs</title>
-      <para>Generates, imports, and deletes SSH keys..</para>
-      <wadl:resources
-        href="../wadls/compute-api/src/ext/os-keypairs.wadl"
-        xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
-    </section>
-    <section xml:id="ext-os-simple-tenant-usage">
-      <title>Simple Usage</title>
-      <para>Reports stats on compute and storage resources.</para>
-      <wadl:resources
-        href="../wadls/compute-api/src/ext/os-simple-tenant-usage.wadl"
-        xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
-    </section>
     <section xml:id="ext-os-security-groups">
       <title>Security Groups</title>
       <para>Creates, modifies, and deletes security groups and
@@ -206,43 +249,11 @@
         href="../wadls/compute-api/src/ext/os-security-groups.wadl"
         xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
     </section>
-    <section xml:id="ext-os-cloudpipe">
-      <title>Cloudpipe</title>
-      <para>Manages virtual vpns for projects.</para>
+    <section xml:id="ext-os-simple-tenant-usage">
+      <title>Simple Usage</title>
+      <para>Reports stats on compute and storage resources.</para>
       <wadl:resources
-        href="../wadls/compute-api/src/ext/os-cloudpipe.wadl"
-        xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
-    </section>
-    <section xml:id="ext-os-hosts">
-      <title>Hosts</title>
-      <para>Manages physical hosts.</para>
-      <wadl:resources
-        href="../wadls/compute-api/src/ext/os-hosts.wadl"
-        xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
-    </section>
-    <section xml:id="ext-os-flavormanage">
-      <title>Flavor Management</title>
-      <para>Creates and deletes flavors.</para>
-      <wadl:resources
-        href="../wadls/compute-api/src/ext/os-flavormanage.wadl"
-        xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
-    </section>
-    <section xml:id="ext-flavorextradata">
-      <title>Flavors - Extra Data</title>
-      <para> Allows extra attributes to be returned with flavor
-        objects. This includes 'swap', 'rxtx_factor' and
-        'OS-FLV-EXT-DATA:ephemeral'. </para>
-      <wadl:resources
-        href="../wadls/compute-api/src/ext/os-flavorextradata.wadl"
-        xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
-    </section>
-    <section xml:id="ext-os-aggregates">
-      <title>Host Aggregates</title>
-      <para> Enables the creation and management of host aggregates.
-        An aggregate allows assigning metadata to groups of compute
-        nodes. Aggregates are only visible to the cloud provider. </para>
-      <wadl:resources
-        href="../wadls/compute-api/src/ext/os-aggregates.wadl"
+        href="../wadls/compute-api/src/ext/os-simple-tenant-usage.wadl"
         xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
     </section>
     <section xml:id="ext-os-virtual-interfaces">
@@ -253,7 +264,6 @@
         href="../wadls/compute-api/src/ext/os-virtual-interfaces.wadl"
         xmlns:wadl="http://wadl.dev.java.net/2009/02"/>
     </section>
-
     <section xml:id="ext-os-used-limits">
       <title>Used Limits</title>
       <para>Extends limits to include information on the usage of per
