@@ -1389,9 +1389,7 @@ auto_assign_floating_ip=True
                 <title>multinic flat manager</title>
                 <mediaobject>
                     <imageobject>
-                        <imagedata scale="50"
-                            fileref="figures/SCH_5007_V00_NUAC-multi_nic_OpenStack-Flat-manager.jpg"
-                        />
+                        <imagedata scale="40" fileref="figures/SCH_5007_V00_NUAC-multi_nic_OpenStack-Flat-manager.jpg"/>
                     </imageobject>
                 </mediaobject>
             </figure>
@@ -1399,9 +1397,7 @@ auto_assign_floating_ip=True
                 <title>multinic flatdhcp manager</title>
                 <mediaobject>
                     <imageobject>
-                        <imagedata scale="40"
-                            fileref="figures/SCH_5007_V00_NUAC-multi_nic_OpenStack-Flat-DHCP-manager.jpg"
-                        />
+                        <imagedata scale="40" fileref="figures/SCH_5007_V00_NUAC-multi_nic_OpenStack-Flat-DHCP-manager.jpg"/>
                     </imageobject>
                 </mediaobject>
             </figure>
@@ -1409,31 +1405,29 @@ auto_assign_floating_ip=True
                 <title>multinic VLAN manager</title>
                 <mediaobject>
                     <imageobject>
-                        <imagedata scale="40"
-                            fileref="figures/SCH_5007_V00_NUAC-multi_nic_OpenStack-VLAN-manager.jpg"
-                        />
+                        <imagedata scale="40" fileref="figures/SCH_5007_V00_NUAC-multi_nic_OpenStack-VLAN-manager.jpg"/>
                     </imageobject>
                 </mediaobject>
             </figure>
         </para>
         <section xml:id="using-multiple-nics-usage">
             <title>Using the multinic feature</title>
-            <para> The first thing to do is to create a new network
-                and attach it to your project :
-                <screen><prompt>$</prompt> <userinput>nova-manage network create --fixed_range_v4=20.20.0.0/24 --num_networks=1 --network_size=256 --label=test --project=$your-project</userinput></screen>
-                Now every time you spawn a new instance, it gets two
-                IP addresses from the respective DHCP servers : <screen><prompt>$</prompt> <userinput>nova list</userinput>
+            <para> In order to use the multinic feature, first create two networks, and attach them
+                to your project :
+                <screen><prompt>$</prompt> <userinput>nova-manage network create --fixed_range_v4=20.20.0.0/24 --num_networks=1 --network_size=256 --label=first-net --project=$your-project</userinput>
+<prompt>$</prompt> <userinput>nova-manage network create --fixed_range_v4=20.20.10.0/24 --num_networks=1 --network_size=256 --label=second-net --project=$your-project</userinput>              </screen>
+                Now every time you spawn a new instance, it gets two IP addresses from the
+                respective DHCP servers : <screen><prompt>$</prompt> <userinput>nova list</userinput>
 <computeroutput>+-----+------------+--------+----------------------------------------+
-|  ID |    Name    | Status |                Networks                |
-+-----+------------+--------+----------------------------------------+
-| 124 | Server 124 | ACTIVE | network2=20.20.0.3; private=20.10.0.14 |
-+-----+------------+--------+----------------------------------------+</computeroutput></screen>
+ |  ID |    Name    | Status |                Networks                |
+ +-----+------------+--------+----------------------------------------+
+ | 124 | Server 124 | ACTIVE | network2=20.20.0.3; private=20.20.10.14|
+ +-----+------------+--------+----------------------------------------+</computeroutput></screen>
                 <note>
-                    <para>Make sure to power up the second interface
-                        on the instance, otherwise that last won't be
-                        reacheable via its second IP. Here is an
-                        example of how to setup the interfaces within
-                        the instance : </para>
+                    <para>Make sure to power up the second interface on the instance, otherwise that
+                        last won't be reacheable via its second IP. Here is an example of how to
+                        setup the interfaces within the instance (this is the configuration that
+                        needs to be applied inside the image) : </para>
                     <para><filename>/etc/network/interfaces</filename>
                         <programlisting># The loopback network interface
 auto lo
@@ -1445,17 +1439,23 @@ iface eth0 inet dhcp
 auto eth1
 iface eth1 inet dhcp                </programlisting></para>
                 </note></para>
+            <note>
+            <para>If the Virtual Network Service Quantum is installed, it is possible to specify the
+                networks to attach to the respective interfaces by using the
+                    <literal>--nic</literal> flag when invoking the <literal>nova</literal> command
+                :
+                <screen><prompt>$</prompt> <userinput>nova boot --image ed8b2a37-5535-4a5f-a615-443513036d71 --flavor 1 --nic net-id= &lt;id of first network&gt;  --nic net-id= &lt;id of first network&gt;  test-vm1</userinput></screen>
+            </para>
+            </note>
         </section>
     </section>
     <section xml:id="existing-ha-networking-options">
         <title>Existing High Availability Options for
             Networking</title>
-        <para>Adapted from a blog post by<link
-                xlink:href="http://unchainyourbrain.com/openstack/13-networking-in-nova">Vish
+        <para>Adapted from a blog post by<link xlink:href="http://unchainyourbrain.com/openstack/13-networking-in-nova">Vish
                 Ishaya</link></para>
 
-        <para>As illustrated in the Flat DHCP diagram in Section <link
-                xlink:href="#configuring-flat-dhcp-networking">Configuring Flat DHCP
+        <para>As illustrated in the Flat DHCP diagram in Section <link xlink:href="#configuring-flat-dhcp-networking">Configuring Flat DHCP
                 Networking</link> titled <link linkend="flat-dhcp-diagram">Flat DHCP network, multiple interfaces, multiple servers</link>,
             traffic from the VM to the public internet has to go through the host running nova
             network. DHCP is handled by nova-network as well, listening on the gateway address of
