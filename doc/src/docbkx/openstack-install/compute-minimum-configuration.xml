@@ -48,16 +48,19 @@ Options:
         should ensure that the <filename>nova.conf</filename> file should have its
         owner set to <literal>root:nova</literal>, and mode set to <literal>0640</literal>, since the
         file contains your MySQL server’s username and password.
+        
+    </para>
+    <note><para>If you are installing as another user, you should set permissions correctly. 
         This packaged install ensures that the nova user belongs
         to the nova group and that the .conf file permissions are
-        set, but here are the manual commands, which should be run as root:
-    </para>
+        set, but here are the manual commands, which should be run as root:</para>
 <screen>
 <prompt># </prompt><userinput>groupadd nova</userinput>
 <prompt># </prompt><userinput>usermod -g nova nova</userinput>
-<prompt># </prompt><userinput>chown -R root:nova /etc/nova</userinput>
+<prompt># </prompt><userinput>chown -R <option>username</option>:nova /etc/nova</userinput>
 <prompt># </prompt><userinput>chmod 640 /etc/nova/nova.conf</userinput>
 </screen>
+    </note>
     <para>The hypervisor is set either by editing <filename>/etc/nova/nova.conf</filename> or referring to
         <filename>nova-compute.conf</filename> in the <filename>nova.conf</filename> file. The hypervisor defaults to <literal>kvm</literal>, but if you are
         working within a VM already, switch to <literal>qemu</literal> on the <literal>libvirt_type=</literal> line. To use Xen, refer
