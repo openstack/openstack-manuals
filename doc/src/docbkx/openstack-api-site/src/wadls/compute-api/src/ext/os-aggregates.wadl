@@ -26,11 +26,13 @@
                             </p>
                         </doc>
                         </param>
+                        <method href="#delete_aggregate"/>
+                        <method href="#get_details"/>
+                        <method href="#update_aggregate"/>
                         <resource path="action">
                             <method href="#set_metadata"/>
                             <method href="#add_host"/>
                             <method href="#remove_host"/>
-                            <method href="#delete_aggregate"/>
                         </resource>
                     </resource>
                 </resource>
@@ -57,7 +59,7 @@
     <method name="POST" id="create_aggregate">
         <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
             <p xmlns="http://www.w3.org/1999/xhtml">
-                Create an aggregate
+                Create an aggregate.
             </p>
         </wadl:doc>
         <request>
@@ -68,7 +70,7 @@
             </param>
             <param name="availability_zone" style="plain" required="true">
                 <doc><p xmlns="http://www.w3.org/1999/xhtml">
-                  Name of aggregate
+                 Availability zone of aggregate
                 </p></doc>
             </param>
             <representation mediaType="application/json">
@@ -77,13 +79,70 @@
                 </doc>
             </representation>
         </request>
-        <response status="200" />
+        <response status="200">
+             <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/os-aggregate-response.json" />
+                </doc>
+            </representation>
+        </response>
     </method>
- 
+
+
+    <method name="GET" id="get_details">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                Get details of a specific aggregate.
+            </p>
+        </wadl:doc>
+        <request>
+            <representation mediaType="application/json"/>
+        </request>
+        <response status="200">
+             <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/os-aggregate-response.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
+    <method name="PUT" id="update_aggregate">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                Update the aggregate's name and optionally availability zone.
+            </p>
+        </wadl:doc>
+        <request>
+            <param name="name" style="plain" required="true">
+                <doc><p xmlns="http://www.w3.org/1999/xhtml">
+                  Name of aggregate
+                </p></doc>
+            </param>
+            <param name="availability_zone" style="plain" required="true">
+                <doc><p xmlns="http://www.w3.org/1999/xhtml">
+                 Availability zone of aggregate
+                </p></doc>
+            </param>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/os-aggregate-create.json" />
+                </doc>
+            </representation>
+        </request>
+        <response status="200">
+             <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/os-aggregate-response.json" />
+                </doc>
+            </representation>
+        </response>
+    </method>
+
     <method name="DELETE" id="delete_aggregate">
         <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
             <p xmlns="http://www.w3.org/1999/xhtml">
-                Delete an aggregate
+                Delete an aggregate.
             </p>
         </wadl:doc>
         <request>
@@ -91,12 +150,11 @@
         </request>
         <response status="200" />
     </method>
- 
 
     <method name="POST" id="set_metadata">
         <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
             <p xmlns="http://www.w3.org/1999/xhtml">
-                Set metadata for an aggregate. 
+                Set metadata for an aggregate.
             </p>
         </wadl:doc>
         <request>
@@ -111,9 +169,15 @@
                 </doc>
             </representation>
         </request>
-        <response status="200" />
+        <response status="200">
+             <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/os-aggregate-response.json" />
+                </doc>
+            </representation>
+        </response>
     </method>
-    
+
     <method name="POST" id="add_host">
         <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
             <p xmlns="http://www.w3.org/1999/xhtml">
@@ -132,7 +196,13 @@
                 </doc>
             </representation>
         </request>
-        <response status="200" />
+        <response status="200">
+             <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/os-aggregate-response.json" />
+                </doc>
+            </representation>
+        </response>
     </method>
 
     <method name="POST" id="remove_host">
@@ -153,6 +223,13 @@
                 </doc>
             </representation>
         </request>
-        <response status="200" />
+        <response status="200">
+             <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/os-aggregate-response.json" />
+                </doc>
+            </representation>
+        </response>
+
     </method>
  </application>
