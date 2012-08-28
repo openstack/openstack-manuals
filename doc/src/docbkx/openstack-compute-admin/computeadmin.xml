@@ -213,17 +213,16 @@ usage: nova [--debug] [--os_username OS_USERNAME] [--os_password OS_PASSWORD]
     </section>
     <section xml:id="live-migration-usage">
 
-        <title>Using Live Migration</title>
-        <para>Before starting live migration, review the "Configuring
-            Live Migration" section.</para>
-        <para>Live migration provides a scheme to migrate running instances from one OpenStack
-            Compute server to another OpenStack Compute server. No visible downtime and no
-            transaction loss is the ideal goal. This feature can be used as described below. </para>
+        <title>Using Migration</title>
+        <para>Before starting migrations, review the <link linkend="configuring-migrations"
+                >Configuring Migrations</link> section.</para>
+        <para>Migration provides a scheme to migrate running instances from one OpenStack Compute
+            server to another OpenStack Compute server. This feature can be used as described below. </para>
 
         <itemizedlist>
             <listitem>
-               <para>First, look at the running instances, to get the ID of the instance you wish
-to live migrate.</para>
+               <para>First, look at the running instances, to get the ID of the instance you wish to
+                    migrate.</para>
                 <programlisting>
 <prompt>#</prompt> <userinput>nova-list</userinput>
 <![CDATA[+--------------------------------------+------+--------+-----------------+
@@ -266,8 +265,7 @@ HostC nova-compute enabled  :-) None
                  <para> In this example, HostC can be picked up because nova-compute is running on it.</para>
             </listitem>
             <listitem>
-                <para>Third, ensure that  HostC has enough resource
-                    for live migration.</para>
+                <para>Third, ensure that HostC has enough resource for migration.</para>
                 <programlisting>
 <prompt>#</prompt> <userinput>nova-manage service describe_resource HostC</userinput>
 <![CDATA[HOST             PROJECT     cpu   mem(mb)     hdd
@@ -303,16 +301,19 @@ HostC            p2            5     10240     150
                  </itemizedlist>
             </listitem>
             <listitem>
-                <para>Finally, live migration</para>
+                <para>Finally, use the <command>nova live-migration</command> command to migrate the
+                    instances.</para>
                 <programlisting>
 <prompt>#</prompt> <userinput>nova live-migration bee83dd3-5cc9-47bc-a1bd-6d11186692d0 HostC</userinput>
 <![CDATA[Migration of bee83dd3-5cc9-47bc-a1bd-6d11186692d0 initiated.
                  ]]></programlisting>
-                 <para>Make sure instances are migrated successfully
-                    with <command>nova list</command>. If instances
-                    are still running on HostB, check logfiles
-                    (src/dest nova-compute and nova-scheduler) to
-                    determine why.</para>
+                 <para>Make sure instances are migrated successfully with <command>nova
+                        list</command>. If instances are still running on HostB, check logfiles
+                    (src/dest nova-compute and nova-scheduler) to determine why.
+                     <note><para>While the nova command is called <command>live-migration</command>, under the default Compute
+                            configuration options the instances are suspended before migration. See
+                            the <link linkend="configuring-migrations">Configuring Migrations</link>
+                            section for more details.</para></note></para>
             </listitem>
         </itemizedlist>
 
