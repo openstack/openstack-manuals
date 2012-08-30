@@ -46,12 +46,7 @@ template1=#GRANT ALL PRIVILEGES ON DATABASE nova TO nova
 template1=#GRANT ALL PRIVILEGES ON DATABASE glance TO nova
 template1=#\q
                     </literallayout>
-    
-    <para>For the Cactus version of Nova, the following fix is required for the PostgreSQL database schema. You don't need to do this for Diablo:</para>
-    <literallayout class="monospaced">
-sudo -u postgres psql template1
-template1=#alter table instances alter instance_type_id type integer using cast(instance_type_id as integer);
-template1=#\q</literallayout>
+
     <para>For Nova components that require access to this database the required configuration in /etc/nova/nova.conf should be (replace $PG_PASS with password):</para>
     
     <literallayout class="monospaced">sql_connection=postgresql://nova:$PG_PASS@control.example.com/nova</literallayout>
