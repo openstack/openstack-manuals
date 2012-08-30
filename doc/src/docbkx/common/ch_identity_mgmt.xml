@@ -214,43 +214,12 @@ keystone-manage export_legacy_catalog \
     <?dbhtml stop-chunking?>
     <title>Migrating from Legacy Authentication</title>
     <para>
-      Migration of users, projects (aka tenants), roles and EC2
-      credentials is supported for the Diablo and Essex releases of
-      Nova. To migrate your auth data from Compute, use the following
-      steps:
+      A different type of authentication was used in OpenStack releases
+      prior to Diablo, after which it was deprecated. It has been 
+      removed entirely in Folsom. If you are still using 'legacy 
+      authentication' and need to upgrade, please refer to the 
+     <link xlink:href="http://docs.openstack.org/essex/openstack-compute/admin/content/migrating-from-nova-auth.html">Essex Documentation</link>.
     </para>
-    <section xml:id="step-1-export-your-data-from-nova">
-      <title>Step 1: Export your data from Compute</title>
-      <para> Use the following command to export your data from
-        Compute (nova): </para>
-      <screen>
-nova-manage export auth &gt; /path/to/dump
-</screen>
-      <para>
-        It is important to redirect the output to a file so it can be
-        imported in a later step.
-      </para>
-    </section>
-    <section xml:id="step-2-db_sync-your-new-empty-database-1">
-      <title>Step 2: db_sync your new, empty database</title>
-      <para>
-        Run the following command to configure the most recent schema in
-        your new installation:
-      </para>
-      <screen>
-keystone-manage db_sync
-</screen>
-    </section>
-    <section xml:id="step-3-import-your-data-to-keystone">
-      <title>Step 3: Import your data to Keystone</title>
-      <para>
-        To import your Compute auth data from a dump file created with
-        <command>nova-manage</command>, run this command:
-      </para>
-      <screen>
-<prompt>$</prompt> <userinput>keystone-manage import_nova_auth <replaceable>[dump_file, e.g. /path/to/dump]</replaceable></userinput>
-</screen>
-    </section>
   </section>
   <section xml:id="initializing-keystone">
     <title>Initializing Keystone</title>
@@ -750,7 +719,7 @@ keystone role-get role=19d1d3344873464d819c45f521ff9890
           example:
         </para>
         <screen>
-keystone role add-user-role \
+keystone add-user-role \
 3a751f78ef4c412b827540b829e2d7dd \
 03c84b51574841ba9a0d8db7882ac645 \
 20601a7f1d94447daa4dff438cb1c209
