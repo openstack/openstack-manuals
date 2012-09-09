@@ -4,547 +4,11 @@ xmlns:xi="http://www.w3.org/2001/XInclude"
 xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
 xml:id="ch_getting-started-with-openstack">
   <title>Getting Started with OpenStack</title>
-  <para>OpenStack is a collection of open source technology that
-  provides massively scalable open source cloud computing software.
-  Currently OpenStack develops two related projects: OpenStack
-  Compute, which offers computing power through virtual machine and
-  network management, and OpenStack Object Storage which is software
-  for redundant, scalable object storage capacity. Closely related to
-  the OpenStack Compute project is the Image Service project, named
-  Glance. OpenStack can be used by corporations, service providers,
-  VARS, SMBs, researchers, and global data centers looking to deploy
+  <para>OpenStack is a collection of open source technologies that
+  provides massively scalable open source cloud computing software. 
+  OpenStack can be used by corporations, service providers, VARS, SMBs,       
+  researchers, and global data centers looking to deploy
   large-scale cloud deployments for private or public clouds.</para>
-  <section xml:id="what-is-openstack">
-    <title>What is OpenStack?</title>
-    <para>OpenStack offers open source software to build public and
-    private clouds. OpenStack is a community and a project as well as
-    open source software to help organizations run clouds for virtual
-    computing or storage. OpenStack contains a collection of open
-    source projects that are community-maintained including OpenStack
-    Compute (code-named Nova), OpenStack Object Storage (code-named
-    Swift), and OpenStack Image Service (code-named Glance).
-    OpenStack provides an operating platform, or toolkit, for
-    orchestrating clouds.</para>
-    <para>OpenStack is more easily defined once the concepts of cloud
-    computing become apparent, but we are on a mission: to provide
-    scalable, elastic cloud computing for both public and private
-    clouds, large and small. At the heart of our mission is a pair of
-    basic requirements: clouds must be simple to implement and
-    massively scalable.</para>
-    <para>If you are new to OpenStack, you will undoubtedly have
-    questions about installation, deployment, and usage. It can seem
-    overwhelming at first. But don't fear, there are places to get
-    information to guide you and to help resolve any issues you may
-    run into during the on-ramp process. Because the project is so
-    new and constantly changing, be aware of the revision time for
-    all information. If you are reading a document that is a few
-    months old and you feel that it isn't entirely accurate, then
-    please let us know through the mailing list at 
-    <link xlink:href="https://launchpad.net/~openstack">
-    https://launchpad.net/~openstack</link>so it can be updated or
-    removed.</para>
-  </section>
-  <section xml:id="components-of-openstack">
-    <title>Components of OpenStack</title>
-    <para>There are currently three main components of OpenStack:
-    Compute, Object Storage, and Image Service. Let's look at each in
-    turn.</para>
-    <para>OpenStack Compute is a cloud fabric controller, used to
-    start up virtual instances for either a user or a group. It's
-    also used to configure networking for each instance or project
-    that contains multiple instances for a particular project.</para>
-    <para>OpenStack Object Storage is a system to store objects in a
-    massively scalable large capacity system with built-in redundancy
-    and failover. Object Storage has a variety of applications, such
-    as backing up or archiving data, serving graphics or videos
-    (streaming data to a user&#226;&#8364;&#8482;s browser), storing
-    secondary or tertiary static data, developing new applications
-    with data storage integration, storing data when predicting
-    storage capacity is difficult, and creating the elasticity and
-    flexibility of cloud-based storage for your web
-    applications.</para>
-    <para>OpenStack Image Service is a lookup and retrieval system
-    for virtual machine images. It can be configured in three ways:
-    using OpenStack Object Store to store images; using Amazon's
-    Simple Storage Solution (S3) storage directly; or using S3
-    storage with Object Store as the intermediate for S3
-    access.</para>
-    <para>The following diagram shows the basic relationships between
-    the projects, how they relate to each other, and how they can
-    fulfill the goals of open source cloud computing.</para>
-    <informalfigure>
-      <mediaobject>
-        <imageobject>
-          <imagedata fileref="figures/OpenStackCore.png" />
-        </imageobject>
-      </mediaobject>
-    </informalfigure>
-  </section>
-  <section xml:id="openstack-architecture-overview">
-    <title>OpenStack Project Architecture Overview</title>
-    <para>by <link xlink:href="http://ken.pepple.info">Ken
-        Pepple</link></para>
-
-    <para>I thought it would be a good chance to revisit my earlier
-      blog post on <link
-        xlink:href="http://ken.pepple.info/openstack/2011/04/22/openstack-nova-architecture/"
-        >OpenStack Compute ("Nova") architecture</link>. This time
-      around, instead of detailing the architecture of just a single
-      service, I'll look at all the pieces of the OpenStack project
-      working together.</para>
-
-    <para>To level-set everyone's understanding, let's briefly review
-      the OpenStack project components and history. Founded in 2010 by
-      Rackspace and NASA, the project has <link
-        xlink:href="http://wiki.openstack.org/Releases">released four
-        versions</link> and is set to release the fifth ("Essex" or
-      2012.1) <link
-        xlink:href="http://wiki.openstack.org/EssexReleaseSchedule">in
-        April</link>. Originally, it consisted of a trio of "core"
-      services:</para>
-
-    <itemizedlist>
-      <listitem>
-        <para>Object Store (<link
-            xlink:href="http://swift.openstack.org">"Swift"</link>)
-          provides object storage. It allows you to store or retrieve
-          files (but not mount directories like a fileserver). Several
-          companies provide commercial storage services based on
-          Swift. These include KT, Rackspace (from which Swift
-          originated) and my company <link
-            xlink:href="http://www.internap.com/flexible-cloud-hosting-solutions/cloud-storage/"
-            >Internap</link>. In fact, the images for this blog post
-          are being served via the Internap Swift
-          implementation.</para>
-      </listitem>
-      <listitem>
-        <para>Image (<link xlink:href="http://glance.openstack.org"
-            >"Glance"</link>) provides a catalog and repository for
-          virtual disk images. These disk images are mostly commonly
-          used in OpenStack Compute. While this service is technically
-          optional, any cloud of size will require it.</para>
-      </listitem>
-      <listitem>
-        <para>Compute (<link xlink:href="http://nova.openstack.org/"
-            >"Nova"</link>) provides virtual servers upon demand.
-          Similar to Amazon's EC2 service, it also provides volume
-          services analogous to Elastic Block Services (EBS). <link
-            xlink:href="http://www.internap.com/flexible-cloud-hosting-solutions/enterprise-public-cloud-solutions/open-public-cloud-solutions/"
-            >Internap</link> provide a commercial compute service
-          built on Nova and it is used internally at <link
-            xlink:href="http://openstack.org/user-stories/mercadolibre-inc/"
-            >Mercado Libre</link> and NASA (where it
-          originated).</para>
-      </listitem>
-    </itemizedlist>
-
-
-    <para>The upcoming release promotes two new projects to "core"
-      project status:</para>
-
-    <itemizedlist>
-      <listitem>
-        <para>Dashboard (<link
-            xlink:href="http://horizon.openstack.org/"
-            >"Horizon"</link>) provides a modular web-based user
-          interface for all the OpenStack services.</para>
-      </listitem>
-      <listitem>
-        <para>Identity (<link
-            xlink:href="http://keystone.openstack.org/"
-            >"Keystone"</link>) provides authentication and
-          authorization for all the OpenStack services. It also
-          provides a service catalog of services within a particular
-          deployment.</para>
-      </listitem>
-    </itemizedlist>
-
-
-    <para>These new projects provide additional infrastructure to
-      support the original three projects.</para>
-
-    <section xml:id="conceptual-architecture">
-      <title>Conceptual Architecture</title>
-
-      <para>The OpenStack project as a whole is designed to
-        "deliver(ing) a massively scalable cloud operating system." To
-        achieve this, each of the constituent services are designed to
-        work together to provide a complete Infrastructure as a
-        Service (IaaS). This integration is facilitated through public
-        application programming interfaces (APIs) that each service
-        offers (and in turn can consume). While these APIs allow each
-        of the services to use another service, it also allows an
-        implementer to switch out any service as long as they maintain
-        the API. These are (mostly) the same APIs that are available
-        to end users of the cloud.</para>
-
-      <para>Conceptually, you can picture the relationships between
-        the services as so:</para>
-
-
-      <informalfigure>
-        <mediaobject>
-          <imageobject>
-            <imagedata scale="60"
-              fileref="figures/nova-concept-int-essex.jpg"/>
-          </imageobject>
-        </mediaobject>
-      </informalfigure>
-
-      <itemizedlist>
-        <listitem>
-          <para>Dashboard (Horizon) provides a web front end to the
-            other OpenStack services</para>
-        </listitem>
-        <listitem>
-          <para>Compute (Nova) stores and retrieves virtual disks
-            ("images") and associated metadata in Glance</para>
-        </listitem>
-        <listitem>
-          <para>Image (Glance) can store the actual virtual disk files
-            in Object (Swift)</para>
-        </listitem>
-        <listitem>
-          <para>All the services authenticate with Identity
-            (Keystone)</para>
-        </listitem>
-      </itemizedlist>
-
-      <para>This is a stylized and simplified view of the
-        architecture, assuming that the implementer is using all of
-        the services together in the most common configuration. It
-        also only shows the "operator" side of the cloud -- it does
-        not picture how consumers of the cloud may actually use it.
-        For example, many compute users will use object storage
-        heavily (and directly).</para>
-    </section>
-    <section xml:id="logical-architecture">
-      <title>Logical Architecture</title>
-
-      <para>As you can imagine, the actual logical architecture is far
-        more complicated than the conceptual architecture shown above.
-        As with any service-oriented architecture, diagrams quickly
-        become "messy" trying to illustrate all the possible
-        combinations of service communications. In the diagram below,
-        I illustrate what I believe will be the most common,
-        "integrated" architecture of an OpenStack-based cloud.</para>
-
-      <informalfigure>
-        <mediaobject>
-          <imageobject>
-            <imagedata scale="20"
-              fileref="figures/nova-logical-arch-essex.jpg"/>
-          </imageobject>
-        </mediaobject>
-      </informalfigure>
-
-      <para>This picture is consistent with the description above in
-        that:</para>
-
-      <itemizedlist>
-        <listitem>
-          <para>End users can interact through a common web interface
-            (Horizon) or directly to each service through their
-            API</para>
-        </listitem>
-        <listitem>
-          <para>All services authenticate through a common source
-            (facilitated through Keystone)</para>
-        </listitem>
-        <listitem>
-          <para>Individual services interact with each other through
-            their public APIs (except where privileged administrator
-            commands are necessary)</para>
-        </listitem>
-      </itemizedlist>
-
-
-      <para>In the sections below, we'll delve into the architecture
-        for each of the services.</para>
-    </section>
-    <section xml:id="overview-dashboard-arch">
-      <title>Dashboard</title>
-
-      <para>Horizon is a modular <link
-          xlink:href="https://www.djangoproject.com/">Django web
-          application</link> that provides an end user and
-        administrator interface to OpenStack services.</para>
-
-
-      <informalfigure>
-        <mediaobject>
-          <imageobject>
-            <imagedata scale="50"
-              fileref="figures/horizon-screenshot.jpg"/>
-          </imageobject>
-        </mediaobject>
-      </informalfigure>
-
-      <para>As with most web applications, the architecture is fairly
-        simple:</para>
-
-      <itemizedlist>
-        <listitem>
-          <para>Horizon is usually deployed via <link
-              xlink:href="http://code.google.com/p/modwsgi/"
-              >mod_wsgi</link> in Apache. The code itself is separated
-            into a reusable python module with most of the logic
-            (interactions with various OpenStack APIs) and
-            presentation (to make it easily customizable for different
-            sites).</para>
-        </listitem>
-        <listitem>
-          <para>A database (configurable to which one). As it relies
-            mostly on the other services for data, it stores very
-            little data of its own.</para>
-        </listitem>
-      </itemizedlist>
-
-
-      <para>From a network architecture point of view, this service
-        will need to customer accessible as well as be able to talk to
-        each services public APIs. If you wish to use the
-        administrator functionality (i.e. for other services), it will
-        also need connectivity to their Admin API endpoints (which
-        should be non-customer accessible).</para>
-    </section>
-    <section xml:id="overview-compute-arch">
-      <title>Compute</title>
-
-      <para>Not much has really changed with Nova's architecture. They
-        have added a few new helper services for EC2 compatibility and
-        console services.</para>
-
-      <itemizedlist>
-        <listitem>
-          <para><code>nova-api</code> accepts and responds to end user
-            compute and volume API calls. It supports OpenStack API,
-            Amazon's EC2 API and a special Admin API (for privileged
-            users to perform administrative actions). It also
-            initiates most of the orchestration activities (such as
-            running an instance) as well as enforces some policy
-            (mostly quota checks). Nova-api is modularized, allowing 
-            for implementers to run only specific APIs.</para>
-        </listitem>
-        <listitem>
-          <para>The <code>nova-compute</code> process is primarily a
-            worker daemon that creates and terminates virtual machine
-            instances via hypervisor's APIs (XenAPI for XenServer/XCP,
-            libvirt for KVM or QEMU, VMwareAPI for VMware, etc.). The
-            process by which it does so is fairly complex but the
-            basics are simple: accept actions from the queue and then
-            perform a series of system commands (like launching a KVM
-            instance) to carry them out while updating state in the
-            database.</para>
-        </listitem>
-        <listitem>
-          <para><code>nova-volume</code> manages the creation,
-            attaching and detaching of persistent volumes to compute
-            instances (similar functionality to Amazon’s Elastic Block
-            Storage). It can use volumes from a variety of providers
-            such as iSCSI or <link
-              xlink:href="http://ceph.newdream.net/">Rados Block
-              Device in Ceph</link>.</para>
-        </listitem>
-        <listitem>
-          <para>The <code>nova-networ</code>k worker daemon is very
-            similar to <code>nova-compute</code> and
-              <code>nova-volume</code>. It accepts networking tasks
-            from the queue and then performs tasks to manipulate the
-            network (such as setting up bridging interfaces or
-            changing iptables rules).</para>
-        </listitem>
-        <listitem>
-          <para>The <code>nova-schedule</code> process is conceptually
-            the simplest piece of code in OpenStack Nova: take a
-            virtual machine instance request from the queue and
-            determines where it should run (specifically, which
-            compute server host it should run on).</para>
-        </listitem>
-        <listitem>
-          <para>The queue provides a central hub for passing messages
-            between daemons. This is usually implemented with <link
-              xlink:href="http://www.rabbitmq.com/">RabbitMQ</link>
-            today, but could be any AMPQ message queue (such as <link
-              xlink:href="http://qpid.apache.org/">Apache
-            Qpid</link>).</para>
-        </listitem>
-        <listitem>
-          <para>The SQL database stores most of the build-time and
-            run-time state for a cloud infrastructure. This includes
-            the instance types that are available for use, instances
-            in use, networks available and projects. Theoretically,
-            OpenStack Nova can support any database supported by
-            SQL-Alchemy but the only databases currently being widely
-            used are sqlite3 (only appropriate for test and
-            development work), MySQL and PostgreSQL.</para>
-        </listitem>
-      </itemizedlist>
-
-
-      <para>Nova also provides console services to allow end users to
-	access their virtual instance's console through a proxy. This
-        involves a pair of daemons (nova-console and
-        nova-consoleauth).</para>
-
-      <para>Nova interacts with all of the usual suspects: Keystone
-        for authentication, Glance for images and Horizon for web
-        interface. The Glance interactions are central. The API
-        process can upload and query Glance while nova-compute will
-        download images for use in launching images.</para>
-    </section>
-    <section xml:id="overview-object-store-arch">
-      <title>Object Store</title>
-
-      <para>The swift architecture is very distributed to prevent any
-        single point of failure as well as to scale horizontally. It
-        includes the following components:</para>
-
-      <itemizedlist>
-        <listitem>
-          <para>Proxy server accepts incoming requests via the
-            OpenStack Object API or just raw HTTP. It accepts files to
-            upload, modifications to metadata or container creation.
-            In addition, it will also serve files or container listing
-            to web browsers. The proxy server may utilize an optional
-            cache (usually deployed with memcache) to improve
-            performance.</para>
-        </listitem>
-        <listitem>
-          <para>Account servers manage accounts defined with the
-            object storage service.</para>
-        </listitem>
-        <listitem>
-          <para>Container servers manage a mapping of containers (i.e
-            folders) within the object store service.</para>
-        </listitem>
-        <listitem>
-          <para>Object servers manage actual objects (i.e. files) on
-            the storage nodes.</para>
-        </listitem>
-        <listitem>
-          <para>There are also a number of periodic process which run
-            to perform housekeeping tasks on the large data store. The
-            most important of these is the replication services, which
-            ensures consistency and availability through the cluster.
-            Other periodic processes include auditors, updaters and
-            reapers.</para>
-        </listitem>
-      </itemizedlist>
-
-
-      <para>Authentication is handled through configurable WSGI
-        middleware (which will usually be Keystone).</para>
-    </section>
-    <section xml:id="overview-image-store-arch">
-      <title>Image Store</title>
-
-      <para>The Glance architecture has stayed relatively stable since
-        the Cactus release. The biggest architectural change has been
-        the addition of authentication, which was added in the Diablo
-        release. Just as a quick reminder, Glance has four main parts
-        to it:</para>
-
-      <itemizedlist>
-        <listitem>
-          <para><code>glance-api</code> accepts Image API calls for
-            image discovery, image retrieval and image storage</para>
-        </listitem>
-        <listitem>
-          <para><code>glance-registry</code> stores, processes and
-            retrieves metadata about images (size, type, etc.)</para>
-        </listitem>
-        <listitem>
-          <para>A database to store the image metadata. Like Nova, you
-            can choose your database depending on your preference (but
-            most people use MySQL or SQlite).</para>
-        </listitem>
-        <listitem>
-          <para>A storage repository for the actual image files. In
-            the diagram, I have shown the most likely configuration
-            (using Swift as the image repository), but this is
-            configurable. In addition to Swift, Glance supports normal
-            filesystems, RADOS block devices, Amazon S3 and HTTP. Be
-            aware that some of these choices are limited to read-only
-            usage.</para>
-        </listitem>
-      </itemizedlist>
-
-
-      <para>There are also a number of periodic process which run on
-        Glance to support caching. The most important of these is the
-        replication services, which ensures consistency and
-        availability through the cluster. Other periodic processes
-        include auditors, updaters and reapers.</para>
-
-      <para>As you can see from the diagram in the Conceptual
-        Architecture section, Glance serves a central role to the
-        overall IaaS picture. It accepts API requests for images (or
-        image metadata) from end users or Nova components and can
-        store its disk files in the object storage service,
-        Swift.</para>
-    </section>
-    <section xml:id="overview-identity-arch">
-      <title>Identity</title>
-
-      <para>Keystone provides a single point of integration for
-        OpenStack policy, catalog, token and authentication.</para>
-
-      <itemizedlist>
-        <listitem>
-          <para>Keystone handles API requests as well as providing
-            configurable catalog, policy, token and identity
-            services.</para>
-        </listitem>
-        <listitem>
-          <para>Each keystone function has a pluggable backend which
-            allows different ways to use the particular service. Most
-            support standard backends like LDAP or SQL, as well as Key
-            Value Stores (KVS).</para>
-        </listitem>
-      </itemizedlist>
-
-
-      <para>Most people will use this as a point of customization for
-        their current authentication services.</para>
-    </section>
-    <section xml:id="overview-future-projects">
-      <title>Future and Current Projects</title>
-
-      <para>This completes the tour of the OpenStack Essex
-        architecture. However, OpenStack will not be stopping here -
-        the Folsom OpenStack release welcomes additional core services to the
-        fold:</para>
-
-      <itemizedlist>
-        <listitem>
-          <para>Network (<link
-              xlink:href="http://docs.openstack.org/incubation/openstack-network/admin/content/"
-              >Quantum</link>) provides "network connectivity as a
-            service" between interface devices managed by other
-            OpenStack services (most likely Nova). The service works
-            by allowing users to create their own networks and then
-            attach interfaces to them. In the Folsom release both the nova-network service
-          and the separate network service are available.</para>
-        </listitem>
-        <listitem>
-          <para>Volumes (Cinder) provides storage to guest VMs. In the
-            Folsom release both the nova-volume service and the
-            separate volume service are available.</para>
-        </listitem>
-      </itemizedlist>
-      <para>A project in incubation for possible future inclusion is a
-        metering project, code-named Ceilometer. The project offers
-        metering information and the ability to code more ways to know
-        what has happened on an OpenStack cloud. Realize that the
-        incubator Ceilometer project is a metering project, and not a
-        billing project. A full billing solution requires metering,
-        rating, and billing. Metering lets you know what actions have
-        taken place, rating enables pricing and line items, and
-        billing gathers the line items to create a bill to send to the
-        consumer and collect payment.</para>
-    </section>
-  </section>
   <section xml:id="why-cloud">
     <title>Why Cloud?</title>
     <para>In data centers today, many computers suffer the same
@@ -643,4 +107,513 @@ xml:id="ch_getting-started-with-openstack">
     http://www.nist.gov/itl/cloud/</link>, published by the US
     National Institute of Standards and Technology.</para>
   </section>
+    
+  <section xml:id="what-is-openstack">
+    <title>What is OpenStack?</title>
+    <para>OpenStack is on a mission: to provide
+    scalable, elastic cloud computing for both public and private
+    clouds, large and small. At the heart of our mission is a pair of
+    basic requirements: clouds must be simple to implement and
+    massively scalable.</para>
+    <para>If you are new to OpenStack, you will undoubtedly have
+    questions about installation, deployment, and usage. It can seem
+    overwhelming at first. But don't fear, there are places to get
+    information to guide you and to help resolve any issues you may
+    run into during the on-ramp process. Because the project is so
+    new and constantly changing, be aware of the revision time for
+    all information. If you are reading a document that is a few
+    months old and you feel that it isn't entirely accurate, then
+    please let us know through the mailing list at 
+    <link xlink:href="https://launchpad.net/~openstack">
+    https://launchpad.net/~openstack</link> or by filing a bug at 
+     <link xlink:href="https://bugs.launchpad.net/openstack-manuals/+filebug"> 
+       https://bugs.launchpad.net/openstack-manuals/+filebug</link> 
+       so it can be updated or removed.</para>
+  </section>
+  <section xml:id="components-of-openstack">
+    <title>Components of OpenStack</title>
+    <para>There are currently seven core components of OpenStack:
+    Compute, Object Storage, Identity, Dashboard, Block Storage, Network 
+    and Image Service. Let's look at each in turn.</para>
+    <itemizedlist>
+      <listitem>
+        <para>Object Store (codenamed <link
+            xlink:href="http://swift.openstack.org">"Swift"</link>)
+          provides object storage. It allows you to store or retrieve
+          files (but not mount directories like a fileserver). Several
+          companies provide commercial storage services based on
+          Swift. These include KT, Rackspace (from which Swift
+          originated) and Internap. Swift is also used internally at many
+          large companies to store their data.</para>
+      </listitem>
+      <listitem>
+        <para>Image (codenamed <link xlink:href="http://glance.openstack.org"
+            >"Glance"</link>) provides a catalog and repository for
+          virtual disk images. These disk images are mostly commonly
+          used in OpenStack Compute. While this service is technically
+          optional, any cloud of size will require it.</para>
+      </listitem>
+      <listitem>
+        <para>Compute (codenamed <link xlink:href="http://nova.openstack.org/"
+            >"Nova"</link>) provides virtual servers upon demand. 
+            <link xlink:href="http://www.rackspace.com/">Rackspace</link> and
+            <link xlink:href="https://www.hpcloud.com/" >HP</link> provide
+            commercial compute services built on Nova and it is used 
+            internally at companies like Mercado Libre and NASA (where it
+          originated).</para>
+      </listitem>
+      <listitem>
+        <para>Dashboard (codenamed <link
+            xlink:href="http://horizon.openstack.org/"
+            >"Horizon"</link>) provides a modular web-based user
+          interface for all the OpenStack services. With this web GUI, you
+          can perform most operations on your cloud like launching an 
+          instance, assigning IP addresses and setting access controls.</para>
+      </listitem>
+      <listitem>
+        <para>Identity (codenamed <link
+            xlink:href="http://keystone.openstack.org/"
+            >"Keystone"</link>) provides authentication and
+          authorization for all the OpenStack services. It also
+          provides a service catalog of services within a particular
+          OpenStack cloud.</para>
+      </listitem>
+      <listitem>
+        <para>Network (codenamed <link
+            xlink:href="http://quantum.openstack.org/"
+            >"Quantum"</link>) provides "network connectivity as a
+          service" between interface devices managed by other
+          OpenStack services (most likely Nova). The service works
+          by allowing users to create their own networks and then
+          attach interfaces to them. Quantum has a pluggable architecture 
+          to support many popular networking vendors and technologies.
+        </para>
+      </listitem>
+      <listitem>
+        <para>Block Storage (codenamed "Cinder") provides persistent 
+          block storage to guest VMs. This project was born from code 
+          originally in Nova (the <code>nova-volume</code> service 
+          described below). In the Folsom release, both the 
+           <code>nova-volume</code> service and the separate volume 
+           service are available.</para>
+      </listitem>
+    </itemizedlist>
+
+      <para>In addition to these core projects, there are also a number of
+         "incubation" projects that are being considered for future inclusion in
+          the OpenStack core.</para>
+    </section>
+
+    <section xml:id="conceptual-architecture">
+      <title>Conceptual Architecture</title>
+
+      <para>The OpenStack project as a whole is designed to
+        "deliver(ing) a massively scalable cloud operating system." To
+        achieve this, each of the constituent services are designed to
+        work together to provide a complete Infrastructure as a
+        Service (IaaS). This integration is facilitated through public
+        application programming interfaces (APIs) that each service
+        offers (and in turn can consume). While these APIs allow each
+        of the services to use another service, it also allows an
+        implementer to switch out any service as long as they maintain
+        the API. These are (mostly) the same APIs that are available
+        to end users of the cloud.</para>
+
+      <para>Conceptually, you can picture the relationships between
+        the services as so:</para>
+
+
+      <informalfigure>
+        <mediaobject>
+          <imageobject>
+            <imagedata scale="40"
+              fileref="figures/openstack-conceptual-arch-folsom.jpg"/>
+          </imageobject>
+        </mediaobject>
+      </informalfigure>
+
+      <itemizedlist>
+        <listitem>
+          <para>Dashboard ("Horizon") provides a web front end to the
+            other OpenStack services</para>
+        </listitem>
+        <listitem>
+          <para>Compute ("Nova") stores and retrieves virtual disks
+            ("images") and associated metadata in Image ("Glance")</para>
+        </listitem>
+        <listitem>
+          <para>Network ("Quantum") provides virtual networking for 
+            Compute.</para>
+        </listitem>
+        <listitem>
+          <para>Block Storage ("Cinder") provides storage volumes for 
+            Compute.</para>
+        </listitem>
+        <listitem>
+          <para>Image ("Glance") can store the actual virtual disk files
+            in the Object Store("Swift")</para>
+        </listitem>
+        <listitem>
+          <para>All the services authenticate with Identity
+            ("Keystone")</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>This is a stylized and simplified view of the
+        architecture, assuming that the implementer is using all of
+        the services together in the most common configuration. It
+        also only shows the "operator" side of the cloud -- it does
+        not picture how consumers of the cloud may actually use it.
+        For example, many users will access object storage
+        heavily (and directly).</para>
+    </section>
+    <section xml:id="logical-architecture">
+      <title>Logical Architecture</title>
+
+      <para>As you can imagine, the logical architecture is far
+        more complicated than the conceptual architecture shown above.
+        As with any service-oriented architecture, diagrams quickly
+        become "messy" trying to illustrate all the possible
+        combinations of service communications. The diagram below,
+        illustrates the most common architecture of an 
+        OpenStack-based cloud. However, as OpenStack supports a 
+        wide variety of technologies, it does not represent the 
+        only architecture possible.</para>
+
+      <informalfigure>
+        <mediaobject>
+          <imageobject>
+            <imagedata scale="15"
+              fileref="figures/openstack-logical-arch-folsom.jpg"/>
+          </imageobject>
+        </mediaobject>
+      </informalfigure>
+
+      <para>This picture is consistent with the conceptual architecture 
+        above in that:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>End users can interact through a common web interface
+            (Horizon) or directly to each service through their
+            API</para>
+        </listitem>
+        <listitem>
+          <para>All services authenticate through a common source
+            (facilitated through Keystone)</para>
+        </listitem>
+        <listitem>
+          <para>Individual services interact with each other through
+            their public APIs (except where privileged administrator
+            commands are necessary)</para>
+        </listitem>
+      </itemizedlist>
+
+
+      <para>In the sections below, we'll delve into the architecture
+        for each of the services.</para>
+    <section xml:id="overview-dashboard-arch">
+      <title>Dashboard</title>
+
+      <para>Horizon is a modular <link
+          xlink:href="https://www.djangoproject.com/">Django web
+          application</link> that provides an end user and
+        administrator interface to OpenStack services.</para>
+
+
+      <informalfigure>
+        <mediaobject>
+          <imageobject>
+            <imagedata scale="33"
+              fileref="figures/horizon-screenshot.jpg"/>
+          </imageobject>
+        </mediaobject>
+      </informalfigure>
+
+      <para>As with most web applications, the architecture is fairly
+        simple:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>Horizon is usually deployed via <link
+              xlink:href="http://code.google.com/p/modwsgi/"
+              >mod_wsgi</link> in Apache. The code itself is separated
+            into a reusable python module with most of the logic
+            (interactions with various OpenStack APIs) and
+            presentation (to make it easily customizable for different
+            sites).</para>
+        </listitem>
+        <listitem>
+          <para>A database (configurable as to which one). As it relies
+            mostly on the other services for data, it stores very
+            little data of its own.</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>From a network architecture point of view, this service
+        will need to be customer accessible as well as be able to talk to
+        each service's public APIs. If you wish to use the
+        administrator functionality (i.e. for other services), it will
+        also need connectivity to their Admin API endpoints (which
+        should be non-customer accessible).</para>
+    </section>
+    <section xml:id="overview-compute-arch">
+      <title>Compute</title>
+
+      <para>Nova is the most complicated and distributed component of 
+        OpenStack. A large number of processes cooperate to turn end 
+        user API requests into running virtual machines. Below is a 
+        list of these processes and their functions:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para><code>nova-api</code> accepts and responds to end user
+            compute API calls. It supports OpenStack Compute 
+            API, Amazon's EC2 API and a special Admin API (for privileged
+            users to perform administrative actions). It also
+            initiates most of the orchestration activities (such as
+            running an instance) as well as enforces some policy
+            (mostly quota checks). </para>
+        </listitem>
+        <listitem>
+          <para>The <code>nova-compute</code> process is primarily a
+            worker daemon that creates and terminates virtual machine
+            instances via hypervisor's APIs (XenAPI for XenServer/XCP,
+            libvirt for KVM or QEMU, VMwareAPI for VMware, etc.). The
+            process by which it does so is fairly complex but the
+            basics are simple: accept actions from the queue and then
+            perform a series of system commands (like launching a KVM
+            instance) to carry them out while updating state in the
+            database.</para>
+        </listitem>
+        <listitem>
+          <para><code>nova-volume</code> manages the creation,
+            attaching and detaching of persistent volumes to compute
+            instances (similar functionality to Amazon’s Elastic Block
+            Storage). It can use volumes from a variety of providers
+            such as iSCSI or <link
+            xlink:href="http://ceph.newdream.net/">Rados Block
+            Device in Ceph</link>. A new OpenStack project, Cinder, 
+            will eventually replace <code>nova-volume</code> 
+            functionality. In the Folsom release, 
+            <code>nova-volume</code> and the Block Storage service 
+            will have similar functionality.</para>
+        </listitem>
+        <listitem>
+          <para>The <code>nova-network</code> worker daemon is very
+            similar to <code>nova-compute</code> and
+            <code>nova-volume</code>. It accepts networking tasks
+            from the queue and then performs tasks to manipulate the
+            network (such as setting up bridging interfaces or
+            changing iptables rules). This functionality is being
+            migrated to Quantum, a separate OpenStack service. In 
+            the Folsom release, much of the functionality will be 
+            duplicated between <code>nova-network</code> and 
+            Quantum.</para>
+        </listitem>
+        <listitem>
+          <para>The <code>nova-schedule</code> process is conceptually
+            the simplest piece of code in OpenStack Nova: take a
+            virtual machine instance request from the queue and
+            determines where it should run (specifically, which
+            compute server host it should run on).</para>
+        </listitem>
+        <listitem>
+          <para>The queue provides a central hub for passing messages
+            between daemons. This is usually implemented with <link
+              xlink:href="http://www.rabbitmq.com/">RabbitMQ</link>
+            today, but could be any AMPQ message queue (such as <link
+              xlink:href="http://qpid.apache.org/">Apache
+            Qpid</link>). New to the Folsom release is support for 
+            <link xlink:href="http://www.zeromq.org/">Zero MQ</link>.</para>
+        </listitem>
+        <listitem>
+          <para>The SQL database stores most of the build-time and
+            run-time state for a cloud infrastructure. This includes
+            the instance types that are available for use, instances
+            in use, networks available and projects. Theoretically,
+            OpenStack Nova can support any database supported by
+            SQL-Alchemy but the only databases currently being widely
+            used are sqlite3 (only appropriate for test and
+            development work), MySQL and PostgreSQL.</para>
+        </listitem>
+        <listitem>
+          <para>Nova also provides console services to allow end users to
+            access their virtual instance's console through a proxy. This
+            involves several daemons (<code>nova-console</code>, 
+             <code>nova-vncproxy</code> and 
+             <code>nova-consoleauth</code>).</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>Nova interacts with many other OpenStack services: 
+        Keystone for authentication, Glance for images and Horizon for web
+        interface. The Glance interactions are central. The API
+        process can upload and query Glance while <code>nova-compute</code> will
+        download images for use in launching images.</para>
+    </section>
+    <section xml:id="overview-object-store-arch">
+      <title>Object Store</title>
+
+      <para>The swift architecture is very distributed to prevent any
+        single point of failure as well as to scale horizontally. It
+        includes the following components:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>Proxy server (<code>swift-proxy-server</code>) accepts 
+          incoming requests via the
+            OpenStack Object API or just raw HTTP. It accepts files to
+            upload, modifications to metadata or container creation.
+            In addition, it will also serve files or container listing
+            to web browsers. The proxy server may utilize an optional
+            cache (usually deployed with memcache) to improve
+            performance.</para>
+        </listitem>
+        <listitem>
+          <para>Account servers manage accounts defined with the
+            object storage service.</para>
+        </listitem>
+        <listitem>
+          <para>Container servers manage a mapping of containers (i.e
+            folders) within the object store service.</para>
+        </listitem>
+        <listitem>
+          <para>Object servers manage actual objects (i.e. files) on
+            the storage nodes.</para>
+        </listitem>
+        <listitem>
+          <para>There are also a number of periodic process which run
+            to perform housekeeping tasks on the large data store. The
+            most important of these is the replication services, which
+            ensures consistency and availability through the cluster.
+            Other periodic processes include auditors, updaters and
+            reapers.</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>Authentication is handled through configurable WSGI
+        middleware (which will usually be Keystone).</para>
+    </section>
+    <section xml:id="overview-image-store-arch">
+      <title>Image Store</title>
+
+      <para>The Glance architecture has stayed relatively stable since
+        the Cactus release. The biggest architectural change has been
+        the addition of authentication, which was added in the Diablo
+        release. Just as a quick reminder, Glance has four main parts
+        to it:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para><code>glance-api</code> accepts Image API calls for
+            image discovery, image retrieval and image storage.</para>
+        </listitem>
+        <listitem>
+          <para><code>glance-registry</code> stores, processes and
+            retrieves metadata about images (size, type, etc.).</para>
+        </listitem>
+        <listitem>
+          <para>A database to store the image metadata. Like Nova, you
+            can choose your database depending on your preference (but
+            most people use MySQL or SQlite).</para>
+        </listitem>
+        <listitem>
+          <para>A storage repository for the actual image files. In
+            the diagram above, Swift is shown as the image repository, 
+            but this is configurable. In addition to Swift, Glance 
+            supports normal filesystems, RADOS block devices, Amazon 
+            S3 and HTTP. Be aware that some of these choices are 
+            limited to read-only usage.</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>There are also a number of periodic process which run on
+        Glance to support caching. The most important of these is the
+        replication services, which ensures consistency and
+        availability through the cluster. Other periodic processes
+        include auditors, updaters and reapers.</para>
+
+      <para>As you can see from the diagram in the Conceptual
+        Architecture section, Glance serves a central role to the
+        overall IaaS picture. It accepts API requests for images (or
+        image metadata) from end users or Nova components and can
+        store its disk files in the object storage service,
+        Swift.</para>
+    </section>
+    <section xml:id="overview-identity-arch">
+      <title>Identity</title>
+
+      <para>Keystone provides a single point of integration for
+        OpenStack policy, catalog, token and authentication.</para>
+
+      <itemizedlist>
+        <listitem>
+          <para><code>keystone</code> handles API requests as well as providing
+            configurable catalog, policy, token and identity
+            services.</para>
+        </listitem>
+        <listitem>
+          <para>Each Keystone function has a pluggable backend which
+            allows different ways to use the particular service. Most
+            support standard backends like LDAP or SQL, as well as Key
+            Value Stores (KVS).</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>Most people will use this as a point of customization for
+        their current authentication services.</para>
+    </section>
+    <section xml:id="overview-network-arch">
+      <title>Network</title>
+
+      <para>Quantum provides "network connectivity as a service" 
+        between interface devices managed by other OpenStack 
+        services (most likely Nova). The service works by allowing 
+        users to create their own networks and then attach interfaces 
+        to them. Like many of the OpenStack services, Quantum is highly 
+        configurable due to it's plug-in architecture. These plug-ins
+        accommodate different networking equipment and software. As such,
+        the architecture and deployment can vary dramatically. In the 
+        above architecture, a simple Linux networking plug-in is shown.</para>
+        
+      <itemizedlist>
+        <listitem>
+          <para><code>quantum-server</code> accepts API requests and then routes them to the appropriate quantum plugin for action.</para>
+        </listitem>
+        <listitem>
+          <para>Quantum plugins and agents perform the actual actions such as plugging and unplugging ports, creating networks or subnets and IP addressing. These plugins and agents differ depending on the vendor and technologies used in the particular cloud. Quantum ships with plugins and agents for: Cisco virtual and physical switches, Nicira NVP product, NEC OpenFlow products, Open vSwitch, Linux bridging and the Ryu Network Operating System.</para>
+          <para>The common agents are L3 (layer 3), DHCP (dynamic host IP addressing) and the specific plug-in agent.</para>
+        </listitem>
+           <listitem>
+             <para>Most Quantum installations will also make use of a messaging queue to route information between the quantum-server and various agents as well as a database to store networking state for particular plugins.</para>
+           </listitem>
+      </itemizedlist>
+      <para>Quantum will interact mainly with Nova, where it will provide 
+        networks and connectivity for its instances.
+      </para>
+
+    </section>
+    <section xml:id="overview-block-storage-arch">
+      <title>Block Storage</title>
+
+      <para>Cinder separates out the persistent block storage functionality that was previously part of Openstack Compute (in the form of nova-volume) into it's own service. The OpenStack Block Storage API allows for manipulation of volumes, volume types (similar to compute flavors) and volume snapshots.</para>
+
+      <itemizedlist>
+        <listitem>
+          <para><code>cinder-api</code> accepts API requests and routes them to cinder-volume for action.</para>
+        </listitem>
+        <listitem>
+          <para><code>cinder-volume</code> acts upon the requests by reading or writing to the Cinder database to maintain state, interacting with other processes (like <code>cinder-scheduler</code>) through a message queue and directly upon block storage providing hardware or software. It can interact with a variety of storage providers through a driver architecture. Currently, there are drivers for IBM, SolidFire, NetApp, Nexenta, Zadara, linux iSCSI and other storage providers. </para>
+        </listitem>
+        <listitem>
+          <para>Much like <code>nova-scheduler</code>, the <code>cinder-scheduler</code> daemon picks the optimal block storage provider node to create the volume on.</para>
+        </listitem>
+        <listitem>
+          <para>Cinder deployments will also make use of a messaging queue to route information between the cinder processes as well as a database to store volume state.</para>
+        </listitem>
+      </itemizedlist>
+      <para>Like Quantum, Cinder will mainly interact with Nova, providing volumes for its instances.</para>
+    </section>
+  </section>  
 </chapter>
