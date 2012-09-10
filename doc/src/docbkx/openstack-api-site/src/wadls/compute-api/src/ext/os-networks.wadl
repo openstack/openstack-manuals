@@ -20,6 +20,18 @@
                 <resource id="os-networks" path="os-networks">
                     <method href="#ListNetworks" />
 
+                        <resource path="add">
+                            <param name="id" style="template" required="true">
+                            <doc>
+                                <p xmlns="http://www.w3.org/1999/xhtml">
+                                    The UUID of the network to add to the project,
+                                    or None (a random free network will be chosen).
+                                </p>
+                            </doc>
+                         </param>
+                        <method href="#AddNetwork" />
+                    </resource>
+
                     <resource path="{id}">
                         <param name="id" style="template" required="true">
                             <doc><p xmlns="http://www.w3.org/1999/xhtml">
@@ -73,13 +85,27 @@
     </method>
 
     <method name="POST" id="DisassociateNetwork">
-        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="Disassocaite Network">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="Disassociate Network">
             <p xmlns="http://www.w3.org/1999/xhtml">Disassociate a network from a project so it can be reused.</p>
         </wadl:doc>
         <request>
             <representation mediaType="application/json">
                 <doc xml:lang="EN">
                     <xsdxt:code href="samples/os-networks-disassociate.json" />
+                </doc>
+            </representation>
+        </request>
+        <response status="202" />
+    </method>
+
+    <method name="POST" id="AddNetwork">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" title="Add Network">
+            <p xmlns="http://www.w3.org/1999/xhtml">Add a network to a project.</p>
+        </wadl:doc>
+        <request>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/os-networks-add.json" />
                 </doc>
             </representation>
         </request>
