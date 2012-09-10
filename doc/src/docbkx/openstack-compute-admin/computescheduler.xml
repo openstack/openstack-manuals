@@ -467,7 +467,7 @@ noop_cost_fn_weight=1.0
             are added together. The scheduler selects the host that has the
             minimum weighted cost.
 
-        The Compute service comes with two cost functions:
+        The Compute service comes with three cost functions:
     </para>
         <section xml:id="compute_fill_first_cost_fn">
             <title>nova.scheduler.least_cost.compute_fill_first_cost_fn</title>
@@ -487,6 +487,16 @@ compute_fill_first_cost_fn_weight=-1.0
 </programlisting>
                 then the scheduler will favor hosts that have the most amount
                 of available RAM, leading to a "spread-first" behavior.</para>
+        </section>
+        <section xml:id="compute_retry_host_cost_fn">
+            <title>nova.scheduler.least_cost.retry_host_cost_fn</title>
+            <para>This cost function adds additional cost for retrying 
+		scheduling a host that was already used for a previous
+		scheduling attempt. </para>
+	   <para> The normal method of using this function is to set 
+		<literal>retry_host_cost_fn_weight</literal>
+		to a positive value, so that hosts which consistently
+		encounter build failures will be used less often.</para>
         </section>
         <section xml:id="noop_cost_fn">
             <title>nova.scheduler.least_cost.noop_cost_fn</title>
