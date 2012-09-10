@@ -1323,13 +1323,29 @@ suffix =cn=exampledomain,cn=com
 driver = keystone.identity.backends.ldap.Identity </screen>
             </listitem>
           </orderedlist></para>
-      <para>By default, the user name in the Identity service is queried against the LDAP
-            <emphasis role="bold">SN</emphasis> (SurName) attribute type and the tenant name in the
-          Identity service will be queried against the LDAP <emphasis role="bold">OU</emphasis> (Organizational Unit)
-          attribute type. These can be changed through the <literal>user_name_attribute</literal>
-          and <literal>tenant_name_attribute</literal> configuration options in
-            <filename>keystone.conf</filename>. For example, you can configure the Identity service to 
+      <para><emphasis role="bold">Overriding default attributes</emphasis></para>
+      <para>
+   The default object classes and attributes are intentionally simplistic. They
+   reflect the common standard objects according to the LDAP RFCs.
+   By default, the user name in the Identity service is queried against the LDAP
+   <emphasis role="bold">SN</emphasis> (SurName) attribute type and the tenant name in the
+    Identity service will be queried against the LDAP <emphasis role="bold">OU</emphasis> (Organizational Unit)
+    attribute type.</para>
+    <para> However, in a live deployment, the correct attributes can be overridden to support a
+   preexisting, more complex schema.  These can be changed through the
+  <literal>user_name_attribute</literal>, <literal>user_id_attribute</literal>
+   and <literal>tenant_name_attribute</literal> configuration options in
+   <filename>keystone.conf</filename>. </para>
+   <para>For example, you can configure the Identity service to 
         use the CN (Common Name) instead of SN.</para>
+   <para> As a more detailed example, in the user object, the
+   objectClass posixAccount from RFC2307 is very common. If this is the
+   underlying objectclass, then the <literal>uid</literal> field should probably be <literal>uidNumber</literal> and
+   <literal>username</literal> field either <literal>uid</literal> or <literal>cn</literal>. To change these two fields, the
+   corresponding entries in the Keystone configuration file would be:</para>
+   <programlisting>[ldap]
+   user_id_attribute = uidNumber
+   user_name_attribute = cn</programlisting>
     </section>
     <section xml:id="reference-for-ldap-config-options">
       <title>Reference for LDAP Configuration Options in keystone.conf</title>
