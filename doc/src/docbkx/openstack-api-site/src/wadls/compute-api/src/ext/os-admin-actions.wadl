@@ -34,6 +34,9 @@
                             <method href="#injectNetworkInfo"/>
                             <method href="#lock"/>
                             <method href="#unlock"/>
+                            <method href="#createBackup"/>
+                            <method href="#os-migrateLive"/>
+                            <method href="#os-resetState"/>
                         </resource>
                     </resource>
                 </resource>
@@ -108,7 +111,7 @@
     <method name="POST" id="migrate">
         <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
             <p xmlns="http://www.w3.org/1999/xhtml">
-                Migrates a server to a new host.
+                Migrates a server to a new host which is picked by scheduler.
             </p>
         </wadl:doc>
         <request>
@@ -185,4 +188,72 @@
         <response status="202" />
     </method>
 
+    <method name="POST" id="createBackup">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                Backup a server instance.
+            </p>
+        </wadl:doc>
+        <request>
+            <param name="name" style="query" required="true" type="xsd:string">
+                <doc><p xmlns="http://www.w3.org/1999/xhtml">Name of the backup image.</p></doc>
+            </param>
+            <param name="backup_type" style="query" required="true" type="xsd:string">
+                <doc><p xmlns="http://www.w3.org/1999/xhtml">The backup type, like 'daily' or 'weekly'.</p></doc>
+            </param>
+            <param name="rotation" style="query" required="true" type="xsd:int">
+                <doc><p xmlns="http://www.w3.org/1999/xhtml">Int parameter representing how many backups to keep around.</p></doc>
+            </param>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/admin_createBackup.json" />
+                </doc>
+            </representation>
+        </request>
+        <response status="202" />
+    </method>
+
+    <method name="POST" id="os-migrateLive">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                Live migrate a server to a new host without rebooting.
+            </p>
+        </wadl:doc>
+        <request>
+            <param name="host" style="query" required="true" type="xsd:string">
+                <doc><p xmlns="http://www.w3.org/1999/xhtml">Name of the new host.</p></doc>
+            </param>
+            <param name="block_migration" style="query" required="true" type="xsd:boolean">
+                <doc><p xmlns="http://www.w3.org/1999/xhtml">If true, migration will be blocked.</p></doc>
+            </param>
+            <param name="disk_over_commit" style="query" required="true" type="xsd:boolean">
+                <doc><p xmlns="http://www.w3.org/1999/xhtml">If true, disk over commit is allowed.</p></doc>
+            </param>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/admin_migrateLive.json" />
+                </doc>
+            </representation>
+        </request>
+        <response status="202" />
+    </method>
+
+    <method name="POST" id="os-resetState">
+        <wadl:doc xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p xmlns="http://www.w3.org/1999/xhtml">
+                Reset the state of a server.
+            </p>
+        </wadl:doc>
+        <request>
+            <param name="state" style="query" required="true" type="xsd:string">
+                <doc><p xmlns="http://www.w3.org/1999/xhtml">The desired state of a server.</p></doc>
+            </param>
+            <representation mediaType="application/json">
+                <doc xml:lang="EN">
+                    <xsdxt:code href="samples/admin_resetState.json" />
+                </doc>
+            </representation>
+        </request>
+        <response status="202" />
+    </method>
 </application>
