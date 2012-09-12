@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:svg="http://www.w3.org/2000/svg"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    version="5.0"
+    xml:id="quantum-cli-refrence">
+    <title>OpenStack Quantum CLI Guide</title>
+    <para>This section describes quantum commands</para>
+    <section xml:id="quantum_overview">
+        <title>Overview</title>
+        <section xml:id="quantum_overview_command">
+            <title>Argument parts of API 2.0 command</title>
+            <para>In general, quantum client command arguments divide into three
+            parts:</para>
+            <section xml:id="quantum_overview_command_known">
+                <title>Known options</title>
+                <para>These options are following
+                      command name. They can be after positional arguments if the command
+                      does not support unknown options. Known options are used to represent
+                      optional values in API resource. Some options have default value if not
+                      specified.</para>
+            </section>
+            <section  xml:id="quantum_overview_command_pos"><title>Positional arguments</title>
+                <para>Positional arguments are mandatory information for an API resource.
+                      They must be given in the order.
+                </para>
+            </section>
+            <section  xml:id="quantum_overview_command_unknown"><title>Unknown options</title>
+              <para>Unknown options are at the end
+                 part of the command line. They must be after a positional argument.
+                 If there is no positional argument for the command, pseudo argument ‘--’ should be used.
+                 To define an unknown option, the format is --optionname [type=int|bool|list...]
+                 [optionvalue]*. There can be multiple option values for a certain optionname.
+                 When there is no optionvalue given, the option is regarded as a bool one and value is true.
+                 The type is python built-in type, such as int, bool, float and list,
+                 defaulted to string if not given. Most of time, quantum server will convert the
+                 value into wanted type. Unknown options are used to provides values for update_command,
+                 implement new features of API v2.0. It can also be used to provide information for API extension.
+                 </para>
+               <para>the usage text for a command can tell if it supports unknown options:</para>
+               <screen>
+<prompt>$</prompt> <userinput>quantum net-create -h</userinput>
+usage: quantum net-create [-h] [-f {html,json,shell,table,yaml}] [-c COLUMN]
+                          [--variable VARIABLE] [--prefix PREFIX]
+                          [--request-format {json,xml}]
+                          [--tenant-id tenant-id] [--admin-state-down]
+                          [--shared]
+                          name ...
+               </screen>
+               <para>Note the “...” after positional argument name, which is the indicator for unknown options.</para>
+            </section>
+        </section>
+        <section xml:id="quantum_overview_cliff">
+            <title>Features from cliff</title>
+            <section xml:id="quantum_overview_cliff_interactive">
+                <title>Interactive mode</title>
+                <para>If there is no command specified, the quantum client will
+                enter into interactive mode:</para>
+                <screen>
+<prompt>$</prompt><userinput>quantum --os-username admin --os-password password --os-tenant-name admin --os-auth-url http://localhost:5000/v2.0</userinput>
+<prompt>(quantum)</prompt> <userinput>help</userinput>
+
+Shell commands (type help &lt;topic&gt;):
+===================================
+cmdenvironment  edit  hi       l   list  pause  r    save  shell      show
+ed              help  history  li  load  py     run  set   shortcuts
+
+Undocumented commands:
+======================
+EOF  eof  exit  q  quit
+
+Application commands (type help &lt;topic&gt;):
+=========================================
+router-interface-delete  net-list           subnet-list
+floatingip-delete        router-delete      subnet-update
+port-list                router-create      subnet-show
+help                     net-create         quota-update
+floatingip-associate     ext-list           quota-list
+port-create              subnet-delete      router-show
+router-gateway-set       floatingip-create  floatingip-disassociate
+net-update               floatingip-list    port-update
+port-delete              router-list        port-show
+net-show                 net-delete         router-update
+ext-show                 floatingip-show    quota-show
+router-gateway-clear     quota-delete
+router-interface-add     subnet-create
+
+<prompt>(quantum)</prompt> <userinput>net-list</userinput>
++--------------------------------------+----------------+--------------------------------------+
+| id                                   | name           | subnets                              |
++--------------------------------------+----------------+--------------------------------------+
+| 11fc08b7-c3b2-4b0c-bd04-66e279d9c470 | public_net1    | 13cc61f6-b33b-495a-a49f-83bdc9e439ab |
+| 22f53ed1-3f3d-49c7-9162-7ba94d9c0a7e | private_mynet1 | b5a9b952-dd4f-445a-89c5-f15d0707b8bd |
+| 2a405f54-aea0-47d7-8a43-4d5129e22b35 | test1          |                                      |
+| d322e1ae-e068-4249-b9b3-7ed8b820bfa2 | mynetwork      |                                      |
++--------------------------------------+----------------+--------------------------------------+
+               </screen>
+             </section>
+             <section xml:id="quantum_overview_cliff_oFormat">
+                <title>Output format</title>
+                <para>We can use -h after each command to show the usage of each command:</para>
+                <screen>
+<prompt>(quantum)</prompt> <userinput>net-list -h</userinput>
+usage: net-list [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
+                [--quote {all,minimal,none,nonnumeric}]
+                [--request-format {json,xml}] [-D] [-F FIELDS]
+                ...
+
+List networks that belong to a given tenant.
+
+positional arguments:
+  filter_specs          filters options: --key1 [type=int|bool|...] value
+                        [--key2 [type=int|bool|...] value ...]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --request-format {json,xml}
+                        the xml or json request format
+  -D, --show-details    show detailed info
+  -F FIELDS, --fields FIELDS
+                        specify the field(s) to be returned by server, can be
+                        repeated
+
+output formatters:
+  output formatter options
+
+  -f {csv,html,json,table,yaml}, --format {csv,html,json,table,yaml}
+                        the output format, defaults to table
+  -c COLUMN, --column COLUMN
+                        specify the column(s) to include, can be repeated
+
+CSV Formatter:
+  --quote {all,minimal,none,nonnumeric}
+                        when to include quotes, defaults to nonnumeric
+               </screen>
+               <para>We can see the output formatters cliff provides to each command.
+                     By default, the output format is table. Now we choose csv output
+                     to run the command net-list:</para>
+               <screen>
+<prompt>(quantum)</prompt> <userinput>net-list -f csv</userinput>
+"id","name","subnets"
+"11fc08b7-c3b2-4b0c-bd04-66e279d9c470","public_net1","13cc61f6-b33b-495a-a49f-83bdc9e439ab"
+"22f53ed1-3f3d-49c7-9162-7ba94d9c0a7e","private_mynet1","b5a9b952-dd4f-445a-89c5-f15d0707b8bd"
+"2a405f54-aea0-47d7-8a43-4d5129e22b35","test1",""
+"d322e1ae-e068-4249-b9b3-7ed8b820bfa2","mynetwork",""
+               </screen>
+             </section>
+             <section xml:id="quantum_overview_cliff_column">
+                <title>Column selection</title>
+                <para>We can see -c COLUMN in previous usage output. It can be used to limit
+                the output fields:</para>
+                <screen>
+<prompt>(quantum)</prompt> <userinput>net-list -c id -c name</userinput>
++--------------------------------------+----------------+
+| id                                   | name           |
++--------------------------------------+----------------+
+| 11fc08b7-c3b2-4b0c-bd04-66e279d9c470 | public_net1    |
+| 22f53ed1-3f3d-49c7-9162-7ba94d9c0a7e | private_mynet1 |
+| 2a405f54-aea0-47d7-8a43-4d5129e22b35 | test1          |
+| d322e1ae-e068-4249-b9b3-7ed8b820bfa2 | mynetwork      |
++--------------------------------------+----------------+
+                </screen>
+            </section>
+        </section>
+        <section xml:id="quantum_overview_API">
+           <title>Features from API</title>
+           <section xml:id="quantum_overview_API_fields">
+                <title>Fields selection</title>
+                <para>If there are ‘fields’ in request URL, V2.0 API will extract the list of fields to return.
+                      A sample of such URLs is http://localhost:9696/v2.0/networks.json?fields=id&amp;fields=name</para>
+                <para> quantumv2 client supports this feature by -F option in known options part and --fields
+                      in unknown options part. For example, quantum  -F id net-list -- --fields name.
+                      Only xx-list and xx-show commands support this feature.</para>
+           </section>
+           <section xml:id="quantum_overview_API_filtering">
+                <title>Value filtering</title>
+                <para>Any other fields except the ‘fields’ are used as value filtering.
+                A sample of such URLs is http://localhost:9696/v2.0/networks.json?name=test1&amp;name=test2&amp;tag=a.
+                By the current quantum server's sample DB plugin, the filtering has the same meaning as a SQL clause:
+                name in [‘test1’, ‘test2’]. Quantum client supports this feature by any key options in unknown
+                option part. For example quantum net-list -- --name test1 test2 --tag a. Only xx-list and xx-show
+                commands support this feature.
+               </para>
+            </section>
+        </section>
+    </section>
+
+</section>
