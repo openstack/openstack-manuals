@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0"
+    xml:id="hyper-v-virtualization-platform">
+    <?dbhtml stop-chunking?>
+    <title>Hyper-V Virtualization Platform</title>
+<para>It is possible to use Hyper-V as a compute node within an
+        OpenStack Deployment. The nova-compute service runs as
+        "openstack-compute," a 32bit service directly upon the Windows
+        platform with the Hyper-V role enabled. The necessary Python
+        components as well as the nova-compute service are installed
+        directly onto the Windows platform. Windows Clustering
+        Services are not needed for functionality within the OpenStack
+        infrastructure. The use of the Windows Server 2012 platform is
+        recommend for the best experience and is the platform for
+        active development. The following Windows platforms have been
+        tested as compute nodes:<itemizedlist>
+            <listitem>
+                <para><emphasis role="bold">Windows Server
+                        2008r2</emphasis></para>
+                <para>Both Server and Server Core with the Hyper-V
+                    role enabled (Shared Nothing Live migration is not
+                    supported using 2008r2)</para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Windows Server
+                        2012</emphasis></para>
+                <para>Server and Core (with the Hyper-V role enabled),
+                    and Hyper-V Server</para>
+            </listitem>
+        </itemizedlist>
+    </para>
+    <section xml:id="installation-architecture-hyper-v"><title>Hyper-V Configuration</title>
+<para>The following sections discuss how to prepare the Windows
+            Hyper-V node for operation as an OpenStack Compute node.
+            Unless stated otherwise, any configuration information
+            should work for both the Windows 2008r2 and 2012
+            platforms. </para>
+        <para><emphasis role="bold">Local Storage Considerations</emphasis></para>
+        <para>The Hyper-V compute node needs to have ample storage for
+            storing the virtual machine images running on the compute
+            nodes. You may use a single volume for all, or partition
+            it into an OS volume and VM volume. It is up to the
+            individual deploying to decide.</para>
+    </section>
+    <section xml:id="configure-ntp-hyper-v">
+        <title>Configure NTP</title>
+        <para>Network time services must be configured to ensure proper operation of the Hyper-V
+            compute node. To set network time on your Hyper-V host you will need to run the
+            following commands</para>
+        <screen os="windows">
+<prompt>C:\</prompt><userinput>net stop w32time</userinput>
+        </screen>
+        <screen os="windows">
+<prompt>C:\</prompt><userinput>w32tm /config /manualpeerlist:pool.ntp.org,0x8 /syncfromflags:MANUAL</userinput>
+        </screen>
+        <screen os="windows">
+<prompt>C:\</prompt><userinput>net start w32time</userinput>
+        </screen>
+    </section>
+    <section xml:id="hyper-v-virtual-switch">
+    <title>Configuring Hyper-V Virtual Switching</title>
+    <para>Information regarding the Hyper-V virtual Switch can be located here:
+    <link xlink:href="http://technet.microsoft.com/en-us/library/hh831823.aspx">http://technet.microsoft.com/en-us/library/hh831823.aspx</link>
+    </para>
+        <para>To quickly enable an interface to be used as a Virtual
+            Interface the following PowerShell may be used:</para>
+    <screen os="windows">
+<prompt>PS C:\</prompt><userinput>$if = Get-NetIPAddress –IPv4Address 192* | Get-NetIPInterface</userinput>
+    </screen>
+<screen os="windows">
+<prompt>PS C:\</prompt><userinput>New-VMSwitch -NetAdapterName $if.ifAlias -Name yourbridgename –AllowManagementOS $false</userinput>
+</screen>
+    </section>
+    <section xml:id="enable-iscsi-services-hyper-v">
+    <title>Enable iSCSI Initiator Service</title>
+    <para>To prepare the Hyper-V node to be able to attach to volumes provided by nova-volume
+        or cinder you must first make sure the Windows iSCSI initiator service is running and started automatically.</para>
+    <screen os="windows">
+<prompt>C:\</prompt><userinput>sc start MSiSCSI</userinput>
+        </screen>
+    <screen os="windows">
+<prompt>C:\</prompt><userinput>sc config MSiSCSI start="auto"</userinput>
+        </screen>
+    </section>
+
+<section xml:id="live-migration-hyper-v">
+        <title>Configuring Shared Nothing Live Migration</title>
+        <para>Detailed information on the configuration of live migration can be found here:
+            <link
+                xlink:href="http://technet.microsoft.com/en-us/library/jj134199.aspx"
+                >http://technet.microsoft.com/en-us/library/jj134199.aspx</link></para>
+            <para>The following outlines the steps of shared nothing
+            live migration.</para>
+                <orderedlist>
+                <listitem>
+                    <para>The target hosts ensures that live migration
+                        is enabled and properly configured in
+                        Hyper-V.</para>
+                </listitem>
+                <listitem>
+                    <para>The target hosts checks if the image to be
+                        migrated requires a base VHD and pulls it from
+                        Glance if not already available on the target
+                        host.</para>
+                </listitem>
+                <listitem>
+                    <para>The source hosts ensures that live migration
+                        is enabled and properly configured in
+                        Hyper-V.</para>
+                </listitem>
+                <listitem>
+                    <para>The source hosts initiates a Hyper-V live
+                        migration.</para>
+                </listitem>
+                <listitem>
+                    <para>The source hosts communicates to the manager
+                        the outcome of the operation.</para>
+                </listitem>
+            </orderedlist>    
+            <para>The following two configuration options/flags are
+            needed in order to support Hyper-V live migration and must
+            be added to your <filename>nova.conf</filename> on the Hyper-V compute node:<itemizedlist>
+                <listitem>
+                    <para><literal>instances_shared_storage=False</literal></para>
+                    <para>This needed to support "shared nothing"
+                        Hyper-V live migrations. It is used in
+                        nova/compute/manager.py</para>
+                </listitem>
+                <listitem>
+                    <para><literal>limit_cpu_features=True</literal></para>
+                    <para>This flag is needed to support live
+                        migration to hosts with different CPU
+                        features. This flag is checked during instance
+                        creation in order to limit the CPU features
+                        used by the VM.</para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <literal>instances_path=DRIVELETTER:\PATH\TO\YOUR\INSTANCES</literal>
+                    </para>
+                </listitem>
+            </itemizedlist></para>
+            <para>Additional Requirements:</para>
+    <itemizedlist>
+                <listitem>
+                    <para>Hyper-V 2012 RC or Windows Server 2012 RC with Hyper-V role enabled</para>
+                </listitem>
+                <listitem>
+                    <para>A Windows domain controller with the Hyper-V compute nodes as domain members</para>
+                </listitem>
+                <listitem>
+                    <para>The instances_path command line option/flag
+                    needs to be the same on all hosts</para>
+                </listitem>
+                <listitem>
+                    <para>The openstack-compute service deployed with
+                    the setup must run with domain credentials. You
+                    can set the service credentials with: </para>
+                 <screen os="windows">
+<prompt>C:\</prompt><userinput>sc config openstack-compute obj="DOMAIN\username" password="password"</userinput></screen>
+                </listitem>
+            </itemizedlist>
+            <para><emphasis role="bold">How to setup live migration on Hyper-V</emphasis></para>
+            <para>To enable shared nothing live migration run the 3
+            PowerShell instructions below on each Hyper-V host:</para>
+            <screen os="windows">
+<prompt>PS C:\</prompt><userinput>Enable-VMMigration</userinput>
+            </screen>
+                <screen os="windows">
+<prompt>PS C:\</prompt><userinput>Set-VMMigrationNetwork <replaceable>IP_ADDRESS</replaceable></userinput>
+                </screen>
+                <screen os="windows">
+<prompt>PS C:\</prompt><userinput>Set-VMHost –VirtualMachineMigrationAuthenticationTypeKerberos</userinput>
+                </screen>
+
+<note>
+    <para>Please replace the IP_ADDRESS with the address of the
+                interface which will provide the virtual switching for
+                nova-network.</para>
+</note>
+            <para><emphasis role="bold">Additional Reading</emphasis></para>
+            <para>Here's an article that clarifies the various live
+            migration options in Hyper-V:</para>
+            <para>
+            <link
+                xlink:href="http://ariessysadmin.blogspot.ro/2012/04/hyper-v-live-migration-of-windows.html"
+                >http://ariessysadmin.blogspot.ro/2012/04/hyper-v-live-migration-of-windows.html</link>
+            </para>
+</section>
+ <section xml:id="python-requirements-hyper-v"><title>"Python Requirements"></title>
+        <para><emphasis role="bold">Python 2.7.3</emphasis></para>
+        <para>Python 2.7.3 must be installed prior to installing the OpenStack Compute Driver on the Hyper-V server.  Download and then install the MSI for windows here:<itemizedlist>
+             <listitem>
+                 <para>
+                 <link xlink:href="http://www.python.org/ftp/python/2.7.3/python-2.7.3.msi" >http://www.python.org/ftp/python/2.7.3/python-2.7.3.msi</link>
+                 </para>
+             </listitem>
+             <listitem>
+                 <para>Install the MSI accepting the default options.</para></listitem>
+            <listitem><para>The installation will put python in C:/python27.</para></listitem>
+         </itemizedlist>
+        </para>
+    <para><emphasis role="bold">Setuptools-0.6c11.win32-py2.7</emphasis></para>
+        <para>You will require pip to install the necessary python module dependencies.  The installer will install under the C:\python27 directory structure. Setuptools for Python 2.7 for Windows can be download from here:</para>
+        <para><link xlink:href="http://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11.win32-py2.7.exe#md5=57e1e64f6b7c7f1d2eddfc9746bbaf20">
+            http://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11.win32-py2.7.exe
+        </link>
+        </para>
+     <para><emphasis role="bold">Python Dependencies</emphasis></para>
+        <para>The following packages need to be downloaded and manually installed onto the Compute Node</para>
+        <itemizedlist>
+            <listitem><para><emphasis role="bold">M2Crypto==0.21.1</emphasis></para>
+                <para>Download and run the installer from the following location:</para>
+                <para>
+                <link xlink:href="http://chandlerproject.org/pub/Project/MeTooCrypto/M2Crypto-0.21.1.win32-py2.7.exe">http://chandlerproject.org/pub/Project/MeTooCrypto/M2Crypto-0.21.1.win32-py2.7.exe</link>
+                </para>
+            </listitem>
+            <listitem><para><emphasis role="bold">MySQL-python==1.2.3</emphasis></para>
+                <para>
+                <link xlink:href="http://codegood.com/download/10/">http://codegood.com/download/10/</link>
+                </para>
+            </listitem>
+            <listitem><para><emphasis role="bold">pywin32==217</emphasis></para>
+                <para>Download and run the installer from the following location</para>
+                <para>
+                <link xlink:href="http://sourceforge.net/projects/pywin32/files/pywin32/Build%20217/pywin32-217.win32-py2.7.exe">http://sourceforge.net/projects/pywin32/files/pywin32/Build%20217/pywin32-217.win32-py2.7.exe</link>
+                </para>
+            </listitem>
+            <listitem><para><emphasis role="bold">greenlet==0.3.4</emphasis></para>
+                <para>Select the link below:</para>
+                <para><link xlink:href="http://www.lfd.uci.edu/~gohlke/pythonlibs/">http://www.lfd.uci.edu/~gohlke/pythonlibs/</link></para>
+                <para>You will need to scroll down to the greenlet section for the following file:
+                    greenlet-0.4.0.win32-py2.7.‌exe</para>
+                <para>Click on the file, to initiate the download.
+                    Once the download is complete, run the
+                    installer.</para>
+            </listitem>
+        </itemizedlist>
+        <para>The following python packages need to be installed via
+            easy_install or pip. Run the following replacing
+            PACKAGENAME with the packages below:</para>
+     <screen os="windows">
+<prompt>C:\</prompt><userinput>c:\Python27\Scripts\pip.exe install <replaceable>PACKAGE_NAME</replaceable></userinput>
+     </screen>
+      <note><para>Please note that you do not need to supply the =="VERSION", it
+                will automatically download and install the
+                latest.</para></note>
+        <itemizedlist>
+            <listitem>
+                <para>SQLAlchemy==0.7.8</para>
+            </listitem>
+            <listitem>
+                <para>WebOb==1.0.8</para>
+            </listitem>
+            <listitem>
+                <para>amqplib==1.0.2</para>
+            </listitem>
+            <listitem>
+                <para>anyjson==0.3.1</para>
+            </listitem>
+            <listitem>
+                <para>argparse==1.2.1</para>
+            </listitem>
+            <listitem>
+                <para>boto==2.1.1</para>
+            </listitem>
+            <listitem>
+                <para>carrot==0.10.7</para>
+            </listitem>
+            <listitem>
+                <para>cheetah==2.4.4</para>
+            </listitem>
+            <listitem>
+                <para>decorator==3.3.3</para>
+            </listitem>
+            <listitem>
+                <para>docutils==0.9</para>
+            </listitem>
+            <listitem>
+                <para>eventlet==0.9.16</para>
+            </listitem>
+            <listitem>
+                <para>feedparser==5.1.2</para>
+            </listitem>
+            <listitem>
+                <para>glance==2012.2</para>
+            </listitem>
+            <listitem>
+                <para>httplib2==0.7.4</para>
+            </listitem>
+            <listitem>
+                <para>ipython==0.12.1</para>
+            </listitem>
+            <listitem>
+                <para>iso8601==0.1.4</para>
+            </listitem>
+            <listitem>
+                <para>jinja2==2.6</para>
+            </listitem>
+            <listitem>
+                <para>kombu==2.2.0</para>
+            </listitem>
+            <listitem>
+                <para>lockfile==0.9.1</para>
+            </listitem>
+            <listitem>
+                <para>logilab-astng==0.23.1</para>
+            </listitem>
+            <listitem>
+                <para>logilab-common==0.57.1</para>
+            </listitem>
+            <listitem>
+                <para>lxml==2.3.5</para>
+            </listitem>
+            <listitem>
+                <para>markdown==2.1.1</para>
+            </listitem>
+            <listitem>
+                <para>mox==0.5.3</para>
+            </listitem>
+            <listitem>
+                <para>netaddr==0.7.7</para>
+            </listitem>
+            <listitem>
+                <para>nose==1.1.2</para>
+            </listitem>
+            <listitem>
+                <para>pastedeploy==1.5.0</para>
+            </listitem>
+            <listitem>
+                <para>pep8==1.2</para>
+            </listitem>
+            <listitem>
+                <para>prettytable==0.6.1</para>
+            </listitem>
+            <listitem>
+                <para>pygments==1.5</para>
+            </listitem>
+            <listitem>
+                <para>pylint==0.25.1</para>
+            </listitem>
+            <listitem>
+                <para>python-novaclient==2012.1</para>
+            </listitem>
+            <listitem>
+                <para>repoze.lru==0.5</para>
+            </listitem>
+            <listitem>
+                <para>routes==1.13</para>
+            </listitem>
+            <listitem>
+                <para>sphinx==1.1.3</para>
+            </listitem>
+            <listitem>
+                <para>sqlalchemy-migrate==0.7.2</para>
+            </listitem>
+            <listitem>
+                <para>suds==0.4</para>
+            </listitem>
+            <listitem>
+                <para>tempita==0.5.1</para>
+            </listitem>
+            <listitem>
+                <para>wmi==1.4.9</para>
+            </listitem>
+            <listitem>
+                <para>wsgiref==0.1.2</para>
+            </listitem>
+            <listitem>
+                <para>python-cinderclient</para>
+            </listitem>
+        </itemizedlist>
+ </section>
+<section xml:id="install-nova-windows-hyper-v">
+        <title>Installing Nova-compute</title>
+        <para><emphasis role="bold">Using git on Windows to retrieve source</emphasis></para>
+        <para>Git be used to download the necessary source code. The
+            installer to run Git on Windows can be downloaded
+            here:</para>
+        <para>
+            <link xlink:href="http://code.google.com/p/msysgit/downloads/list?q=full+installer+official+git">http://code.google.com/p/msysgit/downloads/list?q=full+installer+official+git</link>
+        </para>
+            <para>Download the latest installer.  Once the download is complete double click the installer and follow the prompts in the installation wizard.  The default should be acceptable for the needs of the document.</para>
+        <para>Once installed you may run the following to clone the Nova code.</para>
+        <screen os="windows">
+<prompt>C:\</prompt><userinput>git.exe clone https://github.com/openstack/nova.git</userinput>
+        </screen>
+    </section>
+    <section xml:id="sample_nova-conf-hyper-v">
+        <title>Configuring Nova.conf</title>
+        <para>The <filename>nova.conf</filename> file must be placed
+            in <literal>C:\etc\nova</literal> for running OpenStack on
+            Hyper-V. Below is a sample <filename>nova.conf</filename>
+            for Windows:</para>
+        <programlisting>
+[DEFAULT]
+verbose=true
+connection_type=hyperv
+force_raw_images=false
+auth_strategy=keystone
+fake_network=true
+vswitch_name=openstack-br
+logdir=c:\openstack\
+state_path=c:\openstack\
+lock_path=c:\openstack\
+instances_path=e:\Hyper-V\instances
+policy_file=C:\Program Files (x86)\OpenStack\nova\etc\nova\policy.json
+api_paste_config=c:\openstack\nova\etc\nova\api-paste.ini
+rabbit_host=<replaceable>IP_ADDRESS</replaceable>
+glance_api_servers=<replaceable>IP_ADDRESS</replaceable>:9292
+image_service=nova.image.glance.GlanceImageService
+sql_connection=mysql://nova:passwd@<replaceable>IP_ADDRESS</replaceable>/nova
+instances_shared_storage=false
+limit_cpu_features=true
+        </programlisting>
+    </section>
+    <section xml:id="prepare-hyper-v-images">
+    <title>Preparing Images for use with Hyper-V</title>
+    <para>Hyper-V currently supports only the VHD file format for
+            virtual machine instances. Detailed instructions for
+            installing virtual machines on Hyper-V can be found
+            here:</para>
+        <para><link xlink:href="http://technet.microsoft.com/en-us/library/cc772480.aspx">http://technet.microsoft.com/en-us/library/cc772480.aspx</link></para>
+    <para>Once you have successfully created a virtual machine, you
+            can then upload the image to glance using the native
+            glance-client:</para>
+    <screen os="windows">
+<prompt>C:\</prompt><userinput>glance image-create --name="<replaceable>VM_IMAGE_NAME</replaceable>" --is-public=true --container-format=bare --disk-format=vhd</userinput>
+    </screen>
+    </section>
+<section xml:id="running_compute-with-hyper-v">       
+    <title>Running Compute with Hyper-V</title>
+     <para>To start the nova-compute service, run this command from a
+            console in the Windows server:</para>
+    <screen os="windows">
+<prompt>C:\</prompt><userinput>C:\python27\python.exe c:\openstack\nova\bin\nova-compute.py</userinput>
+    </screen>
+ </section>
+        <section xml:id="troubleshooting-hyper-v">
+        <title>Troubleshooting Hyper-V Configuration</title>
+           <itemizedlist>
+               <listitem><para>I ran the <literal>nova-manage service list</literal> command
+                    from my controller; however, I'm not seeing smiley
+                    faces for Hyper-V compute nodes, what do I
+                    do?</para>
+<para><emphasis role="italic">Verify that you are synchronized with a network time source.
+                        Instructions for configuring NTP on your Hyper-V compute node are located
+                            <link xlink:href="#configure_ntp">here</link>
+                    </emphasis></para></listitem>
+           </itemizedlist>
+            
+        </section>
+</section>
