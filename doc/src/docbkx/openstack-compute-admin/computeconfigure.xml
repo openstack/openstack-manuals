@@ -43,7 +43,7 @@
           <filename>nova.conf</filename> file by entering a new line
         with a <literal>#</literal> sign at the beginning of the line.
         To see a listing of all possible configuration options, refer
-        to the <link linkend="compute-options-reference">Configuration Options Reference</link>.</para>
+        to the <xref linkend="compute-options-reference">Configuration Options Reference</xref>.</para>
 
       <para>Here is a simple example <filename>nova.conf</filename>
         file for a small private cloud, with all the cloud controller
@@ -415,53 +415,145 @@ $ <userinput>sudo service nova-compute restart</userinput></screen>
         <filename>nova.conf</filename> file need to be copied to each
       compute node. Here are some sample
         <filename>nova.conf</filename> files that offer examples of
-      specific configurations used for the Diablo release.</para>
+      specific configurations.</para>
 
     <simplesect>
-      <title>Configuration using KVM, FlatDHCP, MySQL, Glance, LDAP, and
-      optionally sheepdog, API is EC2</title>
+      <title>Essex configuration using KVM, FlatDHCP, MySQL, Glance,
+        LDAP, and optionally sheepdog, API is EC2</title>
 
-      <para>From <link
-      xlink:href="http://wikitech.wikimedia.org/view/OpenStack#On_the_controller_and_all_compute_nodes.2C_configure_.2Fetc.2Fnova.2Fnova.conf">wikimedia.org</link>,
-      used with permission. Where you see parameters passed in, it's likely an
-      IP address you need.</para>
+      <para>From <link xlink:href="http://gerrit.wikimedia.org"
+          >gerrit.wikimedia.org</link>, used with permission. Where
+        you see parameters passed in, they are reading from Puppet
+        configuration files. For example, a variable like &lt;%=
+        novaconfig["my_ip"] %&gt; is for the puppet templates they use
+        to deploy.</para>
 
       <programlisting>
-# configured using KVM, FlatDHCP, MySQL, Glance, LDAP, and optionally sheepdog, API is EC2
-verbose
+[DEFAULT]
+
+verbose=True
+auth_strategy=keystone
+connection_type=libvirt
+root_helper=sudo /usr/bin/nova-rootwrap
+instance_name_template=i-%08x
 daemonize=1
+scheduler_driver=nova.scheduler.simple.SimpleScheduler
+max_cores=200
+my_ip=&lt;%= novaconfig["my_ip"] %&gt;
 logdir=/var/log/nova
 state_path=/var/lib/nova
 lock_path=/var/lock/nova
-sql_connection=mysql://$nova_db_user:$nova_db_pass@$nova_db_host/$nova_db_name
+sql_connection=mysql://&lt;%= novaconfig["db_user"] %&gt;:&lt;%= novaconfig["db_pass"] %&gt;@&lt;%= novaconfig["db_host"] %&gt;/&lt;%= novaconfig["db_name"] %&gt;
 image_service=nova.image.glance.GlanceImageService
-s3_host=$nova_glance_host
-glance_api_servers=$nova_glance_host
-rabbit_host=$nova_rabbit_host
-network_host=$nova_network_host
-ec2_url=http://$nova_api_host:8773/services/Cloud
-libvirt_type=kvm
+s3_host=&lt;%= novaconfig["glance_host"] %&gt;
+glance_api_servers=&lt;%= novaconfig["glance_host"] %&gt;:9292
+rabbit_host=&lt;%= novaconfig["rabbit_host"] %&gt;
+cc_host=&lt;%= novaconfig["cc_host"] %&gt;
+network_host=&lt;%= novaconfig["network_host"] %&gt;
+ec2_url=http://&lt;%= novaconfig["api_host"] %&gt;:8773/services/Cloud
+ec2_dmz_host=&lt;%= novaconfig["api_ip"] %&gt;
+dmz_cidr=&lt;%= novaconfig["dmz_cidr"] %&gt;
+libvirt_type=&lt;%= novaconfig["libvirt_type"] %&gt;
+dhcpbridge_flagfile=/etc/nova/nova.conf
 dhcpbridge=/usr/bin/nova-dhcpbridge
-flat_network_bridge=br100
+flat_network_dhcp_start=&lt;%= novaconfig["dhcp_start"] %&gt;
+dhcp_domain=&lt;%= novaconfig["dhcp_domain"] %&gt;
 network_manager=nova.network.manager.FlatDHCPManager
-flat_interface=$nova_network_flat_interface
-public_interface=$nova_network_public_interface
-routing_source_ip=$nova_network_public_ip
-ajax_console_proxy_url=$nova_ajax_proxy_url
-volume_driver=nova.volume.driver.SheepdogDriver
-auth_driver=nova.auth.ldapdriver.LdapDriver
-ldap_url=ldap://$nova_ldap_host
-ldap_password=$nova_ldap_user_pass
-ldap_user_dn=$nova_ldap_user_dn
-ldap_user_unit=people
-ldap_user_subtree=ou=people,$nova_ldap_base_dn
-ldap_project_subtree=ou=groups,$nova_ldap_base_dn
-role_project_subtree=ou=groups,$nova_ldap_base_dn
-ldap_cloudadmin=cn=cloudadmins,ou=groups,$nova_ldap_base_dn
-ldap_itsec=cn=itsec,ou=groups,$nova_ldap_base_dn
-ldap_sysadmin=cn=sysadmins,$nova_ldap_base_dn
-ldap_netadmin=cn=netadmins,$nova_ldap_base_dn
-ldap_developer=cn=developers,$nova_ldap_base_dn
+flat_interface=&lt;%= novaconfig["network_flat_interface"] %&gt;
+flat_injected=False
+flat_network_bridge=&lt;%= novaconfig["flat_network_bridge"] %&gt;
+fixed_range=&lt;%= novaconfig["fixed_range"] %&gt;
+public_interface=&lt;%= novaconfig["network_public_interface"] %&gt;
+routing_source_ip=&lt;%= novaconfig["network_public_ip"] %&gt;
+node_availability_zone=&lt;%= novaconfig["zone"] %&gt;
+zone_name=&lt;%= novaconfig["zone"] %&gt;
+quota_floating_ips=&lt;%= novaconfig["quota_floating_ips"] %&gt;
+multi_host=True
+api_paste_config=/etc/nova/api-paste.ini
+#use_ipv6=True
+allow_same_net_traffic=False
+live_migration_uri=&lt;%= novaconfig["live_migration_uri"] %&gt;
+      </programlisting>
+      <para>These represent configuration role classes used by the puppet configuration files to build
+      out the rest of the <filename>nova.conf</filename> file. </para>
+<programlisting>
+ldap_base_dn => "dc=wikimedia,dc=org",
+ldap_user_dn => "uid=novaadmin,ou=people,dc=wikimedia,dc=org",
+ldap_user_pass => $passwords::openstack::nova::nova_ldap_user_pass,
+ldap_proxyagent => "cn=proxyagent,ou=profile,dc=wikimedia,dc=org",
+ldap_proxyagent_pass => $passwords::openstack::nova::nova_ldap_proxyagent_pass,
+controller_mysql_root_pass => $passwords::openstack::nova::controller_mysql_root_pass,
+puppet_db_name => "puppet",
+puppet_db_user => "puppet",
+puppet_db_pass => $passwords::openstack::nova::nova_puppet_user_pass,
+# By default, don't allow projects to allocate public IPs; this way we can
+# let users have network admin rights, for firewall rules and such, and can
+# give them public ips by increasing their quota
+quota_floating_ips => "0",
+libvirt_type => $realm ? {
+			"production" => "kvm",
+			"labs" => "qemu",
+db_host => $controller_hostname,
+		dhcp_domain => "pmtpa.wmflabs",
+		glance_host => $controller_hostname,
+		rabbit_host => $controller_hostname,
+		cc_host => $controller_hostname,
+		network_flat_interface => $realm ? {
+			"production" => "eth1.103",
+			"labs" => "eth0.103",
+		},
+		network_flat_interface_name => $realm ? {
+			"production" => "eth1",
+			"labs" => "eth0",
+		},
+		network_flat_interface_vlan => "103",
+		flat_network_bridge => "br103",
+		network_public_interface => "eth0",
+		network_host => $realm ? {
+			"production" => "10.4.0.1",
+			"labs" => "127.0.0.1",
+		},
+		api_host => $realm ? {
+			"production" => "virt2.pmtpa.wmnet",
+			"labs" => "localhost",
+		},
+		api_ip => $realm ? {
+			"production" => "10.4.0.1",
+			"labs" => "127.0.0.1",
+		},
+		fixed_range => $realm ? {
+			"production" => "10.4.0.0/24",
+			"labs" => "192.168.0.0/24",
+		},
+		dhcp_start => $realm ? {
+			"production" => "10.4.0.4",
+			"labs" => "192.168.0.4",
+		},
+		network_public_ip => $realm ? {
+			"production" => "208.80.153.192",
+			"labs" => "127.0.0.1",
+		},
+		dmz_cidr => $realm ? {
+			"production" => "208.80.153.0/22,10.0.0.0/8",
+			"labs" => "10.4.0.0/24",
+		},
+		controller_hostname => $realm ? {
+			"production" => "labsconsole.wikimedia.org",
+			"labs" => $fqdn,
+		},
+		ajax_proxy_url => $realm ? {
+			"production" => "http://labsconsole.wikimedia.org:8000",
+			"labs" => "http://${hostname}.${domain}:8000",
+		},
+		ldap_host => $controller_hostname,
+		puppet_host => $controller_hostname,
+		puppet_db_host => $controller_hostname,
+		live_migration_uri => "qemu://%s.pmtpa.wmnet/system?pkipath=/var/lib/nova",
+		zone => "pmtpa",
+		keystone_admin_token => $keystoneconfig["admin_token"],
+		keystone_auth_host => $keystoneconfig["bind_ip"],
+		keystone_auth_protocol => $keystoneconfig["auth_protocol"],
+		keystone_auth_port => $keystoneconfig["auth_port"],
             </programlisting>
 
       <figure xml:id="Nova_conf_KVM_LDAP">
@@ -482,27 +574,9 @@ ldap_developer=cn=developers,$nova_ldap_base_dn
 
       <para>This example <filename>nova.conf</filename> file is from an
       internal Rackspace test system used for demonstrations.</para>
-
-      <programlisting>
-# configured using KVM, Flat, MySQL, and Glance, API is OpenStack (or EC2)
-daemonize=1
-dhcpbridge_flagfile=/etc/nova/nova.conf
-dhcpbridge=/usr/bin/nova-dhcpbridge
-flat_network_bridge=br100
-lock_path=/var/lock/nova
-logdir=/var/log/nova
-state_path=/var/lib/nova
-verbose
-network_manager=nova.network.manager.FlatManager
-sql_connection=mysql://$nova_db_user:$nova_db_pass@$nova_db_host/$nova_db_name
-osapi_host=$nova_api_host
-rabbit_host=$rabbit_api_host
-ec2_host=$nova_api_host
-image_service=nova.image.glance.GlanceImageService
-glance_api_servers=$nova_glance_host
-
-        </programlisting>
-
+<programlisting>
+      <xi:include parse="text" href="../openstack-install/samples/nova.conf"/>
+</programlisting>
       <figure xml:id="Nova_conf_KVM_Flat">
         <title>KVM, Flat, MySQL, and Glance, OpenStack or EC2 API</title>
 
