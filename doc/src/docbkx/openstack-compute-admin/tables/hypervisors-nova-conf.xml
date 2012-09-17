@@ -35,6 +35,21 @@
                 </td>
             </tr>
             <tr>
+                <td><para> libvirt_images_type=default </para></td>
+                <td><para> (StrOpt) Instance ephemeral storage backend format.
+                    Acceptable values are: raw, qcow2, lvm, default.
+                    If default is specified, then use_cow_images flag
+		    is used instead of this one. Please note, that current 
+                    snapshot mechanism in OpenStack Compute works only with instances
+                    backed with Qcow2 images. </para></td>
+            </tr>
+            <tr>
+                <td><para> libvirt_images_volume_group=None </para></td>
+                <td><para> (StrOpt) LVM Volume Group that is used
+                    for instance ephemerals, when you specify
+                    libvirt_images_type=lvm. </para></td>
+            </tr>
+	    <tr>
                 <td> libvirt_inject_password=false </td>
                 <td> (BoolOpt) Inject the admin password at boot time,
                     without an agent. </td>
@@ -48,6 +63,11 @@
                 <td>libvirt_snapshots_directory=$instances_path/snapshots</td>
                 <td> (StrOpt) Location where libvirt driver will store snapshots
                     before uploading them to image service</td>
+            </tr>
+            <tr>
+                <td><para> libvirt_sparse_logical_volumes=false </para></td>
+                <td><para> (BoolOpt) Create sparse (not fully allocated) LVM volumes
+                    for instance ephemerals if you use LVM backend for them. </para></td>
             </tr>
             <tr>
                 <td> libvirt_type=kvm </td>
