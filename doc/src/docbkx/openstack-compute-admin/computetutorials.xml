@@ -176,11 +176,37 @@ export NOVA_VERSION=1.1
             
             <para>You can obtain extra informations about the instance you just spawned : its CPU
                 usage, the memory, the disk io or network io, per instance, by running the
-                    <command>nova diagnostics</command> command:</para>
-
-            <screen>
-<prompt>$</prompt> <userinput>nova diagnostics</userinput>
-            </screen>
+                    <command>nova diagnostics</command> command: <screen><prompt>$</prompt> <userinput>nova list</userinput></screen><programlisting>
++--------------------------------------+------+--------+------------------------+
+| ID                                   | Name | Status | Networks               |
++--------------------------------------+------+--------+------------------------+
+| 50191b9c-b26d-4b61-8404-f149c29acd5a | test | ACTIVE | local-net=192.168.4.35 |
++--------------------------------------+------+--------+------------------------+
+                </programlisting>
+                <screen><prompt>$</prompt> <userinput>nova diagnostics 50191b9c-b26d-4b61-8404-f149c29acd5a</userinput> </screen><programlisting>
++------------------+------------+
+| Property         | Value      |
++------------------+------------+
+| cpu0_time        | 9160000000 |
+| memory           | 524288     |
+| memory-actual    | 524288     |
+| memory-rss       | 178040     |
+| vda_errors       | -1         |
+| vda_read         | 3146752    |
+| vda_read_req     | 202        |
+| vda_write        | 1024       |
+| vda_write_req    | 1          |
+| vnet0_rx         | 610        |
+| vnet0_rx_drop    | 0          |
+| vnet0_rx_errors  | 0          |
+| vnet0_rx_packets | 7          |
+| vnet0_tx         | 0          |
+| vnet0_tx_drop    | 0          |
+| vnet0_tx_errors  | 0          |
+| vnet0_tx_packets | 0          |
++------------------+------------+                    
+                </programlisting>
+            </para>
         </section>
         <section xml:id="installing-needed-software-for-web-scale">
             <title>Part III: Installing the Needed Software for the Web-Scale Scenario</title>
