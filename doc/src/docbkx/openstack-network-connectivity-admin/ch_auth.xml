@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter [
+<!-- Some useful entities borrowed from HTML -->
+<!ENTITY ndash  "&#x2013;">
+<!ENTITY mdash  "&#x2014;">
+<!ENTITY hellip "&#x2026;">
+<!ENTITY plusmn "&#xB1;">
+
+<!-- Useful for describing APIs -->
+<!ENTITY GET    '<command xmlns="http://docbook.org/ns/docbook">GET</command>'>
+<!ENTITY PUT    '<command xmlns="http://docbook.org/ns/docbook">PUT</command>'>
+<!ENTITY POST   '<command xmlns="http://docbook.org/ns/docbook">POST</command>'>
+<!ENTITY DELETE '<command xmlns="http://docbook.org/ns/docbook">DELETE</command>'>
+
+<!ENTITY CHECK  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
+<imageobject role="fo">
+<imagedata fileref="figures/Check_mark_23x20_02.svg"
+format="SVG" scale="60"/>
+</imageobject>
+<imageobject role="html">
+<imagedata fileref="../figures/Check_mark_23x20_02.png"
+format="PNG" />
+</imageobject>
+</inlinemediaobject>'>
+
+<!ENTITY ARROW  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
+<imageobject role="fo">
+<imagedata fileref="figures/Arrow_east.svg"
+format="SVG" scale="60"/>
+</imageobject>
+<imageobject role="html">
+<imagedata fileref="../figures/Arrow_east.png"
+format="PNG" />
+</imageobject>
+</inlinemediaobject>'>
+]>
+<chapter xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="ch_auth">
+    <title>Authentication and Authorization</title>
+    <para>Quantum uses the Keystone identity service
+        (openstack.keystone.org) as the default authentication
+        service. When keystone is enabled Users submitting requests to
+        the Quantum service must provide an authentication token in
+        X-Auth-Token request header. The aforementioned token should
+        have been obtained by authenticating with the keystone
+        endpoint. For more information concerning authentication with
+        Keystone, please refer to the Keystone documentation. When
+        keystone is enabled, it is not mandatory to specify tenant_id
+        for resources in create requests, as the tenant identifier
+        will be derived from the Authentication token. Please note
+        that the default authorization settings only allow
+        administrative users to create resources on behalf of a
+        different tenant. Quantum uses information received from
+        Keystone to authorize user requests. Quantum handles two kind
+        of authorization policies: <itemizedlist>
+            <listitem>
+                <para>Operation-based: policy specify access criteria
+                    for specific operations, possibly with
+                    fine-grained control over specific attributes;
+                </para>
+            </listitem>
+            <listitem>
+                <para>Resource-based: whether access to specific
+                    resource might be granted or not according to the
+                    permissions configured for the resource (currently
+                    available only for the network resource) The
+                    actual authorization policies enforced in Quantum
+                    might vary from deployment to deployment. </para>
+            </listitem>
+        </itemizedlist></para>
+    <para>- describe policy.json updates - roles etc </para>
+</chapter>

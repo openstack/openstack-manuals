@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter [
+<!-- Some useful entities borrowed from HTML -->
+<!ENTITY ndash  "&#x2013;">
+<!ENTITY mdash  "&#x2014;">
+<!ENTITY hellip "&#x2026;">
+<!ENTITY plusmn "&#xB1;">
+
+<!-- Useful for describing APIs -->
+<!ENTITY GET    '<command xmlns="http://docbook.org/ns/docbook">GET</command>'>
+<!ENTITY PUT    '<command xmlns="http://docbook.org/ns/docbook">PUT</command>'>
+<!ENTITY POST   '<command xmlns="http://docbook.org/ns/docbook">POST</command>'>
+<!ENTITY DELETE '<command xmlns="http://docbook.org/ns/docbook">DELETE</command>'>
+
+<!ENTITY CHECK  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
+<imageobject role="fo">
+<imagedata fileref="figures/Check_mark_23x20_02.svg"
+format="SVG" scale="60"/>
+</imageobject>
+<imageobject role="html">
+<imagedata fileref="../figures/Check_mark_23x20_02.png"
+format="PNG" />
+</imageobject>
+</inlinemediaobject>'>
+
+<!ENTITY ARROW  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
+<imageobject role="fo">
+<imagedata fileref="figures/Arrow_east.svg"
+format="SVG" scale="60"/>
+</imageobject>
+<imageobject role="html">
+<imagedata fileref="../figures/Arrow_east.png"
+format="PNG" />
+</imageobject>
+</inlinemediaobject>'>
+<!ENTITY SENova 'services extension'>
+<!ENTITY uSENova 'Services extension'>
+<!ENTITY uuSENova 'Services Extension'>
+<!ENTITY RSNova 'reset state extension'>
+<!ENTITY uRSNova 'Reset state extension'>
+<!ENTITY uuRSNova 'Reset State Extension'>
+<!ENTITY ngCS 'next generation Rackspace Cloud Servers™ <link
+                        xlink:href="http://www.rackspace.com/cloud/openstack/"
+                        >powered by OpenStack</link>'>
+<!ENTITY ungCS 'Next generation Rackspace Cloud Servers™ <link
+                        xlink:href="http://www.rackspace.com/cloud/openstack/"
+                        >powered by OpenStack</link>'>
+]>
+<chapter xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="ch_overview">
+    <title>Overview</title>
+    <para> This chapter describes the high-level concepts and
+        components of a Quantum deployment. </para>
+    <section xml:id="WhatIsQuantum">
+        <title>What is Quantum?</title>
+        <para>The Quantum project was created to provide a rich and
+            tenant-facing API for defining network connectivity and
+            addressing in the cloud. The Quantum project gives
+            operators the ability to leverage different networking
+            technologies to power their cloud networking.   </para>
+        <para>For a detailed description of the Quantum API
+            abstractions and their attributes, see the <link
+                xlink:href="http://docs.openstack.org/api/openstack-network/2.0/content/"
+                xmlns:svg="http://www.w3.org/2000/svg"
+                xmlns:m="http://www.w3.org/1998/Math/MathML"
+                xmlns:html="http://www.w3.org/1999/xhtml"
+                xmlns:db="http://docbook.org/ns/docbook"
+                    ><citetitle>Quantum API Guide
+                (v2.0)</citetitle></link>.</para>
+        <section xml:id="rich_network">
+            <title>A Rich Network API</title>
+            <para>Quantum is a virtual network service that provides a
+                powerful API to define the network connectivity and
+                addressing used by devices from other services, such
+                as OpenStack Nova.   </para>
+            <para>The OpenStack Nova API has a virtual server
+                abstraction to describe compute resources. Similarly,
+                the Quantum API has virtual  network, subnet, and port
+                abstractions to describe network resources. In more
+                detail: <itemizedlist>
+                    <listitem>
+                        <para><emphasis role="bold"
+                            >Network</emphasis>. An isolated L2
+                            segment, analogous to VLAN in the physical
+                            networking world.</para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">Subnet</emphasis>.
+                            A block of v4 or v6 IP addresses and
+                            associated configuration state.</para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">Port</emphasis>. A
+                            connection point for attaching a single
+                            device, such as the NIC of a virtual
+                            server, to a Quantum network. Also
+                            describes the associated network
+                            configuration, such as the MAC and IP
+                            addresses to be used on that port.  
+                        </para>
+                    </listitem>
+                </itemizedlist>You can configure rich network
+                topologies by creating and configuring networks and
+                subnets, and then instructing other OpenStack services
+                like Nova to attach virtual devices to ports on these
+                networks.  In particular, Quantum supports each tenant
+                having multiple private networks, and allows tenants
+                to choose their own IP addressing scheme, even if
+                those IP addresses overlap with those used by other
+                tenants.  This enables very advanced cloud networking
+                use cases, such as building multi-tiered web
+                applications and allowing applications to be migrated
+                to the cloud without changing IP addresses. </para>
+            <para>Even if a cloud administrator does not intend to
+                expose these capabilities to tenants directly, the
+                Quantum API can be very useful even when used as an
+                admin API because it provides significantly more
+                flexibility for the cloud administrator to customize
+                network offerings.  </para>
+            <para>The Quantum API also provides a mechanism that lets
+                cloud administrators expose additional API
+                capabilities through API extensions.  Commonly, new
+                capabilities are first introduced as an API extension,
+                and over time become part of the core Quantum API.
+            </para>
+        </section>
+        <section xml:id="flexibility">
+            <title>Flexibility to Choose Different Network
+                Technologies</title>
+            <para>Enhancing traditional networking solutions to
+                provide rich cloud networking is challenging.
+                Traditional networking is not designed to scale to
+                cloud proportions or to configure automatically. </para>
+            <para>The original Nova network implementation assumed a
+                very basic model of performing all isolation through
+                Linux VLANs and IP tables. Quantum introduces the
+                concept of a <emphasis role="italic"
+                >plugin</emphasis>, which is a pluggable back-end
+                implementation of the Quantum API. A plugin can a
+                variety of technologies to implement the logical API
+                requests.  Some Quantum plugins might use basic Linux
+                VLANs and IP tables, while others might use more
+                advanced technologies, such as L2-in-L3 tunneling or
+                OpenFlow, to provide similar benefits. </para>
+            <para>The current set of plugins include: <itemizedlist>
+                    <listitem>
+                        <para><emphasis role="bold">Open
+                                vSwitch</emphasis>. <link
+                                xlink:href="http://www.openvswitch.org/openstack/documentation"
+                                >http://www.openvswitch.org/openstack/documentation</link>
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">Cisco</emphasis>.
+                                <link
+                                xlink:href="quantum/plugins/cisco/README"
+                                >quantum/plugins/cisco/README</link>
+                            and <link
+                                xlink:href="http://wiki.openstack.org/cisco-quantum"
+                                >http://wiki.openstack.org/cisco-quantum</link>
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">Linux
+                                Bridge</emphasis>. <link
+                                xlink:href="quantum/plugins/linuxbridge/README"
+                                >quantum/plugins/linuxbridge/README</link>
+                            and <link
+                                xlink:href="http://wiki.openstack.org/Quantum-Linux-Bridge-Plugin"
+                                >http://wiki.openstack.org/Quantum-Linux-Bridge-Plugin</link>
+                             </para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">Nicira
+                                NVP</emphasis>. <link
+                                xlink:href="quantum/plugins/nicira/nicira_nvp_plugin/README"
+                                >quantum/plugins/nicira/nicira_nvp_plugin/README</link>
+                            and <link
+                                xlink:href="http://www.nicira.com/support"
+                                >http://www.nicira.com/support</link>.
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">Ryu</emphasis>.
+                                <link
+                                xlink:href="quantum/plugins/ryu/README"
+                                >quantum/plugins/ryu/README</link> and
+                                <link
+                                xlink:href="http://www.osrg.net/ryu/using_with_openstack.html"
+                                >http://www.osrg.net/ryu/using_with_openstack.html</link>
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">NEC</emphasis>.
+                            (FIXME: needs link) </para>
+                    </listitem>
+                </itemizedlist></para>
+            <para>Plugins enable the cloud administrator to weigh
+                different options and decide which networking
+                technology is right for the deployment.</para>
+        </section>
+    </section>
+    <section xml:id="Architecture">
+        <title>Quantum Architecture </title>
+        <para>This section describes the high-level components of a
+            Quantum deployment. </para>
+        <section xml:id="arch_overview">
+            <title>Overview</title>
+            <para>Before you deploy Quantum, it is useful to
+                understand the different components that make up the
+                solution and how those components interact with each
+                other and with other OpenStack services. </para>
+            <para>Quantum is a standalone service, just like other
+                OpenStack services such as Nova, Glance, Keystone, and
+                Horizon. Like those services, a deployment of Quantum
+                often involves deploying several processes on a
+                variety of hosts. </para>
+            <para>The main process of the Quantum Service is
+                    <literal>quantum-server</literal>, which is a
+                Python daemon that exposes the Quantum API and passes
+                user requests to the configured Quantum plugin for
+                additional processing. Typically, the plugin requires
+                access to a database for persistent storage, similar
+                to other OpenStack services. </para>
+            <para>If your deployment uses a <emphasis role="italic"
+                    >controller host</emphasis> to run centralized
+                OpenStack Nova components, you can deploy Quantum on
+                that same host. However, Quantum is entirely
+                standalone and can be deployed on its own server as
+                well. Quantum also includes additional agents that
+                might be required depending on your deployment: <itemizedlist>
+                    <listitem>
+                        <para><emphasis role="bold">plugin
+                                agent</emphasis>
+                                (<literal>quantum-*-agent</literal>).
+                            Runs on each hypervisor to perform local
+                            vswitch configuration. Agent to be run
+                            depends on which plugin you are using, as
+                            some plugins do not require an agent.
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">dhcp
+                                agent</emphasis>
+                                (<literal>quantum-dhcp-agent</literal>).
+                            Provides DHCP services to tenant networks.
+                            This agent is the same across all plugins.
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">l3
+                                agent</emphasis>
+                            <literal>(quantum-l3-agent</literal>).
+                            Provides L3/NAT forwarding to provide
+                            external network access for VMs on tenant
+                            networks. This agent is the same across
+                            all plugins. </para>
+                    </listitem>
+                </itemizedlist></para>
+            <para>These agents interact with the main quantum-server
+                process in the following ways: <itemizedlist>
+                    <listitem>
+                        <para>Through RPC. For example, rabbitmq or
+                            qpid.</para>
+                    </listitem>
+                    <listitem>
+                        <para>Through the standard Quantum API. 
+                             </para>
+                    </listitem>
+                </itemizedlist>Quantum relies on the OpenStack
+                Identify Project (Keystone) for authentication and
+                authorization of all API request.    </para>
+            <para>OpenStack Nova interacts with Quantum through calls
+                to its standard API.  As part of creating a VM,
+                nova-compute communicates with the Quantum API to plug
+                each virtual NIC on the VM into a particular Quantum
+                network.   </para>
+            <para>Horizon is has basic integration with the Quantum
+                API, allowing tenants to create networks and subnets
+                through the GUI, and specify the set of networks that
+                a VM should connect to when it is launched.  See the
+                    <citetitle>Horizon Administrator
+                Guide</citetitle>.</para>
+
+        </section>
+        <section xml:id="services">
+            <title>Place Services on Physical Hosts</title>
+            <para>Like other OpenStack services, Quantum provides
+                cloud administrators with significant flexibility in
+                deciding where to run individual services.  One one
+                extreme, all services including Nova, Quantum,
+                Keystone, and so on can be run on a single physical
+                hosts for evaluation purposes.  On the other, each
+                service could have its own physical hosts, and some
+                cases be replicated across multiple hosts for
+                redundancy. See Section XXX on high availability.  </para>
+            <para>In this guide, we focus primarily on a standard
+                architecture that includes a “cloud controller” host,
+                a “network gateway” host, and a set of hypervisors for
+                running VMs.  </para>
+        </section>
+        <section xml:id="connectivity">
+            <title>Network Connectivity for Physical Hosts</title>
+            <para>A standard Quantum setup has up to four distinct
+                physical data center networks: </para>
+            <itemizedlist>
+                <listitem>
+                    <para><emphasis role="bold">Management
+                            network</emphasis>. Used for internal
+                        communication between OpenStack Components.  
+                        The IP addresses on this network should be
+                        reachable only within the data center. 
+                    </para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="bold">API
+                        network</emphasis>. Exposes all OpenStack
+                        APIs, including the Quantum API, to
+                        tenants. The IP addresses on this network
+                        should be reachable by anyone on the
+                        Internet.  </para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="bold">Data
+                            network</emphasis>. Used for VM data
+                        communication within the cloud deployment. 
+                        The IP addressing requirements of this network
+                        depend on the Quantum plugin in use.  </para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="bold">Public
+                            network</emphasis>. Used to provide VMs
+                        with Internet access in some deployment
+                        scenarios.  The IP addresses on this network
+                        should be reachable by anyone on the
+                        Internet.  </para>
+                </listitem>
+            </itemizedlist>
+        </section>
+    </section>
+</chapter>

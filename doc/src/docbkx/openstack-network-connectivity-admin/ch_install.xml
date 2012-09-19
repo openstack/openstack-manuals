@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter [
+<!-- Some useful entities borrowed from HTML -->
+<!ENTITY ndash  "&#x2013;">
+<!ENTITY mdash  "&#x2014;">
+<!ENTITY hellip "&#x2026;">
+<!ENTITY plusmn "&#xB1;">
+
+<!-- Useful for describing APIs -->
+<!ENTITY GET    '<command xmlns="http://docbook.org/ns/docbook">GET</command>'>
+<!ENTITY PUT    '<command xmlns="http://docbook.org/ns/docbook">PUT</command>'>
+<!ENTITY POST   '<command xmlns="http://docbook.org/ns/docbook">POST</command>'>
+<!ENTITY DELETE '<command xmlns="http://docbook.org/ns/docbook">DELETE</command>'>
+
+<!ENTITY CHECK  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
+<imageobject role="fo">
+<imagedata fileref="figures/Check_mark_23x20_02.svg"
+format="SVG" scale="60"/>
+</imageobject>
+<imageobject role="html">
+<imagedata fileref="../figures/Check_mark_23x20_02.png"
+format="PNG" />
+</imageobject>
+</inlinemediaobject>'>
+
+<!ENTITY ARROW  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
+<imageobject role="fo">
+<imagedata fileref="figures/Arrow_east.svg"
+format="SVG" scale="60"/>
+</imageobject>
+<imageobject role="html">
+<imagedata fileref="../figures/Arrow_east.png"
+format="PNG" />
+</imageobject>
+</inlinemediaobject>'>
+<!ENTITY SENova 'services extension'>
+<!ENTITY uSENova 'Services extension'>
+<!ENTITY uuSENova 'Services Extension'>
+<!ENTITY RSNova 'reset state extension'>
+<!ENTITY uRSNova 'Reset state extension'>
+<!ENTITY uuRSNova 'Reset State Extension'>
+<!ENTITY ngCS 'next generation Rackspace Cloud Servers™ <link
+                        xlink:href="http://www.rackspace.com/cloud/openstack/"
+                        >powered by OpenStack</link>'>
+<!ENTITY ungCS 'Next generation Rackspace Cloud Servers™ <link
+                        xlink:href="http://www.rackspace.com/cloud/openstack/"
+                        >powered by OpenStack</link>'>
+]>
+<chapter xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="ch_install">
+    <title>Quantum Installation</title>
+    <para> This chapter describes how to install the Quantum Service
+        and get it up and running. </para>
+    <para>If you are building a host from scratch to use for Quantum,
+        we strongly recommend using Ubuntu 12.04/12.10 or Fedora 17/18
+        as these platforms have quantum packages and receive
+        significant testing.</para>
+    <section xml:id="install_ubuntu">
+        <title>Install Packages (Ubuntu) </title>
+        <note>
+            <para>This model assumes that you are using Ubuntu Precise
+                with testing PPAs. We will want to update once this is
+                officially released by Ubuntu.</para>
+        </note>
+        <para>Point to Folsom PPAs:                        
+                                                            </para>
+        <para>apt-get install python-software-properties
+            add-apt-repository
+            ppa:openstack-ubuntu-testing/folsom-trunk-testing
+            add-apt-repository
+            ppa:openstack-ubuntu-testing/folsom-deps-staging apt-get
+            update &amp;&amp; apt-get dist-upgrade</para>
+        <para>To update your code to the most recent version of the
+            these PPAs, simply re-run the last command in the above
+            sequence.   </para>
+        <section xml:id="rpc_setup">
+            <title>RPC Setup: </title>
+            <para>Quantum uses RPC to allow DHCP agents and any plugin
+                agents to communicate with the main quantum-server
+                process.  Commonly, this can use the same RPC
+                mechanism used by other OpenStack components like
+                Nova.  </para>
+            <para>To use RabbitMQ as the message bus for RPC, make
+                sure that rabbit is installed on a host reachable via
+                the management network (if this is already the case
+                because of deploying another service like Nova, this
+                existing RabbitMQ setup is sufficient):  </para>
+            <para>apt-get install rabbitmq-server    </para>
+            <para>rabbitmqctl change_password guest
+                &lt;password&gt;     </para>
+            <para>Then update quantum.conf with these values: </para>
+            <para>rabbit_host=&lt;mgmt-IP-of-rabbit-host&gt; </para>
+            <para>rabbit_password=&lt;password&gt;</para>
+            <para>rabbit_user=guest </para>
+            <para>IMPORTANT: This quantum.conf file should be copied
+                to and used on all hosts running quantum-server,
+                quantum-dhcp-agent, quantum-openvswitch-agent, or
+                quantum-linuxbridge-agent (see below). </para>
+        </section>
+        <section xml:id="install_quantum_server">
+            <title>Install quantum-server: </title>
+            <para>Install quantum-server and CLI for accessing the
+                API: </para>
+            <para>                                               
+                                                                </para>
+            <para>apt-get -y install quantum-server python-cliff
+                python-pyparsing</para>
+            <para>You will also want to install the plugin you choose
+                to use, for example: </para>
+            <para>apt-get -y install quantum-plugin-openvswitch</para>
+            <para>Most plugins require a database to be installed and
+                configured in a plugin configuration file.  For
+                example: </para>
+            <para>apt-get -y install mysql-server python-mysqldb 
+                python-sqlalchemy </para>
+            <para>A database that you are already using for other
+                OpenStack services will work fine for this.  Simply
+                create a ‘quantum’ database: </para>
+            <para>mysql -u &lt;user&gt; -p &lt;pass&gt; -e “create
+                database quantum”</para>
+            <para>And then configure the plugin’s configuration file
+                to use this database.  Find the plugin configuration
+                file in /etc/quantum/plugins (e.g.,
+                /etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini)
+                and set: </para>
+            <para>sql_connection =
+                mysql://&lt;user&gt;:&lt;password&gt;@localhost/quantum?charset=utf8</para>
+            <para>NOTE: different plugins can use different database
+                schemas, so when switching a plugin, you must always
+                drop the quantum database and start fresh.  </para>
+            <para>FIXME: these plugin-specific sections should be
+                sub-sections where the reader needs to click on a
+                specific link to see the content.  This helps this
+                section from getting too long. </para>
+            <para>OpenVswitch Plugin: </para>
+            <para>Using the OVS plugin in a deployment with multiple
+                hosts requires the using of either tunneling or vlans
+                in order to isolate traffic from multiple networks. 
+                Tunneling is easier to deploy, as it does not require
+                configuring VLANs on network switches, so that is what
+                we describe here.  More advanced deployment options
+                are described in the Appendix.  </para>
+            <para>Edit
+                /etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini
+                to specify the following values: </para>
+            <para>service quantum-server restart</para>
+        </section>
+        <section xml:id="install_quantum_dhcp">
+            <title>>Install quantum-dhcp-agent: </title>
+            <para>The host running quantum-server requires a network
+                interface with an IP address on the “management
+                network” and another interface on the “data network”. </para>
+            <para>apt-get -y install  quantum-dhcp-agent</para>
+            <para>Install the agent specific to the plugin (if
+                needed): </para>
+            <para>For example: apt-get -y install
+                quantum-plugin-openvswitch-agent</para>
+        </section>
+        <section xml:id="install_quantum-l3">
+            <title>Install quantum-l3-agent: </title>
+            <para>apt-get -y install  quantum-l3-agent</para>
+            <para>Install the agent specific to the plugin (if
+                needed): </para>
+            <para>For example: apt-get -y install
+                quantum-plugin-openvswitch-agent</para>
+        </section>
+        <section xml:id="install_quantum_client">
+            <title>Install quantum CLI client: </title>
+            <para>apt-get -y install python-pyparsing python-cliff
+                python-quantumclient</para>
+        </section>
+        <section xml:id="init_config">
+            <title>Init, Config and Log File locations: </title>
+            <para>TBD</para>
+        </section>
+    </section>
+    <section xml:id="install_fedora">
+        <title>Installing Packages (Fedora) </title>
+        <para>[ For Essex, Bob Kurkura has done a great job of
+            documenting Red Hat packages</para>
+        <para> * install server + client packages</para>
+        <para> * configuration, including configuring keystone info,
+            choosing a plugin</para>
+        <para> * include plugin specific config params or point to
+            config files in reference section?</para>
+        <para> * starting + stopping services</para>
+        <para> * logging (if varies?) </para>
+    </section>
+    <?hard-pagebreak?>
+</chapter>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter [
+<!-- Some useful entities borrowed from HTML -->
+<!ENTITY ndash  "&#x2013;">
+<!ENTITY mdash  "&#x2014;">
+<!ENTITY hellip "&#x2026;">
+<!ENTITY plusmn "&#xB1;">
+
+<!-- Useful for describing APIs -->
+<!ENTITY GET    '<command xmlns="http://docbook.org/ns/docbook">GET</command>'>
+<!ENTITY PUT    '<command xmlns="http://docbook.org/ns/docbook">PUT</command>'>
+<!ENTITY POST   '<command xmlns="http://docbook.org/ns/docbook">POST</command>'>
+<!ENTITY DELETE '<command xmlns="http://docbook.org/ns/docbook">DELETE</command>'>
+
+<!ENTITY CHECK  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
+<imageobject role="fo">
+<imagedata fileref="figures/Check_mark_23x20_02.svg"
+format="SVG" scale="60"/>
+</imageobject>
+<imageobject role="html">
+<imagedata fileref="../figures/Check_mark_23x20_02.png"
+format="PNG" />
+</imageobject>
+</inlinemediaobject>'>
+
+<!ENTITY ARROW  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
+<imageobject role="fo">
+<imagedata fileref="figures/Arrow_east.svg"
+format="SVG" scale="60"/>
+</imageobject>
+<imageobject role="html">
+<imagedata fileref="../figures/Arrow_east.png"
+format="PNG" />
+</imageobject>
+</inlinemediaobject>'>
+<!ENTITY SENova 'services extension'>
+<!ENTITY uSENova 'Services extension'>
+<!ENTITY uuSENova 'Services Extension'>
+<!ENTITY RSNova 'reset state extension'>
+<!ENTITY uRSNova 'Reset state extension'>
+<!ENTITY uuRSNova 'Reset State Extension'>
+<!ENTITY ngCS 'next generation Rackspace Cloud Servers™ <link
+                        xlink:href="http://www.rackspace.com/cloud/openstack/"
+                        >powered by OpenStack</link>'>
+<!ENTITY ungCS 'Next generation Rackspace Cloud Servers™ <link
+                        xlink:href="http://www.rackspace.com/cloud/openstack/"
+                        >powered by OpenStack</link>'>
+]>
+<chapter xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="ch_config">
+    <title>Configuring Quantum Components</title>
+    <section xml:id="keystone">
+        <title>Keystone Configuration for Quantum</title>
+        <para>FIXME: should we show details Keystone commands here, or
+            just point to locations in Keystone docs, as these should
+            be standard operations for many services.  Probably best
+            in Keystone setup with a ref here.  </para>
+        <procedure>
+            <title>To Configure Keystone for Quantum</title>
+            <step>
+                <title>To Create a Quantum Service Entry</title>
+                <para>Quantum needs to be available in the  Keystone
+                    service catalog.  For example: </para>
+                <screen><computeroutput>keystone service-create --name quantum --type network --description 'OpenStack Networking service'
+keystone endpoint-create --region $KEYSTONE_REGION --service-id $2 --publicurl
+'http://$IP:9696/' --adminurl 'http://$IP:9696/' --internalurl 'http://$IP:9696/'</computeroutput></screen>
+            </step>
+            <step>
+                <title>Create Quantum Service User</title>
+                <para>For Nova to speak to the Quantum API, and for
+                    some internal components of Quantum to communicate
+                    with the Quantum API, you need to provide them
+                    with admin user credentials.  The suggested
+                    approach is to create a special ‘quantum’ user for
+                    this purpose.  </para>
+                <para>For example: </para>
+                <screen><computeroutput>QUANTUM_USER=$(get_id keystone user-create --name=quantum --pass="$SERVICE_PASSWORD" 
+--tenant-id $SERVICE_TENANT) keystone user-role-add --tenant-id $SERVICE_TENANT 
+--user-id $QUANTUM_USER --role-id $ADMIN_ROLE</computeroutput></screen>
+            </step>
+        </procedure>
+    </section>
+    <section xml:id="running_nova_with_quantum">
+        <title>Running Nova with Quantum</title>
+        <para>When Quantum is in use, Nova does not use nova-network. 
+            This means many of the tools and configuration options </para>
+        <para>- warning about not using traditional nova tools like
+            'nova-manage' and 'nova' to manage networks or IP
+            addressing, including both fixed and floating IPs. 
+            Security groups do work.  Also, let them know that
+            nova-network does not run in this scenario.  </para>
+        <para>The following items need to be set in the nova.conf used
+            by each nova-compute instance.  </para>
+        <itemizedlist>
+            <listitem>
+                <para>setting network API</para>
+            </listitem>
+            <listitem>
+                <para>quantum-url</para>
+            </listitem>
+            <listitem>
+                <para>quantum service-user </para>
+            </listitem>
+            <listitem>
+                <para>choosing a type of vif-plugging</para>
+            </listitem>
+        </itemizedlist>
+        <para><emphasis role="bold">nova.conf</emphasis>:</para>
+        <screen><computeroutput>network_api_class=nova.network.quantumv2.api.API
+quantum_url=http://localhost:9696
+quantum_auth_strategy=keystone
+quantum_admin_tenant_name=service
+quantum_admin_username=quantum
+quantum_admin_password=password
+quantum_admin_auth_url="http://192.168.0.1:35357/v2.0"</computeroutput></screen>
+        <para><emphasis role="bold">nova-compute.conf </emphasis>(for
+            OVS) </para>
+        <screen><computeroutput>libvirt_ovs_bridge=br-int
+libvirt_vif_type=ethernet
+libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchDriver
+libvirt_use_virtio_for_bridges=True</computeroutput></screen>
+        <para> borrow text from:
+            http://docs.openstack.org/trunk/openstack-network/admin/content/Vifplugging-d1e453.html</para>
+        <para> &lt;describe vif-plugging options, what plugins they
+            are compatible with, and why to choose one versus the
+            other&gt;</para>
+    </section>
+    <section xml:id="horizon">
+        <title>Running Horizon with Quantum</title>
+        <para>- config options to enable</para>
+        <para>- Limitations (ability to create L2 networks only, no L3
+            support).  </para>
+    </section>
+</chapter>

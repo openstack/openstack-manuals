@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE appendix [
+<!-- Some useful entities borrowed from HTML -->
+<!ENTITY ndash  "&#x2013;">
+<!ENTITY mdash  "&#x2014;">
+<!ENTITY hellip "&#x2026;">
+<!ENTITY plusmn "&#xB1;">
+
+<!-- Useful for describing APIs -->
+<!ENTITY GET    '<command xmlns="http://docbook.org/ns/docbook">GET</command>'>
+<!ENTITY PUT    '<command xmlns="http://docbook.org/ns/docbook">PUT</command>'>
+<!ENTITY POST   '<command xmlns="http://docbook.org/ns/docbook">POST</command>'>
+<!ENTITY DELETE '<command xmlns="http://docbook.org/ns/docbook">DELETE</command>'>
+
+<!ENTITY CHECK  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
+<imageobject role="fo">
+<imagedata fileref="figures/Check_mark_23x20_02.svg"
+format="SVG" scale="60"/>
+</imageobject>
+<imageobject role="html">
+<imagedata fileref="../figures/Check_mark_23x20_02.png"
+format="PNG" />
+</imageobject>
+</inlinemediaobject>'>
+
+<!ENTITY ARROW  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
+<imageobject role="fo">
+<imagedata fileref="figures/Arrow_east.svg"
+format="SVG" scale="60"/>
+</imageobject>
+<imageobject role="html">
+<imagedata fileref="../figures/Arrow_east.png"
+format="PNG" />
+</imageobject>
+</inlinemediaobject>'>
+]>
+<appendix xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="app_demo">
+    <title>Demo Setup</title>
+    <para>This section describes how to install the Quantum service
+        and its components. The demo assumes the following:</para>
+    <para>OpenStack Service Node:</para>
+    <orderedlist>
+        <listitem>
+            <para>Relevant Nova services are installed and
+                configured</para>
+        </listitem>
+        <listitem>
+            <para>Glance is installed and the image
+                cirros-0.3.0-x86_64-uec exists. This will be used in
+                the examples.</para>
+        </listitem>
+        <listitem>
+            <para>Keystone installed and running</para>
+        </listitem>
+        <listitem>
+            <para>Additional services <itemizedlist>
+                    <listitem>
+
+                        <para>RabbitMQ (password is rpwd)</para>
+                    </listitem>
+                    <listitem>
+                        <para>MySql server (user is muser and password
+                            is mpwd)</para>
+
+                    </listitem>
+                </itemizedlist>
+            </para>
+        </listitem>
+    </orderedlist>
+    <para>Compute Nodes</para>
+    <orderedlist>
+        <listitem>
+            <para>Nova compute is installed and configured</para>
+        </listitem>
+    </orderedlist>
+    <para>The diagram (<link
+            xlink:href="https://docs.google.com/drawings/d/1E_UTCAS22EDHecL5LunLKCzlcqyk-tsWLrAEZTKyz1I/edit"
+            >https://docs.google.com/drawings/d/1E_UTCAS22EDHecL5LunLKCzlcqyk-tsWLrAEZTKyz1I/edit</link>)
+        below shows the setup. The example uses the OpenvSwitch plugin
+        and agents (you can tweak the configurationsto use the Linux
+        Bridge plugin and agents).</para>
+    <mediaobject>
+        <imageobject role="fo">
+            <imagedata
+                fileref="figures/0clip_image002_-1344673767.gif"
+                contentwidth="6in"/>
+        </imageobject>
+    </mediaobject>
+    <para>There will be three components to the setup.<table
+            rules="all">
+            <caption>Components for Demo</caption>
+            <thead>
+                <tr>
+                    <th>Component</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>OpenStack Services </td>
+                    <td>Runs the Quantum service, Keystone and all of
+                        the Nova service that are required to deploy a
+                        VM. The service must have at least one network
+                        interface. This will be used to communicate
+                        with the compute nodes. </td>
+                </tr>
+
+                <tr>
+                    <td>Compute Node </td>
+                    <td>Runs Nova compute, Quantum L2 agent and the
+                        DHCP agent. This node will not have access the
+                        public network. The DHCP agent will allocate
+                        IP addresses to the VMs on the network. The
+                        node must have at least one network interface.
+                    </td>
+                </tr>
+                <tr>
+                    <td>Compute Node </td>
+                    <td>Runs Nova compute, Quantum L2 agent and the L3
+                        agent. This node will have access the public
+                        network. The L3 agent will perform NAT and
+                        enable the VM’s to access the public network.
+                        The node must have at least two network
+                        interfaces. </td>
+                </tr>
+            </tbody>
+        </table></para>
+    <section xml:id="demo_install">
+        <title>Installations</title>
+        <para><itemizedlist>
+                <listitem>
+                    <para>Quantum Service <orderedlist>
+                            <listitem>
+                                <para>Install the Quantum
+                                   service.</para>
+                            </listitem>
+                            <listitem>
+                                <para>Create plugin database
+                                   <filename>ovs_quantum</filename>.
+                                   See the section on the Quantum
+                                   service for the exact details.
+                                   Create user
+                                   <literal>muser</literal> with
+                                   password
+                                   <literal>mpwd</literal>.</para>
+                            </listitem>
+                            <listitem>
+                                <para>Update the Quantum configuration
+                                   file,
+                                   <filename>/etc/quantum/quantum.conf</filename>:</para>
+                                <screen><computeroutput>core_plugin=quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPluginV2
+rabbit_password = openstack
+rabbit_host = localhost</computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Update the plugin configuration
+                                   file,
+                                   <filename>/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</filename>:</para>
+                                <screen><computeroutput>sql_connection=mysql://muser:mpwd@localhost/ovs_quantum?charset=utf8
+[TBD provider nets]</computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Start the Quantum service</para>
+                            </listitem>
+                        </orderedlist></para>
+
+                </listitem>
+                <listitem>
+                    <para>Compute Nodes - L2 Agent <orderedlist>
+                            <listitem>
+                                <para>Install the the L2 agent.</para>
+                            </listitem>
+                            <listitem>
+                                <para>Update the Quantum configuration
+                                   file,
+                                   <filename>/etc/quantum/quantum.conf</filename>:</para>
+                                <screen><computeroutput>rabbit_password = openstack
+rabbit_host = 100.1.1.10</computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Update the plugin configuration
+                                   file. </para>
+                                <para>[TBD provider nets]</para>
+                            </listitem>
+                            <listitem>
+                                <para>Start the Quantum L2
+                                   agent</para>
+                            </listitem>
+                        </orderedlist></para>
+
+                </listitem>
+                <listitem>
+                    <para>DHCP Agent</para>
+                </listitem>
+                <listitem>
+                    <para>Compute Node + L3 Agent</para>
+                </listitem>
+            </itemizedlist></para>
+    </section>
+</appendix>
