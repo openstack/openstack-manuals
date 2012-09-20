@@ -33,18 +33,6 @@ format="SVG" scale="60"/>
 format="PNG" />
 </imageobject>
 </inlinemediaobject>'>
-<!ENTITY SENova 'services extension'>
-<!ENTITY uSENova 'Services extension'>
-<!ENTITY uuSENova 'Services Extension'>
-<!ENTITY RSNova 'reset state extension'>
-<!ENTITY uRSNova 'Reset state extension'>
-<!ENTITY uuRSNova 'Reset State Extension'>
-<!ENTITY ngCS 'next generation Rackspace Cloud Servers™ <link
-                        xlink:href="http://www.rackspace.com/cloud/openstack/"
-                        >powered by OpenStack</link>'>
-<!ENTITY ungCS 'Next generation Rackspace Cloud Servers™ <link
-                        xlink:href="http://www.rackspace.com/cloud/openstack/"
-                        >powered by OpenStack</link>'>
 ]>
 <chapter xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -52,233 +40,234 @@ format="PNG" />
     xml:id="ch_using">
     <title>Using Quantum</title>
     <para> This chapter describes how to use Quantum.</para>
-   
-        <para>There are two main approaches to using Quantum.  The
-            first is to expose the Quantum API to cloud tenants,
-            allowing them to build rich network topologies.  The
-            second is to have the cloud administrator, or another tool
-            run the the cloud admin, create network connectivity on
-            behalf of tenants.  In this document, we commonly describe
-            operations as being performed by a tenant, but they might
-            also be performed by the cloud admin on behalf of the
-            tenant.  </para>
-        <para>The Quantum v2.0 API represents a combination of the
-            Quantum v1.1 API
-            (http://docs.openstack.org/api/openstack-network/1.0/content/),
-            which focused on defining private L2 networks and
-            attaching VM NICs to those networks  with the IP Address
-            Managements capabilities from the former Melange API
-            (http://melange.readthedocs.org/en/latest/apidoc.html|Melange
-            API) .  These IPAM capabilities focus on being able to
-            associate IP address blocks and other network
-            configuration required by a network device (e.g., default
-            gateway, dns-servers) with a Quantum Network, and then
-            being able to allocate an IP address out of such a block
-            and associate it with a device that is attached to the
-            network via a Quantum Port; also it allows for specifying
-            host routes which will be distributed to instances
-            launched on Quantum networks.</para>
-        <para>The v2.0 API does this by introducing a new entity,
-            called Subnet.  Subnets can represent either an IPv4 or
-            IPv6 address block, and each Quantum Network commonly has
-            one or more subnets.  When a port is created on the
-            network, by default it will be allocated an available
-            fixed IP address out of one of the designated subnets for
-            each IP version.  When the Port is destroyed, the
-            allocated addresses return to the pool of available IPs on
-            the subnet. Users of the Quantum API can either choose a
-            specific IP address from the block, or let Quantum choose
-            the first available IP address. For more details about the
-            v2 API please see XX (FIXME: this page is out of date a
-            should be replaced with link to the real v2 spec before
-            posting publicly)</para>
-        <section xml:id="api_features">
-            <title>Core API Features</title>
-            <para>Once Quantum is installed and running, both tenants
-                and admins primarily interact with the service via
-                create-read-update-delete (CRUD) API operations
-                performed either directly against the API, or more
-                commonly via the 'quantum' CLI tool.  Like other
-                OpenStack CLI tools, the 'quantum' tool is just a
-                basic wrapper around the Quantum API, so any operation
-                that can be performed via the CLI has an equivalent
-                API call that can be performed programmatically.  </para>
-            <para>The CLI supports many options for filtering results,
-                limiting fields show, etc.  For details, refer to the
-                Quantum CLI documentation  &lt;link to CLI guide once
-                available&gt;  </para>
-            <section xml:id="api_abstractions">
-                <title>API Abstractions</title>
-                <para>Apart from the previously introduced subnet
-                    entity, the quantum v2 API provides abstraction
-                    for networks and ports. A Network represents an
-                    isolated virtual Layer-2 domain, where a port
-                    represents a virtual switch port on a given
-                    network.</para>
-                <para>The table below summarizes the attributes
-                    available for each of these abstractions. For more
-                    operations about API abstraction and operations,
-                    please refer to the Quantum API v2.0 guide
-                    &lt;metti link&gt;.</para>
-                <para><emphasis role="bold">Network</emphasis></para>
-                <informaltable border="1" class="MsoNormalTable"
-                    style="width:100.0%;margin-left:5.0pt;border-collapse:collapse;border:none;  mso-border-alt:solid windowtext .5pt;mso-yfti-tbllook:1184;mso-padding-alt:  0in 5.4pt 0in 5.4pt;mso-border-insideh:.5pt solid windowtext;mso-border-insidev:  .5pt solid windowtext"
-                    width="100%">
+
+    <para>There are two main approaches to using Quantum.  The first
+        is to expose the Quantum API to cloud tenants, allowing them
+        to build rich network topologies.  The second is to have the
+        cloud administrator, or another tool run the the cloud admin,
+        create network connectivity on behalf of tenants.  In this
+        document, we commonly describe operations as being performed
+        by a tenant, but they might also be performed by the cloud
+        admin on behalf of the tenant.  </para>
+    <para>The Quantum v2.0 API represents a combination of the Quantum
+        v1.1 API
+        (http://docs.openstack.org/api/openstack-network/1.0/content/),
+        which focused on defining private L2 networks and attaching VM
+        NICs to those networks  with the IP Address Managements
+        capabilities from the former Melange API
+        (http://melange.readthedocs.org/en/latest/apidoc.html|Melange
+        API) .  These IPAM capabilities focus on being able to
+        associate IP address blocks and other network configuration
+        required by a network device (e.g., default gateway,
+        dns-servers) with a Quantum Network, and then being able to
+        allocate an IP address out of such a block and associate it
+        with a device that is attached to the network via a Quantum
+        Port; also it allows for specifying host routes which will be
+        distributed to instances launched on Quantum networks.</para>
+    <para>The v2.0 API does this by introducing a new entity, called
+        Subnet.  Subnets can represent either an IPv4 or IPv6 address
+        block, and each Quantum Network commonly has one or more
+        subnets.  When a port is created on the network, by default it
+        will be allocated an available fixed IP address out of one of
+        the designated subnets for each IP version.  When the Port is
+        destroyed, the allocated addresses return to the pool of
+        available IPs on the subnet. Users of the Quantum API can
+        either choose a specific IP address from the block, or let
+        Quantum choose the first available IP address. For more
+        details about the v2 API please see XX (FIXME: this page is
+        out of date a should be replaced with link to the real v2 spec
+        before posting publicly)</para>
+    <section xml:id="api_features">
+        <title>Core API Features</title>
+        <para>Once Quantum is installed and running, both tenants and
+            admins primarily interact with the service via
+            create-read-update-delete (CRUD) API operations performed
+            either directly against the API, or more commonly via the
+            'quantum' CLI tool.  Like other OpenStack CLI tools, the
+            'quantum' tool is just a basic wrapper around the Quantum
+            API, so any operation that can be performed via the CLI
+            has an equivalent API call that can be performed
+            programmatically.  </para>
+        <para>The CLI supports many options for filtering results,
+            limiting fields show, etc.  For details, refer to the
+            Quantum CLI documentation  &lt;link to CLI guide once
+            available&gt;  </para>
+        <section xml:id="api_abstractions">
+            <title>API Abstractions</title>
+            <para>Apart from the previously introduced subnet entity,
+                the quantum v2 API provides abstraction for networks
+                and ports. A Network represents an isolated virtual
+                Layer-2 domain, where a port represents a virtual
+                switch port on a given network.</para>
+            <para>The table below summarizes the attributes available
+                for each of these abstractions. For more operations
+                about API abstraction and operations, please refer to
+                the Quantum API v2.0 guide &lt;metti link&gt;.</para>
+
+            <table rules="all">
+                <caption>Network</caption>
+                <thead>
                     <tr>
-                        <td rowspan="1" colspan="1" valign="top">
-                            Attribute name </td>
-                        <td rowspan="1" colspan="1" valign="top"> Type </td>
-                        <td rowspan="1" colspan="1" valign="top">
-                            Default Value </td>
-                        <td rowspan="1" colspan="1" valign="top">
-                            Description </td>
+                        <th> Attribute name </th>
+                        <th> Type </th>
+                        <th> Default Value </th>
+                        <th> Description </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>id </td>
+                        <td>uuid </td>
+                        <td>auto generated </td>
+                        <td>Unique identifier </td>
                     </tr>
                     <tr>
-                        <td rowspan="1" colspan="1" valign="top"> id </td>
-                        <td rowspan="1" colspan="1" valign="top"> uuid </td>
-                        <td rowspan="1" colspan="1" valign="top"> auto
-                            generated </td>
-                        <td rowspan="1" colspan="1" valign="top">
-                            Unique identifier </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="1" colspan="1" valign="top"> name </td>
-                        <td rowspan="1" colspan="1" valign="top">
-                            string </td>
-                        <td rowspan="1" colspan="1" valign="top"> N/A </td>
-                        <td rowspan="1" colspan="1" valign="top">
-                            Human-readable name for the network. Might
+                        <td>name </td>
+                        <td>string </td>
+                        <td>N/A </td>
+                        <td>Human-readable name for the network. Might
                             not be unique. </td>
                     </tr>
                     <tr>
-                        <td rowspan="1" colspan="1" valign="top">
-                            admin_state_up </td>
-                        <td rowspan="1" colspan="1" valign="top"> bool </td>
-                        <td rowspan="1" colspan="1" valign="top"> True </td>
-                        <td rowspan="1" colspan="1" valign="top"> Sets
-                            the administrative state of network. if
-                            down, network does not forward packets.
+                        <td>admin_state_up </td>
+                        <td>bool </td>
+                        <td>True </td>
+                        <td>Sets the administrative state of network.
+                            if down, network does not forward packets.
                         </td>
                     </tr>
                     <tr>
-                        <td rowspan="1" colspan="1" valign="top">
-                            status </td>
-                        <td rowspan="1" colspan="1" valign="top">
-                            string </td>
-                        <td rowspan="1" colspan="1" valign="top"> N/A </td>
-                        <td rowspan="1" colspan="1" valign="top">
-                            Indicates whether network is currently
+                        <td>status </td>
+                        <td>string </td>
+                        <td>N/A </td>
+                        <td>Indicates whether network is currently
                             operational. </td>
                     </tr>
                     <tr>
-                        <td rowspan="1" colspan="1" valign="top">
-                            subnets </td>
-                        <td rowspan="1" colspan="1" valign="top">
-                            list(uuid) </td>
-                        <td rowspan="1" colspan="1" valign="top">
-                            empty list </td>
-                        <td rowspan="1" colspan="1" valign="top">
-                            Subnets associated with this network.
+                        <td>subnets </td>
+                        <td>list(uuid) </td>
+                        <td>empty list </td>
+                        <td>Subnets associated with this network.
                         </td>
                     </tr>
                     <tr>
-                        <td rowspan="1" colspan="1" valign="top">
-                            shared </td>
-                        <td rowspan="1" colspan="1" valign="top"> bool </td>
-                        <td rowspan="1" colspan="1" valign="top">
-                            False </td>
-                        <td rowspan="1" colspan="1" valign="top">
-                            Specifies whether the network resource can
+                        <td>shared </td>
+                        <td>bool </td>
+                        <td>False </td>
+                        <td>Specifies whether the network resource can
                             be accessed by any tenant or not </td>
                     </tr>
                     <tr>
-                        <td rowspan="1" colspan="1" valign="top">
-                            tenant_it </td>
-                        <td rowspan="1" colspan="1" valign="top"> uuid </td>
-                        <td rowspan="1" colspan="1" valign="top"> N/A </td>
-                        <td rowspan="1" colspan="1" valign="top">
-                            Owner of network. Only admin users can
+                        <td>tenant_it </td>
+                        <td>uuid </td>
+                        <td>N/A </td>
+                        <td>Owner of network. Only admin users can
                             specify a tenant_id other than its own.
                         </td>
                     </tr>
-                </informaltable>
-                <para>&lt; TODO: Salvatore to complete with ports and
-                    subnets tables&gt;</para>
-            </section>
-            <section xml:id="basic_workflow">
-                <title>Basic Workflow </title>
-                <para>(include output in examples) </para>
-                <para>quantum create-net net1</para>
-                <para>quantum create-subnet net1 10.0.0.0/24</para>
-                <para>View current networks:</para>
-                <para>quantum net-list</para>
-                <para> </para>
-                <para>Boot the VM with a single NIC on the selected
-                    network:</para>
-                <para>nova boot --image &lt;img&gt; --flavor
-                    &lt;flavor&gt; --nic net-id=&lt;&gt; 
-                    &lt;vm-name&gt;</para>
-                <para>Congrats, you have booted a VM on a quantum
-                    network.  </para>
-                <para>There is now a Quantum port on 'net1' that
-                    corresponds to the VM Nic.  You can view it with
-                    the following command, which searches for all
-                    ports with a "device_id" corresponding to the Nova
-                    server UUID:</para>
-                <para>quantum port-list -- --device_id=ZZZ</para>
-                <para>To view only a few fields of the port, you can
-                    limit output using -c.  For example to see only
-                    the mac_address of the port, use:</para>
-                <para>quantum port-list -c mac_address --
-                    --device_id=ZZZ</para>
-                <para>You could temporarily disable the port from
-                    sending traffic by updating it to have
-                    admin_state_up=False:</para>
-                <para>quantum port-update &lt;YYY&gt;
-                    --admin_state_up=False</para>
-                <para>When we delete the Nova VM, the underlying
-                    Quantum port is automatically deleted:</para>
-                <para>quantum port-list -c mac_address --
-                    --device_id=ZZZ</para>
-            </section>
-            <section xml:id="admin_api_config">
-                <title>Admin API configuration</title>
-                <para>These same calls can be performed by the cloud
-                    admin on half of the tenants by specifying a
-                    tenant_id in the request, for example:</para>
-                <para>quantum net-create net1 --tenant_id=XXX</para>
-                <para>This tenant_id should be the tenant UUID from
-                    keystone. To view all keystone tenant UUIDs, run
-                    the following command as a keystone admin
-                    user:</para>
-                <para>keystone tenant-list</para>
-            </section>
-            <section xml:id="advanced_networking">
-                <title>Advanced Network &amp; Subnet
-                    Operations</title>
-                <para>Creation:</para>
-                <para>- example showing each option being set (in
-                    particular, showing options that are lists, which
-                    can be tricky).  </para>
-                <para>- shared networks</para>
-                <para>- disabling DHCP</para>
-                <para>- networks with no gateways</para>
-                <para>- networks with routes other than default
-                    routes.  </para>
-                <para>Searches:</para>
-                <para>- Find all Ports/IPs allocated on a
-                    network</para>
-                <para>Deletion:</para>
-                <para>- deletion requirements (no VM ports on
-                    network)</para>
-            </section>
-            <section xml:id="advanced_vm">
-                <title>Advanced VM creation &amp; port operations.  </title>
-                <para>- booting VMs with multiple NICs</para>
-                <para>- specifying a port-id, rather than a
-                    net-id</para>
-                <para>- behavior of quantum when no --nic is
-                    specified.  </para>
-            </section>
+                </tbody>
+            </table>
+            <para>&lt; TODO: Salvatore to complete with ports and
+                subnets tables&gt;</para>
         </section>
+        <section xml:id="basic_workflow">
+            <title>Basic Workflow </title>
+            <para>(include output in examples) </para>
+            <screen><computeroutput>quantum create-net net1 quantum create-subnet net1 10.0.0.0/24</computeroutput></screen>
+            <para>View current networks:</para>
+            <screen><computeroutput>quantum net-list</computeroutput></screen>
+
+            <para>Boot the VM with a single NIC on the selected
+                network:</para>
+            <screen><computeroutput>nova boot --image &lt;img&gt; --flavor &lt;flavor&gt; --nic net-id=&lt;&gt; &lt;vm-name&gt;</computeroutput></screen>
+            <para>Congrats, you have booted a VM on a quantum
+                network.  </para>
+            <para>There is now a Quantum port on 'net1' that
+                corresponds to the VM Nic.  You can view it with the
+                following command, which searches for all ports with a
+                "device_id" corresponding to the Nova server
+                UUID:</para>
+            <screen><computeroutput>quantum port-list -- --device_id=ZZZ</computeroutput></screen>
+            <para>To view only a few fields of the port, you can limit
+                output using -c.  For example to see only the
+                mac_address of the port, use:</para>
+            <screen><computeroutput>quantum port-list -c mac_address -- --device_id=ZZZ</computeroutput></screen>
+            <para>You could temporarily disable the port from sending
+                traffic by updating it to have
+                admin_state_up=False:</para>
+            <screen><computeroutput>quantum port-update &lt;YYY&gt; --admin_state_up=False</computeroutput></screen>
+            <para>When we delete the Nova VM, the underlying Quantum
+                port is automatically deleted:</para>
+            <screen><computeroutput>quantum port-list -c mac_address -- --device_id=ZZZ</computeroutput></screen>
+        </section>
+        <section xml:id="admin_api_config">
+            <title>Admin API configuration</title>
+            <para>These same calls can be performed by the cloud admin
+                on half of the tenants by specifying a tenant_id in
+                the request, for example:</para>
+            <screen><computeroutput>quantum net-create net1 --tenant_id=XXX</computeroutput></screen>
+            <para>This tenant_id should be the tenant UUID from
+                keystone. To view all keystone tenant UUIDs, run the
+                following command as a keystone admin user:</para>
+            <screen><computeroutput>keystone tenant-list</computeroutput></screen>
+        </section>
+        <section xml:id="advanced_networking">
+            <title>Advanced Network &amp; Subnet Operations</title>
+            <para>Creation:</para>
+            <itemizedlist>
+                <listitem>
+                    <para>example showing each option being set (in
+                        particular, showing options that are lists,
+                        which can be tricky).  </para>
+                </listitem>
+                <listitem>
+                    <para>shared networks</para>
+                </listitem>
+                <listitem>
+                    <para>disabling DHCP</para>
+                </listitem>
+                <listitem>
+                    <para>networks with no gateways</para>
+                </listitem>
+                <listitem>
+                    <para>networks with routes other than default
+                        routes.  </para>
+                </listitem>
+            </itemizedlist>
+            <para>Searches:</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>Find all Ports/IPs allocated on a
+                            network</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>Deletion:</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>deletion requirements (no VM ports on
+                            network)</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+        </section>
+        <section xml:id="advanced_vm">
+            <title>Advanced VM creation &amp; port operations.  </title>
+            <itemizedlist>
+                <listitem>
+                    <para>booting VMs with multiple NICs</para>
+                </listitem>
+                <listitem>
+                    <para>specifying a port-id, rather than a
+                        net-id</para>
+                </listitem>
+                <listitem>
+                    <para>behavior of quantum when no --nic is
+                        specified.  </para>
+                </listitem>
+            </itemizedlist>
+        </section>
+    </section>
 </chapter>

@@ -33,18 +33,6 @@ format="SVG" scale="60"/>
 format="PNG" />
 </imageobject>
 </inlinemediaobject>'>
-<!ENTITY SENova 'services extension'>
-<!ENTITY uSENova 'Services extension'>
-<!ENTITY uuSENova 'Services Extension'>
-<!ENTITY RSNova 'reset state extension'>
-<!ENTITY uRSNova 'Reset state extension'>
-<!ENTITY uuRSNova 'Reset State Extension'>
-<!ENTITY ngCS 'next generation Rackspace Cloud Servers™ <link
-                        xlink:href="http://www.rackspace.com/cloud/openstack/"
-                        >powered by OpenStack</link>'>
-<!ENTITY ungCS 'Next generation Rackspace Cloud Servers™ <link
-                        xlink:href="http://www.rackspace.com/cloud/openstack/"
-                        >powered by OpenStack</link>'>
 ]>
 <chapter xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -63,8 +51,9 @@ format="PNG" />
             passing the API calls to the plugin for processing. The
             quantum-server should receive one of more configuration
             files as it its input, for example:</para>
-        <para>quantum-server --config-file &lt;quantum config&gt;
-            --config-file &lt;plugin config&gt;</para>
+        <para>
+            <screen><computeroutput>quantum-server --config-file &lt;quantum config&gt; --config-file &lt;plugin config&gt;</computeroutput></screen>
+        </para>
         <para>The quantum config contains the common quantum
             configuration parameters. The plugin config contains the
             plugin specific flags. The plugin that is run on the
@@ -81,20 +70,15 @@ format="PNG" />
             database. Quantum makes use of MYSQL by default. After
             installing and starting the SQL server, set a password for
             the root account and delete the anonymous accounts: </para>
-        <para>$&gt; mysql -u root</para>
-        <para> mysql&gt; update mysql.user set password =
-            password('iamroot') where user = 'root';</para>
-        <para> mysql&gt; delete from mysql.user where user =
-            '';</para>
+        <screen><computeroutput>$&gt; mysql -u root
+mysql&gt; update mysql.user set password = password('iamroot') where user = 'root';
+mysql&gt; delete from mysql.user where user = '';</computeroutput></screen>
         <para>Create a database and user account specifically for
             plugin:</para>
-        <para>mysql&gt; create database &lt;database-name&gt;;</para>
-        <para> mysql&gt; create user '&lt;user-name&gt;'@'localhost'
-            identified by '&lt;user-name&gt;';</para>
-        <para> mysql&gt; create user '&lt;user-name&gt;'@'%'
-            identified by '&lt;user-name&gt;';</para>
-        <para> mysql&gt; grant all on &lt;database-name&gt;.* to
-            '&lt;user-name&gt;'@'%';</para>
+        <screen><computeroutput>mysql&gt; create database &lt;database-name&gt;;
+mysql&gt; create user '&lt;user-name&gt;'@'localhost' identified by '&lt;user-name&gt;';
+mysql&gt; create user '&lt;user-name&gt;'@'%' identified by '&lt;user-name&gt;';
+mysql&gt; grant all on &lt;database-name&gt;.* to '&lt;user-name&gt;'@'%';</computeroutput></screen>
         <para>Once the above is done you can update the settings in
             the relevant plugin configuration files. The plugin
             specific configuration files can be found at
@@ -104,56 +88,49 @@ format="PNG" />
             machine NIC to the Quantum network. Each node should have
             a Quantum agent running on it. Note that the agent
             receives the following input parameters:</para>
-        <para><emphasis role="italic">quantum-plugin-agent
+       <screen><computeroutput>quantum-plugin-agent
                 --config-file &lt;quantum config&gt; --config-file
-                &lt;plugin config&gt;</emphasis></para>
+                &lt;plugin config&gt;</computeroutput></screen>
         <para>Two things need to be done prior to working with the
             plugin:</para>
-        <para>1. Ensure that the core plugin is updated</para>
-        <para>2. Ensure that the database connection is correctly
-            set.</para>
+       <orderedlist><listitem>
+                <para>Ensure that the core plugin is updated.</para>
+            </listitem>
+            <listitem>
+                <para>Ensure that the database connection is correctly
+                    set.</para>
+            </listitem></orderedlist>
         <para>The table below contains examples for these settings.
             Some linux packages may provide installation utilities
             that configure these. <table rules="all">
                 <caption>Settings</caption>
                 <thead>
                     <tr>
-                        <th>  </th>
-                        <th>OpenvSwitch </th>
-                        <th>Linux Bridge </th>
+                        <th></th>
+                        <th>OpenvSwitch</th>
+                        <th>Linux Bridge</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>core_plugin
-                            ($QUANTUM_CONF_DIR/quantum.conf) </td>
-                        <td>
-                            quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPluginV2 </td>
-                        <td>
-                            quantum.plugins.linuxbridge.lb_quantum_plugin.LinuxBridgePluginV2
-                        </td>
+                        <td>core_plugin ($QUANTUM_CONF_DIR/quantum.conf)</td>
+                        <td>quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPluginV2</td>
+                        <td>quantum.plugins.linuxbridge.lb_quantum_plugin.LinuxBridgePluginV2</td>
                     </tr>
                     <tr>
-                        <td> sql_connection (in the plugin
-                            configuration file) </td>
-                        <td>
-                            mysql://&lt;username&gt;:&lt;password&gt;@localhost/ovs_quantum?charset=utf8 </td>
-                        <td>
-                            mysql://&lt;username&gt;:&lt;password&gt;@localhost/quantum_linux_bridge?charset=utf8
-                        </td>
+                        <td>sql_connection (in the plugin configuration file)</td>
+                        <td>mysql://&lt;username&gt;:&lt;password&gt;@localhost/ovs_quantum?charset=utf8</td>
+                        <td>mysql://&lt;username&gt;:&lt;password&gt;@localhost/quantum_linux_bridge?charset=utf8</td>
                     </tr>
                     <tr>
-                        <td>Plugin Configuration File </td>
-                        <td>
-                            $QUANTUM_CONF_DIR/plugins/openvswitch/ovs_quantum_plugin.ini </td>
-                        <td>
-                            $QUANTUM_CONF_DIR/plugins/linuxbridge/linuxbridge_conf.ini
-                        </td>
+                        <td>Plugin Configuration File</td>
+                        <td>$QUANTUM_CONF_DIR/plugins/openvswitch/ovs_quantum_plugin.ini</td>
+                        <td>$QUANTUM_CONF_DIR/plugins/linuxbridge/linuxbridge_conf.ini</td>
                     </tr>
                     <tr>
                         <td>Agent </td>
-                        <td> quantum-openvswitch-agent   </td>
-                        <td> quantum-linuxbridge-agent   </td>
+                        <td>quantum-openvswitch-agent</td>
+                        <td>quantum-linuxbridge-agent</td>
                     </tr>
                 </tbody>
             </table></para>
@@ -168,8 +145,8 @@ format="PNG" />
             network. When a Quantum subnet is created, by default, the
             subnet has DHCP enabled. The node that runs the DHCP agent
             should run:</para>
-        <para>quantum-dhcp-agent --config-file &lt;quantum config&gt;
-            --config-file &lt;dhcp config&gt;</para>
+        <screen><computeroutput>quantum-dhcp-agent --config-file &lt;quantum config&gt;
+            --config-file &lt;dhcp config&gt;</computeroutput></screen>
         <para>Currently the DHCP agent uses dnsmasq to perform that
             static address assignment. A driver needs to be configured
             that matches the plugin running on the service. <table
@@ -184,13 +161,10 @@ format="PNG" />
                 </thead>
                 <tbody>
                     <tr>
-                        <td> interface_driver
-                            ($QUANTUM_CONF_DIR/dhcp_agent.ini) </td>
-                        <td>
-                            quantum.agent.linux.interface.OVSInterfaceDriver </td>
-                        <td>
-                            quantum.agent.linux.interface.BridgeInterfaceDriver
-                        </td>
+                        <td>interface_driver
+                            ($QUANTUM_CONF_DIR/dhcp_agent.ini)</td>
+                        <td>quantum.agent.linux.interface.OVSInterfaceDriver</td>
+                        <td>quantum.agent.linux.interface.BridgeInterfaceDriver</td>
                     </tr>
                 </tbody>
             </table></para>
@@ -227,19 +201,14 @@ format="PNG" />
                 </thead>
                 <tbody>
                     <tr>
-                        <td> interface_driver
-                            ($QUANTUM_CONF_DIR/l3_agent.ini) </td>
-                        <td>
-                            quantum.agent.linux.interface.OVSInterfaceDriver </td>
-                        <td>
-                            quantum.agent.linux.interface.BridgeInterfaceDriver
-                        </td>
+                        <td> interface_driver ($QUANTUM_CONF_DIR/l3_agent.ini) </td>
+                        <td>quantum.agent.linux.interface.OVSInterfaceDriver </td>
+                        <td>quantum.agent.linux.interface.BridgeInterfaceDriver</td>
                     </tr>
                     <tr>
-                        <td> external_network_bridge
-                            ($QUANTUM_CONF_DIR/l3_agent.ini) </td>
+                        <td>external_network_bridge ($QUANTUM_CONF_DIR/l3_agent.ini) </td>
                         <td>br-ex </td>
-                        <td> This field must be left empty. This is
+                        <td>This field must be left empty. This is
                             due to the fact that the interface will be
                             created at run time. </td>
                     </tr>
@@ -250,20 +219,17 @@ format="PNG" />
             order to do this:<orderedlist>
                 <listitem>
                     <para>Keystone authentication:</para>
-                    <para>auth_url=
-                        "$KEYSTONE_SERVICE_PROTOCOL://$KEYSTONE_AUTH_HOST:$KEYSTONE_AUTH_PORT/v2.0"</para>
+                   <screen><computeroutput>auth_url="$KEYSTONE_SERVICE_PROTOCOL://$KEYSTONE_AUTH_HOST:$KEYSTONE_AUTH_PORT/v2.0"</computeroutput></screen>
                     <para>or</para>
-                    <para>auth_host $KEYSTONE_SERVICE_HOST</para>
-                    <para>auth_port $KEYSTONE_AUTH_PORT</para>
-                    <para>auth_protocol
-                        $KEYSTONE_SERVICE_PROTOCOL</para>
+                  <screen><computeroutput>auth_host $KEYSTONE_SERVICE_HOST
+auth_port $KEYSTONE_AUTH_PORT
+auth_protocol $KEYSTONE_SERVICE_PROTOCOL</computeroutput></screen>
                 </listitem>
                 <listitem>
                     <para>Admin user details:</para>
-                    <para>admin_tenant_name
-                        $SERVICE_TENANT_NAME</para>
-                    <para>admin_user $Q_ADMIN_USERNAME</para>
-                    <para>admin_password $SERVICE_PASSWORD</para>
+                    <screen><computeroutput>admin_tenant_name $SERVICE_TENANT_NAME
+admin_user $Q_ADMIN_USERNAME
+admin_password $SERVICE_PASSWORD</computeroutput></screen>
                     <note>
                         <para>By default the L3 agent makes use of
                             Linux namespaces. If the linux
@@ -271,7 +237,7 @@ format="PNG" />
                             this can be disabled by
                             configuring:</para>
                     </note>
-                    <para>use_namespaces = False</para>
+                    <screen><computeroutput>use_namespaces = False</computeroutput></screen>
                     <para>By default this is True. If this is set as
                         False then only one router ID can be supported
                         per node. This must be configured via the

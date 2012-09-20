@@ -66,17 +66,15 @@ format="PNG" />
         </note>
         <para>Point to Folsom PPAs:                        
                                                             </para>
-        <para>apt-get install python-software-properties
-            add-apt-repository
-            ppa:openstack-ubuntu-testing/folsom-trunk-testing
-            add-apt-repository
-            ppa:openstack-ubuntu-testing/folsom-deps-staging apt-get
-            update &amp;&amp; apt-get dist-upgrade</para>
+        <screen><computeroutput>apt-get install python-software-properties
+add-apt-repository ppa:openstack-ubuntu-testing/folsom-trunk-testing
+add-apt-repository ppa:openstack-ubuntu-testing/folsom-deps-staging apt-get
+update &amp;&amp; apt-get dist-upgrade</computeroutput></screen>
         <para>To update your code to the most recent version of the
             these PPAs, simply re-run the last command in the above
             sequence.   </para>
         <section xml:id="rpc_setup">
-            <title>RPC Setup: </title>
+            <title>RPC Setup </title>
             <para>Quantum uses RPC to allow DHCP agents and any plugin
                 agents to communicate with the main quantum-server
                 process.  Commonly, this can use the same RPC
@@ -87,106 +85,117 @@ format="PNG" />
                 the management network (if this is already the case
                 because of deploying another service like Nova, this
                 existing RabbitMQ setup is sufficient):  </para>
-            <para>apt-get install rabbitmq-server    </para>
-            <para>rabbitmqctl change_password guest
-                &lt;password&gt;     </para>
+            <screen><computeroutput>apt-get install rabbitmq-server   
+rabbitmqctl change_password guest &lt;password&gt;</computeroutput></screen>
             <para>Then update quantum.conf with these values: </para>
-            <para>rabbit_host=&lt;mgmt-IP-of-rabbit-host&gt; </para>
-            <para>rabbit_password=&lt;password&gt;</para>
-            <para>rabbit_user=guest </para>
-            <para>IMPORTANT: This quantum.conf file should be copied
-                to and used on all hosts running quantum-server,
-                quantum-dhcp-agent, quantum-openvswitch-agent, or
-                quantum-linuxbridge-agent (see below). </para>
+            <screen><computeroutput>rabbit_host=&lt;mgmt-IP-of-rabbit-host&gt; 
+rabbit_password=&lt;password&gt; rabbit_user=guest </computeroutput></screen>
+            <important>
+                <para>This quantum.conf file should be copied to and
+                    used on all hosts running quantum-server,
+                    quantum-dhcp-agent, quantum-openvswitch-agent, or
+                    quantum-linuxbridge-agent (see below). </para>
+            </important>
         </section>
         <section xml:id="install_quantum_server">
-            <title>Install quantum-server: </title>
+            <title>Install quantum-server </title>
             <para>Install quantum-server and CLI for accessing the
                 API: </para>
-            <para>                                               
-                                                                </para>
-            <para>apt-get -y install quantum-server python-cliff
-                python-pyparsing</para>
+
+            <screen><computeroutput>apt-get -y install quantum-server python-cliff python-pyparsing</computeroutput></screen>
             <para>You will also want to install the plugin you choose
                 to use, for example: </para>
-            <para>apt-get -y install quantum-plugin-openvswitch</para>
+            <screen><computeroutput>apt-get -y install quantum-plugin-openvswitch</computeroutput></screen>
             <para>Most plugins require a database to be installed and
                 configured in a plugin configuration file.  For
                 example: </para>
-            <para>apt-get -y install mysql-server python-mysqldb 
-                python-sqlalchemy </para>
+            <screen><computeroutput>apt-get -y install mysql-server python-mysqldb python-sqlalchemy </computeroutput></screen>
             <para>A database that you are already using for other
                 OpenStack services will work fine for this.  Simply
                 create a ‘quantum’ database: </para>
-            <para>mysql -u &lt;user&gt; -p &lt;pass&gt; -e “create
-                database quantum”</para>
+            <screen><computeroutput>mysql -u &lt;user&gt; -p &lt;pass&gt; -e “create database quantum”</computeroutput></screen>
             <para>And then configure the plugin’s configuration file
                 to use this database.  Find the plugin configuration
-                file in /etc/quantum/plugins (e.g.,
-                /etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini)
+                file in <filename>/etc/quantum/plugins</filename> (For
+                example,
+                    <filename>/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</filename>)
                 and set: </para>
-            <para>sql_connection =
-                mysql://&lt;user&gt;:&lt;password&gt;@localhost/quantum?charset=utf8</para>
-            <para>NOTE: different plugins can use different database
-                schemas, so when switching a plugin, you must always
-                drop the quantum database and start fresh.  </para>
+            <screen><computeroutput>sql_connection = mysql://&lt;user&gt;:&lt;password&gt;@localhost/quantum?charset=utf8</computeroutput></screen>
+            <note>
+                <para>Different plugins can use different database
+                    schemas, so when switching a plugin, you must
+                    always drop the quantum database and start fresh. 
+                </para>
+            </note>
             <para>FIXME: these plugin-specific sections should be
                 sub-sections where the reader needs to click on a
                 specific link to see the content.  This helps this
                 section from getting too long. </para>
-            <para>OpenVswitch Plugin: </para>
+        </section>
+        <section xml:id="openvswitch_plugin">
+            <title>OpenVswitch Plugin</title>
             <para>Using the OVS plugin in a deployment with multiple
                 hosts requires the using of either tunneling or vlans
                 in order to isolate traffic from multiple networks. 
                 Tunneling is easier to deploy, as it does not require
                 configuring VLANs on network switches, so that is what
-                we describe here.  More advanced deployment options
-                are described in the Appendix.  </para>
+                we describe here. More advanced deployment options are
+                described in the <xref linkend="ch_adv_config"/>.  </para>
             <para>Edit
-                /etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini
+                    <filename>/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</filename>
                 to specify the following values: </para>
-            <para>service quantum-server restart</para>
+            <screen><computeroutput>service quantum-server restart</computeroutput></screen>
         </section>
         <section xml:id="install_quantum_dhcp">
-            <title>Install quantum-dhcp-agent: </title>
+            <title>Install quantum-dhcp-agent</title>
             <para>The host running quantum-server requires a network
                 interface with an IP address on the “management
                 network” and another interface on the “data network”. </para>
-            <para>apt-get -y install  quantum-dhcp-agent</para>
+            <screen><computeroutput>apt-get -y install quantum-dhcp-agent</computeroutput></screen>
             <para>Install the agent specific to the plugin (if
                 needed): </para>
-            <para>For example: apt-get -y install
-                quantum-plugin-openvswitch-agent</para>
+            <para>For example: </para>
+            <screen><computeroutput>apt-get -y install quantum-plugin-openvswitch-agent</computeroutput></screen>
         </section>
         <section xml:id="install_quantum-l3">
-            <title>Install quantum-l3-agent: </title>
-            <para>apt-get -y install  quantum-l3-agent</para>
+            <title>Install quantum-l3-agent </title>
+           <screen><computeroutput>apt-get -y install quantum-l3-agent</computeroutput></screen>
             <para>Install the agent specific to the plugin (if
                 needed): </para>
-            <para>For example: apt-get -y install
-                quantum-plugin-openvswitch-agent</para>
+            <para>For example:
+                <screen><computeroutput>apt-get -y install quantum-plugin-openvswitch-agent</computeroutput></screen></para>
         </section>
         <section xml:id="install_quantum_client">
-            <title>Install quantum CLI client: </title>
-            <para>apt-get -y install python-pyparsing python-cliff
-                python-quantumclient</para>
+            <title>Install quantum CLI Client</title>
+            <para>Install the quantum CLI client:</para>
+           <screen><computeroutput>apt-get -y install python-pyparsing python-cliff python-quantumclient</computeroutput></screen>
         </section>
         <section xml:id="init_config">
-            <title>Init, Config and Log File locations: </title>
+            <title>Init, Config, and Log File Locations</title>
             <para>TBD</para>
         </section>
     </section>
     <section xml:id="install_fedora">
         <title>Installing Packages (Fedora) </title>
-        <para>[ For Essex, Bob Kurkura has done a great job of
+        <para>[For Essex, Bob Kurkura has done a great job of
             documenting Red Hat packages</para>
-        <para> * install server + client packages</para>
-        <para> * configuration, including configuring keystone info,
-            choosing a plugin</para>
-        <para> * include plugin specific config params or point to
-            config files in reference section?</para>
-        <para> * starting + stopping services</para>
-        <para> * logging (if varies?) </para>
+       <itemizedlist><listitem>
+                <para>install server + client packages</para>
+            </listitem>
+            <listitem>
+                <para>configuration, including configuring keystone
+                    info, choosing a plugin</para>
+            </listitem>
+            <listitem>
+                <para>include plugin specific config params or point
+                    to config files in reference section?</para>
+            </listitem>
+            <listitem>
+                <para>starting + stopping services</para>
+            </listitem>
+            <listitem>
+                <para>logging (if varies?) </para>
+            </listitem></itemizedlist>
     </section>
     <?hard-pagebreak?>
 </chapter>
