@@ -7,8 +7,8 @@
   </info>
 
   <para> The VNC Proxy is an OpenStack component that allows users of the Compute service to access
-    their instances through VNC clients. In Essex and beyond, there is support for for both libvirt
-    and XenServer using both Java and websocket cleints. </para>
+    their instances through VNC clients. In Essex and beyond, there is support for both libvirt and
+    XenServer using both Java and websocket cleints. </para>
   <para> The VNC console connection works as follows: </para>
   <orderedlist>
     <listitem>
@@ -211,7 +211,6 @@
       <para> Then, to create a session, first request an access URL
         using <command>python-novaclient</command> and then run the client like so. To retrieve access URL: </para>
       <screen>
-
 <prompt>$</prompt> <userinput>nova get-vnc-console <replaceable>[server_id]</replaceable> xvpvnc</userinput>
       </screen>
       <para>To run client:</para>
@@ -231,14 +230,31 @@
       <para>The configuration option parameter should point to your
         <filename>nova.conf</filename> configuration file that includes the message queue server address and
         credentials. </para>
-      <para> By default, <command>nova-novncproxy</command> binds <literal>0.0.0.0:6080</literal>. This can
-        be configured in <filename>nova.conf</filename> with: </para>
+      <para> By default, <command>nova-novncproxy</command> binds on
+        <literal>0.0.0.0:6080</literal>. </para>
+      <para>In order to connect the service to your nova deployment, add the two following
+        configuration options into your <filename>nova.conf</filename> file : </para>
       <itemizedlist>
         <listitem>
-          <para> <literal>novncproxy_port</literal>=<replaceable>[port]</replaceable> </para>
+          <para> <literal>vncserver_listen</literal>=<replaceable>0.0.0.0</replaceable> </para>
+          <para>This confguration option allow you to specify the address for the vnc service to
+            bind on, make sure it is assigned one of the compute node interfaces. This address will
+            be the one used by your domain file.  : </para>
+          <para><computeroutput> 
+&lt;graphics type="vnc" autoport="yes" keymap="en-us" listen="0.0.0.0"/> 
+          </computeroutput>
+          </para>
+          <note>
+            <para> In order to have the live migration working, make sure to use the
+                <replaceable>0.0.0.0</replaceable>address. </para>
+          </note>
         </listitem>
         <listitem>
-          <para> <literal>novncproxy_host</literal>=<replaceable>[host]</replaceable> </para>
+          <para>
+            <literal>vncserver_ proxyclient_ address </literal>=<replaceable>127.0.0.1</replaceable>
+          </para>
+          <para>This is the address of the compute host that nova will instruct proxies to use when
+            connecting to instance vncservers.</para>
         </listitem>
       </itemizedlist>
       <note><para>The previous vnc proxy implementation, called nova-vncproxy, has
@@ -263,54 +279,67 @@
       <title>Frequently asked questions about VNC access to
         VMs</title>
     </info>
-    <para> Q: What has changed since Diablo? </para>
-    <para> A: Previously, VNC support was done differently for libvirt
-      and XenAPI. Now, there is unified multi-hypervisor support. To
-      support this change, configuration options have been added and
-      changed. Also, a new required service called nova-consoleauth
-      has been added. If you are upgrading from Diablo, you will have
-      to take these changes into consideration when upgrading. </para>
-    <para> If you are using Diablo, please see the documentation that
-      shipped with your code, as this information will not be
-      relevant. </para>
-    <para> Q: What happened to Diablo's nova-vncproxy? </para>
-    <para> A: nova-vncproxy was removed from the nova source tree. The
-      Essex analog for this process is nova-novncproxy, which is
-      provided by an external project. </para>
-    <para> Q: Why is nova-vncproxy no longer part of nova? </para>
-    <para> A: In Diablo, we shipped a websocket proxy (nova-vncproxy)
-      with nova, but it had poor browser support. This nova-vncproxy
-      code was dependent on external noVNC code, so changes to that
-      system involved updating 2 projects. Due to the rapid evolution
-      of websocket tech, and the tight dependence of the websocket
-      proxy on javscript and html components, we decided to keep that
-      code all in one place. </para>
-    <para> Q: What is the difference between nova-xvpvncproxy and
-      nova-novncproxy? </para>
-    <para> A: nova-xvpvncproxy which ships with nova, is a new proxy
-      that supports a simple Java client. nova-novncproxy uses noVNC
-      to provide vnc support through a web browser. </para>
-    <para> Q: I want VNC support in the Dashboard. What services do I need? </para>
-    <para> A: You need nova-novncproxy, nova-consoleauth, and
-      correctly configured compute hosts. </para>
-    <para> Q: When I use <command>nova get-vnc-console</command> or click on the VNC tab of the Dashboard, it hangs.
-      Why? </para>
-    <para> A: Make sure you are running nova-consoleauth (in addition
-      to nova-novncproxy). The proxies rely on nova-consoleauth to
-      validate tokens, and will wait for a reply from them until a
-      timeout is reached. </para>
-    <para> Q: My vnc proxy worked fine during my All-In-One test, but
-      now it doesn't work on multi host. Why? </para>
-    <para> A: The default options work for an All-In-One install,
-      but changes must be made on your compute hosts once you start to
-      build a cluster. As an example, suppose you have two servers: </para>
-    <programlisting language="bash">
+    <itemizedlist>
+      <listitem>
+        <para><emphasis role="bold">Q: What has changed since Diablo?</emphasis>
+        </para>
+        <para>A: Previously, VNC support was done differently for libvirt and XenAPI. Now, there is
+          unified multi-hypervisor support. To support this change, configuration options have been
+          added and changed. Also, a new required service called nova-consoleauth has been added. If
+          you are upgrading from Diablo, you will have to take these changes into consideration when
+          upgrading. </para>
+        <para> 
+          If you are using Diablo, please see the documentation that
+          shipped with your code, as this information will not be
+          relevant. 
+        </para>
+      </listitem>
+      <listitem>
+        <para><emphasis role="bold">Q: What happened to Diablo's nova-vncproxy? </emphasis></para>
+        <para>A: nova-vncproxy was removed from the nova source tree. The Essex analog for this
+          process is nova-novncproxy, which is provided by an external project. </para>
+      </listitem>
+      <listitem>
+        <para><emphasis role="bold">Q: Why is nova-vncproxy no longer part of nova?</emphasis>
+        </para>
+        <para>A: In Diablo, we shipped a websocket proxy (nova-vncproxy) with nova, but it had poor
+          browser support. This nova-vncproxy code was dependent on external noVNC code, so changes
+          to that system involved updating 2 projects. Due to the rapid evolution of websocket tech,
+          and the tight dependence of the websocket proxy on javscript and html components, we
+          decided to keep that code all in one place. </para>
+      </listitem>
+      <listitem>
+        <para><emphasis role="bold">Q: What is the difference between nova-xvpvncproxy and
+            nova-novncproxy?</emphasis>
+        </para>
+        <para>A: nova-xvpvncproxy which ships with nova, is a new proxy that supports a simple Java
+          client. nova-novncproxy uses noVNC to provide vnc support through a web browser. </para>
+      </listitem>
+      <listitem>
+        <para><emphasis role="bold">Q: I want VNC support in the Dashboard. What services do I need?
+          </emphasis></para>
+        <para> A: You need nova-novncproxy, nova-consoleauth, and
+          correctly configured compute hosts. </para>
+      </listitem>
+      <listitem>
+        <para><emphasis role="bold">Q: When I use <command>nova get-vnc-console</command> or click
+            on the VNC tab of the Dashboard, it hangs. Why? </emphasis></para>
+        <para>A: Make sure you are running nova-consoleauth (in addition to nova-novncproxy). The
+          proxies rely on nova-consoleauth to validate tokens, and will wait for a reply from them
+          until a timeout is reached. </para>
+      </listitem>
+      <listitem>
+        <para><emphasis role="bold">Q: My vnc proxy worked fine during my All-In-One test, but now
+            it doesn't work on multi host. Why? </emphasis></para>
+        <para>A: The default options work for an All-In-One install, but changes must be made on
+          your compute hosts once you start to build a cluster. As an example, suppose you have two
+          servers: </para>
+        <programlisting language="bash">
 PROXYSERVER (public_ip=172.24.1.1, management_ip=192.168.1.1)
 COMPUTESERVER (management_ip=192.168.1.2)
-</programlisting>
-    <para> Your nova-compute configuration file would need the
-      following values: </para>
-    <programlisting language="bash">
+        </programlisting>
+        <para>Your nova-compute configuration file would need the following values: </para>
+        <programlisting language="bash">
 # These flags help construct a connection data structure
 vncserver_proxyclient_address=192.168.1.2
 novncproxy_base_url=http://172.24.1.1:6080/vnc_auto.html
@@ -319,28 +348,38 @@ xvpvncproxy_base_url=http://172.24.1.1:6081/console
 # This is the address where the underlying vncserver (not the proxy)
 # will listen for connections.
 vncserver_listen=192.168.1.2
-</programlisting>
-    <para> Note that novncproxy_base_url and novncproxy_base_url use a
-      public ip; this is the url that is ultimately returned to
-      clients, who generally will not have access to your private
-      network. Your PROXYSERVER must be able to reach
-      vncserver_proxyclient_address, as that is the address over which
-      the vnc connection will be proxied. </para>
-    <para> See "Important nova-compute Options" for more information. </para>
-    <para> Q: My noVNC does not work with recent versions of web
-      browsers. Why? </para>
-    <para> A: Make sure you have python-numpy installed, which is
-      required to support a newer version of the WebSocket protocol
-      (HyBi-07+). Also, if you are using Diablo's nova-vncproxy, note
-      that support for this protocol is not provided. </para>
-    <para> Q: How do I adjust the dimensions of the VNC window image in horizon?</para>
-    <para> A: These values are hard-coded in a Django HTML template. To alter them, you must edit
-      the template file <filename>_detail_vnc.html</filename>. The location of this file will vary
-      based on Linux distribution. On Ubuntu 12.04, the file can be found at
-        <filename>/usr/share/pyshared/horizon/dashboards/nova/templates/nova/instances_and_volumes/instances/_detail_vnc.html</filename>. </para>
-    <para>Modify the <literal>width</literal> and <literal>height</literal> parameters: </para>
- <programlisting language="html">
-  &lt;iframe src="{{ vnc_url }}" width="720" height="430"&gt;&lt;/iframe&gt;
+    </programlisting>
+        <para>Note that novncproxy_base_url and novncproxy_base_url use a public ip; this is the url
+          that is ultimately returned to clients, who generally will not have access to your private
+          network. Your PROXYSERVER must be able to reach vncserver_proxyclient_address, as that is
+          the address over which the vnc connection will be proxied. </para>
+        <para> See "Important nova-compute Options" for more information. </para>
+      </listitem>
+      <listitem>
+        <para>
+          <emphasis role="bold">Q: My noVNC does not work with recent versions of web browsers. Why?
+          </emphasis>
+        </para>
+        <para>
+          A: Make sure you have python-numpy installed, which is
+          required to support a newer version of the WebSocket protocol
+          (HyBi-07+). Also, if you are using Diablo's nova-vncproxy, note
+          that support for this protocol is not provided. 
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <emphasis role="bold">Q: How do I adjust the dimensions of the VNC window image in
+            horizon?</emphasis></para>
+        <para> A: These values are hard-coded in a Django HTML template. To alter them, you must edit
+          the template file <filename>_detail_vnc.html</filename>. The location of this file will vary
+          based on Linux distribution. On Ubuntu 12.04, the file can be found at
+          <filename>/usr/share/pyshared/horizon/dashboards/nova/templates/nova/instances_and_volumes/instances/_detail_vnc.html</filename>. </para>
+        <para>Modify the <literal>width</literal> and <literal>height</literal> parameters: </para>
+        <programlisting language="html">
+ &lt;iframe src="{{ vnc_url }}" width="720" height="430"&gt;&lt;/iframe&gt;
  </programlisting>
+      </listitem>
+    </itemizedlist>    
   </section>
 </section>
