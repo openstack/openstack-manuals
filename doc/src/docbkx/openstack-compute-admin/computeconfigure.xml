@@ -684,13 +684,48 @@ xenapi_remap_vbd_dev=true
     <?dbhtml stop-chunking?>
     <title>Configuring Migrations</title>
 
+    <note>
+      <para>This feature is for cloud administrators only.
+      </para>
+    </note>
+
     <para>Migration allows an administrator to move a virtual machine instance from one compute host
-      to another. This feature is useful when a compute host requires maintenance but the instances
-      running on the host must be kept running. Migration can also be useful to redistribute the
-      load when many VM instances are running on a specific physical machine. </para>
-    <para>The following section describes how to configure for migrations using the KVM
-      hypervisor. The Xen hypervisor supports migrations as well, including live migration. See the
-      <link xlink:href="http://wiki.openstack.org/XenServer/LiveMigration">XenServer Live Migration</link> OpenStack wiki page for more details.</para>
+      to another. This feature is useful when a compute host requires maintenance. Migration can also
+      be useful to redistribute the load when many VM instances are running on a specific physical machine. </para>
+
+    <para>There are two types of migration:
+      <itemizedlist>
+        <listitem>
+          <para><emphasis role="bold">Migration</emphasis> (or non-live migration):
+          In this case the instance will be shut down (and the instance will
+          know that it has been rebooted) for a period of time in order to be
+          moved to another hypervisor.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Live migration</emphasis> (or true live migration):
+          Almost no instance downtime, it is useful when the instances must be kept
+          running during the migration.</para>
+        </listitem>
+      </itemizedlist>
+    </para>
+
+    <para>There are two types of <emphasis role="bold">live migration</emphasis>:
+      <itemizedlist>
+        <listitem>
+          <para><emphasis role="bold">Shared storage based live migration</emphasis>: In this case both hypervisors have access to a shared storage.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Block live migration</emphasis>: for this type of migration, no shared storage is required.</para>
+        </listitem>
+      </itemizedlist>
+    </para>
+
+    <para>The following sections describe how to configure your hosts and compute nodes
+      for migrations using the KVM and XenServer hypervisors.
+    </para>
+
+    <section xml:id="configuring-migrations-kvm-libvirt">
+    <title>KVM-Libvirt</title>
 
     <para><emphasis role="bold">Prerequisites</emphasis>
       <itemizedlist>
@@ -709,10 +744,6 @@ xenapi_remap_vbd_dev=true
             based volumes</para>
         </listitem>
       </itemizedlist>
-      <note>
-        <para>This feature for cloud administrators only, since the use of nova-manage is necessary.
-        </para>
-      </note>
       <note>
         <para>Migrations done by the Compute service do not use libvirt's live migration
           functionality by default. Because of this, guests are suspended before migration and may
@@ -900,7 +931,7 @@ root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l
       </orderedlist></para>
     <xi:include href="tables/live-migration-nova-conf.xml"/>
 
-    <section xml:id="true-live-migration">
+    <section xml:id="true-live-migration-kvm-libvirt">
       <title>Enabling true live migration</title>
       <para>By default, the Compute service does not use libvirt's live migration functionality. To
         enable this functionality, add the following line to <filename>nova.conf</filename>:
@@ -909,8 +940,110 @@ root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l
         the migration process will never terminate. This can happen if the guest operating system
         dirties blocks on the disk faster than they can migrated. </para>
     </section>
+    </section>
 
-  </section>
+    <section xml:id="configuring-migrations-xenserver">
+    <title>XenServer</title>
+
+    <section xml:id="configuring-migrations-xenserver-shared-storage">
+    <title>Shared Storage</title>
+      <para><emphasis role="bold">Prerequisites</emphasis>
+        <itemizedlist>
+          <listitem>
+            <para><emphasis role="bold">Compatible XenServer hypervisors.</emphasis> For more information,
+            please refer to the <link xlink:href="http://docs.vmd.citrix.com/XenServer/6.0.0/1.0/en_gb/reference.html#pooling_homogeneity_requirements">Requirements for Creating Resource Pools</link>
+            section of the XenServer Administrator's Guide.
+            </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Shared storage:</emphasis> an NFS export,
+            visible to all XenServer hosts.
+            <note>
+              <para>Please check the <link xlink:href="http://docs.vmd.citrix.com/XenServer/6.0.0/1.0/en_gb/reference.html#id1002701">NFS VHD</link>
+              section of the XenServer Administrator's Guide for the supported
+              NFS versions.
+              </para>
+            </note>
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+
+      <para>
+      In order to use shared storage live migration with XenServer hypervisors,
+      the hosts must be joined to a XenServer pool. In order to create that pool,
+      a host aggregate must be created with special metadata. This metadata will be
+      used by the XAPI plugins to establish the pool.
+      </para>
+
+      <orderedlist>
+        <listitem>
+          <para>
+          Add an NFS VHD storage to your master XenServer, and set it as default SR. For more information, please refer to the
+          <link xlink:href="http://docs.vmd.citrix.com/XenServer/6.0.0/1.0/en_gb/reference.html#id1002701">NFS VHD</link> section of the XenServer Administrator's Guide.
+          </para>
+        </listitem>
+
+        <listitem>
+          <para>
+          Configure all the compute nodes to use the default sr for pool operations, by including:
+          <programlisting>sr_matching_filter=default-sr:true</programlisting>
+          in your <filename>nova.conf</filename> configuration files across your compute nodes.
+          </para>
+        </listitem>
+
+        <listitem>
+          <para>
+          Create a host aggregate
+          <programlisting>$ nova aggregate-create &lt;name-for-pool&gt; &lt;availability-zone&gt;</programlisting>
+          The command will display a table which contains the id of the newly created aggregate.
+          Now add special metadata to the aggregate, to mark it as a hypervisor pool
+          <programlisting>$ nova aggregate-set-metadata &lt;aggregate-id&gt; hypervisor_pool=true
+$ nova aggregate-set-metadata &lt;aggregate-id&gt; operational_state=created</programlisting>
+          Make the first compute node part of that aggregate
+          <programlisting>$ nova aggregate-add-host &lt;aggregate-id&gt; &lt;name-of-master-compute&gt;</programlisting>
+          At this point, the host is part of a XenServer pool.
+          </para>
+        </listitem>
+
+        <listitem>
+          <para>
+          Add additional hosts to the pool:
+          <programlisting>$ nova aggregate-add-host &lt;aggregate-id&gt; &lt;compute-host-name&gt;</programlisting>
+          <note>
+            <para>At this point the added compute node and the host will be shut down, in order to
+            join the host to the XenServer pool. The operation will fail, if any server other than the
+            compute node is running/suspended on your host.</para>
+          </note>
+          </para>
+        </listitem>
+      </orderedlist>
+
+    </section> <!-- End of Shared Storage -->
+
+    <section xml:id="configuring-migrations-xenserver-block-migration">
+    <title>Block migration</title>
+      <para><emphasis role="bold">Prerequisites</emphasis>
+        <itemizedlist>
+          <listitem>
+            <para><emphasis role="bold">Compatible XenServer hypervisors.</emphasis> The hypervisors must support the Storage XenMotion feature. Please refer
+            to the manual of your XenServer to make sure your edition has this feature.
+            </para>
+          </listitem>
+        </itemizedlist>
+        <note>
+          <para>Please note, that you need to use an extra option <literal>--block-migrate</literal> for the live migration
+          command, in order to use block migration.</para>
+        </note>
+        <note>
+          <para>Please note, that block migration works only with EXT local storage SRs,
+          and the server should not have any volumes attached.</para>
+        </note>
+      </para>
+    </section> <!-- End of Block migration -->
+
+    </section> <!-- End of XenServer -->
+  </section> <!-- End of configuring migrations -->
   <section xml:id="installing-moosefs-as-backend">
     <title>Installing MooseFS as shared storage for the instances directory</title>
     <para> In the previous section we presented a convenient way to deploy a shared storage using
