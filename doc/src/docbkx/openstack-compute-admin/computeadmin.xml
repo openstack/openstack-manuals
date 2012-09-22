@@ -328,6 +328,79 @@ HostC            p2            5     10240     150
 
 
     </section>
+    <section xml:id="nova-compute-node-down">
+	<title>Recovering from a failed compute node</title>
+	<para>If you have deployed OpenStack Compute with a shared filesystem, 
+	you can quickly recover from a failed compute node. </para>
+	<simplesect>
+	    <title>Working with host information</title>
+            <para>
+	The first step is to identify the vms on the affected hosts, using tools such as 
+	a combination of <literal>nova list</literal> and <literal>nova show</literal> or 
+	<literal>euca-describe-instances</literal>. Here's an example using the EC2 API
+	 - instance i-000015b9 that is running on node np-rcc54:
+            </para>
+	<programlisting>
+	i-000015b9 at3-ui02 running nectarkey (376, np-rcc54) 0 m1.xxlarge 2012-06-19T00:48:11.000Z 115.146.93.60
+	</programlisting>
+	<para>
+	First, you can review the status of the host using the nova database, some of the important information is highlighted below. This example converts an EC2 API instance ID into an openstack ID - if you used the <literal>nova</literal>
+	commands, you can substitute the ID directly. You can find the credentials for your database in 
+<literal>/etc/nova.conf</literal>.
+	</para>
+<programlisting>
+SELECT * FROM instances WHERE id = CONV('15b9', 16, 10) \G;
+*************************** 1. row ***************************
+              created_at: 2012-06-19 00:48:11
+              updated_at: 2012-07-03 00:35:11
+              deleted_at: NULL
+...
+                      id: 5561
+...
+             power_state: 5
+                vm_state: shutoff
+...
+                hostname: at3-ui02
+                    host: np-rcc54
+...
+                    uuid: 3f57699a-e773-4650-a443-b4b37eed5a06
+...
+              task_state: NULL
+...
+</programlisting>
+</simplesect>
+<simplesect>
+<title>Recover the VM</title>
+<para>
+Armed with the information of VMs on the failed host, determine which compute host
+ the affected VMs should be moved to. In this case, the VM will move to np-rcc46, which 
+is achieved using this database command:</para>
+<programlisting>
+UPDATE instances SET host = 'np-rcc46' WHERE uuid = '3f57699a-e773-4650-a443-b4b37eed5a06';
+</programlisting>
+<para> Next, if using a hypervisor that relies on libvirt (such as KVM) 
+it is a good idea to update the <literal>libvirt.xml</literal> file 
+(found in <literal>/var/lib/nova/instances/[instance ID]</literal>). 
+The important changes to make are to change the <literal>DHCPSERVER</literal>
+ value to the host ip address of the nova compute host that is the VMs new home, and
+update the VNC IP if it isn't already <literal>0.0.0.0</literal>.
+</para>
+<para>
+Next, reboot the VM:
+<screen>
+<prompt>$</prompt> <userinput>nova reboot --hard 3f57699a-e773-4650-a443-b4b37eed5a06</userinput>
+</screen>
+</para>
+<para>In theory, the above database update and <literal>nova reboot</literal> command
+are all that is required to recover the VMs from a failed host. 
+However, if further problems occur, consider looking at recreating the 
+network filter configuration using <literal>virsh</literal>, restarting the 
+nova services or updating the <literal>vm_state</literal> and 
+<literal>power_state</literal> in the nova database.</para>
+</simplesect>
+</section>
+
+
     <section xml:id="nova-disaster-recovery-process">
         <title>Nova Disaster Recovery Process</title>
         <para>Sometimes, things just don't go right. An incident is
