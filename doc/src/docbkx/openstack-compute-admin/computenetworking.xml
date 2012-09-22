@@ -1669,6 +1669,20 @@ public_interface=vlan100
         </programlisting>
             <para>Restart the nova-network service if you change
                 nova.conf while the service is running.</para>
+        <note><title>Traffic between VMs using floating IPs</title>
+        <para>Note that due to the way floating IPs are implemented using a 
+        source NAT (SNAT rule in iptables), inconsistent behaviour of 
+        security groups can be seen if VMs use their floating IP 
+        to communicate with other virtual machines - particularly on
+        the same physical host. Traffic from VM to VM accross the
+        fixed network does not have this issue, and this is the 
+        recommended path. To ensure traffic doesn't get SNATed 
+        to the floating range, explicitly set 
+        <literal>dmz_cidr=x.x.x.x/y</literal>. x.x.x.x/y is the 
+        range of floating ips for each pool of floating ips you define.
+        This configuration is also necessary to make source_groups work
+        if the vms in the source group have floating ips.</para>
+        </note>
         </section>
         <section
             xml:id="Creating_a_List_of_Available_Floating_IP_Addresses">
