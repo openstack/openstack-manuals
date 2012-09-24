@@ -1684,6 +1684,43 @@ public_interface=vlan100
         if the vms in the source group have floating ips.</para>
         </note>
         </section>
+        <section xml:id="Enabling_ip_forwarding">
+        <title>Enabling IP forwarding</title>
+        <para>By default, the IP forwarding is disabled on most of Linux distributions. The
+                "floating IP" feature requires the IP forwarding enabled in order to work.
+        <note>
+            <para>The IP forwarding only needs to be enabled on the nodes running the service
+                        nova-network. If the multi_host mode is used, make sure to enable it on all
+                        the compute node, otherwise, enable it on the node running the nova-network
+                        service.</para>
+        </note>
+        </para>
+            <para> you can check if the forwarding is enabled by running the following command: <screen><prompt>$</prompt> <userinput>cat /proc/sys/net/ipv4/ip_forward</userinput></screen>
+                <screen><computeroutput>0</computeroutput></screen></para>
+        <para>Or using sysctl<screen><prompt>$</prompt> <userinput> sysctl net.ipv4.ip_forward</userinput></screen>
+            <screen><computeroutput>net.ipv4.ip_forward = 0</computeroutput></screen>
+        </para>
+        <para>In this example, the IP forwarding is disabled. You
+            can enable it on the fly by running the following
+            command:
+            <screen><prompt>$</prompt> <userinput>sysctl -w net.ipv4.ip_forward=1</userinput></screen>or
+            <screen><prompt>$</prompt> <userinput>echo 1 > /proc/sys/net/ipv4/ip_forward</userinput></screen>
+            In order to make the changes permanent, edit the
+            <filename>/etc/sysctl.conf</filename> and update
+            the IP forwarding setting :
+            <programlisting>net.ipv4.ip_forward = 1</programlisting>
+            Save the file and run the following command in order
+            to apply the changes :
+            <screen><prompt>$</prompt> <userinput>sysctl -p</userinput></screen>
+            It is also possible to update the setting by
+            restarting the network service. Here's an example for
+            Ubuntu:
+            <screen os="ubuntu"><userinput><prompt>$</prompt>/etc/init.d/procps.sh restart</userinput></screen></para>
+        <para>Here's an example for RHEL/Fedora/CentOS:</para>
+        <para>
+            <screen os="rhel;fedora;centos"><prompt>$</prompt> <userinput>service network restart</userinput></screen>
+        </para>
+    </section>       
         <section
             xml:id="Creating_a_List_of_Available_Floating_IP_Addresses">
             <title>Creating a List of Available Floating IP
