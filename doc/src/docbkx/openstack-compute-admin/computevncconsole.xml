@@ -8,7 +8,7 @@
 
   <para> The VNC Proxy is an OpenStack component that allows users of the Compute service to access
     their instances through VNC clients. In Essex and beyond, there is support for both libvirt and
-    XenServer using both Java and websocket cleints. </para>
+    XenServer using both Java and websocket clients. </para>
   <para> The VNC console connection works as follows: </para>
   <orderedlist>
     <listitem>
@@ -24,7 +24,7 @@
     <listitem>
       <para> Proxy talks to nova-consoleauth to authorize the user's token, and then maps the token
         to the <emphasis>private</emphasis> host and port of an instance's VNC server. The compute
-        host specifies the what address the proxy should use to connect via the
+        host specifies the address the proxy should use to connect via the
           <filename>nova.conf</filename> option vncserver_proxyclient_address. In this way, the vnc
         proxy works as a bridge between the public network, and the private host network. </para>
     </listitem>
@@ -47,7 +47,18 @@
     </listitem>
     <listitem>
       <para> Transparently deals with hypervisor-specific connection
-        details to provide a uniform client experience. </para>
+        details to provide a uniform client experience. 
+          <figure xml:id="novnc-process">
+            <title>NoVNC Process</title>
+            <mediaobject>
+          <imageobject role="fo">
+            <imagedata
+              fileref="figures/novnc/SCH_5009_V00_NUAC-VNC_OpenStack.png"
+              format="PNG" scale="50"/>
+          </imageobject>
+            </mediaobject>
+        </figure>
+      </para>
     </listitem>
   </itemizedlist>
   <section xml:id="about-nova-consoleauth">
@@ -55,11 +66,10 @@
       <title>About nova-consoleauth</title>
     </info>
 
-    <para> Both client proxies leverage a shared service to manage
-      token auth called nova-consoleauth. This service must be running
-      in order for either proxy to work. Many proxies of either type
-      can be run against a single nova-consoleauth service in a
-      cluster configuration. </para>
+    <para>Both client proxies leverage a shared service to manage token auth called
+      nova-consoleauth. This service must be running in order for either proxy to work. Many proxies
+      of either type can be run against a single nova-consoleauth service in a cluster
+      configuration. </para>
     <para>The nova-consoleauth shared service should not be confused
       with nova-console, which is a XenAPI-specific service that is not
       used by the most recent VNC proxy architecture. </para>
@@ -75,22 +85,18 @@
 
     <itemizedlist>
       <listitem>
-        <para> One nova-consoleauth process. Typically this runs on
-          the controller host. </para>
+        <para>One nova-consoleauth process. Typically this runs on the controller host. </para>
       </listitem>
       <listitem>
-        <para> One or more nova-novncproxy services. This supports
-          browser-based novnc clients. For simple deployments, this
-          service typically will run on the same machine as nova-api,
-          since it proxies between the public network and the private
-          compute host network. </para>
+        <para>One or more nova-novncproxy services. This supports browser-based novnc clients. For
+          simple deployments, this service typically will run on the same machine as nova-api, since
+          it proxies between the public network and the private compute host network. </para>
       </listitem>
       <listitem>
-        <para> One or more nova-xvpvncproxy services. This supports
-          the special Java client discussed in this document. For
-          simple deployments, this service typically will run on the
-          same machine as nova-api, since it proxies between the
-          public network and the private compute host network. </para>
+        <para>One or more nova-xvpvncproxy services. This supports the special Java client discussed
+          in this document. For simple deployments, this service typically will run on the same
+          machine as nova-api, since it proxies between the public network and the private compute
+          host network. </para>
       </listitem>
       <listitem>
         <para> One or more compute hosts. These compute hosts must
