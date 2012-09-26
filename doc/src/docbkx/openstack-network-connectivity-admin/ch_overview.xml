@@ -139,7 +139,7 @@ format="PNG" />
                 Linux VLANs and IP tables. Quantum introduces the
                 concept of a <emphasis role="italic"
                 >plugin</emphasis>, which is a pluggable back-end
-                implementation of the Quantum API. A plugin can a
+                implementation of the Quantum API. A plugin can use a
                 variety of technologies to implement the logical API
                 requests.  Some Quantum plugins might use basic Linux
                 VLANs and IP tables, while others might use more
@@ -339,6 +339,115 @@ format="PNG" />
                         Internet.  </para>
                 </listitem>
             </itemizedlist>
+        </section>
+    </section>
+    <section xml:id="use_cases">
+        <title>Quantum Deployment Use Cases</title>
+        <para>This section describes some of the common Quantum deployment use cases
+              for Quantum.  These examples are not exhaustive and can be combined with
+              each other to create more complex use cases.</para>
+        <section xml:id="use_cases_single_flat">
+        <title>Use Case: Single Flat Network</title>
+        <para>In the simplest use case, a single Quantum network exists.  This is a
+              "shared" network, meaning it is visible to all tenants via the Quantum
+              API.  Tenant VMs have a single NIC, and receive
+              a fixed IP address from the subnet(s) associated with that network.
+              This essentially maps to the FlatManager
+              and FlatDHCPManager models provided by Nova. Floating IPs are not
+              supported.</para>
+         <para>It is common
+              that such a Quantum network is a "provider network", meaning it was created
+              by the OpenStack administrator to map directly to an existing physical
+              network in the data center.  This allows the provider to use a physical
+              router on that data center network as the gateway for VMs to reach
+              the outside world.  For each subnet on an external network, the gateway
+              configuration on the physical router must be manually configured
+              outside of OpenStack.</para>
+              <para><inlinemediaobject>  <imageobject>
+              <imagedata fileref="figures/UseCase-SingleFlat.png"/>
+              </imageobject> </inlinemediaobject> </para>
+              <!--Image source link: https://docs.google.com/a/nicira.com/drawings/d/1Jb6iSoBo4G7fv7i2EMpYTMTxesLPmEPKIbI7sVbhhqY/edit -->
+        </section>
+        <section xml:id="use_cases_multi_flat">
+        <title>Use Case: Multiple Flat Network</title>
+              <para>
+              This use case is very similar to the above Single Flat Network use case,
+              except that tenants see multiple shared networks via the Quantum API
+              and can choose which network (or networks) to plug into.
+              </para>
+              <para><inlinemediaobject>  <imageobject>
+              <imagedata fileref="figures/UseCase-MultiFlat.png"/>
+              </imageobject> </inlinemediaobject> </para>
+              <!--Image source link: https://docs.google.com/a/nicira.com/drawings/d/14ayGsyunW_P-wvY8OiueE407f7540JD3VsWUH18KHvU/edit -->
+        </section>
+        <section xml:id="use_cases_mixed">
+        <title>Use Case: Mixed Flat and Private Network</title>
+              <para>
+              This use case is an extension of the above flat network use cases,
+              in which tenants also optionally have access to private per-tenant
+              networks.  In addition to seeing one or more shared networks via
+              the quantum API, tenants can create additional networks that are only
+              visible to users of that tenant.  When creating VMs, those VMs can have
+              NICs on any of the shared networks and/or any of the private networks
+              belonging to the tenant.  This enables the creation of "multi-tier"
+              topologies using VMs with multiple NICs.  It also supports a model where
+              a VM acting as a gateway can provide services such as routing, NAT, or
+              load balancing.
+              </para>
+              <para><inlinemediaobject>  <imageobject>
+              <imagedata fileref="figures/UseCase-MixedFlatPrivate.png"/>
+              </imageobject> </inlinemediaobject> </para>
+              <!--Image source link: https://docs.google.com/a/nicira.com/drawings/d/1efSqR6KA2gv-OKl5Rl-oV_zwgYP8mgQHFP2DsBj5Fqo/edit -->
+        </section>
+        <section xml:id="use_cases_single_router">
+        <title>Use Case: Provider Router with Private Networks</title>
+              <para>
+              This use provides each tenant with one or more private networks, which
+              connect to the outside world via a Quantum router.  The case where
+              each tenant gets exactly one network in this form maps to the same
+              logical topology as the VlanManager in Nova (of course, Quantum doesn't
+              require VLANs).  Using the Quantum API, the tenant would only see a
+              network for each private network assigned to that tenant. The router
+              object in the API is created and owned by the cloud admin. </para>
+              <para> This model supports giving VMs public addresses using
+              "floating IPs", in which the router maps public addresses from the
+              external network to fixed IPs on private networks.  Hosts without floating
+              IPs can still create outbound connections to the external network, as
+              the provider router performs SNAT to the router's external IP. The
+              IP address of the physical router is used as the gateway_ip of the
+              external network subnet, so the provider has a default router for
+              Internet traffic.
+              </para>
+              <para>
+              The router provides L3 connectivity between private networks, meaning
+              that different tenants can reach each others instances unless additional
+              filtering (e.g., security groups) is used.  Because there is only a single
+              router, tenant networks cannot use overlapping IPs.  Thus, it is likely
+              that the admin would create the private networks on behalf of tenants.
+              </para>
+              <para><inlinemediaobject>  <imageobject>
+              <imagedata fileref="figures/UseCase-SingleRouter.png"/>
+              </imageobject> </inlinemediaobject> </para>
+              <!--Image source link: https://docs.google.com/a/nicira.com/drawings/d/1DKxeZZXml_fNZHRoGPKkC7sGdkPJZCtWytYZqHIp_ZE/edit -->
+        </section>
+        <section xml:id="use_cases_tenant_router">
+        <title>Use Case: Per-tenant Routers with Private Networks</title>
+              <para>
+              A more advanced router scenario in which each tenant gets
+              at least one router, and potentially has access to the Quantum API to
+              create additional routers.  The tenant can create their own networks,
+              potentially uplinking those networks to a router.  This model enables
+              tenant-defined multi-tier applications, with
+              each tier being a separate network behind the router.  Since there are
+              multiple routers, tenant subnets can be overlapping without conflicting,
+              since access to external networks all happens via SNAT or Floating IPs.
+              Each router uplink and floating IP is allocated from the external network
+              subnet.
+              </para>
+              <para><inlinemediaobject>  <imageobject>
+              <imagedata fileref="figures/UseCase-MultiRouter.png"/>
+              </imageobject> </inlinemediaobject> </para>
+              <!--Image source link: https://docs.google.com/a/nicira.com/drawings/d/1mmQc8cBUoTEfEns-ehIyQSTvOrjUdl5xeGDv9suVyAY/edit -->
         </section>
     </section>
 </chapter>
