@@ -39,7 +39,6 @@ format="PNG" />
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="ch_using">
     <title>Using Quantum</title>
-    <para> This chapter describes how to use Quantum.</para>
 
     <para>There are two main approaches to using Quantum.  The first
         is to expose the Quantum API to cloud tenants, allowing them
@@ -49,36 +48,8 @@ format="PNG" />
         document, we commonly describe operations as being performed
         by a tenant, but they might also be performed by the cloud
         admin on behalf of the tenant.  </para>
-    <para>The Quantum v2.0 API represents a combination of the Quantum
-        v1.1 API
-        (http://docs.openstack.org/api/openstack-network/1.0/content/),
-        which focused on defining private L2 networks and attaching VM
-        NICs to those networks  with the IP Address Managements
-        capabilities from the former Melange API
-        (http://melange.readthedocs.org/en/latest/apidoc.html|Melange
-        API) .  These IPAM capabilities focus on being able to
-        associate IP address blocks and other network configuration
-        required by a network device (e.g., default gateway,
-        dns-servers) with a Quantum Network, and then being able to
-        allocate an IP address out of such a block and associate it
-        with a device that is attached to the network via a Quantum
-        Port; also it allows for specifying host routes which will be
-        distributed to instances launched on Quantum networks.</para>
-    <para>The v2.0 API does this by introducing a new entity, called
-        Subnet.  Subnets can represent either an IPv4 or IPv6 address
-        block, and each Quantum Network commonly has one or more
-        subnets.  When a port is created on the network, by default it
-        will be allocated an available fixed IP address out of one of
-        the designated subnets for each IP version.  When the Port is
-        destroyed, the allocated addresses return to the pool of
-        available IPs on the subnet. Users of the Quantum API can
-        either choose a specific IP address from the block, or let
-        Quantum choose the first available IP address. For more
-        details about the v2 API please see XX (FIXME: this page is
-        out of date a should be replaced with link to the real v2 spec
-        before posting publicly)</para>
     <section xml:id="api_features">
-        <title>Core API Features</title>
+        <title>Core Quantum API Features</title>
         <para>Once Quantum is installed and running, both tenants and
             admins primarily interact with the service via
             create-read-update-delete (CRUD) API operations performed
@@ -88,21 +59,34 @@ format="PNG" />
             API, so any operation that can be performed via the CLI
             has an equivalent API call that can be performed
             programmatically.  </para>
-        <para>The CLI supports many options for filtering results,
-            limiting fields show, etc.  For details, refer to the
-            Quantum CLI documentation  &lt;link to CLI guide once
-            available&gt;  </para>
+        <para>The CLI supports many options for filtering results, limiting fields show, etc.  For
+            details, refer to the Quantum CLI documentation.   </para>
         <section xml:id="api_abstractions">
             <title>API Abstractions</title>
-            <para>Apart from the previously introduced subnet entity,
-                the quantum v2 API provides abstraction for networks
-                and ports. A Network represents an isolated virtual
-                Layer-2 domain, where a port represents a virtual
-                switch port on a given network.</para>
+            <para>The Quantum v2.0 API provides control over both L2 network topologies and the IP
+                addresses used on those networks (IP Address Management or IPAM).  There is also an
+                extension to cover basic L3 forwarding and NAT, providing capabilities similar to
+                nova-network.  </para>
+            <para>In the Quantum API, an isolated L2 network segment (similar to a VLAN)
+                is called a 'Network' and forms the basis for describing the L2 network
+                topology available in a given Quantum deployment.</para>
+            <para>The Quantum API uses
+                the notion of a 'Subnet', which associates a block of IP addresses and
+                other network configuration (e.g., default gateway,
+                dns-servers) with a Quantum Network. Each subnet represents an IPv4 or IPv6
+                address block and each Quantum Network can have multiple subnets, if
+                desired.  </para>
+            <para>A 'Port' represents an attachment port to a L2 Quantum Network.  When a port
+                is created on the network, by default it will be allocated an available fixed IP
+                address out of one of the designated Subnets for each IP version (if one
+                exists).  When the Port is
+                destroyed, the allocated addresses return to the pool of available IPs on the
+                subnet(s). Users of the Quantum API can either choose a specific IP address from the
+                block, or let Quantum choose the first available IP address. </para>
             <para>The table below summarizes the attributes available
                 for each of these abstractions. For more operations
                 about API abstraction and operations, please refer to
-                the Quantum API v2.0 guide &lt;metti link&gt;.</para>
+                the <link xlink:href="http://docs.openstack.org/api/openstack-network/2.0/content/">Quantum v2.0 API Developer Guide</link>.</para>
 
             <table rules="all">
                 <caption>Network</caption>
@@ -117,49 +101,49 @@ format="PNG" />
                 <tbody>
                     <tr>
                         <td>id </td>
-                        <td>uuid </td>
-                        <td>auto generated </td>
-                        <td>Unique identifier </td>
+                        <td>uuid-str </td>
+                        <td>generated </td>
+                        <td>UUID for the network. </td>
                     </tr>
                     <tr>
                         <td>name </td>
-                        <td>string </td>
-                        <td>N/A </td>
+                        <td>String </td>
+                        <td>None </td>
                         <td>Human-readable name for the network. Might
                             not be unique. </td>
                     </tr>
                     <tr>
                         <td>admin_state_up </td>
-                        <td>bool </td>
+                        <td>Bool </td>
                         <td>True </td>
-                        <td>Sets the administrative state of network.
-                            if down, network does not forward packets.
-                        </td>
+                        <td>The administrative state of network. If
+                            false (down), the network does not forward
+                            packets.</td>
                     </tr>
                     <tr>
                         <td>status </td>
-                        <td>string </td>
+                        <td>String </td>
                         <td>N/A </td>
-                        <td>Indicates whether network is currently
-                            operational. </td>
+                        <td><para>Indicates whether network is
+                                  currently operational. </para></td>
                     </tr>
                     <tr>
                         <td>subnets </td>
-                        <td>list(uuid) </td>
-                        <td>empty list </td>
+                        <td>list(uuid-str) </td>
+                        <td>Empty list </td>
                         <td>Subnets associated with this network.
                         </td>
                     </tr>
                     <tr>
                         <td>shared </td>
-                        <td>bool </td>
+                        <td>Bool </td>
                         <td>False </td>
                         <td>Specifies whether the network resource can
-                            be accessed by any tenant or not </td>
+                            be accessed by any tenant or not. </td>
                     </tr>
                     <tr>
-                        <td>tenant_it </td>
-                        <td>uuid </td>
+                        <td>tenant_id </td>
+                        <td>uuid-str </td>
                         <td>N/A </td>
                         <td>Owner of network. Only admin users can
                             specify a tenant_id other than its own.
@@ -167,107 +151,296 @@ format="PNG" />
                     </tr>
                 </tbody>
             </table>
-            <para>&lt; TODO: Salvatore to complete with ports and
-                subnets tables&gt;</para>
+            <table rules="all">
+                <caption>Subnet</caption>
+                <thead>
+                    <tr>
+                        <th>Attribute </th>
+                        <th>Type </th>
+                        <th>Default Value </th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>id </td>
+                        <td>uuid-str </td>
+                        <td>generated </td>
+                        <td>UUID representing the subnet </td>
+                    </tr>
+                    <tr>
+                        <td>network_id </td>
+                        <td>uuid-str </td>
+                        <td>N/A </td>
+                        <td>network this subnet is associated with. </td>
+                    </tr>
+                    <tr>
+                        <td>name </td>
+                        <td>String </td>
+                        <td>None </td>
+                        <td>Human-readable name for the subnet. Might
+                            not be unique. </td>
+                    </tr>
+                    <tr>
+                        <td>ip_version </td>
+                        <td>int </td>
+                        <td>4 </td>
+                        <td>IP version </td>
+                    </tr>
+                    <tr>
+                        <td>cidr </td>
+                        <td>string </td>
+                        <td>N/A </td>
+                        <td>cidr representing IP range for this
+                            subnet, based on IP version </td>
+                    </tr>
+                    <tr>
+                        <td>gateway_ip </td>
+                        <td>string </td>
+                        <td>first address in <emphasis role="italic"
+                                >cidr</emphasis>
+                        </td>
+                        <td>default gateway used by devices in this
+                            subnet </td>
+                    </tr>
+                    <tr>
+                        <td>dns_nameservers </td>
+                        <td>list(str) </td>
+                        <td>Empty list </td>
+                        <td>DNS name servers used by hosts in this
+                            subnet. </td>
+                    </tr>
+                    <tr>
+                        <td>allocation_pools </td>
+                        <td>list(dict) </td>
+                        <td>Every address in <emphasis role="italic"
+                                >cidr</emphasis>, excluding <emphasis
+                                role="italic">gateway_ip</emphasis> if
+                            configured </td>
+                        <td>Sub-ranges of cidr available for dynamic
+                            allocation to ports [ { "start":
+                            "10.0.0.2", "end": "10.0.0.254"} ] </td>
+                    </tr>
+                    <tr>
+                        <td>host_routes </td>
+                        <td>list(dict) </td>
+                        <td>Empty List </td>
+                        <td>Routes that should be used by devices with
+                            IPs from this subnet (not including local
+                            subnet route). </td>
+                    </tr>
+                    <tr>
+                        <td>enable_dhcp </td>
+                        <td>Bool </td>
+                        <td>True </td>
+                        <td>Specifies whether DHCP is enabled for
+                            this subnet or not. </td>
+                    </tr>
+                    <tr>
+                        <td>tenant_id </td>
+                        <td>uuid-str </td>
+                        <td>N/A </td>
+                        <td>Owner of network. Only admin users can
+                            specify a tenant_id other than its own.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table rules="all">
+                <caption>Port</caption>
+                <thead>
+                    <tr>
+                        <th>Attribute </th>
+                        <th>Type </th>
+                        <th>Default Value </th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>id </td>
+                        <td>uuid-str </td>
+                        <td>generated </td>
+                        <td>UUID for the port.</td>
+                    </tr>
+                    <tr>
+                        <td>network_id </td>
+                        <td>uuid-str </td>
+                        <td>N/A </td>
+                        <td>Network that this port is associated with.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>name </td>
+                        <td>String </td>
+                        <td>None </td>
+                        <td>Human-readable name for the port. Might
+                            not be unique. </td>
+                    </tr>
+                    <tr>
+                        <td>admin_state_up </td>
+                        <td>bool </td>
+                        <td>true </td>
+                        <td>Administrative state of port. If false
+                            (down), port does not forward packets.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>status </td>
+                        <td>string </td>
+                        <td>N/A </td>
+                        <td><para>Indicates whether network is
+			        currently operational. </para>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>mac_address </td>
+                        <td>string </td>
+                        <td>generated </td>
+                        <td>Mac address to use on this port. </td>
+                    </tr>
+                    <tr>
+                        <td>fixed_ips </td>
+                        <td>list(dict) </td>
+                        <td>automatically allocated from pool </td>
+                        <td>Specifies IP addresses for the port thus
+                            associating the port itself with the
+                            subnets where the IP addresses are picked
+                            from </td>
+                    </tr>
+                    <tr>
+                        <td>device_id </td>
+                        <td>str </td>
+                        <td>None </td>
+                        <td>identifies the device (e.g., virtual
+                            server) using this port. </td>
+                    </tr>
+                    <tr>
+                        <td>device_owner </td>
+                        <td>str </td>
+                        <td>None </td>
+                        <td>Identifies the entity (e.g.: dhcp agent) using this port. </td>
+                    </tr>
+                    <tr>
+                        <td>tenant_id </td>
+                        <td>uuid-str </td>
+                        <td>N/A </td>
+                        <td>Owner of network. Only admin users can
+                            specify a tenant_id other than its own.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </section>
         <section xml:id="basic_workflow">
             <title>Basic Workflow </title>
             <para>(include output in examples) </para>
-            <screen><computeroutput>quantum create-net net1 quantum create-subnet net1 10.0.0.0/24</computeroutput></screen>
+            <screen><computeroutput>quantum create-net net1
+quantum create-subnet net1 10.0.0.0/24</computeroutput></screen>
             <para>View current networks:</para>
             <screen><computeroutput>quantum net-list</computeroutput></screen>
 
             <para>Boot the VM with a single NIC on the selected
                 network:</para>
-            <screen><computeroutput>nova boot --image &lt;img&gt; --flavor &lt;flavor&gt; --nic net-id=&lt;&gt; &lt;vm-name&gt;</computeroutput></screen>
+            <screen><computeroutput>nova boot --image &lt;img&gt; --flavor &lt;flavor&gt; --nic net-id=&lt;net-id&gt; &lt;vm-name&gt;</computeroutput></screen>
             <para>Congrats, you have booted a VM on a quantum
                 network.  </para>
             <para>There is now a Quantum port on 'net1' that
                 corresponds to the VM Nic.  You can view it with the
                 following command, which searches for all ports with a
-                "device_id" corresponding to the Nova server
+                "device_id" corresponding to the Nova instance
                 UUID:</para>
-            <screen><computeroutput>quantum port-list -- --device_id=ZZZ</computeroutput></screen>
+            <screen><computeroutput>quantum port-list -- --device_id=&lt;vm-id&gt;</computeroutput></screen>
             <para>To view only a few fields of the port, you can limit
                 output using -c.  For example to see only the
                 mac_address of the port, use:</para>
-            <screen><computeroutput>quantum port-list -c mac_address -- --device_id=ZZZ</computeroutput></screen>
+            <screen><computeroutput>quantum port-list -c mac_address -- --device_id=&lt;vm-id&gt;</computeroutput></screen>
             <para>You could temporarily disable the port from sending
                 traffic by updating it to have
                 admin_state_up=False:</para>
-            <screen><computeroutput>quantum port-update &lt;YYY&gt; --admin_state_up=False</computeroutput></screen>
+            <screen><computeroutput>quantum port-update &lt;port-id&gt; --admin_state_up=False</computeroutput></screen>
             <para>When we delete the Nova VM, the underlying Quantum
                 port is automatically deleted:</para>
-            <screen><computeroutput>quantum port-list -c mac_address -- --device_id=ZZZ</computeroutput></screen>
+            <screen><computeroutput>quantum port-list -c mac_address -- --device_id=&lt;vm-id&gt;</computeroutput></screen>
+        </section>
+        <section xml:id="cli_guide">
+            <title>Quantum CLI Guide</title>
+            <para>Before going further, we STRONGLY suggest that you quickly read the few
+            pages in the <link xlink:href="http://docs.openstack.org/cli/quick-start/content/index.html">OpenStack CLI Guide</link> that are specific to Quantum.  Quantum's CLI has some
+        advanced capabilities that are described only in that guide.</para>
         </section>
         <section xml:id="admin_api_config">
             <title>Admin API configuration</title>
             <para>These same calls can be performed by the cloud admin
                 on half of the tenants by specifying a tenant_id in
                 the request, for example:</para>
-            <screen><computeroutput>quantum net-create net1 --tenant_id=XXX</computeroutput></screen>
-            <para>This tenant_id should be the tenant UUID from
-                keystone. To view all keystone tenant UUIDs, run the
+            <screen><computeroutput>quantum net-create net1 --tenant_id=&lt;tenant-id&gt;</computeroutput></screen>
+            <para>This tenant_id should be the tenant ID from
+                keystone. To view all keystone tenant IDs, run the
                 following command as a keystone admin user:</para>
             <screen><computeroutput>keystone tenant-list</computeroutput></screen>
         </section>
         <section xml:id="advanced_networking">
-            <title>Advanced Network &amp; Subnet Operations</title>
-            <para>Creation:</para>
-            <itemizedlist>
-                <listitem>
-                    <para>example showing each option being set (in
-                        particular, showing options that are lists,
-                        which can be tricky).  </para>
-                </listitem>
-                <listitem>
-                    <para>shared networks</para>
-                </listitem>
-                <listitem>
-                    <para>disabling DHCP</para>
-                </listitem>
-                <listitem>
-                    <para>networks with no gateways</para>
-                </listitem>
-                <listitem>
-                    <para>networks with routes other than default
-                        routes.  </para>
-                </listitem>
-            </itemizedlist>
-            <para>Searches:</para>
-            <para>
+            <title>Advanced API Operations Examples</title>
+            <section xml:id="advanced_networking_create">
+                <title>Network, Subnet &amp; Port Creation</title>
                 <itemizedlist>
                     <listitem>
-                        <para>Find all Ports/IPs allocated on a
-                            network</para>
+                        <para>Create a "shared" network (i.e., a network that can be used by all tenants)</para>
+                        <screen><computeroutput>quantum net-create public-net --shared True</computeroutput></screen>
+                    </listitem>
+                    <listitem>
+                        <para>Create a subnet that has a specific gateway IP address.</para>
+                        <screen><computeroutput>quantum subnet-create --gateway 10.0.0.254 net1 10.0.0.0/24</computeroutput></screen>
+                    </listitem>
+                    <listitem>
+                        <para>Create a subnet that has no gateway IP address.</para>
+                        <screen><computeroutput>quantum subnet-create --no-gateway net1 10.0.0.0/24</computeroutput></screen>
+                    </listitem>
+                    <listitem>
+                        <para>Create a subnet for which DHCP is disabled.</para>
+                        <screen><computeroutput>quantum subnet-create net1 10.0.0.0/24 --enable_dhcp False</computeroutput></screen>
+                    </listitem>
+                    <listitem>
+                        <para>Create subnet with a specific set of host routes:</para>
+                        <screen><computeroutput>quantum subnet-create test-net1 40.0.0.0/24 --host_routes type=dict list=true destination=40.0.1.0/24,nexthop=40.0.0.2</computeroutput></screen>
+                    </listitem>
+                    <listitem>
+                        <para>Create subnet with a specific set of dns nameserver:</para>
+                        <screen><computeroutput>quantum subnet-create test-net1 40.0.0.0/24 --dns_nameservers list=true 8.8.8.7 8.8.8.8</computeroutput></screen>
                     </listitem>
                 </itemizedlist>
-            </para>
-            <para>Deletion:</para>
-            <para>
+            </section>
+            <section xml:id="advanced_networking_listing">
+                <title>Searches</title>
                 <itemizedlist>
                     <listitem>
-                        <para>deletion requirements (no VM ports on
-                            network)</para>
+                        <para>Find all Ports/IPs allocated on a network</para>
+                        <screen><computeroutput>quantum port-list -- --network_id &lt;net-id&gt;</computeroutput></screen>
                     </listitem>
                 </itemizedlist>
-            </para>
-        </section>
-        <section xml:id="advanced_vm">
+            </section>
+            <section xml:id="advanced_vm">
             <title>Advanced VM creation &amp; port operations.  </title>
             <itemizedlist>
                 <listitem>
-                    <para>booting VMs with multiple NICs</para>
+                    <para>booting a VM with multiple NICs</para>
+                    <screen><computeroutput>nova boot --image &lt;img&gt; --flavor &lt;flavor&gt; --nic net-id=&lt;net1-id&gt; --nic net-id=&lt;net2-id&gt; &lt;vm-name&gt;</computeroutput></screen>
                 </listitem>
                 <listitem>
                     <para>specifying a port-id, rather than a
                         net-id</para>
+                    <screen><computeroutput>quantum port-create --fixed-ip subnet_id=&lt;subnet-id&gt;,ip_address=192.168.57.101 net1
+nova boot --image &lt;img&gt; --flavor &lt;flavor&gt; --nic port-id=&lt;port-id&gt; &lt;vm-name&gt;</computeroutput></screen>
                 </listitem>
                 <listitem>
-                    <para>behavior of quantum when no --nic is
-                        specified.  </para>
+                    <para>booting a VM with no --nic option specified.
+                        In this case the launched VM connects to all networks
+                        that are accessible to the tenant who submits the request.</para>
+                    <screen><computeroutput>nova boot --image &lt;img&gt; --flavor &lt;flavor&gt; &lt;vm-name&gt;</computeroutput></screen>
                 </listitem>
             </itemizedlist>
         </section>
+      </section>
     </section>
 </chapter>

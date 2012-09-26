@@ -194,8 +194,11 @@ format="PNG" />
                         </para>
                     </listitem>
                     <listitem>
-                        <para><emphasis role="bold">NEC</emphasis>.
-                            (FIXME: needs link) </para>
+                        <para><emphasis role="bold">NEC OpenFlow</emphasis>.
+                                <link
+                                xlink:href="http://wiki.openstack.org/Quantum-NEC-OpenFlow-Plugin"
+                                >http://wiki.openstack.org/Quantum-NEC-OpenFlow-Plugin</link>
+                        </para>
                     </listitem>
                 </itemizedlist></para>
             <para>Plugins enable the cloud administrator to weigh
@@ -278,7 +281,7 @@ format="PNG" />
                 nova-compute communicates with the Quantum API to plug
                 each virtual NIC on the VM into a particular Quantum
                 network.   </para>
-            <para>Horizon is has basic integration with the Quantum
+            <para>Horizon has basic integration with the Quantum
                 API, allowing tenants to create networks and subnets
                 through the GUI, and specify the set of networks that
                 a VM should connect to when it is launched.  See the
@@ -288,15 +291,12 @@ format="PNG" />
         </section>
         <section xml:id="services">
             <title>Place Services on Physical Hosts</title>
-            <para>Like other OpenStack services, Quantum provides
-                cloud administrators with significant flexibility in
-                deciding where to run individual services.  One one
-                extreme, all services including Nova, Quantum,
-                Keystone, and so on can be run on a single physical
-                hosts for evaluation purposes.  On the other, each
-                service could have its own physical hosts, and some
-                cases be replicated across multiple hosts for
-                redundancy. See <xref linkend="ch_high_avail"/>.  </para>
+            <para>Like other OpenStack services, Quantum provides cloud administrators with
+                significant flexibility in deciding where to run individual services.  One one
+                extreme, all services including Nova, Quantum, Keystone, and so on can be run on a
+                single physical hosts for evaluation purposes.  On the other, each service could
+                have its own physical hosts, and some cases be replicated across multiple hosts for
+                redundancy. See <xref linkend="ch_high_avail"/>  </para>
             <para>In this guide, we focus primarily on a standard
                 architecture that includes a “cloud controller” host,
                 a “network gateway” host, and a set of hypervisors for
@@ -304,8 +304,13 @@ format="PNG" />
         </section>
         <section xml:id="connectivity">
             <title>Network Connectivity for Physical Hosts</title>
-            <para>A standard Quantum setup has up to four distinct
-                physical data center networks: </para>
+            <para><inlinemediaobject>
+                    <imageobject>
+                        <imagedata fileref="figures/Quantum-PhysNet-Diagram.png"/>
+                    <!-- Edit link: http://docs.google.com/drawings/d/19qtlB_EeG9TM_jpeX5DprHRd9ShngXgfpt_t5mlrUMo/edit -->
+                    </imageobject>
+                </inlinemediaobject></para>
+            <para>A standard Quantum setup has up to four distinct physical data center networks: </para>
             <itemizedlist>
                 <listitem>
                     <para><emphasis role="bold">Management
@@ -331,7 +336,7 @@ format="PNG" />
                         depend on the Quantum plugin in use.  </para>
                 </listitem>
                 <listitem>
-                    <para><emphasis role="bold">Public
+                    <para><emphasis role="bold">External
                             network</emphasis>. Used to provide VMs
                         with Internet access in some deployment
                         scenarios.  The IP addresses on this network

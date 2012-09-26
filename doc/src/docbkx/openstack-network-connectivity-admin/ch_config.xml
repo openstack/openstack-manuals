@@ -50,87 +50,150 @@ format="PNG" />
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="ch_config">
-    <title>Configuring Quantum Components</title>
+    <title>Configuring other OpenStack Components</title>
     <section xml:id="keystone">
         <title>Keystone Configuration for Quantum</title>
-        <para>FIXME: should we show details Keystone commands here, or
-            just point to locations in Keystone docs, as these should
-            be standard operations for many services.  Probably best
-            in Keystone setup with a ref here.  </para>
         <procedure>
             <title>To Configure Keystone for Quantum</title>
             <step>
                 <title>To Create a Quantum Service Entry</title>
                 <para>Quantum needs to be available in the  Keystone
-                    service catalog.  For example: </para>
-                <screen><computeroutput><?db-font-size 75%?>keystone service-create --name quantum --type network --description 'OpenStack Networking service'
-keystone endpoint-create --region $KEYSTONE_REGION --service-id $2 --publicurl
+                    service catalog.  The steps for this depend on whether you are using
+                    Keystone's SQL catalog driver or the template catalog driver.</para>
+                <para>With the sql driver, for a given region ($REGION) and
+                    IP address of the Quantum server ($IP) run: </para>
+                <screen><computeroutput><?db-font-size 75%?>keystone service-create --name quantum --type network --description 'OpenStack Networking Service'
+keystone endpoint-create --region $REGION --service-id quantum --publicurl
 'http://$IP:9696/' --adminurl 'http://$IP:9696/' --internalurl 'http://$IP:9696/'</computeroutput></screen>
+                <para>With the template driver, for a given region ($REGION) and IP
+                      address of the Quantum server ($IP), add the following content to
+                      your keystone catalog template file (default_catalog.templates):</para>
+                <screen><computeroutput>
+catalog.$Region.network.publicURL = http://$IP:9696
+catalog.$Region.network.adminURL = http://$IP:9696
+catalog.$Region.network.internalURL = http://$IP:9696
+catalog.$Region.network.name = Network Service
+                </computeroutput></screen>
             </step>
             <step>
                 <title>Create Quantum Service User</title>
                 <para>For Nova to speak to the Quantum API, and for
                     some internal components of Quantum to communicate
                     with the Quantum API, you need to provide them
-                    with admin user credentials.  The suggested
-                    approach is to create a special ‘quantum’ user for
-                    this purpose.  </para>
+                    with admin user credentials that they can use when accessing
+                    the Quantum API.  The suggested
+                    approach is to create a special 'service' tenant, create a
+                    ‘quantum’ user within this tenant, and to assign this user
+                    an 'admin' role. </para>
                 <para>For example: </para>
-                <screen><computeroutput><?db-font-size 75%?>QUANTUM_USER=$(get_id keystone user-create --name=quantum --pass="$SERVICE_PASSWORD" 
---tenant-id $SERVICE_TENANT) keystone user-role-add --tenant-id $SERVICE_TENANT 
---user-id $QUANTUM_USER --role-id $ADMIN_ROLE</computeroutput></screen>
+                <screen><computeroutput><?db-font-size 75%?>keystone user-create --name=quantum --pass=$SERVICE_PASSWORD
+--tenant-id service keystone user-role-add --tenant-id $SERVICE_TENANT
+--user-id quantum --role-id $ADMIN_ROLE</computeroutput></screen>
             </step>
         </procedure>
+        <para> See the Keystone Administrator Guide for more details about
+         creating service entries and service users.</para>
     </section>
-    <section xml:id="running_nova_with_quantum">
+    <section xml:id="nova_with_quantum">
         <title>Running Nova with Quantum</title>
-        <para>When Quantum is in use, Nova does not use nova-network. 
-            This means many of the tools and configuration options </para>
-        <para>- warning about not using traditional nova tools like
-            'nova-manage' and 'nova' to manage networks or IP
-            addressing, including both fixed and floating IPs. 
-            Security groups do work.  Also, let them know that
-            nova-network does not run in this scenario.  </para>
-        <para>The following items need to be set in the nova.conf used
-            by each nova-compute instance.  </para>
+        <para>Unlike traditional Nova deployments, when Quantum is in use, Nova should not run a
+            nova-network. Instead, Nova delegates almost all of the network-related decisions to
+            Quantum. This means many of the network-related CLI command and configuration options
+            you are familiar with from using Nova do not work with Quantum.</para>
+        <para>Therefore, it is very important that you refer to this guide when configuring
+            networking, rather than relying on Nova networking documentation or past experience with
+            Nova. If a Nova CLI command or configuration option related to networking is not
+            mentioned in this guide, it is likely not supported for use with Quantum. In particular,
+            using CLI tools like 'nova-manage' and 'nova' to manage networks or IP addressing,
+            including both fixed and floating IPs, is not supported with Quantum.</para>
+        <section xml:id="nova_with_quantum_api">
+        <title>Configuring Nova to reach the Quantum API</title>
+        <para>Each time a VM is provisioned or deprovisioned in Nova, Nova communicates with Quantum
+            via the standard API.  To do so, it requires the following items in the nova.conf used
+            by each nova-compute and nova-api instance:  </para>
         <itemizedlist>
             <listitem>
-                <para>setting network API</para>
+                <para>network_api_class: must be modified from default to indicate that Quantum
+                    should be used rather than the traditional nova-network networking model.</para>
             </listitem>
             <listitem>
-                <para>quantum-url</para>
+                <para>quantum_url: must include the hostname/IP and port of the Quantum server for
+                    this deployment.</para>
             </listitem>
             <listitem>
-                <para>quantum service-user </para>
+                <para>quantum_auth_strategy: should be kept a default 'keystone' for all production
+                    deployments.</para>
             </listitem>
             <listitem>
-                <para>choosing a type of vif-plugging</para>
+                <para>quantum_admin_tenant_name: must be modified to be the the name of the service
+                    tenant created in the above section on Keystone configuration.</para>
+            </listitem>
+            <listitem>
+                <para>quantum_admin_username: must be modified to be the the name of the user
+                    created in the above section on Keystone configuration.</para>
+            </listitem>
+            <listitem>
+                <para>quantum_admin_password: must be modified to be the the password of the user
+                    created in the above section on Keystone configuration.</para>
+            </listitem>
+            <listitem>
+                <para>quantum_admin_auth_url: must be modified to
+                        point to the keystone server IP and port. This
+                        is the Identity (keystone) admin API server IP
+                        and port value, and not the Identity service
+                        API IP and port.</para>
             </listitem>
         </itemizedlist>
-        <para><emphasis role="bold">nova.conf</emphasis>:</para>
+        </section>
+        <section xml:id="nova_with_quantum_vifplugging">
+            <title>Configuring Vif-plugging in Nova</title>
+            <para>When nova-compute creates a VM, it must "plug" each of the VM's vNICs into a Quantum
+                controlled virtual switch, and inform the virtual switch about the Quantum port-id
+                associated with each vNIC.   This is done by specifying a field in the nova.conf of
+                the nova-compute instance indicating what type of ''vif-plugging'' should be used.
+                The exact field(s) you need to set depend on your plugin.  For plugins not
+                listed below, see the plugin's own documentation.</para>
+            <section xml:id="nova_with_quantum_vifplugging_ovs"><title>Vif-plugging with Open vSwitch Plugin</title>
+                <itemizedlist>
+                    <listitem><para>When using libvirt (any version) with Nova security groups: libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybirdOVSBridgeDriver</para></listitem>
+                    <listitem><para>When using libvirt (version &lt; 0.9.11) without Nova security groups: libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchDriver</para></listitem>
+                    <listitem><para>When using libvirt (version &gt;= 0.9.11) without Nova security groups: libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchVirtualPortDriver</para></listitem>
+                </itemizedlist>
+            </section>
+            <section xml:id="nova_with_quantum_vifplugging_bridge"><title>Vif-plugging with Linux Bridge Plugin</title>
+                <itemizedlist>
+                    <listitem><para>When using libvirt (any version): libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtBridgeDriver</para></listitem>
+                </itemizedlist>
+            </section>
+            <section xml:id="nova_with_quantum_vifplugging_nvp"><title>Vif-plugging with Nicira NVP Plugin</title>
+                <itemizedlist>
+                    <listitem><para>When using libvirt (version &lt; 0.9.11): libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchDriver</para></listitem>
+                    <listitem><para>When using libvirt (version &gt;= 0.9.11): libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchVirtualPortDriver</para></listitem>
+                    <listitem><para>When using XenServer: xenapi_vif_driver=nova.virt.xenapi.vif.XenAPIOpenVswitchDriver </para></listitem>
+                </itemizedlist>
+            </section>
+            <section xml:id="nova_with_quantum_vifplugging_nec"><title>Vif-plugging with NEC OpenFlow Plugin</title>
+                <itemizedlist>
+                    <listitem><para>When using libvirt (any version) with Nova security groups: libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybirdOVSBridgeDriver</para></listitem>
+                    <listitem><para>When using libvirt (version &lt; 0.9.11) without Nova security groups: libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchDriver</para></listitem>
+                    <listitem><para>When using libvirt (version &gt;= 0.9.11) without Nova security groups: libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchVirtualPortDriver</para></listitem>
+                </itemizedlist>
+            </section>
+        </section>
+        <section xml:id="nova_with_quantum_example">
+        <title> Example nova.conf (for nova-compute and nova-api)</title>
+        <para>Example values for the above settings, assuming a cloud controller node running
+            Keystone and Quantum with an IP address of 192.168.1.2 and vif-plugging using the
+            LibvirtOpenVswitchDriver with virtio enabled.  </para>
         <screen><computeroutput>network_api_class=nova.network.quantumv2.api.API
-quantum_url=http://localhost:9696
+quantum_url=http://192.168.1.2:9696
 quantum_auth_strategy=keystone
 quantum_admin_tenant_name=service
 quantum_admin_username=quantum
 quantum_admin_password=password
-quantum_admin_auth_url="http://192.168.0.1:35357/v2.0"</computeroutput></screen>
-        <para><emphasis role="bold">nova-compute.conf </emphasis>(for
-            OVS) </para>
-        <screen><computeroutput>libvirt_ovs_bridge=br-int
-libvirt_vif_type=ethernet
-libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchDriver
-libvirt_use_virtio_for_bridges=True</computeroutput></screen>
-        <para> borrow text from:
-            http://docs.openstack.org/trunk/openstack-network/admin/content/Vifplugging-d1e453.html</para>
-        <para> &lt;describe vif-plugging options, what plugins they
-            are compatible with, and why to choose one versus the
-            other&gt;</para>
-    </section>
-    <section xml:id="horizon">
-        <title>Running Horizon with Quantum</title>
-        <para>- config options to enable</para>
-        <para>- Limitations (ability to create L2 networks only, no L3
-            support).  </para>
+quantum_admin_auth_url=http://192.168.1.2:35357/v2.0
+libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchDriver  # needed only for nova-compute
+libvirt_use_virtio_for_bridges=True # needed only for nova-compute</computeroutput> </screen>
+        </section>
     </section>
 </chapter>
