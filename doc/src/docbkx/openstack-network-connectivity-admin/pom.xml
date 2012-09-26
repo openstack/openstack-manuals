@@ -2,9 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    
+
     <modelVersion>4.0.0</modelVersion>
-    
+
     <groupId>org.openstack.docs</groupId>
     <artifactId>openstack-guide</artifactId>
     <version>1.0.0-SNAPSHOT</version>
@@ -42,7 +42,7 @@
             </pluginRepositories>
         </profile>
     </profiles>
-    
+
     <build>
         <resources>
             <resource>
@@ -53,7 +53,7 @@
             </resource>
         </resources>
         <plugins>
-            
+
             <plugin>
                 <groupId>com.rackspace.cloud.api</groupId>
                 <artifactId>clouddocs-maven-plugin</artifactId>
@@ -103,15 +103,14 @@
                             <sectionLabelIncludesComponentLabel>0</sectionLabelIncludesComponentLabel>
                             <postProcess>
                                 <!-- Copies the figures to the correct location for webhelp -->
-                                
-                               <!-- <copy todir="${basedir}/target/docbkx/webhelp/os-compute-adminguide/figures">
+
+                                <copy todir="${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-network/admin/content/figures">
                                     <fileset dir="${basedir}/figures">
-                                        <include name="**/*.png" />
+                                        <include name="**/*.*" />
                                     </fileset>
                                 </copy>
-                                -->
                                 <!-- Copies webhelp (HTML output) to desired URL location on docs.openstack.org -->
-                                                   
+
                                 <copy
                                     todir="${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-network/admin">
                                     <fileset
@@ -119,17 +118,17 @@
                                         <include name="**/*" />
                                     </fileset>
                                 </copy>
-                                
+
                                 <!--Moves PDFs to the needed placement -->
-                               
+
                                 <move failonerror="false"
                                     file="${basedir}/target/docbkx/pdf/bk-quantum-admin-guide.pdf"
-                                    tofile="${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-network/admin/bk-quantum-admin-guide-trunk.pdf"/>                
-                                                       
+                                    tofile="${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-network/admin/bk-quantum-admin-guide-trunk.pdf"/>
+
                                 <!--Deletes leftover uneeded directories -->
-                                
+
                                 <delete dir="${basedir}/target/docbkx/webhelp/bk-quantum-admin-guide"/>
-                                                                
+
                             </postProcess>
                         </configuration>
                     </execution>
@@ -146,7 +145,7 @@
                     <branding>openstack</branding>
                 </configuration>
             </plugin>
-            
+
         </plugins>
     </build>
 </project>
