@@ -6,47 +6,13 @@
 <!ENTITY hellip "&#x2026;">
 <!ENTITY plusmn "&#xB1;">
 
-<!-- Useful for describing APIs -->
-<!ENTITY GET    '<command xmlns="http://docbook.org/ns/docbook">GET</command>'>
-<!ENTITY PUT    '<command xmlns="http://docbook.org/ns/docbook">PUT</command>'>
-<!ENTITY POST   '<command xmlns="http://docbook.org/ns/docbook">POST</command>'>
-<!ENTITY DELETE '<command xmlns="http://docbook.org/ns/docbook">DELETE</command>'>
-
-<!ENTITY CHECK  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
-<imageobject role="fo">
-<imagedata fileref="figures/Check_mark_23x20_02.svg"
-format="SVG" scale="60"/>
-</imageobject>
-<imageobject role="html">
-<imagedata fileref="../figures/Check_mark_23x20_02.png"
-format="PNG" />
-</imageobject>
-</inlinemediaobject>'>
-
-<!ENTITY ARROW  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
-<imageobject role="fo">
-<imagedata fileref="figures/Arrow_east.svg"
-format="SVG" scale="60"/>
-</imageobject>
-<imageobject role="html">
-<imagedata fileref="../figures/Arrow_east.png"
-format="PNG" />
-</imageobject>
-</inlinemediaobject>'>
-<!ENTITY SENova 'services extension'>
-<!ENTITY uSENova 'Services extension'>
-<!ENTITY uuSENova 'Services Extension'>
-<!ENTITY RSNova 'reset state extension'>
-<!ENTITY uRSNova 'Reset state extension'>
-<!ENTITY uuRSNova 'Reset State Extension'>
-<!ENTITY ngCS 'next generation Rackspace Cloud Servers™ <link
-                        xlink:href="http://www.rackspace.com/cloud/openstack/"
-                        >powered by OpenStack</link>'>
-<!ENTITY ungCS 'Next generation Rackspace Cloud Servers™ <link
-                        xlink:href="http://www.rackspace.com/cloud/openstack/"
-                        >powered by OpenStack</link>'>
 ]>
-<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="ch_install">
+<chapter 
+    xmlns="http://docbook.org/ns/docbook" 
+    xmlns:xi="http://www.w3.org/2001/XInclude" 
+    xmlns:xlink="http://www.w3.org/1999/xlink" 
+    version="5.0" 
+    xml:id="ch_install">
     <title>Quantum Installation</title>
     <para> This chapter describes how to install the Quantum Service
         and get it up and running. </para>
@@ -83,12 +49,12 @@ apt-get update &amp;&amp; apt-get dist-upgrade</computeroutput></screen>
                 existing RabbitMQ setup is sufficient):  </para>
             <screen><computeroutput>apt-get install rabbitmq-server   
 rabbitmqctl change_password guest &lt;password&gt;</computeroutput></screen>
-            <para>Then update quantum.conf with these values: </para>
+            <para>Then update /etc/quantum/quantum.conf with these values: </para>
             <screen><computeroutput>rabbit_host=&lt;mgmt-IP-of-rabbit-host&gt;
 rabbit_password=&lt;password&gt;
 rabbit_user=guest </computeroutput></screen>
             <important>
-                <para>This quantum.conf file should be copied to and
+                <para>This /etc/quantum/quantum.conf file should be copied to and
                     used on all hosts running quantum-server,
                     quantum-dhcp-agent, quantum-openvswitch-agent, or
                     quantum-linuxbridge-agent (see below). </para>
@@ -126,7 +92,7 @@ rabbit_user=guest </computeroutput></screen>
             </note>
             <section xml:id="openvswitch_plugin">
             <title>Configuring Open vSwitch Plugin</title>
-            <para>Using the OVS plugin in a deployment with multiple
+            <para>Using the Open vSwitch (OVS) plugin in a deployment with multiple
                 hosts requires the using of either tunneling or vlans
                 in order to isolate traffic from multiple networks. 
                 Tunneling is easier to deploy, as it does not require
@@ -211,8 +177,8 @@ service quantum-server stop
 service quantum-server status
 service quantum-server start
 service quantum-server restart</computeroutput></screen>
-    <para> Log files are found in /var/log/quantum . </para>
-    <para> Configuration files are in /etc/quantum . </para>
+    <para> Log files are found in /var/log/quantum. </para>
+    <para> Configuration files are in /etc/quantum. </para>
         </section>
     </section>
     <section xml:id="install_fedora">
