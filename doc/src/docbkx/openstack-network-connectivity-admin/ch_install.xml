@@ -7,11 +7,9 @@
 <!ENTITY plusmn "&#xB1;">
 
 ]>
-<chapter 
-    xmlns="http://docbook.org/ns/docbook" 
-    xmlns:xi="http://www.w3.org/2001/XInclude" 
-    xmlns:xlink="http://www.w3.org/1999/xlink" 
-    version="5.0" 
+<chapter xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="ch_install">
     <title>Quantum Installation</title>
     <para> This chapter describes how to install the Quantum Service
@@ -23,8 +21,9 @@
     <section xml:id="install_ubuntu">
         <title>Install Packages (Ubuntu) </title>
         <note>
-            <para>This model assumes that you are using Ubuntu Precise with trunk testing PPAs. We
-                will  update this once there is an official released by Ubuntu.</para>
+            <para>This model assumes that you are using Ubuntu Precise
+                with trunk testing PPAs. We will update this once
+                there is an official released by Ubuntu.</para>
         </note>
         <para>Point to Folsom PPAs:                        
                                                             </para>
@@ -49,14 +48,16 @@ apt-get update &amp;&amp; apt-get dist-upgrade</computeroutput></screen>
                 existing RabbitMQ setup is sufficient):  </para>
             <screen><computeroutput>apt-get install rabbitmq-server   
 rabbitmqctl change_password guest &lt;password&gt;</computeroutput></screen>
-            <para>Then update /etc/quantum/quantum.conf with these values: </para>
+            <para>Then update /etc/quantum/quantum.conf with these
+                values: </para>
             <screen><computeroutput>rabbit_host=&lt;mgmt-IP-of-rabbit-host&gt;
 rabbit_password=&lt;password&gt;
 rabbit_user=guest </computeroutput></screen>
             <important>
-                <para>This /etc/quantum/quantum.conf file should be copied to and
-                    used on all hosts running quantum-server,
-                    quantum-dhcp-agent, quantum-openvswitch-agent, or
+                <para>This /etc/quantum/quantum.conf file should be
+                    copied to and used on all hosts running
+                    quantum-server, quantum-dhcp-agent,
+                    quantum-openvswitch-agent, or
                     quantum-linuxbridge-agent (see below). </para>
             </important>
         </section>
@@ -64,7 +65,6 @@ rabbit_user=guest </computeroutput></screen>
             <title>Install quantum-server </title>
             <para>Install quantum-server and CLI for accessing the
                 API: </para>
-
             <screen><computeroutput>apt-get -y install quantum-server python-cliff python-pyparsing</computeroutput></screen>
             <para>You will also want to install the plugin you choose
                 to use, for example: </para>
@@ -91,72 +91,108 @@ rabbit_user=guest </computeroutput></screen>
                 </para>
             </note>
             <section xml:id="openvswitch_plugin">
-            <title>Configuring Open vSwitch Plugin</title>
-            <para>Using the Open vSwitch (OVS) plugin in a deployment with multiple
-                hosts requires the using of either tunneling or vlans
-                in order to isolate traffic from multiple networks. 
-                Tunneling is easier to deploy, as it does not require
-                configuring VLANs on network switches, so that is what
-                we describe here. More advanced deployment options are
-                described in the <xref linkend="ch_adv_config"/>.  </para>
-            <para>Edit
-                    <filename>/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</filename>
-                to specify the following values: </para>
-            <screen><computeroutput>enable_tunneling=True
+                <title>Configuring Open vSwitch Plugin</title>
+                <para>Using the Open vSwitch (OVS) plugin in a
+                    deployment with multiple hosts requires the using
+                    of either tunneling or vlans in order to isolate
+                    traffic from multiple networks.  Tunneling is
+                    easier to deploy, as it does not require
+                    configuring VLANs on network switches, so that is
+                    what we describe here. More advanced deployment
+                    options are described in the <xref
+                        linkend="ch_adv_config"/>.  </para>
+                <para>Edit
+                        <filename>/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</filename>
+                    to specify the following values: </para>
+                <screen><computeroutput>enable_tunneling=True
 tenant_network_type=gre
 tunnel_id_ranges=1:1000
 local_ip=&lt;data-net-IP-address-of-node&gt; # only required on nodes running quantum-plugin-openvswitch-agent</computeroutput></screen>
-            <para>After performing that change on the node running quantum-server, restart quantum-server to pick up the new settings.</para>
-            <screen><computeroutput>service quantum-server restart</computeroutput></screen>
+                <para>After performing that change on the node running
+                    quantum-server, restart quantum-server to pick up
+                    the new settings.</para>
+                <screen><computeroutput>service quantum-server restart</computeroutput></screen>
             </section>
         </section>
         <section xml:id="install_quantum_agent">
             <title>Install quantum-plugin-*-agent</title>
-            <para>Some plugins utilize an agent that runs on each node that handles data packets.  This includes any node running
-            nova-compute, as well as nodes running dedicated quantum agents like quantum-dhcp-agent and quantum-l3-agent (see below).
-            If your plugin uses an agent, this section describes how to run the agent for this plugin, as well as the basic configuration options.</para>
-            <section xml:id="install_quantum_agent_ovs"> <title>Open vSwitch Agent</title>
+            <para>Some plugins utilize an agent that runs on each node
+                that handles data packets. This includes any node
+                running nova-compute, as well as nodes running
+                dedicated quantum agents like quantum-dhcp-agent and
+                quantum-l3-agent (see below). If your plugin uses an
+                agent, this section describes how to run the agent for
+                this plugin, as well as the basic configuration
+                options.</para>
+            <section xml:id="install_quantum_agent_ovs">
+                <title>Open vSwitch Agent</title>
                 <para>Install the OVS agent: </para>
                 <screen><computeroutput>apt-get -y install quantum-plugin-openvswitch-agent</computeroutput></screen>
-                <para>The ovs_quantum_plugin.ini created in the above step must be replicated on all nodes quantum-plugin-openvswitch-agent.
-                    When using tunneling, each node running quantum-plugin-openvswitch agent should have an IP address configured on the Data Network,
-                    and that IP address should be specified using the local_ip value in the ovs_quantum_plugin.ini file. </para>
+                <para>The ovs_quantum_plugin.ini created in the above
+                    step must be replicated on all nodes
+                    quantum-plugin-openvswitch-agent. When using
+                    tunneling, each node running
+                    quantum-plugin-openvswitch agent should have an IP
+                    address configured on the Data Network, and that
+                    IP address should be specified using the local_ip
+                    value in the ovs_quantum_plugin.ini file. </para>
                 <para>Then restart the agent</para>
                 <screen><computeroutput>service quantum-plugin-openvswitch-agent restart</computeroutput></screen>
-                <para>All hosts running quantum-plugin-openvswitch-agent also requires that an OVS bridge named "br-int" exists.  To create it, run:</para>
+                <para>All hosts running
+                    quantum-plugin-openvswitch-agent also requires
+                    that an OVS bridge named "br-int" exists. To
+                    create it, run:</para>
                 <screen><computeroutput>ovs-vsctl add-br br-int</computeroutput></screen>
             </section>
         </section>
-       <section xml:id="install_quantum_dhcp">
+        <section xml:id="install_quantum_dhcp">
             <title>Install quantum-dhcp-agent</title>
             <para>The host running quantum-server requires a network
                 interface with an IP address on the “management
                 network” and another interface on the “data network”. </para>
             <screen><computeroutput>apt-get -y install quantum-dhcp-agent</computeroutput></screen>
-            <para>Install the agent specific to the plugin (see plugin specific agent section above). </para>
+            <para>Install the agent specific to the plugin (see plugin
+                specific agent section above). </para>
         </section>
         <section xml:id="install_quantum-l3">
             <title>Install quantum-l3-agent </title>
-           <screen><computeroutput>apt-get -y install quantum-l3-agent</computeroutput></screen>
-            <para>Install the agent specific to the plugin (see plugin specific agent section above). </para>
-            <para>Create a bridge "br-ex" that will be used to uplink this node running quantum-l3-agent to the
-                  external network, then attach the NIC attached to the external network to this bridge.</para>
-            <para>For example, with Open vSwitch and NIC eth1 connect to the external network, run:</para>
+            <screen><computeroutput>apt-get -y install quantum-l3-agent</computeroutput></screen>
+            <para>Install the agent specific to the plugin (see plugin
+                specific agent section above). </para>
+            <para>Create a bridge "br-ex" that will be used to uplink
+                this node running quantum-l3-agent to the external
+                network, then attach the NIC attached to the external
+                network to this bridge.</para>
+            <para>For example, with Open vSwitch and NIC eth1 connect
+                to the external network, run:</para>
             <screen><computeroutput>ovs-vsctl add-br br-ex
 ovs-vsctl add-port br-ex eth1
             </computeroutput></screen>
-            <para>The node running quantum-l3-agent should not have an IP address manually configured on the NIC connected to the external network.
-            Rather, you must have a range of IP addresses from the external network that can be used by Quantum for routers that uplink
-            to the external network. This range must be large enough to have an IP address for each router in the deployment, as well as each
-            floating IP.</para>
-            <para>
-            The quantum-l3-agent uses the Linux IP stack and iptables to perform L3 forwarding and NAT.  In order to support multiple routers with
-            potentially overlapping IP addresses, quantum-l3-agent defaults to using Linux network namespaces to provide isolated forwarding contexts
-            (see diagram FIXME).  As a result, the IP addresses of routers will not be visible simply by running "ip addr list" or "ifconfig" on the
-            node.  Similarly, you will not be able to directly ping fixed IPs.  To do either of these things, you must run the command within
-            a particular router's network namespace.  The namespace will have the name "qrouter-&lt;UUID of the router&gt;.  The following commands are
-            examples of running commands in the namespace of a router with UUID 47af3868-0fa8-4447-85f6-1304de32153b:
-            <screen>
+            <para>The node running quantum-l3-agent should not have an
+                IP address manually configured on the NIC connected to
+                the external network. Rather, you must have a range of
+                IP addresses from the external network that can be
+                used by Quantum for routers that uplink to the
+                external network. This range must be large enough to
+                have an IP address for each router in the deployment,
+                as well as each floating IP.</para>
+            <para> The quantum-l3-agent uses the Linux IP stack and
+                iptables to perform L3 forwarding and NAT. In order to
+                support multiple routers with potentially overlapping
+                IP addresses, quantum-l3-agent defaults to using Linux
+                network namespaces to provide isolated forwarding
+                contexts (see diagram FIXME). As a result, the IP
+                addresses of routers will not be visible simply by
+                running "ip addr list" or "ifconfig" on the node.
+                Similarly, you will not be able to directly ping fixed
+                IPs. To do either of these things, you must run the
+                command within a particular router's network
+                namespace. The namespace will have the name
+                "qrouter-&lt;UUID of the router&gt;. The following
+                commands are examples of running commands in the
+                namespace of a router with UUID
+                47af3868-0fa8-4447-85f6-1304de32153b:
+                <screen>
             <computeroutput>
 ip netns exec qrouter-47af3868-0fa8-4447-85f6-1304de32153b ip addr list
 ip netns exec qrouter-47af3868-0fa8-4447-85f6-1304de32153b ping &lt;fixed-ip&gt;
@@ -167,41 +203,159 @@ ip netns exec qrouter-47af3868-0fa8-4447-85f6-1304de32153b ping &lt;fixed-ip&gt;
         <section xml:id="install_quantum_client">
             <title>Install quantum CLI Client</title>
             <para>Install the quantum CLI client:</para>
-           <screen><computeroutput>apt-get -y install python-pyparsing python-cliff python-quantumclient</computeroutput></screen>
+            <screen><computeroutput>apt-get -y install python-pyparsing python-cliff python-quantumclient</computeroutput></screen>
         </section>
         <section xml:id="init_config">
             <title>Init, Config, and Log File Locations</title>
-            <para>Services can be started and stopped using the 'service' command.  For example:</para>
-        <screen><computeroutput>
-service quantum-server stop
+            <para>Services can be started and stopped using the
+                'service' command. For example:</para>
+            <screen><computeroutput>service quantum-server stop
 service quantum-server status
 service quantum-server start
 service quantum-server restart</computeroutput></screen>
-    <para> Log files are found in /var/log/quantum. </para>
-    <para> Configuration files are in /etc/quantum. </para>
+            <para> Log files are found in /var/log/quantum. </para>
+            <para> Configuration files are in /etc/quantum.</para>
         </section>
     </section>
     <section xml:id="install_fedora">
         <title>Installing Packages (Fedora) </title>
-        <para>[For Essex, Bob Kurkura has done a great job of
-            documenting Red Hat packages</para>
-       <itemizedlist><listitem>
-                <para>install server + client packages</para>
-            </listitem>
-            <listitem>
-                <para>configuration, including configuring keystone
-                    info, choosing a plugin</para>
-            </listitem>
-            <listitem>
-                <para>include plugin specific config params or point
-                    to config files in reference section?</para>
-            </listitem>
-            <listitem>
-                <para>starting + stopping services</para>
-            </listitem>
-            <listitem>
-                <para>logging (if varies?) </para>
-            </listitem></itemizedlist>
+        <para>The OpenStack packages for Fedora can be retrieved from:
+                <uri>https://apps.fedoraproject.org/packages/s/openstack</uri>.</para>
+        <section xml:id="fedora_rpc_setup">
+            <title xml:id="qpid_rpc_setup">RPC Setup </title>
+            <para>Quantum uses RPC to allow DHCP agents and any plugin
+                agents to communicate with the main quantum-server
+                process.  Commonly, this can use the same RPC
+                mechanism used by other OpenStack components like
+                Nova.</para>
+            <para>To use QPID AMQP as the message bus for RPC, make
+                sure that QPID is installed on a host reachable via
+                the management network (if this is already the case
+                because of deploying another service like Nova, this
+                existing QPID setup is sufficient):  </para>
+            <screen><computeroutput>sudo yum -y install qpid-cpp-server qpid-cpp-server-daemon
+sudo chkconfig qpidd on
+sudo service qpidd start</computeroutput></screen>
+            <para>Then update /etc/quantum/quantum.conf with these
+                values: </para>
+            <screen><computeroutput>rpc_backend = quantum.openstack.common.rpc.impl_qpid
+qpid_hostname = &lt;mgmt-IP-of-qpid-host></computeroutput></screen>
+            <important>
+                <para>The Fedora packaging has a number of utility
+                    scripts that configure all of the necessary
+                    configuration files. The scripts can also be used
+                    to understand what needs to be configured for the
+                    specific Quantum services. The scripts will be
+                    described below. Please note that the scripts make
+                    use of the package openstack-utils. Please
+                    install:</para>
+                <para>
+                    <screen><computeroutput>sudo yum install -y openstack-utils</computeroutput></screen>
+                </para>
+            </important>
+        </section>
+        <section  xml:id="fedora_q_server">
+            <title>Install quantum-server and plugin </title>
+            <para>Install quantum-server and plugin. <emphasis
+                    role="bold">Note</emphasis> the client is
+                installed as a dependency for the Quantum
+                service.</para>
+            <screen><computeroutput>sudo yum install -y openstack-quantum
+sudo yum install -y openstack-quantum-openvswitch</computeroutput></screen>
+            <para>Most plugins require a database to be installed and
+                configured in a plugin configuration file.  The Fedora
+                packaging for Quantum a server setup utility scripts
+                that will take care of this. For example: </para>
+            <screen><computeroutput>sudo quantum-server-setup --plugin openvswitch </computeroutput></screen>
+            <para>Enable and start the service:</para>
+            <screen><computeroutput>sudo systemctl enable quantum-server.service
+sudo systemctl start quantum-server.service</computeroutput></screen>
+            <note>
+                <para>Different plugins can use different database
+                    schemas, so when switching a plugin, you must
+                    always drop the quantum database and start
+                    fresh.</para>
+            </note>
+        </section>
+        <section  xml:id="fedora_q_plugin">
+            <title>Install quantum-plugin-*-agent</title>
+            <para>Some plugins utilize an agent that runs on each node
+                that handles data packets. This includes any node
+                running nova-compute, as well as nodes running
+                dedicated quantum agents like quantum-dhcp-agent and
+                quantum-l3-agent (see below). If your plugin uses an
+                agent, this section describes how to run the agent for
+                this plugin, as well as the basic configuration
+                options.</para>
+            <section  xml:id="fedora_q_agent">
+                <title>Open vSwitch Agent</title>
+                <para>Install the OVS agent: </para>
+                <screen><computeroutput>sudo yum install -y openstack-quantum-openvswitch</computeroutput></screen>
+                <para>Run the agent setup script:</para>
+                <screen><computeroutput>sudo quantum-agent-setup --plugin openvswitch</computeroutput></screen>
+                <para>All hosts running
+                    quantum-plugin-openvswitch-agent also requires
+                    that an OVS bridge named "br-int" exists. To
+                    create it, run:</para>
+                <screen><computeroutput>ovs-vsctl add-br br-int</computeroutput></screen>
+                <para>Enable and start the agent:</para>
+                <screen><computeroutput>sudo systemctl enable quantum-openvswitch-agent.service
+sudo systemctl start quantum-openvswitch-agent.service</computeroutput></screen>
+            </section>
+        </section>
+        <section  xml:id="fedora_q_dhcp">
+            <title>Install quantum-dhcp-agent</title>
+            <para>The DHCP agent is part of the openstack-quantum
+                package.</para>
+            <screen><computeroutput>sudo yum install -y openstack-quantum</computeroutput></screen>
+            <para>Run the agent setup script:</para>
+            <screen><computeroutput>sudo quantum-dhcp-setup --plugin openvswitch</computeroutput></screen>
+            <para>Enable and start the agent:</para>
+            <screen><computeroutput>sudo systemctl enable quantum-dhcp-agent.service 
+ sudo systemctl start quantum-dhcp-agent.service </computeroutput></screen>
+        </section>
+        <section  xml:id="fedora_q_l3">
+            <title>Install quantum-l3-agent </title>
+            <para>The L3 agent is part of the openstack-quantum
+                package.</para>
+            <para>Create a bridge "br-ex" that will be used to uplink
+                this node running quantum-l3-agent to the external
+                network, then attach the NIC attached to the external
+                network to this bridge.For example, with Open vSwitch
+                and NIC eth1 connect to the external network,
+                run:</para>
+            <screen><computeroutput>sudo ovs-vsctl add-br br-ex
+sudo ovs-vsctl add-port br-ex eth1</computeroutput></screen>
+            <para>The node running quantum-l3-agent should not have an
+                IP address manually configured on the NIC connected to
+                the external network. Rather, you must have a range of
+                IP addresses from the external network that can be
+                used by Quantum for routers that uplink to the
+                external network. This range must be large enough to
+                have an IP address for each router in the deployment,
+                as well as each floating IP.</para>
+            <screen><computeroutput>sudo yum install -y openstack-quantum</computeroutput></screen>
+            <para>Run the agent setup script:</para>
+            <screen><computeroutput>sudo quantum-l3-setup --plugin openvswitch</computeroutput></screen>
+            <para>Enable and start the agent:</para>
+            <screen><computeroutput>sudo systemctl enable quantum-l3-agent.service 
+sudo systemctl start quantum-l3-agent.service</computeroutput></screen>
+        </section>
+        <section xml:id="fedora_q_client">
+            <title>Install quantum CLI client</title>
+            <para>Install the quantum CLI client:</para>
+            <screen><computeroutput>sudo yum install -y python-quantumclient</computeroutput></screen>
+        </section>
+        <section xml:id="fedora_misc">
+            <title><?sbr?>Init, Config, and Log File Locations</title>
+            <para>Services can be started and stopped using the
+                'service' command. For example:</para>
+            <screen><computeroutput>sudo service quantum-server stop
+sudo service quantum-server status
+sudo service quantum-server start
+sudo service quantum-server restart</computeroutput></screen>
+            <para>Log files are found in /var/log/quantum. </para>
+            <para>Configuration files are in /etc/quantum.</para>
+        </section>
     </section>
-    <?hard-pagebreak?>
 </chapter>
