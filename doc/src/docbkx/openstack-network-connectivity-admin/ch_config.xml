@@ -68,12 +68,10 @@ keystone endpoint-create --region $REGION --service-id quantum --publicurl
                 <para>With the template driver, for a given region ($REGION) and IP
                       address of the Quantum server ($IP), add the following content to
                       your keystone catalog template file (default_catalog.templates):</para>
-                <screen><computeroutput>
-catalog.$Region.network.publicURL = http://$IP:9696
+                <screen><computeroutput>catalog.$Region.network.publicURL = http://$IP:9696
 catalog.$Region.network.adminURL = http://$IP:9696
 catalog.$Region.network.internalURL = http://$IP:9696
-catalog.$Region.network.name = Network Service
-                </computeroutput></screen>
+catalog.$Region.network.name = Network Service </computeroutput></screen>
             </step>
             <step>
                 <title>Create Quantum Service User</title>
@@ -192,8 +190,10 @@ quantum_admin_tenant_name=service
 quantum_admin_username=quantum
 quantum_admin_password=password
 quantum_admin_auth_url=http://192.168.1.2:35357/v2.0
-libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchDriver  # needed only for nova-compute
-libvirt_use_virtio_for_bridges=True # needed only for nova-compute</computeroutput> </screen>
+
+# needed only for nova-compute
+libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchDriver
+libvirt_use_virtio_for_bridges=True </computeroutput> </screen>
         </section>
     </section>
 </chapter>
