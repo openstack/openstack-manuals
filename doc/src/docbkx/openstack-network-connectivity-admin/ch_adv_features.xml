@@ -39,7 +39,6 @@ format="PNG" />
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="ch_adv_features">
     <title>Advanced Features through API Extensions</title>
-    <para> </para>
     <para>This section discusses two API extensions implemented by
         several plugins.  We include them in this guide as they are
         provide capabilities similar to what was available in
@@ -47,7 +46,7 @@ format="PNG" />
         portion of the OpenStack community.  </para>
     <section xml:id="provider_networks">
         <title>Provider Networks</title>
-        <para>Goal: allow cloud administrators to create Quantum
+        <para>Provider networks allow cloud administrators to create Quantum
             networks that map directly to physical networks in the
             data center.  This is commonly used to give tenants direct
             access to a "public" network that can be used to reach the
@@ -56,28 +55,160 @@ format="PNG" />
             allow a VM from the "marketing" department to be placed on
             the same VLAN as bare-metal marketing hosts in the same
             data center).  </para>
-        <para>- Describe basic model of defining nets, mapping nets to
-            bridges.  </para>
-        <para>- examples creating provider networks (both flat and
-            vlan) </para>
+        <para>[Detailed configuration instructions content to be added]</para>
     </section>
     <section xml:id="l3_router_and_nat">
-        <title>L3 Router and NAT</title>
-        <para>Goal: access to external networks (e.g., Internet) via
-            an L3 router while still being able to control network
-            topology and IP addressing. </para>
-        <para>Two main modes: </para>
-        <para>* single provider router (similar to nova-network) </para>
-        <para>* per-tenant or per-application routers.  </para>
-        <section xml:id="l3_quantum_arch">
-            <title>L3 Quantum Architecture</title>
-            <para>&lt;extend core diagram to include L3 gateway
-                appliance&gt;  </para>
-            <para>- talk about setting up and running l3-agent. 
-                Running multiple agents.  </para>
+        <title>L3 Routing and NAT</title>
+        <para>Just like the core Quantum API provides abstract L2 network
+        segments that are decopuled from the technology used to implement
+        the L2 network, Quantum includes an API extension that provides
+        abstract L3 routers that API users can dynamically provision and
+        configure.  These Quantum routers can connect multiple L2 Quantum
+        networks, and can also provide a "gateway" that connects one or more
+        private L2 networks to a shared "external" network (e.g., a public
+        network for access to the Internet).  See <xref linkend="use_cases_single_router"/> and
+        <xref linkend="use_cases_tenant_router"/> for details on
+        common models of deploying Quantum L3 routers.</para>
+        <para>
+        The L3 router provides basic NAT capabilities on "gateway" ports
+        that uplink the router to external networks.  This router SNATs all
+        traffic by default, and supports "Floating IPs", which creates a
+        static one-to-one mapping from a public IP on the external network
+        to a private IP on one of the other subnets attached to the router.
+        This allows a tenant to selectively expose VMs on private networks to
+        other hosts on the external network (and often to all hosts on the
+        Internet).  Floating IPs can be allocated and then mapped from one
+        Quantum port to another, as needed.
+        </para>
+        <section xml:id="l3_api_abstractions">
+            <title>L3 API Abstractions</title>
+            <table rules="all">
+                <caption>Router</caption>
+                <thead>
+                    <tr>
+                        <th> Attribute name </th>
+                        <th> Type </th>
+                        <th> Default Value </th>
+                        <th> Description </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>id </td>
+                        <td>uuid-str </td>
+                        <td>generated </td>
+                        <td>UUID for the router. </td>
+                    </tr>
+                    <tr>
+                        <td>name </td>
+                        <td>String </td>
+                        <td>None </td>
+                        <td>Human-readable name for the router. Might
+                            not be unique. </td>
+                    </tr>
+                    <tr>
+                        <td>admin_state_up </td>
+                        <td>Bool </td>
+                        <td>True </td>
+                        <td>The administrative state of router. If
+                            false (down), the router does not forward
+                            packets.</td>
+                    </tr>
+                    <tr>
+                        <td>status </td>
+                        <td>String </td>
+                        <td>N/A </td>
+                        <td><para>Indicates whether router is
+                                  currently operational. </para></td>
+                    </tr>
+                    <tr>
+                        <td>tenant_id </td>
+                        <td>uuid-str </td>
+                        <td>N/A </td>
+                        <td>Owner of the router. Only admin users can
+                            specify a tenant_id other than its own.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>external_gateway_info</td>
+                        <td>dict contain 'network_id' key-value pair</td>
+                        <td>Null</td>
+                        <td>External network that this router connects
+                            to for gateway services (e.g., NAT)</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table rules="all">
+                <caption>Floating IP</caption>
+                <thead>
+                    <tr>
+                        <th> Attribute name </th>
+                        <th> Type </th>
+                        <th> Default Value </th>
+                        <th> Description </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>id </td>
+                        <td>uuid-str </td>
+                        <td>generated </td>
+                        <td>UUID for the floating IP. </td>
+                    </tr>
+                    <tr>
+                        <td>floating_ip_address</td>
+                        <td>string (IP address)</td>
+                        <td>allocated by Quantum</td>
+                        <td>The external network IP address available
+                            to be mapped to an internal IP address.</td>
+                    </tr>
+                    <tr>
+                        <td>floating_network_id</td>
+                        <td>uuid-str</td>
+                        <td>N/A</td>
+                        <td><para>The network indicating the set of subnets
+                                  from which the floating IP should be
+                                  allocated</para></td>
+                    </tr>
+                    <tr>
+                        <td>router_id </td>
+                        <td>uuid-str </td>
+                        <td>N/A</td>
+                        <td>Read-only value indicating the router that
+                            connects the external network to the associated
+                            internal port, if a port is associated.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>port_id</td>
+                        <td>uuid-str</td>
+                        <td>Null</td>
+                        <td>Indicates the internal Quantum port associated
+                            with the external floating IP.</td>
+                    </tr>
+                    <tr>
+                        <td>fixed_ip_address</td>
+                        <td>string (IP address)</td>
+                        <td>Null</td>
+                        <td>Indicates the IP address on the internal port
+                            that is mapped to by the floating IP (since
+                            a Quantum port might have more than one IP
+                            address).</td>
+                    </tr>
+                    <tr>
+                        <td>tenant_id </td>
+                        <td>uuid-str </td>
+                        <td>N/A </td>
+                        <td>Owner of the Floating IP. Only admin users can
+                            specify a tenant_id other than its own.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
         </section>
-        <section xml:id="api_abstractions2">
-            <title>API Abstractions </title>
+        <section xml:id="l3_workflow">
+            <title>Common L3 Workflow</title>
             <para>Create external networks (admin-only) </para>
             <screen><computeroutput>quantum net-create public --router:external=True
 quantum subnet-create public 172.16.1.0/24 </computeroutput></screen>
@@ -86,13 +217,13 @@ quantum subnet-create public 172.16.1.0/24 </computeroutput></screen>
             <para>Creating routers</para>
             <para>Internal-only router to connect multiple L2 networks
                 privately.  </para>
-            <screen><computeroutput>quantum net-create net1 
+            <screen><computeroutput>quantum net-create net1
 quantum subnet-create net1 10.0.0.0/24
-quantum net-create net2 
-quantum subnet-create net1 10.0.0.0/24
+quantum net-create net2
+quantum subnet-create net2 10.0.1.0/24
 quantum router-create router1
-quantum router-interface-add router1 &lt;subnet1-uuid&gt; 
-quantum router-interface-add router2 &lt;subnet2-uuid&gt;</computeroutput></screen>
+quantum router-interface-add router1 &lt;subnet1-uuid&gt;
+quantum router-interface-add router1 &lt;subnet2-uuid&gt;</computeroutput></screen>
             <para>The router will get an interface with the gateway_ip
                 address of the subnet, and this interface will be
                 attached to a port on the L2 Quantum network
@@ -129,7 +260,7 @@ quantum router-interface-add router2 &lt;subnet2-uuid&gt;</computeroutput></scre
                 router).  </para>
             <para>Create floating IP unassociated, then
                 associate</para>
-            <screen><computeroutput>quantum floatingip-create &lt;ext-net-id&gt; 
+            <screen><computeroutput>quantum floatingip-create &lt;ext-net-id&gt;
 quantum floatingip-associate &lt;floatingip-id&gt; &lt;internal VM port-id&gt; </computeroutput></screen>
             <para>create floating IP and associate in a single
                 step</para>
