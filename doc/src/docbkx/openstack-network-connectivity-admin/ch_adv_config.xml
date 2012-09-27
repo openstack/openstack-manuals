@@ -45,7 +45,7 @@ format="PNG" />
         After installing from packages, $QUANTUM_CONF_DIR is
             <filename>/etc/quantum</filename>.</para>
     <section xml:id="quantum_server">
-        <title>Quantum Server</title>
+        <title>Quantum Server with Plugin</title>
         <para>This is the Quantum service that runs the Quantum API
             Web Server. It is responsible for loading a plugin and
             passing the API calls to the plugin for processing. The
@@ -62,13 +62,8 @@ format="PNG" />
             that performs the actual networking. Specific
             configuration details can be seen in the Appendix -
             Configuration File Options. </para>
-    </section>
-    <section xml:id="core_plugins">
-        <title>Core Plugins</title>
-        <para>This section will describe the OpenvSwitch and
-            LinuxBridge plugin configurations. The plugins require a
-            database. Quantum makes use of MYSQL by default. After
-            installing and starting the SQL server, set a password for
+        <para>Most plugins require a SQL database. After
+            installing and starting the database server, set a password for
             the root account and delete the anonymous accounts: </para>
         <screen><computeroutput>$&gt; mysql -u root
 mysql&gt; update mysql.user set password = password('iamroot') where user = 'root';
@@ -83,7 +78,7 @@ mysql&gt; grant all on &lt;database-name&gt;.* to '&lt;user-name&gt;'@'%';</comp
             the relevant plugin configuration files. The plugin
             specific configuration files can be found at
             $QUANTUM_CONF_DIR/plugins.</para>
-        <para>Each plugin has a L2 agent that performs the actual
+        <para>Some plugins have a L2 agent that performs the actual
             networking. That is, the agent will attach the virtual
             machine NIC to the Quantum network. Each node should have
             a Quantum agent running on it. Note that the agent
@@ -247,5 +242,9 @@ admin_password $SERVICE_PASSWORD</computeroutput></screen>
                         Configuration File Options.</para>
                 </listitem>
             </orderedlist></para>
+    </section>
+    <section xml:id="l3_agent_detail">
+    <title>L3 Agent</title>
+    <para>[Content to be added]</para>
     </section>
 </chapter>
