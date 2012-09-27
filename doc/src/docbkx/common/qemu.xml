@@ -12,14 +12,16 @@
         performance than KVM and is a poor choice for a production deployment.</para>
     <para>The typical uses cases for QEMU are<itemizedlist>
             <listitem>
-                <para>Running on older hardware that lacks virtualization support.</para>
+                <para>Running on older hardware that lacks
+                    virtualization support.</para>
             </listitem>
             <listitem>
-                <para>Running the Compute service inside of a virtual machine for development or
-                    testing purposes, where the hypervisor does not support native virtualization
-                    for guests.</para>
+                <para>Running the Compute service inside of a virtual
+                    machine for development or testing purposes, where
+                    the hypervisor does not support native
+                    virtualization for guests.</para>
             </listitem>
-        </itemizedlist>running on</para>
+        </itemizedlist></para>
     <para>KVM requires hardware support for acceleration. If hardware support is not available
         (e.g., if you are running Compute inside of a VM and the hypervisor does not expose the
         required hardware support), you can use QEMU instead. KVM and QEMU have the same level of
@@ -47,9 +49,16 @@ libvirt_type=qemu</programlisting></para>
         </listitem>
     </itemizedlist>
     <section xml:id="fixes-rhel-qemu" os="rhel;fedora;centos"><title>Tips and fixes for QEMU on RHEL</title>
-    <para>
-        If you are testing OpenStack in a virtual machine, you need to configure nova to use qemu without KVM and hardware virtualization. The second command relaxes SELinux rules to allow this mode of operation (https://bugzilla.redhat.com/show_bug.cgi?id=753589) The last 2 commands here work around a libvirt issue fixed in RHEL 6.4. Note nested virtualization will be the much slower TCG variety, and you should provide lots of memory to the top level guest, as the openstack created guests default to 2GM RAM with no overcommit.
-    </para>
+    <para> If you are testing OpenStack in a virtual machine, you need
+            to configure nova to use qemu without KVM and hardware
+            virtualization. The second command relaxes SELinux rules
+            to allow this mode of operation
+            (https://bugzilla.redhat.com/show_bug.cgi?id=753589) The
+            last 2 commands here work around a libvirt issue fixed in
+            RHEL 6.4. Note nested virtualization will be the much
+            slower TCG variety, and you should provide lots of memory
+            to the top level guest, as the OpenStack-created guests
+            default to 2GM RAM with no overcommit. </para>
         <note><para>The second command, <command>setsebool</command>, may take a while.</para></note>
         <screen><prompt>$></prompt> <userinput>sudo openstack-config --set /etc/nova/nova.conf DEFAULT libvirt_type qemu</userinput>
         <prompt>$></prompt> <userinput>setsebool -P virt_use_execmem on</userinput>

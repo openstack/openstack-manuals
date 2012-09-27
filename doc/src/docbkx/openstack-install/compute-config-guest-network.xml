@@ -11,8 +11,8 @@
     <para>Set your network interface in promiscuous mode so that it can receive packets that are
         intended for virtual machines. As
         root:<screen><prompt>#</prompt> <userinput>ip link set eth0 promisc on</userinput></screen></para>
-    <para>Set up your /etc/network/interfaces file with these settings: </para>
-    <itemizedlist><listitem><para>eth0: public IP, gateway</para></listitem>
+    <para os="ubuntu">Set up your /etc/network/interfaces file with these settings: </para>
+    <itemizedlist os="ubuntu"><listitem><para>eth0: public IP, gateway</para></listitem>
         <listitem><para>br100: no ports, stp off, fd 0, first address from fixed_range set in nova.conf files.</para></listitem></itemizedlist> 
     <para os="ubuntu">Here's an Ubuntu/Debian example:</para>
     <para os="ubuntu"><literallayout class="monospaced"># The loopback network interface
@@ -30,7 +30,7 @@ address 192.168.100.1
 netmask 255.255.255.0 
 bridge_stp off
 bridge_fd 0</literallayout></para>
-    <para os="centos;fedora;rhel">Here's an example for RHEL, Fedora, or CentOS. Create
+    <para os="centos;fedora;rhel">Here's an example network setup for RHEL, Fedora, or CentOS. Create
         
         <filename>/etc/sysconfig/network-scripts/ifcfg-br100</filename>:</para>
     <literallayout os="centos;fedora;rhel" class="monospaced">
