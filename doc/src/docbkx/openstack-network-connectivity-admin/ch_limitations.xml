@@ -42,27 +42,99 @@ format="PNG" />
     <para>
         <itemizedlist>
             <listitem>
-                <para>No equivalent for nova-network --multi_host flag
+                <para><emphasis>Quantum overlapping IPs do not work with
+                Nova security groups or Nova metadata server:</emphasis>
+                Nova was designed assuming that a particular IP address will
+                only ever be used by a single VM at any time.  Quantum supports
+                overlapping IPs if the allow_overlapping_ips config value is
+                set to 'True'.  We default this value to false to prevent
+                unintentionally running Nova security groups or metadata
+                server with overlapping IPs.  If you enable this flag,
+                you must disable both Nova security groups and the Nova
+                metadata service.</para>
+            </listitem>
+            <listitem>
+                <para><emphasis>No equivalent for nova-network --multi_host
+                flag:</emphasis> Nova-network has a model where the L3,
+                NAT, and DHCP processing happen on the compute node itself,
+                rather than a dedicated networking node.  Quantum does not
+                has an equivalent configuration, but is likely to add a similar
+                capability in the future.  However, since the nova-network
+                multi_host design has some significant limitations in terms of
+                deployment scale (limited to a single physical L2) and L3
+                forwarding behavior (does not map to a single L3 router for
+                traffic between instances on separate networks), the Quantum
+                feature may not be an exact match, or may be limited to
+                a subnet of all Quantum deployment scenarios.
                 </para>
             </listitem>
             <listitem>
-                <para>Using nova metadata service requires special
-                    configuration (TBD) to work with quantum L3, and
-                    will not work if VMs have overlapping IP
-                    addresses. </para>
+                <para><emphasis>Linux network namespace required on
+                nodes running quantum-l3-agent or quantum-dhcp-agent:
+                </emphasis>.  In order to support overlapping IP addresses,
+                the Quantum DHCP and L3 agents uses Linux network namespaces
+                by default.  The hosts running these processes must support
+                namespaces in the Linux kernel (2.6.24 or newer) and must
+                have a version of the 'ip' utility that supports the 'netns'
+                command.  To test, try running the following as root:</para>
+            <screen><computeroutput>ip netns create test-ns
+ip netns exec test-ns ifconfig</computeroutput></screen>
+            <para>If the proceding commands do not produce errors, your
+            platform is likely sufficient to use the dhcp-agent or l3-agent
+            with namespace.  In our experience, most recent Ubuntu platforms
+            support namespaces as does Fedora 17 and new, but some older
+            RHEL platforms do
+            not by default. It may be possible to upgrade the iproute2
+            package on a platform that does not support namespaces by default.
+            </para>
+            <para> If you need to disable namespaces, make sure the quantum.conf
+            used by quantum-server has the following setting:</para>
+            <screen><computeroutput>allow_overlapping_ips=False</computeroutput></screen>
+            <para>and that the dhcp_agent.ini and l3_agent.ini have the
+            following setting:</para>
+            <screen><computeroutput>use_namespaces=False</computeroutput></screen>
+
             </listitem>
             <listitem>
-                <para>Namespaces with certain linux distributions
-                </para>
+            <para><emphasis>No IPv6 support for L3 agent:</emphasis>
+            The quantum-l3-agent supports only IPv4 forwarding.  Currently,
+            There are no errors provided if you configure IPv6 addresses
+            via the API.</para>
             </listitem>
             <listitem>
-                <para>nova libvirt ethernet type (SELinux) (Note: we
-                    can work around this by using the vif-driver:
-                    LibvirtHybridOVSBridgeDriver). </para>
+            <para><emphasis>L3 Agent supports limited scale for Quantum Routers:</emphasis>
+            The L3 agent polls the Quantum API to learn about changes to L3
+            configuration.  If there are a large number of routers or router
+            ports, this can lead to heavy load on the database used by a
+            Quantum plugin.  The suggested work-around is to increase the
+            polling_interval value in l3_agent.ini .  This will increase the
+            possible time between when a L3 configuration change happens via
+            the API and when it affects data forwarding.</para>
             </listitem>
             <listitem>
-                <para>DHCP does not work if quantum notifications uses
-                    zmq (require qpid or rabbitmq)</para>
+                <para><emphasis>ZeroMQ support is experimental</emphasis>:
+                    Some agents, including quantum-dhcp-agent,
+                    quantum-openvswitch-agent, and quantum-linuxbridge-agent
+                    use RPC to communicate.  ZeroMQ is an available option
+                    in the configuration file, but has not been tested and
+                    should be considered experimental.  In particular, there
+                    are believed to be issues with ZeroMQ and the dhcp agent.
+                    </para>
+            </listitem>
+            <listitem>
+            <para><emphasis>MetaPlugin is experimental</emphasis>:
+                This release includes a "MetaPlugin" that is intended to
+                support multiple plugins at the same time for different
+                API requests, based on the content of those API requests.
+                This functionality has not been widely reviewed or tested
+                by the core team, and should be considered experimental
+                until further validation is performed. </para>
+           </listitem>
+           <listitem>
+            <para><emphasis>Horizon does not support Routers/Floating IPs
+                  with Quantum:</emphasis> Horizon support is limited to
+                  operations on Quantum Networks, Subnets, and Ports.
+                  Routers and Floating IPs must be configured via CLI.</para>
             </listitem>
         </itemizedlist>
     </para>
