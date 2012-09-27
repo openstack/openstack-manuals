@@ -56,19 +56,127 @@ format="PNG" />
         Keystone to authorize user requests. Quantum handles two kind
         of authorization policies: <itemizedlist>
             <listitem>
-                <para>Operation-based: policy specify access criteria
-                    for specific operations, possibly with
-                    fine-grained control over specific attributes;
-                </para>
+                <para><emphasis role="bold">Operation-based</emphasis>: policies specify access
+                    criteria for specific operations, possibly with fine-grained control over
+                    specific attributes; </para>
             </listitem>
             <listitem>
-                <para>Resource-based: whether access to specific
-                    resource might be granted or not according to the
-                    permissions configured for the resource (currently
-                    available only for the network resource) The
-                    actual authorization policies enforced in Quantum
-                    might vary from deployment to deployment. </para>
+                <para><emphasis role="bold">Resource-based:</emphasis> whether access to specific
+                    resource might be granted or not according to the permissions configured for the
+                    resource (currently available only for the network resource). The actual
+                    authorization policies enforced in Quantum might vary from deployment to
+                    deployment. </para>
             </listitem>
         </itemizedlist></para>
-    <para>- describe policy.json updates - roles etc </para>
+    <para>The policy engine reads entries from the <emphasis role="italic">policy.json</emphasis>
+        file. The actual location of this file might vary from distribution to distribution. Entries
+        can be updated while the system is running, and no service restart is required. That is to
+        say, everytime the policy file is updated, the policies will be automatically reloaded.
+        Currently the only way of updating such policies is to edit the policy file. Please note
+        that in this section we will use both the terms "policy" and "rule" to refer to objects
+        which are specified in the same way in the policy file; in other words, there are no syntax
+        differences between a rule and a policy. We will define a policy something which is matched
+        directly from the quantum policy engine, whereas we will define a rule as the elements of
+        such policies which are then evaluated. For instance in <code>create_subnet:
+            [["admin_or_network_owner"]]</code>, <emphasis role="italic">create_subnet</emphasis> is
+        regarded as a policy, whereas <emphasis role="italic">admin_or_network_owner</emphasis> is
+        regarded as a rule.</para>
+    <para>Policies are triggered by the Quantum policy engine whenever one of them matches a Quantum
+        API operation or a specific attribute being used in a given operation. For instance the
+            <code>create_subnet</code> policy is triggered every time a <code>POST
+            /v2.0/subnets</code> request is sent to the Quantum server; on the other hand
+            <code>create_network:shared</code> is triggered every time the <emphasis role="italic"
+            >shared</emphasis> attribute is explicitly specified (and set to a value different from
+        its default) in a <code>POST /v2.0/networks</code> request. It is also worth mentioning that
+        policies can be also related to specific API extensions; for instance
+            <code>extension:provider_network:set</code> will be triggered if the attributes defined
+        by the Provider Network extensions are specified in an API request.</para>
+    <para>An authorization policy can be composed by one or more rules. If more rules are specified,
+        evaluation policy will be successful if any of the rules evaluates successfully; if an API
+        operation matches multiple policies, then all the policies must evaluate successfully. Also,
+        authorization rules are recursive. Once a rule is matched, the rule(s) can be resolved to
+        another rule, until a terminal rule is reached.</para>
+    <para>The Quantum policy engine currently defines the following kinds of terminal rules:</para>
+    <para><itemizedlist>
+            <listitem>
+                <para><emphasis role="bold">Role-based rules</emphasis>: evaluate successfully if
+                    the user submitting the request has the specified role. For instance
+                        <code>"role:admin"</code>is successful if the user submitting the request is
+                    an administrator.</para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Field-based rules: </emphasis>evaluate successfully if a
+                    field of the resource specified in the current request matches a specific value.
+                    For instance <code>"field:networks:shared=True"</code> is successful if the
+                    attribute <emphasis role="italic">shared</emphasis> of the <emphasis
+                        role="italic">network</emphasis> resource is set to true.</para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Generic rules:</emphasis> compare an attribute in the
+                    resource with an attribute extracted from the user's security credentials and
+                    evaluates successfully if the comparison is successful. For instance
+                        <code>"tenant_id:%(tenant_id)s"</code> is successful if the tenant
+                    identifier in the resource is equal to the tenant identifier of the user
+                    submitting the request.</para>
+            </listitem>
+        </itemizedlist> The following is an extract from the default policy.json file: </para>
+    <para><code>{</code></para>
+    <para><code>    "admin_or_owner": [["role:admin"], ["tenant_id:%(tenant_id)s"]],
+                </code><emphasis role="bold">[1]</emphasis></para>
+    <para><code>    "admin_or_network_owner": [["role:admin"],
+            ["tenant_id:%(network_tenant_id)s"]],</code></para>
+    <para><code>    "admin_only": [["role:admin"]], "regular_user": [],</code></para>
+    <para><code>    "shared": [["field:networks:shared=True"]],</code></para>
+    <para><code>    "default": [["rule:admin_or_owner"]],</code><emphasis role="bold">[2]</emphasis></para>
+    <para><code>    "create_subnet": [["rule:admin_or_network_owner"]],</code></para>
+    <para><code>    "get_subnet": [["rule:admin_or_owner"], ["rule:shared"]],</code></para>
+    <para><code>    "update_subnet": [["rule:admin_or_network_owner"]],</code></para>
+    <para><code>    "delete_subnet": [["rule:admin_or_network_owner"]],</code></para>
+    <para><code>    "create_network": [],</code></para>
+    <para><code>    "get_network": [["rule:admin_or_owner"], ["rule:shared"]],</code><emphasis role="bold">[3]</emphasis></para>
+    <para><code>    "create_network:shared": [["rule:admin_only"]], </code><emphasis role="bold">[4]</emphasis>
+    </para>
+    <para><code>    "update_network": [["rule:admin_or_owner"]],</code></para>
+    <para><code>    "delete_network": [["rule:admin_or_owner"]],</code></para>
+    <para><code>    "create_port": [], </code></para>
+    <para><code>    "create_port:mac_address": [["rule:admin_or_network_owner"]],</code><emphasis role="bold">[5]</emphasis></para>
+    <para><code>    "create_port:fixed_ips": [["rule:admin_or_network_owner"]],</code></para>
+    <para><code>    "get_port": [["rule:admin_or_owner"]],</code></para>
+    <para><code>    "update_port": [["rule:admin_or_owner"]], </code></para>
+    <para><code>    "delete_port": [["rule:admin_or_owner"]]</code></para>
+    <para><code>}</code></para>
+    <para>[1] is a rule which evaluates successfully if the current user is an administrator or the
+        owner of the resource specified in the request (tenant identifier is equal).</para>
+    <para>[2] is the default policy which is always evaluated if an API operation does not match any
+        of the policies in policy.json.</para>
+    <para>[3] This policy will evaluate successfully if either <emphasis role="italic"
+            >admin_or_owner</emphasis>, or <emphasis role="italic">shared</emphasis> evalutes
+        successfully.</para>
+    <para>[4] This policy will restrict the ability of manipulating the <emphasis role="italic"
+            >shared</emphasis> attribute for a network to administrators only.</para>
+    <para>[5] This policy will restrict the ability of manipilating the <emphasis role="italic"
+            >mac_address</emphasis> attribute for a port only to administrators and the owner of the
+        network where the port is attached.</para>
+    <para>In some cases, some operations should be restricted to administrators only; therefore, as
+        a further example, let us consider how this sample policy file should be modified in a
+        scenario where tenants are allowed only to define networks and see their resources, and all
+        the other operations can be performed only in an administrative context:</para>
+    <para><code>{</code></para>
+    <para><code>    "admin_or_owner": [["role:admin"], ["tenant_id:%(tenant_id)s"]],</code></para>
+    <para><code>    "admin_only": [["role:admin"]], "regular_user": [],</code></para>
+    <para><code>    "default": [["rule:admin_only"]], </code></para>
+    <para><code>    "create_subnet": [["rule:admin_only"]],</code></para>
+    <para><code>    "get_subnet": [["rule:admin_or_owner"]],</code></para>
+    <para><code>    "update_subnet": [["rule:admin_only"]],</code></para>
+    <para><code>    "delete_subnet": [["rule:admin_only"]],</code></para>
+    <para><code>    "create_network": [],</code></para>
+    <para><code>    "get_network": [["rule:admin_or_owner"]],</code></para>
+    <para><code>    "create_network:shared": [["rule:admin_only"]],</code></para>
+    <para><code>    "update_network": [["rule:admin_or_owner"]],</code></para>
+    <para><code>    "delete_network": [["rule:admin_or_owner"]],</code></para>
+    <para><code>    "create_port": [["rule:admin_only"]], </code></para>
+    <para><code>    "get_port": [["rule:admin_or_owner"]],</code></para>
+    <para><code>    "update_port": [["rule:admin_only"]], </code></para>
+    <para><code>    "delete_port": [["rule:admin_only"]]</code></para>
+    <para><code>}</code></para>
 </chapter>
