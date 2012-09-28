@@ -5,12 +5,13 @@
   <modelVersion>4.0.0</modelVersion>
   
   <groupId>org.openstack.docs</groupId>
-  <artifactId>openstack-guide</artifactId>
+  <artifactId>openstack-cli-guide</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>jar</packaging>
-  <name>OpenStack CLI Guide</name>
+  <name>OpenStack CLI Guides</name>
+  
   <!-- ################################################ -->
-  <!-- Use "mvn clean generate-sources" to run this POM -->
+  <!-- USE "mvn clean generate-sources" to run this POM -->
   <!-- ################################################ -->
   <profiles>
     <profile>
@@ -49,20 +50,22 @@
       <plugin>
         <groupId>com.rackspace.cloud.api</groupId>
         <artifactId>clouddocs-maven-plugin</artifactId>
-        <version>1.4.0</version>
+        <version>1.5.0</version>
         <executions>
-          <!--<execution>
+          <execution>
             <id>goal1</id>
             <goals>
               <goal>generate-pdf</goal>
             </goals>
             <phase>generate-sources</phase>
             <configuration>
+              <pdfUrl>cli-guide.pdf</pdfUrl>
               <highlightSource>false</highlightSource>
+              <!-- The following elements sets the autonumbering of sections in output for chapter numbers but no numbered sections-->
               <sectionAutolabel>0</sectionAutolabel>
               <sectionLabelIncludesComponentLabel>0</sectionLabelIncludesComponentLabel>
             </configuration>
-          </execution>-->
+          </execution>
           <execution>
             <id>goal2</id>
             <goals>
@@ -71,11 +74,12 @@
             <phase>generate-sources</phase>
             <configuration>
               <!-- These parameters only apply to webhelp -->
+              <pdfUrl>cli-guide.pdf</pdfUrl>
               <enableDisqus>1</enableDisqus>
               <disqusShortname>os-cliguide</disqusShortname>
               <enableGoogleAnalytics>1</enableGoogleAnalytics>
               <googleAnalyticsId>UA-17511903-6</googleAnalyticsId>
-              <!--<generateToc>
+              <generateToc>
                 appendix  toc,title
                 article/appendix  nop
                 article   toc,title
@@ -87,32 +91,26 @@
                 qandaset  toc
                 reference toc,title
                 set       toc,title
-              </generateToc>-->
+              </generateToc>
               <!-- The following elements sets the autonumbering of sections in output for chapter numbers but no numbered sections-->
-              <webhelpIncludeSearchTab>false</webhelpIncludeSearchTab>
-              <chapterAutolabel>0</chapterAutolabel>
-              <chunkFirstSections>0</chunkFirstSections>
               <sectionAutolabel>0</sectionAutolabel>
               <sectionLabelIncludesComponentLabel>0</sectionLabelIncludesComponentLabel>
-              <preProcess>
-                <mkdir
-                  dir="${project.build.directory}/docbkx/webhelp/bk-cli-guide/content"/>
-                <echo
-                  file="${project.build.directory}/docbkx/webhelp/bk-cli-guide/content/deleteme.html">
-                  &lt;html xmlns="http://www.w3.org/1999/xhtml">
-                  &lt;body>
-                  &lt;div id="content">
-                  &lt;p>foo bar baz&lt;/p>
-                  &lt;/div>
-                  &lt;/body>
-                  &lt;/html>
-                </echo>
-              </preProcess>
               <postProcess>
-                <delete
-                  file="${project.build.directory}/docbkx/webhelp/bk-cli-guide/content/deleteme.html"/>
+                <!-- Copies webhelp (HTML output) to desired URL location on docs.openstack.org -->
+                <copy
+                  todir="${basedir}/target/docbkx/webhelp/cli-guide/">
+                  <fileset
+                    dir="${basedir}/target/docbkx/webhelp/bk-cli-guide/">
+                    <include name="**/*" />
+                  </fileset>
+                </copy>
+                <!--Moves PDFs to the needed placement -->
+                <move failonerror="false"
+                  file="${basedir}/target/docbkx/pdf/bk-cli-guide.pdf"
+                  tofile="${basedir}/target/docbkx/webhelp/cli-guide/content/cli-guide.pdf"/>
+                <!--Deletes leftover uneeded directories -->
+                <delete dir="${basedir}/target/docbkx/webhelp/bk-cli-guide/"/> 
               </postProcess>
-              
             </configuration>
           </execution>
         </executions>

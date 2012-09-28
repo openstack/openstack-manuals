@@ -5,11 +5,12 @@
     xmlns:svg="http://www.w3.org/2000/svg"
     xmlns:html="http://www.w3.org/1999/xhtml"
     version="5.0"
-    xml:id="nova-cli-refrence">
-    <title>OpenStack Nova CLI Guide</title>
+    xml:id="glance-cli-reference">
+    <?dbhtml stop-chunking?>
+    <title>OpenStack Glance CLI Guide</title>
     <para>This section describes what  you can do with the OpenStack
-        Nova client (CLI). </para>
-    <section xml:id="nova_help">
+        Glance client (CLI). </para>
+    <section xml:id="glance_help">
         <title>Getting Command, Parameter, and Subcommand Help</title>
         <para>Help for commands, parameters, and subcommands is
             available with the <command>glance help</command> command.
@@ -27,7 +28,7 @@ Describe a specific image.
 Positional arguments:
   &lt;IMAGE_ID>  ID of image to describe.            </screen></para>
     </section>
-    <section xml:id="listing">
+    <section xml:id="glance-image-list">
         <title>List Images</title>
         <para>To see what images are available to you, use this
             command:
@@ -52,11 +53,9 @@ Positional arguments:
 </screen>
         </para>
     </section>
-    <section xml:id="launch_instance">
+    <section xml:id="glance-image-create">
         <title>Add a New Image</title>
         <para>Adding a new image to your OpenStack cloud.</para>
-        <section xml:id="launch_commands_used">
-            <title>Commands Used</title>
             <para>This process uses the following commands: <itemizedlist>
                     <listitem>
                         <para><command>glance
@@ -75,8 +74,7 @@ Positional arguments:
                             image-show</command></para>
                     </listitem>
                 </itemizedlist></para>
-        </section>
-        <section xml:id="launch_procedure">
+        <section xml:id="glance-image-prereqs">
             <title>Before You Add a New Image</title>
             
             <para>Ensure you have created an image that is OpenStack
@@ -85,55 +83,16 @@ Positional arguments:
                     chapter</link> for details.</para></section>
         
         
-        <section xml:id="inserting_metadata">
-            <title>Inserting metadata during launch</title>
-            <para>When booting a server, you can also add metadata, so
-                that you can more easily identify it amongst your
-                ever-growing elastic cloud. Use the
-                    <literal>--meta</literal> option with a key=value
-                pair, where you can make up the string for both the
-                key and the value. For example, you could add a
-                description and also the creator of the server.
-                <screen>
-<prompt>$</prompt> <userinput>nova boot --image=natty-image --flavor=2 smallimage2 --meta description='Small test image' --meta creator=joecool</userinput>
-                </screen></para>
-            <para>When viewing the server information, you can see the metadata included on the <literal>metadata</literal> line:
-            <screen>
-<prompt>$</prompt> <userinput>nova show smallimage2</userinput>
-+------------------------+---------------------------------------------------------------+
-|        Property        |                             Value                             |
-+------------------------+---------------------------------------------------------------+
-|   OS-DCF:diskConfig    |                             MANUAL                            |
-| OS-EXT-STS:power_state |                               1                               |
-| OS-EXT-STS:task_state  |                              None                             |
-|  OS-EXT-STS:vm_state   |                             active                            |
-|       accessIPv4       |                                                               |
-|       accessIPv6       |                                                               |
-|      config_drive      |                                                               |
-|        created         |                      2012-05-16T20:48:23Z                     |
-|         flavor         |                            m1.small                           |
-|         hostId         |    de0c201e62be88c61aeb52f51d91e147acf6cf2012bb57892e528487   |
-|           id           |              8ec95524-7f43-4cce-a754-d3e5075bf915             |
-|         image          |                          natty-image                          |
-|        key_name        |                                                               |
-|        metadata        | {u'description': u'Small test image', u'creator': u'joecool'} |
-|          name          |                          smallimage2                          |
-|    private network     |                         172.16.101.11                         |
-|        progress        |                               0                               |
-|     public network     |                          10.4.113.11                          |
-|         status         |                             ACTIVE                            |
-|       tenant_id        |                e830c2fbb7aa4586adf16d61c9b7e482               |
-|        updated         |                      2012-05-16T20:48:35Z                     |
-|        user_id         |                de3f4e99637743c7b6d27faca4b800a9               |
-+------------------------+---------------------------------------------------------------+
-            </screen></para>
+        <section xml:id="glance-inserting-metadata">
+            <title>Assigning metadata to an image</title>
+            <para>TBD</para>
         </section>
     </section>
     
     
-    <section xml:id="images"><title>Managing Images</title>
+    <section xml:id="managing-images-glance"><title>Managing Images</title>
     <para>Adding images and setting the access to them can be managed
-            in nova, but you can create images by taking a snapshot of
+            in glance, but you can create images by taking a snapshot of
             a running instance and view available images, set or
             delete image metadata, and delete an image, using the nova
             CLI.</para>
