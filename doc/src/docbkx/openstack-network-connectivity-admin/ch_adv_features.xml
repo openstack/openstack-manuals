@@ -54,8 +54,223 @@ format="PNG" />
             the network that already have a defined meaning (e.g.,
             allow a VM from the "marketing" department to be placed on
             the same VLAN as bare-metal marketing hosts in the same
-            data center).  </para>
-        <para>[Detailed configuration instructions content to be added]</para>
+            data center).</para>
+        <para>The provider extension allows administrators to
+            explicitly manage the relationship between Quantum virtual
+            networks and underlying physical mechanisms such as VLANs
+            and tunnels. When this extension is supported, Quantum
+            client users with administrative privileges see additional
+            provider attributes on all virtual networks, and are able
+            to specify these attributes in order to create provider
+            networks.</para>
+        <para>As of the Folsom release, the provider extension is
+            supported by the openvswitch and linuxbridge plugins.
+            Configuration of these plugins requires familiarity with
+            this extension.</para>
+        <section xml:id="provider_terminology">
+            <title>Terminology</title>
+            <para>A number of terms are used in the provider extension
+                and in the configuration of plugins supporting the
+                provider extension:<itemizedlist>
+                    <listitem>
+                        <para><emphasis role="bold">virtual
+                                network</emphasis> - A Quantum L2
+                            network (identified by a UUID and optional
+                            name) whose ports can be attached as vNICs
+                            to Nova instances and to various Quantum
+                            agents. The openvswitch and linuxbridge
+                            plugins each support several different
+                            mechanisms to realize virtual
+                            networks.</para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">physical
+                                network</emphasis> - A network
+                            connecting virtualization hosts (i.e. Nova
+                            compute nodes) with each other and with
+                            other network resources. Each physical
+                            network may support multiple virtual
+                            networks. The provider extension and the
+                            plugin configurations identify physical
+                            networks using simple string names.</para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">tenant
+                                network</emphasis> - A "normal"
+                            virtual network created by/for a tenant.
+                            The tenant is not aware of how that
+                            network is physically realized.</para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">provider
+                                network</emphasis> - A virtual network
+                            administratively created to map to a
+                            specific network in the data center,
+                            typically to enable direct access to
+                            non-OpenStack resources on that network.
+                            Tenants can be given access to provider
+                            networks.</para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">VLAN
+                                network</emphasis> - A virtual network
+                            realized as packets on a specific physical
+                            network containing IEEE 802.1Q headers
+                            with a specific VID field value. VLAN
+                            networks sharing the same physical network
+                            are isolated from each other at L2, and
+                            can even have overlapping IP address
+                            spaces. Each distinct physical network
+                            supporting VLAN networks is treated as a
+                            separate VLAN trunk, with a distinct space
+                            of VID values. Valid VID values are 1
+                            through 4094.</para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">flat
+                                network</emphasis> - A virtual network
+                            realized as packets on a specific physical
+                            network containing no IEEE 802.1Q header.
+                            Each physical network can realize at most
+                            one flat network.</para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">local
+                                network</emphasis> - A virtual network
+                            that allows communication within each
+                            host, but not across a network. Local
+                            networks are intended mainly for
+                            single-node test scenarios, but may have
+                            other uses.</para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">GRE
+                                network</emphasis> - A virtual network
+                            realized as network packets encapsulated
+                            using GRE. GRE networks are also referred
+                            to as "tunnels". GRE tunnel packets are
+                            routed by the host's IP routing table, so
+                            GRE networks are not associated by Quantum
+                            with specific physical networks.</para>
+                    </listitem>
+                </itemizedlist></para>
+            <para>Both the openvswitch and linuxbridge plugins support
+                VLAN networks, flat networks, and local networks. Only
+                the openvswitch plugin currently supports GRE
+                networks, provided that the host's Linux kernel
+                supports the required Open vSwitch features.</para>
+        </section>
+        <section xml:id="provider_attributes">
+            <title>Provider Attributes</title>
+            <para>The provider extension extends the Quantum network
+                resource with the following three additional
+                attributes:</para>
+            <table rules="all">
+                <caption>Provider Network Attributes</caption>
+                <thead>
+                    <tr>
+                        <th> Attribute name </th>
+                        <th> Type </th>
+                        <th> Default Value </th>
+                        <th> Description </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>provider:network_type </td>
+                        <td>String </td>
+                        <td>N/A </td>
+                        <td>The physical mechanism by which the
+                            virtual network is realized. Possible
+                            values are "flat", "vlan", "local", and
+                            "gre", corresponding to flat networks,
+                            VLAN networks, local networks, and GRE
+                            networks as defined above. All types of
+                            provider networks can be created by
+                            administrators, while tenant networks can
+                            be realized as "vlan", "gre", or "local"
+                            network types depending on plugin
+                            configuration.</td>
+                    </tr>
+                    <tr>
+                        <td>provider:physical_network </td>
+                        <td>String </td>
+                        <td>If a physical network named "default" has
+                            been configured, and if
+                            provider:network_type is "flat" or "vlan",
+                            then "default" is used.</td>
+                        <td>The name of the physical network over
+                            which the virtual network is realized for
+                            flat and VLAN networks. Not applicable to
+                            the "local" or "gre" network types.</td>
+                    </tr>
+                    <tr>
+                        <td>provider:segmentation_id</td>
+                        <td>Integer</td>
+                        <td>N/A</td>
+                        <td>For VLAN networks, the VLAN VID on the
+                            physical network that realizes the virtual
+                            network. Valid VLAN VIDs are 1 through
+                            4094. For GRE networks, the tunnel ID.
+                            Valid tunnel IDs are any 32 bit unsigned
+                            integer. Not applicable to the "flat" or
+                            "local" network types.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <para>The provider attributes are returned by Quantum
+                network API operations when the client is authorized
+                for the <code>extension:provider_network:view</code>
+                action via the Quantum policy configuration. The
+                provider attributes are only accepted for network API
+                operations if the client is authorized for the
+                    <code>extension:provider_network:set</code>
+                action. The default Quantum API policy configuration
+                authorizes both actions for users with the admin role.
+                See <xref linkend="ch_auth"/> for details on policy
+                configuration.</para>
+        </section>
+        <section xml:id="provider_api_workflow">
+            <title>Provider API Workflow</title>
+            <para>Show all attributes of a network, including provider
+                attributes when invoked with the admin role:</para>
+            <para>
+                <programlisting>quantum net-show &lt;name or net-id&gt;</programlisting>
+            </para>
+            <para>Create a local provider network (admin-only):</para>
+            <para>
+                <programlisting>quantum net-create &lt;name&gt; --tenant_id &lt;tenant-id&gt; --provider:network_type local</programlisting>
+            </para>
+            <para>Create a flat provider network (admin-only):</para>
+            <para>
+                <programlisting>quantum net-create &lt;name&gt; --tenant_id &lt;tenant-id&gt; --provider:network_type flat --provider:physical_network &lt;phys-net-name&gt;</programlisting>
+            </para>
+            <para>Create a VLAN provider network (admin-only):</para>
+            <para>
+                <programlisting>quantum net-create &lt;name&gt; --tenant_id &lt;tenant-id&gt; --provider:network_type vlan --provider:physical_network &lt;phys-net-name&gt; --provider:segmentation_id &lt;VID&gt;</programlisting>
+            </para>
+            <para>Create a GRE provider network (admin-only):</para>
+            <para>
+                <programlisting>quantum net-create &lt;name&gt; --tenant_id &lt;tenant-id&gt; --provider:network_type gre --provider:segmentation_id &lt;tunnel-id&gt;</programlisting>
+            </para>
+            <para>When creating flat networks or VLAN networks,
+                &lt;phys-net-name&gt; must be known to the plugin. See
+                    <xref linkend="ovs_quantum_plugin"/> and <xref
+                    linkend="linuxbridge_conf"/> for details on
+                configuring network_vlan_ranges to identify all
+                physical networks. When creating VLAN networks,
+                &lt;VID&gt; can fall either within or outside any
+                configured ranges of VLAN IDs from which tenant
+                networks are allocated. Similarly, when creating GRE
+                networks, &lt;tunnel-id&gt; can fall either within or
+                outside any tunnel ID ranges from which tenant
+                networks are allocated.</para>
+            <para>Once provider networks have been created, subnets
+                can be allocated and they can be used similarly to
+                other virtual networks, subject to authorization
+                policy based on the specified
+                &lt;tenant_id&gt;.</para>
+        </section>
     </section>
     <section xml:id="l3_router_and_nat">
         <title>L3 Routing and NAT</title>
