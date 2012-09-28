@@ -1,0 +1,826 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<appendix xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" 
+    version="5.0"
+    xml:id="ap_installingfolsomubuntuprecise"
+    os="ubuntu">
+    <title>OpenStack Folsom deployment guide for Ubuntu Precise,
+        Single node installation. </title>
+    <para>ASSUMPTION: Currently guide uses Nova-Network will be updated for Quantum soon, although
+        we have created database and endpoint for it.</para>
+    <section xml:id="osfolubuntu-prerquisite">
+    <title>Prerequisites</title>
+    <para>One server with two NICs</para>
+    <itemizedlist>
+        <listitem><para>IF1 : Public traffic</para></listitem>
+        <listitem><para>IF2 : Private traffic</para></listitem>
+    </itemizedlist>    
+        <para>
+            <programlisting>
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# The primary network interface
+auto eth0
+iface eth0 inet static
+ address 10.211.55.17
+ netmask 255.255.255.0
+ gateway 10.211.55.1
+
+# This is an autoconfigured IPv6 interface
+iface eth0 inet6 auto
+
+auto eth1
+iface eth1 inet static
+ address 10.211.55.20
+ netmask 255.255.255.0
+ gatewaty10.211.55.1
+  </programlisting>
+</para>
+        <screen>
+   <prompt>$</prompt> <userinput>sudo /etc/init.d/networking restart</userinput>
+ </screen>
+        <para>Download and install the Ubuntu Precise 12.04 LTS x86_64</para>
+        <para>Add the following Ubuntu repository:</para>
+        <screen>
+    <prompt>$</prompt> <userinput>sudo echo «deb http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/folsom main» >> /etc/apt/sources.list.d/folsom.list</userinput>
+    <prompt>$</prompt> <userinput>sudo apt-get update</userinput>    
+    <prompt>$</prompt> <userinput>sudo apt-get upgrade</userinput>        
+        </screen>
+        <note>
+            <para>If you see the following error: <code>GPG error:
+                    http://ubuntu-cloud.archive.canonical.com
+                    precise-updates/folsom Release: The following
+                    signatures couldn't be verified because the public
+                    key is not available: NO_PUBKEY
+                    5EDB1B62EC4926EA</code>, upgrade ubuntu-cloud-keyring by running <code>sudo apt-get install ubuntu-cloud-keyring</code>.
+            </para>
+        </note>
+        <para>Install the required packages</para>
+        <screen>
+    <prompt>$</prompt> <userinput> sudo apt-get install vlan bridge-utils ntp mysql-server python-mysqldb</userinput>
+        </screen>
+        <para>Enable the ip_forwarding</para>
+        <screen>
+     <prompt>$</prompt> <userinput> sudo vim /etc/sysctl.conf</userinput>
+
+# Uncomment the next line to enable packet forwarding for IPv4
+net.ipv4.ip_forward=1       
+</screen>
+        <para>Update the configuration</para>
+        <screen> <prompt>$</prompt> <userinput>sudo sysctl -p</userinput>    
+</screen>
+        <para>Edit /etc/ntp.conf</para>
+        <para>
+            <programlisting># /etc/ntp.conf, configuration for ntpd; see ntp.conf(5) for help
+
+driftfile /var/lib/ntp/ntp.drift
+
+
+# Enable this if you want statistics to be logged.
+#statsdir /var/log/ntpstats/
+
+statistics loopstats peerstats clockstats
+filegen loopstats file loopstats type day enable
+filegen peerstats file peerstats type day enable
+filegen clockstats file clockstats type day enable
+
+# Specify one or more NTP servers.
+
+# Use servers from the NTP Pool Project. Approved by Ubuntu Technical Board
+# on 2011-02-08 (LP: #104525). See http://www.pool.ntp.org/join.html for
+# more information.
+server 0.ubuntu.pool.ntp.org
+server 1.ubuntu.pool.ntp.org
+server 2.ubuntu.pool.ntp.org
+server 3.ubuntu.pool.ntp.org
+
+# Use Ubuntu's ntp server as a fallback.
+server ntp.ubuntu.com iburst
+server 127.127.1.0
+fudge 127.127.1.0 stratum 10
+
+# Access control configuration; see /usr/share/doc/ntp-doc/html/accopt.html for
+# details.  The web page &lt;http://support.ntp.org/bin/view/Support/AccessRestrictions>
+# might also be helpful.
+#
+# Note that "restrict" applies to both servers and clients, so a configuration
+# that might be intended to block requests from certain clients could also end
+# up blocking replies from your own upstream servers.
+
+# By default, exchange time with everybody, but don't allow configuration.
+restrict -4 default kod notrap nomodify nopeer noquery
+restrict -6 default kod notrap nomodify nopeer noquery
+
+# Local users may interrogate the ntp server more closely.
+restrict 127.0.0.1
+restrict ::1
+
+# Clients from this (example!) subnet have unlimited access, but only if
+# cryptographically authenticated.
+#restrict 192.168.123.0 mask 255.255.255.0 notrust
+
+
+# If you want to provide time to your local subnet, change the next line.
+# (Again, the address is an example only.)
+#broadcast 192.168.123.255
+
+# If you want to listen to time broadcasts on your local subnet, de-comment the
+# next lines.  Please do this only if you trust everybody on the network!
+#disable auth
+#broadcastclient
+</programlisting>
+        </para>
+        <screen> <prompt>$</prompt> <userinput>sudo service ntp restart</userinput></screen>
+        <para>Edit /etc/mysql/my.cnf  and uncomment</para>
+        <programlisting>bind-address            = 0.0.0.0</programlisting>
+        <para>Restart mysql server</para>
+        <screen><prompt>$</prompt> <userinput>sudo service mysql restart</userinput></screen>
+        <para>Creating and adding the databases for all the
+            services<screen><prompt>$</prompt> <userinput>mysql -u root -proot -e "create database nova;"</userinput>
+<prompt>$</prompt> <userinput>mysql -u root -proot -e "create database glance;"</userinput>
+<prompt>$</prompt> <userinput>mysql -u root -proot -e "create database cinder;"</userinput>
+<prompt>$</prompt> <userinput>mysql -u root -proot -e "create database keystone;"</userinput>
+<prompt>$</prompt> <userinput>mysql -u root -proot -e "create database ovs_quantum;"</userinput> </screen>Add
+            mysql permissions for the created
+            databases<screen> <userinput>mysql > grant all privileges on nova.* to nova@"localhost" identified by "openstack";</userinput>
+ <userinput>mysql > grant all privileges on nova.* to nova@"%" identified by "openstack";</userinput>
+ <userinput>mysql > grant all privileges on glance.* to glance@"localhost" identified by "openstack";</userinput>
+ <userinput>mysql > grant all privileges on glance.* to glance@"%" identified by "openstack";</userinput> 
+ <userinput>mysql > grant all privileges on cinder.* to cinder@"localhost" identified by "openstack";</userinput> 
+ <userinput>mysql > grant all privileges on cinder.* to cinder@"%" identified by "openstack";</userinput>
+ <userinput>mysql > grant all privileges on keystone.* to keystone@"localhost" identified by "openstack";</userinput> 
+ <userinput>mysql > grant all privileges on keystone.* to keystone@"%" identified by "openstack";</userinput> 
+ <userinput>mysql > grant all privileges on ovs_quantum.* to ovs_quantum@"localhost" identified by "openstack";</userinput>
+ <userinput>mysql > grant all privileges on ovs_quantum.* to ovs_quantum@"%" identified by "openstack";</userinput></screen></para>
+    
+    
+    </section>
+    <section xml:id="osfolubuntu-identityservice">
+        <title>Installing and Configuring Identity service</title>
+        <para>Install the
+            packages<screen><prompt>$</prompt> <userinput>sudo apt-get install keystone python-keystone python-keystoneclient</userinput></screen>Edit
+            /etc/keystone/keystone.conf and modify Admin token, SQLAlchemy, Catalog
+            accordingly.<programlisting>admin_token = admin</programlisting><programlisting>connection = mysql://keystone:openstack@10.211.55.17/keystone</programlisting><programlisting>
+driver = keystone.catalog.backends.sql.Catalog</programlisting></para>
+        <para>Restart
+            Keystone<screen><prompt>$</prompt> <userinput>sudo service keystone restart</userinput> </screen></para>
+        <para>Populate the
+            database<screen><prompt>$</prompt> <userinput>keystone-manage db_sync</userinput>
+</screen>Update
+            the /home/$user/.bashrc by adding then credentials
+            below<programlisting>export SERVICE_TOKEN=admin
+export OS_TENANT_NAME=admin
+export OS_USERNAME=admin
+export OS_PASSWORD=openstack
+export OS_AUTH_URL=http://10.211.55.17:5000/v2.0/
+export SERVICE_ENDPOINT=http://10.211.55.17:35357/v2.0/</programlisting>Source
+            the environment
+            setting<screen><prompt>$</prompt> <userinput>source ./home/$user/.bashrc</userinput></screen>Add
+            keystone
+            users<screen><prompt>$</prompt> <userinput>keystone user-create --name admin --pass openstack --email admin@foobar.com</userinput>
+<prompt>$</prompt> <userinput>keystone user-create --name nova --pass openstack   --email nova@foobar.com</userinput>
+<prompt>$</prompt> <userinput>keystone user-create --name glance --pass openstack   --email glance@foobar.com</userinput>
+<prompt>$</prompt> <userinput>keystone user-create --name swift --pass openstack   --email swift@foobar.com</userinput>
+<prompt>$</prompt> <userinput>keystone user-create --name cinder --pass openstack   --email cinder@foobar.com</userinput>
+<prompt>$</prompt> <userinput>keystone user-create --name quantum --pass openstack   --email quantum@foobar.com</userinput></screen>Create
+            roles<screen><prompt>$</prompt> <userinput>keystone role-create --name admin</userinput>
+<prompt>$</prompt> <userinput>keystone role-create --name Member</userinput></screen></para>
+        <para>Create
+            services<screen><prompt>$</prompt> <userinput>keystone service-create --name nova --type compute --description "OpenStack Compute Service"</userinput>
+<prompt>$</prompt> <userinput>keystone service-create --name volume --type volume --description "OpenStack Volume Service"</userinput>
+<prompt>$</prompt> <userinput>keystone service-create --name glance --type image --description "OpenStack Image Service"</userinput>
+<prompt>$</prompt> <userinput>keystone service-create --name swift --type object-store --description "OpenStack Storage Service"</userinput>
+<prompt>$</prompt> <userinput>keystone service-create --name keystone --type identity --description "OpenStack Identity Service"</userinput>
+<prompt>$</prompt> <userinput>keystone service-create --name ec2 --type ec2 --description "EC2 Service"</userinput>
+<prompt>$</prompt> <userinput>keystone service-create --name cinder --type volume --description "Cinder Service"</userinput>
+<prompt>$</prompt> <userinput>keystone service-create --name quantum --type network --description "OpenStack Networking service"</userinput></screen>Create
+            endpoints<programlisting># For Nova-api</programlisting></para>
+        <para>
+            <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service_id bbbd1945908f4fae90530e8721df650d --publicurl "http://10.211.55.17:8774/v2/%(tenant_id)s" --adminurl "http://10.211.55.17:8774/v2/%(tenant_id)s" --internalurl "http://10.211.55.17:8774/v2/%(tenant_id)s"
+</userinput></screen>
+            <programlisting># For Nova-volume</programlisting>
+            <screen>
+<prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service_id 53a8ae206b3645368daa9db4fe149ee5 --publicurl "http://10.211.55.17:8776/v1/%(tenant_id)s" --adminurl "http://10.211.55.17:8776/v1/%(tenant_id)s" --internalurl "http://10.211.55.17:8776/v1/%(tenant_id)s"
+</userinput></screen>
+            <programlisting>#For Glance
+</programlisting>
+            <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service_id 4088ac79a42d4495977465a782fbf03f --publicurl "http://10.211.55.17:9292/v1" --adminurl "http://10.211.55.17:9292/v1" --internalurl "http://10.211.55.17:9292/v1"
+</userinput></screen>
+            <programlisting># For Swift</programlisting>
+            <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service_id 
+259703bf8d3c4b5e8aad1179fa8171bd --publicurl "http://10.211.55.17:8080/v1/AUTH_%(tenant_id)s" --adminurl "http://10.211.55.17:8080/v1" --internalurl "http://10.211.55.17:8080/v1/AUTH_%(tenant_id)s"</userinput></screen>
+            <programlisting>#For Identity Service</programlisting>
+            <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service_id 1f46270f7c774a0786ec6ea590d99b7c --publicurl "http://10.211.55.17:5000/v2.0" --adminurl "http://10.211.55.17:35357/v2.0" --internalurl "http://10.211.55.17:5000/v2.0"</userinput></screen>
+            <programlisting>#For EC2_compatibility</programlisting>
+            <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service_id 58e531e33059482f940de8ba9e97e5d1 --publicurl "http://10.211.55.17:8773/services/Cloud" --adminurl "http://10.211.55.17:8773/services/Admin" --internalurl "http://10.211.55.17:8773/services/Cloud"
+</userinput></screen>
+        </para>
+        <para>
+            <programlisting>#For Cinder</programlisting>
+            <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service_id 65a888cf384d4c68b595196661cee87d --publicurl "http://10.211.55.17:8776/v1/%(tenant_id)s" --adminurl "http://10.211.55.17:8776/v1/%(tenant_id)s" --internalurl "http://10.211.55.17:8776/v1/%(tenant_id)s"
+</userinput></screen>
+        </para>
+        <programlisting>#For Quantum</programlisting>
+        <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service-id 59877a8f97f04a2aad1e8164e14d7450 --publicurl "http://10.211.55.17:9696/" --adminurl "http://10.211.55.17:9696/" --internalurl "http://10.211.55.17:9696/"</userinput></screen>
+        <para>Retrieve all the
+            ids<screen><prompt>$</prompt> <userinput>keystone tenant-list</userinput></screen></para>
+        <programlisting>+----------------------------------+---------+---------+
+|                id                |   name  | enabled |
++----------------------------------+---------+---------+
+| 2a76a11b872e4ca18adb3162924735af | service |   True  |
+| 950fe8e5ed5f4659a8556ac836e8943d |  admin  |   True  |
++----------------------------------+---------+---------+
+</programlisting>
+        <screen><prompt>$</prompt> <userinput>keystone user-list</userinput></screen>
+        <programlisting>+----------------------------------+---------+---------+--------------------+
+|                id                |   name  | enabled |       email        |
++----------------------------------+---------+---------+--------------------+
+| 1d64219fcdeb41c3a163a761c61ef280 |   nova  |   True  |  nova@foobar.com   |
+| 223c1711de5446f9b99c71803fc488db | quantum |   True  | quantum@foobar.com |
+| 45e9461fa61e48f99de1adcd0b38eae7 |  admin  |   True  |  admin@foobar.com  |
+| af4a1747e71d48c7834c408678f27316 |  cinder |   True  | cinder@foobar.com  |
+| ceade796dee047b8b3488661a29f23cd |  glance |   True  | glance@foobar.com  |
+| e3b2c1c3082c4545888329d0862ffcf1 |  swift  |   True  |  swift@foobar.com  |
++----------------------------------+---------+---------+--------------------+
+</programlisting>
+        <screen><prompt>$</prompt> <userinput>keystone role-list</userinput></screen>
+        <programlisting>+----------------------------------+--------+
+|                id                |  name  |
++----------------------------------+--------+
+| de031f37231b4d4cafb0af9f56dba100 | Member |
+| e45af7cf33be4dac8070aa8310144ce3 | admin  |
++----------------------------------+--------+</programlisting>
+        <screen><prompt>$</prompt> <userinput>service-list</userinput></screen>
+        <programlisting>+----------------------------------+----------+--------------+------------------------------+
+|                id                |   name   |     type     |         description          |
++----------------------------------+----------+--------------+------------------------------+
+| 1f46270f7c774a0786ec6ea590d99b7c | keystone |   identity   |  OpenStack Identity Service  |
+| 259703bf8d3c4b5e8aad1179fa8171bd |  swift   | object-store |  OpenStack Storage Service   |
+| 4088ac79a42d4495977465a782fbf03f |  glance  |    image     |   OpenStack Image Service    |
+| 53a8ae206b3645368daa9db4fe149ee5 |  volume  |    volume    |   OpenStack Volume Service   |
+| 58e531e33059482f940de8ba9e97e5d1 |   ec2    |     ec2      |         EC2 Service          |
+| 65a888cf384d4c68b595196661cee87d |  cinder  |    volume    |        Cinder Service        |
+| 72c2cd62020f4c349e64a383b05daf8b | quantum  |   network    | OpenStack Networking service |
+| bbbd1945908f4fae90530e8721df650d |   nova   |   compute    |  OpenStack Compute Service   |
++----------------------------------+----------+--------------+------------------------------+</programlisting>
+        <para>Adding roles</para>
+        <programlisting># User admin &lt;> role admin &lt;> tenant admin</programlisting>
+        <screen><prompt>$</prompt> <userinput>keystone user-role-add --user_id 45e9461fa61e48f99de1adcd0b38eae7 --role_id e45af7cf33be4dac8070aa8310144ce3 --tenant_id 950fe8e5ed5f4659a8556ac836e8943d
+</userinput></screen>
+        <programlisting># User nova &lt;> role admin &lt;> tenant service</programlisting>
+        <screen><prompt>$</prompt> <userinput>keystone user-role-add --user_id 1d64219fcdeb41c3a163a761c61ef280 --role_id e45af7cf33be4dac8070aa8310144ce3 --tenant_id 2a76a11b872e4ca18adb3162924735af
+</userinput></screen>
+        <programlisting># User glance &lt;> role admin &lt;> tenant service</programlisting>
+        <screen><prompt>$</prompt> keystone user-role-add --user_id e3b2c1c3082c4545888329d0862ffcf1 --role_id e45af7cf33be4dac8070aa8310144ce3 --tenant_id 2a76a11b872e4ca18adb3162924735af</screen>
+        <programlisting># User swift &lt;> role admin &lt;> tenant service</programlisting>
+        <screen><prompt>$</prompt> <userinput>keystone user-role-add --user_id e3b2c1c3082c4545888329d0862ffcf1 --role_id e45af7cf33be4dac8070aa8310144ce3 --tenant_id 2a76a11b872e4ca18adb3162924735af
+</userinput></screen>
+        <programlisting># User admin &lt;> role Member &lt;> tenant admin</programlisting>
+        <screen><prompt>$</prompt> <userinput>keystone user-role-add --user_id 45e9461fa61e48f99de1adcd0b38eae7 --role_id de031f37231b4d4cafb0af9f56dba100 --tenant_id 950fe8e5ed5f4659a8556ac836e8943d
+</userinput></screen>
+        <programlisting> # User cinder &lt;> role admin &lt;> tenant service</programlisting>
+        <screen><prompt>$</prompt> <userinput>keystone user-role-add --user_id af4a1747e71d48c7834c408678f27316 --role_id e45af7cf33be4dac8070aa8310144ce3 --tenant_id 2a76a11b872e4ca18adb3162924735af
+</userinput></screen>
+        <programlisting># User quantum &lt;> role admin &lt;> tenant service </programlisting>
+        <screen><prompt>$</prompt> <userinput>keystone user-role-add --user_id 223c1711de5446f9b99c71803fc488db --role_id e45af7cf33be4dac8070aa8310144ce3 --tenant_id 2a76a11b872e4ca18adb3162924735af
+</userinput></screen>
+        <programlisting> # User swift &lt;> role Member &lt;> service admin</programlisting>
+        <screen><prompt>$</prompt> <userinput>keystone user-role-add --user_id e3b2c1c3082c4545888329d0862ffcf1 --role_id de031f37231b4d4cafb0af9f56dba100 --tenant_id 950fe8e5ed5f4659a8556ac836e8943d</userinput></screen>
+        <para>NOTE: All These ID will differ in your configuration use appropriate command and
+            retrive all the ID.</para>
+        <programlisting/>
+    </section>
+    <section xml:id="osfolubuntu-imageservice">
+        <title>Installing and configuring Image Service</title>
+        <para>Install the packages</para>
+        <screen><prompt>$</prompt> <userinput>sudo apt-get install glance glance-api glance-client glance-common glance-registry python-glance</userinput></screen>
+        <para>Edit /etc/glance/glance-api-paste.ini (filter
+            authoken)<programlisting>[filter:authtoken]
+paste.filter_factory = keystone.middleware.auth_token:filter_factory
+auth_host = 10.211.55.17
+auth_port = 35357
+auth_protocol = http
+admin_tenant_name = service
+admin_user = glance
+admin_password = openstack</programlisting>Edit
+            /etc/glance/glance-registry-paste.ini (filter
+            authtoken)<programlisting>[filter:authtoken]
+paste.filter_factory = keystone.middleware.auth_token:filter_factory
+auth_host = 10.211.55.17
+auth_port = 35357
+auth_protocol = http
+admin_tenant_name = service
+admin_user = glance
+admin_password = openstack </programlisting>
+            Edit /etc/glance/glance-api.conf</para>
+        <para>SQLAlchemy part of
+            config<programlisting>sql_connection = mysql://glance:openstack@10.211.55.17/glance</programlisting></para>
+        <para>Append the following
+            lines<programlisting>[paste_deploy]
+flavor = keystone</programlisting></para>
+        <para>Edit /etc/glance/glance-registry.conf</para>
+        <para>SQLAlchemy part of
+            config<programlisting>sql_connection = mysql://glance:openstack@10.211.55.17/glance</programlisting></para>
+        <para>Append the following
+            lines<programlisting>[paste_deploy]
+flavor = keystone</programlisting></para>
+        <para>Populate the
+            databse<screen><prompt>$</prompt> <userinput>sudo glance-manage db_sync</userinput></screen></para>
+        <para>Restart all
+            services<screen><prompt>$</prompt> <userinput>sudo service glance-api restart; sudo service glance-registry restart</userinput></screen>Testing
+            Glance
+            configuration<screen><prompt>$</prompt> <userinput>glance index</userinput></screen>If
+            nothing is returned, then it’s working</para>
+        
+        
+    </section>
+    <section xml:id="osfolubuntu-computesevice">
+        <title> Installing and configuring Compute</title>
+        
+        <para>Install the
+            packages<screen><prompt>$</prompt> <userinput>sudo apt-get install nova-api nova-cert nova-compute nova-compute-qemu nova-doc nova-network nova-objectstore nova-scheduler nova-volume rabbitmq-server novnc nova-consoleauth novnc  </userinput></screen>Update
+            /etc/nova/nova.conf<programlisting>[DEFAULT]
+logdir=/var/log/nova
+state_path=/var/lib/nova
+lock_path=/run/lock/nova
+allow_admin_api=true
+verbose=True
+api_paste_config=/etc/nova/api-paste.ini
+scheduler_driver=nova.scheduler.simple.SimpleScheduler
+s3_host=10.211.55.17
+ec2_host=10.211.55.17
+ec2_dmz_host=10.211.55.17
+rabbit_host=10.211.55.17
+cc_host=10.211.55.17
+nova_url=http://10.211.55.17:8774/v1.1/
+sql_connection=mysql://nova:openstack@10.211.55.17/nova
+ec2_url=http://10.211.55.17:8773/services/Cloud
+
+# Auth
+use_deprecated_auth=false
+auth_strategy=keystone
+keystone_ec2_url=http://10.211.55.17:5000/v2.0/ec2tokens
+# Imaging service
+glance_api_servers=10.211.55.17:9292
+image_service=nova.image.glance.GlanceImageService
+
+# Virt driver
+connection_type=libvirt
+libvirt_type=qemu
+libvirt_use_virtio_for_bridges=true
+start_guests_on_host_boot=false
+resume_guests_state_on_host_boot=false
+
+# Vnc configuration
+novnc_enabled=true
+novncproxy_base_url=http://10.211.55.17:6080/vnc_auto.html
+novncproxy_port=6080
+vncserver_proxyclient_address=127.0.0.1
+vncserver_listen=0.0.0.0
+
+# Network settings
+dhcpbridge_flagfile=/etc/nova/nova.conf
+dhcpbridge=/usr/bin/nova-dhcpbridge
+network_manager=nova.network.manager.VlanManager
+public_interface=eth0
+vlan_interface=eth1
+fixed_range=192.168.4.32/27
+routing_source_ip=10.211.55.17
+network_size=32
+force_dhcp_release=True
+iscsi_helper=ietadm
+iscsi_ip_address=10.211.55.20
+rootwrap_config=/etc/nova/rootwrap.conf
+
+# Cinder #
+volume_api_class=nova.volume.cinder.API
+osapi_volume_listen_port=5900
+</programlisting>Update
+            the file ownership
+            rights<screen><prompt>$</prompt> <userinput>sudo chown -R nova. /etc/nova</userinput>
+<prompt>$</prompt> <userinput>sudo chmod 644 /etc/nova/nova.conf</userinput></screen>Edit
+            /etc/nova/api-paste.ini (filter
+            authtoken)<programlisting>[filter:authtoken]
+paste.filter_factory = keystone.middleware.auth_token:filter_factory
+auth_host = 10.211.55.17
+auth_port = 35357
+auth_protocol = http
+admin_tenant_name = service
+admin_user = nova
+admin_password = openstack
+signing_dirname = /tmp/keystone-signing-nova</programlisting>Populate
+            the
+            database<screen><prompt>$</prompt> <userinput>sudo nova-manage db sync</userinput></screen>Create
+            the private
+            network<screen><prompt>$</prompt><userinput>nova-manage network create private --fixed_range_v4=192.168.4.32/27 --num_networks=1 --bridge=br100 --bridge_interface=eth0 --network_size=32</userinput></screen>Edit
+            /etc/default/iscsitarget<programlisting>ISCSITARGET_ENABLE=true</programlisting>Restart
+            everything</para>
+        <screen><prompt>$</prompt> <userinput>cd /etc/init.d/; for i in $( ls nova-* ); do sudo service $i restart; done </userinput>
+<prompt>$</prompt> <userinput>service open-iscsi restart</userinput>
+<prompt>$</prompt> <userinput>service novnc restart</userinput></screen>
+        <para>Check the smiling
+            services<screen><prompt>$</prompt> <userinput> sudo nova-manage service list</userinput></screen></para>
+        <programlisting>Binary           Host                Zone             Status    State  Updated_At
+nova-consoleauth ubuntu-precise      nova             enabled   :-)    2012-09-10 15:46:31
+nova-scheduler   ubuntu-precise      nova             enabled   :-)    2012-09-10 15:46:31
+nova-compute     ubuntu-precise      nova             enabled   :-)    2012-09-10 15:46:31
+nova-network     ubuntu-precise      nova             enabled   :-)    2012-09-10 15:46:31
+nova-cert        ubuntu-precise      nova             enabled   :-)    2012-09-10 15:46:31</programlisting>
+        
+    </section>
+    <section xml:id="osfolubuntu-dashboardservice">
+        <title>Installing and configuring Dashboard</title>
+        <para>Install the
+            packages<screen><prompt>$</prompt> <userinput>sudo apt-get install openstack-dashboard memcached</userinput></screen>Disable
+            the quantum endpoint, as of now in our setup we are not using Quantum to do so Edit
+            /etc/openstack-dashboard/local_settings.py - under
+            TEMPLATE_DEBUG.<programlisting>QUANTUM_ENABLED = False</programlisting>Restart the
+            services<screen><prompt>$</prompt> <userinput>sudo service apache2 restart; sudo service memcached restart</userinput></screen><screen/></para>
+    </section>
+    <section xml:id="osfolubuntu-cinder">
+        <title>Installing and configuring Cinder</title>
+        <para>Install the
+            packages<screen><prompt>$</prompt> <userinput>sudo apt-get install cinder-api cinder-scheduler cinder-volume iscsitarget open-iscsi iscsitarget-dkms python-cinderclient tgt</userinput></screen></para>
+        <para>Edit /etc/cinder/api-paste.init (filter
+            authtoken)<programlisting>[filter:authtoken]
+paste.filter_factory = keystone.middleware.auth_token:filter_factory
+service_protocol = http
+service_host = 10.211.55.17
+service_port = 5000
+auth_host = 10.211.55.17
+auth_port = 35357
+auth_protocol = http
+admin_tenant_name = service
+admin_user = cinder
+admin_password = openstack</programlisting></para>
+        <para>Edit /etc/cinder/cinder.conf</para>
+        <programlisting>[DEFAULT]
+rootwrap_config=/etc/cinder/rootwrap.conf
+sql_connection = mysql://cinder:openstack@10.211.55.17/cinder
+api_paste_confg = /etc/cinder/api-paste.ini
+
+iscsi_helper=ietadm
+volume_name_template = volume-%s
+volume_group = cinder-volumes
+verbose = True
+auth_strategy = keystone
+#osapi_volume_listen_port=5900</programlisting>
+        <para>Create a 2GB test loopfile</para>
+        <screen><prompt>$</prompt> <userinput>dd if=/dev/zero of=cinder-volumes bs=1 count=0 seek=2G</userinput></screen>
+        <para>Mount it</para>
+        <screen><prompt>$</prompt> <userinput>losetup /dev/loop2 cinder-volumes</userinput></screen>
+        <para>Create a 8e
+            partition<screen><prompt>$</prompt> <userinput>fdisk > n</userinput>
+<prompt>$</prompt> <userinput>fdisk > 1</userinput>
+<prompt>$</prompt> <userinput>fdisk > enter</userinput>
+<prompt>$</prompt> <userinput>fdisk > enter</userinput>
+<prompt>$</prompt> <userinput>fdisk > t</userinput>
+<prompt>$</prompt> <userinput>fdisk > 8e</userinput>
+<prompt>$</prompt> <userinput>fdisk > write</userinput></screen>Add
+            it<screen><prompt>$</prompt> <userinput>pvgcreate /dev/loop2</userinput>
+<prompt>$</prompt> <userinput>vgcreate cinder-volumes /dev/loop2</userinput></screen></para>
+        <para>Restart the
+            services<screen><prompt>$</prompt> <userinput>sudo service cinder-volume restart</userinput>
+<prompt>$</prompt> <userinput>sudo service cinder-api restart</userinput> </screen>Create
+            a 1gb test
+            volume<screen><prompt>$</prompt> <userinput>cinder create --display_name test 1</userinput>
+<prompt>$</prompt> <userinput>cinder list</userinput></screen></para>
+        <programlisting>+--------------------------------------+-----------+--------------+------+-------------+-------------+
+|                  ID                  |   Status  | Display Name | Size | Volume Type | Attached to |
++--------------------------------------+-----------+--------------+------+-------------+-------------+
+| 5bbad3f9-50ad-42c5-b58c-9b6b63ef3532 | available |     test     |  1   |     None    |             |
++--------------------------------------+-----------+--------------+------+-------------+-------------+</programlisting>
+    </section>
+    <section xml:id="osfolubuntu-swift">
+        <title>Installing and configuring Swift</title>
+<para>Install the
+            packages<screen><prompt>$</prompt> <userinput>sudo apt-get install swift swift-proxy swift-account swift-container swift-object xfsprogs curl python-pastedeploy</userinput></screen>Create
+            a loopback
+            device<screen><prompt>$</prompt> <userinput>dd if=/dev/zero of=swift-volume bs=1 count=0 seek=2G</userinput>
+<prompt>$</prompt> <userinput>sudo mkfs.xfs -i size=1024 /srv/swift-disk</userinput></screen>
+            Create a
+            mountpoint<screen><prompt>$</prompt> <userinput>sudo mkdir /mnt/swift_backend</userinput></screen>Add
+            an fstab entry inside
+            /etc/fstab<programlisting>/home/$user/swift-volume /mnt/swift_backend xfs loop,noatime,nodiratime,nobarrier,logbufs=8 0 0</programlisting>Mount
+            it<screen><prompt>$</prompt> <userinput>sudo mount -a</userinput></screen>Create the
+            backend<screen><prompt>$</prompt> <userinput>sudo mount /mnt/swift_backend</userinput>
+<prompt>$</prompt> <userinput>sudo pushd /mnt/swift_backend</userinput>
+<prompt>$</prompt> <userinput>sudo mkdir node1 node2 node3 node4</userinput>
+<prompt>$</prompt> <userinput>sudo popd</userinput>
+<prompt>$</prompt> <userinput>sudo chown swift.swift /mnt/swift_backend/*</userinput>
+<prompt>$</prompt> <userinput>for i in {1..4}; do sudo ln -s /mnt/swift_backend/node$i /srv/node$i; done;</userinput>
+<prompt>$</prompt> <userinput>sudo mkdir -p /etc/swift/account-server /etc/swift/container-server /etc/swift/object- - server /srv/node1/device /srv/node2/device /srv/node3/device /srv/node4/device</userinput>
+<prompt>$</prompt> <userinput>sudo mkdir /run/swift</userinput>
+<prompt>$</prompt> <userinput>sudo chown -L -R swift.swift /etc/swift /srv/node[1-4]/ /run/swift</userinput>
+<prompt>$</prompt> <userinput>sudo mkdir /run/swift</userinput></screen></para>
+        <para>Configure rsync, by modifying
+            /etc/default/rsync<programlisting>RSYNC_ENABLE=true</programlisting></para>
+        <para>Modify,
+            /etc/rsyncd.conf<programlisting># General stuff
+uid = swift
+gid = swift
+log file = /var/log/rsyncd.log
+pid file = /run/rsyncd.pid
+address = 127.0.0.1
+
+# Account Server replication settings
+[account6012]
+max connections = 25
+path = /srv/node1/
+read only = false
+lock file = /run/lock/account6012.lock
+
+[account6022]
+max connections = 25
+path = /srv/node2/
+read only = false
+lock file = /run/lock/account6022.lock
+
+[account6032]
+max connections = 25
+path = /srv/node3/
+read only = false
+lock file = /run/lock/account6032.lock
+
+[account6042]
+max connections = 25
+path = /srv/node4/
+read only = false
+lock file = /run/lock/account6042.lock
+
+# Container server replication settings
+[container6011]
+max connections = 25
+path = /srv/node1/
+read only = false
+lock file = /run/lock/container6011.lock
+
+[container6021]
+max connections = 25
+path = /srv/node2/
+read only = false
+lock file = /run/lock/container6021.lock
+
+[container6031]
+max connections = 25
+path = /srv/node3/
+read only = false
+lock file = /run/lock/container6031.lock
+
+[container6041]
+max connections = 25
+path = /srv/node4/
+read only = false
+lock file = /run/lock/container6041.lock
+
+# Object Server replication settings
+[object6010]
+max connections = 25
+path = /srv/node1/
+read only = false
+lock file = /run/lock/object6010.lock
+
+[object6020]
+max connections = 25
+path = /srv/node2/
+read only = false
+lock file = /run/lock/object6020.lock
+
+[object6030]
+max connections = 25
+path = /srv/node3/
+read only = false
+lock file = /run/lock/object6030.lock
+
+[object6040]
+max connections = 25
+path = /srv/node4/
+read only = false
+lock file = /run/lock/object6040.lock</programlisting>Restart
+            the
+            service<screen><prompt>$</prompt> <userinput>sudo service rsync restart</userinput></screen>Create
+            /etc/rsyslog.d/10-swift.conf<programlisting># Uncomment the following to have a log containing all logs together
+#local1,local2,local3,local4,local5.*   /var/log/swift/all.log
+
+# Uncomment the following to have hourly proxy logs for stats processing
+#$template HourlyProxyLog,"/var/log/swift/hourly/%$YEAR%%$MONTH%%$DAY%%$HOUR%"
+#local1.*;local1.!notice ?HourlyProxyLog
+
+local1.*;local1.!notice /var/log/swift/proxy.log
+local1.notice           /var/log/swift/proxy.error
+local1.*                ~
+
+local2.*;local2.!notice /var/log/swift/storage1.log
+local2.notice           /var/log/swift/storage1.error
+local2.*                ~
+
+local3.*;local3.!notice /var/log/swift/storage2.log
+local3.notice           /var/log/swift/storage2.error
+local3.*                ~
+
+local4.*;local4.!notice /var/log/swift/storage3.log
+local4.notice           /var/log/swift/storage3.error
+local4.*                ~
+
+local5.*;local5.!notice /var/log/swift/storage4.log
+local5.notice           /var/log/swift/storage4.error
+local5.*         </programlisting>Append
+            to /etc/rsyslog.conf<programlisting>$PrivDropToGroup adm</programlisting>Configure the
+            file
+            permissions<screen><prompt>$</prompt> <userinput>sudo mkdir -p /var/log/swift/hourly</userinput>
+<prompt>$</prompt> <userinput>sudo chown -R syslog.adm /var/log/swift</userinput>
+<prompt>$</prompt> <userinput>sudo chmod -R g+w /var/log/swift</userinput>
+<prompt>$</prompt> <userinput>sudo service rsyslog restart</userinput></screen></para>
+        <para>Configure the components</para>
+        <para>Edit
+            /etc/swift/swift.conf<programlisting>[swift-hash]
+# random unique string that can never change (DO NOT LOSE). I’m using 03c9f48da2229770.
+# od -t x8 -N 8 -A n &lt; /dev/random
+# The above command can be used to generate random a string.
+swift_hash_path_suffix = 03c9f48da2229770</programlisting>Edit
+            /etc/swift/proxy-server.conf<programlisting>[DEFAULT]
+bind_port = 8080
+user = swift
+swift_dir = /etc/swift
+
+[pipeline:main]
+# Order of execution of modules defined below
+pipeline = catch_errors healthcheck cache authtoken keystone proxy-server
+
+[app:proxy-server]
+use = egg:swift#proxy
+allow_account_management = true
+account_autocreate = true
+set log_name = swift-proxy
+set log_facility = LOG_LOCAL0
+set log_level = INFO
+set access_log_name = swift-proxy
+set access_log_facility = SYSLOG
+set access_log_level = INFO
+set log_headers = True
+
+[filter:healthcheck]
+use = egg:swift#healthcheck
+
+[filter:catch_errors]
+use = egg:swift#catch_errors
+
+[filter:cache]
+use = egg:swift#memcache
+set log_name = cache
+
+[filter:authtoken]
+paste.filter_factory = keystone.middleware.auth_token:filter_factory
+auth_protocol = http
+auth_host = 127.0.0.1
+auth_port = 35357
+auth_token = admin
+service_protocol = http
+service_host = 127.0.0.1
+service_port = 5000
+admin_token = admin
+admin_tenant_name = service
+admin_user = swift
+admin_password = openstack
+delay_auth_decision = 0
+signing_dir = /tmp/keystone-signing-swift
+
+[filter:keystone]
+paste.filter_factory = keystone.middleware.swift_auth:filter_factory
+operator_roles = admin, Member
+is_admin = true
+
+
+</programlisting></para>
+        <para>Create the account file
+            /etc/swift/account/server/1.conf<programlisting>[DEFAULT]
+devices = /srv/node1
+mount_check = false
+disable_fallocate = true
+bind_port = 6012
+user = swift
+log_facility = LOG_LOCAL2
+recon_cache_path = /var/cache/swift
+
+[pipeline:main]
+pipeline = recon account-server
+
+[app:account-server]
+use = egg:swift#account
+
+[filter:recon]
+use = egg:swift#recon
+
+[account-replicator]
+vm_test_mode = yes
+
+[account-auditor]
+
+[account-reaper]</programlisting></para>
+        <para>Duplicate
+            it<screen><prompt>$</prompt> <userinput>sudo cp /etc/swift/account-server/1.conf /etc/swift/account-server/2.conf</userinput>
+<prompt>$</prompt> <userinput>sudo cp /etc/swift/account-server/1.conf /etc/swift/account-server/3.conf</userinput>
+<prompt>$</prompt> <userinput>sudo cp /etc/swift/account-server/1.conf /etc/swift/account-server/4.conf</userinput>
+<prompt>$</prompt> <userinput>sudo sed -i ’s/6012/6022/g;s/LOCAL2/LOCAL3/g;s/node1/node2/g’ /etc/swift/account-server/2.conf</userinput>
+<prompt>$</prompt> <userinput>sudo sed -i ’s/6012/6032/g;s/LOCAL2/LOCAL4/g;s/node1/node3/g’ /etc/swift/account-server/3.conf</userinput>
+<prompt>$</prompt> <userinput>sudo sed -i ’s/6012/6042/g;s/LOCAL2/LOCAL5/g;s/node1/node4/g’ /etc/swift/account-server/4.conf</userinput></screen></para>
+        <para>Configure the container file
+            (/etc/swift/container-server/1.conf)<programlisting>[DEFAULT]
+devices = /srv/node1
+mount_check = false
+disable_fallocate = true
+bind_port = 6011
+user = swift
+log_facility = LOG_LOCAL2
+recon_cache_path = /var/cache/swift
+
+[pipeline:main]
+pipeline = recon container-server
+
+[app:container-server]
+use = egg:swift#container
+
+[filter:recon]
+use = egg:swift#recon
+
+[container-replicator]
+vm_test_mode = yes
+
+[container-updater]
+
+[container-auditor]
+
+[container-sync]</programlisting>Duplicate
+            it<screen><prompt>$</prompt> <userinput>sudo cp /etc/swift/container-server/1.conf /etc/swift/container-server/2.conf</userinput>
+<prompt>$</prompt> <userinput>sudo cp /etc/swift/container-server/1.conf /etc/swift/container-server/3.conf</userinput>
+<prompt>$</prompt> <userinput>sudo cp /etc/swift/container-server/1.conf /etc/swift/container-server/4.conf</userinput>
+<prompt>$</prompt> <userinput>sudo sed -i ’s/6011/6021/g;s/LOCAL2/LOCAL3/g;’ /etc/swift/container-server/2.conf</userinput>
+<prompt>$</prompt> <userinput>sudo sed -i ’s/6011/6031/g;s/LOCAL2/LOCAL4/g;’ /etc/swift/container-server/3.conf</userinput>
+<prompt>$</prompt> <userinput>sudo sed -i ’s/6011/6041/g;s/LOCAL2/LOCAL5/g;’ /etc/swift/container-server/4.conf</userinput></screen>Create
+            the object server file
+            (/etc/swift/object-server/1.conf)<programlisting>[DEFAULT]
+devices = /srv/node1
+mount_check = false
+disable_fallocate = true
+bind_port = 6010
+user = swift
+log_facility = LOG_LOCAL2
+recon_cache_path = /var/cache/swift
+
+[pipeline:main]
+pipeline = recon object-server
+
+[app:object-server]
+use = egg:swift#object
+
+[filter:recon]
+use = egg:swift#recon
+
+[object-replicator]
+vm_test_mode = yes
+
+[object-updater]
+
+[object-auditor]
+</programlisting>Duplicate
+            it<screen><prompt>$</prompt> <userinput>sudo cp /etc/swift/object-server/1.conf /etc/swift/object-server/2.conf</userinput>
+<prompt>$</prompt> <userinput>sudo cp /etc/swift/object-server/1.conf /etc/swift/object-server/3.conf</userinput>
+<prompt>$</prompt> <userinput>sudo cp /etc/swift/object-server/1.conf /etc/swift/object-server/4.conf</userinput>
+<prompt>$</prompt> <userinput>sudo sed -i ’s/6010/6020/g;s/LOCAL2/LOCAL3/g;’ /etc/swift/object-server/2.conf</userinput>
+<prompt>$</prompt> <userinput>sudo sed -i ’s/6010/6030/g;s/LOCAL2/LOCAL4/g;’ /etc/swift/object-server/3.conf</userinput>
+<prompt>$</prompt> <userinput>sudo sed -i ’s/6010/6040/g;s/LOCAL2/LOCAL5/g;’ /etc/swift/object-server/4.conf</userinput></screen>Configure
+            the
+            rings<screen><prompt>$</prompt> <userinput>pushd /etc/swift</userinput>
+<prompt>$</prompt> <userinput>sudo sudo swift-ring-builder object.builder create 18 3 1</userinput>
+<prompt>$</prompt> <userinput>sudo sudo swift-ring-builder container.builder create 18 3 1</userinput>
+<prompt>$</prompt> <userinput>sudo sudo swift-ring-builder account.builder create 18 3 1</userinput>
+</screen>Create
+            the zones and balance
+            them<screen><prompt>$</prompt> <userinput>sudo swift-ring-builder object.builder add z1-127.0.0.1:6010/device 1</userinput>
+<prompt>$</prompt> <userinput>sudo swift-ring-builder object.builder add z2-127.0.0.1:6020/device 1</userinput>
+<prompt>$</prompt> <userinput>sudo swift-ring-builder object.builder add z3-127.0.0.1:6030/device 1</userinput>
+<prompt>$</prompt> <userinput>sudo swift-ring-builder object.builder add z4-127.0.0.1:6040/device 1</userinput>
+<prompt>$</prompt> <userinput>sudo swift-ring-builder object.builder rebalance</userinput>
+<prompt>$</prompt> <userinput>sudo swift-ring-builder container.builder add z1-127.0.0.1:6011/device 1</userinput>
+<prompt>$</prompt> <userinput>sudo swift-ring-builder container.builder add z2-127.0.0.1:6021/device 1</userinput>
+<prompt>$</prompt> <userinput>sudo swift-ring-builder container.builder add z3-127.0.0.1:6031/device 1</userinput>
+<prompt>$</prompt> <userinput>sudo swift-ring-builder container.builder add z4-127.0.0.1:6041/device 1</userinput>
+<prompt>$</prompt> <userinput>sudo swift-ring-builder container.builder rebalance</userinput>
+<prompt>$</prompt> <userinput>sudo swift-ring-builder account.builder add z1-127.0.0.1:6012/device 1</userinput>
+<prompt>$</prompt> <userinput>sudo swift-ring-builder account.builder add z2-127.0.0.1:6022/device 1</userinput>
+<prompt>$</prompt> <userinput>sudo swift-ring-builder account.builder add z3-127.0.0.1:6032/device 1</userinput>
+<prompt>$</prompt> <userinput>sudo swift-ring-builder account.builder add z4-127.0.0.1:6042/device 1</userinput>
+<prompt>$</prompt> <userinput>sudo swift-ring-builder account.builder rebalance</userinput></screen>Restart
+            the
+            services<screen><prompt>$</prompt> <userinput>sudo swift-init main start</userinput>
+<prompt>$</prompt> <userinput>sudo swift-init rest start</userinput></screen>
+            Test
+            it<screen><prompt>$</prompt> <userinput>swift -v -V 2.0 -A http://127.0.0.1:5000/v2.0/ -U swift -K openstack stat</userinput></screen></para>        
+    </section>
+</appendix>    
