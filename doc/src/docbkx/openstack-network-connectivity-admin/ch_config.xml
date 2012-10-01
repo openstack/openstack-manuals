@@ -46,10 +46,8 @@ format="PNG" />
                         xlink:href="http://www.rackspace.com/cloud/openstack/"
                         >powered by OpenStack</link>'>
 ]>
-<chapter xmlns="http://docbook.org/ns/docbook"
-    xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
-    xml:id="ch_config">
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="ch_config">
     <title>Configuring other OpenStack Components</title>
     <section xml:id="keystone">
         <title>Keystone Configuration for Quantum</title>
@@ -57,40 +55,64 @@ format="PNG" />
             <title>To Configure Keystone for Quantum</title>
             <step>
                 <title>To Create a Quantum Service Entry</title>
-                <para>Quantum needs to be available in the  Keystone
-                    service catalog.  The steps for this depend on whether you are using
-                    Keystone's SQL catalog driver or the template catalog driver.</para>
-                <para>With the sql driver, for a given region ($REGION) and
-                    IP address of the Quantum server ($IP) run: </para>
-                <screen><computeroutput><?db-font-size 75%?>keystone service-create --name quantum --type network --description 'OpenStack Networking Service'
-keystone endpoint-create --region $REGION --service-id quantum --publicurl
-'http://$IP:9696/' --adminurl 'http://$IP:9696/' --internalurl 'http://$IP:9696/'</computeroutput></screen>
-                <para>With the template driver, for a given region ($REGION) and IP
-                      address of the Quantum server ($IP), add the following content to
-                      your keystone catalog template file (default_catalog.templates):</para>
-                <screen><computeroutput>catalog.$Region.network.publicURL = http://$IP:9696
-catalog.$Region.network.adminURL = http://$IP:9696
-catalog.$Region.network.internalURL = http://$IP:9696
-catalog.$Region.network.name = Network Service </computeroutput></screen>
+                <para>Quantum needs to be available in the  Keystone service catalog.  The steps for
+                    this depend on whether you are using Keystone's SQL catalog driver or the
+                    template catalog driver.</para>
+                <para>With the <emphasis>SQL driver</emphasis>, for a given region ($REGION), IP address of the
+                    Quantum server ($IP), and service ID ($ID) returned by the Keystone service catalog, run: </para>
+                <screen><userinput><?db-font-size 75%?>keystone service-create --name quantum --type network --description 'OpenStack Networking Service'</userinput></screen>
+                <para>Make a note of the ID returned by keystone and
+                    put it in the $ID location.</para>
+<screen><userinput>keystone endpoint-create --region $REGION --service-id $ID --publicurl
+                    'http://$IP:9696/' --adminurl 'http://$IP:9696/' --internalurl 'http://$IP:9696/'</userinput></screen>
+                <para>Here's an example with real values:</para>
+                <screen><userinput><?db-font-size 75%?><prompt>$</prompt> <userinput>keystone service-create --name quantum --type network --description 'OpenStack Networking Service'</userinput></userinput></screen>
+                <screen>+-------------+----------------------------------+
+                |   Property  |              Value               |
+                +-------------+----------------------------------+
+                | description | OpenStack Networking Service     |
+                | id          | 26a55b340e254ad5bb78c0b14391e153 |
+                | name        | quantum                          |
+                | type        | network                          |
+                +-------------+----------------------------------+</screen>
+                <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion
+                    --service-id 26a55b340e254ad5bb78c0b14391e153 --publicurl
+                    "http://10.211.55.17:9696/" --adminurl "http://10.211.55.17:9696/" --internalurl
+                    "http://10.211.55.17:9696/" </userinput></screen>
+                <para>With the <emphasis>template driver</emphasis>,
+                    for a given region ($REGION) and IP address of the
+                    Quantum server ($IP), add the following content to
+                    your keystone catalog template file
+                    (default_catalog.templates). </para>
+                <screen><computeroutput>catalog.$REGION.network.publicURL = http://$IP:9696
+catalog.$REGION.network.adminURL = http://$IP:9696
+catalog.$REGION.network.internalURL = http://$IP:9696
+catalog.$REGION.network.name = Network Service </computeroutput></screen>
+                <para>Here is an example with real values:</para>
+                <programlisting>catalog.$Region.network.publicURL = http://10.211.55.17:9696
+                    catalog.$Region.network.adminURL = http://10.211.55.17:9696
+                    catalog.$Region.network.internalURL = http://10.211.55.17:9696
+                    catalog.$Region.network.name = Network Service</programlisting>
+                
             </step>
             <step>
                 <title>Create Quantum Service User</title>
-                <para>For Nova to speak to the Quantum API, and for
-                    some internal components of Quantum to communicate
-                    with the Quantum API, you need to provide them
-                    with admin user credentials that they can use when accessing
-                    the Quantum API.  The suggested
-                    approach is to create a special 'service' tenant, create a
-                    ‘quantum’ user within this tenant, and to assign this user
-                    an 'admin' role. </para>
+                <para>For Nova to speak to the Quantum API, and for some internal components of
+                    Quantum to communicate with the Quantum API, you need to provide them with admin
+                    user credentials that they can use when accessing the Quantum API.  The
+                    suggested approach is to create a special 'service' tenant, create a ‘quantum’
+                    user within this tenant, and to assign this user an 'admin' role. Kindly check
+                    the ID for user, role and tenant.</para>
                 <para>For example: </para>
-                <screen><computeroutput><?db-font-size 75%?>keystone user-create --name=quantum --pass=$SERVICE_PASSWORD
---tenant-id service keystone user-role-add --tenant-id $SERVICE_TENANT
---user-id quantum --role-id $ADMIN_ROLE</computeroutput></screen>
+                <screen><computeroutput><?db-font-size 75%?>keystone user-create --name=quantum --pass=$SERVICE_PASSWORD --tenant-id service 
+</computeroutput></screen>
+                <screen><prompt>$</prompt> <userinput>  keystone user-role-add --user_id
+              45e9461fa61e48f99de1adcd0b38eae7 --role_id e45af7cf33be4dac8070aa8310144ce3
+              --tenant_id 950fe8e5ed5f4659a8556ac836e8943d</userinput></screen>
             </step>
         </procedure>
-        <para> See the Keystone Administrator Guide for more details about
-         creating service entries and service users.</para>
+        <para> See the Keystone Administrator Guide for more details about creating service entries
+            and service users.</para>
     </section>
     <section xml:id="nova_with_quantum">
         <title>Running Nova with Quantum</title>
@@ -105,85 +127,121 @@ catalog.$Region.network.name = Network Service </computeroutput></screen>
             using CLI tools like 'nova-manage' and 'nova' to manage networks or IP addressing,
             including both fixed and floating IPs, is not supported with Quantum.</para>
         <section xml:id="nova_with_quantum_api">
-        <title>Configuring Nova to reach the Quantum API</title>
-        <para>Each time a VM is provisioned or deprovisioned in Nova, Nova communicates with Quantum
-            via the standard API.  To do so, it requires the following items in the nova.conf used
-            by each nova-compute and nova-api instance:  </para>
-        <itemizedlist>
-            <listitem>
-                <para>network_api_class: must be modified from default to indicate that Quantum
-                    should be used rather than the traditional nova-network networking model.</para>
-            </listitem>
-            <listitem>
-                <para>quantum_url: must include the hostname/IP and port of the Quantum server for
-                    this deployment.</para>
-            </listitem>
-            <listitem>
-                <para>quantum_auth_strategy: should be kept a default 'keystone' for all production
-                    deployments.</para>
-            </listitem>
-            <listitem>
-                <para>quantum_admin_tenant_name: must be modified to be the the name of the service
-                    tenant created in the above section on Keystone configuration.</para>
-            </listitem>
-            <listitem>
-                <para>quantum_admin_username: must be modified to be the the name of the user
-                    created in the above section on Keystone configuration.</para>
-            </listitem>
-            <listitem>
-                <para>quantum_admin_password: must be modified to be the the password of the user
-                    created in the above section on Keystone configuration.</para>
-            </listitem>
-            <listitem>
-                <para>quantum_admin_auth_url: must be modified to
-                        point to the keystone server IP and port. This
-                        is the Identity (keystone) admin API server IP
-                        and port value, and not the Identity service
-                        API IP and port.</para>
-            </listitem>
-        </itemizedlist>
+            <title>Configuring Nova to reach the Quantum API</title>
+            <para>Each time a VM is provisioned or deprovisioned in Nova, Nova communicates with
+                Quantum via the standard API. To do so, it requires the following items in the
+                nova.conf used by each nova-compute and nova-api instance:  </para>
+            <itemizedlist>
+                <listitem>
+                    <para>network_api_class: must be modified from default to indicate that Quantum
+                        should be used rather than the traditional nova-network networking
+                        model.</para>
+                </listitem>
+                <listitem>
+                    <para>quantum_url: must include the hostname/IP and port of the Quantum server
+                        for this deployment.</para>
+                </listitem>
+                <listitem>
+                    <para>quantum_auth_strategy: should be kept a default 'keystone' for all
+                        production deployments.</para>
+                </listitem>
+                <listitem>
+                    <para>quantum_admin_tenant_name: must be modified to be the the name of the
+                        service tenant created in the above section on Keystone
+                        configuration.</para>
+                </listitem>
+                <listitem>
+                    <para>quantum_admin_username: must be modified to be the the name of the user
+                        created in the above section on Keystone configuration.</para>
+                </listitem>
+                <listitem>
+                    <para>quantum_admin_password: must be modified to be the the password of the
+                        user created in the above section on Keystone configuration.</para>
+                </listitem>
+                <listitem>
+                    <para>quantum_admin_auth_url: must be modified to point to the keystone server
+                        IP and port. This is the Identity (keystone) admin API server IP and port
+                        value, and not the Identity service API IP and port.</para>
+                </listitem>
+            </itemizedlist>
         </section>
         <section xml:id="nova_with_quantum_vifplugging">
             <title>Configuring Vif-plugging in Nova</title>
-            <para>When nova-compute creates a VM, it must "plug" each of the VM's vNICs into a Quantum
-                controlled virtual switch, and inform the virtual switch about the Quantum port-id
-                associated with each vNIC.   This is done by specifying a field in the nova.conf of
-                the nova-compute instance indicating what type of ''vif-plugging'' should be used.
-                The exact field(s) you need to set depend on your plugin.  For plugins not
-                listed below, see the plugin's own documentation.</para>
-            <section xml:id="nova_with_quantum_vifplugging_ovs"><title>Vif-plugging with Open vSwitch Plugin</title>
+            <para>When nova-compute creates a VM, it must "plug" each of the VM's vNICs into a
+                Quantum controlled virtual switch, and inform the virtual switch about the Quantum
+                port-id associated with each vNIC. This is done by specifying a field in the
+                nova.conf of the nova-compute instance indicating what type of ''vif-plugging''
+                should be used. The exact field(s) you need to set depend on your plugin. For
+                plugins not listed below, see the plugin's own documentation.</para>
+            <section xml:id="nova_with_quantum_vifplugging_ovs">
+                <title>Vif-plugging with Open vSwitch Plugin</title>
                 <itemizedlist>
-                    <listitem><para>When using libvirt (any version) with Nova security groups: libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybirdOVSBridgeDriver</para></listitem>
-                    <listitem><para>When using libvirt (version &lt; 0.9.11) without Nova security groups: libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchDriver</para></listitem>
-                    <listitem><para>When using libvirt (version &gt;= 0.9.11) without Nova security groups: libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchVirtualPortDriver</para></listitem>
+                    <listitem>
+                        <para>When using libvirt (any version) with Nova security groups:
+                            libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybirdOVSBridgeDriver</para>
+                    </listitem>
+                    <listitem>
+                        <para>When using libvirt (version &lt; 0.9.11) without Nova security groups:
+                            libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchDriver</para>
+                    </listitem>
+                    <listitem>
+                        <para>When using libvirt (version &gt;= 0.9.11) without Nova security
+                            groups:
+                            libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchVirtualPortDriver</para>
+                    </listitem>
                 </itemizedlist>
             </section>
-            <section xml:id="nova_with_quantum_vifplugging_bridge"><title>Vif-plugging with Linux Bridge Plugin</title>
+            <section xml:id="nova_with_quantum_vifplugging_bridge">
+                <title>Vif-plugging with Linux Bridge Plugin</title>
                 <itemizedlist>
-                    <listitem><para>When using libvirt (any version): libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtBridgeDriver</para></listitem>
+                    <listitem>
+                        <para>When using libvirt (any version):
+                            libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtBridgeDriver</para>
+                    </listitem>
                 </itemizedlist>
             </section>
-            <section xml:id="nova_with_quantum_vifplugging_nvp"><title>Vif-plugging with Nicira NVP Plugin</title>
+            <section xml:id="nova_with_quantum_vifplugging_nvp">
+                <title>Vif-plugging with Nicira NVP Plugin</title>
                 <itemizedlist>
-                    <listitem><para>When using libvirt (version &lt; 0.9.11): libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchDriver</para></listitem>
-                    <listitem><para>When using libvirt (version &gt;= 0.9.11): libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchVirtualPortDriver</para></listitem>
-                    <listitem><para>When using XenServer: xenapi_vif_driver=nova.virt.xenapi.vif.XenAPIOpenVswitchDriver </para></listitem>
+                    <listitem>
+                        <para>When using libvirt (version &lt; 0.9.11):
+                            libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchDriver</para>
+                    </listitem>
+                    <listitem>
+                        <para>When using libvirt (version &gt;= 0.9.11):
+                            libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchVirtualPortDriver</para>
+                    </listitem>
+                    <listitem>
+                        <para>When using XenServer:
+                            xenapi_vif_driver=nova.virt.xenapi.vif.XenAPIOpenVswitchDriver </para>
+                    </listitem>
                 </itemizedlist>
             </section>
-            <section xml:id="nova_with_quantum_vifplugging_nec"><title>Vif-plugging with NEC OpenFlow Plugin</title>
+            <section xml:id="nova_with_quantum_vifplugging_nec">
+                <title>Vif-plugging with NEC OpenFlow Plugin</title>
                 <itemizedlist>
-                    <listitem><para>When using libvirt (any version) with Nova security groups: libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybirdOVSBridgeDriver</para></listitem>
-                    <listitem><para>When using libvirt (version &lt; 0.9.11) without Nova security groups: libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchDriver</para></listitem>
-                    <listitem><para>When using libvirt (version &gt;= 0.9.11) without Nova security groups: libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchVirtualPortDriver</para></listitem>
+                    <listitem>
+                        <para>When using libvirt (any version) with Nova security groups:
+                            libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybirdOVSBridgeDriver</para>
+                    </listitem>
+                    <listitem>
+                        <para>When using libvirt (version &lt; 0.9.11) without Nova security groups:
+                            libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchDriver</para>
+                    </listitem>
+                    <listitem>
+                        <para>When using libvirt (version &gt;= 0.9.11) without Nova security
+                            groups:
+                            libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchVirtualPortDriver</para>
+                    </listitem>
                 </itemizedlist>
             </section>
         </section>
         <section xml:id="nova_with_quantum_example">
-        <title> Example nova.conf (for nova-compute and nova-api)</title>
-        <para>Example values for the above settings, assuming a cloud controller node running
-            Keystone and Quantum with an IP address of 192.168.1.2 and vif-plugging using the
-            LibvirtOpenVswitchDriver with virtio enabled.  </para>
-        <screen><computeroutput>network_api_class=nova.network.quantumv2.api.API
+            <title> Example nova.conf (for nova-compute and nova-api)</title>
+            <para>Example values for the above settings, assuming a cloud controller node running
+                Keystone and Quantum with an IP address of 192.168.1.2 and vif-plugging using the
+                LibvirtOpenVswitchDriver with virtio enabled. </para>
+            <screen><computeroutput>network_api_class=nova.network.quantumv2.api.API
 quantum_url=http://192.168.1.2:9696
 quantum_auth_strategy=keystone
 quantum_admin_tenant_name=service
