@@ -38,4 +38,68 @@
             </programlisting>
             <para>This script has only been tested on Ubuntu 10.04, so if you are using a different distro or OS, some care should be taken before using in production.
         </para></section>
+
+        <section xml:id="recover-ring-builder-file">
+	<title>Emergency Recovery of Ring Builder Files</title>
+	<para> You should always keep a backup of Swift ring builder files. 
+	However, if an emergency occurs, this procedure may assist in returning
+	your cluster to an operational state.</para>
+	<para>Using existing Swift tools, there is no way to recover a builder
+	 file from a ring.gz file. However, if you have a knowledge of Python,
+	 it is possible to construct a builder file that is pretty close to
+	 the one you have lost. The following is what you will need to do.</para>
+	<warning><title>Warning</title>
+	<para>This procedure is a last-resort for emergency circumstances - it 
+	requires knowledge of the swift python code and may not succeed. </para></warning>
+	<para>First, load the ring and a new ringbuilder object in a Python REPL:</para>
+	<programlisting>
+>>> from swift.common.ring import RingData, RingBuilder
+>>> ring = RingData.load('/path/to/account.ring.gz')
+	</programlisting>
+	<para>Now, start copying the data we have in the ring into the builder.</para>
+	<programlisting>
+>>> import math
+>>> partitions = len(ring._replica2part2dev_id[0])
+>>> replicas = len(ring._replica2part2dev_id)
+
+>>> builder = RingBuilder(int(Math.log(partitions, 2)), replicas, 1)
+>>> builder.devs = ring.devs
+>>> builder._replica2part2dev = ring.replica2part2dev_id
+>>> builder._last_part_moves_epoch = 0
+>>> builder._last_part_moves = array('B', (0 for _ in xrange(self.parts)))
+>>> builder._set_parts_wanted()
+>>> for d in builder._iter_devs():
+            d['parts'] = 0
+>>> for p2d in builder._replica2part2dev:
+            for dev_id in p2d:
+                builder.devs[dev_id]['parts'] += 1
+	</programlisting>
+	<para>This is the extent of the recoverable fields. For 
+	<literal>min_part_hours</literal>  you'll either have to remember
+	 what the value you used was, or just make up a new one.</para>
+	<programlisting>
+>>> builder.change_min_part_hours(24) # or whatever you want it to be
+	</programlisting>
+	<para>Try some validation: if this doesn't raise an exception, you may
+	 feel some hope. Not too much, though.</para>
+	<programlisting>
+>>> builder.validate()
+	</programlisting>
+	<para>Save the builder.</para>
+	<programlisting>
+>>> import pickle
+>>> pickle.dump(builder.to_dict(), open('account.builder', 'wb'), protocol=2)
+	</programlisting>
+	<para>You should now have a file called 'account.builder' in the current
+	 working directory.
+	Next, run <literal>swift-ring-builder account.builder write_ring</literal>
+	 and compare the new account.ring.gz to the account.ring.gz that you started
+	 from. They probably won't be byte-for-byte identical, but if you load them
+	 up in a REPL and their <literal>_replica2part2dev_id</literal> and 
+	<literal>devs</literal> attributes are the same (or nearly so), then you're
+	 in good shape.</para>
+	<para>Next, repeat the procedure for <literal>container.ring.gz</literal> 
+	and <literal>object.ring.gz</literal>, and you might get usable builder
+	files.</para>
+	</section> 
 </chapter>
