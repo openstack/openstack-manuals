@@ -74,18 +74,27 @@ format="PNG" />
                 </emphasis>.  In order to support overlapping IP addresses,
                 the Quantum DHCP and L3 agents uses Linux network namespaces
                 by default.  The hosts running these processes must support
-                namespaces in the Linux kernel (2.6.24 or newer) and must
-                have a version of the 'ip' utility that supports the 'netns'
-                command.  To test, try running the following as root:</para>
-            <screen><computeroutput>ip netns create test-ns
+                network namespaces. To support network namespaces,
+                the following are required:</para>
+                <itemizedlist>
+                  <listitem><para>Linux kernel 2.6.24 or newer
+                  (with CONFIG_NET_NS=y in kernel configuration) and
+                  </para></listitem>
+                  <listitem><para>iproute2 utilities ('ip' command)
+                  version 3.1.0 (aka 20111117) or newer
+                  </para></listitem>
+                </itemizedlist>
+                <para>To check whether your host supports
+                namespaces try running the following as root:</para>
+                <screen><computeroutput>ip netns create test-ns
 ip netns exec test-ns ifconfig</computeroutput></screen>
-            <para>If the proceding commands do not produce errors, your
-            platform is likely sufficient to use the dhcp-agent or l3-agent
-            with namespace.  In our experience, most recent Ubuntu platforms
-            support namespaces as does Fedora 17 and new, but some older
-            RHEL platforms do
-            not by default. It may be possible to upgrade the iproute2
-            package on a platform that does not support namespaces by default.
+                <para>If the preceding commands do not produce errors, your
+                platform is likely sufficient to use the dhcp-agent or l3-agent
+                with namespace.  In our experience, Ubuntu 12.04 or later
+                support namespaces as does Fedora 17 and new, but some older
+                RHEL platforms do not by default. It may be possible to upgrade
+                the iproute2 package on a platform that does not support
+                namespaces by default.
             </para>
             <para> If you need to disable namespaces, make sure the quantum.conf
             used by quantum-server has the following setting:</para>
