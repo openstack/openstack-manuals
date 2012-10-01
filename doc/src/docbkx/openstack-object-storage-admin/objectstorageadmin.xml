@@ -2264,7 +2264,73 @@ memcache time for the key).
                    </tbody>
                 </table>
             </section>
- 
+         <section xml:id="swift-constraints">
+                
+                <title>Constraints</title>
+                <para>The <literal>swift-constraints</literal> section in <literal>swift.conf</literal> allows modification of internal limits within swift. These are advanced features for tuning the performance of the cluster and should be altered with caution.</para>
+                <table rules="all">
+                    <caption>Configuration options for swift-constraints  in swift.conf</caption>
+                   <tbody>
+                        <tr><td>Option</td>
+                            <td>Default</td>
+                            <td>Description</td>
+                            
+                        </tr>
+                    <tr>
+                        <td>max_file_size</td>
+                        <td>5368709122</td>
+                        <td>the largest "normal" object that can be saved in
+			 the cluster. This is also the limit on the size of each segment of
+			 a "large" object when using the large object manifest support.
+			 This value is set in bytes. Setting it to lower than 1MiB will cause
+			 some tests to fail. It is STRONGLY recommended to leave this value at
+			 the default (5 * 2**30 + 2).</td>
+                    </tr>
+                    <tr>
+                        <td>max_meta_name_length</td>
+                        <td>128</td>
+                        <td>the max number of bytes in the utf8 encoding
+			of the name portion of a metadata header.</td>
+                    </tr>
+                    <tr>
+                        <td>max_meta_value_lenth</td>
+                        <td>256</td>
+                        <td>the max number of bytes in the utf8 encoding of a metadata value</td>
+                    </tr>
+                    <tr>
+                        <td>max_meta_count</td>
+                        <td>90</td>
+                        <td>the max number of metadata keys that can be stored
+			 on a single account, container, or object</td>
+                    </tr>
+                    <tr>
+                        <td>max_meta_overall_size</td>
+                        <td>4096</td>
+                        <td>the max number of bytes in the utf8 encoding of the metadata (keys + values)</td>
+                    </tr>
+                    <tr>
+                        <td>max_object_name_length</td>
+                        <td>1024</td>
+                        <td>the max number of bytes in the utf8 encoding of an object name</td>
+                    </tr>
+                    <tr>
+                        <td>container_listing_limit</td>
+                        <td>10000</td>
+                        <td> the default (and max) number of items returned for a container listing request</td>
+                    </tr>
+                    <tr>
+                        <td>max_account_name_length</td>
+                        <td>256</td>
+                        <td>the max number of bytes in the utf8 encoding of an account name</td>
+                    </tr>
+                    <tr>
+                        <td>max_container_name_length</td>
+                        <td>256</td>
+                        <td>the max number of bytes in the utf8 encoding of a container name</td>
+                    </tr>
+                   </tbody>
+                </table>
+            </section>
 
 
     </section>
