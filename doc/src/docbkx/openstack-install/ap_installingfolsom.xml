@@ -196,6 +196,9 @@ export SERVICE_ENDPOINT=http://10.211.55.17:35357/v2.0/</programlisting>Source
 <prompt>$</prompt> <userinput>keystone user-create --name quantum --pass openstack   --email quantum@foobar.com</userinput></screen>Create
             roles.<screen><prompt>$</prompt> <userinput>keystone role-create --name admin</userinput>
 <prompt>$</prompt> <userinput>keystone role-create --name Member</userinput></screen></para>
+		<para>Create
+            tenants.<screen><prompt>$</prompt> <userinput>keystone tenant-create --name=service</userinput>
+<prompt>$</prompt> <userinput>keystone tenant-create --name=admin</userinput></screen></para>
         <para>Create
             services.<screen><prompt>$</prompt> <userinput>keystone service-create --name nova --type compute --description "OpenStack Compute Service"</userinput>
 <prompt>$</prompt> <userinput>keystone service-create --name volume --type volume --description "OpenStack Volume Service"</userinput>
@@ -232,7 +235,7 @@ export SERVICE_ENDPOINT=http://10.211.55.17:35357/v2.0/</programlisting>Source
 </userinput></screen>
         </para>
         <programlisting>#For Quantum</programlisting>
-        <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service-id 59877a8f97f04a2aad1e8164e14d7450 --publicurl "http://10.211.55.17:9696/" --adminurl "http://10.211.55.17:9696/" --internalurl "http://10.211.55.17:9696/"</userinput></screen>
+        <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service-id 59877a8f97f04a2aad1e8164e14d7450 --publicurl "http://10.211.55.17:9696/v2" --adminurl "http://10.211.55.17:9696/v2" --internalurl "http://10.211.55.17:9696/v2"</userinput></screen>
         <para>Retrieve all the
             ids.<screen><prompt>$</prompt> <userinput>keystone tenant-list</userinput></screen></para>
         <programlisting>+----------------------------------+---------+---------+
@@ -261,7 +264,7 @@ export SERVICE_ENDPOINT=http://10.211.55.17:35357/v2.0/</programlisting>Source
 | de031f37231b4d4cafb0af9f56dba100 | Member |
 | e45af7cf33be4dac8070aa8310144ce3 | admin  |
 +----------------------------------+--------+</programlisting>
-        <screen><prompt>$</prompt> <userinput>service-list</userinput></screen>
+        <screen><prompt>$</prompt> <userinput>keystone service-list</userinput></screen>
         <programlisting>+----------------------------------+----------+--------------+------------------------------+
 |                id                |   name   |     type     |         description          |
 +----------------------------------+----------+--------------+------------------------------+
@@ -479,6 +482,8 @@ volume_group = cinder-volumes
 verbose = True
 auth_strategy = keystone
 #osapi_volume_listen_port=5900</programlisting>
+        <para>Populate the database.<screen><prompt>$</prompt>
+          <userinput>sudo cinder-manage db sync</userinput></screen></para>
         <para>Create a 2GB test loopfile.</para>
         <screen><prompt>$</prompt> <userinput>dd if=/dev/zero of=cinder-volumes bs=1 count=0 seek=2G</userinput></screen>
         <para>Mount it.</para>
