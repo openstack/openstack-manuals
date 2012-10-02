@@ -50,21 +50,11 @@ iface eth1 inet static
         <para>Add the following Ubuntu repository (as root):</para>
         <screen>
     <prompt>#</prompt> <userinput>echo deb http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/folsom main >> /etc/apt/sources.list.d/folsom.list</userinput>
-    <prompt>#</prompt> <userinput>apt-get update</userinput>    
+    <prompt>#</prompt> <userinput>apt-get install ubuntu-cloud-keyring </userinput>    
+    <prompt>#</prompt> <userinput>apt-get update</userinput>   
     <prompt>#</prompt> <userinput>apt-get upgrade</userinput>        
         </screen>
-        <note>
-            <para>If you see the following error: <code>GPG error:
-                    http://ubuntu-cloud.archive.canonical.com
-                    precise-updates/folsom Release: The following
-                    signatures couldn't be verified because the public
-                    key is not available: NO_PUBKEY
-                    5EDB1B62EC4926EA</code>, run <code>apt-key adv
-                    --recv-keys --keyserver keyserver.ubuntu.com
-                    5EDB1B62EC4926EA</code> and then do <code>apt-get
-                    update</code> and <code>apt-get upgrade</code>
-                again. </para>
-        </note>
+       
         <para>Install the required packages.</para>
         <screen>
     <prompt>$</prompt> <userinput> sudo apt-get install vlan bridge-utils ntp mysql-server python-mysqldb</userinput>
