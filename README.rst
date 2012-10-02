@@ -10,6 +10,7 @@ OpenStack project. It includes documentation for:
  * OpenStack Object Storage
  * OpenStack Dashboard
  * OpenStack Network Connectivity
+ * OpenStack Volumes
 
 For more details, see the `OpenStack Documentation HowTo wiki page
 <http://wiki.openstack.org/Documentation/HowTo>`_.
