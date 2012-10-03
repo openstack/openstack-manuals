@@ -479,15 +479,16 @@ quantum router-interface-add router1 &lt;subnet2-uuid&gt;</computeroutput></scre
 quantum floatingip-associate &lt;floatingip-id&gt; &lt;internal VM port-id&gt; </computeroutput></screen>
             <para>create floating IP and associate in a single
                 step</para>
-            <screen><computeroutput>quantum floatingip-create &lt;ext-net-id&gt; --port_id &lt;internal VM port-id&gt; </computeroutput></screen>
+            <screen><computeroutput>quantum floatingip-create --port_id &lt;internal VM port-id&gt; &lt;ext-net-id&gt; </computeroutput></screen>
             <para>Viewing Floating IP State: </para>
             <para>View all: </para>
             <screen><computeroutput>quantum floatingip-list</computeroutput></screen>
             <para>Find floating IP for a particular VM port: </para>
-            <screen><computeroutput>quantum floatingip-list -- --port_id=ZZZ - disassociate</computeroutput></screen>
-            <screen><computeroutput>quantum floatingip-associate &lt;floatingip-id&gt;</computeroutput></screen>
+            <screen><computeroutput>quantum floatingip-list -- --port_id=ZZZ</computeroutput></screen>
+            <para>Disassociate a Floating IP:</para>
+            <screen><computeroutput>quantum floatingip-disassociate &lt;floatingip-id&gt;</computeroutput></screen>
             <para>L3 Tear Down</para>
-            <para>When;s:</para>
+            <para>Delete the Floating IP:</para>
             <screen><computeroutput>quantum floatingip-delete &lt;floatingip-id&gt; </computeroutput></screen>
             <para>Then clear the any gateway: </para>
             <screen><computeroutput>quantum router-gateway-clear router1</computeroutput></screen>
