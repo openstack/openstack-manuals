@@ -61,10 +61,10 @@
     <title>Note</title>
     <para>Choose a secure password for the keystone user and replace
       all references to
-        <replaceable>[YOUR_KEYSTONE_PASSWORD]</replaceable> with this
-      password.</para>
+        <replaceable>[YOUR_KEYSTONEDB_PASSWORD]</replaceable> with
+      this password.</para>
   </note>
-  <screen><prompt>mysql&gt;</prompt> <userinput>GRANT ALL ON keystone.* TO 'keystone'@'%' IDENTIFIED BY '<replaceable>[YOUR_KEYSTONE_PASSWORD]</replaceable>';</userinput></screen>
+  <screen><prompt>mysql&gt;</prompt> <userinput>GRANT ALL ON keystone.* TO 'keystone'@'%' IDENTIFIED BY '<replaceable>[YOUR_KEYSTONEDB_PASSWORD]</replaceable>';</userinput></screen>
   <para>Enter quit at the <literal>mysql></literal> prompt to exit
     MySQL.</para>
   <screen><prompt>mysql&gt;</prompt> <userinput>quit</userinput></screen>
@@ -80,7 +80,7 @@
     default, Keystone's data store is sqlite. To change the data store
     to mysql, change the line defining "connection" in
       <filename>/etc/keystone/keystone.conf</filename> like so:</para>
-  <programlisting>connection = mysql://keystone:<replaceable>[YOUR_KEYSTONE_PASSWORD]</replaceable>@192.168.206.130/keystone</programlisting>
+  <programlisting>connection = mysql://keystone:<replaceable>[YOUR_KEYSTONEDB_PASSWORD]</replaceable>@192.168.206.130/keystone</programlisting>
   <para>Also, ensure that the proper service token is used in the
     <filename>keystone.conf</filename> file. An example is provided in the Appendix or you can generate a random string. The sample token is:</para>
   <programlisting>admin_token = 012345SECRET99TOKEN012345</programlisting>
@@ -96,33 +96,16 @@
     <title>Configuring Services to work with Keystone</title>
     <para> Once Keystone is installed and running, you set up users
       and tenants and services to be configured to work with it. </para>
-    <section xml:id="setting-up-tenants-users-and-roles">
-      <title>Setting up tenants, users, and roles</title>
+    <section xml:id="setting-up-tenants-users-and-roles-manually">
+      <title>Setting up tenants, users, and roles - manually</title>
       <para>You need to minimally define a tenant, user, and role to
         link the tenant and user as the most basic set of details to
         get other services authenticating and authorizing with the
         Identity service. </para>
-      <para>Scripted configuration:</para>
-      <para>The Keystone project offers a bash script for populating
-        tenants, users, and roles at
-        <link xlink:href="https://github.com/openstack/keystone/blob/master/tools/sample_data.sh">https://github.com/openstack/keystone/blob/master/tools/sample_data.sh</link>
-        with sample data </para>
-      <para>On any distribution with python tools, you can run this keystone-init script that automates the steps below that use the keystone client API.</para>
-      <screen><prompt>$</prompt> <userinput>git clone https://github.com/nimbis/keystone-init.git</userinput></screen>
-      <para>You'll need <link xlink:href="http://pyyaml.org/wiki/PyYAML">PyYAML</link> installed to use this script. Look at
-        the script that does the work: <link
-          xlink:href="https://github.com/nimbis/keystone-init/blob/master/keystone-init.py"
-          >https://github.com/nimbis/keystone-init/blob/master/keystone-init.py</link>. </para>
-      <para>Edit the accompanying configuration file the script uses:
-          <link
-          xlink:href="https://github.com/nimbis/keystone-init/blob/master/config.yaml"
-          >https://github.com/nimbis/keystone-init/blob/master/config.yaml</link> with the IP address 
-          of your servers. You can substitute quickly using this command in the directory where config.yaml is stored:</para>
-      <screen><prompt>$</prompt> <userinput>sed -i.bak s/192.168.206.130/172.16.150.12/g config.yaml</userinput></screen>
-        <para>Then run the modified script as
-        root:<screen><prompt>#</prompt> <userinput>./keystone-init.py config.yaml</userinput></screen></para>
-      <para>Manual configuration:</para>
-      <para>Here are the manual, unscripted steps. First, create a default tenant, we'll name it
+      <para>Here are the manual, unscripted steps using the keystone
+        client. At the end of this section a scripted method is
+        available. </para>
+      <para>First, create a default tenant, we'll name it
           <literal>openstackDemo</literal> in this example.</para>
       <screen><prompt>$ </prompt><userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 tenant-create --name openstackDemo --description "Default Tenant" --enabled true</userinput></screen>
       <programlisting>      +-------------+----------------------------------+
@@ -250,6 +233,7 @@
       <screen><prompt>$</prompt><userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 user-role-add --user-id 4346677b8909823e389f0b4037b1246e --tenant_id eb7e0c10a99446cfa14c244374549e9d --role-id e3d9d157cc95410ea45d23bbbc2e5c10</userinput></screen>
       <para>There is no output to this command.</para>
       <para>Next you create definitions for the services.</para>
+      
     </section>
   </section>
   <section xml:id="defining-services">
@@ -640,6 +624,16 @@ service-create \
 +-------------+---------------------------------------------------+
 </computeroutput>
 </screen>
+    </section>
+    <section xml:id="scripted-keystone-setup">
+      <title>Setting up Tenants, Users, Roles, and Services -
+        Scripted</title>
+      <para>The Keystone project offers a bash script for populating
+        tenants, users, roles and services at <link
+          xlink:href="https://github.com/openstack/keystone/blob/master/tools/sample_data.sh"
+          >https://github.com/openstack/keystone/blob/master/tools/sample_data.sh</link>
+        with sample data. This script uses 127.0.0.1 for all endpoint
+        IP addresses. This script also defines services for you. </para>
     </section>
   </section>
 </section>
