@@ -4,76 +4,115 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
     <title>Verifying the Identity Service Installation</title>
-    <para>Install curl, a command-line tool for running REST API
-        requests along with openssl for meeting a dependency
-        requirement:</para>
-    <screen os="ubuntu"><prompt>$</prompt><userinput>apt-get install curl openssl</userinput></screen>
-    <screen os="rhel;fedora;centos"><prompt>$</prompt><userinput>yum install curl openssl</userinput></screen>
-    <para>Here is a curl command you can use to ensure that the Identity service is working:</para>
-    <literallayout class="monospaced">curl -d '{"auth": {"passwordCredentials": {"username": "admin", "password": "secretword"}}}' -H "Content-type: application/json" http://192.168.206.130:35357/v2.0/tokens | python -mjson.tool</literallayout>
-    <para>In return, you should receive a token for the admin
-        user. </para>
-    <literallayout class="monospaced">{
-    "access": {
-        "serviceCatalog": {},
-        "token": {
-            "expires": "2012-04-12T00:40:12Z",
-            "id": "cec68088d08747639c682ee5228106d1"
-        },
-        "user": {
-            "id": "a4c2d43f80a549a19864c89d759bb3fe",
-            "name": "admin",
-            "roles": [],
-            "roles_links": [],
-            "username": "admin"
-        }
-    }
-}</literallayout>
-    <para>You can also get a token that expires in 24 hours using the
-        admin user account:</para>
-    <literallayout class="monospaced">curl -d '{"auth": {"tenantName": "openstackDemo", "passwordCredentials":{"username": "admin", "password": "secretword"}}}' -H "Content-type: application/json" http://192.168.206.130:35357/v2.0/tokens | python -mjson.tool</literallayout>
-    <para>In return, you get the token listing shown below.</para>
-    <literallayout class="monospaced">
-{
-    "access": {
-        "serviceCatalog": {},
-        "token": {
-            "expires": "2012-04-12T00:41:21Z",
-            "id": "a220bfdf313b404fa5e063fcc7cc1f3e",
-            "tenant": {
-                "description": "Default Tenant",
-                "enabled": true,
-                "id": "b5815b046cfe47bb891a7b64119e7f80",
-                "name": "openstackDemo"
-            }
-        },
-        "user": {
-            "id": "a4c2d43f80a549a19864c89d759bb3fe",
-            "name": "admin",
-            "roles": [],
-            "roles_links": [],
-            "username": "admin"
-        }
-    }
-}
-    </literallayout>
-
-    <para>Here is another quick test to ensure that the Keystone CLI
-        is working. First, set up a keystonerc file with the admin
-        credentials and admin endpoint: </para>
-
-        <programlisting language="bash">
+    <para>
+        Verify that authentication is behaving as expected by using your
+        established username and password to generate an authentication token:
+    </para>
+    <screen>
+        <prompt>$</prompt> <userinput>keystone --os-username=admin --os-password=secretword --os-auth-url=http://192.168.206.130:35357/v2.0 token-get</userinput>
+        <computeroutput>
++----------+----------------------------------+
+| Property |              Value               |
++----------+----------------------------------+
+| expires  |       2012-10-04T16:08:03Z       |
+|    id    | 960ad732a0eb4b2a88516f18384c1fba |
+| user_id  | a4c2d43f80a549a19864c89d759bb3fe |
++----------+----------------------------------+
+        </computeroutput>
+    </screen>
+    <para>
+        You should receive a token in response, paired with your user ID.
+    </para>
+    <para>
+        This verifies that keystone is running on the expected endpoint, and
+        that your user account is established with the expected credentials.
+    </para>
+    <para>
+        Next, verify that authorization is behaving as expected by requesting
+        authorization on a tenant:
+    </para>
+    <screen>
+        <prompt>$</prompt> <userinput>keystone --os-username=admin --os-password=secretword --os-tenant-name=openstackDemo --os-auth-url=http://192.168.206.130:35357/v2.0 token-get</userinput>
+        <computeroutput>
++-----------+----------------------------------+
+|  Property |              Value               |
++-----------+----------------------------------+
+|  expires  |       2012-10-04T16:10:14Z       |
+|     id    | 8787f264d2a34607b37aa8d58d956afa |
+| tenant_id | c1ac0f7f0e55448fa3940fa6b8b54911 |
+|  user_id  | a4c2d43f80a549a19864c89d759bb3fe |
++-----------+----------------------------------+
+        </computeroutput>
+    </screen>
+    <para>
+        You should receive a new token in response, this time including the ID of
+        the tenant you specified.
+    </para>
+    <para>
+        This verifies that your user account has an explicitly defined role on
+        the specified tenant, and that the tenant exists as expected.
+    </para>
+    <para>
+        You can also set your <literal>--os-*</literal> variables in your
+        environment to simplify CLI usage. First, set up a
+        <literal>keystonerc</literal> file with the admin credentials and admin
+        endpoint:
+    </para>
+    <programlisting language="bash">
         export OS_USERNAME=admin
         export OS_PASSWORD=secretword
         export OS_TENANT_NAME=openstackDemo
-        export OS_AUTH_URL=http://127.0.0.1:35357/v2.0/
-        </programlisting>
-        <para>Source the file.</para>
+        export OS_AUTH_URL=http://192.168.206.130:35357/v2.0
+    </programlisting>
+    <para>
+        Save and source the file.
+    </para>
+    <screen><prompt>$</prompt> <userinput>source keystonerc</userinput></screen>
+    <para>
+        Verify that your <literal>keystonerc</literal> is configured correctly
+        by performing the same command as above, but without any
+        <literal>--os-*</literal> arguments.
+    </para>
     <screen>
-    <prompt>$</prompt> <userinput>. ./keystonerc</userinput></screen>
-    <para>You should see a listing of users after typing in <userinput>keystone user-list</userinput>.</para>
-    <screen><prompt>$</prompt> <userinput>keystone user-list</userinput>
-<computeroutput>
+        <prompt>$</prompt> <userinput>keystone token-get</userinput>
+        <computeroutput>
++-----------+----------------------------------+
+|  Property |              Value               |
++-----------+----------------------------------+
+|  expires  |       2012-10-04T16:12:38Z       |
+|     id    | 03a13f424b56440fb39278b844a776ae |
+| tenant_id | c1ac0f7f0e55448fa3940fa6b8b54911 |
+|  user_id  | a4c2d43f80a549a19864c89d759bb3fe |
++-----------+----------------------------------+
+        </computeroutput>
+    </screen>
+    <para>
+        You should receive a new token in response, reflecting the same tenant
+        and user ID values as above.
+    </para>
+    <para>
+        This verifies that you have configured your environment variables
+        correctly.
+    </para>
+    <para>
+        Finally, verify that your admin account has authorization to perform
+        administrative commands.
+    </para>
+    <note>
+        <title>Reminder</title>
+        <para>
+            Unlike basic authentication/authorization, which can be performed
+            against either port 5000 or 35357, administrative commands MUST be
+            performed against the admin API port: 35357).
+
+            This means that you MUST use port 35357 in your
+            <literal>OS_AUTH_URL</literal> or <literal>--os-auth-url</literal>
+            setting.
+        </para>
+    </note>
+    <screen>
+        <prompt>$</prompt> <userinput>keystone user-list</userinput>
+        <computeroutput>
 +----------------------------------+---------+-------+--------+
 |                id                | enabled | email |  name  |
 +----------------------------------+---------+-------+--------+
@@ -83,5 +122,10 @@
 | a4c2d43f80a549a19864c89d759bb3fe | True    | None  | admin  |
 | ec47114af7014afd9a8994cbb6057a8b | True    | None  | ec2    |
 +----------------------------------+---------+-------+--------+
-</computeroutput></screen>
+        </computeroutput>
+    </screen>
+    <para>
+        This verifies that your user account has the <literal>admin</literal>
+        role, as defined in keystone's <literal>policy.json</literal> file.
+    </para>
 </section>
