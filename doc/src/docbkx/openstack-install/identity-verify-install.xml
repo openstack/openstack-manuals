@@ -10,60 +10,60 @@
     <screen os="ubuntu"><prompt>$</prompt><userinput>apt-get install curl openssl</userinput></screen>
     <screen os="rhel;fedora;centos"><prompt>$</prompt><userinput>yum install curl openssl</userinput></screen>
     <para>Here is a curl command you can use to ensure that the Identity service is working:</para>
-    <literallayout class="monospaced">curl -d '{"auth": {"tenantName": "adminTenant", "passwordCredentials":{"username": "adminUser", "password": "secretword"}}}' -H "Content-type: application/json" http://192.168.206.130:35357/v2.0/tokens | python -mjson.tool</literallayout>
-    <para>In return, you should receive a token for the adminUser
+    <literallayout class="monospaced">curl -d '{"auth": {"passwordCredentials": {"username": "admin", "password": "secretword"}}}' -H "Content-type: application/json" http://192.168.206.130:35357/v2.0/tokens | python -mjson.tool</literallayout>
+    <para>In return, you should receive a token for the admin
         user. </para>
     <literallayout class="monospaced">{
     "access": {
-        "serviceCatalog": {}, 
+        "serviceCatalog": {},
         "token": {
-            "expires": "2012-04-12T00:40:12Z", 
+            "expires": "2012-04-12T00:40:12Z",
             "id": "cec68088d08747639c682ee5228106d1"
-        }, 
+        },
         "user": {
-            "id": "6b0141904f09480d810a5949d79ea0f3", 
-            "name": "adminUser", 
-            "roles": [], 
-            "roles_links": [], 
-            "username": "adminUser"
+            "id": "a4c2d43f80a549a19864c89d759bb3fe",
+            "name": "admin",
+            "roles": [],
+            "roles_links": [],
+            "username": "admin"
         }
     }
 }</literallayout>
     <para>You can also get a token that expires in 24 hours using the
-        adminUser account:</para>
-    <literallayout class="monospaced">curl -d '{"auth": {"tenantName": "openstackDemo", "passwordCredentials":{"username": "adminUser", "password": "secretword"}}}' -H "Content-type: application/json" http://192.168.206.130:35357/v2.0/tokens | python -mjson.tool</literallayout>
+        admin user account:</para>
+    <literallayout class="monospaced">curl -d '{"auth": {"tenantName": "openstackDemo", "passwordCredentials":{"username": "admin", "password": "secretword"}}}' -H "Content-type: application/json" http://192.168.206.130:35357/v2.0/tokens | python -mjson.tool</literallayout>
     <para>In return, you get the token listing shown below.</para>
     <literallayout class="monospaced">
 {
     "access": {
-        "serviceCatalog": {}, 
+        "serviceCatalog": {},
         "token": {
-            "expires": "2012-04-12T00:41:21Z", 
-            "id": "a220bfdf313b404fa5e063fcc7cc1f3e", 
+            "expires": "2012-04-12T00:41:21Z",
+            "id": "a220bfdf313b404fa5e063fcc7cc1f3e",
             "tenant": {
-                "description": "Default Tenant", 
-                "enabled": true, 
-                "id": "50af8cc655c24ada96f73010c96b70a2", 
+                "description": "Default Tenant",
+                "enabled": true,
+                "id": "b5815b046cfe47bb891a7b64119e7f80",
                 "name": "openstackDemo"
             }
-        }, 
+        },
         "user": {
-            "id": "6b0141904f09480d810a5949d79ea0f3", 
-            "name": "adminUser", 
-            "roles": [], 
-            "roles_links": [], 
-            "username": "adminUser"
+            "id": "a4c2d43f80a549a19864c89d759bb3fe",
+            "name": "admin",
+            "roles": [],
+            "roles_links": [],
+            "username": "admin"
         }
     }
 }
     </literallayout>
-    
+
     <para>Here is another quick test to ensure that the Keystone CLI
         is working. First, set up a keystonerc file with the admin
         credentials and admin endpoint: </para>
-        
+
         <programlisting language="bash">
-        export OS_USERNAME=adminUser
+        export OS_USERNAME=admin
         export OS_PASSWORD=secretword
         export OS_TENANT_NAME=openstackDemo
         export OS_AUTH_URL=http://127.0.0.1:35357/v2.0/
@@ -74,14 +74,14 @@
     <para>You should see a listing of users after typing in <userinput>keystone user-list</userinput>.</para>
     <screen><prompt>$</prompt> <userinput>keystone user-list</userinput>
 <computeroutput>
-+----------------------------------+---------+-------+-----------+
-|                id                | enabled | email |    name   |
-+----------------------------------+---------+-------+-----------+
-| 318003c9a97342dbab6ff81675d68364 | True    | None  | swift     |
-| 3a316b32f44941c0b9ebc577feaa5b5c | True    | None  | nova      |
-| ac4dd12ebad84e55a1cd964b356ddf65 | True    | None  | glance    |
-| ca951c79453d4033a7c270bc6e0860fa | True    | None  | adminUser |
-| ec47114af7014afd9a8994cbb6057a8b | True    | None  | ec2       |
-+----------------------------------+---------+-------+-----------+
++----------------------------------+---------+-------+--------+
+|                id                | enabled | email |  name  |
++----------------------------------+---------+-------+--------+
+| 318003c9a97342dbab6ff81675d68364 | True    | None  | swift  |
+| 3a316b32f44941c0b9ebc577feaa5b5c | True    | None  | nova   |
+| ac4dd12ebad84e55a1cd964b356ddf65 | True    | None  | glance |
+| a4c2d43f80a549a19864c89d759bb3fe | True    | None  | admin  |
+| ec47114af7014afd9a8994cbb6057a8b | True    | None  | ec2    |
++----------------------------------+---------+-------+--------+
 </computeroutput></screen>
 </section>
