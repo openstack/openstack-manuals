@@ -23,12 +23,12 @@
     <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install -y memcached mod-wsgi openstack-dashboard</userinput></screen>
     <para>Next, modify the variable <literal>CACHE_BACKEND</literal> in
             <filename>/etc/openstack-dashboard/local_settings.py</filename> to match the ones set in
-            <filename>/etc/memcached.conf</filename>. Open
+        <filename os="ubuntu">/etc/memcached.conf</filename><filename os="centos;fedora;rhel">/etc/sysconfig/memcached.conf</filename>. Open
             <filename>/etc/openstack-dashboard/local_settings.py</filename> and look for this
         line:</para>
     <programlisting>CACHE_BACKEND = 'memcached://127.0.0.1:11211/'</programlisting>
     <note><para>The address and port in the new value need to be equal to
-        the ones set in <filename>/etc/memcached.conf</filename>.</para></note>
+        the ones set in <filename os="ubuntu">/etc/memcached.conf</filename><filename os="centos;fedora;rhel">/etc/sysconfig/memcached.conf</filename>.</para></note>
     <para>If you change the memcached settings, restart the Apache web
         server for the changes to take effect.</para>
     <note><para>This guide has selected memcache as a 
