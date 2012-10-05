@@ -59,7 +59,7 @@
             </goals>
             <phase>generate-sources</phase>
             <configuration>
-              <pdfUrl>cli-guide.pdf</pdfUrl>
+              <!--<pdfUrl>cli-guide.pdf</pdfUrl>-->
               <highlightSource>false</highlightSource>
               <!-- The following elements sets the autonumbering of sections in output for chapter numbers but no numbered sections-->
               <sectionAutolabel>0</sectionAutolabel>
@@ -96,10 +96,20 @@
               <sectionAutolabel>0</sectionAutolabel>
               <sectionLabelIncludesComponentLabel>0</sectionLabelIncludesComponentLabel>
               <postProcess>
+                <!-- Copies webhelp (HTML output) to desired URL location on docs.openstack.org -->
+                <copy
+                  todir="${basedir}/target/docbkx/webhelp/cli-guide/">
+                  <fileset
+                    dir="${basedir}/target/docbkx/webhelp/bk-cli-guide/">
+                    <include name="**/*" />
+                  </fileset>
+                </copy>
                 <!--Moves PDF to the needed placement -->
                 <move failonerror="false"
                   file="${basedir}/target/docbkx/pdf/bk-cli-guide.pdf"
                   tofile="${basedir}/target/docbkx/webhelp/cli-guide/content/cli-guide.pdf"/> 
+                <!--Deletes leftover uneeded directories -->
+                <delete dir="${basedir}/target/docbkx/webhelp/bk-cli-guide"/>
               </postProcess>
             </configuration>
           </execution>
@@ -111,7 +121,7 @@
           <includes>
             bk-cli-guide.xml
           </includes>
-          <!--<canonicalUrlBase>http://docs.openstack.org/cli/bk-cli-guide/content/</canonicalUrlBase>-->
+          <!--<canonicalUrlBase>http://docs.openstack.org/cli/content/</canonicalUrlBase>-->
           <profileSecurity>reviewer</profileSecurity>
           <branding>openstack</branding>
 	</configuration>
