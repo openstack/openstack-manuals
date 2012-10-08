@@ -3,9 +3,10 @@ documentation for OpenStack High Availability.
 
 Contrary to the rest of the documentation which is straight-up
 DocBook, this guide is being maintained, at least for the time being,
-in AsciiDoc. AsciiDoc processing is currently not supported by the
-Maven toolchain, so as a stop-gap measure until such support becomes
-available, please do this if you want to send a patch:
+in AsciiDoc. AsciiDoc processing is supported by the OpenStack Jenkins
+CI infrastructure, but not by the Maven toolchain. So as a stop-gap
+measure until such support becomes available, please do this if you
+want to build offline before you send a patch:
 
 1. Make your change to the AsciiDoc source file (.txt). The syntax
    should be self explanatory-and intuitive to anyone who's ever used
@@ -21,13 +22,20 @@ available, please do this if you want to send a patch:
    produce a clean patch against bk-ha-guide.xml which you can then
    submit to Gerrit along with your .txt file patch.
 
-Here's a command line you can use with AsciiDoc, xsltproc and xmllint
-to achieve all of the above:
+4. Add an "xml:id" attribute on the root <book> element. The Maven
+   toolchain requires this.
+
+Here's a command line you can use with AsciiDoc, xsltproc, xmllint and
+sed to achieve all of the above:
 
 asciidoc -b docbook -d book -o - ha-guide.txt | \
   xsltproc -o - /path/to/db4-upgrade.xsl - | \
-  xmllint -o bk-ha-guide.xml --format -
+  xmllint --format - | \
+  sed -e 's,^<book ,<book xml:id="bk-ha-guide" ,' \
+  > bk-ha-guide.xml
 
-There's one more quirk: in the transformation, AsciiDoc discards the
-"xml:id" attribute on the root <book> element. The Maven toolchain
-requires this, so please re-add it so the root element.
+Admittedly, the sed hack is particularly ugly, but it does get the job
+done.
+
+After that, you should be able to build with "mvn clean
+generate-sources" as you normally would.
