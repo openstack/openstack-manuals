@@ -114,6 +114,27 @@ local_ip=&lt;data-net-IP-address-of-node&gt;</computeroutput></screen>
             <para>After performing that change on the node running quantum-server, restart quantum-server to pick up the new settings.</para>
             <screen><computeroutput>service quantum-server restart</computeroutput></screen>
             </section>
+            <section xml:id="nvp_plugin">
+                <title>Configuring Nicira NVP Plugin</title>
+                <para>To configure Quantum to use the NVP plugin first edit
+                    <filename>/etc/quantum/quantum.conf</filename> and set:</para>
+                <screen><computeroutput>core_plugin = quantum.plugins.nicira.nicira_nvp_plugin.QuantumPlugin.NvpPluginV2</computeroutput></screen>
+                <para>Edit
+                    <filename>/etc/quantum/plugins/nicira/nvp.ini</filename>
+                    in order to configure the plugin. The quantum database
+                    created previously will be used by setting:</para>
+                <screen><computeroutput>sql_connection = mysql://&lt;user&gt;:&lt;password&gt;@localhost/quantum?charset=utf8</computeroutput></screen>
+                <para>In order to tell quantum about a controller cluster,
+                      create a [CLUSTER:&lt;name&gt;] section underneath the [NVP]
+                      section. Under this new cluster specify the Transport Zone
+                      by setting:</para>
+                <screen><computeroutput>default_tz_uuid = &lt;uuid_of_the_transport_zone&gt;</computeroutput></screen>
+                <para>Specify the controllers in this cluster by setting:</para>
+                <screen><computeroutput>nvp_controller_connection = &lt;ip&gt;:&lt;port&gt;:&lt;user&gt;:&lt;pw&gt;:&lt;req_timeout&gt;:&lt;http_timeout&gt;:&lt;retries&gt;:&lt;redirects&gt;</computeroutput></screen>
+                <para>one for each controller.</para>
+                <para>Lastly, restart quantum-server to pick up the new settings.</para>
+                <screen><computeroutput>service quantum-server restart</computeroutput></screen>
+            </section>
         </section>
         <section xml:id="install_quantum_agent">
             <title>Install quantum-plugin-*-agent</title>
