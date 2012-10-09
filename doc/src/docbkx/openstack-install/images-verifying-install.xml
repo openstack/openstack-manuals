@@ -18,32 +18,32 @@
     wget http://smoser.brickies.net/ubuntu/ttylinux-uec/ttylinux-uec-amd64-12.1_2.6.35-22_1.tar.gz
     tar -zxvf ttylinux-uec-amd64-12.1_2.6.35-22_1.tar.gz </screen>
     <para>Upload the kernel.</para>
-    <note><para>This example shows inputting --os_username, --os_password,
-        --os_tenant, --os_auth_url on the command line for
+    <note><para>This example shows inputting --os-username, --os-password,
+        --os-tenant-name, --os-auth-url on the command line for
         reference. You could also use the OS_* environment
         variables by setting them in an openrc file: </para>
         <programlisting><xi:include parse="text" href="samples/openrc.txt"/></programlisting>
         <para>Then you would source these environment variables by running <userinput>source openrc</userinput>.</para></note>
-    <screen>glance --os_username=admin --os_password=secretword --os_tenant=openstackDemo --os_auth_url=http://127.0.0.1:5000/v2.0 add name="tty-linux-kernel" disk_format=aki container_format=aki &lt; ttylinux-uec-amd64-12.1_2.6.35-22_1-vmlinuz</screen>
+    <screen>glance --os-username=admin --os-password=secretword --os-tenant-name=openstackDemo --os-auth-url=http://192.168.206.130:5000/v2.0 add name="tty-linux-kernel" disk_format=aki container_format=aki &lt; ttylinux-uec-amd64-12.1_2.6.35-22_1-vmlinuz</screen>
     <programlisting>Uploading image 'tty-linux-kernel'
     =================================================================================================================================================================[100%] 41.8M/s, ETA  0h  0m  0s
     Added new image with ID: 599907ff-296d-4042-a671-d015e34317d2</programlisting>
     
     <para>Upload the initrd.</para>
-    <screen>glance --os_username=admin --os_password=secretword --os_tenant=openstackDemo --os_auth_url=http://127.0.0.1:5000/v2.0 add name="tty-linux-ramdisk" disk_format=ari container_format=ari &lt; ttylinux-uec-amd64-12.1_2.6.35-22_1-loader </screen>
+    <screen>glance --os-username=admin --os-password=secretword --os-tenant-name=openstackDemo --os-auth-url=http://192.168.206.130:5000/v2.0 add name="tty-linux-ramdisk" disk_format=ari container_format=ari &lt; ttylinux-uec-amd64-12.1_2.6.35-22_1-loader </screen>
     <programlisting>Uploading image 'tty-linux-ramdisk'
     ===========================================================================================================================================================[100%] 937.483441K/s, ETA  0h  0m  0s
     Added new image with ID: 7d9f0378-1640-4e43-8959-701f248d999d</programlisting>
     
     <para>Upload the image.</para>
-    <screen>glance --os_username=admin --os_password=secretword --os_tenant=openstackDemo --os_auth_url=http://127.0.0.1:5000/v2.0 add name="tty-linux" disk_format=ami container_format=ami kernel_id=599907ff-296d-4042-a671-d015e34317d2 ramdisk_id=7d9f0378-1640-4e43-8959-701f248d999d &lt; ttylinux-uec-amd64-12.1_2.6.35-22_1.img </screen>
+    <screen>glance --os-username=admin --os-password=secretword --os-tenant-name=openstackDemo --os-auth-url=http://192.168.206.130:5000/v2.0 add name="tty-linux" disk_format=ami container_format=ami kernel_id=599907ff-296d-4042-a671-d015e34317d2 ramdisk_id=7d9f0378-1640-4e43-8959-701f248d999d &lt; ttylinux-uec-amd64-12.1_2.6.35-22_1.img </screen>
     <programlisting>Uploading image 'tty-linux'
     ===========================================================================================================================================================[100%] 118.480514M/s, ETA  0h  0m  0s
     Added new image with ID: 21b421e5-44d4-4903-9db0-4f134fdd0793</programlisting>
     
     
     <para>Now a glance index should show a legitimate image.</para>
-    <programlisting>glance --os_username=admin --os_password=secretword --os_tenant=openstackDemo --os_auth_url=http://127.0.0.1:5000/v2.0 index
+    <programlisting>glance --os-username=admin --os-password=secretword --os-tenant-name=openstackDemo --os-auth-url=http://192.168.206.130:5000/v2.0 index
     ID                                   Name                           Disk Format          Container Format     Size          
     ------------------------------------ ------------------------------ -------------------- -------------------- --------------
     21b421e5-44d4-4903-9db0-4f134fdd0793 tty-linux                      ami                  ami                        25165824
