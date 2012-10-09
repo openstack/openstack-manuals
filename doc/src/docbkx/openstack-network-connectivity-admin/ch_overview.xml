@@ -324,14 +324,6 @@ format="PNG" />
                     </para>
                 </listitem>
                 <listitem>
-                    <para><emphasis role="bold">API
-                        network</emphasis>. Exposes all OpenStack
-                        APIs, including the Quantum API, to
-                        tenants. The IP addresses on this network
-                        should be reachable by anyone on the
-                        Internet.  </para>
-                </listitem>
-                <listitem>
                     <para><emphasis role="bold">Data
                             network</emphasis>. Used for VM data
                         communication within the cloud deployment. 
@@ -346,7 +338,22 @@ format="PNG" />
                         should be reachable by anyone on the
                         Internet.  </para>
                 </listitem>
+                <listitem>
+                    <para><emphasis role="bold">API
+                        network</emphasis>. Exposes all OpenStack
+                        APIs, including the Quantum API, to
+                        tenants. The IP addresses on this network
+                        should be reachable by anyone on the
+                        Internet. This may be the same network as
+                        the external network, as it is possible to create
+                        a quantum subnet for the external network that uses
+                        IP allocation ranges to use only less than the full
+                        range of IP addresses in an IP block. </para>
+                </listitem>
             </itemizedlist>
+            <note><para>If the Nova metadata service is being used, any address space used on tenant networks
+            must be routable on both the API network and on the External network, since the host running nova-api
+            must be able to reply to HTTP requests with the un-SNATed IP address of a VM. </para></note>
         </section>
     </section>
     <section xml:id="use_cases">
