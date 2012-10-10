@@ -298,7 +298,7 @@ export SERVICE_ENDPOINT=http://10.211.55.17:35357/v2.0/</programlisting>Source
     <section xml:id="osfolubuntu-imageservice">
         <title>Installing and configuring Image Service</title>
         <para>Install the packages.</para>
-        <screen><prompt>$</prompt> <userinput>sudo apt-get install glance glance-api glance-client glance-common glance-registry python-glance</userinput></screen>
+        <screen><prompt>$</prompt> <userinput>sudo apt-get install glance glance-api python-glanceclient glance-common glance-registry python-glance</userinput></screen>
         <para>Edit /etc/glance/glance-api-paste.ini (filter
             authoken).<programlisting>[filter:authtoken]
 paste.filter_factory = keystone.middleware.auth_token:filter_factory
@@ -306,8 +306,8 @@ auth_host = 10.211.55.17
 auth_port = 35357
 auth_protocol = http
 admin_tenant_name = service
-admin_user = glance
-admin_password = openstack</programlisting>Edit
+admin_user = admin
+admin_password = secretword</programlisting>Edit
             /etc/glance/glance-registry-paste.ini (filter
             authtoken).<programlisting>[filter:authtoken]
 paste.filter_factory = keystone.middleware.auth_token:filter_factory
@@ -315,8 +315,8 @@ auth_host = 10.211.55.17
 auth_port = 35357
 auth_protocol = http
 admin_tenant_name = service
-admin_user = glance
-admin_password = openstack </programlisting>
+admin_user = admin
+admin_password = secretword </programlisting>
             Edit /etc/glance/glance-api.conf.</para>
         <para>SQLAlchemy part of
             config.<programlisting>sql_connection = mysql://glance:openstack@10.211.55.17/glance</programlisting></para>
@@ -343,7 +343,7 @@ flavor = keystone</programlisting></para>
         <title> Installing and configuring Compute</title>
         
         <para>Install the
-            packages.<screen><prompt>$</prompt> <userinput>sudo apt-get install nova-api nova-cert nova-compute nova-compute-qemu nova-doc nova-network nova-objectstore nova-scheduler nova-volume rabbitmq-server novnc nova-consoleauth novnc  </userinput></screen>Update
+            packages.<screen><prompt>$</prompt> <userinput>sudo apt-get install nova-api nova-cert nova-compute nova-compute-qemu nova-doc nova-network nova-objectstore nova-scheduler nova-volume rabbitmq-server novnc nova-consoleauth  </userinput></screen>Update
             /etc/nova/nova.conf.<programlisting>[DEFAULT]
 logdir=/var/log/nova
 state_path=/var/lib/nova

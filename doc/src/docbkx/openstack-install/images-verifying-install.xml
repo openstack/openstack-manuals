@@ -4,7 +4,9 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">            
             <title>Verifying the Image Service Installation</title>
-    <literallayout class="monospaced">glance 2012.1</literallayout>
+    <para>To validate the Image service client is installed, enter
+            <userinput>glance help</userinput> at the command
+        line.</para>
     <para>Obtain a test image.</para>
     <screen>mkdir /tmp/images
     cd /tmp/images/
@@ -17,19 +19,19 @@
         variables by setting them in an openrc file: </para>
         <programlisting><xi:include parse="text" href="samples/openrc.txt"/></programlisting>
         <para>Then you would source these environment variables by running <userinput>source openrc</userinput>.</para></note>
-    <screen>glance --os-username=admin --os-password=secretword --os-tenant-name=openstackDemo --os-auth-url=http://192.168.206.130:5000/v2.0 add name="tty-linux-kernel" disk_format=aki container_format=aki &lt; ttylinux-uec-amd64-12.1_2.6.35-22_1-vmlinuz</screen>
+    <screen>glance --os-username=admin --os-password=secretword --os-tenant-name=openstackDemo --os-auth-url=http://192.168.206.130:5000/v2.0 image-create name="tty-linux-kernel" disk_format=aki container_format=aki &lt; ttylinux-uec-amd64-12.1_2.6.35-22_1-vmlinuz</screen>
     <programlisting>Uploading image 'tty-linux-kernel'
     =================================================================================================================================================================[100%] 41.8M/s, ETA  0h  0m  0s
     Added new image with ID: 599907ff-296d-4042-a671-d015e34317d2</programlisting>
     
     <para>Upload the initrd.</para>
-    <screen>glance --os-username=admin --os-password=secretword --os-tenant-name=openstackDemo --os-auth-url=http://192.168.206.130:5000/v2.0 add name="tty-linux-ramdisk" disk_format=ari container_format=ari &lt; ttylinux-uec-amd64-12.1_2.6.35-22_1-loader </screen>
+    <screen>glance --os-username=admin --os-password=secretword --os-tenant-name=openstackDemo --os-auth-url=http://192.168.206.130:5000/v2.0 image-create name="tty-linux-ramdisk" disk_format=ari container_format=ari &lt; ttylinux-uec-amd64-12.1_2.6.35-22_1-loader </screen>
     <programlisting>Uploading image 'tty-linux-ramdisk'
     ===========================================================================================================================================================[100%] 937.483441K/s, ETA  0h  0m  0s
     Added new image with ID: 7d9f0378-1640-4e43-8959-701f248d999d</programlisting>
     
     <para>Upload the image.</para>
-    <screen>glance --os-username=admin --os-password=secretword --os-tenant-name=openstackDemo --os-auth-url=http://192.168.206.130:5000/v2.0 add name="tty-linux" disk_format=ami container_format=ami kernel_id=599907ff-296d-4042-a671-d015e34317d2 ramdisk_id=7d9f0378-1640-4e43-8959-701f248d999d &lt; ttylinux-uec-amd64-12.1_2.6.35-22_1.img </screen>
+    <screen>glance --os-username=admin --os-password=secretword --os-tenant-name=openstackDemo --os-auth-url=http://192.168.206.130:5000/v2.0 image-create name="tty-linux" disk_format=ami container_format=ami kernel_id=599907ff-296d-4042-a671-d015e34317d2 ramdisk_id=7d9f0378-1640-4e43-8959-701f248d999d &lt; ttylinux-uec-amd64-12.1_2.6.35-22_1.img </screen>
     <programlisting>Uploading image 'tty-linux'
     ===========================================================================================================================================================[100%] 118.480514M/s, ETA  0h  0m  0s
     Added new image with ID: 21b421e5-44d4-4903-9db0-4f134fdd0793</programlisting>

@@ -103,11 +103,14 @@
             <para><screen>
 <prompt>$</prompt> <userinput>nova volume-attach 857d70e4-35d5-4bf6-97ed-bf4e9a4dcf5a 1 /dev/vdb</userinput>
                     </screen>
-                The first argument refers to the instance
-                you will attach the volume to;
-                The second is the volume ID;
-                The third is the mountpoint<emphasis role="bold"> on the
-                    compute-node</emphasis> that the volume will be attached to</para>
+                The first argument refers to the instance you will
+                attach the volume to; the second is the volume ID; The
+                third is the mountpoint<emphasis role="bold"> on the
+                    compute-node</emphasis> that the volume will be
+                attached to. Compute generates a non-conflicting
+                device name if one is not passed to attach_volume and
+                ensures that the volume name isn't already attached
+                there.</para>
             <para>By doing that, the compute-node which runs the instance basically performs
                 an iSCSI connection and creates a session. You can ensure that the session
                 has been created by running : </para>

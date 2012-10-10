@@ -9,8 +9,12 @@
     <title>Installing and Configuring the Image Service</title>
     
     <para>Install the Image service, as root:</para>
-    <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install glance</userinput></screen>
-    <screen os="rhel;centos;fedora"><prompt>$</prompt> <userinput>sudo yum  install openstack-nova-essex openstack-glance-essex</userinput></screen>
+    <screen os="ubuntu"><prompt>#</prompt> <userinput>sudo apt-get install glance glance-api glance-common python-glanceclient glance-registry python-glance </userinput></screen>
+    <screen os="rhel;centos;fedora"><prompt>$</prompt> <userinput>sudo yum install openstack-nova-essex openstack-glance-essex</userinput></screen>
+    <note os="ubuntu"><para>10/10/12: When using the Ubuntu Cloud Archive, you need to
+            re-install the python-keystoneclient after installing the
+            glance packages listed above, otherwise you see an
+            error.</para></note>
     <para>After installing, you need to delete the sqlite database it creates, then change the
         configuration to point to the MySQL database. </para>
     <para os="ubuntu">Delete the <filename>glance.sqlite</filename> file created in the
@@ -24,42 +28,95 @@
      </para><para>Create a MySQL user for the newly-created glance database that has full control of the database. </para>
      <para><screen><prompt>mysql></prompt> <userinput>GRANT ALL ON glance.* TO 'glance'@'%' IDENTIFIED BY '<replaceable>[YOUR_GLANCEDB_PASSWORD]</replaceable>';</userinput></screen></para>
      <para>Enter <literal>quit </literal>at the <literal>mysql></literal> prompt to exit
-            MySQL.</para><para><literallayout class="monospaced">mysql> quit</literallayout></para></section>
+     MySQL.</para>
+     <para><literallayout class="monospaced">mysql> quit</literallayout></para></section>
     <section xml:id="configure-glance-files"><title>Edit the Glance configuration files and paste ini middleware files</title>
-       <para> Update <filename>/etc/glance/glance-api-paste.ini</filename> and configure the
-                    <literal>admin_<replaceable>*</replaceable></literal> values under
-                <literal>[filter:authtoken]</literal>.</para>
-           <screen>[filter:authtoken]
+       <para>The Image service has a number of options that you can use to configure the Glance API
+server, the Glance Registry server, and the various storage backends that
+Glance can use to store images. By default, the storage backend is in file, specified in the glance-api.conf config file in the section [DEFAULT].
+       </para>
+        <para> Most configuration is done via configuration files,
+            with the Glance API server and Glance Registry server
+            using separate configuration files. When installing
+            through an operating system package management system,
+            sample configuration files are installed in /etc/glance.
+            You configure the PasteDeploy configuration, which
+            controls the deployment of the WSGI application for each
+            component, in files named
+                <replaceable>component</replaceable>-paste.ini, such
+            as glance-api-paste.ini.</para>
+        <para>This walkthrough installs the image service using a file
+            backend and the Identity service (Keystone) for
+            authentication.</para>
+        <para>Update
+                <filename>/etc/glance/glance-api-paste.ini</filename>
+            and configure the
+                    <literal>admin_<replaceable>*</replaceable></literal>
+            values under <literal>[filter:authtoken]</literal>.</para>
+        <screen>[filter:authtoken]
 admin_tenant_name = service
 admin_user = glance
 admin_password = glance</screen>
-           <para>Add this to the end of <filename>/etc/glance/glance-api.conf</filename>.</para>
-           <screen>[paste_deploy]
-flavor = keystone</screen>
+           <para>Add the admin and service identifiers and
+            flavor=keystone to the end of
+                <filename>/etc/glance/glance-api.conf</filename> as
+            shown below.</para>
+           <screen>[keystone_authtoken]
+auth_host = 127.0.0.1
+auth_port = 35357
+auth_protocol = http
+admin_tenant_name = service
+admin_user = admin
+admin_password = secretword
+
+[paste_deploy]
+# Name of the paste configuration file that defines the available pipelines
+config_file = /etc/glance/glance-api-paste.ini
+
+# Partial name of a pipeline in your paste configuration file with the
+# service name removed. For example, if your paste section name is
+# [pipeline:glance-api-keystone], you would configure the flavor below
+# as 'keystone'.
+flavor=keystone
+ </screen>
            
            <para>Restart glance-api to pick up these changed settings.</para>
            <screen>service glance-api restart</screen>
            
-           <para>Add this to the end of <filename>/etc/glance/glance-registry.conf</filename>.</para>
-           <screen>[paste_deploy]
-flavor = keystone</screen>
+           <para>Update the last sections of
+                <filename>/etc/glance/glance-registry.conf</filename>
+            to reflect the values you set earlier for admin user and
+            the service tenant, plus enable the Identity service with
+            flavor=keystone.</para>
+           <screen>[keystone_authtoken]
+auth_host = 127.0.0.1
+auth_port = 35357
+auth_protocol = http
+admin_tenant_name = service
+admin_user = admin
+admin_password = secretword
+
+[paste_deploy]
+# Name of the paste configuration file that defines the available pipelines
+config_file = /etc/glance/glance-api-paste.ini
+
+# Partial name of a pipeline in your paste configuration file with the
+# service name removed. For example, if your paste section name is
+# [pipeline:glance-api-keystone], you would configure the flavor below
+# as 'keystone'.
+flavor=keystone</screen>
            
            <para>Update
-                <filename>/etc/glance/glance-registry-paste.ini</filename>,
-            configure the admin_* values under
-            [filter:authtoken]:</para>
-           <screen>[filter:authtoken]
-admin_tenant_name = service
-admin_user = glance
-admin_password = glance</screen>
-           <para>Ensure that the glance-registry pipeline section includes authtoken:</para>
-        <screen>[pipeline:glance-registry]
-#pipeline = context registryapp
-# NOTE: use the following pipeline for keystone
-pipeline = authtoken auth-context context registryapp</screen>
+                <filename>/etc/glance/glance-registry-paste.ini</filename>
+            by enabling the Identity service, keystone:</para>
+           <screen># Use this pipeline for keystone auth
+[pipeline:glance-registry-keystone]
+pipeline = authtoken context registryapp</screen>
         <para>Ensure that <filename>/etc/glance/glance-registry.conf</filename>
             points to the MySQL database rather than
             sqlite.<programlisting>sql_connection = mysql://glance:<replaceable>[YOUR_GLANCEDB_PASSWORD]</replaceable>@192.168.206.130/glance</programlisting></para>
+        <para>Restart glance-registry to pick up these changed settings.</para>
+        <screen>service glance-registry restart</screen>
         <note><para>Any time you change the .conf files, restart the
         corresponding service.</para></note>
         <para os="ubuntu">On Ubuntu 12.04, the database tables are under version control and you must do these
@@ -72,5 +129,5 @@ pipeline = authtoken auth-context context registryapp</screen>
            <screen><prompt>#</prompt> <userinput>service glance-registry restart</userinput>
 <prompt>#</prompt> <userinput>service glance-api restart</userinput></screen>
         <note><para>This guide does not configure image caching, refer to <link
-                    xlink:href="http://glance.openstack.org">http://glance.openstack.org</link> for
+                    xlink:href="http://glance.openstack.org">http://docs.openstack.org/developer/glance/</link> for
                 more information.</para></note></section></section>
