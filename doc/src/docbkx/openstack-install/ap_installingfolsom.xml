@@ -477,15 +477,17 @@ auth_strategy = keystone
         <screen><prompt>$</prompt> <userinput>dd if=/dev/zero of=cinder-volumes bs=1 count=0 seek=2G</userinput></screen>
         <para>Mount it.</para>
         <screen><prompt>$</prompt> <userinput>losetup /dev/loop2 cinder-volumes</userinput></screen>
-        <para>Create a 8e
-            partition.<screen><prompt>$</prompt> <userinput>fdisk > n</userinput>
+        <para>Create a 8e partition.<screen>
+<prompt>$</prompt> <userinput>fdisk /dev/loop2</userinput>
+<prompt>$</prompt> <userinput>fdisk > n</userinput>
+<prompt>$</prompt> <userinput>fdisk > p</userinput>
 <prompt>$</prompt> <userinput>fdisk > 1</userinput>
 <prompt>$</prompt> <userinput>fdisk > enter</userinput>
 <prompt>$</prompt> <userinput>fdisk > enter</userinput>
 <prompt>$</prompt> <userinput>fdisk > t</userinput>
 <prompt>$</prompt> <userinput>fdisk > 8e</userinput>
 <prompt>$</prompt> <userinput>fdisk > write</userinput></screen>Add
-            it.<screen><prompt>$</prompt> <userinput>pvgcreate /dev/loop2</userinput>
+            it.<screen><prompt>$</prompt> <userinput>pvcreate /dev/loop2</userinput>
 <prompt>$</prompt> <userinput>vgcreate cinder-volumes /dev/loop2</userinput></screen></para>
         <para>Restart the
             services.<screen><prompt>$</prompt> <userinput>sudo service cinder-volume restart</userinput>
