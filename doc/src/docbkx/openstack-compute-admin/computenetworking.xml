@@ -3,7 +3,7 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="ch_networking">
-    <title>Networking</title>
+    <title>Networking with nova-network</title>
     <para>By understanding the available networking configuration
         options you can design the best configuration for your
         OpenStack Compute instances.</para>
@@ -11,17 +11,23 @@
     <section xml:id="networking-options">
         <title>Networking Options</title>
         <para>This section offers a brief overview of each concept in
-            networking for Compute. </para>
-        <para>In Compute, users organize their cloud resources in projects. A Compute project
-            consists of a number of VM instances created by a user. For each VM instance, Compute
-            assigns to it a private IP address. (Currently, Compute only supports Linux bridge
-            networking that allows the virtual interfaces to connect to the outside network through
-            the physical interface.)</para>
-        <para>The Network Controller provides virtual networks to
+            networking for Compute. With the Folsom release, you can
+            chose either to install and configure nova-network for
+            networking between VMs or use the Networking service
+            (quantum) for networking. Refer to the <link
+                xlink:href="http://docs.openstack.org/trunk/openstack-network/admin/content/"
+                >Network Administration Guide</link> to configure
+            Compute networking options with Quantum.</para>
+        <para>For each VM instance, Compute assigns to it a private IP
+            address. (Currently, Compute with nova-network only
+            supports Linux bridge networking that allows the virtual
+            interfaces to connect to the outside network through the
+            physical interface.)</para>
+        <para>The network controller with nova-network provides virtual networks to
             enable compute servers to interact with each other and
             with the public network.</para>
-        <para>Currently, Compute supports three kinds of networks, implemented in three “Network
-            Manager” types:<itemizedlist>
+        <para>Currently, Compute with nova-network supports three
+            kinds of networks, implemented in three “Network Manager” types:<itemizedlist>
                 <listitem>
                     <para>Flat Network Manager</para>
                 </listitem>
