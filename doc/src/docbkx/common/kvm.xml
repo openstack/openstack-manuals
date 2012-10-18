@@ -5,11 +5,23 @@
     xml:id="kvm">
     <?dbhtml stop-chunking?>
     <title>KVM</title>
-<para>KVM is configured as the default hypervisor for Compute. To enable KVM explicitly, add the
-        following configuration options
+<para>KVM is configured as the default hypervisor for Compute. <note>
+            <para>There are several sections about hypervisor
+                selection in this document. If you are reading this
+                document linearly, you do not want to load the KVM
+                module prior to installing nova-compute. The
+                nova-compute service depends on qemu-kvm which
+                installs
+                    <filename>/lib/udev/rules.d/45-qemu-kvm.rules</filename>,
+                which sets the correct permissions on the /dev/kvm
+                device node.</para>
+        </note></para>
+    <para>To enable KVM explicitly, add the following configuration
+        options
         <filename>/etc/nova/nova.conf</filename>:<programlisting>compute_driver=libvirt.LibvirtDriver
 libvirt_type=kvm</programlisting>
-        The KVM hypervisor supports the following virtual machine image formats:<itemizedlist>
+        The KVM hypervisor supports the following virtual machine
+        image formats:<itemizedlist>
             <listitem>
                 <para>Raw</para>
             </listitem>
@@ -124,10 +136,19 @@ kvm-amd</programlisting></para>
     </section>
     <section xml:id="xml-troubleshooting">
         <title>Troubleshooting</title>
-        <para>Trying to launch a new virtual machine instance fails with the
-                <literal>ERROR</literal> state, and the following error appears in
+        <para>Trying to launch a new virtual machine instance fails
+            with the <literal>ERROR</literal> state, and the following
+            error appears in
                 <filename>/var/log/nova/nova-compute.log</filename><screen><computeroutput>libvirtError: internal error no supported architecture for os type 'hvm'</computeroutput></screen>
-            This is a symptom that the KVM kernel modules have not been loaded.</para>
+            This is a symptom that the KVM kernel modules have not
+            been loaded. </para>
+        <para>If you cannot start VMs after installation without
+            rebooting, it's possible the permissions are not correct.
+            This can happen if you load the KVM module before you've
+            installed nova-compute. To check the permissions, run
+                <userinput>ls -l /dev/kvm</userinput> to see whether
+            the group is set to kvm. If not, run <userinput>sudo
+                udevadm trigger</userinput>.</para>
     </section>
 </section>
 
