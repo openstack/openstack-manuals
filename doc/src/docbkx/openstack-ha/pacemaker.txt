@@ -169,5 +169,41 @@ Version: 1.1.6-9971ebba4494012a93c03b40a2c58ec0eb60f50c
 Online: [ node2 node1 ]
 ----
 
-At this point, you have a working and running Pacemaker cluster, to
-which you may now start adding resources.
+=== Setting basic cluster properties
+
+Once your Pacemaker cluster is set up, it is recommended to set a few
+basic cluster properties. To do so, start the +crm+ shell and change
+into the configuration menu by entering
++configure+. Alternatively. you may jump straight into the Pacemaker
+configuration menu by typing +crm configure+ directly from a shell
+prompt.
+
+Then, set the following properties:
+
+----
+include::pacemaker-properties.crm[]
+----
+
+<1> Setting +no-quorum-policy="ignore"+ is required in 2-node Pacemaker
+clusters for the following reason: if quorum enforcement is enabled,
+and one of the two nodes fails, then the remaining node can not
+establish a _majority_ of quorum votes necessary to run services, and
+thus it is unable to take over any resources. The appropriate
+workaround is to ignore loss of quorum in the cluster. This is safe
+and necessary _only_ in 2-node clusters. Do not set this property in
+Pacemaker clusters with more than two nodes.
+
+<2> Setting +pe-warn-series-max+, +pe-input-series-max+ and
++pe-error-series-max+ to 1000 instructs Pacemaker to keep a longer
+history of the inputs processed, and errors and warnings generated, by
+its Policy Engine. This history is typically useful in case cluster
+troubleshooting becomes necessary.
+
+<3> Pacemaker uses an event-driven approach to cluster state
+processing. However, certain Pacemaker actions occur at a configurable
+interval, +cluster-recheck-interval+, which defaults to 15 minutes. It
+is usually prudent to reduce this to a shorter interval, such as 5 or
+3 minutes.
+
+Once you have made these changes, you may +commit+ the updated
+configuration.
