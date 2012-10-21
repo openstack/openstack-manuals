@@ -13,5 +13,15 @@
     <para>Install the required nova- packages, and dependencies are automatically
         installed.</para>
     <screen os="ubuntu">sudo apt-get install nova-compute nova-volume nova-novncproxy novnc nova-api nova-ajax-console-proxy nova-cert nova-consoleauth nova-doc nova-scheduler nova-network</screen>
+    <para os="ubuntu">If you see the error:
+        <screen>E: Unable to locate package nova-novncproxy</screen>ensure
+        that you have installed the Ubuntu Cloud Archive packages by
+        adding the following to
+            <filename>/etc/apt/sources.list.d/folsom.list</filename>:
+        <screen>deb http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/folsom main</screen>Prior
+        to running apt-get update and apt-get upgrade, install the
+        keyring:
+        <screen>sudo apt-get install ubuntu-cloud-keyring</screen>
+    </para>
     <screen os="centos;rhel;fedora">sudo yum install openstack-nova </screen>
 </section>
