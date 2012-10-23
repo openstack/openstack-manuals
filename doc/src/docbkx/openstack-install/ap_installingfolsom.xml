@@ -437,11 +437,16 @@ nova-cert        ubuntu-precise      nova             enabled   :-)    2012-09-1
         <title>Installing and configuring Dashboard</title>
         <para>Install the
             packages.<screen><prompt>$</prompt> <userinput>sudo apt-get install openstack-dashboard memcached</userinput></screen>Disable
-            the quantum endpoint, as of now in our setup we are not
-            using Quantum to do so Edit
+            the quantum endpoint, as of now in our setup we are not using Quantum to do so Edit
             /etc/openstack-dashboard/local_settings.py - under
-            TEMPLATE_DEBUG.<programlisting>QUANTUM_ENABLED = False</programlisting>Restart
-            the
+            TEMPLATE_DEBUG.<programlisting>QUANTUM_ENABLED = False</programlisting></para>
+        <note>
+            <para>In order to change the timezone you can use either dashboard or inside
+                /etc/openstack-dashboard/local_settings.py you can change below mentioned
+                parameter.<programlisting>TIME_ZONE = "UTC"</programlisting>
+            </para>
+        </note>
+        <para>Restart the
             services.<screen><prompt>$</prompt> <userinput>sudo service apache2 restart; sudo service memcached restart</userinput></screen></para>
     </section>
     <section xml:id="osfolubuntu-cinder">
