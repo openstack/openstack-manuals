@@ -23,19 +23,17 @@
     <section xml:id="install_ubuntu">
         <title>Install Packages (Ubuntu) </title>
         <note>
-            <para>This model assumes that you are using Ubuntu Precise
-                with folsom testing PPAs. We will update this once
-                there is an official released by Ubuntu.</para>
+            <para>We are using Ubuntu cloud archive you can read more about it Explanation of each
+                possible sources.list entry can be found here: <link
+                    xlink:href="http://blog.canonical.com/2012/09/14/now-you-can-have-your-openstack-cake-and-eat-it/"
+                    >http://bit.ly/Q8OJ9M  </link></para>
         </note>
         <para>Point to Folsom PPAs:                        
                                                             </para>
-        <screen><computeroutput>apt-get install python-software-properties
-add-apt-repository ppa:openstack-ubuntu-testing/folsom-trunk-testing
-add-apt-repository ppa:openstack-ubuntu-testing/folsom-deps-staging
-apt-get update &amp;&amp; apt-get dist-upgrade</computeroutput></screen>
-        <para>To update your code to the most recent version of the
-            these PPAs, simply re-run the last command in the above
-            sequence.   </para>
+        <screen><prompt>#</prompt> <userinput>echo deb http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/folsom main >> /etc/apt/sources.list.d/folsom.list</userinput>
+    <prompt>#</prompt> <userinput>apt-get install ubuntu-cloud-keyring </userinput>    
+    <prompt>#</prompt> <userinput>apt-get update</userinput>   
+    <prompt>#</prompt> <userinput>apt-get upgrade</userinput>   </screen>
         <section xml:id="rpc_setup">
             <title>RPC Setup </title>
             <para>Quantum uses RPC to allow DHCP agents and any plugin
