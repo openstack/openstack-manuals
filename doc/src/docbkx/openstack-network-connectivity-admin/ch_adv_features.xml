@@ -481,7 +481,6 @@ quantum floatingip-associate &lt;floatingip-id&gt; &lt;internal VM port-id&gt; <
                 step</para>
             <screen><computeroutput>quantum floatingip-create --port_id &lt;internal VM port-id&gt; &lt;ext-net-id&gt; </computeroutput></screen>
             <para>Viewing Floating IP State: </para>
-            <para>View all: </para>
             <screen><computeroutput>quantum floatingip-list</computeroutput></screen>
             <para>Find floating IP for a particular VM port: </para>
             <screen><computeroutput>quantum floatingip-list -- --port_id=ZZZ</computeroutput></screen>
@@ -497,6 +496,197 @@ quantum floatingip-associate &lt;floatingip-id&gt; &lt;internal VM port-id&gt; <
             <screen><computeroutput>quantum router-interface-remove router1 &lt;subnet-id&gt; </computeroutput></screen>
             <para>Finally, delete the router: </para>
             <screen><computeroutput>quantum router-delete router1</computeroutput></screen>
+        </section>
+    </section>
+    <section xml:id="securitygroups">
+        <title>Security Groups</title>
+        <para>Security groups and security group rules allows administrators and
+              tenants the ability to specify the type of traffic and direction
+              (ingress/egress) that is allowed to pass through a port. A security
+              group is a container for security group rules.</para>
+        <para>When a port is created in quantum it is associated with a security
+              group. If a security group is not specified the port will be associated
+              with a default security group. By default this group will drop all
+              ingress traffic and allow all egress. Rules can be added to this
+              group in order to change the behaviour.</para>
+        <para>In order to use nova security groups in quantum,
+            configure the following files. In
+                <filename>/etc/quantum/quantum.conf</filename>, set
+            proxy_mode True within the SECURITYGROUP section.  Ensure
+            that the quantum-server
+                <filename>/etc/quantum/quantum.conf</filename> file
+            has proxy_mode=False so that the quantum API service does
+            not work as a proxy for nova API calls. Then in
+                <filename>/etc/nova/nova.conf</filename> set
+            security_group_handler to be
+            nova.network.sg.SecurityGroupHandlerQuantumProxy and
+            quantum_port_security=True in the DEFAULT section. Once
+            the files are changed, restart quantum-server, nova-api,
+            and the nova-compute services in order to pick up the
+            changes.</para>
+         <note><para>If quantum-server is set to proxy_mode=True then you will not be
+                able to use security groups through the quantum api
+                and you will have to control security groups through
+                nova configuration and commands.</para></note>
+        <section xml:id="securitygroup_api_abstractions">
+            <title>Security Group API Abstractions</title>
+            <table rules="all">
+                <caption>Security Group Attributes</caption>
+                <thead>
+                    <tr>
+                        <th> Attribute name </th>
+                        <th> Type </th>
+                        <th> Default Value </th>
+                        <th> Description </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>id </td>
+                        <td>uuid-str </td>
+                        <td>generated </td>
+                        <td>UUID for the security group. </td>
+                    </tr>
+                    <tr>
+                        <td>name </td>
+                        <td>String </td>
+                        <td>None </td>
+                        <td>Human-readable name for the security group. Might
+                            not be unique. Cannot be named default as that is
+									 automatically created for a tenant.</td>
+                    </tr>
+                    <tr>
+                        <td>description </td>
+                        <td>String </td>
+                        <td>None </td>
+                        <td>Human-readable description of a security
+                            group.</td>
+                    </tr>
+                    <tr>
+                        <td>external_id</td>
+                        <td>Integer </td>
+                        <td>N/A </td>
+                        <td><para>This is used to coordinate nova security
+                            groups with quantum security groups for backwards
+                            compatibility. </para></td>
+                    </tr>
+                    <tr>
+                        <td>tenant_id </td>
+                        <td>uuid-str </td>
+                        <td>N/A </td>
+                        <td>Owner of the security group. Only admin users can
+                            specify a tenant_id other than their own.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table rules="all">
+                <caption>Security Group Rules</caption>
+                <thead>
+                    <tr>
+                        <th> Attribute name </th>
+                        <th> Type </th>
+                        <th> Default Value </th>
+                        <th> Description </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>id </td>
+                        <td>uuid-str </td>
+                        <td>generated </td>
+                        <td>UUID for the security group rule. </td>
+                    </tr>
+                    <tr>
+                        <td>security_group_id</td>
+                        <td>uuid-str or Integer</td>
+                        <td>allocated by Quantum</td>
+                        <td>The security group to associate rule with.</td>
+                    </tr>
+                    <tr>
+                        <td>direction</td>
+                        <td>String</td>
+                        <td>N/A</td>
+                        <td>The direction the traffic is allow
+                            (ingress/egress) from a VM.</td>
+                    </tr>
+                    <tr>
+                        <td>protocol</td>
+                        <td>String </td>
+                        <td>None</td>
+                        <td>IP Protocol (icmp, tcp, udp, etc).</td>
+                    </tr>
+                    <tr>
+                        <td>port_range_min</td>
+                        <td>Integer</td>
+                        <td>None</td>
+                        <td>Port at start of range</td>
+                    </tr>
+                     <tr>
+                        <td>port_range_max</td>
+                        <td>Integer</td>
+                        <td>None</td>
+                        <td>Port at end of range</td>
+                    </tr>
+                     <tr>
+                        <td>ethertype</td>
+                        <td>String</td>
+                        <td>None</td>
+                        <td>ethertype in L2 packet (IPv4, IPv6, etc)</td>
+                    </tr>
+                     <tr>
+                        <td>source_ip_prefix</td>
+                        <td>string (IP cidr)</td>
+                        <td>None</td>
+                        <td>CIDR for address range</td>
+                    </tr>
+                     <tr>
+                        <td>source_group_id</td>
+                        <td>uuid-str or Integer</td>
+                        <td>allocated by Quantum or Nova</td>
+                        <td>Source security group to apply to rule.</td>
+                    </tr>
+                    <tr>
+                        <td>external_id</td>
+                        <td>Integer </td>
+                        <td>N/A </td>
+                        <td><para>This is used to coordinate nova security
+                            groups with quantum security groups for backwards
+                            compatibility. </para></td>
+                    </tr>
+                    <tr>
+                        <td>tenant_id </td>
+                        <td>uuid-str </td>
+                        <td>N/A </td>
+                        <td>Owner of the security group rule. Only admin users can
+                            specify a tenant_id other than its own.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </section>
+        <section xml:id="securitygroup_workflow">
+            <title>Common Security Group Commands</title>
+            <para>Create a security group for our web servers:</para>
+            <screen><computeroutput>
+quantum security-group-create webservers --description "security group for webservers"</computeroutput></screen>
+            <para>Viewing security groups: </para>
+            <screen><computeroutput>quantum security-group-list</computeroutput></screen>
+            <para>Creating security group rule to allow port 80
+                ingress:</para>
+            <screen><computeroutput>
+quantum security-group-rule-create --direction ingress --protocol tcp --port_range_min 80 --port_range_max 80 &lt;security_group_uuid&gt;</computeroutput></screen>
+            <para>List security group rules: </para>
+            <screen><computeroutput>quantum security-group-rule-list </computeroutput></screen>
+            <para>Delete a security group rule:</para>
+            <screen><computeroutput>quantum security-group-rule-delete &lt;security_group_rule_uuid&gt;</computeroutput></screen>
+            <para>Delete security group:</para>
+                <screen><computeroutput>quantum security-group-delete  &lt;security_group_uuid&gt; </computeroutput></screen>
+            <para>Create a port associated with security group:</para>
+            <screen><computeroutput>quantum port-create  &lt;network_id&gt; --security_groups list=true &lt;security_group_id&gt;  &lt;security_group_id&gt;</computeroutput></screen>
+            <para>Remove security groups from a port:</para>
+            <screen><computeroutput>quantum port-update  &lt;port_id&gt; --security_groups=None</computeroutput></screen>
         </section>
     </section>
 </chapter>
