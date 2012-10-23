@@ -50,7 +50,7 @@ This server could not verify that you are authorized to access the document you 
     <para>Add the CirrOS image to the Image service using the <command>glance add</command> command,
         passing the image file through standard input:</para>
     <para>
-        <screen><prompt>$</prompt> <userinput>glance add name=cirros-0.3.0-x86_64 disk_format=qcow2 container_format=bare &lt; stackimages/cirros.img</userinput>
+        <screen><prompt>$</prompt> <userinput>glance add name=cirros-0.3.0-x86_64 --disk-format=qcow2 --container-format=bare &lt; stackimages/cirros.img</userinput>
 <computeroutput>Added new image with ID: f4addd24-4e8a-46bb-b15d-fae2591f1a35</computeroutput></screen>
     </para>
     <para>
@@ -69,9 +69,9 @@ This server could not verify that you are authorized to access the document you 
                 </listitem>
             </varlistentry>
             <varlistentry>
-                <term><literal>disk_format=qcow2</literal></term>
+                <term><literal>disk-format=qcow2</literal></term>
                 <listitem>
-                    <para>The <literal>disk_format</literal> field specifies the format of the image
+                    <para>The <literal>disk-format</literal> field specifies the format of the image
                         file.  In this case, the image file format is QCOW2, which can be verified
                         using the <command>file</command>
                         command:<screen><prompt>$</prompt> <userinput>file <userinput>stackimages/cirros.img</userinput>
@@ -83,9 +83,9 @@ This server could not verify that you are authorized to access the document you 
                 </listitem>
             </varlistentry>
             <varlistentry>
-                <term><literal>container_format=bare</literal></term>
+                <term><literal>container-format=bare</literal></term>
                 <listitem>
-                    <para>The <literal>container_format</literal> field is required by the
+                    <para>The <literal>container-format</literal> field is required by the
                             <command>glance add</command> command but isn't actually used by any of
                         the OpenStack services, so the value specified here has no effect on system
                         behavior. We specify <literal>bare</literal> to indicate that the image file
