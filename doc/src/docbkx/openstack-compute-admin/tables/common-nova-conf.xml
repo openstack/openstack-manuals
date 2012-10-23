@@ -30,6 +30,14 @@
                 </para></td>
             </tr>
             <tr>
+                <td><para> api_url=</para></td>
+                <td><para> (StrOpt) URL for the Zone's Auth API </para></td>
+            </tr>
+            <tr>
+                <td><para> auth_blob=</para></td>
+                <td><para> (StrOpt) To be written, found in /nova/scheduler/filters/trusted_filter.py, related to FLAGS.trusted_computing.auth_blob. </para></td>
+            </tr>
+            <tr>
                 <td><para> aws_access_key_id=admin </para></td>
                 <td><para> (StrOpt) AWS Access ID </para></td>
             </tr>
@@ -38,8 +46,13 @@
                 <td><para> (StrOpt) AWS Access Key </para></td>
             </tr>
             <tr>
+                <td><para> backdoor_port=&lt;None&gt; </para></td>
+                <td><para> (IntOpt) Port for eventlet backdoor to listen
+                </para></td>
+            </tr>
+            <tr>
                 <td><para> bandwith_poll_interval=600 </para></td>
-                <td><para> (IntOpt) interval to pull bandwidth usage info
+                <td><para> (IntOpt) Interval to pull bandwidth usage info
                 </para></td>
             </tr>
             <tr>
@@ -59,6 +72,10 @@
             <tr>
                 <td><para> cert_topic=cert </para></td>
                 <td><para> (StrOpt) the topic cert nodes listen on </para></td>
+            </tr>
+            <tr>
+                <td><para> claim_timeout_seconds=600 </para></td>
+                <td><para> (IntOpt) Found in /nova/compute/resource_tracker.py </para></td>
             </tr>
             <tr>
                 <td><para> compute_api_class=nova.compute.api.API </para></td>
@@ -154,6 +171,10 @@
                     doesn't specify one </para></td>
             </tr>
             <tr>
+                <td><para>default_scheduler_driver=&lt;None&gt; </para></td>
+                <td><para> (StrOpt)  </para></td>
+            </tr>
+            <tr>
                 <td><para> disable_process_locking=false </para></td>
                 <td><para> (BoolOpt) Whether to disable inter-process locks
                 </para></td>
@@ -182,6 +203,15 @@
                     the EC2 API server (http, https) </para></td>
             </tr>
             <tr>
+                <td><para> ec2_strict_validation=true </para></td>
+                <td><para> (BoolOpt) Enables strict validation for EC2 API server requests </para></td>
+            </tr>
+            <tr>
+                <td><para> ec2_workers=&lt;None&gt; </para></td>
+                <td><para> (StrOpt) To be written; Found in
+                        /nova/service.py </para></td>
+            </tr>
+            <tr>
                 <td><para> enable_instance_password=true </para></td>
                 <td><para> (BoolOpt) Allows use of instance password during
                     server creation </para></td>
@@ -203,6 +233,11 @@
                 </para></td>
             </tr>
             <tr>
+                <td><para> fatal_deprecations=false </para></td>
+                <td><para> (BoolOpt) To be written; Found in /nova/common/deprecated.py
+                </para></td>
+            </tr>
+            <tr>
                 <td><para> firewall_driver=nova.virt.firewall.libvirt.IptablesFirewallDriver</para></td>
                 <td><para> (StrOpt) Firewall driver (defaults to iptables)
                 </para></td>
@@ -213,6 +248,10 @@
                     floating_ip_dns_manager=nova.network.dns_driver.DNSDriver </para></td>
                 <td><para> (StrOpt) full class name for the DNS Manager for
                     floating IPs </para></td>
+            </tr>
+            <tr>
+                <td><para> glance_api_insecure=false </para></td>
+                <td><para> (BoolOpt) Allow to perform insecure SSL (https) requests to glance </para></td>
             </tr>
             <tr>
                 <td><para> glance_api_servers=$glance_host:$glance_port </para></td>
@@ -240,9 +279,18 @@
             </tr>
             <tr>
                 <td><para>
+                    image_info_filename_pattern=$instances_path/ </para></td>
+                <td><para> (StrOpt) Used for image caching; found in /nova/virt/libvirt/utils.py </para></td>
+            </tr>
+            <tr>
+                <td><para>
                     image_service=nova.image.glance.GlanceImageService </para></td>
                 <td><para> (StrOpt) The service to use for retrieving and
                     searching images. </para></td>
+            </tr>
+            <tr>
+                <td><para> instance_build_timeout=0 </para></td>
+                <td><para> (StrOpt) To be written; found in /nova/compute/manager.py </para></td>
             </tr>
             <tr>
                 <td><para> instance_dns_domain= </para></td>
@@ -260,6 +308,10 @@
                 <td><para> (StrOpt) time period to generate instance usages
                     for. Time period must be hour, day, month or year
                 </para></td>
+            </tr>
+            <tr>
+                <td><para> instance_uuid_format= [instance: %(uuid)s]</para></td>
+                <td><para> (StrOpt) To be written; found in /nova/openstack/common/log.py</para></td>
             </tr>
             <tr>
                 <td><para> isolated_hosts= </para></td>
@@ -356,16 +408,20 @@
             <tr>
                 <td><para>
                     network_manager=nova.network.manager.VlanManager </para></td>
-                <td><para> (StrOpt) full class name for the Manager for
+                <td><para> (StrOpt) Full class name for the Manager for
                     network </para></td>
             </tr>
             <tr>
                 <td><para> network_topic=network </para></td>
-                <td><para> (StrOpt) the topic network nodes listen on </para></td>
+                <td><para> (StrOpt) The topic network nodes listen on </para></td>
             </tr>
             <tr>
                 <td><para> node_availability_zone=nova </para></td>
-                <td><para> (StrOpt) availability zone of this node </para></td>
+                <td><para> (StrOpt) Availability zone of this node </para></td>
+            </tr>
+            <tr>
+                <td><para> non_inheritable_image_properties=['cache_in_nova', 'instance_uuid', 'user_id', 'image_type', 'backup_type', 'min_ram', 'min_disk'] </para></td>
+                <td><para> (ListOpt) These are image properties which a snapshot should not inherit from an instance </para></td>
             </tr>
             <tr>
                 <td><para>
