@@ -30,13 +30,10 @@
   </screen>
   <para>During the install, you'll be prompted for the mysql root
     password. Enter a password of your choice and verify it.</para>
-  <para os="ubuntu">Use <command>sed</command> to edit
-      <filename>/etc/mysql/my.cnf</filename> to change
-      <literal>bind-address</literal> from localhost (127.0.0.1) to
-    any (0.0.0.0) and restart the mysql service, as root. </para>
+  <para>Ensure the MySQL service listens on a public interface, by editing the
+      <filename>/etc/mysql/my.cnf</filename>file. Update the "bind-address" directive : </para>
   <para>
-    <screen os="ubuntu"><prompt>#</prompt> <userinput>sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/my.cnf</userinput>
-<prompt>#</prompt> <userinput>service mysql restart</userinput></screen>   
+    <programlisting>bind-address            = 0.0.0.0    </programlisting>   
   </para>
   <para os="rhel;centos;fedora">Set MySQL to start the daemon every time you start and then start the server.
   <screen>
