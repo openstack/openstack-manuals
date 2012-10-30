@@ -175,13 +175,16 @@ catalog.$REGION.network.name = Network Service </computeroutput></screen>
                 plugins not listed below, see the plugin's own documentation.</para>
             <section xml:id="nova_with_quantum_vifplugging_ovs">
                 <title>Vif-plugging with Open vSwitch Plugin</title>
+                <para>The choice of vif-plugging for the Open vSwitch plugin depends on what version of libvirt you
+                 are using, as well as whether you are using Nova security filtering (i.e., security groups,
+                 provider firewall, VM spoofing prevention).</para>
                 <itemizedlist>
                     <listitem>
-                        <para>When using libvirt (any version) with Nova security groups:
+                        <para>When using libvirt (any version) with Nova security filtering:
                             libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybirdOVSBridgeDriver</para>
                     </listitem>
                     <listitem>
-                        <para>When using libvirt (version &lt; 0.9.11) without Nova security groups:
+                        <para>When using libvirt (version &lt; 0.9.11) without Nova security filtering:
                             libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchDriver</para>
                     </listitem>
                     <listitem>
@@ -202,6 +205,8 @@ catalog.$REGION.network.name = Network Service </computeroutput></screen>
             </section>
             <section xml:id="nova_with_quantum_vifplugging_nvp">
                 <title>Vif-plugging with Nicira NVP Plugin</title>
+                <para>The choice of vif-plugging for the NVP Plugin depends on what version of libvirt you
+                 are using (this assumes you are using NVP for security groups and VM spoof prevention).</para>
                 <itemizedlist>
                     <listitem>
                         <para>When using libvirt (version &lt; 0.9.11):
@@ -219,13 +224,16 @@ catalog.$REGION.network.name = Network Service </computeroutput></screen>
             </section>
             <section xml:id="nova_with_quantum_vifplugging_nec">
                 <title>Vif-plugging with NEC OpenFlow Plugin</title>
+                <para>The choice of vif-plugging for the NEC plugin depends on what version of libvirt you
+                 are using, as well as whether you are using Nova security filtering (i.e., security groups,
+                 provider firewall, VM spoofing prevention).</para>
                 <itemizedlist>
                     <listitem>
-                        <para>When using libvirt (any version) with Nova security groups:
+                        <para>When using libvirt (any version) with Nova security filtering:
                             libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybirdOVSBridgeDriver</para>
                     </listitem>
                     <listitem>
-                        <para>When using libvirt (version &lt; 0.9.11) without Nova security groups:
+                        <para>When using libvirt (version &lt; 0.9.11) without Nova security filtering:
                             libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchDriver</para>
                     </listitem>
                     <listitem>
