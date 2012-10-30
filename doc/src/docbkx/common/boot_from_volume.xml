@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section 
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" 
+    version="5.0"
+    xml:id="boot_from_volume">
+  <title>Launch from a Volume</title>
+  <para>The Compute service has preliminary support for booting an instance from a
+  volume.</para>
+  <simplesect>
+    <title>Creating a bootable volume</title>
+    <para>To create a bootable volume, mount the volume to an existing instance, and then
+    build a volume-backed image. Here is an example based on <link
+    xlink:href="https://github.com/openstack-dev/devstack/blob/master/exercises/boot_from_volume.sh"
+    >exercises/boot_from_volume.sh</link>. This example assumes that you have a
+    running instance with a 1GB volume mounted at <literal>/dev/vdc</literal>. These
+    commands will make the mounted volume bootable using a CirrOS image. As
+    root:<screen><prompt>#</prompt> <userinput>mkfs.ext3 -b 1024 /dev/vdc 1048576</userinput>
+    <prompt>#</prompt> <userinput>mkdir /tmp/stage</userinput>
+    <prompt>#</prompt> <userinput>mount /dev/vdc /tmp/stage</userinput>
+    
+    <prompt>#</prompt> <userinput>cd /tmp</userinput>
+    <prompt>#</prompt> <userinput>wget https://launchpad.net/cirros/trunk/0.3.0/+download/cirros-0.3.0-x86_64-rootfs.img.gz</userinput>
+    <prompt>#</prompt> <userinput>gunzip cirros-0.3.0-x86_64-rootfs.img.gz</userinput>
+    <prompt>#</prompt> <userinput>mkdir /tmp/cirros</userinput>
+    <prompt>#</prompt> <userinput>mount /tmp/cirros-0.3.0-x86_64-rootfs.img /tmp/cirros</userinput>
+    
+    <prompt>#</prompt> <userinput>cp -pr /tmp/cirros/* /tmp/stage</userinput>
+    <prompt>#</prompt> <userinput>umount /tmp/cirros</userinput>
+    <prompt>#</prompt> <userinput>sync</userinput>
+    <prompt>#</prompt> <userinput>umount /tmp/stage</userinput></screen></para>
+    <para>Detach the volume once you are done.</para>
+  </simplesect>
+  <simplesect>
+    <title>Booting an instance from the volume</title>
+    <para>To boot a new instance from the volume, use
+    the <command>nova boot</command> command with use
+    the <literal>--block-device-mapping</literal>
+    flag. The output for <command>nova help
+    boot</command> shows the following
+    documentation about this
+    flag:<screen><computeroutput> --block-device-mapping &lt;dev-name=mapping&gt;
+    Block device mapping in the format
+    &lt;dev-name=&lt;id&gt;:&lt;type&gt;:&lt;size(GB)&gt;:&lt;delete-on-terminate&gt;.
+    </computeroutput></screen></para>
+    <para>The command arguments are:<variablelist>
+    <varlistentry>
+      <term><literal>dev-name</literal></term>
+      <listitem>
+	<para>A device name where the volume will be attached in the system at
+	<filename>/dev/<replaceable>dev_name</replaceable></filename>.
+	This value is typically <literal>vda</literal>.</para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term><literal>id</literal></term>
+      <listitem>
+	<para>The ID of the volume to boot from, as shown in the output of
+	<command>nova volume-list</command>.</para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term><literal>type</literal></term>
+      <listitem>
+	<para>This is either <literal>snap</literal>, which means that the
+	volume was created from a snapshot, or anything other than
+	<literal>snap</literal> (a blank string is valid). In the
+	example above, the volume was not created from a snapshot, so we
+	will leave this field blank in our example below.</para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term><literal>size (GB)</literal></term>
+      <listitem>
+	<para>The size of the volume, in GB. It is safe to leave this blank and
+	have the Compute service infer the size.</para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term><literal>delete-on-terminate</literal></term>
+      <listitem>
+	<para>A boolean to indicate whether the volume should be deleted when
+	the instance is terminated. True can be specified as
+	<literal>True</literal> or <literal>1</literal>. False can be
+	specified as <literal>False</literal> or
+	<literal>0</literal>.</para>
+      </listitem>
+    </varlistentry>
+    </variablelist></para>
+    <para><note>
+      <para>Because of bug <link
+      xlink:href="https://bugs.launchpad.net/nova/+bug/1008622"
+      >#1008622</link>, you must specify an image when booting from a volume,
+      even though this image will not be used.</para>
+      </note>The following example will attempt boot from volume with
+      ID=<literal>13</literal>, it will not delete on terminate. Replace the
+      <literal>--image</literal> flag with a valid image on your system, and the
+      <literal>--key-name</literal> with a valid keypair
+      name:<screen><prompt>$</prompt> <userinput>nova boot --image <replaceable>f4addd24-4e8a-46bb-b15d-fae2591f1a35</replaceable> --flavor 2 --key-name <replaceable>mykey</replaceable> \
+    --block-device-mapping vda=13:::0 boot-from-vol-test</userinput></screen></para>
+  </simplesect>
+</section>

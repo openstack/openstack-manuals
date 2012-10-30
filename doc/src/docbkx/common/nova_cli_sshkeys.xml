@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section 
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" 
+    version="5.0"
+    xml:id="inserting_sshkeys">
+  <title>Associating ssh keys with instances</title>
+
+  <simplesect xml:id="nova_cli_keygen">
+    <title>Creating New Keys</title>
+    <para>The command:<screen> 
+      <prompt>$</prompt> <userinput>nova keypair-add mykey > mykey.pem</userinput></screen>
+      will create a keynamed <literal>mykey</literal> which
+      you can associate with instances.  Save the file
+      <filename>mykey.pem</filename> to a securelocation as it
+      will allow root access to instances the
+      <literal>mykey</literal>key is associated with.
+    </para>
+  </simplesect>
+
+  <simplesect xml:id="nova_cli_keyupload">
+    <title>Uploading Existing Keys</title>
+    <para>The command:<screen>
+      <prompt>$</prompt> <userinput>nova keypair-add --pub-key mykey.pub mykey</userinput></screen>      
+      will upload the existing publickey <literal>mykey.pub</literal>
+      and associate it with the name <literal>mykey</literal>.  You
+      will need to have the matching private key to access instances
+      associated with this key.  </para>
+  </simplesect>
+
+  <simplesect xml:id="nova_cli_associatekey">
+    <title>Adding Keys to Your Instance</title>
+    <para>To associate a key with an instance on boot add <literal>--key_name mykey</literal> to your command line for example:<screen>
+     <prompt>$</prompt> <userinput>nova boot --image ubuntu-cloudimage --flavor 1 --key_name mykey</userinput></screen> 
+    </para>
+  </simplesect>
+  
+</section>
+

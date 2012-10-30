@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section 
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" 
+    version="5.0"
+    xml:id="nova_cli_resizerebuild">
+  <title>Change Server Configuration</title>
+  <para>After you have created a server, you may need to increase its
+  size, change the image used to build it, or perform other
+  configuration changes.</para>
+  <section xml:id="resizerebuild_commands_used">
+    <title>Commands Used</title>
+    <para>This process uses the following commands:
+    <itemizedlist>
+      <listitem><para><command>nova
+      resize*</command></para></listitem>
+      <listitem><para><command>nova rebuild</command></para></listitem>
+    </itemizedlist>
+    </para>
+  </section>
+  <section xml:id="nova_cli_resize">
+    <title>Increase or Decrease Server Size</title>
+    <para>Server size is changed by applying a different
+    flavor to the server. Before you begin, use nova
+    flavor-list to review the flavors available to
+    you.</para>
+    <screen>
+<prompt>$</prompt> <userinput>nova flavor-list</userinput>
++----+-----------+-----------+------+-----------+------+-------+-------------+
+| ID |    Name   | Memory_MB | Disk | Ephemeral | Swap | VCPUs | RXTX_Factor |
++----+-----------+-----------+------+-----------+------+-------+-------------+
+| 1  |  m1.tiny  |    512    |  0   |     0     |      |   1   |     1.0     |
+| 2  |  m1.small |    2048   |  10  |     20    |      |   1   |     1.0     |
+| 3  | m1.medium |    4096   |  10  |     40    |      |   2   |     1.0     |
+| 4  |  m1.large |    8192   |  10  |     80    |      |   4   |     1.0     |
+| 5  | m1.xlarge |   16384   |  10  |    160    |      |   8   |     1.0     |
++----+-----------+-----------+------+-----------+------+-------+-------------+
+    </screen>
+    <para>In this example, we'll take a server originally configured with the <code>m1.tiny</code> flavor and resize it to <code>m1.small</code>.</para>
+    <screen>
+      <prompt>$</prompt> <userinput>nova show acdfb2c4-38e6-49a9-ae1c-50182fc47e35</userinput>
++------------------------+----------------------------------------------------------+
+|        Property        |                          Value                           |
++------------------------+----------------------------------------------------------+
+|   OS-DCF:diskConfig    |                          MANUAL                          |
+| OS-EXT-STS:power_state |                            1                             |
+| OS-EXT-STS:task_state  |                           None                           |
+|  OS-EXT-STS:vm_state   |                          active                          |
+|       accessIPv4       |                                                          |
+|       accessIPv6       |                                                          |
+|      config_drive      |                                                          |
+|        created         |                   2012-05-09T15:47:48Z                   |
+|         flavor         |                         m1.tiny                          |
+|         hostId         | de0c201e62be88c61aeb52f51d91e147acf6cf2012bb57892e528487 |
+|           id           |           acdfb2c4-38e6-49a9-ae1c-50182fc47e35           |
+|         image          |                      maverick-image                      |
+|        key_name        |                                                          |
+|        metadata        |                            {}                            |
+|          name          |                       resize-demo                        |
+|    private network     |                       172.16.101.6                       |
+|        progress        |                            0                             |
+|     public network     |                        10.4.113.6                        |
+|         status         |                          ACTIVE                          |
+|       tenant_id        |             e830c2fbb7aa4586adf16d61c9b7e482             |
+|        updated         |                   2012-05-09T15:47:59Z                   |
+|        user_id         |             de3f4e99637743c7b6d27faca4b800a9             |
++------------------------+----------------------------------------------------------+
+    </screen>
+    <para>Use the resize command with the server's ID (6beefcf7-9de6-48b3-9ba9-e11b343189b3) and the ID of the desired flavor (2):</para>
+    <screen>
+      <prompt>$</prompt> <userinput>nova resize 6beefcf7-9de6-48b3-9ba9-e11b343189b3 2</userinput>  
+    </screen>
+    <para>While the server is rebuilding, its status will be displayed as RESIZING. </para>
+  </section>
+</section>

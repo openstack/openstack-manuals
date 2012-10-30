@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="ch_instance_mgmt">
+    <title>Instance Management</title>
+
+    <para>Instances are the running virtual machines within an
+    OpenStack cloud.  The <link linkend="images-and-instances">Images
+    and Instances</link> section of the <link
+    linkend="ch_introduction-to-openstack-compute">Introduction to
+    OpenStack Compute</link> Chapter provides a high level overview of
+    instances and their life cycle</para>
+
+    <para>This chapter deals with the details of how to manage that
+    life cycle</para>
+
+    <section xml:id="instance-mgmt-interfaces">
+      <?dbhtml stop-chunking?>
+      <title>Interfaces to managing instances</title>
+
+      <para>OpenStack provides command line, web based, and API based
+      instance managment. Additionally a number of third party
+      management tools are available for use with OpenStack using
+      either the native API or the provided EC2 compatibility
+      API.</para>
+
+      <simplesect xml:id="instance-mgmt-novaclient">
+	<title>Nova CLI</title>
+
+	<para>The <application>nova</application> command provided by
+	the OpenStack python-novaclient package is the basic
+	commandline utility for users interacting with OpenStack. This
+	is available as a native package for most modern Linux
+	distributions or the latest version can be installed directly
+	using <application>pip</application> python package installer:
+	<programlisting language="bash">sudo pip install -e git+https://github.com/openstack/python-novaclient.git#egg=python-novaclient</programlisting>
+	</para>
+
+	<para>Full details for <application>nova</application> and
+	other CLI tools are provided in the <link
+	xlink:href="http://docs.openstack.org/cli/quick-start/content/index.html">OpenStack
+	CLI Guide</link>.  What follows is the minimal introduction
+	required to follow the CLI example in this chapter.  In the
+	case of a conflict the <link
+	xlink:href="http://docs.openstack.org/cli/quick-start/content/index.html">OpenStack
+	CLI Guide</link> should be considered authoritative (and a bug
+	filed against this section). </para>
+
+	<para>In order to function the <application>nova</application>
+	CLI needs to know four things:</para>
+	<itemizedlist>
+	  <listitem><para>Authentication URL. This can be passed as
+	  the --os_auth_url flag or using the OS_AUTH_URL environment
+	  variable.</para></listitem>
+	  <listitem><para>Tenant(sometimes refered to as project)
+	  name. This can be passed as the --os_tenant_name flag or
+	  using the OS_TENANT_NAME environment
+	  variable.</para></listitem>
+	  <listitem><para>User name. This can be passed as the
+	  --os_username flag or using the OS_USERNAME environment
+	  variable.</para></listitem>
+	  <listitem><para>Password. This can be passed as the
+	  --os_password flag or using the OS_PASSWORD environment
+	  variable.</para></listitem>
+	</itemizedlist>
+
+	<para>For example if you have your <link
+	linkend="ch-identity-mgmt-config">Keytone</link> identity
+	management service running on the default port (5000) on host
+	keystone.example.com and want to use the
+	<application>nova</application> cli as the user "demouser"
+	with the password "demopassword" in the "demoproject" tenant
+	you can export the following values in your shell environment
+	or pass the equivalent commandline args (presuming these
+	identities already exist):</para>
+
+	<programlisting language="bash">
+	  export OS_AUTH_URL="http://keystone.example.com:5000/v2.0/"
+	  export OS_USERNAME=demouser
+	  export OS_PASSWORD=demopassword
+	  export OS_TENANT_NAME=demoproject</programlisting>
+
+	<para>If you are using the <link
+	linkend="instance-mgmt-horizon">Horizon</link> web dashboard,
+	users can easily download credential files like this with the
+	correct values for your particular implementation.</para>
+
+      </simplesect>
+      <simplesect xml:id="instance-mgmt-horizon">
+	<title>Horizon web dashboard</title>
+	<para>Horizon is the highly customizable and extensible
+	OpenStack web dashboard.  The <link
+	xlink:href="http://docs.openstack.org/developer/horizon">Horizon
+	Project</link> home page has detailed information on deploying
+	horizon.</para>
+      </simplesect>
+
+      <simplesect xml:id="instance-mgmt-novaapi">
+	<title>Compute API</title>
+	<para>Openstack provides a RESTful API for all functionality.
+	Complete API documentation is available at at
+	http://docs.openstack.org/api. The <link
+	xlink:href="http://docs.openstack.org/api/openstack-compute/2">OpenStack
+	Compute API</link> documentation refers to instances as
+	"servers".</para>
+	<para>The <link linkend="instance-mgmt-novaclient">nova cli</link> can be made to show the API calls it is making by passing it the --debug flag
+	<screen><prompt>#</prompt><userinput>nova --debug list</userinput>
+	<computeroutput>connect: (10.0.0.15, 5000)
+send: 'POST /v2.0/tokens HTTP/1.1\r\nHost: 10.0.0.15:5000\r\nContent-Length: 116\r\ncontent-type: application/json\r\naccept-encoding: gzip, deflate\r\naccept: application/json\r\nuser-agent: python-novaclient\r\n\r\n{"auth": {"tenantName": "demoproject", "passwordCredentials": {"username": "demouser", "password": "demopassword"}}}'
+reply: 'HTTP/1.1 200 OK\r\n'
+header: Content-Type: application/json
+header: Vary: X-Auth-Token
+header: Date: Thu, 13 Sep 2012 20:27:36 GMT
+header: Transfer-Encoding: chunked
+connect: (128.52.128.15, 8774)
+send: u'GET /v2/fa9dccdeadbeef23ae230969587a14bf/servers/detail HTTP/1.1\r\nHost: 10.0.0.15:8774\r\nx-auth-project-id: demoproject\r\nx-auth-token: deadbeef9998823afecc3d552525c34c\r\naccept-encoding: gzip, deflate\r\naccept: application/json\r\nuser-agent: python-novaclient\r\n\r\n'
+reply: 'HTTP/1.1 200 OK\r\n'
+header: X-Compute-Request-Id: req-bf313e7d-771a-4c0b-ad08-c5da8161b30f
+header: Content-Type: application/json
+header: Content-Length: 15
+header: Date: Thu, 13 Sep 2012 20:27:36 GMT
++----+------+--------+----------+
+| ID | Name | Status | Networks |
++----+------+--------+----------+
++----+------+--------+----------+
+	</computeroutput>
+	</screen></para>
+
+      </simplesect>
+      <simplesect xml:id="instance-mgmt-ec2compat">
+	<title>EC2 Compatibility API</title>
+
+	<para>In addition to the native compute API OpenStack provides
+	an EC2 compatible API.  This allows legacy workflows built for
+	EC2 to work with OpenStack.</para>
+
+	<para><link linkend="configuring-ec2-API">Configuring the EC2
+	API</link> lists configuration options for customizing this
+	compatibility API on your OpenStack cloud.</para>
+      </simplesect>
+
+      <simplesect xml:id="instance-mgmt-3rdparty">
+	<title>Third Party Tools</title> 
+
+	<para>There are numerous third party tools and language
+	specific SDKs for interacting with OpenStack clouds both
+	through native and campatibility APIs.  These are not
+	OpenStack projects so we can only provide links to some of the
+	more popular projects and a brief description.  For detailed
+	installation and usage info please see the individual project
+	pages</para>
+
+	<para>
+	  <itemizedlist>
+	    <listitem><para><link
+	    xlink:href="http://open.eucalyptus.com/wiki/Euca2oolsGuide">euca2ools
+	    </link> is a popular opensource CLI for interacting with
+	    the EC2 API.  This is convinent for multi cloud
+	    environments where EC2 is the common API, or for
+	    transitioning from EC2 API based clouds to
+	    OpenStack.</para></listitem> 
+	    <listitem><para><link
+	    xlink:href="http://code.google.com/p/hybridfox/">hybridfox</link>
+	    is a Firefox browser add-on that provides a graphical
+	    interface to many popular public and private cloud
+	    technologies.</para></listitem>
+	    <listitem><para><link
+	    xlink:href="https://github.com/boto/boto">boto</link> is a
+	    Python library for interacting with Amazon Web Services.
+	    It can be used ot access openstack through the EC2
+	    compatibility API</para></listitem>
+	    <listitem><para><link
+	    xlink:href="https://rubygems.org/gems/fog">fog</link> is
+	    the Ruby cloud services library and provides methods fo
+	    rinteracting with a large number of cloud and
+	    virtualization platforms.</para></listitem>
+	    <listitem><para><link
+	    xlink:href="http://heat-api.org/">heat</link> is a high
+	    level orchestration system that provides a programmable
+	    interface to orchestrate multiple cloud applications
+	    implementing well known standards such as CloudFormation
+	    and TOSCA. Unlike other projects menioned in this section
+	    <link xlink:href="http://heat-api.org/">heat</link>
+	    requires changes to your openstack deployment and is
+	    working toward official inclusion as an OpenStack project.
+	    At this point <link
+	    xlink:href="http://heat-api.org/">heat</link> is a
+	    developmnet project not a production resource, but it does
+	    show what the not too distant future of instanc
+	    emanagement may be like.</para></listitem>
+	  </itemizedlist>
+	</para>
+      </simplesect>
+    </section>
+
+    <section xml:id="instance-building-blocks">
+      <?dbhtml stop-chunking?>
+      <title>Instance building blocks</title>
+
+      <para>There are two fundamental requirements for a computing
+      system, software and hardware.  Virtualization and cloud
+      frameworks tend to blur these lines and some of your "hardware"
+      may actually be "software" but conceptually you still need an
+      operating system and something to run it on.</para>
+
+      <simplesect xml:id="instance-building-blocks-images">
+	<title>Images</title>
+	<para>In OpenStack the base operating system is usually copied
+	from an <link linkend="ch_image_mgmt">"image"</link> stored in
+	the Glance image service.  This is the most common case and
+	results in an ephemeral instance which starts from a know
+	templated state and loose all accumulated state on shutdown.
+	It is also possible in special cases to put an operating
+	system on a persistent <link
+	linkend="managing-volumes">"volume"</link> in the Nova-Volume
+	or Cinder volume system.  This gives a more traditional
+	persistent system that accumulates state wich is preserved
+	across restarts. To get a list of available images on your system run:
+	<screen><prompt>$</prompt><userinput>nova image-list</userinput>
+	<computeroutput>
++--------------------------------------+-------------------------------+--------+--------------------------------------+ 
+| ID                                   | Name                          | Status | Server                               | 
++--------------------------------------+-------------------------------+--------+--------------------------------------+ 
+| aee1d242-730f-431f-88c1-87630c0f07ba | Ubuntu 12.04 cloudimg amd64   | ACTIVE |                                      | 
+| 0b27baa1-0ca6-49a7-b3f4-48388e440245 | Ubuntu 12.10 cloudimg amd64   | ACTIVE |                                      | 
+| df8d56fc-9cea-4dfd-a8d3-28764de3cb08 | jenkins                       | ACTIVE |                                      |
++--------------------------------------+-------------------------------+--------+--------------------------------------+
+	</computeroutput>
+	</screen>
+	</para>
+	<para>
+	  The displayed image atributes are 
+	  <itemizedlist>
+	    <listitem><para>ID: the automatically generate UUID of
+	    the image</para></listitem>
+	    <listitem><para>Name: a free form human readable name
+	    given to the image</para></listitem>
+	    <listitem><para>Status: shows the status of the image
+	    ACTIVE images are available for use.</para></listitem>
+	    <listitem><para>Server: for images that are created as
+	    snapshots of running instance this is the UUID of the
+	    instance the snapshot derives from, for uploaded images it
+	    is blank</para></listitem>
+	  </itemizedlist>
+	</para>
+      </simplesect>
+
+      <simplesect xml:id="instance-building-blocks-flavors">
+	<title>Flavors</title>
+	<para>Virtual hardware templates are called "flavors" in
+	OpenStack.  The default install provides a range of five
+	flavors.  These are configurable by admin users (this too is
+	configurable and may be delegated by redefining the accss
+	controls for "compute_extension:flavormanage" in
+	<filename>/etc/nova/policy.json</filename> on the compute-api
+	server) . To get a list of available flavors on your system
+	run: <screen><prompt>$</prompt><userinput>nova flavor-list</userinput>
+	<computeroutput>
++----+-------------+-----------+------+-----------+------+-------+-------------+-----------+-------------+
+| ID | Name        | Memory_MB | Disk | Ephemeral | Swap | VCPUs | RXTX_Factor | Is_Public | extra_specs |
++----+-------------+-----------+------+-----------+------+-------+-------------+-----------+-------------+
+| 1  | m1.tiny     | 512       | 0    | 0         |      | 1     | 1.0         | True      | {}          |
+| 2  | m1.small    | 2048      | 10   | 20        |      | 1     | 1.0         | True      | {}          |
+| 3  | m1.medium   | 4096      | 10   | 40        |      | 2     | 1.0         | True      | {}          |
+| 4  | m1.large    | 8192      | 10   | 80        |      | 4     | 1.0         | True      | {}          |
+| 5  | m1.xlarge   | 16384     | 10   | 160       |      | 8     | 1.0         | True      | {}          |
++----+-------------+-----------+------+-----------+------+-------+-------------+-----------+-------------+
+	</computeroutput>
+	</screen>
+	</para>
+      
+	<para> The <command>nova flavor-create</command> command
+	allows authorized users to create new flavor, additional
+	flavor manipulation commands can be shown with the command
+	<command>nova help |grep flavor</command></para>
+
+	<para>Flavors define a numner of elements
+	<itemizedlist>
+	  <listitem><para>ID: a unique numeric id </para></listitem>
+	  <listitem><para>Name: a descriptive
+	  name. <replaceable>xx</replaceable>.<replaceable>size_name</replaceable>
+	  is conventional not required, though some thirdparty tools
+	  may rely on it.</para></listitem>
+	  <listitem><para>Memory_MB: virtual machine memory in
+	  megabytes</para></listitem>
+	  <listitem><para>Disk: virtual root disk size in gigabytes.
+	  This is an ephemeral disk the base <link
+	  linkend="ch_image_mgmt">image</link> is copied into.  When
+	  booting rom a persistant<link
+	  linkend="managing-volumes">volume</link> it is not used.
+	  The "0" size is a special case which uses the native base
+	  image size as the size of the ephemeral root volume.
+	  </para></listitem>
+	  <listitem><para>Ephemeral: specifise the size of a secondary
+	  ephemeral data disk, this is created empty and exists only
+	  for the life of the instance.</para></listitem>
+	  <listitem><para>Swap: optional swap space allocation for the
+	  instance</para></listitem>
+	  <listitem><para>VCPUs: number of virtual CPUs presented to
+	  the instance</para></listitem>
+	  <listitem><para>RXTX_Factor: optional property allows
+	  created servers to have a different bandwidth cap than that
+	  defined in the network they are attached to. This factor is
+	  multiplied by the rxtx_base property of the network.
+	  Default value is 1.0 (ie the same as attached
+	  network).</para></listitem>
+	  <listitem><para>IS_Public: Boolean value, whether flavor is
+	  available to all users or private to the tenant it was
+	  created in.  Defaults to True.</para></listitem>
+	  <listitem><para>extra_specs: optional holds key/value pairs
+	  to be matched against key/value pairs configured on compute
+	  node.</para></listitem>
+	</itemizedlist>
+	</para>
+      </simplesect>
+    </section>
+
+    <section xml:id="instance-creation">
+      <?dbhtml stop-chunking?>
+      <title>Creating instances</title>
+      <xi:include href="../common/nova_cli_boot.xml" />
+      <xi:include href="../common/boot_from_volume.xml" />
+    </section>
+
+   <section xml:id="instance-scheduling-constraints">
+      <title>Controlling where instances run</title>
+      <para>The <link linkend="scheduler-filters">scheduler
+      filters</link> section provides deetailed information on
+      controlling where your instances run, including ensuring a set
+      of instances run on <link
+      linkend="differenthostfilter">diffent</link> compute nodes for
+      service resiliency or on the <link
+      linkend="samehostfilter">same</link> node for high performance
+      interinstance communications</para>
+      <para> Additionally admin users can specify and exact compute
+      node to run on by specifying <literal>--availability-zone
+      &lt;availibility-zone&gt;:&lt;compute-host&gt;</literal> on the command
+      line, for example to force an instance to launch on the
+      <literal>nova-1</literal> conpute node in the default
+      <literal>nova</literal> availibility zone:
+      <screen><prompt>#</prompt><userinput>nova boot --image aee1d242-730f-431f-88c1-87630c0f07ba --flavor 1 --availability-zone nova:nova-1 testhost</userinput></screen></para>
+    </section>
+
+    <section xml:id="instance-data">
+      <?dbhtml stop-chunking?>
+      <title>Instance specific data</title>
+      <para>authorized_keys key injection, user-data, metadata
+      service, file injection</para>
+      <xi:include href="../common/nova_cli_sshkeys.xml" />
+      <xi:include href="../common/nova_cli_metadata.xml" />
+      <xi:include href="../common/nova_cli_userdata.xml" />
+      <xi:include href="../common/nova_cli_fileinjection.xml" />
+    </section>
+
+    <section xml:id="instance-networking">
+      <?dbhtml stop-chunking?>
+      <title>Managing instance networking</title>
+      <xi:include href="../common/nova_cli_floatingip.xml" />
+      <xi:include href="../common/nova_cli_secgroups.xml" />
+    </section>
+
+    <!-- maybe this should not be shared with nova-cli so we can talk abotu cinder? -->
+    <xi:include href="../common/nova_cli_volumes.xml" />
+      
+    <section xml:id="instance-access">
+      <?dbhtml stop-chunking?>
+      <title>Accessing running instances</title>
+      <para>The most common access method for running instances is
+      probably ssh, but this requires you have setup your instance
+      with <link linkend="inserting_sshkeys">ssh keys</link> and you
+      have arranged for it to be running ssh with a <link
+      linkend="floating_ip_addresses">public ip</link> and opened the
+      ssh port in your <link
+      linkend="nova_cli_security_groups">security group</link>
+      configuration. If you haven;t done this or you are trying to
+      debug a problem image OpenStack can be configured to provide a
+      VNC console, be aware that VNC is an unencrypted protocol so you
+      should be cautious what you type across that link, see <link
+      linkend="getting-started-with-vnc-proxy">Getting Started With
+      VNC Proxy</link> section for details on how to configure and
+      connectto this service.</para>
+    </section>
+
+    <xi:include href="../common/nova_cli_startstop.xml" />
+    <xi:include href="../common/nova_cli_resizerebuild.xml" />
+
+<!-- future work
+    <section xml:id="instance-migration">
+      <?dbhtml stop-chunking?>
+      <title>Migrating running instances</title>
+      <para>live, stop &amp; copy</para>
+    </section>
+-->
+    <xi:include href="../common/nova_cli_terminate.xml" />
+
+</chapter>
