@@ -2,12 +2,12 @@
 <section xml:id="install-glance"
     xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" 
+    xmlns:xlink="http://www.w3.org/1999/xlink"
     xmlns:svg="http://www.w3.org/2000/svg"
     xmlns:html="http://www.w3.org/1999/xhtml"
     version="5.0">
     <title>Installing and Configuring the Image Service</title>
-    
+
     <para>Install the Image service, as root:</para>
     <screen os="ubuntu"><prompt>#</prompt> <userinput>sudo apt-get install glance glance-api glance-common python-glanceclient glance-registry python-glance </userinput></screen>
     <screen os="rhel;centos;fedora"><prompt>$</prompt> <userinput>sudo yum install openstack-nova-essex openstack-glance-essex</userinput></screen>
@@ -21,7 +21,7 @@
             <filename>/var/lib/glance/</filename> directory.</para>
     <screen><prompt>#</prompt> <userinput>rm /var/lib/glance/glance.sqlite</userinput></screen>
  <section xml:id="configure-glance-mysql"><title>Configuring the Image Service database backend</title>
-    <para>Configure the backend data store. For MySQL, create a glance MySQL database and a glance MySQL user. Grant the "glance" user full 
+    <para>Configure the backend data store. For MySQL, create a glance MySQL database and a glance MySQL user. Grant the "glance" user full
     access to the glance MySQL database.</para><para>Start the MySQL command line client by running:</para>
      <para><screen><prompt>$</prompt> <userinput>mysql -u root -p</userinput></screen></para><para>Enter the MySQL root user's password when prompted.</para>
      <para>To configure the MySQL database, create the glance database. </para><para><screen><prompt>mysql></prompt> <userinput>CREATE DATABASE glance;</userinput></screen>
@@ -66,8 +66,8 @@ auth_host = 127.0.0.1
 auth_port = 35357
 auth_protocol = http
 admin_tenant_name = service
-admin_user = admin
-admin_password = secretword
+admin_user = glance
+admin_password = glance
 
 [paste_deploy]
 # Name of the paste configuration file that defines the available pipelines
@@ -79,10 +79,10 @@ config_file = /etc/glance/glance-api-paste.ini
 # as 'keystone'.
 flavor=keystone
  </screen>
-           
+
            <para>Restart glance-api to pick up these changed settings.</para>
            <screen>service glance-api restart</screen>
-           
+
            <para>Update the last sections of
                 <filename>/etc/glance/glance-registry.conf</filename>
             to reflect the values you set earlier for admin user and
@@ -93,8 +93,8 @@ auth_host = 127.0.0.1
 auth_port = 35357
 auth_protocol = http
 admin_tenant_name = service
-admin_user = admin
-admin_password = secretword
+admin_user = glance
+admin_password = glance
 
 [paste_deploy]
 # Name of the paste configuration file that defines the available pipelines
@@ -105,7 +105,7 @@ config_file = /etc/glance/glance-api-paste.ini
 # [pipeline:glance-api-keystone], you would configure the flavor below
 # as 'keystone'.
 flavor=keystone</screen>
-           
+
            <para>Update
                 <filename>/etc/glance/glance-registry-paste.ini</filename>
             by enabling the Identity service, keystone:</para>
@@ -124,7 +124,7 @@ pipeline = authtoken context registryapp</screen>
             root:
             <screen><prompt>#</prompt> <userinput>glance-manage version_control 0</userinput></screen></para>
 <para>Now you can populate or migrate the database. <screen><prompt>#</prompt> <userinput>glance-manage db_sync</userinput></screen></para>
-        
+
         <para>Restart glance-registry and glance-api services, as root:</para>
            <screen><prompt>#</prompt> <userinput>service glance-registry restart</userinput>
 <prompt>#</prompt> <userinput>service glance-api restart</userinput></screen>
