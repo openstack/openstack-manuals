@@ -72,5 +72,23 @@
       <prompt>$</prompt> <userinput>nova resize 6beefcf7-9de6-48b3-9ba9-e11b343189b3 2</userinput>  
     </screen>
     <para>While the server is rebuilding, its status will be displayed as RESIZING. </para>
+    <screen>
+      <prompt>$</prompt> <userinput>nova list</userinput>
++--------------------------------------+-------------+--------+-----------------------------------------+
+| ID                                   | Name        | Status | Networks                                |
++--------------------------------------+-------------+--------+-----------------------------------------+
+| 970e4ca0-f9b7-4c44-80ed-bf0152c96ae1 | resize-demo | RESIZE | private=172.16.101.6, public=10.4.113.6 |
++--------------------------------------+-------------+--------+-----------------------------------------+
+    </screen>
+    <para>When the resize operation is completed, the status displayed is VERIFY_RESIZE. This prompts
+    the user to verify that the operation has been successful; to confirm:</para>
+    <screen>
+      <prompt>$</prompt> <userinput>nova resize-confirm 6beefcf7-9de6-48b3-9ba9-e11b343189b3</userinput>
+    </screen>
+    <para>However, if the operation has not worked as expected, you can revert it by doing:</para>
+    <screen>
+      <prompt>$</prompt> <userinput>nova resize-revert 6beefcf7-9de6-48b3-9ba9-e11b343189b3</userinput>
+    </screen>
+    <para>In both cases, the server status should go back to ACTIVE.</para>
   </section>
 </section>
