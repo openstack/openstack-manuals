@@ -417,9 +417,8 @@ signing_dirname = /tmp/keystone-signing-nova</programlisting>Populate
             the
             database.<screen><prompt>$</prompt> <userinput>sudo nova-manage db sync</userinput></screen>Create
             the private
-            network.<screen><prompt>$</prompt><userinput>nova-manage network create private --fixed_range_v4=192.168.4.32/27 --num_networks=1 --bridge=br100 --bridge_interface=eth0 --network_size=32</userinput></screen>Edit
-            /etc/default/iscsitarget.<programlisting>ISCSITARGET_ENABLE=true</programlisting>Restart
-            everything.</para>
+            network.<screen><prompt>$</prompt><userinput>nova-manage network create private --fixed_range_v4=192.168.4.32/27 --num_networks=1 --bridge=br100 --bridge_interface=eth0 --network_size=32</userinput></screen>
+            Restart everything.</para>
         <screen><prompt>$</prompt> <userinput>cd /etc/init.d/; for i in $( ls nova-* ); do sudo service $i restart; done </userinput>
 <prompt>$</prompt> <userinput>service open-iscsi restart</userinput>
 <prompt>$</prompt> <userinput>service novnc restart</userinput></screen>
@@ -452,7 +451,8 @@ nova-cert        ubuntu-precise      nova             enabled   :-)    2012-09-1
     <section xml:id="osfolubuntu-cinder">
         <title>Installing and configuring Cinder</title>
         <para>Install the
-            packages.<screen><prompt>$</prompt> <userinput>sudo apt-get install cinder-api cinder-scheduler cinder-volume iscsitarget open-iscsi iscsitarget-dkms python-cinderclient tgt</userinput></screen></para>
+            packages.<screen><prompt>$</prompt> <userinput>sudo apt-get install cinder-api
+cinder-scheduler cinder-volume open-iscsi python-cinderclient tgt</userinput></screen></para>
         <para>Edit /etc/cinder/api-paste.init (filter
             authtoken).<programlisting>[filter:authtoken]
 paste.filter_factory = keystone.middleware.auth_token:filter_factory
