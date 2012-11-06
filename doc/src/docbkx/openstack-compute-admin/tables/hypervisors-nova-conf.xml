@@ -19,8 +19,13 @@
             </tr>
             <tr>
                 <td> checksum_base_images=false </td>
-                <td> (BoolOpt) Write a checksum for files in _base to
-                    disk </td>
+                <td> (BoolOpt) Used as an additional check to detect if cached images have become
+                    corrupted. If true, the compute service will write checksums for image files in
+                    the <filename>/var/lib/nova/instances/_base</filename> directory to disk, and do
+                    periodic checks to verify that this checksum is valid. If the checksum fails to
+                    validate, the failure is recorded to the log as an error, but no other action is
+                    taken: it is assumed that an operator will monitor the logs and take appropriate
+                    action.</td>
             </tr>
             <tr>
                 <td> hyperv_attaching_volume_retry_count=10 </td>
