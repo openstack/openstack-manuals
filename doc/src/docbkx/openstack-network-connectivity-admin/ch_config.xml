@@ -126,6 +126,15 @@ catalog.$REGION.network.name = Network Service </computeroutput></screen>
             mentioned in this guide, it is likely not supported for use with Quantum. In particular,
             using CLI tools like 'nova-manage' and 'nova' to manage networks or IP addressing,
             including both fixed and floating IPs, is not supported with Quantum.</para>
+        <note>
+            <para>It is strongly recommended that you uninstall
+                nova-network and reboot any physical nodes that had
+                been running nova-network before using them to run
+                Quantum. Inadvertently running the nova-network
+                process while using Quantum can cause problems, as can
+                stale iptables rules pushed down by previously running
+                nova-network. </para>
+        </note>
         <section xml:id="nova_with_quantum_api">
             <title>Configuring Nova to reach the Quantum API</title>
             <para>Each time a VM is provisioned or deprovisioned in Nova, Nova communicates with
