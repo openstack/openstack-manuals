@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <appendix xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" 
+    xmlns:xlink="http://www.w3.org/1999/xlink"
     version="5.0"
     xml:id="ap_installingfolsomubuntuprecise"
     os="ubuntu">
@@ -15,7 +15,7 @@
     <itemizedlist>
         <listitem><para>IF1 : Public traffic</para></listitem>
         <listitem><para>IF2 : Private traffic</para></listitem>
-    </itemizedlist>    
+    </itemizedlist>
         <para>
             <programlisting>
 # This file describes the network interfaces available on your system
@@ -51,11 +51,11 @@ iface eth1 inet static
             (as root):</para>
         <screen>
     <prompt>#</prompt> <userinput>echo deb http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/folsom main >> /etc/apt/sources.list.d/folsom.list</userinput>
-    <prompt>#</prompt> <userinput>apt-get install ubuntu-cloud-keyring </userinput>    
-    <prompt>#</prompt> <userinput>apt-get update</userinput>   
-    <prompt>#</prompt> <userinput>apt-get upgrade</userinput>        
+    <prompt>#</prompt> <userinput>apt-get install ubuntu-cloud-keyring </userinput>
+    <prompt>#</prompt> <userinput>apt-get update</userinput>
+    <prompt>#</prompt> <userinput>apt-get upgrade</userinput>
         </screen>
-       
+
         <para>Install the required packages.</para>
         <screen>
     <prompt>$</prompt> <userinput> sudo apt-get install vlan bridge-utils ntp mysql-server python-mysqldb</userinput>
@@ -65,10 +65,10 @@ iface eth1 inet static
      <prompt>$</prompt> <userinput> sudo vim /etc/sysctl.conf</userinput>
 
 # Uncomment the next line to enable packet forwarding for IPv4
-net.ipv4.ip_forward=1       
+net.ipv4.ip_forward=1
 </screen>
         <para>Update the configuration.</para>
-        <screen> <prompt>$</prompt> <userinput>sudo sysctl -p</userinput>    
+        <screen> <prompt>$</prompt> <userinput>sudo sysctl -p</userinput>
 </screen>
         <para>Edit /etc/ntp.conf</para>
         <para>
@@ -146,15 +146,15 @@ restrict ::1
             databases.<screen> <userinput>mysql > grant all privileges on nova.* to nova@"localhost" identified by "openstack";</userinput>
  <userinput>mysql > grant all privileges on nova.* to nova@"%" identified by "openstack";</userinput>
  <userinput>mysql > grant all privileges on glance.* to glance@"localhost" identified by "openstack";</userinput>
- <userinput>mysql > grant all privileges on glance.* to glance@"%" identified by "openstack";</userinput> 
- <userinput>mysql > grant all privileges on cinder.* to cinder@"localhost" identified by "openstack";</userinput> 
+ <userinput>mysql > grant all privileges on glance.* to glance@"%" identified by "openstack";</userinput>
+ <userinput>mysql > grant all privileges on cinder.* to cinder@"localhost" identified by "openstack";</userinput>
  <userinput>mysql > grant all privileges on cinder.* to cinder@"%" identified by "openstack";</userinput>
- <userinput>mysql > grant all privileges on keystone.* to keystone@"localhost" identified by "openstack";</userinput> 
- <userinput>mysql > grant all privileges on keystone.* to keystone@"%" identified by "openstack";</userinput> 
+ <userinput>mysql > grant all privileges on keystone.* to keystone@"localhost" identified by "openstack";</userinput>
+ <userinput>mysql > grant all privileges on keystone.* to keystone@"%" identified by "openstack";</userinput>
  <userinput>mysql > grant all privileges on ovs_quantum.* to ovs_quantum@"localhost" identified by "openstack";</userinput>
  <userinput>mysql > grant all privileges on ovs_quantum.* to ovs_quantum@"%" identified by "openstack";</userinput></screen></para>
-    
-    
+
+
     </section>
     <section xml:id="osfolubuntu-identityservice">
         <title>Installing and Configuring Identity service</title>
@@ -212,7 +212,7 @@ export SERVICE_ENDPOINT=http://10.211.55.17:35357/v2.0/</programlisting>Source
             <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service_id 4088ac79a42d4495977465a782fbf03f --publicurl "http://10.211.55.17:9292/v1" --adminurl "http://10.211.55.17:9292/v1" --internalurl "http://10.211.55.17:9292/v1"
 </userinput></screen>
             <programlisting># For Swift</programlisting>
-            <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service_id 
+            <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service_id
 259703bf8d3c4b5e8aad1179fa8171bd --publicurl "http://10.211.55.17:8080/v1/AUTH_%(tenant_id)s" --adminurl "http://10.211.55.17:8080/v1" --internalurl "http://10.211.55.17:8080/v1/AUTH_%(tenant_id)s"</userinput></screen>
             <programlisting>#For Identity Service</programlisting>
             <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service_id 1f46270f7c774a0786ec6ea590d99b7c --publicurl "http://10.211.55.17:5000/v2.0" --adminurl "http://10.211.55.17:35357/v2.0" --internalurl "http://10.211.55.17:5000/v2.0"</userinput></screen>
@@ -337,12 +337,12 @@ flavor = keystone</programlisting></para>
             Glance
             configuration.<screen><prompt>$</prompt> <userinput>glance index</userinput></screen>If
             nothing is returned, then it is working.</para>
-        
-        
+
+
     </section>
     <section xml:id="osfolubuntu-computesevice">
         <title> Installing and configuring Compute</title>
-        
+
         <para>Install the
             packages.<screen><prompt>$</prompt> <userinput>sudo apt-get install nova-api nova-cert nova-compute nova-compute-qemu nova-doc nova-network nova-objectstore nova-scheduler nova-volume rabbitmq-server novnc nova-consoleauth  </userinput></screen>Update
             /etc/nova/nova.conf.<programlisting>[DEFAULT]
@@ -393,8 +393,6 @@ fixed_range=192.168.4.32/27
 routing_source_ip=10.211.55.17
 network_size=32
 force_dhcp_release=True
-iscsi_helper=ietadm
-iscsi_ip_address=10.211.55.20
 rootwrap_config=/etc/nova/rootwrap.conf
 
 # Cinder #
@@ -430,7 +428,7 @@ nova-scheduler   ubuntu-precise      nova             enabled   :-)    2012-09-1
 nova-compute     ubuntu-precise      nova             enabled   :-)    2012-09-10 15:46:31
 nova-network     ubuntu-precise      nova             enabled   :-)    2012-09-10 15:46:31
 nova-cert        ubuntu-precise      nova             enabled   :-)    2012-09-10 15:46:31</programlisting>
-        
+
     </section>
     <section xml:id="osfolubuntu-dashboardservice">
         <title>Installing and configuring Dashboard</title>
@@ -471,12 +469,16 @@ rootwrap_config=/etc/cinder/rootwrap.conf
 sql_connection = mysql://cinder:openstack@10.211.55.17/cinder
 api_paste_confg = /etc/cinder/api-paste.ini
 
-iscsi_helper=ietadm
+iscsi_helper=tgtadm
 volume_name_template = volume-%s
 volume_group = cinder-volumes
 verbose = True
 auth_strategy = keystone
 #osapi_volume_listen_port=5900</programlisting>
+        <para>Setup the tgts file.<screen><prompt>$</prompt>
+          <userinput>sudo sh -c "echo 'include /var/lib/cinder/volumes/*' >> /etc/tgt/conf.d/cinder.conf"</userinput></screen></para>
+        <para>Restart the tgt service.<screen><prompt>$</prompt>
+          <userinput>sudo restart tgt</userinput></screen></para>
         <para>Populate the database.<screen><prompt>$</prompt>
           <userinput>sudo cinder-manage db sync</userinput></screen></para>
         <para>Create a 2GB test loopfile.</para>
@@ -825,6 +827,6 @@ vm_test_mode = yes
             services.<screen><prompt>$</prompt> <userinput>sudo swift-init main start</userinput>
 <prompt>$</prompt> <userinput>sudo swift-init rest start</userinput></screen>
             Test
-            it.<screen><prompt>$</prompt> <userinput>swift -v -V 2.0 -A http://127.0.0.1:5000/v2.0/ -U swift -K openstack stat</userinput></screen></para>        
+            it.<screen><prompt>$</prompt> <userinput>swift -v -V 2.0 -A http://127.0.0.1:5000/v2.0/ -U swift -K openstack stat</userinput></screen></para>
     </section>
-</appendix>    
+</appendix>
