@@ -4,6 +4,19 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="ch_volumes">
     <title>Volumes</title>
+    <section xml:id="cinder-vs-nova-volumes">
+        <title>Cinder Versus Nova-Volumes</title>
+        <para>You now have two options in terms of Block Storage.
+            Currently (as of the Folsom release) both are nearly
+            identical in terms of functionality, API's and even the
+            general theory of operation. Keep in mind however that
+            Nova-Volumes is deprecated and will be removed at the
+            release of Grizzly. </para>
+        <para>See the Cinder section of the <link
+                xlink:href="http://docs.openstack.org/trunk/openstack-compute/install/apt/content/osfolubuntu-cinder.html"
+                >Folsom Install Guide</link> for Cinder-specific
+            information.</para>
+    </section>
     <section xml:id="managing-volumes">
         <title>Managing Volumes</title>
         <para>Nova-volume is the service that allows you to give extra block level storage to your
@@ -49,9 +62,9 @@
                     get a new disk (usually a /dev/vdX disk) </para>
             </listitem>
         </orderedlist>
-        <para>For this particular walkthrough, there is one cloud controller running nova-api,
+        <para>For this particular walk through, there is one cloud controller running nova-api,
             nova-scheduler, nova-objectstore, nova-network and nova-volume services. There are two
-            additional compute nodes running nova-compute. The walkthrough uses a custom
+            additional compute nodes running nova-compute. The walk through uses a custom
             partitioning scheme that carves out 60GB of space and labels it as LVM. The network is a
             /28 .80-.95, and FlatManger is the NetworkManager setting for OpenStack Compute (Nova). </para>
         <para>Please note that the network mode doesn't interfere at
@@ -81,6 +94,7 @@
         <xi:include href="install-nova-volume.xml" />
         <xi:include href="configure-nova-volume.xml" />
         <xi:include href="troubleshoot-nova-volume.xml" />
+        <xi:include href="troubleshoot-cinder.xml" />
         <xi:include href="backup-nova-volume-disks.xml" />
     </section>
     <section xml:id="volume-drivers">
@@ -176,13 +190,13 @@ iscsi_helper=tgtadm
                     </listitem>
                 </itemizedlist>
                 <para>Ceph developers recommend to use btrfs as a
-                    filesystem for the storage. Using XFS is also
+                    file system for the storage. Using XFS is also
                     possible and might be a better alternative for
                     production environments. Neither Ceph nor Btrfs
                     are ready for production. It could be really risky
                     to put them together. This is why XFS is an
                     excellent alternative to btrfs. The ext4
-                    filesystem is also compatible but doesn’t take
+                    file system is also compatible but doesn’t take
                     advantage of all the power of Ceph.</para>
 
                 <note>
@@ -193,7 +207,7 @@ iscsi_helper=tgtadm
                 </note>
 
                 <para>See <link xlink:href="http://ceph.com/docs/master/rec/filesystem/"
-                    >ceph.com/docs/master/rec/filesystem/</link> for more information about usable file
+                    >ceph.com/docs/master/rec/file system/</link> for more information about usable file
                         systems.</para>
             </simplesect>
             <simplesect><title>Ways to store, use and expose data</title>
@@ -204,13 +218,13 @@ iscsi_helper=tgtadm
                             object, default storage mechanism.</para>
                     </listitem>
                     <listitem><para><emphasis>RBD</emphasis>: as a block
-                        device. The linux kernel RBD (rados block
-                        device) driver allows striping a linux block
+                        device. The Linux kernel RBD (rados block
+                        device) driver allows striping a Linux block
                         device over multiple distributed object store
                         data objects. It is compatible with the kvm
                         RBD image.</para></listitem>
                     <listitem><para><emphasis>CephFS</emphasis>: as a file,
-                        POSIX-compliant filesystem.</para></listitem>
+                        POSIX-compliant file system.</para></listitem>
                 </itemizedlist>
                 <para>Ceph exposes its distributed object store (RADOS) and it can be accessed via multiple interfaces:</para>
                 <itemizedlist>
@@ -221,7 +235,7 @@ iscsi_helper=tgtadm
                     <listitem><para><emphasis>librados</emphasis> and the
                         related C/C++ bindings.</para></listitem>
                     <listitem><para><emphasis>rbd and QEMU-RBD</emphasis>:
-                        linux kernel and QEMU block devices that
+                        Linux kernel and QEMU block devices that
                         stripe data across multiple
                         objects.</para></listitem>
                 </itemizedlist>
@@ -782,7 +796,7 @@ volume_driver=nova.volume.storwize_svc.StorwizeSVCDriver
                 </simplesect>
                 <simplesect>
                     <title>Operation</title>
-                    <para>The admin uses the the nova-manage command
+                    <para>The admin uses the nova-manage command
                         detailed below to add flavors and backends. </para>
                     <para>One or more nova-volume service instances
                         will be deployed per availability zone. When
@@ -839,7 +853,7 @@ volume_driver=nova.volume.storwize_svc.StorwizeSVCDriver
                         </listitem>
                         <listitem>
                             <para>
-                                <emphasis role="bold">The backend configs that the volume driver uses need to be
+                                <emphasis role="bold">The backend configurations that the volume driver uses need to be
                                     created before starting the volume service.
                                 </emphasis>
                             </para>
@@ -887,6 +901,33 @@ Note: SR type and config connection parameters are in keeping with the XenAPI Co
                         used for creating, destroying, attaching, or
                         detaching volumes. </para>
                 </simplesect>
+            </section>
+            <section xml:id="cinder-volumes-solidfire">
+                <title>Configuring Cinder or Nova-Volumes to use a SolidFire Cluster</title>
+                <para>The SolidFire Cluster is a high performance all SSD iSCSI storage device,
+                    providing massive scale out capability and extreme fault tolerance.  A key
+                    feature of the SolidFire cluster is the ability to set and modify during
+                    operation specific QoS levels on a volume per volume basis.  The SolidFire
+                    cluster offers all of these things along with de-duplication, compression and an
+                    architecture that takes full advantage of SSD's.</para>
+                <para>To configure and use a SolidFire cluster with Nova-Volumes modify your
+                    <filename>nova.conf</filename> or <filename>cinder.conf</filename> file as shown below:</para>
+					<programlisting>
+volume_driver=nova.volume.solidfire.SolidFire
+iscsi_ip_prefix=172.17.1.*  # the prefix of your SVIP
+san_ip=172.17.1.182         # the address of your MVIP
+san_login=sfadmin           # your cluster admin login
+san_password=sfpassword     # your cluster admin password
+                </programlisting>
+                <para>To configure and use a SolidFire cluster with Cinder, modify your cinder.conf
+                    file similarly to how you would a nova.conf:</para>
+				<programlisting>
+volume_driver=cinder.volume.solidfire.SolidFire
+iscsi_ip_prefix=172.17.1.*  # the prefix of your SVIP
+san_ip=172.17.1.182         # the address of your MVIP
+san_login=sfadmin           # your cluster admin login
+san_password=sfpassword     # your cluster admin password
+                </programlisting>
             </section>
         </section>
     </section>
