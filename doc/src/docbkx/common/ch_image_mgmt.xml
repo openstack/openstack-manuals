@@ -131,6 +131,12 @@
                     Ubuntu 12.04 server guide</link> has documentation on how
                     to use VMBuilder.</para>
             </section>
+            <section xml:id="boxgrinder"><title>BoxGrinder (KVM, Xen, VMWare)</title>
+            <para><link xlink:href="http://boxgrinder.org">BoxGrinder</link> is another tool for
+                creating virtual machine images, which it calls appliances. BoxGrinder can create
+                Fedora, Red Hat Enterprise Linux, or CentOS images. BoxGrinder is currently only
+                supported on Fedora. </para>
+        </section>
             <section xml:id="veewee">
                 <title>VeeWee (KVM)</title>
                 <para><link xlink:href="https://github.com/jedi4ever/veewee">
@@ -264,23 +270,34 @@ kvm        24966 libvirt-qemu   24u  IPv4 1915470      0t0  TCP *:5901 (LISTEN)<
             <title>Configure to fetch metadata</title>
             <para>An instance must perform several steps on startup by interacting wtih the metada
                 service (e.g., retrieve ssh public key, execute user data script). There are several
-                ways to implement this functionality, inclduign:<itemizedlist>
+                ways to implement this functionality, including:<itemizedlist>
                     <listitem>
                         <para>Install a <link
                                 xlink:href="http://koji.fedoraproject.org/koji/packageinfo?packageID=12620"
-                                >cloud-init RPM</link> , which is a port of the Ubuntu cloud-init
-                            package.</para>
-                    </listitem>
-                    <listitem>
-                        <para>Install <link xlink:href="https://github.com/yahoo/Openstack-Condense"
-                                >Condenser</link>, an alternate version of cloud-init.</para>
+                                >cloud-init RPM</link> , which is a port of the Ubuntu <link
+                                xlink:href="https://launchpad.net/cloud-init">cloud-init</link>
+                            package. This is the recommended approach.</para>
                     </listitem>
                     <listitem>
                         <para>Modify <filename>/etc/rc.local</filename> to fetch desired information
                             from the metadata service, as described below.</para>
                     </listitem>
                 </itemizedlist></para>
-            <para>To fetch the ssh public key and add it to the root account, edit the
+        </simplesect>
+            <simplesect>
+                <title>Using cloud-init to fetch the public key</title>
+                <para>The cloud-init package will automatically fetch the public key from the
+                metadata server and place the key in an account. The account varies by distribution.
+                On Ubuntu-based virtual virtual machines, the account is called "ubuntu". On
+                Fedora-based virtual machines, the account is called "ec2-user".</para>
+            <para>You can change the name of the account used by cloud-init by editing the
+                    <filename>/etc/cloud/cloud.cfg</filename> file and adding a line with a
+                different user. For example, to configure cloud-init to put the key in an account
+                named "admin", edit the config file so it has the
+                line:<programlisting>user: admin</programlisting></para></simplesect>
+            <simplesect>
+                <title>Writing a script to fetch the public key</title>
+                            <para>To fetch the ssh public key and add it to the root account, edit the
                 <filename>/etc/rc.local</filename> file and add the following lines before
                 the line “touch /var/lock/subsys/local”</para>
             <programlisting>depmod -a
@@ -307,7 +324,8 @@ echo &quot;************************&quot;
                         >Using Instance Metadata</link> for details on how to retrieve user
                     data.</para></note>
 
-        </simplesect>
+          </simplesect>
+        
         <simplesect><title>Shut down the instance</title>
         <para>From inside the instance, as
                 root:<screen><prompt>#</prompt> <userinput>/sbin/shutdown -h now</userinput></screen></para></simplesect>
