@@ -5,9 +5,16 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" 
     version="5.0">
     <title>Troubleshoot your nova-volume installation</title>
-    <para>If the volume attachment doesn't work, you should be able to perform different
-        checks in order to see where the issue is. The nova-volume.log and nova-compute.log
-        will help you to diagnosis the errors you could encounter : </para>
+    <para>This section will help if you are able to successfully
+        create volumes with either Cinder or Nova-Volume, however you
+        can't attach them to an instance. If you are having trouble
+        creating volumes, go to the <link
+            linkend="troubleshoot-cinder">cinder
+            troubleshooting</link>section.</para>
+    <para>If the volume attachment doesn't work, you should be able to
+        perform different checks in order to see where the issue is.
+        The <filename>nova-volume.log</filename> and <filename>nova-compute.log</filename> will help you to
+        diagnosis the errors you could encounter: </para>
     <para><emphasis role="bold">nova-compute.log / nova-volume.log</emphasis></para>
     <para>
         <itemizedlist>
@@ -45,14 +52,15 @@ iscsiadm: cannot make connection to 172.29.200.37: No route to host\niscsiadm: c
                 <screen>
 <prompt>$</prompt> <userinput>telnet $ip_of_nova_volumes  3260</userinput>
                         </screen>
-                <para>If the session times out, check the
-                    server firewall ; or try to ping it. You
-                    could also run a tcpdump session which may
-                    also provide extra information : </para>
+                <para>If the session times out, check the server
+                    firewall; or try to ping it. You could also run a
+                    tcpdump session which may also provide extra
+                    information: </para>
                 <screen>
 <prompt>$</prompt> <userinput>tcpdump -nvv -i $iscsi_interface port dest $ip_of_nova_volumes</userinput>
                         </screen>
-                <para> Again, try to manually run an iSCSI discovery via : </para>
+                <para> Again, try to manually run an iSCSI discovery
+                    via: </para>
                 <screen>
 <prompt>$</prompt> <userinput>iscsiadm -m discovery -t st -p $ip_of_nova-volumes</userinput>
                         </screen>
@@ -72,8 +80,8 @@ iscsiadm: cannot make connection to 172.29.200.37: No route to host\niscsiadm: c
                 <screen>
 <prompt>$</prompt> <userinput>iscsiadm -m session -r $session_id -u</userinput>
                         </screen>
-                <para>Here is an <command>iscsi -m</command>
-                    session output : </para>
+                <para>Here is an <command>iscsi -m</command> session
+                    output: </para>
                 <programlisting>
 tcp: [1] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-1
 tcp: [2] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-2
@@ -86,36 +94,35 @@ tcp: [9] 172.16.40.244:3260,1 iqn.2010-10.org.openstack:volume-9
                         </programlisting>
                 <para>For example, to free volume 9,
                     close the session number 9. </para>
-                <para>The cloud-controller is actually unaware
-                    of the iSCSI session closing, and will
-                    keeps the volume state as
-                    <literal>in-use</literal>:
+                <para>The cloud-controller is actually unaware of the
+                    iSCSI session closing, and will keeps the volume
+                    state as <literal>in-use</literal>:
                     <programlisting>
                             +----+-----------+--------------+------+-------------+--------------------------------------+
                             | ID |   Status  | Display Name | Size | Volume Type |             Attached to              |
                             +----+-----------+--------------+------+-------------+--------------------------------------+
                             | 9  | in-use    | New Volume   | 20   | None        | 7db4cb64-7f8f-42e3-9f58-e59c9a31827d |
                             </programlisting>You
-                    now have to inform the cloud-controller
-                    that the disk can be used. Nova stores the
-                    volumes info into the "volumes" table. You
-                    will have to update four fields into the
-                    database nova uses (eg. MySQL). First,
-                    conect to the database : </para>
+                    now have to inform the cloud-controller that the
+                    disk can be used. Nova stores the volumes info
+                    into the "volumes" table. You will have to update
+                    four fields into the database nova uses (eg.
+                    MySQL). First, connect to the database: </para>
                 <screen>
 <prompt>$</prompt> <userinput>mysql -uroot -p$password nova</userinput>
                         </screen>
-                <para> Using the volume id, you will
-                    have to run the following sql queries
-                </para>
+                <para> Using the volume id, you will have to run the
+                    following sql queries: </para>
                 <programlisting>
 mysql> update volumes set mountpoint=NULL where id=9;
 mysql> update volumes set status="available" where status "error_deleting" where id=9;
 mysql> update volumes set attach_status="detached" where id=9;
 mysql> update volumes set instance_id=0 where id=9;
                         </programlisting>
-                <para>Now if you run again <command>nova volume-list</command> from the cloud
-                    controller, you should see an available volume now : </para>
+                <para>Now if you run again <command>nova
+                        volume-list</command> from the cloud
+                    controller, you should see an available volume
+                    now: </para>
                 <programlisting>
                             +----+-----------+--------------+------+-------------+--------------------------------------+
                             | ID |   Status  | Display Name | Size | Volume Type |             Attached to              |
