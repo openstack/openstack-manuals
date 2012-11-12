@@ -38,34 +38,7 @@
             <para> Please use "sudo" in order to install and configure packages with superuser
                 privileges.</para>
         </note>
-        <section xml:id="rpc_setup">
-            <title>RPC Setup </title>
-            <para>Quantum uses RPC to allow DHCP agents and any plugin
-                agents to communicate with the main quantum-server
-                process.  Commonly, this can use the same RPC
-                mechanism used by other OpenStack components like
-                Nova.  </para>
-            <para>To use RabbitMQ as the message bus for RPC, make
-                sure that rabbit is installed on a host reachable via
-                the management network (if this is already the case
-                because of deploying another service like Nova, this
-                existing RabbitMQ setup is sufficient):  </para>
-            <screen><computeroutput>apt-get install rabbitmq-server   
-rabbitmqctl change_password guest &lt;password&gt;</computeroutput></screen>
-            <para>Then update /etc/quantum/quantum.conf with these
-                values: </para>
-            <screen><computeroutput>rabbit_host=&lt;mgmt-IP-of-rabbit-host&gt;
-rabbit_password=&lt;password&gt;
-rabbit_user=guest </computeroutput></screen>
-            <important>
-                <para>This /etc/quantum/quantum.conf file should be
-                    copied to and used on all hosts running
-                    quantum-server, quantum-dhcp-agent,
-                    quantum-openvswitch-agent, or
-                    quantum-linuxbridge-agent (see below). </para>
-            </important>
-        </section>
-        <section xml:id="install_quantum_server">
+       <section xml:id="install_quantum_server">
             <title>Install quantum-server </title>
             <para>Install quantum-server and CLI for accessing the
                 API: </para>
@@ -94,6 +67,34 @@ rabbit_user=guest </computeroutput></screen>
                     always drop the quantum database and start fresh. 
                 </para>
             </note>
+        <section xml:id="rpc_setup">
+            <title>RPC Setup </title>
+            <para>Quantum uses RPC to allow DHCP agents and any plugin
+                agents to communicate with the main quantum-server
+                process.  Commonly, this can use the same RPC
+                mechanism used by other OpenStack components like
+                Nova.  </para>
+            <para>To use RabbitMQ as the message bus for RPC, make
+                sure that rabbit is installed on a host reachable via
+                the management network (if this is already the case
+                because of deploying another service like Nova, this
+                existing RabbitMQ setup is sufficient):  </para>
+            <screen><computeroutput>apt-get install rabbitmq-server   
+rabbitmqctl change_password guest &lt;password&gt;</computeroutput></screen>
+            <para>Then update /etc/quantum/quantum.conf with these
+                values: </para>
+            <screen><computeroutput>rabbit_host=&lt;mgmt-IP-of-rabbit-host&gt;
+rabbit_password=&lt;password&gt;
+rabbit_user=guest </computeroutput></screen>
+            <important>
+                <para>This /etc/quantum/quantum.conf file should be
+                    copied to and used on all hosts running
+                    quantum-server, quantum-dhcp-agent,
+                    quantum-openvswitch-agent, or
+                    quantum-linuxbridge-agent (see below). </para>
+            </important>
+        </section>
+ 
             <section xml:id="openvswitch_plugin">
                 <title>Configuring Open vSwitch Plugin</title>
                 <para>Using the Open vSwitch (OVS) plugin in a
