@@ -482,12 +482,11 @@ enabled_apis=ec2,osapi_compute,metadata
 #Leaving out enabled_apis altogether is NOT sufficient, as it defaults to include osapi_volume</programlisting>
         <para>Setup the tgts file <emphasis role="italic">NOTE: $state_path=/var/lib/cinder/ and
                 $volumes_dir = $state_path/volumes by default and path MUST
-            exist!</emphasis>.<screen><prompt>$</prompt>
-          <userinput>sudo sh -c "echo 'include $volumes_dir/*' >> /etc/tgt/conf.d/cinder.conf"</userinput></screen></para>
-        <para>Restart the tgt service.<screen><prompt>$</prompt>
-          <userinput>sudo restart tgt</userinput></screen></para>
-        <para>Populate the database.<screen><prompt>$</prompt>
-          <userinput>sudo cinder-manage db sync</userinput></screen></para>
+            exist!</emphasis>.<screen><prompt>$</prompt><userinput>sudo sh -c "echo 'include $volumes_dir/*' >> /etc/tgt/conf.d/cinder.conf"</userinput></screen></para>
+        <para>Restart the tgt
+            service.<screen><prompt>$</prompt><userinput>sudo restart tgt</userinput></screen></para>
+        <para>Populate the
+            database.<screen><prompt>$</prompt><userinput>sudo cinder-manage db sync</userinput></screen></para>
         <para>Create a 2GB test loopfile.</para>
         <screen><prompt>$</prompt> <userinput>dd if=/dev/zero of=cinder-volumes bs=1 count=0 seek=2G</userinput></screen>
         <para>Mount it.</para>
@@ -498,7 +497,9 @@ enabled_apis=ec2,osapi_compute,metadata
 <prompt>$</prompt> <userinput>vgcreate cinder-volumes /dev/loop2</userinput></screen></para>
         <para>Restart the
             services.<screen><prompt>$</prompt> <userinput>sudo service cinder-volume restart</userinput>
-<prompt>$</prompt> <userinput>sudo service cinder-api restart</userinput> </screen>Create
+<prompt>$</prompt> <userinput>sudo service cinder-api restart</userinput>
+<prompt>$</prompt> <userinput>sudo service cinder-scheduler restart</userinput>
+ </screen>Create
             a 1 GB test
             volume.<screen><prompt>$</prompt> <userinput>cinder create --display_name test 1</userinput>
 <prompt>$</prompt> <userinput>cinder list</userinput></screen></para>
