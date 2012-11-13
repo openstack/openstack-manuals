@@ -28,9 +28,9 @@ iface lo inet loopback
 # The primary network interface
 auto eth0
 iface eth0 inet static
- address 10.211.55.17
+ address 172.16.30.20
  netmask 255.255.255.0
- gateway 10.211.55.1
+ gateway 172.16.30.1
 
 # This is an autoconfigured IPv6 interface
 iface eth0 inet6 auto
@@ -160,9 +160,8 @@ restrict ::1
         <title>Installing and Configuring Identity service</title>
         <para>Install the
             packages.<screen><prompt>$</prompt> <userinput>sudo apt-get install keystone python-keystone python-keystoneclient</userinput></screen>Edit
-            /etc/keystone/keystone.conf and modify Admin token,
-            SQLAlchemy, Catalog
-            accordingly.<programlisting>admin_token = admin</programlisting><programlisting>connection = mysql://keystone:openstack@10.211.55.17/keystone</programlisting><programlisting>[catalog]
+            /etc/keystone/keystone.conf and modify Admin token, SQLAlchemy, Catalog
+            accordingly.<programlisting>admin_token = admin</programlisting><programlisting>connection = mysql://keystone:openstack@10.211.55.20/keystone</programlisting><programlisting>[catalog]
 driver = keystone.catalog.backends.sql.Catalog</programlisting></para>
         <para>Restart
             Keystone.<screen><prompt>$</prompt> <userinput>sudo service keystone restart</userinput> </screen></para>
@@ -174,8 +173,8 @@ driver = keystone.catalog.backends.sql.Catalog</programlisting></para>
 export OS_TENANT_NAME=admin
 export OS_USERNAME=admin
 export OS_PASSWORD=openstack
-export OS_AUTH_URL=http://10.211.55.17:5000/v2.0/
-export SERVICE_ENDPOINT=http://10.211.55.17:35357/v2.0/</programlisting>Source
+export OS_AUTH_URL=http://10.211.55.20:5000/v2.0/
+export SERVICE_ENDPOINT=http://10.211.55.20:35357/v2.0/</programlisting>Source
             the environment
             setting.<screen><prompt>$</prompt> <userinput>source ./home/$user/.bashrc</userinput></screen>Add
             keystone
@@ -201,32 +200,32 @@ export SERVICE_ENDPOINT=http://10.211.55.17:35357/v2.0/</programlisting>Source
 <prompt>$</prompt> <userinput>keystone service-create --name quantum --type network --description "OpenStack Networking service"</userinput></screen>Create
             endpoints.<programlisting># For Nova-api</programlisting></para>
         <para>
-            <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service_id bbbd1945908f4fae90530e8721df650d --publicurl "http://10.211.55.17:8774/v2/%(tenant_id)s" --adminurl "http://10.211.55.17:8774/v2/%(tenant_id)s" --internalurl "http://10.211.55.17:8774/v2/%(tenant_id)s"
+            <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service_id bbbd1945908f4fae90530e8721df650d --publicurl "http://172.16.30.20:8774/v2/%(tenant_id)s" --adminurl "http://10.211.55.20:8774/v2/%(tenant_id)s" --internalurl "http://10.211.55.20:8774/v2/%(tenant_id)s"
 </userinput></screen>
             <programlisting># For Nova-volume</programlisting>
             <screen>
-<prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service_id 53a8ae206b3645368daa9db4fe149ee5 --publicurl "http://10.211.55.17:8776/v1/%(tenant_id)s" --adminurl "http://10.211.55.17:8776/v1/%(tenant_id)s" --internalurl "http://10.211.55.17:8776/v1/%(tenant_id)s"
+<prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service_id 53a8ae206b3645368daa9db4fe149ee5 --publicurl "http://172.16.30.20:8776/v1/%(tenant_id)s" --adminurl "http://10.211.55.20:8776/v1/%(tenant_id)s" --internalurl "http://10.211.55.20:8776/v1/%(tenant_id)s"
 </userinput></screen>
             <programlisting>#For Glance
 </programlisting>
-            <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service_id 4088ac79a42d4495977465a782fbf03f --publicurl "http://10.211.55.17:9292/v1" --adminurl "http://10.211.55.17:9292/v1" --internalurl "http://10.211.55.17:9292/v1"
+            <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service_id 4088ac79a42d4495977465a782fbf03f --publicurl "http://10.211.55.20:9292/v1" --adminurl "http://10.211.55.20:9292/v1" --internalurl "http://10.211.55.20:9292/v1"
 </userinput></screen>
             <programlisting># For Swift</programlisting>
             <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service_id
-259703bf8d3c4b5e8aad1179fa8171bd --publicurl "http://10.211.55.17:8080/v1/AUTH_%(tenant_id)s" --adminurl "http://10.211.55.17:8080/v1" --internalurl "http://10.211.55.17:8080/v1/AUTH_%(tenant_id)s"</userinput></screen>
+259703bf8d3c4b5e8aad1179fa8171bd --publicurl "http://172.16.30.20:8080/v1/AUTH_%(tenant_id)s" --adminurl "http://10.211.55.20:8080/v1" --internalurl "http://10.211.55.20:8080/v1/AUTH_%(tenant_id)s"</userinput></screen>
             <programlisting>#For Identity Service</programlisting>
-            <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service_id 1f46270f7c774a0786ec6ea590d99b7c --publicurl "http://10.211.55.17:5000/v2.0" --adminurl "http://10.211.55.17:35357/v2.0" --internalurl "http://10.211.55.17:5000/v2.0"</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service_id 1f46270f7c774a0786ec6ea590d99b7c --publicurl "http://172.16.30.200:5000/v2.0" --adminurl "http://10.211.55.20:35357/v2.0" --internalurl "http://10.211.55.20:5000/v2.0"</userinput></screen>
             <programlisting>#For EC2_compatibility</programlisting>
-            <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service_id 58e531e33059482f940de8ba9e97e5d1 --publicurl "http://10.211.55.17:8773/services/Cloud" --adminurl "http://10.211.55.17:8773/services/Admin" --internalurl "http://10.211.55.17:8773/services/Cloud"
+            <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service_id 58e531e33059482f940de8ba9e97e5d1 --publicurl "http://172.16.30.20:8773/services/Cloud" --adminurl "http://10.211.55.20:8773/services/Admin" --internalurl "http://10.211.55.20:8773/services/Cloud"
 </userinput></screen>
         </para>
         <para>
             <programlisting>#For Cinder</programlisting>
-            <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service_id 65a888cf384d4c68b595196661cee87d --publicurl "http://10.211.55.17:8776/v1/%(tenant_id)s" --adminurl "http://10.211.55.17:8776/v1/%(tenant_id)s" --internalurl "http://10.211.55.17:8776/v1/%(tenant_id)s"
+            <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service_id 65a888cf384d4c68b595196661cee87d --publicurl "http://172.16.30.20:8776/v1/%(tenant_id)s" --adminurl "http://10.211.55.20:8776/v1/%(tenant_id)s" --internalurl "http://10.211.55.20:8776/v1/%(tenant_id)s"
 </userinput></screen>
         </para>
         <programlisting>#For Quantum</programlisting>
-        <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service-id 59877a8f97f04a2aad1e8164e14d7450 --publicurl "http://10.211.55.17:9696/v2" --adminurl "http://10.211.55.17:9696/v2" --internalurl "http://10.211.55.17:9696/v2"</userinput></screen>
+        <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service-id 59877a8f97f04a2aad1e8164e14d7450 --publicurl "http://172.16.30.20:9696/v2" --adminurl "http://10.211.55.20:9696/v2" --internalurl "http://10.211.55.20:9696/v2"</userinput></screen>
         <para>Retrieve all the
             ids.<screen><prompt>$</prompt> <userinput>keystone tenant-list</userinput></screen></para>
         <programlisting>+----------------------------------+---------+---------+
@@ -303,7 +302,7 @@ export SERVICE_ENDPOINT=http://10.211.55.17:35357/v2.0/</programlisting>Source
         <para>Edit /etc/glance/glance-api-paste.ini (filter
             authoken).<programlisting>[filter:authtoken]
 paste.filter_factory = keystone.middleware.auth_token:filter_factory
-auth_host = 10.211.55.17
+auth_host = 10.211.55.20
 auth_port = 35357
 auth_protocol = http
 admin_tenant_name = service
@@ -312,7 +311,7 @@ admin_password = openstack</programlisting>Edit
             /etc/glance/glance-registry-paste.ini (filter
             authtoken).<programlisting>[filter:authtoken]
 paste.filter_factory = keystone.middleware.auth_token:filter_factory
-auth_host = 10.211.55.17
+auth_host = 10.211.55.20
 auth_port = 35357
 auth_protocol = http
 admin_tenant_name = service
@@ -320,13 +319,13 @@ admin_user = admin
 admin_password = openstack</programlisting>
             Edit /etc/glance/glance-api.conf.</para>
         <para>SQLAlchemy part of
-            config.<programlisting>sql_connection = mysql://glance:openstack@10.211.55.17/glance</programlisting></para>
+            config.<programlisting>sql_connection = mysql://glance:openstack@10.211.55.20/glance</programlisting></para>
         <para>Append the following
             lines.<programlisting>[paste_deploy]
 flavor = keystone</programlisting></para>
         <para>Edit /etc/glance/glance-registry.conf.</para>
         <para>SQLAlchemy part of
-            config.<programlisting>sql_connection = mysql://glance:openstack@10.211.55.17/glance</programlisting></para>
+            config.<programlisting>sql_connection = mysql://glance:openstack@10.211.55.20/glance</programlisting></para>
         <para>Append the following
             lines.<programlisting>[paste_deploy]
 flavor = keystone</programlisting></para>
@@ -352,21 +351,21 @@ lock_path=/run/lock/nova
 verbose=True
 api_paste_config=/etc/nova/api-paste.ini
 scheduler_driver=nova.scheduler.simple.SimpleScheduler
-s3_host=10.211.55.17
-ec2_host=10.211.55.17
-ec2_dmz_host=10.211.55.17
-rabbit_host=10.211.55.17
-cc_host=10.211.55.17
-nova_url=http://10.211.55.17:8774/v1.1/
-sql_connection=mysql://nova:openstack@10.211.55.17/nova
-ec2_url=http://10.211.55.17:8773/services/Cloud
+s3_host=10.211.55.20
+ec2_host=10.211.55.20
+ec2_dmz_host=10.211.55.20
+rabbit_host=10.211.55.20
+cc_host=10.211.55.20
+nova_url=http://10.211.55.20:8774/v1.1/
+sql_connection=mysql://nova:openstack@10.211.55.20/nova
+ec2_url=http://10.211.55.20:8773/services/Cloud
 
 # Auth
 use_deprecated_auth=false
 auth_strategy=keystone
-keystone_ec2_url=http://10.211.55.17:5000/v2.0/ec2tokens
+keystone_ec2_url=http://10.211.55.20:5000/v2.0/ec2tokens
 # Imaging service
-glance_api_servers=10.211.55.17:9292
+glance_api_servers=10.211.55.20:9292
 image_service=nova.image.glance.GlanceImageService
 
 # Virt driver
@@ -378,7 +377,7 @@ resume_guests_state_on_host_boot=false
 
 # Vnc configuration
 novnc_enabled=true
-novncproxy_base_url=http://10.211.55.17:6080/vnc_auto.html
+novncproxy_base_url=http://10.211.55.20:6080/vnc_auto.html
 novncproxy_port=6080
 vncserver_proxyclient_address=127.0.0.1
 vncserver_listen=0.0.0.0
@@ -390,7 +389,7 @@ network_manager=nova.network.manager.VlanManager
 public_interface=eth0
 vlan_interface=eth1
 fixed_range=192.168.4.32/27
-routing_source_ip=10.211.55.17
+routing_source_ip=172.16.30.20
 network_size=32
 force_dhcp_release=True
 rootwrap_config=/etc/nova/rootwrap.conf
@@ -405,7 +404,7 @@ osapi_volume_listen_port=5900
             /etc/nova/api-paste.ini (filter
             authtoken).<programlisting>[filter:authtoken]
 paste.filter_factory = keystone.middleware.auth_token:filter_factory
-auth_host = 10.211.55.17
+auth_host = 10.211.55.20
 auth_port = 35357
 auth_protocol = http
 admin_tenant_name = service
@@ -455,9 +454,9 @@ cinder-scheduler cinder-volume open-iscsi python-cinderclient tgt</userinput></s
             authtoken).<programlisting>[filter:authtoken]
 paste.filter_factory = keystone.middleware.auth_token:filter_factory
 service_protocol = http
-service_host = 10.211.55.17
+service_host = 10.211.55.20
 service_port = 5000
-auth_host = 10.211.55.17
+auth_host = 10.211.55.20
 auth_port = 35357
 auth_protocol = http
 admin_tenant_name = service
@@ -466,7 +465,7 @@ admin_password = openstack</programlisting></para>
         <para>Edit /etc/cinder/cinder.conf.</para>
         <programlisting>[DEFAULT]
 rootwrap_config=/etc/cinder/rootwrap.conf
-sql_connection = mysql://cinder:openstack@10.211.55.17/cinder
+sql_connection = mysql://cinder:openstack@10.211.55.20/cinder
 api_paste_config = /etc/cinder/api-paste.ini
 
 iscsi_helper=tgtadm
