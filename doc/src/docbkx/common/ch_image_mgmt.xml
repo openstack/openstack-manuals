@@ -553,22 +553,29 @@ brw-rw---- 1 root disk 43, 51 2012-03-05 15:32 /dev/nbd3p3</computeroutput></scr
         </section>
     </section>
     <section xml:id="specify-host-to-boot-instances-on">
-        <title>Select a specific node to boot instances on</title>
-        <para> It is possible to specify which node to run the instance on using the nova client. In
-            order to use such feature, make sure you are using an admin account.
-        </para>
-        <para>You can retrieve the current active node by running : </para>
-        <screen><prompt>$</prompt> <userinput>nova-manage service list</userinput></screen>
-        <screen><computeroutput>
-server1 nova-network enabled  :- ) 2011-04-06 17:05:11
-server1 nova-compute enabled  :- ) 2011-04-06 17:05:13
-server1 nova-scheduler enabled :- ) 2011-04-06 17:05:17
-server2 nova-compute disabled  :- ) 2011-04-06 17:05:19
-</computeroutput>    </screen>
-        <para>We see here our "server2" runs as a node. You can now select the host on which the
-            instance would be spawned, using the "--hint" flag : </para>
+        <title>Select a specific host to boot instances on</title>
+        <para>With the Folsom release it is no longer possible
+        to indicate a specific compute host to use to boot an instance
+        with the --force_hosts parameter. See bug <link xlink:href="https://bugs.launchpad.net/ubuntu/+source/nova/+bug/1061665">1061665</link>
+        for further discussion.</para>
+    </section>
+    <section xml:id="specify-zone-to-boot-instances-on">
+        <title>Select a specific zone to boot instances on</title>
+        <para> It is possible to specify which availability zone to
+            run the instance on using the nova client. In order to use
+            such feature, make sure you are using an admin account. </para>
+        <para>You can determine the current active zone by looking at
+            the nova.conf file for the compute node and seeing the
+            node_availability_zone=yyyyy where yyyyy is the name of
+            the zone the host is affiliated with. </para>
+        <para>We see here our "server2" lives in the "nova"
+            availabilty zone. You can now select the host on which the
+            instance would be spawned, using the "--availability-zone"
+            parameter as an admin. </para>
+        <note><para>The --force_hosts scheduler hint has been replaced with
+            --availability_zone in the Folsom release. </para></note>
         <para>
-            <screen><prompt>$</prompt> <userinput>nova boot --image 1 --flavor 2 --key_name test --hint force_hosts=server2 my-first-server</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>nova boot --image &lt;uuid&gt; --flavor m1.tiny --key_name test --availability-zone nova:server2</userinput></screen>
         </para>
     </section>
     <section xml:id="creating-custom-images">
@@ -628,10 +635,10 @@ server2 nova-compute disabled  :- ) 2011-04-06 17:05:19
             time of launching the instance.</para>
         <para>However, we have also added a small section towards the
             end of the chapter about creating bootable images with
-            multiple partitions that can be be used by nova to launch
-            an instance without the need for kernel and ramdisk
-            images. The caveat is that while nova-compute can re-size
-            such disks at the time of launching the instance, the file
+            multiple partitions that can be used by nova to launch an
+            instance without the need for kernel and ramdisk images.
+            The caveat is that while nova-compute can re-size such
+            disks at the time of launching the instance, the file
             system size is not altered and hence, for all practical
             purposes, such disks are not re-sizable.</para>
         <section xml:id="creating-a-linux-image">
