@@ -111,7 +111,7 @@
         available at <link linkend="scripted-keystone-setup">Setting up tenants, users, and roles - scripted</link>. </para></note>
       <para>First, create a default tenant, we'll name it
           <literal>demo</literal> in this example.</para>
-      <screen><prompt>$</prompt> <userinput>keystone --os-token 012345SECRET99TOKEN012345 --os-endpoint http://192.168.206.130:35357/v2.0 tenant-create --name demo --description "Default Tenant"</userinput></screen>
+      <screen><prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 tenant-create --name demo --description "Default Tenant"</userinput></screen>
       <programlisting>      +-------------+----------------------------------+
       |   Property  |              Value               |
       +-------------+----------------------------------+
@@ -121,7 +121,7 @@
       | name        | demo                             |
       +-------------+----------------------------------+</programlisting>
       <para>Create a default user named <literal>admin</literal>. </para>
-      <screen><prompt>$</prompt> <userinput>keystone --os-token 012345SECRET99TOKEN012345 --os-endpoint http://192.168.206.130:35357/v2.0 user-create --tenant-id b5815b046cfe47bb891a7b64119e7f80 --name admin --pass secretword</userinput></screen>
+      <screen><prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 user-create --tenant-id b5815b046cfe47bb891a7b64119e7f80 --name admin --pass secretword</userinput></screen>
       <programlisting>      +----------+----------------------------------+
       | Property |              Value               |
       +----------+----------------------------------+
@@ -132,7 +132,7 @@
       | tenantId | b5815b046cfe47bb891a7b64119e7f80 |
       +----------+----------------------------------+</programlisting>
       <para>Create an administrative role based on keystone's default <literal>policy.json</literal> file, <literal>admin</literal>.</para>
-      <screen><prompt>$</prompt> <userinput>keystone --os-token 012345SECRET99TOKEN012345 --os-endpoint http://192.168.206.130:35357/v2.0 role-create --name admin</userinput></screen>
+      <screen><prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 role-create --name admin</userinput></screen>
       <programlisting>      +----------+----------------------------------+
       | Property |              Value               |
       +----------+----------------------------------+
@@ -143,11 +143,11 @@
           <literal>admin</literal> user in the
           <literal>demo</literal> tenant with
         "user-role-add".</para>
-      <screen><prompt>$</prompt> <userinput>keystone --os-token 012345SECRET99TOKEN012345 --os-endpoint http://192.168.206.130:35357/v2.0 user-role-add --user-id a4c2d43f80a549a19864c89d759bb3fe --tenant-id b5815b046cfe47bb891a7b64119e7f80 --role-id e3d9d157cc95410ea45d23bbbc2e5c10</userinput></screen>
+      <screen><prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 user-role-add --user-id a4c2d43f80a549a19864c89d759bb3fe --tenant-id b5815b046cfe47bb891a7b64119e7f80 --role-id e3d9d157cc95410ea45d23bbbc2e5c10</userinput></screen>
       <para>There is no output to this command.</para>
       <para>Create a Service Tenant. This tenant contains all the
         services that we make known to the service catalog. </para>
-      <screen><prompt>$</prompt> <userinput>keystone --os-token 012345SECRET99TOKEN012345 --os-endpoint http://192.168.206.130:35357/v2.0 tenant-create --name service --description "Service Tenant"</userinput></screen>
+      <screen><prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 tenant-create --name service --description "Service Tenant"</userinput></screen>
       <programlisting>      +-------------+----------------------------------+
       |   Property  |              Value               |
       +-------------+----------------------------------+
@@ -159,7 +159,7 @@
       <para>Create a Glance Service User in the Service Tenant. You'll
         do this for any service you add to be in the Keystone service
         catalog.</para>
-      <screen><prompt>$</prompt> <userinput>keystone --os-token 012345SECRET99TOKEN012345 --os-endpoint http://192.168.206.130:35357/v2.0 user-create --tenant-id eb7e0c10a99446cfa14c244374549e9d --name glance --pass glance</userinput></screen>
+      <screen><prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 user-create --tenant-id eb7e0c10a99446cfa14c244374549e9d --name glance --pass glance</userinput></screen>
       <programlisting>      +----------+----------------------------------+
       | Property |             Value                |
       +----------+----------------------------------+
@@ -172,10 +172,10 @@
       <para>Grant the <literal>admin</literal> role to the
           <literal>glance</literal> user in the
           <literal>service</literal> tenant.</para>
-      <screen><prompt>$</prompt> <userinput>keystone --os-token 012345SECRET99TOKEN012345 --os-endpoint http://192.168.206.130:35357/v2.0 user-role-add --user-id 46b2667a7807483d983e0b4037a1623b --tenant-id eb7e0c10a99446cfa14c244374549e9d --role-id e3d9d157cc95410ea45d23bbbc2e5c10</userinput></screen>
+      <screen><prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 user-role-add --user-id 46b2667a7807483d983e0b4037a1623b --tenant-id eb7e0c10a99446cfa14c244374549e9d --role-id e3d9d157cc95410ea45d23bbbc2e5c10</userinput></screen>
       <para>There is no output to this command. </para>
       <para>Create a Nova Service User in the Service Tenant. </para>
-      <screen><prompt>$</prompt> <userinput>keystone --os-token 012345SECRET99TOKEN012345 --os-endpoint http://192.168.206.130:35357/v2.0 user-create --tenant-id eb7e0c10a99446cfa14c244374549e9d --name nova --pass nova</userinput></screen>
+      <screen><prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 user-create --tenant-id eb7e0c10a99446cfa14c244374549e9d --name nova --pass nova</userinput></screen>
       <programlisting>      +----------+----------------------------------+
       | Property |             Value                |
       +----------+----------------------------------+
@@ -188,10 +188,10 @@
       <para>Grant the <literal>admin</literal> role to the
           <literal>nova</literal> user in the
           <literal>service</literal> tenant.</para>
-      <screen><prompt>$</prompt> <userinput>keystone --os-token 012345SECRET99TOKEN012345 --os-endpoint http://192.168.206.130:35357/v2.0 user-role-add --user-id 54b3776a8707834d983e0b4037b1345c --tenant-id eb7e0c10a99446cfa14c244374549e9d --role-id e3d9d157cc95410ea45d23bbbc2e5c10</userinput></screen>
+      <screen><prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 user-role-add --user-id 54b3776a8707834d983e0b4037b1345c --tenant-id eb7e0c10a99446cfa14c244374549e9d --role-id e3d9d157cc95410ea45d23bbbc2e5c10</userinput></screen>
       <para>There is no output to this command. </para>
       <para>Create an EC2 Service User in the Service Tenant. </para>
-      <screen><prompt>$</prompt> <userinput>keystone --os-token 012345SECRET99TOKEN012345 --os-endpoint http://192.168.206.130:35357/v2.0 user-create --tenant-id eb7e0c10a99446cfa14c244374549e9d --name ec2 --pass ec2</userinput></screen>
+      <screen><prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 user-create --tenant-id eb7e0c10a99446cfa14c244374549e9d --name ec2 --pass ec2</userinput></screen>
       <programlisting>      +----------+----------------------------------+
       | Property |             Value                |
       +----------+----------------------------------+
@@ -204,11 +204,11 @@
       <para>Grant the <literal>admin</literal> role to the
           <literal>ec2</literal> user in the
           <literal>service</literal> tenant.</para>
-      <screen><prompt>$</prompt> <userinput>keystone --os-token 012345SECRET99TOKEN012345 --os-endpoint http://192.168.206.130:35357/v2.0 user-role-add --user-id 32e7668b8707834d983e0b4037b1345c --tenant-id eb7e0c10a99446cfa14c244374549e9d --role-id e3d9d157cc95410ea45d23bbbc2e5c10</userinput></screen>
+      <screen><prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 user-role-add --user-id 32e7668b8707834d983e0b4037b1345c --tenant-id eb7e0c10a99446cfa14c244374549e9d --role-id e3d9d157cc95410ea45d23bbbc2e5c10</userinput></screen>
       <para>There is no output to this command.</para>
       <para>Create an Object Storage Service User in the Service
         Tenant. </para>
-      <screen><prompt>$</prompt> <userinput>keystone --os-token 012345SECRET99TOKEN012345 --os-endpoint http://192.168.206.130:35357/v2.0 user-create --tenant-id eb7e0c10a99446cfa14c244374549e9d --name swift --pass swiftpass</userinput></screen>
+      <screen><prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 user-create --tenant-id eb7e0c10a99446cfa14c244374549e9d --name swift --pass swiftpass</userinput></screen>
       <programlisting>      +----------+----------------------------------+
       | Property |             Value                |
       +----------+----------------------------------+
@@ -221,7 +221,7 @@
       <para>Grant the <literal>admin</literal> role to the
           <literal>swift</literal> user in the
           <literal>service</literal> tenant.</para>
-      <screen><prompt>$</prompt> <userinput>keystone --os-token 012345SECRET99TOKEN012345 --os-endpoint http://192.168.206.130:35357/v2.0 user-role-add --user-id 4346677b8909823e389f0b4037b1246e --tenant-id eb7e0c10a99446cfa14c244374549e9d --role-id e3d9d157cc95410ea45d23bbbc2e5c10</userinput></screen>
+      <screen><prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 user-role-add --user-id 4346677b8909823e389f0b4037b1246e --tenant-id eb7e0c10a99446cfa14c244374549e9d --role-id e3d9d157cc95410ea45d23bbbc2e5c10</userinput></screen>
       <para>There is no output to this command.</para>
       <para>Next you create definitions for the services.</para>
 
@@ -373,8 +373,8 @@ driver = keystone.catalog.backends.sql.Catalog
       <para>Here we define the services and their endpoints.</para>
       <para>Define the Identity service:</para>
       <screen>
-<prompt>$</prompt> <userinput>keystone --os-token 012345SECRET99TOKEN012345 \
- --os-endpoint http://192.168.206.130:35357/v2.0/ \
+<prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 \
+ --endpoint http://192.168.206.130:35357/v2.0/ \
  service-create \
  --name=keystone \
  --type=identity \
@@ -388,8 +388,8 @@ driver = keystone.catalog.backends.sql.Catalog
 | name        | keystone                         |
 | type        | identity                         |
 +-------------+----------------------------------+</computeroutput>
-<prompt>$</prompt> <userinput>keystone --os-token 012345SECRET99TOKEN012345 \
- --os-endpoint http://192.168.206.130:35357/v2.0/ \
+<prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 \
+ --endpoint http://192.168.206.130:35357/v2.0/ \
  endpoint-create \
  --region RegionOne \
  --service-id=15c11a23667e427e91bc31335b45f4bd \
@@ -419,8 +419,8 @@ driver = keystone.catalog.backends.sql.Catalog
             endpoint.</para>
         </note></para>
       <screen>
-<prompt>$</prompt> <userinput>keystone --os-token 012345SECRET99TOKEN012345 \
---os-endpoint http://192.168.206.130:35357/v2.0/ \
+<prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 \
+--endpoint http://192.168.206.130:35357/v2.0/ \
 service-create \
  --name=nova \
  --type=compute \
@@ -434,8 +434,8 @@ service-create \
 | type        | compute                          |
 +-------------+----------------------------------+
 </computeroutput>
-<prompt>$</prompt> <userinput>keystone --os-token 012345SECRET99TOKEN012345 \
---os-endpoint http://192.168.206.130:35357/v2.0/ \
+<prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 \
+--endpoint http://192.168.206.130:35357/v2.0/ \
 endpoint-create \
  --region RegionOne \
  --service-id=abc0f03c02904c24abdcc3b7910e2eed \
@@ -457,8 +457,8 @@ endpoint-create \
       <para>Define the Volume service, which also requires a separate
         endpoint for each tenant.</para>
       <screen>
-<prompt>$</prompt> <userinput>keystone --os-token 012345SECRET99TOKEN012345 \
- --os-endpoint http://192.168.206.130:35357/v2.0/ \
+<prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 \
+ --endpoint http://192.168.206.130:35357/v2.0/ \
 service-create \
  --name=volume \
  --type=volume \
@@ -474,8 +474,8 @@ service-create \
 | type        | volume                           |
 +-------------+----------------------------------+
 </computeroutput>
-<prompt>$</prompt> <userinput>keystone --os-token 012345SECRET99TOKEN012345 \
- --os-endpoint http://192.168.206.130:35357/v2.0/ \
+<prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 \
+ --endpoint http://192.168.206.130:35357/v2.0/ \
  endpoint-create \
  --region RegionOne \
  --service-id=1ff4ece13c3e48d8a6461faebd9cd38f \
@@ -498,8 +498,8 @@ service-create \
 </screen>
       <para>Define the Image service:</para>
       <screen>
-<prompt>$</prompt> <userinput>keystone --os-token 012345SECRET99TOKEN012345 \
- --os-endpoint http://192.168.206.130:35357/v2.0/ \
+<prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 \
+ --endpoint http://192.168.206.130:35357/v2.0/ \
  service-create \
  --name=glance \
  --type=image \
@@ -515,8 +515,8 @@ service-create \
 | type        | image                            |
 +-------------+----------------------------------+
 </computeroutput>
-<prompt>$</prompt> <userinput>keystone --os-token 012345SECRET99TOKEN012345 \
- --os-endpoint http://192.168.206.130:35357/v2.0/ \
+<prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 \
+ --endpoint http://192.168.206.130:35357/v2.0/ \
  endpoint-create \
  --region RegionOne \
  --service-id=7d5258c490144c8c92505267785327c1 \
@@ -539,8 +539,8 @@ service-create \
 </screen>
       <para>Define the EC2 compatibility service:</para>
       <screen>
-<prompt>$</prompt> <userinput>keystone --os-token 012345SECRET99TOKEN012345 \
- --os-endpoint http://192.168.206.130:35357/v2.0/ \
+<prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 \
+ --endpoint http://192.168.206.130:35357/v2.0/ \
  service-create \
  --name=ec2 \
  --type=ec2 \
@@ -554,8 +554,8 @@ service-create \
 | type        | ec2                              |
 +-------------+----------------------------------+
 </computeroutput>
-<prompt>$</prompt> <userinput>keystone --os-token 012345SECRET99TOKEN012345 \
- --os-endpoint http://192.168.206.130:35357/v2.0/ \
+<prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 \
+ --endpoint http://192.168.206.130:35357/v2.0/ \
  endpoint-create \
  --region RegionOne \
  --service-id=181cdad1d1264387bcc411e1c6a6a5fd \
@@ -578,8 +578,8 @@ service-create \
 </screen>
       <para>Define the Object Storage service:</para>
       <screen>
-<prompt>$</prompt> <userinput>keystone  --os-token 012345SECRET99TOKEN012345 \
- --os-endpoint http://192.168.206.130:35357/v2.0/ \
+<prompt>$</prompt> <userinput>keystone  --token 012345SECRET99TOKEN012345 \
+ --endpoint http://192.168.206.130:35357/v2.0/ \
  service-create \
  --name=swift \
  --type=object-store \
@@ -593,8 +593,8 @@ service-create \
 | type        | object-store                     |
 +-------------+----------------------------------+
 </computeroutput>
-<prompt>$</prompt> <userinput>keystone --os-token 012345SECRET99TOKEN012345 \
- --os-endpoint http://192.168.206.130:35357/v2.0/ \
+<prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 \
+ --endpoint http://192.168.206.130:35357/v2.0/ \
  endpoint-create \
  --region RegionOne \
  --service-id=272efad2d1234376cbb911c1e5a5a6ed \
