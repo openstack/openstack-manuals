@@ -476,25 +476,28 @@ verbose = True
 auth_strategy = keystone
 #osapi_volume_listen_port=5900</programlisting>
         <para>Verify entries in nova.conf.</para>
-		<programlisting>volume_api_class=nova.volume.cinder.API
+        <programlisting>volume_api_class=nova.volume.cinder.API
 enabled_apis=ec2,osapi_compute,metadata
 #MAKE SURE NO ENTRY FOR osapi_volume anywhere in nova.conf!!!
 #Leaving out enabled_apis altogether is NOT sufficient, as it defaults to include osapi_volume</programlisting>
         <para>Setup the tgts file <emphasis role="italic">NOTE: $state_path=/var/lib/cinder/ and
                 $volumes_dir = $state_path/volumes by default and path MUST
-            exist!</emphasis>.<screen><prompt>$</prompt><userinput>sudo sh -c "echo 'include $volumes_dir/*' >> /etc/tgt/conf.d/cinder.conf"</userinput></screen></para>
+            exist!</emphasis>.<screen><prompt>$</prompt> <userinput>sudo sh -c "echo 'include $volumes_dir/*' >> /etc/tgt/conf.d/cinder.conf"</userinput></screen></para>
         <para>Restart the tgt
-            service.<screen><prompt>$</prompt><userinput>sudo restart tgt</userinput></screen></para>
+            service.<screen><prompt>$</prompt> <userinput>sudo restart tgt</userinput></screen></para>
         <para>Populate the
-            database.<screen><prompt>$</prompt><userinput>sudo cinder-manage db sync</userinput></screen></para>
+            database.<screen><prompt>$</prompt> <userinput>sudo cinder-manage db sync</userinput></screen></para>
         <para>Create a 2GB test loopfile.</para>
-        <screen><prompt>$</prompt> <userinput>dd if=/dev/zero of=cinder-volumes bs=1 count=0 seek=2G</userinput></screen>
+        <screen><prompt>$</prompt> <userinput>sudo dd if=/dev/zero of=cinder-volumes bs=1 count=0 seek=2G</userinput></screen>
         <para>Mount it.</para>
-        <screen><prompt>$</prompt> <userinput>losetup /dev/loop2 cinder-volumes</userinput></screen>
-        <para>
-          Initialise it as an lvm 'physical volume', then create the lvm 'volume group'
-<screen><prompt>$</prompt> <userinput>pvcreate /dev/loop2</userinput>
-<prompt>$</prompt> <userinput>vgcreate cinder-volumes /dev/loop2</userinput></screen></para>
+        <screen><prompt>$</prompt> <userinput>sudo losetup /dev/loop2 cinder-volumes</userinput></screen>
+        <para> Initialise it as an lvm 'physical volume', then create the lvm 'volume group'
+            <screen><prompt>$</prompt> <userinput>sudo pvcreate /dev/loop2</userinput>
+<prompt>$</prompt> <userinput>sudo vgcreate cinder-volumes /dev/loop2</userinput></screen></para>
+        <para>Lets check if our volume is created.
+            <screen><prompt>$</prompt> <userinput>sudo pvscan</userinput></screen></para>
+        <programlisting>PV /dev/loop1   VG cinder-volumes   lvm2 [2.00 GiB / 1020.00 MiB free]
+  Total: 1 [2.00 GiB] / in use: 1 [2.00 GiB] / in no VG: 0 [0   ]</programlisting>
         <para>Restart the
             services.<screen><prompt>$</prompt> <userinput>sudo service cinder-volume restart</userinput>
 <prompt>$</prompt> <userinput>sudo service cinder-api restart</userinput>
