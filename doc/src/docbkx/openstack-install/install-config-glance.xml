@@ -35,19 +35,20 @@
         <title>Edit the Glance configuration files and paste ini
             middleware files</title>
         <para>The Image service has a number of options that you can
-            use to configure the Glance API server, optionally the Glance
-            Registry server, and the various storage backends that
-            Glance can use to store images. By default, the storage
-            backend is in file, specified in the glance-api.conf
-            config file in the section [DEFAULT]. </para>
+            use to configure the Glance API server, optionally the
+            Glance Registry server, and the various storage backends
+            that Glance can use to store images. By default, the
+            storage backend is in file, specified in the
+            glance-api.conf config file in the section [DEFAULT]. </para>
         <para> The glance-api service implements versions 1 and 2 of
-            the OpenStack Images API. By default, both are enabled by setting these
-            configuration options to "true" in the <filename>glance-api.conf</filename> file. </para>
+            the OpenStack Images API. By default, both are enabled by
+            setting these configuration options to "true" in the
+                <filename>glance-api.conf</filename> file. </para>
         <screen>enable_v1_api=True</screen>
         <screen>enable_v2_api=True</screen>
-        <para>Disable either version of the
-            Images API by setting the option to False in the
-            <filename>glance-api.conf</filename> file.</para>
+        <para>Disable either version of the Images API by setting the
+            option to False in the
+                <filename>glance-api.conf</filename> file.</para>
         <note>
             <para> In order to use the v2 API, you must copy the
                 necessary SQL configuration from your glance-registry
@@ -56,7 +57,8 @@
                 v2 Image API for your installation. The v1 API is
                 implemented on top of the glance-registry service
                 while the v2 API is not. </para>
-        </note><para> Most configuration is done via configuration files,
+        </note>
+        <para> Most configuration is done via configuration files,
             with the Glance API server (and possibly the Glance
             Registry server) using separate configuration files. When
             installing through an operating system package management
@@ -100,6 +102,10 @@ config_file = /etc/glance/glance-api-paste.ini
 # as 'keystone'.
 flavor=keystone
  </screen>
+        <para>Ensure that
+                <filename>/etc/glance/glance-api.conf</filename>
+            points to the MySQL database rather than
+            sqlite.<programlisting>sql_connection = mysql://glance:<replaceable>[YOUR_GLANCEDB_PASSWORD]</replaceable>@192.168.206.130/glance</programlisting></para>
         <para>Restart glance-api to pick up these changed
             settings.</para>
         <screen>service glance-api restart</screen>
@@ -147,9 +153,11 @@ pipeline = authtoken context registryapp</screen>
             install to prevent the Image service from breaking
             possible upgrades, as root:
             <screen><prompt>#</prompt> <userinput>glance-manage version_control 0</userinput></screen></para>
-        <para>Now you can populate or migrate the database. <screen><prompt>#</prompt> <userinput>glance-manage db_sync</userinput></screen></para>
-        <para>Restart glance-registry and glance-api services, as root:</para>
-           <screen><prompt>#</prompt> <userinput>service glance-registry restart</userinput>
+        <para>Now you can populate or migrate the database.
+            <screen><prompt>#</prompt> <userinput>glance-manage db_sync</userinput></screen></para>
+        <para>Restart glance-registry and glance-api services, as
+            root:</para>
+        <screen><prompt>#</prompt> <userinput>service glance-registry restart</userinput>
 <prompt>#</prompt> <userinput>service glance-api restart</userinput></screen>
         <note>
             <para>This guide does not configure image caching, refer
