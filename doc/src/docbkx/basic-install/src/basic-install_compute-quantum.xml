@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="basic-install_compute-quantum">
+    <title>Quantum</title>
+        <section xml:id="compute-ovs">
+            <title>Open vSwitch</title>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>Install the packages:<screen><userinput>apt-get install -y openvswitch-switch</userinput></screen></para>
+                    </listitem>
+                    <listitem>
+                        <para>Start Open vSwitch service<screen><userinput>service openvswitch-switch start</userinput></screen></para>
+                    </listitem>
+                    <listitem>
+                        <para>Configure Virtual Bridging<screen><userinput>ovs-vsctl add-br br-int</userinput></screen></para>
+                    </listitem>
+                </orderedlist>
+            </para>
+        </section>
+        <section xml:id="compute-quantum">
+            <title>Quantum</title>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>Install the packages :<screen><userinput>apt-get install -y quantum-plugin-openvswitch-agent</userinput></screen></para>
+                    </listitem>
+                    <listitem>
+                        <para>Edit <emphasis role="bold">/etc/quantum/quantum.conf</emphasis> file and modify :<screen><userinput>core_plugin = \
+    quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPluginV2
+auth_strategy = keystone
+fake_rabbit = False
+rabbit_host = 192.168.0.1
+rabbit_password = password</userinput></screen></para>
+                    </listitem>
+                    <listitem>
+                        <para>Edit <emphasis role="bold"
+                        >/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</emphasis> file and
+                    modify
+                    :<screen><userinput>[DATABASE]
+sql_connection = mysql://quantum:password@192.168.0.1:3306/quantum
+[OVS]
+tenant_network_type = gre
+tunnel_id_ranges = 1:1000
+integration_bridge = br-int
+tunnel_bridge = br-tun
+local_ip = 10.0.0.2
+enable_tunneling = True</userinput></screen></para>
+                    </listitem>
+                    <listitem>
+                        <para>Start the Agent :<screen><userinput>service quantum-plugin-openvswitch-agent restart</userinput></screen></para>
+                    </listitem>
+                </orderedlist>
+            </para>
+         </section>
+</section>
+

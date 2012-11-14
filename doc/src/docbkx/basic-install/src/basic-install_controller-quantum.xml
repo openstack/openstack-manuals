@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="basic-install_controller-quantum">
+    <title>Quantum</title>
+        <para>
+            <orderedlist>
+                <listitem>
+                    <para>Install the packages
+                    :<screen><userinput>apt-get install quantum-server</userinput></screen></para>
+                </listitem>
+                <listitem>
+                    <para>Configure Quantum services :</para>
+                    <itemizedlist>
+                        <listitem>
+                            <para>Edit <emphasis role="bold">/etc/quantum/quantum.conf</emphasis> file and modify :<screen><userinput>core_plugin = \
+    quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPluginV2
+auth_strategy = keystone
+fake_rabbit = False
+rabbit_password = password</userinput></screen></para>
+                        </listitem>
+                        <listitem>
+                            <para>Edit <emphasis role="bold"
+                                >/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</emphasis>
+                            file and modify :<screen><userinput>[DATABASE]
+sql_connection = mysql://quantum:password@localhost:3306/quantum
+[OVS]
+tenant_network_type = gre
+tunnel_id_ranges = 1:1000
+enable_tunneling = True</userinput></screen>
+                            <db:note xmlns:db="http://docbook.org/ns/docbook">
+                                <db:para>It's more handy to choose
+                               <emphasis role="bold">tunnel
+                               mode</emphasis> since you don't
+                               have to configure your physical
+                               switches for VLANs.</db:para>
+                            </db:note></para>
+                        </listitem>
+                        <listitem>
+                            <para>Edit <emphasis role="bold">/etc/quantum/api-paste.ini</emphasis> file and modify :<screen><userinput>admin_tenant_name = service
+admin_user = quantum
+admin_password = password</userinput></screen></para>
+                        </listitem>
+                    </itemizedlist>
+                </listitem>
+                <listitem>
+                    <para>Start the services
+                    :<screen><userinput>service quantum-server restart</userinput></screen></para>
+                </listitem>
+            </orderedlist>
+        </para>
+</section>

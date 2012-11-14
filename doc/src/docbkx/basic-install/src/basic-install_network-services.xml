@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="basic-install_network-services">
+    <title>Network Services</title>
+    <section xml:id="network-ovs">
+    <title>Open-vSwitch</title>
+    <para>
+        <orderedlist>
+            <listitem>
+                <para>Install the packages :<screen><userinput>apt-get install quantum-plugin-openvswitch-agent \
+quantum-dhcp-agent quantum-l3-agent</userinput></screen></para>
+            </listitem>
+            <listitem>
+                <para>Start Open vSwitch:
+                     <screen>service openvswitch-switch start</screen></para>
+            </listitem>
+            <listitem>
+                <para>Create Virtual Bridging
+                        :<screen>ovs-vsctl add-br br-int
+ovs-vsctl add-br br-ex
+ovs-vsctl add-port br-ex eth2
+ip link set up br-ex </screen></para>
+            </listitem>
+        </orderedlist>
+    </para>
+    </section>
+    <section xml:id="network-quantum">
+        <title>Quantum</title>
+            <para>Configure Quantum services :</para>
+            <itemizedlist>
+                <listitem>
+                    <para>Edit <emphasis role="bold">/etc/quantum/l3_agent.ini</emphasis> file and modify :<screen><userinput>auth_url = http://192.168.0.1:35357/v2.0
+admin_tenant_name = service
+admin_user = quantum
+admin_password = password
+metadata_ip = 192.168.0.1
+use_namespaces = False</userinput></screen></para>
+                </listitem>
+                <listitem>
+                    <para>Edit <emphasis role="bold">/etc/quantum/quantum.conf</emphasis> file and modify :<screen><userinput>core_plugin = \
+    quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPluginV2
+auth_strategy = keystone
+fake_rabbit = False
+rabbit_host = 192.168.0.1
+rabbit_password = password</userinput></screen></para>
+                </listitem>
+                <listitem>
+                    <para>Edit <emphasis role="bold"
+                        >/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</emphasis> file and
+                    modify :<screen>[DATABASE]
+sql_connection = mysql://quantum:password@192.168.0.1:3306/quantum
+[OVS]
+tenant_network_type = gre
+tunnel_id_ranges = 1:1000
+enable_tunneling = True
+integration_bridge = br-int
+tunnel_bridge = br-tun
+local_ip = 10.10.10.1</screen>
+                    <db:note xmlns:db="http://docbook.org/ns/docbook">
+                        <db:para>It's more handy to choose <emphasis
+                                role="bold">tunnel mode</emphasis>
+                            since you don't have to configure your
+                            physical switches for VLANs.</db:para>
+                    </db:note></para>
+                </listitem>
+                <listitem>
+                    <para>Edit <emphasis role="bold">/etc/quantum/dhcp_agent.ini</emphasis> file and add :<screen><userinput>use_namespaces = False</userinput></screen></para>
+                </listitem>
+            </itemizedlist>
+
+            <para>Start the services
+                :<screen>service quantum-plugin-openvswitch-agent start
+service quantum-dhcp-agent restart
+service quantum-l3-agent restart</screen></para>
+
+    </section>
+</section>
