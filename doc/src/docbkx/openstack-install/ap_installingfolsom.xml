@@ -7,8 +7,9 @@
     os="ubuntu">
     <title>OpenStack Folsom deployment guide for Ubuntu Precise,
         Single node installation. </title>
-    <para>ASSUMPTION: Currently guide uses Nova-Network will be updated for Quantum soon, although
-        we have created database and endpoint for it.</para>
+    <para>ASSUMPTION: Currently guide uses Nova-Network will be
+        updated for Quantum soon, although we have created database
+        and endpoint for the Quantum service.</para>
     <section xml:id="osfolubuntu-prerquisite">
     <title>Prerequisites</title>
     <para>One server with two NICs</para>
@@ -161,12 +162,12 @@ restrict ::1
         <para>Install the
             packages.<screen><prompt>$</prompt> <userinput>sudo apt-get install keystone python-keystone python-keystoneclient</userinput></screen>Edit
             /etc/keystone/keystone.conf and modify Admin token, SQLAlchemy, Catalog
-            accordingly.<programlisting>admin_token = admin</programlisting><programlisting>connection = mysql://keystone:openstack@10.211.55.20/keystone</programlisting><programlisting>[catalog]
-driver = keystone.catalog.backends.sql.Catalog</programlisting></para>
+            accordingly.<programlisting>admin_token = admin</programlisting><programlisting>connection = mysql://keystone:openstack@10.211.55.20/keystone</programlisting></para>
         <para>Restart
             Keystone.<screen><prompt>$</prompt> <userinput>sudo service keystone restart</userinput> </screen></para>
         <para>Populate the
             database.<screen><prompt>$</prompt> <userinput>keystone-manage db_sync</userinput>
+<prompt>$</prompt> <userinput>sudo service keystone restart</userinput>
 </screen>Update
             the /home/$user/.bashrc by adding then credentials
             below.<programlisting>export SERVICE_TOKEN=admin
@@ -288,12 +289,11 @@ export SERVICE_ENDPOINT=http://10.211.55.20:35357/v2.0/</programlisting>Source
         <programlisting># User quantum &lt;> role admin &lt;> tenant service </programlisting>
         <screen><prompt>$</prompt> <userinput>keystone user-role-add --user_id 223c1711de5446f9b99c71803fc488db --role_id e45af7cf33be4dac8070aa8310144ce3 --tenant_id 2a76a11b872e4ca18adb3162924735af
 </userinput></screen>
-        <programlisting> # User swift &lt;> role Member &lt;> service admin</programlisting>
+        <programlisting> # User swift &lt;> role Member &lt;> tenant service</programlisting>
         <screen><prompt>$</prompt> <userinput>keystone user-role-add --user_id e3b2c1c3082c4545888329d0862ffcf1 --role_id de031f37231b4d4cafb0af9f56dba100 --tenant_id 950fe8e5ed5f4659a8556ac836e8943d</userinput></screen>
         <para>NOTE: All These ID will differ in your configuration -
             use the appropriate command and retrieve all the
             IDs.</para>
-        <programlisting/>
     </section>
     <section xml:id="osfolubuntu-imageservice">
         <title>Installing and configuring Image Service</title>
@@ -437,9 +437,11 @@ nova-cert        ubuntu-precise      nova             enabled   :-)    2012-09-1
             /etc/openstack-dashboard/local_settings.py - under
             TEMPLATE_DEBUG.<programlisting>QUANTUM_ENABLED = False</programlisting></para>
         <note>
-            <para>In order to change the timezone you can use either dashboard or inside
-                /etc/openstack-dashboard/local_settings.py you can change below mentioned
-                parameter.<programlisting>TIME_ZONE = "UTC"</programlisting>
+            <para>In order to change the timezone you can use either
+                dashboard or inside
+                /etc/openstack-dashboard/local_settings.py you can
+                change the parameter
+                below.<programlisting>TIME_ZONE = "UTC"</programlisting>
             </para>
         </note>
         <para>Restart the
@@ -514,20 +516,18 @@ enabled_apis=ec2,osapi_compute,metadata
     <section xml:id="osfolubuntu-swift">
         <title>Installing and configuring Swift</title>
 <para>Install the
-            packages.<screen><prompt>$</prompt> <userinput>sudo apt-get install swift swift-proxy swift-account swift-container swift-object xfsprogs curl python-pastedeploy</userinput></screen>Create
+            packages.<screen><prompt>$</prompt> <userinput>sudo apt-get install swift swift-proxy swift-account swift-container swift-object xfsprogs curl python-pastedeploy python-swiftclient</userinput></screen>Create
             a loopback
-            device.<screen><prompt>$</prompt> <userinput>dd if=/dev/zero of=swift-volume bs=1 count=0 seek=2G</userinput>
-<prompt>$</prompt> <userinput>sudo mkfs.xfs -i size=1024 /srv/swift-disk</userinput></screen>
+            device.<screen><prompt>#</prompt> <userinput>dd if=/dev/zero of=swift-volume bs=1 count=0 seek=2G</userinput>
+<prompt>#</prompt> <userinput>mkfs.xfs -i size=1024 /srv/swift-volume</userinput></screen>
             Create a
             mountpoint.<screen><prompt>$</prompt> <userinput>sudo mkdir /mnt/swift_backend</userinput></screen>Add
-            an fstab entry inside
-            /etc/fstab.<programlisting>/home/$user/swift-volume /mnt/swift_backend xfs loop,noatime,nodiratime,nobarrier,logbufs=8 0 0</programlisting>Mount
-            it.<screen><prompt>$</prompt> <userinput>sudo mount -a</userinput></screen>Create
-            the
-            backend.<screen><prompt>$</prompt> <userinput>sudo mount /mnt/swift_backend</userinput>
-<prompt>$</prompt> <userinput>sudo pushd /mnt/swift_backend</userinput>
+            an fstab entry inside /etc/fstab. ($user, replace it with your
+            username)<programlisting>/home/$user/swift-volume /mnt/swift_backend xfs loop,noatime,nodiratime,nobarrier,logbufs=8 0 0</programlisting>Mount
+            it.<screen><prompt>$</prompt> <userinput>sudo mount -a</userinput></screen>Create the
+            backend.<screen>
+<prompt>#</prompt> <userinput>cd /mnt/swift_backend</userinput>
 <prompt>$</prompt> <userinput>sudo mkdir node1 node2 node3 node4</userinput>
-<prompt>$</prompt> <userinput>sudo popd</userinput>
 <prompt>$</prompt> <userinput>sudo chown swift.swift /mnt/swift_backend/*</userinput>
 <prompt>$</prompt> <userinput>for i in {1..4}; do sudo ln -s /mnt/swift_backend/node$i /srv/node$i; done;</userinput>
 <prompt>$</prompt> <userinput>sudo mkdir -p /etc/swift/account-server /etc/swift/container-server /etc/swift/object- - server /srv/node1/device /srv/node2/device /srv/node3/device /srv/node4/device</userinput>
@@ -536,8 +536,8 @@ enabled_apis=ec2,osapi_compute,metadata
 <prompt>$</prompt> <userinput>sudo mkdir /run/swift</userinput></screen></para>
         <para>Configure rsync, by modifying
             /etc/default/rsync.<programlisting>RSYNC_ENABLE=true</programlisting></para>
-        <para>Modify,
-            /etc/rsyncd.conf.<programlisting># General stuff
+        <para>Create, /etc/rsyncd.conf and populate it with contents
+            below.<programlisting># General stuff
 uid = swift
 gid = swift
 log file = /var/log/rsyncd.log
@@ -645,10 +645,9 @@ local4.*                ~
 
 local5.*;local5.!notice /var/log/swift/storage4.log
 local5.notice           /var/log/swift/storage4.error
-local5.*         </programlisting>Append
-            to
-            /etc/rsyslog.conf.<programlisting>$PrivDropToGroup adm</programlisting>Configure
-            the file
+local5.*         </programlisting>Append/add
+            to /etc/rsyslog.conf.<programlisting>$PrivDropToGroup adm</programlisting>Configure the
+            file
             permissions.<screen><prompt>$</prompt> <userinput>sudo mkdir -p /var/log/swift/hourly</userinput>
 <prompt>$</prompt> <userinput>sudo chown -R syslog.adm /var/log/swift</userinput>
 <prompt>$</prompt> <userinput>sudo chmod -R g+w /var/log/swift</userinput>
@@ -715,7 +714,7 @@ is_admin = true
 
 </programlisting></para>
         <para>Create the account file
-            /etc/swift/account/server/1.conf.<programlisting>[DEFAULT]
+            /etc/swift/account-server/1.conf.<programlisting>[DEFAULT]
 devices = /srv/node1
 mount_check = false
 disable_fallocate = true
@@ -837,6 +836,7 @@ vm_test_mode = yes
             services.<screen><prompt>$</prompt> <userinput>sudo swift-init main start</userinput>
 <prompt>$</prompt> <userinput>sudo swift-init rest start</userinput></screen>
             Test
-            it.<screen><prompt>$</prompt> <userinput>swift -v -V 2.0 -A http://127.0.0.1:5000/v2.0/ -U swift -K openstack stat</userinput></screen></para>
+            it.<screen><prompt>$</prompt> <userinput>swift -v -V 2.0 -A http://127.0.0.1:5000/v2.0/ -U service:swift -K openstack
+      stat</userinput></screen></para>
     </section>
 </appendix>
