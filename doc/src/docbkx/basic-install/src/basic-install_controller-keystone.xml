@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="basic-install_controller-keystone">
+    <title>Keystone</title>
+    <para>
+        <orderedlist>
+            <listitem>
+                <para>Install the packages
+                    :<screen><userinput>apt-get -y install keystone python-keystone python-keystoneclient</userinput></screen></para>
+            </listitem>
+            <listitem>
+                <para>Edit <emphasis role="bold">/etc/keystone/keystone.conf</emphasis> :<programlisting>[DEFAULT]
+admin_token = password
+bind_host = 0.0.0.0
+public_port = 5000
+admin_port = 35357
+compute_port = 8774
+verbose = True
+debug = True
+log_file = keystone.log
+log_dir = /var/log/keystone
+log_config = /etc/keystone/logging.conf
+
+[sql]
+connection = mysql://keystone:password@localhost:3306/keystone
+idle_timeout = 200
+
+[identity]
+driver = keystone.identity.backends.sql.Identity
+
+[catalog]
+driver = keystone.catalog.backends.sql.Catalog
+
+(...)</programlisting></para>
+            </listitem>
+            <listitem>
+                <para>Restart Keystone and create the tables in the database
+                    :<screen><userinput>service keystone restart
+keystone-manage db_sync</userinput></screen></para>
+            </listitem>
+            <listitem>
+                <para>Load environment variables :</para>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para>Create <emphasis role="bold">novarc</emphasis> file
+                                :<screen><userinput>export OS_TENANT_NAME=admin
+export OS_USERNAME=admin
+export OS_PASSWORD=password
+export OS_AUTH_URL="http://localhost:5000/v2.0/"
+export SERVICE_ENDPOINT="http://localhost:35357/v2.0"
+export SERVICE_TOKEN=password</userinput></screen></para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+                <itemizedlist>
+                    <listitem>
+                        <para>Export the variables
+                            :<screen><userinput>source novarc
+echo "source novarc">>.bashrc</userinput></screen></para>
+                    </listitem>
+                </itemizedlist>
+            </listitem>
+            <listitem>
+                <para>Download the <link xlink:href="https://github.com/EmilienM/openstack-folsom-guide/blob/master/scripts/keystone-data.sh">data script</link> and fill Keystone database with datas (users,
+                    tenants, services) :<screen><userinput>./keystone-data.sh</userinput></screen></para>
+            </listitem>
+            <listitem>
+                <para>Download the <link
+                    xlink:href="https://github.com/EmilienM/openstack-folsom-guide/blob/master/scripts/keystone-endpoints.sh">endpoint script</link> and create the endpoints (for projects) :<screen><userinput>./keystone-endpoints.sh</userinput></screen></para>
+            </listitem>
+        </orderedlist>
+    </para>
+</section>

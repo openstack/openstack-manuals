@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="basic-install_compute-common">
+                <title>Common services</title>
+		<orderedlist>
+                <listitem>
+                    <para>Install Ubuntu with this parameters :<itemizedlist>
+                        <listitem>
+                            <para>Time zone : <emphasis role="bold">UTC</emphasis></para>
+                        </listitem>
+                        <listitem>
+                            <para>Hostname : <emphasis role="bold">folsom-compute</emphasis></para>
+                        </listitem>
+                        <listitem>
+                            <para>Packages : <emphasis role="bold">OpenSSH-Server</emphasis></para>
+                        </listitem>
+                    </itemizedlist></para>
+                    <para>After OS Installation, reboot the server .</para>
+                </listitem>
+                <listitem>
+                    <para>Add the repository and upgrade Ubuntu :<screen><userinput>apt-get install -y python-software-properties
+add-apt-repository ppa:openstack-ubuntu-testing/folsom-trunk-testing
+add-apt-repository ppa:openstack-ubuntu-testing/folsom-deps-staging
+apt-get update &amp;&amp; apt-get -y dist-upgrade</userinput></screen>Reboot the server.</para>
+                </listitem>
+                <listitem>
+                    <para>Configure the network :</para>
+                    <para><itemizedlist>
+                            <listitem>
+                                <para>Edit <emphasis role="bold">/etc/network/interfaces</emphasis>
+                                    file :</para>
+                            </listitem>
+                        </itemizedlist><screen><userinput># Management Network
+auto eth0
+    iface eth0 inet static
+    address 192.168.0.2
+    netmask 255.255.255.0
+    gateway 192.168.0.254
+    dns-nameservers 8.8.8.8
+
+# VMs Networks with OVS in tunnel mode
+auto eth1
+    iface eth1 inet static
+    address 10.0.0.4
+    netmask 255.255.255.0</userinput></screen>Then, restart network service :<screen><userinput>service networking restart</userinput></screen></para>
+                    <para>
+                        <itemizedlist>
+                            <listitem>
+                                <para>Enable <emphasis role="bold">IP forwarding</emphasis> :</para>
+                            </listitem>
+                        </itemizedlist>
+                        <programlisting>sed -i -r 's/^\s*#(net\.ipv4\.ip_forward=1.*)/\1/' /etc/sysctl.conf
+echo 1 > /proc/sys/net/ipv4/ip_forward </programlisting>
+                        <itemizedlist>
+                            <listitem>
+                                <para>Edit the <emphasis role="bold">/etc/hosts</emphasis> file and
+                                    add <emphasis role="bold">folsom-controller</emphasis> &amp;
+                                    <emphasis role="bold">folsom-compute</emphasis> hostnames
+                                    with correct IP.</para>
+                            </listitem>
+                        </itemizedlist>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>Install &amp; Configure NTP :<itemizedlist>
+                        <listitem>
+                            <para>Install the package :<screen><userinput>apt-get install -y ntp</userinput></screen></para>
+                        </listitem>
+                        <listitem>
+                            <para>Configure <emphasis role="bold">/etc/ntp.conf</emphasis> file :<screen><userinput>server 192.168.0.1</userinput></screen></para>
+                        </listitem>
+                        <listitem>
+                            <para>Restart the service :<screen><userinput>service ntp restart</userinput></screen></para>
+                        </listitem>
+                    </itemizedlist></para>
+                </listitem>
+		</orderedlist>
+</section>

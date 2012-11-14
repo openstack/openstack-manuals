@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="basic-install_compute-hypervisor">
+    <title>Hypervisor</title>
+	<para>
+                <orderedlist>
+                    <listitem>
+                        <para>Install the packages that we need :<screen><userinput>apt-get install -y kvm libvirt-bin pm-utils</userinput></screen></para>
+                    </listitem>
+                    <listitem>
+                        <para>Configure libvirt :</para>
+                        <itemizedlist>
+                            <listitem>
+                                <para>Edit <emphasis role="bold">/etc/libvirt/qemu.conf</emphasis>
+                                    file and add :<screen><userinput>cgroup_device_acl = [
+    "/dev/null", "/dev/full", "/dev/zero",
+    "/dev/random", "/dev/urandom",
+    "/dev/ptmx", "/dev/kvm", "/dev/kqemu",
+    "/dev/rtc", "/dev/hpet","/dev/net/tun"]</userinput></screen></para>
+                            </listitem>
+                            <listitem>
+                                <para>Disable <emphasis role="bold">KVM default virtual bridge</emphasis> to avoid any confusion :<screen><userinput>virsh net-destroy default
+virsh net-undefine default</userinput></screen></para>
+                            </listitem>
+                            <listitem>
+                                <para>Allow <emphasis role="bold">Live Migrations</emphasis> :</para>
+                                <para>Edit <emphasis role="bold">/etc/libvirt/libvirtd.conf</emphasis> file
+                                    :<programlisting>listen_tls = 0
+listen_tcp = 1
+auth_tcp = "none" </programlisting></para>
+                                <para>Modify libvirtd_opts variable in <emphasis role="bold">/etc/init/libvirt-bin.conf</emphasis> file :<screen><userinput>env libvirtd_opts="-d -l" </userinput></screen></para>
+                                <para>Edit  <emphasis role="bold">/etc/default/libvirt-bin</emphasis> file :<screen><userinput>libvirtd_opts="-d -l"   </userinput></screen></para>
+                            </listitem>
+                        </itemizedlist>
+                    </listitem>
+                    <listitem>
+                                <para>Restart libvirt :<screen><userinput>service libvirt-bin restart</userinput></screen>
+                                </para>
+                    </listitem>
+                </orderedlist>
+            </para>
+</section>

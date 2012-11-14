@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="basic-install_controller-glance">
+    <title>Glance</title>
+	<para>
+                <orderedlist>
+                    <listitem>
+                        <para>Install the packages :<screen><userinput>apt-get -y install glance glance-api python-glanceclient glance-common</userinput></screen></para>
+                    </listitem>
+                    <listitem>
+                        <para>Configure Glance :</para>
+                        <itemizedlist>
+                            <listitem>
+                                <para>Edit <emphasis role="bold">/etc/glance/glance-api.conf</emphasis> and <emphasis role="bold">/etc/glance/glance-registry.conf</emphasis> files and modify :<screen><userinput>sql_connection = mysql://glance:password@localhost/glance
+admin_tenant_name = service
+admin_user = glance
+admin_password = password</userinput></screen>For
+                                        <emphasis role="bold">glance-api.conf</emphasis>, modify :
+                                    <screen><userinput>notifier_strategy = rabbit
+rabbit_password = password</userinput></screen></para>
+                            </listitem>
+                            <listitem>
+                                <para>Restart Glance services :<screen><userinput>service glance-api restart &amp;&amp; service glance-registry restart</userinput></screen></para>
+                            </listitem>
+                            <listitem>
+                                <para>Create Glance tables into the database :<screen><userinput>glance-manage db_sync</userinput></screen></para>
+                            </listitem>
+                            <listitem>
+                                <para>Download and import <link xlink:href="http://uec-images.ubuntu.com/releases/precise/release/ubuntu-12.04-server-cloudimg-amd64.tar.gz">Ubuntu 12.04 UEC Image</link> :<screen><userinput>tar xzvf ubuntu-12.04-server-cloudimg-amd64.tar.gz
+glance image-create --name="Ubuntu 12.04 UEC" --public --container-format=ovf \
+    --disk-format=qcow2 &lt; precise-server-cloudimg-amd64.img</userinput></screen></para>
+                            </listitem>
+                            <listitem>
+                                <para>Check if the image has been introduced in the index
+                                    :<screen><userinput>glance image-list
+
++--------+---------+-------------+------------------+------------+--------+
+| ID     | Name    | Disk Format | Container Format | Size       | Status |
++--------+---------+-------------+------------------+------------+--------+
+| 9a17961| Ubuntu  | qcow2       | ovf              | 1476395008 | active |
++--------+---------+-------------+------------------+------------+--------+</userinput></screen></para>
+                            </listitem>
+                            <listitem>
+                                <para>You can also install <link xlink:href="https://review.openstack.org/#/c/7615/">Glance Replicator</link> (new in Folsom).
+More informations about it <link xlink:href="http://www.stillhq.com/openstack/000007.html">here</link>.</para>
+                            </listitem>
+                        </itemizedlist>
+                    </listitem>
+                </orderedlist>
+            </para>
+</section>

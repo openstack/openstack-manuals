@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="basic-install_controller-quantum">
+    <title>Quantum</title>
+              	<section xml:id="controller-ovs">
+              	<title>Open-vSwitch</title>
+              	            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>Install the packages :<screen><userinput>apt-get install -y openvswitch-switch</userinput></screen></para>
+                    </listitem>
+                    <listitem>
+                        <para>Start Open-vSwitch service &amp; restart the agent :<screen><userinput>/etc/init.d/openvswitch-switch start</userinput></screen></para>
+                    </listitem>
+                    <listitem>
+                        <para>Configure virtual bridging :<screen><userinput>ovs-vsctl add-br br-int
+ovs-vsctl add-br br-ex
+ovs-vsctl br-set-external-id br-ex bridge-id br-ex
+ovs-vsctl add-port br-ex eth2</userinput></screen></para>
+                    </listitem>
+                </orderedlist>
+            </para>
+		</section>
+		<section xml:id="controller-quantum">
+                <title>Quantum</title>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>Install the packages :<screen><userinput>apt-get -y install quantum-server python-cliff \
+    quantum-plugin-openvswitch-agent \
+    quantum-l3-agent quantum-dhcp-agent \
+    python-pyparsing</userinput></screen></para>
+                    </listitem>
+                    <listitem>
+                        <para>Configure Quantum services :</para>
+                        <itemizedlist>
+                            <listitem>
+                                <para>Edit <emphasis role="bold">/etc/quantum/quantum.conf</emphasis> file and modify :<screen><userinput>core_plugin = \
+    quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPluginV2
+auth_strategy = keystone
+fake_rabbit = False
+rabbit_password = password</userinput></screen></para>
+                            </listitem>
+                            <listitem>
+                                <para>Edit <emphasis role="bold">/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</emphasis> file and modify :<screen><userinput>[DATABASE]
+sql_connection = mysql://quantum:password@localhost:3306/quantum
+reconnect_interval = 2
+[OVS]
+tenant_network_type = gre 
+tunnel_id_ranges = 1:1000
+integration_bridge = br-int
+tunnel_bridge = br-tun
+local_ip = 10.0.0.3
+enable_tunneling = True
+[AGENT]
+root_helper = sudo /usr/bin/quantum-rootwrap /etc/quantum/rootwrap.conf</userinput></screen>
+				<db:note xmlns:db="http://docbook.org/ns/docbook">
+                                        <db:para>It's more handy to choose <emphasis role="bold">tunnel mode</emphasis> since you don't have to configure your physical switchs for VLANs.</db:para>
+                                </db:note></para>
+                            </listitem>
+                            <listitem>
+                                <para>Edit <emphasis role="bold"
+                                        >/etc/quantum/l3_agent.ini</emphasis> file and modify :<screen><userinput>[DEFAULT]
+debug = True
+interface_driver = quantum.agent.linux.interface.OVSInterfaceDriver
+auth_url = http://localhost:35357/v2.0
+auth_region = RegionOne
+admin_tenant_name = service
+admin_user = quantum
+admin_password = password
+root_helper = sudo quantum-rootwrap /etc/quantum/rootwrap.conf
+metadata_ip = 192.168.0.1
+use_namespaces = False</userinput></screen></para>
+                            </listitem>
+                            <listitem>
+                                <para>Edit <emphasis role="bold">/etc/quantum/dhcp_agent.ini</emphasis> file and add :<screen><userinput>use_namespaces = False</userinput></screen></para>
+                            </listitem>
+                            <listitem>
+                                <para>Edit <emphasis role="bold">/etc/quantum/api-paste.ini</emphasis> file and modify :<screen><userinput>admin_tenant_name = service
+admin_user = quantum 
+admin_password = password</userinput></screen></para>
+                            </listitem>
+                        </itemizedlist>
+                    </listitem>
+                    <listitem>
+                        <para>Start the services :<screen><userinput>service quantum-server restart
+service quantum-plugin-openvswitch-agent restart
+service quantum-dhcp-agent restart
+service quantum-l3-agent restart</userinput></screen></para>
+                    </listitem>
+                    <listitem>
+                        <para>Download my <link xlink:href="https://github.com/EmilienM/openstack-folsom-guide/blob/master/scripts/quantum-networking.sh">Quantum script</link>. Before launching it, you should modify
+                            networking informations inside the script. All is commented and you can
+                            customize belong your needs. In this script, we actually create one
+                            tenant network with its router, and one external network connected to
+                            the tenant router. We are using the "<emphasis role="bold">Per-tenant
+                                Routers with Private Networks</emphasis>"
+                            use-case.<screen><userinput>./quantum-networking.sh</userinput></screen></para>
+                    </listitem>
+                    <listitem>
+                        <para>We need now to configure again the L3 Agent in editing <emphasis role="bold">/etc/quantum/l3_agent.ini</emphasis> file and modify the
+                            values for router and external network.</para>
+                    </listitem>
+                </orderedlist>
+            	</para>
+	</section>
+</section>

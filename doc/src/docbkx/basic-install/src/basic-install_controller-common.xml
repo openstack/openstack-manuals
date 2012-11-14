@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="basic-install_controller-common">
+                <title>Common services</title>
+          	<section xml:id="controller-os">
+        <title>Operating System</title>
+           	<orderedlist>
+                <listitem>
+                    <para>Install Ubuntu with this parameters :<itemizedlist>
+                            <listitem>
+                                <para>Time zone : <emphasis role="bold">UTC</emphasis></para>
+                            </listitem>
+                            <listitem>
+                                <para>Hostname : <emphasis role="bold">folsom-controller</emphasis></para>
+                            </listitem>
+                            <listitem>
+                                <para>Packages : <emphasis role="bold">OpenSSH-Server</emphasis></para>
+                            </listitem>
+                        </itemizedlist></para>
+                    <para>After OS Installation, reboot the server.</para>
+                </listitem>
+                <listitem>
+                    <para>Setup the Cloud Archive in editing <emphasis role="bold">/etc/apt/sources.list</emphasis> :
+                    <screen><userinput>deb http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/folsom main</userinput></screen>
+                    Then, you should setup keyring and upgrade packages :
+                    <screen><userinput>apt-get install ubuntu-cloud-keyring
+apt-get update &amp;&amp; apt-get -y dist-upgrade</userinput></screen>Reboot the server.</para>
+                </listitem>
+                <listitem>
+                    <para>Configure the network :</para>
+                    <para><itemizedlist>
+                        <listitem>
+                            <para>Edit <emphasis role="bold">/etc/network/interfaces</emphasis> file
+                                :</para>
+                        </listitem>
+                    </itemizedlist><screen><userinput># Management Network
+auto eth0
+    iface eth0 inet static
+    address 192.168.0.1
+    netmask 255.255.255.0
+    gateway 192.168.0.254
+    dns-nameservers 8.8.8.8
+
+# VMs Networks with OVS in tunnel mode
+    auto eth1
+    iface eth1 inet static
+    address 10.0.0.3
+    netmask 255.255.255.0
+
+# Public Bridge
+    auto eth2
+    iface eth2 inet manual
+    up ifconfig $IFACE 0.0.0.0 up
+    up ip link set $IFACE promisc on 
+    down ifconfig $IFACE down</userinput></screen>Then,
+                    restart network service :
+                    <screen><userinput>service networking restart</userinput></screen></para>
+                    <para>
+                        <itemizedlist>
+                            <listitem>
+                                <para>Enable <emphasis role="bold">IP forwarding</emphasis> since
+                                    this node will be a gateway (with quantum-l3-agent) between
+                                    external &amp; internal network :</para>
+                            </listitem>
+                        </itemizedlist>
+                        <screen><userinput>sed -i -r 's/^\s*#(net\.ipv4\.ip_forward=1.*)/\1/' /etc/sysctl.conf
+echo 1 > /proc/sys/net/ipv4/ip_forward</userinput></screen>
+                        <itemizedlist>
+                            <listitem>
+                                <para>Edit the <emphasis role="bold">/etc/hosts</emphasis> file and
+                                    add <emphasis role="bold">folsom-controller</emphasis> &amp;
+                                        <emphasis role="bold">folsom-compute</emphasis> hostnames
+                                    with correct IP.</para>
+                            </listitem>
+                        </itemizedlist>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>Install Configure NTP :<itemizedlist>
+                            <listitem>
+                                <para>Install the package
+                                    :<screen><userinput>apt-get install -y ntp</userinput></screen></para>
+                            </listitem>
+                            <listitem>
+                                <para>Configure <emphasis role="bold">/etc/ntp.conf</emphasis> file
+                                    :<screen><userinput>server ntp.ubuntu.com iburst
+server 127.127.1.0
+fudge 127.127.1.0 stratum 10</userinput></screen></para>
+                            </listitem>
+                            <listitem>
+                                <para>Restart the service
+                                    :<screen><userinput>service ntp restart</userinput></screen></para>
+                            </listitem>
+                        </itemizedlist></para>
+                </listitem>
+            </orderedlist>
+            </section>
+            <section xml:id="controller-mysql">
+            <info>
+                <title>MySQL</title>
+            </info>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>Install the packages :<screen><userinput>apt-get -y install mysql-server python-mysqldb</userinput></screen></para>
+                    </listitem>
+                    <listitem>
+                        <para>Allow connection from the network
+                            :<screen><userinput>sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/my.cnf</userinput></screen></para>
+                    </listitem>
+                    <listitem>
+                        <para>Restart the service
+                            :<screen><userinput>service mysql restart</userinput></screen></para>
+                    </listitem>
+                    <listitem>
+                        <para>Create Databases, Users, Rights :
+                        <screen><userinput>mysql -u root -ppassword &lt;&lt;EOF
+CREATE DATABASE nova;
+GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'localhost' \
+IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'192.168.0.1' \
+IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'192.168.0.2' \
+IDENTIFIED BY 'password';
+CREATE DATABASE cinder;
+GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'localhost' \
+IDENTIFIED BY 'password';
+CREATE DATABASE glance;
+GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'localhost' \
+IDENTIFIED BY 'password';
+CREATE DATABASE keystone;
+GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'localhost' \
+IDENTIFIED BY 'password';
+CREATE DATABASE quantum;
+GRANT ALL PRIVILEGES ON quantum.* TO 'quantum'@'localhost' \
+IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON quantum.* TO 'quantum'@'192.168.0.2' \
+IDENTIFIED BY 'password';
+FLUSH PRIVILEGES;
+EOF</userinput></screen></para>
+                    </listitem>
+                </orderedlist>
+            </para>
+            </section>
+            <section xml:id="controller-rabbitmq">
+                <title>Rabbit-MQ</title>
+                        <para>
+                <orderedlist>
+                    <listitem>
+                        <para>Install the packages :</para>
+
+                        <screen><userinput>apt-get -y install rabbitmq-server</userinput></screen></listitem>
+                    <listitem>
+                        <para>Change the default password :</para>
+                        <screen><userinput>rabbitmqctl change_password guest password</userinput></screen></listitem>
+                </orderedlist>
+            </para>
+	</section>
+</section>
