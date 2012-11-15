@@ -522,7 +522,7 @@ enabled_apis=ec2,osapi_compute,metadata
 <prompt>#</prompt> <userinput>mkfs.xfs -i size=1024 /srv/swift-volume</userinput></screen>
             Create a
             mountpoint.<screen><prompt>$</prompt> <userinput>sudo mkdir /mnt/swift_backend</userinput></screen>Add
-            an fstab entry inside /etc/fstab. ($user, replace it with your
+            an fstab entry inside /etc/fstab. ($user, replace it with your logged in Linux
             username)<programlisting>/home/$user/swift-volume /mnt/swift_backend xfs loop,noatime,nodiratime,nobarrier,logbufs=8 0 0</programlisting>Mount
             it.<screen><prompt>$</prompt> <userinput>sudo mount -a</userinput></screen>Create the
             backend.<screen>
@@ -816,8 +816,8 @@ vm_test_mode = yes
 <prompt>$</prompt> <userinput>sudo sudo swift-ring-builder container.builder create 18 3 1</userinput>
 <prompt>$</prompt> <userinput>sudo sudo swift-ring-builder account.builder create 18 3 1</userinput>
 </screen>Create
-            the zones and balance
-            them.<screen><prompt>$</prompt> <userinput>sudo swift-ring-builder object.builder add z1-127.0.0.1:6010/device 1</userinput>
+            the zones and balance them.
+            <screen><prompt>$</prompt> <userinput>sudo swift-ring-builder object.builder add z1-127.0.0.1:6010/device 1</userinput>
 <prompt>$</prompt> <userinput>sudo swift-ring-builder object.builder add z2-127.0.0.1:6020/device 1</userinput>
 <prompt>$</prompt> <userinput>sudo swift-ring-builder object.builder add z3-127.0.0.1:6030/device 1</userinput>
 <prompt>$</prompt> <userinput>sudo swift-ring-builder object.builder add z4-127.0.0.1:6040/device 1</userinput>
@@ -832,11 +832,18 @@ vm_test_mode = yes
 <prompt>$</prompt> <userinput>sudo swift-ring-builder account.builder add z3-127.0.0.1:6032/device 1</userinput>
 <prompt>$</prompt> <userinput>sudo swift-ring-builder account.builder add z4-127.0.0.1:6042/device 1</userinput>
 <prompt>$</prompt> <userinput>sudo swift-ring-builder account.builder rebalance</userinput></screen>Restart
-            the
-            services.<screen><prompt>$</prompt> <userinput>sudo swift-init main start</userinput>
+            the services. It will take
+            sometime.<screen><prompt>$</prompt> <userinput>sudo swift-init main start</userinput>
 <prompt>$</prompt> <userinput>sudo swift-init rest start</userinput></screen>
-            Test
-            it.<screen><prompt>$</prompt> <userinput>swift -v -V 2.0 -A http://127.0.0.1:5000/v2.0/ -U service:swift -K openstack
-      stat</userinput></screen></para>
+            Check the
+            status<screen><prompt>$</prompt> <userinput>swift -v -V 2.0 -A http://127.0.0.1:5000/v2.0/ -U service:swift -K openstack stat</userinput></screen></para>
+        <para>Create a container name "test"  and with the list option we can see it created.</para>
+        <para>
+            <screen><prompt>$</prompt> <userinput>swift -v -V 2.0 -A http://127.0.0.1:5000/v2.0/ -U service:swift -K openstack post test</userinput>
+<prompt>$</prompt> <userinput>swift -v -V 2.0 -A http://127.0.0.1:5000/v2.0/ -U service:swift -K openstack list</userinput></screen>
+        </para>
+        <para>
+            <programlisting>test</programlisting>
+        </para>
     </section>
 </appendix>
