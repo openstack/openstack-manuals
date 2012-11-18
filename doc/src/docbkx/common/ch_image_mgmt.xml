@@ -325,7 +325,7 @@ echo &quot;************************&quot;
                     data.</para></note>
 
           </simplesect>
-        
+
         <simplesect><title>Shut down the instance</title>
         <para>From inside the instance, as
                 root:<screen><prompt>#</prompt> <userinput>/sbin/shutdown -h now</userinput></screen></para></simplesect>
@@ -1110,5 +1110,178 @@ use_cow_images=true
                 </listitem>
             </itemizedlist>
         </para>
+    </section>
+    <section xml:id="replicating-images">
+        <title>Replicating images across multiple data centers </title>
+        <para>The image service comes with a tool called <command>glance-replicator</command> that
+            can be used to populate a new glance server using the images stored in an existing
+            glance server. The images in the replicated glance server preserve the uuids, metadata,
+            and image data from the original. Running the tool will output a set of commands that it
+            supports:<screen>$ <userinput>glance-replicator</userinput>
+<computeroutput>Usage: glance-replicator &lt;command> [options] [args]
+
+Commands:
+
+    help &lt;command>  Output help for one of the commands below
+
+    compare         What is missing from the slave glance?
+    dump            Dump the contents of a glance instance to local disk.
+    livecopy        Load the contents of one glance instance into another.
+    load            Load the contents of a local directory into glance.
+    size            Determine the size of a glance instance if dumped to disk.
+
+Options:
+  --version             show program's version number and exit
+  -h, --help            show this help message and exit
+  -c CHUNKSIZE, --chunksize=CHUNKSIZE
+                        Amount of data to transfer per HTTP write
+  -d, --debug           Print debugging information
+  -D DONTREPLICATE, --dontreplicate=DONTREPLICATE
+                        List of fields to not replicate
+  -m, --metaonly        Only replicate metadata, not images
+  -l LOGFILE, --logfile=LOGFILE
+                        Path of file to log to
+  -s, --syslog          Log to syslog instead of a file
+  -t TOKEN, --token=TOKEN
+                        Pass in your authentication token if you have one. If
+                        you use this option the same token is used for both
+                        the master and the slave.
+  -M MASTERTOKEN, --mastertoken=MASTERTOKEN
+                        Pass in your authentication token if you have one.
+                        This is the token used for the master.
+  -S SLAVETOKEN, --slavetoken=SLAVETOKEN
+                        Pass in your authentication token if you have one.
+                        This is the token used for the slave.
+  -v, --verbose         Print more verbose output</computeroutput></screen></para>
+        <para>The replicator supports the following commands:</para>
+        <simplesect>
+            <title>livecopy: Load the contents of one glance instance into another</title>
+            <para>
+                <screen><userinput>glance-replicator livecopy <replaceable>fromserver:port</replaceable> <replaceable>toserver:port</replaceable></userinput></screen>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><replaceable>fromserver:port</replaceable>: the location of the master
+                            glance instance</para>
+                    </listitem>
+                    <listitem>
+                        <para><replaceable>toserver:port</replaceable>: the location of the slave
+                            glance instance. </para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>Take a copy of the fromserver, and dump it onto the toserver. Only images visible
+                to the user running the replicator will be copied if glance is configured to use the
+                Identity service (keystone) for authentication. Only images active on
+                    <replaceable>fromserver </replaceable>are copied across. The copy is done
+                "on-the-wire" so there are no large temporary files on the machine running the
+                replicator to clean up.</para>
+        </simplesect>
+        <simplesect>
+            <title>dump: Dump the contents of a glance instance to local disk</title>
+            <para>
+                <screen><userinput>glance-replicator dump <replaceable>server:port</replaceable> <replaceable>path</replaceable></userinput></screen>
+            </para>
+            <para><itemizedlist>
+                    <listitem>
+                        <para><replaceable>server:port</replaceable>: the location of the glance
+                            instance. </para>
+                    </listitem>
+                    <listitem>
+                        <para><replaceable>path</replaceable>: a directory on disk to contain the
+                            data. </para>
+                    </listitem>
+                </itemizedlist>Do the same thing as <command>livecopy</command>, but dump the
+                contents of the glance server to a directory on disk. This includes metadata and
+                image data. Depending on the size of the local glance repository, the resulting dump
+                may consume a large amount of local storage. Therefore, we recommend you use the
+                    <command>size</command> comamnd first to determine the size of the resulting
+                dump.</para>
+        </simplesect>
+        <simplesect>
+            <title>load: Load a directory created by the dump command into a glance server</title>
+            <para>
+                <screen><userinput>glance-replicator load server:port path</userinput></screen>
+                <itemizedlist>
+                    <listitem>
+                        <para><replaceable>server:port</replaceable>: the location of the glance
+                            instance.</para>
+                    </listitem>
+                    <listitem>
+                        <para><replaceable>path</replaceable>: a directory on disk containing the
+                            data.</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>Load the contents of a local directory into glance. </para>
+            <para>The <command>dump</command> and <command>load</command> are useful when
+                replicating across two glance servers where a direct connection across the two
+                glance hosts is impossible or too slow.</para>
+        </simplesect>
+        <simplesect>
+            <title>compare: Compare the contents of two glance servers</title>
+            <para><screen><userinput>glance-replicator compare <replaceable>fromserver:port</replaceable> <replaceable>toserver:port</replaceable></userinput></screen><itemizedlist>
+                    <listitem>
+                        <para><replaceable>fromserver:port</replaceable>: the location of the master
+                            glance instance.</para>
+                    </listitem>
+                    <listitem>
+                        <para><replaceable> toserver:port</replaceable>: the location of the slave
+                            glance instance. </para>
+                    </listitem>
+                </itemizedlist>The <command>compare</command> command will show you the differences
+                between the two servers, which is effectively a dry run of the
+                    <command>livecopy</command> command.</para>
+        </simplesect>
+        <simplesect>
+            <title>size: Determine the size of a glance instance if dumped to disk</title>
+            <para><screen><userinput>glance-replicator size</userinput></screen><itemizedlist>
+                    <listitem>
+                        <para><replaceable>server:port</replaceable>: the location of the glance
+                            instance.</para>
+                    </listitem>
+                </itemizedlist>The <command>size</command> command will tell you how much disk is
+                going to be used by image data in either a <command>dump</command> or a
+                    <command>livecopy</command>. Note that this will provide raw number of bytes
+                that would be written to the destination, it has no information about the redundancy
+                costs associated with glance-registry back-ends that use replication for redundancy,
+                such as Swift or Ceph.</para>
+        </simplesect>
+        <simplesect>
+            <title>Example using livecopy</title>
+        <para>Assuming you have a primary glance service running on a node called
+            <literal>primary.example.com</literal> with glance-api service running on port
+            <literal>9292</literal> (the default port) and you want to replicate its contents to
+            a secondary glance service running on a node called
+            <literal>secondary.example.com</literal>, also on port 9292, you will first need to
+            get authentication tokens from keystone for the primary and secondary glance server and
+            then you can use the <literal>glance-replicator livecopy</literal> command.</para>
+        <para>The following example assumes that you have a credentials file for your primary cloud
+                called <filename>primary.openrc</filename> and one for your secondary cloud called
+                    <filename>secondary.openrc</filename>.<screen><prompt>$</prompt> <userinput>source primary.openrc</userinput>
+<prompt>$</prompt> <userinput>keystone token-get</userinput>
+<computeroutput>+-----------+----------------------------------+
+|  Property |              Value               |
++-----------+----------------------------------+
+| expires   | 2012-11-16T03:13:08Z             |
+| id        | 8a5d3afb5095430891f33f69a2791463 |
+| tenant_id | dba21b41af584daeac5782ca15a77a25 |
+| user_id   | add2ece6b1f94866994d3a3e3beb3d47 |
++-----------+----------------------------------+</computeroutput>
+<prompt>$</prompt> <userinput>PRIMARY_AUTH_TOKEN=<replaceable>8e97fa8bcf4443cfbd3beb9079c7142f </replaceable></userinput>
+<prompt>$</prompt> <userinput>source secondary.openrc</userinput>
+<prompt>$</prompt> <userinput>keystone token-get</userinput>
+<computeroutput>+-----------+----------------------------------+
+|  Property |              Value               |
++-----------+----------------------------------+
+| expires   | 2012-11-16T03:13:08Z             |
+| id        | 29f777ac2c9b41a6b4ee9c3e6b85f98a |
+| tenant_id | fbde89d638d947a19545b0f387ffea4d |
+| user_id   | 4a7a48e7d62e4b428c78d02c1968ca7b |
++-----------+----------------------------------+</computeroutput>
+<prompt>$</prompt> <userinput>SECONDARY_AUTH_TOKEN=<replaceable>29f777ac2c9b41a6b4ee9c3e6b85f98a</replaceable></userinput>
+<prompt>$</prompt> <userinput>glance-replicator livecopy primary.example.com:9292 secondary.example.com:9292 -M ${PRIMARY_AUTH_TOKEN} -S ${SECONDARY_AUTH_TOKEN} </userinput></screen></para>
+        </simplesect>
     </section>
 </chapter>
