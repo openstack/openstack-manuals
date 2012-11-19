@@ -37,7 +37,18 @@
             </tr>
             <tr>
                 <td>libvirt_cpu_mode=&lt;None&gt; </td>
-                <td> (StrOpt)</td>
+                <td> (StrOpt) Configures the guest CPU model exposed to the hypervisor. Valid
+                    options are: custom, host-model, host-passthrough, none. If the hypervisor is
+                    KVM or QEMU, the default value is host-model, otherwise the default value is
+                    none.</td>
+            </tr>
+            <tr>
+                <td>libvirt_cpu_model=&lt;None&gt; </td>
+                <td> (StrOpt)  Specify the guest CPU model exposed to the hypervisor. This
+                    configuration option is only applicable if <literal>libvirt_cpu_mode</literal>
+                    is set to <literal>custom</literal>. Valid options: one of the named models
+                    specified in <filename>/usr/share/libvirt/cpu_map.xml</filename>, e.g.:
+                    Westmere, Nehalem, Opteron_G3. </td>
             </tr>
             <tr>
                 <td>libvirt_disk_prefix=&lt;None&gt; </td>
@@ -56,7 +67,7 @@
                 <td><para> (StrOpt) Instance ephemeral storage backend format.
                     Acceptable values are: raw, qcow2, lvm, default.
                     If default is specified, then use_cow_images flag
-		    is used instead of this one. Please note, that current 
+		    is used instead of this one. Please note, that current
                     snapshot mechanism in OpenStack Compute works only with instances
                     backed with Qcow2 images. </para></td>
             </tr>
