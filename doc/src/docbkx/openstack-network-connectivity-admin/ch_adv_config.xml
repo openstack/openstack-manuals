@@ -34,68 +34,55 @@ format="PNG" />
 </imageobject>
 </inlinemediaobject>'>
 ]>
-<chapter xmlns="http://docbook.org/ns/docbook"
-    xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
-    xml:id="ch_adv_config">
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="ch_adv_config">
     <title>Advanced Configuration Options</title>
-    <para>This section describes advanced configurations options for
-        various system components (i.e. config options where the
-        default is usually ok, but that the user may want to tweak).
-        After installing from packages, $QUANTUM_CONF_DIR is
-            <filename>/etc/quantum</filename>.</para>
+    <para>This section describes advanced configurations options for various system components (i.e.
+        config options where the default is usually ok, but that the user may want to tweak). After
+        installing from packages, $QUANTUM_CONF_DIR is <filename>/etc/quantum</filename>.</para>
     <section xml:id="quantum_server">
         <title>Quantum Server with Plugin</title>
-        <para>This is the Quantum service that runs the Quantum API
-            Web Server. It is responsible for loading a plugin and
-            passing the API calls to the plugin for processing. The
-            quantum-server should receive one of more configuration
-            files as it its input, for example:</para>
+        <para>This is the Quantum service that runs the Quantum API Web Server. It is responsible
+            for loading a plugin and passing the API calls to the plugin for processing. The
+            quantum-server should receive one of more configuration files as it its input, for
+            example:</para>
         <para>
             <screen><computeroutput>quantum-server --config-file &lt;quantum config&gt; --config-file &lt;plugin config&gt;</computeroutput></screen>
         </para>
-        <para>The quantum config contains the common quantum
-            configuration parameters. The plugin config contains the
-            plugin specific flags. The plugin that is run on the
-            service is loaded via the configuration parameter
-            ‘core_plugin’. In some cases a plugin may have an agent
-            that performs the actual networking. Specific
-            configuration details can be seen in the Appendix -
-            Configuration File Options. </para>
-        <para>Most plugins require a SQL database. After
-            installing and starting the database server, set a password for
-            the root account and delete the anonymous accounts: </para>
+        <para>The quantum config contains the common quantum configuration parameters. The plugin
+            config contains the plugin specific flags. The plugin that is run on the service is
+            loaded via the configuration parameter ‘core_plugin’. In some cases a plugin may have an
+            agent that performs the actual networking. Specific configuration details can be seen in
+            the Appendix - Configuration File Options. </para>
+        <para>Most plugins require a SQL database. After installing and starting the database
+            server, set a password for the root account and delete the anonymous accounts: </para>
         <screen><computeroutput>$&gt; mysql -u root
 mysql&gt; update mysql.user set password = password('iamroot') where user = 'root';
 mysql&gt; delete from mysql.user where user = '';</computeroutput></screen>
-        <para>Create a database and user account specifically for
-            plugin:</para>
+        <para>Create a database and user account specifically for plugin:</para>
         <screen><computeroutput>mysql&gt; create database &lt;database-name&gt;;
 mysql&gt; create user '&lt;user-name&gt;'@'localhost' identified by '&lt;user-name&gt;';
 mysql&gt; create user '&lt;user-name&gt;'@'%' identified by '&lt;user-name&gt;';
 mysql&gt; grant all on &lt;database-name&gt;.* to '&lt;user-name&gt;'@'%';</computeroutput></screen>
-        <para>Once the above is done you can update the settings in
-            the relevant plugin configuration files. The plugin
-            specific configuration files can be found at
+        <para>Once the above is done you can update the settings in the relevant plugin
+            configuration files. The plugin specific configuration files can be found at
             $QUANTUM_CONF_DIR/plugins.</para>
-        <para>Some plugins have a L2 agent that performs the actual
-            networking. That is, the agent will attach the virtual
-            machine NIC to the Quantum network. Each node should have
-            a Quantum agent running on it. Note that the agent
-            receives the following input parameters:</para>
-       <screen><computeroutput>quantum-plugin-agent --config-file &lt;quantum config&gt; --config-file &lt;plugin config&gt;</computeroutput></screen>
-        <para>Two things need to be done prior to working with the
-            plugin:</para>
-       <orderedlist><listitem>
+        <para>Some plugins have a L2 agent that performs the actual networking. That is, the agent
+            will attach the virtual machine NIC to the Quantum network. Each node should have a
+            Quantum agent running on it. Note that the agent receives the following input
+            parameters:</para>
+        <screen><computeroutput>quantum-plugin-agent --config-file &lt;quantum config&gt; --config-file &lt;plugin config&gt;</computeroutput></screen>
+        <para>Two things need to be done prior to working with the plugin:</para>
+        <orderedlist>
+            <listitem>
                 <para>Ensure that the core plugin is updated.</para>
             </listitem>
             <listitem>
-                <para>Ensure that the database connection is correctly
-                    set.</para>
-            </listitem></orderedlist>
-        <para>The table below contains examples for these settings.
-            Some linux packages may provide installation utilities
-            that configure these. <table rules="all">
+                <para>Ensure that the database connection is correctly set.</para>
+            </listitem>
+        </orderedlist>
+        <para>The table below contains examples for these settings. Some linux packages may provide
+            installation utilities that configure these. <table rules="all">
                 <caption>Settings</caption>
                 <col width="35%"/>
                 <col width="65%"/>
@@ -108,7 +95,7 @@ mysql&gt; grant all on &lt;database-name&gt;.* to '&lt;user-name&gt;'@'%';</comp
                 <tbody>
                     <tr>
                         <td><emphasis role="bold">Open vSwitch</emphasis></td>
-                        <td></td>
+                        <td/>
                     </tr>
                     <tr>
                         <td>core_plugin ($QUANTUM_CONF_DIR/quantum.conf)</td>
@@ -128,7 +115,7 @@ mysql&gt; grant all on &lt;database-name&gt;.* to '&lt;user-name&gt;'@'%';</comp
                     </tr>
                     <tr>
                         <td><emphasis role="bold">Linux Bridge</emphasis></td>
-                        <td></td>
+                        <td/>
                     </tr>
                     <tr>
                         <td>core_plugin ($QUANTUM_CONF_DIR/quantum.conf)</td>
@@ -148,87 +135,21 @@ mysql&gt; grant all on &lt;database-name&gt;.* to '&lt;user-name&gt;'@'%';</comp
                     </tr>
                 </tbody>
             </table></para>
-        <para>All of the plugin configuration files options can be
-            found in the Appendix - Configuration File Options.
-        </para>
+        <para>All of the plugin configuration files options can be found in the Appendix -
+            Configuration File Options. </para>
     </section>
     <section xml:id="adv_cfg_dhcp_agent">
-      <title>DHCP Agent</title>
-      <para>There is an option to run a DHCP server that
-      will allocate IP addresses to virtual machines running on the
-      network. When a Quantum subnet is created, by default, the
-      subnet has DHCP enabled.</para>
-      <para>The node that runs the DHCP agent should run:</para>
-      <screen><computeroutput>quantum-dhcp-agent --config-file &lt;quantum config&gt;
+        <title>DHCP Agent</title>
+        <para>There is an option to run a DHCP server that will allocate IP addresses to virtual
+            machines running on the network. When a Quantum subnet is created, by default, the
+            subnet has DHCP enabled.</para>
+        <para>The node that runs the DHCP agent should run:</para>
+        <screen><computeroutput>quantum-dhcp-agent --config-file &lt;quantum config&gt;
 --config-file &lt;dhcp config&gt;</computeroutput></screen>
-      <para>Currently the DHCP agent uses dnsmasq to perform that
-      static address assignment.</para>
-      <para>A driver needs to be configured
-          that matches the plugin running on the service.
-          <table rules="all">
-              <caption>Basic settings</caption>
-              <col width="50%"/>
-              <col width="50%"/>
-              <thead>
-                  <tr>
-                      <th>Parameter </th>
-                      <th>Value </th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr>
-                      <td><emphasis role="bold">Open vSwitch</emphasis></td>
-                      <td></td>
-                  </tr>
-                  <tr>
-                      <td>interface_driver
-                          ($QUANTUM_CONF_DIR/dhcp_agent.ini)</td>
-                      <td>quantum.agent.linux.interface.OVSInterfaceDriver</td>
-                  </tr>
-                  <tr>
-                      <td><emphasis role="bold">Linux Bridge</emphasis></td>
-                      <td></td>
-                  </tr>
-                  <tr>
-                      <td>interface_driver
-                          ($QUANTUM_CONF_DIR/dhcp_agent.ini)</td>
-                      <td>quantum.agent.linux.interface.BridgeInterfaceDriver</td>
-                  </tr>
-              </tbody>
-          </table></para>
-      <para>
-        All of the DHCP agent configuration options can be
-        found in the <link linkend="dhcp_agent_ini">
-        Appendix - Configuration File Options</link>.
-      </para>
-      <section xml:id="adv_cfg_dhcp_agent_namespace">
-        <title>Namespace</title>
-        <para>
-          By default the DHCP agent makes use of linux network
-          namespaces in order to support overlapping IP addresses.
-          Requirements for network namespaces support are described in
-          the <link linkend="ch_limitations">Limitation</link> section.
-        </para>
-        <para>
-          <emphasis role="bold">If the linux installation does not support
-          network namespace, you must disable using network namespace
-          in the DHCP agent config file</emphasis>
-          (The default value of use_namespaces is True).
-        </para>
-        <screen><computeroutput>use_namespaces = False</computeroutput></screen>
-      </section>
-    </section>
-    <section xml:id="adv_cfg_l3_agent">
-      <title>L3 Agent</title>
-        <para>There is an option to run a L3 agent that will give
-        enable layer 3 forwarding and floating IP support. The
-        node that runs the L3 agent should run:</para>
-        <screen><computeroutput>quantum-l3-agent --config-file &lt;quantum config&gt;
---config-file &lt;l3 config&gt;</computeroutput></screen>
-        <para>A driver needs to be configured that matches the plugin
-            running on the service. The driver is used to create the
-            routing interface.
-            <table rules="all">
+        <para>Currently the DHCP agent uses dnsmasq to perform that static address
+            assignment.</para>
+        <para>A driver needs to be configured that matches the plugin running on the service. <table
+                rules="all">
                 <caption>Basic settings</caption>
                 <col width="50%"/>
                 <col width="50%"/>
@@ -241,7 +162,57 @@ mysql&gt; grant all on &lt;database-name&gt;.* to '&lt;user-name&gt;'@'%';</comp
                 <tbody>
                     <tr>
                         <td><emphasis role="bold">Open vSwitch</emphasis></td>
-                        <td></td>
+                        <td/>
+                    </tr>
+                    <tr>
+                        <td>interface_driver ($QUANTUM_CONF_DIR/dhcp_agent.ini)</td>
+                        <td>quantum.agent.linux.interface.OVSInterfaceDriver</td>
+                    </tr>
+                    <tr>
+                        <td><emphasis role="bold">Linux Bridge</emphasis></td>
+                        <td/>
+                    </tr>
+                    <tr>
+                        <td>interface_driver ($QUANTUM_CONF_DIR/dhcp_agent.ini)</td>
+                        <td>quantum.agent.linux.interface.BridgeInterfaceDriver</td>
+                    </tr>
+                </tbody>
+            </table></para>
+        <para> All of the DHCP agent configuration options can be found in the <link
+                linkend="dhcp_agent_ini"> Appendix - Configuration File Options</link>. </para>
+        <section xml:id="adv_cfg_dhcp_agent_namespace">
+            <title>Namespace</title>
+            <para> By default the DHCP agent makes use of linux network namespaces in order to
+                support overlapping IP addresses. Requirements for network namespaces support are
+                described in the <link linkend="ch_limitations">Limitation</link> section. </para>
+            <para>
+                <emphasis role="bold">If the linux installation does not support network namespace,
+                    you must disable using network namespace in the DHCP agent config
+                    file</emphasis> (The default value of use_namespaces is True). </para>
+            <screen><computeroutput>use_namespaces = False</computeroutput></screen>
+        </section>
+    </section>
+    <section xml:id="adv_cfg_l3_agent">
+        <title>L3 Agent</title>
+        <para>There is an option to run a L3 agent that will give enable layer 3 forwarding and
+            floating IP support. The node that runs the L3 agent should run:</para>
+        <screen><computeroutput>quantum-l3-agent --config-file &lt;quantum config&gt;
+--config-file &lt;l3 config&gt;</computeroutput></screen>
+        <para>A driver needs to be configured that matches the plugin running on the service. The
+            driver is used to create the routing interface. <table rules="all">
+                <caption>Basic settings</caption>
+                <col width="50%"/>
+                <col width="50%"/>
+                <thead>
+                    <tr>
+                        <th>Parameter </th>
+                        <th>Value </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><emphasis role="bold">Open vSwitch</emphasis></td>
+                        <td/>
                     </tr>
                     <tr>
                         <td>interface_driver ($QUANTUM_CONF_DIR/l3_agent.ini) </td>
@@ -253,7 +224,7 @@ mysql&gt; grant all on &lt;database-name&gt;.* to '&lt;user-name&gt;'@'%';</comp
                     </tr>
                     <tr>
                         <td><emphasis role="bold">Linux Bridge</emphasis></td>
-                        <td></td>
+                        <td/>
                     </tr>
                     <tr>
                         <td>interface_driver ($QUANTUM_CONF_DIR/l3_agent.ini) </td>
@@ -261,64 +232,50 @@ mysql&gt; grant all on &lt;database-name&gt;.* to '&lt;user-name&gt;'@'%';</comp
                     </tr>
                     <tr>
                         <td>external_network_bridge ($QUANTUM_CONF_DIR/l3_agent.ini) </td>
-                        <td>This field must be empty (or the bridge name for
-			    the external network).</td>
+                        <td>This field must be empty (or the bridge name for the external
+                            network).</td>
                     </tr>
                 </tbody>
             </table>
         </para>
-        <para>
-	  The L3 agent communicates with the Quantum server via the Quantum API,
-	  so the following configuration is required:
-          <orderedlist>
-            <listitem>
-              <para>Keystone authentication:</para>
-              <screen><computeroutput>auth_url="$KEYSTONE_SERVICE_PROTOCOL://$KEYSTONE_AUTH_HOST:$KEYSTONE_AUTH_PORT/v2.0"</computeroutput></screen>
-              <para>For example,</para>
-              <screen><computeroutput>http://10.56.51.210:5000/v2.0</computeroutput></screen>
-            </listitem>
-            <listitem>
-              <para>Admin user details:</para>
-              <screen><computeroutput>admin_tenant_name $SERVICE_TENANT_NAME
+        <para> The L3 agent communicates with the Quantum server via the Quantum API, so the
+            following configuration is required: <orderedlist>
+                <listitem>
+                    <para>Keystone authentication:</para>
+                    <screen><computeroutput>auth_url="$KEYSTONE_SERVICE_PROTOCOL://$KEYSTONE_AUTH_HOST:$KEYSTONE_AUTH_PORT/v2.0"</computeroutput></screen>
+                    <para>For example,</para>
+                    <screen><computeroutput>http://10.56.51.210:5000/v2.0</computeroutput></screen>
+                </listitem>
+                <listitem>
+                    <para>Admin user details:</para>
+                    <screen><computeroutput>admin_tenant_name $SERVICE_TENANT_NAME
 admin_user $Q_ADMIN_USERNAME
 admin_password $SERVICE_PASSWORD</computeroutput></screen>
-            </listitem>
-          </orderedlist>
+                </listitem>
+            </orderedlist>
         </para>
-        <para>
-          All of the L3 agent configuration options can be
-          found in the <link linkend="l3_agent_ini">
-          Appendix - Configuration File Options</link>.
-        </para>
-      <section xml:id="adv_cfg_l3_agent_namespace">
-        <title>Namespace</title>
-        <para>
-          By default the L3 agent makes use of Linux network namespaces
-          in order to support overlapping IP addresses.
-          Requirements for network namespaces support are described in
-          the <link linkend="ch_limitations">Limitation</link> section.
-        </para>
-        <para>
-          <emphasis role="bold">If the linux installation does not support
-          network namespace, you must disable using network namespace
-          in the L3 agent config file</emphasis>
-          (The default value of use_namespaces is True).
-        </para>
-        <screen><computeroutput>use_namespaces = False</computeroutput></screen>
-        <para>
-          When use_namespaces is set as False, only one router ID can be supported
-          per node. This must be configured via the configuration variable
-          <emphasis>router_id</emphasis>.
-        </para>
-        <screen><computeroutput># If use_namespaces is set as False then the agent can only configure one router.
+        <para> All of the L3 agent configuration options can be found in the <link
+                linkend="l3_agent_ini"> Appendix - Configuration File Options</link>. </para>
+        <section xml:id="adv_cfg_l3_agent_namespace">
+            <title>Namespace</title>
+            <para> By default the L3 agent makes use of Linux network namespaces in order to support
+                overlapping IP addresses. Requirements for network namespaces support are described
+                in the <link linkend="ch_limitations">Limitation</link> section. </para>
+            <para>
+                <emphasis role="bold">If the linux installation does not support network namespace,
+                    you must disable using network namespace in the L3 agent config file</emphasis>
+                (The default value of use_namespaces is True). </para>
+            <screen><computeroutput>use_namespaces = False</computeroutput></screen>
+            <para> When use_namespaces is set as False, only one router ID can be supported per
+                node. This must be configured via the configuration variable
+                    <emphasis>router_id</emphasis>. </para>
+            <screen><computeroutput># If use_namespaces is set as False then the agent can only configure one router.
 # This is done by setting the specific router_id.
 router_id = 1064ad16-36b7-4c2f-86f0-daa2bcbd6b2a</computeroutput></screen>
-        <para>
-          To configure it, you need to run the Quantum service and create a router,
-          and then set an ID of the router created to <emphasis>router_id</emphasis>
-          in the L3 agent configuration file.
-        </para>
-        <screen><computeroutput>$ quantum router-create myrouter1
+            <para> To configure it, you need to run the Quantum service and create a router, and
+                then set an ID of the router created to <emphasis>router_id</emphasis> in the L3
+                agent configuration file. </para>
+            <screen><computeroutput>$ quantum router-create myrouter1
 Created a new router:
 +-----------------------+--------------------------------------+
 | Field                 | Value                                |
@@ -331,88 +288,79 @@ Created a new router:
 | tenant_id             | 0c236f65baa04e6f9b4236b996555d56     |
 +-----------------------+--------------------------------------+
         </computeroutput></screen>
-      </section>
-      <section xml:id="adv_cfg_l3_agent_multi_extnet">
-        <title>Multiple Floating IP Pools</title>
-        <para>
-          Quantum L3 supports multiple floating IP pools. In Quantum,
-          a floating IP pool is represented as an external network and
-          a floating IP is allocated from a subnet associated with the
-          external network. Since each L3 agent can be associated with
-          at most one external network, we need to invoke multiple L3
-          agent to define multiple floating IP pools.
-          <emphasis role="bold">'gateway_external_network_id'</emphasis>
-          in L3 agent configuration file indicates the external network that
-          the L3 agent handles.
-          You can run multiple L3 agent instances on one host.
-        </para>
-        <para>
-          In addition, when you run multiple L3 agents, make sure that
-          <emphasis role="bold">handle_internal_only_routers</emphasis>
-          is set to <emphasis role="bold">True</emphasis> only for one
-          L3 agent in a quantum deployment and set to <emphasis
-          role="bold">False</emphasis> for all other L3 agents.
-          Since the default value of this parameter is True, you need
-          to configure it carefully.
-        </para>
-        <para>
-          Before starting L3 agents, you need to create routers and
-          external networks, then update the configuration files
-          with UUID of external networks and start L3 agents.
-        </para>
-        <para>
-          For the first agent, invoke it with the following l3_agent.ini
-          where handle_internal_only_routers is True.
-        </para>
-        <screen><computeroutput>handle_internal_only_routers = True
+        </section>
+        <section xml:id="adv_cfg_l3_agent_multi_extnet">
+            <title>Multiple Floating IP Pools</title>
+            <para> Quantum L3 supports multiple floating IP pools. In Quantum, a floating IP pool is
+                represented as an external network and a floating IP is allocated from a subnet
+                associated with the external network. Since each L3 agent can be associated with at
+                most one external network, we need to invoke multiple L3 agent to define multiple
+                floating IP pools. <emphasis role="bold">'gateway_external_network_id'</emphasis> in
+                L3 agent configuration file indicates the external network that the L3 agent
+                handles. You can run multiple L3 agent instances on one host. </para>
+            <para> In addition, when you run multiple L3 agents, make sure that <emphasis
+                    role="bold">handle_internal_only_routers</emphasis> is set to <emphasis
+                    role="bold">True</emphasis> only for one L3 agent in a quantum deployment and
+                set to <emphasis role="bold">False</emphasis> for all other L3 agents. Since the
+                default value of this parameter is True, you need to configure it carefully. </para>
+            <para> Before starting L3 agents, you need to create routers and external networks, then
+                update the configuration files with UUID of external networks and start L3 agents. </para>
+            <para> For the first agent, invoke it with the following l3_agent.ini where
+                handle_internal_only_routers is True. </para>
+            <screen><computeroutput>handle_internal_only_routers = True
 gateway_external_network_id = 2118b11c-011e-4fa5-a6f1-2ca34d372c35
 external_network_bridge = br-ex</computeroutput></screen>
-        <screen><computeroutput>python /opt/stack/quantum/bin/quantum-l3-agent
+            <screen><computeroutput>python /opt/stack/quantum/bin/quantum-l3-agent
  --config-file /etc/quantum/quantum.conf
  --config-file=/etc/quantum/l3_agent.ini</computeroutput></screen>
-        <para>
-          For the second (or later) agent, invoke it with the following
-          l3_agent.ini where handle_internal_only_routers is False.
-        </para>
-        <screen><computeroutput>handle_internal_only_routers = False
+            <para> For the second (or later) agent, invoke it with the following l3_agent.ini where
+                handle_internal_only_routers is False. </para>
+            <screen><computeroutput>handle_internal_only_routers = False
 gateway_external_network_id = e828e54c-850a-4e74-80a8-8b79c6a285d8
 external_network_bridge = br-ex-2</computeroutput></screen>
-      </section>
-      <section xml:id="adv_cfg_l3_agent_metadata">
-        <title>Nova Metadata Server Support</title>
-        <para>
-          To use Nova metadata service, metadata_ip and metadata_port
-          in the L3 agent configuration file need to be configured.
-          Accessing from VMs to Nova metadata service is forwarded to
-          an external network through Quantum L3 router. Nova metadata
-          service must be reachable from the external network.
-          As the <link linkend="ch_limitations">Limitations section
-          </link> says, note that Quantum overlapping IPs support and
-          Nova metadata service cannot be used together.
-        </para>
-        <screen><computeroutput>metadata_ip = 10.56.51.210
-metadata_port = 8775</computeroutput></screen>
-        <para>
-          In addition, a routing setting on the host running the metadata service
-          is required. For example, when VM launched on a network 172.18.1.0/24
-          accesses the Nova metadata service, the source IP address is in the above
-          subnet, so we need to add an additional routing entry by the following command.
-          You need to configure routing entries like this for each subnet on which
-          VMs will be launched.
-        </para>
-        <screen><computeroutput>route add -net 172.18.11.0/24 gw $ROUTER_GW_IP</computeroutput></screen>
-        <para>
-          where $ROUTER_GW_IP is an IP address of the interface of the Quantum
-          router connected to the external network. This IP address can be obtained
-          by the following command:
-        </para>
-        <screen><computeroutput>$ quantum port-list -- --device_id &lt;router-id&gt; --device_owner network:router_gateway
-+--------------------------------------+------+-------------------+-------------------------------------------------------------------------------------+
-| id                                   | name | mac_address       | fixed_ips                                                                           |
-+--------------------------------------+------+-------------------+-------------------------------------------------------------------------------------+
-| b476808c-327a-4535-b64e-c1a4932ad962 |      | fa:16:3e:2b:85:d7 | {"subnet_id": "22b5e685-aa18-4716-92cc-9d23f5f5050a", "ip_address": "172.24.4.226"} |
-+--------------------------------------+------+-------------------+-------------------------------------------------------------------------------------+
-</computeroutput></screen>
-      </section>
+        </section>
+        <section xml:id="adv_cfg_l3_agent_metadata">
+            <title>Nova Metadata Server Support</title>
+            <para> To use Nova metadata service, metadata_ip and metadata_port in the L3 agent
+                configuration file need to be configured. Accessing from VMs to Nova metadata
+                service is forwarded to an external network through Quantum L3 router. Nova metadata
+                service must be reachable from the external network. As the <link
+                    linkend="ch_limitations">Limitations section </link> says, note that Quantum
+                overlapping IPs support and Nova metadata service cannot be used together. </para>
+            <para>Allowing VMs to reach the metadata service is a big point of confusion with
+                Quantum. We need to make sure instructions for how to set this up are displayed more
+                prominently than they already are, and that there are instructions for how to
+                validate and troubleshoot in this scenario.</para>
+            <para>Example validation includes:</para>
+            <para><emphasis role="bold">VALIDATION STEP #1</emphasis></para>
+            <para>- on network node(l3_agent running) ping to metadata_ip that specified by
+                l3_agent.py</para>
+            <para> if you are not using namespace, just run:</para>
+            
+                <screen>  ping &lt;metadata_ip></screen>
+                <para>for example, if the metadata server IP is 172.16.10.5, run:</para>
+                <screen><prompt>$</prompt><userinput>ping 172.16.10.5 </userinput></screen>
+            
+            <para>if you using namespaces, identify the UUID of the router and run:</para>
+            
+                <screen>ip netns exec qrouter-&lt;router uuid> ping &lt;metadata_ip></screen>
+                <para>for example, if the router uuid is d7e9ec57-77c2-4046-aebf-d978ed4a4f83 and
+                    the metadata server IP is 172.16.10.5, run:</para>
+                <screen><prompt>$</prompt> <userinput>ip netns exec qrouter-d7e9ec57-77c2-4046-aebf-d978ed4a4f83 ping 172.16.10.5</userinput></screen>
+            
+            <para><emphasis role="bold">VALIDATION STEP #2</emphasis></para>
+            <para>- on metadata server(nova_api server) check connection to vm's subnets using an un-NATed IP address of the VM, such as 10.0.0.2:</para>
+            <para><screen><prompt>$</prompt><userinput>ping 10.0.0.2</userinput></screen></para>
+            <para><emphasis role="bold">NOTE</emphasis></para>
+            <para>OpenStack does not manage this routing for you, so you need to make sure that your
+                host running the metadata service always has a route to reach each private network's
+                subnet via the external network IP of that subnet's quantum router. To do this, you
+                can either run quantum without namespaces, and run the quantum-l3-agent on the same
+                host as nova-api. Otherwise, you can identify an IP prefix that includes all private
+                network subnet's (e.g., 10.0.0.0/8) and then make sure that your metadata server has
+                a route for that prefix with the quantum router's external IP address as the
+                next hop. </para>
+           
+        </section>
     </section>
 </chapter>
