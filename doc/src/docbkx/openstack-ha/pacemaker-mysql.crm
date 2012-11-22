@@ -26,7 +26,7 @@ primitive p_mysql ocf:heartbeat:mysql \
   op monitor interval="20s" timeout="10s" \
   op start timeout="120s" \
   op stop timeout="120s"
-group g_mysql p_ip_mysql p_fs-mysql p_mysql
+group g_mysql p_ip_mysql p_fs_mysql p_mysql
 ms ms_drbd_mysql p_drbd_mysql \
   meta notify="true" clone-max="2"
 colocation c_mysql_on_drbd inf: g_mysql ms_drbd_mysql:Master
