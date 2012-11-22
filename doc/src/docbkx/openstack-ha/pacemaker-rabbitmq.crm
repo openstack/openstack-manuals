@@ -23,5 +23,5 @@ primitive p_rabbitmq ocf:rabbitmq:rabbitmq-server \
 group g_rabbitmq p_ip_rabbitmq p_fs_rabbitmq p_rabbitmq
 ms ms_drbd_rabbitmq p_drbd_rabbitmq \
   meta notify="true" master-max="1" clone-max="2"
-colocation c_rabbitmq_on_drbd inf: g_services ms_drbd_rabbitmq:Master
-order o_drbd_before_rabbitmq inf: ms_drbd_rabbitmq:promote g_services:start
+colocation c_rabbitmq_on_drbd inf: g_rabbitmq ms_drbd_rabbitmq:Master
+order o_drbd_before_rabbitmq inf: ms_drbd_rabbitmq:promote g_rabbitmq:start
