@@ -76,20 +76,29 @@ Positional arguments:
                 </itemizedlist></para>
         <section xml:id="glance-image-prereqs">
             <title>Before You Add a New Image</title>
-            
+
             <para>Ensure you have created an image that is OpenStack
                 compatible. Refer to the <link xlink:href="http://docs.openstack.org/">OpenStack Compute
                     Administration Manual Image Management
                     chapter</link> for details.</para></section>
-        
-        
+
+        <section xml:id="glance-create-image">
+            <title>Upload an image to glance</title>
+            <para>Assuming you had a CentOS 6.3 image in qcow2 format called centos63.qcow2, the
+                following example will upload it to glance and configure it for public
+                access.</para>
+            <para>
+                <screen><prompt>$</prompt> <userinput>glance image-create --name centos63-image --disk-format=qcow2 --container-format=raw --is-public=True &lt; ./centos63.qcow2</userinput></screen>
+            </para>
+        </section>
+
         <section xml:id="glance-inserting-metadata">
             <title>Assigning metadata to an image</title>
             <para>TBD</para>
         </section>
     </section>
-    
-    
+
+
     <section xml:id="managing-images-glance"><title>Managing Images</title>
     <para>Adding images and setting the access to them can be managed
             in glance, but you can create images by taking a snapshot of
@@ -97,8 +106,8 @@ Positional arguments:
             delete image metadata, and delete an image, using the nova
             CLI.</para>
         <para/>
-        
+
     </section>
 
-   
+
 </section>
