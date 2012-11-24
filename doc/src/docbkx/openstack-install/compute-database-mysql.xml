@@ -1,21 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section xml:id="setting-up-sql-database-mysql"    
+<section xml:id="setting-up-sql-database-mysql"
     xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
     <title>Configuring the SQL Database (MySQL) on the Cloud Controller</title>
-    
+
     <para>Start the mysql command line client by running:</para>
-    <para><userinput>mysql -u root -p</userinput></para>
+    <para>
+        <screen><userinput>mysql -u root -p</userinput></screen></para>
     <para>Enter the mysql root user's password when prompted.</para>
     <para>To configure the MySQL database, create the nova database. </para>
-    <para><userinput>mysql> CREATE DATABASE nova;</userinput></para>
-    <para>Create a MySQL user and password for the newly-created nova database that
-        has full control of the database. </para>
-    <para><userinput>mysql> GRANT ALL ON nova.* TO 'nova'@'%' IDENTIFIED BY '<replaceable>[YOUR_NOVADB_PASSWORD]</replaceable>';</userinput></para>
+    <para>
+        <screen><prompt>mysql></prompt> <userinput>CREATE DATABASE nova;</userinput></screen></para>
+    <para>Create a MySQL user and password for the newly-created nova database that has full control
+        of the database. </para>
+    <screen><para><prompt>mysql></prompt> <userinput>GRANT ALL ON nova.* TO 'nova'@'%' IDENTIFIED BY '<replaceable>[YOUR_NOVADB_PASSWORD]</replaceable>';</userinput>
+<prompt>mysql></prompt> <userinput>GRANT ALL ON nova.* TO 'nova'@'localhost' IDENTIFIED BY '<replaceable>[YOUR_NOVADB_PASSWORD]</replaceable>';</userinput></para></screen>
+    <note>
+        <para>In the above commands, even though the <literal>'nova'@'%'</literal> also matches
+            <literal>'nova'@'localhost'</literal>, you must explicitly specify the
+            <literal>'nova'@'localhost'</literal> entry.</para>
+        <para>By default, MySQL will create entries in the user table with
+            <literal>User=''</literal> and <literal>Host='localhost'</literal>. The
+            <literal>User=''</literal> acts as a wildcard, matching all users. If you do not
+            have the <literal>'nova'@'localhost'</literal> account, and you try to log in as the
+            nova user, the precedence rules of MySQL will match against the <literal>User=''
+                Host='localhost'</literal> account before it matches against the
+            <literal>User='nova' Host='%'</literal> account. This will result in an error
+            message that looks like: </para>
+        <para>
+            <screen><computeroutput>ERROR 1045 (28000): Access denied for user 'nova'@'localhost' (using password: YES)</computeroutput></screen>
+        </para>
+        <para>Thus, we create a separate <literal>User='nova' Host='localhost'</literal> entry that
+            will match with higher precedence. </para>
+        <para>See the <link xlink:href="http://dev.mysql.com/doc/refman/5.5/en/connection-access.html"
+            >MySQL documentation on connection verification</link> for more details on how MySQL
+            determines which row in the user table it uses when authenticating connections.</para>
+    </note>
+
     <para>Enter quit at the mysql> prompt to exit MySQL.</para>
-    <para><userinput>mysql> quit</userinput></para>
-    
+    <para>
+        <screen><userinput>mysql> quit</userinput></screen></para>
+
+
     <para>The command to populate the database is described later in the
         documentation, in the Section entitled <link
         linkend="compute-db-sync">Configuring the Database for Compute</link>.

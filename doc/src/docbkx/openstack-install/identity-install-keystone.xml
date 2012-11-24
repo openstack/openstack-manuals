@@ -55,8 +55,8 @@
   <para>To configure the MySQL database, create the keystone
     database.</para>
   <screen><prompt>mysql&gt;</prompt> <userinput>CREATE DATABASE keystone;</userinput></screen>
-  <para>Create a MySQL user for the newly-created keystone database
-    that has full control of the keystone database.</para>
+  <para>Create a MySQL user for the newly-created keystone database that has full control of the
+    keystone database. </para>
   <note>
     <title>Note</title>
     <para>Choose a secure password for the keystone user and replace
@@ -64,7 +64,30 @@
         <replaceable>[YOUR_KEYSTONEDB_PASSWORD]</replaceable> with
       this password.</para>
   </note>
-  <screen><prompt>mysql&gt;</prompt> <userinput>GRANT ALL ON keystone.* TO 'keystone'@'%' IDENTIFIED BY '<replaceable>[YOUR_KEYSTONEDB_PASSWORD]</replaceable>';</userinput></screen>
+  <screen><prompt>mysql&gt;</prompt> <userinput>GRANT ALL ON keystone.* TO 'keystone'@'%' IDENTIFIED BY '<replaceable>[YOUR_KEYSTONEDB_PASSWORD]</replaceable>';</userinput>
+<prompt>mysql&gt;</prompt> <userinput>GRANT ALL ON keystone.* TO 'keystone'@'localhost' IDENTIFIED BY '<replaceable>[YOUR_KEYSTONEDB_PASSWORD]</replaceable>';</userinput></screen>
+
+    <note>
+      <para>In the above commands, even though the <literal>'keystone'@'%'</literal> also matches
+          <literal>'keystone'@'localhost'</literal>, you must explicitly specify the
+          <literal>'keystone'@'localhost'</literal> entry.</para>
+      <para>By default, MySQL will create entries in the user table with <literal>User=''</literal>
+      and <literal>Host='localhost'</literal>. The <literal>User=''</literal> acts as a wildcard,
+      matching all users. If you do not have the <literal>'keystone'@'localhost'</literal> account,
+      and you try to log in as the keystone user, the precedence rules of MySQL will match against
+      the <literal>User='' Host='localhost</literal> account before it matches against the
+        <literal>User='keystone' Host='%'</literal> account. This will result in an error message
+      that looks like: </para>
+      <para>
+        <screen><computeroutput>ERROR 1045 (28000): Access denied for user 'keystone'@'localhost' (using password: YES)</computeroutput></screen>
+      </para>
+      <para>Thus, we create a separate <literal>User='keystone' Host='localhost'</literal> entry
+      that will match with higher precedence. </para>
+      <para>See the <link xlink:href="http://dev.mysql.com/doc/refman/5.5/en/connection-access.html"
+          >MySQL documentation on connection verification</link> for more details on how MySQL
+        determines which row in the user table it uses when authenticating connections.</para>
+    </note>
+
   <para>Enter quit at the <literal>mysql></literal> prompt to exit
     MySQL.</para>
   <screen><prompt>mysql&gt;</prompt> <userinput>quit</userinput></screen>
