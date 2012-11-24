@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0"
+    xml:id="adding-images">
+    <title>Adding images</title>
+    <simplesect>
+        <title>glance image-create</title>
+    <para>Use the <command>glance image-create</command> command to add a new virtual machine image
+            to glance, and use <command>glance image-update</command> to modify properties of an
+            image that has been updated. The image-create command takes several optional arguments,
+            but you should specify a name for your image using the <literal>--name</literal> flag,
+            as well as the disk format with <literal>--disk-format</literal> and container format
+            with <literal>--container_format</literal>. Pass in the file via standard input or using
+            the file command. For example:</para>
+        <para>
+            <screen><prompt>$</prompt> <userinput>glance image-create --name myimage --disk_format=raw --container_format=bare &lt; <replaceable>/path/to/file.img</replaceable></userinput></screen>
+            or
+            <screen><prompt>$</prompt> <userinput>glance image-create --name myimage --file --disk_format=raw --container_format=bare  <replaceable>/path/to/file.img</replaceable></userinput></screen></para>
+</simplesect>
+    <simplesect>
+        <title>Disk format</title>
+        <para>The <literal>--disk_format</literal> flag specifies the format of the underlying disk
+            image.  Virtual appliance vendors have different formats for laying out the information
+            contained in a virtual machine disk image. The following are valid disk formats:<variablelist>
+                <varlistentry>
+                    <term>raw</term>
+                    <listitem>
+                        <para>This is an unstructured disk image format.</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term>qcow2</term>
+                    <listitem>
+                        <para>A disk format supported by the QEMU emulator that can expand
+                            dynamically and supports copy-on-write.</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term>vhd</term>
+                    <listitem>
+                        <para>This is the VHD disk format, a common disk format used by virtual
+                            machine monitors from VMWare, Xen, Microsoft, VirtualBox, and
+                            others.</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term>vmdk</term>
+                    <listitem>
+                        <para>This common disk format is used by the Compute service's VMware
+                            API.</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term>iso</term>
+                    <listitem>
+                        <para>An archive format typically used for the data contents of an optical
+                            disc (e.g. CDROM, DVD).</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term>vdi</term>
+                    <listitem>
+                        <para>A disk format supported by VirtualBox virtual machine monitor and the
+                            QEMU emulator </para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term>aki</term>
+                    <listitem>
+                        <para>An Amazon kernel image.</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term>ari</term>
+                    <listitem>
+                        <para>An Amazon ramdisk image.</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term>ami</term>
+                    <listitem>
+                        <para>An Amazon machine image.</para>
+                    </listitem>
+                </varlistentry>
+            </variablelist></para>
+    </simplesect>
+    <simplesect>
+        <title>Container format</title>
+        <para>The <literal>--container_format</literal> flag indicates whether the virtual machine
+            image is in a file format that also contains metadata about the actual virtual
+            machine.</para>
+        <para>Note that the container format string is not currently used by the Compute service, so
+            it is safe to simply specify bare as the container format if you are unsure. The
+            following are valid container formats:<variablelist>
+                <varlistentry>
+                    <term>bare</term>
+                    <listitem>
+                        <para>This indicates there is no container or metadata envelope for the
+                            image.</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term>ovf</term>
+                    <listitem>
+                        <para>This is the OVF container format, a standard for describing the
+                            contents of a virtual machine appliance. </para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term>aki</term>
+                    <listitem>
+                        <para>Use this format when the disk format is set to
+                            <literal>aki</literal>.</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term>ari</term>
+                    <listitem>
+                        <para>Use this format when the disk format is set to
+                            <literal>ari</literal>.</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term>ami</term>
+                    <listitem>
+                        <para>Use this format when the disk format is set to
+                            <literal>ami</literal>.</para>
+                    </listitem>
+                </varlistentry>
+            </variablelist></para>
+    </simplesect>
+    <simplesect>
+        <title>Image metadata</title>
+        <para>You can associate metadata with an image using the <literal>--property
+                    <replaceable>key</replaceable>=<replaceable>value</replaceable></literal>
+            argument to <command>glance image-create </command>or <command>glance
+                image-update</command>.For
+            example:<screen><prompt>$</prompt> <userinput>glance image-update <replaceable>img-uuid</replaceable> --property architecture=arm --property hypervisor_type=qemu</userinput></screen>
+            If the following properties are set on an image, and the ImagePropertiesFilter scheduler
+            filter is enabled (which it is by default), then the scheduler will only consider
+            compute hosts that satisfy these properties:  <variablelist>
+                <varlistentry>
+                    <term>architecture</term>
+                    <listitem>
+                        <para>The CPU architecture that must be supported by the hypervisor, e.g.
+                                <literal>x86_64</literal>, <literal>arm</literal>. Run
+                                <command>uname -m</command> to get the architecture of a
+                            machine.</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term>hypervisor_type</term>
+                    <listitem>
+                        <para>The hypervisor type. Allowed values include: <literal>xen</literal>,
+                                <literal>qemu</literal>, <literal>kvm</literal>,
+                                <literal>lxc</literal>, <literal>uml</literal>,
+                                <literal>vmware</literal>, <literal>hyperv</literal>,
+                                <literal>powervm</literal>.</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term>vm_mode</term>
+                    <listitem>
+                        <para>The virtual machine mode. This represents the host/guest ABI
+                            (application binary interface) used for the virtual machine. Allowed
+                            values are:<variablelist>
+                                <varlistentry>
+                                    <term><literal>hvm</literal></term>
+                                    <listitem>
+                                        <para>Fully virtualized. This is the mode used by QEMU and
+                                            KVM.</para>
+                                    </listitem>
+                                </varlistentry>
+                                <varlistentry>
+                                    <term><literal>xen</literal></term>
+                                    <listitem>
+                                        <para>Xen 3.0 paravirtualized.</para>
+                                    </listitem>
+                                </varlistentry>
+                                <varlistentry>
+                                    <term><literal>uml</literal></term>
+                                    <listitem>
+                                        <para>User Mode Linux paravirtualized.</para>
+                                    </listitem>
+                                </varlistentry>
+                                <varlistentry>
+                                    <term><literal>exe</literal></term>
+                                    <listitem>
+                                        <para>Executables in containers. This is the mode used by
+                                            LXC.</para>
+                                    </listitem>
+                                </varlistentry>
+                            </variablelist></para>
+                    </listitem>
+                </varlistentry>
+            </variablelist>The following metadata properties are specific to the XenAPI driver:<variablelist>
+                <varlistentry>
+                    <term>auto_disk_config</term>
+                    <listitem>
+                        <para>A boolean option. If true, the root partition on the disk will be
+                            automatically resized before the instance boots. This value is only
+                            taken into account by the Compute service when using a Xen-based
+                            hypervisor with the XenAPI driver. The Compute service will only attempt
+                            to resize if there is a single partition on the image, and only if the
+                            partition is in ext3 or ext4 format.</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term>os_type</term>
+                    <listitem>
+                        <para>The operating system installed on the image, e.g.
+                                <literal>linux</literal>, <literal>windows</literal>. The XenAPI
+                            driver contains logic that will take different actions depending on the
+                            value of the os_type parameter of the image. For example, for images
+                            where <literal>os_type=windows</literal>, it will create a FAT32-based
+                            swap partition instead of a Linux swap partition, and it will limit the
+                            injected hostname to less than 16 characters.</para>
+                    </listitem>
+                </varlistentry>
+            </variablelist></para>
+        <para>The following metadata properties are specific to the VMware API driver:<variablelist>
+                <varlistentry>
+                    <term>vmware_adaptertype</term>
+                    <listitem>
+                        <para>Indicates the virtual SCSI or IDE controller used by the hypervisor.
+                            Allowed values: <literal>lsiLogic</literal>,
+                            <literal>busLogic</literal>, <literal>ide</literal></para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term>vmware_ostype</term>
+                    <listitem>
+                        <para>A VMware GuestID which describes the operating system installed in the
+                            image. This will be passed to the hypervisor when creating a virtual
+                            machine. See <link xlink:href="http://www.thinkvirt.com/?q=node/181"
+                                >thinkvirt.com</link> for a list of valid values. If this is not
+                            specified, it will default to <literal>otherGuest</literal>.</para>
+                    </listitem>
+                </varlistentry>
+            </variablelist><variablelist>
+                <varlistentry>
+                    <term>vmware_image_version</term>
+                    <listitem>
+                        <para>Currently unused, set it to <literal>1</literal>. </para>
+                    </listitem>
+                </varlistentry>
+            </variablelist></para>
+    </simplesect>
+</section>
