@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0"
+    xml:id="user-data">
+    <title>Configuring instances at boot time</title>
+    <simplesect>
+        <title>Introduction</title>
+        <para>Users often want to do some configuration to their instances after booting. For
+            example, you may want to install some packages, start services, or manage the instance
+            using a Puppet or Chef server. When launching instances in an OpenStack cloud, there are
+            two technologies that work together to support automated configuration of instances at
+            boot time: user data and cloud-init.</para>
+    </simplesect>
+    <simplesect>
+        <title>User data</title>
+        <para>User data is the mechanism by which a user can pass information contained in a local
+            file to an instance at launch time. The typical use case is to pass something like a
+            shell script or a configuration file as user data.</para>
+        <para>User data is sent using the <literal>--user-data
+                    <replaceable>/path/to/filename</replaceable></literal> option when calling
+                <command>nova boot</command>. The following example creates a text file and then
+            send the contents of that file as user data to the instance.</para>
+        <para>
+            <screen><prompt>$</prompt> <userinput>echo "This is some text" > myfile.txt</userinput>
+<prompt>$</prompt> <userinput>nova boot --user-data ./myfile.txt --image myimage myinstance</userinput></screen>
+        </para>
+        <para>The instance can retrieve user data by querying the metadata service at using either
+            the OpenStack metadata API or the EC2 compatibility API:</para>
+        <para>
+            <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/2009-04-04/user-data</userinput>
+<computeroutput>This is some text</computeroutput>
+<prompt>$</prompt> <userinput>curl http://169.254.169.254/openstack/2012-08-10/user_data</userinput>
+<computeroutput>This is some text</computeroutput></screen>
+        </para>
+        <para>Note that the Compute service treats user data as a blob. While the example above used
+            a text file, user data can be in any format.</para>
+    </simplesect>
+    <simplesect>
+        <title>Cloud-init</title>
+        <para>To do something useful with the user data, the virtual machine image must be
+            configured to run a service on boot that retrieves the user data from the metadata
+            service and take some action based on the contents of the data. The cloud-init package
+            was designed to do exactly this. In particular, cloud-init is compatible with the
+            Compute metadata service as well as the Compute config drive. </para>
+        <para>Note that cloud-init is not an OpenStack technology. Rather, it is a package that is
+            designed to support multiple cloud providers, so that the same virtual machine image can
+            be used in different clouds without modification. Cloud-init is an open source project,
+            and the source code is available on <link xlink:href="http://launchpad.net/cloud-init"
+                >Launchpad</link>. It is maintained by Canonical, the company which runs the Ubuntu
+            project. All Ubuntu cloud images come pre-installed with cloud-init. However, cloud-init
+            is not designed to be Ubuntu-specific, and has been successfully ported to
+            Fedora.</para>
+        <para>We recommend installing cloud-init on images that you create to simplify the task of
+            configuring your instances on boot. Even if you do not wish to use user data to
+            configure instance behavior at boot time, cloud-init provides useful functionality such
+            as copying the public key to an account (the <literal>ubuntu</literal> account by
+            default on Ubuntu instances, the <literal>ec2-user</literal> by dfault in Fedora
+            instances).</para>
+        <para>If you do not have cloud-init installed, you will need to manually configure your
+            image to retrieve the public key from the metadata service on boot and copy it to the
+            appropriate account.</para>
+        </simplesect>
+    <simplesect>
+        <title>Cloud-init supported formats and documentation</title>
+        <para>We recommend taking a look at the cloud-init <link
+                xlink:href="http://bazaar.launchpad.net/~cloud-init-dev/cloud-init/trunk/view/head:/doc/userdata.txt"
+                >doc/userdata.txt</link> file the <link
+                xlink:href="http://bazaar.launchpad.net/~cloud-init-dev/cloud-init/trunk/files/head:/doc/examples/"
+                >examples</link> directory as well as the <link
+                xlink:href="https://help.ubuntu.com/community/CloudInit">Ubuntu community
+                documentation</link> for details on how to use cloud-init. We provide some basic
+            examples here.</para>
+        <para>Cloud-init supports several different input formats for user data. We briefly discuss
+            two commonly used formats:<itemizedlist>
+                <listitem>
+                    <para>Shell scripts (starts with <literal>#!</literal>)</para>
+                </listitem>
+                <listitem>
+                    <para>Cloud config files (starts with <literal>#cloud-config</literal>)</para>
+                </listitem>
+            </itemizedlist></para>
+    </simplesect>
+    <simplesect>
+        <title>Running a shell script on boot</title>
+        <para>Assuming you have cloud-init installed, the simplest way to configure an instance on
+            boot is to pass a shell script as user data. The shell file must begin with
+                <literal>#!</literal> in order for cloud-init to recognize it as a shell script.
+            Here's an example of a script that creates an account called
+                <literal>clouduser</literal>.</para>
+        <para><programlisting>#!/bin/bash
+adduser --disabled-password --gecos "" clouduser</programlisting>Sending
+            a shell script as user data has a similar effect to writing an
+                <filename>/etc/rc.local</filename> script: it will be executed very late in the boot
+            sequence as root.</para>
+    </simplesect>
+    <simplesect><title>Cloud-config format</title>
+        <para>Cloud-init supports a YAML-based config format that allows the user to configure a
+            large number of options on a system. User data that begins with
+                <literal>#cloud-config</literal> will be interpreted by cloud-init as cloud-config
+            format.</para>
+    </simplesect>
+    <simplesect>
+        <title>Example: Setting hostname</title>
+    <para>This cloud-init user data example sets the hostname and the FQDN, as well as updating
+                <filename>/etc/hosts</filename> on the instance:</para>
+        <para>
+            <programlisting>#cloud-config
+hostname: mynode
+fqdn: mynode.example.com
+manage_etc_hosts: true</programlisting>
+        </para>
+    </simplesect>
+    <simplesect>
+        <title>Example: Configuring instances with Puppet</title>
+        <para>This cloud-init user data example, based on <link
+                xlink:href="http://bazaar.launchpad.net/~cloud-init-dev/cloud-init/trunk/view/head:/doc/examples/cloud-config-puppet.txt"
+                >doc/examples/cloud-config-puppet.txt</link>, would configure the instance to
+            contact a Puppet server at puppetmaster.example.org and verify its identity using a
+            certificate.
+            <programlisting>#cloud-config
+puppet:
+ conf:
+   agent:
+     server: "puppetmaster.example.org"
+   ca_cert: |
+     -----BEGIN CERTIFICATE-----
+     MIICCTCCAXKgAwIBAgIBATANBgkqhkiG9w0BAQUFADANMQswCQYDVQQDDAJjYTAe
+     Fw0xMDAyMTUxNzI5MjFaFw0xNTAyMTQxNzI5MjFaMA0xCzAJBgNVBAMMAmNhMIGf
+     MA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCu7Q40sm47/E1Pf+r8AYb/V/FWGPgc
+     b014OmNoX7dgCxTDvps/h8Vw555PdAFsW5+QhsGr31IJNI3kSYprFQcYf7A8tNWu
+     1MASW2CfaEiOEi9F1R3R4Qlz4ix+iNoHiUDTjazw/tZwEdxaQXQVLwgTGRwVa+aA
+     qbutJKi93MILLwIDAQABo3kwdzA4BglghkgBhvhCAQ0EKxYpUHVwcGV0IFJ1Ynkv
+     T3BlblNTTCBHZW5lcmF0ZWQgQ2VydGlmaWNhdGUwDwYDVR0TAQH/BAUwAwEB/zAd
+     BgNVHQ4EFgQUu4+jHB+GYE5Vxo+ol1OAhevspjAwCwYDVR0PBAQDAgEGMA0GCSqG
+     SIb3DQEBBQUAA4GBAH/rxlUIjwNb3n7TXJcDJ6MMHUlwjr03BDJXKb34Ulndkpaf
+     +GAlzPXWa7bO908M9I8RnPfvtKnteLbvgTK+h+zX1XCty+S2EQWk29i2AdoqOTxb
+     hppiGMp0tT5Havu4aceCXiy2crVcudj3NFciy8X66SoECemW9UYDCb9T5D0d
+     -----END CERTIFICATE-----
+ </programlisting></para>
+    </simplesect>
+    <simplesect>
+        <title>Example: Configuring instances with Chef</title>
+        <para>This cloud-init user data example, based on <link
+                xlink:href="http://bazaar.launchpad.net/~cloud-init-dev/cloud-init/trunk/view/head:/doc/examples/cloud-config-chef.txt"
+                >doc/examples/cloud-config/chef.txt</link>, and intended for use in an Ubuntu image,
+            would add the Chef apt repository, install Chef, connect to a Chef server at
+            https://chefserver.example.com:4000 and install
+            Apache.<programlisting>#cloud-config
+apt_sources:
+ - source: "deb http://apt.opscode.com/ $RELEASE-0.10 main"
+   key: |
+     -----BEGIN PGP PUBLIC KEY BLOCK-----
+     Version: GnuPG v1.4.9 (GNU/Linux)
+
+     mQGiBEppC7QRBADfsOkZU6KZK+YmKw4wev5mjKJEkVGlus+NxW8wItX5sGa6kdUu
+     twAyj7Yr92rF+ICFEP3gGU6+lGo0Nve7KxkN/1W7/m3G4zuk+ccIKmjp8KS3qn99
+     dxy64vcji9jIllVa+XXOGIp0G8GEaj7mbkixL/bMeGfdMlv8Gf2XPpp9vwCgn/GC
+     JKacfnw7MpLKUHOYSlb//JsEAJqao3ViNfav83jJKEkD8cf59Y8xKia5OpZqTK5W
+     ShVnNWS3U5IVQk10ZDH97Qn/YrK387H4CyhLE9mxPXs/ul18ioiaars/q2MEKU2I
+     XKfV21eMLO9LYd6Ny/Kqj8o5WQK2J6+NAhSwvthZcIEphcFignIuobP+B5wNFQpe
+     DbKfA/0WvN2OwFeWRcmmd3Hz7nHTpcnSF+4QX6yHRF/5BgxkG6IqBIACQbzPn6Hm
+     sMtm/SVf11izmDqSsQptCrOZILfLX/mE+YOl+CwWSHhl+YsFts1WOuh1EhQD26aO
+     Z84HuHV5HFRWjDLw9LriltBVQcXbpfSrRP5bdr7Wh8vhqJTPjrQnT3BzY29kZSBQ
+     YWNrYWdlcyA8cGFja2FnZXNAb3BzY29kZS5jb20+iGAEExECACAFAkppC7QCGwMG
+     CwkIBwMCBBUCCAMEFgIDAQIeAQIXgAAKCRApQKupg++Caj8sAKCOXmdG36gWji/K
+     +o+XtBfvdMnFYQCfTCEWxRy2BnzLoBBFCjDSK6sJqCu5Ag0ESmkLtBAIAIO2SwlR
+     lU5i6gTOp42RHWW7/pmW78CwUqJnYqnXROrt3h9F9xrsGkH0Fh1FRtsnncgzIhvh
+     DLQnRHnkXm0ws0jV0PF74ttoUT6BLAUsFi2SPP1zYNJ9H9fhhK/pjijtAcQwdgxu
+     wwNJ5xCEscBZCjhSRXm0d30bK1o49Cow8ZIbHtnXVP41c9QWOzX/LaGZsKQZnaMx
+     EzDk8dyyctR2f03vRSVyTFGgdpUcpbr9eTFVgikCa6ODEBv+0BnCH6yGTXwBid9g
+     w0o1e/2DviKUWCC+AlAUOubLmOIGFBuI4UR+rux9affbHcLIOTiKQXv79lW3P7W8
+     AAfniSQKfPWXrrcAAwUH/2XBqD4Uxhbs25HDUUiM/m6Gnlj6EsStg8n0nMggLhuN
+     QmPfoNByMPUqvA7sULyfr6xCYzbzRNxABHSpf85FzGQ29RF4xsA4vOOU8RDIYQ9X
+     Q8NqqR6pydprRFqWe47hsAN7BoYuhWqTtOLSBmnAnzTR5pURoqcquWYiiEavZixJ
+     3ZRAq/HMGioJEtMFrvsZjGXuzef7f0ytfR1zYeLVWnL9Bd32CueBlI7dhYwkFe+V
+     Ep5jWOCj02C1wHcwt+uIRDJV6TdtbIiBYAdOMPk15+VBdweBXwMuYXr76+A7VeDL
+     zIhi7tKFo6WiwjKZq0dzctsJJjtIfr4K4vbiD9Ojg1iISQQYEQIACQUCSmkLtAIb
+     DAAKCRApQKupg++CauISAJ9CxYPOKhOxalBnVTLeNUkAHGg2gACeIsbobtaD4ZHG
+     0GLl8EkfA8uhluM=
+     =zKAm
+     -----END PGP PUBLIC KEY BLOCK-----
+
+chef:
+ install_type: "packages"
+ server_url: "https://chefserver.example.com:4000"
+ node_name: "your-node-name"
+ environment: "production"
+ validation_name: "yourorg-validator"
+ validation_key: |
+     -----BEGIN RSA PRIVATE KEY-----
+     YOUR-ORGS-VALIDATION-KEY-HERE
+     -----END RSA PRIVATE KEY-----
+ run_list:
+  - "recipe[apache2]"
+  - "role[db]"
+ initial_attributes:
+    apache:
+      prefork:
+        maxclients: 100
+      keepalive: "off"</programlisting></para>
+
+    </simplesect>
+</section>
