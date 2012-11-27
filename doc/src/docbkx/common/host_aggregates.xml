@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+xmlns:xi="http://www.w3.org/2001/XInclude"
+xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+xml:id="host-aggregates">
+<title>Host aggregates</title>
+    <simplesect>
+        <title>Overview</title>
+<para>Host aggregates are a mechanism to further partition an availability zone; while availability
+            zones are visible to users, host aggregates are only visible to administrators. Host
+            aggregates started out as a way to use Xen hypervisor resource pools, but has been
+            generalized to provide a mechanism to allow administrators to assign key-value pairs to
+            groups of machines. Each node can have multiple aggregates, each aggregate can have
+            multiple key-value pairs, and the same key-value pair can be assigned to multiple
+            aggregate. This information can be used in the scheduler to enable advanced scheduling,
+            to set up Xen hypervisor resources pools or to define logical groups for migration. </para>
+    </simplesect>
+    <simplesect>
+        <title>Command-line interface</title>
+        <para>The <command>nova</command> command-line tool supports the following aggregate-related
+            commands. <variablelist>
+                <varlistentry>
+                    <term><command>nova aggregate-list</command></term>
+                    <listitem>
+                        <para>Print a list of all aggregates.</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><command>nova aggregate-create <replaceable>&lt;name></replaceable>
+                            <replaceable>&lt;availability-zone></replaceable></command></term>
+                    <listitem>
+                        <para>Create a new aggregate named <replaceable>&lt;name></replaceable> in
+                            availability zone <replaceable>&lt;availability-zone></replaceable>.
+                            Returns the ID of the newly created aggregate.</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><command>nova aggregate-delete
+                            <replaceable>&lt;id></replaceable></command></term>
+                    <listitem>
+                        <para>Delete an aggregate with id <replaceable>&lt;id></replaceable>.</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><command>nova aggregate-details
+                            <replaceable>&lt;id></replaceable></command></term>
+                    <listitem>
+                        <para>Show details of the aggregate with id
+                                <replaceable>&lt;id></replaceable>.</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><command>nova aggregate-add-host <replaceable>&lt;id></replaceable>
+                            <replaceable>&lt;host></replaceable></command></term>
+                    <listitem>
+                        <para>Add host with name <replaceable>&lt;host></replaceable> to aggregate
+                            with id <replaceable>&lt;id></replaceable>.</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><command>nova aggregate-remove-host <replaceable>&lt;id></replaceable>
+                            <replaceable>&lt;host></replaceable></command></term>
+                    <listitem>
+                        <para>Remove the host with name <replaceable>&lt;host></replaceable> from
+                            the aggregate with id <replaceable>&lt;id></replaceable>.</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><command>nova aggregate-set-metadata <replaceable>&lt;id></replaceable>
+                            <replaceable>&lt;key=value></replaceable>
+                                [<replaceable>&lt;key=value></replaceable> ...] </command></term>
+                    <listitem>
+                        <para>Add or update metadata (key-value pairs) associated with the aggregate
+                            with id <replaceable>&lt;id></replaceable>.</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><command>nova aggregate-update <replaceable>&lt;id></replaceable>
+                            <replaceable>&lt;name></replaceable>
+                                [<replaceable>&lt;availability_zone></replaceable>]</command></term>
+                    <listitem>
+                        <para>Update the aggregate's name and optionally availablity zone.</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><command>nova host-list</command></term>
+                    <listitem>
+                        <para>List all hosts by service.</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><command>nova host-update --maintenance [enable |
+                        disable]</command></term>
+                    <listitem>
+                        <para>Put/resume host into/from maintenance.</para>
+                    </listitem>
+                </varlistentry>
+            </variablelist></para>
+
+            <note><para>These commands are only accessible to administrators. If the username and tenant
+                you are using to access the Compute service do not have the <literal>admin</literal>
+                role, or have not been explicitly granted the appropriate privileges, you will see
+                one of the following errors when trying to use these
+                commands:<screen><computeroutput>ERROR: Policy doesn't allow compute_extension:aggregates to be performed. (HTTP 403) (Request-ID: req-299fbff6-6729-4cef-93b2-e7e1f96b4864)
+</computeroutput></screen><screen><computeroutput>ERROR: Policy doesn't allow compute_extension:hosts to be performed. (HTTP 403) (Request-ID: req-ef2400f6-6776-4ea3-b6f1-7704085c27d1)
+</computeroutput></screen></para></note>
+        
+    </simplesect>
+    <simplesect>
+        <title>Configure scheduler to support host aggregates</title>
+        <para>One common use case for host aggregates is when you want to support scheduling
+            instances to a subset of compute hosts because they have a specific capability. For
+            example, you may want to allow users to request compute hosts that have SSD drives if
+            they need access to faster disk I/O, or access to compute hosts that have GPU cards to
+            take advantage of GPU-accelerated code.</para>
+        <para>To configure the scheduler to support host aggregates, the
+                <literal>scheduler_default_filters</literal> configuration option must contain the
+                <literal>AggregateInstanceExtraSpecsFilter</literal> in addition to the other
+            filters used by the scheduler. Add the following line to
+                <filename>/etc/nova/nova.conf</filename> on the host that runs the nova-scheduler
+            service to enable host aggregates filtering, as well as the other filters that are
+            typically
+            enabled:<programlisting>scheduler_default_filters=AggregateInstanceExtraSpecsFilter,AvailabilityZoneFilter,RamFilter,ComputeFilter</programlisting></para>
+    </simplesect>
+    <simplesect>
+        <title>Example: specify compute hosts with SSDs</title>
+        <para>In this example, we configure the Compute service to allow users to request nodes that
+            have solid-state drives (SSDs). We create a new host aggregate called
+                <literal>fast-io</literal> in the availability zone called <literal>nova</literal>,
+            we add the key-value pair <literal>ssd=true</literal> to the aggregate, and then we add
+            compute nodes <literal>node1</literal>, and <literal>node2</literal> to
+            it.<screen><prompt>$</prompt> <userinput>nova aggregate-create fast-io nova</userinput>
+<computeroutput>+----+---------+-------------------+-------+----------+
+| Id | Name    | Availability Zone | Hosts | Metadata |
++----+---------+-------------------+-------+----------+
+| 1  | fast-io | nova              |       |          |
++----+---------+-------------------+-------+----------+</computeroutput>
+<prompt>$</prompt> <userinput>nova aggregate-set-metadata 1 ssd=true</userinput>
+<computeroutput>+----+---------+-------------------+-------+-------------------+
+| Id | Name    | Availability Zone | Hosts | Metadata          |
++----+---------+-------------------+-------+-------------------+
+| 1  | fast-io | nova              | []    | {u'ssd': u'true'} |
++----+---------+-------------------+-------+-------------------+</computeroutput>
+<prompt>$</prompt> <userinput>nova aggregate-add-host 1 node1</userinput>
+<computeroutput>+----+---------+-------------------+-----------+-------------------+
+| Id | Name    | Availability Zone | Hosts      | Metadata          |
++----+---------+-------------------+------------+-------------------+
+| 1  | fast-io | nova              | [u'node1'] | {u'ssd': u'true'} |
++----+---------+-------------------+------------+-------------------+</computeroutput>
+<prompt>$</prompt> <userinput>nova aggregate-add-host 1 node2</userinput>
+<computeroutput>+----+---------+-------------------+---------------------+-------------------+
+| Id | Name    | Availability Zone | Hosts                | Metadata          |
++----+---------+-------------------+----------------------+-------------------+
+| 1  | fast-io | nova              | [u'node1', u'node2'] | {u'ssd': u'true'} |
++----+---------+-------------------+----------------------+-------------------+</computeroutput>
+</screen></para>
+        <para>Next, we use the <command>nova flavor-create</command> command to create a new flavor
+            called <literal>ssd.large</literal> with an ID of 6, 8GB of RAM, 80GB root disk, and 4
+            vCPUs.
+            <screen><prompt>$</prompt> <userinput>nova flavor-create ssd.large 6 8192 80 4</userinput>
+<computeroutput>+----+-----------+-----------+------+-----------+------+-------+-------------+-----------+-------------+
+| ID | Name      | Memory_MB | Disk | Ephemeral | Swap | VCPUs | RXTX_Factor | Is_Public | extra_specs |
++----+-----------+-----------+------+-----------+------+-------+-------------+-----------+-------------+
+| 6  | ssd.large | 8192      | 80   | 0         |      | 4     | 1           | True      | {}          |
++----+-----------+-----------+------+-----------+------+-------+-------------+-----------+-------------+</computeroutput></screen></para>
+        <para>Once the flavor has been created, we specify one or more key-value pair that must
+            match the key-value pairs on the host aggregates. In this case, there's only one
+            key-value pair, <literal>ssd=true</literal>. Setting a key-value pair on a flavor is
+            done using the <command>nova-manage instance_type set_key</command>
+            command.<screen><prompt>#</prompt> <userinput>nova-manage instance_type set_key --name=ssd.large  --key=ssd --value=true</userinput></screen></para>
+        <para>Once it is set, you should see the <literal>extra_specs</literal> property of the
+                <literal>ssd.large</literal> flavor populated with a key of <literal>ssd</literal>
+            and a corresponding value of
+            <literal>true</literal>.<screen><prompt>$</prompt> <userinput>nova flavor-show ssd.large</userinput>
+<computeroutput>+----------------------------+-------------------+
+| Property                   | Value             |
++----------------------------+-------------------+
+| OS-FLV-DISABLED:disabled   | False             |
+| OS-FLV-EXT-DATA:ephemeral  | 0                 |
+| disk                       | 80                |
+| extra_specs                | {u'ssd': u'true'} |
+| id                         | 6                 |
+| name                       | ssd.large         |
+| os-flavor-access:is_public | True              |
+| ram                        | 8192              |
+| rxtx_factor                | 1.0               |
+| swap                       |                   |
+| vcpus                      | 4                 |
++----------------------------+-------------------+</computeroutput></screen></para>
+        <para>Now, when a user requests an instance with the <literal>ssd.large</literal> flavor,
+            the scheduler will only consider hosts with the <literal>ssd=true</literal> key-value
+            pair. In this example, that would only be <literal>node1</literal> and
+                <literal>node2</literal>.</para>
+    </simplesect>
+    <simplesect>
+        <title>XenServer hypervisor pools to support live migration</title>
+        <para>When using the XenAPI-based hypervisor, the Compute service uses host aggregates to
+            manage XenServer Resource pools, which are used in supporting live migration. See <link
+                linkend="configuring-migrations-xenserver-shared-storage">Configuring Migrations</link> for details on how to
+            create these kinds of host aggregates to support live migration. </para>
+     </simplesect>
+</section>
