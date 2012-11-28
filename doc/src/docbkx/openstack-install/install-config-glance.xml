@@ -10,15 +10,13 @@
 
     <para>Install the Image service, as root:</para>
     <screen os="ubuntu"><prompt>#</prompt> <userinput>sudo apt-get install glance</userinput></screen>
-    <screen os="rhel;centos;fedora"><prompt>$</prompt> <userinput>sudo yum install openstack-nova-essex openstack-glance-essex</userinput></screen>
+    <screen os="rhel;centos;fedora"><prompt>$</prompt> <userinput>sudo yum install openstack-nova openstack-glance</userinput></screen>
     <note os="ubuntu"><para>10/10/12: When using the Ubuntu Cloud Archive, you need to
             re-install the python-keystoneclient after installing the
             glance packages listed above, otherwise you see an
             error.</para></note>
-    <para>After installing, you need to delete the sqlite database it creates, then change the
-        configuration to point to the MySQL database. </para>
-    <para os="ubuntu">Delete the <filename>glance.sqlite</filename> file created in the
-            <filename>/var/lib/glance/</filename> directory.</para>
+    <para os="ubuntu">If you are using Ubuntu, delete the <filename>glance.sqlite</filename> file created in the
+            <filename>/var/lib/glance/</filename> directory:</para>
     <screen><prompt>#</prompt> <userinput>rm /var/lib/glance/glance.sqlite</userinput></screen>
     
  <section xml:id="configure-glance-mysql"><title>Configuring the Image Service database backend</title>
