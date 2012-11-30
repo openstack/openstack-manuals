@@ -23,25 +23,6 @@
   <para>Configure the production-ready backend data store rather than
     using the catalog supplied by default for the ability to backup
     the service and endpoint data. This example shows MySQL.</para>
-  <para>Install MySQL as
-  root:</para>
-  <screen os="ubuntu;deb"><prompt>#</prompt> <userinput>apt-get install python-mysqldb mysql-server</userinput></screen>
-  <screen os="rhel;fedora;centos"><prompt>$</prompt> <userinput>yum install mysql mysql-server MySQL-python</userinput>
-  </screen>
-  <para>During the install, you'll be prompted for the mysql root
-    password. Enter a password of your choice and verify it.</para>
-  <para os="ubuntu">Use <command>sed</command> to edit
-      <filename>/etc/mysql/my.cnf</filename> to change
-      <literal>bind-address</literal> from localhost (127.0.0.1) to
-    any (0.0.0.0) and restart the mysql service, as root. </para>
-  <para>
-    <screen os="ubuntu"><prompt>#</prompt> <userinput>sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/my.cnf</userinput>
-<prompt>#</prompt> <userinput>service mysql restart</userinput></screen>
-  </para>
-  <para os="rhel;centos;fedora">Set MySQL to start the daemon every time you start and then start the server.
-  <screen>
-    <prompt>#</prompt> <userinput>chkconfig --level 2345 mysqld on</userinput>
-    <prompt>#</prompt> <userinput>service mysqld start</userinput></screen></para>
   <para>The following sequence of commands will create a MySQL
     database named "keystone" and a MySQL user named "keystone" with
     full access to the "keystone" MySQL database.</para>
