@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section [
+<!-- Some useful entities borrowed from HTML -->
+<!ENTITY ndash  "&#x2013;">
+<!ENTITY mdash  "&#x2014;">
+<!ENTITY hellip "&#x2026;">
+<!ENTITY plusmn "&#xB1;">
+
+<!-- Useful for describing APIs -->
+<!ENTITY GET    '<command xmlns="http://docbook.org/ns/docbook">GET</command>'>
+<!ENTITY PUT    '<command xmlns="http://docbook.org/ns/docbook">PUT</command>'>
+<!ENTITY POST   '<command xmlns="http://docbook.org/ns/docbook">POST</command>'>
+<!ENTITY DELETE '<command xmlns="http://docbook.org/ns/docbook">DELETE</command>'>
+
+<!ENTITY CHECK  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
+<imageobject role="fo">
+<imagedata fileref="figures/Check_mark_23x20_02.svg"
+format="SVG" scale="60"/>
+</imageobject>
+<imageobject role="html">
+<imagedata fileref="../figures/Check_mark_23x20_02.png"
+format="PNG" />
+</imageobject>
+</inlinemediaobject>'>
+
+<!ENTITY ARROW  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
+<imageobject role="fo">
+<imagedata fileref="figures/Arrow_east.svg"
+format="SVG" scale="60"/>
+</imageobject>
+<imageobject role="html">
+<imagedata fileref="../figures/Arrow_east.png"
+format="PNG" />
+</imageobject>
+</inlinemediaobject>'>
+]>
+<section xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="app_demo_flat">
+    <title>Single Flat Network</title>
+    <para>This section describes how to install the Quantum service
+        and its components for the "<link
+            linkend="use_cases_single_flat">Use Case: Single Flat Network
+            </link>". The demo assumes the
+        following:</para>
+    <para><emphasis role="bold">OpenStack Service Node</emphasis></para>
+    <orderedlist>
+        <listitem>
+            <para>Relevant Nova services are installed, configured and
+                running.</para>
+        </listitem>
+        <listitem>
+            <para>Glance is installed, configured and running.  In
+                addition to this there should be an image.</para>
+        </listitem>
+        <listitem>
+            <para>Keystone is installed, configured and running. A
+                quantum user <emphasis role="bold">quantum</emphasis>
+                should be created on tenant <emphasis role="bold"
+                    >servicetenant</emphasis> with password <emphasis
+                    role="bold">servicepassword</emphasis>.</para>
+        </listitem>
+        <listitem>
+            <para>Additional services <itemizedlist>
+                    <listitem>
+                        <para>RabbitMQ is running with default guest and its password</para>
+                    </listitem>
+                    <listitem>
+                        <para>MySQL server (user is <emphasis
+                                role="bold">root</emphasis> and
+                            password is <emphasis role="bold"
+                                >root</emphasis>)</para>
+                    </listitem>
+                </itemizedlist></para>
+        </listitem>
+    </orderedlist>
+    <para><emphasis role="bold">Compute Nodes</emphasis></para>
+    <orderedlist>
+        <listitem>
+            <para>Nova compute is installed and configured</para>
+        </listitem>
+    </orderedlist>
+    <para>The diagram below shows the setup. For simplicity all of the
+        nodes should have one interface for management traffic and one
+        or more interfaces for traffic to and from VMs. The management
+        network is 100.1.1.0/24 with controller node at 100.1.1.2. The example uses the Open vSwitch
+        plugin and agents.</para>
+    <para><emphasis role="bold">Note</emphasis> the setup can be tweaked to make use of another
+        supported plugin and its agents.</para>
+     <mediaobject>
+            <imageobject role="fo">
+                  <imagedata scale="60" fileref="figures/demo_flat_install.png"/>
+            </imageobject>
+            <imageobject role="html">
+                   <imagedata fileref="figures/demo_flat_install.png"/>
+            </imageobject>
+     </mediaobject>
+    <para>There will be some nodes in the setup.<table rules="all">
+            <caption>Nodes for Demo</caption>
+            <thead>
+                <tr>
+                    <th>Node</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>OpenStack Controller Node</td>
+                    <td>Runs the Quantum service, Keystone and all of
+                        the Nova services that are required to deploy
+                        a VM. The service must have at least one
+                        network interface, this should be connected to
+                        the "Management Network". The IP address of
+                        the interface should be configured as
+                        100.1.1.2/24. This will be used to
+                        communicate with the compute and network
+                        nodes. <emphasis role="bold">Note</emphasis>
+                        nova-network should not be running. This is
+                        replaced by Quantum.</td>
+                </tr>
+                <tr>
+                    <td>Compute Node</td>
+                    <td>Runs Nova compute and the Quantum L2 agent.
+                        This node will not have access the public
+                        network. The node must have at least two
+                        network interfaces. The first is used to
+                        communicate with the controller node, via the
+                        management network. The second interface will be
+                        used for the VM traffic, this is via the Data
+                        network. The VM will be able to receive its IP
+                        address from the DHCP agent on this
+                        network.</td>
+                </tr>
+                <tr>
+                    <td>Network Node</td>
+                    <td>Runs Quantum L2 agent and the DHCP agent.
+                        This node will have access the
+                        public network. The DHCP agent will allocate
+                        IP addresses to the VMs on the network. The node must have
+                        at least two network interfaces. The first
+                        is used to communicate with the controller
+                        node, this is via the management network. The second
+                        interface will be used for the VM traffic,
+                        this is on the data network.</td>
+                </tr>
+                <tr>
+                    <td>Router</td>
+                    <td>Router has IP 30.0.0.1, which is the default gateway for
+                    all VMs. The router should have ability to access public networks.</td>
+                </tr>
+            </tbody>
+        </table></para>
+    <section xml:id="demo_flat_installions">
+        <title>Installations</title>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para><emphasis role="bold">Controller Node - Quantum Service</emphasis><orderedlist>
+                            <listitem>
+                                <para>Install the Quantum service.</para>
+                            </listitem>
+                            <listitem>
+                                <para>Create plugin database <emphasis
+                                   role="bold">ovs_quantum</emphasis>.
+                                   See the section on the <link
+                                   linkend="core_plugins">Core
+                                   Plugins</link> for the exact
+                                   details.</para>
+                            </listitem>
+                            <listitem>
+                                <para>Update the Quantum configuration
+                                   file, <emphasis role="bold"
+                                   >/etc/quantum/quantum.conf</emphasis>:</para>
+                                <screen><computeroutput>[DEFAULT]
+core_plugin = quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPluginV2
+control_exchange = quantum
+rabbit_host = controlnode
+notification_driver = quantum.openstack.common.notifier.rabbit_notifier</computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Update the plugin configuration
+                                   file, <emphasis role="bold"
+                                   >/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</emphasis>:</para>
+                                <screen><computeroutput>[DATABASE]
+sql_connection = mysql://root:root@controlnode:3306/ovs_quantum?charset=utf8
+[OVS]
+network_vlan_ranges = physnet1
+bridge_mappings = physnet1:br-eth0
+</computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Update the api-paste
+                                   configuration file to include the
+                                   keystone user, <emphasis
+                                   role="bold"
+                                   >/etc/quantum/api-paste.ini</emphasis>:</para>
+                                <screen><computeroutput>[filter:authtoken]
+admin_tenant_name=servicetenant
+admin_user=quantum
+admin_password=servicepassword</computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Start the Quantum service</para>
+                            </listitem>
+                        </orderedlist></para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="bold">Compute Node - Nova compute</emphasis><orderedlist>
+                            <listitem>
+                                <para>Install the Nova compute.</para>
+                            </listitem>
+                            <listitem>
+                                <para>Update the nova configuration
+                                   file, <emphasis role="bold"
+                                   >/etc/nova/nova.conf. Make sure the following is at the end of this file</emphasis>:</para>
+                                <screen><computeroutput>
+network_api_class=nova.network.quantumv2.api.API
+
+quantum_admin_username=quantum
+quantum_admin_password=servicepassword
+quantum_admin_auth_url=http://controlnode:35357/v2.0/
+quantum_auth_strategy=keystone
+quantum_admin_tenant_name=servicetenant
+quantum_url=http://controlnode:9696/
+
+libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver</computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Restart the nova service</para>
+                            </listitem>
+                        </orderedlist></para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="bold">Compute and Network Node - L2 Agent</emphasis><orderedlist>
+                            <listitem>
+                                <para>Install the L2 agent.</para>
+                            </listitem>
+                            <listitem>
+                                <para>Add the integration bridge to the Open vSwitch:</para>
+                                <screen><computeroutput>sudo ovs-vsctl add-br br-int</computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Update the Quantum configuration
+                                   file, <emphasis role="bold"
+                                   >/etc/quantum/quantum.conf</emphasis>:</para>
+                                <screen><computeroutput>[DEFAULT]
+core_plugin = quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPluginV2
+control_exchange = quantum
+rabbit_host = controlnode
+notification_driver = quantum.openstack.common.notifier.rabbit_notifier</computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Update the plugin configuration
+                                   file, <emphasis role="bold"
+                                   >/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</emphasis>:</para>
+                                <screen><computeroutput>[DATABASE]
+sql_connection = mysql://root:root@controlnode:3306/ovs_quantum?charset=utf8
+[OVS]
+network_vlan_ranges = physnet1
+bridge_mappings = physnet1:br-eth0</computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Create the network bridge
+                                   <emphasis role="bold"
+                                   >br-eth0</emphasis> (All VM
+                                   communication between the nodes
+                                   will be done via eth0):</para>
+                                <screen><computeroutput>sudo ovs-vsctl add-br br-eth0
+sudo ovs-vsctl add-port br-eth0 eth0</computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Start the Quantum L2 agent</para>
+                            </listitem>
+                        </orderedlist></para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="bold">Network Node - DHCP Agent</emphasis><orderedlist>
+                            <listitem>
+                                <para>Install the DHCP agent.</para>
+                            </listitem>
+                            <listitem>
+                                <para>Update the Quantum configuration
+                                   file, <emphasis role="bold"
+                                   >/etc/quantum/quantum.conf</emphasis>:</para>
+                                <screen><computeroutput>[DEFAULT]
+core_plugin = quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPluginV2
+control_exchange = quantum
+rabbit_host = controlnode
+notification_driver = quantum.openstack.common.notifier.rabbit_notifier</computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Update the DHCP configuration
+                                   file, , <emphasis role="bold"
+                                   >/etc/quantum/dhcp_agent.ini</emphasis>:</para>
+                                <screen><computeroutput>interface_driver = quantum.agent.linux.interface.OVSInterfaceDriver</computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Start the DHCP agent</para>
+                            </listitem>
+                        </orderedlist></para>
+                </listitem>
+             </itemizedlist>
+        </para>
+    </section>
+    <section xml:id="demo_flat_logical_network_config">
+        <title>Logical Network Configuration</title>
+        <para>All of the commands below can be done on the contorller node.</para>
+        <para><emphasis role="bold">Note</emphasis> please ensure that
+            the following environment variables are set. These are
+            used by the various clients to access Keystone.</para>
+        <para>
+            <screen><computeroutput>export OS_USERNAME=admin
+export OS_PASSWORD=adminpassword
+export OS_TENANT_NAME=admin
+export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/</computeroutput></screen>
+        </para>
+        <para>
+                   <orderedlist>
+                            <listitem>
+                                <para>Get the tenant ID (Used as
+                                   $TENANT_ID later):</para>
+                                <screen><computeroutput>keystone tenant-list</computeroutput></screen>
+                                <screen><computeroutput>
++----------------------------------+---------+---------+
+|                id                |   name  | enabled |
++----------------------------------+---------+---------+
+| 247e478c599f45b5bd297e8ddbbc9b6a | TenantA |   True  |
+| 2b4fec24e62e4ff28a8445ad83150f9d | TenantC |   True  |
+| 3719a4940bf24b5a8124b58c9b0a6ee6 | TenantB |   True  |
+| 5fcfbc3283a142a5bb6978b549a511ac |   demo  |   True  |
+| b7445f221cda4f4a8ac7db6b218b1339 |  admin  |   True  |
++----------------------------------+---------+---------+
+                                </computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Get the User information:</para>
+                                <screen><computeroutput>keystone user-list</computeroutput></screen>
+                                <screen><computeroutput>
++----------------------------------+-------+---------+-------------------+
+|                id                |  name | enabled |       email       |
++----------------------------------+-------+---------+-------------------+
+| 5a9149ed991744fa85f71e4aa92eb7ec |  demo |   True  |                   |
+| 5b419c74980d46a1ab184e7571a8154e | admin |   True  | admin@example.com |
+| 8e37cb8193cb4873a35802d257348431 | UserC |   True  |                   |
+| c11f6b09ed3c45c09c21cbbc23e93066 | UserB |   True  |                   |
+| ca567c4f6c0942bdac0e011e97bddbe3 | UserA |   True  |                   |
++----------------------------------+-------+---------+-------------------+
+                                </computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Create a internal shared network on the
+                                   demo tenant ($TENANT_ID will be
+                                   5fcfbc3283a142a5bb6978b549a511ac):</para>
+                                <screen><computeroutput>quantum net-create --tenant-id $TENANT_ID sharednet1 --shared --provider:network_type flat --provider:physical_network physnet1</computeroutput></screen>
+                                <screen><computeroutput>Created a new network:
++---------------------------+--------------------------------------+
+| Field                     | Value                                |
++---------------------------+--------------------------------------+
+| admin_state_up            | True                                 |
+| id                        | 04457b44-e22a-4a5c-be54-a53a9b2818e7 |
+| name                      | sharednet1                           |
+| provider:network_type     | flat                                 |
+| provider:physical_network | physnet1                             |
+| provider:segmentation_id  |                                      |
+| router:external           | False                                |
+| shared                    | True                                 |
+| status                    | ACTIVE                               |
+| subnets                   |                                      |
+| tenant_id                 | b7445f221cda4f4a8ac7db6b218b1339     |
++---------------------------+--------------------------------------+
+</computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Create a subnet on the network:</para>
+                                <screen><computeroutput>quantum subnet-create --tenant-id $TENANT_ID sharednet1 30.0.0.0/24</computeroutput></screen>
+                                <screen><computeroutput>Created a new subnet:
++------------------+--------------------------------------------+
+| Field            | Value                                      |
++------------------+--------------------------------------------+
+| allocation_pools | {"start": "30.0.0.2", "end": "30.0.0.254"} |
+| cidr             | 30.0.0.0/24                                |
+| dns_nameservers  |                                            |
+| enable_dhcp      | True                                       |
+| gateway_ip       | 30.0.0.1                                   |
+| host_routes      |                                            |
+| id               | b8e9a88e-ded0-4e57-9474-e25fa87c5937       |
+| ip_version       | 4                                          |
+| name             |                                            |
+| network_id       | 04457b44-e22a-4a5c-be54-a53a9b2818e7       |
+| tenant_id        | 5fcfbc3283a142a5bb6978b549a511ac           |
++------------------+--------------------------------------------+
+</computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Create a server for tenant A:</para>
+                                <screen><computeroutput>nova --os-tenant-name TenantA --os-username UserA --os-password password --os-auth-url=http://localhost:5000/v2.0 boot --image tty --flavor 1 --nic net-id=04457b44-e22a-4a5c-be54-a53a9b2818e7 TenantA_VM1</computeroutput></screen>
+<screen><computeroutput>nova --os-tenant-name TenantA --os-username UserA --os-password password --os-auth-url=http://localhost:5000/v2.0  list
++--------------------------------------+-------------+--------+---------------------+
+| ID                                   | Name        | Status | Networks            |
++--------------------------------------+-------------+--------+---------------------+
+| 09923b39-050d-4400-99c7-e4b021cdc7c4 | TenantA_VM1 | ACTIVE | sharednet1=30.0.0.3 |
++--------------------------------------+-------------+--------+---------------------+
+</computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Ping the server of tenant A:</para>
+                                <screen><computeroutput>
+sudo ip addr flush eth0
+sudo ip addr add 30.0.0.201/24 dev br-eth0
+ping 30.0.0.3
+</computeroutput></screen>
+                            <para>Note: if nova filter is using, please set right security group rule.</para></listitem>
+                            <listitem>
+                                <para>Ping the public network within the server of tenant A:</para>
+                                <screen><computeroutput>ping 192.168.1.1
+PING 192.168.1.1 (192.168.1.1) 56(84) bytes of data.
+64 bytes from 192.168.1.1: icmp_req=1 ttl=64 time=1.74 ms
+64 bytes from 192.168.1.1: icmp_req=2 ttl=64 time=1.50 ms
+64 bytes from 192.168.1.1: icmp_req=3 ttl=64 time=1.23 ms
+^C
+--- 192.168.1.1 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2003ms
+rtt min/avg/max/mdev = 1.234/1.495/1.745/0.211 ms
+</computeroutput></screen>
+                            <para>Note: The 192.168.1.1 is an IP on public network that the router is connecting.</para></listitem>
+                            <listitem>
+                                <para>Create servers for other tenants</para>
+                                <para>We can create servers for other tenants with similar commnds. Since all these VMs share
+                                the same subnet, they will be able to access each other.</para></listitem>
+                        </orderedlist>
+        </para>
+    </section>
+</section>
