@@ -4,134 +4,13 @@
     xmlns:xi= "http://www.w3.org/2001/XInclude"
     xmlns:xlink= "http://www.w3.org/1999/xlink" version= "5.0">
     <title>Configuration: nova.conf</title>
-    <simplesect>
-        <title>Overview</title>
-        <para>The Compute service supports a large number of configuration options. These options
-            are specified in a configuration file whose default location in
-                <filename>/etc/nova/nova.conf</filename>.</para>
-        <para>The configuration file is in <link xlink:href="https://en.wikipedia.org/wiki/INI_file"
-                >INI file format</link>, with options specified as <literal>key=value</literal>
-            pairs, grouped into sections. Almost all of the configuration options are in the
-                <literal>DEFAULT</literal> section. Here's a brief
-            example:<programlisting>[DEFAULT]
-debug=true
-verbose=true
 
-[trusted_computing]
-server=10.3.4.2</programlisting></para>
+    <xi:include href="../common/compute-options.xml" />
 
-        </simplesect>
-    <simplesect>
-        <title>Types of configuration options</title>
-        <para> Each configuration option has an associated type that indicates what values can be
-            set. The supported option types are as follows:<variablelist>
-                <varlistentry>
-                    <term>BoolOpt</term>
-                    <listitem>
-                        <para>Boolean option. Value must be either <literal>true</literal> or
-                                <literal>false</literal> .
-                            Example:<programlisting>debug=false</programlisting></para>
-                    </listitem>
-                </varlistentry>
-                <varlistentry>
-                    <term>StrOpt</term>
-                    <listitem>
-                        <para>String option. Value is an arbitary string.
-                            Example:<programlisting>my_ip=10.0.0.1</programlisting></para>
-                    </listitem>
-                </varlistentry>
-                <varlistentry>
-                    <term>IntOption</term>
-                    <listitem>
-                        <para>Integer option. Value must be an integer. Example:
-                            <programlisting>glance_port=9292</programlisting></para>
-                    </listitem>
-                </varlistentry>
-                <varlistentry>
-                    <term>MultiStrOpt</term>
-                    <listitem>
-                        <para>String option. Same as StrOpt, except that it can be declared multiple
-                            times to indicate multiple values.
-                            Example:<programlisting>ldap_dns_servers=dns1.example.org
-ldap_dns_servers=dns2.example.org</programlisting></para>
-                    </listitem>
-                </varlistentry>
-                <varlistentry>
-                    <term>ListOpt</term>
-                    <listitem>
-                        <para>List option. Value is a list of arbitrary strings separated by commas.
-                            Example:<programlisting>enabled_apis=ec2,osapi_compute,metadata</programlisting></para>
-                    </listitem>
-                </varlistentry>
-                <varlistentry>
-                    <term>FloatOpt</term>
-                    <listitem>
-                        <para>Floating-point option. Value must be a floating-point number.
-                            Example:<programlisting>ram_allocation_ratio=1.5</programlisting></para>
-                    </listitem>
-                </varlistentry>
-            </variablelist>
-        </para>
 
-    <important>
-      <para>Nova options should <emphasis>not</emphasis>
-      be quoted.</para>
-    </important>
-        </simplesect>
-    <simplesect>
-        <title>Sections</title>
-        <para>Configuration options are grouped by section. The Compute config file supports the
-            following sections.<variablelist>
-                <varlistentry>
-                    <term><literal>[DEFAULT]</literal></term>
-                    <listitem>
-                        <para>Almost all of the configuration options are organized into this
-                            section. If the documentation for a configuration option does not
-                            specify its section, assume that it should be placed in this one.</para>
-                    </listitem>
-                </varlistentry>
-                <varlistentry>
-                    <term><literal>[conductor]</literal></term>
-                    <listitem>
-                        <para>This section is used for options for configuring the nova-conductor
-                            service.</para>
-                    </listitem>
-                </varlistentry>
-                <varlistentry>
-                    <term><literal>[trusted_computing]</literal></term>
-                    <listitem>
-                        <para>This section is used for options that relate to the trusted computing
-                            pools functionality. Options in this section describe how to connect to
-                            a remote attestation service.</para>
-                    </listitem>
-                </varlistentry>
-            </variablelist></para>
-    </simplesect>
-    <simplesect>
-        <title>Variable substition</title>
-        <para>The configuration file supports variable substitution. Once a configuration option is
-            set,  it can be referenced in later configuration values when preceded by
-                <literal>$</literal>. Consider the following example where <literal>my_ip</literal>
-            is defined and then <literal>$my_ip</literal> is used as a
-            variable.<programlisting>my_ip=10.2.3.4
-glance_host=$my_ip
-metadata_host=$my_ip</programlisting></para>
-        <para>If you need a value to contain the <literal>$</literal> symbol, escape it by doing
-                <literal>$$</literal>. For example, if your LDAP DNS password was
-                <literal>$xkj432</literal>, you would
-            do:<programlisting>ldap_dns_password=$$xkj432</programlisting></para>
-    </simplesect>
-    <simplesect>
-        <title>Specifying an alternate location for nova.conf</title>
-        <para>The configuration file is loaded by all of the nova-* services, as well as the
-                <command>nova-manage</command> command-line tool. To specify an alternate location
-            for the configuration file, pass the <literal>--config-file
-                    <replaceable>/path/to/nova.conf</replaceable></literal> argument when starting a
-            nova-* service or calling <command>nova-manage</command>.</para>
-    </simplesect>
-        <simplesect>
-            <title>List of configuration options</title>
-            <para>For a complete list of all available configuration options for each OpenStack Compute service, run bin/nova-&lt;servicename&gt; --help.</para>
+<section xml:id="list-of-compute-config-options">
+    <title>List of configuration options</title>
+    <para>For a complete list of all available configuration options for each OpenStack Compute service, run bin/nova-&lt;servicename&gt; --help.</para>
     <xi:include href="tables/common-nova-conf.xml"/>
     <xi:include href="tables/database-nova-conf.xml"/>
     <xi:include href="tables/ipv6-nova-conf.xml"/>
@@ -156,6 +35,6 @@ metadata_host=$my_ip</programlisting></para>
     <xi:include href="tables/scheduler-nova-conf.xml" />
     <xi:include href="tables/config-drive-nova-conf.xml"/>
     <xi:include href="tables/volumes-nova-conf.xml" />
+</section>
 
-    </simplesect>
 </chapter>
