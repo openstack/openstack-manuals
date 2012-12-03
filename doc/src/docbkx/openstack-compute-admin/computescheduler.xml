@@ -15,7 +15,7 @@ it. The scheduler is configurable through a variety of options.</para>
 scheduler_driver=nova.scheduler.multi.MultiScheduler
 volume_scheduler_driver=nova.scheduler.chance.ChanceScheduler
 compute_scheduler_driver=nova.scheduler.filter_scheduler.FilterScheduler
-scheduler_available_filters=nova.scheduler.filters.standard_filters
+scheduler_available_filters=nova.scheduler.filters.all_filters
 scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
 least_cost_functions=nova.scheduler.least_cost.compute_fill_first_cost_fn
 compute_fill_first_cost_fn_weight=-1.0
@@ -89,7 +89,7 @@ servicing the request (<literal>ComputeFilter</literal>).</para>
             specifies all of the filter that are included with the
             Compute service:
             <programlisting>
-scheduler_available_filters=nova.scheduler.filters.standard_filters
+scheduler_available_filters=nova.scheduler.filters.all_filters
     </programlisting>
             This configuration option can be specified multiple times.
             For example, if you implemented your own custom filter in
@@ -98,7 +98,7 @@ scheduler_available_filters=nova.scheduler.filters.standard_filters
             filter, your <filename>nova.conf</filename> file would
             contain:
             <programlisting>
-scheduler_available_filters=nova.scheduler.filters.standard_filters
+scheduler_available_filters=nova.scheduler.filters.all_filters
 scheduler_available_filters=myfilter.MyFilter
     </programlisting>
         </para>
