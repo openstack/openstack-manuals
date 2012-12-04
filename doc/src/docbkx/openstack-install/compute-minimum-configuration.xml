@@ -59,10 +59,16 @@ Options:
 <prompt># </prompt><userinput>chmod 640 /etc/nova/nova.conf</userinput>
 </screen>
     </note>
-    <para>The hypervisor is set either by editing <filename>/etc/nova/nova.conf</filename> or referring to
-        <filename>nova-compute.conf</filename> in the <filename>nova.conf</filename> file. The hypervisor defaults to <literal>kvm</literal>, but if you are
+    <para>The hypervisor is set by editing <filename>/etc/nova/nova.conf .
+    The hypervisor defaults to <literal>kvm</literal>, but if you are
         working within a VM already, switch to <literal>qemu</literal> on the <literal>libvirt_type=</literal> line. To use Xen, refer
         to the overview in this book for where to install nova components. </para>
+    <note><para>You can also configure the nova-compute service 
+    (and, for example  configure a hypervisor-per-compute-node) with a 
+    separate <literal>nova-compute.conf</literal> file and then referring to
+     <literal>nova-compute.conf</literal> in the <literal>nova.conf</literal> file.
+    </para></note>
+ 
     <para>Ensure the database connection defines your backend data
         store by adding a <literal>sql_connection</literal> line to <filename>nova.conf</filename>:
         <literal>sql_connection=mysql://<replaceable>[user]</replaceable>:<replaceable>[pass]</replaceable>@<replaceable>[primary IP]</replaceable>/<replaceable>[db
@@ -91,7 +97,7 @@ fixed_range=192.168.100.0/24
 public_interface=eth0
 flat_interface=eth0
 flat_network_bridge=br100</programlisting>
-    <para>Here is an example <filename>nova.conf</filename> with commented
+   <para>Here is an example <filename>nova.conf</filename> with commented
         sections:</para>
     <para><programlisting><xi:include parse="text" href="samples/nova.conf"/>
 </programlisting></para>
