@@ -18,17 +18,43 @@
     <para os="ubuntu">If you are using Ubuntu, delete the <filename>glance.sqlite</filename> file created in the
             <filename>/var/lib/glance/</filename> directory:</para>
     <screen><prompt>#</prompt> <userinput>rm /var/lib/glance/glance.sqlite</userinput></screen>
-    
+
  <section xml:id="configure-glance-mysql"><title>Configuring the Image Service database backend</title>
     <para>Configure the backend data store. For MySQL, create a glance MySQL database and a glance MySQL user. Grant the "glance" user full
     access to the glance MySQL database.</para><para>Start the MySQL command line client by running:</para>
      <para><screen><prompt>$</prompt> <userinput>mysql -u root -p</userinput></screen></para><para>Enter the MySQL root user's password when prompted.</para>
      <para>To configure the MySQL database, create the glance database. </para><para><screen><prompt>mysql></prompt> <userinput>CREATE DATABASE glance;</userinput></screen>
      </para><para>Create a MySQL user for the newly-created glance database that has full control of the database. </para>
-     <para><screen><prompt>mysql></prompt> <userinput>GRANT ALL ON glance.* TO 'glance'@'%' IDENTIFIED BY '<replaceable>[YOUR_GLANCEDB_PASSWORD]</replaceable>';</userinput></screen></para>
+     <para><screen><prompt>mysql></prompt> <userinput>GRANT ALL ON glance.* TO 'glance'@'%' IDENTIFIED BY '<replaceable>[YOUR_GLANCEDB_PASSWORD]</replaceable>';</userinput>
+<prompt>mysql></prompt> <userinput>GRANT ALL ON glance.* TO 'glance'@'localhost' IDENTIFIED BY '<replaceable>[YOUR_GLANCEDB_PASSWORD]</replaceable>';</userinput></screen></para>
+    <note>
+        <para>In the above commands, even though the <literal>'glance'@'%'</literal> also matches
+                <literal>'glance'@'localhost'</literal>, you must explicitly specify the
+                <literal>'glance'@'localhost'</literal> entry.</para>
+        <para>By default, MySQL will create entries in the user table with
+                <literal>User=''</literal> and <literal>Host='localhost'</literal>. The
+                <literal>User=''</literal> acts as a wildcard, matching all users. If you do not
+            have the <literal>'glance'@'localhost'</literal> account, and you try to log in as the
+            glance user, the precedence rules of MySQL will match against the <literal>User=''
+                Host='localhost'</literal> account before it matches against the
+                <literal>User='glance' Host='%'</literal> account. This will result in an error
+            message that looks like: </para>
+        <para>
+            <screen><computeroutput>ERROR 1045 (28000): Access denied for user 'glance'@'localhost' (using password: YES)</computeroutput></screen>
+        </para>
+        <para>Thus, we create a separate <literal>User='glance' Host='localhost'</literal> entry that
+            will match with higher precedence. </para>
+        <para>See the <link xlink:href="http://dev.mysql.com/doc/refman/5.5/en/connection-access.html"
+            >MySQL documentation on connection verification</link> for more details on how MySQL
+            determines which row in the user table it uses when authenticating connections.</para>
+    </note>
+
         <para>Enter <literal>quit </literal>at the
                 <literal>mysql></literal> prompt to exit MySQL.</para>
-     <para><literallayout class="monospaced">mysql> quit</literallayout></para></section>
+
+     <para><screen><prompt>mysql></prompt> <userinput>quit</userinput></screen></para>
+
+ </section>
     <section xml:id="configure-glance-files">
         <title>Edit the Glance configuration files and paste ini
             middleware files</title>
