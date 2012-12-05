@@ -402,7 +402,36 @@ nova services or updating the <literal>vm_state</literal> and
 <literal>power_state</literal> in the nova database.</para>
 </simplesect>
 </section>
-
+    <section xml:id="nova-uid-mismatch">
+	<title>Recovering from a UID/GID mismatch</title>
+	<para>When running OpenStack compute, using a shared filesystem or
+         an automated configuration tool, you could encounter a situation
+         where some files on your compute node are using the wrong UID or
+         GID. This causes a raft of errors, such as being unable to live
+         migrate, or start virtual machines. </para>
+         <para> The following is a basic procedure run on nova-compute hosts, based on the KVM hypervisor,
+          that could help to restore the situation:
+         <itemizedlist>
+         <listitem><para>First,make sure you don't use numbers that are already used for some other user/group.</para></listitem>
+         <listitem><para>Set the nova uid in /etc/passwd to the same number in all hosts (e.g. 112)</para></listitem>
+         <listitem><para>Set the libvirt-qemu uid in /etc/passwd to the same number in all hosts (e.g. 119)</para></listitem>
+         <listitem><para>Set the nova group in /etc/group file to the same number in all hosts (e.g. 120)</para></listitem>
+         <listitem><para>Set the libvirtd group in /etc/group file to the same number in all hosts (e.g. 119)</para></listitem>
+         <listitem><para>Stop the services on the compute node</para></listitem>
+         <listitem><para>Change all the files owned by nova or group by nova, e.g.
+         <programlisting>        
+         find / -uid 108 -exec chown nova {} \; # note the 108 here is the old nova uid before the change
+         find / -gid 120 -exec chgrp nova {} \;
+         </programlisting>
+         </para></listitem>
+         <listitem><para>Repeat the steps for the libvirt-qemu owned files if those were needed to change</para></listitem>
+         <listitem><para>Restart the services</para></listitem>
+         </itemizedlist>
+         </para>
+         <para>Following this, you can run the <command>find</command>
+         command to verify that all files using the correct identifiers.
+         </para>
+   </section>
 
     <section xml:id="nova-disaster-recovery-process">
         <title>Nova Disaster Recovery Process</title>
