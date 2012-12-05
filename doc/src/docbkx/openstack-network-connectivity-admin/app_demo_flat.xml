@@ -40,9 +40,76 @@ format="PNG" />
     <para>This section describes how to install the Quantum service
         and its components for the "<link
             linkend="use_cases_single_flat">Use Case: Single Flat Network
-            </link>". The demo assumes the
-        following:</para>
-    <para><emphasis role="bold">OpenStack Service Node</emphasis></para>
+            </link>". </para>
+    <para>The diagram below shows the setup. For simplicity all of the
+        nodes should have one interface for management traffic and one
+        or more interfaces for traffic to and from VMs. The management
+        network is 100.1.1.0/24 with controller node at 100.1.1.2. The example uses the Open vSwitch
+        plugin and agent.</para>
+    <para><emphasis role="bold">Note</emphasis> the setup can be tweaked to make use of another
+        supported plugin and its agent.</para>
+     <mediaobject>
+            <imageobject role="fo">
+                  <imagedata scale="60" fileref="figures/demo_flat_install.png"/>
+            </imageobject>
+            <imageobject role="html">
+                   <imagedata fileref="figures/demo_flat_install.png"/>
+            </imageobject>
+     </mediaobject>
+    <para>Here are some nodes in the setup.</para>
+         <informaltable rules="all" width="100%">
+                    <col width="20%"/>
+                    <col width="80%"/>
+            <thead>
+                <tr>
+                    <th>Node</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Controller Node</td>
+                    <td>Runs the Quantum service, Keystone and all of
+                        the Nova services that are required to deploy
+                        VMs. The node must have at least one
+                        network interface, which is connected to
+                        the "Management Network". The hostname is 'controlnode', which
+                        every other node resolve to the controller node's IP.
+                        <emphasis role="bold">Note</emphasis>
+                        nova-network should not be running. This is
+                        replaced by Quantum.</td>
+                </tr>
+                <tr>
+                    <td>Compute Node</td>
+                    <td>Runs Nova compute and the Quantum L2 agent.
+                        The node must have at least two
+                        network interfaces. The first is used to
+                        communicate with the controller node via the
+                        management network. The second interface is
+                        used for the VM traffic on the Data
+                        network. The VM will be able to receive its IP
+                        address from the DHCP agent on this
+                        network.</td>
+                </tr>
+                <tr>
+                    <td>Network Node</td>
+                    <td>Runs Quantum L2 agent and the DHCP agent.
+                        The DHCP agent will allocate
+                        IP addresses to the VMs on the network. The node must have
+                        at least two network interfaces. The first
+                        is used to communicate with the controller
+                        node via the management network. The second
+                        interface will be used for the VM traffic on the data network.</td>
+                </tr>
+                <tr>
+                    <td>Router</td>
+                    <td>Router has IP 30.0.0.1, which is the default gateway for
+                    all VMs. The router should have ability to access public networks.</td>
+                </tr>
+            </tbody>
+        </informaltable>
+     <para>The demo assumes the following:</para>
+    <para><emphasis role="bold">Controller Node</emphasis></para>
     <orderedlist>
         <listitem>
             <para>Relevant Nova services are installed, configured and
@@ -73,93 +140,23 @@ format="PNG" />
                 </itemizedlist></para>
         </listitem>
     </orderedlist>
-    <para><emphasis role="bold">Compute Nodes</emphasis></para>
+    <para><emphasis role="bold">Compute Node</emphasis></para>
     <orderedlist>
         <listitem>
             <para>Nova compute is installed and configured</para>
         </listitem>
     </orderedlist>
-    <para>The diagram below shows the setup. For simplicity all of the
-        nodes should have one interface for management traffic and one
-        or more interfaces for traffic to and from VMs. The management
-        network is 100.1.1.0/24 with controller node at 100.1.1.2. The example uses the Open vSwitch
-        plugin and agents.</para>
-    <para><emphasis role="bold">Note</emphasis> the setup can be tweaked to make use of another
-        supported plugin and its agents.</para>
-     <mediaobject>
-            <imageobject role="fo">
-                  <imagedata scale="60" fileref="figures/demo_flat_install.png"/>
-            </imageobject>
-            <imageobject role="html">
-                   <imagedata fileref="figures/demo_flat_install.png"/>
-            </imageobject>
-     </mediaobject>
-    <para>There will be some nodes in the setup.<table rules="all">
-            <caption>Nodes for Demo</caption>
-            <thead>
-                <tr>
-                    <th>Node</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>OpenStack Controller Node</td>
-                    <td>Runs the Quantum service, Keystone and all of
-                        the Nova services that are required to deploy
-                        a VM. The service must have at least one
-                        network interface, this should be connected to
-                        the "Management Network". The IP address of
-                        the interface should be configured as
-                        100.1.1.2/24. This will be used to
-                        communicate with the compute and network
-                        nodes. <emphasis role="bold">Note</emphasis>
-                        nova-network should not be running. This is
-                        replaced by Quantum.</td>
-                </tr>
-                <tr>
-                    <td>Compute Node</td>
-                    <td>Runs Nova compute and the Quantum L2 agent.
-                        This node will not have access the public
-                        network. The node must have at least two
-                        network interfaces. The first is used to
-                        communicate with the controller node, via the
-                        management network. The second interface will be
-                        used for the VM traffic, this is via the Data
-                        network. The VM will be able to receive its IP
-                        address from the DHCP agent on this
-                        network.</td>
-                </tr>
-                <tr>
-                    <td>Network Node</td>
-                    <td>Runs Quantum L2 agent and the DHCP agent.
-                        This node will have access the
-                        public network. The DHCP agent will allocate
-                        IP addresses to the VMs on the network. The node must have
-                        at least two network interfaces. The first
-                        is used to communicate with the controller
-                        node, this is via the management network. The second
-                        interface will be used for the VM traffic,
-                        this is on the data network.</td>
-                </tr>
-                <tr>
-                    <td>Router</td>
-                    <td>Router has IP 30.0.0.1, which is the default gateway for
-                    all VMs. The router should have ability to access public networks.</td>
-                </tr>
-            </tbody>
-        </table></para>
     <section xml:id="demo_flat_installions">
-        <title>Installations</title>
+        <title>Installation</title>
         <para>
             <itemizedlist>
                 <listitem>
-                    <para><emphasis role="bold">Controller Node - Quantum Service</emphasis><orderedlist>
+                    <para><emphasis role="bold">Controller Node - Quantum Server</emphasis><orderedlist>
                             <listitem>
-                                <para>Install the Quantum service.</para>
+                                <para>Install the Quantum server.</para>
                             </listitem>
                             <listitem>
-                                <para>Create plugin database <emphasis
+                                <para>Create database <emphasis
                                    role="bold">ovs_quantum</emphasis>.
                                    See the section on the <link
                                    linkend="core_plugins">Core
@@ -289,7 +286,7 @@ notification_driver = quantum.openstack.common.notifier.rabbit_notifier</compute
                             </listitem>
                             <listitem>
                                 <para>Update the DHCP configuration
-                                   file, , <emphasis role="bold"
+                                   file <emphasis role="bold"
                                    >/etc/quantum/dhcp_agent.ini</emphasis>:</para>
                                 <screen><computeroutput>interface_driver = quantum.agent.linux.interface.OVSInterfaceDriver</computeroutput></screen>
                             </listitem>
@@ -303,7 +300,7 @@ notification_driver = quantum.openstack.common.notifier.rabbit_notifier</compute
     </section>
     <section xml:id="demo_flat_logical_network_config">
         <title>Logical Network Configuration</title>
-        <para>All of the commands below can be done on the contorller node.</para>
+        <para>All of the commands below can be executed on the network node.</para>
         <para><emphasis role="bold">Note</emphasis> please ensure that
             the following environment variables are set. These are
             used by the various clients to access Keystone.</para>
@@ -349,7 +346,7 @@ export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/</computeroutput></screen>
                             <listitem>
                                 <para>Create a internal shared network on the
                                    demo tenant ($TENANT_ID will be
-                                   5fcfbc3283a142a5bb6978b549a511ac):</para>
+                                   5a9149ed991744fa85f71e4aa92eb7ec):</para>
                                 <screen><computeroutput>quantum net-create --tenant-id $TENANT_ID sharednet1 --shared --provider:network_type flat --provider:physical_network physnet1</computeroutput></screen>
                                 <screen><computeroutput>Created a new network:
 +---------------------------+--------------------------------------+
@@ -424,8 +421,10 @@ rtt min/avg/max/mdev = 1.234/1.495/1.745/0.211 ms
                             <para>Note: The 192.168.1.1 is an IP on public network that the router is connecting.</para></listitem>
                             <listitem>
                                 <para>Create servers for other tenants</para>
-                                <para>We can create servers for other tenants with similar commnds. Since all these VMs share
-                                the same subnet, they will be able to access each other.</para></listitem>
+                                <para>We can create servers for other
+                        tenants with similar commands. Since all these
+                        VMs share the same subnet, they will be able
+                        to access each other.</para></listitem>
                         </orderedlist>
         </para>
     </section>
