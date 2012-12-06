@@ -46,9 +46,9 @@ Options:
         should ensure that the <filename>nova.conf</filename> file should have its
         owner set to <literal>root:nova</literal>, and mode set to <literal>0640</literal>, since the
         file contains your MySQL server’s username and password.
-        
+
     </para>
-    <note><para>If you are installing as another user, you should set permissions correctly. 
+    <note><para>If you are installing as another user, you should set permissions correctly.
         This packaged install ensures that the nova user belongs
         to the nova group and that the .conf file permissions are
         set, but here are the manual commands, which should be run as root:</para>
@@ -59,16 +59,16 @@ Options:
 <prompt># </prompt><userinput>chmod 640 /etc/nova/nova.conf</userinput>
 </screen>
     </note>
-    <para>The hypervisor is set by editing <filename>/etc/nova/nova.conf .
+    <para>The hypervisor is set by editing <filename>/etc/nova/nova.conf</filename>.
     The hypervisor defaults to <literal>kvm</literal>, but if you are
         working within a VM already, switch to <literal>qemu</literal> on the <literal>libvirt_type=</literal> line. To use Xen, refer
         to the overview in this book for where to install nova components. </para>
-    <note><para>You can also configure the nova-compute service 
-    (and, for example  configure a hypervisor-per-compute-node) with a 
+    <note><para>You can also configure the nova-compute service
+    (and, for example  configure a hypervisor-per-compute-node) with a
     separate <literal>nova-compute.conf</literal> file and then referring to
      <literal>nova-compute.conf</literal> in the <literal>nova.conf</literal> file.
     </para></note>
- 
+
     <para>Ensure the database connection defines your backend data
         store by adding a <literal>sql_connection</literal> line to <filename>nova.conf</filename>:
         <literal>sql_connection=mysql://<replaceable>[user]</replaceable>:<replaceable>[pass]</replaceable>@<replaceable>[primary IP]</replaceable>/<replaceable>[db
@@ -110,7 +110,7 @@ flat_network_bridge=br100</programlisting>
     <para>Stop the nova- services prior to running db sync, by running
         stop commands as root. Otherwise your logs show errors because
         the database has not yet been populated:</para>
-   
+
         <screen os="ubuntu">
 <prompt>#</prompt> <userinput>stop nova-api</userinput>
 <prompt>#</prompt> <userinput>stop nova-compute</userinput>
