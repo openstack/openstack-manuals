@@ -2167,8 +2167,7 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                 </table>
             </section>
         <section xml:id="swift-tempurl">
-                
-                <title>Temporary URL</title>
+        <title>Temporary URL</title>
                 <para>
 Allows the creation of URLs to provide temporary access to objects.
 
@@ -2190,8 +2189,8 @@ the Unix timestamp the access should be allowed until, the full path
 to the object, and the key set on the account.
 
 For example, here is code generating the signature for a GET for 60
-seconds on /v1/AUTH_account/container/object::
-<code>
+seconds on /v1/AUTH_account/container/object:
+<programlisting>
     import hmac
     from hashlib import sha1
     from time import time
@@ -2201,18 +2200,19 @@ seconds on /v1/AUTH_account/container/object::
     key = 'mykey'
     hmac_body = '%s\\n%s\\n%s' % (method, expires, path)
     sig = hmac.new(key, hmac_body, sha1).hexdigest()
-</code>
-Be certain to use the full path, from the /v1/ onward.
+</programlisting></para>
+
+<para>Be certain to use the full path, from the /v1/ onward.
 
 Let's say the sig ends up equaling
 da39a3ee5e6b4b0d3255bfef95601890afd80709 and expires ends up
-1323479485. Then, for example, the website could provide a link to::
-<code>
+1323479485. Then, for example, the website could provide a link to:
+<programlisting>
     https://swift-cluster.example.com/v1/AUTH_account/container/object?
     temp_url_sig=da39a3ee5e6b4b0d3255bfef95601890afd80709&amp;
     temp_url_expires=1323479485
-</code>
-Any alteration of the resource path or query arguments would result
+</programlisting></para>
+<para>Any alteration of the resource path or query arguments would result
 in 401 Unauthorized. Similary, a PUT where GET was the allowed method
 would 401. HEAD is allowed if GET or PUT is allowed.
 
