@@ -42,7 +42,7 @@
         
         <simplesect xml:id="container-server"><title>Container Server</title>
             
-            <para>The Container Server’s primary job is to handle listings of objects. It doesn’t know where those object’s are, just what objects are in a specific container. The listings are stored as sqlite database files, and replicated across the cluster similar to how objects are. Statistics are also tracked that include the total number of objects, and total storage usage for that container.</para>
+            <para>The Container Server’s primary job is to handle listings of objects. It doesn’t know where those objects are, just what objects are in a specific container. The listings are stored as sqlite database files, and replicated across the cluster similar to how objects are. Statistics are also tracked that include the total number of objects, and total storage usage for that container.</para>
         </simplesect>
         <simplesect><title>Account Server</title>
             <para>The Account Server is very similar to the Container Server, excepting that it is
@@ -1214,6 +1214,155 @@ memcache time for the key).
                    </tbody>
                 </table>
             </section>
+        <section xml:id="swift-dispersion">
+                
+                <title>Cluster Health</title>
+                <para>
+There is a <literal>swift-dispersion-report</literal> tool for measuring overall cluster health.
+ This is accomplished by checking if a set of deliberately distributed containers and objects are 
+ currently in their proper places within the cluster.
+
+For instance, a common deployment has three replicas of each object. The health of that object can
+be measured by checking if each replica is in its proper place. If only 2 of the 3 is in place the
+object’s heath can be said to be at 66.66%, where 100% would be perfect.
+
+A single object’s health, especially an older object, usually reflects the health of that entire
+partition the object is in. If we make enough objects on a distinct percentage of the partitions in
+the cluster, we can get a pretty valid estimate of the overall cluster health. In practice, about
+1% partition coverage seems to balance well between accuracy and the amount of time it takes to
+gather results.
+
+The first thing that needs to be done to provide this health value is create a new account solely
+for this usage. Next, we need to place the containers and objects throughout the system so that
+they are on distinct partitions. The swift-dispersion-populate tool does this by making up random
+container and object names until they fall on distinct partitions. Last, and repeatedly for the
+life of the cluster, we need to run the swift-dispersion-report tool to check the health of each of
+these containers and objects.
+
+These tools need direct access to the entire cluster and to the ring files (installing them on a
+proxy server will probably do). Both swift-dispersion-populate and swift-dispersion-report use the
+same configuration file, <literal>/etc/swift/dispersion.conf</literal>. Example dispersion.conf file:
+<programlisting>
+[dispersion]
+auth_url = http://localhost:8080/auth/v1.0
+auth_user = test:tester
+auth_key = testing
+</programlisting>
+There are also options for the conf file for specifying the dispersion coverage (defaults to 1%),
+retries, concurrency, etc. though usually the defaults are fine.
+
+Once the configuration is in place, run swift-dispersion-populate to populate the containers and
+objects throughout the cluster.
+
+Now that those containers and objects are in place, you can run swift-dispersion-report to get a
+dispersion report, or the overall health of the cluster. Here is an example of a cluster in perfect
+health:
+
+<programlisting>
+$ swift-dispersion-report
+Queried 2621 containers for dispersion reporting, 19s, 0 retries
+100.00% of container copies found (7863 of 7863)
+Sample represents 1.00% of the container partition space
+
+Queried 2619 objects for dispersion reporting, 7s, 0 retries
+100.00% of object copies found (7857 of 7857)
+Sample represents 1.00% of the object partition space
+</programlisting>
+Now, deliberately double the weight of a device in the object ring (with replication turned
+off) and rerun the dispersion report to show what impact that has:
+
+<programlisting>
+$ swift-ring-builder object.builder set_weight d0 200
+$ swift-ring-builder object.builder rebalance
+...
+$ swift-dispersion-report
+Queried 2621 containers for dispersion reporting, 8s, 0 retries
+100.00% of container copies found (7863 of 7863)
+Sample represents 1.00% of the container partition space
+
+Queried 2619 objects for dispersion reporting, 7s, 0 retries
+There were 1763 partitions missing one copy.
+77.56% of object copies found (6094 of 7857)
+Sample represents 1.00% of the object partition space
+</programlisting>
+You can see the health of the objects in the cluster has gone down significantly. Of course, 
+this test environment has just four devices, in a production environment with many many devices the
+impact of one device change is much less. Next, run the replicators to get everything put back
+into place and then rerun the dispersion report:
+<programlisting>
+... start object replicators and monitor logs until they're caught up ...
+$ swift-dispersion-report
+Queried 2621 containers for dispersion reporting, 17s, 0 retries
+100.00% of container copies found (7863 of 7863)
+Sample represents 1.00% of the container partition space
+
+Queried 2619 objects for dispersion reporting, 7s, 0 retries
+100.00% of object copies found (7857 of 7857)
+Sample represents 1.00% of the object partition space
+</programlisting>
+Alternatively, the dispersion report can also be output in json format. This allows it to be more
+easily consumed by third party utilities:
+<programlisting>
+$ swift-dispersion-report -j
+{"object": {"retries:": 0, "missing_two": 0, "copies_found": 7863, "missing_one": 0,
+"copies_expected": 7863, "pct_found": 100.0, "overlapping": 0, "missing_all": 0}, "container":
+{"retries:": 0, "missing_two": 0, "copies_found": 12534, "missing_one": 0, "copies_expected":
+12534, "pct_found": 100.0, "overlapping": 15, "missing_all": 0}}
+</programlisting>
+                </para>
+                <table rules="all">
+                    <caption>Configuration options for dispersion in proxy-server.conf
+                    file</caption>
+                   <tbody>
+                        <tr><td>Option</td>
+                            <td>Default</td>
+                            <td>Description</td>
+                            
+                        </tr>
+                    <tr>
+                        <td>auth_version</td>
+                        <td>1.0</td>
+                        <td>Swift authentication API version</td>
+                    </tr>
+                    <tr>
+                        <td>dispersion_coverage</td>
+                        <td>1</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>dump_json</td>
+                        <td>'no'</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>retries</td>
+                        <td>3</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>auth_url</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>auth_user</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>auth_key</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>swift_dir</td>
+                        <td>/etc/swift</td>
+                        <td></td>
+                    </tr>
+                   </tbody>
+                </table>
+            </section>
+
 
 
     </section>
