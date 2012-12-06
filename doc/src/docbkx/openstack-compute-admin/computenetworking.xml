@@ -41,9 +41,13 @@
             since you can't yet select the type of network for a given project, you cannot configure
             more than one type of network in a given Compute installation.</para>
         <note>
-            <para>All of the networking options require network connectivity to be already set up
-                between OpenStack physical nodes. OpenStack will not create or configure any network
-                interfaces (except bridges and VM virtual interfaces). </para>
+            <para>All of the networking options require network connectivity to be already
+            set up between OpenStack physical nodes. OpenStack will not configure
+            any physical network interfaces.
+
+            OpenStack will automatically create all network bridges (i.e., br100)
+            and VM virtual interfaces.
+           </para>
             <para>All machines must have a <emphasis role="italic">public</emphasis> and <emphasis
                     role="italic">internal</emphasis> network interface (controlled by the options:
                     <literal>public_interface</literal> for the public interface, and
@@ -83,11 +87,12 @@
         <para>In <emphasis role="bold">Flat Mode</emphasis>, a network administrator specifies a
             subnet. The IP addresses for VM instances are grabbed from the subnet, and then injected
             into the image on launch. Each instance receives a fixed IP address from the pool of
-            available addresses. A network administrator must configure the Linux networking bridge
-            (typically named <literal>br100</literal>, although this configurable) both on the
-            network controller hosting the network and on the cloud controllers hosting the
-            instances. All instances of the system are attached to the same bridge, configured
-            manually by the network administrator.</para>
+            available addresses. 
+            A system administrator may create the Linux networking bridge
+            (typically named <literal>br100</literal>, although this configurable) on the
+            systems running the <literal>nova-network</literal> service. All instances of the
+             system are attached to the same bridge, configured manually by the network administrator.
+        </para>
         <para>
             <note>
                 <para>The configuration injection currently only works on Linux-style systems that
