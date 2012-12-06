@@ -63,22 +63,19 @@ format="PNG" />
                 <screen><userinput><?db-font-size 75%?>keystone service-create --name quantum --type network --description 'OpenStack Networking Service'</userinput></screen>
                 <para>Make a note of the ID returned by keystone and
                     put it in the $ID location.</para>
-<screen><userinput>keystone endpoint-create --region $REGION --service-id $ID --publicurl
-                    'http://$IP:9696/' --adminurl 'http://$IP:9696/' --internalurl 'http://$IP:9696/'</userinput></screen>
+<screen><userinput>keystone endpoint-create --region $REGION --service-id $ID --publicurl 'http://$IP:9696/' --adminurl 'http://$IP:9696/' --internalurl 'http://$IP:9696/'</userinput></screen>
                 <para>Here's an example with real values:</para>
                 <screen><userinput><?db-font-size 75%?><prompt>$</prompt> <userinput>keystone service-create --name quantum --type network --description 'OpenStack Networking Service'</userinput></userinput></screen>
                 <screen>+-------------+----------------------------------+
-                |   Property  |              Value               |
-                +-------------+----------------------------------+
-                | description | OpenStack Networking Service     |
-                | id          | 26a55b340e254ad5bb78c0b14391e153 |
-                | name        | quantum                          |
-                | type        | network                          |
-                +-------------+----------------------------------+</screen>
-                <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion
-                    --service-id 26a55b340e254ad5bb78c0b14391e153 --publicurl
-                    "http://10.211.55.17:9696/" --adminurl "http://10.211.55.17:9696/" --internalurl
-                    "http://10.211.55.17:9696/" </userinput></screen>
+|   Property  |              Value               |
++-------------+----------------------------------+
+| description | OpenStack Networking Service     |
+| id          | 26a55b340e254ad5bb78c0b14391e153 |
+| name        | quantum                          |
+| type        | network                          |
++-------------+----------------------------------+</screen>
+                <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service-id 26a55b340e254ad5bb78c0b14391e153 \
+--publicurl "http://10.211.55.17:9696/" --adminurl "http://10.211.55.17:9696/" --internalurl "http://10.211.55.17:9696/" </userinput></screen>
                 <para>With the <emphasis>template driver</emphasis>,
                     for a given region ($REGION) and IP address of the
                     Quantum server ($IP), add the following content to
@@ -90,9 +87,9 @@ catalog.$REGION.network.internalURL = http://$IP:9696
 catalog.$REGION.network.name = Network Service </computeroutput></screen>
                 <para>Here is an example with real values:</para>
                 <programlisting>catalog.$Region.network.publicURL = http://10.211.55.17:9696
-                    catalog.$Region.network.adminURL = http://10.211.55.17:9696
-                    catalog.$Region.network.internalURL = http://10.211.55.17:9696
-                    catalog.$Region.network.name = Network Service</programlisting>
+catalog.$Region.network.adminURL = http://10.211.55.17:9696
+catalog.$Region.network.internalURL = http://10.211.55.17:9696
+catalog.$Region.network.name = Network Service</programlisting>
                 
             </step>
             <step>
@@ -104,11 +101,12 @@ catalog.$REGION.network.name = Network Service </computeroutput></screen>
                     user within this tenant, and to assign this user an 'admin' role. Kindly check
                     the ID for user, role and tenant.</para>
                 <para>For example: </para>
-                <screen><computeroutput><?db-font-size 75%?>keystone user-create --name=quantum --pass=$SERVICE_PASSWORD --tenant-id service 
-</computeroutput></screen>
-                <screen><prompt>$</prompt> <userinput>  keystone user-role-add --user_id
-              45e9461fa61e48f99de1adcd0b38eae7 --role_id e45af7cf33be4dac8070aa8310144ce3
-              --tenant_id 950fe8e5ed5f4659a8556ac836e8943d</userinput></screen>
+
+                <screen><prompt>$</prompt> <userinput>ADMIN_ROLE=$(get_id keystone role-create --name=admin)
+</userinput></screen>
+                <screen><prompt>$</prompt> <userinput>QUANTUM_USER=$(get_id keystone user-create --name=quantum --pass="$QUANTUM_PASSWORD" --email=demo@example.com --tenant-id service)
+</userinput></screen>
+                <screen><prompt>$</prompt> <userinput>  keystone user-role-add --user_id $QUANTUM_USER --role_id $ADMIN_ROLE --tenant_id service</userinput></screen>
             </step>
         </procedure>
         <para> See the Keystone Administrator Guide for more details about creating service entries
