@@ -19,10 +19,12 @@
                 <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install swift-account swift-container swift-object xfsprogs</userinput></screen>
                 <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-swift-account openstack-swift-container openstack-swift-object xfsprogs</userinput></screen></para>
         </listitem>
-        <listitem><para>For every device on the node, setup the XFS volume (/dev/sdb is used
-            as an example):</para>
-            <para><screen><prompt>#</prompt><userinput>fdisk /dev/sdb</userinput></screen>(set up a
-                single partition)
+        <listitem><para>For every device on the node you wish to use for storage,
+            setup the XFS volume (/dev/sdb is used as an example). Use a single partition per
+drive. For example, in a server with 12 disks you may use one or two disks for the operating system which
+should not be touched in this step. The other 10 or 11 disks should be partitioned with a single
+partition, then formatted in XFS.</para>
+            <para><screen><prompt>#</prompt><userinput>fdisk /dev/sdb</userinput></screen>
                 <programlisting>mkfs.xfs -i size=1024 /dev/sdb1
 echo "/dev/sdb1 /srv/node/sdb1 xfs noatime,nodiratime,nobarrier,logbufs=8 0 0" &gt;&gt; /etc/fstab
 mkdir -p /srv/node/sdb1
