@@ -12,11 +12,9 @@
         </para>
       </listitem>
     </itemizedlist>
-    <para>
-      ..note: Swift can run with other distros, but for this document we
+    <note><para>Swift can run with other distros, but for this document we
       will focus on installing on Ubuntu Server, ypmv (your packaging
-      may vary).
-    </para>
+      may vary). </para></note>
     <para>
       Basic architecture and terms
     </para>
@@ -61,20 +59,19 @@
         </itemizedlist>
       </listitem>
     </itemizedlist>
-    <db:note xmlns:db="http://docbook.org/ns/docbook"><db:para> Fewer Storage nodes can be used initially, but a minimum of 5 is recommended for a production cluster.</db:para></db:note>
+    <note><para> Fewer Storage nodes can be used initially, but a minimum of 5 is recommended for a production cluster.</para></note>
     <para>
       This document describes each Storage node as a separate zone in
       the ring. It is recommended to have a minimum of 5 zones. A zone
       is a group of nodes that is as isolated as possible from other
       nodes (separate servers, network, power, even geography). The ring
       guarantees that every replica is stored in a separate zone. For
-      more information about the ring and zones, see: :doc:`The Rings
-      &lt;overview_ring&gt;`.
+      more information about the ring and zones, see: <link linkend="the-ring">The Ring</link>.
     </para>
     <para>
       To increase reliability, you may want to add additional Proxy
       servers for performance which is described in
-      :ref:`add-proxy-server`.
+      <link linkend="adding-a-proxy-server">Adding a Proxy Server</link>.
     </para>
   </section>
   <section xml:id="network-setup-notes"><info><title>Network Setup Notes</title></info>
@@ -82,12 +79,12 @@
     <para>
       This document refers to two networks. An external network for
       connecting to the Proxy server, and a storage network that is not
-      accessibile from outside the cluster, to which all of the nodes
+      accessible from outside the cluster, to which all of the nodes
       are connected. All of the Swift services, as well as the rsync
       daemon on the Storage nodes are configured to listen on their
       STORAGE_LOCAL_NET IP addresses.
     </para>
-    <db:note xmlns:db="http://docbook.org/ns/docbook"><db:para> Run all commands as the root user</db:para></db:note>
+    <note><para> Run all commands as the root user</para></note>
   </section>
   <section xml:id="general-os-configuration-and-partitioning-for-each-node"><info><title>General OS configuration and partitioning for each
     node</title></info>
@@ -150,11 +147,11 @@ export PROXY_LOCAL_NET_IP=10.1.2.4
 </screen>
       </listitem>
     </orderedlist>
-    <db:note xmlns:db="http://docbook.org/ns/docbook"><db:para> The random string of text in /etc/swift/swift.conf is used as a salt when hashing to determine mappings in the ring.</db:para></db:note>
+    <note><para> The random string of text in /etc/swift/swift.conf is used as a salt when hashing to determine mappings in the ring.</para></note>
   </section>
   <section xml:id="configure-the-proxy-node"><info><title>Configure the Proxy node</title></info>
     
-    <db:note xmlns:db="http://docbook.org/ns/docbook"><db:para> It is assumed that all commands are run as the root user</db:para></db:note>
+    <note><para> It is assumed that all commands are run as the root user</para></note>
     <orderedlist>
       <listitem>
         <para>
@@ -174,7 +171,7 @@ openssl req -new -x509 -nodes -out cert.crt -keyout cert.key
 </screen>
       </listitem>
     </orderedlist>
-    <db:note xmlns:db="http://docbook.org/ns/docbook"><db:para> If you don't create the cert files, Swift silently uses http internally rather than https. This document assumes that you have created these certs, so if you're following along step-by-step, create them.</db:para></db:note>
+    <note><para> If you don't create the cert files, Swift silently uses http internally rather than https. This document assumes that you have created these certs, so if you're following along step-by-step, create them.</para></note>
     <orderedlist>
       <listitem>
         <para>
@@ -231,13 +228,13 @@ EOF
     </orderedlist>
       <note><title>Note</title><para>
 If you run multiple memcache servers, put the multiple IP:port listings    
-in the [filter:cache] section of the proxy-server.conf file like:
+in the [filter:cache] section of the <filename>proxy-server.conf</filename> file like:
 `10.1.2.3:11211,10.1.2.4:11211`. Only the proxy server uses memcache.
     </para></note>
     <note><title>Note</title><para>
     The memcache_servers variable can also be set in a separate file:
-    /etc/swift/memcache.conf. If it is set there, it will override 
-    the value in proxy-server.conf
+    <filename>/etc/swift/memcache.conf</filename>. If it is set in both places, the value
+    in <filename>proxy-server.conf</filename> will override the one in <filename>memcache.conf</filename>.
     </para></note>
     <orderedlist>
       <listitem>
@@ -260,12 +257,6 @@ swift-ring-builder object.builder create 18 3 1
 </screen>
       </listitem>
     </orderedlist>
-    <para>
-      ..note:
-    </para>
-    <screen>
-For more information on building rings, see :doc:`overview_ring`.
-</screen>
     <orderedlist>
       <listitem>
         <para>
@@ -283,7 +274,7 @@ swift-ring-builder object.builder add z$ZONE-$STORAGE_LOCAL_NET_IP:6000/$DEVICE 
 </screen>
       </listitem>
     </orderedlist>
-    <db:note xmlns:db="http://docbook.org/ns/docbook"><db:para> Assuming there are 5 zones with 1 node per zone, ZONE should start at 1 and increment by one for each additional node.</db:para></db:note>
+    <note><para> Assuming there are 5 zones with 1 node per zone, ZONE should start at 1 and increment by one for each additional node.</para></note>
     <orderedlist>
       <listitem>
         <para>
@@ -306,7 +297,7 @@ swift-ring-builder object.builder rebalance
 </screen>
       </listitem>
     </orderedlist>
-    <db:note xmlns:db="http://docbook.org/ns/docbook"><db:para> Rebalancing rings can take some time.</db:para></db:note>
+    <note><para> Rebalancing rings can take some time.</para></note>
     <orderedlist>
       <listitem>
         <para>
@@ -335,7 +326,7 @@ swift-init proxy start
   </section>
   <section xml:id="configure-the-storage-nodes"><info><title>Configure the Storage nodes</title></info>
     
-    <db:note xmlns:db="http://docbook.org/ns/docbook"><db:para> Swift should work on any modern filesystem that supports Extended Attributes (XATTRS). We currently recommend XFS as it demonstrated the best overall performance for the swift use case after considerable testing and benchmarking at Rackspace. It is also the only filesystem that has been thoroughly tested. These instructions assume that you are going to devote /dev/sdb1 to an XFS filesystem.</db:para></db:note>
+    <note><para> Swift should work on any modern filesystem that supports Extended Attributes (XATTRS). We currently recommend XFS as it demonstrated the best overall performance for the swift use case after considerable testing and benchmarking at Rackspace. It is also the only filesystem that has been thoroughly tested. These instructions assume that you are going to devote /dev/sdb1 to an XFS filesystem.</para></note>
     <orderedlist>
       <listitem>
         <para>
@@ -408,7 +399,7 @@ service rsync start
 </screen>
       </listitem>
     </orderedlist>
-    <db:note xmlns:db="http://docbook.org/ns/docbook"><db:para> The rsync daemon requires no authentication, so it should be run on a local, private network.</db:para></db:note>
+    <note><para> The rsync daemon requires no authentication, so it should be run on a local, private network.</para></note>
     <orderedlist>
       <listitem>
         <para>
@@ -624,7 +615,7 @@ swift -A https://$PROXY_LOCAL_NET_IP:8080/auth/v1.0 -U system:root -K testpass d
       url to the load balancer.
     </para>
     <para>
-      See :ref:`config-proxy` for the initial setup, and then follow
+      See <link linkend="configure-the-proxy-node">config-proxy</link> for the initial setup, and then follow
       these additional steps.
     </para>
     <orderedlist>
@@ -680,7 +671,7 @@ user_system_root = testpass .admin http[s]://&lt;LOAD_BALANCER_HOSTNAME&gt;:&lt;
       at error messages in /var/log/kern.log.
     </para>
     <para>
-      There are more debugging hints and tips in the :doc:`admin_guide`.
+      There are more debugging hints and tips in the <link linkend="troubleshooting-openstack-object-storage">Troubleshooting</link> section.
     </para>
   </section>
 </section>
