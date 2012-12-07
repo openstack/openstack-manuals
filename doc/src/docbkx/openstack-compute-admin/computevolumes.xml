@@ -931,6 +931,79 @@ san_password=sfpassword     # your cluster admin password
             </section>
         </section>
     </section>
+       <section xml:id="HPSan-driver">
+            <title>HP / LeftHand SAN</title>
+            <para>HP/LeftHand SANs are optimized for virtualized
+                environments with VMware ESX &amp; Microsoft Hyper-V, though
+                the OpenStack integration provides additional
+                support to various other virtualized environments
+                (Xen, KVM, OpenVZ etc) by exposing the volumes via ISCSI
+                to connect to the instances.</para>
+            <para>The HpSanISCSIDriver allows you to use a HP/Lefthand
+                SAN that supports the Cliq interface. Every supported
+                volume operation translates into a cliq call in the
+                backend.</para>
+            <para>To use Nova with HP/Lefthand SAN, you should set the
+                following required parameters in <literal>nova.conf</literal>:</para>
+                <itemizedlist>
+                    <listitem><para>set
+                            <literal>volume_driver=nova.volume.san.HpSanISCSIDriver</literal>.</para></listitem>
+                    <listitem><para>set <literal>san_ip</literal> flag to the hostname or VIP of
+                        your Virtual Storage Appliance (VSA).</para></listitem>
+                    <listitem>
+                    <para>set <literal>san_login</literal> and
+                            <literal>san_password</literal> to the
+                        username and password of the ssh user with all
+                        necessary privileges on the appliance.</para>
+                </listitem>
+                <listitem>
+                    <para>set <literal>san_ssh_port=16022</literal>
+                        the default is set to 22, but the default for
+                        the VSA is usually 16022.</para>
+                </listitem>
+                    <listitem><para>set <literal>san_clustername</literal> to the name of the
+                        cluster on which the associated volumes will
+                        be created.</para></listitem>
+                </itemizedlist>
+            <para>Some of the optional settings with their default
+                values:</para>
+                <itemizedlist>
+                    <listitem><para><literal>san_thin_provision=True</literal> set it to False to
+                        disable thin provisioning.</para></listitem>
+                    <listitem><para><literal>san_is_local=False</literal> This is almost always
+                        False for this driver. Setting it to True will
+                        try and run the cliq commands locally instead
+                        of over ssh.</para></listitem>
+                </itemizedlist>
+            <simplesect>
+                <title>Configuring the VSA</title>
+                <para>In addition to configuring the nova-volume
+                    service some pre configuration has to happen on
+                    the VSA for proper functioning in an Openstack
+                    environment. </para>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para>Configure Chap on each of the
+                                nova-compute nodes.</para>
+                        </listitem>
+                        <listitem>
+                            <para>Add Server associations on the VSA
+                                with the associated Chap and initiator
+                                information. Note that the name should
+                                correspond to the <emphasis
+                                   role="italic">'hostname'</emphasis>
+                                of the nova-compute node. For Xen this
+                                will be the hypervisor hostname. This
+                                can either be done thru Cliq or the
+                                Centralized Management Console.
+                            </para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+            </simplesect>
+        </section>
+    </section>
     <section xml:id="boot-from-volume">
         <title>Boot From Volume</title>
         <para>The Compute service has preliminary support for booting an instance from a
