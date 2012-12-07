@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="configuring-tenant-specific-storage-for-images">
+    <title>Configuring Tenant-specific Storage Locations for Images
+        with Object Storage</title>
+    <para>For some deployers, storing all images in a single place for
+        all tenants and users to access is not ideal. To enable access
+        control to specific images for cloud users, you can configure
+        the Image service with the ability to store image data in the
+        image owner-specific locations.</para>
+    <para>These are the relevant configuration options in the
+            <filename>glance-api.conf</filename> file:</para>
+    <itemizedlist>
+        <listitem>
+            <para>swift_store_multi_tenant: this must be set to 'True'
+                to enable tenant-specific storage locations (it
+                defaults to 'False').</para>
+        </listitem>
+        <listitem>
+            <para>swift_store_admin_tenants: this is a list of
+                tenants, referenced by id, that should be granted read
+                and write access to all Object Storage containers
+                created by the Image service.</para>
+        </listitem>
+    </itemizedlist>
+    <para>Assuming you configured 'swift' as your default_store in
+            <filename>glance-api.conf</filename> and you enable this
+        feature as described above, images will be stored in an Object
+        Storage service (swift) endpoint pulled from the authenticated
+        user's service_catalog. The created image data will only be
+        accessible through the Image service by the tenant that owns
+        it and any tenants defined in swift_store_admin_tenants that
+        are identified as having admin-level accounts.</para>
+</section>
