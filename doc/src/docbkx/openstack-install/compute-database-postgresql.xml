@@ -5,7 +5,8 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
     <title>Configuring the SQL Database (PostgreSQL) on the Cloud Controller</title>
     <para>Optionally, if you choose not to use MySQL, you can install and configure PostgreSQL for all your databases. Here's a walkthrough for the Nova database:</para>
-    <screen><userinput><prompt>$</prompt> sudo apt-get install postgresql postgresql-client</userinput></screen>
+    <screen os="ubuntu"><userinput><prompt>$</prompt> sudo apt-get install postgresql postgresql-client</userinput></screen>
+    <screen os="rhel;centos;fedora"><userinput><prompt>$</prompt> sudo yum install postgresql postgresql-client</userinput></screen>
     <para>Start the PostgreSQL command line client by running:</para>
     <para><userinput>sudo su - postgres</userinput></para>
     <para>Enter the postgresql root user's password if prompted.</para>
@@ -19,8 +20,9 @@ postgres=# \q
 postgres> exit</screen></para>
     <para>The database is created and we have a privileged user that controls the database. Now we have to install the packages that will help Nova access the database.</para>
     
-    <screen><userinput><prompt>$</prompt> sudo apt-get install python-sqlalchemy python-psycopg2</userinput></screen>
-      
+    <screen os="ubuntu"><userinput><prompt>$</prompt> sudo apt-get install python-sqlalchemy python-psycopg2</userinput></screen>
+    <screen os="rhel;centos;fedora"><userinput><prompt>$</prompt> sudo yum install python-sqlalchemy python-psycopg2</userinput></screen>
+    
     <para>Configure the <filename>/etc/nova/nova.conf</filename> file, to ensure it knows to use the PostgreSQL database:</para>
     
     <literallayout class="monospaced">connection = postgres://novadbadmin:[<replaceable>[YOUR_NOVADB_PASSWORD]</replaceable>]@127.0.0.1/nova</literallayout>
