@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="upgrading-keystone" 
+    xmlns="http://docbook.org/ns/docbook" 
+    xmlns:xi="http://www.w3.org/2001/XInclude" 
+    xmlns:xlink="http://www.w3.org/1999/xlink" 
+    version="5.0">
+    <title>Upgrading Keystone</title>
+    <para>Finally, here are the overall steps for upgrading the keystone service.</para>
+    <itemizedlist>
+        <listitem>
+            <para>Since Keystone databse has been completely rewritten, we need to prepare a
+                database and update Keystone configuration.</para>
+            <orderedlist>
+                <listitem>
+                    <para>Create a new database for the migration:</para>
+                    <screen><prompt>$</prompt> <userinput>mysql -u root -p -e &quot;create database keystone_essex character set=utf8; grant all privileges on keystone_essex to keystone@&quot;%&quot; identified by $keystone-pass&quot;</userinput></screen>
+                </listitem>
+                <listitem>
+                    <para>Update <filename>/etc/keystone/keystone.conf</filename>
+                        <emphasis role="bold">[SQL]</emphasis> section:</para>
+                    <programlisting>[sql]
+connection = mysql://keystone:openstack@10.211.55.20/keystone_essex</programlisting>
+                </listitem>
+                <listitem>
+                    <para>With the regular user, run the following command :</para>
+                    <screen os="ubuntu"><prompt>$</prompt> <userinput>keystone-manage db_sync</userinput></screen>
+                    <note><para>Make sure to perform the command as a regular (non-root) user otherwise you would end up to
+                            change <filename>/var/log/glance/</filename> owner, making the daemons
+                            unable to write into these directories.</para></note>
+                </listitem>
+                <listitem>
+                    <para>Import the old database entries into the new one by running the following
+                        command:</para>
+                    <screen><prompt>$</prompt> <userinput>keystone-manage import_legacy mysql://keystone:keystone-pass@10.211.55.20/keystone</userinput></screen>
+                </listitem>
+            </orderedlist>
+        </listitem>
+        <listitem>
+            <para>In Essex, Keystone doesn't use any SQL database for storing its endpoints, rather
+                is uses a plain file. You can override that behaviour by editing
+                    <filename>/etc/keystone/keystone.conf</filename>
+                <emphasis role="bold">[catalog]</emphasis> section:</para>
+            <programlisting>[catalog]
+# dynamic, sql-based backend (supports API/CLI-based management commands)
+<emphasis role="bold">driver = keystone.catalog.backends.sql.Catalog</emphasis>
+#driver = keystone.catalog.backends.templated.TemplatedCatalog
+#template_file = /etc/keystone/default_catalog.templates</programlisting>
+        </listitem>
+        <listitem>
+            <para> The <emphasis role="italic">keystone-manage</emphasis> utility is not used
+                anymore for managing your users, tenants and projects. Rather you need to instruct
+                your <emphasis role="italic">keystone</emphasis> client to connect to its API. In
+                order to do that, set a token into <filename>/etc/keystone/keystone/conf</filename>.
+                See the<emphasis role="bold">[ADMIN]</emphasis> section:</para>
+            <programlisting> [DEFAULT]
+# A "shared secret" between keystone and other openstack services
+admin_token = admin</programlisting>
+            <para>Edit your <filename>.bashrc</filename> and set the token and the keystone admin
+                API address:</para>
+            <programlisting>export SERVICE_TOKEN=admin
+                
+export OS_TENANT_NAME=admin
+export SERVICE_ENDPOINT=http://10.211.55.20:35357/v2.0/</programlisting>
+            <para>The following examples show you how to create a user, a tenant and an endpoint using the new syntax:
+            <itemizedlist>
+                <listitem>
+                    <para><emphasis role="bold">User creation</emphasis></para><screen><prompt>$</prompt> <userinput>keystone user-create --name admin --pass openstack --email admin@foobar.com</userinput></screen></listitem>
+                <listitem>
+                    <para><emphasis role="bold">Tenant creation</emphasis></para><screen><prompt>$</prompt> <userinput>keystone tenant-create --name service</userinput></screen></listitem>
+                <listitem>
+                    <para><emphasis role="bold">Endpoint creation</emphasis></para><screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service_id 4088ac79a42d4495977465a782fbf03f --publicurl "http://10.211.55.17:9292/v1" --adminurl "http://10.211.55.17:9292/v1" --internalurl "http://10.211.55.17:9292/v1"</userinput></screen></listitem>
+            </itemizedlist>
+            </para>
+        </listitem>
+        <listitem>
+            <para> Finally, as stated in the introduction, global roles don't work anymore. Diablo
+                manages two kinds of roles : tenant-specific roles and global roles. A user could be
+                "Member" in a tenant and also "<emphasis role="italic">Admin</emphasis>" of the
+                whole cloud (Allowing the admin user to create new tenants for instance). In Essex,
+                you need to grant "<emphasis role="italic">Admin</emphasis>" role on all the created
+                tenants in order to consider the user as admin. You can create a new tenant
+                    <emphasis role="italic">globaltenant</emphasis> for specifying former global
+                roles. Note that you cannot migrate former global roles as-is.</para>
+        </listitem>
+    </itemizedlist>
+</section>

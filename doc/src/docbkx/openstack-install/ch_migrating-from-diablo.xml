@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="ch_migrating-from-diablo">
+    <title>Migrating from Diablo to Essex</title>
+    <?dbhtml stop-chunking?>
+    <para>This section presents all the necessary steps in order to operate an upgrade from Diablo
+        to Essex. The upgrade procedure uses Ubuntu 12.04 ("<emphasis role="italic"
+            >Precise</emphasis>") and it assumes you operated the upgrade from your previous version
+        to Ubuntu 12.04. For every service, the limitations and known-issues will also be presented
+        ; depending on your running setup, some topics might not be covered through this guide. </para>
+    <para><emphasis role="bold">Considerations and known limitations</emphasis></para>
+    <itemizedlist>
+        <listitem>
+            <para>One of the most important thing regarding Essex is the usage of <emphasis
+                    role="bold">UUIDs</emphasis> instead of sequential IDs that were previsouly used
+                in Diablo. This change induces inconsistencies between the two version that the
+                current sections addresses per service (Nova, Glance and Keystone).</para>
+        </listitem>
+        <listitem>
+            <para>The database upgrade commands are not similar for the services (note the
+                underscore):</para>
+            <programlisting>nova-manage db sync
+keystone-manage db_sync
+glance-manage db_sync</programlisting>
+        </listitem>
+        <listitem>
+            <para>Keystone doesn't store its endpoint into a database by default. You can override
+                that behaviour by updating <filename>/etc/keystone/keystone.conf</filename> (Refer
+                to the <link linkend="upgrading-keystone">Keystone upgrade procedure</link> for the detailled steps).</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="italic">keystone-manage</emphasis> is not used anymore for
+                creating initial users, tenants and projects. Rather, the <emphasis role="italic"
+                    >keystone</emphasis> command uses a token in order to communicate with the
+                Keystone API. (Reffer to the Keystone upgrade procedure).</para>
+        </listitem>
+        <listitem>
+            <para>Keystone doesn't support global roles in Essex. If you were previously using
+                global and per-tenant roles for a user, it won't work anymore. You need to create a
+                new tenant (could be "<emphasis role="italic">globaltenant</emphasis>" specially
+                dedicated for managing global roles for the admin users. The Keystone upgrade
+                procedure covers in detail that point.</para>
+        </listitem>
+        <listitem>
+            <para>User tools (such as <emphasis role="italic">nova</emphasis>, <emphasis
+                    role="italic">glance</emphasis> and <emphasis role="italic">keystone</emphasis>)
+                need ID of objects in Essex rather than plain names. For instance : </para>
+<screen><prompt>$</prompt> <userinput>keystone user-role-add --user_id 223c1711de5446f9b99c71803fc488db --role_id e45af7cf33be4dac8070aa8310144ce3 --tenant_id 2a76a11b872e4ca18adb3162924735af</userinput></screen>            
+        </listitem>
+    </itemizedlist>
+    <para/>
+    <section xml:id="about-the-migration-procedure">
+        <title>Pre-requisites before migrating your cloud</title>
+        <itemizedlist>
+            <listitem>
+                <para>Before going through that document, make sure to backup your database and
+                    configuration files. <orderedlist>
+                        <listitem>
+                            <para>Create a backup directory :
+                                <screen ><prompt>#</prompt> <userinput>mkdir /root/openstack/backup</userinput></screen></para>
+                        </listitem>
+                        <listitem>
+                            <para>Backup your database by running the following command :
+                                <screen><prompt>#</prompt> <userinput>mysqldump --all-databases -u root -p | gzip > /root/openstack/backup/diablo_db.sql.gz</userinput></screen></para>
+                        </listitem>
+                        <listitem>
+                            <para>Save the configuration files of the different projects you
+                                deployed :
+<screen><prompt>#</prompt> <userinput>cp -r /etc/nova/ /root/openstack/backup/nova/</userinput>
+<prompt>#</prompt> <userinput>cp -r /etc/keystone/ /root/openstack/backup/keystone/</userinput>
+<prompt>#</prompt> <userinput>cp -r /etc/glance/ /root/openstack/backup/glance/</userinput></screen>
+                            </para>
+                        </listitem>
+                    </orderedlist></para>
+            </listitem>
+            <listitem>
+                <para>Upgrade your system by running the following command:</para>
+                <screen os="ubuntu"><prompt>#</prompt> <userinput>sudo -y apt-get update &amp;&amp; sudo apt-get upgrade/</userinput></screen>
+            </listitem>
+        </itemizedlist>        
+        <xi:include href="version-upgrade-nova.xml"/>
+        <xi:include href="version-upgrade-glance.xml"/>
+        <xi:include href="version-upgrade-keystone.xml"/>
+    </section>
+</chapter>

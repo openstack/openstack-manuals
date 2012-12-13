@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="upgrading-glance" 
+    xmlns="http://docbook.org/ns/docbook" 
+    xmlns:xi="http://www.w3.org/2001/XInclude" 
+    xmlns:xlink="http://www.w3.org/1999/xlink" 
+    version="5.0">
+    <title>Upgrading Glance</title>
+    <para>Here are the overall steps for upgrading the glance service.</para>
+    <itemizedlist>
+        <listitem>
+            <para>Upgrade the database</para>
+            <orderedlist>
+                <listitem>
+                    <para>With your system user (not as root), run the following command :</para>
+                    <screen os="ubuntu"><prompt>$</prompt> <userinput>glance-manage db_sync</userinput></screen>
+                    <note><para>Make sure to perform the command as a regular (non-root) user othewise you would end up to
+                            change <filename>/var/log/glance/</filename> owner, making the daemons
+                            unable to write into these directories.</para></note>
+                </listitem>
+            </orderedlist>
+        </listitem>
+        <listitem>
+            <para>Since Glance images are no longer referenced by IDs but by UUIDS, nova snapshots
+                won't work anymore : during a snapshot, nova performs a Glance call in order to
+                retrieve the image reference. In order to fix that, the simplest way is to save a
+                map from the old IDs to the new IDs and update the following fields into nova
+                database:</para>
+            <programlisting>image_ref
+kernel_id (id any)
+ramdisk_id (if any)            </programlisting>
+        </listitem>
+    </itemizedlist>
+</section>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="upgrading-nova" 
+    xmlns="http://docbook.org/ns/docbook" 
+    xmlns:xi="http://www.w3.org/2001/XInclude" 
+    xmlns:xlink="http://www.w3.org/1999/xlink" 
+    version="5.0">
+    <title>Upgrading nova</title>
+    <para>Here are the overall steps for upgrading the nova service.</para>
+    <itemizedlist>
+        <listitem>
+            <para>Upgrade the database</para>
+            <orderedlist>
+                <listitem>
+                    <para>With the your system user (non-root), run the following command :</para>
+                    <screen os="ubuntu"><prompt>$</prompt> <userinput>nova-manage db sync</userinput></screen>
+                </listitem>
+            </orderedlist>
+        </listitem>
+        <listitem>
+            <para>Upgrade the <filename>/etc/nova/nova.conf</filename> on all your servers. Essex
+                introduces new configuration options instead of flags:
+            <itemizedlist>
+                <listitem><para>Before:</para>
+                    <programlisting>--verbose=false
+--ec2_url=http://127.0.0.1:8773/services/Cloud
+--s3_host=127.0.0.1
+--cc_host=127.0.0.1             </programlisting>
+                </listitem>
+                <listitem>
+                    <para>After:</para>
+                    <programlisting>[DEFAULT]
+logdir = /var/log/nova
+state_path = /var/lib/nova
+lock_path = /var/lock/nova
+dhcpbridge = /usr/bin/nova-dhcpbridge               </programlisting>
+                </listitem>
+            </itemizedlist>
+            </para>
+                
+                <para>Adjust your configuration options accordingly. You can refer to the OpenStack
+                wiki at <link
+                    xlink:href=" http://docs.openstack.org/essex/openstack-compute/admin/content/compute-options-reference.html"
+                    >
+                    http://docs.openstack.org/essex/openstack-compute/admin/content/compute-options-reference.html</link>
+                to see a list of all possible configuration options.</para>
+        </listitem>
+    </itemizedlist>
+</section>
