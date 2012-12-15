@@ -16,12 +16,40 @@
                         <itemizedlist>
                             <listitem>
                                 <para>Edit <emphasis role="bold">/etc/nova/api-paste.ini</emphasis>
-                                    file and modify :<screen><userinput>admin_tenant_name = service 
+                            file and modify
+                            :<screen><userinput>admin_tenant_name = service 
 admin_user = nova 
-admin_password = password</userinput></screen>You
-                                    should also <emphasis role="bold">delete</emphasis> each
-                                    composite with "<emphasis role="bold">volume</emphasis>".</para>
-                                <para>We can do that manually or with this command :<screen><userinput>sed -i '/volume/d' /etc/nova/api-paste.ini</userinput></screen></para>
+admin_password = password</userinput></screen>Since
+                            we are going to use Cinder for volumes, we should also <emphasis
+                                role="bold">delete</emphasis> each part concerning "<emphasis
+                                role="bold">nova-volume</emphasis>" :
+                            <screen>============================================================
+[composite:osapi_volume]
+use = call:nova.api.openstack.urlmap:urlmap_factory
+/: osvolumeversions
+/v1: openstack_volume_api_v1
+============================================================
+
+============================================================
+[composite:openstack_volume_api_v1]
+use = call:nova.api.auth:pipeline_factory
+noauth = faultwrap sizelimit noauth ratelimit osapi_volume_app_v1
+keystone = faultwrap sizelimit authtoken keystonecontext ratelimit osapi_volume_app_v1
+keystone_nolimit = faultwrap sizelimit authtoken keystonecontext osapi_volume_app_v1
+============================================================
+
+============================================================
+[app:osapi_volume_app_v1]
+paste.app_factory = nova.api.openstack.volume:APIRouter.factory
+============================================================
+
+============================================================
+[pipeline:osvolumeversions]
+pipeline = faultwrap osvolumeversionapp
+
+[app:osvolumeversionapp]
+paste.app_factory = nova.api.openstack.volume.versions:Versions.factory
+============================================================</screen></para>
                             </listitem>
                             <listitem>
                                 <para>Edit <emphasis role="bold">/etc/nova/nova.conf</emphasis> file

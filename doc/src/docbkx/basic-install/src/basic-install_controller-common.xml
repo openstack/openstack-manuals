@@ -21,13 +21,17 @@
                         </itemizedlist></para>
                     <para>After OS Installation, reboot the server.</para>
                 </listitem>
-                <listitem>
-                    <para>Setup the Cloud Archive in editing <emphasis role="bold">/etc/apt/sources.list</emphasis> :
-                    <screen><userinput>deb http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/folsom main</userinput></screen>
-                    Then, you should setup keyring and upgrade packages :
-                    <screen><userinput>apt-get install ubuntu-cloud-keyring
-apt-get update &amp;&amp; apt-get -y dist-upgrade</userinput></screen>Reboot the server.</para>
-                </listitem>
+           	    <listitem>
+           	        <para>Since Ubuntu 12.04 LTS has OpenStack Essex
+                    by default, we are going to use the Ubuntu Cloud
+                    Archive for Folsom
+                    :<screen>apt-get install ubuntu-cloud-keyring</screen>Edit
+                        <emphasis role="bold"
+                        >/etc/apt/source.list.d/cloud-archive.list</emphasis>
+                    :<screen>deb http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/folsom main </screen>Upgrade
+                    the system (and reboot if you need)
+                    :<screen>apt-get update &amp;&amp; apt-get upgrade</screen></para>
+           	    </listitem>
                 <listitem>
                     <para>Configure the network :</para>
                     <para><itemizedlist>
@@ -43,36 +47,29 @@ auto eth0
     gateway 192.168.0.254
     dns-nameservers 8.8.8.8
 
-# VMs Networks with OVS in tunnel mode
+# API + Public Network
     auto eth1
     iface eth1 inet static
-    address 10.0.0.3
-    netmask 255.255.255.0
-
-# Public Bridge
-    auto eth2
-    iface eth2 inet manual
-    up ifconfig $IFACE 0.0.0.0 up
-    up ip link set $IFACE promisc on 
-    down ifconfig $IFACE down</userinput></screen>Then,
+    address 7.7.7.7
+    netmask 255.255.255.0</userinput></screen>Then,
                     restart network service :
                     <screen><userinput>service networking restart</userinput></screen></para>
                     <para>
                         <itemizedlist>
                             <listitem>
-                                <para>Enable <emphasis role="bold">IP forwarding</emphasis> since
-                                    this node will be a gateway (with quantum-l3-agent) between
-                                    external &amp; internal network :</para>
+                                <para>Edit <emphasis role="bold">/etc/sysctl.conf
+                                </emphasis>:</para>
                             </listitem>
                         </itemizedlist>
-                        <screen><userinput>sed -i -r 's/^\s*#(net\.ipv4\.ip_forward=1.*)/\1/' /etc/sysctl.conf
-echo 1 > /proc/sys/net/ipv4/ip_forward</userinput></screen>
+                        <programlisting>net.ipv4.ip_forward=1
+net.ipv4.conf.all.rp_filter = 0
+net.ipv4.conf.default.rp_filter = 0  </programlisting>
                         <itemizedlist>
                             <listitem>
                                 <para>Edit the <emphasis role="bold">/etc/hosts</emphasis> file and
-                                    add <emphasis role="bold">folsom-controller</emphasis> &amp;
-                                        <emphasis role="bold">folsom-compute</emphasis> hostnames
-                                    with correct IP.</para>
+                                    add <emphasis role="bold">folsom-controller</emphasis>, <emphasis
+                                        role="bold">folsom-network</emphasis> and <emphasis role="bold"
+                                            >folsom-compute</emphasis> hostnames with correct IP.</para>
                             </listitem>
                         </itemizedlist>
                     </para>
@@ -99,7 +96,7 @@ fudge 127.127.1.0 stratum 10</userinput></screen></para>
             </section>
             <section xml:id="controller-mysql">
             <info>
-                <title>MySQL</title>
+                <title>MySQL Database Service</title>
             </info>
             <para>
                 <orderedlist>
@@ -124,6 +121,8 @@ GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'192.168.0.1' \
 IDENTIFIED BY 'password';
 GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'192.168.0.2' \
 IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'192.168.0.3' \
+IDENTIFIED BY 'password';
 CREATE DATABASE cinder;
 GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'localhost' \
 IDENTIFIED BY 'password';
@@ -138,6 +137,8 @@ GRANT ALL PRIVILEGES ON quantum.* TO 'quantum'@'localhost' \
 IDENTIFIED BY 'password';
 GRANT ALL PRIVILEGES ON quantum.* TO 'quantum'@'192.168.0.2' \
 IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON quantum.* TO 'quantum'@'192.168.0.3' \
+IDENTIFIED BY 'password';
 FLUSH PRIVILEGES;
 EOF</userinput></screen></para>
                     </listitem>
@@ -145,7 +146,7 @@ EOF</userinput></screen></para>
             </para>
             </section>
             <section xml:id="controller-rabbitmq">
-                <title>Rabbit-MQ</title>
+                <title>RabbitMQ Messaging Service</title>
                         <para>
                 <orderedlist>
                     <listitem>

@@ -10,6 +10,10 @@
                         <para>Install the packages :<screen><userinput>apt-get install -y cinder-api cinder-scheduler cinder-volume iscsitarget \
     open-iscsi iscsitarget-dkms python-cinderclient</userinput></screen></para>
                     </listitem>
+                    <listitem><para>Since there is a bug in tgtadm, we have to modify <emphasis role="bold"
+                        >/etc/tgt/targets.conf</emphasis>
+                    :<screen># include /etc/tgt/conf.d/*.conf
+include /etc/tgt/conf.d/cinder_tgt.conf </screen></para></listitem>
                     <listitem>
                         <para>Configure &amp; start the iSCSI services :<screen><userinput>sed -i 's/false/true/g' /etc/default/iscsitarget
 service iscsitarget start
@@ -20,15 +24,10 @@ service open-iscsi start</userinput></screen></para>
                         <itemizedlist>
                             <listitem>
                                 <para>Edit <emphasis role="bold">/etc/cinder/cinder.conf</emphasis>
-                                    file and modify :<screen><userinput>[DEFAULT]
-rootwrap_config = /etc/cinder/rootwrap.conf
+                            file and modify
+                            :<screen><userinput>[DEFAULT]
 sql_connection = mysql://cinder:password@localhost:3306/cinder
-iscsi_helper = ietadm 
-volume_group = cinder-volumes
-rabbit_password = password
-logdir = /var/log/cinder
-verbose = true
-auth_strategy = keystone</userinput></screen></para>
+rabbit_password = password</userinput></screen></para>
                             </listitem>
                             <listitem>
                                 <para>Edit <emphasis role="bold">/etc/cinder/api-paste.ini</emphasis> file and modify :<screen><userinput>admin_tenant_name = service
@@ -36,7 +35,8 @@ admin_user = cinder
 admin_password = password</userinput></screen></para>
                             </listitem>
                             <listitem>
-                                <para>Create the volume :<screen><userinput>fdisk /dev/sdb
+                                <para>Create the volume (on the second disk)
+                            :<screen><userinput>fdisk /dev/sdb
 
 [Create a Linux partition]
 

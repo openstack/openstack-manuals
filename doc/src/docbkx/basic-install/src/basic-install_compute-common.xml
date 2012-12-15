@@ -20,19 +20,21 @@
                     <para>After OS Installation, reboot the server .</para>
                 </listitem>
                 <listitem>
-                    <para>Add the repository and upgrade Ubuntu :<screen><userinput>apt-get install -y python-software-properties
-add-apt-repository ppa:openstack-ubuntu-testing/folsom-trunk-testing
-add-apt-repository ppa:openstack-ubuntu-testing/folsom-deps-staging
-apt-get update &amp;&amp; apt-get -y dist-upgrade</userinput></screen>Reboot the server.</para>
+                    <para>Since Ubuntu 12.04 LTS has OpenStack Essex by default, we are going to use
+                Cloud Archives for Folsom :<screen>apt-get install ubuntu-cloud-keyring</screen>Edit
+                    <emphasis role="bold">/etc/apt/source.list.d/cloud-archive.list</emphasis>
+                :<screen>deb http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/folsom main </screen>Upgrade
+                the system (and reboot if you need)
+                :<screen>apt-get update &amp;&amp; apt-get upgrade</screen></para>
                 </listitem>
                 <listitem>
                     <para>Configure the network :</para>
                     <para><itemizedlist>
-                            <listitem>
-                                <para>Edit <emphasis role="bold">/etc/network/interfaces</emphasis>
-                                    file :</para>
-                            </listitem>
-                        </itemizedlist><screen><userinput># Management Network
+                    <listitem>
+                        <para>Edit <emphasis role="bold">/etc/network/interfaces</emphasis> file
+                            :</para>
+                    </listitem>
+                </itemizedlist><screen><userinput># Management Network
 auto eth0
     iface eth0 inet static
     address 192.168.0.2
@@ -40,25 +42,29 @@ auto eth0
     gateway 192.168.0.254
     dns-nameservers 8.8.8.8
 
-# VMs Networks with OVS in tunnel mode
+# Data Network
 auto eth1
     iface eth1 inet static
-    address 10.0.0.4
-    netmask 255.255.255.0</userinput></screen>Then, restart network service :<screen><userinput>service networking restart</userinput></screen></para>
+    address 10.10.10.2
+    netmask 255.255.255.0</userinput></screen>Then,
+                restart network service
+                :<screen><userinput>service networking restart</userinput></screen></para>
                     <para>
                         <itemizedlist>
                             <listitem>
-                                <para>Enable <emphasis role="bold">IP forwarding</emphasis> :</para>
+                                <para>Edit <emphasis role="bold">/etc/sysctl.conf
+                            </emphasis>:</para>
                             </listitem>
                         </itemizedlist>
-                        <programlisting>sed -i -r 's/^\s*#(net\.ipv4\.ip_forward=1.*)/\1/' /etc/sysctl.conf
-echo 1 > /proc/sys/net/ipv4/ip_forward </programlisting>
+                        <programlisting>net.ipv4.ip_forward=1
+net.ipv4.conf.all.rp_filter = 0
+net.ipv4.conf.default.rp_filter = 0  </programlisting>
                         <itemizedlist>
                             <listitem>
                                 <para>Edit the <emphasis role="bold">/etc/hosts</emphasis> file and
-                                    add <emphasis role="bold">folsom-controller</emphasis> &amp;
-                                    <emphasis role="bold">folsom-compute</emphasis> hostnames
-                                    with correct IP.</para>
+                            add <emphasis role="bold">folsom-controller</emphasis>, <emphasis
+                                role="bold">folsom-network</emphasis> and <emphasis role="bold"
+                                >folsom-compute</emphasis> hostnames with correct IP.</para>
                             </listitem>
                         </itemizedlist>
                     </para>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="basic-install_network-operating">
+    <title>Virtual Networking</title>
+    <section xml:id="create-networking">
+        <title>Create Virtual Networking</title>
+        <para>
+            <orderedlist>
+                <listitem>
+                    <para>Download the <link xlink:href="https://github.com/EmilienM/openstack-folsom-guide/raw/master/scripts/quantum-networking.sh">Quantum script</link>.
+ We are using the "<emphasis role="bold">Per-tenant
+     Routers with Private Networks</emphasis>" use-case.</para></listitem>
+                <listitem>
+                    <para>Edit the script belong your networking (public network, floatings IP).</para>
+                </listitem>
+                <listitem>
+                    <para>Execute the script.</para>
+                </listitem>
+            </orderedlist>
+        </para>
+    </section>
+    <section xml:id="configure-l3">
+        <title>L3 Configuration</title>
+        <itemizedlist>
+            <listitem>
+                <para>Copy the external network ID :<screen>quantum net-list</screen></para>
+            </listitem>
+            <listitem>
+                <para>Edit /etc/quantum/l3-agent.ini and paste the ID :<screen>gateway_external_net_id = ID</screen></para>
+            </listitem>
+            <listitem>
+                <para>Copy the provider router ID :<screen>quantum router-list</screen></para>
+            </listitem>
+            <listitem>
+                <para>Edit /etc/quantum/l3-agent.ini and paste the ID :<screen>router_id = ID</screen></para>
+            </listitem>
+            <listitem>
+                <para>Restart L3 Agent :<screen>service quantum-l3-agent restart</screen></para>
+            </listitem>
+         </itemizedlist>
+    </section>
+</section>
