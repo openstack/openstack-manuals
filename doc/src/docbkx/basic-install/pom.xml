@@ -105,6 +105,12 @@
               <sectionAutolabel>0</sectionAutolabel>
               <sectionLabelIncludesComponentLabel>0</sectionLabelIncludesComponentLabel>
               <postProcess>
+                <!-- Copies the figures to the correct location for webhelp -->
+                <copy todir="${basedir}/target/docbkx/webhelp/${release.path.name}/basic-install/content/figures">
+                  <fileset dir="${basedir}/src/figures">
+                    <include name="**/*.*" />
+                  </fileset>
+                </copy>
                 <!-- Copies webhelp (HTML output) to desired URL location on docs.openstack.org -->
                 <copy
                   todir="${basedir}/target/docbkx/webhelp/${release.path.name}/basic-install/">
