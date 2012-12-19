@@ -1,0 +1,753 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section [
+<!-- Some useful entities borrowed from HTML -->
+<!ENTITY ndash  "&#x2013;">
+<!ENTITY mdash  "&#x2014;">
+<!ENTITY hellip "&#x2026;">
+<!ENTITY plusmn "&#xB1;">
+
+<!-- Useful for describing APIs -->
+<!ENTITY GET    '<command xmlns="http://docbook.org/ns/docbook">GET</command>'>
+<!ENTITY PUT    '<command xmlns="http://docbook.org/ns/docbook">PUT</command>'>
+<!ENTITY POST   '<command xmlns="http://docbook.org/ns/docbook">POST</command>'>
+<!ENTITY DELETE '<command xmlns="http://docbook.org/ns/docbook">DELETE</command>'>
+
+<!ENTITY CHECK  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
+<imageobject role="fo">
+<imagedata fileref="figures/Check_mark_23x20_02.svg"
+format="SVG" scale="60"/>
+</imageobject>
+<imageobject role="html">
+<imagedata fileref="../figures/Check_mark_23x20_02.png"
+format="PNG" />
+</imageobject>
+</inlinemediaobject>'>
+
+<!ENTITY ARROW  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
+<imageobject role="fo">
+<imagedata fileref="figures/Arrow_east.svg"
+format="SVG" scale="60"/>
+</imageobject>
+<imageobject role="html">
+<imagedata fileref="../figures/Arrow_east.png"
+format="PNG" />
+</imageobject>
+</inlinemediaobject>'>
+]>
+<section xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="app_demo_routers_with_private_networks">
+    <title>Per-tenant Routers with Private Networks</title>
+    <para>This section describes how to install the Quantum service
+        and its components for the "<link
+            linkend="use_cases_tenant_router">Use Case: Per-tenant Routers with Private Networks
+            </link>".</para>
+    <mediaobject>
+          <imageobject role="fo">
+              <imagedata scale="60"
+                  fileref="figures/UseCase-MultiRouter.png" align="left"/>
+          </imageobject>
+          <imageobject role="html">
+              <imagedata fileref="figures/UseCase-MultiRouter.png"/>
+          </imageobject>
+    </mediaobject>
+
+    <para>The diagram below shows the setup. All of the
+        nodes should have one interface for management traffic. The example uses the Open vSwitch plugin.
+        The agents are configured to use GRE for data transport. There is an external network where
+        we will have floating IPs and router gateway ports. A physical router is connecting these floating IPs
+        and router gateway ports to outside world.</para>
+     <mediaobject>
+            <imageobject role="fo">
+                  <imagedata scale="55" fileref="figures/demo_routers_with_private_networks.png"/>
+            </imageobject>
+            <imageobject role="html">
+                   <imagedata fileref="figures/demo_routers_with_private_networks.png"/>
+            </imageobject>
+     </mediaobject>
+    <para>Below are nodes in the setup:
+           <informaltable rules="all" width="100%">
+                    <col width="20%"/>
+                    <col width="80%"/>
+            <thead>
+                <tr>
+                    <th>Node</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Controller Node</td>
+                    <td>Runs the Quantum server, Keystone and all of
+                        Nova services. The node must have at least one
+                        network interface, which connects to
+                        the "Management Network". The hostname is 'controlnode', which
+                        every other node will resolve to the controller node's IP.
+                        <emphasis role="bold">Note</emphasis>
+                        nova-network should not be running, as it is
+                        replaced by Quantum.</td>
+                </tr>
+                <tr>
+                    <td>Compute Node</td>
+                    <td>Runs Nova compute and the Quantum L2 agent.
+                        The node just needs one network interface since we will use GRE tunnels
+                        as data network. The VM will be able to receive its IP
+                        address from the DHCP agent on data network.
+                    </td>
+                </tr>
+                <tr>
+                    <td>Network Node</td>
+                    <td>Runs Quantum L2 agent, DHCP agent and L3 agent.
+                        This node will have access to the
+                        external network. The DHCP agent will allocate
+                        IP addresses to the VMs on data network (Technically, the addresses
+                        are allocated by the Quantum server, and distributed by the dhcp agent).
+                        The node must have
+                        at least two network interfaces. The first
+                        is used to communicate with the controller
+                        node via the management network. The second
+                        interface will be used as external network.
+                        GRE tunnels will be set up as data network.</td>
+                </tr>
+                <tr>
+                    <td>Router</td>
+                    <td>Router has IP 30.0.0.1, which is the default gateway for
+                    all VMs. The router should have ability to access public networks.</td>
+                </tr>
+            </tbody>
+        </informaltable></para>
+    <para>The demo assumes the following:</para>
+    <para><emphasis role="bold">Controller Node</emphasis></para>
+    <orderedlist>
+        <listitem>
+            <para>Relevant Nova services are installed, configured and
+                running.</para>
+        </listitem>
+        <listitem>
+            <para>Glance is installed, configured and running.  In
+                addition to this there should be an image named tty.</para>
+        </listitem>
+        <listitem>
+            <para>Keystone is installed, configured and running. A
+                quantum user <emphasis role="bold">quantum</emphasis>
+                should be created on tenant <emphasis role="bold"
+                    >servicetenant</emphasis> with password <emphasis
+                    role="bold">servicepassword</emphasis>.</para>
+        </listitem>
+        <listitem>
+            <para>Additional services <itemizedlist>
+                    <listitem>
+                        <para>RabbitMQ is running with default guest and its password</para>
+                    </listitem>
+                    <listitem>
+                        <para>MySQL server (user is <emphasis
+                                role="bold">root</emphasis> and
+                            password is <emphasis role="bold"
+                                >root</emphasis>)</para>
+                    </listitem>
+                </itemizedlist></para>
+        </listitem>
+    </orderedlist>
+    <para><emphasis role="bold">Compute Node</emphasis></para>
+    <orderedlist>
+        <listitem>
+            <para>Nova compute is installed and configured</para>
+        </listitem>
+    </orderedlist>
+    <section xml:id="demo_routers_with_private_networks_installions">
+        <title>Installation</title>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para><emphasis role="bold">Controller Node - Quantum Server</emphasis><orderedlist>
+                            <listitem>
+                                <para>Install the Quantum server.</para>
+                            </listitem>
+                            <listitem>
+                                <para>Create database <emphasis
+                                   role="bold">ovs_quantum</emphasis>.
+                                   See the section on the <link
+                                   linkend="core_plugins">Core
+                                   Plugins</link> for the exact
+                                   details.</para>
+                            </listitem>
+                            <listitem>
+                                <para>Update the Quantum configuration
+                                   file, <emphasis role="bold"
+                                   >/etc/quantum/quantum.conf</emphasis></para>
+                                <screen><computeroutput>[DEFAULT]
+core_plugin = quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPluginV2
+control_exchange = quantum
+rabbit_host = controlnode
+notification_driver = quantum.openstack.common.notifier.rabbit_notifier</computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Update the plugin configuration
+                                   file, <emphasis role="bold"
+                                   >/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</emphasis>:</para>
+                                <screen><computeroutput>[DATABASE]
+sql_connection = mysql://root:root@controlnode:3306/ovs_quantum?charset=utf8
+[OVS]
+tenant_network_type = gre
+tunnel_id_ranges = 1:1000
+enable_tunneling = True
+</computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Update the api-paste
+                                   configuration file to include the
+                                   keystone user, <emphasis
+                                   role="bold"
+                                   >/etc/quantum/api-paste.ini</emphasis></para>
+                                <screen><computeroutput>[filter:authtoken]
+admin_tenant_name=servicetenant
+admin_user=quantum
+admin_password=servicepassword</computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Start the Quantum server</para>
+                                <para>The quantum server can be a service of operating system.
+                                The command may be different to start the service on different operating systems.
+                                However the command to run the quantum server directly is kind of like:</para>
+                                <screen><computeroutput>
+ sudo quantum-server --config-file /etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini --config-file /etc/quantum/quantum.conf
+                                </computeroutput></screen>
+                            </listitem>
+                        </orderedlist></para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="bold">Compute Node - Nova compute</emphasis><orderedlist>
+                            <listitem>
+                                <para>Install the Nova compute.</para>
+                            </listitem>
+                            <listitem>
+                                <para>Update the nova configuration
+                                   file, <emphasis role="bold"
+                                   >/etc/nova/nova.conf. Make sure the following is at the end of this file</emphasis>:</para>
+                                <screen><computeroutput>
+network_api_class=nova.network.quantumv2.api.API
+
+quantum_admin_username=quantum
+quantum_admin_password=servicepassword
+quantum_admin_auth_url=http://controlnode:35357/v2.0/
+quantum_auth_strategy=keystone
+quantum_admin_tenant_name=servicetenant
+quantum_url=http://controlnode:9696/
+
+libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver</computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Restart the nova service</para>
+                            </listitem>
+                        </orderedlist></para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="bold">Compute and Network Node - L2 Agent</emphasis><orderedlist>
+                            <listitem>
+                                <para>Install the L2 agent.</para>
+                            </listitem>
+                            <listitem>
+                                <para>Add the integration bridge to the Open vSwitch</para>
+                                <screen><computeroutput>sudo ovs-vsctl add-br br-int</computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Update the Quantum configuration
+                                   file, <emphasis role="bold"
+                                   >/etc/quantum/quantum.conf</emphasis></para>
+                                <screen><computeroutput>[DEFAULT]
+core_plugin = quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPluginV2
+control_exchange = quantum
+rabbit_host = controlnode
+notification_driver = quantum.openstack.common.notifier.rabbit_notifier</computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Update the plugin configuration
+                                   file, <emphasis role="bold"
+                                   >/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</emphasis>.</para>
+                                <para>Compute Node:</para>
+                                <screen><computeroutput>[DATABASE]
+sql_connection = mysql://root:root@controlnode:3306/ovs_quantum?charset=utf8
+[OVS]
+tenant_network_type = gre
+tunnel_id_ranges = 1:1000
+enable_tunneling = True
+local_ip = 9.181.89.202</computeroutput></screen>
+                                <para>Network Node:</para>
+                                <screen><computeroutput>[DATABASE]
+sql_connection = mysql://root:root@controlnode:3306/ovs_quantum?charset=utf8
+[OVS]
+tenant_network_type = gre
+tunnel_id_ranges = 1:1000
+enable_tunneling = True
+local_ip = 9.181.89.203</computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Create the integration bridge
+                                   <emphasis role="bold"
+                                   >br-int</emphasis>:</para>
+                                <screen><computeroutput>sudo ovs-vsctl --may-exist add-br br-int
+</computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Start the Quantum L2 agent</para>
+                                <para>The quantum Open vSwitch L2 agent can be a service of operating system.
+                                The command may be different to start the service on different operating systems.
+                                However the command to run it directly is kind of like:</para>
+                                <screen><computeroutput>
+sudo quantum-openvswitch-agent --config-file /etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini --config-file /etc/quantum/quantum.conf
+                                </computeroutput></screen>
+                            </listitem>
+                        </orderedlist></para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="bold">Network Node - DHCP Agent</emphasis><orderedlist>
+                            <listitem>
+                                <para>Install the DHCP agent.</para>
+                            </listitem>
+                            <listitem>
+                                <para>Update the Quantum configuration
+                                   file, <emphasis role="bold"
+                                   >/etc/quantum/quantum.conf</emphasis></para>
+                                <screen><computeroutput>[DEFAULT]
+core_plugin = quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPluginV2
+control_exchange = quantum
+rabbit_host = controlnode
+notification_driver = quantum.openstack.common.notifier.rabbit_notifier
+allow_overlapping_ips = True</computeroutput></screen>
+                            <para><emphasis role="bold"> We set <literal>allow_overlapping_ips</literal> because we have
+                            overlapping subnets for TenantA and TenantC.</emphasis></para>
+                            </listitem>
+                            <listitem>
+                                <para>Update the DHCP configuration
+                                   file <emphasis role="bold"
+                                   >/etc/quantum/dhcp_agent.ini</emphasis></para>
+                                <screen><computeroutput>interface_driver = quantum.agent.linux.interface.OVSInterfaceDriver</computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Start the DHCP agent</para>
+                                <para>The quantum DHCP agent can be a service of operating system.
+                                The command may be different to start the service on different operating systems.
+                                However the command to run it directly is kind of like:</para>
+                                <screen><computeroutput>
+sudo quantum-dhcp-agent --config-file /etc/quantum/quantum.conf --config-file /etc/quantum/dhcp_agent.ini
+                                </computeroutput></screen>
+                            </listitem>
+                        </orderedlist></para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="bold">Network Node - L3 Agent</emphasis><orderedlist>
+                            <listitem>
+                                <para>Install the L3 agent.</para>
+                            </listitem>
+                            <listitem>
+                                <para>Add the external network bridge</para>
+                                <screen><computeroutput>sudo ovs-vsctl add-br br-ex</computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Add the physical interface, for example eth0, that is
+                                    connected to the outside network to this bridge</para>
+                                <screen><computeroutput>sudo ovs-vsctl add-port br-ex eth0</computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Update the L3 configuration
+                                   file <emphasis role="bold"
+                                   >/etc/quantum/l3_agent.ini</emphasis>:</para>
+                                <screen><computeroutput>[DEFAULT]
+interface_driver=quantum.agent.linux.interface.OVSInterfaceDriver
+use_namespaces=True</computeroutput></screen>
+                            <para><emphasis role="bold"> We set <literal>use_namespaces</literal> (It is True by default.) because we have
+                            overlapping subnets for TenantA and TenantC and we are going to host the routers with one l3 agent network node.</emphasis></para>
+                            </listitem>
+                            <listitem>
+                                <para>Start the L3 agent</para>
+                                <para>The quantum L3 agent can be a service of operating system.
+                                The command may be different to start the service on different operating systems.
+                                However the command to run it directly is kind of like:</para>
+                                <screen><computeroutput>
+sudo quantum-l3-agent --config-file /etc/quantum/quantum.conf --config-file /etc/quantum/l3_agent.ini
+                                </computeroutput></screen>
+                            </listitem>
+                        </orderedlist></para>
+                </listitem>
+            </itemizedlist>
+        </para>
+    </section>
+    <section xml:id="demo_per_tenant_router_network_config">
+        <title>Logical Network Configuration</title>
+        <para>All of the commands below can be executed on the network node.</para>
+        <para><emphasis role="bold">Note</emphasis> please ensure that
+            the following environment variables are set. These are
+            used by the various clients to access Keystone.</para>
+        <para>
+            <screen><computeroutput>export OS_USERNAME=admin
+export OS_PASSWORD=adminpassword
+export OS_TENANT_NAME=admin
+export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/</computeroutput></screen>
+        </para>
+        <para>
+                   <orderedlist>
+                            <listitem>
+                                <para>Get the tenant ID (Used as
+                                   $TENANT_ID later)</para>
+                                <screen><computeroutput>keystone tenant-list</computeroutput></screen>
+                                <screen><computeroutput>
++----------------------------------+---------+---------+
+|                id                |   name  | enabled |
++----------------------------------+---------+---------+
+| 247e478c599f45b5bd297e8ddbbc9b6a | TenantA |   True  |
+| 2b4fec24e62e4ff28a8445ad83150f9d | TenantC |   True  |
+| 3719a4940bf24b5a8124b58c9b0a6ee6 | TenantB |   True  |
+| 5fcfbc3283a142a5bb6978b549a511ac |   demo  |   True  |
+| b7445f221cda4f4a8ac7db6b218b1339 |  admin  |   True  |
++----------------------------------+---------+---------+
+                                </computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Get the user information</para>
+                                <screen><computeroutput>keystone user-list</computeroutput></screen>
+                                <screen><computeroutput>
++----------------------------------+-------+---------+-------------------+
+|                id                |  name | enabled |       email       |
++----------------------------------+-------+---------+-------------------+
+| 5a9149ed991744fa85f71e4aa92eb7ec |  demo |   True  |                   |
+| 5b419c74980d46a1ab184e7571a8154e | admin |   True  | admin@example.com |
+| 8e37cb8193cb4873a35802d257348431 | UserC |   True  |                   |
+| c11f6b09ed3c45c09c21cbbc23e93066 | UserB |   True  |                   |
+| ca567c4f6c0942bdac0e011e97bddbe3 | UserA |   True  |                   |
++----------------------------------+-------+---------+-------------------+
+                                </computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Create the external network and
+                        its subnet by admin user:</para>
+                                <screen><computeroutput>
+quantum net-create Ext-Net --provider:network_type local --router:external true
+Created a new network:
++---------------------------+--------------------------------------+
+| Field                     | Value                                |
++---------------------------+--------------------------------------+
+| admin_state_up            | True                                 |
+| id                        | 2c757c9e-d3d6-4154-9a77-336eb99bd573 |
+| name                      | Ext-Net                              |
+| provider:network_type     | local                                |
+| provider:physical_network |                                      |
+| provider:segmentation_id  |                                      |
+| router:external           | True                                 |
+| shared                    | False                                |
+| status                    | ACTIVE                               |
+| subnets                   |                                      |
+| tenant_id                 | b7445f221cda4f4a8ac7db6b218b1339     |
++---------------------------+--------------------------------------+
+
+quantum subnet-create Ext-Net 30.0.0.0/24
+Created a new subnet:
++------------------+--------------------------------------------+
+| Field            | Value                                      |
++------------------+--------------------------------------------+
+| allocation_pools | {"start": "30.0.0.2", "end": "30.0.0.254"} |
+| cidr             | 30.0.0.0/24                                |
+| dns_nameservers  |                                            |
+| enable_dhcp      | True                                       |
+| gateway_ip       | 30.0.0.1                                   |
+| host_routes      |                                            |
+| id               | ba754a55-7ce8-46bb-8d97-aa83f4ffa5f9       |
+| ip_version       | 4                                          |
+| name             |                                            |
+| network_id       | 2c757c9e-d3d6-4154-9a77-336eb99bd573       |
+| tenant_id        | b7445f221cda4f4a8ac7db6b218b1339           |
++------------------+--------------------------------------------+
+</computeroutput></screen> <para><emphasis role="bold">
+                            <literal>provider:network_type
+                                local</literal> means we don't need
+                            quantum to realize this network through
+                            provider network. <literal>router:external
+                                true</literal> means we are creating
+                            an external network, on which we can
+                            create floating ip and router gateway
+                            port.</emphasis></para>
+                            </listitem>
+                            <listitem>
+                                <para>Add an IP on external network to br-ex</para>
+                                <para>Since we are using br-ex as our external network bridge, we will add an IP 30.0.0.100/24 to br-ex
+                                and then ping our VM's floating IP from our network node.</para>
+                                <screen><computeroutput>sudo ip addr add 30.0.0.100/24 dev br-ex
+sudo ip link set br-ex up
+                              </computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                            <para>Serve TenantA</para>
+                            <para>For TenantA, we will create a private network, a subnet, a server, a router and  a floating IP.</para>
+                            <orderedlist>
+                              <listitem>
+                                <para>Create a network for TenantA</para>
+                                <screen><computeroutput>
+quantum --os-tenant-name TenantA --os-username UserA --os-password password --os-auth-url=http://localhost:5000/v2.0 net-create TenantA-Net
+Created a new network:
++-----------------+--------------------------------------+
+| Field           | Value                                |
++-----------------+--------------------------------------+
+| admin_state_up  | True                                 |
+| id              | 7d0e8d5d-c63c-4f13-a117-4dc4e33e7d68 |
+| name            | TenantA-Net                          |
+| router:external | False                                |
+| shared          | False                                |
+| status          | ACTIVE                               |
+| subnets         |                                      |
+| tenant_id       | 247e478c599f45b5bd297e8ddbbc9b6a     |
++-----------------+--------------------------------------+</computeroutput></screen>
+                                <para>After that we can use admin user to query the network's provider network information:</para>
+                                <screen><computeroutput> quantum net-show TenantA-Net
++---------------------------+--------------------------------------+
+| Field                     | Value                                |
++---------------------------+--------------------------------------+
+| admin_state_up            | True                                 |
+| id                        | 7d0e8d5d-c63c-4f13-a117-4dc4e33e7d68 |
+| name                      | TenantA-Net                          |
+| provider:network_type     | gre                                  |
+| provider:physical_network |                                      |
+| provider:segmentation_id  | 1                                    |
+| router:external           | False                                |
+| shared                    | False                                |
+| status                    | ACTIVE                               |
+| subnets                   |                                      |
+| tenant_id                 | 247e478c599f45b5bd297e8ddbbc9b6a     |
++---------------------------+--------------------------------------+
+</computeroutput></screen>
+                            <para>We can see that it has GRE tunnel ID (I.E. provider:segmentation_id) 1.</para>
+                            </listitem>
+                            <listitem>
+                                <para>Create a subnet on the network TenantA-Net</para>
+                                <screen><computeroutput>
+quantum --os-tenant-name TenantA --os-username UserA --os-password password --os-auth-url=http://localhost:5000/v2.0 subnet-create TenantA-Net 10.0.0.0/24
+Created a new subnet:
++------------------+--------------------------------------------+
+| Field            | Value                                      |
++------------------+--------------------------------------------+
+| allocation_pools | {"start": "10.0.0.2", "end": "10.0.0.254"} |
+| cidr             | 10.0.0.0/24                                |
+| dns_nameservers  |                                            |
+| enable_dhcp      | True                                       |
+| gateway_ip       | 10.0.0.1                                   |
+| host_routes      |                                            |
+| id               | 51e2c223-0492-4385-b6e9-83d4e6d10657       |
+| ip_version       | 4                                          |
+| name             |                                            |
+| network_id       | 7d0e8d5d-c63c-4f13-a117-4dc4e33e7d68       |
+| tenant_id        | 247e478c599f45b5bd297e8ddbbc9b6a           |
++------------------+--------------------------------------------+
+</computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Create a server for TenantA</para>
+                                <screen><computeroutput> nova --os-tenant-name TenantA --os-username UserA --os-password password --os-auth-url=http://localhost:5000/v2.0 boot --image tty --flavor 1 --nic net-id=7d0e8d5d-c63c-4f13-a117-4dc4e33e7d68 TenantA_VM1</computeroutput></screen>
+<screen><computeroutput>nova --os-tenant-name TenantA --os-username UserA --os-password password --os-auth-url=http://localhost:5000/v2.0 list
++--------------------------------------+-------------+--------+----------------------+
+| ID                                   | Name        | Status | Networks             |
++--------------------------------------+-------------+--------+----------------------+
+| 7c5e6499-7ef7-4e36-8216-62c2941d21ff | TenantA_VM1 | ACTIVE | TenantA-Net=10.0.0.3 |
++--------------------------------------+-------------+--------+----------------------+
+</computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Create and configure a router
+                                for TenantA:</para>
+                                <screen><computeroutput>
+quantum --os-tenant-name TenantA --os-username UserA --os-password password --os-auth-url=http://localhost:5000/v2.0 router-create TenantA-R1
+Created a new router:
++-----------------------+--------------------------------------+
+| Field                 | Value                                |
++-----------------------+--------------------------------------+
+| admin_state_up        | True                                 |
+| external_gateway_info |                                      |
+| id                    | 59cd02cb-6ee6-41e1-9165-d251214594fd |
+| name                  | TenantA-R1                           |
+| status                | ACTIVE                               |
+| tenant_id             | 247e478c599f45b5bd297e8ddbbc9b6a     |
++-----------------------+--------------------------------------+
+                        </computeroutput></screen>
+                       <screen><computeroutput>quantum --os-tenant-name TenantA --os-username UserA --os-password password --os-auth-url=http://localhost:5000/v2.0 router-interface-add TenantA-R1 51e2c223-0492-4385-b6e9-83d4e6d10657
+Added interface to router TenantA-R1
+                        </computeroutput></screen>
+                        <screen><computeroutput>
+quantum router-gateway-set TenantA-R1 Ext-Net
+                        </computeroutput></screen>
+                        <para><emphasis role="bold"> We are using admin user to run last command since our external network is owned by admin tenant.</emphasis></para>
+                      </listitem>
+                            <listitem>
+                                <para>Associate a floating IP for
+                                TenantA_VM1</para>
+                                <para>1. Create a floating IP</para><screen><computeroutput>quantum --os-tenant-name TenantA --os-username UserA --os-password password --os-auth-url=http://localhost:5000/v2.0 floatingip-create Ext-Net
+Created a new floatingip:
++---------------------+--------------------------------------+
+| Field               | Value                                |
++---------------------+--------------------------------------+
+| fixed_ip_address    |                                      |
+| floating_ip_address | 30.0.0.2                             |
+| floating_network_id | 2c757c9e-d3d6-4154-9a77-336eb99bd573 |
+| id                  | 5a1f90ed-aa3c-4df3-82cb-116556e96bf1 |
+| port_id             |                                      |
+| router_id           |                                      |
+| tenant_id           | 247e478c599f45b5bd297e8ddbbc9b6a     |
++---------------------+--------------------------------------+
+</computeroutput></screen>
+<para>2. Get the port ID of the VM with ID 7c5e6499-7ef7-4e36-8216-62c2941d21ff</para><screen><computeroutput>
+quantum --os-tenant-name TenantA --os-username UserA --os-password password --os-auth-url=http://localhost:5000/v2.0 port-list -- --device_id 7c5e6499-7ef7-4e36-8216-62c2941d21ff
++--------------------------------------+------+-------------------+---------------------------------------------------------------------------------+
+| id                                   | name | mac_address       | fixed_ips                                                                       |
++--------------------------------------+------+-------------------+---------------------------------------------------------------------------------+
+| 6071d430-c66e-4125-b972-9a937c427520 |      | fa:16:3e:a0:73:0d | {"subnet_id": "51e2c223-0492-4385-b6e9-83d4e6d10657", "ip_address": "10.0.0.3"} |
++--------------------------------------+------+-------------------+---------------------------------------------------------------------------------+
+</computeroutput></screen>
+<para>3. Associate the floating IP with the VM port</para><screen><computeroutput>
+quantum --os-tenant-name TenantA --os-username UserA --os-password password --os-auth-url=http://localhost:5000/v2.0 floatingip-associate 5a1f90ed-aa3c-4df3-82cb-116556e96bf1 6071d430-c66e-4125-b972-9a937c427520
+Associated floatingip 5a1f90ed-aa3c-4df3-82cb-116556e96bf1
+quantum floatingip-list
++--------------------------------------+------------------+---------------------+--------------------------------------+
+| id                                   | fixed_ip_address | floating_ip_address | port_id                              |
++--------------------------------------+------------------+---------------------+--------------------------------------+
+| 5a1f90ed-aa3c-4df3-82cb-116556e96bf1 | 10.0.0.3         | 30.0.0.2            | 6071d430-c66e-4125-b972-9a937c427520 |
++--------------------------------------+------------------+---------------------+--------------------------------------+
+</computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Ping the public network from the server of TenantA</para>
+                                <para>In my environment, 192.168.1.0/24 is my public network connected
+                                with my physical router, which also connects to quantum external network 30.0.0.0/24.
+                                With the floating IP and virtual router, we can ping the public network within the server of tenant A:</para>
+                                <screen><computeroutput>ping 192.168.1.1
+PING 192.168.1.1 (192.168.1.1) 56(84) bytes of data.
+64 bytes from 192.168.1.1: icmp_req=1 ttl=64 time=1.74 ms
+64 bytes from 192.168.1.1: icmp_req=2 ttl=64 time=1.50 ms
+64 bytes from 192.168.1.1: icmp_req=3 ttl=64 time=1.23 ms
+^C
+--- 192.168.1.1 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2003ms
+rtt min/avg/max/mdev = 1.234/1.495/1.745/0.211 ms
+</computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Ping floating IP of the TenantA's server</para>
+                                <screen><computeroutput>
+ping 30.0.0.2
+PING 30.0.0.2 (30.0.0.2) 56(84) bytes of data.
+64 bytes from 30.0.0.2: icmp_req=1 ttl=63 time=45.0 ms
+64 bytes from 30.0.0.2: icmp_req=2 ttl=63 time=0.898 ms
+64 bytes from 30.0.0.2: icmp_req=3 ttl=63 time=0.940 ms
+^C
+--- 30.0.0.2 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2002ms
+rtt min/avg/max/mdev = 0.898/15.621/45.027/20.793 ms
+</computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Create other servers for TenantA</para>
+                                <para>We can create more servers for TenantA and add floating IPs for them.</para></listitem>
+                        </orderedlist>
+                        </listitem>
+                            <listitem>
+                            <para>Serve TenantC</para>
+                            <para>For TenantC, we will create two private networks with subnet 10.0.0.0/24 and subnet 10.0.1.0/24,
+                            some servers, one router to connect to these two subnets and some floating IPs.</para>
+                            <orderedlist>
+                              <listitem>
+                                <para>Create networks and subnets for TenantC</para>
+                                <screen><computeroutput>
+quantum --os-tenant-name TenantC --os-username UserC --os-password password --os-auth-url=http://localhost:5000/v2.0 net-create TenantC-Net1
+quantum --os-tenant-name TenantC --os-username UserC --os-password password --os-auth-url=http://localhost:5000/v2.0 subnet-create TenantC-Net1 10.0.0.0/24 --name TenantC-Subnet1
+quantum --os-tenant-name TenantC --os-username UserC --os-password password --os-auth-url=http://localhost:5000/v2.0 net-create TenantC-Net2
+quantum --os-tenant-name TenantC --os-username UserC --os-password password --os-auth-url=http://localhost:5000/v2.0 subnet-create TenantC-Net2 10.0.1.0/24 --name TenantC-Subnet2
+                                </computeroutput></screen>
+                                <para>After that we can use admin user to query the network's provider network information:</para>
+                                <screen><computeroutput> quantum net-show TenantC-Net1
++---------------------------+--------------------------------------+
+| Field                     | Value                                |
++---------------------------+--------------------------------------+
+| admin_state_up            | True                                 |
+| id                        | 91309738-c317-40a3-81bb-bed7a3917a85 |
+| name                      | TenantC-Net1                         |
+| provider:network_type     | gre                                  |
+| provider:physical_network |                                      |
+| provider:segmentation_id  | 2                                    |
+| router:external           | False                                |
+| shared                    | False                                |
+| status                    | ACTIVE                               |
+| subnets                   | cf03fd1e-164b-4527-bc87-2b2631634b83 |
+| tenant_id                 | 2b4fec24e62e4ff28a8445ad83150f9d     |
++---------------------------+--------------------------------------+
+quantum net-show TenantC-Net2
++---------------------------+--------------------------------------+
+| Field                     | Value                                |
++---------------------------+--------------------------------------+
+| admin_state_up            | True                                 |
+| id                        | 5b373ad2-7866-44f4-8087-f87148abd623 |
+| name                      | TenantC-Net2                         |
+| provider:network_type     | gre                                  |
+| provider:physical_network |                                      |
+| provider:segmentation_id  | 3                                    |
+| router:external           | False                                |
+| shared                    | False                                |
+| status                    | ACTIVE                               |
+| subnets                   | 38f0b2f0-9f98-4bf6-9520-f4abede03300 |
+| tenant_id                 | 2b4fec24e62e4ff28a8445ad83150f9d     |
++---------------------------+--------------------------------------+
+
+</computeroutput></screen>
+                            <para>We can see that we have GRE tunnel IDs (I.E. provider:segmentation_id) 2 and 3.
+                            And also note down the network IDs and subnet IDs because we will use them to create VMs and router.</para>
+                            </listitem>
+                            <listitem>
+                                <para>Create a server TenantC-VM1 for TenantC on TenantC-Net1</para>
+                                <screen><computeroutput>nova --os-tenant-name TenantC --os-username UserC --os-password password --os-auth-url=http://localhost:5000/v2.0 boot --image tty --flavor 1 --nic net-id=91309738-c317-40a3-81bb-bed7a3917a85 TenantC_VM1</computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>Create a server TenantC-VM3 for TenantC on TenantC-Net2</para>
+                                <screen><computeroutput>nova --os-tenant-name TenantC --os-username UserC --os-password password --os-auth-url=http://localhost:5000/v2.0 boot --image tty --flavor 1 --nic net-id=5b373ad2-7866-44f4-8087-f87148abd623 TenantC_VM3</computeroutput></screen>
+                            </listitem>
+                            <listitem>
+                                <para>List servers of TenantC</para>
+                                <screen><computeroutput>nova --os-tenant-name TenantC --os-username UserC --os-password password --os-auth-url=http://localhost:5000/v2.0 list
++--------------------------------------+-------------+--------+-----------------------+
+| ID                                   | Name        | Status | Networks              |
++--------------------------------------+-------------+--------+-----------------------+
+| b739fa09-902f-4b37-bcb4-06e8a2506823 | TenantC_VM1 | ACTIVE | TenantC-Net1=10.0.0.3 |
+| 17e255b2-b14f-48b3-ab32-5df36566d2e8 | TenantC_VM3 | ACTIVE | TenantC-Net2=10.0.1.3 |
++--------------------------------------+-------------+--------+-----------------------+
+                                </computeroutput></screen><para>Note down the server IDs since we will use them later.</para>
+                            </listitem>
+                            <listitem>
+                                <para>Make sure servers get their IPs</para>
+                                <para>We can use VNC to log on the VMs
+                                to check if they get IPs. If not, we
+                                have to make sure the quantum
+                                components are running right and the
+                                GRE tunnels work.</para>
+                            </listitem>
+                            <listitem>
+                                <para>Create and configure a router
+                                for TenantC:</para>
+                                <screen><computeroutput>
+quantum --os-tenant-name TenantC --os-username UserC --os-password password --os-auth-url=http://localhost:5000/v2.0 router-create TenantC-R1
+                        </computeroutput></screen>
+                        <screen><computeroutput>quantum --os-tenant-name TenantC --os-username UserC --os-password password --os-auth-url=http://localhost:5000/v2.0 router-interface-add TenantC-R1 cf03fd1e-164b-4527-bc87-2b2631634b83
+quantum --os-tenant-name TenantC --os-username UserC --os-password password --os-auth-url=http://localhost:5000/v2.0 router-interface-add TenantC-R1 38f0b2f0-9f98-4bf6-9520-f4abede03300
+                        </computeroutput></screen>
+                       <screen><computeroutput>
+quantum router-gateway-set TenantC-R1 Ext-Net
+                        </computeroutput></screen>
+                       <para><emphasis role="bold"> We are using admin user to run last command since our external network is owned by admin tenant.</emphasis></para>
+                      </listitem>
+                            <listitem>
+                                <para>Checkpoint: ping from within TenantC's servers</para>
+                                <para>Since we have a router connecting to two subnets, the VMs on these subnets are able to ping each other.
+                                And since we have set the router's gateway interface, TenantC's servers are able to ping external network IPs, such as 192.168.1.1, 30.0.0.1 etc.</para>
+                            </listitem>
+                            <listitem>
+                                <para>Associate floating IPs for
+                                TenantC's servers</para>
+                                <para>We can use the similar commands as we used in TenantA's section to finish this task.</para>
+                            </listitem>
+                   </orderedlist>
+                   </listitem>
+               </orderedlist>
+        </para>
+    </section>
+</section>
