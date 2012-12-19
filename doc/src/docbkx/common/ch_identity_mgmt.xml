@@ -74,15 +74,13 @@
         </para>
       </listitem>
     </itemizedlist>
-    <para>
-      Logging is configured externally to the rest of Identity, the file
-      specifying the logging configuration is in the <literal>[DEFAULT]</literal>
-       section
-      of the keystone conf file under <literal>log_config</literal>. If
-      you wish to route all your logging through syslog, set
-      <literal>use_syslog=true</literal> option in the
-      <literal>[DEFAULT]</literal> section.
-    </para>
+    <para> Logging is configured externally to the rest of Identity,
+      the file specifying the logging configuration is in the
+        <literal>[DEFAULT]</literal> section of the
+        <filename>keystone.conf</filename> file under
+        <literal>log_config</literal>. If you wish to route all your
+      logging through syslog, set <literal>use_syslog=true</literal>
+      option in the <literal>[DEFAULT]</literal> section. </para>
     <para>
       A sample logging file is available with the project in the
       directory <filename>etc/logging.conf.sample</filename>. Like other
@@ -1321,5 +1319,68 @@ admin_password = keystone123
     </section>
   </section>
 </section>
-
+<section xml:id="keystone-ssl">
+<title>Configuring Keystone SSL support</title>
+<para> Keystone may be configured to support 2-way SSL out-of-the-box.
+      The x509 certificates used by Keystone must be obtained
+      externally and configured for use with Keystone as described in
+      this section. However, a set of sample certificates is provided
+      in the <literal>examples/ssl</literal> directory with the
+      Keystone distribution for testing. Here is the description of
+      each of them and their purpose: <itemizedlist>
+        <listitem>
+          <para><filename>ca.pem</filename> - Certificate Authority
+            chain to validate against.</para>
+        </listitem>
+        <listitem>
+          <para><filename>keystone.pem</filename> - Public certificate
+            for Keystone server.</para>
+        </listitem>
+        <listitem>
+          <para><filename>middleware.pem</filename> - Public and
+            private certificate for Keystone middleware/client.</para>
+        </listitem>
+        <listitem>
+          <para><filename>cakey.pem</filename> - Private key for the
+            CA.</para>
+        </listitem>
+        <listitem>
+          <para><filename>keystonekey.pem</filename> - Private key for
+            the Keystone server.</para>
+        </listitem>
+      </itemizedlist> Note that you may choose whatever names you want
+      for these certificates, or combine the public/private keys in
+      the same file if you wish. These certificates are just provided
+      as an example. </para>
+<para> To enable SSL with client authentication, modify the
+        <literal>etc/keystone.conf</literal> file accordingly under
+      the <literal>[ssl]</literal> section. SSL configuration example
+      using the included sample certificates:
+      <programlisting>
+[ssl]
+enable = True
+certfile = &lt;path to keystone.pem&gt;
+keyfile = &lt;path to keystonekey.pem&gt;
+ca_certs = &lt;path to ca.pem&gt;
+cert_required = True
+</programlisting>
+      Example:
+      <programlisting>[ssl]  
+enable = True
+certfile = /home/agentl/openstack/tests/certs/signing_cert.pem  
+keyfile = /home/agentl/openstack/tests/certs/private_key.pem  
+ca_certs = /home/agentl/openstack/tests/certs/cacert.pem  
+cert_required = True </programlisting></para>
+<para>
+<itemizedlist>
+<listitem><para>enable: True enables SSL. Defaults to False.</para></listitem>
+<listitem><para>certfile: Path to Keystone public certificate file.</para></listitem>
+<listitem><para>keyfile: Path to Keystone private certificate file. If the
+            private key is included in the certfile, the keyfile may
+            be omitted.</para></listitem>
+<listitem><para>ca_certs: Path to CA trust chain.</para></listitem>
+<listitem><para>cert_required: Requires client certificate. Defaults to False.</para></listitem>
+</itemizedlist>
+</para>
+</section>
 </chapter>
