@@ -90,6 +90,10 @@ format="PNG" />
 
             <table rules="all">
                 <caption>Network</caption>
+		<col width="20%"/>
+		<col width="20%"/>
+		<col width="20%"/>
+		<col width="40%"/>
                 <thead>
                     <tr>
                         <th> Attribute name </th>
@@ -153,6 +157,10 @@ format="PNG" />
             </table>
             <table rules="all">
                 <caption>Subnet</caption>
+		<col width="20%"/>
+		<col width="20%"/>
+		<col width="20%"/>
+		<col width="40%"/>
                 <thead>
                     <tr>
                         <th>Attribute </th>
@@ -248,6 +256,10 @@ format="PNG" />
             </table>
             <table rules="all">
                 <caption>Port</caption>
+		<col width="20%"/>
+		<col width="20%"/>
+		<col width="20%"/>
+		<col width="40%"/>
                 <thead>
                     <tr>
                         <th>Attribute </th>
@@ -332,49 +344,33 @@ format="PNG" />
                 </tbody>
             </table>
         </section>
-        <section xml:id="basic_workflow">
-            <title>Basic Workflow </title>
-            <para>(include output in examples) </para>
-            <screen><computeroutput>quantum net-create net1
-quantum subnet-create net1 10.0.0.0/24</computeroutput></screen>
-            <para>View current networks:</para>
-            <screen><computeroutput>quantum net-list</computeroutput></screen>
-
-            <para>Boot the VM with a single NIC on the selected
-                network:</para>
-            <screen><computeroutput>nova boot --image &lt;img&gt; --flavor &lt;flavor&gt; --nic net-id=&lt;net-id&gt; &lt;vm-name&gt;</computeroutput></screen>
-            <para>Congrats, you have booted a VM on a quantum
-                network.  </para>
-            <para>There is now a Quantum port on 'net1' that
-                corresponds to the VM Nic.  You can view it with the
-                following command, which searches for all ports with a
-                "device_id" corresponding to the Nova instance
-                UUID:</para>
-            <screen><computeroutput>quantum port-list -- --device_id=&lt;vm-id&gt;</computeroutput></screen>
-            <para>To view only a few fields of the port, you can limit
-                output using -c.  For example to see only the
-                mac_address of the port, use:</para>
-            <screen><computeroutput>quantum port-list -c mac_address -- --device_id=&lt;vm-id&gt;</computeroutput></screen>
-            <para>You could temporarily disable the port from sending
-                traffic by updating it to have
-                admin_state_up=False:</para>
-            <screen><computeroutput>quantum port-update &lt;port-id&gt; --admin_state_up=False</computeroutput></screen>
-            <para>When we delete the Nova VM, the underlying Quantum
-                port is automatically deleted:</para>
-            <screen><computeroutput>quantum port-list -c mac_address -- --device_id=&lt;vm-id&gt;</computeroutput></screen>
-        </section>
         <section xml:id="cli_guide">
             <title>Quantum CLI Guide</title>
             <para>Before going further, we STRONGLY suggest that you quickly read the few
             pages in the <link xlink:href="http://docs.openstack.org/cli/quick-start/content/index.html">OpenStack CLI Guide</link> that are specific to Quantum.  Quantum's CLI has some
         advanced capabilities that are described only in that guide.</para>
         </section>
+	<section xml:id="basic_operations">
+	  <title>Basic Operations</title>
+	  <para>Create a network</para>
+	  <screen><prompt>$</prompt> <userinput>quantum net-create net1</userinput></screen>
+	  <para>Create a subnet associated with net1</para>
+	  <screen><prompt>$</prompt> <userinput>quantum subnet-create net1 10.0.0.0/24</userinput></screen>
+	  <para>List ports on a tenant</para>
+	  <screen><prompt>$</prompt> <userinput>quantum port-list</userinput></screen>
+	  <para><emphasis role="italic">device_owner</emphasis> field describes who owns the port.
+	  A port whose <emphasis role="italic">device_owner</emphasis> begins with "network:" is created by Quantum (network service)
+	  and a port whose <emphasis role="italic">device_owner</emphasis> begins with "compute:" is created by Nova (compute service).</para>
+	  <screen><prompt>$</prompt> <userinput>quantum port-list -c id -c fixed_ips -c device_owner</userinput></screen>
+          <para><command>port-show</command> shows a detail of a specified port.</para>
+	  <screen><prompt>$</prompt> <userinput>quantum port-show &lt;port-id&gt;</userinput></screen>
+	</section>
         <section xml:id="admin_api_config">
             <title>Admin API configuration</title>
             <para>These same calls can be performed by the cloud admin
                 on half of the tenants by specifying a tenant_id in
                 the request, for example:</para>
-            <screen><computeroutput>quantum net-create net1 --tenant_id=&lt;tenant-id&gt;</computeroutput></screen>
+            <screen><computeroutput>quantum net-create --tenant-id=&lt;tenant-id&gt; net1</computeroutput></screen>
             <para>This tenant_id should be the tenant ID from
                 keystone. To view all keystone tenant IDs, run the
                 following command as a keystone admin user:</para>
@@ -387,7 +383,7 @@ quantum subnet-create net1 10.0.0.0/24</computeroutput></screen>
                 <itemizedlist>
                     <listitem>
                         <para>Create a "shared" network (i.e., a network that can be used by all tenants)</para>
-                        <screen><computeroutput>quantum net-create public-net --shared True</computeroutput></screen>
+                        <screen><computeroutput>quantum net-create --shared public-net</computeroutput></screen>
                     </listitem>
                     <listitem>
                         <para>Create a subnet that has a specific gateway IP address.</para>
@@ -415,32 +411,80 @@ quantum subnet-create net1 10.0.0.0/24</computeroutput></screen>
                 <title>Searches</title>
                 <itemizedlist>
                     <listitem>
-                        <para>Find all Ports/IPs allocated on a network</para>
+                        <para>Find all Ports/IPs allocated on a network.</para>
                         <screen><computeroutput>quantum port-list -- --network_id &lt;net-id&gt;</computeroutput></screen>
                     </listitem>
                 </itemizedlist>
             </section>
-            <section xml:id="advanced_vm">
-            <title>Advanced VM creation &amp; port operations.  </title>
-            <itemizedlist>
-                <listitem>
-                    <para>booting a VM with multiple NICs</para>
-                    <screen><computeroutput>nova boot --image &lt;img&gt; --flavor &lt;flavor&gt; --nic net-id=&lt;net1-id&gt; --nic net-id=&lt;net2-id&gt; &lt;vm-name&gt;</computeroutput></screen>
-                </listitem>
-                <listitem>
-                    <para>specifying a port-id, rather than a
-                        net-id</para>
-                    <screen><computeroutput>quantum port-create --fixed-ip subnet_id=&lt;subnet-id&gt;,ip_address=192.168.57.101 net1
-nova boot --image &lt;img&gt; --flavor &lt;flavor&gt; --nic port-id=&lt;port-id&gt; &lt;vm-name&gt;</computeroutput></screen>
-                </listitem>
-                <listitem>
-                    <para>booting a VM with no --nic option specified.
-                        In this case the launched VM connects to all networks
-                        that are accessible to the tenant who submits the request.</para>
-                    <screen><computeroutput>nova boot --image &lt;img&gt; --flavor &lt;flavor&gt; &lt;vm-name&gt;</computeroutput></screen>
-                </listitem>
-            </itemizedlist>
         </section>
-      </section>
+    </section>
+    <section xml:id="using_nova_with_quantum">
+        <title>Using Nova with Quantum</title>
+        <section xml:id="basic_workflow_with_nova">
+            <title>Basic Workflow </title>
+            <para>Check available networks:</para>
+            <screen><prompt>$</prompt> <userinput>quantum net-list</userinput></screen>
+            <para>Boot the VM with a single NIC on the selected network (net1):</para>
+            <screen><prompt>$</prompt> <userinput>nova boot --image &lt;img&gt; --flavor &lt;flavor&gt; --nic net-id=&lt;net-id&gt; &lt;vm-name&gt;</userinput></screen>
+            <para>Congrats, you have booted a VM on a quantum network.
+	    You may need to configure <link linkend="enabling_ping_and_ssh">security group rules</link>
+	    to allow accesses to the VM.
+	    </para>
+            <para>There is now a Quantum port on 'net1' that
+                corresponds to the VM Nic.  You can view it with the
+                following command, which searches for all ports with a
+                "device_id" corresponding to the Nova instance
+                UUID:</para>
+            <screen><prompt>$</prompt> <userinput>quantum port-list -- --device_id=&lt;vm-id&gt;</userinput></screen>
+            <para>To view only a few fields of the port, you can limit
+                output using -c.  For example to see only the
+                mac_address of the port, use:</para>
+            <screen><prompt>$</prompt> <userinput>quantum port-list -c mac_address -- --device_id=&lt;vm-id&gt;</userinput></screen>
+            <para>You could temporarily disable the port from sending
+                traffic by updating it to have
+                admin_state_up=False:</para>
+            <screen><prompt>$</prompt> <userinput>quantum port-update &lt;port-id&gt; --admin_state_up=False</userinput></screen>
+            <para>When we delete the Nova VM, the underlying Quantum
+                port is automatically deleted:</para>
+            <screen><prompt>$</prompt> <userinput>quantum port-list -c mac_address -- --device_id=&lt;vm-id&gt;</userinput></screen>
+        </section>
+	<section xml:id="advanceed_vm_creation">
+	  <title>Advanced VM creation</title>
+	  <para>
+	    <itemizedlist>
+	      <listitem>
+		<para>Booting a VM with multiple NICs</para>
+		<screen><prompt>$</prompt> <userinput>nova boot --image &lt;img&gt; --flavor &lt;flavor&gt; \
+--nic net-id=&lt;net1-id&gt; --nic net-id=&lt;net2-id&gt; &lt;vm-name&gt;</userinput></screen>
+	      </listitem>
+	      <listitem>
+		<para>Booting a VM with a specific IP address.
+		To do this, we need to create a quantum port with a specific IP address first,
+		and then boot a VM specifying a port-id rather than a net-id.</para>
+		<screen><prompt>$</prompt> <userinput>quantum port-create --fixed-ip subnet_id=&lt;subnet-id&gt;,ip_address=192.168.57.101 &lt;net-id&gt;
+nova boot --image &lt;img&gt; --flavor &lt;flavor&gt; --nic port-id=&lt;port-id&gt; &lt;vm-name&gt;</userinput></screen>
+               <note><para><command>v4-fixed-ip</command> parameter of <command>--nic</command> option
+	       in <command>nova</command> command is not supported with Quantum at the moment.</para></note>
+	      </listitem>
+	      <listitem>
+		<para>booting a VM with no --nic option specified.
+		In this case the launched VM connects to all networks
+		that are accessible to the tenant who submits the request.</para>
+		<screen><prompt>$</prompt> <userinput>nova boot --image &lt;img&gt; --flavor &lt;flavor&gt; &lt;vm-name&gt;</userinput></screen>
+	      </listitem>
+	    </itemizedlist>
+	  </para>
+	</section>
+	<section xml:id="enabling_ping_and_ssh">
+	  <title>Security Groups (Enabling Ping and SSH on VMs)</title>
+	  <para>In Folsom release, the security groups feature is provided by Nova not by Quantum.
+	  You can configure security group rules by using <command>nova secgroup-add-rule</command>
+	  or <command>euca-authorize</command> command to enable accesses to your VMs.
+	  The example below allows <command>ping</command> or <command>ssh</command> to your VMs.</para>
+	  <screen><prompt>$</prompt> <userinput>nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0</userinput>
+<prompt>$</prompt> <userinput>nova secgroup-add-rule default tcp 22 22 0.0.0.0/0</userinput></screen>
+          <para>For more detail about Nova security groups,
+	  please see "Networking with nova-network" in OpenStack Compute Administration Manual.</para>
+	</section>
     </section>
 </chapter>
