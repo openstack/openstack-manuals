@@ -2098,13 +2098,18 @@ iface eth1 inet dhcp                </programlisting></para>
                 </itemizedlist></para>
             <para>If the compute host is not an API endpoint, use the
                     <command>nova-api-metadata</command> service. The <filename>nova.conf</filename>
-                file should contain:<programlisting>multi_host=True</programlisting></para>
+                file should contain:<programlisting>multi_host=True
+send_arp_for_ha=true
+</programlisting>
+The <literal>send_arp_for_ha</literal> option facilitates sending of gratuituous arp messages
+to ensure the arp caches on compute hosts are up to date.</literal></para>
             <para>If a compute host is also an API endpoint, use the <command>nova-api</command>
                 service. Your <literal>enabled_apis</literal> option will need to contain
                     <literal>metadata</literal>, as well as additional options depending on the API
                 services. For example, if it supports compute requests, volume requests, and EC2
                 compatibility, the <filename>nova.conf</filename> file should contain:
                 <programlisting>multi_host=True
+send_arp_for_ha=true
 enabled_apis=ec2,osapi_compute,osapi_volume,metadata</programlisting></para>
 
             <para>The <literal>multi_host</literal> option must be in place for network creation and
