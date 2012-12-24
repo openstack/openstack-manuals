@@ -3,38 +3,38 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="basic-install_operate">
-	<title>Create your first VM</title>
-    	<orderedlist>
-    		<listitem>
-			<para>You can now use OpenStack API or the Dashboard to manage your
-				own IaaS : <link
-					xlink:href="http://192.168.0.1/horizon"
-					>http://192.168.0.1/horizon</link> with demo /
-				password credentials.</para>
-		</listitem>
-    		<listitem>
-    			<para>Edit the security group "Default" to allow ICMP and SSH.</para>
-    		</listitem>
-    		<listitem>
-    			<para>Create a personal keypair.</para>
-    		</listitem>
-    		<listitem>
-    			<para>In the Dashboard, go to "Instances and Images" for
-				spawning a new VM.</para>
-    		</listitem>
-    		<listitem>
-    			<para>Since Horizon does not manage L3 in Folsom release, we have to configure floating IP from Quantum CLI (using demo tenant).
-    			To do that, you need to get the ext_net ID and the port_id of your VM :
-    			<screen>quantum net-list
-quantum port-list</screen></para>
-    		</listitem>
-    		<listitem>
-    			<para>Now, we are going to create a floating-IP attached to the virtual port of our VM and routed to the external network :
-    			<screen>quantum floatingip-create --port_id port_id ext_net_id</screen></para>
-    		</listitem>
-    		<listitem>
-    			<para>That's it! You should be able to ping your VM using
-				floating IP.</para>
-    		</listitem>
+        <title>Create your first VM</title>
+        <orderedlist>
+                <listitem>
+                        <para>You can now use OpenStack API or the Dashboard to manage your
+                                own IaaS : <link
+                                        xlink:href="http://192.168.0.1/horizon"
+                                        >http://192.168.0.1/horizon</link> with demo /
+                                password credentials.</para>
+                </listitem>
+                <listitem>
+                        <para>Edit the security group "Default" to allow ICMP and SSH.</para>
+                </listitem>
+                <listitem>
+                        <para>Create a personal keypair.</para>
+                </listitem>
+                <listitem>
+                        <para>In the Dashboard, go to "Instances" and click "Launch Instance" for
+                                spawning a new VM.</para>
+                </listitem>
+                <listitem>
+                        <para>Since Horizon does not manage L3 in Folsom release, we have to configure floating IP from Quantum CLI (using demo tenant).
+                        To do that, you need to get the ext_net ID and the port_id of your VM :
+                        <screen>quantum net-list -- --router:external True
+quantum port-list -- --device_id &lt;vm-uuid&gt;</screen></para>
+                </listitem>
+                <listitem>
+                        <para>Now, we are going to create a floating-IP attached to the virtual port of our VM and routed to the external network :
+                        <screen>quantum floatingip-create --port_id &lt;port_id&gt; &lt;ext_net_id&gt;</screen></para>
+                </listitem>
+                <listitem>
+                        <para>That's it! You should be able to ping your VM using
+                                floating IP.</para>
+                </listitem>
         </orderedlist>
 </section>

@@ -4,6 +4,24 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="basic-install_compute-quantum">
     <title>Quantum</title>
+        <section xml:id="compute-ovs">
+            <title>Open vSwitch</title>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>Install the packages:<screen><userinput>apt-get install -y openvswitch-switch</userinput></screen></para>
+                    </listitem>
+                    <listitem>
+                        <para>Start Open vSwitch service<screen><userinput>service openvswitch-switch start</userinput></screen></para>
+                    </listitem>
+                    <listitem>
+                        <para>Configure Virtual Bridging<screen><userinput>ovs-vsctl add-br br-int</userinput></screen></para>
+                    </listitem>
+                </orderedlist>
+            </para>
+        </section>
+        <section xml:id="compute-quantum">
+            <title>Quantum</title>
             <para>
                 <orderedlist>
                     <listitem>
@@ -16,13 +34,6 @@ auth_strategy = keystone
 fake_rabbit = False
 rabbit_host = 192.168.0.1
 rabbit_password = password</userinput></screen></para>
-                    </listitem>
-                    <listitem>
-                        <para>Start Open-vSwitch service &amp; restart the agent :<screen><userinput>/etc/init.d/openvswitch-switch start
-restart quantum-plugin-openvswitch-agent</userinput></screen></para>
-                    </listitem>
-                    <listitem>
-                        <para>Configure virtual bridging :<screen><userinput>ovs-vsctl add-br br-int</userinput></screen></para>
                     </listitem>
                     <listitem>
                         <para>Edit <emphasis role="bold"
@@ -39,14 +50,10 @@ local_ip = 10.0.0.2
 enable_tunneling = True</userinput></screen></para>
                     </listitem>
                     <listitem>
-                       <para>Edit <emphasis role="bold">/etc/quantum/api-paste.ini</emphasis> file and modify :<screen><userinput>admin_tenant_name = service
-admin_user = quantum 
-admin_password = password</userinput></screen></para>
-                     </listitem>
-                    <listitem>
                         <para>Start the Agent :<screen><userinput>service quantum-plugin-openvswitch-agent restart</userinput></screen></para>
                     </listitem>
                 </orderedlist>
             </para>
+         </section>
 </section>
 

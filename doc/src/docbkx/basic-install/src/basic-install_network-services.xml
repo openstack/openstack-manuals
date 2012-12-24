@@ -13,6 +13,10 @@
 quantum-dhcp-agent quantum-l3-agent</userinput></screen></para>
             </listitem>
             <listitem>
+                <para>Start Open vSwitch:
+                     <screen>service openvswitch-switch start</screen></para>
+            </listitem>
+            <listitem>
                 <para>Create Virtual Bridging
                         :<screen>ovs-vsctl add-br br-int
 ovs-vsctl add-br br-ex
@@ -27,29 +31,26 @@ ip link set up br-ex </screen></para>
             <para>Configure Quantum services :</para>
             <itemizedlist>
                 <listitem>
-                    <para>Edit <emphasis role="bold">/etc/quantum/api-paste.ini</emphasis> file and modify :<screen><userinput>admin_tenant_name = service
-admin_user = quantum 
-admin_password = password</userinput></screen></para>
-                </listitem>
-                <listitem>
-                    <para>Edit <emphasis role="bold">/etc/quantum/l3_agent.ini</emphasis> file and modify :<screen><userinput>admin_tenant_name = service
+                    <para>Edit <emphasis role="bold">/etc/quantum/l3_agent.ini</emphasis> file and modify :<screen><userinput>auth_url = http://192.168.0.1:35357/v2.0
+admin_tenant_name = service
 admin_user = quantum 
 admin_password = password
 metadata_ip = 192.168.0.1
-use_namespaces=False</userinput></screen></para>
+use_namespaces = False</userinput></screen></para>
                 </listitem>
                 <listitem>
                     <para>Edit <emphasis role="bold">/etc/quantum/quantum.conf</emphasis> file and modify :<screen><userinput>core_plugin = \
     quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPluginV2
 auth_strategy = keystone
 fake_rabbit = False
+rabbit_host = 192.168.0.1
 rabbit_password = password</userinput></screen></para>
                 </listitem>
                 <listitem>
                     <para>Edit <emphasis role="bold"
                         >/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</emphasis> file and
                     modify :<screen>[DATABASE]
-sql_connection = mysql://quantum:password@localhost:3306/quantum
+sql_connection = mysql://quantum:password@192.168.0.1:3306/quantum
 [OVS]
 tenant_network_type = gre 
 tunnel_id_ranges = 1:1000
@@ -67,15 +68,10 @@ local_ip = 10.10.10.1</screen>
                 <listitem>
                     <para>Edit <emphasis role="bold">/etc/quantum/dhcp_agent.ini</emphasis> file and add :<screen><userinput>use_namespaces = False</userinput></screen></para>
                 </listitem>
-                <listitem>
-                    <para>Edit <emphasis role="bold">/etc/quantum/api-paste.ini</emphasis> file and modify :<screen><userinput>admin_tenant_name = service
-admin_user = quantum 
-admin_password = password</userinput></screen></para>
-                </listitem>
             </itemizedlist>
 
             <para>Start the services
-                :<screen>service quantum-plugin-openvswitch-agent restart
+                :<screen>service quantum-plugin-openvswitch-agent start
 service quantum-dhcp-agent restart
 service quantum-l3-agent restart</screen></para>
         
