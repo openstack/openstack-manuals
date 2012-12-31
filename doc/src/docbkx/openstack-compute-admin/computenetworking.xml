@@ -2055,36 +2055,46 @@ iface eth1 inet dhcp                </programlisting></para>
             failure.</para>
         <simplesect>
             <title>HA Option 1: Multi-host</title>
-            <para>To eliminate the network host as a single point of failure, Compute can be
-                configured to allow each compute host to do all of the networking jobs for its own
-                VMs. Each compute host does NAT, DHCP, and acts as a gateway for all of its own VMs.
-                While there is still a single point of failure in this scenario, it is the same
-                point of failure that applies to all virtualized systems.</para>
+            <para>To eliminate the network host as a single point of
+                failure, Compute can be configured to allow each
+                compute host to do all of the networking jobs for its
+                own VMs. Each compute host does NAT, DHCP, and acts as
+                a gateway for all of its own VMs. While there is still
+                a single point of failure in this scenario, it is the
+                same point of failure that applies to all virtualized
+                systems.</para>
 
-            <para>This setup requires adding an IP on the VM network to each host in the system, and
-                it implies a little more overhead on the compute hosts. It is also possible to
-                combine this with option 4 (HW Gateway) to remove the need for your compute hosts to
-                gateway. In that hybrid version they would no longer gateway for the VMs and their
-                responsibilities would only be DHCP and NAT.</para>
+            <para>This setup requires adding an IP on the VM network
+                to each host in the system, and it implies a little
+                more overhead on the compute hosts. It is also
+                possible to combine this with option 4 (HW Gateway) to
+                remove the need for your compute hosts to gateway. In
+                that hybrid version they would no longer gateway for
+                the VMs and their responsibilities would only be DHCP
+                and NAT.</para>
             <para>The resulting layout for the new HA networking
                 option looks the following diagram:</para>
             <para><figure>
-                <title>High Availability Networking Option</title>
-                <mediaobject>
-                    <imageobject>
-                        <imagedata scale="50"
-                            fileref="figures/ha-net.jpg"/>
-                    </imageobject>
-                </mediaobject>
-            </figure></para>
-            <para>In contrast with the earlier diagram, all the hosts in the system are running the
-                nova-compute, nova-network and nova-api services. Each host does DHCP and does NAT
-                for public traffic for the VMs running on that particular host. In this model every
-                compute host requires a connection to the public internet and each host is also
-                assigned an address from the VM network where it listens for DHCP traffic. The
-                nova-api service is needed so that it can act as a metadata server for the
-                instances.</para>
-            <para>To run in HA mode, each compute host must run the following services:<itemizedlist>
+                    <title>High Availability Networking Option</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata scale="50"
+                                fileref="figures/ha-net.jpg"/>
+                        </imageobject>
+                    </mediaobject>
+                </figure></para>
+            <para>In contrast with the earlier diagram, all the hosts
+                in the system are running the nova-compute,
+                nova-network and nova-api services. Each host does
+                DHCP and does NAT for public traffic for the VMs
+                running on that particular host. In this model every
+                compute host requires a connection to the public
+                internet and each host is also assigned an address
+                from the VM network where it listens for DHCP traffic.
+                The nova-api service is needed so that it can act as a
+                metadata server for the instances.</para>
+            <para>To run in HA mode, each compute host must run the
+                following services:<itemizedlist>
                     <listitem>
                         <para><command>nova-compute</command></para>
                     </listitem>
@@ -2093,36 +2103,47 @@ iface eth1 inet dhcp                </programlisting></para>
                     </listitem>
                     <listitem>
                         <para><command>nova-api-metadata</command> or
-                            <command>nova-api</command></para>
+                                <command>nova-api</command></para>
                     </listitem>
                 </itemizedlist></para>
             <para>If the compute host is not an API endpoint, use the
-                    <command>nova-api-metadata</command> service. The <filename>nova.conf</filename>
-                    file should contain:</para>
+                    <command>nova-api-metadata</command> service. The
+                    <filename>nova.conf</filename> file should
+                contain:</para>
             <programlisting>multi_host=True
 send_arp_for_ha=true
             </programlisting>
             <para> The <literal>send_arp_for_ha</literal> option
-                facilitates sending of gratuituous arp messages to
+                facilitates sending of gratuitous arp messages to
                 ensure the arp caches on compute hosts are up to
                 date.</para>
-            <para>If a compute host is also an API endpoint, use the <command>nova-api</command>
-                service. Your <literal>enabled_apis</literal> option will need to contain
-                    <literal>metadata</literal>, as well as additional options depending on the API
-                services. For example, if it supports compute requests, volume requests, and EC2
-                compatibility, the <filename>nova.conf</filename> file should contain:
+            <para>If a compute host is also an API endpoint, use the
+                    <command>nova-api</command> service. Your
+                    <literal>enabled_apis</literal> option will need
+                to contain <literal>metadata</literal>, as well as
+                additional options depending on the API services. For
+                example, if it supports compute requests, volume
+                requests, and EC2 compatibility, the
+                    <filename>nova.conf</filename> file should
+                contain:
                 <programlisting>multi_host=True
 send_arp_for_ha=true
 enabled_apis=ec2,osapi_compute,osapi_volume,metadata</programlisting></para>
 
-            <para>The <literal>multi_host</literal> option must be in place for network creation and
-                nova-network must be run on every compute host. These created multi hosts networks
-                will send all network related commands to the host that the VM is on. You need to
-                set the configuration option <literal>enabled_apis</literal> such that it includes
-                    <literal>metadata</literal> in the list of enabled APIs. </para>
-            <note><para>You must specify the <literal>multi_host</literal> option
-            on the command line when creating fixed networks. For example:
-            <screen>
+            <para>The <literal>multi_host</literal> option must be in
+                place for network creation and nova-network must be
+                run on every compute host. These created multi hosts
+                networks will send all network related commands to the
+                host that the VM is on. You need to set the
+                configuration option <literal>enabled_apis</literal>
+                such that it includes <literal>metadata</literal> in
+                the list of enabled APIs. </para>
+            <note>
+                <para>You must specify the
+                        <literal>multi_host</literal> option on the
+                    command line when creating fixed networks. For
+                    example:
+                    <screen>
               <prompt>#</prompt> <userinput> nova-manage network create --fixed_range_v4=192.168.0.0/24 --num_networks=1 --network_size=256 --multi_host=T --label=test</userinput>
             </screen></para>
             </note>
