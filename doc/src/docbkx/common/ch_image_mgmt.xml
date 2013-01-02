@@ -152,6 +152,76 @@
             </section>
             
         </section>
+    <section xml:id="image-customizing-what-you-need-to-know">
+        <?dbhtml stop-chunking?>
+        <title>Customizing an image for OpenStack</title>
+        <para>This section describes what customizations you should to your image to maximize
+            compatibility with OpenStack.</para>
+        <section xml:id="support-metadata-or-config-drive"><title>Support metadata service or config drive</title>
+            <para>An image needs to be able to retrieve information from OpenStack, such as the ssh public key
+                and <link linkend="user-data">user data</link> that the user submitted when
+                requesting the image. This information is accessible via the <link
+                    linkend="metadata-service">metadata service</link> or the <link
+                    linkend="config-drive">config drive</link>. The easiest way to support this is
+                to install the <link xlink:href="http://launchpad.net/cloud-init">cloud-init</link>
+                package into your image.</para></section>
+        <section xml:id="support-resizing">
+            <title>Support resizing</title>
+            <para>The size of the disk in a virtual machine image is determined when you initially
+                create the image. However, OpenStack lets you launch instances with different size
+                drives by specifying different <link linkend="instance-building-blocks-flavors"
+                    >flavors</link>. For example, if your image was created with a 5 GB disk, and
+                you launch an instance with a flavor of <literal>m1.small</literal>, the resulting
+                virtual machine instance will have a primary disk of 10GB. When an instance's disk
+                is resized up, zeros are just added to the end.</para>
+            <para>Your image needs to be able to resize its partitions on boot to match the size
+                requested by the user. Otherwise, after the instance boots, you will need to
+                manually resize the partitions if you want to access the additional storage you have
+                access to when the disk size associated with the flavor exceeds the disk size your
+                image was created with. </para>
+            <para>Your image must be configured to deal with two issues:<itemizedlist>
+                    <listitem>
+                        <para>The image's partition table describes the original size of the
+                            image</para>
+                    </listitem>
+                    <listitem>
+                        <para>The image's filesystem fills the original size of the image</para>
+                    </listitem>
+                </itemizedlist></para>
+            <simplesect><title>Adjusting the partition table on instance boot</title>
+                <para>Your image will need to run a script on boot to modify the partition table. Due to a
+                    limitation in the Linux kernel, you cannot modify a partition table of a disk
+                    that has partition currently mounted (you can for LVM, but not for "raw disks");
+                    this partition adjustment has to happen inside the initramfs before the root
+                    volume is mounted, or a reboot has to be done to free the mount of
+                        <filename>/</filename>.</para>
+                <para xlink:href="https://launchpad.net/cloud-utils">Ubuntu cloud images and cirros
+                    images use a tool called <command>growpart</command> that is part of the <link
+                        xlink:href="http://launchpad.net/cloud-utils">cloud-utils</link>
+                    package.</para></simplesect>
+            <simplesect>
+                <title>Adjusting the filesystem</title>
+                <para>You will need to resize the file system in addition to the partition table. If
+                    you have cloud-init installed, it will do the resize assuming the partition
+                    tables have been adjusted properly. Cirros images run resize2fs on the root
+                    partition on boot.</para>
+                <note><para>If you are using XenServer as your hypervisor, the above steps are not needed as the Compute
+                        service will automatically adjust the partition and filesystem for your
+                        instance on boot. Automatic resize will occur if the following are all true:<itemizedlist>
+                            <listitem>
+                                <para><literal>auto_disk_config=True</literal> in <filename>nova.conf</filename>.</para>
+                            </listitem>
+                            <listitem>
+                                <para>The disk on the image has only one partition.</para>
+                            </listitem>
+                            <listitem>
+                                <para>The file system on the one partition is ext3 or ext4.</para>
+                            </listitem>
+                        </itemizedlist></para></note>
+            </simplesect>
+        </section>
+        
+    </section>
     <section xml:id="manually-creating-qcow2-images">
         <title>Creating raw or QCOW2 images</title>
         <para>This section describes how to create a raw or QCOW2 image from a Linux installation
