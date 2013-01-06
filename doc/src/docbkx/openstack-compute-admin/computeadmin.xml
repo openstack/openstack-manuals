@@ -78,7 +78,7 @@ format="SVG" scale="60"/>
 
         </listitem>
     </itemizedlist>
-    
+
     <section xml:id="understanding-the-compute-service-architecture">
 
         <title>Understanding the Compute Service Architecture</title>
@@ -210,7 +210,7 @@ usage: nova [--debug] [--os-username OS_USERNAME] [--os-password OS_PASSWORD]
                     <command>nova-manage project list</command></para>
 
             <para>Run without arguments to see a list of available command categories: nova-manage</para>
-            <para>You can also run with a category argument such as user to see 
+            <para>You can also run with a category argument such as user to see
 	          a list of all commands in that category: nova-manage service</para>
         </simplesect>        <simplesect><title>Using the euca2ools commands</title>
             <para>For a command-line interface to EC2 API calls, use
@@ -222,6 +222,98 @@ usage: nova [--debug] [--os-username OS_USERNAME] [--os-password OS_PASSWORD]
     </section>
 
     <xi:include href="rootwrap.xml"/>
+
+    <section xml:id="logging">
+        <title>Managing logs</title>
+        <simplesect>
+            <title>Logging module</title>
+            <para>Adding the following line to <filename>/etc/nova/nova.conf</filename> will allow
+                you to specify a configuration file for changing the logging behavior, in particular
+                for changing the logging level (e.g., <literal>DEBUG</literal>,
+                    <literal>INFO</literal>, <literal>WARNING</literal>,
+                <literal>ERROR</literal>):<programlisting>log-config=/etc/nova/logging.conf</programlisting></para>
+            <para>The log config file is an ini-style config file which must contain a section
+                called <literal>logger_nova</literal>, which controls the behavior of the logging
+                facility in the <literal>nova-*</literal> services. The file must contain a section
+                called <literal>logger_nova</literal>, for
+                example:<programlisting>[logger_nova]
+level = INFO
+handlers = stderr
+qualname = nova</programlisting></para>
+            <para>This example sets the debugging level to <literal>INFO</literal> (which less
+                verbose than the default <literal>DEBUG</literal> setting). See the <link
+                    xlink:href="http://docs.python.org/release/2.7/library/logging.html#configuration-file-format"
+                    >Python documentation on logging configuration file format </link>for more
+                details on this file, including the meaning of the <literal>handlers </literal>and
+                    <literal>quaname</literal> variables. See <link
+                    xlink:href="https://github.com/openstack/nova/blob/master/etc/nova/logging_sample.conf"
+                    >etc/nova/logging_sample.conf</link> in the openstack/nova repository on GitHub
+                for an example logging.conf file with various handlers defined.</para>
+        </simplesect>
+        <simplesect><title>Syslog</title>
+
+        <para>OpenStack Compute services can be configured to send logging information to syslog.
+                This is particularly useful if you want to use rsyslog, which will forward the logs
+                to a remote machine. You need to separately configure the Compute service (nova),
+                the Identity service (keystone), the Image service (glance), and, if you are using
+                it, the Block Storage service (cinder) to send log messages to syslog. To do so, add
+                the following lines to:<itemizedlist>
+                    <listitem>
+                        <para><filename>/etc/nova/nova.conf</filename></para>
+                    </listitem>
+                    <listitem>
+                        <para><filename>/etc/keystone/keystone.conf</filename></para>
+                    </listitem>
+                    <listitem>
+                        <para><filename>/etc/glance/glance-api.conf</filename></para>
+                    </listitem>
+                    <listitem>
+                        <para><filename>/etc/glance/glance-registry.conf</filename></para>
+                    </listitem>
+                    <listitem>
+                        <para><filename>/etc/cinder/cinder.conf</filename></para>
+                    </listitem>
+                </itemizedlist><programlisting>verbose = False
+debug = False
+use_syslog = True
+syslog_log_facility = LOG_LOCAL0 </programlisting>
+                In addition to enabling syslog, these settings also turn off more verbose output and
+                debugging output from the log.<note>
+                    <para>While the example above uses the same local facility for each service
+                            (<literal>LOG_LOCAL0</literal>, which corresponds to syslog facility
+                            <literal>LOCAL0</literal>), we recommend that you configure a separate
+                        local facility for each service, as this provides better isolation and more
+                        flexibility. For example, you may want to capture logging info at different
+                        severity levels for different services. Syslog allows you to define up to
+                        seven local facilities, <literal>LOCAL0, LOCAL1, ..., LOCAL7</literal>. See
+                        the syslog documentation for more details.</para>
+                </note></para>
+        </simplesect>
+        <simplesect><title>Rsyslog</title>
+            <para>Rsyslog is a useful tool for setting up a centralized log server across multiple
+                machines. We briefly describe the configuration to set up an rsyslog server; a full
+                treatment of rsyslog is beyond the scope of this document. We assume rsyslog has
+                already been installed on your hosts, which is the default on most Linux
+                distributions.</para>
+            <para>This example shows a minimal configuration for
+                    <filename>/etc/rsyslog.conf</filename> on the log server host which will receive
+                the log
+                files:<programlisting># provides TCP syslog reception
+$ModLoad imtcp
+$InputTCPServerRun 1024</programlisting></para>
+            <para>Add to <filename>/etc/rsyslog.conf</filename> a filter rule on which looks for a
+                hostname. The example below use <replaceable>compute-01</replaceable> as an example
+                of a compute host
+                name:<programlisting>:hostname, isequal, "<replaceable>compute-01</replaceable>" /mnt/rsyslog/logs/compute-01.log</programlisting></para>
+            <para>On the compute hosts, create a file named
+                    <filename>/etc/rsyslog.d/60-nova.conf</filename>, with the following
+                content.<programlisting># prevent debug from dnsmasq with the daemon.none parameter
+*.*;auth,authpriv.none,daemon.none,local0.none -/var/log/syslog
+# Specify a log level of ERROR
+local0.error    @@172.20.1.43:1024</programlisting></para>
+            <para>Once you have created this file, restart your rsyslog daemon. Error-level log
+                messages on the compute hosts  should now be sent to your log server.</para></simplesect>
+    </section>
 
     <section xml:id="live-migration-usage">
 
@@ -333,13 +425,13 @@ HostC            p2            5     10240     150
     </section>
     <section xml:id="nova-compute-node-down">
 	<title>Recovering from a failed compute node</title>
-	<para>If you have deployed OpenStack Compute with a shared filesystem, 
+	<para>If you have deployed OpenStack Compute with a shared filesystem,
 	you can quickly recover from a failed compute node. </para>
 	<simplesect>
 	    <title>Working with host information</title>
             <para>
-	The first step is to identify the vms on the affected hosts, using tools such as 
-	a combination of <literal>nova list</literal> and <literal>nova show</literal> or 
+	The first step is to identify the vms on the affected hosts, using tools such as
+	a combination of <literal>nova list</literal> and <literal>nova show</literal> or
 	<literal>euca-describe-instances</literal>. Here's an example using the EC2 API
 	 - instance i-000015b9 that is running on node np-rcc54:
             </para>
@@ -348,7 +440,7 @@ HostC            p2            5     10240     150
 	</programlisting>
 	<para>
 	First, you can review the status of the host using the nova database, some of the important information is highlighted below. This example converts an EC2 API instance ID into an openstack ID - if you used the <literal>nova</literal>
-	commands, you can substitute the ID directly. You can find the credentials for your database in 
+	commands, you can substitute the ID directly. You can find the credentials for your database in
 <literal>/etc/nova.conf</literal>.
 	</para>
 <programlisting>
@@ -376,14 +468,14 @@ SELECT * FROM instances WHERE id = CONV('15b9', 16, 10) \G;
 <title>Recover the VM</title>
 <para>
 Armed with the information of VMs on the failed host, determine which compute host
- the affected VMs should be moved to. In this case, the VM will move to np-rcc46, which 
+ the affected VMs should be moved to. In this case, the VM will move to np-rcc46, which
 is achieved using this database command:</para>
 <programlisting>
 UPDATE instances SET host = 'np-rcc46' WHERE uuid = '3f57699a-e773-4650-a443-b4b37eed5a06';
 </programlisting>
-<para> Next, if using a hypervisor that relies on libvirt (such as KVM) 
-it is a good idea to update the <literal>libvirt.xml</literal> file 
-(found in <literal>/var/lib/nova/instances/[instance ID]</literal>). 
+<para> Next, if using a hypervisor that relies on libvirt (such as KVM)
+it is a good idea to update the <literal>libvirt.xml</literal> file
+(found in <literal>/var/lib/nova/instances/[instance ID]</literal>).
 The important changes to make are to change the <literal>DHCPSERVER</literal>
  value to the host ip address of the nova compute host that is the VMs new home, and
 update the VNC IP if it isn't already <literal>0.0.0.0</literal>.
@@ -395,10 +487,10 @@ Next, reboot the VM:
 </screen>
 </para>
 <para>In theory, the above database update and <literal>nova reboot</literal> command
-are all that is required to recover the VMs from a failed host. 
-However, if further problems occur, consider looking at recreating the 
-network filter configuration using <literal>virsh</literal>, restarting the 
-nova services or updating the <literal>vm_state</literal> and 
+are all that is required to recover the VMs from a failed host.
+However, if further problems occur, consider looking at recreating the
+network filter configuration using <literal>virsh</literal>, restarting the
+nova services or updating the <literal>vm_state</literal> and
 <literal>power_state</literal> in the nova database.</para>
 </simplesect>
 </section>
@@ -419,7 +511,7 @@ nova services or updating the <literal>vm_state</literal> and
          <listitem><para>Set the libvirtd group in /etc/group file to the same number in all hosts (e.g. 119)</para></listitem>
          <listitem><para>Stop the services on the compute node</para></listitem>
          <listitem><para>Change all the files owned by nova or group by nova, e.g.
-         <programlisting>        
+         <programlisting>
          find / -uid 108 -exec chown nova {} \; # note the 108 here is the old nova uid before the change
          find / -gid 120 -exec chgrp nova {} \;
          </programlisting>
