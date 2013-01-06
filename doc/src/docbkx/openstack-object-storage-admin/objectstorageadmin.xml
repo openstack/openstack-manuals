@@ -5,23 +5,23 @@
     xml:id="ch_running-openstack-object-storage">
         <title>System Administration for OpenStack Object Storage</title>
     <para>By understanding the concepts inherent to the Object Storage system you can better monitor and administer your storage solution. </para>
-    
+
     <section xml:id="understanding-how-object-storage-works">
-        
+
         <title>Understanding How Object Storage Works</title>
         <para>This section offers a brief overview of each concept in administering Object Storage. </para>
         <simplesect xml:id="the-ring"><title>The Ring</title>
-            
+
             <para>A ring represents a mapping between the names of entities stored on disk and their physical location. There are separate rings for accounts, containers, and objects. When other components need to perform any operation on an object, container, or account, they need to interact with the appropriate ring to determine its location in the cluster.
             </para>
             <para>The Ring maintains this mapping using zones, devices, partitions, and replicas. Each partition in the ring is replicated, by default, 3 times across the cluster, and the locations for a partition are stored in the mapping maintained by the ring. The ring is also responsible for determining which devices are used for handoff in failure scenarios.</para>
-            
+
             <para>Data can be isolated with the concept of zones in the ring. Each replica of a partition is guaranteed to reside in a different zone. A zone could represent a drive, a server, a cabinet, a switch, or even a datacenter.</para>
-            
+
             <para>The partitions of the ring are equally divided among all the devices in the OpenStack Object Storage installation. When partitions need to be moved around (for example if a device is added to the cluster), the ring ensures that a minimum number of partitions are moved at a time, and only one replica of a partition is moved at a time.</para>
-            
+
             <para>Weights can be used to balance the distribution of partitions on drives across the cluster. This can be useful, for example, when different sized drives are used in a cluster.</para>
-            
+
             <para>The ring is used by the Proxy server and several background processes (like replication).</para></simplesect>
         <simplesect><title>Proxy Server</title>
             <para>The Proxy Server is responsible for tying together the rest of the OpenStack Object Storage architecture. For each request, it will look up the location of the account, container, or object in the ring (see below) and route the request accordingly. The public API is also exposed through the Proxy Server.
@@ -32,16 +32,16 @@
             <para>When objects are streamed to or from an object server, they are streamed directly through the proxy server to or from the user – the proxy server does not spool them.</para>
             <para>You can use a proxy server with account management enabled by configuring it in
                 the proxy server configuration file.</para></simplesect>
-        
+
         <simplesect xml:id="object-server"><title>Object Server</title>
-            
+
             <para>The Object Server is a very simple blob storage server that can store, retrieve and delete objects stored on local devices. Objects are stored as binary files on the filesystem with metadata stored in the file’s extended attributes (xattrs). This requires that the underlying filesystem choice for object servers support xattrs on files. Some filesystems, like ext3, have xattrs turned off by default.</para>
-            
+
             <para>Each object is stored using a path derived from the object name’s hash and the operation’s timestamp. Last write always wins, and ensures that the latest object version will be served. A deletion is also treated as a version of the file (a 0 byte file ending with “.ts”, which stands for tombstone). This ensures that deleted files are replicated correctly and older versions don’t magically reappear due to failure scenarios.</para>
         </simplesect>
-        
+
         <simplesect xml:id="container-server"><title>Container Server</title>
-            
+
             <para>The Container Server’s primary job is to handle listings of objects. It doesn’t know where those objects are, just what objects are in a specific container. The listings are stored as sqlite database files, and replicated across the cluster similar to how objects are. Statistics are also tracked that include the total number of objects, and total storage usage for that container.</para>
         </simplesect>
         <simplesect><title>Account Server</title>
@@ -49,7 +49,7 @@
                 responsible for listings of containers rather than objects.</para>
         </simplesect>
         <simplesect xml:id="swift-replication">            <title>Replication</title>
-            
+
             <para>Replication is designed to keep the system in a consistent state in the face of temporary error conditions like network outages or drive failures.
             </para>
             <para>The replication processes compare local data with each remote copy to ensure they all contain the latest version. Object replication uses a hash list to quickly compare subsections of each partition, and container and account replication use a combination of hashes and shared high water marks.
@@ -59,7 +59,7 @@
             <para>The replicator also ensures that data is removed from the system. When an item (object, container, or account) is deleted, a tombstone is set as the latest version of the item. The replicator will see the tombstone and ensure that the item is removed from the entire system.
             </para></simplesect>
         <simplesect xml:id="updaters"><title>Updaters</title>
-            
+
             <para>There are times when container or account data can not be immediately updated.
                 This usually occurs during failure scenarios or periods of high load. If an update
                 fails, the update is queued locally on the file system, and the updater will process
@@ -73,18 +73,48 @@
             <para>In practice, the consistency window is only as large as the frequency at which the updater runs and may not even be noticed as the proxy server will route listing requests to the first container server which responds. The server under load may not be the one that serves subsequent listing requests – one of the other two replicas may handle the listing.</para>
         </simplesect>
         <simplesect xml:id="auditors"><title>Auditors</title>
-            
+
             <para>Auditors crawl the local server checking the integrity of the objects, containers, and accounts. If corruption is found (in the case of bit rot, for example), the file is quarantined, and replication will replace the bad file from another replica. If other errors are found they are logged (for example, an object’s listing can’t be found on any container server it should be).
-                
+
             </para></simplesect>
     </section>
 
     <xi:include href="objectstorage-config-reference.xml"/>
 
+    <section xml:id="object-layout-on-storage">
+        <title>Object Layout on Storage</title>
+        <para>Swift uses the underlying filesystem to store the data on disk. An administrator can
+            use normal filesystem tools to find and inspect this data. Swift uses the following
+            convention for storing objects:</para>
+        <para><filename>
+                    /<replaceable>path_to_mount_points</replaceable>/<replaceable>device</replaceable>/objects/<replaceable>partition</replaceable>/<replaceable>hash_suffix</replaceable>/<replaceable>hash/</replaceable></filename></para>
+        <para>Accounts and containers are stored similarly, with the "objects" part of the path
+            replaced with "accounts" or "containers".</para>
+        <para>The directory is where all of the data for the object is stored. Inside the directory,
+            there is normally just one file (named
+                    <filename><replaceable>&lt;timestamp></replaceable>.data</filename>). The
+            object's data is stored in the file, and the object's metadata is stored in the extended
+            attributes (xattrs) of the file. </para>
+        <para>If a user deletes the object, the <filename>.data</filename> file is deleted and a
+                    <filename><replaceable>&lt;timestamp></replaceable>.ts</filename> ("ts" for
+            "tombstone") file is created as a zero-byte file. This is a delete marker that will be
+            eventually reaped, but it exists to ensure that the delete properly propagates to all
+            replicas in the cluster.</para>
+        <para>Swift uses this scheme of timestamps in the file name to implement conflict resolution.
+            Each piece of data is assigned a timestamp by the proxy server when the request comes to
+            the cluster, and that timestamp is what's used to name the file on disk on the object
+            (or account or container) server. For the common case, there will be a single file in
+            the directory. If Swift receives multiple, concurrent requests to write to the same
+            object, it can happen that multiple <filename>.data</filename> files are written to this
+            directory. Swift uses "last-write-wins" to resolve such conflicts, choosing the most
+            recent file by timestamp.</para>
+
+    </section>
+
     <section xml:id="configuring-and-tuning-openstack-object-storage">
         <title>Configuring and Tuning OpenStack Object Storage</title>
     <para>This section walks through deployment options and considerations.</para>
-    
+
 <para>You have multiple deployment options to choose from. The swift services run completely autonomously, which provides for a lot of flexibility when
             designing the hardware deployment for swift. The 4 main services are:</para>
 
@@ -94,7 +124,7 @@
 <listitem><para>Container Services</para></listitem>
 <listitem><para>Account Services</para></listitem>
 </itemizedlist>
-    
+
 <para>The Proxy Services are more CPU and network I/O intensive. If you are using
 10g networking to the proxy, or are terminating SSL traffic at the proxy,
 greater CPU power will be required.</para>
@@ -116,12 +146,12 @@ but this is a very important part of the cluster, so time should be spent
 designing the network for a Swift cluster.</para>
 </section>
     <section xml:id="preparing-the-ring">
-     
+
 <title>Preparing the Ring</title>
 <note><title>Note</title><para>"Partition" in this section refers to the logical
 partitions of the swift ring - not physical partitions on Storage node drives.
 You should setup your Storage Node disk partitions with one physical partition
- per disk, as per the 
+ per disk, as per the
 <link linkend="installing-and-configuring-storage-nodes">installation instructions</link>
 .</para></note>
 <para>The first step is to determine the number of partitions that will be in the
@@ -191,10 +221,10 @@ commands and options. </para>
 
 </section>
     <section xml:id="considerations-and-tuning">
-        <title>Considerations and Tuning</title><para>Fine-tuning your deployment and installation may take some time and effort. Here are some considerations for improving performance of an OpenStack Object Storage installation.</para> 
+        <title>Considerations and Tuning</title><para>Fine-tuning your deployment and installation may take some time and effort. Here are some considerations for improving performance of an OpenStack Object Storage installation.</para>
         <section xml:id="memcached-considerations">
             <title>Memcached Considerations</title>
-            
+
             <para>Several of the Services rely on Memcached for caching certain types of
                 lookups, such as auth tokens, and container/account existence.  Swift does
                 not do any caching of actual object data.  Memcached should be able to run
@@ -213,7 +243,7 @@ commands and options. </para>
                 should also be monitored to ensure that the times do not vary too much.</para>
         </section>
         <section xml:id="general-service-tuning">
-            
+
             <title>General Service Tuning</title>
             <para>Most services support either a worker or concurrency value in the settings.
                 This allows the services to make effective use of the cores available. A good
@@ -240,12 +270,12 @@ commands and options. </para>
                 thorough testing with our use cases and hardware configurations, XFS was
                 the best all-around choice. If you decide to use a filesystem other than
                 XFS, we highly recommend thorough testing.</para>
-            
+
             <para>If you are using XFS, some settings that can dramatically impact
                 performance. We recommend the following when creating the XFS
                 partition:</para>
             <para><code>mkfs.xfs -i size=1024 -f /dev/sda1</code></para>
-            
+
             <para>Setting the inode size is important, as XFS stores xattr data in the inode.
                 If the metadata is too large to fit in the inode, a new extent is created,
                 which can cause quite a performance problem. Upping the inode size to 1024
@@ -261,7 +291,7 @@ commands and options. </para>
                 choose to mount the drives in another directory, be sure to set the
                     <code>devices</code> config option in all of the server configs to point to the
                 correct directory.</para>
-            
+
         </section>
         <section xml:id="general-system-tuning">
             <title>General System Tuning</title>
@@ -269,7 +299,7 @@ commands and options. </para>
                 changes have been found to be useful for our use cases.</para>
             <para>The following settings should be in <code>/etc/sysctl.conf</code>:</para>
             <literallayout>
-        
+
 # disable TIME_WAIT.. wait..
 net.ipv4.tcp_tw_recycle=1
 net.ipv4.tcp_tw_reuse=1
@@ -281,7 +311,7 @@ net.ipv4.tcp_syncookies = 0
 net.ipv4.netfilter.ip_conntrack_max = 262144
 
     </literallayout>
-            
+
             <para>To load the updated sysctl settings, run <code>sudo sysctl -p </code></para>
             <para>A note about changing the TIME_WAIT values. By default the OS will hold
                 a port open for 60 seconds to ensure that any remaining packets can be
@@ -296,8 +326,8 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                 the <code>log_facility</code> option to set the syslog log facility destination. We
                 recommend using syslog-ng to route the logs to specific log files locally on the
                 server and also to remote log collecting servers.</para>
-            
-        </section> 
+
+        </section>
         <section xml:id="working-with-rings">
         <title>Working with Rings</title>
         <para>The rings determine where data should reside in the cluster. There is a
@@ -346,7 +376,7 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                 to calculate the partition for the hash.</para>
                     <section xml:id="list-of-devices-in-the-ring">
                 <title>List of Devices in the Ring</title>
-                
+
                 <para>The list of devices is known internally to the Ring class as devs. Each item in
                     the list of devices is a dictionary with the following keys:</para>
                 <table rules="all">
@@ -356,13 +386,13 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                     <td>Key</td>
                     <td>Type</td>
                     <td>Description</td></tr>
-                 
+
                         <tr><td>id</td>
                             <td>integer</td>
                             <td>The index into the list devices.</td>
                         </tr>
                         <tr><td>zone</td>
-                            
+
                             <td>integer</td>
                             <td>The zone the devices resides in.</td>
                         </tr>
@@ -381,7 +411,7 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                         <tr><td>ip</td>
                             <td>string</td>
                             <td>The IP address of the server containing the device.</td>
-                            
+
                         </tr>
                         <tr><td>port</td>
                             <td>int</td>
@@ -394,7 +424,7 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                                 For example: sdb1</td>
                         </tr>
                         <tr><td>meta</td>
-                            
+
                             <td>string</td>
                             <td>A general-use field for storing additional information for the
                                 device. This information isn't used directly by the server
@@ -410,7 +440,7 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                     to 0.0. </para>
             </section>
         </section>
-        
+
                 <section xml:id="partition-assignment-list">
                 <title>Partition Assignment List</title>
                 <para>This is a list of array(&#8216;I') of devices ids. The outermost list contains an
@@ -418,12 +448,12 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                     partition count for the ring. Each integer in the array(&#8216;I') is an index into
                     the above list of devices. The partition list is known internally to the Ring
                     class as _replica2part2dev_id.</para>
-                
+
                 <para>So, to create a list of device dictionaries assigned to a partition, the Python
                     code would look like: devices = [self.devs[part2dev_id[partition]] for part2dev_id in self._replica2part2dev_id]</para>
                 <para>array(&#8216;I') is used for memory conservation as there may be millions of
                     partitions.</para>
-                
+
             </section>
                 <section xml:id="partition-shift-value">
                 <title>Partition Shift Value</title>
@@ -432,7 +462,7 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                     data for that hash should reside. Only the top four bytes of the hash is used
                     in this process. For example, to compute the partition for the path
                     /account/container/object the Python code might look like: partition = unpack_from('&gt;I', md5('/account/container/object').digest())[0] &gt;&gt;self._part_shift</para>
-                
+
             </section></section>
             <section xml:id="building-the-ring">
             <title>Building the Ring</title>
@@ -461,7 +491,7 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                 min_part_hours. This restriction is ignored for replicas of partitions on
                 devices that have been removed, as removing a device only happens on device
                 failure and there's no choice but to make a reassignment.</para>
-            
+
             <para>The above processes don't always perfectly rebalance a ring due to the random
                 nature of gathering partitions for reassignment. To help reach a more balanced
                 ring, the rebalance process is repeated until near perfect (less 1% off) or
@@ -485,7 +515,7 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                 before it's shipped out to the servers, and guarantees each server is using a
                 ring from the same timeline. It also means that the servers themselves aren't
                 spending a lot of resources maintaining rings.</para>
-            
+
             <para>A couple of &#8220;ring server&#8221; options were considered. One was where all ring
                 lookups would be done by calling a service on a separate server or set of
                 servers, but this was discarded due to the latency involved. Another was much
@@ -519,7 +549,7 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                 replicas rather than each data item independently attempted and retried. Hashes
                 of directory structures can be calculated and compared with other replicas to
                 reduce directory walking and network traffic.</para>
-            
+
             <para>Partitioning and independently assigning partition replicas also allowed for
                 the best balanced cluster. The best of the other strategies tended to give
                 +-10% variance on device balance with devices of equal weight and +-15% with
@@ -543,7 +573,7 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                     retention time and no undelete; it is assumed the reseller will implement such
                     features and only call remove_storage_account once it is truly desired the
                     account's data be removed.</para>
-                
+
                 <para>The account reaper runs on each account server and scans the server
                     occasionally for account databases marked for deletion. It will only trigger on
                     accounts that server is the primary node for, so that multiple account servers
@@ -569,7 +599,7 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                         REST API. However, the downside was that it would use proxy resources and log
                         everything when it didn't really need to. Also, it would likely need a
                         dedicated server or two, just for issuing the delete requests.</para>
-                    
+
                     <para>A completely bottom-up approach was also considered, where the object and
                         container servers would occasionally scan the data they held and check if the
                         account was deleted, removing the data if so. The upside was the speed of
@@ -588,15 +618,15 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                         performing its replication scan, but it would have to spawn and track deletion
                         processes which seemed needlessly complex.</para>
                     <para>In the end, an account server centric approach seemed best, as described above.</para>
-              
+
         </section>
-        </section> 
+        </section>
     </section>
     <section xml:id="replication">
         <title>Replication</title>
         <para>Since each replica in OpenStack Object Storage functions independently, and clients generally require only a simple majority of nodes responding to consider an operation successful, transient failures like network partitions can quickly cause replicas to diverge.  These differences are eventually reconciled by asynchronous, peer-to-peer replicator processes.  The replicator processes traverse their local filesystems, concurrently performing operations in a manner that balances load across physical disks.</para>
         <para>Replication uses a push model, with records and files generally only being copied from local to remote replicas.  This is important because data on the node may not belong there (as in the case of handoffs and ring changes), and a replicator can't know what data exists elsewhere in the cluster that it should pull in.  It's the duty of any node that contains data to ensure that data gets to where it belongs.  Replica placement is handled by the ring.</para>
-        
+
         <para>Every deleted record or file in the system is marked by a tombstone, so that deletions can be replicated alongside creations.  These tombstones are cleaned up by the replication process after a period of time referred to as the consistency window, which is related to replication duration and how long transient failures can remove a node from the cluster.  Tombstone cleanup must be tied to replication to reach replica convergence.</para>
         <para>If a replicator detects that a remote drive has failed, it will use the ring's &#8220;get_more_nodes&#8221; interface to choose an alternate node to synchronize with.  The replicator can generally maintain desired levels of replication in the face of hardware failures, though some replicas may not be in an immediately usable location.</para>
         <para>Replication is an area of active development, and likely rife with potential improvements to speed and correctness.</para>
@@ -604,7 +634,7 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
         <section xml:id="database-replication">
             <title>Database Replication</title>
             <para>The first step performed by db replication is a low-cost hash comparison to find out whether or not two replicas already match.  Under normal operation, this check is able to verify that most databases in the system are already synchronized very quickly.  If the hashes differ, the replicator brings the databases in sync by sharing records added since the last sync point.</para>
-            
+
             <para>This sync point is a high water mark noting the last record at which two databases were known to be in sync, and is stored in each database as a tuple of the remote database id and record id.  Database ids are unique amongst all replicas of the database, and record ids are monotonically increasing integers.  After all new records have been pushed to the remote database, the entire sync table of the local database is pushed, so the remote database knows it's now in sync with everyone the local database has previously synchronized with.</para>
             <para>If a replica is found to be missing entirely, the whole local database file is transmitted to the peer using rsync(1) and vested with a new unique id.</para>
             <para>In practice, DB replication can process hundreds of databases per concurrency setting per second (up to the number of available CPUs or disks) and is bound by the number of DB transactions that must be performed.</para>
@@ -614,11 +644,11 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
             <para>The initial implementation of object replication simply performed an rsync to push data from a local partition to all remote servers it was expected to exist on.  While this performed adequately at small scale, replication times skyrocketed once directory structures could no longer be held in RAM.  We now use a modification of this scheme in which a hash of the contents for each suffix directory is saved to a per-partition hashes file.  The hash for a suffix directory is invalidated when the contents of that suffix directory are modified.</para>
             <para>The object replication process reads in these hash files, calculating any invalidated hashes.  It then transmits the hashes to each remote server that should hold the partition, and only suffix directories with differing hashes on the remote server are rsynced.  After pushing files to the remote server, the replication process notifies it to recalculate hashes for the rsynced suffix directories.</para>
             <para>Performance of object replication is generally bound by the number of uncached directories it has to traverse, usually as a result of invalidated suffix directory hashes.  Using write volume and partition counts from our running systems, it was designed so that around 2% of the hash space on a normal node will be invalidated per day, which has experimentally given us acceptable replication speeds.</para>
-            
+
         </section></section>
-    
+
     <section xml:id="managing-large-objects">
-        
+
         <title>Managing Large Objects (Greater than 5 GB)</title>
         <para>OpenStack Object Storage has a limit on the size of a single uploaded object; by default this is
                 5GB. However, the download size of a single object is virtually unlimited with
@@ -628,19 +658,19 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                 with the possibility of parallel uploads of the segments.</para>
         <section xml:id="using-swift-to-manage-segmented-objects">
             <title>Using swift to Manage Segmented Objects</title>
-            
+
             <para>The quickest way to try out this feature is use the included swift OpenStack
                 Object Storage client tool. You can use the -S option to specify the segment size to use
                 when splitting a large file. For example:</para>
             <screen><prompt>#</prompt> <userinput>swift upload test_container -S 1073741824 large_file</userinput></screen>
-            
+
             <para>This would split the large_file into 1G segments and begin uploading those
                 segments in parallel. Once all the segments have been uploaded, swift will then
                 create the manifest file so the segments can be downloaded as one.</para>
             <para>So now, the following st command would download the entire large object:</para>
-            
+
             <literallayout>swift download test_container large_file</literallayout>
-            
+
             <para>The swift CLI uses a strict convention for its segmented object support. In the
                 above example it will upload all the segments into a second container named
                 test_container_segments. These segments will have names like
@@ -651,7 +681,7 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                 the segment name format of &lt;name&gt;/&lt;timestamp&gt;/&lt;size&gt;/&lt;segment&gt; is so that an
                 upload of a new file with the same name won't overwrite the contents of the
                 first until the last moment when the manifest file is updated.</para>
-            
+
             <para>The swift CLI will manage these segment files for you, deleting old segments on
                 deletes and overwrites, etc. You can override this behavior with the
                 --leave-segments option if desired; this is useful if you want to have multiple
@@ -663,7 +693,7 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                 instead of having swift do that for you. You can just upload the segments like you
                 would any other object and the manifest is just a zero-byte file with an extra
                 X-Object-Manifest header.</para>
-            
+
             <para>All the object segments need to be in the same container, have a common object
                 name prefix, and their names sort in the order they should be concatenated.
                 They don't have to be in the same container as the manifest file will be, which
@@ -672,7 +702,7 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                 X-Object-Manifest:<code>&lt;container&gt;/&lt;prefix&gt; header</code>, where &lt;container&gt; is
                 the container the object segments are in and &lt;prefix&gt; is the common prefix
                 for all the segments.</para>
-            
+
             <para>It is best to upload all the segments first and then create or update the
                 manifest. In this way, the full object won't be available for downloading until
                 the upload is complete. Also, you can upload a new set of segments to a second
@@ -691,7 +721,7 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                 http://&lt;storage_url&gt;/container/myobject --data-binary '' # And now we can
                 download the segments as a single object curl -H 'X-Auth-Token: &lt;token&gt;' \
                 http://&lt;storage_url&gt;/container/myobject</para>
-                
+
         </section>
         <section xml:id="additional-notes-on-large-objects">
             <title>Additional Notes on Large Objects</title>
@@ -699,18 +729,18 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                 <listitem><para>With a GET or HEAD of a manifest file, the X-Object-Manifest:
                 <code>&lt;container&gt;/&lt;prefix&gt;</code> header will be returned with the concatenated object
                     so you can tell where it's getting its segments from.</para></listitem>
-                
+
                 <listitem><para>The response's Content-Length for a GET or HEAD on the manifest
                     file will be the sum of all the segments in the &lt;container&gt;/&lt;prefix&gt;
                     listing, dynamically. So, uploading additional segments after the manifest is
                     created will cause the concatenated object to be that much larger; there's no
                     need to recreate the manifest file.</para></listitem>
-                
+
                 <listitem><para>The response's Content-Type for a GET or HEAD on the manifest
                     will be the same as the Content-Type set during the PUT request that
                     created the manifest. You can easily change the Content-Type by reissuing
                     the PUT.</para></listitem>
-                
+
                 <listitem><para>The response's ETag for a GET or HEAD on the manifest file will
                     be the MD5 sum of the concatenated string of ETags for each of the segments
                     in the &lt;container&gt;/&lt;prefix&gt; listing, dynamically. Usually in OpenStack Object Storage the
@@ -747,7 +777,7 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                 cluster, wouldn't provide the client with any option to do parallel uploads,
                 and had no basis for a resume feature.  The transparent implementation was
                 deemed just too complex for the benefit.</para>
-            
+
             <para>The current &#8220;user manifest&#8221; design was chosen in order to provide a
                 transparent download of large objects to the client and still provide the
                 uploading client a clean API to support segmented uploads.</para>
@@ -757,7 +787,7 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                 decided that pushing an added burden onto the client which could potentially
                 limit adoption should be avoided in favor of a simpler &#8220;API&#8221; (essentially just
                 the format of the &#8216;X-Object-Manifest' header).</para>
-            
+
             <para>During development it was noted that this &#8220;implicit&#8221; user manifest approach
                 which is based on the path prefix can be potentially affected by the eventual
                 consistency window of the container listings, which could theoretically cause
@@ -767,20 +797,20 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                 which isn't running the object-updaters or container-replicators.</para>
             <para>Like all of OpenStack Object Storage, Large Object Support is living feature which will continue
                 to improve and may change over time.</para>
-    
+
         </section>
     </section>
     <section xml:id="throttling-resources-by-setting-rate-limits">
-        
+
         <title>Throttling Resources by Setting Rate Limits</title>
-          
+
             <para>Rate limiting in OpenStack Object Storage is implemented as a pluggable middleware that you configure on the proxy server. Rate
                 limiting is performed on requests that result in database writes to the
                 account and container sqlite dbs. It uses memcached and is dependent on
                 the proxy servers having highly synchronized time. The rate limits are
                 limited by the accuracy of the proxy server clocks.</para>
         <section xml:id="configuration-for-rate-limiting">
-                
+
                 <title>Configuration for Rate Limiting</title>
                 <para>All configuration is optional.  If no account or container limits are provided
                     there will be no rate limiting.  Configuration available:</para>
@@ -791,7 +821,7 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                         <tr><td>Option</td>
                             <td>Default</td>
                             <td>Description</td>
-                            
+
                         </tr>
                         <tr><td>clock_accuracy</td>
                             <td>1000</td>
@@ -807,7 +837,7 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                             <td>App will immediately return a 498 response
                                 if the necessary sleep time ever exceeds
                                 the given max_sleep_time_seconds.</td>
-                            
+
                         </tr>
                         <tr><td>log_sleep_time_seconds</td>
                             <td>0</td>
@@ -822,7 +852,7 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                                 /account_name/container_name. Number is in
                                 requests per second</td>
                         </tr>
-                        
+
                         <tr><td>account_whitelist</td>
                             <td>&#8216;'</td>
                             <td>Comma separated lists of account names that
@@ -841,9 +871,9 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                                 requests to /account_name/container_name
                                 and PUTs and DELETEs to
                                 /account_name/container_name/object_name</td>
-                            
+
                         </tr></tbody>
-                    
+
                 </table>
                 <para>The container rate limits are linearly interpolated from the values given.  A
                     sample container rate limiting could be:</para>
@@ -863,7 +893,7 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                         <tr><td>100</td>
                             <td>100</td>
                         </tr>
-                        
+
                         <tr><td>150</td>
                             <td>75</td>
                         </tr>
@@ -875,21 +905,21 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                         </tr>
                     </tbody>
                 </table>
-                
+
             </section>
     </section>
     <section xml:id="swift-additional-features">
-        
+
         <title>Additional Features</title>
           <para>This section aims to detail a number of additional features in Swift and their
-          configuration. </para>  
+          configuration. </para>
         <section xml:id="swift-healthcheck">
-                
+
                 <title>Health Check</title>
-                <para>Health Check provides a simple way to monitor 
+                <para>Health Check provides a simple way to monitor
                 if the swift proxy server is alive. If the proxy is
                 access with the path  /healthcheck, it will respond
-                with “OK” in the body, which can be used by 
+                with “OK” in the body, which can be used by
                 monitoring tools.</para>
                 <table rules="all">
                     <caption>Configuration options for filter:healthcheck  in proxy-server.conf
@@ -898,7 +928,7 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                         <tr><td>Option</td>
                             <td>Default</td>
                             <td>Description</td>
-                            
+
                         </tr>
                     <tr>
                         <td>log_name</td>
@@ -920,10 +950,10 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
             </section>
 
         <section xml:id="swift-domain-remap">
-                
+
                 <title>Domain Remap</title>
-                <para>Domain Remap is middleware that translates 
-                container and account parts of a domain to path 
+                <para>Domain Remap is middleware that translates
+                container and account parts of a domain to path
                 parameters that the proxy server understands.
                 </para>
                 <table rules="all">
@@ -933,7 +963,7 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                         <tr><td>Option</td>
                             <td>Default</td>
                             <td>Description</td>
-                            
+
                         </tr>
                     <tr>
                         <td>log_name</td>
@@ -975,9 +1005,9 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
             </section>
 
         <section xml:id="swift-cname-lookup">
-                
+
                 <title>CNAME Lookup</title>
-                <para>CNAME Lookup is middleware that translates 
+                <para>CNAME Lookup is middleware that translates
                 an unknown domain in the host header to something that
                 ends with the configured storage_domain by looking up
                 the given domain's CNAME record in DNS.
@@ -989,7 +1019,7 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                         <tr><td>Option</td>
                             <td>Default</td>
                             <td>Description</td>
-                            
+
                         </tr>
                     <tr>
                         <td>log_name</td>
@@ -1089,7 +1119,7 @@ memcache time for the key).
                         <tr><td>Option</td>
                             <td>Default</td>
                             <td>Description</td>
-                            
+
                         </tr>
                     <tr>
                         <td>incoming_allow_headers</td>
@@ -1115,7 +1145,7 @@ memcache time for the key).
                 </table>
             </section>
         <section xml:id="swift-name-check">
-                
+
                 <title>Name Check Filter</title>
                 <para>Name Check is a filter that disallows any paths that contain defined
                 forbidden characters or that exceed a defined length.
@@ -1127,7 +1157,7 @@ memcache time for the key).
                         <tr><td>Option</td>
                             <td>Default</td>
                             <td>Description</td>
-                            
+
                         </tr>
                     <tr>
                         <td>forbidden_chars</td>
@@ -1148,7 +1178,7 @@ memcache time for the key).
                 </table>
             </section>
          <section xml:id="swift-constraints">
-                
+
                 <title>Constraints</title>
                 <para>The <literal>swift-constraints</literal> section in <literal>swift.conf</literal> allows modification of internal limits within swift. These are advanced features for tuning the performance of the cluster and should be altered with caution.</para>
                 <table rules="all">
@@ -1157,7 +1187,7 @@ memcache time for the key).
                         <tr><td>Option</td>
                             <td>Default</td>
                             <td>Description</td>
-                            
+
                         </tr>
                     <tr>
                         <td>max_file_size</td>
@@ -1215,11 +1245,11 @@ memcache time for the key).
                 </table>
             </section>
         <section xml:id="swift-dispersion">
-                
+
                 <title>Cluster Health</title>
                 <para>
 There is a <literal>swift-dispersion-report</literal> tool for measuring overall cluster health.
- This is accomplished by checking if a set of deliberately distributed containers and objects are 
+ This is accomplished by checking if a set of deliberately distributed containers and objects are
  currently in their proper places within the cluster.
 
 For instance, a common deployment has three replicas of each object. The health of that object can
@@ -1285,7 +1315,7 @@ There were 1763 partitions missing one copy.
 77.56% of object copies found (6094 of 7857)
 Sample represents 1.00% of the object partition space
 </programlisting>
-You can see the health of the objects in the cluster has gone down significantly. Of course, 
+You can see the health of the objects in the cluster has gone down significantly. Of course,
 this test environment has just four devices, in a production environment with many many devices the
 impact of one device change is much less. Next, run the replicators to get everything put back
 into place and then rerun the dispersion report:
@@ -1317,7 +1347,7 @@ $ swift-dispersion-report -j
                         <tr><td>Option</td>
                             <td>Default</td>
                             <td>Description</td>
-                            
+
                         </tr>
                     <tr>
                         <td>auth_version</td>
@@ -1368,12 +1398,12 @@ $ swift-dispersion-report -j
     </section>
 
     <section xml:id="configuring-openstack-object-storage-with-s3_api">
-    
+
     <title>Configuring Object Storage with the S3 API</title>
         <para>The Swift3 middleware emulates the S3 REST API on top of Object Storage.</para>
-            
+
             <para>The following operations are currently supported:</para>
-            
+
             <itemizedlist>
             <listitem><para>GET Service</para></listitem>
             <listitem><para>DELETE Bucket</para></listitem>
@@ -1387,7 +1417,7 @@ $ swift-dispersion-report -j
             <para>To use this middleware, first download the latest version from its repository
             to your proxy server(s).</para>
             <screen><prompt>$</prompt> <userinput>git clone https://github.com/fujita/swift3.git</userinput></screen>
-            <para>Optional: To use this middleware with Swift 1.7.0 and previous versions, you'll need to use the v1.7 
+            <para>Optional: To use this middleware with Swift 1.7.0 and previous versions, you'll need to use the v1.7
             tag of the fujita/swift3 repository. Clone the repo as above and then:</para>
             <screen><prompt>$</prompt> <userinput>cd swift3; git checkout v1.7</userinput></screen>
             <para>Then, install it using standard python mechanisms, such as:</para>
@@ -1403,14 +1433,14 @@ $ swift-dispersion-report -j
         <programlisting>
 [pipeline:main]
 pipeline = healthcheck cache swift3 swauth proxy-server
-      
+
 [filter:swift3]
 use = egg:swift#swift3
         </programlisting>
     <para>Next, configure the tool that you use to connect to the S3 API. For S3curl, for example,
             you'll need to add your host IP information by adding y our host IP to the @endpoints
             array (line 33 in s3curl.pl):</para>
-       
+
         <literallayout class="monospaced">my @endpoints = ( '1.2.3.4');</literallayout>
         <para>Now you can send commands to the endpoint, such as:</para>
         <screen>
@@ -1433,7 +1463,7 @@ connection = boto.s3.Connection(
         </programlisting>
     </section>
     <section xml:id="managing-openstack-object-storage-with-swift-cli">
-        
+
         <title>Managing OpenStack Object Storage with CLI Swift</title><para>In the Object Store (swift) project there is a tool that can perform a variety of tasks on
             your storage cluster named swift. This client utility can be used for adhoc processing,
             to gather statistics, list items, update metadata, upload, download and delete files. It
@@ -1442,11 +1472,11 @@ connection = boto.s3.Connection(
             expires in the middle of processing, retrying operations up to five times and a
             processing concurrency of 10. All of these things help make the swift tool robust and
             great for operational use.</para>
-        
+
         <section xml:id="swift-cli-basics">
-            <title>Swift CLI Basics</title>        
+            <title>Swift CLI Basics</title>
 <para>The command line usage for swift, the CLI tool is:
-                <literallayout>swift (command) [options] [args]</literallayout></para>  
+                <literallayout>swift (command) [options] [args]</literallayout></para>
 
 <para>Here are the available commands for swift. </para>
 <simplesect><title>stat [container] [object]</title>
@@ -1506,7 +1536,7 @@ connection = boto.s3.Connection(
  2010-11-16-22_access.log
  2010-11-15-21_access.log
  2010-11-15-22_access.log
-                
+
  Log lines:
  Nov 15 21:53:52 lucid64 proxy-server - 127.0.0.1 15/Nov/2010/22/53/52 DELETE /v1/AUTH_cd4f57824deb4248a533f2c28bf156d3/2eefc05599d44df38a7f18b0b42ffedd HTTP/1.0 204 - \
 - test%3Atester%2CAUTH_tkcdab3c6296e249d7b7e2454ee57266ff - - - txaba5984c-aac7-460e-b04b-afc43f0c6571 - 0.0432
@@ -1524,7 +1554,7 @@ connection = boto.s3.Connection(
 2010-11-15-21_access.log
 2010-11-15-22_access.log
                 </programlisting>
-                
+
                 Get statistics on the account:
                 <screen><prompt>$</prompt> <userinput>swift -A http://swift-auth.com:11000/v1.0 -U test:tester -K testing -q stat</userinput></screen>
                 <programlisting>
@@ -1533,7 +1563,7 @@ Containers: 1
 Objects: 4
 Bytes: 5888268
                 </programlisting>
-                
+
                 Get statistics on the container:
                 <screen><prompt>$</prompt> <userinput>swift -A http://swift-auth.com:11000/v1.0 -U test:tester -K testing stat logtest</userinput> </screen><programlisting>Account: AUTH_cd4f57824deb4248a533f2c28bf156d3
 Container: logtest
