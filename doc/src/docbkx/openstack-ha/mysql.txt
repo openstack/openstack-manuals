@@ -1,5 +1,5 @@
-[[ch-mysql]]
-== Highly available MySQL
+[[s-mysql]]
+=== Highly available MySQL
 
 MySQL is the default database server used by many OpenStack
 services. Making the MySQL service highly available involves
@@ -20,7 +20,7 @@ availability once it has sufficiently matured. At the time of writing,
 however, the Pacemaker/DRBD based approach remains the recommended one
 for OpenStack environments.
 
-=== Configuring DRBD
+==== Configuring DRBD
 
 The Pacemaker based MySQL server requires a DRBD resource from
 which it mounts the +/var/lib/mysql+ directory. In this example,
@@ -66,7 +66,7 @@ the primary and secondary roles in DRBD. Must be completed _on one
 node only,_ namely the one where you are about to continue with
 creating your filesystem.
 
-=== Creating a file system
+==== Creating a file system
 
 Once the DRBD resource is running and in the primary role (and
 potentially still in the process of running the initial device
@@ -93,7 +93,7 @@ background:
 drbdadm secondary mysql
 ----
 
-=== Preparing MySQL for Pacemaker high availability
+==== Preparing MySQL for Pacemaker high availability
 
 In order for Pacemaker monitoring to function properly, you must
 ensure that MySQL's database files reside on the DRBD device. If you
@@ -122,7 +122,7 @@ node1:# umount /mnt
 Regardless of the approach, the steps outlined here must be completed
 on only one cluster node.
 
-=== Adding MySQL resources to Pacemaker
+==== Adding MySQL resources to Pacemaker
 
 You may now proceed with adding the Pacemaker configuration for
 MySQL resources. Connect to the Pacemaker cluster with +crm
@@ -154,7 +154,7 @@ Once completed, commit your configuration changes by entering +commit+
 from the +crm configure+ menu. Pacemaker will then start the MySQL
 service, and its dependent resources, on one of your nodes.
 
-=== Configuring OpenStack services for highly available MySQL
+==== Configuring OpenStack services for highly available MySQL
 
 Your OpenStack services must now point their MySQL configuration to
 the highly available, virtual cluster IP address -- rather than a
