@@ -260,6 +260,21 @@ commands and options. </para>
                 of configuration settings should be done to ensure best utilization of CPU,
                 network connectivity, and disk I/O.</para>
         </section>
+        <section xml:id="raid">
+            <title>RAID Considerations</title>
+            <para>We recommend that you do not use RAID with Swift.</para>
+            <para>The workload for Swift is very write-heavy, with small random IO accesses. This
+                type of workload performs very poorly for most parity RAID (e.g., RAID 2-6). Testing
+                done by Rackspace suggests that under heavy workloads, the overall RAID performance
+                can degrade to be as slow as a single drive.</para>
+            <para>Furthermore, a drive failure in a RAID array can result in very poor performance
+                on the node until the RAID rebuilds, which can take a long time. Testing at
+                Rackspace, using nodes with 24 2T drives, revealed that a RAID rebuild after a drive
+                failure could take on the order of two weeks, during which time the node performance
+                suffered dramatically as the RAID array functioned in a degraded state. This kind of
+                significantly degraded performance can potentially have ripple effects across the
+                rest of the cluster.</para>
+        </section>
         <section xml:id="filesystem-considerations">
             <title>Filesystem Considerations</title>
             <para>Swift is designed to be mostly filesystem agnostic&#8211;the only requirement
