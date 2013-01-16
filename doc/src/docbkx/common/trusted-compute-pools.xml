@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0"
+    xml:id="trusted-compute-pools">
+    <title>Trusted Compute Pools</title>
+    <simplesect>
+        <title>Overview</title>
+    <para>Trusted compute pools enables administrators to designate a group of compute hosts as
+            "trusted". These hosts use hardware-based security features, such as Intel's Trusted
+            Execution Technology (TXT), to provide an additional level of security. Combined with an
+            external standalone web-based remote attestation server, cloud providers can ensure that
+            the compute node is running software with verified measurements, thus they can establish
+            the foundation for the secure cloud stack. Through the Trusted Computing Pools, cloud
+            subscribers can request services to be run on verified compute nodes. </para>
+    <para>The remote attestation server performs node verification through the following steps:<orderedlist>
+                <listitem>
+                    <para> Compute nodes boot with Intel TXT technology enabled.</para>
+                </listitem>
+                <listitem>
+                    <para>The compute node's BIOS, hypervisor and OS are measured.</para>
+                </listitem>
+                <listitem>
+                    <para>These measured data is sent to the attestation server when challenged by
+                        attestation server.</para>
+                </listitem>
+                <listitem>
+                    <para> The attestation server verifies those measurements against good/known
+                        database to determine nodes' trustworthiness.</para>
+                </listitem>
+            </orderedlist></para>
+        <para>A description of how to set up an attestation service is beyond the scope of this
+            document. See the <link xlink:href="https://github.com/OpenAttestation/OpenAttestation"
+                >Open Attestation</link> project for an open source project that can be used to
+            implement an attestation service.</para>
+    <para>
+        <mediaobject>
+            <imageobject role="fo">
+                <imagedata fileref="figures/OpenStackTrustedComputePool1.png"
+                    format="PNG"/>
+            </imageobject>
+            <imageobject role="html">
+                <imagedata fileref="figures/OpenStackTrustedComputePool1.png"
+                    format="PNG"/>
+            </imageobject>
+        </mediaobject>
+    </para>
+        </simplesect>
+    <simplesect>
+        <title>Configuring the Compute service to use Trusted Compute Pools</title>
+<para>The Compute service must be configured to with the connection information for the attestation
+            service. The connection information is specified in the
+                <literal>trusted_computing</literal> section of nova.conf. Specify the following
+            parameters in this section.<variablelist>
+                <varlistentry>
+                    <term>server</term>
+                    <listitem>
+                        <para>Hostname or IP address of the host that runs the attestation
+                            service</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term>port</term>
+                    <listitem>
+                        <para>HTTPS port for the attestation service</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term>server_ca_file</term>
+                    <listitem>
+                        <para>Certificate file used to verify the attestation server's
+                            identity.</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term>api_url</term>
+                    <listitem>
+                        <para>The attestation service URL path.</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term>auth_blob</term>
+                    <listitem>
+                        <para>An authentication blob, which is required by the attestation
+                            service.</para>
+                    </listitem>
+                </varlistentry>
+            </variablelist>Add the following lines to <filename>/etc/nova/nova.conf</filename> in
+            the <literal>DEFAULT</literal> and <literal>trusted_computing</literal> sections to
+            enable scheduling support for Trusted Compute Pools, and edit the details of the
+                <literal>trusted_computing</literal> section based on the details of your
+            attestation
+            service.<programlisting>[DEFAULT]
+compute_scheduler_driver=nova.scheduler.filter_scheduler.FilterScheduler
+scheduler_available_filters=nova.scheduler.filters.all_filters
+scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter,TrustedFilter
+
+[trusted_computing]
+server=10.1.71.206
+port=8443
+server_ca_file=/etc/nova/ssl.10.1.71.206.crt
+# If using OAT v1.5, use this api_url:
+api_url=/AttestationService/resources
+# If using OAT pre-v1.5, use this api_url:
+#api_url=/OpenAttestationWebServices/V1.0
+auth_blob=i-am-openstack    </programlisting></para>
+    <para>Restart the nova-compute and nova-scheduler services after making these changes.</para>
+    </simplesect>
+    <simplesect>
+        <title>Specify trusted flavors</title>
+        <para>One or more flavors must be configured as "trusted". Users can then request trusted
+            nodes by specifying one of these trusted flavors when booting a new instance. Use the
+                <command>nova-manage instance_type set_key</command> command to set a flavor as
+            trusted. For example, to set the m1.tiny flavor as trusted:</para>
+        <para>
+            <screen><prompt>#</prompt> <userinput>nova-manage instance_type set_key m1.tiny trust:trusted_host trusted</userinput></screen>
+        </para>
+        <para>A user can request that their instance runs on a trusted host by specifying a trusted
+            flavor when invoking the <command>nova boot</command> command.</para>
+    <para>
+            <mediaobject>
+                <imageobject role="fo">
+                    <imagedata fileref="figures/OpenStackTrustedComputePool2.png" format="PNG"/>
+                </imageobject>
+                <imageobject role="html">
+                    <imagedata fileref="figures/OpenStackTrustedComputePool2.png" format="PNG"/>
+                </imageobject>
+            </mediaobject>
+        </para>
+    </simplesect>
+</section>
