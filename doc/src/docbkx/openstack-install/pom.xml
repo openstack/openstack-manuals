@@ -59,7 +59,7 @@
             <plugin>
                 <groupId>com.rackspace.cloud.api</groupId>
                 <artifactId>clouddocs-maven-plugin</artifactId>
-                <version>1.5.1</version>
+                <version>1.5.2</version>
                 
                 <executions>
                     <execution>
@@ -107,32 +107,41 @@
                             <sectionLabelIncludesComponentLabel>0</sectionLabelIncludesComponentLabel>
                             <postProcess>
                                 <!-- Copies the figures to the correct location for webhelp -->
-                                
-                                <copy todir="${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-compute/install/${operating.system}/content/figures">
-                                    <fileset dir="${basedir}/figures">
-                                        <include name="**/*.*" />
-                                    </fileset>
-                                </copy>
-                                
-                                <!-- Copies webhelp (HTML output) to desired URL location on docs.openstack.org -->
-                                
+
                                 <copy
-                                    todir="${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-compute/install/${operating.system}">
-                                    <fileset
-                                        dir="${basedir}/target/docbkx/webhelp/bk_openstackinstallguide/">
-                                        <include name="**/*" />
-                                    </fileset>
+                                   todir="${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-compute/install/${operating.system}/content/figures">
+                                   <fileset dir="${basedir}/figures">
+                                   <include name="**/*.*"/>
+                                   </fileset>
                                 </copy>
-                                
+
+                                <copy
+                                   todir="${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-compute/install/${operating.system}/content/figures"
+                                   >  <fileset dir="../common/figures"
+                                   >  <include name="**/*.*"/> 
+                                   </fileset>  </copy>
+
+                                <!-- Copies webhelp (HTML output) to desired URL location on docs.openstack.org -->
+
+                                <copy
+                                   todir="${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-compute/install/${operating.system}">
+                                   <fileset
+                                   dir="${basedir}/target/docbkx/webhelp/bk_openstackinstallguide/">
+                                   <include name="**/*"/>
+                                   </fileset>
+                                </copy>
+
                                 <!--Moves PDFs to the needed placement -->
-                                
+
                                 <move failonerror="false"
-                                    file="${basedir}/target/docbkx/pdf/bk_openstackinstallguide.pdf"
-                                    tofile="${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-compute/install/${operating.system}/openstack-install-guide-${operating.system}-${release.path.name}.pdf"/>                
-                                
+                                   file="${basedir}/target/docbkx/pdf/bk_openstackinstallguide.pdf"
+                                   tofile="${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-compute/install/${operating.system}/openstack-install-guide-${operating.system}-${release.path.name}.pdf"/>
+
                                 <!--Deletes leftover uneeded directories -->
-                                
-                                <delete dir="${basedir}/target/docbkx/webhelp/bk_openstackinstallguide/"/>                        
+
+                                <delete
+                                   dir="${basedir}/target/docbkx/webhelp/bk_openstackinstallguide/"
+                                />
                             </postProcess>
                         </configuration>
                     </execution>
