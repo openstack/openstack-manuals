@@ -462,7 +462,7 @@ brw-rw---- 1 root disk 43, 51 2012-03-05 15:32 /dev/nbd3p3</computeroutput></scr
             <para>
                 <screen><prompt>$</prompt> <userinput>IMAGE=centos-6.2.img</userinput>
 <prompt>$</prompt> <userinput>NAME=centos-6.2</userinput>
-<prompt>$</prompt> <userinput>glance image-create name="${NAME}" --is-public=true --container-format=ovf --disk-format=raw &lt; ${IMAGE}</userinput></screen>
+<prompt>$</prompt> <userinput>glance image-create --name="${NAME}" --is-public=true --container-format=ovf --disk-format=raw &lt; ${IMAGE}</userinput></screen>
             </para>
         </simplesect>
         <simplesect>
@@ -470,7 +470,7 @@ brw-rw---- 1 root disk 43, 51 2012-03-05 15:32 /dev/nbd3p3</computeroutput></scr
             <para>
                 <screen><prompt>$</prompt> <userinput>IMAGE=centos-6.2.img</userinput>
 <prompt>$</prompt> <userinput>NAME=centos-6.2</userinput>
-<prompt>$</prompt> <userinput>glance image-create name="${NAME}" --is-public=true --container-format=ovf --disk-format=qcow2 &lt; ${IMAGE}</userinput></screen>
+<prompt>$</prompt> <userinput>glance image-create --name="${NAME}" --is-public=true --container-format=ovf --disk-format=qcow2 &lt; ${IMAGE}</userinput></screen>
             </para>
         </simplesect>
 
@@ -487,7 +487,7 @@ brw-rw---- 1 root disk 43, 51 2012-03-05 15:32 /dev/nbd3p3</computeroutput></scr
             <screen>
 <prompt>$</prompt> <userinput>name=cirros-0.3-x86_64</userinput>
 <prompt>$</prompt> <userinput>image=cirros-0.3.0-x86_64-disk.img</userinput>
-<prompt>$</prompt> <userinput>glance image-create name=$name --is-public=true --container-format=bare --disk-format=qcow2 &lt; $image</userinput>
+<prompt>$</prompt> <userinput>glance image-create --name=$name --is-public=true --container-format=bare --disk-format=qcow2 &lt; $image</userinput>
             </screen>
             <para>Check that adding the image was successful (Status should
                 be ACTIVE when the operation is complete):</para>
@@ -979,7 +979,7 @@ uec-publish-image -t image --kernel-file vmlinuz-2.6.38-7-server --ramdisk-file 
                 cumbersome steps related to extracting the single ext4
                 partition.</para>
             <screen>
-glance image-create name="My Server" --is-public=true --container-format=ovf --disk-format=raw &lt; server.img
+glance image-create --name="My Server" --is-public=true --container-format=ovf --disk-format=raw &lt; server.img
 </screen>
         </simplesect>
         <simplesect>
@@ -1038,7 +1038,7 @@ sudo kvm -m 2048 -cdrom win2k8_dvd.iso -drive file=windowsserver.img,if=virtio -
         <para>Shut-down the VM and upload the image to
             OpenStack</para>
         <screen>
-glance image-create name="My WinServer" --is-public=true --container-format=ovf --disk-format=raw &lt; windowsserver.img
+glance image-create --name="My WinServer" --is-public=true --container-format=ovf --disk-format=raw &lt; windowsserver.img
 </screen>
     </section>
     <section xml:id="creating-images-from-running-instances">
