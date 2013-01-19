@@ -1,0 +1,96 @@
+[[s-keystone]]
+=== Highly available Keystone
+
+Keystone is the Identity Service in OpenStack and used by many services.
+Making the Keystone service highly available in active / passive mode involves
+
+* selecting and assigning a virtual IP address (VIP) that can freely
+  float between cluster nodes,
+* configuring Keystone to listen on that IP address,
+* managing Keystone daemon with the Pacemaker cluster manager,
+* configuring OpenStack services to use this IP address.
+
+NOTE: Here is the http://docs.openstack.org/trunk/openstack-compute/install/apt/content/ch_installing-openstack-identity-service.html[documentation] for installing Keystone service.
+
+
+==== Adding Keystone resource to Pacemaker
+
+First of all, you need to download the resource agent to your system :
+
+----
+cd /usr/lib/ocf/resource.d
+mkdir openstack
+cd openstack
+wget https://raw.github.com/madkiss/openstack-resource-agents/master/ocf/keystone
+chmod a+rx *
+----
+
+You may now proceed with adding the Pacemaker configuration for
+Keystone resource. Connect to the Pacemaker cluster with +crm
+configure+, and add the following cluster resources:
+
+----
+include::includes/pacemaker-keystone.crm[]
+----
+
+This configuration creates
+
+* +p_ip_keystone+, a virtual IP address for use by Keystone
+  (192.168.42.103),
+* +p_keystone+, a resource for manage Keystone service
+* a service +group+ to ensure that virtual IP is linked to the Keystone resource.
+
++crm configure+ supports batch input, so you may copy and paste the
+above into your live pacemaker configuration, and then make changes as
+required. For example, you may enter +edit p_ip_keystone+ from the
++crm configure+ menu and edit the resource to match your preferred
+virtual IP address.
+
+Once completed, commit your configuration changes by entering +commit+
+from the +crm configure+ menu. Pacemaker will then start the Keystone 
+service, and its dependent resources, on one of your nodes.
+
+==== Configuring Keystone service
+
+You need to edit your Keystone configuration file (+keystone.conf+) and change the bind parameter :
+----
+bind_host = 192.168.42.103
+----
+
+To be sure all datas will be high available, you should to be sure that you store everything in the MySQL database (which is also high available) :
+----
+[catalog]
+driver = keystone.catalog.backends.sql.Catalog
+...
+[identity]
+driver = keystone.identity.backends.sql.Identity
+...
+----
+
+
+==== Configuring OpenStack Services to use High Available Keystone
+
+Your OpenStack services must now point their Keystone configuration to
+the highly available, virtual cluster IP address -- rather than a
+Keystone server's physical IP address as you normally would.
+
+For example with Nova, if your Keystone service IP address is
+192.168.42.103 as in the configuration explained here, you would use
+the following line in your API configuration file
+(+api-paste.ini+):
+
+----
+auth_host = 192.168.42.103
+----
+
+You need also to create the Keystone Endpoint with this IP.
+
+NOTE : If you are using both private and public IP, you should create two Virtual IP and define your endpoint like this :
+----
+keystone endpoint-create --region $KEYSTONE_REGION --service-id keystone --publicurl 'http://PUBLIC_VIP:5000/v2.0' --adminurl 'http://192.168.42.103:35357/v2.0' --internalurl 'http://192.168.42.103:5000/v2.0'
+----
+
+If you are using the Horizon Dashboard, you should edit +local_settings.py+ file :
+----
+OPENSTACK_HOST = 192.168.42.103
+----

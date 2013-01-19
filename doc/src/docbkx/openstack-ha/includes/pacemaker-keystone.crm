@@ -1,0 +1,7 @@
+primitive p_ip_keystone ocf:heartbeat:IPaddr2 \
+  params ip="192.168.42.103" cidr_netmask="24" \
+  op monitor interval="30s"
+primitive p_keystone ocf:openstack:keystone \
+  params config="/etc/keystone/keystone.conf" os_password="secret" os_username="admin" os_tenant_name="admin" os_auth_url="http://192.168.42.103:5000/v2.0/" \
+  op monitor interval="30s" timeout="30s"
+group g_keystone p_ip_keystone p_keystone
