@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0"
+    xml:id="image-formats">
+    <title>Disk and Container Formats for Images</title>
+    <?dbhtml stop-chunking?>
+    <para>When adding an image to the Image service (glance), you may specify what the virtual
+        machine image&#8217;s <literal>disk format</literal> and <literal>container format</literal> are.</para>
+    <para>This document explains exactly what these formats are.</para>
+    <section xml:id="disk-format">
+        <title>Disk Format</title>
+        <para>The disk format of a virtual machine image is the format of the underlying
+            disk image. Virtual appliance vendors have different formats for laying out
+            the information contained in a virtual machine disk image.</para>
+        <para>You can set your image&#8217;s disk format to one of the following:</para>
+        <itemizedlist>
+            <listitem><para>raw</para>
+                <para>This is an unstructured disk image format; if you have a file without an extension it is possibly a raw format</para>
+            </listitem>
+            <listitem><para>vhd</para>
+                <para>This is the VHD disk format, a common disk format used by virtual machine
+                    monitors from VMWare, Xen, Microsoft, VirtualBox, and others</para>
+            </listitem>
+            <listitem><para>vmdk</para>
+                <para>Another common disk format supported by many common virtual machine monitors</para>
+            </listitem>
+            <listitem><para>vdi</para>
+                <para>A disk format supported by VirtualBox virtual machine monitor and the QEMU
+                    emulator</para>
+            </listitem>
+            <listitem><para>iso</para>
+                <para>An archive format for the data contents of an optical disc (e.g. CDROM)</para>
+            </listitem>
+            <listitem><para>qcow2</para>
+                <para>A disk format supported by the QEMU emulator that can expand dynamically and
+                    supports Copy on Write</para>
+            </listitem>
+            <listitem><para>aki</para>
+                <para>This indicates what is stored in Glance is an Amazon kernel image</para>
+            </listitem>
+            <listitem><para>ari</para>
+                <para>This indicates what is stored in Glance is an Amazon ramdisk image</para>
+            </listitem>
+            <listitem><para>ami</para>
+                <para>This indicates what is stored in Glance is an Amazon machine image</para>
+            </listitem>
+        </itemizedlist>
+    </section>
+    <section xml:id="container-format">
+        <title>Container Format</title>
+        <para>The container format refers to whether the virtual machine image is in a
+            file format that also contains metadata about the actual virtual machine.</para>
+        <para>Note that the container format string is not currently used by Glance or
+            other OpenStack components, so it is safe to simply specify bare as
+            the container format if you are unsure.</para>
+        <para>You can set your image&#8217;s container format to one of the following:</para>
+        <itemizedlist>
+            <listitem><para>bare</para>
+                <para>This indicates there is no container or metadata envelope for the image</para>
+            </listitem>
+            <listitem><para>ovf</para>
+                <para>This is the OVF container format</para>
+            </listitem>
+            <listitem><para>aki</para>
+                <para>This indicates what is stored in Glance is an Amazon kernel image</para>
+            </listitem>
+            <listitem><para>ari</para>
+                <para>This indicates what is stored in Glance is an Amazon ramdisk image</para>
+            </listitem>
+            <listitem><para>ami</para>
+                <para>This indicates what is stored in Glance is an Amazon machine image</para>
+            </listitem>
+        </itemizedlist>
+    </section>
+    
+</section>

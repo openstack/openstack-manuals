@@ -49,8 +49,9 @@
         the Identity service, plus you have sourced the environment
         variables required by the nova client and glance
         client.</para>
-    <xi:include href="tenant-specific-image-storage.xml"></xi:include>
+    <xi:include href="tenant-specific-image-storage.xml"/>
     <xi:include href="adding-images.xml"/>
+    <xi:include href="image-formats.xml"/>
     <section xml:id="starting-images">
         <title>Getting virtual machine images</title>
         <?dbhtml stop-chunking?>
@@ -1045,7 +1046,7 @@ kvm-img create -f raw windowsserver.img 20G
         <para>and attach it during the installation</para>
         <para>Start the installation by running</para>
         <screen>
-sudo kvm -m 2048 -cdrom win2k8_dvd.iso -drive file=windowsserver.img,if=virtio -boot d drive file=virtio-win-0.1-22.iso,index=3,media=cdrom -net nic,model=virtio -net user -nographic -vnc :0
+sudo kvm -m 2048 -cdrom win2k8_dvd.iso -drive file=windowsserver.img,if=virtio -drive file=virtio-win-0.1-22.iso,index=3,media=cdrom -net nic,model=virtio -net user -nographic -vnc :0
 </screen>
         <para>When the installation prompts you to choose a hard disk
             device you won’t see any devices available. Click on “Load
