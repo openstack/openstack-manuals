@@ -19,18 +19,23 @@
             <listitem>
                 <para>Using a database backend</para>
             </listitem>
-        </orderedlist> While using a template file is simpler, it is not
-        recommended except for development environments such as <link
-            xlink:href="http://www.devstack.org">DevStack</link>. 
-        The template file does not enable Create, Read, Update, or Delete (CRUD) operations on the service 
-        catalog through keystone commands, but you can use the service-list 
-        command when using the template catalog. 
-        A database backend can provide better reliability, availability,
-        and data redundancy. This section describes how to populate the
-        Keystone service catalog using the database backend. Your
-        <filename>/etc/keystone/keystone.conf</filename> file should contain
-        the following lines if it is properly configured to use the
-        database backend.</para>
+        </orderedlist> While using a template file is simpler, it is
+        not recommended except for development environments such as
+            <link xlink:href="http://www.devstack.org"
+        >DevStack</link>. The template file does not enable Create,
+        Read, Update, or Delete (CRUD) operations on the service
+        catalog through keystone commands, but you can use the
+        service-list command when using the template catalog. When
+        keystone uses a template file backend, then changes made to
+        the endpoints are kept in memory and don't persist if you
+        restart the service or reboot the machine. Use the SQL backend
+        when deploying a system for production.</para>
+    <para>A database backend can provide better reliability,
+        availability, and data redundancy. This section describes how
+        to populate the Keystone service catalog using the database
+        backend. Your <filename>/etc/keystone/keystone.conf</filename>
+        file should contain the following lines if it is properly
+        configured to use the database backend.</para>
     
     <programlisting>
 [catalog]
