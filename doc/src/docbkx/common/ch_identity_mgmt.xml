@@ -933,11 +933,13 @@ keystone user-role-add --tenant_id=[uuid of the service tenant] \
         heavily - and this <emphasis role="strong">must</emphasis> be
         configured for the OpenStack Dashboard to properly function.
       </para>
-      <para>
-        The endpoints for these services are defined in a template, an
-        example of which is in the project as the file
-        <literal>etc/default_catalog.templates</literal>.
-      </para>
+      <para> The endpoints for these services are defined in a
+          template, an example of which is in the project as the file
+            <literal>etc/default_catalog.templates</literal>. When
+          keystone uses a template file backend, then changes made to
+          the endpoints are kept in memory and don't persist if you
+          restart the service or reboot the machine. Use the SQL
+          backend when deploying a system for production.</para>
       <para>
         Keystone supports two means of defining the services, one is the
         catalog template, as described above - in which case everything
