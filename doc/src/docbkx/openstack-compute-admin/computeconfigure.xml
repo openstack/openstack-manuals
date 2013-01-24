@@ -655,10 +655,10 @@ xenapi_remap_vbd_dev=true
       several installation and configuration steps. The
         <literal>libvirt_type</literal> configuration option indicates
       which hypervisor will be used. Refer to <link
-        linkend="hypervisor-configuration-basics">Hypervisor Configuration Basics</link> for more details.
-      To customize hypervisor support in OpenStack Compute, refer to
-      these configuration settings in
-      <filename>nova.conf</filename>.</para>
+        linkend="hypervisor-configuration-basics">Hypervisor Configuration Basics</link> for more
+      details. To customize hypervisor support in OpenStack Compute,
+      refer to these configuration settings in
+        <filename>nova.conf</filename>.</para>
     <xi:include href="tables/hypervisors-nova-conf.xml"/>
   </section>
 
@@ -1472,11 +1472,15 @@ mfsmount 	/var/lib/nova/instances fuse mfsmaster=mfsmaster,_netdev 	0 	0
 rpc_backend=nova.rpc.impl_kombu
       </programlisting>
 
-      <para>The following tables describe the rest of the options that can be
-      used when <application>RabbitMQ</application> is used as the messaging
-      system. You can configure the messaging communication for different
-      installation scenarios as well as tune RabbitMQ's retries and the size
-      of the RPC thread pool.</para>
+      <para>The following tables describe the rest of the options that
+        can be used when <application>RabbitMQ</application> is used
+        as the messaging system. You can configure the messaging
+        communication for different installation scenarios as well as
+        tune RabbitMQ's retries and the size of the RPC thread pool.
+        If you want to monitor notifications through RabbitMQ, you
+        must set the notification_driver option in nova.conf to
+        nova.notifier.rabbit_notifier. The default for sending usage
+        data is 60 seconds plus a randomized 0-60 seconds. </para>
 
       <table rules="all">
         <caption>Description of <filename>nova.conf</filename>
