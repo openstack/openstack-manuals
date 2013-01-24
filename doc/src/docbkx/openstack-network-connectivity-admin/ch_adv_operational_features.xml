@@ -193,32 +193,32 @@ notification_topics = notifications_one,notifications_two
     <section xml:id="ch_adv_quotas">
       <title>Quotas</title>
       <para>
-	Quota is a function to limit number of resources. You can
-	enforce default quota for all tenant. You will get error
-	when you try to create resources more than the number of
-	quota value.
+        Quota is a function to limit number of resources. You can
+        enforce default quota for all tenant. You will get error
+        when you try to create resources more than the number of
+        quota value.
       </para>
       <screen><computeroutput>$ quantum net-create test_net
 Quota exceeded for resources: ['network']</computeroutput></screen>
       <para>
-	Per-tenant quota configuration is also supported by quota
-	extension API. See <link linkend="cfg_quotas_per_tenant">
-	Per-tenant quota configuration</link> for details.
+        Per-tenant quota configuration is also supported by quota
+        extension API. See <link linkend="cfg_quotas_per_tenant">
+        Per-tenant quota configuration</link> for details.
       </para>
       <section xml:id="cfg_quotas_common">
-	<title>Basic quota configuration</title>
-	<para>
-	  In Quantum default quota mechanism, all tenants have a same
-	  quota value, i.e., a number of resources that a tenant can create.
-	  This is enabled by default.
-	</para>
-	<para>
-	  The value of quota is defined in the Quantum configuration file
-	  (quantum.conf). If you want to disable quota for a specific resource
-	  (e.g., network, subnet, port), remove a corresponding item from 'quota_items'.
-	  Each of the quota values in the example below is the default value.
-	</para>
-	<screen><computeroutput>[QUOTAS]
+        <title>Basic quota configuration</title>
+        <para>
+          In Quantum default quota mechanism, all tenants have a same
+          quota value, i.e., a number of resources that a tenant can create.
+          This is enabled by default.
+        </para>
+        <para>
+          The value of quota is defined in the Quantum configuration file
+          (quantum.conf). If you want to disable quota for a specific resource
+          (e.g., network, subnet, port), remove a corresponding item from 'quota_items'.
+          Each of the quota values in the example below is the default value.
+        </para>
+        <screen><computeroutput>[QUOTAS]
 # resource name(s) that are supported in quota features
 quota_items = network,subnet,port
 
@@ -234,12 +234,12 @@ quota_port = 50
 # default driver to use for quota checks
 quota_driver = quantum.quota.ConfDriver</computeroutput></screen>
         <para>
-	  Quantum also supports quotas for L3 resources: router and floating IP.
-	  You can configure them by adding the following lines to
-	  'QUOTAS' section in quantum.conf.
-	  (Note that 'quota_items' does not affect these quotas.)
-	</para>
-	<screen><computeroutput>[QUOTAS]
+          Quantum also supports quotas for L3 resources: router and floating IP.
+          You can configure them by adding the following lines to
+          'QUOTAS' section in quantum.conf.
+          (Note that 'quota_items' does not affect these quotas.)
+        </para>
+        <screen><computeroutput>[QUOTAS]
 # number of routers allowed per tenant, and minus means unlimited
 quota_router = 10
 
@@ -247,16 +247,16 @@ quota_router = 10
 quota_floatingip = 50</computeroutput></screen>
       </section>
       <section xml:id="cfg_quotas_per_tenant">
-	<title>Per-tenant quota configuration</title>
-	<para>
-	  Quantum also supports per-tenant quota limit by quota	extension API.
-	  To enable per-tenant quota, you need to set 'quota_driver' in 'quantum.conf'.
-	</para>
-	<screen><computeroutput>quota_driver = quantum.extensions._quotav2_driver.DbQuotaDriver</computeroutput></screen>
-	<para>
-	  When per-tenant quota is enabled, the output of the following command contains 'quotas'.
-	</para>
-	<screen><computeroutput>$ quantum ext-list -c alias -c name
+        <title>Per-tenant quota configuration</title>
+        <para>
+          Quantum also supports per-tenant quota limit by quota extension API.
+          To enable per-tenant quota, you need to set 'quota_driver' in 'quantum.conf'.
+        </para>
+        <screen><computeroutput>quota_driver = quantum.extensions._quotav2_driver.DbQuotaDriver</computeroutput></screen>
+        <para>
+          When per-tenant quota is enabled, the output of the following command contains 'quotas'.
+        </para>
+        <screen><computeroutput>$ quantum ext-list -c alias -c name
 +----------+------------------------+
 | alias    | name                   |
 +----------+------------------------+
@@ -264,28 +264,28 @@ quota_floatingip = 50</computeroutput></screen>
 | quotas   | Quotas for each tenant |
 | provider | Provider Network       |
 +----------+------------------------+</computeroutput></screen>
-	<note><para>
-	  In Folsom release, per-tenant quota is supported by Open vSwitch plugin,
-	  Linux Bridge plugin, and Nicira NVP plugin and cannot be used with other plugins.
-	</para></note>
-	<para>
-	  There are four CLI commands to manage per-tenant quota.
-	</para>
-	<screen><computeroutput>  quota-delete               Delete defined quotas of a given tenant.
+        <note><para>
+          In Folsom release, per-tenant quota is supported by Open vSwitch plugin,
+          Linux Bridge plugin, and Nicira NVP plugin and cannot be used with other plugins.
+        </para></note>
+        <para>
+          There are four CLI commands to manage per-tenant quota.
+        </para>
+        <screen><computeroutput>  quota-delete               Delete defined quotas of a given tenant.
   quota-list                 List defined quotas of all tenants.
   quota-show                 Show quotas of a given tenant
   quota-update               Define tenant's quotas not to use defaults.</computeroutput></screen>
         <para>
-	  Only users with 'admin' role can change a quota value.
-	  Note that the default set of quotas are enforced for all
-	  tenants by default, so there is no 'quota-create' command.
-	</para>
+          Only users with 'admin' role can change a quota value.
+          Note that the default set of quotas are enforced for all
+          tenants by default, so there is no 'quota-create' command.
+        </para>
         <para>
-	  'quota-list' displays a list of tenants for which per-tenant quota is enabled.
-	  The tenants who have the default set of quota limits are not listed.
-	  This command is permitted to only 'admin' users.
-	</para>
-	<screen><computeroutput>$ quantum quota-list
+          'quota-list' displays a list of tenants for which per-tenant quota is enabled.
+          The tenants who have the default set of quota limits are not listed.
+          This command is permitted to only 'admin' users.
+        </para>
+        <screen><computeroutput>$ quantum quota-list
 +------------+---------+------+--------+--------+----------------------------------+
 | floatingip | network | port | router | subnet | tenant_id                        |
 +------------+---------+------+--------+--------+----------------------------------+
@@ -293,12 +293,12 @@ quota_floatingip = 50</computeroutput></screen>
 |         25 |      10 |   30 |     10 |     10 | bff5c9455ee24231b5bc713c1b96d422 |
 +------------+---------+------+--------+--------+----------------------------------+</computeroutput></screen>
         <para>
-	  'quota-show' reports the current set of quota limits for the specified tenant.
-	  Regular (non-admin) users can call this command (without --tenant_id parameter).
-	  If per-tenant quota limits are not defined for the tenant, the default set of
-	  quotas are displayed.
-	</para>
-	<screen><computeroutput>$ quantum quota-show --tenant_id 6f88036c45344d9999a1f971e4882723
+          'quota-show' reports the current set of quota limits for the specified tenant.
+          Regular (non-admin) users can call this command (without --tenant_id parameter).
+          If per-tenant quota limits are not defined for the tenant, the default set of
+          quotas are displayed.
+        </para>
+        <screen><computeroutput>$ quantum quota-show --tenant_id 6f88036c45344d9999a1f971e4882723
 +------------+-------+
 | Field      | Value |
 +------------+-------+
@@ -309,9 +309,9 @@ quota_floatingip = 50</computeroutput></screen>
 | subnet     | 5     |
 +------------+-------+</computeroutput></screen>
         <para>
-	  The below is an example called by a non-admin user.
-	</para>
-	<screen><computeroutput>$ quantum quota-show
+          The below is an example called by a non-admin user.
+        </para>
+        <screen><computeroutput>$ quantum quota-show
 +------------+-------+
 | Field      | Value |
 +------------+-------+
@@ -321,9 +321,9 @@ quota_floatingip = 50</computeroutput></screen>
 | router     | 10    |
 | subnet     | 5     |
 +------------+-------+</computeroutput></screen>
-	<para>You can update a quota of the given tenant by 'quota-update' command.</para>
-	<para>Update the limit of network quota.</para>
-	<screen><computeroutput>$ quantum quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 --network 5
+        <para>You can update a quota of the given tenant by 'quota-update' command.</para>
+        <para>Update the limit of network quota.</para>
+        <screen><computeroutput>$ quantum quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 --network 5
 +------------+-------+
 | Field      | Value |
 +------------+-------+
@@ -334,7 +334,7 @@ quota_floatingip = 50</computeroutput></screen>
 | subnet     | 10    |
 +------------+-------+</computeroutput></screen>
         <para>You can update quotas of multiple resources in one command.</para>
-	<screen><computeroutput>$ quantum quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 --subnet 5 --port 20
+        <screen><computeroutput>$ quantum quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 --subnet 5 --port 20
 +------------+-------+
 | Field      | Value |
 +------------+-------+
@@ -345,11 +345,11 @@ quota_floatingip = 50</computeroutput></screen>
 | subnet     | 5     |
 +------------+-------+</computeroutput></screen>
         <para>
-	  To update the limits of L3 resource (router, floating IP), we need to
-	  specify new values of the quotas after '--'. The example below updates
-	  the limit of the number of floating IPs for the given tenant.
-	</para>
-	<screen><computeroutput>$ quantum quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 -- --floatingip 20
+          To update the limits of L3 resource (router, floating IP), we need to
+          specify new values of the quotas after '--'. The example below updates
+          the limit of the number of floating IPs for the given tenant.
+        </para>
+        <screen><computeroutput>$ quantum quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 -- --floatingip 20
 +------------+-------+
 | Field      | Value |
 +------------+-------+
@@ -360,9 +360,9 @@ quota_floatingip = 50</computeroutput></screen>
 | subnet     | 5     |
 +------------+-------+</computeroutput></screen>
         <para>
-	  You can update the limits of multiple resources including L2 resources and L3 resource in one command.
-	</para>
-	<screen><computeroutput>$ quantum quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 --network 3 --subnet 3 --port 3 -- --floatingip 3 --router 3
+          You can update the limits of multiple resources including L2 resources and L3 resource in one command.
+        </para>
+        <screen><computeroutput>$ quantum quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 --network 3 --subnet 3 --port 3 -- --floatingip 3 --router 3
 +------------+-------+
 | Field      | Value |
 +------------+-------+
@@ -373,11 +373,11 @@ quota_floatingip = 50</computeroutput></screen>
 | subnet     | 3     |
 +------------+-------+</computeroutput></screen>
         <para>
-	  To clear per-tenant quota limits, use 'quota-delete'.
-	  After 'quota-delete', quota limits enforced to the tenant are reset to
-	  the default set of quotas.
-	</para>
-	<screen><computeroutput>$ quantum quota-delete --tenant_id 6f88036c45344d9999a1f971e4882723
+          To clear per-tenant quota limits, use 'quota-delete'.
+          After 'quota-delete', quota limits enforced to the tenant are reset to
+          the default set of quotas.
+        </para>
+        <screen><computeroutput>$ quantum quota-delete --tenant_id 6f88036c45344d9999a1f971e4882723
 Deleted quota: 6f88036c45344d9999a1f971e4882723
 $ quantum quota-show --tenant_id 6f88036c45344d9999a1f971e4882723
 +------------+-------+
