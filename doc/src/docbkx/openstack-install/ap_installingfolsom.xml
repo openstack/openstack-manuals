@@ -505,6 +505,12 @@ rabbit_virtual_host = /nova</programlisting>
 enabled_apis=ec2,osapi_compute,metadata
 #MAKE SURE NO ENTRY FOR osapi_volume anywhere in nova.conf!!!
 #Leaving out enabled_apis altogether is NOT sufficient, as it defaults to include osapi_volume</programlisting>
+        <para>Add volume_list entry to /etc/lvm/lvm.conf to keep LVM from activating logical volumes created in VMs. NOTE: You must add the names of any other volume groups needed by the operating system or other services.</para>
+        <programlisting>activation {
+...
+volume_list = [ "cinder-volumes" ]
+...
+}</programlisting>
         <para>Setup the tgts file <emphasis role="italic">NOTE: $state_path=/var/lib/cinder/ and
                 $volumes_dir = $state_path/volumes by default and path MUST
             exist!</emphasis>.<screen><prompt>$</prompt> <userinput>sudo sh -c "echo 'include $volumes_dir/*' >> /etc/tgt/conf.d/cinder.conf"</userinput></screen></para>
