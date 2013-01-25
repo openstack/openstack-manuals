@@ -1,0 +1,86 @@
+[[s-glance_api]]
+=== Highly available Glance API
+
+Glance is the Image Delivery and Registring Service in OpenStack.
+Making the Glance API service highly available in active / passive mode involves
+
+* configuring Glance to listen on the VIP address,
+* managing Glance API daemon with the Pacemaker cluster manager,
+* configuring OpenStack services to use this IP address.
+
+NOTE: Here is the http://docs.openstack.org/trunk/openstack-compute/install/apt/content/ch_installing-openstack-identity-service.html[documentation] for installing Glance API service.
+
+
+==== Adding Glance API resource to Pacemaker
+
+ First of all, you need to download the resource agent to your system :
+  
+----
+cd /usr/lib/ocf/resource.d/openstack
+wget https://raw.github.com/madkiss/openstack-resource-agents/master/ocf/glance-api
+chmod a+rx *
+----
+
+You may now proceed with adding the Pacemaker configuration for
+Glance API resource. Connect to the Pacemaker cluster with +crm
+configure+, and add the following cluster resources:
+
+----
+include::includes/pacemaker-glance_api.crm[]
+----
+
+This configuration creates
+
+* +p_ip_glance-api+, a virtual IP address for use by Glance API
+  (192.168.42.104),
+* +p_glance-api+, a resource for manage Glance API service
+
++crm configure+ supports batch input, so you may copy and paste the
+above into your live pacemaker configuration, and then make changes as
+required. For example, you may enter +edit p_ip_glance-api+ from the
++crm configure+ menu and edit the resource to match your preferred
+virtual IP address.
+
+Once completed, commit your configuration changes by entering +commit+
+from the +crm configure+ menu. Pacemaker will then start the Glance API
+service, and its dependent resources, on one of your nodes.
+
+==== Configuring Glance API service
+
+Edit +/etc/glance/glance-api.conf+ :
+----
+# We have to use MySQL connection to store datas :
+sql_connection=mysql://glance:password@192.168.42.101/glance
+
+# We bind Glance API to the VIP :
+bind_host = 192.168.42.103
+
+# Connect to Glance Registry service :
+registry_host = 192.168.42.104
+
+# We send notifications to High Available RabbitMQ :
+notifier_strategy = rabbit
+rabbit_host = 192.168.42.102
+----
+
+
+==== Configuring OpenStack Services to use High Available Glance API
+
+Your OpenStack services must now point their Glance API configuration to
+the highly available, virtual cluster IP address -- rather than a
+Glance API server's physical IP address as you normally would.
+
+For Nova, for example, if your Glance API service IP address is
+192.168.42.104 as in the configuration explained here, you would use
+the following line in your +nova.conf+ file :
+
+----
+glance_api_servers = 192.168.42.103
+----
+
+You need also to create the Glance API Endpoint with this IP.
+
+NOTE : If you are using both private and public IP, you should create two Virtual IP and define your endpoint like this :
+----
+keystone endpoint-create --region $KEYSTONE_REGION --service-id $image-id --publicurl 'http://PUBLIC_VIP:9292/v2' --adminurl 'http://192.168.42.103:9292/v2' --internalurl 'http://192.168.42.103:9292/v2'
+----

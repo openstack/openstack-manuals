@@ -4,9 +4,7 @@
 Keystone is the Identity Service in OpenStack and used by many services.
 Making the Keystone service highly available in active / passive mode involves
 
-* selecting and assigning a virtual IP address (VIP) that can freely
-  float between cluster nodes,
-* configuring Keystone to listen on that IP address,
+* configuring Keystone to listen on the VIP address,
 * managing Keystone daemon with the Pacemaker cluster manager,
 * configuring OpenStack services to use this IP address.
 
@@ -33,12 +31,7 @@ configure+, and add the following cluster resources:
 include::includes/pacemaker-keystone.crm[]
 ----
 
-This configuration creates
-
-* +p_ip_keystone+, a virtual IP address for use by Keystone
-  (192.168.42.103),
-* +p_keystone+, a resource for manage Keystone service
-* a service +group+ to ensure that virtual IP is linked to the Keystone resource.
+This configuration creates +p_keystone+, a resource for manage Keystone service.
 
 +crm configure+ supports batch input, so you may copy and paste the
 above into your live pacemaker configuration, and then make changes as
