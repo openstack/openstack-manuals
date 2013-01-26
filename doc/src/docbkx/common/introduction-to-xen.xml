@@ -319,6 +319,44 @@ XenAPI plugins Readme</link>.
 
 </section>
 
+<section xml:id="xenapi-boot-from-iso">
+<title>Xen Boot from ISO</title>
+<para>XenServer, through the XenAPI integration with OpenStack
+provides a feature to boot instances from an ISO file. In order
+to activate the "Boot From ISO" feature, the SR elements on 
+XenServer host must be configured that way.</para>
+
+<para>First, create an ISO-typed SR, such as an NFS ISO library,
+ for instance. For this, using XenCenter is a simple method.
+ You need to export an NFS volume from a remote NFS server.
+ Make sure it is exported in read-write mode.</para>
+<para> Second, on the compute host, find the uuid of this ISO SR
+and write it down.
+<screen><prompt>#</prompt> <userinput>xe host-list</userinput></screen>
+</para>
+<para>
+Next, locate the uuid of the NFS ISO library:
+<screen><prompt>#</prompt> <userinput>xe sr-list content-type=iso</userinput></screen>
+</para>
+<para> Set the uuid and configuration. Even if an NFS mount point
+            isn't local storage, you must specify "local-storage-iso".
+            <screen><prompt>#</prompt> <userinput>xe sr-param-set uuid=[iso sr uuid] other-config:i18n-key=local-storage-iso</userinput></screen>
+        </para>
+<para>
+Now, make sure the host-uuid from "xe pbd-list" equals the uuid of the host you found earlier
+<screen><prompt>#</prompt> <userinput>xe sr-uuid=[iso sr uuid]</userinput></screen>
+</para>
+
+<para>You should now be able to add images via the OpenStack Image
+Registry, with <literal>disk_format=iso</literal>, and boot them in
+OpenStack Compute.
+<programlisting>
+glance image-create --name=fedora_iso --disk_format=iso --container_format=bare &lt; Fedora-16-x86_64-netinst.iso
+</programlisting>
+</para>
+
+</section>
+
 <section xml:id="further-reading">
 <title>Further reading</title>
 
