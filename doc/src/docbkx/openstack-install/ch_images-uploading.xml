@@ -47,10 +47,10 @@ Details: 401 Unauthorized
 This server could not verify that you are authorized to access the document you requested. Either you supplied the wrong credentials (e.g., bad password), or your browser does not understand how to supply the credentials required.
 
  Authentication required  </computeroutput></screen></para>
-    <para>Add the CirrOS image to the Image service using the <command>glance add</command> command,
+    <para>Add the CirrOS image to the Image service using the <command>glance image-create</command> command,
         passing the image file through standard input:</para>
     <para>
-        <screen><prompt>$</prompt> <userinput>glance add name=cirros-0.3.0-x86_64 --disk-format=qcow2 --container-format=bare &lt; stackimages/cirros.img</userinput>
+        <screen><prompt>$</prompt> <userinput>glance image-create --name=cirros-0.3.0-x86_64 --disk-format=qcow2 --container-format=bare &lt; stackimages/cirros.img</userinput>
 <computeroutput>Added new image with ID: f4addd24-4e8a-46bb-b15d-fae2591f1a35</computeroutput></screen>
     </para>
     <para>
@@ -86,7 +86,7 @@ This server could not verify that you are authorized to access the document you 
                 <term><literal>container-format=bare</literal></term>
                 <listitem>
                     <para>The <literal>container-format</literal> field is required by the
-                            <command>glance add</command> command but isn't actually used by any of
+                            <command>glance image-create</command> command but isn't actually used by any of
                         the OpenStack services, so the value specified here has no effect on system
                         behavior. We specify <literal>bare</literal> to indicate that the image file
                         is not in a file format that contains metadata about the virtual
