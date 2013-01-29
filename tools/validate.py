@@ -22,6 +22,9 @@ import subprocess
 import sys
 import urllib2
 
+# These are files that are known to not be in DocBook format
+EXCEPTIONS = ['ha-guide-docinfo.xml']
+
 
 def get_schema():
     """Return the DocBook RELAX NG schema"""
@@ -68,7 +71,7 @@ def main(rootdir):
 
         for f in files:
             # Ignore maven files, which are called pom.xml
-            if f.endswith('.xml') and f != 'pom.xml':
+            if f.endswith('.xml') and f != 'pom.xml' and f not in EXCEPTIONS:
                 try:
                     path = os.path.abspath(os.path.join(root, f))
                     doc = etree.parse(path)
