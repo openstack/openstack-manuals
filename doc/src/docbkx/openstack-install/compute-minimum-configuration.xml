@@ -19,34 +19,13 @@
                 <para><literal>vncserver_proxyclient_address</literal></para>
             </listitem>
         </itemizedlist>For the above configuration options, you must use the IP address of the
-        specific compute host, not the cloud controller.<note>
-            <para>In the Essex release, the <filename>nova.conf</filename> file format changed from
-                flags (<literal>--name=value</literal>) to INI file format
-                    (<literal>name=value</literal>). The Compute service will function properly with
-                either format.</para>
-            <para>The default <filename>nova.conf</filename> format for Essex packages varies by
-                distribution. Fedora packages use the new INI style format, and Ubuntu 12.04
-                packages use the old flag format. By convention, this guide uses the new INI style
-                format.</para>
-            <para>You can automatically convert a <filename>nova.conf</filename> file from flag
-                format to INI format using <command>nova-manage</command>:</para>
-            <screen><prompt>$</prompt> <userinput>nova-manage config convert --help</userinput>
-<computeroutput>Usage: nova-manage config convert &lt;args&gt; [options]
-
-
-Options:
-  -h, --help        show this help message and exit
-  --infile=&lt;path&gt;  old-style flagfile to convert to config
-  --outfile=&lt;path&gt;  path for output file. Writes config to stdout if not
-                    specified</computeroutput></screen>
-        </note>
+        specific compute host, not the cloud controller.
     </para>
     <para>The packages automatically do these steps for a user
         named nova, but if you are installing as another user you
         should ensure that the <filename>nova.conf</filename> file should have its
         owner set to <literal>root:nova</literal>, and mode set to <literal>0640</literal>, since the
         file contains your MySQL server’s username and password.
-
     </para>
     <note><para>If you are installing as another user, you should set permissions correctly.
         This packaged install ensures that the nova user belongs

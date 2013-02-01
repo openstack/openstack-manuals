@@ -7,8 +7,7 @@
   </info>
 
   <para> The VNC Proxy is an OpenStack component that allows users of the Compute service to access
-    their instances through VNC clients. In Essex and beyond, there is support for both libvirt and
-    XenServer using both Java and websocket clients. </para>
+    their instances through VNC clients. </para>
   <para> The VNC console connection works as follows: </para>
   <orderedlist>
     <listitem>
@@ -287,35 +286,7 @@
     </info>
     <itemizedlist>
       <listitem>
-        <para><emphasis role="bold">Q: What has changed since Diablo?</emphasis>
-        </para>
-        <para>A: Previously, VNC support was done differently for libvirt and XenAPI. Now, there is
-          unified multi-hypervisor support. To support this change, configuration options have been
-          added and changed. Also, a new required service called nova-consoleauth has been added. If
-          you are upgrading from Diablo, you will have to take these changes into consideration when
-          upgrading. </para>
-        <para> 
-          If you are using Diablo, please see the documentation that
-          shipped with your code, as this information will not be
-          relevant. 
-        </para>
-      </listitem>
-      <listitem>
-        <para><emphasis role="bold">Q: What happened to Diablo's nova-vncproxy? </emphasis></para>
-        <para>A: nova-vncproxy was removed from the nova source tree. The Essex analog for this
-          process is nova-novncproxy, which is provided by an external project. </para>
-      </listitem>
-      <listitem>
-        <para><emphasis role="bold">Q: Why is nova-vncproxy no longer part of nova?</emphasis>
-        </para>
-        <para>A: In Diablo, we shipped a websocket proxy (nova-vncproxy) with nova, but it had poor
-          browser support. This nova-vncproxy code was dependent on external noVNC code, so changes
-          to that system involved updating 2 projects. Due to the rapid evolution of websocket tech,
-          and the tight dependence of the websocket proxy on javscript and html components, we
-          decided to keep that code all in one place. </para>
-      </listitem>
-      <listitem>
-        <para><emphasis role="bold">Q: What is the difference between nova-xvpvncproxy and
+       <para><emphasis role="bold">Q: What is the difference between nova-xvpvncproxy and
             nova-novncproxy?</emphasis>
         </para>
         <para>A: nova-xvpvncproxy which ships with nova, is a new proxy that supports a simple Java
