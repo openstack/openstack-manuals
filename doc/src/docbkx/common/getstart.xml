@@ -5,7 +5,7 @@ xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
 xml:id="ch_getting-started-with-openstack">
   <title>Getting Started with OpenStack</title>
   <para>OpenStack is a collection of open source technologies that
-  provides massively scalable open source cloud computing software. 
+  provides massively scalable cloud computing software. 
   OpenStack can be used by corporations, service providers, VARS, SMBs,       
   researchers, and global data centers looking to deploy
   large-scale cloud deployments for private or public clouds.</para>
@@ -190,25 +190,25 @@ xml:id="ch_getting-started-with-openstack">
         </para>
       </listitem>
       <listitem>
-        <para>Block Storage (codenamed "Cinder") provides persistent 
+        <para>Block Storage (codenamed <link
+            xlink:href="http://cinder.openstack.org">"Cinder"</link>)
+          provides persistent 
           block storage to guest VMs. This project was born from code 
           originally in Nova (the <code>nova-volume</code> service 
-          described below). In the Folsom release, both the 
-           <code>nova-volume</code> service and the separate volume 
-           service are available.</para>
+          described below).</para>
       </listitem>
     </itemizedlist>
 
       <para>In addition to these core projects, there are also a number of
-         "incubation" projects that are being considered for future inclusion in
-          the OpenStack core.</para>
+         "incubation" projects that are being considered for future 
+          integration into the OpenStack release.</para>
     </section>
 
     <section xml:id="conceptual-architecture">
       <title>Conceptual Architecture</title>
 
       <para>The OpenStack project as a whole is designed to
-        "deliver(ing) a massively scalable cloud operating system." To
+        deliver a massively scalable cloud operating system. To
         achieve this, each of the constituent services are designed to
         work together to provide a complete Infrastructure as a
         Service (IaaS). This integration is facilitated through public
@@ -372,8 +372,8 @@ xml:id="ch_getting-started-with-openstack">
             API, Amazon's EC2 API and a special Admin API (for privileged
             users to perform administrative actions). It also
             initiates most of the orchestration activities (such as
-            running an instance) as well as enforces some policy
-            (mostly quota checks). </para>
+            running an instance) as well as enforces some policy.
+            </para>
         </listitem>
         <listitem>
           <para>The <code>nova-compute</code> process is primarily a
@@ -387,29 +387,13 @@ xml:id="ch_getting-started-with-openstack">
             database.</para>
         </listitem>
         <listitem>
-          <para><code>nova-volume</code> manages the creation,
-            attaching and detaching of persistent volumes to compute
-            instances (similar functionality to Amazon’s Elastic Block
-            Storage). It can use volumes from a variety of providers
-            such as iSCSI or <link
-            xlink:href="http://ceph.newdream.net/">Rados Block
-            Device in Ceph</link>. A new OpenStack project, Cinder, 
-            will eventually replace <code>nova-volume</code> 
-            functionality. In the Folsom release, 
-            <code>nova-volume</code> and the Block Storage service 
-            will have similar functionality.</para>
-        </listitem>
-        <listitem>
           <para>The <code>nova-network</code> worker daemon is very
-            similar to <code>nova-compute</code> and
-            <code>nova-volume</code>. It accepts networking tasks
+            similar to <code>nova-compute</code>. It accepts networking tasks
             from the queue and then performs tasks to manipulate the
             network (such as setting up bridging interfaces or
             changing iptables rules). This functionality is being
-            migrated to Quantum, a separate OpenStack service. In 
-            the Folsom release, much of the functionality will be 
-            duplicated between <code>nova-network</code> and 
-            Quantum.</para>
+            migrated to Quantum, a separate OpenStack service. 
+            </para>
         </listitem>
         <listitem>
           <para>The <code>nova-schedule</code> process is conceptually
@@ -597,7 +581,7 @@ xml:id="ch_getting-started-with-openstack">
     <section xml:id="overview-block-storage-arch">
       <title>Block Storage</title>
 
-      <para>Cinder separates out the persistent block storage functionality that was previously part of Openstack Compute (in the form of nova-volume) into it's own service. The OpenStack Block Storage API allows for manipulation of volumes, volume types (similar to compute flavors) and volume snapshots.</para>
+      <para>Cinder separates out the persistent block storage functionality that was previously part of Openstack Compute into it's own service. The OpenStack Block Storage API allows for manipulation of volumes, volume types (similar to compute flavors) and volume snapshots.</para>
 
       <itemizedlist>
         <listitem>
