@@ -31,17 +31,14 @@
                 <td>
                     <para>Processor: 64-bit x86</para>
                     <para>Memory: 12 GB RAM </para>
-                    <para>Disk space: 30 GB (SATA or SAS or SSD) </para>
+                    <para>Disk space: 30 GB (SATA, SAS or SSD) </para>
                     <para>Volume storage: two disks with 2 TB (SATA) for volumes attached to the
                         compute nodes </para>
-                    <para>Network: one 1 GB Network Interface Card (NIC)</para>
+                    <para>Network: one 1 Gbps Network Interface Card (NIC)</para>
                 </td>
                 <td>
                     <para>Two NICS are recommended but not required. A quad core server with 12
                         GB RAM would be more than sufficient for a cloud controller node.</para>
-                    <para>32-bit processors will work for the cloud controller node. </para>
-                    <para>The package repositories referred to in this
-                        guide do not contain i386 packages.</para>
                 </td>
             </tr>
             <tr>
@@ -50,13 +47,9 @@
                     <para>Processor: 64-bit x86</para>
                     <para>Memory: 32 GB RAM</para>
                     <para>Disk space: 30 GB (SATA)</para>
-                    <para>Network: two 1 GB NICs</para>
+                    <para>Network: two 1 Gbps NICs</para>
                 </td>
                 <td>
-                    <para>Note that you cannot run 64-bit VM instances
-                        on a 32-bit compute node. A 64-bit compute
-                        node can run either 32- or 64-bit VMs,
-                        however. </para>
                     <para>With 2 GB RAM you can run one m1.small instance on a node or three
                         m1.tiny instances without memory swapping, so 2 GB RAM would be a
                         minimum for a test-environment compute node. As an example, Rackspace
@@ -72,8 +65,6 @@
                         xlink:href="http://hcl.vmd.citrix.com/">
                         XenServer harware compatibility list</link>.</para>
                     <para>For LXC, the VT extensions are not required.</para>
-                    <para>The packages referred to in this guide do not
-                        contain i386 packages.</para>
                 </td>
             </tr>
             
@@ -83,7 +74,7 @@
         <para>While certain parts of OpenStack are known to work on
             various operating systems, currently the only
             feature-complete, production-supported host environment is
-            Linux.</para></note>
+            64-bit Linux.</para></note>
     <para><emphasis role="bold">Operating System</emphasis>: OpenStack
         currently has packages for the following distributions:
         CentOS, Debian, Fedora, RHEL, and Ubuntu. These packages are
@@ -107,20 +98,15 @@
     <para><emphasis role="bold">Database</emphasis>: For
         OpenStack Compute, you need access to either a PostgreSQL
         or MySQL database, or you can install it as part of the
-        OpenStack Compute installation process. For Object
-        Storage, the container and account servers use SQLite, and
-        you can install it as part of the installation
-        process.</para>
+        OpenStack Compute installation process.</para>
     <para><emphasis role="bold">Permissions</emphasis>: You can
-        install OpenStack Compute, the Image Service, or Object
-        Storage either as root or as a user with sudo permissions
-        if you configure the sudoers file to enable all the
-        permissions. </para>
+        install OpenStack services either as root or as a user
+        with sudo permissions if you configure the sudoers file
+         to enable all the permissions. </para>
     <para><emphasis role="bold">Network Time Protocol</emphasis>:
         You must install a time synchronization program such as
-        NTP. For Compute, time synchronization keeps your cloud
-        controller and compute nodes talking to the same time
-        server to avoid problems scheduling VM launches on compute
+        NTP. For Compute, time synchronization avoids problems
+        when scheduling VM launches on compute
         nodes. For Object Storage, time synchronization ensure the
         object replications are accurately updating objects when
         needed so that the freshest content is served.</para>
