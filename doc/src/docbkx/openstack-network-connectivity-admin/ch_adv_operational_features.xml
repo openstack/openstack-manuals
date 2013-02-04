@@ -1,40 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE chapter [
-<!-- Some useful entities borrowed from HTML -->
-<!ENTITY ndash  "&#x2013;">
-<!ENTITY mdash  "&#x2014;">
-<!ENTITY hellip "&#x2026;">
-<!ENTITY plusmn "&#xB1;">
-
-<!-- Useful for describing APIs -->
-<!ENTITY GET    '<command xmlns="http://docbook.org/ns/docbook">GET</command>'>
-<!ENTITY PUT    '<command xmlns="http://docbook.org/ns/docbook">PUT</command>'>
-<!ENTITY POST   '<command xmlns="http://docbook.org/ns/docbook">POST</command>'>
-<!ENTITY DELETE '<command xmlns="http://docbook.org/ns/docbook">DELETE</command>'>
-
-<!ENTITY CHECK  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
-<imageobject role="fo">
-<imagedata fileref="figures/Check_mark_23x20_02.svg"
-format="SVG" scale="60"/>
-</imageobject>
-<imageobject role="html">
-<imagedata fileref="../figures/Check_mark_23x20_02.png"
-format="PNG" />
-</imageobject>
-</inlinemediaobject>'>
-
-<!ENTITY ARROW  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
-<imageobject role="fo">
-<imagedata fileref="figures/Arrow_east.svg"
-format="SVG" scale="60"/>
-</imageobject>
-<imageobject role="html">
-<imagedata fileref="../figures/Arrow_east.png"
-format="PNG" />
-</imageobject>
-</inlinemediaobject>'>
-
-]>
 <chapter xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
@@ -42,17 +6,19 @@ format="PNG" />
     <title>Advanced Operational Features</title>
     <section xml:id="ch_adv_logging">
         <title>Logging Settings</title>
-        <para>Quantum components use Python logging module to do logging.
-        Logging configuration can be provided in quantum.conf or as command line options.
-        Command options will override ones in quantum.conf.</para>
-        <para>Two ways to specify the logging configuration for Quantum components:</para>
+        <para>OpenStack Networking components use Python logging
+      module to do logging. Logging configuration can be provided in
+      <filename>quantum.conf</filename> or as command line options. Command options will
+      override ones in <filename>quantum.conf</filename>.</para>
+        <para>Two ways to specify the logging configuration for
+      OpenStack Networking components:</para>
         <orderedlist>
             <listitem>
                 <para>Provide logging settings in a logging configuration file.</para>
                 <para>Please see <link xlink:href="http://docs.python.org/howto/logging.html">Python Logging HOWTO</link> for logging configuration file.</para>
             </listitem>
             <listitem>
-                <para>Provide logging setting in quantum.conf</para>
+                <para>Provide logging setting in <filename>quantum.conf</filename></para>
                 <screen>
                     <computeroutput>
 [DEFAULT]
@@ -82,9 +48,11 @@ format="PNG" />
         <title>Notifications</title>
         <section xml:id="ch_adv_notification_overview">
         <title>Notification Options</title>
-        <para>Notifications can be sent when Quantum resources such as network, subnet and port
-        are created, updated or deleted. To support DHCP agent, rpc_notifier driver must be set.
-        To set up the notification, edit notification options in quantum.conf:</para>
+        <para>Notifications can be sent when OpenStack Networking
+        resources such as network, subnet and port are created,
+        updated or deleted. To support DHCP agent, rpc_notifier driver
+        must be set. To set up the notification, edit notification
+        options in <filename>quantum.conf</filename>:</para>
         <screen>
                     <computeroutput>
 # ============ Notification System Options =====================
@@ -119,10 +87,12 @@ notification_topics = notifications
                 <title>Setting Cases</title>
                 <section xml:id="ch_adv_notification_cases_log_rpc">
                 <title>Logging and RPC</title>
-                <para>The options below will make Quantum server send notifications via logging and RPC.
-                The logging options are described in <link linkend="ch_adv_logging">Logging Settings</link>.
-                RPC notifications will go to 'notifications.info' queue binded to a topic exchange defined
-                by 'control_exchange' in quantum.conf.</para>
+                <para>The options below will make OpenStack Networking
+          server send notifications via logging and RPC. The logging
+          options are described in <link linkend="ch_adv_logging"
+            >Logging Settings</link>. RPC notifications will go to
+          'notifications.info' queue binded to a topic exchange
+          defined by 'control_exchange' in <filename>quantum.conf</filename>.</para>
         <screen>
                     <computeroutput>
 # ============ Notification System Options =====================
@@ -155,9 +125,11 @@ notification_topics = notifications
                 </section>
                 <section xml:id="ch_adv_notification_cases_multi_rpc_topics">
                 <title>Multiple RPC Topics</title>
-                <para>The options below will make Quantum server send notifications to multiple RPC topics.
-                RPC notifications will go to 'notifications_one.info' and 'notifications_two.info' queues binded
-                to a topic exchange defined by 'control_exchange' in quantum.conf.</para>
+                <para>The options below will make OpenStack Networking
+          server send notifications to multiple RPC topics. RPC
+          notifications will go to 'notifications_one.info' and
+          'notifications_two.info' queues binded to a topic exchange
+          defined by 'control_exchange' in <filename>quantum.conf</filename>.</para>
         <screen>
                     <computeroutput>
 # ============ Notification System Options =====================
@@ -207,17 +179,14 @@ Quota exceeded for resources: ['network']</computeroutput></screen>
       </para>
       <section xml:id="cfg_quotas_common">
         <title>Basic quota configuration</title>
-        <para>
-          In Quantum default quota mechanism, all tenants have a same
-          quota value, i.e., a number of resources that a tenant can create.
-          This is enabled by default.
-        </para>
-        <para>
-          The value of quota is defined in the Quantum configuration file
-          (quantum.conf). If you want to disable quota for a specific resource
-          (e.g., network, subnet, port), remove a corresponding item from 'quota_items'.
-          Each of the quota values in the example below is the default value.
-        </para>
+        <para> In OpenStack Networking default quota mechanism, all
+        tenants have a same quota value, i.e., a number of resources
+        that a tenant can create. This is enabled by default. </para>
+        <para> The value of quota is defined in the OpenStack
+        Networking configuration file (<filename>quantum.conf</filename>). If you want to
+        disable quota for a specific resource (e.g., network, subnet,
+        port), remove a corresponding item from 'quota_items'. Each of
+        the quota values in the example below is the default value. </para>
         <screen><computeroutput>[QUOTAS]
 # resource name(s) that are supported in quota features
 quota_items = network,subnet,port
@@ -233,12 +202,11 @@ quota_port = 50
 
 # default driver to use for quota checks
 quota_driver = quantum.quota.ConfDriver</computeroutput></screen>
-        <para>
-          Quantum also supports quotas for L3 resources: router and floating IP.
-          You can configure them by adding the following lines to
-          'QUOTAS' section in quantum.conf.
-          (Note that 'quota_items' does not affect these quotas.)
-        </para>
+        <para> OpenStack Networking also supports quotas for L3
+        resources: router and floating IP. You can configure them by
+        adding the following lines to 'QUOTAS' section in
+        <filename>quantum.conf</filename>. (Note that 'quota_items' does not affect these
+        quotas.) </para>
         <screen><computeroutput>[QUOTAS]
 # number of routers allowed per tenant, and minus means unlimited
 quota_router = 10
@@ -248,10 +216,9 @@ quota_floatingip = 50</computeroutput></screen>
       </section>
       <section xml:id="cfg_quotas_per_tenant">
         <title>Per-tenant quota configuration</title>
-        <para>
-          Quantum also supports per-tenant quota limit by quota extension API.
-          To enable per-tenant quota, you need to set 'quota_driver' in 'quantum.conf'.
-        </para>
+        <para> OpenStack Networking also supports per-tenant quota
+        limit by quota extension API. To enable per-tenant quota, you
+        need to set 'quota_driver' in 'quantum.conf'. </para>
         <screen><computeroutput>quota_driver = quantum.extensions._quotav2_driver.DbQuotaDriver</computeroutput></screen>
         <para>
           When per-tenant quota is enabled, the output of the following command contains 'quotas'.

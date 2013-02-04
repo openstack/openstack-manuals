@@ -1,39 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE chapter [
-<!-- Some useful entities borrowed from HTML -->
-<!ENTITY ndash  "&#x2013;">
-<!ENTITY mdash  "&#x2014;">
-<!ENTITY hellip "&#x2026;">
-<!ENTITY plusmn "&#xB1;">
-
-<!-- Useful for describing APIs -->
-<!ENTITY GET    '<command xmlns="http://docbook.org/ns/docbook">GET</command>'>
-<!ENTITY PUT    '<command xmlns="http://docbook.org/ns/docbook">PUT</command>'>
-<!ENTITY POST   '<command xmlns="http://docbook.org/ns/docbook">POST</command>'>
-<!ENTITY DELETE '<command xmlns="http://docbook.org/ns/docbook">DELETE</command>'>
-
-<!ENTITY CHECK  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
-<imageobject role="fo">
-<imagedata fileref="figures/Check_mark_23x20_02.svg"
-format="SVG" scale="60"/>
-</imageobject>
-<imageobject role="html">
-<imagedata fileref="../figures/Check_mark_23x20_02.png"
-format="PNG" />
-</imageobject>
-</inlinemediaobject>'>
-
-<!ENTITY ARROW  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
-<imageobject role="fo">
-<imagedata fileref="figures/Arrow_east.svg"
-format="SVG" scale="60"/>
-</imageobject>
-<imageobject role="html">
-<imagedata fileref="../figures/Arrow_east.png"
-format="PNG" />
-</imageobject>
-</inlinemediaobject>'>
-]>
 <chapter xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
@@ -42,33 +7,48 @@ format="PNG" />
     <para>
         <itemizedlist>
             <listitem>
-                <para><emphasis>Quantum overlapping IPs do not work with Nova security groups or
-                        Nova metadata server:</emphasis> Nova was designed assuming that a
-                    particular IP address will only ever be used by a single VM at any time. Quantum
-                    supports overlapping IPs if the allow_overlapping_ips config value is set to
-                    'True'. We default this value to false to prevent unintentionally running Nova
-                    security groups or metadata server with overlapping IPs. If you enable this
-                    flag, you must disable both Nova security groups and the Nova metadata
+                <para><emphasis>OpenStack Networking overlapping IPs
+                        do not work with Nova security groups or Nova
+                        metadata server:</emphasis> Nova was designed
+                    assuming that a particular IP address will only
+                    ever be used by a single VM at any time. OpenStack
+                    Networking supports overlapping IPs if the
+                    allow_overlapping_ips config value is set to
+                    'True'. We default this value to false to prevent
+                    unintentionally running Nova security groups or
+                    metadata server with overlapping IPs. If you
+                    enable this flag, you must disable both Nova
+                    security groups and the Nova metadata
                     service.</para>
             </listitem>
             <listitem>
-                <para><emphasis>No equivalent for nova-network --multi_host flag:</emphasis>
-                    Nova-network has a model where the L3, NAT, and DHCP processing happen on the
-                    compute node itself, rather than a dedicated networking node. Quantum does not
-                    have an equivalent configuration, but is likely to add a similar capability in
-                    the future. However, since the nova-network multi_host design has some
-                    significant limitations in terms of deployment scale (limited to a single
-                    physical L2) and L3 forwarding behavior (does not map to a single L3 router for
-                    traffic between instances on separate networks), the Quantum feature may not be
-                    an exact match, or may be limited to a subnet of all Quantum deployment
-                    scenarios. </para>
+                <para><emphasis>No equivalent for nova-network
+                        --multi_host flag:</emphasis> Nova-network has
+                    a model where the L3, NAT, and DHCP processing
+                    happen on the compute node itself, rather than a
+                    dedicated networking node. OpenStack Networking
+                    does not have an equivalent configuration, but is
+                    likely to add a similar capability in the future.
+                    However, since the nova-network multi_host design
+                    has some significant limitations in terms of
+                    deployment scale (limited to a single physical L2)
+                    and L3 forwarding behavior (does not map to a
+                    single L3 router for traffic between instances on
+                    separate networks), the OpenStack Networking
+                    feature may not be an exact match, or may be
+                    limited to a subnet of all OpenStack Networking
+                    deployment scenarios. </para>
             </listitem>
             <listitem>
-                <para><emphasis>Linux network namespace required on nodes running quantum-l3-agent
-                        or quantum-dhcp-agent: </emphasis>. In order to support overlapping IP
-                    addresses, the Quantum DHCP and L3 agents use Linux network namespaces by
-                    default. The hosts running these processes must support network namespaces. To
-                    support network namespaces, the following are required:</para>
+                <para><emphasis>Linux network namespace required on
+                        nodes running quantum-l3-agent or
+                        quantum-dhcp-agent: </emphasis>. In order to
+                    support overlapping IP addresses, the OpenStack
+                    Networking DHCP and L3 agents use Linux network
+                    namespaces by default. The hosts running these
+                    processes must support network namespaces. To
+                    support network namespaces, the following are
+                    required:</para>
                 <itemizedlist>
                     <listitem>
                         <para>Linux kernel 2.6.24 or newer (with CONFIG_NET_NS=y in kernel
@@ -88,7 +68,8 @@ ip netns exec test-ns ifconfig</computeroutput></screen>
                     Ubuntu 12.04 or later support namespaces as does Fedora 17 and new, but some
                     older RHEL platforms do not by default. It may be possible to upgrade the
                     iproute2 package on a platform that does not support namespaces by default. </para>
-                <para> If you need to disable namespaces, make sure the quantum.conf used by
+                <para> If you need to disable namespaces, make sure
+                    the <filename>quantum.conf</filename> used by
                     quantum-server has the following setting:</para>
                 <screen><computeroutput>allow_overlapping_ips=False</computeroutput></screen>
                 <para>and that the dhcp_agent.ini and l3_agent.ini have the following
@@ -104,13 +85,18 @@ ip netns exec test-ns ifconfig</computeroutput></screen>
                     supports only IPv4 forwarding. Currently, There are no errors provided if you
                     configure IPv6 addresses via the API.</para>
             </listitem><listitem>
-                <para><emphasis>L3 Agent supports limited scale for Quantum Routers:</emphasis> The
-                    L3 agent polls the Quantum API to learn about changes to L3 configuration. If
-                    there are a large number of routers or router ports, this can lead to heavy load
-                    on the database used by a Quantum plugin. The suggested work-around is to
-                    increase the polling_interval value in l3_agent.ini . This will increase the
-                    possible time between when a L3 configuration change happens via the API and
-                    when it affects data forwarding.</para>
+                <para><emphasis>L3 Agent supports limited scale for
+                        OpenStack Networking Routers:</emphasis> The
+                    L3 agent polls the OpenStack Networking API to
+                    learn about changes to L3 configuration. If there
+                    are a large number of routers or router ports,
+                    this can lead to heavy load on the database used
+                    by an OpenStack Networking plugin. The suggested
+                    work-around is to increase the polling_interval
+                    value in l3_agent.ini . This will increase the
+                    possible time between when a L3 configuration
+                    change happens via the API and when it affects
+                    data forwarding.</para>
             </listitem><listitem>
                 <para><emphasis>ZeroMQ support is experimental</emphasis>: Some agents, including
                     quantum-dhcp-agent, quantum-openvswitch-agent, and quantum-linuxbridge-agent use
@@ -124,10 +110,12 @@ ip netns exec test-ns ifconfig</computeroutput></screen>
                     functionality has not been widely reviewed or tested by the core team, and
                     should be considered experimental until further validation is performed. </para>
             </listitem><listitem>
-                <para><emphasis>Horizon does not support Routers/Floating IPs with
-                        Quantum:</emphasis> Horizon support is limited to operations on Quantum
-                    Networks, Subnets, and Ports. Routers and Floating IPs must be configured via
-                    CLI.</para>
+                <para><emphasis>Horizon does not support
+                        Routers/Floating IPs with OpenStack
+                        Networking:</emphasis> Horizon support is
+                    limited to operations on OpenStack Networking
+                    Networks, Subnets, and Ports. Routers and Floating
+                    IPs must be configured via CLI.</para>
             </listitem><listitem>
                 <para>L3 Router Extension does not support IPv6.</para>
             </listitem></itemizedlist>

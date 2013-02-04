@@ -1,43 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE section [
-<!-- Some useful entities borrowed from HTML -->
-<!ENTITY ndash  "&#x2013;">
-<!ENTITY mdash  "&#x2014;">
-<!ENTITY hellip "&#x2026;">
-<!ENTITY plusmn "&#xB1;">
-
-<!-- Useful for describing APIs -->
-<!ENTITY GET    '<command xmlns="http://docbook.org/ns/docbook">GET</command>'>
-<!ENTITY PUT    '<command xmlns="http://docbook.org/ns/docbook">PUT</command>'>
-<!ENTITY POST   '<command xmlns="http://docbook.org/ns/docbook">POST</command>'>
-<!ENTITY DELETE '<command xmlns="http://docbook.org/ns/docbook">DELETE</command>'>
-
-<!ENTITY CHECK  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
-<imageobject role="fo">
-<imagedata fileref="figures/Check_mark_23x20_02.svg"
-format="SVG" scale="60"/>
-</imageobject>
-<imageobject role="html">
-<imagedata fileref="../figures/Check_mark_23x20_02.png"
-format="PNG" />
-</imageobject>
-</inlinemediaobject>'>
-
-<!ENTITY ARROW  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
-<imageobject role="fo">
-<imagedata fileref="figures/Arrow_east.svg"
-format="SVG" scale="60"/>
-</imageobject>
-<imageobject role="html">
-<imagedata fileref="../figures/Arrow_east.png"
-format="PNG" />
-</imageobject>
-</inlinemediaobject>'>
-]>
 <section xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="app_demo_flat">
     <title>Single Flat Network</title>
-    <para>This section describes how to install the Quantum service
+    <para>This section describes how to install the OpenStack Networking service
         and its components for the "<link
             linkend="use_cases_single_flat">Use Case: Single Flat Network
             </link>". </para>
@@ -69,31 +34,33 @@ format="PNG" />
             <tbody>
                 <tr>
                     <td>Controller Node</td>
-                    <td>Runs the Quantum service, Keystone and all of
-                        the Nova services that are required to deploy
-                        VMs. The node must have at least one
+                    <td>Runs the OpenStack Networking service, OpenStack Identity and all of
+                        the OpenStack Compute services that are required to deploy
+                        VMs (nova-api, nova-scheduler, for example). The node must have at least one
                         network interface, which is connected to
                         the "Management Network". The hostname is 'controlnode', which
                         every other node resolve to the controller node's IP.
                         <emphasis role="bold">Note</emphasis>
-                        nova-network should not be running. This is
-                        replaced by Quantum.</td>
+                        The nova-network service should not be running. This is
+                        replaced by OpenStack Networking.</td>
                 </tr>
                 <tr>
                     <td>Compute Node</td>
-                    <td>Runs Nova compute and the Quantum L2 agent.
-                        The node must have at least two
-                        network interfaces. The first is used to
-                        communicate with the controller node via the
-                        management network. The second interface is
-                        used for the VM traffic on the Data
-                        network. The VM will be able to receive its IP
-                        address from the DHCP agent on this
-                        network.</td>
+                <td>Runs the OpenStack Networking L2 agent and the
+                    OpenStack Compute services that run VMs
+                    (nova-compute specifically, and optionally other
+                    nova-* services depending on configuration). The
+                    node must have at least two network interfaces.
+                    The first is used to communicate with the
+                    controller node via the management network. The
+                    second interface is used for the VM traffic on the
+                    Data network. The VM will be able to receive its
+                    IP address from the DHCP agent on this
+                    network.</td>
                 </tr>
                 <tr>
                     <td>Network Node</td>
-                    <td>Runs Quantum L2 agent and the DHCP agent.
+                    <td>Runs OpenStack Networking L2 agent and the DHCP agent.
                         The DHCP agent will allocate
                         IP addresses to the VMs on the network. The node must have
                         at least two network interfaces. The first
@@ -112,7 +79,7 @@ format="PNG" />
     <para><emphasis role="bold">Controller Node</emphasis></para>
     <orderedlist>
         <listitem>
-            <para>Relevant Nova services are installed, configured and
+            <para>Relevant OpenStack Compute services are installed, configured and
                 running.</para>
         </listitem>
         <listitem>
@@ -120,9 +87,10 @@ format="PNG" />
                 addition to this there should be an image.</para>
         </listitem>
         <listitem>
-            <para>Keystone is installed, configured and running. A
-                quantum user <emphasis role="bold">quantum</emphasis>
-                should be created on tenant <emphasis role="bold"
+            <para>OpenStack Identity is installed, configured and
+                running. An OpenStack Networking user <emphasis
+                    role="bold">quantum</emphasis> should be created
+                on tenant <emphasis role="bold"
                     >servicetenant</emphasis> with password <emphasis
                     role="bold">servicepassword</emphasis>.</para>
         </listitem>
@@ -143,7 +111,7 @@ format="PNG" />
     <para><emphasis role="bold">Compute Node</emphasis></para>
     <orderedlist>
         <listitem>
-            <para>Nova compute is installed and configured</para>
+            <para>OpenStack Compute compute is installed and configured</para>
         </listitem>
     </orderedlist>
     <section xml:id="demo_flat_installions">
@@ -151,9 +119,9 @@ format="PNG" />
         <para>
             <itemizedlist>
                 <listitem>
-                    <para><emphasis role="bold">Controller Node - Quantum Server</emphasis><orderedlist>
+                    <para><emphasis role="bold">Controller Node - OpenStack Networking Server</emphasis><orderedlist>
                             <listitem>
-                                <para>Install the Quantum server.</para>
+                                <para>Install the OpenStack Networking server.</para>
                             </listitem>
                             <listitem>
                                 <para>Create database <emphasis
@@ -164,7 +132,7 @@ format="PNG" />
                                    details.</para>
                             </listitem>
                             <listitem>
-                                <para>Update the Quantum configuration
+                                <para>Update the OpenStack Networking configuration
                                    file, <emphasis role="bold"
                                    >/etc/quantum/quantum.conf</emphasis>:</para>
                                 <screen><computeroutput>[DEFAULT]
@@ -187,7 +155,7 @@ bridge_mappings = physnet1:br-eth0
                             <listitem>
                                 <para>Update the api-paste
                                    configuration file to include the
-                                   keystone user, <emphasis
+                                   OpenStack Identity user, <emphasis
                                    role="bold"
                                    >/etc/quantum/api-paste.ini</emphasis>:</para>
                                 <screen><computeroutput>[filter:authtoken]
@@ -196,17 +164,17 @@ admin_user=quantum
 admin_password=servicepassword</computeroutput></screen>
                             </listitem>
                             <listitem>
-                                <para>Start the Quantum service</para>
+                                <para>Start the OpenStack Networking service</para>
                             </listitem>
                         </orderedlist></para>
                 </listitem>
                 <listitem>
-                    <para><emphasis role="bold">Compute Node - Nova compute</emphasis><orderedlist>
+                    <para><emphasis role="bold">Compute Node - OpenStack Compute </emphasis><orderedlist>
                             <listitem>
-                                <para>Install the Nova compute.</para>
+                                <para>Install the nova-compute service.</para>
                             </listitem>
                             <listitem>
-                                <para>Update the nova configuration
+                                <para>Update the OpenStack Compute configuration
                                    file, <emphasis role="bold"
                                    >/etc/nova/nova.conf. Make sure the following is at the end of this file</emphasis>:</para>
                                 <screen><computeroutput>
@@ -222,7 +190,7 @@ quantum_url=http://controlnode:9696/
 libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver</computeroutput></screen>
                             </listitem>
                             <listitem>
-                                <para>Restart the nova service</para>
+                                <para>Restart the OpenStack Compute service</para>
                             </listitem>
                         </orderedlist></para>
                 </listitem>
@@ -236,7 +204,7 @@ libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver</computero
                                 <screen><computeroutput>sudo ovs-vsctl add-br br-int</computeroutput></screen>
                             </listitem>
                             <listitem>
-                                <para>Update the Quantum configuration
+                                <para>Update the OpenStack Networking configuration
                                    file, <emphasis role="bold"
                                    >/etc/quantum/quantum.conf</emphasis>:</para>
                                 <screen><computeroutput>[DEFAULT]
@@ -265,7 +233,7 @@ bridge_mappings = physnet1:br-eth0</computeroutput></screen>
 sudo ovs-vsctl add-port br-eth0 eth0</computeroutput></screen>
                             </listitem>
                             <listitem>
-                                <para>Start the Quantum L2 agent</para>
+                                <para>Start the OpenStack Networking L2 agent</para>
                             </listitem>
                         </orderedlist></para>
                 </listitem>
@@ -275,7 +243,7 @@ sudo ovs-vsctl add-port br-eth0 eth0</computeroutput></screen>
                                 <para>Install the DHCP agent.</para>
                             </listitem>
                             <listitem>
-                                <para>Update the Quantum configuration
+                                <para>Update the OpenStack Networking configuration
                                    file, <emphasis role="bold"
                                    >/etc/quantum/quantum.conf</emphasis>:</para>
                                 <screen><computeroutput>[DEFAULT]
@@ -303,7 +271,7 @@ notification_driver = quantum.openstack.common.notifier.rabbit_notifier</compute
         <para>All of the commands below can be executed on the network node.</para>
         <para><emphasis role="bold">Note</emphasis> please ensure that
             the following environment variables are set. These are
-            used by the various clients to access Keystone.</para>
+            used by the various clients to access OpenStack Identity.</para>
         <para>
             <screen><computeroutput>export OS_USERNAME=admin
 export OS_PASSWORD=adminpassword
@@ -405,7 +373,7 @@ sudo ip addr flush eth0
 sudo ip addr add 30.0.0.201/24 dev br-eth0
 ping 30.0.0.3
 </computeroutput></screen>
-                            <para>Note: if nova filter is using, please set right security group rule.</para></listitem>
+                            </listitem>
                             <listitem>
                                 <para>Ping the public network within the server of tenant A:</para>
                                 <screen><computeroutput>ping 192.168.1.1

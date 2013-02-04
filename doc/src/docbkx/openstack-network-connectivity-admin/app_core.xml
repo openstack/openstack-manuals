@@ -1,12 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE appendix [
-<!-- Some useful entities borrowed from HTML -->
-<!ENTITY ndash  "&#x2013;">
-<!ENTITY mdash  "&#x2014;">
-<!ENTITY hellip "&#x2026;">
-<!ENTITY plusmn "&#xB1;">
-
-]>
 <appendix xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
@@ -14,7 +6,7 @@
     <title>Core Configuration File Options</title>
     <section xml:id="quantum_conf">
         <title>quantum.conf</title>
-        <para>The configuration settings for the quantum services are found in <filename>/etc/quantum/quantum.conf</filename>.</para>
+        <para>The configuration settings for the OpenStack Networking services are found in <filename>/etc/quantum/quantum.conf</filename>.</para>
             <table rules="all">
                 <caption>Debugging Options</caption>
                 <thead>
@@ -505,7 +497,7 @@
                                 mysql://root:nova@127.0.0.1:3306/ovs_quantum.
                                 Replace 127.0.0.1 above with the IP
                                 address of the database used by the
-                                main quantum server. (Leave it as is
+                                main OpenStack Networking server. (Leave it as is
                                 if the database runs on this
                                 host.).</para>
                             <note>
@@ -660,7 +652,7 @@
                                 mysql://root:nova@127.0.0.1:3306/ovs_quantum.
                                 Replace 127.0.0.1 above with the IP
                                 address of the database used by the
-                                main quantum server. (Leave it as is
+                                main OpenStack Networking server. (Leave it as is
                                 if the database runs on this
                                 host.).</para>
                             <note>
@@ -807,8 +799,8 @@
                 <tbody>
                     <tr>
                         <td>admin_user= </td>
-                        <td>(StrOpt) Admin Quantum user defined in
-                            keystone </td>
+                        <td>(StrOpt) Name of the admin user for OpenStack Networking, which is defined in
+                            <link xlink:href="keystone.html">OpenStack Identity</link> (keystone) </td>
                     </tr>
                     <tr>
                         <td>admin_password= </td>
@@ -870,8 +862,8 @@
                     <tr>
                         <td>resync_interval=30 </td>
                         <td>(IntOpt) If there is an exception on the
-                            Quantum service then the DHCP agent will
-                            ensure that it syncs with the Quantum
+                            quantum-server service, then the DHCP agent will
+                            ensure that it syncs with the quantum.conf
                             configuration. The validation about
                             syncing is done every resync_interval
                             seconds. </td>
@@ -954,12 +946,12 @@
                     </tr>
                     <tr>
                         <td>metadata_ip= </td>
-                        <td>(StrOpt) IP address used by Nova metadata
+                        <td>(StrOpt) IP address used by OpenStack Compute metadata
                             server. </td>
                     </tr>
                     <tr>
                         <td>metadata_port=8775 </td>
-                        <td>(IntOpt) TCP Port used by Nova metadata
+                        <td>(IntOpt) TCP Port used by OpenStack Compute metadata
                             server. </td>
                     </tr>
                     <tr>
@@ -992,8 +984,8 @@
                 <tbody>
                     <tr>
                         <td>admin_user= </td>
-                        <td>(StrOpt) Admin Quantum user defined in
-                            keystone </td>
+                        <td>(StrOpt) Name of the admin user for OpenStack Networking, which is defined in
+                            <link xlink:href="keystone.html">OpenStack Identity</link> (keystone)</td>
                     </tr>
                     <tr>
                         <td>admin_password= </td>

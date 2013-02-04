@@ -1,39 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE chapter [
-<!-- Some useful entities borrowed from HTML -->
-<!ENTITY ndash  "&#x2013;">
-<!ENTITY mdash  "&#x2014;">
-<!ENTITY hellip "&#x2026;">
-<!ENTITY plusmn "&#xB1;">
-
-<!-- Useful for describing APIs -->
-<!ENTITY GET    '<command xmlns="http://docbook.org/ns/docbook">GET</command>'>
-<!ENTITY PUT    '<command xmlns="http://docbook.org/ns/docbook">PUT</command>'>
-<!ENTITY POST   '<command xmlns="http://docbook.org/ns/docbook">POST</command>'>
-<!ENTITY DELETE '<command xmlns="http://docbook.org/ns/docbook">DELETE</command>'>
-
-<!ENTITY CHECK  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
-<imageobject role="fo">
-<imagedata fileref="figures/Check_mark_23x20_02.svg"
-format="SVG" scale="60"/>
-</imageobject>
-<imageobject role="html">
-<imagedata fileref="../figures/Check_mark_23x20_02.png"
-format="PNG" />
-</imageobject>
-</inlinemediaobject>'>
-
-<!ENTITY ARROW  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
-<imageobject role="fo">
-<imagedata fileref="figures/Arrow_east.svg"
-format="SVG" scale="60"/>
-</imageobject>
-<imageobject role="html">
-<imagedata fileref="../figures/Arrow_east.png"
-format="PNG" />
-</imageobject>
-</inlinemediaobject>'>
-]>
 <chapter xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
@@ -46,22 +11,24 @@ format="PNG" />
         portion of the OpenStack community.  </para>
     <section xml:id="provider_networks">
         <title>Provider Networks</title>
-        <para>Provider networks allow cloud administrators to create Quantum
-            networks that map directly to physical networks in the
-            data center.  This is commonly used to give tenants direct
-            access to a "public" network that can be used to reach the
-            Internet.  It may also be used to integrate with VLANs in
-            the network that already have a defined meaning (e.g.,
-            allow a VM from the "marketing" department to be placed on
-            the same VLAN as bare-metal marketing hosts in the same
-            data center).</para>
+        <para>Provider networks allow cloud administrators to create
+            OpenStack Networking networks that map directly to
+            physical networks in the data center.  This is commonly
+            used to give tenants direct access to a "public" network
+            that can be used to reach the Internet.  It may also be
+            used to integrate with VLANs in the network that already
+            have a defined meaning (e.g., allow a VM from the
+            "marketing" department to be placed on the same VLAN as
+            bare-metal marketing hosts in the same data
+            center).</para>
         <para>The provider extension allows administrators to
-            explicitly manage the relationship between Quantum virtual
-            networks and underlying physical mechanisms such as VLANs
-            and tunnels. When this extension is supported, Quantum
-            client users with administrative privileges see additional
-            provider attributes on all virtual networks, and are able
-            to specify these attributes in order to create provider
+            explicitly manage the relationship between OpenStack
+            Networking virtual networks and underlying physical
+            mechanisms such as VLANs and tunnels. When this extension
+            is supported, OpenStack Networking client users with
+            administrative privileges see additional provider
+            attributes on all virtual networks, and are able to
+            specify these attributes in order to create provider
             networks.</para>
         <para>As of the Folsom release, the provider extension is
             supported by the openvswitch and linuxbridge plugins.
@@ -74,25 +41,27 @@ format="PNG" />
                 provider extension:<itemizedlist>
                     <listitem>
                         <para><emphasis role="bold">virtual
-                                network</emphasis> - A Quantum L2
-                            network (identified by a UUID and optional
-                            name) whose ports can be attached as vNICs
-                            to Nova instances and to various Quantum
-                            agents. The openvswitch and linuxbridge
-                            plugins each support several different
-                            mechanisms to realize virtual
+                                network</emphasis> - An OpenStack
+                            Networking L2 network (identified by a
+                            UUID and optional name) whose ports can be
+                            attached as vNICs to OpenStack Compute
+                            instances and to various OpenStack
+                            Networking agents. The openvswitch and
+                            linuxbridge plugins each support several
+                            different mechanisms to realize virtual
                             networks.</para>
                     </listitem>
                     <listitem>
                         <para><emphasis role="bold">physical
                                 network</emphasis> - A network
-                            connecting virtualization hosts (i.e. Nova
-                            compute nodes) with each other and with
-                            other network resources. Each physical
-                            network may support multiple virtual
-                            networks. The provider extension and the
-                            plugin configurations identify physical
-                            networks using simple string names.</para>
+                            connecting virtualization hosts (i.e.
+                            OpenStack Compute nodes) with each other
+                            and with other network resources. Each
+                            physical network may support multiple
+                            virtual networks. The provider extension
+                            and the plugin configurations identify
+                            physical networks using simple string
+                            names.</para>
                     </listitem>
                     <listitem>
                         <para><emphasis role="bold">tenant
@@ -150,8 +119,9 @@ format="PNG" />
                             using GRE. GRE networks are also referred
                             to as "tunnels". GRE tunnel packets are
                             routed by the host's IP routing table, so
-                            GRE networks are not associated by Quantum
-                            with specific physical networks.</para>
+                            GRE networks are not associated by
+                            OpenStack Networking with specific
+                            physical networks.</para>
                     </listitem>
                 </itemizedlist></para>
             <para>Both the openvswitch and linuxbridge plugins support
@@ -162,9 +132,9 @@ format="PNG" />
         </section>
         <section xml:id="provider_attributes">
             <title>Provider Attributes</title>
-            <para>The provider extension extends the Quantum network
-                resource with the following three additional
-                attributes:</para>
+            <para>The provider extension extends the OpenStack
+                Networking network resource with the following three
+                additional attributes:</para>
             <table rules="all">
                 <caption>Provider Network Attributes</caption>
 		<col width="25%"/>
@@ -222,17 +192,19 @@ format="PNG" />
                     </tr>
                 </tbody>
             </table>
-            <para>The provider attributes are returned by Quantum
-                network API operations when the client is authorized
-                for the <code>extension:provider_network:view</code>
-                action via the Quantum policy configuration. The
-                provider attributes are only accepted for network API
-                operations if the client is authorized for the
+            <para>The provider attributes are returned by OpenStack
+                Networking API operations when the client is
+                authorized for the
+                    <code>extension:provider_network:view</code>
+                action via the OpenStack Networking policy
+                configuration. The provider attributes are only
+                accepted for network API operations if the client is
+                authorized for the
                     <code>extension:provider_network:set</code>
-                action. The default Quantum API policy configuration
-                authorizes both actions for users with the admin role.
-                See <xref linkend="ch_auth"/> for details on policy
-                configuration.</para>
+                action. The default OpenStack Networking API policy
+                configuration authorizes both actions for users with
+                the admin role. See <xref linkend="ch_auth"/> for
+                details on policy configuration.</para>
         </section>
         <section xml:id="provider_api_workflow">
             <title>Provider API Workflow</title>
@@ -278,27 +250,31 @@ format="PNG" />
     </section>
     <section xml:id="l3_router_and_nat">
         <title>L3 Routing and NAT</title>
-        <para>Just like the core Quantum API provides abstract L2 network
-        segments that are decopuled from the technology used to implement
-        the L2 network, Quantum includes an API extension that provides
-        abstract L3 routers that API users can dynamically provision and
-        configure.  These Quantum routers can connect multiple L2 Quantum
-        networks, and can also provide a "gateway" that connects one or more
-        private L2 networks to a shared "external" network (e.g., a public
-        network for access to the Internet).  See <xref linkend="use_cases_single_router"/> and
-        <xref linkend="use_cases_tenant_router"/> for details on
-        common models of deploying Quantum L3 routers.</para>
-        <para>
-        The L3 router provides basic NAT capabilities on "gateway" ports
-        that uplink the router to external networks.  This router SNATs all
-        traffic by default, and supports "Floating IPs", which creates a
-        static one-to-one mapping from a public IP on the external network
-        to a private IP on one of the other subnets attached to the router.
-        This allows a tenant to selectively expose VMs on private networks to
-        other hosts on the external network (and often to all hosts on the
-        Internet).  Floating IPs can be allocated and then mapped from one
-        Quantum port to another, as needed.
-        </para>
+        <para>Just like the core OpenStack Networking API provides
+            abstract L2 network segments that are decopuled from the
+            technology used to implement the L2 network, OpenStack
+            Networking includes an API extension that provides
+            abstract L3 routers that API users can dynamically
+            provision and configure. These OpenStack Networking
+            routers can connect multiple L2 OpenStack Networking
+            networks, and can also provide a "gateway" that connects
+            one or more private L2 networks to a shared "external"
+            network (e.g., a public network for access to the
+            Internet). See <xref linkend="use_cases_single_router"/>
+            and <xref linkend="use_cases_tenant_router"/> for details
+            on common models of deploying OpenStack Networking L3
+            routers.</para>
+        <para> The L3 router provides basic NAT capabilities on
+            "gateway" ports that uplink the router to external
+            networks. This router SNATs all traffic by default, and
+            supports "Floating IPs", which creates a static one-to-one
+            mapping from a public IP on the external network to a
+            private IP on one of the other subnets attached to the
+            router. This allows a tenant to selectively expose VMs on
+            private networks to other hosts on the external network
+            (and often to all hosts on the Internet). Floating IPs can
+            be allocated and then mapped from one OpenStack Networking
+            port to another, as needed. </para>
         <section xml:id="l3_api_abstractions">
             <title>L3 API Abstractions</title>
             <table rules="all">
@@ -385,7 +361,7 @@ format="PNG" />
                     <tr>
                         <td>floating_ip_address</td>
                         <td>string (IP address)</td>
-                        <td>allocated by Quantum</td>
+                        <td>allocated by OpenStack Networking</td>
                         <td>The external network IP address available
                             to be mapped to an internal IP address.</td>
                     </tr>
@@ -410,17 +386,18 @@ format="PNG" />
                         <td>port_id</td>
                         <td>uuid-str</td>
                         <td>Null</td>
-                        <td>Indicates the internal Quantum port associated
-                            with the external floating IP.</td>
+                        <td>Indicates the internal OpenStack
+                            Networking port associated with the
+                            external floating IP.</td>
                     </tr>
                     <tr>
                         <td>fixed_ip_address</td>
                         <td>string (IP address)</td>
                         <td>Null</td>
-                        <td>Indicates the IP address on the internal port
-                            that is mapped to by the floating IP (since
-                            a Quantum port might have more than one IP
-                            address).</td>
+                        <td>Indicates the IP address on the internal
+                            port that is mapped to by the floating IP
+                            (since an OpenStack Networking port might
+                            have more than one IP address).</td>
                     </tr>
                     <tr>
                         <td>tenant_id </td>
@@ -453,14 +430,14 @@ quantum router-interface-add router1 &lt;subnet1-uuid&gt;
 quantum router-interface-add router1 &lt;subnet2-uuid&gt;</computeroutput></screen>
             <para>The router will get an interface with the gateway_ip
                 address of the subnet, and this interface will be
-                attached to a port on the L2 Quantum network
-                associated with the subnet. The router will also get
-                an gateway interface to the specified external
-                network.  This will provide SNAT connectivity to the
-                external network as well as support for floating IPs
-                allocated on that external networks (see below). 
-                Commonly an external network maps to a network in the
-                provider </para>
+                attached to a port on the L2 OpenStack Networking
+                network associated with the subnet. The router will
+                also get an gateway interface to the specified
+                external network.  This will provide SNAT connectivity
+                to the external network as well as support for
+                floating IPs allocated on that external networks (see
+                below).  Commonly an external network maps to a
+                network in the provider </para>
             <para>A router can also be connected to an “external
                 network”, allowing that router to act as a NAT gateway
                 for external connectivity.  </para>
@@ -476,9 +453,9 @@ quantum router-interface-add router1 &lt;subnet2-uuid&gt;</computeroutput></scre
             <para>First, identify the port-id representing the VM NIC
                 that the floating IP should map to: </para>
             <screen><computeroutput>quantum port-list -c id -c fixed_ips -- --device_id=ZZZ</computeroutput></screen>
-            <para>This port must be on a Quantum subnet that is
-                attached to a router uplinked to the external network
-                that will be used to create the floating IP. 
+            <para>This port must be on an OpenStack Networking subnet
+                that is attached to a router uplinked to the external
+                network that will be used to create the floating IP. 
                 Conceptually, this is because the router must be able
                 to perform the Destination NAT (DNAT) rewriting of
                 packets from the Floating IP address (chosen from a
@@ -516,30 +493,32 @@ quantum floatingip-associate &lt;floatingip-id&gt; &lt;internal VM port-id&gt; <
               tenants the ability to specify the type of traffic and direction
               (ingress/egress) that is allowed to pass through a port. A security
               group is a container for security group rules.</para>
-        <para>When a port is created in quantum it is associated with a security
-              group. If a security group is not specified the port will be associated
-              with a default security group. By default this group will drop all
-              ingress traffic and allow all egress. Rules can be added to this
-              group in order to change the behaviour.</para>
-        <para>In order to use nova security groups in quantum,
-            configure the following files. In
+        <para>When a port is created in OpenStack Networking it is
+            associated with a security group. If a security group is
+            not specified the port will be associated with a default
+            security group. By default this group will drop all
+            ingress traffic and allow all egress. Rules can be added
+            to this group in order to change the behaviour.</para>
+        <para>In order to use OpenStack Compute security groups in
+            OpenStack Networking, configure the following files. In
                 <filename>/etc/quantum/quantum.conf</filename>, set
-            proxy_mode True within the SECURITYGROUP section.  Ensure
+            proxy_mode True within the SECURITYGROUP section. Ensure
             that the quantum-server
                 <filename>/etc/quantum/quantum.conf</filename> file
-            has proxy_mode=False so that the quantum API service does
-            not work as a proxy for nova API calls. Then in
-                <filename>/etc/nova/nova.conf</filename> set
-            security_group_handler to be
+            has proxy_mode=False so that the OpenStack Networking API
+            service does not work as a proxy for OpenStack Compute API
+            calls. Then in <filename>/etc/nova/nova.conf</filename>
+            set security_group_handler to be
             nova.network.sg.SecurityGroupHandlerQuantumProxy and
             quantum_port_security=True in the DEFAULT section. Once
             the files are changed, restart quantum-server, nova-api,
             and the nova-compute services in order to pick up the
             changes.</para>
          <note><para>If quantum-server is set to proxy_mode=True then you will not be
-                able to use security groups through the quantum api
-                and you will have to control security groups through
-                nova configuration and commands.</para></note>
+                able to use security groups through the OpenStack
+                Networking API and you will have to control security
+                groups through OpenStack Compute configuration and
+                commands.</para></note>
         <section xml:id="securitygroup_api_abstractions">
             <title>Security Group API Abstractions</title>
             <table rules="all">
@@ -582,9 +561,9 @@ quantum floatingip-associate &lt;floatingip-id&gt; &lt;internal VM port-id&gt; <
                         <td>external_id</td>
                         <td>Integer </td>
                         <td>N/A </td>
-                        <td><para>This is used to coordinate nova security
-                            groups with quantum security groups for backwards
-                            compatibility. </para></td>
+                        <td><para>This is used to coordinate OpenStack Compute security groups
+                                with OpenStack Networking security
+                                groups for backwards compatibility. </para></td>
                     </tr>
                     <tr>
                         <td>tenant_id </td>
@@ -620,7 +599,7 @@ quantum floatingip-associate &lt;floatingip-id&gt; &lt;internal VM port-id&gt; <
                     <tr>
                         <td>security_group_id</td>
                         <td>uuid-str or Integer</td>
-                        <td>allocated by Quantum</td>
+                        <td>allocated by OpenStack Networking</td>
                         <td>The security group to associate rule with.</td>
                     </tr>
                     <tr>
@@ -663,16 +642,17 @@ quantum floatingip-associate &lt;floatingip-id&gt; &lt;internal VM port-id&gt; <
                      <tr>
                         <td>source_group_id</td>
                         <td>uuid-str or Integer</td>
-                        <td>allocated by Quantum or Nova</td>
+                        <td>allocated by OpenStack Networking or
+                            OpenStack Compute</td>
                         <td>Source security group to apply to rule.</td>
                     </tr>
                     <tr>
                         <td>external_id</td>
                         <td>Integer </td>
                         <td>N/A </td>
-                        <td><para>This is used to coordinate nova security
-                            groups with quantum security groups for backwards
-                            compatibility. </para></td>
+                        <td><para>This is used to coordinate OpenStack Compute security groups
+                                with OpenStack Networking security
+                                groups for backwards compatibility. </para></td>
                     </tr>
                     <tr>
                         <td>tenant_id </td>
