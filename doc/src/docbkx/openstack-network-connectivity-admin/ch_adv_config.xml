@@ -1,39 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE chapter [
-<!-- Some useful entities borrowed from HTML -->
-<!ENTITY ndash  "&#x2013;">
-<!ENTITY mdash  "&#x2014;">
-<!ENTITY hellip "&#x2026;">
-<!ENTITY plusmn "&#xB1;">
-
-<!-- Useful for describing APIs -->
-<!ENTITY GET    '<command xmlns="http://docbook.org/ns/docbook">GET</command>'>
-<!ENTITY PUT    '<command xmlns="http://docbook.org/ns/docbook">PUT</command>'>
-<!ENTITY POST   '<command xmlns="http://docbook.org/ns/docbook">POST</command>'>
-<!ENTITY DELETE '<command xmlns="http://docbook.org/ns/docbook">DELETE</command>'>
-
-<!ENTITY CHECK  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
-<imageobject role="fo">
-<imagedata fileref="figures/Check_mark_23x20_02.svg"
-format="SVG" scale="60"/>
-</imageobject>
-<imageobject role="html">
-<imagedata fileref="../figures/Check_mark_23x20_02.png"
-format="PNG" />
-</imageobject>
-</inlinemediaobject>'>
-
-<!ENTITY ARROW  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
-<imageobject role="fo">
-<imagedata fileref="figures/Arrow_east.svg"
-format="SVG" scale="60"/>
-</imageobject>
-<imageobject role="html">
-<imagedata fileref="../figures/Arrow_east.png"
-format="PNG" />
-</imageobject>
-</inlinemediaobject>'>
-]>
 <chapter xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="ch_adv_config">
     <title>Advanced Configuration Options</title>
@@ -41,8 +6,8 @@ format="PNG" />
         config options where the default is usually ok, but that the user may want to tweak). After
         installing from packages, $QUANTUM_CONF_DIR is <filename>/etc/quantum</filename>.</para>
     <section xml:id="quantum_server">
-        <title>Quantum Server with Plugin</title>
-        <para>This is the Quantum service that runs the Quantum API Web Server. It is responsible
+        <title>OpenStack Networking Server with Plugin</title>
+        <para>This is the web server that runs the OpenStack Networking API Web Server. It is responsible
             for loading a plugin and passing the API calls to the plugin for processing. The
             quantum-server should receive one of more configuration files as it its input, for
             example:</para>
@@ -68,8 +33,8 @@ mysql&gt; grant all on &lt;database-name&gt;.* to '&lt;user-name&gt;'@'%';</comp
             configuration files. The plugin specific configuration files can be found at
             $QUANTUM_CONF_DIR/plugins.</para>
         <para>Some plugins have a L2 agent that performs the actual networking. That is, the agent
-            will attach the virtual machine NIC to the Quantum network. Each node should have a
-            Quantum agent running on it. Note that the agent receives the following input
+            will attach the virtual machine NIC to the OpenStack Networking network. Each node should have an
+            L2 agent running on it. Note that the agent receives the following input
             parameters:</para>
         <screen><computeroutput>quantum-plugin-agent --config-file &lt;quantum config&gt; --config-file &lt;plugin config&gt;</computeroutput></screen>
         <para>Two things need to be done prior to working with the plugin:</para>
@@ -81,7 +46,7 @@ mysql&gt; grant all on &lt;database-name&gt;.* to '&lt;user-name&gt;'@'%';</comp
                 <para>Ensure that the database connection is correctly set.</para>
             </listitem>
         </orderedlist>
-        <para>The table below contains examples for these settings. Some linux packages may provide
+        <para>The table below contains examples for these settings. Some Linux packages may provide
             installation utilities that configure these. <table rules="all">
                 <caption>Settings</caption>
                 <col width="35%"/>
@@ -141,7 +106,7 @@ mysql&gt; grant all on &lt;database-name&gt;.* to '&lt;user-name&gt;'@'%';</comp
     <section xml:id="adv_cfg_dhcp_agent">
         <title>DHCP Agent</title>
         <para>There is an option to run a DHCP server that will allocate IP addresses to virtual
-            machines running on the network. When a Quantum subnet is created, by default, the
+            machines running on the network. When a subnet is created, by default, the
             subnet has DHCP enabled.</para>
         <para>The node that runs the DHCP agent should run:</para>
         <screen><computeroutput>quantum-dhcp-agent --config-file &lt;quantum config&gt;
@@ -182,11 +147,11 @@ mysql&gt; grant all on &lt;database-name&gt;.* to '&lt;user-name&gt;'@'%';</comp
                 linkend="dhcp_agent_ini"> Appendix - Configuration File Options</link>. </para>
         <section xml:id="adv_cfg_dhcp_agent_namespace">
             <title>Namespace</title>
-            <para> By default the DHCP agent makes use of linux network namespaces in order to
+            <para> By default the DHCP agent makes use of Linux network namespaces in order to
                 support overlapping IP addresses. Requirements for network namespaces support are
                 described in the <link linkend="ch_limitations">Limitation</link> section. </para>
             <para>
-                <emphasis role="bold">If the linux installation does not support network namespace,
+                <emphasis role="bold">If the Linux installation does not support network namespace,
                     you must disable using network namespace in the DHCP agent config
                     file</emphasis> (The default value of use_namespaces is True). </para>
             <screen><computeroutput>use_namespaces = False</computeroutput></screen>
@@ -238,10 +203,10 @@ mysql&gt; grant all on &lt;database-name&gt;.* to '&lt;user-name&gt;'@'%';</comp
                 </tbody>
             </table>
         </para>
-        <para> The L3 agent communicates with the Quantum server via the Quantum API, so the
+        <para> The L3 agent communicates with the OpenStack Networking server via the OpenStack Networking API, so the
             following configuration is required: <orderedlist>
                 <listitem>
-                    <para>Keystone authentication:</para>
+                    <para>OpenStack Identity authentication:</para>
                     <screen><computeroutput>auth_url="$KEYSTONE_SERVICE_PROTOCOL://$KEYSTONE_AUTH_HOST:$KEYSTONE_AUTH_PORT/v2.0"</computeroutput></screen>
                     <para>For example,</para>
                     <screen><computeroutput>http://10.56.51.210:5000/v2.0</computeroutput></screen>
@@ -262,7 +227,7 @@ admin_password $SERVICE_PASSWORD</computeroutput></screen>
                 overlapping IP addresses. Requirements for network namespaces support are described
                 in the <link linkend="ch_limitations">Limitation</link> section. </para>
             <para>
-                <emphasis role="bold">If the linux installation does not support network namespace,
+                <emphasis role="bold">If the Linux installation does not support network namespace,
                     you must disable using network namespace in the L3 agent config file</emphasis>
                 (The default value of use_namespaces is True). </para>
             <screen><computeroutput>use_namespaces = False</computeroutput></screen>
@@ -272,7 +237,7 @@ admin_password $SERVICE_PASSWORD</computeroutput></screen>
             <screen><computeroutput># If use_namespaces is set as False then the agent can only configure one router.
 # This is done by setting the specific router_id.
 router_id = 1064ad16-36b7-4c2f-86f0-daa2bcbd6b2a</computeroutput></screen>
-            <para> To configure it, you need to run the Quantum service and create a router, and
+            <para> To configure it, you need to run the OpenStack Networking service and create a router, and
                 then set an ID of the router created to <emphasis>router_id</emphasis> in the L3
                 agent configuration file. </para>
             <screen><computeroutput>$ quantum router-create myrouter1
@@ -291,16 +256,21 @@ Created a new router:
         </section>
         <section xml:id="adv_cfg_l3_agent_multi_extnet">
             <title>Multiple Floating IP Pools</title>
-            <para> Quantum L3 supports multiple floating IP pools. In Quantum, a floating IP pool is
-                represented as an external network and a floating IP is allocated from a subnet
-                associated with the external network. Since each L3 agent can be associated with at
-                most one external network, we need to invoke multiple L3 agent to define multiple
-                floating IP pools. <emphasis role="bold">'gateway_external_network_id'</emphasis> in
-                L3 agent configuration file indicates the external network that the L3 agent
-                handles. You can run multiple L3 agent instances on one host. </para>
+            <para> The L3 API in OpenStack Networking supports
+                multiple floating IP pools. In OpenStack Networking, a
+                floating IP pool is represented as an external network
+                and a floating IP is allocated from a subnet
+                associated with the external network. Since each L3
+                agent can be associated with at most one external
+                network, we need to invoke multiple L3 agent to define
+                multiple floating IP pools. <emphasis role="bold"
+                    >'gateway_external_network_id'</emphasis> in L3
+                agent configuration file indicates the external
+                network that the L3 agent handles. You can run
+                multiple L3 agent instances on one host. </para>
             <para> In addition, when you run multiple L3 agents, make sure that <emphasis
                     role="bold">handle_internal_only_routers</emphasis> is set to <emphasis
-                    role="bold">True</emphasis> only for one L3 agent in a quantum deployment and
+                    role="bold">True</emphasis> only for one L3 agent in an OpenStack Networking deployment and
                 set to <emphasis role="bold">False</emphasis> for all other L3 agents. Since the
                 default value of this parameter is True, you need to configure it carefully. </para>
             <para> Before starting L3 agents, you need to create routers and external networks, then
@@ -320,15 +290,15 @@ gateway_external_network_id = e828e54c-850a-4e74-80a8-8b79c6a285d8
 external_network_bridge = br-ex-2</computeroutput></screen>
         </section>
         <section xml:id="adv_cfg_l3_agent_metadata">
-            <title>Nova Metadata Server Support</title>
-            <para> To use Nova metadata service, metadata_ip and metadata_port in the L3 agent
-                configuration file need to be configured. Accessing from VMs to Nova metadata
-                service is forwarded to an external network through Quantum L3 router. Nova metadata
+            <title>OpenStack Compute Metadata Server Support</title>
+            <para> To use OpenStack Compute metadata service, metadata_ip and metadata_port in the L3 agent
+                configuration file need to be configured. Accessing from VMs to OpenStack Compute metadata
+                service is forwarded to an external network through OpenStack Networking L3 router. OpenStack Compute metadata
                 service must be reachable from the external network. As the <link
-                    linkend="ch_limitations">Limitations section </link> says, note that Quantum
-                overlapping IPs support and Nova metadata service cannot be used together. </para>
+                    linkend="ch_limitations">Limitations section </link> says, note that OpenStack Networking
+                overlapping IPs support and OpenStack Compute metadata service cannot be used together. </para>
             <para>Allowing VMs to reach the metadata service is a big point of confusion with
-                Quantum. We need to make sure instructions for how to set this up are displayed more
+                OpenStack Networking. We need to make sure instructions for how to set this up are displayed more
                 prominently than they already are, and that there are instructions for how to
                 validate and troubleshoot in this scenario.</para>
             <para>Example validation includes:</para>
@@ -354,11 +324,11 @@ external_network_bridge = br-ex-2</computeroutput></screen>
             <para><emphasis role="bold">NOTE</emphasis></para>
             <para>OpenStack does not manage this routing for you, so you need to make sure that your
                 host running the metadata service always has a route to reach each private network's
-                subnet via the external network IP of that subnet's quantum router. To do this, you
-                can either run quantum without namespaces, and run the quantum-l3-agent on the same
+                subnet via the external network IP of that subnet's OpenStack Networking router. To do this, you
+                can either run OpenStack Networking without namespaces, and run the quantum-l3-agent on the same
                 host as nova-api. Otherwise, you can identify an IP prefix that includes all private
                 network subnet's (e.g., 10.0.0.0/8) and then make sure that your metadata server has
-                a route for that prefix with the quantum router's external IP address as the
+                a route for that prefix with the OpenStack Networking router's external IP address as the
                 next hop. </para>
            
         </section>

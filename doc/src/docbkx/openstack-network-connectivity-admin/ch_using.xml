@@ -1,47 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE chapter [
-<!-- Some useful entities borrowed from HTML -->
-<!ENTITY ndash  "&#x2013;">
-<!ENTITY mdash  "&#x2014;">
-<!ENTITY hellip "&#x2026;">
-<!ENTITY plusmn "&#xB1;">
-
-<!-- Useful for describing APIs -->
-<!ENTITY GET    '<command xmlns="http://docbook.org/ns/docbook">GET</command>'>
-<!ENTITY PUT    '<command xmlns="http://docbook.org/ns/docbook">PUT</command>'>
-<!ENTITY POST   '<command xmlns="http://docbook.org/ns/docbook">POST</command>'>
-<!ENTITY DELETE '<command xmlns="http://docbook.org/ns/docbook">DELETE</command>'>
-
-<!ENTITY CHECK  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
-<imageobject role="fo">
-<imagedata fileref="figures/Check_mark_23x20_02.svg"
-format="SVG" scale="60"/>
-</imageobject>
-<imageobject role="html">
-<imagedata fileref="../figures/Check_mark_23x20_02.png"
-format="PNG" />
-</imageobject>
-</inlinemediaobject>'>
-
-<!ENTITY ARROW  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
-<imageobject role="fo">
-<imagedata fileref="figures/Arrow_east.svg"
-format="SVG" scale="60"/>
-</imageobject>
-<imageobject role="html">
-<imagedata fileref="../figures/Arrow_east.png"
-format="PNG" />
-</imageobject>
-</inlinemediaobject>'>
-]>
 <chapter xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="ch_using">
-    <title>Using Quantum</title>
+    <title>Using OpenStack Networking</title>
 
-    <para>There are two main approaches to using Quantum.  The first
-        is to expose the Quantum API to cloud tenants, allowing them
+    <para>There are two main approaches to using OpenStack Networking.  The first
+        is to expose the OpenStack Networking API to cloud tenants, allowing them
         to build rich network topologies.  The second is to have the
         cloud administrator, or another tool run the the cloud admin,
         create network connectivity on behalf of tenants.  In this
@@ -49,44 +14,44 @@ format="PNG" />
         by a tenant, but they might also be performed by the cloud
         admin on behalf of the tenant.  </para>
     <section xml:id="api_features">
-        <title>Core Quantum API Features</title>
-        <para>Once Quantum is installed and running, both tenants and
+        <title>Core OpenStack Networking API Features</title>
+        <para>Once OpenStack Networking is installed and running, both tenants and
             admins primarily interact with the service via
             create-read-update-delete (CRUD) API operations performed
             either directly against the API, or more commonly via the
             'quantum' CLI tool.  Like other OpenStack CLI tools, the
-            'quantum' tool is just a basic wrapper around the Quantum
+            'quantum' tool is just a basic wrapper around the OpenStack Networking
             API, so any operation that can be performed via the CLI
             has an equivalent API call that can be performed
             programmatically.  </para>
         <para>The CLI supports many options for filtering results, limiting fields show, etc.  For
-            details, refer to the Quantum CLI documentation.   </para>
+            details, refer to the OpenStack Networking CLI documentation.   </para>
         <section xml:id="api_abstractions">
             <title>API Abstractions</title>
-            <para>The Quantum v2.0 API provides control over both L2 network topologies and the IP
+            <para>The OpenStack Networking v2.0 API provides control over both L2 network topologies and the IP
                 addresses used on those networks (IP Address Management or IPAM).  There is also an
                 extension to cover basic L3 forwarding and NAT, providing capabilities similar to
                 nova-network.  </para>
-            <para>In the Quantum API, an isolated L2 network segment (similar to a VLAN)
+            <para>In the OpenStack Networking API, an isolated L2 network segment (similar to a VLAN)
                 is called a 'Network' and forms the basis for describing the L2 network
-                topology available in a given Quantum deployment.</para>
-            <para>The Quantum API uses
+                topology available in a given OpenStack Networking deployment.</para>
+            <para>The OpenStack Networking API uses
                 the notion of a 'Subnet', which associates a block of IP addresses and
                 other network configuration (e.g., default gateway,
-                dns-servers) with a Quantum Network. Each subnet represents an IPv4 or IPv6
-                address block and each Quantum Network can have multiple subnets, if
+                dns-servers) with an OpenStack Networking network. Each subnet represents an IPv4 or IPv6
+                address block and each OpenStack Networking network can have multiple subnets, if
                 desired.  </para>
-            <para>A 'Port' represents an attachment port to a L2 Quantum Network.  When a port
+            <para>A 'Port' represents an attachment port to a L2 OpenStack Networking network.  When a port
                 is created on the network, by default it will be allocated an available fixed IP
                 address out of one of the designated Subnets for each IP version (if one
                 exists).  When the Port is
                 destroyed, the allocated addresses return to the pool of available IPs on the
-                subnet(s). Users of the Quantum API can either choose a specific IP address from the
-                block, or let Quantum choose the first available IP address. </para>
+                subnet(s). Users of the OpenStack Networking API can either choose a specific IP address from the
+                block, or let OpenStack Networking choose the first available IP address. </para>
             <para>The table below summarizes the attributes available
                 for each of these abstractions. For more operations
                 about API abstraction and operations, please refer to
-                the <link xlink:href="http://docs.openstack.org/api/openstack-network/2.0/content/">Quantum v2.0 API Developer Guide</link>.</para>
+                the <link xlink:href="http://docs.openstack.org/api/openstack-network/2.0/content/">OpenStack Networking v2.0 API Developer Guide</link>.</para>
 
             <table rules="all">
                 <caption>Network</caption>
@@ -345,9 +310,9 @@ format="PNG" />
             </table>
         </section>
         <section xml:id="cli_guide">
-            <title>Quantum CLI Guide</title>
+            <title>OpenStack Networking CLI Guide</title>
             <para>Before going further, we STRONGLY suggest that you quickly read the few
-            pages in the <link xlink:href="http://docs.openstack.org/cli/quick-start/content/index.html">OpenStack CLI Guide</link> that are specific to Quantum.  Quantum's CLI has some
+            pages in the <link xlink:href="http://docs.openstack.org/cli/quick-start/content/index.html">OpenStack CLI Guide</link> that are specific to OpenStack Networking.  OpenStack Networking's CLI has some
         advanced capabilities that are described only in that guide.</para>
         </section>
 	<section xml:id="basic_operations">
@@ -359,8 +324,8 @@ format="PNG" />
 	  <para>List ports on a tenant</para>
 	  <screen><prompt>$</prompt> <userinput>quantum port-list</userinput></screen>
 	  <para><emphasis role="italic">device_owner</emphasis> field describes who owns the port.
-	  A port whose <emphasis role="italic">device_owner</emphasis> begins with "network:" is created by Quantum (network service)
-	  and a port whose <emphasis role="italic">device_owner</emphasis> begins with "compute:" is created by Nova (compute service).</para>
+	  A port whose <emphasis role="italic">device_owner</emphasis> begins with "network:" is created by OpenStack Networking
+	  and a port whose <emphasis role="italic">device_owner</emphasis> begins with "compute:" is created by OpenStack Compute (compute service).</para>
 	  <screen><prompt>$</prompt> <userinput>quantum port-list -c id -c fixed_ips -c device_owner</userinput></screen>
           <para><command>port-show</command> shows a detail of a specified port.</para>
 	  <screen><prompt>$</prompt> <userinput>quantum port-show &lt;port-id&gt;</userinput></screen>
@@ -372,8 +337,8 @@ format="PNG" />
                 the request, for example:</para>
             <screen><computeroutput>quantum net-create --tenant-id=&lt;tenant-id&gt; net1</computeroutput></screen>
             <para>This tenant_id should be the tenant ID from
-                keystone. To view all keystone tenant IDs, run the
-                following command as a keystone admin user:</para>
+                OpenStack Identity. To view all OpenStack Identity tenant IDs, run the
+                following command as an OpenStack Identity (keystone) admin user:</para>
             <screen><computeroutput>keystone tenant-list</computeroutput></screen>
         </section>
         <section xml:id="advanced_networking">
@@ -419,21 +384,21 @@ format="PNG" />
         </section>
     </section>
     <section xml:id="using_nova_with_quantum">
-        <title>Using Nova with Quantum</title>
+        <title>Using OpenStack Compute with OpenStack Networking</title>
         <section xml:id="basic_workflow_with_nova">
             <title>Basic Workflow </title>
             <para>Check available networks:</para>
             <screen><prompt>$</prompt> <userinput>quantum net-list</userinput></screen>
             <para>Boot the VM with a single NIC on the selected network (net1):</para>
             <screen><prompt>$</prompt> <userinput>nova boot --image &lt;img&gt; --flavor &lt;flavor&gt; --nic net-id=&lt;net-id&gt; &lt;vm-name&gt;</userinput></screen>
-            <para>Congrats, you have booted a VM on a quantum network.
+            <para>Congrats, you have booted a VM on an OpenStack Networking network.
 	    You may need to configure <link linkend="enabling_ping_and_ssh">security group rules</link>
 	    to allow accesses to the VM.
 	    </para>
-            <para>There is now a Quantum port on 'net1' that
+            <para>There is now an OpenStack Networking port on 'net1' that
                 corresponds to the VM Nic.  You can view it with the
                 following command, which searches for all ports with a
-                "device_id" corresponding to the Nova instance
+                "device_id" corresponding to the OpenStack Compute instance
                 UUID:</para>
             <screen><prompt>$</prompt> <userinput>quantum port-list -- --device_id=&lt;vm-id&gt;</userinput></screen>
             <para>To view only a few fields of the port, you can limit
@@ -444,7 +409,7 @@ format="PNG" />
                 traffic by updating it to have
                 admin_state_up=False:</para>
             <screen><prompt>$</prompt> <userinput>quantum port-update &lt;port-id&gt; --admin_state_up=False</userinput></screen>
-            <para>When we delete the Nova VM, the underlying Quantum
+            <para>When we delete the OpenStack Compute VM, the underlying OpenStack Networking
                 port is automatically deleted:</para>
             <screen><prompt>$</prompt> <userinput>quantum port-list -c mac_address -- --device_id=&lt;vm-id&gt;</userinput></screen>
         </section>
@@ -459,12 +424,12 @@ format="PNG" />
 	      </listitem>
 	      <listitem>
 		<para>Booting a VM with a specific IP address.
-		To do this, we need to create a quantum port with a specific IP address first,
+		To do this, we need to create an OpenStack Networking port with a specific IP address first,
 		and then boot a VM specifying a port-id rather than a net-id.</para>
 		<screen><prompt>$</prompt> <userinput>quantum port-create --fixed-ip subnet_id=&lt;subnet-id&gt;,ip_address=192.168.57.101 &lt;net-id&gt;
 nova boot --image &lt;img&gt; --flavor &lt;flavor&gt; --nic port-id=&lt;port-id&gt; &lt;vm-name&gt;</userinput></screen>
                <note><para><command>v4-fixed-ip</command> parameter of <command>--nic</command> option
-	       in <command>nova</command> command is not supported with Quantum at the moment.</para></note>
+	       in <command>nova</command> command is not supported with OpenStack Networking at the moment.</para></note>
 	      </listitem>
 	      <listitem>
 		<para>booting a VM with no --nic option specified.
@@ -477,13 +442,13 @@ nova boot --image &lt;img&gt; --flavor &lt;flavor&gt; --nic port-id=&lt;port-id&
 	</section>
 	<section xml:id="enabling_ping_and_ssh">
 	  <title>Security Groups (Enabling Ping and SSH on VMs)</title>
-	  <para>In Folsom release, the security groups feature is provided by Nova not by Quantum.
+	  <para>In Folsom release, the security groups feature is provided by OpenStack Compute not by OpenStack Networking.
 	  You can configure security group rules by using <command>nova secgroup-add-rule</command>
 	  or <command>euca-authorize</command> command to enable accesses to your VMs.
 	  The example below allows <command>ping</command> or <command>ssh</command> to your VMs.</para>
 	  <screen><prompt>$</prompt> <userinput>nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0</userinput>
 <prompt>$</prompt> <userinput>nova secgroup-add-rule default tcp 22 22 0.0.0.0/0</userinput></screen>
-          <para>For more detail about Nova security groups,
+          <para>For more detail about OpenStack Compute security groups,
 	  please see "Networking with nova-network" in OpenStack Compute Administration Manual.</para>
 	</section>
     </section>

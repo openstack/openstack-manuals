@@ -1,26 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE chapter[
-<!-- Some useful entities borrowed from HTML -->
-<!ENTITY ndash  "&#x2013;">
-<!ENTITY mdash  "&#x2014;">
-<!ENTITY hellip "&#x2026;">
-<!ENTITY plusmn "&#xB1;">
-
-]>
 <chapter
     xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink"
     version="5.0"
     xml:id="ch_install">
-    <title>Quantum Installation</title>
-    <para> This chapter describes how to install the Quantum Service
+    <title>OpenStack Networking Installation</title>
+    <para> This chapter describes how to install the OpenStack Networking service
         and get it up and running. </para>
-    <para>If you are building a host from scratch to use for Quantum,
+    <para>If you are building a host from scratch to use for OpenStack Networking,
         we strongly recommend using Ubuntu 12.04/12.10 or Fedora 17/18
-        as these platforms have quantum packages and receive
+        as these platforms have OpenStack Networking packages and receive
         significant testing.</para>
-    <para>Quantum requires at least dnsmasq 2.59, to support all the
+    <para>OpenStack Networking requires at least dnsmasq 2.59, to support all the
      options it requires.</para>
     <section xml:id="install_ubuntu">
         <title>Install Packages (Ubuntu) </title>
@@ -45,7 +37,7 @@
             <title>Install quantum-server </title>
             <para>Install quantum-server and CLI for accessing the
                 API: </para>
-            <screen><computeroutput>apt-get -y install quantum-server python-cliff python-pyparsing</computeroutput></screen>
+            <screen><computeroutput>apt-get -y install quantum-server python-cliff python-pyparsing python-quantumclient</computeroutput></screen>
             <para>You will also want to install the plugin you choose
                 to use, for example: </para>
             <screen><computeroutput>apt-get -y install quantum-plugin-openvswitch</computeroutput></screen>
@@ -72,7 +64,7 @@
             </note>
             <section xml:id="rpc_setup">
                 <title>RPC Setup </title>
-                <para>Quantum uses RPC to allow DHCP agents and any
+                <para>OpenStack Networking uses RPC to allow DHCP agents and any
                     plugin agents to communicate with the main
                     quantum-server process.  Commonly, this can use
                     the same RPC mechanism used by other OpenStack
@@ -125,7 +117,7 @@ local_ip=&lt;data-net-IP-address-of-node&gt;</computeroutput></screen>
             </section>
             <section xml:id="nvp_plugin">
                 <title>Configuring Nicira NVP Plugin</title>
-                <para>To configure Quantum to use the NVP plugin first
+                <para>To configure OpenStack Networking to use the NVP plugin first
                     edit
                         <filename>/etc/quantum/quantum.conf</filename>
                     and set:</para>
@@ -136,7 +128,7 @@ local_ip=&lt;data-net-IP-address-of-node&gt;</computeroutput></screen>
                     database created previously will be used by
                     setting:</para>
                 <screen><computeroutput>sql_connection = mysql://&lt;user&gt;:&lt;password&gt;@localhost/quantum?charset=utf8</computeroutput></screen>
-                <para>In order to tell quantum about a controller
+                <para>In order to tell OpenStack Networking about a controller
                     cluster, create a [CLUSTER:&lt;name&gt;] section
                     underneath the [NVP] section. Under this new
                     cluster specify the Transport Zone by
@@ -156,7 +148,7 @@ local_ip=&lt;data-net-IP-address-of-node&gt;</computeroutput></screen>
             <para>Some plugins utilize an agent that runs on each node
                 that handles data packets. This includes any node
                 running nova-compute, as well as nodes running
-                dedicated quantum agents like quantum-dhcp-agent and
+                dedicated OpenStack Networking agents like quantum-dhcp-agent and
                 quantum-l3-agent (see below). If your plugin uses an
                 agent, this section describes how to run the agent for
                 this plugin, as well as the basic configuration
@@ -205,14 +197,14 @@ local_ip=&lt;data-net-IP-address-of-node&gt;</computeroutput></screen>
                     so you need to make sure that your host running
                     the metadata service always has a route to reach
                     each private network's subnet via the external
-                    network IP of that subnet's quantum router. To do
-                    this, you can run quantum without namespaces, and
+                    network IP of that subnet's OpenStack Networking router. To do
+                    this, you can run OpenStack Networking without namespaces, and
                     run the quantum-l3-agent on the same host as
                     nova-api. Alternatively, you can identify an IP
                     prefix that includes all private network subnet's
                     (e.g., 10.0.0.0/8) and then make sure that your
                     metadata server has a route for that prefix with
-                    the quantum router's external IP address as the
+                    the OpenStack Networking router's external IP address as the
                     next hop. For more validation information, refer
                     to <link linkend="adv_cfg_l3_agent_metadata"
                         >Advanced configuration</link></para>
@@ -225,7 +217,7 @@ ovs-vsctl add-port br-ex eth1</computeroutput></screen>
                 IP address manually configured on the NIC connected to
                 the external network. Rather, you must have a range of
                 IP addresses from the external network that can be
-                used by Quantum for routers that uplink to the
+                used by OpenStack Networking for routers that uplink to the
                 external network. This range must be large enough to
                 have an IP address for each router in the deployment,
                 as well as each floating IP.</para>
@@ -250,8 +242,8 @@ ip netns exec qrouter-47af3868-0fa8-4447-85f6-1304de32153b ping &lt;fixed-ip&gt;
             </screen>
         </section>
         <section xml:id="install_quantum_client">
-            <title>Install quantum CLI Client</title>
-            <para>Install the quantum CLI client:</para>
+            <title>Install OpenStack Networking CLI Client</title>
+            <para>Install the OpenStack Networking CLI client:</para>
             <screen><computeroutput>apt-get -y install python-pyparsing python-cliff python-quantumclient</computeroutput></screen>
         </section>
         <section xml:id="init_config">
@@ -273,7 +265,7 @@ service quantum-server restart</computeroutput></screen>
                 <uri>https://apps.fedoraproject.org/packages/s/openstack</uri>.</para>
         <section xml:id="fedora_rpc_setup">
             <title xml:id="qpid_rpc_setup">RPC Setup </title>
-            <para>Quantum uses RPC to allow DHCP agents and any plugin
+            <para>OpenStack Networking uses RPC to allow DHCP agents and any plugin
                 agents to communicate with the main quantum-server
                 process.  Commonly, this can use the same RPC
                 mechanism used by other OpenStack components like
@@ -295,7 +287,7 @@ qpid_hostname = &lt;mgmt-IP-of-qpid-host></computeroutput></screen>
                     scripts that configure all of the necessary
                     configuration files. The scripts can also be used
                     to understand what needs to be configured for the
-                    specific Quantum services. The scripts will be
+                    specific OpenStack Networking services. The scripts will be
                     described below. Please note that the scripts make
                     use of the package openstack-utils. Please
                     install:</para>
@@ -308,13 +300,13 @@ qpid_hostname = &lt;mgmt-IP-of-qpid-host></computeroutput></screen>
             <title>Install quantum-server and plugin </title>
             <para>Install quantum-server and plugin. <emphasis
                     role="bold">Note</emphasis> the client is
-                installed as a dependency for the Quantum
+                installed as a dependency for the OpenStack Networking
                 service.</para>
             <screen><computeroutput>sudo yum install -y openstack-quantum
 sudo yum install -y openstack-quantum-openvswitch</computeroutput></screen>
             <para>Most plugins require a database to be installed and
                 configured in a plugin configuration file.  The Fedora
-                packaging for Quantum a server setup utility scripts
+                packaging for OpenStack Networking a server setup utility scripts
                 that will take care of this. For example: </para>
             <screen><computeroutput>sudo quantum-server-setup --plugin openvswitch </computeroutput></screen>
             <para>Enable and start the service:</para>
@@ -332,7 +324,7 @@ sudo systemctl start quantum-server.service</computeroutput></screen>
             <para>Some plugins utilize an agent that runs on each node
                 that handles data packets. This includes any node
                 running nova-compute, as well as nodes running
-                dedicated quantum agents like quantum-dhcp-agent and
+                dedicated OpenStack Networking agents like quantum-dhcp-agent and
                 quantum-l3-agent (see below). If your plugin uses an
                 agent, this section describes how to run the agent for
                 this plugin, as well as the basic configuration
@@ -380,7 +372,7 @@ sudo ovs-vsctl add-port br-ex eth1</computeroutput></screen>
                 IP address manually configured on the NIC connected to
                 the external network. Rather, you must have a range of
                 IP addresses from the external network that can be
-                used by Quantum for routers that uplink to the
+                used by OpenStack Networking for routers that uplink to the
                 external network. This range must be large enough to
                 have an IP address for each router in the deployment,
                 as well as each floating IP.</para>
@@ -392,8 +384,8 @@ sudo ovs-vsctl add-port br-ex eth1</computeroutput></screen>
 sudo systemctl start quantum-l3-agent.service</computeroutput></screen>
         </section>
         <section xml:id="fedora_q_client">
-            <title>Install quantum CLI client</title>
-            <para>Install the quantum CLI client:</para>
+            <title>Install OpenStack Networking CLI client</title>
+            <para>Install the OpenStack Networking CLI client:</para>
             <screen><computeroutput>sudo yum install -y python-quantumclient</computeroutput></screen>
         </section>
         <section xml:id="fedora_misc">

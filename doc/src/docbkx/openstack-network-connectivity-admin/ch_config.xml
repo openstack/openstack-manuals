@@ -1,68 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE chapter [
-<!-- Some useful entities borrowed from HTML -->
-<!ENTITY ndash  "&#x2013;">
-<!ENTITY mdash  "&#x2014;">
-<!ENTITY hellip "&#x2026;">
-<!ENTITY plusmn "&#xB1;">
-
-<!-- Useful for describing APIs -->
-<!ENTITY GET    '<command xmlns="http://docbook.org/ns/docbook">GET</command>'>
-<!ENTITY PUT    '<command xmlns="http://docbook.org/ns/docbook">PUT</command>'>
-<!ENTITY POST   '<command xmlns="http://docbook.org/ns/docbook">POST</command>'>
-<!ENTITY DELETE '<command xmlns="http://docbook.org/ns/docbook">DELETE</command>'>
-
-<!ENTITY CHECK  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
-<imageobject role="fo">
-<imagedata fileref="figures/Check_mark_23x20_02.svg"
-format="SVG" scale="60"/>
-</imageobject>
-<imageobject role="html">
-<imagedata fileref="../figures/Check_mark_23x20_02.png"
-format="PNG" />
-</imageobject>
-</inlinemediaobject>'>
-
-<!ENTITY ARROW  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
-<imageobject role="fo">
-<imagedata fileref="figures/Arrow_east.svg"
-format="SVG" scale="60"/>
-</imageobject>
-<imageobject role="html">
-<imagedata fileref="../figures/Arrow_east.png"
-format="PNG" />
-</imageobject>
-</inlinemediaobject>'>
-<!ENTITY SENova 'services extension'>
-<!ENTITY uSENova 'Services extension'>
-<!ENTITY uuSENova 'Services Extension'>
-<!ENTITY RSNova 'reset state extension'>
-<!ENTITY uRSNova 'Reset state extension'>
-<!ENTITY uuRSNova 'Reset State Extension'>
-<!ENTITY ngCS 'next generation Rackspace Cloud Servers™ <link
-                        xlink:href="http://www.rackspace.com/cloud/openstack/"
-                        >powered by OpenStack</link>'>
-<!ENTITY ungCS 'Next generation Rackspace Cloud Servers™ <link
-                        xlink:href="http://www.rackspace.com/cloud/openstack/"
-                        >powered by OpenStack</link>'>
-]>
 <chapter xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="ch_config">
     <title>Configuring other OpenStack Components</title>
     <section xml:id="keystone">
-        <title>Keystone Configuration for Quantum</title>
+        <title>OpenStack Identity Configuration for OpenStack
+            Networking</title>
         <procedure>
-            <title>To Configure Keystone for Quantum</title>
+            <title>To Configure OpenStack Compute for OpenStack
+                Networking</title>
             <step>
-                <title>To Create a Quantum Service Entry</title>
-                <para>Quantum needs to be available in the  Keystone service catalog.  The steps for
-                    this depend on whether you are using Keystone's SQL catalog driver or the
-                    template catalog driver.</para>
-                <para>With the <emphasis>SQL driver</emphasis>, for a given region ($REGION), IP address of the
-                    Quantum server ($IP), and service ID ($ID) returned by the Keystone service catalog, run: </para>
+                <title>To Create an OpenStack Networking Service
+                    Entry</title>
+                <para>OpenStack Networking needs to be available in
+                    the  OpenStack Compute service catalog.  The steps
+                    for this depend on whether you are using the SQL
+                    catalog driver or the template catalog
+                    driver.</para>
+                <para>With the <emphasis>SQL driver</emphasis>, for a
+                    given region ($REGION), IP address of the
+                    OpenStack Networking server ($IP), and service ID
+                    ($ID) returned by the OpenStack Compute service
+                    catalog, run: </para>
                 <screen><userinput><?db-font-size 75%?>keystone service-create --name quantum --type network --description 'OpenStack Networking Service'</userinput></screen>
-                <para>Make a note of the ID returned by keystone and
-                    put it in the $ID location.</para>
+                <para>Make a note of the ID returned by the command
+                    and put it in the $ID location.</para>
 <screen><userinput>keystone endpoint-create --region $REGION --service-id $ID --publicurl 'http://$IP:9696/' --adminurl 'http://$IP:9696/' --internalurl 'http://$IP:9696/'</userinput></screen>
                 <para>Here's an example with real values:</para>
                 <screen><userinput><?db-font-size 75%?><prompt>$</prompt> <userinput>keystone service-create --name quantum --type network --description 'OpenStack Networking Service'</userinput></userinput></screen>
@@ -78,9 +39,9 @@ format="PNG" />
 --publicurl "http://10.211.55.17:9696/" --adminurl "http://10.211.55.17:9696/" --internalurl "http://10.211.55.17:9696/" </userinput></screen>
                 <para>With the <emphasis>template driver</emphasis>,
                     for a given region ($REGION) and IP address of the
-                    Quantum server ($IP), add the following content to
-                    your keystone catalog template file
-                    (default_catalog.templates). </para>
+                    OpenStack Networking server ($IP), add the
+                    following content to your OpenStack Compute
+                    catalog template file (default_catalog.templates). </para>
                 <screen><computeroutput>catalog.$REGION.network.publicURL = http://$IP:9696
 catalog.$REGION.network.adminURL = http://$IP:9696
 catalog.$REGION.network.internalURL = http://$IP:9696
@@ -93,13 +54,19 @@ catalog.$Region.network.name = Network Service</programlisting>
                 
             </step>
             <step>
-                <title>Create Quantum Service User</title>
-                <para>For Nova to speak to the Quantum API, and for some internal components of
-                    Quantum to communicate with the Quantum API, you need to provide them with admin
-                    user credentials that they can use when accessing the Quantum API.  The
-                    suggested approach is to create a special 'service' tenant, create a ‘quantum’
-                    user within this tenant, and to assign this user an 'admin' role. Kindly check
-                    the ID for user, role and tenant.</para>
+                <title>Create OpenStack Networking Service
+                    User</title>
+                <para>For OpenStack Compute to speak to the OpenStack
+                    Networking API, and for some internal components
+                    of OpenStack Networking to communicate with the
+                    OpenStack Networking API, you need to provide them
+                    with admin user credentials that they can use when
+                    accessing the OpenStack Networking API.  The
+                    suggested approach is to create a special
+                    'service' tenant, create a ‘quantum’ user within
+                    this tenant, and to assign this user an 'admin'
+                    role. Kindly check the ID for user, role and
+                    tenant.</para>
                 <para>For example: </para>
 
                 <screen><prompt>$</prompt> <userinput>ADMIN_ROLE=$(get_id keystone role-create --name=admin)
@@ -109,42 +76,54 @@ catalog.$Region.network.name = Network Service</programlisting>
                 <screen><prompt>$</prompt> <userinput>  keystone user-role-add --user_id $QUANTUM_USER --role_id $ADMIN_ROLE --tenant_id service</userinput></screen>
             </step>
         </procedure>
-        <para> See the Keystone Administrator Guide for more details about creating service entries
-            and service users.</para>
+        <para> See the OpenStack Installation Guides for more details
+            about creating service entries and service users.</para>
     </section>
     <section xml:id="nova_with_quantum">
-        <title>Running Nova with Quantum</title>
-        <para>Unlike traditional Nova deployments, when Quantum is in use, Nova should not run a
-            nova-network. Instead, Nova delegates almost all of the network-related decisions to
-            Quantum. This means many of the network-related CLI command and configuration options
-            you are familiar with from using Nova do not work with Quantum.</para>
-        <para>Therefore, it is very important that you refer to this guide when configuring
-            networking, rather than relying on Nova networking documentation or past experience with
-            Nova. If a Nova CLI command or configuration option related to networking is not
-            mentioned in this guide, it is likely not supported for use with Quantum. In particular,
-            using CLI tools like 'nova-manage' and 'nova' to manage networks or IP addressing,
-            including both fixed and floating IPs, is not supported with Quantum.</para>
+        <title>Running OpenStack Compute with OpenStack
+            Networking</title>
+        <para>Unlike traditional OpenStack Compute deployments, when
+            OpenStack Networking is in use, OpenStack Compute should
+            not run a nova-network. Instead, OpenStack Compute
+            delegates almost all of the network-related decisions to
+            OpenStack Networking. This means many of the
+            network-related CLI command and configuration options you
+            are familiar with from using OpenStack Compute do not work
+            with OpenStack Networking.</para>
+        <para>Therefore, it is very important that you refer to this
+            guide when configuring networking, rather than relying on
+            OpenStack Compute networking documentation or past
+            experience with OpenStack Compute. If a Nova CLI command
+            or configuration option related to networking is not
+            mentioned in this guide, it is likely not supported for
+            use with OpenStack Networking. In particular, using CLI
+            tools like 'nova-manage' and 'nova' to manage networks or
+            IP addressing, including both fixed and floating IPs, is
+            not supported with OpenStack Networking.</para>
         <note>
             <para>It is strongly recommended that you uninstall
                 nova-network and reboot any physical nodes that had
                 been running nova-network before using them to run
-                Quantum. Inadvertently running the nova-network
-                process while using Quantum can cause problems, as can
-                stale iptables rules pushed down by previously running
-                nova-network. </para>
+                OpenStack Networking. Inadvertently running the
+                nova-network process while using OpenStack Networking
+                can cause problems, as can stale iptables rules pushed
+                down by previously running nova-network. </para>
         </note>
         <section xml:id="nova_with_quantum_api">
-            <title>Configuring Nova to reach the Quantum API</title>
-            <para>Each time a VM is provisioned or deprovisioned in Nova, Nova communicates with
-                Quantum via the standard API. To do so, it requires the following items in the
-                nova.conf used by each nova-compute and nova-api instance:  </para>
+            <title>Configuring OpenStack Compute to reach the
+                OpenStack Networking API</title>
+            <para>Each time a VM is provisioned or deprovisioned in
+                OpenStack Compute, nova-* services communicate with
+                OpenStack Networking via the standard API. To do so,
+                it requires the following items in the nova.conf used
+                by each nova-compute and nova-api instance:  </para>
             <itemizedlist>
                 <listitem>
                     <para>network_api_class: must be modified from
-                        default to nova.network.quantumv2.api.API 
-                        indicate that Quantum should be used rather
-                        than the traditional nova-network networking
-                        model.</para>
+                        default to nova.network.quantumv2.api.API
+                        indicate that OpenStack Networking should be
+                        used rather than the traditional nova-network
+                        networking model.</para>
                 </listitem>
                 <listitem>
                     <para>quantum_url: must include the hostname/IP and port of the Quantum server
@@ -155,49 +134,67 @@ catalog.$Region.network.name = Network Service</programlisting>
                         production deployments.</para>
                 </listitem>
                 <listitem>
-                    <para>quantum_admin_tenant_name: must be modified to be the name of the
-                        service tenant created in the above section on Keystone
+                    <para>quantum_admin_tenant_name: must be modified
+                        to be the name of the service tenant created
+                        in the above section on OpenStack Compute
                         configuration.</para>
                 </listitem>
                 <listitem>
-                    <para>quantum_admin_username: must be modified to be the name of the user
-                        created in the above section on Keystone configuration.</para>
+                    <para>quantum_admin_username: must be modified to
+                        be the name of the user created in the above
+                        section on OpenStack Compute
+                        configuration.</para>
                 </listitem>
                 <listitem>
-                    <para>quantum_admin_password: must be modified to be the password of the
-                        user created in the above section on Keystone configuration.</para>
+                    <para>quantum_admin_password: must be modified to
+                        be the password of the user created in the
+                        above section on OpenStack Compute
+                        configuration.</para>
                 </listitem>
                 <listitem>
-                    <para>quantum_admin_auth_url: must be modified to point to the keystone server
-                        IP and port. This is the Identity (keystone) admin API server IP and port
-                        value, and not the Identity service API IP and port.</para>
+                    <para>quantum_admin_auth_url: must be modified to
+                        point to the OpenStack Compute server IP and
+                        port. This is the Identity (keystone) admin
+                        API server IP and port value, and not the
+                        Identity service API IP and port.</para>
                 </listitem>
             </itemizedlist>
         </section>
         <section xml:id="nova_with_quantum_vifplugging">
-            <title>Configuring Vif-plugging in Nova</title>
-            <para>When nova-compute creates a VM, it must "plug" each of the VM's vNICs into a
-                Quantum controlled virtual switch, and inform the virtual switch about the Quantum
-                port-id associated with each vNIC. This is done by specifying a field in the
-                nova.conf of the nova-compute instance indicating what type of ''vif-plugging''
-                should be used. The exact field(s) you need to set depend on your plugin. For
-                plugins not listed below, see the plugin's own documentation.</para>
+            <title>Configuring Vif-plugging in OpenStack
+                Compute</title>
+            <para>When nova-compute creates a VM, it must "plug" each
+                of the VM's vNICs into an OpenStack Networking
+                controlled virtual switch, and inform the virtual
+                switch about the OpenStack Networking port-id
+                associated with each vNIC. This is done by specifying
+                a field in the nova.conf of the nova-compute instance
+                indicating what type of ''vif-plugging'' should be
+                used. The exact field(s) you need to set depend on
+                your plugin. For plugins not listed below, see the
+                plugin's own documentation.</para>
             <section xml:id="nova_with_quantum_vifplugging_ovs">
                 <title>Vif-plugging with Open vSwitch Plugin</title>
-                <para>The choice of vif-plugging for the Open vSwitch plugin depends on what version of libvirt you
-                 are using, as well as whether you are using Nova security filtering (i.e., security groups,
-                 provider firewall, VM spoofing prevention).</para>
+                <para>The choice of vif-plugging for the Open vSwitch
+                    plugin depends on what version of libvirt you are
+                    using, as well as whether you are using OpenStack
+                    Compute security filtering (i.e., security groups,
+                    provider firewall, VM spoofing prevention).</para>
                 <itemizedlist>
                     <listitem>
-                        <para>When using libvirt (any version) with Nova security filtering:
+                        <para>When using libvirt (any version) with
+                            OpenStack Compute security filtering:
                             libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybirdOVSBridgeDriver</para>
                     </listitem>
                     <listitem>
-                        <para>When using libvirt (version &lt; 0.9.11) without Nova security filtering:
+                        <para>When using libvirt (version &lt; 0.9.11)
+                            without OpenStack Compute security
+                            filtering:
                             libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchDriver</para>
                     </listitem>
                     <listitem>
-                        <para>When using libvirt (version &gt;= 0.9.11) without Nova security
+                        <para>When using libvirt (version &gt;=
+                            0.9.11) without OpenStack Compute security
                             groups:
                             libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchVirtualPortDriver</para>
                     </listitem>
@@ -238,20 +235,26 @@ catalog.$Region.network.name = Network Service</programlisting>
             </section>
             <section xml:id="nova_with_quantum_vifplugging_nec">
                 <title>Vif-plugging with NEC OpenFlow Plugin</title>
-                <para>The choice of vif-plugging for the NEC plugin depends on what version of libvirt you
-                 are using, as well as whether you are using Nova security filtering (i.e., security groups,
-                 provider firewall, VM spoofing prevention).</para>
+                <para>The choice of vif-plugging for the NEC plugin
+                    depends on what version of libvirt you are using,
+                    as well as whether you are using OpenStack Compute
+                    security filtering (i.e., security groups,
+                    provider firewall, VM spoofing prevention).</para>
                 <itemizedlist>
                     <listitem>
-                        <para>When using libvirt (any version) with Nova security filtering:
+                        <para>When using libvirt (any version) with
+                            OpenStack Compute security filtering:
                             libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybirdOVSBridgeDriver</para>
                     </listitem>
                     <listitem>
-                        <para>When using libvirt (version &lt; 0.9.11) without Nova security filtering:
+                        <para>When using libvirt (version &lt; 0.9.11)
+                            without OpenStack Compute security
+                            filtering:
                             libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchDriver</para>
                     </listitem>
                     <listitem>
-                        <para>When using libvirt (version &gt;= 0.9.11) without Nova security
+                        <para>When using libvirt (version &gt;=
+                            0.9.11) without OpenStack Compute security
                             groups:
                             libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchVirtualPortDriver</para>
                     </listitem>
@@ -269,9 +272,11 @@ catalog.$Region.network.name = Network Service</programlisting>
         </section>
         <section xml:id="nova_with_quantum_example">
             <title> Example nova.conf (for nova-compute and nova-api)</title>
-            <para>Example values for the above settings, assuming a cloud controller node running
-                Keystone and Quantum with an IP address of 192.168.1.2 and vif-plugging using the
-                LibvirtOpenVswitchDriver with virtio enabled. </para>
+            <para>Example values for the above settings, assuming a
+                cloud controller node running OpenStack Compute and
+                OpenStack Networking with an IP address of 192.168.1.2
+                and vif-plugging using the LibvirtOpenVswitchDriver
+                with virtio enabled. </para>
             <screen><computeroutput>network_api_class=nova.network.quantumv2.api.API
 quantum_url=http://192.168.1.2:9696
 quantum_auth_strategy=keystone
