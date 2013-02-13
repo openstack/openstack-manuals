@@ -825,7 +825,7 @@ volume_driver=nova.volume.storwize_svc.StorwizeSVCDriver
                     <orderedlist>
                         <listitem>
                             <para>xensm requires that you use either Citrix XenServer or XCP as the hypervisor.
-                                The Netapp and EqualLogic backends are not supported on XCP.
+                                The NetApp and EqualLogic backends are not supported on XCP.
                             </para>
                         </listitem>
                         <listitem>
@@ -896,7 +896,7 @@ Note: SR type and config connection parameters are in keeping with the XenAPI Co
                         the volume types API. As a result, we simply
                         end up creating volumes in a "first fit" order
                         on the given backends. </para>
-                    <para>The standard euca-* or openstack API
+                    <para>The standard euca-* or OpenStack API
                         commands (such as volume extensions) should be
                         used for creating, destroying, attaching, or
                         detaching volumes. </para>
@@ -912,7 +912,7 @@ Note: SR type and config connection parameters are in keeping with the XenAPI Co
                     architecture that takes full advantage of SSD's.</para>
                 <para>To configure and use a SolidFire cluster with Nova-Volumes modify your
                     <filename>nova.conf</filename> or <filename>cinder.conf</filename> file as shown below:</para>
-					<programlisting>
+     <programlisting>
 volume_driver=nova.volume.solidfire.SolidFire
 iscsi_ip_prefix=172.17.1.*  # the prefix of your SVIP
 san_ip=172.17.1.182         # the address of your MVIP
@@ -921,7 +921,7 @@ san_password=sfpassword     # your cluster admin password
                 </programlisting>
                 <para>To configure and use a SolidFire cluster with Cinder, modify your cinder.conf
                     file similarly to how you would a nova.conf:</para>
-				<programlisting>
+    <programlisting>
 volume_driver=cinder.volume.solidfire.SolidFire
 iscsi_ip_prefix=172.17.1.*  # the prefix of your SVIP
 san_ip=172.17.1.182         # the address of your MVIP
@@ -930,8 +930,959 @@ san_password=sfpassword     # your cluster admin password
                 </programlisting>
             </section>
         </section>
+    <section xml:id="netapp-volume-driver">
+     <title>NetApp drivers</title>
+            <para>NetApp drivers for 7-Mode and clustered Data ONTAP®
+                have been written in two variants namely iSCSI and NFS
+                drivers. Both variants provide OpenStack with access
+                to NetApp 7-Mode controllers and clustered Data ONTAP
+                for provisioning and managing OpenStack volumes.
+            </para>
+     <section xml:id="netapp-iscsi-driver">
+            <title>NetApp iSCSI drivers for 7-Mode and clustered Data ONTAP 
+            </title>
+                <para>The NetApp iSCSI drivers for 7-Mode and
+                    clustered Data ONTAP systems provide OpenStack
+                    compute instances with access to NetApp 7-Mode
+                    storage controllers and clustered Data ONTAP
+                    storage systems. </para>
+            <section xml:id="netapp-iscsi-driver-7mode">
+            <title>NetApp iSCSI driver for 7-Mode storage controller</title>
+                    <para>The NetApp iSCSI driver for 7-Mode is a
+                        driver interface from OpenStack to the NetApp
+                        7-Mode storage controllers for provisioning
+                        and managing the SAN block storage entity,
+                        that is, NetApp LUN using iSCSI protocol.
+                    </para>
+                    <para>The NetApp iSCSI driver for 7-Mode requires
+                        additional NetApp management software, namely
+                        OnCommand™, installed and configured for using
+                        7-Mode storage controllers before configuring
+                        the 7-Mode driver on OpenStack. </para>
+   <simplesect>
+                <title>Configuration options available for the 7-Mode system 
+                driver</title>
+    <para>Set the volume driver to the NetApp 7-Mode driver by 
+    setting the <literal>volume_driver</literal> option in
+                            <filename>cinder.conf</filename> as follows:
+                </para>
+                <programlisting>
+     volume_driver=cinder.volume.drivers.netapp.iscsi.NetAppISCSIDriver
+                </programlisting>
+                <table rules="all">
+                <caption>List of configuration flags for NetApp 7-Mode iSCSI 
+                         driver</caption>
+                <col width="35%"/>
+                <col width="15%"/>
+                <col width="15%"/>
+                <col width="35%"/>
+                <thead>
+                <tr>
+                    <td>Flag name</td>
+                    <td>Type</td>
+                    <td>Default</td>
+                    <td>Description</td>
+                </tr>
+                </thead>
+                <tbody>
+                   <tr>
+                        <td><para><literal>netapp_wsdl_url</literal></para>
+                        </td>
+                        <td><para>Mandatory</para></td>
+                        <td><para></para></td>
+                        <td><para>WSDL URL for NetApp
+                                   OnCommand services running on an
+                                   OnCommand installation. OnCommand
+                                   is used as intermediate management
+                                   software between OpenStack and
+                                   7-Mode storage systems.
+                                   </para>
+                        </td>
+                    </tr>
+     <tr>
+                        <td><para><literal>netapp_login</literal></para>
+                        </td>
+                        <td><para>Mandatory</para></td>
+                        <td><para></para></td>
+                        <td><para>Login user name for OnCommand installation.
+                            </para>
+                        </td>
+                    </tr>
+     <tr>
+                        <td><para><literal>netapp_password</literal></para>
+                        </td>
+                        <td><para>Mandatory</para></td>
+                        <td><para></para></td>
+                        <td><para>Login password for OnCommand installation.
+                            </para>
+                        </td>
+                    </tr>
+     <tr>
+                        <td><para><literal>netapp_server_hostname</literal>
+                            </para>
+                        </td>
+                        <td><para>Mandatory</para></td>
+                        <td><para></para></td>
+                        <td><para>OnCommand server host name/IP address.
+                            </para>
+                        </td>
+                    </tr>
+     <tr>
+                        <td><para><literal>netapp_server_port</literal></para>
+                        </td>
+                        <td><para>Optional</para></td>
+                        <td><para>8088</para></td>
+                        <td><para>OnCommand server port.</para>
+                        </td>
+                    </tr>
+     <tr>
+                        <td><para><literal>netapp_storage_service</literal>
+                            </para>
+                        </td>
+                        <td><para>Optional</para></td>
+                        <td><para></para></td>
+                        <td><para>Storage service to use while provisioning.
+                         Storage service is configured on OnCommand.      
+       </para>
+                        </td>
+                    </tr>
+     <tr>
+                        <td><para><literal>netapp_storage_service_prefix
+                                  </literal>
+                            </para>
+                        </td>
+                        <td><para>Optional</para></td>
+                        <td><para></para></td>
+                        <td><para>Storage service prefix to use on OnCommand 
+          if using volume_types.
+       </para>
+                        </td>
+                    </tr>
+     <tr>
+                        <td><para><literal>netapp_vfiler</literal></para>
+                        </td>
+                        <td><para>Optional</para></td>
+                        <td><para></para></td>
+                                   <td><para>The vFiler® unit name if
+                                   using vFiler to host OpenStack
+                                   volumes. MultiStore® must be
+                                   enabled before using vFiler for
+                                   provisioning. </para>
+                                   </td>
+                    </tr>
+                 </tbody>
+            </table>
+                        <note>
+                            <para>Make sure that at least one of the
+                                flags netapp_storage_service or
+                                netapp_storage_service_prefix is
+                                specified in configuration. </para>
+                        </note>
+   <para>Refer to 
+   <link xlink:href="https://communities.netapp.com/groups/openstack"
+                    >OpenStack NetApp community</link> for detailed 
+                    information.</para>
+            </simplesect>
+            </section>
+                <section xml:id="netapp-iscsi-driver-cluster">
+                    <title>NetApp iSCSI driver for clustered Data
+                        ONTAP</title>
+                    <para>The NetApp iSCSI driver for clustered Data
+                        ONTAP is a driver interface from OpenStack to
+                        clustered Data ONTAP storage systems that
+                        allows the provisioning and managing the SAN
+                        block storage entity, that is, NetApp LUN
+                        using iSCSI protocol. </para>
+                    <para>The NetApp iSCSI driver for clustered Data
+                        ONTAP requires additional NetApp management
+                        software namely OnCommand, WFA and the NetApp
+                        Cloud Web Service application to be installed
+                        and configured for using clustered Data ONTAP
+                        systems before configuring ONTAP cluster
+                        driver on OpenStack. </para>
+                    <simplesect>
+                        <title>Configuration options for the clustered
+                            Data ONTAP driver </title>
+                        <para>Set the volume driver to the clustered
+                            Data ONTAP driver by setting the
+                                <literal>volume_driver</literal>
+                            option in <filename>cinder.conf</filename>
+                            as follows: </para>
+                        <programlisting>
+    volume_driver=cinder.volume.drivers.netapp.iscsi.NetAppCmodeISCSIDriver
+                </programlisting>
+                        <table rules="all">
+                            <caption>List of configuration flags for
+                                clustered Data ONTAP iSCSI
+                                driver</caption>
+                            <col width="35%"/>
+                            <col width="15%"/>
+                            <col width="15%"/>
+                            <col width="35%"/>
+                            <thead>
+                                <tr>
+                                   <td>Flag name</td>
+                                   <td>Type</td>
+                                   <td>Default</td>
+                                   <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                   <td><para><literal>netapp_wsdl_url</literal></para>
+                                   </td>
+                                   <td><para>Mandatory</para></td>
+                                   <td><para/></td>
+                                   <td><para>WSDL URL for NetApp Cloud
+                                   Web Service application serving as
+                                   management software. NetApp Cloud
+                                   Web Service is an intermediate
+                                   service for propagating requests
+                                   from the OpenStack driver to
+                                   different NetApp softwares
+                                   installed in the environment and
+                                   the clustered Data ONTAP systems.
+                                   </para>
+                                   </td>
+                                </tr>
+                                <tr>
+                                   <td><para><literal>netapp_server_hostname</literal>
+                                   </para>
+                                   </td>
+                                   <td><para>Mandatory</para></td>
+                                   <td><para/></td>
+                                   <td><para>The host name/IP address
+                                   of NetApp Cloud Web Service
+                                   installation. </para>
+                                   </td>
+                                </tr>
+                                <tr>
+                                   <td><para><literal>netapp_server_port</literal></para>
+                                   </td>
+                                   <td><para>Mandatory</para></td>
+                                   <td><para/></td>
+                                   <td><para>The port on which NetApp
+                                   Cloud Web Service listens.</para>
+                                   </td>
+                                </tr>
+                                <tr>
+                                   <td><para><literal>netapp_login</literal></para>
+                                   </td>
+                                   <td><para>Mandatory</para></td>
+                                   <td><para/></td>
+                                   <td><para>Login user name for
+                                   NetApp Cloud Web Service
+                                   installation. </para>
+                                   </td>
+                                </tr>
+                                <tr>
+                                   <td><para><literal>netapp_password</literal></para>
+                                   </td>
+                                   <td><para>Mandatory</para></td>
+                                   <td><para/></td>
+                                   <td><para>Login password for NetApp
+                                   Cloud Web Service installation.
+                                   </para>
+                                   </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <para>Refer to <link
+                                xlink:href="https://communities.netapp.com/groups/openstack"
+                                >OpenStack NetApp community</link> for
+                            detailed information.</para>
+                    </simplesect>
+                </section>
+            <section xml:id="netapp-iscsi-driver-direct-7mode">
+            <title>NetApp iSCSI direct driver for 7-Mode storage controller
+            </title>
+            <para>The NetApp iSCSI direct driver for 7-Mode is a driver
+                  interface from OpenStack to the NetApp 7-Mode storage
+                  controllers for the provisioning and managing the 
+                  SAN block storage entity, that is, NetApp LUN using iSCSI
+                  protocol.      
+   </para>
+   <para>The NetApp iSCSI direct driver for 7-Mode does not
+         require any additional management software to achieve
+      the desired functionality. It uses NetApp APIs to interact
+      with the 7-Mode storage controller.
+   </para>
+   <simplesect>
+                <title>Configuration options for the 7-Mode direct driver
+                </title>
+                <para>Set the volume driver to the NetApp 7-Mode direct driver
+                      by setting the <literal>volume_driver</literal> option in
+                            <filename>cinder.conf</filename> as follows:</para>
+                <programlisting>
+  volume_driver=cinder.volume.drivers.netapp.iscsi.NetAppDirect7modeISCSIDriver
+                </programlisting>
+                <table rules="all">
+                <caption>List of configuration flags for NetApp 7-Mode iSCSI
+                         direct driver
+                </caption>
+                <col width="35%"/>
+                <col width="15%"/>
+                <col width="15%"/>
+                <col width="35%"/>
+                <thead>
+                <tr>
+                    <td>Flag name</td>
+                    <td>Type</td>
+                    <td>Default</td>
+                    <td>Description</td>
+                </tr>
+                </thead>
+                <tbody>
+                     <tr>
+                        <td><para><literal>netapp_server_hostname</literal>
+                            </para>
+                        </td>
+                        <td><para>Mandatory</para></td>
+                        <td><para></para></td>
+                        <td><para>The management IP address for the 
+                7-Mode storage controller.</para>
+                        </td>
+                    </tr>
+     <tr>
+                        <td><para><literal>netapp_server_port</literal></para>
+                        </td>
+                        <td><para>Mandatory</para></td>
+                        <td><para></para></td>
+                        <td><para>The 7-Mode controller port to use for 
+                                  communication. As a custom 80 is used for
+                                  http and 443 is used for https communication.
+                                  The default ports can be changed if
+                                  other ports are used for ONTAPI® on 7-Mode
+                                  controller.
+                            </para>
+                        </td>
+                    </tr>
+     <tr>
+                        <td><para><literal>netapp_login</literal></para>
+                        </td>
+                        <td><para>Mandatory</para></td>
+                        <td><para></para></td>
+                        <td><para>Login user name for 7-Mode controller
+                                  management.
+                            </para>
+                        </td>
+                    </tr>
+     <tr>
+                        <td><para><literal>netapp_password</literal></para>
+                        </td>
+                        <td><para>Mandatory</para></td>
+                        <td><para></para></td>
+                        <td><para>Login password for 7-Mode controller
+                                  management.
+                            </para>
+                        </td>
+                    </tr>
+     <tr>
+                        <td><para><literal>netapp_transport_type</literal>
+                            </para>
+                        </td>
+                        <td><para>Optional</para></td>
+                        <td><para>http</para></td>
+                        <td><para>Transport protocol to use for communicating
+                                  with 7-Mode controller. Supported protocols
+                                  include http and https.
+                            </para>
+                        </td>
+                    </tr>
+     <tr>
+                        <td><para><literal>netapp_size_multiplier</literal>
+                            </para>
+                        </td>
+                        <td><para>Optional</para></td>
+                        <td><para>1.2</para></td>
+                        <td><para>The quantity to be multiplied 
+                by the requested OpenStack volume size which 
+          then is used to make sure that the final size
+          is available on the 7-Mode controller before 
+          creating the OpenStack volume on the same
+          controller.
+          </para>
+                        </td>
+                    </tr>
+     <tr>
+                        <td><para><literal>netapp_vfiler</literal></para>
+                        </td>
+                        <td><para>Optional</para></td>
+                        <td><para></para></td>
+                        <td><para>The vFiler unit to be used for provisioning
+                of OpenStack volumes. Use this only if using
+          MultiStore®.</para>
+                        </td>
+                    </tr>
+    </tbody>
+            </table>
+   <para>Refer to 
+   <link xlink:href="https://communities.netapp.com/groups/openstack"
+                    >OpenStack NetApp community</link> for detailed
+                     information.</para>
+            </simplesect>
+            </section>
+            <section xml:id="netapp-iscsi-driver-direct-cluster">
+            <title>NetApp iSCSI direct driver for clustered Data ONTAP </title>
+            <para>The NetApp iSCSI direct driver for clustered Data ONTAP is
+                  a driver interface from OpenStack to clustered Data
+                  ONTAP storage systems for provisioning and managing the
+                  SAN block storage entity, that is, NetApp LUN  using iSCSI
+                  protocol.      
+   </para>
+   <para>The NetApp iSCSI direct driver for clustered Data ONTAP
+         does not require additional management software to achieve
+      the desired functionality. It uses NetApp APIs to interact
+      with the clustered Data ONTAP.
+   </para>
+   <simplesect>
+                <title>Configuration options for the clustered Data ONTAP
+                       direct driver
+                </title>
+                <para>Set the volume driver to the clustered Data ONTAP direct
+                      driver by setting the <literal>volume_driver</literal>
+                      option in <filename>cinder.conf</filename> as follows:
+                </para>
+                <programlisting>
+  volume_driver=cinder.volume.drivers.netapp.iscsi.NetAppDirectCmodeISCSIDriver
+                </programlisting>
+                <table rules="all">
+                <caption>List of configuration flags for clustered Data ONTAP
+                         iSCSI direct driver
+                </caption>
+                <col width="35%"/>
+                <col width="15%"/>
+                <col width="15%"/>
+                <col width="35%"/>
+                <thead>
+                <tr>
+                    <td>Flag name</td>
+                    <td>Type</td>
+                    <td>Default</td>
+                    <td>Description</td>
+                </tr>
+                </thead>
+                <tbody>
+                     <tr>
+                        <td><para><literal>netapp_server_hostname</literal>
+                            </para>
+                        </td>
+                        <td><para>Mandatory</para></td>
+                        <td><para></para></td>
+                        <td><para>The cluster management IP address
+                                  for the clustered Data ONTAP.
+                            </para>
+                        </td>
+                    </tr>
+     <tr>
+                        <td><para><literal>netapp_server_port</literal></para>
+                        </td>
+                        <td><para>Mandatory</para></td>
+                        <td><para></para></td>
+                        <td><para>The clustered Data ONTAP port to use for
+                                  communication. As a custom 80 is used for
+                                  http and 443 is used for https communication. 
+                                  The default ports can be changed if other
+                                  ports are used for ONTAPI on clustered 
+                                  Data ONTAP.
+                            </para>
+                        </td>
+                    </tr>
+     <tr>
+                        <td><para><literal>netapp_login</literal></para>
+                        </td>
+                        <td><para>Mandatory</para></td>
+                        <td><para></para></td>
+                        <td><para>Login user name for clustered Data ONTAP 
+                                  management.
+                            </para>
+                        </td>
+                    </tr>
+     <tr>
+                        <td><para><literal>netapp_password</literal></para>
+                        </td>
+                        <td><para>Mandatory</para></td>
+                        <td><para></para></td>
+                        <td><para>Login password for clustered Data ONTAP
+                                  management.
+                            </para>
+                        </td>
+                    </tr>
+     <tr>
+                        <td><para><literal>netapp_transport_type</literal>
+                            </para>
+                        </td>
+                        <td><para>Optional</para></td>
+                        <td><para>http</para></td>
+                        <td><para>Transport protocol for communicating
+                                  with clustered Data ONTAP. Supported
+                                  protocols include http and https.</para>
+                        </td>
+                    </tr>
+     <tr>
+                        <td><para><literal>netapp_size_multiplier</literal>
+                            </para>
+                        </td>
+                        <td><para>Optional</para></td>
+                        <td><para>1.2</para></td>
+                        <td><para>The quantity to be multiplied 
+                to the requested OpenStack volume size which 
+          then is used to make sure that the final size
+          is available on clustered Data ONTAP Vserver
+          before creating OpenStack volume on the
+          same.</para>
+                        </td>
+                    </tr>
+     <tr>
+                        <td><para><literal>netapp_vserver</literal></para>
+                        </td>
+                        <td><para>Optional</para></td>
+                        <td><para>openstack</para></td>
+                        <td><para>The Vserver on the cluster on which 
+                provisioning of OpenStack volumes will 
+          be done.</para>
+                        </td>
+                    </tr>
+    </tbody>
+            </table>
+   <para>Refer to 
+   <link xlink:href="https://communities.netapp.com/groups/openstack"
+                    >OpenStack NetApp community</link> for detailed
+                     information.</para>
+            </simplesect>    
+        </section>
+     </section>
+     <section xml:id="netapp-nfs-driver">
+            <title>NetApp NFS drivers for 7-Mode and clustered Data ONTAP
+                   systems
+            </title>
+   <para>The NetApp NFS drivers for 7-Mode and clustered Data ONTAP
+         systems provide OpenStack compute instances with 
+      access to NetApp 7-Mode storage controllers and
+      clustered Data ONTAP storage systems for provisioning and 
+      managing entities on NFS exports on NetApp storage 
+      controllers.         
+   </para>
+   <para>The NFS exports are mounted on the OpenStack nodes
+         after which the OpenStack volumes can be created and 
+      managed using the NetApp NFS drivers on the NFS exports.
+      The OpenStack compute instances get the required block
+      storage device as files on NFS exports managed by OpenStack.
+   </para>
+   <section xml:id="netapp-nfs-driver-7mode">
+            <title>NetApp NFS driver for 7-Mode storage controller</title>
+            <para>The NetApp NFS driver for 7-Mode is a driver interface
+         from OpenStack to NetApp 7-Mode storage controllers 
+      for provisioning and managing OpenStack
+      volumes on NFS exports provided by the 7-Mode storage
+      controller.      
+   </para>
+   <para>The NetApp NFS driver for 7-Mode requires additional
+         NetApp management software namely OnCommand which needs  
+      installed and configured for using 7-Mode storage 
+      controllers before configuring 7-Mode NFS driver on 
+      OpenStack.      
+   </para>
+   <simplesect>
+                <title>Configuration options available for the 7-Mode NFS
+                       driver</title>
+    <para>Set the volume driver to the NetApp 7-Mode driver by
+          setting the <literal>volume_driver</literal> option in
+                            <filename>cinder.conf</filename> as follows:
+                </para>
+                <programlisting>
+    volume_driver=cinder.volume.drivers.netapp.nfs.NetAppNFSDriver
+                </programlisting>
+                <table rules="all">
+                <caption>List of configuration flags for NetApp 7-Mode NFS
+                         driver
+                </caption>
+                <col width="35%"/>
+                <col width="15%"/>
+                <col width="15%"/>
+                <col width="35%"/>
+                <thead>
+                <tr>
+                    <td>Flag name</td>
+                    <td>Type</td>
+                    <td>Default</td>
+                    <td>Description</td>
+                </tr>
+                </thead>
+                <tbody>
+                   <tr>
+                        <td><para><literal>netapp_wsdl_url</literal></para>
+                        </td>
+                        <td><para>Mandatory</para></td>
+                        <td><para></para></td>
+                        <td><para>WSDL URL for NetApp OnCommand Webservices
+                                  running on an OnCommand installation. 
+                                  OnCommand is used as an intermediate
+                                  management software between OpenStack and
+                                  7-Mode storage systems.
+       </para>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><para><literal>netapp_server_hostname</literal>
+                            </para>
+                        </td>
+                        <td><para>Mandatory</para></td>
+                        <td><para></para></td>
+                        <td><para>OnCommand server host name/IP address.
+                            </para>
+                        </td>
+                    </tr>
+     <tr>
+                        <td><para><literal>netapp_server_port</literal></para>
+                        </td>
+                        <td><para>Optional</para></td>
+                        <td><para>8088</para></td>
+                        <td><para>OnCommand server port to connect to.</para>
+                        </td>
+                    </tr>
+     <tr>
+                        <td><para><literal>netapp_login</literal></para>
+                        </td>
+                        <td><para>Mandatory</para></td>
+                        <td><para></para></td>
+                        <td><para>Login user name for OnCommand installation.
+                            </para>
+                        </td>
+                    </tr>
+     <tr>
+                        <td><para><literal>netapp_password</literal></para>
+                        </td>
+                        <td><para>Mandatory</para></td>
+                        <td><para></para></td>
+                        <td><para>Login password for OnCommand installation.
+                            </para>
+                        </td>
+                    </tr>
+    </tbody>
+            </table>
+   <para>Refer to 
+   <link xlink:href="https://communities.netapp.com/groups/openstack"
+                    >OpenStack NetApp community</link> for detailed 
+                     information.</para>
+            </simplesect>
+            </section>
+            <section xml:id="netapp-nfs-driver-cluster">
+            <title>NetApp NFS driver for clustered Data ONTAP </title>
+            <para>The NetApp NFS driver for clustered Data ONTAP  is a driver 
+                  interface from OpenStack to clustered Data ONTAP systems 
+      for provisioning and managing OpenStack
+      volumes on NFS exports provided by the clustered Data ONTAP 
+      system.      
+   </para>
+   <para>The NetApp NFS driver for clustered Data ONTAP requires
+         additional NetApp management software namely OnCommand, WFA
+         and NetApp Cloud Web Service application to be installed and
+         configured for using clustered Data ONTAP systems before
+         configuring clustered Data ONTAP NFS driver on OpenStack.      
+   </para>
+   <simplesect>
+                <title>Configuration options for the clustered Data ONTAP 
+                       NFS driver
+                </title>
+                <para>Set the volume driver to the clustered Data ONTAP NFS
+                      driver by setting the <literal>volume_driver
+                      </literal> option in <filename>cinder.conf
+                      </filename> as follows: 
+                </para>
+                <programlisting>
+    volume_driver=cinder.volume.drivers.netapp.nfs.NetAppCmodeNfsDriver
+                </programlisting>
+                <table rules="all">
+                <caption>List of configuration flags for clustered Data ONTAP
+                         NFS driver</caption>
+                <col width="35%"/>
+                <col width="15%"/>
+                <col width="15%"/>
+                <col width="35%"/>
+                <thead>
+                <tr>
+                    <td>Flag name</td>
+                    <td>Type</td>
+                    <td>Default</td>
+                    <td>Description</td>
+                </tr>
+                </thead>
+                <tbody>
+                     <tr>
+                        <td><para><literal>netapp_wsdl_url</literal></para>
+                        </td>
+                        <td><para>Mandatory</para></td>
+                        <td><para></para></td>
+                        <td><para>WSDL URL for NetApp Cloud Web Service serving
+                                  as management software. NetApp Cloud
+                                  Web Service is an intermediate service used
+                                  for propagating requests from the OpenStack
+                                  driver to different NetApp softwares 
+          installed in the environment and the ONTAP 
+          cluster systems.
+                   </para>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><para><literal>netapp_server_hostname</literal>
+                            </para>
+                        </td>
+                        <td><para>Mandatory</para></td>
+                        <td><para></para></td>
+                        <td><para>The host name/IP address of NetApp
+                                  Cloud Web Service installation.
+                            </para>
+                        </td>
+                    </tr>
+     <tr>
+                        <td><para><literal>netapp_server_port</literal></para>
+                        </td>
+                        <td><para>Mandatory</para></td>
+                        <td><para></para></td>
+                        <td><para>The port on which NetApp Cloud
+                Web Service listens.</para>
+                        </td>
+                    </tr>
+     <tr>
+                        <td><para><literal>netapp_login</literal></para>
+                        </td>
+                        <td><para>Mandatory</para></td>
+                        <td><para></para></td>
+                        <td><para>Login user name for NetApp Cloud Web Service
+                                  installation.
+                            </para>
+                        </td>
+                    </tr>
+     <tr>
+                        <td><para><literal>netapp_password</literal></para>
+                        </td>
+                        <td><para>Mandatory</para></td>
+                        <td><para></para></td>
+                        <td><para>Login password for NetApp Cloud Web Service
+                                  installation.
+                            </para>
+                        </td>
+                    </tr>
+    </tbody>
+            </table>
+   <para>Refer to 
+   <link xlink:href="https://communities.netapp.com/groups/openstack"
+                    >OpenStack NetApp community</link> for detailed 
+                     information.</para>
+            </simplesect> 
+            </section>
+            <section xml:id="netapp-nfs-driver-direct-7mode">
+            <title>NetApp NFS direct driver for 7-Mode storage controller
+            </title>
+            <para>The NetApp NFS direct driver for 7-Mode is a driver interface
+         from OpenStack to NetApp 7-Mode storage controllers 
+      for provisioning and managing OpenStack
+      volumes on NFS exports provided by the 7-Mode storage 
+      controller.      
+   </para>
+   <para>The NetApp NFS direct driver for 7-Mode does not
+         require any additional management software to achieve
+      the desired functionality. It uses NetApp APIs to interact
+      with the 7-Mode storage controller.
+   </para>
+   <simplesect>
+                <title>Configuration options for the 7-Mode NFS direct driver
+                </title>
+                <para>Set the volume driver to the NetApp 7-Mode direct driver
+                      by setting the <literal>volume_driver</literal> option in
+                            <filename>cinder.conf</filename> as follows: 
+                </para>
+                <programlisting>
+   volume_driver=cinder.volume.drivers.netapp.nfs.NetAppDirect7modeNfsDriver
+                </programlisting>
+                <table rules="all">
+                <caption>List of configuration flags for NetApp 7-Mode NFS
+                         direct driver</caption>
+                <col width="35%"/>
+                <col width="15%"/>
+                <col width="15%"/>
+                <col width="35%"/>
+                <thead>
+                <tr>
+                    <td>Flag name</td>
+                    <td>Type</td>
+                    <td>Default</td>
+                    <td>Description</td>
+                </tr>
+                </thead>
+                <tbody>
+                     <tr>
+                        <td><para><literal>netapp_server_hostname</literal>
+                            </para>
+                        </td>
+                        <td><para>Mandatory</para></td>
+                        <td><para></para></td>
+                        <td><para>The management IP address for the 
+                NetApp 7-Mode storage controller.</para>
+                        </td>
+                    </tr>
+     <tr>
+                        <td><para><literal>netapp_server_port</literal></para>
+                        </td>
+                        <td><para>Mandatory</para></td>
+                        <td><para></para></td>
+                        <td><para>The 7-Mode controller port to use for
+                                  communication. As a custom 80 is used for
+                                  http and 443 is used for https communication.
+                                  The default ports can be changed if other 
+                                  ports are for ONTAPI on 7-Mode controller.
+                            </para>
+                        </td>
+                    </tr>
+     <tr>
+                        <td><para><literal>netapp_login</literal></para>
+                        </td>
+                        <td><para>Mandatory</para></td>
+                        <td><para></para></td>
+                        <td><para>Login user name for 7-Mode controller
+                                  management.
+                            </para>
+                        </td>
+                    </tr>
+     <tr>
+                        <td><para><literal>netapp_password</literal></para>
+                        </td>
+                        <td><para>Mandatory</para></td>
+                        <td><para></para></td>
+                        <td><para>Login password for 7-Mode controller
+                                  management.
+                            </para>
+                        </td>
+                    </tr>
+     <tr>
+                        <td><para><literal>netapp_transport_type</literal>
+                            </para>
+                        </td>
+                        <td><para>Optional</para></td>
+                        <td><para>http</para></td>
+                        <td><para>Transport protocol to use for communicating
+                                  with 7-Mode controller. Supported protocols
+                                  include http and https.
+                            </para>
+                        </td>
+                    </tr>
+    </tbody>
+            </table>
+   <para>Refer to 
+   <link xlink:href="https://communities.netapp.com/groups/openstack"
+                    >OpenStack NetApp community</link> for detailed 
+                     information.</para>
+            </simplesect>
+            </section>
+            <section xml:id="netapp-nfs-driver-direct-cluster">
+            <title>NetApp NFS direct driver for clustered Data ONTAP</title>
+            <para>The NetApp NFS direct driver for clustered Data ONTAP is a
+                  driver interface from OpenStack to clustered Data
+                  ONTAP system for provisioning and managing 
+                  OpenStack volumes on NFS exports provided by the clustered
+                  Data ONTAP system.      
+   </para>
+   <para>The NetApp NFS direct driver for clustered Data ONTAP does not
+         require any additional management software to achieve
+      the desired functionality. It uses NetApp APIs to interact
+      with the clustered Data ONTAP.
+   </para>
+   <simplesect>
+                <title>Configuration options for the clustered Data ONTAP NFS
+                       direct driver</title>
+                <para>Set the volume driver to the NetApp clustered Data ONTAP
+                     direct driver by setting the <literal>volume_driver
+                      </literal> option in <filename>cinder.conf
+                      </filename> as follows: </para>
+                <programlisting>
+  volume_driver=cinder.volume.drivers.netapp.nfs.NetAppDirectCmodeNfsDriver
+                </programlisting>
+                <table rules="all">
+                <caption>List of configuration flags for NetApp clustered Data
+                         ONTAP NFS direct driver</caption>
+                <col width="35%"/>
+                <col width="15%"/>
+                <col width="15%"/>
+                <col width="35%"/>
+                <thead>
+                <tr>
+                    <td>Flag name</td>
+                    <td>Type</td>
+                    <td>Default</td>
+                    <td>Description</td>
+                </tr>
+                </thead>
+                <tbody>
+                     <tr>
+                        <td><para><literal>netapp_server_hostname</literal>
+                            </para>
+                        </td>
+                        <td><para>Mandatory</para></td>
+                        <td><para></para></td>
+                        <td><para>The cluster management IP address
+                                  for the clustered Data ONTAP.
+                            </para>
+                        </td>
+                    </tr>
+     <tr>
+                        <td><para><literal>netapp_server_port</literal></para>
+                        </td>
+                        <td><para>Mandatory</para></td>
+                        <td><para></para></td>
+                        <td><para>The clustered Data ONTAP port for
+                                  communication. As a custom 80 is used for
+                                  http and 443 is used for https communication.
+                                  The default ports can be changed if
+                                  other ports are used for ONTAPI on 
+                                  clustered Data ONTAP.
+                            </para>
+                        </td>
+                    </tr>
+     <tr>
+                        <td><para><literal>netapp_login</literal></para>
+                        </td>
+                        <td><para>Mandatory</para></td>
+                        <td><para></para></td>
+                        <td><para>Login user name for clustered Data ONTAP 
+                                  management.
+                            </para>
+                        </td>
+                    </tr>
+     <tr>
+                        <td><para><literal>netapp_password</literal></para>
+                        </td>
+                        <td><para>Mandatory</para></td>
+                        <td><para></para></td>
+                        <td><para>Login password for clustered Data ONTAP 
+                                  management.
+                            </para>
+                        </td>
+                    </tr>
+     <tr>
+                        <td><para><literal>netapp_transport_type</literal>
+                            </para>
+                        </td>
+                        <td><para>Optional</para></td>
+                        <td><para>http</para></td>
+                        <td><para>Transport protocol for communicating
+                                  with clustered Data ONTAP. Supported
+                                  protocols include http and https.
+                            </para>
+                        </td>
+                    </tr>
+    </tbody>
+            </table>
+   <para>Refer to 
+   <link xlink:href="https://communities.netapp.com/groups/openstack"
+                    >OpenStack NetApp community</link> for detailed 
+                     information.</para>
+            </simplesect>    
+        </section>   
+     </section>
+     </section>
     </section>
-       <section xml:id="HPSan-driver">
+    <section xml:id="HPSan-driver">
             <title>HP / LeftHand SAN</title>
             <para>HP/LeftHand SANs are optimized for virtualized
                 environments with VMware ESX &amp; Microsoft Hyper-V, though
