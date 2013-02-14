@@ -75,6 +75,12 @@ ip netns exec test-ns ifconfig</computeroutput></screen>
                 <para>and that the dhcp_agent.ini and l3_agent.ini have the following
                     setting:</para>
                 <screen><computeroutput>use_namespaces=False</computeroutput></screen>
+                <note><para> If the host does not support namespaces then the <systemitem class="service"
+                            >quantum-l3-agent</systemitem> and <systemitem class="service"
+                            >quantum-dhcp-agent</systemitem> should be run on different hosts. This
+                        is due to the fact that there is no isolation between the IP addresses
+                        created by the L3 agent and by the DHCP agent. By manipulating the routing
+                        the user can ensure that these networks have access to one another.</para></note>
                 <para>If you run both L3 + DHCP services on the same node, you should enable
                     namespaces to avoid conflicts with routes :</para>
                     <screen><computeroutput>use_namespaces=True</computeroutput></screen>
