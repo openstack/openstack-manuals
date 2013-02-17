@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0"
+    xml:id="ch_upgrading_from_essex">
+    <title>OpenStack Folsom upgrade</title>
+    <para>This chapter will lead you through the Essex to Folsom upgrade
+        process. If you are running an earlier version, you should upgrade to Essex
+        before continuing.</para>
+
+    <para>As a preliminary step, you should check the release
+        notes:</para>
+    <itemizedlist>
+        <listitem>
+            <para><link xlink:href="http://wiki.openstack.org/ReleaseNotes/Folsom">Folsom release notes, 2012.2</link>.</para>
+        </listitem>
+
+        <listitem>
+            <para><link xlink:href="http://wiki.openstack.org/ReleaseNotes/2012.2.1">2012.2.1</link>.</para>
+        </listitem>
+
+        <listitem>
+            <para><link xlink:href="http://wiki.openstack.org/ReleaseNotes/2012.2.2">2012.2.2</link>.</para>
+        </listitem>
+        <listitem>
+            <para><link xlink:href="http://wiki.openstack.org/ReleaseNotes/2012.2.3">2012.2.3</link>.</para>
+        </listitem>
+    </itemizedlist>
+
+    <para>The upgrade process will be done in the following steps:</para>
+    <orderedlist>
+        <listitem>
+            <para>Upgrade the OpenStack Identity service (Keystone).</para>
+        </listitem>
+        <listitem>
+            <para>Upgrade the OpenStack Image service (Glance).</para>
+        </listitem>
+        <listitem>
+            <para>Upgrade all OpenStack Compute (Nova) services.</para>
+        </listitem>
+        <listitem>
+            <para>Optional: Upgrade nova-volume to OpenStack Block Storage (Cinder). Please note that nova-volume will be deprecated in the
+                following release.</para>
+        </listitem>
+        <listitem>
+            <para>Optional: Upgrade nova-network to OpenStack Networking (Quantum). Please note that nova-network will be deprecated in
+                the following release.</para>
+        </listitem>
+    </orderedlist>
+
+    <section xml:id="keystone_upgrade">
+        <title>Identity service (Keystone) upgrade</title>
+        <orderedlist>
+            <listitem>
+                <para>
+                    Stop the services:
+                    <screen><prompt>$</prompt> <userinput>sudo service keystone stop</userinput>
+<prompt>$</prompt> <userinput>ps aux | grep keystone </userinput> </screen>
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    Create a backup of your configuration files and of your database contents:
+                    <screen><prompt>$</prompt> <userinput>sudo cp -a /etc/keystone $HOME/keystone_conf.bkp</userinput>
+<prompt>$</prompt> <userinput>mysqldump -u KEYSTONE_USER -pKEYSTONE_PASSWORD KEYSTONE_DB > $HOME/keystone_db_backup.sql</userinput> </screen>
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    Upgrade the packages to the latest 2012.2 version, using your distribution package manager.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    Apply the database upgrade.
+                    <screen><prompt>$</prompt> <userinput>sudo keystone-manage db_sync</userinput></screen>
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    Start the keystone service:
+                    <screen><prompt>$</prompt> <userinput>sudo service keystone restart</userinput></screen>
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    Check that everything is running fine:
+                    <screen><prompt>$</prompt> <userinput>keystone user-list</userinput>
++---------------------------------------------------------+---------------------------------------------------------+---------+--------------------------+
+|                            id                           |                           name                          | enabled |          email           |
++---------------------------------------------------------+---------------------------------------------------------+---------+--------------------------+
+(...)</screen>
+                </para>
+            </listitem>
+
+        </orderedlist>
+    </section>
+
+    <section xml:id="glace_upgrade">
+        <title>Image service (Glance) upgrade</title>
+        <orderedlist>
+            <listitem>
+                <para>
+                    Stop the services:
+                    <screen><prompt>$</prompt> <userinput>sudo service glance-api stop</userinput>
+<prompt>$</prompt> <userinput>sudo service glance-registry stop</userinput>
+<prompt>$</prompt> <userinput>ps aux | grep glance </userinput> </screen>
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    Create a backup of your configuration files and of your database contents:
+                    <screen><prompt>$</prompt> <userinput>sudo cp -a /etc/glance $HOME/glance_conf.bkp</userinput>
+<prompt>$</prompt> <userinput>mysqldump -u GLANCE_USER -pGLANCE_PASSWORD GLANCE_DB > $HOME/glance_db_backup.sql</userinput> </screen>
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    Upgrade the packages to the latest 2012.2 version, using your distribution package manager.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    Change the configuration files according to the <link xlink:href="http://wiki.openstack.org/ReleaseNotes/Folsom#OpenStack_Image_Service_.28Glance.29gt">Release Notes</link>.
+                </para>
+                <orderedlist>
+                    <listitem>
+                        <para>You have to
+                            add the sql connection parameters to your API configuration file, or disable the
+                            new v2 API setting the <code>enable_v2_api</code> to <code>false</code>:
+                            <programlisting>sql_connection = sqlite:///glance.sqlite # You should set this to your actual configuration
+sql_idle_timeout = 3600</programlisting>
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>Also, the <code>auth_token</code> middleware configuration has been moved from the paste
+                            configuration to the server configuration. Unless you have made modifications to your paste
+                            config it is recommended to accept the distributed <code>glance-api-paste.ini</code> and
+                            <code>glance-registry-paste.ini</code> files and then add the <code>auth_token</code>
+                            configuration at the bottom of your <code>glance-api.conf</code> and <code>glance-registry.conf</code>,
+                            adapting it to your actual configuration:
+
+                            <programlisting>[keystone_authtoken]
+auth_host = 127.0.0.1
+auth_port = 35357
+auth_protocol = http
+admin_tenant_name = %SERVICE_TENANT_NAME%
+admin_user = %SERVICE_USER%
+admin_password = %SERVICE_PASSWORD%</programlisting>
+                        </para>
+                    </listitem>
+                </orderedlist>
+            </listitem>
+
+            <listitem>
+                <para>
+                    Apply the database upgrade.
+                    <screen><prompt>$</prompt> <userinput>sudo glance-manage db_sync</userinput></screen>
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    Start the glance services:
+                    <screen><prompt>$</prompt> <userinput>sudo service glance-api restart</userinput>
+<prompt>$</prompt> <userinput>sudo service glance-registry restart</userinput></screen>
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    Check that everything is running fine:
+                    <screen><prompt>$</prompt> <userinput>glance index</userinput>
+ID                                   Name                           Disk Format          Container Format     Size
+------------------------------------ ------------------------------ -------------------- -------------------- --------------
+(...)</screen>
+                </para>
+            </listitem>
+
+        </orderedlist>
+
+    </section>
+
+    <section xml:id="nova_upgrade">
+        <title>Compute service (Nova) upgrade</title>
+        <para>We will perform an upgrade of all the nova packages to the Folsom version. However, in this section
+            we do not cover the upgrade to OpenStack Networking (Quantum) and OpenStack Block Storage (Cinder) of the respective and deprecated nova-network and
+            nova-volume packages, as this will be covered in another section.
+        </para>
+
+        <orderedlist>
+            <listitem>
+                <para>
+                    Stop all the nova services.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    Create a backup of your configuration files and of your database contents:
+                    <screen><prompt>$</prompt> <userinput>sudo cp -a /etc/nova $HOME/nova_conf.bkp</userinput>
+<prompt>$</prompt> <userinput>mysqldump -u NOVA_USER -pNOVA_PASSWORD NOVA_DB > $HOME/nova_db_backup.sql</userinput></screen>
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    Upgrade the configuration files according to the
+                    <link xlink:href="http://wiki.openstack.org/ReleaseNotes/Folsom#OpenStack_Compute_.28Nova.29">Release Notes</link>.
+                    You have to take into account the following:
+                </para>
+                <orderedlist>
+                    <warning>
+                        <para>
+                            IMPORTANT: If you are backing your instances with shared storage, make sure to disable image
+                            cache BEFORE upgrading to Folsom:
+                            <screen><userinput>image_cache_manager_interval = 0 </userinput></screen>
+                            There is a serious issue when using cache manager and shared storage, for more details please check this
+                            <link xlink:href="https://bugs.launchpad.net/nova/+bug/1078594">this bug report</link>
+                        </para>
+                    </warning>
+
+                    <listitem>
+                        <para>Change the <filename>nova.conf</filename> file to the new configuration format.
+                            In Essex the configuration was based on the old <code>--option-name</code>
+                            format, but in Folsom it has been changed to the INI config format,
+                            with options specified as <code>key=value</code> pairs. Because of this change,
+                            boolean options have to be explicitly set to true/false (such as
+                            <code>verbose=true</code>). The following code:
+                            <screen><userinput>--debug
+--verbose
+--state_path=/var/lib/nova
+--nouse_cow_images</userinput></screen>
+                            Will transform into this.
+                            <screen><userinput>[DEFAULT]
+debug=true
+verbose=true
+state_path=/var/lib/nova
+use_cow_images=false</userinput></screen>
+                            Check the <link xlink:href="..openstack-compute/admin/content/list-of-compute-config-options.html">compute options reference card</link> 
+                            to check if all your flags are recognized.
+                        </para>
+                    </listitem>
+
+                    <listitem>
+                        <para>Check new the rootwrap configuration <link xlink:href="http://wiki.openstack.org/Packager/Rootwrap">changes</link>.
+                        </para>
+                    </listitem>
+
+                    <listitem>
+                        <para>If you are using Libvirt:
+                            <itemizedlist>
+                                <listitem>
+                                    <para>The <code>connection_type</code> flag has been deprecated in favor of the
+                                        <code>compute_driver</code> flag, so <code>connection_type=libvirt</code>
+                                        should be replaced with <code>compute_driver=libvirt.LibvirtDriver</code>
+                                        and <code>connection_type=xenapi</code> should be replaced
+                                        with <code>compute_driver=xenapi.XenAPIDriver</code>.
+                                    </para>
+                                </listitem>
+
+                                <listitem>
+                                    <para>The libvirt.xml and cpuinfo.xml templates have been removed in favor of a
+                                        <link xlink:href="http://wiki.openstack.org/LibvirtXMLConfigAPIs">new config API</link>.
+                                    </para>
+                                </listitem>
+
+                            </itemizedlist>
+                        </para>
+                    </listitem>
+                </orderedlist>
+            </listitem>
+
+            <listitem>
+                <para>Upgrade all the packages to the latest 2012.2 version, using your distribution package manager.
+                    Note that we are not migrating nova-network and nova-volume to OpenStack Networking (Quantum) and OpenStack Block Storage (Cinder) in this
+                    step, but just upgrade those packages to Folsom.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>Upgrade the nova api paste. It is recommended to accept the new <code>nova/api-paste.ini</code>
+                    file from the package, and then check it against a backed file for any local modifications.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>Upgrade the <code>nova/policy.json</code> file. Unless you have made local changes you should accept
+                    the new file provided with the package.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>Apply the DB upgrade.
+                    <screen>
+<prompt>$</prompt> <userinput>sudo nova-manage db sync</userinput>
+                    </screen>
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>Restart all the services.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>Check that everything is working fine:
+                    <screen><prompt>$</prompt> <userinput>sudo nova-manage service list</userinput>
+(...)
+
+<prompt>$</prompt> <userinput>nova list</userinput>
++--------------------------------------+---------------+---------+-------------------------------------+
+| ID                                   | Name          | Status  | Networks                            |
++--------------------------------------+---------------+---------+-------------------------------------+
+(...)
+                    </screen>
+                </para>
+            </listitem>
+
+        </orderedlist>
+    </section>
+
+    <section xml:id="n-volume_to_cinder">
+        <title>Upgrade nova-volume to OpenStack Block Storage (Cinder)</title>
+        <para>We assume that all the services (including nova-volume) are migrated to Folsom.
+            <orderedlist>
+                <listitem>
+                    <para>
+                        Install Folsom version of OpenStack Block Storage (Cinder).
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>Create a cinder user in Keystone as an admin in service tenant.
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>Edit <code>/etc/cinder/api-paste.ini</code> to reflect the
+                        <code>admin_user</code>, <code>admin_tenant_name</code>, and <code>admin_password</code>
+                        that you created in the previous step.
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>Create Cinder database and database user.
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>Check the SQL connection in <code>/etc/cinder/cinder.conf</code>.
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>Create initial Cinder database:
+                        <screen><prompt>$</prompt> <userinput>sudo cinder-manage db sync</userinput></screen>
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>Copy volume tables using the following command:
+                        <screen><prompt>$</prompt> <userinput>sudo cinder-manage migrate import_db --src=$NOVA_SQL_CONN --dest=$CINDER_SQL_CONN</userinput></screen>
+                    </para>
+                    <note>
+                        <para>
+                            Do not include the database names in <code>--src</code> or <code>--dest</code>;
+                            <code>cinder-manage</code> assumes your source database is named "<code>nova</code>"
+                            and that your destination database is named "<code>cinder</code>", and appends these
+                            to the strings you supply.
+                        </para>
+                    </note>
+                </listitem>
+
+                <listitem>
+                    <para>Copy iSCSI target configuration
+                        <screen><prompt>$</prompt> <userinput>sudo cinder-manage migrate copy_ptgt_files --src=/var/lib/nova-volume/volumes --dest=/var/lib/cinder/volumes</userinput></screen>
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>Set the correct volume api class in your <code>nova.conf</code> configuration file.
+                        <screen><userinput>volume_api_class=nova.volume.cinder.API</userinput></screen>
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>Remove the <code>osapi_volume</code> from the <code>enabled_apis</code> in your <code>/etc/nova/nova.conf</code>. If you do
+                        not have such a configuration option, set it explicitly to the following (as it is included by default):
+                        <screen><userinput>enabled_apis=ec2,osapi_compute,metadata</userinput></screen>
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>Disable and stop the <code>nova-volume</code> service.
+                        <screen><prompt>$</prompt> <userinput>sudo echo "manual" > /etc/init/nova-volume.override</userinput>
+<prompt>$</prompt> <userinput>sudo service nova-volume stop</userinput></screen>
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>Restart the <code>nova-api</code> service
+                         <screen><prompt>$</prompt> <userinput>sudo service nova-api restart</userinput></screen>
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>Start cinder service:
+                         <screen><prompt>$</prompt> <userinput>sudo service cinder-api restart</userinput></screen>
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>Ensure that <code>/etc/tgt/conf.d/cinder.conf</code> exists and has an
+                        include line that matches <code>volumes_dir</code> option in <code>cinder.conf</code>.
+                        In the default case this is include <code>/var/lib/cinder/volumes/*</code>, if you edit
+                        this file restart the <code>tgtd</code> service.
+                    </para>
+                </listitem>
+            </orderedlist>
+        </para>
+    </section>
+
+    <section xml:id="n-network_to_quantum">
+        <title>Upgrade nova-network to OpenStack Networking (Quantum)</title>
+        <para>This process has not yet been documented. 
+        </para>
+    </section>
+</chapter>
+
