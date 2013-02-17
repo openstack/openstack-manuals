@@ -1,44 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section xmlns="http://docbook.org/ns/docbook"
+<chapter xmlns="http://docbook.org/ns/docbook"
     xmlns:xlink="http://www.w3.org/1999/xlink"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:svg="http://www.w3.org/2000/svg"
-    xmlns:html="http://www.w3.org/1999/xhtml"
-    version="5.0"
-    xml:id="nova-cli-reference">
+    xmlns:html="http://www.w3.org/1999/xhtml" version="5.0"
+    xml:id="nova_client">
     <?dbhtml stop-chunking?>
-    <title>OpenStack Nova CLI Guide</title>
-    <para>This section describes what  you can do with the OpenStack
-        Nova client (CLI). </para>
+    <title>nova Client</title>
+    <para>This chapter describes how to use the nova client.</para>
+    <para>To install the client, see <xref linkend="install_clients"
+        />.</para>
+
+
     <section xml:id="nova_help">
         <title>Get Command, Parameter, and Subcommand Help</title>
         <para>Help for commands, parameters, and subcommands is
-            available with the <command>nova help</command> command.
-            <screen>
-<prompt>$</prompt> <userinput>nova help</userinput>
-            </screen></para>
+            available with the <command>nova help</command> command.</para>
+            <screen><prompt>$</prompt> <userinput>nova help</userinput></screen>
         <para>Include the command name to get usage information about
             an individual command, as in the following example.
-            <screen>
-<prompt>$</prompt> <userinput>nova help actions</userinput>
+            <screen><prompt>$</prompt> <userinput>nova help actions</userinput>
 usage: nova actions &lt;server>
 
 Retrieve server actions.
 
 Positional arguments:
-  &lt;server>  Name or ID of server.
-            </screen></para>
+  &lt;server>  Name or ID of server.      </screen></para>
     </section>
     <section xml:id="listing">
         <title>List Instances, Images, and Flavors</title>
-        <para>Before you can go about the business of building your cloud, you
-            want to know what images are available to you by asking
-            the image service what kinds of configurations are
-            available. The image service could be compared to iTunes
-            for your cloud - you can view the playlist of images
-            before using your favorite image to create a new instance
-            in the cloud. To get the list of images, their names,
-            status, and ID, use this command:
+        <para>Before you can go about the business of building your
+            cloud, you want to know what images are available to you
+            by asking the image service what kinds of configurations
+            are available. The image service could be compared to
+            iTunes for your cloud - you can view the playlist of
+            images before using your favorite image to create a new
+            instance in the cloud. To get the list of images, their
+            names, status, and ID, use this command:
             <screen>
 <prompt>$</prompt> <userinput>nova image-list</userinput>
 +--------------------------------------+----------------+--------+--------+
@@ -50,7 +48,8 @@ Positional arguments:
 | e110fb7d-2a9e-4da5-923f-5565867ce87a | maverick-image | ACTIVE |        |
 +--------------------------------------+----------------+--------+--------+
         </screen></para>
-        <para>Next you need to know the relative sizes of each of these. </para>
+        <para>Next you need to know the relative sizes of each of
+            these. </para>
         <para><screen>
 <prompt>$</prompt> <userinput>nova flavor-list</userinput>
 +----+-----------+-----------+------+-----------+------+-------+-------------+
@@ -63,7 +62,8 @@ Positional arguments:
 | 5  | m1.xlarge |   16384   |  10  |    160    |      |   8   |     1.0     |
 +----+-----------+-----------+------+-----------+------+-------+-------------+
     </screen></para>
-        <para>You can also narrow down the list by using grep to find only the CentOS images with a command like this: </para>
+        <para>You can also narrow down the list by using grep to find
+            only the CentOS images with a command like this: </para>
         <para>
             <screen>
 <prompt>$</prompt> <userinput>nova image-list | grep 'natty'</userinput>
@@ -74,7 +74,7 @@ Positional arguments:
         </para>
     </section>
     <section xml:id="launch_instance">
-        <title>Launch a New Instance</title>
+        <title>Launch an Instance</title>
         <para>Launching a new instance on OpenStack.</para>
         <section xml:id="launch_commands_used">
             <title>Commands Used</title>
@@ -93,47 +93,55 @@ Positional arguments:
         <section xml:id="launch_procedure">
             <title>Before Launch</title>
 
-            <para>With the information about what is available to you, you can choose the combination of image and flavor to create your virtual servers and launch instances. </para></section>
+            <para>With the information about what is available to you,
+                you can choose the combination of image and flavor to
+                create your virtual servers and launch instances.
+            </para>
+        </section>
 
-      <xi:include href="../../common/nova_cli_boot.xml" />
-      <xi:include href="../../common/boot_from_volume.xml" />
-      <xi:include href="../../common/nova_cli_sshkeys.xml" />
-      <xi:include href="../../common/nova_cli_metadata.xml" />
-      <xi:include href="../../common/nova_cli_userdata.xml" />
-      <xi:include href="../../common/nova_cli_fileinjection.xml" />
+        <xi:include href="../../common/nova_cli_boot.xml"/>
+        <xi:include href="../../common/boot_from_volume.xml"/>
+        <xi:include href="../../common/nova_cli_sshkeys.xml"/>
+        <xi:include href="../../common/nova_cli_metadata.xml"/>
+        <xi:include href="../../common/nova_cli_userdata.xml"/>
+        <xi:include href="../../common/nova_cli_fileinjection.xml"/>
 
     </section>
 
-    <xi:include href="../../common/nova_cli_resizerebuild.xml" />
-    <xi:include href="../../common/nova_cli_startstop.xml" />
+    <xi:include href="../../common/nova_cli_resizerebuild.xml"/>
+    <xi:include href="../../common/nova_cli_startstop.xml"/>
 
     <section xml:id="reboot">
         <title>Rebooting an instance</title>
-        <para><command>nova reboot</command> performs a reboot of a running instance. By default,
-            this is a "soft" reboot, which will attempt a graceful shutdown and restart of the
-            instance. To perform a "hard" reboot (i.e., a power cycle of the instance), pass the
-                <literal>--hard</literal> flag as an argument.</para>
+        <para><command>nova reboot</command> performs a reboot of a
+            running instance. By default, this is a "soft" reboot,
+            which will attempt a graceful shutdown and restart of the
+            instance. To perform a "hard" reboot (i.e., a power cycle
+            of the instance), pass the <literal>--hard</literal> flag
+            as an argument.</para>
     </section>
 
-    <xi:include href="../../common/nova_cli_secgroups.xml" />
-    <xi:include href="../../common/nova_cli_floatingip.xml" />
+    <xi:include href="../../common/nova_cli_secgroups.xml"/>
+    <xi:include href="../../common/nova_cli_floatingip.xml"/>
 
-    <section xml:id="images"><title>Manage Images</title>
-    <para>Adding images and setting the access to them can be  managed
-            in Glance, but you can create images by taking a snapshot
-            of a running instance and view available images, set or
-            delete image metadata, and delete an image, using the nova
-            CLI.</para>
+    <section xml:id="images">
+        <title>Manage Images</title>
+        <para>Adding images and setting the access to them can be
+            managed in Glance, but you can create images by taking a
+            snapshot of a running instance and view available images,
+            set or delete image metadata, and delete an image, using
+            the nova CLI.</para>
 
     </section>
-    <xi:include href="../../common/nova_cli_volumes.xml" />
-    <xi:include href="../../common/nova_cli_terminate.xml" />
+    <xi:include href="../../common/nova_cli_volumes.xml"/>
+    <xi:include href="../../common/nova_cli_terminate.xml"/>
     <section xml:id="instance_console">
         <title>Get an Instance Console</title>
         <para>When you need to get a VNC console directly to a server,
             you can use the <code>nova get-vnc-console</code> command
             to connect.</para>
     </section>
-    <xi:include href="../../common/nova_cli_usage_statistics.xml" />
+    <xi:include href="nova_cli_commands.xml"/>
+    <xi:include href="../../common/nova_cli_usage_statistics.xml"/>
 
-</section>
+</chapter>
