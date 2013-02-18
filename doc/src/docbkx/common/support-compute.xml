@@ -48,4 +48,13 @@
                 an active state instead of an error state, for example:<screen><prompt>$</prompt> <userinput>nova reset-state --active c6bbbf26-b40a-47e7-8d5c-eb17bf65c485</userinput></screen>
             </para>
         </section>
+       <section xml:id="problems-with-injection">
+       <title>Problems with Injection</title>
+       <para>If you are diagnosing problems with instances not booting,
+       or booting slowly, consider investigating file injection as a 
+       cause. Setting <literal>libvirt_injection_partition</literal>
+       to -2 disables injection in libvirt. This can be required if you want to make user
+       specified files available from the metadata server (and config drive is not enabled),
+       for performance reasons, and also to avoid boot failure if injection itself fails.</para>
+       </section>
  </chapter>
