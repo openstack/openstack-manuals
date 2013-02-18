@@ -16,35 +16,35 @@
         <tr>
             <td><para>
                 scheduler_host_manager=nova.scheduler.host_manager.HostManager </para></td>
-            <td><para> (StrOpt) The scheduler host manager class to use
+            <td><para> (StrOpt) The scheduler host manager class to use.
             </para></td>
         </tr>
         <tr>
             <td><para>
                 scheduler_max_attempts=3 </para></td>
-            <td><para> (IntOpt) Maximum number of attempts to schedule an instance before giving up and settting the instance to
-                error
+            <td><para> (IntOpt) Maximum number of attempts to schedule an instance before giving up and setting the instance to
+                error.
             </para></td>
         </tr>
         <tr>
             <td><para> cpu_allocation_ratio=16.0 </para></td>
             <td><para> (FloatOpt) Virtual CPU to Physical CPU allocation
-                ratio </para></td>
+                ratio. </para></td>
         </tr>
         <tr>
             <td><para> ram_allocation_ratio=1.5 </para></td>
             <td><para> (FloatOpt) virtual ram to physical ram allocation
-                ratio </para></td>
+                ratio. </para></td>
         </tr>
         <tr>
             <td><para> reserved_host_disk_mb=0 </para></td>
             <td><para> (IntOpt) Amount of disk in MB to reserve for
-                host/dom0 </para></td>
+                host/dom0. </para></td>
         </tr>
         <tr>
             <td><para> reserved_host_memory_mb=512 </para></td>
             <td><para> (IntOpt) Amount of memory in MB to reserve for
-                host/dom0 </para></td>
+                host/dom0. </para></td>
         </tr>
         <tr>
             <td><para>
@@ -66,42 +66,42 @@
             <td><para> compute_fill_first_cost_fn_weight=-1.0 </para></td>
             <td><para> (FloatOpt) How much weight to give the fill-first
                 cost function. A negative value will reverse
-                behavior: e.g. spread-first </para></td>
+                behavior: e.g. spread-first. </para></td>
         </tr>
         <tr>
             <td><para> retry_host_cost_fn_weight=1.0 </para></td>
             <td><para> (FloatOpt) How much weight to give the retry host
                 cost function. A negative value will reverse
-                behavior: e.g. use multiple-times-retried hosts first </para></td>
+                behavior: e.g. use multiple-times-retried hosts first. </para></td>
         </tr>
         <tr>
             <td><para>
                 least_cost_functions=nova.scheduler.least_cost.compute_fill_first_cost_fn </para></td>
             <td><para> (ListOpt) Which cost functions the
-                LeastCostScheduler should use </para></td>
+                LeastCostScheduler should use. </para></td>
         </tr>
         <tr>
             <td><para> noop_cost_fn_weight=1.0 </para></td>
             <td><para> (FloatOpt) How much weight to give the noop cost
-                function </para></td>
+                function. </para></td>
         </tr>
         <tr>
             <td><para>
                 scheduler_driver=nova.scheduler.multi.MultiScheduler </para></td>
-            <td><para> (StrOpt) Default driver to use for the scheduler
+            <td><para> (StrOpt) Default driver to use for the scheduler.
             </para></td>
         </tr>
         <tr>
             <td><para>
                 compute_scheduler_driver=nova.scheduler.filter_scheduler.FilterScheduler </para></td>
-            <td><para> (StrOpt) Driver to use for scheduling compute
-                calls </para></td>
+            <td><para> (StrOpt) Driver to use for scheduling Compute
+                calls. </para></td>
         </tr>
         <tr>
             <td><para>
                 volume_scheduler_driver=nova.scheduler.chance.ChanceScheduler </para></td>
             <td><para> (StrOpt) Driver to use for scheduling volume
-                calls </para></td>
+                calls. </para></td>
         </tr>
         
         
@@ -115,22 +115,35 @@
         <tr>
             <td><para> max_cores=16 </para></td>
             <td><para> (IntOpt) maximum number of instance cores to
-                allow per host </para></td>
+                allow per host. </para></td>
         </tr>
         <tr>
             <td><para> max_gigabytes=10000 </para></td>
             <td><para> (IntOpt) maximum number of volume gigabytes to
-                allow per host </para></td>
+                allow per host. </para></td>
         </tr>
         <tr>
             <td><para> max_networks=1000 </para></td>
             <td><para> (IntOpt) maximum number of networks to allow per
-                host </para></td>
+                host. </para></td>
         </tr>
         <tr>
             <td><para> skip_isolated_core_check=true </para></td>
             <td><para> (BoolOpt) Allow overcommitting vcpus on isolated
-                hosts </para></td>
+                hosts. </para></td>
+        </tr>
+         <tr>
+             <td><para>
+             scheduler_host_subset_size=1 </para></td>
+            <td><para> (IntOpt) New instances will be scheduled on a
+             host chosen randomly from a subset of the N best hosts,
+             rather than just the host with the highest weight.
+             This property defines the subset size that a host is
+             chosen from. A value of 1 chooses the first host
+             returned by the weighing functions. This value must be
+             at least 1. Any value less than 1 will be ignored,
+             and 1 will be used instead.
+            </para></td>
         </tr>
     </tbody>
 </table>
