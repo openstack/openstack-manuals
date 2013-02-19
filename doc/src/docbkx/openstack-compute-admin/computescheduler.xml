@@ -228,18 +228,22 @@ scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
 
     <section xml:id="groupantiaffinityfilter">
         <title>GroupAntiAffinityFilter</title>
-        <para>
-        The GroupAntiAffinityFilter ensures that each instance in a group is on a different host.
-        To take advantage of this filter, the requester must pass a scheduler hint, using
-                    <literal>group</literal> as the key and a
-                list of instance uuids as the value.
-                Using the <command>nova</command> command-line tool,
-                use the <literal>--hint</literal> flag. For example:
-                <screen>
-<prompt>$</prompt> <userinput>nova boot --image cedef40a-ed67-4d10-800e-17455edce175 --flavor 1 --hint group=a0cf03a5-d921-4877-bb5c-86d26cf818e1 --hint group=8c19174f-4220-44f0-824a-cd1eeef10287 server-1</userinput>
-</screen>
-
-        </para>
+            <para> The GroupAntiAffinityFilter ensures that each
+                instance in a group is on a different host. To take
+                advantage of this filter, the requester must pass a
+                scheduler hint, using <literal>group</literal> as the
+                key and a list of instance uuids as the value. Using
+                the <command>nova</command> command-line tool, use the
+                    <literal>--hint</literal> flag. For
+                example:</para>
+            <screen>
+<prompt>$</prompt> <userinput>nova boot --image cedef40a-ed67-4d10-800e-17455edce175 --flavor 1 --hint group=a0cf03a5-d921-4877-bb5c-86d26cf818e1 server-1</userinput></screen>
+            <para> The hint provided to the scheduler is used to find
+                the hosts of all virtual machines that have
+                    <literal>group
+                    a0cf03a5-d921-4877-bb5c-86d26cf818e1</literal> and
+                then select a different host to start
+                    <literal>server-1</literal> on. </para>
     </section>
 
     <section xml:id="imagepropertiesfilter">
