@@ -136,17 +136,17 @@
                     <listitem>
                         <para>You have to
                             add the sql connection parameters to your API configuration file, or disable the
-                            new v2 API setting the <code>enable_v2_api</code> to <code>false</code>:
+                            new v2 API setting the <literal>enable_v2_api</literal> to <literal>false</literal>:
                             <programlisting>sql_connection = sqlite:///glance.sqlite # You should set this to your actual configuration
 sql_idle_timeout = 3600</programlisting>
                         </para>
                     </listitem>
                     <listitem>
-                        <para>Also, the <code>auth_token</code> middleware configuration has been moved from the paste
+                        <para>Also, the <literal>auth_token</literal> middleware configuration has been moved from the paste
                             configuration to the server configuration. Unless you have made modifications to your paste
-                            config it is recommended to accept the distributed <code>glance-api-paste.ini</code> and
-                            <code>glance-registry-paste.ini</code> files and then add the <code>auth_token</code>
-                            configuration at the bottom of your <code>glance-api.conf</code> and <code>glance-registry.conf</code>,
+                            config it is recommended to accept the distributed <filename>glance-api-paste.ini</filename> and
+                            <filename>glance-registry-paste.ini</filename> files and then add the <literal>auth_token</literal>
+                            configuration at the bottom of your <filename>glance-api.conf</filename> and <filename>glance-registry.conf</filename>,
                             adapting it to your actual configuration:
 
                             <programlisting>[keystone_authtoken]
@@ -231,11 +231,11 @@ ID                                   Name                           Disk Format 
 
                     <listitem>
                         <para>Change the <filename>nova.conf</filename> file to the new configuration format.
-                            In Essex the configuration was based on the old <code>--option-name</code>
+                            In Essex the configuration was based on the old <literal>--option-name</literal>
                             format, but in Folsom it has been changed to the INI config format,
-                            with options specified as <code>key=value</code> pairs. Because of this change,
+                            with options specified as <literal>key=value</literal> pairs. Because of this change,
                             boolean options have to be explicitly set to true/false (such as
-                            <code>verbose=true</code>). The following code:
+                            <literal>verbose=true</literal>). The following code:
                             <screen><userinput>--debug
 --verbose
 --state_path=/var/lib/nova
@@ -260,11 +260,11 @@ use_cow_images=false</userinput></screen>
                         <para>If you are using Libvirt:
                             <itemizedlist>
                                 <listitem>
-                                    <para>The <code>connection_type</code> flag has been deprecated in favor of the
-                                        <code>compute_driver</code> flag, so <code>connection_type=libvirt</code>
-                                        should be replaced with <code>compute_driver=libvirt.LibvirtDriver</code>
-                                        and <code>connection_type=xenapi</code> should be replaced
-                                        with <code>compute_driver=xenapi.XenAPIDriver</code>.
+                                    <para>The <literal>connection_type</literal> flag has been deprecated in favor of the
+                                        <literal>compute_driver</literal> flag, so <literal>connection_type=libvirt</literal>
+                                        should be replaced with <literal>compute_driver=libvirt.LibvirtDriver</literal>
+                                        and <literal>connection_type=xenapi</literal> should be replaced
+                                        with <literal>compute_driver=xenapi.XenAPIDriver</literal>.
                                     </para>
                                 </listitem>
 
@@ -288,13 +288,13 @@ use_cow_images=false</userinput></screen>
             </listitem>
 
             <listitem>
-                <para>Upgrade the nova api paste. It is recommended to accept the new <code>nova/api-paste.ini</code>
+                <para>Upgrade the nova api paste. It is recommended to accept the new <filename>nova/api-paste.ini</filename>
                     file from the package, and then check it against a backed file for any local modifications.
                 </para>
             </listitem>
 
             <listitem>
-                <para>Upgrade the <code>nova/policy.json</code> file. Unless you have made local changes you should accept
+                <para>Upgrade the <filename>nova/policy.json</filename> file. Unless you have made local changes you should accept
                     the new file provided with the package.
                 </para>
             </listitem>
@@ -345,8 +345,8 @@ use_cow_images=false</userinput></screen>
                 </listitem>
 
                 <listitem>
-                    <para>Edit <code>/etc/cinder/api-paste.ini</code> to reflect the
-                        <code>admin_user</code>, <code>admin_tenant_name</code>, and <code>admin_password</code>
+                    <para>Edit <filename>/etc/cinder/api-paste.ini</filename> to reflect the
+                        <literal>admin_user</literal>, <literal>admin_tenant_name</literal>, and <literal>admin_password</literal>
                         that you created in the previous step.
                     </para>
                 </listitem>
@@ -357,7 +357,7 @@ use_cow_images=false</userinput></screen>
                 </listitem>
 
                 <listitem>
-                    <para>Check the SQL connection in <code>/etc/cinder/cinder.conf</code>.
+                    <para>Check the SQL connection in <filename>/etc/cinder/cinder.conf</filename>.
                     </para>
                 </listitem>
 
@@ -373,9 +373,9 @@ use_cow_images=false</userinput></screen>
                     </para>
                     <note>
                         <para>
-                            Do not include the database names in <code>--src</code> or <code>--dest</code>;
-                            <code>cinder-manage</code> assumes your source database is named "<code>nova</code>"
-                            and that your destination database is named "<code>cinder</code>", and appends these
+                            Do not include the database names in <literal>--src</literal> or <literal>--dest</literal>;
+                            <literal>cinder-manage</literal> assumes your source database is named "<literal>nova</literal>"
+                            and that your destination database is named "<literal>cinder</literal>", and appends these
                             to the strings you supply.
                         </para>
                     </note>
@@ -388,27 +388,27 @@ use_cow_images=false</userinput></screen>
                 </listitem>
 
                 <listitem>
-                    <para>Set the correct volume api class in your <code>nova.conf</code> configuration file.
+                    <para>Set the correct volume api class in your <filename>nova.conf</filename> configuration file.
                         <screen><userinput>volume_api_class=nova.volume.cinder.API</userinput></screen>
                     </para>
                 </listitem>
 
                 <listitem>
-                    <para>Remove the <code>osapi_volume</code> from the <code>enabled_apis</code> in your <code>/etc/nova/nova.conf</code>. If you do
+                    <para>Remove the <literal>osapi_volume</literal> from the <literal>enabled_apis</literal> in your <filename>/etc/nova/nova.conf</filename>. If you do
                         not have such a configuration option, set it explicitly to the following (as it is included by default):
                         <screen><userinput>enabled_apis=ec2,osapi_compute,metadata</userinput></screen>
                     </para>
                 </listitem>
 
                 <listitem>
-                    <para>Disable and stop the <code>nova-volume</code> service.
+                    <para>Disable and stop the <literal>nova-volume</literal> service.
                         <screen><prompt>$</prompt> <userinput>sudo echo "manual" > /etc/init/nova-volume.override</userinput>
 <prompt>$</prompt> <userinput>sudo service nova-volume stop</userinput></screen>
                     </para>
                 </listitem>
 
                 <listitem>
-                    <para>Restart the <code>nova-api</code> service
+                    <para>Restart the <literal>nova-api</literal> service
                          <screen><prompt>$</prompt> <userinput>sudo service nova-api restart</userinput></screen>
                     </para>
                 </listitem>
@@ -420,10 +420,10 @@ use_cow_images=false</userinput></screen>
                 </listitem>
 
                 <listitem>
-                    <para>Ensure that <code>/etc/tgt/conf.d/cinder.conf</code> exists and has an
-                        include line that matches <code>volumes_dir</code> option in <code>cinder.conf</code>.
-                        In the default case this is include <code>/var/lib/cinder/volumes/*</code>, if you edit
-                        this file restart the <code>tgtd</code> service.
+                    <para>Ensure that <filename>/etc/tgt/conf.d/cinder.conf</filename> exists and has an
+                        include line that matches <literal>volumes_dir</literal> option in <filename>cinder.conf</filename>.
+                        In the default case this is include <literal>/var/lib/cinder/volumes/*</literal>, if you edit
+                        this file restart the <literal>tgtd</literal> service.
                     </para>
                 </listitem>
             </orderedlist>
