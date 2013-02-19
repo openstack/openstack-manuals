@@ -549,63 +549,6 @@ compute_fill_first_cost_fn_weight=-1.0
             is the default top-level scheduler as specified by the <literal>scheduler_driver</literal>
             configuration option.</para>
         </section>
-        <section xml:id="simple">
-            <title>Simple Scheduler</title>
-            <para>The Simple Scheduler (<literal>nova.scheduler.simple.SimpleScheduler</literal>)
-            implements a naive scheduler that tries to find the least loaded host
-            (i.e., implements a "spread-first" algorithm). It can schedule requests
-            for both <literal>nova-compute</literal> and <literal>nova-volume</literal>.
-            </para>
-            <para>The Simple Scheduler supports the following configuration
-                options:
-    <table rules="all" xml:id="simple-scheduler-conf">
-        <caption>Description of Simple Scheduler configuration options</caption>
-        <col width="30%"/>
-        <col width="70%"/>
-        <thead>
-            <tr>
-                <td>Configuration option=Default value</td>
-                <td>(Type) Description</td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>
-                    <literal>max_cores=16</literal>
-                </td>
-                <td>
-                    (IntOpt) The maximum number of instance cores to allow
-                    per host. Used when servicing compute requests to determine
-                    whether a host is a valid candidate for launching a VM
-                    instance.
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <literal>max_gigabytes=10000</literal>
-                </td>
-                <td>
-                    (IntOpt) Maximum number of volume gigabytes to allow per
-                    host. Used when servicing volume requests to determine
-                    whether a host is a valid candidate for creating a new
-                    volume.
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <literal>
-                     skip_isolated_core_check=true
-                    </literal>
-                </td>
-                <td>
-                    (BoolOpt) If true, allow overcommitting of vcpus on
-                    <link linkend="isolatedhostsfilter">isolated hosts</link>.
-                </td>
-            </tr>
-        </tbody>
-    </table>
-            </para>
-        </section>
     </section>
     <xi:include href="../common/host_aggregates.xml"/>
 </chapter>
