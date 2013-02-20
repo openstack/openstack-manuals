@@ -15,11 +15,12 @@
         describes adding compute nodes, and the service we are
         scaling out is called 'nova-compute.'</para>
     <para>For a multi-node install you only make changes to
-        nova.conf and copy it to additional compute nodes. Ensure
-        each nova.conf file points to the correct IP addresses for
-        the respective services. Customize the nova.conf example
-        below to match your environment. The CC_ADDR is the Cloud
-        Controller IP Address. </para>
+        <filename>nova.conf</filename> and copy it to additional
+        compute nodes. Ensure each <filename>nova.conf</filename>
+        file points to the correct IP addresses for the respective
+        services. Customize the <filename>nova.conf</filename> example
+        below to match your environment. The <literal>CC_ADDR</literal>
+        is the Cloud Controller IP Address. </para>
     <programlisting>
 dhcpbridge_flagfile=/etc/nova/nova.conf
 dhcpbridge=/usr/bin/nova-dhcpbridge
@@ -37,9 +38,10 @@ fixed_range= network/CIDR
 network_size=number of addresses
                   </programlisting>
     <para> By default, Nova sets the bridge device based on the
-        setting in --flat_network_bridge. Now you can edit
-        /etc/network/interfaces with the following template,
-        updated with your IP information. </para>
+        setting in <literal>--flat_network_bridge</literal>. Now
+        you can edit <filename>/etc/network/interfaces</filename>
+        with the following template, updated with your IP information.
+    </para>
     <programlisting>
 # The loopback network interface
 auto lo
@@ -62,7 +64,7 @@ iface br100 inet static
 </programlisting>
     <para>Restart networking:</para>
     <literallayout class="monospaced">/etc/init.d/networking restart</literallayout>
-    <para>With nova.conf updated and networking set, configuration
+    <para>With <filename>nova.conf</filename> updated and networking set, configuration
         is nearly complete. First, bounce the relevant services to
         take the latest updates:</para>
     <literallayout class="monospaced">restart libvirt-bin; service nova-compute restart</literallayout>
@@ -99,9 +101,9 @@ chmod g+rwx /dev/kvm
 | 2011-01-30 21:27:28 | 2011-02-03 06:54:23 | NULL       |       0 |  8 | osdemo05 | nova-compute   | compute   |        29284 |        0 | nova              |
 +---------------------+---------------------+------------+---------+----+----------+----------------+-----------+--------------+----------+-------------------+
             </programlisting>
-    <para>You can see that 'osdemo0{1,2,4,5} are all running
-        'nova-compute.' When you start spinning up instances, they
-        will allocate on any node that is running nova-compute
-        from this list.</para>
+            <para>You can see that <literal>osdemo0{1,2,4,5}</literal> are all running
+                <literal>nova-compute</literal>. When you start spinning up instances,
+                they will allocate on any node that is running <literal>nova-compute</literal>
+                from this list.</para>
 
 </section>
