@@ -12,7 +12,7 @@
     <screen os="ubuntu"><prompt>#</prompt> <userinput>sudo apt-get install glance</userinput></screen>
     <screen os="rhel;centos;fedora"><prompt>$</prompt> <userinput>sudo yum install openstack-nova openstack-glance</userinput></screen>
     <note os="ubuntu"><para>10/10/12: When using the Ubuntu Cloud Archive, you need to
-            re-install the python-keystoneclient after installing the
+            re-install the <literal>python-keystoneclient</literal> after installing the
             glance packages listed above, otherwise you see an
             error.</para></note>
     <para os="ubuntu">If you are using Ubuntu, delete the <filename>glance.sqlite</filename> file created in the
@@ -63,11 +63,14 @@
             Glance Registry server, and the various storage backends
             that Glance can use to store images. By default, the
             storage backend is in file, specified in the
-            glance-api.conf config file in the section [DEFAULT]. </para>
-        <para> The glance-api service implements versions 1 and 2 of
-            the OpenStack Images API. By default, both are enabled by
-            setting these configuration options to "true" in the
-                <filename>glance-api.conf</filename> file. </para>
+            <filename>glance-api.conf</filename> config file in the section <literal>[DEFAULT]</literal>.
+        </para>
+        <para> The <literal>glance-api</literal> service implements
+            versions 1 and 2 of the OpenStack Images API. By default,
+            both are enabled by setting these configuration options to
+            <literal>True</literal> in the <filename>glance-api.conf</filename>
+            file.
+        </para>
         <screen>enable_v1_api=True</screen>
         <screen>enable_v2_api=True</screen>
         <para>Disable either version of the Images API by setting the
@@ -75,8 +78,8 @@
                 <filename>glance-api.conf</filename> file.</para>
         <note>
             <para> In order to use the v2 API, you must copy the
-                necessary SQL configuration from your glance-registry
-                service to your glance-api configuration file. The
+                necessary SQL configuration from your <literal>glance-registry</literal>
+                service to your <literal>glance-api</literal> configuration file. The
                 following instructions assume that you want to use the
                 v2 Image API for your installation. The v1 API is
                 implemented on top of the glance-registry service
@@ -87,11 +90,11 @@
             Registry server) using separate configuration files. When
             installing through an operating system package management
             system, sample configuration files are installed in
-            /etc/glance. You configure the PasteDeploy configuration,
+            <literal>/etc/glance</literal>. You configure the PasteDeploy configuration,
             which controls the deployment of the WSGI application for
             each component, in files named
                 <replaceable>component</replaceable>-paste.ini, such
-            as glance-api-paste.ini.</para>
+                as <filename>glance-api-paste.ini</filename>.</para>
         <para>This walkthrough installs the image service using a file
             backend and the Identity service (Keystone) for
             authentication.</para>
@@ -105,7 +108,7 @@ admin_tenant_name = service
 admin_user = glance
 admin_password = glance</screen>
         <para>Add the admin and service identifiers and
-            flavor=keystone to the end of
+            <literal>flavor=keystone</literal> to the end of
                 <filename>/etc/glance/glance-api.conf</filename> as
             shown below.</para>
         <screen>[keystone_authtoken]
@@ -137,7 +140,7 @@ flavor=keystone
                 <filename>/etc/glance/glance-registry.conf</filename>
             to reflect the values you set earlier for admin user and
             the service tenant, plus enable the Identity service with
-            flavor=keystone.</para>
+            <literal>flavor=keystone</literal>.</para>
         <screen>[keystone_authtoken]
 auth_host = 127.0.0.1
 auth_port = 35357
