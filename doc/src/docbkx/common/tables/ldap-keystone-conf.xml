@@ -13,134 +13,251 @@
         </thead>
         <tbody>
             <tr>
-                <td>
-                    cloudadmin= "cn=cloudadmins,ou=Groups,dc=example,dc=com" </td>
-                <td> (StrOpt) CN for Cloud Admins </td>
+                <td>url=ldap://localhost</td>
+                <td>The location for the ldap server.</td>
             </tr>
             <tr>
                 <td>
-                    developer= "cn=developers,ou=Groups,dc=example,dc=com" </td>
-                <td> (StrOpt) CN for Developers </td>
+                    user = dc=Manager,dc=example,dc=com </td>
+                <td> (StrOpt) User for the LDAP server to use as default. </td>
             </tr>
             <tr>
-                <td> itsec= "cn=itsec,ou=Groups,dc=example,dc=com" </td>
-                <td> (StrOpt) CN for ItSec </td>
-            </tr>
-            <tr>
-                <td>
-                    netadmin= "cn=netadmins,ou=Groups,dc=example,dc=com" </td>
-                <td> (StrOpt) CN for NetAdmins </td>
-            </tr>
-            <tr>
-                <td> password= "changeme" </td>
-                <td> (StrOpt) LDAP password </td>
-            </tr>
-            <tr>
-                <td> suffix= "cn=example,cn=com" </td>
-                <td> (StrOpt) LDAP suffix </td>
-            </tr> 
-            <tr>
-                <td> use_dumb_member=False </td>
-                <td> (BoolOpt) Simulates an LDAP member </td>
-            </tr>    
-            <tr>
-                <td>
-                    project_subtree= "ou=Groups,dc=example,dc=com" </td>
-                <td> (StrOpt) OU for Projects </td>
-            </tr>
-            <tr>
-                <td> objectClass= inetOrgPerson</td>
-                <td> (StrOpt) LDAP objectClass to use</td>
-            </tr>
-            <tr>
-                <td> schema_version=2 </td>
-                <td> (IntOpt) Current version of the LDAP schema </td>
+                <td> password = None </td>
+                <td> (StrOpt) Password for LDAP server to connect to. </td>
             </tr>
             <tr>
                 <td>
-                    sysadmin= "cn=sysadmins,ou=Groups,dc=example,dc=com" </td>
-                <td> (StrOpt) CN for Sysadmins </td>
+                    suffix = cn=example,cn=com </td>
+                <td> (StrOpt) Default suffix for your LDAP server. </td>
+            </tr>
+            <tr><td>use_dumb_member = False</td>
+            <td>(Bool) Indicates whether dumb_member settings are in use.</td></tr>
+            <tr>
+                <td>allow_subtree_delete = False
+                     </td>
+                <td> (Bool) Determine whether to delete LDAP subtrees.</td>
             </tr>
             <tr>
-                <td> url= "ldap://localhost" </td>
-                <td> (StrOpt) Point this at your ldap server </td>
+                <td>dumb_member = cn=dumb,dc=example,dc=com
+                </td>
+                <td>Mockup member as placeholder, for testing purposes. </td>
+            </tr><tr>
+                <td>query_scope = one
+                </td>
+                <td>The LDAP scope for queries, this can be either 'one' (onelevel/singleLevel) or 'sub' (subtree/wholeSubtree)</td>
+            </tr><tr>
+                <td>user_tree_dn = ou=Users,dc=example,dc=com
+                </td>
+                <td> </td>
+            </tr><tr>
+                <td>user_filter =
+                </td>
+                <td> </td>
+            </tr><tr>
+                <td>user_objectclass = inetOrgPerson
+                </td>
+                <td> </td>
+            </tr><tr>
+                <td>user_id_attribute = cn
+                </td>
+                <td> </td>
+            </tr><tr>
+                <td>user_name_attribute = sn
+                </td>
+                <td> </td>
+            </tr><tr>
+                <td>user_mail_attribute = email
+                </td>
+                <td> </td>
+            </tr><tr>
+                <td>user_pass_attribute = userPassword
+                </td>
+                <td> </td>
+            </tr><tr>
+                <td>user_enabled_attribute = enabled
+                </td>
+                <td>Example, userAccountControl. Combines with user_enabled_mask and user_enabled_default settings below to extract the value from an integer
+                    attribute like in Active Directory. </td>
+            </tr><tr>
+                <td>user_enabled_mask = 0
+                </td>
+                <td> </td>
+            </tr><tr>
+                <td>user_enabled_default = True
+                </td>
+                <td> </td>
+            </tr><tr>
+                <td>user_attribute_ignore = tenant_id,tenants
+                </td>
+                <td> </td>
+            </tr><tr>
+                <td>user_allow_create = True
+                </td>
+                <td>If the users are managed by another tool and you have only read access, you would set this to False.</td>
+            </tr><tr>
+                <td>user_allow_update = True
+                </td>
+                <td> </td>
+            </tr><tr>
+                <td>user_allow_delete = True
+                </td>
+                <td> </td>
             </tr>
             <tr>
-                <td> user= "dc=Manager,dc=example,dc=com" </td>
-                <td> (StrOpt) LDAP User</td>
+                <td>tenant_tree_dn = ou=Groups,dc=example,dc=com
+                </td>
+                <td> </td>
             </tr>
             <tr>
-                <td> user_tree_dn="ou=Users,dc=example,dc=com" </td>
-                <td> (StrOpt) OU for Users</td>
+                <td>tenant_filter =
+                </td>
+                <td>If the backend is providing too much output, you can set a filter to blank so tenants are not passed through.</td>
+            </tr><tr>
+                <td>tenant_objectclass = groupOfNames
+                </td>
+                <td> </td>
+            </tr><tr>
+                <td>tenant_id_attribute = cn
+                </td>
+                <td> </td>
+            </tr><tr>
+                <td>tenant_member_attribute = member
+                </td>
+                <td> </td>
+            </tr><tr>
+                <td>tenant_name_attribute = ou
+                </td>
+                <td> </td>
+            </tr><tr>
+                <td>tenant_desc_attribute = desc
+                </td>
+                <td> </td>
+            </tr><tr>
+                <td>tenant_enabled_attribute = enabled
+                </td>
+                <td> </td>
+            </tr><tr>
+                <td>tenant_attribute_ignore =
+                </td>
+                <td> </td>
+            </tr><tr>
+                <td>tenant_allow_create = True
+                </td>
+                <td> </td>
+            </tr><tr>
+                <td>tenant_allow_update = True
+                </td>
+                <td> </td>
             </tr>
             <tr>
-                <td> user_dn= "cn=Manager,dc=example,dc=com" </td>
-                <td> (StrOpt) DN of Users </td>
+                <td>tenant_allow_delete = True
+                </td>
+                <td> </td>
             </tr>
             <tr>
-                <td> user_objectClass= inetOrgPerson </td>
-                <td> (StrOpt) DN of Users </td>
+                <td>role_tree_dn = ou=Roles,dc=example,dc=com
+                </td>
+                <td> </td>
             </tr>
             <tr>
-                <td> user_id_attribute= cn </td>
-                <td> (StrOpt) Attribute to use as id </td>
+                <td>role_filter =
+                </td>
+                <td> </td>
             </tr>
             <tr>
-                <td> user_modify_only=false </td>
-                <td> (BoolOpt) Modify user attributes instead of
-                    creating/deleting </td>
+                <td>role_objectclass = organizationalRole
+                </td>
+                <td> </td>
             </tr>
             <tr>
-                <td> user_name_attribute= sn</td>
-                <td> (StrOpt) Attribute to use as name </td>
+                <td>role_id_attribute = cn
+                </td>
+                <td> </td>
             </tr>
             <tr>
-                <td> user_subtree= "ou=Users,dc=example,dc=com" </td>
-                <td> (StrOpt) OU for Users </td>
+                <td>role_name_attribute = ou
+                </td>
+                <td> </td>
             </tr>
             <tr>
-                <td> user_unit= "Users" </td>
-                <td> (StrOpt) OID for Users </td>
+                <td>role_member_attribute = roleOccupant
+                </td>
+                <td> </td>
             </tr>
             <tr>
-                <td> tenant_tree_dn="ou=Groups,dc=example,dc=com"</td>
-                <td> (StrOpt) OU for Tenants</td>
+                <td>role_attribute_ignore =
+                </td>
+                <td> </td>
             </tr>
             <tr>
-                <td> tenant_objectclass= groupOfNames</td>
-                <td> (StrOpt) LDAP ObjectClass to use for Tenants</td>
+                <td>role_allow_create = True
+                </td>
+                <td> </td>
             </tr>
             <tr>
-                <td> tenant_id_attribute= cn</td>
-                <td> (strOpt) Attribute to use as Tenant</td>
+                <td>role_allow_update = True
+                </td>
+                <td> </td>
             </tr>
             <tr>
-                <td> tenant_member_attribute= member</td>
-                <td> (strOpt) Attribute to use as Member</td>
+                <td>role_allow_delete = True
+                </td>
+                <td> </td>
             </tr>
             <tr>
-                <td> tenant_name_attribute= ou</td>
-                <td> (strOpt) Attribute to use as tenant name</td>
+                <td>group_tree_dn =
+                </td>
+                <td> </td>
             </tr>
             <tr>
-                <td> role_tree_dn= "ou=Roles,dc=example,dc=com"</td>
-                <td> (strOpt) OU for Roles</td>
+                <td>group_filter =
+                </td>
+                <td> </td>
             </tr>
             <tr>
-                <td> role_objectclass= organizationalRole</td>
-                <td> (strOpt) LDAP ObjectClass to use for Roles</td>
+                <td>group_objectclass = groupOfNames
+                </td>
+                <td> </td>
             </tr>
             <tr>
-                <td> role_project_subtree= "ou=Groups,dc=example,dc=com" </td>
-                <td> (StrOpt) OU for Roles </td>
+                <td>group_id_attribute = cn
+                </td>
+                <td> </td>
             </tr>
             <tr>
-                <td> role_member_attribute= roleOccupant </td>
-                <td> (StrOpt) Attribute to use as Role member </td>
+                <td>group_name_attribute = ou
+                </td>
+                <td> </td>
             </tr>
             <tr>
-                <td> role_id_attribute= cn </td>
-                <td> (StrOpt) Attribute to use as Role</td>
+                <td>group_member_attribute = member
+                </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td>group_desc_attribute = desc
+                </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td>group_attribute_ignore =
+                </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td>group_allow_create = True
+                </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td>group_allow_update = True
+                </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td>group_allow_delete = True
+                </td>
+                <td> </td>
             </tr>
         </tbody>
     </table>

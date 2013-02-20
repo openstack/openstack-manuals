@@ -12,8 +12,51 @@
     keystone using the command line client.
   </para>
   <xi:include href="../common/keystone-concepts.xml"/>
+  <section xml:id="memcached-and-system-time">
+    <title>Memcached and System Time</title>
+    <para>
+      If using <link xlink:href="http://memcached.org/">memcached</link> with
+      Keystone - e.g. using the memcache token driver or the
+      <literal>auth_token</literal> middleware - ensure that the system
+      time of memcached hosts is set to UTC. Memcached uses the host's
+      system time in determining whether a key has expired, whereas
+      Keystone sets key expiry in UTC. The timezone used by Keystone and
+      memcached must match if key expiry is to behave as expected.
+    </para>
+  </section>
+  <xi:include href="keystone-ssl-config.xml"/>
+  <section xml:id="user-crud">
+    <title>User CRUD</title>
+    <para>
+      Keystone provides a user CRUD filter that can be added to the
+      public_api pipeline. This user crud filter allows users to use a
+      HTTP PATCH to change their own password. To enable this extension
+      you should define a <literal>user_crud_extension</literal> filter, insert it after
+      the <literal>*_body</literal> middleware and before the
+      <literal>public_service</literal> app in the public_api WSGI
+      pipeline in <filename>keystone.conf</filename> e.g.:
+    </para>
+    <screen>
+[filter:user_crud_extension]
+paste.filter_factory = keystone.contrib.user_crud:CrudExtension.factory
+
+[pipeline:public_api]
+pipeline = stats_monitoring url_normalize token_auth admin_token_auth xml_body json_body debug ec2_extension user_crud_extension public_service
+</screen>
+    <para>
+      Each user can then change their own password with a HTTP PATCH
+    </para>
+    <screen>
+&gt; curl -X PATCH http://localhost:5000/v2.0/OS-KSCRUD/users/&lt;userid&gt; -H &quot;Content-type: application/json&quot;  \
+-H &quot;X_Auth_Token: &lt;authtokenid&gt;&quot; -d '{&quot;user&quot;: {&quot;password&quot;: &quot;ABCD&quot;, &quot;original_password&quot;: &quot;DCBA&quot;}}'
+</screen>
+    <para>
+      In addition to changing their password all of the users current
+      tokens will be deleted (if the backend used is kvs or sql)
+    </para>
+  </section>
   <section xml:id="keystone-configuration-file">
-    <title>Configuration File</title>
+    <title>Configuration Files</title>
     <para>
       The Identity configuration file is an 'ini' file format with
       sections, extended from
@@ -25,27 +68,69 @@
       drivers for the various services are included under their
       individual sections.
     </para>
-    <para> The services include: <itemizedlist>
-        <listitem>
-          <para><literal>[identity]</literal> - the python module that
-            backends the identity system</para>
-        </listitem>
-        <listitem>
-          <para><literal>[catalog]</literal> - the python module that
-            backends the service catalog</para>
-        </listitem>
-        <listitem>
-          <para><literal>[token]</literal> - the python module that
-            backends the token providing mechanisms</para>
-        </listitem>
-        <listitem>
-          <para><literal>[policy]</literal> - the python module that
-            drives the policy system for RBAC</para>
-        </listitem>
-      </itemizedlist></para>
+    <para> The services include: </para>
+      <itemizedlist>
+      <listitem>
+        <para>
+          <literal>[DEFAULT]</literal> - general configuration
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>[sql]</literal> - optional storage backend
+          configuration
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>[ec2]</literal> - Amazon EC2 authentication driver
+          configuration
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>[s3]</literal> - Amazon S3 authentication driver
+          configuration.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>[identity]</literal> - identity system driver
+          configuration
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>[catalog]</literal> - service catalog driver
+          configuration
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>[token]</literal> - token driver configuration
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>[policy]</literal> - policy system driver configuration
+          for RBAC
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>[signing]</literal> - cryptographic signatures for PKI
+          based tokens
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>[ssl]</literal> - SSL configuration
+        </para>
+      </listitem>
+    </itemizedlist>
     <para>
       The configuration file is expected to be named
-      <literal>keystone.conf</literal>. When starting up Identity, you
+      <filename>keystone.conf</filename>. When starting Identity, you
       can specify a different configuration file to use with
       <literal>--config-file</literal>. If you do
       <emphasis role="strong">not</emphasis> specify a configuration
@@ -74,6 +159,9 @@
         </para>
       </listitem>
     </itemizedlist>
+  </section>
+  <section xml:id="keystone-logging">
+    <title>Logging</title>
     <para> Logging is configured externally to the rest of Identity,
       the file specifying the logging configuration is in the
         <literal>[DEFAULT]</literal> section of the
@@ -122,12 +210,59 @@
       <para>Note that middleware parameters in
       paste config take priority, they must be removed to use values
       in [keystone_authtoken] section.</para>
+  </section>
+  <section xml:id="monitoring">
+    <title>Monitoring</title>
+    <para>
+      Keystone provides some basic request/response monitoring
+      statistics out of the box.
+    </para>
+    <para>
+      Enable data collection by defining a
+      <literal>stats_monitoring</literal> filter and including it at the
+      beginning of any desired WSGI pipelines:
+    </para>
+    <screen>
+[filter:stats_monitoring]
+paste.filter_factory = keystone.contrib.stats:StatsMiddleware.factory
+
+[pipeline:public_api]
+pipeline = stats_monitoring [...] public_service
+</screen>
+    <para>
+      Enable the reporting of collected data by defining a
+      <literal>stats_reporting</literal> filter and including it near
+      the end of your <literal>admin_api</literal> WSGI pipeline (After
+      <literal>*_body</literal> middleware and before
+      <literal>*_extension</literal> filters is recommended):
+    </para>
+    <screen>
+[filter:stats_reporting]
+paste.filter_factory = keystone.contrib.stats:StatsExtension.factory
+
+[pipeline:admin_api]
+pipeline = [...] json_body stats_reporting ec2_extension [...] admin_service
+</screen>
+    <para>
+      Query the admin API for statistics using:
+    </para>
+    <screen>
+$ curl -H 'X-Auth-Token: ADMIN' http://localhost:35357/v2.0/OS-STATS/stats
+</screen>
+    <para>
+      Reset collected data using:
+    </para>
+    <screen>
+$ curl -H 'X-Auth-Token: ADMIN' -X DELETE http://localhost:35357/v2.0/OS-STATS/stats
+</screen>
+  </section>
+  <xi:include href="certificates-for-pki.xml"/>
     <section xml:id="sample-configuration-files">
       <title>Sample Configuration Files</title>
       <itemizedlist>
         <listitem>
           <para>
-            <literal>etc/keystone.conf</literal>
+            <filename>etc/keystone.conf</filename>
           </para>
         </listitem>
         <listitem>
@@ -137,7 +272,7 @@
         </listitem>
       </itemizedlist>
     </section>
-  </section>
+  
   <section xml:id="running-keystone">
     <title>Running</title>
     <para>
@@ -149,7 +284,7 @@ keystone-all
 </screen>
     <para>
       Invoking this command starts up two wsgi.Server instances,
-      configured by the <literal>keystone.conf</literal> file as
+      configured by the <filename>keystone.conf</filename> file as
       described above. One of these wsgi 'servers' is
       <literal>admin</literal> (the administration API) and the other is
       <literal>main</literal> (the primary/public API interface). Both
@@ -466,7 +601,7 @@ keystone user-list
 </screen>
       </section>
       <section xml:id="user-update-email">
-        <title><literal>user-update-email</literal></title>
+        <title><literal>user-update --email</literal></title>
         <para>
           arguments
         </para>
@@ -488,7 +623,7 @@ keystone user-list
           example:
         </para>
         <screen>
-keystone user-update-email 03c84b51574841ba9a0d8db7882ac645 &quot;someone@somewhere.com&quot;
+keystone user-update --email 03c84b51574841ba9a0d8db7882ac645 &quot;someone@somewhere.com&quot;
 </screen>
       </section>
       <section xml:id="user-enable">
@@ -530,7 +665,7 @@ keystone user-disable 03c84b51574841ba9a0d8db7882ac645
 </screen>
       </section>
       <section xml:id="user-update-password">
-        <title><literal>user-update-password</literal></title>
+        <title><literal>user-update --password</literal></title>
         <para>
           arguments
         </para>
@@ -550,7 +685,7 @@ keystone user-disable 03c84b51574841ba9a0d8db7882ac645
           example:
         </para>
         <screen>
-keystone user-update-password 03c84b51574841ba9a0d8db7882ac645 foo
+keystone user-update --password 03c84b51574841ba9a0d8db7882ac645 foo
 </screen>
       </section>
     </section>
@@ -819,7 +954,7 @@ keystone service-delete 08741d8ed88242ca88d1f61484a0fe3b
       <title>Admin Token</title>
       <para> For a default installation of Keystone, before you can
           use the REST API, you need to define an authorization token.
-          This is configured in <literal>keystone.conf</literal> file
+          This is configured in <filename>keystone.conf</filename> file
           under the section <literal>[DEFAULT]</literal>. In the
           sample file provided with the keystone project, the line
           defining this token is </para>
@@ -986,8 +1121,7 @@ keystone service-create --name=swift \
         </listitem>
         <listitem>
           <para>
-            Configure the paste file for swift-proxy
-            (`/etc/swift/proxy-server.conf`)
+            Configure the paste file for swift-proxy, <filename>/etc/swift/proxy-server.conf</filename>.
           </para>
         </listitem>
         <listitem>
@@ -1064,7 +1198,7 @@ use = egg:swift#healthcheck
           <para>
             Configure the paste file for swift-proxy
             (`/etc/swift/proxy-server.conf`) to use S3token and Swift3
-            middleware.
+            middleware. You must have the s3token middleware in the pipeline when using keystone and swift3.
           </para>
           <para>
             Here's an example:
@@ -1136,139 +1270,162 @@ connection = boto.connect_s3(
     </section>
     <section xml:id="configuring-keystone-for-ldap-backend">
       <title>Configuring Keystone for an LDAP backend</title>
-      <para> It is possible to connect an LDAP backend with the Identity service Keystone. <orderedlist>
-            <listitem>
-              <para><emphasis role="bold">Setting up the LDAP backend</emphasis></para>
-              <itemizedlist>
-                <listitem>
-                  <para>Configuring Users</para>
-                  <para> The users will be stored into a collection
-                    <screen>ou=Users,$SUBTREEY</screen> that will make use of the standard LDAP
-                    objectClass<screen>inetOrgPerson</screen>(being defined in
-                      <filename>/etc/openldap/schema/inetorgperson.ldiff</filename>. You would only
-                    need two LDAP fields :<emphasis role="bold">CN</emphasis> and <emphasis role="bold">CN</emphasis>. The <emphasis role="bold">CN</emphasis> field will
-                    be used for the bind call, and is the <emphasis role="bold">ID</emphasis> field
-                    for the <emphasis role="bold">user</emphasis> object. </para>
-                </listitem>
-                <listitem>
-                  <para>Configuring Tenants</para>
-                  <para> OpenStack tenants is also a collection. They are instances of the object
-                      <emphasis role="bold">groupOfNames</emphasis> (defined in
-                      <filename>/etc/openldap/schema/core.ldiff</filename>. In order to bind tenant
-                    to users, the user's <emphasis role="bold">DN</emphasis> should be indicated
-                    into the tenant's <emphasis role="bold">members</emphasis> attribute. </para>
-                </listitem>
-                <listitem>
-                  <para>Configuring Roles</para>
-                  <para> Roles will be stored into the organizationalRole LDAP object class, into
-                      <filename>/etc/openldap/schema/core.ldiff</filename>. The assignment is
-                    indicated via the User's <emphasis role="bold">DN</emphasis> in the <emphasis role="bold">roleOccupant</emphasis> attribute. </para>
-                </listitem>
-              </itemizedlist>
-            </listitem>
-            <listitem>
-              <para><emphasis role="bold">Setting up Keystone</emphasis></para>
-              <itemizedlist>
-                <listitem>
-                  <para>The "[LDAP]" stanza in the <filename>keystone.conf</filename> file allows
-                    you to specify the parameters related to the LDAP backend. Supported values are: </para>
-                  <itemizedlist>
-                    <listitem>
-                      <para>url</para>
-                    </listitem>
-                    <listitem>
-                      <para>user</para>
-                    </listitem>
-                    <listitem>
-                      <para>password</para>
-                    </listitem>
-                    <listitem>
-                      <para>suffix</para>
-                    </listitem>
-                    <listitem>
-                      <para>use_dumb_member </para>
-                    </listitem>
-                    <listitem>
-                      <para>user_tree_dn</para>
-                    </listitem>
-                    <listitem>
-                      <para>user_objectclass </para>
-                    </listitem>
-                    <listitem>
-                      <para>user_id_attribute</para>
-                    </listitem>
-                    <listitem>
-                      <para>user_name_attribute</para>
-                    </listitem>
-                    <listitem>
-                      <para>tenant_tree_dn</para>
-                    </listitem>
-                    <listitem>
-                      <para>tenant_objectclass</para>
-                    </listitem>
-                    <listitem>
-                      <para>tenant_id_attribute</para>
-                    </listitem>
-                    <listitem>
-                      <para>tenant_name_attribute</para>
-                    </listitem>
-                    <listitem>
-                      <para>tenant_member_attribute</para>
-                    </listitem>
-                    <listitem>
-                      <para>role_tree_dn</para>
-                    </listitem>
-                    <listitem>
-                      <para>role_objectclass </para>
-                    </listitem>
-                    <listitem>
-                      <para>role_id_attribute </para>
-                    </listitem>
-                    <listitem>
-                      <para>role_member_attribute</para>
-                    </listitem>
-                  </itemizedlist>
-                </listitem>
-              </itemizedlist>
-              <para> Here is a typical set-up: </para>
-              <screen>[ldap]
-url = ldap://localhost
-tree_dn = dc=exampledomain,dc=com
-user_tree_dn = ou=Users,dc=exampledomain,dc=com
-role_tree_dn = ou=Roles,dc=exampledomain,dc=com
-tenant_tree_dn = ou=Groups,dc=exampledomain,dc=com
-user = dc=Manager,dc=exampledomain,dc=com
-password = freeipa4all
-backend_entities = ['Tenant', 'User', 'UserRoleAssociation', 'Role']
-suffix =cn=exampledomain,cn=com
-
-[identity]
-driver = keystone.identity.backends.ldap.Identity </screen>
-            </listitem>
-          </orderedlist></para>
-      <para><emphasis role="bold">Overriding default attributes</emphasis></para>
       <para>
-   The default object classes and attributes are intentionally simplistic. They
-   reflect the common standard objects according to the LDAP RFCs.
-   By default, the user name in the Identity service is queried against the LDAP
-   <emphasis role="bold">SN</emphasis> (SurName) attribute type and the tenant name in the
-    Identity service will be queried against the LDAP <emphasis role="bold">OU</emphasis> (Organizational Unit)
-    attribute type.</para>
-    <para> However, in a live deployment, the correct attributes can be overridden to support a
-   preexisting, more complex schema.  These can be changed through the
-  <literal>user_name_attribute</literal>, <literal>user_id_attribute</literal>
-   and <literal>tenant_name_attribute</literal> configuration options in
-   <filename>keystone.conf</filename>. </para>
-   <para>For example, you can configure the Identity service to 
-        use the CN (Common Name) instead of SN.</para>
-   <para> As a more detailed example, in the user object, the
-   objectClass posixAccount from RFC2307 is very common. If this is the
-   underlying objectclass, then the <literal>uid</literal> field should probably be <literal>uidNumber</literal> and
-   <literal>username</literal> field either <literal>uid</literal> or <literal>cn</literal>. To change these two fields, the
-   corresponding entries in the Keystone configuration file would be:</para>
-   <programlisting>[ldap]
-   user_id_attribute = uidNumber
-   user_name_attribute = cn</programlisting>
+        As an alternative to the SQL Database backing store, Keystone can
+        use a directory server to provide the Identity service. An example
+        Schema for OpenStack would look like this:
+      </para>
+      <screen>
+dn: cn=openstack,cn=org
+dc: openstack
+objectClass: dcObject
+objectClass: organizationalUnit
+ou: openstack
+
+dn: ou=Groups,cn=openstack,cn=org
+objectClass: top
+objectClass: organizationalUnit
+ou: groups
+
+dn: ou=Users,cn=openstack,cn=org
+objectClass: top
+objectClass: organizationalUnit
+ou: users
+
+dn: ou=Roles,cn=openstack,cn=org
+objectClass: top
+objectClass: organizationalUnit
+ou: roles
+</screen>
+      <para>
+        The corresponding entries in the Keystone configuration file are:
+      </para>
+      <screen>
+[ldap]
+url = ldap://localhost
+user = dc=Manager,dc=openstack,dc=org
+password = badpassword
+suffix = dc=openstack,dc=org
+use_dumb_member = False
+allow_subtree_delete = False
+
+user_tree_dn = ou=Users,dc=openstack,dc=com
+user_objectclass = inetOrgPerson
+
+tenant_tree_dn = ou=Groups,dc=openstack,dc=com
+tenant_objectclass = groupOfNames
+
+role_tree_dn = ou=Roles,dc=example,dc=com
+role_objectclass = organizationalRole
+</screen>
+      <para>
+        The default object classes and attributes are intentionally
+        simplistic. They reflect the common standard objects according to
+        the LDAP RFCs. However, in a live deployment, the correct attributes
+        can be overridden to support a preexisting, more complex schema. For
+        example, in the user object, the objectClass posixAccount from
+        RFC2307 is very common. If this is the underlying objectclass, then
+        the <emphasis>uid</emphasis> field should probably be
+        <emphasis>uidNumber</emphasis> and <emphasis>username</emphasis>
+        field either <emphasis>uid</emphasis> or <emphasis>cn</emphasis>. To
+        change these two fields, the corresponding entries in the Keystone
+        configuration file are:
+      </para>
+      <screen>
+[ldap]
+user_id_attribute = uidNumber
+user_name_attribute = cn
+</screen>
+      <para>
+        There is a set of allowed actions per object type that you can
+        modify depending on your specific deployment. For example, the users
+        are managed by another tool and you have only read access, in such
+        case the configuration is:
+      </para>
+      <screen>
+[ldap]
+user_allow_create = False
+user_allow_update = False
+user_allow_delete = False
+
+tenant_allow_create = True
+tenant_allow_update = True
+tenant_allow_delete = True
+
+role_allow_create = True
+role_allow_update = True
+role_allow_delete = True
+</screen>
+      <para>
+        There are some configuration options for filtering users, tenants
+        and roles, if the backend is providing too much output, in such case
+        the configuration will look like:
+      </para>
+      <screen>
+[ldap]
+user_filter = (memberof=CN=openstack-users,OU=workgroups,DC=openstack,DC=com)
+tenant_filter =
+role_filter =
+</screen>
+      <para>
+        In case that the directory server does not have an attribute enabled
+        of type boolean for the user, there are several configuration
+        parameters that can be used to extract the value from an integer
+        attribute like in Active Directory:
+      </para>
+      <screen>
+[ldap]
+user_enabled_attribute = userAccountControl
+user_enabled_mask      = 2
+user_enabled_default   = 512
+</screen>
+      <para>
+        In this case the attribute is an integer and the enabled attribute
+        is listed in bit 1, so the if the mask configured
+        <emphasis>user_enabled_mask</emphasis> is different from 0, it gets
+        the value from the field <emphasis>user_enabled_attribute</emphasis>
+        and it makes an ADD operation with the value indicated on
+        <emphasis>user_enabled_mask</emphasis> and if the value matches the
+        mask then the account is disabled.
+      </para>
+      <para>
+        It also saves the value without mask to the user identity in the
+        attribute <emphasis>enabled_nomask</emphasis>. This is needed in
+        order to set it back in case that we need to change it to
+        enable/disable a user because it contains more information than the
+        status like password expiration. Last setting
+        <emphasis>user_enabled_mask</emphasis> is needed in order to create
+        a default value on the integer attribute (512 = NORMAL ACCOUNT on
+        AD)
+      </para>
+      <para>
+        In case of Active Directory the classes and attributes could not
+        match the specified classes in the LDAP module so you can configure
+        them like so:
+      </para>
+      <screen>
+[ldap]
+user_objectclass         = person
+user_id_attribute        = cn
+user_name_attribute      = cn
+user_mail_attribute      = mail
+user_enabled_attribute   = userAccountControl
+user_enabled_mask        = 2
+user_enabled_default     = 512
+user_attribute_ignore    = tenant_id,tenants
+tenant_objectclass       = groupOfNames
+tenant_id_attribute      = cn
+tenant_member_attribute  = member
+tenant_name_attribute    = ou
+tenant_desc_attribute    = description
+tenant_enabled_attribute = extensionName
+tenant_attribute_ignore  =
+role_objectclass         = organizationalRole
+role_id_attribute        = cn
+role_name_attribute      = ou
+role_member_attribute    = roleOccupant
+role_attribute_ignore    =
+</screen>
     </section>
     <section xml:id="reference-for-ldap-config-options">
       <title>Reference for LDAP Configuration Options in keystone.conf</title>
