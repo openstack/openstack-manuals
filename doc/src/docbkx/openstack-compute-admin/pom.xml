@@ -10,7 +10,7 @@
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>OpenStack Guides</name>
-
+    
     <properties>
         <!-- This is set by Jenkins according to the branch. -->
         <release.path.name>local</release.path.name>
@@ -109,14 +109,14 @@
                                 </copy>
                                 
                                 <copy
-                                   todir="${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-compute/admin/content/figures">
-                                   <fileset dir="../common/figures">
-                                   <include name="**/*.*"/>
-                                   </fileset>
+                                    todir="${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-compute/admin/content/figures">
+                                    <fileset dir="../common/figures">
+                                        <include name="**/*.*"/>
+                                    </fileset>
                                 </copy>
                                 
                                 <!-- Copies webhelp (HTML output) to desired URL location on docs.openstack.org -->
-                                                   
+                                
                                 <copy
                                     todir="${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-compute/admin">
                                     <fileset
@@ -126,15 +126,15 @@
                                 </copy>
                                 
                                 <!--Moves PDFs to the needed placement -->
-                               
+                                
                                 <move failonerror="false"
                                     file="${basedir}/target/docbkx/pdf/bk-compute-adminguide.pdf"
                                     tofile="${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-compute/admin/bk-compute-adminguide-${release.path.name}.pdf"/>                
-                                                       
+                                
                                 <!--Deletes leftover uneeded directories -->
                                 
                                 <delete dir="${basedir}/target/docbkx/webhelp/bk-compute-adminguide"/>
-                                                                
+                                
                             </postProcess>
                         </configuration>
                     </execution>
@@ -144,7 +144,7 @@
                     <xincludeSupported>true</xincludeSupported>
                     <sourceDirectory>.</sourceDirectory>
                     <includes>
-                       bk-compute-adminguide.xml
+                        bk-compute-adminguide.xml
                     </includes>
                     <canonicalUrlBase>http://docs.openstack.org/${release.path.name}/openstack-compute/admin/content/</canonicalUrlBase>
                     <profileSecurity>reviewer</profileSecurity>
