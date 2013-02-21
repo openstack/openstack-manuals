@@ -10,10 +10,6 @@
                         <para>Install the packages :<screen><userinput>apt-get install -y cinder-api cinder-scheduler cinder-volume iscsitarget \
     open-iscsi iscsitarget-dkms python-cinderclient linux-headers-`uname -r`</userinput></screen></para>
                     </listitem>
-                    <listitem><para>Since there is a bug in tgtadm, we have to modify <emphasis role="bold"
-                        >/etc/tgt/targets.conf</emphasis>
-                    :<screen># include /etc/tgt/conf.d/*.conf
-include /etc/tgt/conf.d/cinder_tgt.conf </screen></para></listitem>
                     <listitem>
                         <para>Configure &amp; start the iSCSI services :<screen><userinput>sed -i 's/false/true/g' /etc/default/iscsitarget
 service iscsitarget start
