@@ -131,6 +131,13 @@
                         <td>(StrOpt) The plugin to be loaded by the
                             service. </td>
                     </tr>
+                    <tr>
+                        <td>
+                            pagination_max_limit=-1 </td>
+                        <td>(StrOpt) The maximum number of items returned
+                            in a single response. A value of 'infinite',
+                            or a negative integer means no limit. </td>
+                    </tr>
                 </tbody>
             </table>
         
@@ -161,6 +168,40 @@
                         <td>allow_bulk=True </td>
                         <td>(BoolOpt) Enable or disable bulk
                             create/update/delete operations. </td>
+                    </tr>
+                    <tr>
+                        <td>allow_pagination=False </td>
+                        <td><para>(BoolOpt) Enable or disable pagination.
+                                 If plugin doesn't support native pagination, it
+                                 will enable emulated pagination. Please note
+                                 native pagination depends on native sorting.
+                                 If native pagination is enabled, native emulated
+                                 sorting will be enabled automatically.</para>
+                            <note>
+                                <para>If the plugin supports native pagination,
+                                      the plugin will returns the maximum limit
+                                      of items as request. If the plugin didn't
+                                      support that, quantum API can emulate the
+                                      pagination behavior. The performance of
+                                      native pagination is better than emulated
+                                      pagiantion. </para>
+                            </note>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>allow_sorting=False </td>
+                        <td><para>(BoolOpt) Enable or disable sorting. If plugin
+                            doesn't support native sorting, it will enable
+                            emulated sorting.</para>
+                            <note>
+                                <para>If the plugin supports native sorting, the
+                                     plugin will returns ordered items as request.
+                                     If the plugin didn't support that, quantum API
+                                     can emulate the sorting behavior. The performance
+                                     of native sorting is better than emulated sorting.
+                                </para>
+                            </note>
+                        </td>
                     </tr>
                     <tr>
                         <td>max_dns_nameservers=5 </td>
