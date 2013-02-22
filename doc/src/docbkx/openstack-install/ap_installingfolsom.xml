@@ -413,8 +413,10 @@ signing_dirname = /tmp/keystone-signing-nova</programlisting>Populate
             the
             database.<screen><prompt>$</prompt> <userinput>sudo nova-manage db sync</userinput></screen>Create
             the private
-            network.<screen><prompt>$</prompt><userinput>nova-manage network create private --fixed_range_v4=192.168.4.32/27 --num_networks=1 --bridge=br100 --bridge_interface=eth1 --network_size=32</userinput></screen>
+            network.<screen><prompt>$</prompt><userinput>nova-manage network create private --fixed_range_v4=192.168.4.32/27 --vlan=100 --num_networks=1 --bridge=br100 --bridge_interface=eth1 --network_size=32</userinput></screen>
             Restart everything.</para>
+            <para><note>The use of <literal>--vlan=100</literal> in the above command is to work
+            around <link xlink:href="https://bugs.launchpad.net/devstack/+bug/1049869">a bug in OpenStack Folsom</link>.</note></para>
         <screen><prompt>$</prompt> <userinput>cd /etc/init.d/; for i in $( ls nova-* ); do sudo service $i restart; done </userinput>
 <prompt>$</prompt> <userinput>service open-iscsi restart</userinput>
 <prompt>$</prompt> <userinput>service nova-novncproxy restart</userinput></screen>
