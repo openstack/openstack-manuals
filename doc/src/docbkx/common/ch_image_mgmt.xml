@@ -51,7 +51,6 @@
         client.</para>
     <xi:include href="tenant-specific-image-storage.xml"/>
     <xi:include href="adding-images.xml"/>
-    <xi:include href="image-formats.xml"/>
     <section xml:id="starting-images">
         <title>Getting virtual machine images</title>
         <?dbhtml stop-chunking?>
@@ -166,22 +165,23 @@
         <para>This section describes what customizations you should to your image to maximize
             compatibility with OpenStack.</para>
         <section xml:id="support-metadata-or-config-drive"><title>Support metadata service or config drive</title>
-            <para>An image needs to be able to retrieve information from OpenStack, such as the ssh public key
+            <para></para>
+            <!--<para>An image needs to be able to retrieve information from OpenStack, such as the ssh public key
                 and <link linkend="user-data">user data</link> that the user submitted when
                 requesting the image. This information is accessible via the <link
                     linkend="metadata-service">metadata service</link> or the <link
                     linkend="config-drive">config drive</link>. The easiest way to support this is
                 to install the <link xlink:href="http://launchpad.net/cloud-init">cloud-init</link>
-                package into your image.</para></section>
+                package into your image.</para>--></section>
         <section xml:id="support-resizing">
             <title>Support resizing</title>
-            <para>The size of the disk in a virtual machine image is determined when you initially
+            <!--<para>The size of the disk in a virtual machine image is determined when you initially
                 create the image. However, OpenStack lets you launch instances with different size
                 drives by specifying different <link linkend="instance-building-blocks-flavors"
                     >flavors</link>. For example, if your image was created with a 5 GB disk, and
                 you launch an instance with a flavor of <literal>m1.small</literal>, the resulting
                 virtual machine instance will have a primary disk of 10GB. When an instance's disk
-                is resized up, zeros are just added to the end.</para>
+                is resized up, zeros are just added to the end.</para>-->
             <para>Your image needs to be able to resize its partitions on boot to match the size
                 requested by the user. Otherwise, after the instance boots, you will need to
                 manually resize the partitions if you want to access the additional storage you have
