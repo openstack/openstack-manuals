@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section xmlns="http://docbook.org/ns/docbook"
+<chapter xmlns="http://docbook.org/ns/docbook"
     xmlns:xlink="http://www.w3.org/1999/xlink"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:svg="http://www.w3.org/2000/svg"
-    xmlns:html="http://www.w3.org/1999/xhtml"
-    version="5.0"
-    xml:id="glance-cli-reference">
+    xmlns:html="http://www.w3.org/1999/xhtml" version="5.0"
+    xml:id="glance_client">
     <?dbhtml stop-chunking?>
-    <title>OpenStack Glance CLI Guide</title>
-    <para>This section describes what  you can do with the OpenStack
-        Glance client (CLI). </para>
+    <title>glance Client</title>
+    <para>This chapter describes how to use the glance client. </para>
+    <para>To install the client, see <xref linkend="install_clients"/>.</para>
+    <!--  <xi:include href="glance_cli_install.xml"/> -->
+
     <section xml:id="glance_help">
         <title>Getting Command, Parameter, and Subcommand Help</title>
         <para>Help for commands, parameters, and subcommands is
@@ -43,7 +44,8 @@ Positional arguments:
 | e110fb7d-2a9e-4da5-923f-5565867ce87a | maverick-image | ACTIVE |        |
 +--------------------------------------+----------------+--------+--------+
         </screen></para>
-        <para>You can also narrow down the list by using grep to find only the CentOS images with a command like this: </para>
+        <para>You can also narrow down the list by using grep to find
+            only the CentOS images with a command like this: </para>
         <para>
             <screen>
 <prompt>$</prompt> <userinput>glance image-list | grep 'natty'</userinput>
@@ -56,36 +58,37 @@ Positional arguments:
     <section xml:id="glance-image-create">
         <title>Add a New Image</title>
         <para>Adding a new image to your OpenStack cloud.</para>
-            <para>This process uses the following commands: <itemizedlist>
-                    <listitem>
-                        <para><command>glance
-                            image-create</command></para>
-                    </listitem>
-                    <listitem>
-                        <para><command>glance
-                            member-create</command></para>
-                    </listitem>
-                    <listitem>
-                        <para><command>glance
-                            member-list</command></para>
-                    </listitem>
-                    <listitem>
-                        <para><command>glance
-                            image-show</command></para>
-                    </listitem>
-                </itemizedlist></para>
+        <para>This process uses the following commands: <itemizedlist>
+                <listitem>
+                    <para><command>glance
+                        image-create</command></para>
+                </listitem>
+                <listitem>
+                    <para><command>glance
+                        member-create</command></para>
+                </listitem>
+                <listitem>
+                    <para><command>glance member-list</command></para>
+                </listitem>
+                <listitem>
+                    <para><command>glance image-show</command></para>
+                </listitem>
+            </itemizedlist></para>
         <section xml:id="glance-image-prereqs">
             <title>Before You Add a New Image</title>
 
             <para>Ensure you have created an image that is OpenStack
-                compatible. Refer to the <link xlink:href="http://docs.openstack.org/">OpenStack Compute
-                    Administration Manual Image Management
-                    chapter</link> for details.</para></section>
+                compatible. Refer to the <link
+                    xlink:href="http://docs.openstack.org/">OpenStack
+                    Compute Administration Manual Image Management
+                    chapter</link> for details.</para>
+        </section>
 
         <section xml:id="glance-create-image">
             <title>Upload an image to glance</title>
-            <para>Assuming you had a CentOS 6.3 image in qcow2 format called centos63.qcow2, the
-                following example will upload it to glance and configure it for public
+            <para>Assuming you had a CentOS 6.3 image in qcow2 format
+                called centos63.qcow2, the following example will
+                upload it to glance and configure it for public
                 access.</para>
             <para>
                 <screen><prompt>$</prompt> <userinput>glance image-create --name centos63-image --disk-format=qcow2 --container-format=raw --is-public=True &lt; ./centos63.qcow2</userinput></screen>
@@ -99,15 +102,15 @@ Positional arguments:
     </section>
 
 
-    <section xml:id="managing-images-glance"><title>Managing Images</title>
-    <para>Adding images and setting the access to them can be managed
-            in glance, but you can create images by taking a snapshot of
-            a running instance and view available images, set or
-            delete image metadata, and delete an image, using the nova
-            CLI.</para>
-        <para/>
+    <section xml:id="managing-images-glance">
+        <title>Managing Images</title>
+        <para>Adding images and setting the access to them can be
+            managed in glance, but you can create images by taking a
+            snapshot of a running instance and view available images,
+            set or delete image metadata, and delete an image, using
+            the nova CLI.</para>
 
     </section>
 
-
-</section>
+    <xi:include href="glance_cli_commands.xml"/>
+</chapter>
