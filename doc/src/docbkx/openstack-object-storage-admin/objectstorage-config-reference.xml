@@ -112,6 +112,22 @@ can be overridden in any of the other sections.</para>
                         underlying filesystem does not support
                         it.</td>
                 </tr>
+                <tr>
+                    <td>fallocate_reserve</td>
+                    <td>0</td>
+                    <td>The number of bytes for fallocate to reserve,
+                        whether there is space for the given file
+                        size or not. The default fallocate_reserve
+                        is 0, meaning "no reserve".
+    Some systems behave badly when they completely run out of space. To
+    alleviate this problem, you can set fallocate_reserve. When the disk free
+    space falls at or below this amount, fallocate calls will fail, even
+    if the underlying OS fallocate call would succeed. For example, a
+    fallocate_reserve of 10737418240 (10G) would make all fallocate calls
+    fail, even for zero-byte files, when the disk free space falls under
+    10G.
+                </td>
+                </tr>
             </tbody>
         </table>
 
@@ -544,6 +560,23 @@ can be overridden in any of the other sections.</para>
                         <td>false</td>
                         <td>Disable "fast fail" fallocate checks if the underlying filesystem does not support it.</td>
                     </tr>
+                <tr>
+                    <td>fallocate_reserve</td>
+                    <td>0</td>
+                    <td>The number of bytes for fallocate to reserve,
+                        whether there is space for the given file
+                        size or not. The default fallocate_reserve
+                        is 0, meaning "no reserve".
+    Some systems behave badly when they completely run out of space. To
+    alleviate this problem, you can set fallocate_reserve. When the disk free
+    space falls at or below this amount, fallocate calls will fail, even
+    if the underlying OS fallocate call would succeed. For example, a
+    fallocate_reserve of 10737418240 (10G) would make all fallocate calls
+    fail, even for zero-byte files, when the disk free space falls under
+    10G.
+                </td>
+                </tr>
+ 
                     <tr>
                         <td>log_name</td>
                         <td>swift</td>
@@ -893,6 +926,23 @@ can be overridden in any of the other sections.</para>
                         <td>false</td>
                         <td>Disable "fast fail" fallocate checks if the underlying filesystem does not support it.</td>
                     </tr>
+                <tr>
+                    <td>fallocate_reserve</td>
+                    <td>0</td>
+                    <td>The number of bytes for fallocate to reserve,
+                        whether there is space for the given file
+                        size or not. The default fallocate_reserve
+                        is 0, meaning "no reserve".
+    Some systems behave badly when they completely run out of space. To
+    alleviate this problem, you can set fallocate_reserve. When the disk free
+    space falls at or below this amount, fallocate calls will fail, even
+    if the underlying OS fallocate call would succeed. For example, a
+    fallocate_reserve of 10737418240 (10G) would make all fallocate calls
+    fail, even for zero-byte files, when the disk free space falls under
+    10G.
+                </td>
+                </tr>
+ 
                 </tbody>
             </table>
             <table rules="all">
