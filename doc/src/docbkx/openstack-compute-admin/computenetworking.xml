@@ -1363,7 +1363,7 @@ exit 0 </programlisting>
                     <programlisting>
 ## cloud-pipe vpn client ##
 vpn_image_id=0bfc8fd3-1590-463b-b178-bce30be5ef7b
-use_project_ca=True
+use_project_ca=true
 cnt_vpn_clients=5
                 </programlisting>
                     You can now restart all the services :
@@ -1816,7 +1816,7 @@ public_interface=vlan100
                 "floating IP" feature requires the IP forwarding enabled in order to work.
         <note>
             <para>The IP forwarding only needs to be enabled on the nodes running the service
-                        nova-network. If the multi_host mode is used, make sure to enable it on all
+                nova-network. If the <literal>multi_host</literal> mode is used, make sure to enable it on all
                         the compute node, otherwise, enable it on the node running the nova-network
                         service.</para>
         </note>
@@ -2040,7 +2040,8 @@ iface eth1 inet dhcp                </programlisting></para>
     <section xml:id="existing-ha-networking-options">
         <title>Existing High Availability Options for
             Networking</title>
-        <para>Adapted from a blog post by<link xlink:href="http://unchainyourbrain.com/openstack/13-networking-in-nova">Vish
+        <para>Based off a blog post by  <link
+                xlink:href="http://unchainyourbrain.com/openstack/13-networking-in-nova">Vish
                 Ishaya</link></para>
 
         <para>As illustrated in the Flat DHCP diagram in Section <link xlink:href="#configuring-flat-dhcp-networking">Configuring Flat DHCP
@@ -2130,14 +2131,13 @@ send_arp_for_ha=true
 send_arp_for_ha=true
 enabled_apis=ec2,osapi_compute,osapi_volume,metadata</programlisting></para>
 
-            <para>The <literal>multi_host</literal> option must be in
-                place for network creation and nova-network must be
-                run on every compute host. These created multi hosts
-                networks will send all network related commands to the
-                host that the VM is on. You need to set the
-                configuration option <literal>enabled_apis</literal>
-                such that it includes <literal>metadata</literal> in
-                the list of enabled APIs. </para>
+            <para>The <literal>multi_host</literal> option must be in place when you create the
+                network and nova-network must be run on every compute host. These created multi
+                hosts networks will send all network related commands to the host that the specific
+                VM is on. You need to edit the configuration option <literal>enabled_apis</literal>
+                such that it includes <literal>metadata</literal> in the list of enabled APIs.
+                Other options become available when you configure <literal>multi_host</literal> nova networking please
+                refer to <link linkend="list-of-compute-config-options"> Configuration: nova.conf</link>.</para>
             <note>
                 <para>You must specify the
                         <literal>multi_host</literal> option on the
