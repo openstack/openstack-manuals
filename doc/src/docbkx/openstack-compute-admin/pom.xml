@@ -43,20 +43,12 @@
     </profiles>
     
     <build>
-        <resources>
-            <resource>
-                <directory>target/docbkx/pdf</directory>
-                <excludes>
-                    <exclude>**/*.fo</exclude>
-                </excludes>
-            </resource>
-        </resources>
         <plugins>
             
             <plugin>
                 <groupId>com.rackspace.cloud.api</groupId>
                 <artifactId>clouddocs-maven-plugin</artifactId>
-                <version>1.5.2</version>
+                <version>1.7.1</version>
                 <executions>
                     <execution>
                         <id>goal1</id>
@@ -99,41 +91,14 @@
                             <!-- The following elements sets the autonumbering of sections in output for chapter numbers but no numbered sections-->
                             <sectionAutolabel>0</sectionAutolabel>
                             <sectionLabelIncludesComponentLabel>0</sectionLabelIncludesComponentLabel>
+                            <targetDirectory>target/docbkx/webhelp/${release.path.name}/openstack-compute</targetDirectory>
+                            <webhelpDirname>admin</webhelpDirname>
+                            <pdfFilenameBase>bk-compute-adminguide-${release.path.name}</pdfFilenameBase>
                             <postProcess>
-                                <!-- Copies the figures to the correct location for webhelp -->
-                                
-                                <copy todir="${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-compute/admin/content/figures">
-                                    <fileset dir="${basedir}/figures">
-                                        <include name="**/*.*" />
-                                    </fileset>
-                                </copy>
-                                
-                                <copy
-                                    todir="${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-compute/admin/content/figures">
-                                    <fileset dir="../common/figures">
-                                        <include name="**/*.*"/>
-                                    </fileset>
-                                </copy>
-                                
-                                <!-- Copies webhelp (HTML output) to desired URL location on docs.openstack.org -->
-                                
-                                <copy
-                                    todir="${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-compute/admin">
-                                    <fileset
-                                        dir="${basedir}/target/docbkx/webhelp/bk-compute-adminguide/">
-                                        <include name="**/*" />
-                                    </fileset>
-                                </copy>
-                                
-                                <!--Moves PDFs to the needed placement -->
-                                
-                                <move failonerror="false"
-                                    file="${basedir}/target/docbkx/pdf/bk-compute-adminguide.pdf"
-                                    tofile="${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-compute/admin/bk-compute-adminguide-${release.path.name}.pdf"/>                
                                 
                                 <!--Deletes leftover uneeded directories -->
                                 
-                                <delete dir="${basedir}/target/docbkx/webhelp/bk-compute-adminguide"/>
+                                <!--<delete dir="${basedir}/target/docbkx/webhelp/bk-compute-adminguide"/>-->
                                 
                             </postProcess>
                         </configuration>
@@ -146,6 +111,7 @@
                     <includes>
                         bk-compute-adminguide.xml
                     </includes>
+                    
                     <canonicalUrlBase>http://docs.openstack.org/${release.path.name}/openstack-compute/admin/content/</canonicalUrlBase>
                     <profileSecurity>reviewer</profileSecurity>
                     <branding>openstack</branding>
