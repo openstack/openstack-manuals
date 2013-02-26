@@ -17,7 +17,6 @@
             <screen><prompt>$</prompt> <userinput>glance image-create --name myimage --disk_format=raw --container_format=bare &lt; <replaceable>/path/to/file.img</replaceable></userinput></screen>
             or
             <screen><prompt>$</prompt> <userinput>glance image-create --name myimage --file --disk_format=raw --container_format=bare  <replaceable>/path/to/file.img</replaceable></userinput></screen></para>
-
     <xi:include href="image-formats.xml"/>
     <section xml:id="image-metadata">
         <title>Image metadata</title>
@@ -28,14 +27,284 @@
             example:<screen><prompt>$</prompt> <userinput>glance image-update <replaceable>img-uuid</replaceable> --property architecture=arm --property hypervisor_type=qemu</userinput></screen>
             If the following properties are set on an image, and the ImagePropertiesFilter scheduler
             filter is enabled (which it is by default), then the scheduler will only consider
-            compute hosts that satisfy these properties:  <variablelist>
+            compute hosts that satisfy these properties:
+            <variablelist xml:id="image-metadata-properties">
                 <varlistentry>
                     <term>architecture</term>
                     <listitem>
                         <para>The CPU architecture that must be supported by the hypervisor, e.g.
                                 <literal>x86_64</literal>, <literal>arm</literal>,  <literal>ppc64</literal>. Run
                                 <command>uname -m</command> to get the architecture of a
-                            machine.</para>
+                                machine.  We strongly recommend using the architecture data vocabulary
+                                defined by the <link xlink:href="http://libosinfo.org">libosinfo project</link>
+                                for this purpose.  Recognized values for this field are:
+                                <variablelist xml:id="image-architecture" spacing="compact">
+                                  <varlistentry>
+                                    <term><literal>alpha</literal></term>
+                                    <listitem>
+                                    <para>
+                                      <link xlink:href="http://en.wikipedia.org/wiki/DEC_Alpha"
+                                            >DEC 64-bit RISC</link>
+                                    </para>
+                                    </listitem>
+                                  </varlistentry>
+                                  <varlistentry>
+                                    <term><literal>armv7l</literal></term>
+                                    <listitem>
+                                    <para>
+                                      <link xlink:href="http://en.wikipedia.org/wiki/ARM_architecture"
+                                            >ARM Cortex-A7 MPCore</link>
+                                    </para>
+                                    </listitem>
+                                  </varlistentry>
+                                  <varlistentry>
+                                    <term><literal>cris</literal></term>
+                                    <listitem>
+                                    <para>
+                                      <link xlink:href="http://en.wikipedia.org/wiki/ETRAX_CRIS"
+                                            >Ethernet, Token Ring, AXis - Code Reduced Instruction Set</link>
+                                    </para>
+                                    </listitem>
+                                  </varlistentry>
+                                  <varlistentry>
+                                    <term><literal>i686</literal></term>
+                                    <listitem>
+                                    <para>
+                                      <link xlink:href="http://en.wikipedia.org/wiki/X86"
+                                            >Intel sixth-generation x86</link>
+                                      (P6 microarchitecture)
+                                    </para>
+                                    </listitem>
+                                  </varlistentry>
+                                  <varlistentry>
+                                    <term><literal>ia64</literal></term>
+                                    <listitem>
+                                    <para>
+                                      <link xlink:href="http://en.wikipedia.org/wiki/Itanium"
+                                            >Itanium</link>
+                                    </para>
+                                    </listitem>
+                                  </varlistentry>
+                                  <varlistentry>
+                                    <term><literal>lm32</literal></term>
+                                    <listitem>
+                                    <para>
+                                      <link xlink:href="http://en.wikipedia.org/wiki/Milkymist"
+                                            >Lattice Micro32</link>
+                                    </para>
+                                    </listitem>
+                                  </varlistentry>
+                                  <varlistentry>
+                                    <term><literal>m68k</literal></term>
+                                    <listitem>
+                                    <para>
+                                      <link xlink:href="http://en.wikipedia.org/wiki/Motorola_68000_family"
+                                            >Motorola 68000</link>
+                                    </para>
+                                    </listitem>
+                                  </varlistentry>
+                                  <varlistentry>
+                                    <term><literal>microblaze</literal></term>
+                                    <listitem>
+                                    <para>
+                                      <link xlink:href="http://en.wikipedia.org/wiki/MicroBlaze"
+                                            >Xilinx 32-bit FPGA (Big Endian)</link>
+                                    </para>
+                                    </listitem>
+                                  </varlistentry>
+                                  <varlistentry>
+                                    <term><literal>microblazeel</literal></term>
+                                    <listitem>
+                                    <para>
+                                      <link xlink:href="http://en.wikipedia.org/wiki/MicroBlaze"
+                                            >Xilinx 32-bit FPGA (Little Endian)</link>
+                                    </para>
+                                    </listitem>
+                                  </varlistentry>
+                                  <varlistentry>
+                                    <term><literal>mips</literal></term>
+                                    <listitem>
+                                    <para>
+                                      <link xlink:href="http://en.wikipedia.org/wiki/MIPS_architecture"
+                                            >MIPS 32-bit RISC (Big Endian)</link>
+                                    </para>
+                                    </listitem>
+                                  </varlistentry>
+                                  <varlistentry>
+                                    <term><literal>mipsel</literal></term>
+                                    <listitem>
+                                    <para>
+                                      <link xlink:href="http://en.wikipedia.org/wiki/MIPS_architecture"
+                                            >MIPS 32-bit RISC (Little Endian)</link>
+                                    </para>
+                                    </listitem>
+                                  </varlistentry>
+                                  <varlistentry>
+                                    <term><literal>mips64</literal></term>
+                                    <listitem>
+                                    <para>
+                                      <link xlink:href="http://en.wikipedia.org/wiki/MIPS_architecture"
+                                            >MIPS 64-bit RISC (Big Endian)</link>
+                                    </para>
+                                    </listitem>
+                                  </varlistentry>
+                                  <varlistentry>
+                                    <term><literal>mips64el</literal></term>
+                                    <listitem>
+                                    <para>
+                                      <link xlink:href="http://en.wikipedia.org/wiki/MIPS_architecture"
+                                            >MIPS 64-bit RISC (Little Endian)</link>
+                                    </para>
+                                    </listitem>
+                                  </varlistentry>
+                                  <varlistentry>
+                                    <term><literal>openrisc</literal></term>
+                                    <listitem>
+                                    <para>
+                                      <link xlink:href="http://en.wikipedia.org/wiki/OpenRISC#QEMU_support"
+                                            >OpenCores RISC</link>
+                                    </para>
+                                    </listitem>
+                                  </varlistentry>
+                                  <varlistentry>
+                                    <term><literal>parisc</literal></term>
+                                    <listitem>
+                                    <para>
+                                      <link xlink:href="http://en.wikipedia.org/wiki/PA-RISC"
+                                            >HP Precision Architecture RISC</link>
+                                    </para>
+                                    </listitem>
+                                  </varlistentry>
+                                  <varlistentry>
+                                    <term><literal>parisc64</literal></term>
+                                    <listitem>
+                                    <para>
+                                      <link xlink:href="http://en.wikipedia.org/wiki/PA-RISC"
+                                            >HP Precision Architecture 64-bit RISC</link>
+                                    </para>
+                                    </listitem>
+                                  </varlistentry>
+                                  <varlistentry>
+                                    <term><literal>ppc</literal></term>
+                                    <listitem>
+                                    <para>
+                                      <link xlink:href="http://en.wikipedia.org/wiki/PowerPC"
+                                            >PowerPC 32-bit</link>
+                                    </para>
+                                    </listitem>
+                                  </varlistentry>
+                                  <varlistentry>
+                                    <term><literal>ppc64</literal></term>
+                                    <listitem>
+                                    <para>
+                                      <link xlink:href="http://en.wikipedia.org/wiki/PowerPC"
+                                            >PowerPC 64-bit</link>
+                                    </para>
+                                    </listitem>
+                                  </varlistentry>
+                                  <varlistentry>
+                                    <term><literal>ppcemb</literal></term>
+                                    <listitem>
+                                    <para>
+                                      <link xlink:href="http://en.wikipedia.org/wiki/PowerPC"
+                                            >PowerPC (Embedded 32-bit)</link>
+                                    </para>
+                                    </listitem>
+                                  </varlistentry>
+                                  <varlistentry>
+                                    <term><literal>s390</literal></term>
+                                    <listitem>
+                                    <para>
+                                      <link xlink:href="http://en.wikipedia.org/wiki/S390"
+                                            >IBM Enterprise Systems Architecture/390</link>
+                                    </para>
+                                    </listitem>
+                                  </varlistentry>
+                                  <varlistentry>
+                                    <term><literal>s390x</literal></term>
+                                    <listitem>
+                                    <para>
+                                      <link xlink:href="http://en.wikipedia.org/wiki/S390x"
+                                            >S/390 64-bit</link>
+                                    </para>
+                                    </listitem>
+                                  </varlistentry>
+                                  <varlistentry>
+                                    <term><literal>sh4</literal></term>
+                                    <listitem>
+                                    <para>
+                                      <link xlink:href="http://en.wikipedia.org/wiki/SuperH"
+                                            >SuperH SH-4 (Little Endian)</link>
+                                    </para>
+                                    </listitem>
+                                  </varlistentry>
+                                  <varlistentry>
+                                    <term><literal>sh4eb</literal></term>
+                                    <listitem>
+                                    <para>
+                                      <link xlink:href="http://en.wikipedia.org/wiki/SuperH"
+                                            >SuperH SH-4 (Big Endian)</link>
+                                    </para>
+                                    </listitem>
+                                  </varlistentry>
+                                  <varlistentry>
+                                    <term><literal>sparc</literal></term>
+                                    <listitem>
+                                    <para>
+                                      <link xlink:href="http://en.wikipedia.org/wiki/Sparc"
+                                            >Scalable Processor Architecture, 32-bit</link>
+                                    </para>
+                                    </listitem>
+                                  </varlistentry>
+                                  <varlistentry>
+                                    <term><literal>sparc64</literal></term>
+                                    <listitem>
+                                    <para>
+                                      <link xlink:href="http://en.wikipedia.org/wiki/Sparc"
+                                            >Scalable Processor Architecture, 64-bit</link>
+                                    </para>
+                                    </listitem>
+                                  </varlistentry>
+                                  <varlistentry>
+                                    <term><literal>unicore32</literal></term>
+                                    <listitem>
+                                    <para>
+                                      <link xlink:href="http://en.wikipedia.org/wiki/Unicore"
+                                            >Microprocessor Research and Development Center
+                                      RISC Unicore32</link>
+                                    </para>
+                                    </listitem>
+                                  </varlistentry>
+                                  <varlistentry>
+                                    <term><literal>x86_64</literal></term>
+                                    <listitem>
+                                    <para>
+                                      <link xlink:href="http://en.wikipedia.org/wiki/X86"
+                                            >64-bit extension of IA-32</link>
+                                    </para>
+                                    </listitem>
+                                  </varlistentry>
+                                  <varlistentry>
+                                    <term><literal>xtensa</literal></term>
+                                    <listitem>
+                                    <para>
+                                      <link xlink:href="http://en.wikipedia.org/wiki/Xtensa#Processor_Cores"
+                                            >Tensilica Xtensa configurable microprocessor core</link>
+                                    </para>
+                                    </listitem>
+                                  </varlistentry>
+                                  <varlistentry>
+                                    <term><literal>xtensaeb</literal></term>
+                                    <listitem>
+                                    <para>
+                                      <link xlink:href="http://en.wikipedia.org/wiki/Xtensa#Processor_Cores"
+                                            >Tensilica Xtensa configurable microprocessor core
+                                      (Big Endian)</link>
+                                    </para>
+                                    </listitem>
+                                  </varlistentry>
+                                </variablelist>
+                        </para>
                     </listitem>
                 </varlistentry>
                 <varlistentry>
@@ -108,7 +377,8 @@
                     </listitem>
                 </varlistentry>
             </variablelist></para>
-        <para>The following metadata properties are specific to the VMware API driver:<variablelist>
+            <para>The following metadata properties are specific to the VMware API driver:
+            <variablelist>
                 <varlistentry>
                     <term>vmware_adaptertype</term>
                     <listitem>
@@ -135,5 +405,310 @@
                     </listitem>
                 </varlistentry>
             </variablelist></para>
-    </section>
+            <para>
+              In order to assist end-users in utilizing images, you may wish to put additional
+              common metadata on Glance images.  By community agreement, the following metadata
+              keys may be used across Glance installations for the purposes described below.
+              <variablelist>
+                <varlistentry>
+                  <term>instance_uuid</term>
+                  <listitem>
+                    <para>
+                      For snapshot images, this is the UUID of the server used to create this image.
+                    </para>
+                  </listitem>
+                </varlistentry>
+                <varlistentry>
+                  <term>kernel_id</term>
+                  <listitem>
+                    <para>
+                      The ID of image stored in Glance that should be used as the kernel when
+                      booting an AMI-style image.
+                    </para>
+                  </listitem>
+                </varlistentry>
+                <varlistentry>
+                  <term>ramdisk_id</term>
+                  <listitem>
+                    <para>
+                      The ID of image stored in Glance that should be used as the ramdisk when
+                      booting an AMI-style image.
+                    </para>
+                  </listitem>
+                </varlistentry>
+                <varlistentry>
+                  <term>os_version</term>
+                  <listitem>
+                    <para>
+                      The operating system version as specified by the distributor.
+                    </para>
+                  </listitem>
+                </varlistentry>
+                <varlistentry>
+                  <term>os_distro</term>
+                  <listitem>
+                    <para>
+                      The value of this property is the common name of the operating system
+                      distribution in all-lowercase.  For this purpose, we use the same data
+                      vocabulary as the <link xlink:href="http://libosinfo.org"
+                      >libosinfo project</link>.  Following are the recognized values for
+                      this property. In the interest of interoperability, please use only
+                      a recognized value for this field.  The deprecated values are listed
+                      to assist you in searching for the recognized value.  Allowed values
+                      are:
+                      <variablelist>
+                        <varlistentry>
+                          <term><literal>arch</literal></term>
+                          <listitem>
+                            <para>
+                              This is: Arch Linux
+                            </para>
+                            <para>
+                              Do not use:
+                              <literal>archlinux</literal>, or
+                              <literal>org.archlinux</literal>
+                            </para>
+                          </listitem>
+                        </varlistentry>
+                        <varlistentry>
+                          <term><literal>centos</literal></term>
+                          <listitem>
+                            <para>
+                              This is: Community Enterprise Operating System
+                            </para>
+                            <para>
+                              Do not use:
+                              <literal>org.centos</literal>
+                              <literal>CentOS</literal>
+                            </para>
+                          </listitem>
+                        </varlistentry>
+                        <varlistentry>
+                          <term><literal>debian</literal></term>
+                          <listitem>
+                            <para>
+                              This is: Debian
+                            </para>
+                            <para>
+                              Do not use:
+                              <literal>Debian</literal>, or
+                              <literal>org.debian</literal>
+                            </para>
+                          </listitem>
+                        </varlistentry>
+                        <varlistentry>
+                          <term><literal>fedora</literal></term>
+                          <listitem>
+                            <para>
+                              This is: Fedora
+                            </para>
+                            <para>
+                              Do not use:
+                              <literal>Fedora</literal>,
+                              <literal>org.fedora</literal>, or
+                              <literal>org.fedoraproject</literal>
+                            </para>
+                          </listitem>
+                        </varlistentry>
+                        <varlistentry>
+                          <term><literal>freebsd</literal></term>
+                          <listitem>
+                            <para>
+                              This is: FreeBSD
+                            </para>
+                            <para>
+                              Do not use:
+                              <literal>org.freebsd</literal>,
+                              <literal>freeBSD</literal>, or
+                              <literal>FreeBSD</literal>
+                            </para>
+                          </listitem>
+                        </varlistentry>
+                        <varlistentry>
+                          <term><literal>gentoo</literal></term>
+                          <listitem>
+                            <para>
+                              This is: Gentoo Linux
+                            </para>
+                            <para>
+                              Do not use:
+                              <literal>Gentoo</literal>, or
+                              <literal>org.gentoo</literal>
+                            </para>
+                          </listitem>
+                        </varlistentry>
+                        <varlistentry>
+                          <term><literal>mandrake</literal></term>
+                          <listitem>
+                            <para>
+                              This is: Mandrakelinux (MandrakeSoft)
+                            </para>
+                            <para>
+                              Do not use:
+                              <literal>mandrakelinux</literal>, or
+                              <literal>MandrakeLinux</literal>
+                            </para>
+                          </listitem>
+                        </varlistentry>
+                        <varlistentry>
+                          <term><literal>mandriva</literal></term>
+                          <listitem>
+                            <para>
+                              This is: Mandriva Linux
+                            </para>
+                            <para>
+                              Do not use:
+                              <literal>mandrivalinux</literal>
+                            </para>
+                          </listitem>
+                        </varlistentry>
+                        <varlistentry>
+                          <term><literal>mes</literal></term>
+                          <listitem>
+                            <para>
+                              This is: Mandriva Enterprise Server
+                            </para>
+                            <para>
+                              Do not use:
+                              <literal>mandrivaent</literal>, or
+                              <literal>mandrivaES</literal>
+                            </para>
+                          </listitem>
+                        </varlistentry>
+                        <varlistentry>
+                          <term><literal>msdos</literal></term>
+                          <listitem>
+                            <para>
+                              This is: Microsoft Disc Operating System
+                            </para>
+                            <para>
+                              Do not use:
+                              <literal>ms-dos</literal>
+                            </para>
+                          </listitem>
+                        </varlistentry>
+                        <varlistentry>
+                          <term><literal>netbsd</literal></term>
+                          <listitem>
+                            <para>
+                              This is: NetBSD
+                            </para>
+                            <para>
+                              Do not use:
+                              <literal>NetBSD</literal>, or
+                              <literal>org.netbsd</literal>
+                            </para>
+                          </listitem>
+                        </varlistentry>
+                        <varlistentry>
+                          <term><literal>netware</literal></term>
+                          <listitem>
+                            <para>
+                              This is: Novell NetWare
+                            </para>
+                            <para>
+                              Do not use:
+                              <literal>novell</literal>, or
+                              <literal>NetWare</literal>
+                            </para>
+                          </listitem>
+                        </varlistentry>
+                        <varlistentry>
+                          <term><literal>openbsd</literal></term>
+                          <listitem>
+                            <para>
+                              This is: OpenBSD
+                            </para>
+                            <para>
+                              Do not use:
+                              <literal>OpenBSD</literal>, or
+                              <literal>org.openbsd</literal>
+                            </para>
+                          </listitem>
+                        </varlistentry>
+                        <varlistentry>
+                          <term><literal>opensolaris</literal></term>
+                          <listitem>
+                            <para>
+                              Do not use:
+                              <literal>OpenSolaris</literal>,or
+                              <literal>org.opensolaris</literal>
+                            </para>
+                          </listitem>
+                        </varlistentry>
+                        <varlistentry>
+                          <term><literal>opensuse</literal></term>
+                          <listitem>
+                            <para>
+                              This is: openSUSE
+                            </para>
+                            <para>
+                              Do not use:
+                              <literal>suse</literal>,
+                              <literal>SuSE</literal>, or
+                              <literal>org.opensuse</literal>
+                            </para>
+                          </listitem>
+                        </varlistentry>
+                        <varlistentry>
+                          <term><literal>rhel</literal></term>
+                          <listitem>
+                            <para>
+                              This is: Red Hat Enterprise Linux
+                            </para>
+                            <para>
+                              Do not use:
+                              <literal>redhat</literal>,
+                              <literal>RedHat</literal>, or
+                              <literal>com.redhat</literal>
+                            </para>
+                          </listitem>
+                        </varlistentry>
+                        <varlistentry>
+                          <term><literal>sled</literal></term>
+                          <listitem>
+                            <para>
+                              This is: SUSE Linux Enterprise Desktop
+                            </para>
+                            <para>
+                              Do not use:
+                              <literal>com.suse</literal>
+                            </para>
+                          </listitem>
+                        </varlistentry>
+                        <varlistentry>
+                          <term><literal>ubuntu</literal></term>
+                          <listitem>
+                            <para>
+                              This is: Ubuntu
+                            </para>
+                            <para>
+                              Do not use:
+                              <literal>Ubuntu</literal>,
+                              <literal>com.ubuntu</literal>,
+                              <literal>org.ubuntu</literal>, or
+                              <literal>canonical</literal>
+                            </para>
+                          </listitem>
+                        </varlistentry>
+                        <varlistentry>
+                          <term><literal>windows</literal></term>
+                          <listitem>
+                            <para>
+                              This is: Microsoft Windows
+                            </para>
+                            <para>
+                              Do not use:
+                              <literal>com.microsoft.server</literal>, or
+                              <literal>windoze</literal>
+                            </para>
+                          </listitem>
+                        </varlistentry>
+                      </variablelist>
+                    </para>
+                  </listitem>
+                </varlistentry>
+              </variablelist>
+            </para>
+          </section>
 </section>
