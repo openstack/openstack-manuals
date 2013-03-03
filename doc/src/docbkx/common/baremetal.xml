@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+xmlns:xi="http://www.w3.org/2001/XInclude"
+xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+xml:id="baremetal">
+    <title>Bare Metal Driver</title>
+    <para>
+    </para>
+    <para>
+        The baremetal driver is a hypervisor driver for Openstack Nova
+        Compute. Within the Openstack framework, it has the same role
+        as the drivers for other hypervisors (libvirt, xen, etc), and
+        yet it is presently unique in that the hardware is not
+        virtualized - there is no hypervisor between the tenants and
+        the physical hardware. It exposes hardware via Openstack's
+        API, using pluggable sub-drivers to deliver machine imaging
+        (PXE) and power control (IPMI).  With this, provisioning and
+        management of physical hardware is accomplished using common
+        cloud APIs and tools, such as Heat or salt-cloud. However, due
+        to this unique situation, using the baremetal driver requires
+        some additional preparation of its environment, the details of
+        which are beyond the scope of this guide.
+    </para>
+    <note><para>
+            Some OpenStack Compute features are not implemented by
+            the baremetal hypervisor driver.  See the <link
+                xlink:href="http://wiki.openstack.org/HypervisorSupportMatrix">
+                hypervisor support matrix</link> for details.
+    </para></note>
+    <para>
+        For the Baremetal driver to be loaded and function properly,
+        ensure that the following options are set in
+        <filename>/etc/nova/nova.conf</filename> on your <systemitem
+            class="service">nova-compute</systemitem> hosts.
+        <programlisting>
+            [default]
+            compute_driver=nova.virt.baremetal.driver.BareMetalDriver
+            firewall_driver = nova.virt.firewall.NoopFirewallDriver
+            scheduler_host_manager=nova.scheduler.baremetal_host_manager.BaremetalHostManager
+            ram_allocation_ratio=1.0
+            reserved_host_memory_mb=0
+        </programlisting>
+    </para>
+    <para>
+        There are many configuration options specific to the
+        Baremetal driver.  Also, some additional steps will be
+        required, such as building the baremetal deploy ramdisk.  See
+        the <link
+            xlink:href="https://wiki.openstack.org/wiki/GeneralBareMetalProvisioningFramework">
+            main wiki page</link> for details and implementation suggestions.
+    </para>
+</section>
