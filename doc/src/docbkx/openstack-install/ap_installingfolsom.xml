@@ -77,10 +77,8 @@ net.ipv4.ip_forward=1
 
 driftfile /var/lib/ntp/ntp.drift
 
-
 # Enable this if you want statistics to be logged.
-#statsdir /var/log/ntpstats/
-
+statsdir /var/log/ntpstats/
 statistics loopstats peerstats clockstats
 filegen loopstats file loopstats type day enable
 filegen peerstats file peerstats type day enable
@@ -91,13 +89,16 @@ filegen clockstats file clockstats type day enable
 # Use servers from the NTP Pool Project. Approved by Ubuntu Technical Board
 # on 2011-02-08 (LP: #104525). See http://www.pool.ntp.org/join.html for
 # more information.
-server 0.ubuntu.pool.ntp.org
-server 1.ubuntu.pool.ntp.org
-server 2.ubuntu.pool.ntp.org
-server 3.ubuntu.pool.ntp.org
+server 0.ubuntu.pool.ntp.org iburst
+server 1.ubuntu.pool.ntp.org iburst
+server 2.ubuntu.pool.ntp.org iburst
+server 3.ubuntu.pool.ntp.org iburst
 
-# Use Ubuntu's ntp server as a fallback.
+# Use Ubuntu's ntp server as well.
 server ntp.ubuntu.com iburst
+
+# Use local RTC as last-ditch high-stratum time source
+# See http://support.ntp.org/bin/view/Support/SelectingOffsiteNTPServers#Section_5.3.5.
 server 127.127.1.0
 fudge 127.127.1.0 stratum 10
 
@@ -109,18 +110,28 @@ fudge 127.127.1.0 stratum 10
 # that might be intended to block requests from certain clients could also end
 # up blocking replies from your own upstream servers.
 
-# By default, exchange time with everybody, but don't allow configuration.
+# By default, exchange time with everybody, but don't allow them to do
+# anything but get time service -- they can't query for read-only statistics
+# using ntpq or ntpdc, much less anything else
 restrict -4 default kod notrap nomodify nopeer noquery
 restrict -6 default kod notrap nomodify nopeer noquery
 
-# Local users may interrogate the ntp server more closely.
+# Local users may interrogate the ntp server more closely
+# Note that they can also make configuration changes, if they have the
+# right cryptographic keys.
 restrict 127.0.0.1
 restrict ::1
 
-# Clients from this (example!) subnet have unlimited access, but only if
-# cryptographically authenticated.
-#restrict 192.168.123.0 mask 255.255.255.0 notrust
+# Clients from this (example!) subnet also have read-only access to
+# information that would be returned by using ntpq or ntpdc commands.
+#restrict 192.168.123.0 mask 255.255.255.0 kod notrap nomodify nopeer
 
+# Note that all cryptographic authentication in NTP is exclusively
+# from server to client -- if you want to prevent unknown/untrusted
+# clients from getting time service from your server, you can't rely
+# on cryptographic authentication to provide that.  Try using other
+# methods to prevent those queries from getting to the ntp daemon
+# in the first place.
 
 # If you want to provide time to your local subnet, change the next line.
 # (Again, the address is an example only.)
