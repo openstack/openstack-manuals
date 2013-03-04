@@ -66,7 +66,7 @@
         <literal>qpid_hostname</literal> instead of <literal>rabbit_host</literal>
         in the <filename>nova.conf</filename> file.</para></note>
 
-      <para>Create a “nova” group, so you can set permissions on the
+<para>Create a <literal>nova</literal> group, so you can set permissions on the
       configuration file:</para>
 
       <screen><prompt>$</prompt> <userinput>sudo addgroup nova</userinput></screen>
@@ -109,11 +109,11 @@
       max IPs available in a <literal>/24</literal>. You can choose values
       that let you use any valid amount that you would like.</para>
 
-      <para>The nova-manage service assumes that the first IP address is your
-      network (like 192.168.0.0), that the 2nd IP is your gateway
-      (192.168.0.1), and that the broadcast is the very last IP in the range
-      you defined (192.168.0.255). If this is not the case you will need to
-      manually edit the sql db <literal>networks</literal> table.</para>
+      <para>The <command>nova-manage</command> service assumes that the first IP address is your
+          network (like <literal>192.168.0.0</literal>), that the 2nd IP is your gateway
+          (<literal>192.168.0.1</literal>), and that the broadcast is the very last IP in the range
+          you defined (<literal>192.168.0.255</literal>). If this is not the case you will need to
+          manually edit the sql db <literal>networks</literal> table.</para>
 
       <para>When you run the <command>nova-manage network create</command>
       command, entries are made in the <literal>networks</literal> and
@@ -127,8 +127,8 @@
       <para>The credentials you will use to launch
         instances, bundle images, and all the other assorted
         API functions can be sourced in a single file, such as
-        creating one called /creds/openrc. </para>
-      <para>Here's an example openrc file you can download from
+        creating one called <filename>/creds/openrc</filename>. </para>
+    <para>Here's an example <filename>openrc</filename> file you can download from
         the Dashboard in Settings > Project Settings >
         Download RC File. </para>
       <para>
@@ -147,7 +147,7 @@ export OS_AUTH_STRATEGY=keystone
 </programlisting>
       </para>
       <para>You also may want to enable EC2 access for the
-        euca2ools. Here is an example ec2rc file for enabling
+        euca2ools. Here is an example <filename>ec2rc</filename> file for enabling
         EC2 access with the required credentials.</para>
       <para>
         <programlisting language="bash">
@@ -228,7 +228,7 @@ source ~/.bashrc</userinput></screen>
 
       <para>If you get the <literal>instance not found</literal> message while
       performing the restart, that means the service was not previously
-      running. You simply need to start it instead of restarting it : </para>
+      running. You simply need to start it instead of restarting it: </para>
 
       <screen><prompt>$</prompt> <userinput>sudo service nova-network start</userinput></screen>
     </section>
@@ -401,25 +401,26 @@ $ <userinput>sudo service nova-compute restart</userinput></screen>
 
     <para>You can use a particular configuration option file by using
       the <literal>option</literal> (<filename>nova.conf</filename>)
-      parameter when running one of the nova- services. This inserts
-      configuration option definitions from the given configuration
+      parameter when running one of the <literal>nova-*</literal> services.
+      This inserts configuration option definitions from the given configuration
       file name, which may be useful for debugging or performance
       tuning. Here are some general purpose configuration
       options.</para>
 
     <para>If you want to maintain the state of all the services, you
-      can use the state_path configuration option to indicate a
-      top-level directory for storing data related to the state of
-      Compute including images if you are using the Compute object
-      store. </para>
+        can use the <literal>state_path</literal> configuration option to indicate a
+        top-level directory for storing data related to the state of
+        Compute including images if you are using the Compute object
+        store. </para>
   </section>
 
   <section xml:id="sample-nova-configuration-files">
   <title>Example <filename>nova.conf</filename> Configuration Files</title>
   <para>
-The following sections describe many of the configuration option settings that can go into the
-nova.conf files. Copies of each nova.conf file need to be copied to each compute node. Here are
-some sample nova.conf files that offer examples of specific configurations.
+    The following sections describe many of the configuration option settings that can go into the
+    <filename>nova.conf</filename> files. Copies of each <filename>nova.conf</filename> file need
+    to be copied to each compute node. Here are some sample <filename>nova.conf</filename>
+    files that offer examples of specific configurations.
    </para>
     <simplesect>
       <title>KVM, Flat, MySQL, and Glance, OpenStack or EC2 API</title>
@@ -535,22 +536,23 @@ xenapi_remap_vbd_dev=true
     communication by putting it into a IPv4/IPv6 dual stack mode. In IPv4/IPv6
     dual stack mode, instances can acquire their IPv6 global unicast address
     by stateless address autoconfiguration mechanism [RFC 4862/2462].
-    IPv4/IPv6 dual stack mode works with VlanManager and FlatDHCPManager
-    networking modes. In VlanManager, different 64bit global routing prefix is used for
-    each project. In FlatDHCPManager, one 64bit global routing prefix is used
+    IPv4/IPv6 dual stack mode works with <literal>VlanManager</literal> and <literal>FlatDHCPManager</literal>
+    networking modes. In <literal>VlanManager</literal>, different 64bit global routing prefix is used for
+    each project. In <literal>FlatDHCPManager</literal>, one 64bit global routing prefix is used
     for all instances.</para>
 
     <para>This configuration has been tested with VM images
     that have IPv6 stateless address autoconfiguration capability (must use
     EUI-64 address for stateless address autoconfiguration), a requirement for
     any VM you want to run with an IPv6 address. Each node that executes a
-    nova- service must have python-netaddr and radvd installed.</para>
+    <literal>nova-*</literal> service must have <literal>python-netaddr</literal>
+    and <literal>radvd</literal> installed.</para>
 
     <para>On all nova-nodes, install python-netaddr:</para>
 
     <screen><prompt>$</prompt> <userinput>sudo apt-get install -y python-netaddr</userinput></screen>
 
-    <para>On all nova-network nodes install radvd and configure IPv6
+    <para>On all <literal>nova-network</literal> nodes install <literal>radvd</literal> and configure IPv6
     networking:</para>
 
     <screen><prompt>$</prompt> <userinput>sudo apt-get install -y radvd</userinput>
@@ -569,22 +571,22 @@ xenapi_remap_vbd_dev=true
 
     <para>You can set IPv6 global routing prefix by using the
         <literal>fixed_range_v6</literal> parameter. The default
-      is: <literal>fd00::/48</literal>. When you use FlatDHCPManager, the command uses
-      the original value of fixed_range_v6. When you use VlanManager,
+      is: <literal>fd00::/48</literal>. When you use <literal>FlatDHCPManager</literal>, the command uses
+      the original value of <literal>fixed_range_v6</literal>. When you use <literal>VlanManager</literal>,
       the command creates prefixes of subnet by incrementing subnet
       id. Guest VMs uses this prefix for generating their IPv6 global
       unicast address.</para>
 
-    <para>Here is a usage example for VlanManager:</para>
+    <para>Here is a usage example for <literal>VlanManager</literal>:</para>
 
     <screen><prompt>$</prompt> <userinput>nova-manage network create public 10.0.1.0/24 3 32 100 1000 fd00:1::/48 </userinput></screen>
 
-    <para>Here is a usage example for FlatDHCPManager:</para>
+    <para>Here is a usage example for <literal>FlatDHCPManager</literal>:</para>
 
     <screen><prompt>$</prompt> <userinput>nova-manage network create public 10.0.2.0/24 3 32 0 0 fd00:1::/48 </userinput></screen>
 
     <para>Note that <literal>vlan_start</literal> and <literal>vpn_start</literal> parameters are not used by
-    FlatDHCPManager.</para>
+    <literal>FlatDHCPManager</literal>.</para>
 
     <xi:include href="tables/ipv6-nova-conf.xml"/>
   </section>
@@ -658,14 +660,14 @@ xenapi_remap_vbd_dev=true
           <para><emphasis role="bold">Hypervisor:</emphasis> KVM with libvirt</para>
         </listitem>
         <listitem>
-          <para><emphasis role="bold">Shared storage:</emphasis> NOVA-INST-DIR/instances/ (eg
-            /var/lib/nova/instances) has to be mounted by shared storage. This guide uses NFS but
-            other options, including the <link
+            <para><emphasis role="bold">Shared storage:</emphasis> <filename><replaceable>NOVA-INST-DIR</replaceable>/instances/</filename> (eg
+              <filename>/var/lib/nova/instances</filename>) has to be mounted by shared storage. This guide uses NFS but
+              other options, including the <link
               xlink:href="http://gluster.org/community/documentation//index.php/OSConnect">OpenStack
               Gluster Connector</link> are available.</para>
         </listitem>
         <listitem>
-          <para><emphasis role="bold">Instances:</emphasis> Instance can be migrated with ISCSI
+          <para><emphasis role="bold">Instances:</emphasis> Instance can be migrated with iSCSI
             based volumes</para>
         </listitem>
       </itemizedlist>
@@ -676,9 +678,10 @@ xenapi_remap_vbd_dev=true
            for more details.</para>
       </note>
       <note>
-        <para> This guide assumes the default value for instances_path in your nova.conf
-          ("NOVA-INST-DIR/instances"). If you have changed the state_path or instances_path
-          variables, please modify accordingly </para>
+          <para> This guide assumes the default value for <literal>instances_path</literal> in your nova.conf
+              (<filename><replaceable>NOVA-INST-DIR</replaceable>/instances</filename>). If you have changed the <literal>state_path</literal>
+              or <literal>instances_path</literal>
+              variables, please modify accordingly. </para>
       </note>
       <note>
         <para>You must specify <literal>vncserver_listen=0.0.0.0</literal> or live migration will
@@ -688,27 +691,28 @@ xenapi_remap_vbd_dev=true
 
     <para><emphasis role="bold">Example Nova Installation Environment</emphasis> <itemizedlist>
         <listitem>
-          <para>Prepare 3 servers at least; for example, HostA, HostB
-            and HostC</para>
+            <para>Prepare 3 servers at least; for example, <literal>HostA</literal>, <literal>HostB</literal>
+                and <literal>HostC</literal></para>
         </listitem>
 
         <listitem>
-          <para>HostA is the "Cloud Controller", and should be running: nova-api, nova-scheduler,
-              nova-network, nova-volume, nova-objectstore.</para>
+            <para><literal>HostA</literal> is the "Cloud Controller", and should be running: <literal>nova-api</literal>,
+                <literal>nova-scheduler</literal>, <literal>nova-network</literal>, <literal>nova-volume</literal>,
+                <literal>nova-objectstore</literal>.</para>
         </listitem>
 
         <listitem>
-          <para>Host B and Host C are the "compute nodes", running nova-compute.</para>
+            <para><literal>HostB</literal> and <literal>HostC</literal> are the "compute nodes", running <literal>nova-compute</literal>.</para>
         </listitem>
 
         <listitem>
-          <para>Ensure that, NOVA-INST-DIR (set with state_path in nova.conf) is same on
+            <para>Ensure that, <literal><replaceable>NOVA-INST-DIR</replaceable></literal> (set with <literal>state_path</literal> in <filename>nova.conf</filename>) is same on
             all hosts.</para>
         </listitem>
 
         <listitem>
-          <para>In this example, HostA will be the NFSv4 server which exports NOVA-INST-DIR/instances,
-          and HostB and HostC mount it.</para>
+            <para>In this example, <literal>HostA</literal> will be the NFSv4 server which exports <filename><replaceable>NOVA-INST-DIR</replaceable>/instances</filename>,
+                and <literal>HostB</literal> and <literal>HostC</literal> mount it.</para>
         </listitem>
       </itemizedlist></para>
 
@@ -734,19 +738,19 @@ xenapi_remap_vbd_dev=true
           <para>Follow the instructions at
 
 <link xlink:href="https://help.ubuntu.com/community/SettingUpNFSHowTo">the Ubuntu NFS HowTo to
-setup an NFS server on HostA, and NFS Clients on HostB and HostC.</link> </para>
-        <para> Our aim is to export NOVA-INST-DIR/instances from HostA,
-        and have it readable and writable by the nova user on HostB and HostC.</para>
+    setup an NFS server on <literal>HostA</literal>, and NFS Clients on <literal>HostB</literal> and <literal>HostC</literal>.</link> </para>
+        <para> Our aim is to export <filename><replaceable>NOVA-INST-DIR</replaceable>/instances</filename> from <literal>HostA</literal>,
+            and have it readable and writable by the nova user on <literal>HostB</literal> and <literal>HostC</literal>.</para>
         </listitem>
         <listitem>
         <para>
         Using your knowledge from the Ubuntu documentation, configure the
-        NFS server at HostA by adding a line to <filename>/etc/exports</filename>
-          <programlisting>NOVA-INST-DIR/instances HostA/255.255.0.0(rw,sync,fsid=0,no_root_squash)</programlisting>
+        NFS server at <literal>HostA</literal> by adding a line to <filename>/etc/exports</filename>
+          <programlisting><replaceable>NOVA-INST-DIR</replaceable>/instances HostA/255.255.0.0(rw,sync,fsid=0,no_root_squash)</programlisting>
         </para>
           <para>Change the subnet mask (<literal>255.255.0.0</literal>) to the appropriate
-            value to include the IP addresses of HostB and HostC. Then
-            restart the NFS server.</para>
+              value to include the IP addresses of <literal>HostB</literal> and <literal>HostC</literal>. Then
+              restart the NFS server.</para>
 
           <screen><prompt>$</prompt> <userinput>/etc/init.d/nfs-kernel-server restart</userinput>
 <prompt>$</prompt> <userinput>/etc/init.d/idmapd restart</userinput></screen>
@@ -757,13 +761,13 @@ setup an NFS server on HostA, and NFS Clients on HostB and HostC.</link> </para>
             'execute/search' bit to allow qemu to be able to use the images
             within the directories. On all hosts, execute the
             following command: </para>
-          <screen><prompt>$</prompt> <userinput>chmod o+x NOVA-INST-DIR/instances</userinput> </screen>
+          <screen><prompt>$</prompt> <userinput>chmod o+x <replaceable>NOVA-INST-DIR</replaceable>/instances</userinput> </screen>
         </listitem>
         <listitem>
           <para>Configure NFS at HostB and HostC by adding below to
-            /etc/fstab.</para>
+              <filename>/etc/fstab</filename>.</para>
 
-          <programlisting>HostA:/ /NOVA-INST-DIR/instances nfs4 defaults 0 0</programlisting>
+          <programlisting>HostA:/ /<replaceable>NOVA-INST-DIR</replaceable>/instances nfs4 defaults 0 0</programlisting>
 
           <para>Then ensure that the exported
             directory can be mounted.</para>
@@ -986,15 +990,15 @@ $ nova aggregate-set-metadata &lt;aggregate-id&gt; operational_state=created</pr
       <itemizedlist>
          <listitem><para>Establish a root trust between all hypervisor
          nodes of your deployment:</para>
-         <para>You can simply do so, by generating an ssh key-pair (with ssh-keygen)
-         and then ensuring that each of your dom0's authorized_keys file
-         (located in /root/.ssh/authorized_keys) contains the public key fingerprint
-         (located in /root/.ssh/id_rsa.pub).</para>
+     <para>You can simply do so, by generating an ssh key-pair (with <command>ssh-keygen</command>)
+         and then ensuring that each of your dom0's <filename>authorized_keys</filename> file
+         (located in <filename>/root/.ssh/authorized_keys</filename>) contains the public key fingerprint
+         (located in <filename>/root/.ssh/id_rsa.pub</filename>).</para>
          </listitem>
-         <listitem><para>Provide a /images mountpoint to your hypervisor's dom0:</para>
+         <listitem><para>Provide a <filename>/images</filename> mountpoint to your hypervisor's dom0:</para>
          <para>Dom0 space is a premium so creating a directory in dom0 is kind of
          dangerous, and almost surely bound to fail especially when resizing big servers.
-         The least you can do is to symlink /images to your local storage SR. The
+         The least you can do is to symlink <filename>/images</filename> to your local storage SR. The
          instructions below work for an English based installation of XenServer (and XCP)
          and in the case of ext3 based SR (with which the resize functionality is
          known to work correctly).</para>
@@ -1052,22 +1056,22 @@ ln -s  $img_dir /images
     <para>
       <itemizedlist>
         <listitem>
-          <para>10.0.10.15 for the MooseFS metadata server admin IP</para>
+            <para><literal>10.0.10.15</literal> for the MooseFS metadata server admin IP</para>
         </listitem>
         <listitem>
-          <para>10.0.10.16 for the MooseFS metadata server main IP</para>
+            <para><literal>10.0.10.16</literal> for the MooseFS metadata server main IP</para>
         </listitem>
         <listitem>
-          <para>10.0.10.17 for the MooseFS metalogger server admin IP</para>
+            <para><literal>10.0.10.17</literal> for the MooseFS metalogger server admin IP</para>
         </listitem>
         <listitem>
-          <para>10.0.10.18 for the MooseFS metalogger server main IP</para>
+            <para><literal>10.0.10.18</literal> for the MooseFS metalogger server main IP</para>
         </listitem>
         <listitem>
-          <para>10.0.10.19 for the MooseFS first chunkserver IP</para>
+            <para><literal>10.0.10.19</literal> for the MooseFS first chunkserver IP</para>
         </listitem>
         <listitem>
-          <para>10.0.10.20 for the MooseFS second chunkserver IP</para>
+            <para><literal>10.0.10.20</literal> for the MooseFS second chunkserver IP</para>
         </listitem>
       </itemizedlist>
       <figure xml:id="moose-FS-deployment">
@@ -1146,12 +1150,12 @@ ln -s  $img_dir /images
           </listitem>
           <listitem>
             <para><emphasis role="bold">Power up the MooseFS mfsmaster service</emphasis></para>
-            <para>You can now start the mfsmaster and mfscgiserv deamons on the MooseFS
-              metadataserver (The mfscgiserv is a webserver which allows you to see via a
-              webinterface the MooseFS status realtime) :
-              <screen><prompt>$</prompt> <userinput>/usr/sbin/mfsmaster start &amp;&amp; /usr/sbin/mfscgiserv start</userinput></screen>Open
-              the following url in your browser : http://10.0.10.16:9425 to see the MooseFS status
-              page</para>
+            <para>You can now start the <literal>mfsmaster</literal> and <literal>mfscgiserv</literal> deamons on the MooseFS
+                metadataserver (The <literal>mfscgiserv</literal> is a webserver which allows you to see via a
+                web interface the MooseFS status realtime) :
+                <screen><prompt>$</prompt> <userinput>/usr/sbin/mfsmaster start &amp;&amp; /usr/sbin/mfscgiserv start</userinput></screen>Open
+                the following url in your browser : http://10.0.10.16:9425 to see the MooseFS status
+                page</para>
             <para/>
           </listitem>
           <listitem>
@@ -1288,11 +1292,11 @@ mfsmount 	/var/lib/nova/instances fuse mfsmaster=mfsmaster,_netdev 	0 	0
     <title>Configuring Database Connections</title>
 
     <para>You can configure OpenStack Compute to use any SQLAlchemy-compatible
-    database. The database name is 'nova' and entries to it are mostly written
-    by the nova-scheduler service, although all the services need to be able
-    to update entries in the database. Use these settings to configure the
-    connection string for the nova database.</para>
-    <xi:include href="tables/database-nova-conf.xml"/>
+        database. The database name is <literal>nova</literal> and entries to it are mostly written
+        by the <literal>nova-scheduler</literal> service, although all the services need to be able
+        to update entries in the database. Use these settings to configure the
+        connection string for the nova database.</para>
+        <xi:include href="tables/database-nova-conf.xml"/>
   </section>
 
   <section xml:id="configuring-compute-messaging">
@@ -1327,9 +1331,11 @@ rpc_backend=nova.rpc.impl_kombu
         communication for different installation scenarios as well as
         tune RabbitMQ's retries and the size of the RPC thread pool.
         If you want to monitor notifications through RabbitMQ, you
-        must set the notification_driver option in nova.conf to
-        nova.notifier.rabbit_notifier. The default for sending usage
-        data is 60 seconds plus a randomized 0-60 seconds. </para>
+        must set the <literal>notification_driver</literal> option in
+        <filename>nova.conf</filename> to 
+        <literal>nova.notifier.rabbit_notifier</literal>. The default
+        for sending usage data is 60 seconds plus a randomized 0-60 seconds.
+      </para>
 
       <table rules="all">
         <caption>Description of <filename>nova.conf</filename>
