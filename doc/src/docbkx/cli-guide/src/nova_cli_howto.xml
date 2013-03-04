@@ -142,6 +142,86 @@ Positional arguments:
             you can use the <code>nova get-vnc-console</code> command
             to connect.</para>
     </section>
+    <section xml:id="baremetal">
+        <title>Managing Baremetal Nodes</title>
+        <para>If you are using the Baremetal driver, you must inform each Nova Compute
+            host of the physical hardware that it should manage. This is done via the
+            baremetal admin extension.</para>
+        <para>Create a node with <command>nova baremetal-node-create</command>, and then
+            add network interface information to it with <command>nova baremetal-interface-add
+            </command>. Nodes and interfaces can be listed and deleted. When a node is in use,
+            its status includes the UUID of the Nova instance that is running on it.
+        <screen>
+<prompt>$</prompt> <userinput>nova baremetal-node-create</userinput> --pm_address=1.2.3.4 --pm_user=ipmi --pm_password=ipmi $(hostname -f) 1 512 10 aa:bb:cc:dd:ee:ff
++------------------+-------------------+
+| Property         | Value             |
++------------------+-------------------+
+| instance_uuid    | None              |
+| pm_address       | 1.2.3.4           |
+| interfaces       | []                |
+| prov_vlan_id     | None              |
+| cpus             | 1                 |
+| memory_mb        | 512               |
+| prov_mac_address | aa:bb:cc:dd:ee:ff |
+| service_host     | ubuntu            |
+| local_gb         | 10                |
+| id               | 1                 |
+| pm_user          | ipmi              |
+| terminal_port    | None              |
++------------------+-------------------+
+
+<prompt>$</prompt> <userinput>nova baremetal-interface-add</userinput> 1 aa:bb:cc:dd:ee:ff                   
++-------------+-------------------+
+| Property    | Value             |
++-------------+-------------------+
+| datapath_id | 0                 |
+| id          | 1                 |
+| port_no     | 0                 |
+| address     | aa:bb:cc:dd:ee:ff |
++-------------+-------------------+
+
+<prompt>$</prompt> <userinput>nova baremetal-node-list</userinput>
++----+--------+------+-----------+---------+-------------------
+  +------+------------+-------------+-------------+---------------+
+| ID | Host   | CPUs | Memory_MB | Disk_GB | MAC Address       
+  | VLAN | PM Address | PM Username | PM Password | Terminal Port |
++----+--------+------+-----------+---------+-------------------
+  +------+------------+-------------+-------------+---------------+
+| 1  | ubuntu | 1    | 512       | 10      | aa:bb:cc:dd:ee:ff 
+  | None | 1.2.3.4    | ipmi        |             | None          |
++----+--------+------+-----------+---------+-------------------
+  +------+------------+-------------+-------------+---------------+
+
+<prompt>$</prompt> <userinput>nova boot --image my-baremetal-image --flavor my-baremetal-flavor test</userinput>
++-----------------------------+--------------------------------------+
+| Property                    | Value                                |
++-----------------------------+--------------------------------------+
+| status                      | BUILD                                |
+| id                          | cc302a8f-cd81-484b-89a8-b75eb3911b1b |
+
+... wait for instance to become active ...
+
+<prompt>$</prompt> <userinput>nova baremetal-node-show</userinput> 1
++------------------+--------------------------------------+
+| Property         | Value                                |
++------------------+--------------------------------------+
+| instance_uuid    | cc302a8f-cd81-484b-89a8-b75eb3911b1b |
+| pm_address       | 1.2.3.4                              |
+| interfaces       | 
+  [{u'datapath_id': u'0', u'id': 1, u'port_no': 0, u'address': u'aa:bb:cc:dd:ee:ff'}] |
+| prov_vlan_id     | None                                 |
+| cpus             | 1                                    |
+| memory_mb        | 512                                  |
+| prov_mac_address | aa:bb:cc:dd:ee:ff                    |
+| service_host     | ubuntu                               |
+| local_gb         | 10                                   |
+| id               | 1                                    |
+| pm_user          | ipmi                                 |
+| terminal_port    | None                                 |
++------------------+--------------------------------------+
+
+        </screen></para>
+    </section>
     <xi:include href="nova_cli_commands.xml"/>
     <xi:include href="../../common/nova_cli_usage_statistics.xml"/>
 
