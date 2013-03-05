@@ -10,98 +10,123 @@
             Currently (as of the Folsom release) both are nearly
             identical in terms of functionality, API's and even the
             general theory of operation. Keep in mind however that
-            Nova-Volumes is deprecated and will be removed at the
+            <literal>nova-volume</literal> is deprecated and will be removed at the
             release of Grizzly. </para>
-        <para>See the Cinder section of the <link
-                xlink:href="http://docs.openstack.org/trunk/openstack-compute/install/apt/content/osfolubuntu-cinder.html"
-                >Folsom Install Guide</link> for Cinder-specific
-            information.</para>
+        <para>For Cinder-specific install 
+            information, refer to the OpenStack Installation Guide.</para>
     </section>
     <section xml:id="managing-volumes">
         <title>Managing Volumes</title>
-        <para>Nova-volume is the service that allows you to give extra block level storage to your
-            OpenStack Compute instances. You may recognize this as a similar offering from Amazon
-            EC2 known as Elastic Block Storage (EBS). However, nova-volume is not the same
-            implementation that EC2 uses today. Nova-volume is an iSCSI solution that employs the
-            use of Logical Volume Manager (LVM) for Linux. Note that a volume may only be attached
-            to one instance at a time. This is not a ‘shared storage’ solution like a SAN of NFS on
-            which multiple servers can attach to.</para>
-        <para>Before going any further; let's discuss the nova-volume implementation in OpenStack: </para>
-        <para>The nova-volumes service uses iSCSI-exposed LVM volumes to the compute nodes which run
-            instances. Thus, there are two components involved: </para>
+        <para>The Cinder project provides the service that allows you
+            to give extra block level storage to your OpenStack
+            Compute instances. You may recognize this as a similar
+            offering from Amazon EC2 known as Elastic Block Storage
+            (EBS). However, OpenStack Block Storage is not the same
+            implementation that EC2 uses today. This is an iSCSI
+            solution that employs the use of Logical Volume Manager
+            (LVM) for Linux. Note that a volume may only be attached
+            to one instance at a time. This is not a ‘shared storage’
+            solution like a SAN of NFS on which multiple servers can
+            attach to.</para>
+        <para>Before going any further; let's discuss the block
+            storage implementation in OpenStack: </para>
+        <para>The cinder service uses iSCSI-exposed LVM volumes to the
+            compute nodes which run instances. Thus, there are two
+            components involved: </para>
         <para>
             <orderedlist>
                 <listitem>
-                    <para>lvm2, which works with a VG called "nova-volumes" (Refer to <link
+                    <para>lvm2, which works with a VG called
+                            <literal>cinder-volumes</literal> or
+                        another named Volume Group (Refer to <link
                             xlink:href="http://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)"
-                            >http://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)</link> for
-                        further details)</para>
+                            >http://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)</link>
+                        for further details)</para>
                 </listitem>
                 <listitem>
-                    <para>open-iscsi, the iSCSI implementation which manages iSCSI sessions on the
-                        compute nodes </para>
+                    <para><literal>open-iscsi</literal>, the iSCSI
+                        implementation which manages iSCSI sessions on
+                        the compute nodes </para>
                 </listitem>
             </orderedlist>
         </para>
-        <para>Here is what happens from the volume creation to its attachment: </para>
+        <para>Here is what happens from the volume creation to its
+            attachment: </para>
         <orderedlist>
             <listitem>
-                <para>The volume is created via <command>nova volume-create</command>; which creates an LV into the
-                    volume group (VG) "nova-volumes" </para>
+                <para>The volume is created via <command>nova
+                        volume-create</command>; which creates an LV
+                    into the volume group (VG)
+                        <literal>cinder-volumes</literal>
+                </para>
             </listitem>
             <listitem>
-                <para>The volume is attached to an instance via <command>nova volume-attach</command>; which creates a
-                    unique iSCSI IQN that will be exposed to the compute node </para>
+                <para>The volume is attached to an instance via
+                        <command>nova volume-attach</command>; which
+                    creates a unique iSCSI IQN that will be exposed to
+                    the compute node </para>
             </listitem>
             <listitem>
-                <para>The compute node which run the concerned instance has now an active ISCSI
-                    session; and a new local storage (usually a /dev/sdX disk) </para>
+                <para>The compute node which run the concerned
+                    instance has now an active ISCSI session; and a
+                    new local storage (usually a
+                        <filename>/dev/sdX</filename> disk) </para>
             </listitem>
             <listitem>
-                <para>libvirt uses that local storage as a storage for the instance; the instance
-                    get a new disk (usually a /dev/vdX disk) </para>
+                <para>libvirt uses that local storage as a storage for
+                    the instance; the instance get a new disk (usually
+                    a <filename>/dev/vdX</filename> disk) </para>
             </listitem>
         </orderedlist>
-        <para>For this particular walk through, there is one cloud controller running nova-api,
-            nova-scheduler, nova-objectstore, nova-network and nova-volume services. There are two
-            additional compute nodes running nova-compute. The walk through uses a custom
-            partitioning scheme that carves out 60GB of space and labels it as LVM. The network is a
-            /28 .80-.95, and FlatManger is the NetworkManager setting for OpenStack Compute (Nova). </para>
+        <para>For this particular walk through, there is one cloud
+            controller running <literal>nova-api</literal>,
+                <literal>nova-scheduler</literal>,
+                <literal>nova-objectstore</literal>,
+                <literal>nova-network</literal> and
+                <literal>cinder-*</literal> services. There are two
+            additional compute nodes running
+                <literal>nova-compute</literal>. The walk through uses
+            a custom partitioning scheme that carves out 60GB of space
+            and labels it as LVM. The network uses
+                <literal>FlatManger</literal> is the
+                <literal>NetworkManager</literal> setting for
+            OpenStack Compute (Nova). </para>
         <para>Please note that the network mode doesn't interfere at
-            all with the way nova-volume works, but networking must be
-            set up for nova-volumes to work. Please refer to <link
+            all with the way cinder works, but networking must be set
+            up for cinder to work. Please refer to <link
                 linkend="ch_networking">Networking</link> for more
             details.</para>
-        <para>To set up Compute to use volumes, ensure that nova-volume is installed along with
-            lvm2. The guide will be split in four parts : </para>
+        <para>To set up Compute to use volumes, ensure that Block
+            Storage is installed along with lvm2. The guide will be
+            split in four parts : </para>
         <para>
             <itemizedlist>
                 <listitem>
-                    <para>Installing the nova-volume service on the cloud controller.</para>
+                    <para>Installing the Block Storage service on the
+                        cloud controller.</para>
                 </listitem>
                 <listitem>
-                    <para>Configuring the "nova-volumes" volume group on the compute
-                        nodes.</para>
+                    <para>Configuring the
+                            <literal>cinder-volumes</literal> volume
+                        group on the compute nodes.</para>
                 </listitem>
                 <listitem>
-                    <para>Troubleshooting your nova-volume installation.</para>
+                    <para>Troubleshooting your installation.</para>
                 </listitem>
                 <listitem>
                     <para>Backup your nova volumes.</para>
                 </listitem>
             </itemizedlist>
         </para>
-        <xi:include href="install-nova-volume.xml" />
-        <xi:include href="configure-nova-volume.xml" />
-        <xi:include href="troubleshoot-nova-volume.xml" />
-        <xi:include href="troubleshoot-cinder.xml" />
-        <xi:include href="backup-nova-volume-disks.xml" />
+        <xi:include href="../openstack-install/cinder-install.xml"/>
+        <xi:include href="troubleshoot-cinder.xml"/>
+        <xi:include href="backup-block-storage-disks.xml"/>
     </section>
     <section xml:id="volume-drivers">
         <title>Volume drivers</title>
-        <para>The default nova-volume behaviour can be altered by
-            using different volume drivers that are included in Nova
-            codebase. To set volume driver, use
+        <para>The default behaviour can be altered by
+            using different volume drivers that are included in the Compute (Nova)
+            code base. To set volume driver, use
                 <literal>volume_driver</literal> flag. The default is
             as follows:</para>
         <programlisting>
@@ -305,7 +330,7 @@ iscsi_helper=tgtadm
                     be port 22 (SSH). </para>
                 <note>
                     <para>Make sure the compute node running
-                          the nova-volume management driver has SSH
+                          the block storage management driver has SSH
                           network access to
                           the storage system. </para>
                 </note>
@@ -799,11 +824,11 @@ volume_driver=nova.volume.storwize_svc.StorwizeSVCDriver
                     <title>Operation</title>
                     <para>The admin uses the nova-manage command
                         detailed below to add flavors and backends. </para>
-                    <para>One or more nova-volume service instances
+                    <para>One or more cinder service instances
                         will be deployed per availability zone. When
                         an instance is started, it will create storage
                         repositories (SRs) to connect to the backends
-                        available within that zone. All nova-volume
+                        available within that zone. All cinder
                         instances within a zone can see all the
                         available backends. These instances are
                         completely symmetric and hence should be able
@@ -885,7 +910,7 @@ Note: SR type and config connection parameters are in keeping with the XenAPI Co
                         </listitem>
                         <listitem>
                             <para>
-                                <emphasis role="bold">Start nova-volume and nova-compute with the new configuration options.
+                                <emphasis role="bold">Start cinder and nova-compute with the new configuration options.
                                 </emphasis>
                             </para>
                         </listitem>
@@ -904,14 +929,14 @@ Note: SR type and config connection parameters are in keeping with the XenAPI Co
                 </simplesect>
             </section>
             <section xml:id="cinder-volumes-solidfire">
-                <title>Configuring Cinder or Nova-Volumes to use a SolidFire Cluster</title>
+                <title>Configuring Block Storage (Cinder) to use a SolidFire Cluster</title>
                 <para>The SolidFire Cluster is a high performance all SSD iSCSI storage device,
                     providing massive scale out capability and extreme fault tolerance.  A key
                     feature of the SolidFire cluster is the ability to set and modify during
                     operation specific QoS levels on a volume per volume basis.  The SolidFire
                     cluster offers all of these things along with de-duplication, compression and an
                     architecture that takes full advantage of SSD's.</para>
-                <para>To configure and use a SolidFire cluster with Nova-Volumes modify your
+                <para>To configure and use a SolidFire cluster with Block Storage (Cinder), modify your
                     <filename>nova.conf</filename> or <filename>cinder.conf</filename> file as shown below:</para>
      <programlisting>
 volume_driver=nova.volume.solidfire.SolidFire
@@ -1947,9 +1972,9 @@ san_password=sfpassword
                 </itemizedlist>
             <simplesect>
                 <title>Configuring the VSA</title>
-                <para>In addition to configuring the nova-volume
+                <para>In addition to configuring the cinder
                     service some pre configuration has to happen on
-                    the VSA for proper functioning in an Openstack
+                    the VSA for proper functioning in an OpenStack
                     environment. </para>
                 <para>
                     <itemizedlist>
@@ -2145,6 +2170,7 @@ cinder_emc_config_file = /etc/cinder/cinder_emc_config.xml
                         credentials for the ECOM server.</para>
                 </simplesect>
         </section>
+    <xi:include href="../openstack-install/adding-block-storage.xml" />
     <section xml:id="boot-from-volume">
         <title>Boot From Volume</title>
         <para>The Compute service has preliminary support for booting an instance from a

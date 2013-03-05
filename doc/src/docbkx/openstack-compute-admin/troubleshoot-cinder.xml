@@ -7,50 +7,50 @@
         during setup and configuration of Cinder. The focus here is on failed creation of volumes.
         The most important thing to know is where to look in case of a failure. There are two log
         files that are especially helpful in the case of a volume creation failure. The first is the
-        cinder-api log, and the second is the cinder-volume log.</para>
-    <para>The cinder-api log is useful in determining if you have
+        <literal>cinder-api</literal> log, and the second is the <literal>cinder-volume</literal> log.</para>
+    <para>The <literal>cinder-api</literal> log is useful in determining if you have
         endpoint or connectivity issues. If you send a request to
         create a volume and it fails, it's a good idea to look here
         first and see if the request even made it to the Cinder
         service. If the request seems to be logged, and there are no
-        errors or trace-backs then you can move to the cinder-volume
+        errors or trace-backs then you can move to the <literal>cinder-volume</literal>
         log and look for errors or trace-backs there.</para>
-    <para>There are some common issues with both nova-volumes and
-        Cinder on Folsom to look out for, the following refers to
-        Cinder only, but is applicable to both Nova-Volume and Cinder
+    <para>There are some common issues with both <literal>nova-volume</literal>
+        and Cinder on Folsom to look out for, the following refers to
+        Cinder only, but is applicable to both <literal>nova-volume</literal> and Cinder
         unless otherwise specified.</para>
     <para><emphasis role="bold"><emphasis role="underline">Create commands are in cinder-api log
                 with no error</emphasis></emphasis></para>
     <para>
         <itemizedlist>
             <listitem>
-                <para><emphasis role="bold">state_path and volumes_dir settings</emphasis></para>
-                <para>As of Folsom Cinder is using tgtd as the default
-                    iscsi helper and implements persistent targets.
+                <para><emphasis role="bold"><literal>state_path</literal> and <literal>volumes_dir</literal> settings</emphasis></para>
+                <para>As of Folsom Cinder is using <command>tgtd</command>
+                    as the default iscsi helper and implements persistent targets.
                     This means that in the case of a tgt restart or
                     even a node reboot your existing volumes on that
                     node will be restored automatically with their
                     original IQN.</para>
                 <para>In order to make this possible the iSCSI target information needs to be stored
                     in a file on creation that can be queried in case of restart of the tgt daemon.
-                    By default, Cinder uses a state_path variable, which if installing via Yum or
-                    APT should be set to /var/lib/cinder/. The next part is the volumes_dir
-                    variable, by default this just simply appends a "volumes" directory to the
-                    state_path. The result is a file-tree /var/lib/cinder/volumes/.</para>
+                    By default, Cinder uses a <literal>state_path</literal> variable, which if installing via Yum or
+                    APT should be set to <filename>/var/lib/cinder/</filename>. The next part is the <literal>volumes_dir</literal>
+                    variable, by default this just simply appends a "<literal>volumes</literal>" directory to the
+                    <literal>state_path</literal>. The result is a file-tree <filename>/var/lib/cinder/volumes/</filename>.</para>
                 <para>While this should all be handled for you by you installer, it can go wrong. If
                     you're having trouble creating volumes and this directory does not exist you
-                    should see an error message in the cinder-volume log indicating that the
-                    volumes_dir doesn't exist, and it should give you information to specify what
+                    should see an error message in the <literal>cinder-volume</literal> log indicating that the
+                    <literal>volumes_dir</literal> doesn't exist, and it should give you information to specify what
                     path exactly it was looking for.</para>
             </listitem>
             <listitem>
                 <para><emphasis role="bold">persistent tgt include file</emphasis></para>
-                <para>Along with the volumes_dir mentioned above, the iSCSI target driver also needs
+                <para>Along with the <literal>volumes_dir</literal> mentioned above, the iSCSI target driver also needs
                     to be configured to look in the correct place for the persist files. This is a
-                    simple entry in /etc/tgt/conf.d, and you should have created this when you went
+                    simple entry in <filename>/etc/tgt/conf.d</filename>, and you should have created this when you went
                     through the install guide. If you haven't or you're running into issues, verify
-                    that you have a file /etc/tgt/conf.d/cinder.conf (for Nova-Volumes, this will be
-                    /etc//tgt/conf.d/nova.conf).</para>
+                    that you have a file <filename>/etc/tgt/conf.d/cinder.conf</filename> (for <literal>nova-volume</literal>, this will be
+                    <filename>/etc/tgt/conf.d/nova.conf</filename>).</para>
                 <para>If the files not there, you can create it easily by doing the
                     following:<programlisting>
 sudo sh -c "echo 'include /var/lib/cinder/volumes/*' >> /etc/tgt/conf.d/cinder.conf"
@@ -58,7 +58,7 @@ sudo sh -c "echo 'include /var/lib/cinder/volumes/*' >> /etc/tgt/conf.d/cinder.c
             </listitem>
         </itemizedlist>
     </para>
-    <para><emphasis role="bold"><emphasis role="underline">No sign of create call in the cinder-api
+    <para><emphasis role="bold"><emphasis role="underline">No sign of create call in the <literal>cinder-api</literal>
                 log</emphasis></emphasis></para>
     <para>This is most likely going to be a minor adjustment to you
             <filename>nova.conf </filename>file. Make sure that your
@@ -71,4 +71,18 @@ volume_api_class=nova.volume.cinder.API
 enabled_apis=ec2,osapi_compute,metadata
     </programlisting>
     </para>
+    <para><emphasis role="bold">Failed to create iscsi target error in the <filename>cinder-volume.log</filename></emphasis></para>
+        
+        <programlisting language="bash">2013-03-12 01:35:43 1248 TRACE cinder.openstack.common.rpc.amqp ISCSITargetCreateFailed: Failed to create iscsi target for volume volume-137641b2-af72-4a2f-b243-65fdccd38780.
+</programlisting>        
+        <para>You may see this error in <filename>cinder-volume.log</filename> after trying to create a volume that is 1 GB. To fix this issue:
+        </para>
+    <para>Change content of the <filename>/etc/tgt/targets.conf</filename> from "include /etc/tgt/conf.d/*.conf" to:
+    include /etc/tgt/conf.d/cinder_tgt.conf:</para>    
+        <programlisting language="bash">
+            include /etc/tgt/conf.d/cinder_tgt.conf
+            include /etc/tgt/conf.d/cinder.conf
+            default-driver iscsi</programlisting>
+        
+        <para>Then restart tgt and <literal>cinder-*</literal> services so they pick up the new configuration.</para>
 </section>

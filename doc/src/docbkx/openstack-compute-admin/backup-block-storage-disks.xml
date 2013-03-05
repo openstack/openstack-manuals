@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section xml:id="backup-nova-volume-disks" 
+<section xml:id="backup-block-storage-disks" 
     xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" 
     version="5.0">
-            <title>Backup your nova-volume disks</title>
-            <para>While Diablo provides the snapshot functionality
-                (using LVM snapshot), you can also back up your
-                volumes. The advantage of this method is that it
-                reduces the size of the backup; only existing data
-                will be backed up, instead of the entire volume. For
-                this example, assume that a 100 GB nova-volume has been
-                created for an instance, while only 4 gigabytes are
-                used. This process will back up only those 4
-                giga-bytes, with the following tools: </para>
+            <title>Backup your Block Storage disks</title>
+            <para>While you can use the snapshot functionality (using
+        LVM snapshot), you can also back up your volumes. The
+        advantage of this method is that it reduces the size of the
+        backup; only existing data will be backed up, instead of the
+        entire volume. For this example, assume that a 100 GB volume
+        has been created for an instance, while only 4 gigabytes are
+        used. This process will back up only those 4 gigabytes, with
+        the following tools: </para>
             <orderedlist>
                 <listitem>
                     <para><command>lvm2</command>, directly
@@ -143,8 +142,7 @@
                 <listitem>
                     <para>If we want to exploit that snapshot with the
                             <command>tar</command> program, we first
-                        need to mount our partition on the
-                        nova-volumes server. </para>
+                        need to mount our partition on the Block Storage server. </para>
                     <para><command>kpartx</command> is a small utility
                         which performs table partition discoveries,
                         and maps it. It can be used to view partitions
@@ -283,7 +281,7 @@
                 <emphasis role="bold">6- Automate your backups</emphasis>
             </para>
             <para>Because you can expect that more and more volumes
-                will be allocated to your nova-volume service, you may
+                will be allocated to your Block Storage service, you may
                 want to automate your backups. This script <link
                     xlink:href="https://github.com/Razique/BashStuff/blob/master/SYSTEMS/OpenStack/SCR_5005_V01_NUAC-OPENSTACK-EBS-volumes-backup.sh"
                     >here</link> will assist you on this task. The
@@ -292,7 +290,7 @@
                 backup based on the
                     <literal>backups_retention_days</literal> setting.
                 It is meant to be launched from the server which runs
-                the nova-volumes component.</para>
+                the Block Storage component.</para>
             <para>Here is an example of a mail report: </para>
             <programlisting>
 Backup Start Time - 07/10 at 01:00:01

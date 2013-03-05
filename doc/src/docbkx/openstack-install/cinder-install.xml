@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="cinder-install"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" 
+    version="5.0">
+    <title>Installing and configuring Cinder</title>
+    <para>Install the
+        packages.<screen><prompt>$</prompt> <userinput>sudo apt-get install cinder-api
+cinder-scheduler cinder-volume open-iscsi python-cinderclient tgt</userinput></screen></para>
+    <para>Edit /etc/cinder/api-paste.ini (filter
+        authtoken).<programlisting>[filter:authtoken]
+paste.filter_factory = keystone.middleware.auth_token:filter_factory
+service_protocol = http
+service_host = 10.211.55.20
+service_port = 5000
+auth_host = 10.211.55.20
+auth_port = 35357
+auth_protocol = http
+admin_tenant_name = service
+admin_user = cinder
+admin_password = openstack</programlisting></para>
+    <para>Edit /etc/cinder/cinder.conf.</para>
+    <programlisting><xi:include parse="text" href="samples/cinder.conf"/></programlisting>
+    <para>Configure RabbitMQ in /etc/cinder/cinder.conf.</para>
+    <programlisting>[DEFAULT]
+# Add these when not using the defaults.
+rabbit_host = 10.10.10.10
+rabbit_port = 5672
+rabbit_userid = rabbit
+rabbit_password = secure_password
+rabbit_virtual_host = /nova</programlisting>
+    <para>Verify entries in nova.conf.</para>
+    <programlisting>volume_api_class=nova.volume.cinder.API
+enabled_apis=ec2,osapi_compute,metadata
+#MAKE SURE NO ENTRY FOR osapi_volume anywhere in nova.conf!!!
+#Leaving out enabled_apis altogether is NOT sufficient, as it defaults to include osapi_volume</programlisting>
+    <para>Add a filter entry to the devices section <filename>/etc/lvm/lvm.conf</filename> to keep LVM from scanning devices used by virtual machines. NOTE: You must add every physical volume that is needed for LVM on the Cinder host. You can get a list by running <command>pvdisplay</command>. Each item in the filter array starts with either an "<literal>a</literal>" for accept, or an "<literal>r</literal>" for reject. Physical volumes that are needed on the Cinder host begin with "<literal>a</literal>". The array must end with "<literal>r/.*/</literal>"</para>
+    <programlisting>devices {
+...
+filter = [ "a/sda1/", "a/sdb1/", "r/.*/"]
+...
+}</programlisting>
+    <para>Setup the target file <emphasis role="italic">NOTE: <literal>$state_path=/var/lib/cinder/</literal> and
+            <literal>$volumes_dir=$state_path/volumes</literal> by default and path MUST
+            exist!</emphasis>.<screen><prompt>$</prompt> <userinput>sudo sh -c "echo 'include $volumes_dir/*' >> /etc/tgt/conf.d/cinder.conf"</userinput></screen>
+    </para>
+    <para>Restart the <command>tgt</command>
+        service.<screen><prompt>$</prompt> <userinput>sudo restart tgt</userinput></screen></para>
+    <para>Populate the
+        database.<screen><prompt>$</prompt> <userinput>sudo cinder-manage db sync</userinput></screen></para>
+    <para>Create a 2GB test loopfile.</para>
+    <screen><prompt>$</prompt> <userinput>sudo dd if=/dev/zero of=cinder-volumes bs=1 count=0 seek=2G</userinput></screen>
+    <para>Mount it.</para>
+    <screen><prompt>$</prompt> <userinput>sudo losetup /dev/loop2 cinder-volumes</userinput></screen>
+    <para>Initialise it as an lvm 'physical volume', then create the lvm 'volume group'
+        <screen><prompt>$</prompt> <userinput>sudo pvcreate /dev/loop2</userinput>
+<prompt>$</prompt> <userinput>sudo vgcreate cinder-volumes /dev/loop2</userinput></screen></para>
+    <para>Lets check if our volume is created.
+        <screen><prompt>$</prompt> <userinput>sudo pvscan</userinput></screen></para>
+    <programlisting>PV /dev/loop1   VG cinder-volumes   lvm2 [2.00 GiB / 1020.00 MiB free]
+  Total: 1 [2.00 GiB] / in use: 1 [2.00 GiB] / in no VG: 0 [0   ]</programlisting>
+    <warning><para>The association between the loop-back device and the backing file 
+            'disappears' when you reboot the node. (see command <command>sudo losetup /dev/loop2 cinder-volumes</command>) 
+        </para>
+        <para>
+            In order to prevent that, you should create a script file named 
+            <filename>/etc/init.d/cinder-setup-backing-file</filename>
+            (you need to be root for doing this, therefore use some command like 
+            <command>sudo vi /etc/init.d/cinder-setup-backing-file</command>).
+        </para>
+        <para>Add the code</para>
+        
+        <programlisting>losetup /dev/loop2&lt;fullPathOfBackingFile>
+            exit 0</programlisting>
+            
+        <para>
+            (Please don't forget to use the full name of the backing file
+            you created with command <command>dd</command> and to terminate
+            the script with <command>exit 0</command>)
+        </para>
+        <para>Make the file executable with command:
+        </para>
+        <programlisting>sudo chmod 755 /etc/init.d/cinder-setup-backing-file
+        </programlisting>
+        <para>Create a link to the just created file so that it is executed when the node reboots:
+        </para>
+        <programlisting>sudo ln -s /etc/init.d/cinder-setup-backing-file /etc/rc2.d/S10cinder-setup-backing-file</programlisting></warning>
+        <para>Restart the
+        services.<screen><prompt>$</prompt> <userinput>sudo service cinder-volume restart</userinput>
+<prompt>$</prompt> <userinput>sudo service cinder-api restart</userinput>
+<prompt>$</prompt> <userinput>sudo service cinder-scheduler restart</userinput>
+ </screen>Create
+        a 1 GB test
+        volume.<screen><prompt>$</prompt> <userinput>cinder create --display_name test 1</userinput>
+<prompt>$</prompt> <userinput>cinder list</userinput></screen></para>
+    <programlisting>+--------------------------------------+-----------+--------------+------+-------------+-------------+
+|                  ID                  |   Status  | Display Name | Size | Volume Type | Attached to |
++--------------------------------------+-----------+--------------+------+-------------+-------------+
+| 5bbad3f9-50ad-42c5-b58c-9b6b63ef3532 | available |     test     |  1   |     None    |             |
++--------------------------------------+-----------+--------------+------+-------------+-------------+</programlisting>
+</section>
