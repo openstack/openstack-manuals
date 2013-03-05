@@ -4,10 +4,12 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="glance_commands">
     <title>glance Command Reference</title>
-    <literallayout class="monospaced">usage: glance [-d] [-v] [-k] [--cert-file CERT_FILE] [--key-file KEY_FILE]
-              [--ca-file CA_FILE] [--timeout TIMEOUT] [-f] [--dry-run] [--ssl]
-              [-H ADDRESS] [-p PORT] [--os-username OS_USERNAME]
-              [-I OS_USERNAME] [--os-password OS_PASSWORD] [-K OS_PASSWORD]
+    <para><literallayout role="monospace">usage: glance [--version] [-d] [-v] [-k] [--cert-file CERT_FILE]
+              [--key-file KEY_FILE] [--os-cacert &lt;ca-certificate-file>]
+              [--ca-file OS_CACERT] [--timeout TIMEOUT] [--no-ssl-compression]
+              [-f] [--dry-run] [--ssl] [-H ADDRESS] [-p PORT]
+              [--os-username OS_USERNAME] [-I OS_USERNAME]
+              [--os-password OS_PASSWORD] [-K OS_PASSWORD]
               [--os-tenant-id OS_TENANT_ID] [--os-tenant-name OS_TENANT_NAME]
               [-T OS_TENANT_NAME] [--os-auth-url OS_AUTH_URL] [-N OS_AUTH_URL]
               [--os-region-name OS_REGION_NAME] [-R OS_REGION_NAME]
@@ -16,49 +18,57 @@
               [--os-image-api-version OS_IMAGE_API_VERSION]
               [--os-service-type OS_SERVICE_TYPE]
               [--os-endpoint-type OS_ENDPOINT_TYPE] [-S OS_AUTH_STRATEGY]
-    </literallayout>
-    <literallayout class="monospaced">
+              &lt;subcommand> ...
 
+Command-line interface to the OpenStack Images API.
+
+Positional arguments:
+  &lt;subcommand>
     add                 DEPRECATED! Use image-create instead.
     clear               DEPRECATED!
     delete              DEPRECATED! Use image-delete instead.
     details             DEPRECATED! Use image-list instead.
-    image-create
-    image-delete        Delete a specific image.
-    image-list          List images.
+    image-create        Create a new image.
+    image-delete        Delete specified image(s).
+    image-download      Download a specific image.
+    image-list          List images you can access.
     image-members       DEPRECATED! Use member-list instead.
     image-show          Describe a specific image.
-    image-update
+    image-update        Update a specific image.
     index               DEPRECATED! Use image-list instead.
     member-add          DEPRECATED! Use member-create instead.
-    member-create
-    member-delete
+    member-create       Share a specific image with a tenant.
+    member-delete       Remove a shared image from a tenant.
     member-images       DEPRECATED! Use member-list instead.
-    member-list
+    member-list         Describe sharing permissions by image or tenant.
     members-replace     DEPRECATED!
-    show
+    show                DEPRECATED! Use image-show instead.
     update              DEPRECATED! Use image-update instead.
     help                Display help about this program or one of its
                         subcommands.
-    </literallayout>
-<literallayout class="monospaced">
+
 Optional arguments:
+  --version             show program's version number and exit
   -d, --debug           Defaults to env[GLANCECLIENT_DEBUG]
   -v, --verbose         Print more verbose output
-  -k, --insecure        Explicitly allow glanceclient to perform "insecure"
-                        SSL (https) requests. The server's certificate will
-                        not be verified against any certificate authorities.
-                        This option should be used with caution.
+  -k, --insecure        Explicitly allow glanceclient to perform"insecure SSL"
+                        (https) requests. The serverscertificate will not be
+                        verified against anycertificate authorities. This
+                        option shouldbe used with caution.
   --cert-file CERT_FILE
                         Path of certificate file to use in SSL connection.
-                        This file can optionally be prepended with the private
+                        This file can optionally beprepended with the private
                         key.
   --key-file KEY_FILE   Path of client key to use in SSL connection. This
                         option is not necessary if your key is prepended to
                         your cert file.
-  --ca-file CA_FILE     Path of CA SSL certificate(s) used to sign the remote
-                        server's certificate.
+  --os-cacert &lt;ca-certificate-file>
+                        Path of CA TLS certificate(s) used to verifythe remote
+                        server's certificate. Without this option glance looks
+                        for the default system CA certificates.
+  --ca-file OS_CACERT   DEPRECATED! Use --os-cacert.
   --timeout TIMEOUT     Number of seconds to wait for a response
+  --no-ssl-compression  Disable SSL compression when using https.
   -f, --force           Prevent select actions from requesting user
                         confirmation.
   --dry-run             DEPRECATED! Only used for deprecated legacy commands.
@@ -101,5 +111,7 @@ Optional arguments:
   --os-endpoint-type OS_ENDPOINT_TYPE
                         Defaults to env[OS_ENDPOINT_TYPE]
   -S OS_AUTH_STRATEGY, --os_auth_strategy OS_AUTH_STRATEGY
-                        DEPRECATED! This option is completely ignored.</literallayout>
+                        DEPRECATED! This option is completely ignored.
+
+See "glance help COMMAND" for help on a specific command.</literallayout></para>
 </section>

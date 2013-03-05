@@ -8,33 +8,13 @@
     <?dbhtml stop-chunking?>
     <title>glance Client</title>
     <para>This chapter describes how to use the glance client. </para>
-    <para>To install the client, see <xref linkend="install_clients"/>.</para>
-    <!--  <xi:include href="glance_cli_install.xml"/> -->
-
-    <section xml:id="glance_help">
-        <title>Getting Command, Parameter, and Subcommand Help</title>
-        <para>Help for commands, parameters, and subcommands is
-            available with the <command>glance help</command> command.
-            <screen>
-<prompt>$</prompt> <userinput>glance help</userinput>
-            </screen></para>
-        <para>Include the command name to get usage information about
-            an individual command, as in the following example.
-            <screen>
-<prompt>$</prompt> <userinput>glance help image-show</userinput>
-usage: glance image-show &lt;IMAGE_ID>
-
-Describe a specific image.
-
-Positional arguments:
-  &lt;IMAGE_ID>  ID of image to describe.            </screen></para>
-    </section>
+    <para>To install the client, see <xref linkend="install_clients"
+        />.</para>
     <section xml:id="glance-image-list">
         <title>List Images</title>
         <para>To see what images are available to you, use this
             command:
-            <screen>
-<prompt>$</prompt> <userinput>glance image-list</userinput>
+            <screen><prompt>$</prompt> <userinput>glance image-list</userinput>
 +--------------------------------------+----------------+--------+--------+
 |                  ID                  |      Name      | Status | Server |
 +--------------------------------------+----------------+--------+--------+
@@ -42,17 +22,14 @@ Positional arguments:
 | 588d93af-645d-4312-a5b0-81347715a91b |   tty-image    | ACTIVE |        |
 | ac6f83b7-078c-47bd-b4c2-4053282da49e | oneiric-image  | ACTIVE |        |
 | e110fb7d-2a9e-4da5-923f-5565867ce87a | maverick-image | ACTIVE |        |
-+--------------------------------------+----------------+--------+--------+
-        </screen></para>
++--------------------------------------+----------------+--------+--------+   </screen></para>
         <para>You can also narrow down the list by using grep to find
             only the CentOS images with a command like this: </para>
         <para>
-            <screen>
-<prompt>$</prompt> <userinput>glance image-list | grep 'natty'</userinput>
+            <screen><prompt>$</prompt> <userinput>glance image-list | grep 'natty'</userinput>
 
 | 12 | natty-server-cloudimg-amd64-kernel   | ACTIVE |        |
-| 13 | natty-server-cloudimg-amd64          | ACTIVE |        |
-</screen>
+| 13 | natty-server-cloudimg-amd64          | ACTIVE |        |</screen>
         </para>
     </section>
     <section xml:id="glance-image-create">
@@ -75,13 +52,14 @@ Positional arguments:
                 </listitem>
             </itemizedlist></para>
         <section xml:id="glance-image-prereqs">
-            <title>Before You Add a New Image</title>
+            <title>Before You Add an Image</title>
 
             <para>Ensure you have created an image that is OpenStack
-                compatible. Refer to the <link
-                    xlink:href="http://docs.openstack.org/">OpenStack
-                    Compute Administration Manual Image Management
-                    chapter</link> for details.</para>
+                compatible. For details, see the <link
+                    xlink:href="http://docs.openstack.org/folsom/openstack-compute/admin/content/ch_image_mgmt.html"
+                    >Image Management chapter</link> in the
+                    <citetitle>OpenStack Compute Administration
+                    Manual</citetitle>.</para>
         </section>
 
         <section xml:id="glance-create-image">
@@ -96,8 +74,118 @@ Positional arguments:
         </section>
 
         <section xml:id="glance-inserting-metadata">
-            <title>Assigning metadata to an image</title>
-            <para>TBD</para>
+            <title>Update an image</title>
+            <para>To update an image, use the following command: </para>
+            <para><screen><prompt>$</prompt> glance image-update &lt;image&gt;</screen></para>
+            <para>Where <varname>image</varname> is the name or ID of
+                the image that you want to update. You can use the
+                following optional arguments to modify the following
+                image properties:</para>
+            <para><literallayout role="monospace">Optional arguments:
+  --name &lt;NAME>         Name of image.
+  --disk-format &lt;DISK_FORMAT>
+                        Disk format of image. Acceptable formats: ami, ari,
+                        aki, vhd, vmdk, raw, qcow2, vdi, and iso.
+  --container-format &lt;CONTAINER_FORMAT>
+                        Container format of image. Acceptable formats: ami,
+                        ari, aki, bare, and ovf.
+  --owner &lt;TENANT_ID>   Tenant who should own image.
+  --size &lt;SIZE>         Size of image data (in bytes).
+  --min-disk &lt;DISK_GB>  Minimum size of disk needed to boot image (in
+                        gigabytes).
+  --min-ram &lt;DISK_RAM>  Minimum amount of ram needed to boot image (in
+                        megabytes).
+  --location &lt;IMAGE_URL>
+                        URL where the data for this image already resides. For
+                        example, if the image data is stored in swift, you
+                        could specify
+                        'swift://account:key@example.com/container/obj'.
+  --file &lt;FILE>         Local file that contains disk image to be uploaded
+                        during update. Alternatively, images can be passed to
+                        the client via stdin.
+  --checksum &lt;CHECKSUM>
+                        Hash of image data used Glance can use for
+                        verification.
+  --copy-from &lt;IMAGE_URL>
+                        Similar to '--location' in usage, but this indicates
+                        that the Glance server should immediately copy the
+                        data and store it in its configured image store.
+  --is-public [True|False]
+                        Make image accessible to the public.
+  --is-protected [True|False]
+                        Prevent image from being deleted.
+  --property &lt;key=value>
+                        Arbitrary property to associate with image. May be
+                        used multiple times.
+  --purge-props         If this flag is present, delete all image properties
+                        not explicitly set in the update request. Otherwise,
+                        those properties not referenced are preserved.
+  --human-readable      Print image size in a human-friendly format.
+</literallayout></para>
+            <para>To annotate an image with a property that describes
+                the required VIF model, use the
+                    <option>--property</option> argument. </para>
+            <para>For example:</para>
+            <para><screen><prompt>$</prompt> glance image-update --property vif_model=e1000 f16-x86_64-openstack-sda</screen>Valid
+                model values vary depending on the
+                    <literal>libvirt_type</literal> setting:
+                    <informaltable rules="all">
+                    <col width="30%"/>
+                    <col width="70%"/>
+                    <thead>
+                        <tr>
+                            <th>libvert_type setting</th>
+                            <th>Supported model values</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>qemu or kvm</td>
+                            <td><para><itemizedlist>
+                                   <listitem>
+                                   <para>virtio</para>
+                                   </listitem>
+                                   <listitem>
+                                   <para>ne2k_pci</para>
+                                   </listitem>
+                                   <listitem>
+                                   <para>pcnet</para>
+                                   </listitem>
+                                   <listitem>
+                                   <para>rtl8139</para>
+                                   </listitem>
+                                   <listitem>
+                                   <para>e1000</para>
+                                   </listitem>
+                                   </itemizedlist></para></td>
+                        </tr>
+                        <tr>
+                            <td>xen</td>
+                            <td>
+                                <itemizedlist>
+                                   <listitem>
+                                   <para>netfront</para>
+                                   </listitem>
+                                   <listitem>
+                                   <para>ne2k_pci</para>
+                                   </listitem>
+                                   <listitem>
+                                   <para>pcnet</para>
+                                   </listitem>
+                                   <listitem>
+                                   <para>rtl8139</para>
+                                   </listitem>
+                                   <listitem>
+                                   <para>e1000</para>
+                                   </listitem>
+                                </itemizedlist>
+                            </td>
+                        </tr>
+                    </tbody>
+                </informaltable></para>
+
+            <para>Requesting an unsupported VIF model causes the guest
+                instance to fail to launch.</para>
         </section>
     </section>
 
@@ -108,7 +196,7 @@ Positional arguments:
             managed in glance, but you can create images by taking a
             snapshot of a running instance and view available images,
             set or delete image metadata, and delete an image, using
-            the nova CLI.</para>
+            the nova client.</para>
 
     </section>
 
