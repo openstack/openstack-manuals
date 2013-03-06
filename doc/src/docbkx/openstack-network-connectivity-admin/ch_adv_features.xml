@@ -495,30 +495,28 @@ quantum floatingip-associate &lt;floatingip-id&gt; &lt;internal VM port-id&gt; <
               group is a container for security group rules.</para>
         <para>When a port is created in OpenStack Networking it is
             associated with a security group. If a security group is
-            not specified the port will be associated with a default
+            not specified the port will be associated with a 'default'
             security group. By default this group will drop all
             ingress traffic and allow all egress. Rules can be added
             to this group in order to change the behaviour.</para>
-        <para>In order to use OpenStack Compute security groups in
-            OpenStack Networking, configure the following files. In
-                <filename>/etc/quantum/quantum.conf</filename>, set
-            proxy_mode True within the SECURITYGROUP section. Ensure
-            that the quantum-server
-                <filename>/etc/quantum/quantum.conf</filename> file
-            has proxy_mode=False so that the OpenStack Networking API
-            service does not work as a proxy for OpenStack Compute API
-            calls. Then in <filename>/etc/nova/nova.conf</filename>
-            set security_group_handler to be
-            nova.network.sg.SecurityGroupHandlerQuantumProxy and
-            quantum_port_security=True in the DEFAULT section. Once
-            the files are changed, restart quantum-server, nova-api,
-            and the nova-compute services in order to pick up the
-            changes.</para>
-         <note><para>If quantum-server is set to proxy_mode=True then you will not be
-                able to use security groups through the OpenStack
-                Networking API and you will have to control security
-                groups through OpenStack Compute configuration and
-                commands.</para></note>
+        <para>If one desires to use the OpenStack Compute security group APIs and/or
+            have OpenStack Compute orchestrate the creation of new ports for instances
+            on specific security groups, additional configuration is needed. To enable
+            this, one must configure the following file
+            <filename>/etc/nova/nova.conf</filename> and set the
+            config option security_group_api=quantum on every node running
+            nova-compute and nova-api. After this change is made restart
+            nova-api and nova-compute in order to pick up this change. After this change
+            is made one will be able to use both the OpenStack Compute and OpenStack
+            Network security group API at the sametime.</para>
+       <note><para>In order to use the OpenStack Compute security group API with
+           OpenStack Networking the OpenStack Networking plugin must implement
+           the security group api. The following plugins currently implement this:
+           Nicira NVP, Open vSwitch, Linux Bridge, NEC, and Ryu.</para></note>
+       <note><para>When using the security group API through OpenStack Compute,
+           security groups are applied to all ports on an instance. The reason
+           for this is that OpenStack Compute security group APIs are instances based
+           and not port based as OpenStack Networking.</para></note>
         <section xml:id="securitygroup_api_abstractions">
             <title>Security Group API Abstractions</title>
             <table rules="all">
@@ -556,14 +554,6 @@ quantum floatingip-associate &lt;floatingip-id&gt; &lt;internal VM port-id&gt; <
                         <td>None </td>
                         <td>Human-readable description of a security
                             group.</td>
-                    </tr>
-                    <tr>
-                        <td>external_id</td>
-                        <td>Integer </td>
-                        <td>N/A </td>
-                        <td><para>This is used to coordinate OpenStack Compute security groups
-                                with OpenStack Networking security
-                                groups for backwards compatibility. </para></td>
                     </tr>
                     <tr>
                         <td>tenant_id </td>
@@ -645,14 +635,6 @@ quantum floatingip-associate &lt;floatingip-id&gt; &lt;internal VM port-id&gt; <
                         <td>allocated by OpenStack Networking or
                             OpenStack Compute</td>
                         <td>Source security group to apply to rule.</td>
-                    </tr>
-                    <tr>
-                        <td>external_id</td>
-                        <td>Integer </td>
-                        <td>N/A </td>
-                        <td><para>This is used to coordinate OpenStack Compute security groups
-                                with OpenStack Networking security
-                                groups for backwards compatibility. </para></td>
                     </tr>
                     <tr>
                         <td>tenant_id </td>
