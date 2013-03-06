@@ -1,0 +1,73 @@
+[[s-cinder-api]]
+=== Highly available Cinder API
+
+Cinder is the block storage service in OpenStack.
+Making the Cinder API service highly available in active / passive mode involves
+
+* configuring Cinder to listen on the VIP address,
+* managing Cinder API daemon with the Pacemaker cluster manager,
+* configuring OpenStack services to use this IP address.
+
+NOTE: Here is the http://docs.openstack.org/trunk/openstack-compute/install/apt/content/osfolubuntu-cinder.html[documentation] for installing Cinder service.
+
+
+==== Adding Cinder API resource to Pacemaker
+
+First of all, you need to download the resource agent to your system :
+  
+----
+cd /usr/lib/ocf/resource.d/openstack
+wget https://raw.github.com/madkiss/openstack-resource-agents/master/ocf/cinder-api
+chmod a+rx *
+----
+
+You may now proceed with adding the Pacemaker configuration for
+Cinder API resource. Connect to the Pacemaker cluster with +crm
+configure+, and add the following cluster resources:
+
+----
+include::includes/pacemaker-cinder_api.crm[]
+----
+
+This configuration creates
+
+* +p_cinder-api+, a resource for manage Cinder API service
+
++crm configure+ supports batch input, so you may copy and paste the
+above into your live pacemaker configuration, and then make changes as
+required. For example, you may enter +edit p_ip_cinder-api+ from the
++crm configure+ menu and edit the resource to match your preferred
+virtual IP address.
+
+Once completed, commit your configuration changes by entering +commit+
+from the +crm configure+ menu. Pacemaker will then start the Cinder API
+service, and its dependent resources, on one of your nodes.
+
+==== Configuring Cinder API service
+
+Edit +/etc/cinder/cinder.conf+ :
+----
+# We have to use MySQL connection to store datas :
+sql_connection=mysql://cinder:password@192.168.42.101/cinder
+
+# We bind Cinder API to the VIP :
+osapi_volume_listen = 192.168.42.103
+
+# We send notifications to High Available RabbitMQ :
+notifier_strategy = rabbit
+rabbit_host = 192.168.42.102
+----
+
+
+==== Configuring OpenStack Services to use High Available Cinder API
+
+Your OpenStack services must now point their Cinder API configuration to
+the highly available, virtual cluster IP address -- rather than a
+Cinder API server's physical IP address as you normally would.
+
+You need to create the Cinder API Endpoint with this IP.
+
+NOTE : If you are using both private and public IP, you should create two Virtual IP and define your endpoint like this :
+----
+keystone endpoint-create --region $KEYSTONE_REGION --service-id $service-id --publicurl 'http://PUBLIC_VIP:8776/v1/%(tenant_id)s' --adminurl 'http://192.168.42.103:8776/v1/%(tenant_id)s' --internalurl 'http://192.168.42.103:8776/v1/%(tenant_id)s'
+----
