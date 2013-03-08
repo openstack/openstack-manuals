@@ -164,12 +164,8 @@ notification_topics = notifications_one,notifications_two
     </section>
     <section xml:id="ch_adv_quotas">
       <title>Quotas</title>
-      <para>
-        Quota is a function to limit number of resources. You can
-        enforce default quota for all tenant. You will get error
-        when you try to create resources more than the number of
-        quota value.
-      </para>
+      <para> Quota is a function to limit number of resources. You can enforce default quota for all
+      tenants. You will get error when you try to create more resources than the limit. </para>
       <screen><computeroutput>$ quantum net-create test_net
 Quota exceeded for resources: ['network']</computeroutput></screen>
       <para>
@@ -182,11 +178,10 @@ Quota exceeded for resources: ['network']</computeroutput></screen>
         <para> In OpenStack Networking default quota mechanism, all
         tenants have a same quota value, i.e., a number of resources
         that a tenant can create. This is enabled by default. </para>
-        <para> The value of quota is defined in the OpenStack
-        Networking configuration file (<filename>quantum.conf</filename>). If you want to
-        disable quota for a specific resource (e.g., network, subnet,
-        port), remove a corresponding item from 'quota_items'. Each of
-        the quota values in the example below is the default value. </para>
+        <para> The value of quota is defined in the OpenStack Networking configuration file
+          (<filename>quantum.conf</filename>). If you want to disable quotas for a specific resource
+        (e.g., network, subnet, port), remove a corresponding item from <literal>quota_items</literal>. Each of the
+        quota values in the example below is the default value. </para>
         <screen><computeroutput>[QUOTAS]
 # resource name(s) that are supported in quota features
 quota_items = network,subnet,port
@@ -202,35 +197,60 @@ quota_port = 50
 
 # default driver to use for quota checks
 quota_driver = quantum.quota.ConfDriver</computeroutput></screen>
-        <para> OpenStack Networking also supports quotas for L3
-        resources: router and floating IP. You can configure them by
-        adding the following lines to 'QUOTAS' section in
-        <filename>quantum.conf</filename>. (Note that 'quota_items' does not affect these
-        quotas.) </para>
-        <screen><computeroutput>[QUOTAS]
+      <para>OpenStack Networking also supports quotas for L3 resources: router and floating IP. You
+        can configure them by adding the following lines to <literal>QUOTAS</literal> section in
+          <filename>quantum.conf</filename>. (Note that <literal>quota_items</literal> does not affect these quotas.) </para>
+      <screen><computeroutput>[QUOTAS]
 # number of routers allowed per tenant, and minus means unlimited
 quota_router = 10
 
 # number of floating IPs allowed per tenant, and minus means unlimited
 quota_floatingip = 50</computeroutput></screen>
+        <para>OpenStack Networking also supports quotas for security group resources: number of
+        security groups and the number of rules per security group. You can configure them by adding
+        the following lines to <literal>QUOTAS</literal> section in <filename>quantum.conf</filename>. (Note that
+        <literal>quota_items</literal> does not affect these quotas.) </para>
+        <screen><computeroutput>[QUOTAS]
+# number of security groups per tenant, and minus means unlimited
+quota_security_group = 10
+
+# number of security rules allowed per tenant, and minus means unlimited
+quota_security_group_rule = 100</computeroutput></screen>
       </section>
       <section xml:id="cfg_quotas_per_tenant">
         <title>Per-tenant quota configuration</title>
-        <para> OpenStack Networking also supports per-tenant quota
-        limit by quota extension API. To enable per-tenant quota, you
-        need to set 'quota_driver' in 'quantum.conf'. </para>
-        <screen><computeroutput>quota_driver = quantum.extensions._quotav2_driver.DbQuotaDriver</computeroutput></screen>
+        <para> OpenStack Networking also supports per-tenant quota limit by quota extension API. To
+        enable per-tenant quota, you need to set <literal>quota_driver</literal> in <literal>quantum.conf</literal>.</para>
+        <screen><computeroutput>quota_driver = quantum.db.quota_db.DbQuotaDriver</computeroutput></screen>
         <para>
-          When per-tenant quota is enabled, the output of the following command contains 'quotas'.
+          When per-tenant quota is enabled, the output of the following command contains <literal>quotas</literal>.
         </para>
         <screen><computeroutput>$ quantum ext-list -c alias -c name
-+----------+------------------------+
-| alias    | name                   |
-+----------+------------------------+
-| router   | Quantum L3 Router      |
-| quotas   | Quotas for each tenant |
-| provider | Provider Network       |
-+----------+------------------------+</computeroutput></screen>
++-----------------+--------------------------+
+| alias           | name                     |
++-----------------+--------------------------+
+| agent_scheduler | Agent Schedulers         |
+| security-group  | security-group           |
+| binding         | Port Binding             |
+| quotas          | Quota management support |
+| agent           | agent                    |
+| provider        | Provider Network         |
+| router          | Quantum L3 Router        |
+| lbaas           | LoadBalancing service    |
+| extraroute      | Quantum Extra Route      |
++-----------------+--------------------------+
+
+$ quantum ext-show quotas
++-------------+------------------------------------------------------------+
+| Field       | Value                                                      |
++-------------+------------------------------------------------------------+
+| alias       | quotas                                                     |
+| description | Expose functions for quotas management per tenant          |
+| links       |                                                            |
+| name        | Quota management support                                   |
+| namespace   | http://docs.openstack.org/network/ext/quotas-sets/api/v2.0 |
+| updated     | 2012-07-29T10:00:00-00:00                                  |
++-------------+------------------------------------------------------------+</computeroutput></screen>
         <note><para>
           In Folsom release, per-tenant quota is supported by Open vSwitch plugin,
           Linux Bridge plugin, and Nicira NVP plugin and cannot be used with other plugins.
@@ -238,17 +258,17 @@ quota_floatingip = 50</computeroutput></screen>
         <para>
           There are four CLI commands to manage per-tenant quota.
         </para>
-        <screen><computeroutput>  quota-delete               Delete defined quotas of a given tenant.
+        <screen><computeroutput> quota-delete               Delete defined quotas of a given tenant.
   quota-list                 List defined quotas of all tenants.
   quota-show                 Show quotas of a given tenant
   quota-update               Define tenant's quotas not to use defaults.</computeroutput></screen>
         <para>
           Only users with 'admin' role can change a quota value.
           Note that the default set of quotas are enforced for all
-          tenants by default, so there is no 'quota-create' command.
+          tenants by default, so there is no <literal>quota-create</literal> command.
         </para>
         <para>
-          'quota-list' displays a list of tenants for which per-tenant quota is enabled.
+          <literal>quota-list</literal> displays a list of tenants for which per-tenant quota is enabled.
           The tenants who have the default set of quota limits are not listed.
           This command is permitted to only 'admin' users.
         </para>
@@ -260,7 +280,7 @@ quota_floatingip = 50</computeroutput></screen>
 |         25 |      10 |   30 |     10 |     10 | bff5c9455ee24231b5bc713c1b96d422 |
 +------------+---------+------+--------+--------+----------------------------------+</computeroutput></screen>
         <para>
-          'quota-show' reports the current set of quota limits for the specified tenant.
+          <literal>quota-show</literal> reports the current set of quota limits for the specified tenant.
           Regular (non-admin) users can call this command (without --tenant_id parameter).
           If per-tenant quota limits are not defined for the tenant, the default set of
           quotas are displayed.
@@ -288,7 +308,7 @@ quota_floatingip = 50</computeroutput></screen>
 | router     | 10    |
 | subnet     | 5     |
 +------------+-------+</computeroutput></screen>
-        <para>You can update a quota of the given tenant by 'quota-update' command.</para>
+        <para>You can update a quota of the given tenant by <literal>quota-update</literal> command.</para>
         <para>Update the limit of network quota.</para>
         <screen><computeroutput>$ quantum quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 --network 5
 +------------+-------+
@@ -340,8 +360,8 @@ quota_floatingip = 50</computeroutput></screen>
 | subnet     | 3     |
 +------------+-------+</computeroutput></screen>
         <para>
-          To clear per-tenant quota limits, use 'quota-delete'.
-          After 'quota-delete', quota limits enforced to the tenant are reset to
+          To clear per-tenant quota limits, use <literal>quota-delete</literal>.
+          After <literal>quota-delete</literal>, quota limits enforced to the tenant are reset to
           the default set of quotas.
         </para>
         <screen><computeroutput>$ quantum quota-delete --tenant_id 6f88036c45344d9999a1f971e4882723
