@@ -145,12 +145,19 @@
                             <listitem>
                                 <para>Update the OpenStack Networking configuration
                                    file, <emphasis role="bold"
-                                   >/etc/quantum/quantum.conf</emphasis></para>
+                                   >/etc/quantum/quantum.conf</emphasis>, with plugin
+                                choice and Identity Service user as necessary:</para>
                                 <screen><computeroutput>[DEFAULT]
 core_plugin = quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPluginV2
 control_exchange = quantum
 rabbit_host = controlnode
-notification_driver = quantum.openstack.common.notifier.rabbit_notifier</computeroutput></screen>
+notification_driver = quantum.openstack.common.notifier.rabbit_notifier
+
+[keystone_authtoken]
+admin_tenant_name=servicetenant
+admin_user=quantum
+admin_password=servicepassword
+</computeroutput></screen>
                             </listitem>
                             <listitem>
                                 <para>Update the plugin configuration
@@ -163,17 +170,6 @@ tenant_network_type = gre
 tunnel_id_ranges = 1:1000
 enable_tunneling = True
 </computeroutput></screen>
-                            </listitem>
-                            <listitem>
-                                <para>Update the api-paste
-                                   configuration file to include the
-                                   keystone user, <emphasis
-                                   role="bold"
-                                   >/etc/quantum/api-paste.ini</emphasis></para>
-                                <screen><computeroutput>[filter:authtoken]
-admin_tenant_name=servicetenant
-admin_user=quantum
-admin_password=servicepassword</computeroutput></screen>
                             </listitem>
                             <listitem>
                                 <para>Start the OpenStack Networking server</para>
