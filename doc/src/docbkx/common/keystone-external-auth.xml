@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="keystone-external-auth" xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="1.0">
+    <title>Using External Authentication with OpenStack Identity</title>
+   <para>When Keystone is executed in <literal>apache-httpd</literal>
+    it is possible to use external authentication methods different
+    from the authentication provided by the identity store backend. 
+    For example, this makes possible to use a SQL identity backend
+    together with X.509 authentication, Kerberos, etc. instead of using
+    the username/password combination.</para>
+
+    <section xml:id="keystone-httpd-auth">
+    <title>Using HTTPD authentication</title>
+    <para>Webservers like Apache HTTP support many methods of
+     authentication. Keystone can profit from this feature and let the
+     authentication be done in the webserver, that will pass down the
+     authenticated user to Keystone using the <literal>REMOTE_USER</literal>
+     environment variable. This user must exist in advance in the identity
+     backend so as to get a token from the controller. To use this method,
+     OpenStack Identity should be running on <literal>apache-httpd</literal>.
+    </para>
+    </section>
+
+    <section xml:id="keystone-x509-auth"> 
+    <title>Using X.509</title>
+    <para>The following snippet for the Apache conf will authenticate
+    the user based on a valid X.509 certificate from a known CA:
+   <programlisting>   
+    &lt;VirtualHost _default_:5000&gt;
+        SSLEngine on
+        SSLCertificateFile    /etc/ssl/certs/ssl.cert
+        SSLCertificateKeyFile /etc/ssl/private/ssl.key
+
+        SSLCACertificatePath /etc/ssl/allowed_cas
+        SSLCARevocationPath  /etc/ssl/allowed_cas
+        SSLUserName          SSL_CLIENT_S_DN_CN
+        SSLVerifyClient      require
+        SSLVerifyDepth       10
+
+        (...)
+    &lt;/VirtualHost&gt;
+    </programlisting>
+    </para>
+    </section>
+</section>
