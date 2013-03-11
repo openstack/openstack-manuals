@@ -1495,7 +1495,36 @@ connection = boto.s3.Connection(
             expires in the middle of processing, retrying operations up to five times and a
             processing concurrency of 10. All of these things help make the swift tool robust and
             great for operational use.</para>
-
+        <section xml:id="swift-acls">
+        <title>Swift ACLs</title>
+        <para>Swift ACLs work with users and accounts. Users have roles on
+        accounts - such as '.admin', which allows full access to all
+        containers and objects under the account. ACLs are set at the
+        container level and support lists for read and write access, 
+        which are set with the X-Container-Read and X-Container-Write
+        header respectively. 
+        </para>
+        <para>
+        The swift client can be used to set the acls, using the post 
+        subcommand with the option '-r' for the read ACL, and '-w' for
+        the write ACL. This example allows the user 'testuser' to read
+        objects in the container:
+        <programlisting>
+        $ swift post -r 'testuser'
+        </programlisting>
+        This could instead be a list of users.
+        </para><para>
+        If you are using the StaticWeb middleware to allow OpenStack
+        Object Storage to serve public web content, you should also
+        be aware of the ACL syntax for managing allowed referrers. The
+        syntax is '.r:' followed by a list of allowed referrers.
+        For example, this command allows all referring domains access
+        to the object:
+        <programlisting>
+        $ swift post -r '.r:*'
+        </programlisting>
+        </para>
+        </section>
         <section xml:id="swift-cli-basics">
             <title>Swift CLI Basics</title>
 <para>The command line usage for swift, the CLI tool is:
