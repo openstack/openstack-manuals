@@ -471,6 +471,22 @@
                         monkey patch </para></td>
             </tr>
             <tr>
+                <td><para>
+                        multi_instance_display_name_template=%s(name)s-%(uuid)s
+                    </para></td>
+                <td><para> (StrOpt) 
+                When creating multiple instances with a single request
+                using the os-multiple-create API extension, this
+                template will be used to build the display name for
+                each instance. The benefit is that the instances
+                end up with different hostnames. To maintain the legacy
+                behaviour of every instance having the same name, set
+                this option to "<literal>%(<replaceable>name</replaceable>)s</literal>".
+                Valid keys for the template are: <literal>name</literal>,
+                <literal>uuid</literal>, <literal>count</literal>.
+                </para></td>
+            </tr>
+            <tr>
                 <td><para> my_ip=192.168.1.82 </para></td>
                 <td><para> (StrOpt) IP address of this host; change
                         my_ip to match each host when copying
@@ -722,6 +738,13 @@
                     </para></td>
                 <td><para> (StrOpt) The full class name of the
                         security group handler class </para></td>
+            </tr>
+            <tr>
+                <td><para>
+                        security_group_api=nova.compute.api.SecurityGroupAPI
+                    </para></td>
+                <td><para> (StrOpt) The full class name of the
+                        security API class </para></td>
             </tr>
             <tr>
                 <td><para> service_down_time=60 </para></td>
