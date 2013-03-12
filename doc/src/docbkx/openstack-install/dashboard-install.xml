@@ -18,13 +18,13 @@
     <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install -y memcached libapache2-mod-wsgi openstack-dashboard</userinput></screen>
     <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install -y memcached mod-wsgi openstack-dashboard</userinput></screen>
     <para>Next, modify the variable <literal>CACHE_BACKEND</literal> in
-            <filename>/etc/openstack-dashboard/local_settings.py</filename> to match the ones set in
+            <filename os="ubuntu">/etc/openstack-dashboard/local_settings.py</filename><filename os="centos;fedora;rhel">/etc/openstack-dashboard/local_settings</filename> to match the ones set in
         <filename os="ubuntu">/etc/memcached.conf</filename><filename os="centos;fedora;rhel">/etc/sysconfig/memcached.conf</filename>. Open
-            <filename>/etc/openstack-dashboard/local_settings.py</filename> and look for this
+            <filename os="ubuntu">/etc/openstack-dashboard/local_settings.py</filename><filename os="centos;fedora;rhel">/etc/openstack-dashboard/local_settings</filename> and look for this
         line:</para>
     <programlisting>CACHE_BACKEND = 'memcached://127.0.0.1:11211/'</programlisting>
     <note><para>The address and port in the new value need to be equal to
-        the ones set in <filename os="ubuntu">/etc/memcached.conf</filename><filename os="centos;fedora;rhel">/etc/sysconfig/memcached.conf</filename>.</para></note>
+        the ones set in <filename os="ubuntu">/etc/memcached.conf</filename><filename os="centos;fedora;rhel">/etc/sysconfig/memcached</filename>.</para></note>
     <para>If you change the memcached settings, restart the Apache web
         server for the changes to take effect.</para>
     <note><para>This guide has selected memcache as a session store for OpenStack Dashboard. There are other
@@ -33,7 +33,7 @@
     <para>
         <note>
             <para>In order to change the timezone you can use either dashboard or inside
-                <filename>/etc/openstack-dashboard/local_settings.py</filename> you can
+                <filename os="centos;fedora;rhel">/etc/openstack-dashboard/local_settings</filename><filename os="ubuntu">/etc/openstack-dashboard/local_settings.py</filename> you can
                 change below mentioned parameter.<programlisting>TIME_ZONE = "UTC"</programlisting>
             </para>
         </note>
