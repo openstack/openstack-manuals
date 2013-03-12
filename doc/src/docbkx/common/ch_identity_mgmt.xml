@@ -190,7 +190,7 @@ pipeline = stats_monitoring url_normalize token_auth admin_token_auth xml_body j
       api-paste.ini like these:</para>
     <screen> [filter:authtoken] 
     paste.filter_factory =
-      keystone.middleware.auth_token:filter_factory 
+      keystoneclient.middleware.auth_token:filter_factory 
       </screen>
       <para>and set in
       <filename>nova.conf</filename> like these: </para>
@@ -1142,11 +1142,11 @@ use = egg:swift#proxy
 account_autocreate = true
 
 [filter:keystone]
-paste.filter_factory = keystone.middleware.swift_auth:filter_factory
+paste.filter_factory = keystoneclient.middleware.swift_auth:filter_factory
 operator_roles = admin, swiftoperator
 
 [filter:authtoken]
-paste.filter_factory = keystone.middleware.auth_token:filter_factory
+paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
 # Delaying the auth decision is required to support token-less
 # usage for anonymous referrers ('.r:*').
 delay_auth_decision = 10
@@ -1229,17 +1229,17 @@ use = egg:swift#memcache
 use = egg:swift#swift3
 
 [filter:keystone]
-paste.filter_factory = keystone.middleware.swift_auth:filter_factory
+paste.filter_factory = keystoneclient.middleware.swift_auth:filter_factory
 operator_roles = admin, swiftoperator
 
 [filter:s3token]
-paste.filter_factory = keystone.middleware.s3_token:filter_factory
+paste.filter_factory = keystoneclient.middleware.s3_token:filter_factory
 auth_port = 35357
 auth_host = 127.0.0.1
 auth_protocol = http
 
 [filter:authtoken]
-paste.filter_factory = keystone.middleware.auth_token:filter_factory
+paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
 service_port = 5000
 service_host = 127.0.0.1
 auth_port = 35357
@@ -1448,7 +1448,7 @@ role_attribute_ignore    =
       </para>
       <screen>
 [filter:authtoken]
-paste.filter_factory = keystone.middleware.auth_token:filter_factory
+paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
 service_port = 5000
 service_host = 127.0.0.1
 auth_port = 35357
