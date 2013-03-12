@@ -121,6 +121,19 @@ scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
                 on how to use this filter.</para>
         </section>
 
+        <section xml:id="aggregate-multi-tenancy-isolation">
+            <title>AggregateMultiTenancyIsolation</title>
+            <para>Isolates tenants to specific<link linkend="host-aggregates"
+                    >host aggregates</link>. If a host is in an 
+                aggregate that has the metadata key <literal>filter_tenant_id</literal>
+                it will only create instances from that tenant (or list of tenants). 
+                A host can be
+                in different aggregates. If a host does not belong to an
+                aggregate with the metadata key, it can create instances from
+                all tenants.
+            </para>
+        </section>
+
         <section xml:id="allhostsfilter">
             <title>AllHostsFilter</title>
             <para>This is a no-op filter, it does not eliminate any of
