@@ -136,6 +136,25 @@ local_ip=&lt;data-net-IP-address-of-node&gt;</computeroutput></screen>
                     new settings.</para>
                 <screen><computeroutput>service quantum-server restart</computeroutput></screen>
             </section>
+            <section xml:id="bigswitch_floodlight_plugin">
+                <title>Configuring Big Switch, Floodlight REST Proxy Plugin</title>
+                <para>To configure OpenStack Networking to use the REST Proxy plugin first
+                    edit
+                        <filename>/etc/quantum/quantum.conf</filename>
+                    and set:</para>
+                <screen><computeroutput>core_plugin = quantum.plugins.bigswitch.plugin.QuantumRestProxyV2</computeroutput></screen>
+                <para>Edit
+                        <filename>/etc/quantum/plugins/bigswitch/restproxy.ini</filename>
+                    in order to configure the plugin. The quantum
+                    database created previously will be used by
+                    setting:</para>
+                <screen><computeroutput>sql_connection = mysql://&lt;user&gt;:&lt;password&gt;@localhost/restproxy_quantum?charset=utf8</computeroutput></screen>
+                <para>Specify a comma separated list controller_ip:port pairs:</para>
+                <screen><computeroutput>server = &lt;controller-ip&gt;:&lt;port&gt;</computeroutput></screen>
+                <para>Lastly, restart quantum-server to pick up the
+                    new settings.</para>
+                <screen><computeroutput>service quantum-server restart</computeroutput></screen>
+            </section>
         </section>
         <section xml:id="install_quantum_agent">
             <title>Install quantum-plugin-*-agent</title>
