@@ -165,7 +165,8 @@ role="bold">must</emphasis> be running in PV mode.</para>
 similar to this:
 
 <informalfigure><mediaobject><imageobject><imagedata
-fileref="figures/XenServer-dom0-domU.png"
+fileref="figures/xenserver_architecture.png"
+contentwidth="140mm"
 /></imageobject></mediaobject></informalfigure>
 </para>
 
@@ -178,7 +179,7 @@ fileref="figures/XenServer-dom0-domU.png"
     (some xapi plugins and network isolation rules).  The majority of this is
     provided by XenServer or XCP (or yourself using Kronos).</para></listitem>
 
-    <listitem><para>OpenStack domU: The nova-compute code runs in a
+    <listitem><para>OpenStack VM: The nova-compute code runs in a
     paravirtualized virtual machine, running on the host under management.
     Each host runs a local instance of nova-compute.  It will often also be
     running nova-network (depending on your network mode).  In this case,
@@ -186,8 +187,8 @@ fileref="figures/XenServer-dom0-domU.png"
     DHCP.</para></listitem>
 
     <listitem><para>Nova uses the XenAPI Python library to talk to xapi, and
-    it uses the Host Internal Management Network to reach from the domU to
-    dom0 without leaving the host.</para></listitem>
+    it uses the Management Network to reach from the domU to dom0 without
+    leaving the host.</para></listitem>
 </itemizedlist>
 </para>
 
@@ -198,15 +199,28 @@ Some notes on the networking:
     <listitem><para>The above diagram assumes FlatDHCP networking (the
     DevStack default).</para></listitem>
 
-    <listitem><para>There are three main OpenStack networks: Management
-    traffic (RabbitMQ, MySQL, etc), Tenant network traffic (controlled by
-    nova-network) and Public traffic (floating IPs, public API end
-    points).</para></listitem>
+    <listitem><para>There are three main OpenStack Networks:
+    <itemizedlist>
+        <listitem><para>Management network - RabbitMQ, MySQL, etc. Please note,
+        that the VM images are downloaded by the xenapi plugins, so please make
+        sure, that the images could be downloaded through the management
+        network. It usually means, binding those services to the management
+        interface.</para></listitem>
+        <listitem><para>Tenant network - controlled by nova-network. The
+        parameters of this network depends on the networking model selected
+        (Flat, Flat DHCP, VLAN)</para></listitem>
+        <listitem><para>Public network - floating IPs, public API endpoints.
+        </para></listitem>
+    </itemizedlist>
+    </para></listitem>
 
-    <listitem><para>Each network that leaves the host has been put through
-    a separate physical network interface.  This is the simplest model, but
-    it's not the only one possible.  You may choose to isolate this traffic
-    using VLANs instead, for example.</para></listitem>
+    <listitem><para>The networks shown here need to be connected to the
+    corresponding physical networks within the datacenter. In the simplest
+    case, three individual physical network cards could be used.  It is also
+    possible to use VLANs to separate these networks. Please note, that the
+    selected configuration must be in line with the networking model selected
+    for the cloud. (in case of VLAN networking, the physical channels have to
+    be able to forward the tagged traffic)</para></listitem>
 </itemizedlist>
 </para>
 
@@ -336,7 +350,7 @@ XenAPI plugins Readme</link>.
 <title>Xen Boot from ISO</title>
 <para>XenServer, through the XenAPI integration with OpenStack
 provides a feature to boot instances from an ISO file. In order
-to activate the "Boot From ISO" feature, the SR elements on 
+to activate the "Boot From ISO" feature, the SR elements on
 XenServer host must be configured that way.</para>
 
 <para>First, create an ISO-typed SR, such as an NFS ISO library,
