@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section [
+<!-- Some useful entities borrowed from HTML -->
+<!ENTITY ndash  "&#x2013;">
+<!ENTITY mdash  "&#x2014;">
+<!ENTITY hellip "&#x2026;">
+<!ENTITY plusmn "&#xB1;">
+        
+      
+]>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="scaling">
+    <title>Scaling</title>
+    <para>If your cloud is successful, you will eventually need to add
+        resources to meet the increasing demand. OpenStack is designed
+        to be horizontally scalable. Rather than switching to larger
+        servers, you procure more servers. Ideally, you scale out and
+        load balance among functionally-identical services.</para>
+    <section xml:id="starting">
+        <title>The Starting Point</title>
+        <para>Determining the scalability of your cloud and how to
+            improve it is an exercise with many variables to balance.
+            No one solution meets everyone's scalability aims.
+            However, it is helpful to track a number of
+            metrics.</para>
+        <para>The starting point for most is the core count of your
+            cloud. By applying some ratios, you can gather information
+            about the number of virtual machines (VMs) you expect to
+            run ((overcommit fraction × cores) / virtual cores per
+            instance), how much storage will be required (flavor disk
+            size × number of instances). You can then use these ratios
+            to determine how much additional infrastructure you will
+            require to support your cloud.</para>
+        <para>The default OpenStack flavors are:</para>
+        <informaltable rules="all">
+            <thead>
+                <tr>
+                    <th align="left">Name</th>
+                    <th align="right">Virtual cores</th>
+                    <th align="right">Memory</th>
+                    <th align="right">Disk</th>
+                    <th align="right">Ephemeral</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><para>m1.tiny</para></td>
+                    <td align="right"><para>1</para></td>
+                    <td align="right"><para>512 MB</para></td>
+                    <td align="right"><para>0 GB</para></td>
+                    <td align="right"><para>0 GB</para></td>
+                </tr>
+                <tr>
+                    <td><para>m1.small</para></td>
+                    <td align="right"><para>1</para></td>
+                    <td align="right"><para>2 GB</para></td>
+                    <td align="right"><para>10 GB</para></td>
+                    <td align="right"><para>20 GB</para></td>
+                </tr>
+                <tr>
+                    <td><para>m1.medium</para></td>
+                    <td align="right"><para>2</para></td>
+                    <td align="right"><para>4 GB</para></td>
+                    <td align="right"><para>10 GB</para></td>
+                    <td align="right"><para>40 GB</para></td>
+                </tr>
+                <tr>
+                    <td><para>m1.large</para></td>
+                    <td align="right"><para>4</para></td>
+                    <td align="right"><para>8 GB</para></td>
+                    <td align="right"><para>10 GB</para></td>
+                    <td align="right"><para>80 GB</para></td>
+                </tr>
+                <tr>
+                    <td><para>m1.xlarge</para></td>
+                    <td align="right"><para>8</para></td>
+                    <td align="right"><para>16 GB</para></td>
+                    <td align="right"><para>10 GB</para></td>
+                    <td align="right"><para>160 GB</para></td>
+                </tr>
+            </tbody>
+        </informaltable>
+        <para>If we assume the following:</para>
+        <itemizedlist>
+            <listitem>
+                <para>200 physical cores</para>
+            </listitem>
+            <listitem>
+                <para>Most instances are size m1.medium (2 virtual
+                    cores, 50 GB of storage)</para>
+            </listitem>
+            <listitem>
+                <para>Default CPU over-commit ratio
+                        (<code>cpu_allocation_ratio</code> in
+                    nova.conf) of 16:1</para>
+            </listitem>
+        </itemizedlist>
+        <para>Then this would support (200 / 2) × 16 = 1600 VM
+            instances and requires 80 TB of storage for
+                <code>/var/lib/nova/instances</code>.</para>
+        <para>However, you need more than the core count alone to
+            estimate the load that the API services, database servers,
+            and queue servers are likely to encounter. You must also
+            consider the usage patterns of your cloud. As a specific
+            example, compare a cloud that supports a managed web
+            hosting platform with one running integration tests for a
+            development project that creates one VM per code commit.
+            In the former, the heavy work of creating a VM happens
+            only every few months, whereas the latter will put
+            constant heavy load on the cloud controller. You must
+            consider your average VM lifetime, as a larger number
+            generally means less load on the cloud controller.</para>
+        <?hard-pagebreak?>
+        <para>Aside from the creation and termination of VMs, you must
+            consider the impact of users accessing the service
+            — particularly on nova-api and its associated database.
+            Listing instances garners a great deal of information and,
+            given the frequency with which users run this operation, a
+            cloud with a large number of users can increase the load
+            significantly. This can even occur without their knowledge
+            — leaving the OpenStack Dashboard instances tab open in
+            the browser refreshes the list of VMs every 30
+            seconds.</para>
+        <para>After you consider these factors, you can determine how
+            many cloud controller cores you require. A typical 8 core,
+            8 GB of RAM server is sufficient for up to a rack of
+            compute nodes — given the above caveats.</para>
+        <para>You must also consider key hardware specifications for
+            the performance of user VMs. You must consider both budget
+            and performance needs. Examples include: Storage
+            performance (spindles/core), memory availability
+            (RAM/core), network bandwidth (Gbps/core), and overall CPU
+            performance (CPU/core).</para>
+        <para>For which metrics to track to determine how to scale
+            your cloud, see the <emphasis role="bold">Monitoring
+                </emphasis>chapter<emphasis role="bold">.</emphasis>
+        </para>
+    </section>
+    <?hard-pagebreak?>
+    <section xml:id="add_controller_nodes">
+        <title>Adding Controller Nodes</title>
+        <para>You can facilitate the horizontal expansion of your
+            cloud by adding nodes. Adding compute nodes is
+            straightforward — they are easily picked up by the
+            existing installation. However, you must consider some
+            important points when you design your cluster to be highly
+            available.</para>
+        <para>Recall that a cloud controller node runs several
+            different services. You can install services that
+            communicate only using the message queue internally
+                — <code>nova-scheduler</code> and
+                <code>nova-console</code> — on a new server for
+            expansion. However, other integral parts require more
+            care.</para>
+        <para>You should load balance user-facing services such as
+            Dashboard, <code>nova-api</code> or the Object Storage
+            proxy. Use any standard HTTP load balancing method (DNS
+            round robin, hardware load balancer, software like Pound
+            or HAProxy). One caveat with Dashboard is the VNC proxy,
+            which uses the WebSocket protocol — something that a L7
+            load balancer might struggle with. See also <link
+                xlink:title="Horizon session storage"
+                xlink:href="http://docs.openstack.org/developer/horizon/topics/deployment.html#session-storage"
+                >Horizon session storage</link>
+            (http://docs.openstack.org/developer/horizon/topics/deployment.html#session-storage).</para>
+        <para>You can configure some services, such as
+                <code>nova-api</code> and <code>glance-api</code>, to
+            use multiple processes by changing a flag in their
+            configuration file — allowing them to share work between
+            multiple cores on the one machine.</para>
+        <para>Several options are available for MySQL load balancing,
+            and RabbitMQ has in-built clustering support. Information
+            on how to configure these and many of the other services
+            can be found in the<emphasis role="bold"> Operations
+                Section.</emphasis>
+        </para>
+    </section>
+    <?hard-pagebreak?>
+    <section xml:id="segregate_cloud">
+        <title>Segregating Your Cloud</title>
+        <para>Use one of the following OpenStack methods to segregate
+            your cloud: <emphasis>cells</emphasis>,
+                <emphasis>regions</emphasis>,
+                <emphasis>zones</emphasis> and <emphasis>host
+                aggregates</emphasis>. Each method provides different
+            functionality, as described in the following table:</para>
+        <informaltable rules="all">
+            <thead>
+                <tr>
+                    <th/>
+                    <th>Cells</th>
+                    <th>Regions</th>
+                    <th>Availability Zones</th>
+                    <th>Host Aggregates</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><para><emphasis role="bold">Use when you
+                                need</emphasis>
+                        </para></td>
+                    <td><para>A single API endpoint for compute, or
+                            you require a second level of
+                            scheduling.</para></td>
+                    <td><para>Discrete regions with separate API
+                            endpoints and no coordination between
+                            regions.</para></td>
+                    <td><para>Logical separation within your nova
+                            deployment for physical isolation or
+                            redundancy.</para></td>
+                    <td><para>To schedule a group of hosts with common
+                            features.</para></td>
+                </tr>
+                <tr>
+                    <td><para><emphasis role="bold">Example</emphasis>
+                        </para></td>
+                    <td><para>A cloud with multiple sites where you
+                            can schedule VMs "anywhere" or on a
+                            particular site.</para></td>
+                    <td><para>A cloud with multiple sites, where you
+                            schedule VMs to a particular site and you
+                            want a shared infrastructure.</para></td>
+                    <td><para>A single site cloud with equipment fed
+                            by separate power supplies.</para></td>
+                    <td><para>Scheduling to hosts with trusted
+                            hardware support.</para></td>
+                </tr>
+                <tr>
+                    <td><para><emphasis role="bold"
+                                >Overhead</emphasis>
+                        </para></td>
+                    <td><para>
+                            <itemizedlist>
+                                <listitem>
+                                   <para>A new service,
+                                   <code>nova-cells</code></para>
+                                </listitem>
+                                <listitem>
+                                   <para>Each cell has a full nova
+                                   installation except
+                                   <code>nova-api</code></para>
+                                </listitem>
+                            </itemizedlist>
+                        </para></td>
+                    <td><para>
+                            <itemizedlist>
+                                <listitem>
+                                   <para>A different API endpoint for
+                                   every region. </para>
+                                </listitem>
+                                <listitem>
+                                   <para>Each region has a full nova
+                                   installation.</para>
+                                </listitem>
+                            </itemizedlist>
+                        </para></td>
+                    <td><para>
+                            <itemizedlist>
+                                <listitem>
+                                   <para>Configuration changes to
+                                   nova.conf</para>
+                                </listitem>
+                            </itemizedlist>
+                        </para></td>
+                    <td><para>
+                            <itemizedlist>
+                                <listitem>
+                                   <para>Configuration changes to
+                                   nova.conf</para>
+                                </listitem>
+                            </itemizedlist>
+                        </para></td>
+                </tr>
+                <tr>
+                    <td><para><emphasis role="bold">Shared
+                                services</emphasis>
+                        </para></td>
+                    <td><para>Keystone</para><para><code>nova-api</code>
+                        </para></td>
+                    <td><para>Keystone</para></td>
+                    <td><para>Keystone</para><para>All nova
+                            services</para></td>
+                    <td><para>Keystone</para><para>All nova
+                            services</para></td>
+                </tr>
+            </tbody>
+        </informaltable>
+        <para>This array of options can be best divided into two
+            — those which result in running separate nova deployments
+            (cells and regions), and those which merely divide a
+            single deployment (availability zones and host
+            aggregates).</para>
+        <?hard-pagebreak?>
+        <section xml:id="cells_regions">
+            <title>Cells and Regions</title>
+            <para>OpenStack Compute cells is designed to allow running
+                the cloud in a distributed fashion without having to
+                use more complicated technologies, or being invasive
+                to existing nova installations. Hosts in a cloud are
+                partitioned into groups called
+                    <emphasis>cells</emphasis>. Cells are configured
+                in a tree. The top-level cell ("API cell") has a host
+                that runs the <code>nova-api</code> service, but no
+                    <code>nova-compute</code> services. Each child
+                cell runs all of the other typical <code>nova-*</code>
+                services found in a regular installation, except for
+                the <code>nova-api</code> service. Each cell has its
+                own message queue and database service, and also runs
+                    <code>nova-cells</code> — which manages the
+                communication between the API cell and child
+                cells.</para>
+            <para>This allows for a single API server being used to
+                control access to multiple cloud installations.
+                Introducing a second level of scheduling (the cell
+                selection), in addition to the regular
+                    <code>nova-scheduler</code> selection of hosts,
+                provides greater flexibility to control where virtual
+                machines are run.</para>
+            <para>Contrast this with regions. Regions have a separate
+                API endpoint per installation, allowing for a more
+                discrete separation. Users wishing to run instances
+                across sites have to explicitly select a region.
+                However, the additional complexity of a running a new
+                service is not required.</para>
+            <para>The OpenStack Dashboard (Horizon) currently only
+                uses a single region, so one dashboard service should
+                be run per region. Regions are a robust way to share
+                some infrastructure between OpenStack Compute
+                installations, while allowing for a high degree of
+                failure tolerance.</para>
+        </section>
+        <section xml:id="availability_zones">
+            <title>Availability Zones and Host Aggregates</title>
+            <para>Both availability zones and host aggregates
+                partition a single nova deployment. While seeming
+                similar to configure, host aggregates and availability
+                zones differ in their intended use. The former allows
+                the partition of OpenStack Compute deployments into
+                logical groups for load balancing and instance
+                distribution, the latter are used to provide some form
+                of physical isolation and redundancy from other
+                availability zones (such as by using separate power
+                supply or network equipment). Host aggregates can be
+                regarded as a mechanism to further partitioning an
+                availability zone, i.e. into multiple groups of hosts
+                that share common resources like storage and network,
+                or have a special property such as trusted computing
+                hardware.</para>
+            <para>A common use of host aggregates is to provide
+                information for use with the
+                    <code>nova-scheduler</code>. For example, limiting
+                specific flavours or images to a subset of
+                hosts.</para>
+            <para>Availability zones allow you to arrange sets of
+                either OpenStack Compute or OpenStack Block Storage
+                hosts into logical groups. You define the availability
+                zone that a given Compute or block Storage host is in
+                locally on each server. Availability zones are
+                commonly used to identify a sets of servers that have
+                some common attribute. For instance, if some of the
+                racks in your data center are on a separate power
+                source, you may put servers in those racks in their
+                own availability zone. Availability zones can also be
+                helpful for separating out different classes of
+                hardware. This is especially helpful with OpenStack
+                Block Storage where you may have storage servers with
+                different types of hard drives. When provisioning
+                resources, users can specify what availability zone
+                they would like their instance or volume to come from.
+                This allows cloud consumers to ensure that their
+                application resources are spread across multiple
+                disparate machines in order to achieve high
+                availability in the event of hardware failure.</para>
+        </section>
+    </section>
+    <section xml:id="scalable_hardware">
+        <title>Scalable Hardware</title>
+        <para>While several resources already exist to help with
+            deploying and installing OpenStack, it's very important to
+            make sure you have your deployment planned out ahead of
+            time. This guide expects at least a rack has been set
+            aside for the OpenStack cloud but also offers suggestions
+            for when and what to scale.</para>
+        <section xml:id="hardware_procure">
+            <title>Hardware Procurement</title>
+            <para>“The Cloud” has been described as a volatile
+                environment where servers can be created and
+                terminated at will. While this may be true, it does
+                not mean that your servers must be volatile. Ensuring
+                your cloud’s hardware is stable and configured
+                correctly means your cloud environment will stay up
+                and running. Basically, put effort into creating a
+                stable hardware environment so you can host a cloud
+                that users may treat as unstable and volatile.</para>
+            <para>OpenStack can be deployed on any hardware supported
+                by an OpenStack-compatible Linux distribution, such as
+                Ubuntu 12.04 as used in this books' reference
+                architecture.</para>
+            <para>Hardware does not have to be consistent, but should
+                at least have the same type of CPU in order to support
+                instance migration.</para>
+            <para>The typical hardware recommended for use with
+                OpenStack is "commodity". That is, very standard
+                "value-for-money" offerings that most hardware vendors
+                stock. It should be straightforward to divide your
+                procurement into building blocks such as "compute,"
+                "object storage," and "cloud controller," and request
+                as many of these as desired. Alternately should you be
+                unable to spend more, if you have existing servers,
+                provided they meet your performance requirements and
+                virtualization technology, these are quite likely to
+                be able to support OpenStack.</para>
+        </section>
+        <section xml:id="capacity_planning">
+            <title>Capacity Planning</title>
+            <para>OpenStack is designed to increase in size in a
+                straightforward manner. Taking into account the
+                considerations in the <emphasis role="bold"
+                    >Scalability</emphasis> chapter — particularly on
+                the sizing of the cloud controller, it should be
+                possible to procure additional compute or object
+                storage nodes as needed. New nodes do not need to be
+                the same specification, or even vendor, as existing
+                nodes.</para>
+            <para>For compute nodes, <code>nova-scheduler</code> will
+                take care of differences in sizing to do with core
+                count and RAM amounts, however you should consider the
+                user experience changes with differing CPU speeds.
+                When adding object storage nodes, a weight should be
+                specified that reflects the capability of the
+                node.</para>
+            <para>Monitoring the resource usage and user growth will
+                enable you to know when to procure. The <emphasis
+                    role="bold">Monitoring</emphasis> chapter details
+                some useful metrics.</para>
+        </section>
+        <section xml:id="burin_testing">
+            <title>Burn-in Testing</title>
+            <para>Server hardware's chance of failure is high at the
+                start and the end of its life. As a result, much
+                effort in dealing with hardware failures while in
+                production can be avoided by appropriate burn-in
+                testing to attempt to trigger the early-stage
+                failures. The general principle is to stress the
+                hardware to its limits. Examples of burn-in tests
+                include running a CPU or disk benchmark for several
+                days.</para>
+        </section>
+    </section>
+</section>

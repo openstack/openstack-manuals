@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE appendix [
+<!-- Some useful entities borrowed from HTML -->
+<!ENTITY ndash  "&#x2013;">
+<!ENTITY mdash  "&#x2014;">
+<!ENTITY hellip "&#x2026;">
+<!ENTITY plusmn "&#xB1;">        
+]>
+
+<appendix xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" label="A"
+    xml:id="use-cases">
+    <title>Use Cases</title>
+    <para>These use cases from the community provide more technical
+        detail than usual. Find additional examples at <link
+            xlink:title="OpenStack Website"
+            xlink:href="https://www.openstack.org/user-stories/"
+            >OpenStack Website</link>
+        (https://www.openstack.org/user-stories/)</para>
+    <section xml:id="nectar">
+        <title>NeCTAR</title>
+        <para>Who uses it: Researchers from the Australian publicly
+            funded research sector. Use is across a wide variety of
+            disciplines, with the purpose of instances being from
+            running simple web servers to using hundreds of cores for
+            high throughput computing.</para>
+        <section xml:id="nectar_deploy">
+            <title>Deployment</title>
+            <para>Using OpenStack Compute Cells, the NeCTAR Cloud
+                spans 8 sites with approximately 4,000 cores per
+                site.</para>
+            <para>Each site runs a different configuration, as
+                resource cells in an OpenStack Compute cells setup.
+                Some sites span multiple data centers, some use off
+                compute node storage with a shared file system and
+                some use on compute node storage with a non-shared
+                file system. Each site deploys the Image Service with
+                an Object Storage back-end. A central Identity
+                Service, Dashboard and Compute API Service is used.
+                Login to the Dashboard triggers a SAML login with
+                Shibboleth, that creates an account in the Identity
+                Service with an SQL back-end.</para>
+            <para>Compute nodes have 24-48 cores, with at least 4GB of
+                RAM per core and approximately 40GB of ephemeral
+                storage per core.</para>
+            <para>All sites are based on Ubuntu 12.04 with KVM as the
+                hypervisor. The OpenStack version in use is typically
+                the current stable version, with 5-10% backported code
+                from trunk and modifications.</para>
+        </section>
+        <section xml:id="nectar_resources">
+            <title>Resources</title>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <link xlink:title="OpenStack Website"
+                            xlink:href="https://www.openstack.org/user-stories/nectar/"
+                            >OpenStack.org Case Study</link>
+                        (https://www.openstack.org/user-stories/nectar/)</para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <link xlink:title="OpenStack Website"
+                            xlink:href="https://github.com/NeCTAR-RC/"
+                            >NeCTAR-RC GitHub</link>
+                        (https://github.com/NeCTAR-RC/)</para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <link xlink:title="OpenStack Website"
+                            xlink:href="https://www.nectar.org.au/"
+                            >NeCTAR Website</link>
+                        (https://www.nectar.org.au/)</para>
+                </listitem>
+            </itemizedlist>
+        </section>
+    </section>
+    <section xml:id="mit_csail">
+        <title>MIT CSAIL</title>
+        <para>Who uses it: Researchers from the MIT Computer Science
+            and Artificial Intelligence Lab.</para>
+        <section xml:id="mit_csail_deploy">
+            <title>Deployment</title>
+            <para>The CSAIL cloud is currently 64 physical nodes with
+                a total of 768 physical cores and 3,456 GB of RAM.
+                Persistent data storage is largely outside of the
+                cloud on NFS with cloud resources focused on compute
+                resources. There are 65 users in 23 projects with
+                typical capacity utilization nearing 90% we are
+                looking to expand.</para>
+            <para>The software stack is Ubuntu 12.04 LTS with
+                OpenStack Folsom from the Ubuntu Cloud Archive. KVM is
+                the hypervisor, deployed using FAI
+                (http://fai-project.org/) and Puppet for configuration
+                management. The FAI and Puppet combination is used lab
+                wide, not only for OpenStack. There is a single cloud
+                controller node, with the remainder of the server
+                hardware dedicated to compute nodes. Due to the
+                compute intensive nature of the use case, the ratio of
+                physical CPU and RAM to virtual is 1:1 in nova.conf.
+                Although hyper-threading is enabled so, given the way
+                Linux counts CPUs, this is actually 2:1 in
+                practice.</para>
+            <para>On the network side, physical systems have two
+                network interfaces and a separate management card for
+                IPMI management. The OpenStack network service uses
+                multi-host networking and the FlatDHCP.</para>
+        </section>
+    </section>
+
+    <section xml:id="dair">
+        <title>DAIR</title>
+        <para>Who uses it: DAIR is an integrated virtual environment
+            that leverages the CANARIE network to develop and test new
+            information communication technology (ICT) and other
+            digital technologies. It combines such digital
+            infrastructure as advanced networking, and cloud computing
+            and storage to create an environment for develop and test
+            of innovative ICT applications, protocols and services,
+            perform at-scale experimentation for deployment, and
+            facilitate a faster time to market.</para>
+        <section xml:id="dair_deploy">
+            <title>Deployment</title>
+            <para>DAIR is hosted at two different data centres across
+                Canada: one in Alberta and the other in Quebec. It
+                consists of a cloud controller at each location,
+                however, one is designated as the "master" controller
+                that is in charge of central authentication and
+                quotas. This is done through custom scripts and light
+                modifications to OpenStack. DAIR is currently running
+                Folsom.</para>
+            <para>For Object Storage, each region has a Swift
+                environment.</para>
+            <para>A NetApp appliance is used in each region for both
+                block storage and instance storage. There are future
+                plans to move the instances off of the NetApp
+                appliance and onto a distributed file system such as
+                Ceph or GlusterFS.</para>
+            <para>VlanManager is used extensively for network
+                management. All servers have two bonded 10gb NICs that
+                are connected to two redundant switches. DAIR is set
+                up to use single-node networking where the cloud
+                controller is the gateway for all instances on all
+                compute nodes. Internal OpenStack traffic (for
+                example, storage traffic) does not go through the
+                cloud controller.</para>
+        </section>
+        <section xml:id="dair_resources">
+            <title>Resources</title>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <link xlink:title="OpenStack Website"
+                            xlink:href="http://www.canarie.ca/en/dair-program/about"
+                            >DAIR Homepage</link>
+                        (http://www.canarie.ca/en/dair-program/about)</para>
+                </listitem>
+            </itemizedlist>
+        </section>
+    </section>
+    <section xml:id="cern">
+        <title>CERN</title>
+        <para>Who uses it: Researchers at CERN (European Organization
+            for Nuclear Research) conducting high-energy physics
+            research.</para>
+        <section xml:id="cern_deploy">
+            <title>Deployment</title>
+            <para>The environment is largely based on Scientific Linux
+                6, which is Red Hat compatible. We use KVM as our
+                primary hypervisor although tests are ongoing with
+                Hyper-V on Windows Server 2008.</para>
+            <para>We use the Puppet Labs OpenStack modules to
+                configure Compute, Image Service, Identity Service and
+                Dashboard. Puppet is used widely for instance
+                configuration and Foreman as a GUI for reporting and
+                instance provisioning.</para>
+            <para>Users and Groups are managed through Active
+                Directory and imported into the Identity Service using
+                LDAP. CLIs are available for Nova and Euca2ools to do
+                this.</para>
+            <para>CERN is currently running around 250 Nova Compute
+                nodes with approximately 1,000 instances.</para>
+        </section>
+        <section xml:id="cern_resources">
+            <title>Resources</title>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <link xlink:title="OpenStack Website"
+                            xlink:href="http://www.slideshare.net/noggin143/20121017-openstack-accelerating-science"
+                            >San Diego 2012
+                        Summit</link> (http://www.slideshare.net/noggin143/20121017-openstack-accelerating-science)</para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <link xlink:title="OpenStack Website"
+                            xlink:href="http://cern.ch/go/N8wp">Review
+                            of CERN Data Centre
+                        Infrastructure</link> (http://cern.ch/go/N8wp)</para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <link xlink:title="OpenStack Website"
+                            xlink:href="http://information-technology.web.cern.ch/book/cern-private-cloud-user-guide"
+                            >CERN Cloud Infrastructure User
+                            Guide</link> (http://information-technology.web.cern.ch/book/cern-private-cloud-user-guide)</para>
+                </listitem>
+            </itemizedlist>
+        </section>
+    </section>
+</appendix>

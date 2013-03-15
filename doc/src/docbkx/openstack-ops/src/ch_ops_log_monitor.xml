@@ -1,0 +1,703 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter [
+        <!-- Some useful entities borrowed from HTML -->
+        <!ENTITY ndash  "&#x2013;">
+        <!ENTITY mdash  "&#x2014;">
+        <!ENTITY hellip "&#x2026;">
+        <!ENTITY plusmn "&#xB1;">
+        
+       
+]>
+<chapter xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="logging_monitoring">
+    <title>Logging and Monitoring</title>
+    <para>As an OpenStack cloud is composed of so many different
+        services, there are a large number of log files. This section
+        aims to assist you in locating and working with them, and
+        other ways to track the status of your deployment.</para>
+
+    <section xml:id="where_are_logs">
+        <title>Where are the Logs?</title>
+        <para>On Ubuntu, most services use the convention of writing
+            their log files to subdirectories of the <code>/var/log
+                directory</code>.</para>
+        <section xml:id="cloud_controller_ops">
+            <title>Cloud Controller</title>
+            <informaltable rules="all">
+                <thead>
+                    <tr>
+                        <th>Service</th>
+                        <th>Log Location</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td xmlns:db="http://docbook.org/ns/docbook"><para>
+                                <code>nova-*</code>
+                            </para></td>
+                        <td xmlns:db="http://docbook.org/ns/docbook"><para>
+                                <code>/var/log/nova</code>
+                            </para></td>
+                    </tr>
+                    <tr>
+                        <td xmlns:db="http://docbook.org/ns/docbook"><para>
+                                <code>glance-*</code>
+                            </para></td>
+                        <td xmlns:db="http://docbook.org/ns/docbook"><para>
+                                <code>/var/log/glance</code>
+                            </para></td>
+                    </tr>
+                    <tr>
+                        <td xmlns:db="http://docbook.org/ns/docbook"><para>
+                                <code>cinder-*</code>
+                            </para></td>
+                        <td xmlns:db="http://docbook.org/ns/docbook"><para>
+                                <code>/var/log/cinder</code>
+                            </para></td>
+                    </tr>
+                    <tr>
+                        <td xmlns:db="http://docbook.org/ns/docbook"><para>
+                                <code>keystone</code>
+                            </para></td>
+                        <td xmlns:db="http://docbook.org/ns/docbook"><para>
+                                <code>/var/log/keystone</code>
+                            </para></td>
+                    </tr>
+                    <tr>
+                        <td xmlns:db="http://docbook.org/ns/docbook"
+                                ><para>horizon</para></td>
+                        <td xmlns:db="http://docbook.org/ns/docbook"><para>
+                                <code>/var/log/apache2/</code>
+                            </para></td>
+                    </tr>
+                    <tr>
+                        <td xmlns:db="http://docbook.org/ns/docbook"
+                                ><para>misc (Swift,
+                            dnsmasq)</para></td>
+                        <td xmlns:db="http://docbook.org/ns/docbook"><para>
+                                <code>/var/log/syslog</code>
+                            </para></td>
+                    </tr>
+                </tbody>
+            </informaltable>
+        </section>
+        <section xml:id="compute_nodes_ops">
+            <title>Compute Nodes</title>
+            <para>libvirt: <code>/var/log/libvirt/libvirtd.log</code>
+            </para>
+            <para>Console (boot up messages) for VM instances:
+                    <code>/var/lib/nova/instances/instance-&lt;instance
+                    id&gt;/console.log</code>
+            </para>
+        </section>
+        <section xml:id="block_storage_nodes">
+            <title>Block Storage Nodes</title>
+            <para>cinder:
+                    <code>/var/log/cinder/cinder-volume.log</code>
+            </para>
+        </section>
+    </section>
+    <section xml:id="how_to_read_logs">
+        <title>How to Read the Logs</title>
+        <para>OpenStack services use the standard logging levels, at
+            increasing severity: DEBUG, INFO, AUDIT, WARNING, ERROR,
+            CRITICAL, TRACE. That is, messages will only appear in the
+            logs if they are more "severe" than the particular log
+            level with DEBUG allowing all log statements through. For
+            example, TRACE will only log if the software has a stack
+            trace, while INFO will log every message including those
+            that are only for information.</para>
+        <para>To disable DEBUG-level logging, edit
+                <code>/etc/nova/nova.conf</code>:</para>
+        <programlisting>debug=false</programlisting>
+        <para>Keystone is handled a little differently. To modify the
+            logging level, edit the
+                <code>/etc/keystone/logging.conf</code> file and look
+            at the <code>logger_root and handler_file</code>
+            sections.</para>
+        <para>Logging for Horizon is configured in
+                <code>/etc/openstack_dashboard/local_settings.py</code>.
+            As Horizon is a Django web application, it follows the
+                <link xlink:title="StackTach GitHub repo"
+                xlink:href="https://docs.djangoproject.com/en/dev/topics/logging/"
+                >Django Logging</link>
+            (https://docs.djangoproject.com/en/dev/topics/logging/)
+            framework conventions.</para>
+        <para>The first step in finding the source of an error is
+            typically to search for a CRITICAL, TRACE, or ERROR
+            message in the log starting at the bottom of the log file. </para>
+        <para>An example of a CRITICAL log message, with the
+            corresponding TRACE (Python traceback) immediately
+            following:</para>
+        <programlisting><?db-font-size 65%?>2013-02-25 21:05:51 17409 CRITICAL cinder [-] Bad or unexpected response from the storage volume backend API: volume group 
+ cinder-volumes doesn't exist
+2013-02-25 21:05:51 17409 TRACE cinder Traceback (most recent call last):
+2013-02-25 21:05:51 17409 TRACE cinder File "/usr/bin/cinder-volume", line 48, in &lt;module&gt;
+2013-02-25 21:05:51 17409 TRACE cinder service.wait()
+2013-02-25 21:05:51 17409 TRACE cinder File "/usr/lib/python2.7/dist-packages/cinder/service.py", line 422, in wait
+2013-02-25 21:05:51 17409 TRACE cinder _launcher.wait()
+2013-02-25 21:05:51 17409 TRACE cinder File "/usr/lib/python2.7/dist-packages/cinder/service.py", line 127, in wait
+2013-02-25 21:05:51 17409 TRACE cinder service.wait()
+2013-02-25 21:05:51 17409 TRACE cinder File "/usr/lib/python2.7/dist-packages/eventlet/greenthread.py", line 166, in wait
+2013-02-25 21:05:51 17409 TRACE cinder return self._exit_event.wait()
+2013-02-25 21:05:51 17409 TRACE cinder File "/usr/lib/python2.7/dist-packages/eventlet/event.py", line 116, in wait
+2013-02-25 21:05:51 17409 TRACE cinder return hubs.get_hub().switch()
+2013-02-25 21:05:51 17409 TRACE cinder File "/usr/lib/python2.7/dist-packages/eventlet/hubs/hub.py", line 177, in switch
+2013-02-25 21:05:51 17409 TRACE cinder return self.greenlet.switch()
+2013-02-25 21:05:51 17409 TRACE cinder File "/usr/lib/python2.7/dist-packages/eventlet/greenthread.py", line 192, in main
+2013-02-25 21:05:51 17409 TRACE cinder result = function(*args, **kwargs)
+2013-02-25 21:05:51 17409 TRACE cinder File "/usr/lib/python2.7/dist-packages/cinder/service.py", line 88, in run_server
+2013-02-25 21:05:51 17409 TRACE cinder server.start()
+2013-02-25 21:05:51 17409 TRACE cinder File "/usr/lib/python2.7/dist-packages/cinder/service.py", line 159, in start
+2013-02-25 21:05:51 17409 TRACE cinder self.manager.init_host()
+2013-02-25 21:05:51 17409 TRACE cinder File "/usr/lib/python2.7/dist-packages/cinder/volume/manager.py", line 95, 
+ in init_host
+2013-02-25 21:05:51 17409 TRACE cinder self.driver.check_for_setup_error()
+2013-02-25 21:05:51 17409 TRACE cinder File "/usr/lib/python2.7/dist-packages/cinder/volume/driver.py", line 116, 
+ in check_for_setup_error
+2013-02-25 21:05:51 17409 TRACE cinder raise exception.VolumeBackendAPIException(data=exception_message)
+2013-02-25 21:05:51 17409 TRACE cinder VolumeBackendAPIException: Bad or unexpected response from the storage volume 
+ backend API: volume group cinder-volumes doesn't exist
+2013-02-25 21:05:51 17409 TRACE cinder</programlisting>
+        <para>In this example, cinder-volumes failed to start and has
+            provided a stack trace, since its volume back-end has been
+            unable to setup the storage volume - probably because the
+            LVM volume that is expected from the configuration does
+            not exist.</para>
+        <para>An example error log:</para>
+        <programlisting>2013-02-25 20:26:33 6619 ERROR nova.openstack.common.rpc.common [-] AMQP server on localhost:5672 is unreachable:
+ [Errno 111] ECONNREFUSED. Trying again in 23 seconds.</programlisting>
+        <para>In this error, a nova service has failed to connect to
+            the RabbitMQ server, because it got a connection refused
+            error.</para>
+    </section>
+    <section xml:id="tracing_instance_request">
+        <title>Tracing Instance Requests</title>
+        <para>When an instance fails to behave properly, you will
+            often have to trace activity associated with that instance
+            across the log files of various <code>nova-*</code>
+            services, and across both the cloud controller and compute
+            nodes.</para>
+        <para>The typical way is to trace the UUID associated with an
+            instance across the service logs.</para>
+        <para>Consider the following example:</para>
+        <programlisting><?db-font-size 65%?>ubuntu@initial:~$ nova list
++--------------------------------------+--------+--------+---------------------------+
+| ID                                   | Name   | Status | Networks                  |
++--------------------------------------+--------+--------+---------------------------+
+| faf7ded8-4a46-413b-b113-f19590746ffe | cirros | ACTIVE | novanetwork=192.168.100.3 |
++--------------------------------------+--------+--------+---------------------------+</programlisting>
+        <para>Here the ID associated with the instance is
+                <code>faf7ded8-4a46-413b-b113-f19590746ffe</code>. If
+            you search for this string on the cloud controller in the
+                <code>/var/log/nova-*.log</code> files, it will appear
+            in <code>nova-api.log</code>,
+                <code>nova-scheduler.log</code>. If you search for
+            this on the compute nodes in
+                <code>/var/log/nova-*.log</code>, it will appear
+                <code>nova-network.log</code> and
+                <code>nova-compute.log</code>. If no ERROR or CRITICAL
+            messages appear, the most recent log entry that reports
+            this may provide a hint about what has gone wrong.</para>
+    </section>
+    <section xml:id="add_custom_logging">
+        <title>Adding Custom Logging Statements</title>
+        <para>If there is not enough information in the existing logs,
+            you may need to add your own custom logging statements to
+            the <code>nova-*</code> services.</para>
+        <para>The source files are located in
+                <code>/usr/lib/python2.7/dist-packages/nova</code>
+        </para>
+        <para>To add logging statements, the following line should be
+            near the top of the file. For most files, these should
+            already be there:</para>
+        <programlisting>from nova.openstack.common import log as logging
+LOG = logging.getLogger(__name__)</programlisting>
+        <para>To add a DEBUG logging statement, you would do:</para>
+        <programlisting>LOG.debug("This is a custom debugging statement")</programlisting>
+        <para>You may notice that all of the existing logging messages
+            are preceded by an underscore and surrounded by
+            parentheses, for example:</para>
+        <programlisting>LOG.debug(_("Logging statement appears here"))</programlisting>
+        <para>This is used to support translation of logging messages
+            into different languages using the <link
+                xlink:href="http://docs.python.org/2/library/gettext.html"
+                >gettext</link>
+            (http://docs.python.org/2/library/gettext.html)
+            internationalization library. You don't need to do this
+            for your own custom log messages. However, if you want to
+            contribute the code back to the OpenStack project that
+            includes logging statements, you will need to surround
+            your log messages with underscore and parentheses.</para>
+    </section>
+    <section xml:id="rabbitmq">
+        <title>RabbitMQ Web Management Interface</title>
+        <para>Aside from connection failures, RabbitMQ log files are
+            generally not useful for debugging OpenStack related
+            issues. Instead, we recommend you use the RabbitMQ web
+            management interface. Enable it on your cloud
+            controller:</para>
+        <programlisting># /usr/lib/rabbitmq/bin/rabbitmq-plugins enable rabbitmq_management
+# service rabbitmq-server restart</programlisting>
+        <para>The RabbitMQ web management interface will be accessible
+            on your cloud controller at http://localhost:55672.</para>
+        <para>Note: Ubuntu 12.04 installs RabbitMQ version, which uses
+            port 55672. RabbitMQ versions 3.0 and above use port 15672
+            instead. You can check which version of RabbitMQ you have
+            running on your local Ubuntu machine by doing:</para>
+        <programlisting>$ dpkg -s rabbitmq-server | grep "Version:"
+Version: 2.7.1-0ubuntu4</programlisting>
+        <para>Items to monitor for RabbitMQ include the number of
+            items in each of the queues and the processing time
+            statistics for the server.</para>
+    </section>
+    <section xml:id="manage_logs_centrally">
+        <title>Centrally Managing Logs</title>
+        <para>Since your cloud will most likely be composed of many
+            servers, you'll have to check logs on each of those
+            servers in order to properly piece an event together. A
+            better solution is to send the logs of all servers to a
+            central location so they can all be accessed from the same
+            area.</para>
+        <para>Ubuntu uses rsyslog as the default logging service.
+            Since it is natively able to send logs to a remote
+            location, you don't have to install anything extra to
+            enable this feature, just modify the configuration file.
+            In doing this, consider running your logging over a
+            management network, or using an encrypted VPN to avoid
+            interception.</para>
+        <section xml:id="rsyslog_client_config">
+            <title>rsyslog Client Configuration</title>
+            <para>To begin, configure all OpenStack components to log
+                to syslog in addition to their standard log file
+                location. Also configure each component to log to a
+                different syslog facility. This makes it easier to
+                split the logs into individual components on the
+                central server.</para>
+            <para>
+                <code>nova.conf</code>:</para>
+            <programlisting>use_syslog=True
+syslog_log_facility=LOG_LOCAL0</programlisting>
+            <para>
+                <code>glance-api.conf</code> and
+                    <code>glance-registry.conf</code>:</para>
+            <programlisting>use_syslog=True
+syslog_log_facility=LOG_LOCAL1</programlisting>
+            <para>
+                <code>cinder.conf</code>:</para>
+            <programlisting>use_syslog=True
+syslog_log_facility=LOG_LOCAL2</programlisting>
+            <para>
+                <code>keystone.conf</code>:</para>
+            <programlisting>use_syslog=True
+syslog_log_facility=LOG_LOCAL3</programlisting>
+            <para>Swift</para>
+            <para>By default, Swift logs to syslog.</para>
+            <para>Next, create /etc/rsyslog.d/client.conf with the
+                following line:</para>
+            <programlisting>*.* @192.168.1.10</programlisting>
+            <para>This instructs rsyslog to send all logs to the IP
+                listed. In this example, the IP points to the Cloud
+                Controller.</para>
+        </section>
+        <section xml:id="rsyslog_server_config">
+            <title>rsyslog Server Configuration</title>
+            <para>Designate a server as the central logging server.
+                The best practice is to choose a server that is solely
+                dedicated to this purpose. Create a file called
+                /etc/rsyslog.d/server.conf with the following
+                contents:</para>
+            <programlisting><?db-font-size 65%?># Enable UDP 
+$ModLoad imudp 
+# Listen on 192.168.1.10 only 
+$UDPServerAddress 192.168.1.10
+# Port 514 
+$UDPServerRun 514  
+      
+# Create logging templates for nova
+$template NovaFile,"/var/log/rsyslog/%HOSTNAME%/nova.log" 
+$template NovaAll,"/var/log/rsyslog/nova.log"
+      
+
+      
+# Log everything else to syslog.log 
+$template DynFile,"/var/log/rsyslog/%HOSTNAME%/syslog.log"
+*.* ?DynFile
+      
+
+      
+# Log various openstack components to their own individual file
+local0.* ?NovaFile 
+local0.* ?NovaAll 
+&amp; ~</programlisting>
+            <para>The above example configuration handles the nova
+                service only. It first configures rsyslog to act as a
+                server that runs on port 512. Next, it creates a
+                series of logging templates. Logging templates control
+                where received logs are stored. Using the example
+                above, a nova log from c01.example.com will go to the
+                following locations:</para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <code>/var/log/rsyslog/c01.example.com/nova.log</code>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>/var/log/rsyslog/nova.log</code>
+                    </para>
+                </listitem>
+            </itemizedlist>
+            <para>This is useful as logs from c02.example.com will go
+                to:</para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <code>/var/log/rsyslog/c02.example.com/nova.log</code>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>/var/log/rsyslog/nova.log</code>
+                    </para>
+                </listitem>
+            </itemizedlist>
+            <para>So you have an individual log file for each compute
+                node as well as an aggregated log that contains nova
+                logs from all nodes.</para>
+        </section>
+    </section>
+    <section xml:id="stacktach">
+        <title>StackTach</title>
+        <para>StackTach is a tool created by Rackspace to collect and
+            report the notifications sent by <code>nova</code>.
+            Notifications are essentially the same as logs, but can be
+            much more detailed. A good overview of notifications can
+            be found at <link xlink:title="StackTach GitHub repo"
+                xlink:href="https://wiki.openstack.org/wiki/SystemUsageData"
+                >System Usage Data</link>
+            (https://wiki.openstack.org/wiki/SystemUsageData).</para>
+        <para>To enable nova to send notifications, add the following
+            to <code>nova.conf</code>:</para>
+        <programlisting>notification_topics=monitor 
+notification_driver=nova.openstack.common.notifier.rabbit_notifier</programlisting>
+        <para>Once <code>nova</code> is sending notifications, install
+            and configure StackTach. Since StackTach is relatively new
+            and constantly changing, installation instructions would
+            quickly become outdated. Please refer to the <link
+                xlink:href="https://github.com/rackspace/stacktach"
+                >StackTach GitHub repo</link>
+            (https://github.com/rackspace/stacktach) for instructions
+            as well as a demo video.</para>
+    </section>
+    <section xml:id="monitoring">
+        <title>Monitoring</title>
+        <para>There are two types of monitoring: watching for problems
+            and watching usage trends. The former ensures that all
+            services are up and running, creating a functional cloud.
+            The latter involves monitoring resource usage over time in
+            order to make informed decisions about potential
+            bottlenecks and upgrades.</para>
+        <section xml:id="process_monitoring">
+            <title>Process Monitoring</title>
+            <para>A basic type of alert monitoring is to simply check
+                and see if a required process is running. For example,
+                ensure that the <code>nova-api</code> service is
+                running on the Cloud Controller:</para>
+            <programlisting>[ root@cloud ~ ] # ps aux | grep nova-api
+nova 12786 0.0 0.0 37952 1312 ? Ss Feb11 0:00 su -s /bin/sh -c exec nova-api --config-file=/etc/nova/nova.conf nova
+nova 12787 0.0 0.1 135764 57400 ? S Feb11 0:01 /usr/bin/python /usr/bin/nova-api --config-file=/etc/nova/nova.conf
+nova 12792 0.0 0.0 96052 22856 ? S Feb11 0:01 /usr/bin/python /usr/bin/nova-api --config-file=/etc/nova/nova.conf
+nova 12793 0.0 0.3 290688 115516 ? S Feb11 1:23 /usr/bin/python /usr/bin/nova-api --config-file=/etc/nova/nova.conf
+nova 12794 0.0 0.2 248636 77068 ? S Feb11 0:04 /usr/bin/python /usr/bin/nova-api --config-file=/etc/nova/nova.conf
+root 24121 0.0 0.0 11688 912 pts/5 S+ 13:07 0:00 grep nova-api</programlisting>
+            <para>You can create automated alerts for critical
+                processes by using Nagios and NRPE. For example, to
+                ensure that the <code>nova-compute</code> process is
+                running on compute nodes, create an alert on your
+                Nagios server that looks like this:</para>
+            <programlisting>define service {</programlisting>
+            <programlisting>    host_name c01.example.com 
+    check_command check_nrpe_1arg!check_nova-compute 
+    use generic-service 
+    notification_period 24x7 
+    contact_groups sysadmins 
+    service_description nova-compute 
+}</programlisting>
+            <para>Then on the actual compute node, create the
+                following NRPE configuration:</para>
+            <programlisting>command[check_nova-compute]=/usr/lib/nagios/plugins/check_procs -c 1: -a nova-compute</programlisting>
+            <para>Nagios will now check and see if at least one
+                nova-compute service is running at all times.</para>
+        </section>
+        <section xml:id="resource_alerting">
+            <title>Resource Alerting</title>
+            <para>Resource alerting provides notifications when one or
+                more resources is critically low. While the monitoring
+                thresholds should be tuned to your specific OpenStack
+                environment, monitoring resource usage is not specific
+                to OpenStack at all – any generic type of alert will
+                work fine.</para>
+            <para>Some of the resources that you want to monitor
+                include:</para>
+            <itemizedlist>
+                <listitem>
+                    <para>Disk Usage</para>
+                </listitem>
+                <listitem>
+                    <para>Server Load</para>
+                </listitem>
+                <listitem>
+                    <para>Memory Usage</para>
+                </listitem>
+                <listitem>
+                    <para>Network IO</para>
+                </listitem>
+                <listitem>
+                    <para>Available vCPUs</para>
+                </listitem>
+            </itemizedlist>
+            <para>For example, to monitor disk capacity on a compute
+                node with Nagios, add the following to your Nagios
+                configuration:</para>
+            <programlisting>define service { 
+    host_name c01.example.com 
+    check_command check_nrpe!check_all_disks!20% 10% 
+    use generic-service 
+    contact_groups sysadmins 
+    service_description Disk 
+}</programlisting>
+            <para>On the compute node, add the following to your NRPE
+                configuration:</para>
+            <programlisting>command[check_all_disks]=/usr/lib/nagios/plugins/check_disk -w $ARG1$ -c $ARG2$ -e</programlisting>
+            <para>Nagios will now alert you with a WARNING when any
+                disk on the compute node is 80% full and CRITICAL when
+                90% is full.</para>
+        </section>
+        <section xml:id="os_resources">
+            <title>OpenStack-specific Resources</title>
+            <para>Resources such as memory, disk, and CPU are generic
+                resources that all servers (even non-OpenStack
+                servers) have and are important to the overall health
+                of the server. When dealing with OpenStack
+                specifically, these resources are important for a
+                second reason: ensuring enough are available in order
+                to launch instances. There are a few ways you can see
+                OpenStack resource usage.</para>
+            <para>The first is through the <code>nova</code>
+                command:</para>
+            <programlisting># nova usage-list</programlisting>
+            <para>This command will display a list of how many
+                instances a tenant has running and some light usage
+                statistics about the combined instances. This command
+                is useful for a quick overview of your cloud, but
+                doesn't really get into a lot of details.</para>
+            <para>Next, the <code>nova</code> database contains three
+                tables that store usage information.</para>
+            <para>The <code>nova.quotas</code> and
+                    <code>nova.quota_usages</code> tables store quota
+                information. If a tenant's quota is different than the
+                default quota settings, their quota will be stored in
+                    <code>nova.quotas</code> table. For
+                example:</para>
+            <programlisting>mysql&gt; select project_id, resource, hard_limit from quotas; 
++----------------------------------+-----------------------------+------------+
+| project_id                       | resource                    | hard_limit |
++----------------------------------+-----------------------------+------------+
+| 628df59f091142399e0689a2696f5baa | metadata_items              | 128        |
+| 628df59f091142399e0689a2696f5baa | injected_file_content_bytes | 10240      |
+| 628df59f091142399e0689a2696f5baa | injected_files              | 5          |
+| 628df59f091142399e0689a2696f5baa | gigabytes                   | 1000       |
+| 628df59f091142399e0689a2696f5baa | ram                         | 51200      |
+| 628df59f091142399e0689a2696f5baa | floating_ips                | 10         |
+| 628df59f091142399e0689a2696f5baa | instances                   | 10         |
+| 628df59f091142399e0689a2696f5baa | volumes                     | 10         |
+| 628df59f091142399e0689a2696f5baa | cores                       | 20         |
++----------------------------------+-----------------------------+------------+ </programlisting>
+            <para>The <code>nova.quota_usages</code> table will keep
+                track of how many resources the tenant currently has
+                in use:</para>
+            <programlisting>mysql&gt; select project_id, resource, in_use from quota_usages where project_id like '628%';
++----------------------------------+--------------+--------+ 
+| project_id                       | resource     | in_use | 
++----------------------------------+--------------+--------+ 
+| 628df59f091142399e0689a2696f5baa | instances    | 1      |
+| 628df59f091142399e0689a2696f5baa | ram          | 512    | 
+| 628df59f091142399e0689a2696f5baa | cores        | 1      | 
+| 628df59f091142399e0689a2696f5baa | floating_ips | 1      | 
+| 628df59f091142399e0689a2696f5baa | volumes      | 2      | 
+| 628df59f091142399e0689a2696f5baa | gigabytes    | 12     | 
+| 628df59f091142399e0689a2696f5baa | images       | 1      | 
++----------------------------------+--------------+--------+</programlisting>
+            <para>By combining the resources used with the tenant's
+                quota, you can figure out a usage percentage. For
+                example, if this tenant is using 1 Floating IP out of
+                10, then they are using 10% of their Floating IP
+                quota. You can take this procedure and turn it into a
+                formatted report:</para>
+            <programlisting>+-----------------------------------+------------+-------------+---------------+ 
+| some_tenant                                                                  | 
++-----------------------------------+------------+-------------+---------------+ 
+| Resource                          | Used       | Limit       |               | 
++-----------------------------------+------------+-------------+---------------+ 
+| cores                             | 1          | 20          |           5 % | 
+| floating_ips                      | 1          | 10          |          10 % | 
+| gigabytes                         | 12         | 1000        |           1 % | 
+| images                            | 1          | 4           |          25 % | 
+| injected_file_content_bytes       | 0          | 10240       |           0 % | 
+| injected_file_path_bytes          | 0          | 255         |           0 % | 
+| injected_files                    | 0          | 5           |           0 % | 
+| instances                         | 1          | 10          |          10 % | 
+| key_pairs                         | 0          | 100         |           0 % | 
+| metadata_items                    | 0          | 128         |           0 % | 
+| ram                               | 512        | 51200       |           1 % | 
+| reservation_expire                | 0          | 86400       |           0 % | 
+| security_group_rules              | 0          | 20          |           0 % | 
+| security_groups                   | 0          | 10          |           0 % | 
+| volumes                           | 2          | 10          |          20 % | 
++-----------------------------------+------------+-------------+---------------+</programlisting>
+            <para>The above was generated using a custom script which
+                can be found on GitHub
+                (https://github.com/cybera/novac/blob/dev/libexec/novac-quota-report).
+                Note that this script is very specific to a certain
+                OpenStack installation and will need modified to fit
+                your environment. However, the logic should easily be
+                transferable.</para>
+        </section>
+        <section xml:id="intelligent_alerting">
+            <title>Intelligent Alerting</title>
+            <para>Intelligent alerting can be thought of as a form of
+                continuous integration for operations. For example,
+                you can easily check to see if Glance is up and
+                running by ensuring that the <code>glance-api</code>
+                and <code>glance-registry</code> processes are running
+                or by seeing if <code>glace-api</code> is responding
+                on port 9292.</para>
+            <para>But how can you tell if images are being
+                successfully uploaded to the Image Service? Maybe the
+                disk that Image Service is storing the images on is
+                full or the S3 back-end is down. You could naturally
+                check this by doing a quick image upload:</para>
+            <programlisting>#!/bin/bash 
+# 
+# assumes that resonable credentials have been stored at 
+# /root/auth 
+ 
+      
+. /root/openrc 
+wget https://launchpad.net/cirros/trunk/0.3.0/+download/cirros-0.3.0-x86_64-disk.img  
+glance image-create --name='cirros image' --is-public=true --container-format=bare --disk-format=qcow2 &lt; cirros-0.3.0-x8
+6_64-disk.img</programlisting>
+            <para>By taking this script and rolling it into an alert
+                for your monitoring system (such as Nagios), you now
+                have an automated way of ensuring image uploads to the
+                Image Catalog are working. Note that you will want to
+                remove the image after each test -- even better, test
+                to see if an image can successfully be deleted from
+                the Image Service.</para>
+            <para>Intelligent alerting takes a considerable more
+                amount of time to plan and implement than the other
+                alerts described in this chapter. A good outline to
+                implement intelligent alerting is:</para>
+            <itemizedlist>
+                <listitem>
+                    <para>Review common actions in your cloud</para>
+                </listitem>
+                <listitem>
+                    <para>Create ways to automatically test these
+                        actions</para>
+                </listitem>
+                <listitem>
+                    <para>Roll these tests into an alerting
+                        system</para>
+                </listitem>
+            </itemizedlist>
+            <para>Some other examples for Intelligent Alerting
+                include:</para>
+            <itemizedlist>
+                <listitem>
+                    <para>Can instances launch and destroyed?</para>
+                </listitem>
+                <listitem>
+                    <para>Can users be created?</para>
+                </listitem>
+                <listitem>
+                    <para>Can objects be stored and deleted?</para>
+                </listitem>
+                <listitem>
+                    <para>Can volumes be created and destroyed?</para>
+                </listitem>
+            </itemizedlist>
+        </section>
+        <section xml:id="trending">
+            <title>Trending</title>
+            <para>Trending can give you great insight into how your
+                cloud is performing day to day. For example, if a busy
+                day was simply a rare occurrence or if you should
+                start adding new compute nodes.</para>
+            <para>Trending takes a slightly different approach than
+                alerting. While alerting is interested in a binary
+                result (whether a check succeeds or fails), trending
+                records the current state of something at a certain
+                point in time. Once enough points in time have been
+                recorded, you can see how the value has changed over
+                time.</para>
+            <para>All of the alert types mentioned earlier can also be
+                used for trend reporting. Some other trend examples
+                include:</para>
+            <itemizedlist>
+                <listitem>
+                    <para>The number of instances on each compute
+                        node</para>
+                </listitem>
+                <listitem>
+                    <para>The types of flavors in use</para>
+                </listitem>
+                <listitem>
+                    <para>The number of volumes in use</para>
+                </listitem>
+                <listitem>
+                    <para>The number of Object Storage requests each
+                        hour</para>
+                </listitem>
+                <listitem>
+                    <para>The number of nova-api requests each
+                        hour</para>
+                </listitem>
+                <listitem>
+                    <para>The I/O statistics of your storage
+                        services</para>
+                </listitem>
+            </itemizedlist>
+            <para>As an example, recording <code>nova-api</code> usage
+                can allow you to track the need to scale your cloud
+                controller. By keeping an eye on <code>nova-api</code>
+                requests, you can determine if you need to spawn more
+                nova-api processes or go as far as introducing an
+                entirely new server to run <code>nova-api</code>. To
+                get an approximate count of the requests, look for
+                standard INFO messages in
+                    <code>/var/log/nova/nova-api.log</code>:</para>
+            <para># grep INFO /var/log/nova/nova-api.log | wc</para>
+            <para>You can obtain further statistics by looking for the
+                number of successful requests:</para>
+            <para># grep " 200 " /var/log/nova/nova-api.log |
+                wc</para>
+            <para>By running this command periodically and keeping a
+                record of the result, you can create a trending report
+                over time that will show if your <code>nova-api</code>
+                usage is increasing, decreasing, or keeping
+                steady.</para>
+            <para>A tool such as collectd can be used to store this
+                information. While collectd is out of the scope of
+                this book, a good starting point would be to use
+                collectd to store the result as a COUNTER data type.
+                More information can be found in collectd's
+                documentation
+                (https://collectd.org/wiki/index.php/Data_source)</para>
+        </section>
+    </section>
+</chapter>
