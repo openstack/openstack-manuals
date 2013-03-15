@@ -1,0 +1,1016 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter [
+<!-- Some useful entities borrowed from HTML -->
+<!ENTITY ndash  "&#x2013;">
+<!ENTITY mdash  "&#x2014;">
+<!ENTITY hellip "&#x2026;">
+<!ENTITY plusmn "&#xB1;">
+        
+       
+]>
+<chapter xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="maintenance">
+    <title>Maintenance, Failures, and Debugging</title>
+    <para>Downtime, whether planned or unscheduled, is a certainty
+        when running a cloud. This chapter aims to provide useful
+        information for dealing proactively, or reactively with these
+        occurrences.</para>
+    <section xml:id="cloud_controller_storage">
+        <title>Cloud Controller and Storage Proxy Failures and
+            Maintenance</title>
+        <para>The cloud controller and storage proxy are very similar
+            to each other when it comes to expected and unexpected
+            downtime. One of each server type typically runs in the
+            cloud, which makes them very noticeable when they are not
+            running.</para>
+        <para>For the cloud controller, the good news is if your cloud
+            is using the FlatDHCP multi-host HA network mode, existing
+            instances and volumes continue to operate while the cloud
+            controller is offline. However for the storage proxy, no
+            storage traffic is possible until it is back up and
+            running.</para>
+        <section xml:id="planned_maintenance">
+            <title>Planned Maintenance</title>
+            <para>One way to plan for cloud controller or storage
+                proxy maintenance is to simply do it off-hours, such
+                as at 1 or 2 A.M.. This strategy impacts fewer users.
+                If your cloud controller or storage proxy is too
+                important to have unavailable at any point in time,
+                you must look into High Availability options.</para>
+        </section>
+        <section xml:id="reboot_cloud_controller">
+            <title>Rebooting a cloud controller or Storage
+                Proxy</title>
+            <para>All in all, just issue the "reboot" command. The
+                operating system cleanly shuts services down and then
+                automatically reboots. If you want to be very
+                thorough, run your backup jobs just before you
+                reboot.</para>
+        </section>
+        <section xml:id="after_a_cc_reboot">
+            <title>After a Cloud Controller or Storage Proxy
+                Reboots</title>
+            <para>After a cloud controller reboots, ensure that all
+                required services were successfully started:</para>
+            <programlisting><?db-font-size 65%?># ps aux | grep nova-
+      # grep AMQP /var/log/nova/nova-*.log
+      # ps aux | grep glance-
+      # ps aux | grep keystone
+      # ps aux | grep cinder</programlisting>
+            <para>Also check that all services are functioning:</para>
+            <programlisting><?db-font-size 65%?># source openrc
+      # glance index
+      # nova list
+      # keystone tenant-list</programlisting>
+            <para>For the storage proxy, ensure that the Object
+                Storage service has resumed:</para>
+            <programlisting><?db-font-size 65%?># ps aux | grep swift</programlisting>
+            <para>Also check that it is functioning:</para>
+            <programlisting><?db-font-size 65%?># swift stat</programlisting>
+        </section>
+        <section xml:id="cc_failure">
+            <title>Total Cloud Controller Failure</title>
+            <para>Unfortunately, this is a rough situation to be in.
+                The cloud controller is a integral part of your cloud
+                and if you have only one controller, many services
+                will be missing.</para>
+            <para>The best way to never get into this situation is to
+                create a highly available cloud controller cluster.
+                This is outside the scope of this document.</para>
+            <para>The next best way is to use a configuration
+                management tool such as Puppet to automatically build
+                a cloud controller. This should not take more than 15
+                minutes if you have a spare server available. After
+                the controller rebuilds, restore any backups taken
+                (see the <emphasis role="bold">Backup and
+                    Recovery</emphasis> chapter).</para>
+        </section>
+    </section>
+    <section xml:id="compute_node_failures">
+        <title>Compute Node Failures and Maintenance</title>
+        <para>Sometimes a compute node either crashes unexpectedly or
+            requires a reboot for maintenance reasons.</para>
+        <section xml:id="planned_maintenance_compute_node">
+            <title>Planned Maintenance</title>
+            <para>If you need to reboot a compute node due to planned
+                maintenance (such as a software or hardware upgrade),
+                first ensure that all hosted instances have been moved
+                off of the node. If your cloud is utilizing shared
+                storage, use the <code>nova live-migration</code>
+                command. First, get a list of instances that need to
+                be moved:</para>
+            <programlisting><?db-font-size 65%?># nova list --host c01.example.com --all-tenants</programlisting>
+            <para>Next, migrate them one by one:</para>
+            <programlisting><?db-font-size 65%?># nova live-migration &lt;uuid&gt; c02.example.com</programlisting>
+            <para>If you are not using shared storage, you can use the
+                    <code>--block-migrate</code> option:</para>
+            <programlisting><?db-font-size 65%?># nova live-migration --block-migrate &lt;uuid&gt; c02.example.com</programlisting>
+            <para>After you have migrated all instances, ensure the
+                    <code>nova-compute</code> service has
+                stopped:</para>
+            <programlisting><?db-font-size 65%?># stop nova-compute</programlisting>
+            <para>If you use a configuration management system, such
+                as Puppet, that ensures the <code>nova-compute</code>
+                service is always running, you can temporarily move
+                the init files:</para>
+            <programlisting><?db-font-size 65%?># mkdir /root/tmp
+# mv /etc/init/nova-compute.conf /root/tmp
+# mv /etc/init.d/nova-compute /root/tmp</programlisting>
+            <para>Next, shut your compute node down, perform your
+                maintenance, and turn the node back on. You can
+                re-enable the <code>nova-compute</code> service by
+                undoing the previous commands:</para>
+            <programlisting><?db-font-size 65%?># mv /root/tmp/nova-compute.conf /etc/init
+# mv /root/tmp/nova-compute /etc/init.d/</programlisting>
+            <para>Then start the <code>nova-compute</code>
+                service:</para>
+            <programlisting><?db-font-size 65%?># start nova-compute</programlisting>
+            <para>You can now optionally migrate the instances back to
+                their original compute node.</para>
+        </section>
+        <section xml:id="after_compute_node_reboot">
+            <title>After a Compute Node Reboots</title>
+            <para>When you reboot a compute node, first verify that it
+                booted successfully. This includes ensuring the
+                    <code>nova-compute</code> service is
+                running:</para>
+            <programlisting><?db-font-size 65%?># ps aux | grep nova-compute
+      # status nova-compute</programlisting>
+            <para>Also ensure that it has successfully connected to
+                the AMQP server:</para>
+            <programlisting><?db-font-size 65%?># grep AMQP /var/log/nova/nova-compute
+2013-02-26 09:51:31 12427 INFO nova.openstack.common.rpc.common [-] Connected to AMQP server on 199.116.232.36:5672</programlisting>
+            <para>After the compute node is successfully running, you
+                must deal with the instances that are hosted on that
+                compute node as none of them will be running.
+                Depending on your SLA with your users/customers, you
+                might have to start each instance and ensure they
+                start correctly.</para>
+        </section>
+        <section xml:id="maintenance_instances">
+            <title>Instances</title>
+            <para>You can create a list of instances that are hosted
+                on the compute node by performing the following
+                command:</para>
+            <programlisting><?db-font-size 65%?># nova list --host c01.example.com --all-tenants</programlisting>
+            <para>After you have the list, you can use the nova
+                command to start each instance:</para>
+            <programlisting><?db-font-size 65%?># nova reboot &lt;uuid&gt;</programlisting>
+            <para>
+                <emphasis role="bold">Note</emphasis>: Any time an
+                instance shuts down unexpectedly, it might have
+                problems on boot. For example, the instance might
+                require an <code>fsck</code> on the root partition. If
+                this happens, the user can use the Dashboard VNC
+                console to fix this.</para>
+            <para>If an instance is not booting at all, meaning
+                    <code>virsh list</code> will never show the
+                instance as even attempting to boot, then do the
+                following on the compute node:</para>
+            <programlisting><?db-font-size 65%?># tail -f /var/log/nova/nova-compute.log</programlisting>
+            <para>Try executing the <code>nova reboot</code> command
+                again. You should see an error message about why the
+                instance was not able to boot</para>
+            <para>In most cases the error will be due to something in
+                libvirt's XML file
+                    (<code>/etc/libvirt/qemu/instance-xxxxxxxx.xml</code>)
+                that no longer exists. You can enforce recreation of
+                the XML file as well as rebooting the instance by
+                running:</para>
+            <programlisting><?db-font-size 65%?># nova reboot --hard &lt;uuid&gt;</programlisting>
+        </section>
+        <section xml:id="inspect_and_recover_failed_instances">
+            <title>Inspecting and Recovering Data from Failed
+                Instances</title>
+            <para>There are scenarios where instances will be running
+                but inaccessible through SSH or responding to any
+                command. VNC console could be displaying a boot
+                failure or kernel panic error messages. This could be
+                an indication of a file system corruption on the VM
+                itself. If you need to recover files or inspect the
+                content of the instance, qemu-nbd can be used to mount
+                the disk.</para>
+            <para>Please note: you will be accessing/viewing the
+                user's content and data - get their approval
+                first!</para>
+            <para>To access the instance's disk
+                (/var/lib/nova/instances/instance-xxxxxx/disk), the
+                following steps must be followed:</para>
+            <orderedlist>
+                <listitem>
+                    <para>Suspend the instance using the virsh
+                        command</para>
+                </listitem>
+                <listitem>
+                    <para>Connect the qemu-nbd device to the
+                        disk</para>
+                </listitem>
+                <listitem>
+                    <para>Mount the qemu-nbd device</para>
+                </listitem>
+                <listitem>
+                    <para>Unmount the device after inspecting</para>
+                </listitem>
+                <listitem>
+                    <para>Disconnect the qemu-nbd device</para>
+                </listitem>
+                <listitem>
+                    <para>Resume the instance</para>
+                </listitem>
+            </orderedlist>
+            <para>If you do not follow the steps from 4-6, OpenStack
+                Compute cannot manage the instance any longer. It will
+                fail to respond to any command issued by OpenStack
+                Compute and it will be marked as shutdown.</para>
+            <para>Once the disk file is mounted, you should be able
+                access it and treated as normal directories with files
+                and a directory structure. However, we do not
+                recommend to edit or touch any files as this could
+                change the acls and make the instance unbootable if it
+                is not already.</para>
+            <orderedlist>
+                <listitem>
+                    <para>Suspend the instance using the virsh command
+                        - taking note of the internal ID.</para>
+                    <programlisting><?db-font-size 65%?>root@compute-node:~# virsh list
+                  Id Name                 State
+                  ----------------------------------
+                  1 instance-00000981    running
+                  2 instance-000009f5    running
+                  30 instance-0000274a    running
+                  
+                  root@compute-node:~# virsh suspend 30
+                  Domain 30 suspended
+              </programlisting>
+                </listitem>
+                <listitem>
+                    <para>Connect the qemu-nbd device to the
+                        disk</para>
+                    <programlisting><?db-font-size 65%?>root@compute-node:/var/lib/nova/instances/instance-0000274a# ls -lh
+total 33M
+-rw-rw---- 1 libvirt-qemu kvm  6.3K Oct 15 11:31 console.log
+-rw-r--r-- 1 libvirt-qemu kvm   33M Oct 15 22:06 disk
+-rw-r--r-- 1 libvirt-qemu kvm  384K Oct 15 22:06 disk.local
+-rw-rw-r-- 1 nova         nova 1.7K Oct 15 11:30 libvirt.xml
+root@compute-node:/var/lib/nova/instances/instance-0000274a# qemu-nbd -c /dev/nbd0 `pwd`/disk             </programlisting>
+                </listitem>
+                <listitem>
+                    <para>Mount the qemu-nbd device.</para>
+                    <para>The qemu-nbd device will try to export the
+                        instance disk's different partitions as
+                        separate devices. For example if vda as the
+                        disk and vda1 as the root partition, qemu-nbd
+                        will export the device as /dev/nbd0 and
+                        /dev/nbd0p1 respectively.</para>
+                    <programlisting><?db-font-size 65%?>#mount the root partition of the device
+root@compute-node:/var/lib/nova/instances/instance-0000274a# mount /dev/nbd0p1 /mnt/
+# List the directories of mnt, and the vm's folder will be display
+# You can inspect the folders and access the /var/log/ files            </programlisting>
+                    <para>To examine the secondary or ephemeral disk,
+                        use an alternate mount point if you want both
+                        primary and secondary drives mounted at the
+                        same time.</para>
+                    <programlisting><?db-font-size 65%?># umount /mnt
+# qemu-nbd -c /dev/nbd1 `pwd`/disk.local
+# mount /dev/nbd1 /mnt/            </programlisting>
+                    <programlisting><?db-font-size 65%?>root@compute-node:/var/lib/nova/instances/instance-0000274a# ls -lh /mnt/
+total 76K
+lrwxrwxrwx.  1 root root    7 Oct 15 00:44 bin -&gt; usr/bin
+dr-xr-xr-x.  4 root root 4.0K Oct 15 01:07 boot
+drwxr-xr-x.  2 root root 4.0K Oct 15 00:42 dev
+drwxr-xr-x. 70 root root 4.0K Oct 15 11:31 etc
+drwxr-xr-x.  3 root root 4.0K Oct 15 01:07 home
+lrwxrwxrwx.  1 root root    7 Oct 15 00:44 lib -&gt; usr/lib
+lrwxrwxrwx.  1 root root    9 Oct 15 00:44 lib64 -&gt; usr/lib64
+drwx------.  2 root root  16K Oct 15 00:42 lost+found
+drwxr-xr-x.  2 root root 4.0K Feb  3  2012 media
+drwxr-xr-x.  2 root root 4.0K Feb  3  2012 mnt
+drwxr-xr-x.  2 root root 4.0K Feb  3  2012 opt
+drwxr-xr-x.  2 root root 4.0K Oct 15 00:42 proc
+dr-xr-x---.  3 root root 4.0K Oct 15 21:56 root
+drwxr-xr-x. 14 root root 4.0K Oct 15 01:07 run
+lrwxrwxrwx.  1 root root    8 Oct 15 00:44 sbin -&gt; usr/sbin
+drwxr-xr-x.  2 root root 4.0K Feb  3  2012 srv
+drwxr-xr-x.  2 root root 4.0K Oct 15 00:42 sys
+drwxrwxrwt.  9 root root 4.0K Oct 15 16:29 tmp
+drwxr-xr-x. 13 root root 4.0K Oct 15 00:44 usr
+drwxr-xr-x. 17 root root 4.0K Oct 15 00:44 var             </programlisting>
+                </listitem>
+                <listitem>
+                    <para>Once you have completed the inspection,
+                        umount the mount point and release the
+                        qemu-nbd device</para>
+                    <programlisting><?db-font-size 65%?>root@compute-node:/var/lib/nova/instances/instance-0000274a# umount /mnt
+root@compute-node:/var/lib/nova/instances/instance-0000274a# qemu-nbd -d /dev/nbd0
+/dev/nbd0 disconnected             </programlisting>
+                </listitem>
+                <listitem>
+                    <para>Resume the instance using virsh</para>
+                    <programlisting><?db-font-size 65%?>root@compute-node:/var/lib/nova/instances/instance-0000274a# virsh list
+Id Name                 State
+----------------------------------
+1 instance-00000981    running
+2 instance-000009f5    running
+30 instance-0000274a    paused
+                  
+root@compute-node:/var/lib/nova/instances/instance-0000274a# virsh resume 30
+Domain 30 resumed            </programlisting>
+                </listitem>
+            </orderedlist>
+        </section>
+        <section xml:id="volumes">
+            <title>Volumes</title>
+            <para>If the affected instances also had attached volumes,
+                first generate a list of instance and volume
+                UUIDs:</para>
+            <programlisting><?db-font-size 65%?>mysql&gt; select nova.instances.uuid as instance_uuid, cinder.volumes.id as volume_uuid, cinder.volumes.status, 
+cinder.volumes.attach_status, cinder.volumes.mountpoint, cinder.volumes.display_name from cinder.volumes
+inner join nova.instances on cinder.volumes.instance_uuid=nova.instances.uuid 
+ where nova.instances.host = 'c01.example.com';</programlisting>
+            <para>You should see a result like the following:</para>
+            <programlisting><?db-font-size 65%?>+---------------+-------------+--------+---------------+------------+--------------+ 
+| instance_uuid | volume_uuid | status | attach_status | mountpoint | display_name | 
++---------------+-------------+--------+---------------+------------+--------------+ 
+| 9b969a05      | 1f0fbf36    | in-use | attached      | /dev/vdc   | test         | 
++---------------+-------------+--------+---------------+------------+--------------+ 
+1 row in set (0.00 sec)</programlisting>
+            <para>Next, manually detach and reattach the
+                volumes:</para>
+            <programlisting><?db-font-size 65%?># nova volume-detach &lt;instance_uuid&gt; &lt;volume_uuid&gt;
+# nova volume-attach &lt;instance_uuid&gt; &lt;volume_uuid&gt; /dev/vdX</programlisting>
+            <para>Where X is the proper mount point. Make sure that
+                the instance has successfully booted and is at a login
+                screen before doing the above.</para>
+        </section>
+        <section xml:id="totle_compute_node_failure">
+            <title>Total Compute Node Failure</title>
+            <para>If a compute node has failed and will likely not
+                ever be fixed or at least not fixed for a few hours,
+                you can relaunch all instances that are hosted on the
+                failed node if you are using shared storage for
+                    <code>/var/lib/nova/instances</code>.</para>
+            <para>To do this, generate a list of instance UUIDs that
+                are hosted on the failed node by running the following
+                query on the nova database:</para>
+            <programlisting><?db-font-size 65%?>mysql&gt; select uuid from instances where host = 'c01.example.com' and deleted = 0;</programlisting>
+            <para>Next, tell Nova that all instances that used to be
+                hosted on c01.example.com are now hosted on
+                c02.example.com:</para>
+            <programlisting><?db-font-size 65%?>mysql&gt; update instances set host = 'c02.example.com' where host = 'c01.example.com' and deleted = 0;</programlisting>
+            <para>After that, use the nova command to reboot all
+                instances that were on c01.example.com while
+                regenerating their XML files at the same time:</para>
+            <programlisting><?db-font-size 65%?># nova reboot --hard &lt;uuid&gt;</programlisting>
+            <para>Finally, re-attach volumes using the same method
+                described in <emphasis role="bold">After a compute
+                    node Reboots</emphasis>.</para>
+        </section>
+        <section xml:id="var_lib_nova_instances">
+            <title>/var/lib/nova/instances</title>
+            <para>It's worth mentioning this directory in the context
+                of failed compute nodes. This directory contains the
+                libvirt KVM file-based disk images for the instances
+                that are hosted on that compute node. If you are not
+                running your cloud in a shared storage environment,
+                this directory will be unique across all compute
+                nodes.</para>
+            <para>
+                <code>/var/lib/nova/instances</code> contains two
+                types of directories.</para>
+            <para>The first is the <code>_base</code> directory. This
+                contains all of the cached base images from glance for
+                each unique image that has been launched on that
+                compute node. Files ending in <code>_20</code> (or a
+                different number) are the ephemeral base
+                images.</para>
+            <para>The other directories are titled
+                    <code>instance-xxxxxxxx</code>. These directories
+                correspond to instances running on that compute node.
+                The files inside are related to one of the files in
+                the <code>_base</code> directory. They're essentially
+                differential-based files containing only the changes
+                made from the original <code>_base</code>
+                directory.</para>
+            <para>All files and directories in
+                    <code>/var/lib/nova/instances</code> are uniquely
+                named. The files in _base are uniquely titled for the
+                glance image that they are based on and the directory
+                names <code>instance-xxxxxxxx</code> are uniquely
+                titled for that particular instance. If you were to
+                hypothetically copy all data from
+                    <code>/var/lib/nova/instances</code> on one
+                compute node to another, you will not overwrite any
+                files or cause any damage to images that have the same
+                unique name (because they are essentially the same
+                file).</para>
+            <para>Although this method is not documented or supported,
+                it is possible to do in situations when your compute
+                node will be permanently offline but you have
+                instances locally stored on it.</para>
+        </section>
+    </section>
+    <section xml:id="storage_node_failures">
+        <title>Storage Node Failures and Maintenance</title>
+        <para>Due to the Object Storage's high redundancy, dealing
+            with object storage node issues is a lot easier than
+            dealing with compute node issues.</para>
+        <section xml:id="reboot_storage_node">
+            <title>Rebooting a Storage Node</title>
+            <para>If a storage node requires a reboot, simply reboot
+                it. Requests for data hosted on that node are
+                redirected to other copies while the server is
+                rebooting.</para>
+        </section>
+        <section xml:id="shut_down_storage_node">
+            <title>Shutting Down a Storage Node</title>
+            <para>If you need to shut down a storage node for an
+                extended period of time (1+ days), consider removing
+                the node from the storage ring. For example:</para>
+            <programlisting><?db-font-size 65%?># swift-ring-builder account.builder remove &lt;ip address of storage node&gt;
+# swift-ring-builder container.builder remove &lt;ip address of storage node&gt;
+# swift-ring-builder object.builder remove &lt;ip address of storage node&gt;
+# swift-ring-builder account.builder rebalance
+# swift-ring-builder container.builder rebalance
+# swift-ring-builder object.builder rebalance   </programlisting>
+            <para>Next, redistribute the ring files to the other
+                nodes:</para>
+            <programlisting><?db-font-size 65%?># for i in s01.example.com s02.example.com s03.example.com
+&gt; do
+&gt; scp *.ring.gz $i:/etc/swift
+&gt; done    </programlisting>
+            <para>These actions effectively take the storage node out
+                of the storage cluster.</para>
+            <para>When the node is able to rejoin the cluster, just
+                add it back to the ring. The exact syntax to add a
+                node to your Swift cluster using
+                    <code>swift-ring-builder</code> heavily depends on
+                the original options used when you originally created
+                your cluster. Please refer back to those
+                commands.</para>
+        </section>
+        <section xml:id="replace_swift_disk">
+            <title>Replacing a Swift Disk</title>
+            <para>If a hard drive fails in a Object Storage node,
+                replacing it is relatively easy. This assumes that
+                your Object Storage environment is configured
+                correctly where the that is stored on the failed drive
+                is also replicated to other drives in the Object
+                Storage environment.</para>
+            <para>This example assumes that <code>/dev/sdb</code> has
+                failed.</para>
+            <para>First, unmount the disk:</para>
+            <programlisting><?db-font-size 65%?># umount /dev/sdb</programlisting>
+            <para>Next, physically remove the disk from the server and
+                replace it with a working disk.</para>
+            <para>Ensure that the operating system has recognized the
+                new disk:</para>
+            <programlisting><?db-font-size 65%?># dmesg | tail</programlisting>
+            <para>You should see a message about /dev/sdb.</para>
+            <para>Because it is recommended to not use partitions on a
+                swift disk, simply format the disk as a whole:</para>
+            <programlisting><?db-font-size 65%?># mkfs.xfs -i size=1024 /dev/sdb</programlisting>
+            <para>Finally, mount the disk:</para>
+            <programlisting><?db-font-size 65%?># mount -a</programlisting>
+            <para>Swift should notice the new disk and that no data
+                exists. It then begins replicating the data to the
+                disk from the other existing replicas.</para>
+        </section>
+    </section>
+    <section xml:id="complete_failure">
+        <title>Handling a Complete Failure</title>
+        <para>A common way of dealing with the recovery from a full
+            system failure, such as a power outage of a data center is
+            to assign each service a priority, and restore in
+            order.</para>
+        <table rules="all">
+            <caption>Example Service Restoration Priority
+                List</caption>
+            <tbody>
+                <tr>
+                    <td xmlns:db="http://docbook.org/ns/docbook"
+                            ><para>1</para></td>
+                    <td xmlns:db="http://docbook.org/ns/docbook"
+                            ><para>Internal network
+                            connectivity</para></td>
+                </tr>
+                <tr>
+                    <td xmlns:db="http://docbook.org/ns/docbook"
+                            ><para>2</para></td>
+                    <td xmlns:db="http://docbook.org/ns/docbook"
+                            ><para>Backing storage
+                        services</para></td>
+                </tr>
+                <tr>
+                    <td xmlns:db="http://docbook.org/ns/docbook"
+                            ><para>3</para></td>
+                    <td xmlns:db="http://docbook.org/ns/docbook"
+                            ><para>Public network connectivity for
+                            user Virtual Machines</para></td>
+                </tr>
+                <tr>
+                    <td xmlns:db="http://docbook.org/ns/docbook"
+                            ><para>4</para></td>
+                    <td xmlns:db="http://docbook.org/ns/docbook"
+                            ><para>Nova-compute, nova-network, cinder
+                            hosts</para></td>
+                </tr>
+                <tr>
+                    <td xmlns:db="http://docbook.org/ns/docbook"
+                            ><para>5</para></td>
+                    <td xmlns:db="http://docbook.org/ns/docbook"
+                            ><para>User virtual machines</para></td>
+                </tr>
+                <tr>
+                    <td xmlns:db="http://docbook.org/ns/docbook"
+                            ><para>10</para></td>
+                    <td xmlns:db="http://docbook.org/ns/docbook"
+                            ><para>Message Queue and Database
+                            services</para></td>
+                </tr>
+                <tr>
+                    <td xmlns:db="http://docbook.org/ns/docbook"
+                            ><para>15</para></td>
+                    <td xmlns:db="http://docbook.org/ns/docbook"
+                            ><para>Keystone services</para></td>
+                </tr>
+                <tr>
+                    <td xmlns:db="http://docbook.org/ns/docbook"
+                            ><para>20</para></td>
+                    <td xmlns:db="http://docbook.org/ns/docbook"
+                            ><para>cinder-scheduler</para></td>
+                </tr>
+                <tr>
+                    <td xmlns:db="http://docbook.org/ns/docbook"
+                            ><para>21</para></td>
+                    <td xmlns:db="http://docbook.org/ns/docbook"
+                            ><para>Image Catalogue and Delivery
+                            services</para></td>
+                </tr>
+                <tr>
+                    <td xmlns:db="http://docbook.org/ns/docbook"
+                            ><para>22</para></td>
+                    <td xmlns:db="http://docbook.org/ns/docbook"
+                            ><para>nova-scheduler services</para></td>
+                </tr>
+                <tr>
+                    <td xmlns:db="http://docbook.org/ns/docbook"
+                            ><para>98</para></td>
+                    <td xmlns:db="http://docbook.org/ns/docbook"
+                            ><para>Cinder-api</para></td>
+                </tr>
+                <tr>
+                    <td xmlns:db="http://docbook.org/ns/docbook"
+                            ><para>99</para></td>
+                    <td xmlns:db="http://docbook.org/ns/docbook"
+                            ><para>Nova-api services</para></td>
+                </tr>
+                <tr>
+                    <td xmlns:db="http://docbook.org/ns/docbook"
+                            ><para>100</para></td>
+                    <td xmlns:db="http://docbook.org/ns/docbook"
+                            ><para>Dashboard node</para></td>
+                </tr>
+            </tbody>
+        </table>
+        <para>Use this example priority list to ensure that user
+            affected services are restored as soon as possible, but
+            not before a stable environment is in place. Of course,
+            despite being listed as a single line item, each step
+            requires significant work. For example, just after
+            starting the database, you should check its integrity or,
+            after starting the Nova services, you should verify that
+            the hypervisor matches the database and fix any
+            mismatches.</para>
+    </section>
+    <section xml:id="config_mgmt">
+        <title>Configuration Management</title>
+        <para>Maintaining an OpenStack cloud requires that you manage
+            multiple physical servers, and this number might grow over
+            time. Because managing nodes manually is error-prone, we
+            strongly recommend that you use a configuration management
+            tool. These tools automate the process of ensuring that
+            all of your nodes are configured properly and encourage
+            you to maintain your configuration information (such as
+            packages and configuration options) in a version
+            controlled repository.</para>
+        <para>Several configuration management tools are available,
+            and this guide does not recommend a specific one. The two
+            most popular ones in the OpenStack community are <link
+                xlink:href="https://puppetlabs.com/">Puppet</link>
+            (https://puppetlabs.com/) with available <link
+                xlink:title="Optimization Overview"
+                xlink:href="http://github.com/puppetlabs/puppetlabs-openstack"
+                >OpenStack Puppet modules</link>
+            (http://github.com/puppetlabs/puppetlabs-openstack) and
+                <link xlink:href="http://www.opscode.com/chef/"
+                >Chef</link> (http://opscode.com/chef) with available
+                <link
+                xlink:href="https://github.com/opscode/openstack-chef-repo"
+                >OpenStack Chef recipes</link>
+            (https://github.com/opscode/openstack-chef-repo). Other
+            newer configuration tools include <link
+                xlink:href="https://juju.ubuntu.com/">Juju</link>
+            (https://juju.ubuntu.com/) <link
+                xlink:href="http://ansible.cc">Ansible</link>
+            (http://ansible.cc) and <link
+                xlink:href="http://saltstack.com/">Salt</link>
+            (http://saltstack.com), and more mature configuration
+            management tools include <link
+                xlink:href="http://cfengine.com/">CFEngine</link>
+            (http://cfengine.com) and <link
+                xlink:href="http://bcfg2.org/">Bcfg2</link>
+            (http://bcfg2.org).</para>
+    </section>
+    <section xml:id="hardware">
+        <title>Working with Hardware</title>
+        <para>Similar to your initial deployment, you should ensure
+            all hardware is appropriately burned in before adding it
+            to production. Run software that uses the hardware to its
+            limits - maxing out RAM, CPU, disk and network. Many
+            options are available, and normally double as benchmark
+            software so you also get a good idea of the performance of
+            your system.</para>
+        <section xml:id="add_new_node">
+            <title>Adding a Compute Node</title>
+            <para>If you find that you have reached or are reaching
+                the capacity limit of your computing resources, you
+                should plan to add additional compute nodes. Adding
+                more nodes is quite easy. The process for adding nodes
+                is the same as when the initial compute nodes were
+                deployed to your cloud: use an automated deployment
+                system to bootstrap the bare-metal server with the
+                operating system and then have a configuration
+                management system install and configure the OpenStack
+                Compute service. Once the Compute service has been
+                installed and configured in the same way as the other
+                compute nodes, it will automatically attach itself to
+                the cloud. The cloud controller will notice the new
+                node(s) and begin scheduling instances to launch
+                there.</para>
+            <para>If your OpenStack Block Storage nodes are separate
+                from your compute nodes, the same procedure still
+                applies as the same queuing and polling system is used
+                in both services.</para>
+            <para>We recommend that you use the same hardware for new
+                compute and block storage nodes. At the very least,
+                ensure that the CPUs are similar in the compute nodes
+                in order to not break live migration.</para>
+        </section>
+        <section xml:id="add_new_object_node">
+            <title>Adding an Object Storage Node</title>
+            <para>Adding a new object storage node is different than
+                adding compute or block storage nodes. You still want
+                to initially configure the server by using your
+                automated deployment and configuration management
+                systems. After that is done, you need to add the local
+                disks of the object storage node into the object
+                storage ring. The exact command to do this is the same
+                command that was used to add the initial disks to the
+                ring. Simply re-run this command on the object storage
+                proxy server for all disks on the new object storage
+                node. Once this has been done, rebalance the ring and
+                copy the resulting ring files to the other storage
+                nodes.</para>
+            <para>It's important to note that if your new object
+                storage node has a different number of disks than the
+                original nodes, the command to add the new node will
+                be different than the original commands. These
+                parameters will vary from environment to
+                environment.</para>
+        </section>
+        <section xml:id="replace_components">
+            <title>Replacing Components</title>
+            <para>Failures of hardware are common in large scale
+                deployments such as an infrastructure cloud. Consider
+                your processes and balance time saving against
+                availability. For example, an Object Storage cluster
+                can easily live with dead disks in it for some period
+                of time if it has sufficient capacity. Or, if your
+                compute installation is not full you could consider
+                live migrating instances off a host with a RAM failure
+                until you have time to deal with the problem.</para>
+        </section>
+    </section>
+    <section xml:id="databases">
+        <title>Databases</title>
+        <para>Almost all OpenStack components have an underlying
+            database to store persistent information. Usually this
+            database is MySQL. Normal MySQL administration is
+            applicable to these databases. OpenStack does not
+            configure the databases out of the ordinary. Basic
+            administration includes performance tweaking, high
+            availability, backup, recovery, and repairing. For more
+            information, see a standard MySQL administration
+            guide.</para>
+        <para>You can perform a couple tricks with the database to
+            either more quickly retrieve information or fix a data
+            inconsistency error. For example, an instance was
+            terminated but the status was not updated in the database.
+            These tricks are discussed throughout this book.</para>
+        <section xml:id="database_connect">
+            <title>Database Connectivity</title>
+            <para>Review the components configuration file to see how
+                each OpenStack component accesses its corresponding
+                database. Look for either <code>sql_connection</code>
+                or simply <code>connection</code>:</para>
+            <programlisting><?db-font-size 65%?># grep -hE "connection ?=" /etc/nova/nova.conf /etc/glance/glance-*.conf 
+/etc/cinder/cinder.conf /etc/keystone/keystone.conf
+	sql_connection = mysql://nova:nova@cloud.alberta.sandbox.cybera.ca/nova
+	sql_connection = mysql://glance:password@cloud.example.com/glance 
+	sql_connection = mysql://glance:password@cloud.example.com/glance 
+sql_connection=mysql://cinder:password@cloud.example.com/cinder 
+	connection = mysql://keystone_admin:password@cloud.example.com/keystone</programlisting>
+            <para>The connection strings take this format:</para>
+            <programlisting><?db-font-size 65%?>mysql:// &lt;username&gt; : &lt;password&gt; @ &lt;hostname&gt; / &lt;database name&gt;</programlisting>
+        </section>
+        <section xml:id="perf_and_opt">
+            <title>Performance and Optimizing</title>
+            <para>As your cloud grows, MySQL is utilized more and
+                more. If you suspect that MySQL might be becoming a
+                bottleneck, you should start researching MySQL
+                optimization. The MySQL manual has an entire section
+                dedicated to this topic <link
+                    xlink:href="http://dev.mysql.com/doc/refman/5.5/en/optimize-overview.html"
+                    >Optimization Overview</link>
+                (http://dev.mysql.com/doc/refman/5.5/en/optimize-overview.html).</para>
+        </section>
+    </section>
+    <section xml:id="hdmy">
+        <title>HDWMY</title>
+        <para>Here's a quick list of various to-do items each hour,
+            day, week, month, and year. Please note these tasks are
+            neither required nor definitive, but helpful ideas:</para>
+        <section xml:id="hourly">
+            <title>Hourly</title>
+            <itemizedlist>
+                <listitem>
+                    <para>Check your monitoring system for alerts and
+                        act on them.</para>
+                </listitem>
+                <listitem>
+                    <para>Check your ticket queue for new
+                        tickets.</para>
+                </listitem>
+            </itemizedlist>
+        </section>
+        <section xml:id="daily">
+            <title>Daily</title>
+            <itemizedlist>
+                <listitem>
+                    <para>Check for instances in a failed or weird
+                        state and investigate why.</para>
+                </listitem>
+                <listitem>
+                    <para>Check for security patches and apply them as
+                        needed.</para>
+                </listitem>
+            </itemizedlist>
+        </section>
+        <section xml:id="weekly">
+            <title>Weekly</title>
+            <itemizedlist>
+                <listitem>
+                    <para>Check cloud usage: <itemizedlist>
+                            <listitem>
+                                <para>User quotas</para>
+                            </listitem>
+                            <listitem>
+                                <para>Disk space</para>
+                            </listitem>
+                            <listitem>
+                                <para>Image usage</para>
+                            </listitem>
+                            <listitem>
+                                <para>Large instances</para>
+                            </listitem>
+                            <listitem>
+                                <para>Network usage (bandwidth and IP
+                                   usage)</para>
+                            </listitem>
+                        </itemizedlist></para>
+                </listitem>
+                <listitem>
+                    <para>Verify your alert mechanisms are still
+                        working.</para>
+                </listitem>
+            </itemizedlist>
+        </section>
+        <section xml:id="monthly">
+            <title>Monthly</title>
+            <itemizedlist>
+                <listitem>
+                    <para>Check usage and trends over the past
+                        month.</para>
+                </listitem>
+                <listitem>
+                    <para>Check for user accounts that should be
+                        removed.</para>
+                </listitem>
+                <listitem>
+                    <para>Check for operator accounts that should be
+                        removed.</para>
+                </listitem>
+            </itemizedlist>
+        </section>
+        <section xml:id="quarterly">
+            <title>Quarterly</title>
+            <itemizedlist>
+                <listitem>
+                    <para>Review usage and trends over the past
+                        quarter.</para>
+                </listitem>
+                <listitem>
+                    <para>Prepare any quarterly reports on usage and
+                        statistics.</para>
+                </listitem>
+                <listitem>
+                    <para>Review and plan any necessary cloud
+                        additions.</para>
+                </listitem>
+                <listitem>
+                    <para>Review and plan any major OpenStack
+                        upgrades.</para>
+                </listitem>
+            </itemizedlist>
+        </section>
+        <section xml:id="semiannual">
+            <title>Semi-Annually</title>
+            <itemizedlist>
+                <listitem>
+                    <para>Upgrade OpenStack.</para>
+                </listitem>
+                <listitem>
+                    <para>Clean up after OpenStack upgrade (any unused
+                        or new services to be aware of?)</para>
+                </listitem>
+            </itemizedlist>
+        </section>
+    </section>
+    <section xml:id="broken_component">
+        <title>Determining which Component Is Broken</title>
+        <para>OpenStack's collection of different components interact
+            with each other strongly. For example, uploading an image
+            requires interaction from <code>nova-api</code>,
+                <code>glance-api</code>, <code>glance-registry</code>,
+            Keystone, and potentially <code>swift-proxy</code>. As a
+            result, it is sometimes difficult to determine exactly
+            where problems lie. Assisting in this is the purpose of
+            this section.</para>
+        <section xml:id="tailing_logs">
+            <title>Tailing Logs</title>
+            <para>The first place to look is the log file related to
+                the command you are trying to run. For example, if
+                    <code>nova list</code> is failing, try tailing a
+                Nova log file and running the command again:</para>
+            <para>Terminal 1:</para>
+            <programlisting><?db-font-size 65%?># tail -f /var/log/nova/nova-api.log</programlisting>
+            <para>Terminal 2:</para>
+            <programlisting><?db-font-size 65%?># nova list</programlisting>
+            <para>Look for any errors or traces in the log file. For
+                more information, see the chapter on <emphasis
+                    role="bold">Logging and
+                Monitoring</emphasis>.</para>
+            <para>If the error indicates that the problem is with
+                another component, switch to tailing that component's
+                log file. For example, if nova cannot access glance,
+                look at the glance-api log:</para>
+            <para>Terminal 1:</para>
+            <programlisting><?db-font-size 65%?># tail -f /var/log/glance/api.log</programlisting>
+            <para>Terminal 2:</para>
+            <programlisting><?db-font-size 65%?># nova list</programlisting>
+            <para>Wash, rinse, repeat until you find the core cause of
+                the problem.</para>
+        </section>
+
+        <section xml:id="daemons_cli">
+            <title>Running Daemons on the CLI</title>
+            <para>Unfortunately, sometimes the error is not apparent
+                from the log files. In this case, switch tactics and
+                use a different command, maybe run the service
+                directly on the command line. For example, if the
+                    <code>glance-api</code> service refuses to start
+                and stay running, try launching the daemon from the
+                command line:</para>
+            <programlisting><?db-font-size 65%?># glance-api</programlisting>
+            <para>This might print the error and cause of the
+                problem.</para>
+        </section>
+        <section xml:id="complexity">
+            <title>Example of Complexity</title>
+            <para>One morning, a compute node failed to run any
+                instances. The log files were a bit vague, claiming
+                that a certain instance was unable to be started. This
+                ended up being a red herring because the instance was
+                simply the first instance in alphabetical order, so it
+                was the first instance that nova-compute would touch. </para>
+            <para>Further troubleshooting showed that libvirt was not
+                running at all. This made more sense. If libvirt
+                wasn't running, then no instance could be virtualized
+                through KVM. Upon trying to start libvirt, it would
+                silently die immediately. The libvirt logs did not
+                explain why.</para>
+            <para>Next, the <code>libvirtd</code> daemon was run on
+                the command line. Finally a helpful error message: it
+                could not connect to d-bus. As ridiculous as it
+                sounds, libvirt, and thus <code>nova-compute</code>,
+                relies on d-bus and somehow d-bus crashed. Simply
+                starting d-bus set the entire chain back on track and
+                soon everything was back up and running.</para>
+        </section>
+        <section xml:id="upgrades">
+            <title>Upgrades</title>
+            <para>With the exception of Object Storage, an upgrade
+                from one version of OpenStack to another is a great
+                deal of work.</para>
+            <para>The upgrade process generally follows these
+                steps:</para>
+            <orderedlist>
+                <listitem>
+                    <para>Read the release notes and
+                        documentation.</para>
+                </listitem>
+                <listitem>
+                    <para>Find incompatibilities between different
+                        versions.</para>
+                </listitem>
+                <listitem>
+                    <para>Plan an upgrade schedule and complete it in
+                        order on a test cluster.</para>
+                </listitem>
+                <listitem>
+                    <para>Run the upgrade.</para>
+                </listitem>
+            </orderedlist>
+            <para>You can perform an upgrade while user instances run.
+                However, this strategy can be dangerous. Don't forget
+                appropriate notice to your users, and backups.</para>
+            <para>The general order that seems to be most successful
+                is:</para>
+            <orderedlist>
+                <listitem>
+                    <para>Upgrade the OpenStack Identity service
+                        (keystone).</para>
+                </listitem>
+                <listitem>
+                    <para>Upgrade the OpenStack Image service
+                        (glance).</para>
+                </listitem>
+                <listitem>
+                    <para>Upgrade all OpenStack Compute (nova)
+                        services.</para>
+                </listitem>
+                <listitem>
+                    <para>Upgrade all OpenStack Block Storage (cinder)
+                        services.</para>
+                </listitem>
+            </orderedlist>
+            <para>For each of these steps, complete the following
+                sub-steps:</para>
+            <orderedlist>
+                <listitem>
+                    <para>Stop services.</para>
+                </listitem>
+                <listitem>
+                    <para>Create a backup of configuration files and
+                        databases.</para>
+                </listitem>
+                <listitem>
+                    <para>Upgrade the packages using your
+                        distribution's package manager.</para>
+                </listitem>
+                <listitem>
+                    <para>Update the configuration files according to
+                        the release notes.</para>
+                </listitem>
+                <listitem>
+                    <para>Apply the database upgrades.</para>
+                </listitem>
+                <listitem>
+                    <para>Restart the services.</para>
+                </listitem>
+                <listitem>
+                    <para>Verify that everything is running.</para>
+                </listitem>
+            </orderedlist>
+            <para>Probably the most important step of all is the
+                pre-upgrade testing. Especially if you are upgrading
+                immediately after release of a new version,
+                undiscovered bugs might hinder your progress. Some
+                deployers prefer to wait until the first point release
+                is announced. However, if you have a significant
+                deployment, you might follow the development and
+                testing of the release, thereby ensuring that bugs for
+                your use cases are fixed.</para>
+            <para>To complete an upgrade of OpenStack Compute while
+                keeping instances running, you should be able to use
+                live migration to move machines around while
+                performing updates, and then move them back afterward
+                as this is a property of the hypervisor. However, it
+                is critical to ensure that database changes are
+                successful otherwise a consistent cluster state could
+                arise.</para>
+        </section>
+    </section>
+</chapter>

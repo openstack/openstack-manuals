@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section [
+<!-- Some useful entities borrowed from HTML -->
+<!ENTITY ndash  "&#x2013;">
+<!ENTITY mdash  "&#x2014;">
+<!ENTITY hellip "&#x2026;">
+<!ENTITY plusmn "&#xB1;">
+        
+      
+]>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="compute_nodes">
+    <title>Compute Nodes</title>
+    <para>Compute nodes form the resource core of the OpenStack
+        Compute cloud, providing the processing, memory, network and
+        storage resources to run instances.</para>
+    <section xml:id="cpu_choice">
+        <title>CPU Choice</title>
+        <para>The type of CPU in your compute node is a very important
+            choice. First, ensure the CPU supports virtualization by
+            way of <emphasis>VT-x</emphasis> for Intel chips and
+                <emphasis>AMD-v</emphasis> for AMD chips.</para>
+        <para>The number of cores that the CPU has also affects the
+            decision. It's common for current CPUs to have up to 12
+            cores. Additionally, if the CPU supports Hyper-threading,
+            those 12 cores are doubled to 24 cores. If you purchase a
+            server that supports multiple CPUs, the number of cores is
+            further multiplied.</para>
+        <para>Whether you should enable hyper-threading on your CPUs
+            depends upon your use case. We recommend you do
+            performance testing with your local workload with both
+            hyper-threading on and off to determine what is more
+            appropriate in your case. </para>
+    </section>
+    <section xml:id="hypervisor_choice">
+        <title>Hypervisor Choice</title>
+        <para>OpenStack Compute supports many hypervisors to various
+            degrees, including <link xlink:title="reference manual"
+                xlink:href="http://www.linux-kvm.org/page/Main_Page"
+                >KVM</link>, <link xlink:title="reference manual"
+                xlink:href="http://lxc.sourceforge.net/">LXC</link>,
+                <link xlink:title="reference manual"
+                xlink:href="http://wiki.qemu.org/Manual">QEMU</link>,
+                <link xlink:title="reference manual"
+                xlink:href="http://user-mode-linux.sourceforge.net/"
+                >UML</link>, <link xlink:title="reference manual"
+                xlink:href="http://www.vmware.com/products/vsphere-hypervisor/support.html"
+                >VMWare ESX/ESXi</link>, <link
+                xlink:title="reference manual"
+                xlink:href="http://www.xen.org">Xen</link>, <link
+                xlink:title="reference manual"
+                xlink:href="http://www-03.ibm.com/systems/power/software/virtualization/features.html"
+                >PowerVM</link>, <link xlink:title="reference manual"
+                xlink:href="http://www.microsoft.com/en-us/server-cloud/windows-server/server-virtualization-features.aspx"
+                >Hyper-V</link>.</para>
+        <para>Probably the most important factor in your choice of
+            hypervisor is your current usage or experience. Aside from
+            that, there are practical concerns to do with feature
+            parity, documentation, and the level of community
+            experience. For example, KVM is the most widely adopted
+            hypervisor in the OpenStack community. Besides KVM, more
+            deployments exist running Xen, LXC, VMWare and Hyper-V
+            than the others listed — however, each of these are
+            lacking some feature support or the documentation on how
+            to use them with OpenStack is out of date.</para>
+        <para>The best information available to support your choice is
+            found on the <link xlink:title="reference manual"
+                xlink:href="https://wiki.openstack.org/wiki/HypervisorSupportMatrix"
+                >Hypervisor Support Matrix</link>
+            (https://wiki.openstack.org/wiki/HypervisorSupportMatrix),
+            and in the <link xlink:title="reference manual"
+                xlink:href="http://docs.openstack.org/folsom/openstack-compute/admin/content/ch_hypervisors.html"
+                >reference manual</link>
+            (http://docs.openstack.org/folsom/openstack-compute/admin/content/ch_hypervisors.html).</para>
+        <para>Note: It is also possible to run multiple hypervisors in
+            a single deployment using Host Aggregates or Cells.
+            However, an individual compute node can only run a single
+            hypervisor at a time.</para>
+    </section>
+    <?hard-pagebreak?>
+    <section xml:id="instance_storage">
+        <title>Instance Storage Solutions</title>
+        <para>As part of the procurement for a compute cluster, you
+            must specify some storage for the disk on which the
+            instantiated instance runs. There are three main
+            approaches to providing this temporary-style storage, and
+            it is important to understand the implications of the
+            choice. They are:</para>
+        <itemizedlist role="compact">
+            <listitem>
+                <para>Off compute node storage – shared file
+                    system</para>
+            </listitem>
+            <listitem>
+                <para>On compute node storage – shared file
+                    system</para>
+            </listitem>
+            <listitem>
+                <para>On compute node storage – non-shared file
+                    system</para>
+            </listitem>
+        </itemizedlist>
+        <para>In general, the questions you should be asking when
+            selecting the storage are as follows:</para>
+        <itemizedlist role="compact">
+            <listitem>
+                <para>What is the platter count you can
+                    achieve?</para>
+            </listitem>
+            <listitem>
+                <para>Do more spindles result in better I/O despite
+                    network access?</para>
+            </listitem>
+            <listitem>
+                <para>Which one results in the best cost-performance
+                    scenario you're aiming for?</para>
+            </listitem>
+            <listitem>
+                <para>How do you manage the storage
+                    operationally?</para>
+            </listitem>
+        </itemizedlist>
+        <section xml:id="off_compute_node_storage">
+            <title>Off Compute Node Storage – Shared File
+                System</title>
+            <para>Many operators use separate compute and storage
+                hosts. Compute services and storage services have
+                different requirements, compute hosts typically
+                require more CPU and RAM than storage hosts.
+                Therefore, for a fixed budget, it makes sense to have
+                different configurations for your compute nodes and
+                your storage nodes with compute nodes invested in CPU
+                and RAM, and storage nodes invested in block
+                storage.</para>
+            <para>Also, if you use separate compute and storage hosts
+                then you can treat your compute hosts as "stateless".
+                This simplifies maintenance for the compute hosts. As
+                long as you don't have any instances currently running
+                on a compute host, you can take it offline or wipe it
+                completely without having any effect on the rest of
+                your cloud. However, if you are more restricted in the
+                number of physical hosts you have available for
+                creating your cloud and you want to be able to
+                dedicate as many of your hosts as possible to running
+                instances, it makes sense to run compute and storage
+                on the same machines.</para>
+            <para>In this option, the disks storing the running
+                instances are hosted in servers outside of the compute
+                nodes. There are also several advantages to this
+                approach:</para>
+            <itemizedlist role="compact">
+                <listitem>
+                    <para>If a compute node fails, instances are
+                        usually easily recoverable.</para>
+                </listitem>
+                <listitem>
+                    <para>Running a dedicated storage system can be
+                        operationally simpler.</para>
+                </listitem>
+                <listitem>
+                    <para>Being able to scale to any number of
+                        spindles.</para>
+                </listitem>
+                <listitem>
+                    <para>It may be possible to share the external
+                        storage for other purposes.</para>
+                </listitem>
+            </itemizedlist>
+            <para>The two main downsides to this approach are:</para>
+            <itemizedlist role="compact">
+                <listitem>
+                    <para>Depending on design, heavy I/O usage from
+                        some instances can affect unrelated
+                        instances.</para>
+                </listitem>
+                <listitem>
+                    <para>Use of the network can decrease
+                        performance.</para>
+                </listitem>
+            </itemizedlist>
+        </section>
+        <section xml:id="on_compute_node_storage">
+            <title>On Compute Node Storage – Shared File
+                System</title>
+            <para>In this option, each <code>nova-compute</code> node
+                is specified with a significant amount of disks, but a
+                distributed file system ties the disks from each
+                compute node into a single mount. The main advantage
+                of this approach is:</para>
+            <itemizedlist role="compact">
+                <listitem>
+                    <para>If additional storage is required, this
+                        option can scale to external storage.</para>
+                </listitem>
+            </itemizedlist>
+            <para>This approach does have several downsides:</para>
+            <itemizedlist role="compact">
+                <listitem>
+                    <para>Running a distributed file system can make
+                        you lose your data locality compared with
+                        non-shared storage.</para>
+                </listitem>
+                <listitem>
+                    <para>Recovery of instances is complicated by
+                        depending on multiple hosts.</para>
+                </listitem>
+                <listitem>
+                    <para>The chassis size of the compute node can
+                        limit the number of spindles able to be used
+                        in a compute node.</para>
+                </listitem>
+                <listitem>
+                    <para>Use of the network can decrease
+                        performance.</para>
+                </listitem>
+            </itemizedlist>
+        </section>
+        <section xml:id="on_compute_node_storage_nonshared">
+            <title>On Compute Node Storage – Non-shared File
+                System</title>
+            <para>In this option, each <code>nova-compute</code> node
+                is specified with enough disks to store the instances
+                it hosts. There are two main reasons why this is a
+                good idea:</para>
+            <itemizedlist role="compact">
+                <listitem>
+                    <para>Heavy I/O usage on one compute node does not
+                        affect instances on other compute
+                        nodes.</para>
+                </listitem>
+                <listitem>
+                    <para>Direct I/O access can increase
+                        performance.</para>
+                </listitem>
+            </itemizedlist>
+            <para>This has several downsides:</para>
+            <itemizedlist role="compact">
+                <listitem>
+                    <para>If a compute node fails, the instances
+                        running on that node are lost.</para>
+                </listitem>
+                <listitem>
+                    <para>The chassis size of the compute node can
+                        limit the number of spindles able to be used
+                        in a compute node.</para>
+                </listitem>
+                <listitem>
+                    <para>Migrations of instances from one node to
+                        another are more complicated, and rely on
+                        features which may not continue to be
+                        developed.</para>
+                </listitem>
+                <listitem>
+                    <para>If additional storage is required, this
+                        option does not to scale.</para>
+                </listitem>
+            </itemizedlist>
+        </section>
+        <section xml:id="live_migration">
+            <title>Issues with Live Migration</title>
+            <para>We consider live migration an integral part of the
+                operations of the cloud. This feature provides the
+                ability to seamlessly move instances from one physical
+                host to another, a necessity for performing upgrades
+                that require reboots of the compute hosts, but only
+                works well with shared storage. Theoretically live
+                migration can be done with non-shared storage, using a
+                feature known as <emphasis>KVM live block
+                    migration</emphasis>. However, this is a
+                little-known feature in OpenStack, with limited
+                testing when compared to live migration, and is slated
+                for deprecation in KVM upstream.</para>
+        </section>
+        <section xml:id="file_systems">
+            <title>Choice of File System</title>
+            <para>If you want to support shared storage live
+                migration, you'll need to configure a distributed file
+                system. Possible options include:</para>
+            <itemizedlist role="compact">
+                <listitem>
+                    <para>NFS (default for Linux)</para>
+                </listitem>
+                <listitem>
+                    <para>GlusterFS</para>
+                </listitem>
+                <listitem>
+                    <para>MooseFS</para>
+                </listitem>
+                <listitem>
+                    <para>Lustre</para>
+                </listitem>
+            </itemizedlist>
+            <para>We've seen deployments with all, and recommend you
+                choose the one you are most familiar with
+                operating.</para>
+        </section>
+    </section>
+    <?hard-pagebreak?>
+    <section xml:id="overcommit">
+        <title>Overcommitting</title>
+        <para>OpenStack allows you to overcommit CPU and RAM on
+            compute nodes. This allows you to increase the number of
+            instances you can have running on your cloud, at the cost
+            of reducing the performance of the instances. OpenStack
+            Compute uses the following ratios by default:</para>
+        <itemizedlist role="compact">
+            <listitem>
+                <para>CPU allocation ratio: 16</para>
+            </listitem>
+            <listitem>
+                <para>RAM allocation ratio: 1.5</para>
+            </listitem>
+        </itemizedlist>
+        <para>The default CPU allocation ratio of 16 means that the
+            scheduler allocates up to 16 virtual cores on a node per
+            physical cores. For example, if a physical node has 12
+            cores, and each virtual machine instance uses 4 virtual
+            cores, the scheduler allocates up to 192 virtual cores to
+            instances (such as, 48 instances, in the case where each
+            instance has 4 virtual cores).</para>
+        <para>Similarly, the default RAM allocation ratio of 1.5 means
+            that the scheduler allocates instances to a physical node
+            as long as the total amount of RAM associated with the
+            instances is less than 1.5 times the amount of RAM
+            available on the physical node. For example, if a physical
+            node has 48 GB of RAM, the scheduler allocates instances
+            to that node until the sum of the RAM associated with the
+            instances reaches 72 GB (such as 6 instances, in the case
+            where each instance has 8GB of RAM).</para>
+        <para>You must select the appropriate CPU and RAM allocation
+            ratio for your particular use case.</para>
+    </section>
+    <section xml:id="logging">
+        <title>Logging</title>
+        <para>Logging is detailed more fully in <xref
+                linkend="logging"/>. However it is an important design
+            consideration to take into account before commencing
+            operations of your cloud. OpenStack produces a great deal
+            of useful logging information, however, in order for it to
+            be useful for operations purposes you should consider
+            having a central logging server to send logs to, and a log
+            parsing/analysis system (such as logstash).</para>
+    </section>
+    <section xml:id="networking">
+        <title>Networking</title>
+        <para>Networking in OpenStack is a complex, multi-faceted
+            challenge. See <xref linkend="network_design"/>.</para>
+    </section>
+</section>

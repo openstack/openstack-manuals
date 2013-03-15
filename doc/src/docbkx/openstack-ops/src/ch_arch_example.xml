@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section [
+<!-- Some useful entities borrowed from HTML -->
+<!ENTITY ndash  "&#x2013;">
+<!ENTITY mdash  "&#x2014;">
+<!ENTITY hellip "&#x2026;">
+<!ENTITY plusmn "&#xB1;">
+
+]>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="example_architecture">
+    <title>Example Architecture</title>
+    <para>Because OpenStack is highly configurable, with many
+        different back-ends and network configuration options, it is
+        difficult to write documentation that covers all possible
+        OpenStack deployments. Therefore, in this guide we have
+        defined an <emphasis>example architecture</emphasis> to
+        simplify the task of documenting, as well as to scope this
+        guide so that it is focused on a configuration where the
+        authors have direct deployment experience.</para>
+    <section xml:id="overview">
+        <title>Overview</title>
+        <informaltable rules="all">
+            <col width="40%"/>
+            <col width="60%"/>
+            <tbody>
+                <tr>
+                    <td><para>OpenStack release</para></td>
+                    <td><para>Folsom</para></td>
+                </tr>
+                <tr>
+                    <td><para>Host operating system</para></td>
+                    <td><para>Ubuntu 12.04 LTS</para></td>
+                </tr>
+                <tr>
+                    <td><para>OpenStack package repository</para></td>
+                    <td><para><link
+                                xlink:href="https://wiki.ubuntu.com/ServerTeam/CloudArchive"
+                                >Ubuntu Cloud Archive</link>
+                            (https://wiki.ubuntu.com/ServerTeam/CloudArchive)
+                            *</para></td>
+                </tr>
+                <tr>
+                    <td><para>Hypervisor</para></td>
+                    <td><para>KVM</para></td>
+                </tr>
+                <tr>
+                    <td><para>Database</para></td>
+                    <td><para>MySQL*</para></td>
+                </tr>
+                <tr>
+                    <td><para>Message queue</para></td>
+                    <td><para>RabbitMQ</para></td>
+                </tr>
+                <tr>
+                    <td><para>Networking service</para></td>
+                    <td><para>nova-network</para></td>
+                </tr>
+                <tr>
+                    <td><para>Network manager</para></td>
+                    <td><para>FlatDHCP</para></td>
+                </tr>
+                <tr>
+                    <td><para>Single nova-network or
+                            multi-host?</para></td>
+                    <td><para>multi-host*</para></td>
+                </tr>
+                <tr>
+                    <td><para>Image Service (glance)
+                        back-end</para></td>
+                    <td><para>file</para></td>
+                </tr>
+                <tr>
+                    <td><para>Identity Service (keystone)
+                            driver</para></td>
+                    <td><para>SQL</para></td>
+                </tr>
+                <tr>
+                    <td><para>Block Storage Service (cinder)
+                            back-end</para></td>
+                    <td><para>LVM/iSCSI</para></td>
+                </tr>
+                <tr>
+                    <td><para>Live Migration back-end</para></td>
+                    <td><para>shared storage using NFS *</para></td>
+                </tr>
+                <tr>
+                    <td><para>Object storage</para></td>
+                    <td><para>OpenStack Object Storage
+                        (swift)</para></td>
+                </tr>
+            </tbody>
+        </informaltable>
+        <para>An asterisk (*) indicates when the example architecture
+            deviates from the settings of a default
+            installation.</para>
+        <note>
+            <para>The following features of OpenStack are supported by
+                the example architecture documented in this guide, but
+                are optional: <itemizedlist role="compact">
+                    <listitem>
+                        <para>Dashboard</para>
+                    </listitem>
+                    <listitem>
+                        <para>Block storage</para>
+                    </listitem>
+                    <listitem>
+                        <para>Floating IPs</para>
+                    </listitem>
+                    <listitem>
+                        <para>Live migration</para>
+                    </listitem>
+                    <listitem>
+                        <para>Object storage</para>
+                    </listitem>
+                </itemizedlist></para>
+        </note>
+    </section>
+    <?hard-pagebreak?>
+    <section xml:id="rationale">
+        <title>Rationale</title>
+        <para>This example architecture has been selected based on the
+            current default feature set of OpenStack Folsom, with an
+            emphasis on stability. In particular, if none of the guide
+            authors had experience deploying the Folsom release of
+            OpenStack with a specific back-end or configuration, we
+            did not consider it for the example architecture. We
+            believe that many clouds currently running OpenStack in
+            production will have made similar choices.</para>
+        <para>The first selection to make is the Operating System that
+            will run on all of the physical nodes. While OpenStack is
+            supported on several distributions of Linux, we used
+                <emphasis role="bold">Ubuntu 12.04 LTS (Long Term
+                Support)</emphasis>. This is due to several factors,
+            including its use by the majority of the development
+            community, feature completeness compared with other
+            distributions and clear future support plans.</para>
+        <para>We recommend that you do not use the default Ubuntu
+            OpenStack install packages and instead use the <link
+                xlink:href="https://wiki.ubuntu.com/ServerTeam/CloudArchive"
+                >Ubuntu Cloud Archive</link>
+            (https://wiki.ubuntu.com/ServerTeam/CloudArchive). The
+            Cloud Archive is a package repository supported by
+            Canonical that will allow you to upgrade to future
+            OpenStack releases while still remaining on Ubuntu
+            12.04.</para>
+        <para><emphasis role="bold">KVM</emphasis> as a hypervisor
+            complements the choice of Ubuntu - being a matched pair in
+            terms of support, and also because of the significant
+            degree of attention it garners from the OpenStack
+            development community (including the authors, who mostly
+            use KVM). It is also feature complete, free from licensing
+            charges and restrictions.</para>
+        <para><emphasis role="bold">MySQL</emphasis> follows a similar
+            trend. Despite its recent change of ownership, this
+            database is the most tested for use with OpenStack and is
+            heavily documented for running on Ubuntu. We deviate from
+            the default database, <emphasis>SQLite</emphasis>, because
+            SQLite is not an appropriate database for production
+            usage.</para>
+        <para>The choice of <emphasis role="bold"> RabbitMQ</emphasis>
+            over other AMQP compatible options that are gaining
+            support in OpenStack, such as ZeroMQ and Qpid is due to
+            its ease of use with Ubuntu and significant testing in
+            production. It also is the only option which supports
+            features such as Compute Cells. We recommend clustering
+            with RabbitMQ, as it is an integral component of the
+            system, and fairly simple to implement due to its inbuilt
+            nature.</para>
+        <para>As discussed in previous chapters, there are several
+            options for networking in OpenStack Compute. We recommend
+                <emphasis role="bold">FlatDHCP</emphasis> and to use
+                <emphasis role="bold">Multi-Host</emphasis> networking
+            mode for high availability, running one
+                <code>nova-network</code> daemon per OpenStack Compute
+            host. This provides a robust mechanism for ensuring
+            network interruptions are isolated to individual compute
+            hosts, and allows for the direct use of hardware network
+            gateways.</para>
+        <para><emphasis role="bold">Live Migration</emphasis> is
+            supported by way of shared storage, with <emphasis
+                role="bold">NFS</emphasis> as the distributed file
+            system.</para>
+        <para>Acknowledging that many small-scale deployments see
+            running an Object Storage service just for the storage of
+            virtual machine images as too costly, we opted for the
+            file back-end in the OpenStack Image Catalog and Delivery
+            Service (Glance). If the cloud you are designing also
+            intends to run Object Storage, it is trivial to enable
+            this as the back-end instead, and a recommended
+            approach.</para>
+        <?hard-pagebreak?>
+        <para>The <emphasis role="bold">SQL back-end for Identify
+                Service (keystone)</emphasis> was selected over
+            others, such as LDAP, as it is the simplest to install and
+            has a large degree of robustness. The authors acknowledge
+            that many installations will desire binding with an
+            existing directory services, and caution careful
+            understanding of the <link
+                xlink:title="LDAP config options"
+                xlink:href="http://docs.openstack.org/folsom/openstack-compute/admin/content/reference-for-ldap-config-options.html"
+                >array of options available</link>
+            (http://docs.openstack.org/folsom/openstack-compute/admin/content/reference-for-ldap-config-options.html)</para>
+        <para>The Block Storage service (Cinder) will be installed
+            natively on external storage nodes and will use the
+                <emphasis role="bold">LVM/iSCSI plugin</emphasis>.
+            Most Block Storage Service plugins are tied to particular
+            vendor products and implementations limiting their use to
+            consumers of those hardware platforms, but LVM/iSCSI is
+            known to be robust and stable on commodity
+            hardware.</para>
+        <para>While the cloud can be run without the <emphasis
+                role="bold">OpenStack Dashboard</emphasis>, we
+            consider it to be indispensable, not just for user
+            interaction with the cloud, but also as a tool for
+            operators. Additionally, the dashboard's use of Django
+            makes it a flexible framework for extension.</para>
+
+        <section xml:id="quantum">
+            <title>Why Not Use the OpenStack Network Service
+                (quantum)?</title>
+            <para>We do not discuss the OpenStack Network Service
+                (quantum) in this guide, because the authors of this
+                guide only have production deployment experience using
+                    <code>nova-network</code>. Additionally, it does
+                not yet support multi-host networking.</para>
+        </section>
+        <section xml:id="multi-host-networking">
+            <title>Why Use Multi-host Networking?</title>
+            <para>In a default OpenStack deployment, there is a single
+                    <code>nova-network</code> service that runs within
+                the cloud (usually on the cloud controller) that
+                provides services such as network address translation
+                (NAT), DHCP, and DNS to the guest instances. If the
+                single node that runs the <code>nova-network</code>
+                service goes down, then you will not be able to access
+                your instances nor will the instances be able to
+                access the Internet. There is also the risk that the
+                single node that runs the nova-network service can
+                become a bottleneck if there is excessive network
+                traffic coming in and out of the cloud.</para>
+            <para>
+                <link xlink:title="Multi-host"
+                    xlink:href="http://docs.openstack.org/folsom/openstack-compute/admin/content/existing-ha-networking-options.html#d6e8906"
+                    >Multi-host</link>
+                (http://docs.openstack.org/folsom/openstack-compute/admin/content/existing-ha-networking-options.html#d6e8906)
+                is a high-availability option for the network
+                configuration where the nova-network service is run on
+                every compute node instead of running on only a single
+                node.</para>
+        </section>
+    </section>
+    <?hard-pagebreak?>
+    <section xml:id="detailed_desc">
+        <title>Detailed Description</title>
+        <para>The reference architecture consists of multiple compute
+            nodes, a cloud controller, an external NFS storage server
+            for instance storage and an OpenStack Block Storage server
+            for volume storage. A network time service (Network Time
+            Protocol, NTP) synchronizes time for all the nodes.
+            FlatDHCPManager in multi-host mode is used for the
+            networking.</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject>
+                    <imagedata width="5in"
+                        fileref="figures/os-ref-arch.png"/>
+                </imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para>The cloud controller runs: the Dashboard, the API
+            services, the database (MySQL), a message queue server
+            (RabbitMQ), the scheduler for choosing compute resources
+            (nova-scheduler), Identity services (keystone,
+                <code>nova-consoleauth</code>), Image services
+                (<code>glance-api</code>,
+            <code>glance-registry</code>), services for console access
+            of guests, and block storage services including the
+            scheduler for storage resources (<code>cinder-api</code>
+            and <code>cinder-scheduler</code>).</para>
+        <?hard-pagebreak?>
+        <para>Compute nodes are where the computing resources are
+            held, and in our example architecture they run the
+            hypervisor (KVM), libvirt (the driver for the hypervisor
+            which enables live migration node to node),
+                <code>nova-compute</code>,
+                <code>nova-api-metadata</code> (generally only used
+            when running in multi-host mode, it retrieves
+            instance-specific metadata), nova-vncproxy, and
+                <code>nova-network.</code>
+        </para>
+        <para>The network consists of two switches, one for the
+            management or private traffic, and one which covers public
+            access including Floating IPs. To support this, the cloud
+            controller and the compute nodes have two network cards.
+            The OpenStack Block Storage and NFS storage servers only
+            need to access the private network and therefore only need
+            one network card, but multiple cards run in a bonded
+            configuration are recommended if possible. Floating IP
+            access is direct to the internet, whereas Flat IP access
+            goes through a NAT.</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject>
+                    <imagedata width="5in"
+                        fileref="figures/os_physical_network_1.png"/>
+                </imageobject>
+            </mediaobject>
+        </informalfigure>
+    </section>
+    <?hard-pagebreak?>
+    <section xml:id="optional_extensions">
+        <title>Optional Extensions</title>
+        <para>You can extend this reference architecture as
+            follows:</para>
+        <itemizedlist role="compact">
+            <listitem>
+                <para>Add additional cloud controllers (see <emphasis
+                        role="bold">Maintenance, Debugging and
+                        Failures</emphasis>)</para>
+            </listitem>
+            <listitem>
+                <para>Add an OpenStack Storage service
+                    (http://docs.openstack.org/folsom/openstack-object-storage/admin/)</para>
+            </listitem>
+            <listitem>
+                <para>Add additional OpenStack Block Storage hosts
+                    (see <emphasis role="bold">Maintenance, Debugging
+                        and Failures</emphasis>)</para>
+            </listitem>
+        </itemizedlist>
+    </section>
+</section>

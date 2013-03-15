@@ -1,23 +1,23 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+    http://maven.apache.org/maven-v4_0_0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
-    
+
     <groupId>org.openstack.docs</groupId>
     <artifactId>openstack-ops-manual</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>OpenStack Manuals</name>
-    
+
     <properties>
         <!-- This is set by Jenkins according to the branch. -->
         <release.path.name>local</release.path.name>
         <comments.enabled>1</comments.enabled>
-        <operating.system>yum</operating.system>
-        <!-- This is set by Jenkins to run twice for each similar operating system group -->
-        <profile.os>centos;fedora;rhel</profile.os>
+        <operating.system>ubuntu</operating.system>
+       
     </properties>
     <!-- ################################################ -->
     <!-- USE "mvn clean generate-sources" to run this POM -->
@@ -44,7 +44,7 @@
             </pluginRepositories>
         </profile>
     </profiles>
-    
+
     <build>
         <resources>
             <resource>
@@ -55,27 +55,13 @@
             </resource>
         </resources>
         <plugins>
-            
+
             <plugin>
                 <groupId>com.rackspace.cloud.api</groupId>
                 <artifactId>clouddocs-maven-plugin</artifactId>
-                <version>1.5.1</version>
-                
+                <version>1.7.1</version>
+
                 <executions>
-                    <execution>
-                        <id>goal1</id>
-                        <goals>
-                            <goal>generate-pdf</goal>
-                        </goals>
-                        <phase>generate-sources</phase>
-                        <configuration>
-                            <pdfUrl>../openstack-ops-manual-${operating.system}-${release.path.name}.pdf</pdfUrl>
-                            <highlightSource>false</highlightSource>
-                            <!-- The following elements sets the autonumbering of sections in output for chapter numbers but no numbered sections-->
-                            <sectionAutolabel>0</sectionAutolabel>
-                            <sectionLabelIncludesComponentLabel>0</sectionLabelIncludesComponentLabel>
-                        </configuration>
-                    </execution>
                     <execution>
                         <id>goal2</id>
                         <goals>
@@ -84,55 +70,39 @@
                         <phase>generate-sources</phase>
                         <configuration>
                             <!-- These parameters only apply to webhelp -->
-                            <pdfUrl>../openstack-ops-manual-${operating.system}-${release.path.name}.pdf</pdfUrl>
+                            <!-- <pdfUrl>../openstack-ops-manual-${operating.system}-${release.path.name}.pdf</pdfUrl> -->
                             <enableDisqus>${comments.enabled}</enableDisqus>
+                            <sourceDirectory>src</sourceDirectory>
                             <disqusShortname>os-ops-${operating.system}</disqusShortname>
                             <enableGoogleAnalytics>1</enableGoogleAnalytics>
                             <googleAnalyticsId>UA-17511903-1</googleAnalyticsId>
-                            <generateToc>
-                                appendix  toc,title
-                                article/appendix  nop
-                                article   toc,title
-                                book      title,figure,table,example,equation
-                                chapter   toc,title
-                                part      toc,title
-                                preface   toc,title
-                                qandadiv  toc
-                                qandaset  toc
-                                reference toc,title
-                                set       toc,title
-                            </generateToc>
-                            <!-- The following elements sets the autonumbering of sections in output for chapter numbers but no numbered sections-->
+                            
+                            <chapterAutolabel>1</chapterAutolabel>
+                            <appendixAutolabel>1</appendixAutolabel>
                             <sectionAutolabel>0</sectionAutolabel>
-                            <sectionLabelIncludesComponentLabel>0</sectionLabelIncludesComponentLabel>
+                            <tocSectionDepth>1</tocSectionDepth>
+                            <formalProcedures>0</formalProcedures>
+                            <generateToc> 
+                                appendix toc,title
+                                article/appendix nop 
+                                article toc,title
+                                book toc,title,figure,table,equation
+                                chapter toc 
+                                part toc,title
+                                acknowledgements toc,title
+                                preface toc
+                                qandadiv toc 
+                                qandaset toc 
+                                reference toc,title 
+                                section toc 
+                                set toc,title
+                            </generateToc>
+                          
+                            <targetDirectory>target/docbkx/webhelp/${release.path.name}/openstack-ops</targetDirectory>
+                            <webhelpDirname>${operating.system}</webhelpDirname>
+                            <pdfFilenameBase>openstack-ops-manual-${operating.system}-${release.path.name}</pdfFilenameBase>
                             <postProcess>
-                                <!-- Copies the figures to the correct location for webhelp -->
-                                
-                                <copy todir="${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-ops/${operating.system}/content/figures">
-                                    <fileset dir="${basedir}/figures">
-                                        <include name="**/*.*" />
-                                    </fileset>
-                                </copy>
-                                
-                                <!-- Copies webhelp (HTML output) to desired URL location on docs.openstack.org -->
-                                
-                                <copy
-                                    todir="${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-ops/${operating.system}">
-                                    <fileset
-                                        dir="${basedir}/target/docbkx/webhelp/bk_openstackopsmanual/">
-                                        <include name="**/*" />
-                                    </fileset>
-                                </copy>
-                                
-                                <!--Moves PDFs to the needed placement -->
-                                
-                                <move failonerror="false"
-                                    file="${basedir}/target/docbkx/pdf/bk_openstackopsmanual.pdf"
-                                    tofile="${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-ops/${operating.system}/openstack-ops-manual-${operating.system}-${release.path.name}.pdf"/>                
-                                
-                                <!--Deletes leftover uneeded directories -->
-                                
-                                <delete dir="${basedir}/target/docbkx/webhelp/bk_openstackopsmanual/"/>                        
+                                <!-- <delete dir="${basedir}/target/docbkx/webhelp/bk_openstackopsmanual/"/>                         -->
                             </postProcess>
                         </configuration>
                     </execution>
@@ -140,16 +110,14 @@
                 <configuration>
                     <!-- These parameters apply to pdf and webhelp -->
                     <xincludeSupported>true</xincludeSupported>
-                    <sourceDirectory>.</sourceDirectory>
-                    <includes>
-                        bk_openstackopsmanual.xml
-                    </includes>
+                    <sourceDirectory>src</sourceDirectory>
+                    <includes> bk_ops_guide.xml </includes>
                     <profileSecurity>reviewer</profileSecurity>
                     <branding>openstack</branding>
                     <profileOs>${profile.os}</profileOs>
                 </configuration>
             </plugin>
-            
+
         </plugins>
     </build>
 </project>
