@@ -11,11 +11,11 @@ allow_account_management = true
 account_autocreate = true
 
 [filter:keystone]
-paste.filter_factory = keystone.middleware.swift_auth:filter_factory
+paste.filter_factory = keystoneclient.middleware.swift_auth:filter_factory
 operator_roles = Member,admin, swiftoperator
 
 [filter:authtoken]
-paste.filter_factory = keystone.middleware.auth_token:filter_factory
+paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
 # Delaying the auth decision is required to support token-less
 # usage for anonymous referrers ('.r:*').
 delay_auth_decision = 10
