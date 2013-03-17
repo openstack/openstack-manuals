@@ -17,8 +17,15 @@
 <prompt>#</prompt> <userinput>service ntp restart</userinput></screen>
    <screen os="rhel;fedora;centos"><prompt>$</prompt> <userinput>sudo service ntpd start</userinput>
 <prompt>$</prompt> <userinput>sudo chkconfig ntpd on</userinput></screen>
-    <para>Set up the NTP client on your compute node so that the time
-        between controller node and compute node is synchronized.
-        Install the NTP package on the compute nodes in addition to
-        the API nodes, to allow more gradual time updates. </para>
+    <para>Set up the NTP client on your compute node so that the time between controller node and
+        compute node is synchronized. The simplest way to do this is to add a daily cron job that
+        synchonizes the compute node's clock with the controller node. You can accomplish this by
+        adding a file, owned by root, marked executable, at
+            <filename>/etc/cron.daily/ntpdate</filename> that contains the
+        following:<programlisting>ntpdate <replaceable>&lt;hostname or IP address of controller></replaceable>
+hwclock -w</programlisting></para>
+    <para>If a large clock skew builds up between the compute nodes and the controller node, then
+        the time change that occurs when the ntpdate cron job runs may confuse some programs running
+        on the compute nodes. To allow more gradual time updates, install the NTP package on the
+        compute nodes in addition to the API nodes.</para>
 </section>
