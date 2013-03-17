@@ -54,7 +54,17 @@
         to your VLAN setup, and passwords are represented as
         DB_PASSWORD_COMPUTE for your Compute (nova) database password,
         and RABBIT PASSWORD represents the password to your rabbit
-        installation.</para>
+        installation.
+        <warning>
+          <para>If you use shared storage for your instances directory, you must set the following
+            option in
+            nova.conf.<programlisting>image_cache_manager_interval=0</programlisting></para>
+          <para>If you do not set this option, then the image cache manager may delete needed images
+            from the <filename>/var/lib/nova/instances/_base</filename> directory. See <link
+              xlink:href="https://bugs.launchpad.net/nova/+bug/1078594">bug #1078594</link> and
+              <link xlink:href="https://bugs.launchpad.net/nova/+bug/1155391">bug #1155391</link>
+            for more details.</para>
+        </warning></para>
 
       <programlisting>
       <xi:include  parse="text" href="../openstack-install/samples/nova.conf"/>
@@ -801,9 +811,13 @@ xenapi_remap_vbd_dev=true
       </itemizedlist>
     </para>
 
-    <para>The following sections describe how to configure your hosts and compute nodes
-      for migrations using the KVM and XenServer hypervisors.
-    </para>
+    <para>The following sections describe how to configure your hosts and compute nodes for
+      migrations using the KVM and XenServer hypervisors.<warning>
+        <para>Recall from the subsection on <link linkend="setting-flags-in-nova-conf-file">Setting
+            configuration options in the <filename>nova.conf</filename> file</link> that if you are
+          using shared storage based live migration, you must set the following option in
+          nova.conf.<programlisting>image_cache_manager_interval=0</programlisting></para>
+      </warning></para>
 
     <section xml:id="configuring-migrations-kvm-libvirt">
     <title>KVM-Libvirt</title>
