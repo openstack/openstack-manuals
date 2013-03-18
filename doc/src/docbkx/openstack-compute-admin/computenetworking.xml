@@ -116,15 +116,32 @@
             out IPs according to the mapping done by nova. Instances receive their fixed IPs by
             doing a dhcpdiscover. These IPs are <emphasis role="italic">not</emphasis> assigned to
             any of the host's network interfaces, only to the VM's guest-side interface.</para>
-        <para>In any setup with flat networking, the host(-s) with nova-network on it is (are)
-            responsible for forwarding traffic from the private network configured with the
-                <literal>fixed_range</literal> configuration option in
-                <filename>nova.conf</filename>. Such host(-s) needs to have <literal>br100</literal>
-            configured and physically connected to any other nodes that are hosting VMs. You must
-            set the <literal>flat_network_bridge</literal> option or create networks with the bridge
-            parameter in order to avoid raising an error. Compute nodes have iptables/ebtables
-            entries created per project and instance to protect against IP/MAC address spoofing and
-            ARP poisoning. </para>
+        <para>In any setup with flat networking, the host(-s) with
+            nova-network on it is (are) responsible for forwarding
+            traffic from the private network. Compute can determine
+            the NAT entries for each network when you have
+                <literal>fixed_range=''</literal> in your
+                <filename>nova.conf</filename>. Sometimes NAT is not
+            used, such as when fixed_range is configured with all
+            public IPs and a hardware router is used (one of the HA
+            options). Such host(-s) needs to have
+                <literal>br100</literal> configured and physically
+            connected to any other nodes that are hosting VMs. You
+            must set the <literal>flat_network_bridge</literal> option
+            or create networks with the bridge parameter in order to
+            avoid raising an error. Compute nodes have
+            iptables/ebtables entries created per project and instance
+            to protect against IP/MAC address spoofing and ARP
+            poisoning. <note>
+                <para>To use the new dynamic
+                        <literal>fixed_range</literal> setup in
+                    Grizzly, set <literal>fixed_range=''</literal> in
+                    your <filename>nova.conf</filename>. For backwards
+                    compatibility, Grizzly supports the
+                        <literal>fixed_range</literal> option and if
+                    set will perform the default logic from Folsom and
+                    earlier releases. </para>
+            </note></para>
         <note>
             <para>In single-host Flat DHCP mode you <emphasis role="italic">will</emphasis> be able
                 to ping VMs via their fixed IP from the nova-network node, but you <emphasis
@@ -451,7 +468,8 @@ echo 'Extra user data here'</computeroutput></screen>
                 configured manually on the gateway if it is required
                 within your network. </para>
             <para>To configure flat networking, ensure that your
-                nova.conf file contains the following line:</para>
+                    <filename>nova.conf</filename> file contains the
+                following line:</para>
             <para>
                 <programlisting>
 network_manager=nova.network.manager.FlatManager
@@ -472,17 +490,25 @@ network_manager=nova.network.manager.FlatManager
                 entry in the database. Consult the diagrams for
                 additional configuration options.</para>
             <para>In any set up with FlatNetworking (either Flat or
-                FlatDHCP), the host with nova-network on it is
-                responsible for forwarding traffic from the private
-                network configured with the
-                    <literal>--fixed_range=</literal> directive in
-                nova.conf and the
-                    <literal>--flat_network_bridge</literal> setting.
-                This host needs to have br100 configured and talking
-                to any other nodes that are hosting VMs. With either
-                of the Flat Networking options, the default gateway
-                for the virtual machines is set to the host which is
-                running nova-network. </para>
+                    FlatDHCP), the host with nova-network on it is
+                    responsible for forwarding traffic from the
+                    private network. Compute determines the "fixed
+                    range" for IPs configured dynamically by pulling
+                    from the configured networks when you set
+                        <literal>fixed_range=''</literal> in
+                        <literal>nova.conf</literal>. This dynamic
+                    range configuration allows for non-contiguous
+                    subnets to be configured in the fixed_ip space and
+                    only configures the NAT rules as they are needed.
+                    This also restricts the NAT range to the smallest
+                    range required preventing the NAT from impacting
+                    subnets that might exist on the external
+                    network.</para>
+                <para>This host needs to have br100 configured and
+                    talking to any other nodes that are hosting VMs.
+                    With either of the Flat Networking options, the
+                    default gateway for the virtual machines is set to
+                    the host which is running nova-network. </para>
             <para>Set the compute node's external IP address to be on
                 the bridge and add eth0 to that bridge. To do this,
                 edit your network interfaces configuration to look
@@ -626,28 +652,29 @@ iface br100 inet dhcp
                 very long time for you to create your initial network,
                 as an entry for each IP will be created in the
                 database. </para>
-            <para>If you have an unused interface on your hosts (eg eth2) that
-                has connectivity with no IP address, you can simply
-                tell FlatDHCP to bridge into the interface by
-                specifying
-                        <literal>flat_interface=<replaceable>&lt;interface></replaceable></literal>
-                in your configuration file. The network host will
-                automatically add the gateway ip to this bridge. If this is the case for you, edit
-                your nova.conf file to contain the following lines: </para>
+            <para>If you have an unused interface on your hosts (eg
+                    eth2) that has connectivity with no IP address,
+                    you can simply tell FlatDHCP to bridge into the
+                    interface by specifying
+                            <literal>flat_interface=<replaceable>&lt;interface></replaceable></literal>
+                    in your configuration file. The network host will
+                    automatically add the gateway ip to this bridge.
+                    If this is the case for you, edit your
+                        <filename>nova.conf</filename> file to contain
+                    the following lines: </para>
             <para>
-                <programlisting>
+                    <programlisting>
 dhcpbridge_flagfile=/etc/nova/nova.conf
 dhcpbridge=/usr/bin/nova-dhcpbridge
 network_manager=nova.network.manager.FlatDHCPManager
-fixed_range=10.0.0.0/8
+fixed_range=''
 flat_network_bridge=br100
 flat_interface=eth2
 flat_injected=False
 public_interface=eth0
                 </programlisting>
-                You can also add the unused interface to br100 manually and not
-                set flat_interface.
-            </para>
+                    You can also add the unused interface to br100
+                    manually and not set flat_interface. </para>
             <para>Integrate your network interfaces to match this
                 configuration.</para>
           </section>
@@ -675,7 +702,7 @@ flat_network_bridge=xenbr2
 public_interface=eth3
 multi_host=True
 dhcpbridge_flagfile=/etc/nova/nova.conf
-fixed_range=10.0.0.0/24
+fixed_range=''
 force_dhcp_release=True
 send_arp_for_ha=True
 flat_injected=False
@@ -720,12 +747,18 @@ firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlis
             xml:id="outbound-traffic-flow-with-any-flat-networking">
             <title>Outbound Traffic Flow with Any Flat
                 Networking</title>
-            <para> In any set up with FlatNetworking, the host with nova-network on it is
-                responsible for forwarding traffic from the private network configured with the
-                    <literal>fixed_range=...</literal> directive in <filename>nova.conf</filename>.
-                This host needs to have a bridge interface (e.g., <literal>br100</literal>) configured and talking to any other
-                nodes that are hosting VMs. With either of the Flat Networking options, the default
-                gateway for the virtual machines is set to the host which is running nova-network. </para>
+            <para> In any set up with FlatNetworking, the host with
+                nova-network on it is responsible for forwarding
+                traffic from the private network dynamically
+                determined by Compute with the
+                    <literal>fixed_range=''</literal> directive in
+                    <filename>nova.conf</filename>. This host needs to
+                have a bridge interface (e.g.,
+                    <literal>br100</literal>) configured and talking
+                to any other nodes that are hosting VMs. With either
+                of the Flat Networking options, the default gateway
+                for the virtual machines is set to the host which is
+                running nova-network. </para>
             <para> When a virtual machine sends traffic out to the
                 public networks, it sends it first to its default
                 gateway, which is where nova-network is configured. </para>
@@ -807,16 +840,23 @@ firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlis
             <para>The bridges that are created by the network manager will be attached to the
                 interface specified by <literal>vlan_interface</literal>, the example above uses the
                     <literal>eth0</literal> interface, which is the default. </para>
-            <para>The <literal>fixed_range</literal> option is a CIDR block which describes the IP
-                address space for all of the instances: this space will be divided up into subnets.
-                This range is typically a <link
-                    xlink:href="https://en.wikipedia.org/wiki/Private_network">private
-                    network</link>. The example above uses the private range
-                    <literal>172.16.0.0/12</literal>.</para>
-            <para>The <literal>network_size</literal> option refers to the default number of IP
-                addresses in each network, although this can be overriden at network creation time .
-                The example above uses a network size of <literal>256</literal>, whicih corresponds
-                to a <literal>/24</literal> network.</para>
+            <para>The <literal>fixed_range</literal> option deprecated
+                in Grizzly and should be set to
+                    <literal>fixed_range=''</literal>  so that Nova
+                determines a CIDR block which describes the IP address
+                space for all of the instances: this space will be
+                divided up into subnets. This range is typically a
+                    <link
+                    xlink:href="https://en.wikipedia.org/wiki/Private_network"
+                    >private network</link>. The example above uses
+                the private range
+                <literal>172.16.0.0/12</literal>.</para>
+            <para>The <literal>network_size</literal> option refers to
+                the default number of IP addresses in each network,
+                although this can be overridden at network creation
+                time . The example above uses a network size of
+                    <literal>256</literal>, which corresponds to a
+                    <literal>/24</literal> network.</para>
             <para>Networks are created with the <command>nova-manage network create</command>
                 command. Here is an example of how to create a network consistent with the above
                 example configuration options, as
@@ -967,10 +1007,9 @@ network_size=256                </programlisting>
             </section>
             <section xml:id="xenapi-vlan-networking">
                 <title>XenAPI VLAN networking</title>
-                <para>VLAN networking works quite differently with the XenAPI
-                    driver, compared to the libvit driver.
-                    The following figure shows how your setup might look:
-                </para>
+                <para>VLAN networking works quite differently with the
+                    XenAPI driver, compared to the libvirt driver. The
+                    following figure shows how your setup might look: </para>
                 <figure xml:id="xenapi-vlan-diagram">
                     <title>VLAN network, multiple interfaces, multiple
                         servers, network HA with XenAPI driver</title>
