@@ -1,0 +1,400 @@
+<section xml:id="ibm-storwize-svc-driver"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0">
+            <title>IBM Storwize family and SVC volume driver</title>
+            <para>The volume management driver for Storwize family and
+                SAN Volume Controller (SVC) provides OpenStack Compute
+                instances with access to IBM Storwize family or SVC
+                storage systems.</para>
+        <section xml:id="ibm-storwize-svc-driver1">
+            <title>Configuring the Storwize family and SVC system
+            </title>
+            <simplesect>
+                <title>iSCSI configuration</title>
+                <para>The Storwize family or SVC system must be
+                configured for iSCSI.
+                Each Storwize family or SVC node should have
+                at least one iSCSI IP address.
+                The driver uses an iSCSI IP address associated
+                with the volume's preferred
+                node (if available) to attach the volume to the
+                instance, otherwise it uses the first available
+                iSCSI IP address of the system.
+                The driver obtains the iSCSI IP address
+                directly from the storage system;
+                there is no need to provide these
+                iSCSI IP addresses directly to the driver. </para>
+                <note>
+                    <para>You should make sure that the compute nodes
+                    have iSCSI network access to the Storwize family
+                    or SVC system. </para>
+                </note>
+            </simplesect>
+            <simplesect>
+                <title>Configuring storage pools</title>
+                <para>The driver allocates all volumes in a single
+                pool.
+                The pool should be created in advance and be
+                provided to the driver using the
+                <literal>storwize_svc_volpool_name</literal>
+                flag.
+                Details about the configuration flags and how
+                to provide the flags to the driver appear in the
+                <link linkend="ibm-storwize-svc-driver2">
+                next section</link>. </para>
+            </simplesect>
+            <simplesect>
+                <title>Configuring user authentication for the driver
+                </title>
+                <para>The driver requires access to the Storwize
+                    family or SVC system management interface.
+                    The driver communicates with
+                    the management using SSH.
+                    The driver should be provided with the Storwize
+                    family or SVC management IP using the
+                    <literal>san_ip</literal>
+                    flag, and the management port should be
+                    provided by the
+                    <literal>san_ssh_port</literal> flag.
+                    By default, the port value is configured to
+                    be port 22 (SSH). </para>
+                <note>
+                    <para>Make sure the compute node running
+                          the nova-volume management driver has SSH
+                          network access to
+                          the storage system. </para>
+                </note>
+                <para>To allow the driver to communicate with the
+                Storwize family or SVC system,
+                you must provide the driver with
+                a user on the storage system. The driver has two
+                authentication methods: password-based
+                authentication and SSH key pair authentication.
+                The user should have an Administrator role.
+                It is suggested to create a new
+                user for the management driver.
+                Please consult with your
+                storage and security administrator regarding
+                the preferred authentication method and how
+                passwords or SSH keys should be stored in a
+                secure manner. </para>
+                <note>
+                    <para>When creating a new user on the Storwize or
+                    SVC system, make sure the user belongs to
+                    the Administrator group or to another group
+                    that has an Administrator role. </para>
+                </note>
+                <para>If using password authentication, assign a
+                    password to the user on the Storwize or SVC
+                    system.
+                    The driver configuration flags for the user and
+                    password are <literal>san_login</literal> and
+                    <literal>san_password</literal>, respectively.
+                </para>
+                <para>If you are using the SSH key pair
+                authentication, create SSH
+                private and public keys using the instructions
+                below or by any other method.
+                Associate the public key with the
+                user by uploading the public key: select the
+                "choose file" option in the Storwize family or
+                SVC management GUI under "SSH public key".
+                Alternatively, you may associate the SSH public
+                key using the command line interface;
+                details can be found in the
+                Storwize and SVC documentation.
+                The private key should
+                be provided to the driver using the
+                <literal>san_private_key</literal>
+                configuration flag. </para>
+            </simplesect>
+            <simplesect>
+                <title>Creating a SSH key pair using OpenSSH</title>
+                <para>You can create an SSH key pair using OpenSSH,
+                by running:
+                </para>
+                <programlisting>
+                ssh-keygen -t rsa
+                </programlisting>
+                <para>The command prompts for a file to save the key
+                pair.
+                For example, if you select 'key' as the
+                filename, two files will be created:
+                <literal>key</literal> and
+                <literal>key.pub</literal>.
+                The <literal>key</literal>
+                file holds the private SSH key and
+                <literal>key.pub</literal> holds the public
+                SSH key.
+                </para>
+                <para>The command also prompts for a passphrase,
+                which should be empty.</para>
+                <para>The private key file should be provided to the
+                driver using the
+                <literal>san_private_key</literal>
+                configuration flag. The public key should be
+                uploaded to the Storwize family or SVC system
+                using the storage management GUI or command
+                line interface. </para>
+            </simplesect>
+        </section>
+        <section xml:id="ibm-storwize-svc-driver2">
+            <title>Configuring the Storwize family and SVC driver
+            </title>
+            <simplesect>
+                <title>Enabling the Storwize family and SVC driver
+                </title>
+                <para>Set the volume driver to the Storwize family and
+                        SVC driver by setting the
+                            <literal>volume_driver</literal> option in
+                            <filename>nova.conf</filename> as follows: </para>
+                <programlisting>
+volume_driver=nova.volume.storwize_svc.StorwizeSVCDriver
+                </programlisting>
+            </simplesect>
+            <simplesect>
+                <title>Configuring options for the Storwize family and
+                        SVC driver in nova.conf</title>
+                <para>The following options apply to all volumes and
+                        cannot be changed for a specific volume. </para>
+                <table rules="all">
+                <caption>List of configuration flags for Storwize
+                            storage and SVC driver</caption>
+                <col width="35%"/>
+                <col width="15%"/>
+                <col width="15%"/>
+                <col width="35%"/>
+                <thead>
+                <tr>
+                    <td>Flag name</td>
+                    <td>Type</td>
+                    <td>Default</td>
+                    <td>Description</td>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><para><literal>san_ip</literal></para>
+                        </td>
+                        <td><para>Required</para></td>
+                        <td><para></para></td>
+                        <td><para>Management IP or host name</para>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><para><literal>san_ssh_port</literal>
+                            </para>
+                        </td>
+                        <td><para>Optional</para></td>
+                        <td><para>22</para></td>
+                        <td><para>Management port</para></td>
+                    </tr>
+                    <tr>
+                        <td><para><literal>san_login</literal></para>
+                        </td>
+                        <td><para>Required</para></td>
+                        <td><para></para></td>
+                        <td><para>Management login username</para>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><para><literal>san_password</literal>
+                            </para>
+                        </td>
+                        <td><para>Required
+                        <footnote xml:id='storwize-svc-fn1'>
+                        <para>The authentication requires either a
+                            password
+                            (<literal>san_password</literal>) or
+                            SSH private key
+                            (<literal>san_private_key</literal>).
+                            One must be specified. If both are
+                            specified the driver will use only the
+                            SSH private key.
+                        </para></footnote>
+                        </para></td>
+                        <td><para></para></td>
+                        <td><para>Management login password</para>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><para><literal>san_private_key</literal>
+                            </para>
+                        </td>
+                        <td><para>Required
+                            <footnoteref linkend='storwize-svc-fn1'/>
+                        </para></td>
+                        <td><para></para></td>
+                        <td><para>Management login SSH private key
+                        </para>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><para>
+                        <literal>storwize_svc_volpool_name</literal>
+                        </para>
+                        </td>
+                        <td><para>Required</para></td>
+                        <td><para></para></td>
+                        <td><para>Pool name for volumes</para></td>
+                    </tr>
+                    <tr>
+                        <td><para>
+                        <literal>storwize_svc_vol_vtype</literal>
+                        </para>
+                        </td>
+                        <td><para>Optional</para></td>
+                        <td><para>Striped</para></td>
+                        <td><para>Volume virtualization type
+                        <footnote xml:id='storwize-svc-fn2'>
+                        <para>More details on this configuration
+                        option are available in the Storwize
+                        family and SVC command line
+                        documentation under the
+                        <literal>mkvdisk</literal> command.
+                        </para></footnote>
+                        </para></td>
+                    </tr>
+                    <tr>
+                        <td><para>
+                        <literal>storwize_svc_vol_rsize</literal>
+                        </para>
+                        </td>
+                        <td><para>Optional</para></td>
+                        <td><para>2%</para></td>
+                        <td><para>Initial physical allocation
+                            <footnote xml:id='storwize-svc-fn3'>
+                            <para>
+                            The driver creates thin-provisioned
+                            volumes by default. The
+                            <literal>storwize_svc_vol_rsize</literal>
+                            flag defines the initial physical
+                            allocation size for thin-provisioned
+                            volumes, or if set to
+                            <literal>-1</literal>,
+                            the driver creates full allocated
+                            volumes. More details
+                            about the available options are available
+                            in the Storwize family and SVC
+                            documentation.
+                            </para></footnote>
+                            </para></td>
+                    </tr>
+                    <tr>
+                        <td><para>
+                        <literal>storwize_svc_vol_warning</literal>
+                        </para>
+                        </td>
+                        <td><para>Optional</para></td>
+                        <td><para>0 (disabled)</para></td>
+                        <td><para>Space allocation warning threshold
+                            <footnoteref linkend='storwize-svc-fn2'/>
+                            </para></td>
+                    </tr>
+                    <tr>
+                        <td><para>
+                        <literal>storwize_svc_vol_autoexpand</literal>
+                        </para>
+                        </td>
+                        <td><para>Optional</para></td>
+                        <td><para>True</para></td>
+                        <td><para>Enable or disable volume auto expand
+                            <footnote xml:id='storwize-svc-fn4'>
+                            <para>
+                            Defines whether thin-provisioned volumes
+                            can be auto expanded by the storage
+                            system, a value of <literal>True</literal>
+                            means that auto expansion is
+                            enabled, a value of
+                            <literal>False</literal>
+                            disables auto expansion.
+                            Details about this option can be
+                            found in the
+                            <literal>–autoexpand</literal>
+                            flag of the Storwize
+                            family and SVC command line interface
+                            <literal>mkvdisk</literal> command.
+                            </para></footnote>
+                            </para></td>
+                    </tr>
+                    <tr>
+                        <td><para>
+                        <literal>storwize_svc_vol_grainsize</literal>
+                        </para>
+                        </td>
+                        <td><para>Optional</para></td>
+                        <td><para>256</para></td>
+                        <td><para>Volume grain size
+                            <footnoteref linkend='storwize-svc-fn2'/>
+                            in KB</para></td>
+                    </tr>
+                    <tr>
+                        <td><para>
+                        <literal>storwize_svc_vol_compression
+                        </literal>
+                        </para>
+                        </td>
+                        <td><para>Optional</para></td>
+                        <td><para>False</para></td>
+                        <td><para>
+                        Enable or disable Real-Time Compression
+                        <footnote xml:id='storwize-svc-fn5'>
+                        <para>Defines whether Real-time Compression
+                            is used for the volumes created with
+                            OpenStack. Details on Real-time
+                            Compression can be found in the
+                            Storwize family and SVC documentation.
+                            The Storwize or SVC system must have
+                            compression enabled for this feature
+                            to work.
+                        </para>
+                        </footnote>
+                        </para>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><para>
+                        <literal>storwize_svc_vol_easytier</literal>
+                        </para>
+                        </td>
+                        <td><para>Optional</para></td>
+                        <td><para>True</para></td>
+                        <td><para>Enable or disable Easy Tier
+                            <footnote xml:id='storwize-svc-fn6'>
+                            <para>Defines whether Easy Tier is used
+                            for the volumes created with OpenStack.
+                            Details on EasyTier can be found in the
+                            Storwize family and SVC documentation.
+                            The Storwize or SVC system must have
+                            Easy Tier enabled for this feature to
+                            work.
+                            </para></footnote>
+                            </para></td>
+                    </tr>
+                    <tr>
+                        <td><para>
+                        <literal>storwize_svc_flashcopy_timeout
+                        </literal>
+                        </para>
+                        </td>
+                        <td><para>Optional</para></td>
+                        <td><para>120</para></td>
+                        <td><para>FlashCopy timeout threshold
+                            <footnote xml:id='storwize-svc-fn7'>
+                            <para>The driver wait timeout threshold
+                                   when creating an OpenStack
+                                   snapshot. This is actually the
+                                   maximum amount of time the driver
+                                   will wait for the Storwize family
+                                   or SVC system to prepare a new
+                                   FlashCopy mapping. The driver
+                                   accepts a maximum wait time of 600
+                                   seconds (10 minutes). </para></footnote> (seconds)</para></td>
+                    </tr>
+                </tbody>
+            </table>
+            </simplesect>
+        </section>
+        </section>

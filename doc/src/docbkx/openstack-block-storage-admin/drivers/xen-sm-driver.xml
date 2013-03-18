@@ -1,0 +1,207 @@
+<section xml:id="xensm"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0">
+<title>Using the XenAPI Storage Manager Volume Driver</title>
+<para>The Xen Storage Manager Volume driver (xensm) is a
+    XenAPI hypervisor specific volume driver, and can be used
+    to provide basic storage functionality, including
+    volume creation and destruction, on a number of
+    different storage back-ends. It also enables the
+    capability of using more sophisticated storage
+    back-ends for operations like cloning/snapshots, etc.
+    The list below shows some of the storage plugins
+    already supported in Citrix XenServer and Xen Cloud Platform
+    (XCP): </para>
+<orderedlist>
+    <listitem>
+        <para>NFS VHD: Storage repository (SR) plugin which stores disks as Virtual Hard Disk (VHD)
+            files on a remote Network File System (NFS).
+        </para>
+    </listitem>
+    <listitem>
+        <para>Local VHD on LVM: SR plugin which represents disks as VHD disks on Logical Volumes (LVM)
+            within a locally-attached Volume Group.
+        </para>
+    </listitem>
+    <listitem>
+        <para>HBA LUN-per-VDI driver: SR plugin which represents Logical Units (LUs)
+            as Virtual Disk Images (VDIs) sourced by host bus adapters (HBAs).
+            E.g. hardware-based iSCSI or FC support.
+        </para>
+    </listitem>
+    <listitem>
+        <para>NetApp: SR driver for mapping of LUNs to VDIs on a NETAPP server,
+            providing use of fast snapshot and clone features on the filer.
+        </para>
+    </listitem>
+    <listitem>
+        <para>LVHD over FC: SR plugin which represents disks as VHDs on Logical Volumes
+            within a Volume Group created on an HBA LUN. E.g. hardware-based iSCSI or FC support.
+        </para>
+    </listitem>
+    <listitem>
+        <para>iSCSI: Base ISCSI SR driver, provides a LUN-per-VDI.
+            Does not support creation of VDIs but accesses existing LUNs on a target.
+        </para>
+    </listitem>
+    <listitem>
+        <para>LVHD over iSCSI: SR plugin which represents disks as
+            Logical Volumes within a Volume Group created on an iSCSI LUN.
+        </para>
+    </listitem>
+    <listitem>
+        <para>EqualLogic: SR driver for mapping of LUNs to VDIs on a
+            EQUALLOGIC array group, providing use of fast snapshot and clone features on the array.
+        </para>
+    </listitem>
+</orderedlist>
+<section xml:id="xensmdesign">
+    <title>Design and Operation</title>
+    <simplesect>
+        <title>Definitions</title>
+        <itemizedlist>
+            <listitem>
+                <para><emphasis role="bold"
+                    >Backend:</emphasis> A term for a
+                    particular storage backend. This could
+                    be iSCSI, NFS, Netapp etc. </para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold"
+                    >Backend-config:</emphasis> All the
+                    parameters required to connect to a
+                    specific backend. For e.g. For NFS,
+                    this would be the server, path, etc. </para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold"
+                    >Flavor:</emphasis> This term is
+                    equivalent to volume "types". A
+                    user friendly term to specify some
+                    notion of quality of service. For
+                    example, "gold" might mean that the
+                    volumes will use a backend where
+                    backups are possible. A flavor can be
+                    associated with multiple backends. The
+                    volume scheduler, with the help of the
+                    driver, will decide which backend will
+                    be used to create a volume of a
+                    particular flavor. Currently, the
+                    driver uses a simple "first-fit"
+                    policy, where the first backend that
+                    can successfully create this volume is
+                    the one that is used. </para>
+            </listitem>
+        </itemizedlist>
+    </simplesect>
+    <simplesect>
+        <title>Operation</title>
+        <para>The admin uses the nova-manage command
+            detailed below to add flavors and backends. </para>
+        <para>One or more nova-volume service instances
+            will be deployed per availability zone. When
+            an instance is started, it will create storage
+            repositories (SRs) to connect to the backends
+            available within that zone. All nova-volume
+            instances within a zone can see all the
+            available backends. These instances are
+            completely symmetric and hence should be able
+            to service any
+            <literal>create_volume</literal> request
+            within the zone. </para>
+        <note>
+            <title>On XenServer, PV guests
+                required</title>
+            <para>Note that when using XenServer you can
+                only attach a volume to a PV guest.</para>
+        </note>
+    </simplesect>
+</section>
+<section xml:id="xensmconfig">
+    <title>Configuring XenAPI Storage Manager</title>
+    <simplesect>
+        <title>Prerequisites
+        </title>
+        <orderedlist>
+            <listitem>
+                <para>xensm requires that you use either Citrix XenServer or XCP as the hypervisor.
+                    The NetApp and EqualLogic backends are not supported on XCP.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Ensure all <emphasis role="bold">hosts</emphasis> running volume and compute services
+                    have connectivity to the storage system.
+                </para>
+            </listitem>
+        </orderedlist>
+    </simplesect>
+    <simplesect>
+        <title>Configuration
+        </title>
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <emphasis role="bold">Set the following configuration options for the nova volume service:
+                        (nova-compute also requires the volume_driver configuration option.)
+                    </emphasis>
+                </para>
+                <programlisting>
+--volume_driver="nova.volume.xensm.XenSMDriver"
+--use_local_volumes=False
+                                </programlisting>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="bold">The backend configurations that the volume driver uses need to be
+                        created before starting the volume service.
+                    </emphasis>
+                </para>
+                <programlisting>
+<prompt>$</prompt> nova-manage sm flavor_create &lt;label> &lt;description>
+
+<prompt>$</prompt> nova-manage sm flavor_delete &lt;label>
+
+<prompt>$</prompt> nova-manage sm backend_add &lt;flavor label> &lt;SR type> [config connection parameters]
+
+Note: SR type and config connection parameters are in keeping with the XenAPI Command Line Interface. http://support.citrix.com/article/CTX124887
+
+<prompt>$</prompt> nova-manage sm backend_delete &lt;backend-id>
+
+                               </programlisting>
+                <para> Example: For the NFS storage manager plugin, the steps
+                    below may be used.
+                </para>
+                <programlisting>
+<prompt>$</prompt> nova-manage sm flavor_create gold "Not all that glitters"
+
+<prompt>$</prompt> nova-manage sm flavor_delete gold
+
+<prompt>$</prompt> nova-manage sm backend_add gold nfs name_label=mybackend server=myserver serverpath=/local/scratch/myname
+
+<prompt>$</prompt> nova-manage sm backend_remove 1
+                                </programlisting>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="bold">Start nova-volume and nova-compute with the new configuration options.
+                    </emphasis>
+                </para>
+            </listitem>
+        </itemizedlist>
+    </simplesect>
+    <simplesect>
+        <title>Creating and Accessing the volumes from VMs </title>
+        <para>Currently, the flavors have not been tied to
+            the volume types API. As a result, we simply
+            end up creating volumes in a "first fit" order
+            on the given backends. </para>
+        <para>The standard euca-* or OpenStack API
+            commands (such as volume extensions) should be
+            used for creating, destroying, attaching, or
+            detaching volumes. </para>
+    </simplesect>
+</section>
+</section>

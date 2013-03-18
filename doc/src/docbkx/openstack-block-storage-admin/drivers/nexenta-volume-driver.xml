@@ -1,0 +1,63 @@
+<section xml:id="nexenta-driver"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0">
+            <title>Nexenta</title>
+            <para>NexentaStor Appliance is NAS/SAN software platform designed for building reliable and fast network storage arrays. The
+                the OpenSolaris and uses ZFS as a disk management system. NexentaStor can serve as a storage node for the OpenStack and
+                for the virtual servers via iSCSI protocol. </para>
+            <para>The Nexenta driver allows you to use Nexenta SA to
+                store Nova volumes. Every Nova volume is represented
+                by a single zvol in a predefined Nexenta volume. For
+                every new volume the driver creates a iSCSI target and
+                iSCSI target group that are used to access it from
+                compute hosts.</para>
+            <para>To use Nova with Nexenta Storage Appliance, you should:</para>
+                <itemizedlist>
+                    <listitem><para>set
+                            <literal>volume_driver=nova.volume.nexenta.volume.NexentaDriver</literal>.</para></listitem>
+                    <listitem><para>set <literal>--nexenta_host</literal> flag to the hostname or IP
+                        of your NexentaStor</para></listitem>
+                    <listitem><para>set <literal>--nexenta_user</literal> and
+                            <literal>--nexenta_password</literal> to
+                        the username and password of the user with all
+                        necessary privileges on the appliance,
+                        including the access to REST API</para></listitem>
+                    <listitem><para>set <literal>--nexenta_volume</literal> to the name of the
+                        volume on the appliance that you would like to
+                        use in Nova, or create a volume named
+                            <literal>nova</literal> (it will be used
+                        by default)</para></listitem>
+                </itemizedlist>
+            <para>Nexenta driver has a lot of tunable flags. Some of them you might want to change:</para>
+                <itemizedlist>
+                    <listitem><para><literal>nexenta_target_prefix</literal> defines the prefix that
+                        will be prepended to volume id to form target
+                        name on Nexenta</para></listitem>
+                    <listitem><para><literal>nexenta_target_group_prefix</literal> defines the
+                        prefix for target groups</para></listitem>
+                    <listitem><para><literal>nexenta_blocksize</literal> can be set to the size of
+                        the blocks in newly created zvols on
+                        appliance, with the suffix; for example, the
+                        default 8K means 8 kilobytes</para></listitem>
+                    <listitem><para><literal>nexenta_sparse</literal> is boolean and can be set to
+                        use sparse zvols to save space on
+                        appliance</para></listitem>
+                </itemizedlist>
+            <para>Some flags that you might want to keep with the
+                default values:</para>
+                <itemizedlist>
+                    <listitem><para><literal>nexenta_rest_port</literal> is the port where Nexenta
+                        listens for REST requests (the same port where
+                        the NMV works)</para></listitem>
+                    <listitem><para><literal>nexenta_rest_protocol</literal> can be set to
+                            <literal>http</literal> or
+                            <literal>https</literal>, but the default
+                        is <literal>auto</literal> which makes the
+                        driver try to use HTTP and switch to HTTPS in
+                        case of failure</para></listitem>
+                    <listitem><para><literal>nexenta_iscsi_target_portal_port</literal> is the port
+                        to connect to Nexenta over iSCSI</para></listitem>
+                </itemizedlist>
+</section>
