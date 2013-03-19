@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section 
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" 
+    version="5.0"
+    xml:id="example-installation-architecture">
+    <title>Example Installation Architectures</title>
+    
+    <para>OpenStack Compute uses a shared-nothing, messaging-based
+        architecture. While very flexible, the fact that you can install each
+        nova- service on an independent server means there are many possible
+        methods for installing OpenStack Compute. Here are the types of
+        installation architectures:</para>
+    
+    <itemizedlist>
+        <listitem>
+            <para>Single node: Only one server runs all nova- services and also
+                drives all the virtual instances. Use this configuration only for
+                trying out OpenStack Compute, or for development purposes.</para>
+        </listitem>
+        
+        <listitem>
+            <para>Two nodes: A cloud controller node runs the nova- services
+                except for <command>nova-compute</command>, and a compute node runs
+                <command>nova-compute</command>. A client computer is likely needed to
+                bundle images and interfacing to the servers, but a client is not
+                required. Use this configuration for proof of concepts or development
+                environments.</para>
+        </listitem>
+        
+        <listitem>
+            <para>Multiple nodes: You can add more compute nodes to the two node
+                installation by simply installing <command>nova-compute</command> on
+                an additional server and copying a <filename>nova.conf</filename> file
+                to the added node. This would result in a multiple node installation.
+                You can also add a volume controller and a network controller as
+                additional nodes in a more complex multiple node installation. A
+                minimum of 4 nodes is best for running multiple virtual instances that
+                require a lot of processing power.</para>
+        </listitem>
+    </itemizedlist>
+    
+    <para>This is an illustration of one possible multiple server installation
+        of OpenStack Compute; virtual server networking in the cluster may
+        vary.</para>
+    
+    <para><inlinemediaobject>
+        <imageobject>
+            <imagedata fileref="figures/NOVA_install_arch.png" scale="80"/>
+        </imageobject>
+    </inlinemediaobject></para>
+    
+    <para>An alternative architecture would be to add more messaging servers
+        if you notice a lot of back up in the messaging queue causing performance
+        problems. In that case you would add an additional RabbitMQ server in
+        addition to or instead of scaling up the database server. Your
+        installation can run any nova- service on any server as long as the
+        <filename>nova.conf</filename> is configured to point to the RabbitMQ
+        server and the server can send messages to the server.</para>
+    
+    <para>Multiple installation architectures are possible, here is another
+        example illustration.</para>
+    
+    <para><inlinemediaobject>
+        <imageobject>
+            <imagedata fileref="figures/NOVA_compute_nodes.png" scale="40"/>
+        </imageobject>
+    </inlinemediaobject></para>
+</section>
