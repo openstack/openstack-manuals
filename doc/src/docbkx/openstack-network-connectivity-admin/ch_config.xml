@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="ch_config">
-    <title>Configuring other OpenStack Components</title>
+    <title>Required Configuration for OpenStack Identify &amp; Compute</title>
+
+    <para>Using OpenStack Networking requires particular configuration and
+    setup steps for both the OpenStack Identify Service and the OpenStack
+    Compute Service.  This chapter describes these steps.</para>
     <section xml:id="keystone">
-        <title>OpenStack Identity Configuration for OpenStack
-            Networking</title>
+        <title>OpenStack Identity</title>
         <procedure>
-            <title>To Configure OpenStack Compute for OpenStack
+            <title>Configuring OpenStack Identify for use with OpenStack
                 Networking</title>
             <step>
                 <title>To Create an OpenStack Networking Service
@@ -51,7 +54,7 @@ catalog.$REGION.network.name = Network Service </computeroutput></screen>
 catalog.$Region.network.adminURL = http://10.211.55.17:9696
 catalog.$Region.network.internalURL = http://10.211.55.17:9696
 catalog.$Region.network.name = Network Service</programlisting>
-                
+
             </step>
             <step>
                 <title>Create OpenStack Networking Service
@@ -73,23 +76,25 @@ catalog.$Region.network.name = Network Service</programlisting>
 </userinput></screen>
                 <screen><prompt>$</prompt> <userinput>QUANTUM_USER=$(get_id keystone user-create --name=quantum --pass="$QUANTUM_PASSWORD" --email=demo@example.com --tenant-id service)
 </userinput></screen>
-                <screen><prompt>$</prompt> <userinput>  keystone user-role-add --user_id $QUANTUM_USER --role_id $ADMIN_ROLE --tenant_id service</userinput></screen>
+                <screen><prompt>$</prompt> <userinput>keystone user-role-add --user_id $QUANTUM_USER --role_id $ADMIN_ROLE --tenant_id service</userinput></screen>
             </step>
         </procedure>
         <para> See the OpenStack Installation Guides for more details
             about creating service entries and service users.</para>
     </section>
     <section xml:id="nova_with_quantum">
-        <title>Running OpenStack Compute with OpenStack
-            Networking</title>
+        <title>OpenStack Compute</title>
         <para>Unlike traditional OpenStack Compute deployments, when
             OpenStack Networking is in use, OpenStack Compute should
             not run a nova-network. Instead, OpenStack Compute
             delegates almost all of the network-related decisions to
-            OpenStack Networking. This means many of the
-            network-related CLI command and configuration options you
-            are familiar with from using OpenStack Compute do not work
-            with OpenStack Networking.</para>
+            OpenStack Networking. Tenant-facing API calls to manage
+            objects like security groups + floating IPs are proxied
+            by OpenStack Compute to OpenStack Network APIs.  However,
+            operator-facing tools (e.g., nova-manage) are not proxied
+            and therefore should NOT be used as these calls are not
+            proxied.</para>
+        <warning>
         <para>Therefore, it is very important that you refer to this
             guide when configuring networking, rather than relying on
             OpenStack Compute networking documentation or past
@@ -100,6 +105,7 @@ catalog.$Region.network.name = Network Service</programlisting>
             tools like 'nova-manage' and 'nova' to manage networks or
             IP addressing, including both fixed and floating IPs, is
             not supported with OpenStack Networking.</para>
+        </warning>
         <note>
             <para>It is strongly recommended that you uninstall
                 nova-network and reboot any physical nodes that had
@@ -109,9 +115,13 @@ catalog.$Region.network.name = Network Service</programlisting>
                 can cause problems, as can stale iptables rules pushed
                 down by previously running nova-network. </para>
         </note>
+        <para>
+        The next section describes nova.conf settings that are required
+        for OpenStack Compute to work properly with OpenStack Networking,
+        rather than the legacy nova-network mechanism.
+        </para>
         <section xml:id="nova_with_quantum_api">
-            <title>Configuring OpenStack Compute to reach the
-                OpenStack Networking API</title>
+            <title>Networking API &amp; and Credential Configuration</title>
             <para>Each time a VM is provisioned or deprovisioned in
                 OpenStack Compute, nova-* services communicate with
                 OpenStack Networking via the standard API. To do so,
@@ -120,154 +130,183 @@ catalog.$Region.network.name = Network Service</programlisting>
             <itemizedlist>
                 <listitem>
                     <para>network_api_class: must be modified from
-                        default to nova.network.quantumv2.api.API
+                        default to 'nova.network.quantumv2.api.API' to
                         indicate that OpenStack Networking should be
                         used rather than the traditional nova-network
                         networking model.</para>
                 </listitem>
                 <listitem>
-                    <para>quantum_url: must include the hostname/IP and port of the Quantum server
-                        for this deployment.</para>
+                    <para>quantum_url: must include the hostname/IP and port
+                        of the quantum-server instance for this
+                        deployment.</para>
                 </listitem>
                 <listitem>
-                    <para>quantum_auth_strategy: should be kept as default 'keystone' for all
-                        production deployments.</para>
+                    <para>quantum_auth_strategy: should be kept as default
+                        'keystone' for all production deployments.</para>
                 </listitem>
                 <listitem>
                     <para>quantum_admin_tenant_name: must be modified
                         to be the name of the service tenant created
-                        in the above section on OpenStack Compute
+                        in the above section on OpenStack Identity
                         configuration.</para>
                 </listitem>
                 <listitem>
                     <para>quantum_admin_username: must be modified to
                         be the name of the user created in the above
-                        section on OpenStack Compute
+                        section on OpenStack Identity
                         configuration.</para>
                 </listitem>
                 <listitem>
                     <para>quantum_admin_password: must be modified to
                         be the password of the user created in the
-                        above section on OpenStack Compute
+                        above section on OpenStack Identity
                         configuration.</para>
                 </listitem>
                 <listitem>
                     <para>quantum_admin_auth_url: must be modified to
-                        point to the OpenStack Compute server IP and
+                        point to the OpenStack Identity server IP and
                         port. This is the Identity (keystone) admin
                         API server IP and port value, and not the
                         Identity service API IP and port.</para>
                 </listitem>
             </itemizedlist>
         </section>
+        <section xml:id="nova_config_security_groups">
+        <title>Security Group Configuration</title>
+        <para>The OpenStack Networking Service provides security group
+        functionality using a mechanism that is more flexible and powerful
+        than the security group capabilities built into OpenStack
+        Compute.  Thus, when using OpenStack Networking, nova.conf should
+        always disable built-in security groups and proxy all security group
+        calls to the OpenStack Networking API.  Failure to do so will result
+        in conflicting security policies being simultaneously applied by
+        both services.  To proxy security groups to Quantum, use the
+        following configuration values:</para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        firewall_driver : must be set to
+                        'nova.virt.firewall.NoopFirewallDriver'
+                        so that nova-compute does not perform iptables-based
+                        filtering itself.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        security_group_api : must be set to 'quantum' so
+                        that all security group requests are proxied to
+                        the OpenStack Network Service.
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </section>
+        <section xml:id="nova_config_metadata">
+        <title>Metadata Configuration</title>
+        <para>The OpenStack Compute service allows VMs to query metadata
+        associated with a VM by making a web request to a special
+        169.254.169.154 address.  Quantum supports proxying those
+        requests to nova-api, even when the requests are made from isolated
+        networks, or from multiple networks that use overlapping IP addresses.
+        Enabling this requires setting the following fields in nova.conf:
+        </para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                    service_quantum_metadata_proxy: must be set to 'true',
+                    otherwise nova-api will not properly respond to requests
+                    from the quantum-metadata-agent.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                    quantum_metadata_proxy_shared_secret: a string "password"
+                    value that should also be configured in the
+                    metadata_agent.ini file in order to authenticate requests
+                    made for metadata.  The default value of the
+                    empty string in both files will allow metadata to
+                    function, but will be insecure if any non-trusted
+                    entities have access to the metadata APIs exposed by
+                    nova-api.
+                    </para>
+                </listitem>
+            </itemizedlist>
+            <note><para>As a precaution, even when using
+            quantum_metadata_proxy_shared_secret, it is recommended that
+            you do not expose metadata using the same nova-api instances that
+            are used for tenants.  Instead, run a dedicated set of nova-api
+            instances for metadata available only on your management network.
+            Whether a given nova-api instance exposes metadata APIs is
+            determined by the value of 'enabled_apis' in its nova.conf.
+            </para></note>
+        </section>
         <section xml:id="nova_with_quantum_vifplugging">
-            <title>Configuring Vif-plugging in OpenStack
-                Compute</title>
+            <title>Vif-plugging Configuration</title>
             <para>When nova-compute creates a VM, it must "plug" each
                 of the VM's vNICs into an OpenStack Networking
                 controlled virtual switch, and inform the virtual
                 switch about the OpenStack Networking port-id
-                associated with each vNIC. This is done by specifying
-                a field in the nova.conf of the nova-compute instance
-                indicating what type of ''vif-plugging'' should be
-                used. The exact field(s) you need to set depend on
-                your plugin. For plugins not listed below, see the
-                plugin's own documentation.</para>
-            <section xml:id="nova_with_quantum_vifplugging_ovs">
-                <title>Vif-plugging with Open vSwitch Plugin</title>
-                <para>The choice of vif-plugging for the Open vSwitch
-                    plugin depends on what version of libvirt you are
-                    using, as well as whether you are using OpenStack
-                    Compute security filtering (i.e., security groups,
-                    provider firewall, VM spoofing prevention).</para>
+                associated with each vNIC.  Different OpenStack Networking
+                plugins may require different types of vif-plugging.
+                The type of vif-plugging to be used is specified in
+                the nova.conf for each nova-compute instance.
+             </para>
+             <para>
+                The following plugins support the "port bindings" API
+                extension that allows Nova to query for the type
+                of vif-plugging required.
                 <itemizedlist>
-                    <listitem>
-                        <para>When using libvirt (any version) with
-                            OpenStack Compute security filtering:
-                            libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver</para>
-                    </listitem>
-                    <listitem>
-                        <para>When using libvirt (version &lt; 0.9.11)
-                            without OpenStack Compute security
-                            filtering:
-                            libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchDriver</para>
-                    </listitem>
-                    <listitem>
-                        <para>When using libvirt (version &gt;=
-                            0.9.11) without OpenStack Compute security
-                            groups:
-                            libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchVirtualPortDriver</para>
-                    </listitem>
+                <listitem><para>OVS plugin</para></listitem>
+                <listitem><para>Linux Bridge Plugin</para></listitem>
+                <listitem><para>NEC Plugin</para></listitem>
+                <listitem><para>Big Switch Plugin</para></listitem>
+                <listitem><para>Hyper-V Plugin</para></listitem>
+                <listitem><para>Brocade Plugin</para></listitem>
                 </itemizedlist>
+            </para>
+            <para>For these plugins, the default values in nova.conf
+                are sufficient.  For other plugins, see the sub-sections
+                below for vif-plugging configuration, or consult external
+                plugin documentation.
+            </para>
+            <note><para>It is possible that the vif-plugging configuration
+                required for nova-compute will vary even within a single
+                deployment if your deployment includes heterogeneous compute
+                platforms (e.g., some computes hosts are KVM while others are
+                ESX).
+            </para></note>
+            <section xml:id="nova_with_quantum_vifplugging_nvp">
+                <title>Vif-plugging with Nicira NVP Plugin</title>
+                <para>The choice of vif-plugging for the NVP Plugin depends
+                  on what version of libvirt is in use.</para>
                 <note><title>Checking your libvirt version</title>
                       <para>To check your libvirt version, use
                             <command>libvirtd
                         --version</command>.</para>
                 </note>
-            </section>
-            <section xml:id="nova_with_quantum_vifplugging_bridge">
-                <title>Vif-plugging with Linux Bridge Plugin</title>
                 <itemizedlist>
                     <listitem>
-                        <para>When using libvirt (any version):
-                            libvirt_vif_driver=nova.virt.libvirt.vif.QuantumLinuxBridgeVIFDriver</para>
+                        <para>When using libvirt (version &gt;= 0.9.11):
+                            libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchVirtualPortDriver</para>
                     </listitem>
-                </itemizedlist>
-            </section>
-            <section xml:id="nova_with_quantum_vifplugging_nvp">
-                <title>Vif-plugging with Nicira NVP Plugin</title>
-                <para>The choice of vif-plugging for the NVP Plugin depends on what version of libvirt you
-                 are using (this assumes you are using NVP for security groups and VM spoof prevention).</para>
-                <itemizedlist>
                     <listitem>
                         <para>When using libvirt (version &lt; 0.9.11):
                             libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchDriver</para>
                     </listitem>
                     <listitem>
-                        <para>When using libvirt (version &gt;= 0.9.11):
-                            libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchVirtualPortDriver</para>
+                        <para>When using ESX: no vif-plugging configuration
+                            required.</para>
                     </listitem>
                     <listitem>
                         <para>When using XenServer:
                             xenapi_vif_driver=nova.virt.xenapi.vif.XenAPIOpenVswitchDriver </para>
                     </listitem>
                 </itemizedlist>
-            </section>
-            <section xml:id="nova_with_quantum_vifplugging_nec">
-                <title>Vif-plugging with NEC OpenFlow Plugin</title>
-                <para>The choice of vif-plugging for the NEC plugin
-                    depends on what version of libvirt you are using,
-                    as well as whether you are using OpenStack Compute
-                    security filtering (i.e., security groups,
-                    provider firewall, VM spoofing prevention).</para>
-                <itemizedlist>
-                    <listitem>
-                        <para>When using libvirt (any version) with
-                            OpenStack Compute security filtering:
-                            libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver</para>
-                    </listitem>
-                    <listitem>
-                        <para>When using libvirt (version &lt; 0.9.11)
-                            without OpenStack Compute security
-                            filtering:
-                            libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchDriver</para>
-                    </listitem>
-                    <listitem>
-                        <para>When using libvirt (version &gt;=
-                            0.9.11) without OpenStack Compute security
-                            groups:
-                            libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchVirtualPortDriver</para>
-                    </listitem>
-                </itemizedlist>
-            </section>
-            <section xml:id="nova_with_quantum_vifplugging_bigswitch_floodlight">
-                <title>Vif-plugging with Big Switch, Floodlight REST Proxy Plugin</title>
-                <itemizedlist>
-                    <listitem>
-                        <para>When using libvirt (any version) and Nova security filtering:
-                            libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver</para>
-                    </listitem>
-                </itemizedlist>
+                <note><para>When using libvirt &lt; 0.9.11, one must also
+                 edit <filename>/etc/libvirt/qemu.conf</filename>,
+                 uncomment the entry for
+                 'cgroup_device_acl', add the value '/dev/net/tun' to the list
+                 of items for the configuration entry, and then restart
+                 libvirtd.</para></note>
             </section>
         </section>
         <section xml:id="nova_with_quantum_example">
@@ -275,8 +314,7 @@ catalog.$Region.network.name = Network Service</programlisting>
             <para>Example values for the above settings, assuming a
                 cloud controller node running OpenStack Compute and
                 OpenStack Networking with an IP address of 192.168.1.2
-                and vif-plugging using the LibvirtOpenVswitchDriver
-                with virtio enabled. </para>
+                and vif-plugging using the LibvirtHybridOVSBridgeDriver. </para>
             <screen><computeroutput>network_api_class=nova.network.quantumv2.api.API
 quantum_url=http://192.168.1.2:9696
 quantum_auth_strategy=keystone
@@ -285,9 +323,15 @@ quantum_admin_username=quantum
 quantum_admin_password=password
 quantum_admin_auth_url=http://192.168.1.2:35357/v2.0
 
-# needed only for nova-compute
-libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchDriver
-libvirt_use_virtio_for_bridges=True </computeroutput> </screen>
+security_group_api=quantum
+firewall_driver=nova.virt.firewall.NoopFirewallDriver
+
+service_quantum_metadata_proxy=true
+quantum_metadata_proxy_shared_secret=foo
+
+# needed only for nova-compute and only for some plugins
+libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver
+</computeroutput> </screen>
         </section>
     </section>
 </chapter>
