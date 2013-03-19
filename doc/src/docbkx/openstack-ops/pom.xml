@@ -8,7 +8,7 @@
 
     <groupId>org.openstack.docs</groupId>
     <artifactId>openstack-ops-manual</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
     <name>OpenStack Manuals</name>
 
@@ -16,8 +16,6 @@
         <!-- This is set by Jenkins according to the branch. -->
         <release.path.name>local</release.path.name>
         <comments.enabled>1</comments.enabled>
-        <operating.system>ubuntu</operating.system>
-       
     </properties>
     <!-- ################################################ -->
     <!-- USE "mvn clean generate-sources" to run this POM -->
@@ -73,7 +71,7 @@
                             <!-- <pdfUrl>../openstack-ops-manual-${operating.system}-${release.path.name}.pdf</pdfUrl> -->
                             <enableDisqus>${comments.enabled}</enableDisqus>
                             <sourceDirectory>src</sourceDirectory>
-                            <disqusShortname>os-ops-${operating.system}</disqusShortname>
+                            <disqusShortname>openstack-ops</disqusShortname>
                             <enableGoogleAnalytics>1</enableGoogleAnalytics>
                             <googleAnalyticsId>UA-17511903-1</googleAnalyticsId>
                             
@@ -98,23 +96,19 @@
                                 set toc,title
                             </generateToc>
                           
-                            <targetDirectory>target/docbkx/webhelp/${release.path.name}/openstack-ops</targetDirectory>
-                            <webhelpDirname>${operating.system}</webhelpDirname>
-                            <pdfFilenameBase>openstack-ops-manual-${operating.system}-${release.path.name}</pdfFilenameBase>
-                            <postProcess>
-                                <!-- <delete dir="${basedir}/target/docbkx/webhelp/bk_openstackopsmanual/"/>                         -->
-                            </postProcess>
-                        </configuration>
+                            <targetDirectory>target/docbkx/webhelp/${release.path.name}</targetDirectory>
+                            <webhelpDirname>openstack-ops</webhelpDirname>
+                            <pdfFilenameBase>openstack-ops-manual-${release.path.name}</pdfFilenameBase>
+                            </configuration>
                     </execution>
                 </executions>
                 <configuration>
                     <!-- These parameters apply to pdf and webhelp -->
                     <xincludeSupported>true</xincludeSupported>
                     <sourceDirectory>src</sourceDirectory>
-                    <includes> bk_ops_guide.xml </includes>
+                    <includes>bk_ops_guide.xml </includes>
                     <profileSecurity>reviewer</profileSecurity>
                     <branding>openstack</branding>
-                    <profileOs>${profile.os}</profileOs>
                 </configuration>
             </plugin>
 
