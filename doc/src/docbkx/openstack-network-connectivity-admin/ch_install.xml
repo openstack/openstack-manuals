@@ -26,8 +26,8 @@
         <para>Point to Folsom PPAs:                        
                                                             </para>
         <screen><prompt>#</prompt> <userinput>echo deb http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/folsom main >> /etc/apt/sources.list.d/folsom.list</userinput>
-    <prompt>#</prompt> <userinput>apt-get install ubuntu-cloud-keyring </userinput>    
-    <prompt>#</prompt> <userinput>apt-get update</userinput>   
+    <prompt>#</prompt> <userinput>apt-get install ubuntu-cloud-keyring </userinput>
+    <prompt>#</prompt> <userinput>apt-get update</userinput>
     <prompt>#</prompt> <userinput>apt-get upgrade</userinput>   </screen>
         <note>
             <para> Please use "sudo" in order to install and configure
@@ -37,10 +37,10 @@
             <title>Install quantum-server </title>
             <para>Install quantum-server and CLI for accessing the
                 API: </para>
-            <screen><computeroutput>apt-get -y install quantum-server python-cliff python-pyparsing python-quantumclient</computeroutput></screen>
+            <screen><computeroutput>apt-get -y install quantum-server python-quantumclient</computeroutput></screen>
             <para>You will also want to install the plugin you choose
                 to use, for example: </para>
-            <screen><computeroutput>apt-get -y install quantum-plugin-openvswitch</computeroutput></screen>
+            <screen><computeroutput>apt-get -y install quantum-plugin-&lt;plugin-name&gt;</computeroutput></screen>
             <para>Most plugins require a database to be installed and
                 configured in a plugin configuration file.  For
                 example: </para>
@@ -51,17 +51,17 @@
             <screen><computeroutput>mysql -u &lt;user&gt; -p &lt;pass&gt; -e “create database quantum”</computeroutput></screen>
             <para>And then configure the plugin’s configuration file
                 to use this database.  Find the plugin configuration
-                file in <filename>/etc/quantum/plugins</filename> (For
+                file in <filename>/etc/quantum/plugins/&lt;plugin-name&gt;</filename> (For
                 example,
                     <filename>/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</filename>)
                 and set: </para>
             <screen><computeroutput>sql_connection = mysql://&lt;user&gt;:&lt;password&gt;@localhost/quantum?charset=utf8</computeroutput></screen>
             <section xml:id="rpc_setup">
                 <title>RPC Setup </title>
-                <para>OpenStack Networking uses RPC to allow DHCP agents and any
-                    plugin agents to communicate with the main
-                    quantum-server process.  Commonly, this can use
-                    the same RPC mechanism used by other OpenStack
+                <para>Many OpenStack Networking plugins uses RPC to
+                    allow agents to communicate with the main
+                    quantum-server process.  If your plugin requires agents,
+                    this can use the same RPC mechanism used by other OpenStack
                     components like Nova.  </para>
                 <para>To use RabbitMQ as the message bus for RPC, make
                     sure that rabbit is installed on a host reachable
@@ -80,13 +80,11 @@ rabbit_userid=guest </computeroutput></screen>
             <important>
                 <para>This /etc/quantum/quantum.conf file should be
                     copied to and used on all hosts running
-                    quantum-server, quantum-dhcp-agent,
-                    quantum-openvswitch-agent, or
-                    quantum-linuxbridge-agent (see below). </para>
+                    quantum-server or any quantum-*-agent binaries. </para>
             </important>
         </section>
             <section xml:id="openvswitch_plugin">
-                <title>Configuring Open vSwitch Plugin</title>
+                <title>Plugin Configuration: OVS Plugin</title>
                 <para>Using the Open vSwitch (OVS) plugin in a
                     deployment with multiple hosts requires the using
                     of either tunneling or vlans in order to isolate
@@ -102,7 +100,7 @@ rabbit_userid=guest </computeroutput></screen>
                 <screen><computeroutput>enable_tunneling=True
 tenant_network_type=gre
 tunnel_id_ranges=1:1000
-# only if node is running the agent
+# only required for nodes running agents
 local_ip=&lt;data-net-IP-address-of-node&gt;</computeroutput></screen>
                 <para>After performing that change on the node running
                     quantum-server, restart quantum-server to pick up
@@ -110,7 +108,10 @@ local_ip=&lt;data-net-IP-address-of-node&gt;</computeroutput></screen>
                 <screen><computeroutput>service quantum-server restart</computeroutput></screen>
             </section>
             <section xml:id="nvp_plugin">
-                <title>Configuring Nicira NVP Plugin</title>
+                <title>Plugin Configuration: Nicira NVP Plugin</title>
+                <para> Make sure the NVP plugin is installed using:</para>
+                <screen><computeroutput>apt-get -y install quantum-plugin-nicira</computeroutput></screen>
+
                 <para>To configure OpenStack Networking to use the NVP plugin first
                     edit
                         <filename>/etc/quantum/quantum.conf</filename>
@@ -118,23 +119,58 @@ local_ip=&lt;data-net-IP-address-of-node&gt;</computeroutput></screen>
                 <screen><computeroutput>core_plugin = quantum.plugins.nicira.nicira_nvp_plugin.QuantumPlugin.NvpPluginV2</computeroutput></screen>
                 <para>Edit
                         <filename>/etc/quantum/plugins/nicira/nvp.ini</filename>
-                    in order to configure the plugin. The quantum
-                    database created previously will be used by
-                    setting:</para>
+                    in order to configure the plugin.</para>
+                <para>In the [DATABASE] section, specify the quantum database
+                    created in the previous step using the following line,
+                    substituting your database server IP address for localhost
+                     if the database is not local:</para>
                 <screen><computeroutput>sql_connection = mysql://&lt;user&gt;:&lt;password&gt;@localhost/quantum?charset=utf8</computeroutput></screen>
                 <para>In order to tell OpenStack Networking about a controller
-                    cluster, create a [CLUSTER:&lt;name&gt;] section
-                    underneath the [NVP] section. Under this new
-                    cluster specify the Transport Zone by
-                    setting:</para>
+                 cluster, create a new [CLUSTER:&lt;name&gt;] section in the
+                config file, and add the following entries:</para>
+                <para>The UUID of the NVP Transport Zone that should be used
+                by default when a tenant creates a network.  This value can
+                be retrieved from the NVP Manager Transport Zones page:</para>
                 <screen><computeroutput>default_tz_uuid = &lt;uuid_of_the_transport_zone&gt;</computeroutput></screen>
-                <para>Specify the controllers in this cluster by
-                    setting:</para>
-                <screen><computeroutput>nvp_controller_connection = &lt;ip&gt;:&lt;port&gt;:&lt;user&gt;:&lt;pw&gt;:&lt;req_timeout&gt;:&lt;http_timeout&gt;:&lt;retries&gt;:&lt;redirects&gt;</computeroutput></screen>
-                <para>one for each controller.</para>
+                <para>A connection string indicating parameters to be used by
+                the NVP plugin when connecting to the NVP webservice
+                API.  There will be one of these lines in the config file
+                for each NVP controller in your deployment.  An NVP operator
+                will likely want to update the NVP controller IP and password,
+                but the remaining fields can be the defaults:</para>
+                <screen><computeroutput>nvp_controller_connection = &lt;controller_node_ip&gt;:&lt;controller_port&gt;:&lt;api_user&gt;:&lt;api_password&gt;:&lt;request_timeout&gt;:&lt;http_timeout&gt;:&lt;retries&gt;:&lt;redirects&gt;</computeroutput></screen>
+                <para>The UUID of an NVP L3 Gateway Service that should be
+                used by default when a tenant creates a router.  This value
+                can be retrieved from the NVP Manager Gateway Services page:
+                </para>
+                <screen><computeroutput>default_l3_gw_service_uuid = &lt;uuid_of_the_gateway_service&gt;</computeroutput></screen>
+                <warning>
+                <para> Ubuntu packaging currently does not update the quantum
+                init script to point to the NVP config file.  Instead,
+                manually update <filename>/etc/default/quantum-server
+                </filename> to set:</para>
+                <screen><computeroutput>QUANTUM_PLUGIN_CONFIG = /etc/quantum/plugins/nicira/nvp.ini</computeroutput></screen>
+                </warning>
                 <para>Lastly, restart quantum-server to pick up the
                     new settings.</para>
                 <screen><computeroutput>service quantum-server restart</computeroutput></screen>
+                <para>An example quantum.conf file to use with NVP would be:
+                </para>
+                <screen><computeroutput>core_plugin = quantum.plugins.nicira.nicira_nvp_plugin.QuantumPlugin.NvpPluginV2
+rabbit_host = 192.168.203.10
+allow_overlapping_ips = True
+</computeroutput></screen>
+                <para>An example nvp.ini file to use with NVP would be:</para>
+<screen><computeroutput>[DATABASE]
+sql_connection=mysql://root:root@127.0.0.1/quantum
+
+[CLUSTER:main]
+default_tz_uuid = d3afb164-b263-4aaa-a3e4-48e0e09bb33c
+default_l3_gw_service_uuid=5c8622cc-240a-40a1-9693-e6a5fca4e3cf
+nvp_controller_connection=10.0.0.2:443:admin:admin:30:10:2:2
+nvp_controller_connection=10.0.0.3:443:admin:admin:30:10:2:2
+nvp_controller_connection=10.0.0.4:443:admin:admin:30:10:2:2
+</computeroutput></screen>
             </section>
             <section xml:id="bigswitch_floodlight_plugin">
                 <title>Configuring Big Switch, Floodlight REST Proxy Plugin</title>
@@ -157,18 +193,29 @@ local_ip=&lt;data-net-IP-address-of-node&gt;</computeroutput></screen>
             </section>
         </section>
         <section xml:id="install_quantum_agent">
-            <title>Install quantum-plugin-*-agent</title>
-            <para>Some plugins utilize an agent that runs on each node
-                that handles data packets. This includes any node
-                running nova-compute, as well as nodes running
-                dedicated OpenStack Networking agents like quantum-dhcp-agent and
-                quantum-l3-agent (see below). If your plugin uses an
-                agent, this section describes how to run the agent for
-                this plugin, as well as the basic configuration
-                options.</para>
+            <title>Install Software on Data Forwarding Nodes</title>
+            <para>Plugins commonly have requirements for particular software
+                that must be run on each node that handles data packets. This
+                includes any node running nova-compute, as well as nodes
+                running dedicated OpenStack Networking service agents like
+                quantum-dhcp-agent, quantum-l3-agent, quantum-lbaas-agent,
+                etc (see below for more information about
+                individual services agents).</para>
+            <para>Commonly, any data forwarding node should have a network
+                interface with an IP address on the “management
+                network” and another interface on the “data network”. </para>
+            <para>In this section, we describe the requirements
+                for particular plugins, which may include the installation of
+                switching software (e.g., Open vSwitch) as well as agents
+                used to communicate with the quantum-server process
+                running elsewhere in the data center.</para>
             <section xml:id="install_quantum_agent_ovs">
-                <title>Open vSwitch Agent</title>
-                <para>Install the OVS agent: </para>
+                <title>Node Setup: OVS Plugin</title>
+                <para>The Open vSwitch plugin requires Open vSwitch as well
+                as the quantum-plugin-openvswitch-agent agent
+                to be installed on each Data Forwarding Node.</para>
+                <para>Install the OVS agent agent package, will pull in the
+                Open vSwitch software as a dependency: </para>
                 <screen><computeroutput>apt-get -y install quantum-plugin-openvswitch-agent</computeroutput></screen>
                 <para>The ovs_quantum_plugin.ini created in the above
                     step must be replicated on all nodes
@@ -186,21 +233,78 @@ local_ip=&lt;data-net-IP-address-of-node&gt;</computeroutput></screen>
                     create it, run:</para>
                 <screen><computeroutput>ovs-vsctl add-br br-int</computeroutput></screen>
             </section>
+            <section xml:id="install_quantum_agent_nvp">
+                <title>Node Setup: Nicira NVP Plugin</title>
+                <para>The Nicira NVP plugin requires a version of Open vSwitch to be installed on each data forwarding node, but
+                does not require an additional agent on data forwarding nodes.</para>
+                <warning><para>It is critical that you are running a version of
+                Open vSwitch that is compatible with the current version of the NVP Controller software.  Do not use the version of
+                Open vSwitch installed by default on Ubuntu.  Instead, use the version of Open Vswitch provided on the Nicira
+                support portal for your version of the NVP Controller.</para></warning>
+                <para>Each data forwarding node should have an IP address on the "management network", as well as an IP address
+                on the "data network" used for tunneling data traffic.</para>
+                <para>For full details on configuring your forwarding node, please see the NVP Administrator Guide.  Next, use
+                the same guide to add the node as a "Hypervisor" using the NVP Manager GUI (Note: even if your forwarding node
+                has no VMs and is only used for services agents like quantum-dhcp-agent or quantum-lbaas-agent, it should be
+                added to NVP as a Hypervisor).</para>
+                <para>After following the NVP Administrator Guide, use the page for this Hypervisor in the NVP Manager GUI
+                to confirm that the node is properly connected to the NVP
+                Controller Cluster and that the NVP Controller Cluster is seeing the integration bridge "br-int".</para>
+            </section>
         </section>
         <section xml:id="install_quantum_dhcp">
-            <title>Install quantum-dhcp-agent</title>
-            <para>The host running quantum-server requires a network
-                interface with an IP address on the “management
-                network” and another interface on the “data network”. </para>
+            <title>Install DHCP Agent</title>
+            <para>The DHCP service agent is compatible with all existing plugins and is required for all deployments
+            where VMs should automatically receive IP addresses via DHCP.</para>
+            <para>The host running the quantum-dhcp-agent must be configured as a "data forwarding node" according to your
+            plugin's requirements (see section above).</para>
+            <para>In addition, you must install the the DHCP agent:</para>
             <screen><computeroutput>apt-get -y install quantum-dhcp-agent</computeroutput></screen>
-            <para>Install the agent specific to the plugin (see plugin
-                specific agent section above). </para>
+            <para>Some options in <filename>/etc/quantum/dhcp_agent.ini</filename> must have certain values that
+             depend on the plugin in use.  The sub-sections below will indicate those values for certain plugins.</para>
+            <section xml:id="dhcp_agent_ovs">
+                <title>DHCP Agent Setup: OVS Plugin</title>
+                <para>The following DHCP agent options are required for the OVS plugin:</para>
+<screen><computeroutput>
+[DEFAULT]
+ovs_use_veth = True
+enable_isolated_metadata = True
+use_namespaces = True
+interface_driver = quantum.agent.linux.interface.OVSInterfaceDriver
+</computeroutput></screen>
+            </section>
+            <section xml:id="dhcp_agent_nvp">
+                <title>DHCP Agent Setup: NVP Plugin</title>
+                <para>The following DHCP agent options are required for the NVP plugin:</para>
+<screen><computeroutput>
+[DEFAULT]
+ovs_use_veth = True
+enable_metadata_network = True
+enable_isolated_metadata = True
+use_namespaces = True
+interface_driver = quantum.agent.linux.interface.OVSInterfaceDriver
+</computeroutput></screen>
+            </section>
         </section>
         <section xml:id="install_quantum-l3">
-            <title>Install quantum-l3-agent </title>
+            <title>Install L3 Agent</title>
+            <para>Quantum has a widely used API extension to allow administrators and tenants to create "routers" that
+            connect to L2 networks.</para>
+            <para>Many plugins rely on the L3 service agent to implement this L3 functionality.
+            However, the following plugins have built in L3 capabilities:
+            </para>
+            <para>
+            <itemizedlist>
+            <listitem><para>Nicira NVP Plugin</para></listitem>
+            <listitem><para>Floodlight/Bigswitch Plugin</para></listitem>
+            </itemizedlist>
+            </para>
+            <warning>
+             <para> Do NOT configure or use <filename>quantum-l3-agent</filename> if you are using one of thes above
+             plugins.</para>
+            </warning>
+            <para>For all other plugins, install the quantum-l3-agent binary on the network node. </para>
             <screen><computeroutput>apt-get -y install quantum-l3-agent</computeroutput></screen>
-            <para>Install the agent specific to the plugin (see plugin
-                specific agent section above). </para>
             <para>Create a bridge "br-ex" that will be used to uplink
                 this node running quantum-l3-agent to the external
                 network, then attach the NIC attached to the external
