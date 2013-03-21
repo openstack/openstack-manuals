@@ -16,10 +16,77 @@
         <release.path.name>local</release.path.name>
         <comments.enabled>1</comments.enabled>
     </properties>
+
     <!-- ################################################ -->
     <!-- USE "mvn clean generate-sources" to run this POM -->
     <!-- Builds the Quantum Administration Manual         -->
     <!-- ################################################ -->
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>com.rackspace.cloud.api</groupId>
+                <artifactId>clouddocs-maven-plugin</artifactId>
+                <version>1.7.2</version>
+                <executions>
+                    <execution>
+                        <id>bk-networking-admin-guide.xml</id>
+                        <goals>
+                            <goal>generate-webhelp</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <!-- These parameters only apply to webhelp -->
+                            <enableDisqus>${comments.enabled}</enableDisqus>
+                            <useVersionForDisqus>1</useVersionForDisqus>
+                            <disqusShortname>os-quantum-guides</disqusShortname>
+                            <enableGoogleAnalytics>1</enableGoogleAnalytics>
+                            <googleAnalyticsId>UA-17511903-1</googleAnalyticsId>
+                            <!-- The following elements sets the autonumbering of sections in output for chapter numbers but no numbered sections-->
+                            <sectionAutolabel>0</sectionAutolabel>
+                            <sectionLabelIncludesComponentLabel>0</sectionLabelIncludesComponentLabel>
+
+			    <webhelpDirname>admin</webhelpDirname>
+			    <targetDirectory>${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-network</targetDirectory>
+			    <includeDateInPdfFilename>0</includeDateInPdfFilename>
+
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>cleanup</id>
+                        <goals>
+                            <goal>generate-webhelp</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+			<configuration>
+			  <includes>dummy.xml</includes>
+			  <postProcess>
+			    <delete includeemptydirs="true" verbose="true">
+			      <fileset dir="${basedir}/target/docbkx/webhelp/${release.path.name}" >
+				<include name="**/*"/>
+				<exclude name="openstack-network/**"/>
+			      </fileset>
+			    </delete>
+			  </postProcess>
+			</configuration>
+		    </execution>
+                </executions>		
+                <configuration>
+                    <!-- These parameters apply to pdf and webhelp -->
+                    <xincludeSupported>true</xincludeSupported>
+                    <sourceDirectory>.</sourceDirectory>
+                    <includes>
+                       bk-networking-admin-guide.xml
+                    </includes>
+                    <canonicalUrlBase>http://docs.openstack.org/${release.path.name}/openstack-network/admin/content/</canonicalUrlBase>
+                    <profileSecurity>reviewer</profileSecurity>
+                    <branding>openstack</branding>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
     <profiles>
         <profile>
             <id>Rackspace Research Repositories</id>
@@ -43,109 +110,4 @@
         </profile>
     </profiles>
 
-    <build>
-        <resources>
-            <resource>
-                <directory>target/docbkx/pdf</directory>
-                <excludes>
-                    <exclude>**/*.fo</exclude>
-                </excludes>
-            </resource>
-        </resources>
-        <plugins>
-
-            <plugin>
-                <groupId>com.rackspace.cloud.api</groupId>
-                <artifactId>clouddocs-maven-plugin</artifactId>
-                <version>1.5.1</version>
-                <executions>
-                    <execution>
-                        <id>goal1</id>
-                        <goals>
-                            <goal>generate-pdf</goal>
-                        </goals>
-                        <phase>generate-sources</phase>
-                        <configuration>
-                            <highlightSource>false</highlightSource>
-                            <!-- The following elements sets the autonumbering of sections in output for chapter numbers but no numbered sections-->
-                            <sectionAutolabel>0</sectionAutolabel>
-                            <sectionLabelIncludesComponentLabel>0</sectionLabelIncludesComponentLabel>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>goal2</id>
-                        <goals>
-                            <goal>generate-webhelp</goal>
-                        </goals>
-                        <phase>generate-sources</phase>
-                        <configuration>
-                            <!-- These parameters only apply to webhelp -->
-                            <enableDisqus>${comments.enabled}</enableDisqus>
-                            <useVersionForDisqus>1</useVersionForDisqus>
-                            <disqusShortname>os-quantum-guides</disqusShortname>
-                            <enableGoogleAnalytics>1</enableGoogleAnalytics>
-                            <googleAnalyticsId>UA-17511903-1</googleAnalyticsId>
-                            <generateToc>
-                                appendix  toc,title
-                                article/appendix  nop
-                                article   toc,title
-                                book      title,figure,table,example,equation
-                                chapter   toc,title
-                                part      toc,title
-                                preface   toc,title
-                                qandadiv  toc
-                                qandaset  toc
-                                reference toc,title
-                                set       toc,title
-                            </generateToc>
-                            <!-- The following elements sets the autonumbering of sections in output for chapter numbers but no numbered sections-->
-                            <sectionAutolabel>0</sectionAutolabel>
-                            <sectionLabelIncludesComponentLabel>0</sectionLabelIncludesComponentLabel>
-                            <postProcess>
-                                <!-- Copies the figures to the correct location for webhelp -->
-
-                                <copy todir="${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-network/admin/content/figures">
-                                    <fileset dir="${basedir}/figures">
-                                        <include name="**/*.*" />
-                                    </fileset>
-                                </copy>
-                                <!-- Copies webhelp (HTML output) to desired URL location on docs.openstack.org -->
-
-                                <copy
-                                    todir="${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-network/admin">
-                                    <fileset
-                                        dir="${basedir}/target/docbkx/webhelp/bk-networking-admin-guide/">
-                                        <include name="**/*" />
-                                    </fileset>
-                                </copy>
-
-                                <!--Moves PDFs to the needed placement -->
-
-                                <move failonerror="false"
-                                    file="${basedir}/target/docbkx/pdf/bk-networking-admin-guide.pdf"
-                                    tofile="${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-network/admin/bk-quantum-admin-guide-${release.path.name}.pdf"/>
-
-                                <!--Deletes leftover uneeded directories -->
-
-                                <delete dir="${basedir}/target/docbkx/webhelp/bk-networking-admin-guide"/>
-
-                            </postProcess>
-                        </configuration>
-                    </execution>
-                </executions>
-                <configuration>
-                    <!-- These parameters apply to pdf and webhelp -->
-                    <xincludeSupported>true</xincludeSupported>
-                    <sourceDirectory>.</sourceDirectory>
-                    <includes>
-                       bk-networking-admin-guide.xml
-                    </includes>
-                    <canonicalUrlBase>http://docs.openstack.org/${release.path.name}/openstack-network/admin/content/</canonicalUrlBase>
-                    <profileSecurity>reviewer</profileSecurity>
-                    <branding>openstack</branding>
-                </configuration>
-            </plugin>
-
-        </plugins>
-    </build>
 </project>
