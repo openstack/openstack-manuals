@@ -19,28 +19,6 @@
     <!-- ################################################ -->
     <!-- USE "mvn clean generate-sources" to run this POM -->
     <!-- ################################################ -->
-    <profiles>
-        <profile>
-            <id>Rackspace Research Repositories</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <repositories>
-                <repository>
-                    <id>rackspace-research</id>
-                    <name>Rackspace Research Repository</name>
-                    <url>http://maven.research.rackspacecloud.com/content/groups/public/</url>
-                </repository>
-            </repositories>
-            <pluginRepositories>
-                <pluginRepository>
-                    <id>rackspace-research</id>
-                    <name>Rackspace Research Repository</name>
-                    <url>http://maven.research.rackspacecloud.com/content/groups/public/</url>
-                </pluginRepository>
-            </pluginRepositories>
-        </profile>
-    </profiles>
     
     <build>
         <plugins>
@@ -48,23 +26,10 @@
             <plugin>
                 <groupId>com.rackspace.cloud.api</groupId>
                 <artifactId>clouddocs-maven-plugin</artifactId>
-                <version>1.7.1</version>
+                <version>1.7.2</version>
                 <executions>
                     <execution>
-                        <id>goal1</id>
-                        <goals>
-                            <goal>generate-pdf</goal>
-                        </goals>
-                        <phase>generate-sources</phase>
-                        <configuration>
-                            <highlightSource>false</highlightSource>
-                            <!-- The following elements sets the autonumbering of sections in output for chapter numbers but no numbered sections-->
-                            <sectionAutolabel>0</sectionAutolabel>
-                            <sectionLabelIncludesComponentLabel>0</sectionLabelIncludesComponentLabel>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>goal2</id>
+                        <id>generate-webhelp</id>
                         <goals>
                             <goal>generate-webhelp</goal>
                         </goals>
@@ -94,15 +59,26 @@
                             <targetDirectory>target/docbkx/webhelp/${release.path.name}/openstack-compute</targetDirectory>
                             <webhelpDirname>admin</webhelpDirname>
                             <pdfFilenameBase>bk-compute-adminguide-${release.path.name}</pdfFilenameBase>
-                            <postProcess>
-                                
-                                <!--Deletes leftover uneeded directories -->
-                                
-                                <!--<delete dir="${basedir}/target/docbkx/webhelp/bk-compute-adminguide"/>-->
-                                
-                            </postProcess>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>cleanup</id>
+                        <goals>
+                            <goal>generate-webhelp</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+			<configuration>
+			  <includes>dummy.xml</includes>
+			  <postProcess>
+			    <delete includeemptydirs="true">
+			      <fileset dir="${basedir}/target/docbkx/webhelp/${release.path.name}" >
+				<include name="**/*"/>
+				<exclude name="openstack-compute/**"/>
+			      </fileset>
+			    </delete>
+			  </postProcess>
+			</configuration>
+		    </execution>
                 </executions>
                 <configuration>
                     <!-- These parameters apply to pdf and webhelp -->
@@ -115,10 +91,33 @@
                     <canonicalUrlBase>http://docs.openstack.org/${release.path.name}/openstack-compute/admin/content/</canonicalUrlBase>
                     <profileSecurity>reviewer</profileSecurity>
                     <branding>openstack</branding>
-                    <strictImageValidation>false</strictImageValidation>
+
                 </configuration>
             </plugin>
             
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>Rackspace Research Repositories</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <repositories>
+                <repository>
+                    <id>rackspace-research</id>
+                    <name>Rackspace Research Repository</name>
+                    <url>http://maven.research.rackspacecloud.com/content/groups/public/</url>
+                </repository>
+            </repositories>
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>rackspace-research</id>
+                    <name>Rackspace Research Repository</name>
+                    <url>http://maven.research.rackspacecloud.com/content/groups/public/</url>
+                </pluginRepository>
+            </pluginRepositories>
+        </profile>
+    </profiles>
+
 </project>
