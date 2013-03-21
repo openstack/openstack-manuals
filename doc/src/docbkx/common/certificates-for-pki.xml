@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section
-    xmlns="http://docbook.org/ns/docbook"
+<section xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-    version="5.0"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="certificates-for-pki">
     <title>Certificates for PKI</title>
     <para> PKI stands for Public Key Infrastructure. Tokens are
@@ -17,10 +15,20 @@
         generated. The files need to be in the locations specified by
         the top level Keystone configuration file as specified in the
         above section. Additionally, the private key should only be
-        readable by the system user that will run Keystone. The values
-        that specify where to read the certificates are under the
-            <literal>[signing]</literal> section of the configuration
-        file. The configuration values are: </para>
+        readable by the system user that will run Keystone. </para>
+    <warning>
+        <para> The certificates can be world readable, but the private
+            key cannot be. The private key should only be readable by
+            the account that is going to sign tokens. When generating
+            files with the <command>keystone-mange pki_setup</command>
+            command, your best option is to run as the pki user. If
+            you run nova-manage as root, you can append
+            --keystone-user and --keystone-group parameters to set the
+            username and group keystone is going to run under.</para>
+    </warning>
+    <para>The values that specify where to read the certificates are
+        under the <literal>[signing]</literal> section of the
+        configuration file. The configuration values are: </para>
     <itemizedlist>
         <listitem>
             <para>
@@ -74,28 +82,26 @@
             following conditions: </para>
         <itemizedlist>
             <listitem>
-                <para>
-                    all certificate and key files must be in Privacy Enhanced
-                    Mail (PEM) format
-                </para>
+                <para> all certificate and key files must be in
+                    Privacy Enhanced Mail (PEM) format </para>
             </listitem>
             <listitem>
-                <para>
-                    private key files must not be protected by a password
-                </para>
+                <para> private key files must not be protected by a
+                    password </para>
             </listitem>
         </itemizedlist>
-        <para>
-            When using signing certificate issued by an external CA, you do
-            not need to specify <literal>key_size</literal>,
+        <para> When using signing certificate issued by an external
+            CA, you do not need to specify
+            <literal>key_size</literal>,
             <literal>valid_days</literal>, and
-            <literal>ca_password</literal> as they will be ignored.
-        </para>
+                <literal>ca_password</literal> as they will be
+            ignored. </para>
         <para> The basic workflow for using a signing certificate
             issued by an external CA involves: </para>
         <orderedlist numeration="arabic">
             <listitem>
-                <para> Request Signing Certificate from External CA </para>
+                <para> Request Signing Certificate from External CA
+                </para>
             </listitem>
             <listitem>
                 <para> Convert certificate and private key to PEM if
@@ -108,15 +114,11 @@
     </section>
     <section xml:id="request-signing-certificate-from-external-ca">
         <title>Request Signing Certificate from External CA</title>
-        <para>
-            One way to request a signing certificate from an external CA is
-            to first generate a PKCS #10 Certificate Request Syntax (CRS)
-            using OpenSSL CLI.
-        </para>
-        <para>
-            First create a certificate request configuration file (e.g.
-            <literal>cert_req.conf</literal>):
-        </para>
+        <para> One way to request a signing certificate from an
+            external CA is to first generate a PKCS #10 Certificate
+            Request Syntax (CRS) using OpenSSL CLI. </para>
+        <para> First create a certificate request configuration file
+            (e.g. <literal>cert_req.conf</literal>): </para>
         <screen>
 [ req ]
 default_bits            = 1024
@@ -135,55 +137,45 @@ organizationalUnitName  = Keystone
 commonName              = Keystone Signing
 emailAddress            = keystone@openstack.org
 </screen>
-        <para>
-            Then generate a CRS with OpenSSL CLI. <emphasis role="strong">Do
-                not encrypt the generated private key. Must use the -nodes
-                option.</emphasis>
+        <para> Then generate a CRS with OpenSSL CLI. <emphasis
+                role="strong">Do not encrypt the generated private
+                key. Must use the -nodes option.</emphasis>
         </para>
-        <para>
-            For example:
-        </para>
+        <para> For example: </para>
         <screen>
 openssl req -newkey rsa:1024 -keyout signing_key.pem -keyform PEM -out signing_cert_req.pem -outform PEM -config cert_req.conf -nodes
 </screen>
-        <para>
-            If everything is successfully, you should end up with
-            <literal>signing_cert_req.pem</literal> and
-            <literal>signing_key.pem</literal>. Send
-            <literal>signing_cert_req.pem</literal> to your CA to request a
-            token signing certificate and make sure to ask the certificate
-            to be in PEM format. Also, make sure your trusted CA certificate
-            chain is also in PEM format.
+        <para> If everything is successfully, you should end up with
+                <literal>signing_cert_req.pem</literal> and
+                <literal>signing_key.pem</literal>. Send
+                <literal>signing_cert_req.pem</literal> to your CA to
+            request a token signing certificate and make sure to ask
+            the certificate to be in PEM format. Also, make sure your
+            trusted CA certificate chain is also in PEM format.
         </para>
     </section>
     <section xml:id="install-external-signing-certificate">
         <title>Install External Signing Certificate</title>
-        <para>
-            Assuming you have the following already:
-        </para>
+        <para> Assuming you have the following already: </para>
         <itemizedlist>
             <listitem>
                 <para>
-                    <literal>signing_cert.pem</literal> - (Keystone token)
-                    signing certificate in PEM format
-                </para>
+                    <literal>signing_cert.pem</literal> - (Keystone
+                    token) signing certificate in PEM format </para>
             </listitem>
             <listitem>
                 <para>
                     <literal>signing_key.pem</literal> - corresponding
-                    (non-encrypted) private key in PEM format
-                </para>
+                    (non-encrypted) private key in PEM format </para>
             </listitem>
             <listitem>
                 <para>
-                    <literal>cacert.pem</literal> - trust CA certificate chain
-                    in PEM format
-                </para>
+                    <literal>cacert.pem</literal> - trust CA
+                    certificate chain in PEM format </para>
             </listitem>
         </itemizedlist>
-        <para>
-            Copy the above to your certificate directory. For example:
-        </para>
+        <para> Copy the above to your certificate directory. For
+            example: </para>
         <screen>
 mkdir -p /etc/keystone/ssl/certs
 cp signing_cert.pem /etc/keystone/ssl/certs/
@@ -191,14 +183,14 @@ cp signing_key.pem /etc/keystone/ssl/certs/
 cp cacert.pem /etc/keystone/ssl/certs/
 chmod -R 700 /etc/keystone/ssl/certs
 </screen>
-        <note><para>
-            Make sure the certificate directory is only accessible by root.
-        </para></note>
-        <para>
-            If your certificate directory path is different from the default
-            <literal>/etc/keystone/ssl/certs</literal>, make sure it is
-            reflected in the <literal>[signing]</literal> section of the
-            configuration file.
-        </para>
+        <note>
+            <para> Make sure the certificate directory is only
+                accessible by root. </para>
+        </note>
+        <para> If your certificate directory path is different from
+            the default <literal>/etc/keystone/ssl/certs</literal>,
+            make sure it is reflected in the
+                <literal>[signing]</literal> section of the
+            configuration file. </para>
     </section>
 </section>
