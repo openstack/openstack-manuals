@@ -440,16 +440,23 @@ nova boot --image &lt;img&gt; --flavor &lt;flavor&gt; --nic port-id=&lt;port-id&
 	    </itemizedlist>
 	  </para>
 	</section>
-	<section xml:id="enabling_ping_and_ssh">
-	  <title>Security Groups (Enabling Ping and SSH on VMs)</title>
-	  <para>In Folsom release, the security groups feature is provided by OpenStack Compute not by OpenStack Networking.
-	  You can configure security group rules by using <command>nova secgroup-add-rule</command>
-	  or <command>euca-authorize</command> command to enable accesses to your VMs.
-	  The example below allows <command>ping</command> or <command>ssh</command> to your VMs.</para>
-	  <screen><prompt>$</prompt> <userinput>nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0</userinput>
-<prompt>$</prompt> <userinput>nova secgroup-add-rule default tcp 22 22 0.0.0.0/0</userinput></screen>
-          <para>For more detail about OpenStack Compute security groups,
-	  please see "Networking with nova-network" in OpenStack Compute Administration Manual.</para>
-	</section>
+   <section xml:id="enabling_ping_and_ssh">
+     <title>Security Groups (Enabling Ping and SSH on VMs)</title>
+     <para>If using a plugin that implements quantum security groups you can configure security group rules directly
+     by using quantum security-group-rule-create to enable access to your VMs. The example below allows <command>ping</command>
+     and <command>ssh</command> to your VMs.
+     <screen>
+     <prompt>$</prompt> <userinput>quantum security-group-rule-create --protocol icmp --direction ingress default</userinput>
+     <prompt>$</prompt> <userinput>quantum security-group-rule-create --protocol tcp --port-range-min 22 --port-range-max 22 --direction ingress default</userinput>
+     </screen></para>
+     <para>If your plugin does not implement quantum security group, security groups can still be leveraged via OpenStack Compute.
+     This can be done using <command>nova secgroup-add-rule</command> or <command>euca-authorize</command> command to enable accesses to your VMs.
+     Below are the nova commands to allow <command>ping</command> and <command>ssh</command> to your VMs.</para>
+     <screen>
+     <prompt>$</prompt> <userinput>nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0</userinput>
+     <prompt>$</prompt> <userinput>nova secgroup-add-rule default tcp 22 22 0.0.0.0/0</userinput></screen>
+
+     <note><para>If your plugin implements quantum security groups you can still leverage nova security groups by setting security_group_api = quantum in <filename>nova.conf</filename>.
+           After setting this all nova security group commands will be proxied to quantum.</para></note></section>
     </section>
 </chapter>
