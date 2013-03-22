@@ -9,186 +9,19 @@
          xmlns:ns="http://docbook.org/ns/docbook">
   <title>Installing OpenStack Compute</title>
 
-  <para>The OpenStack system has several key projects that are separate
-  installations but can work together depending on your cloud needs: OpenStack
-  Compute, OpenStack Block Storage, OpenStack Object Storage, and the OpenStack
-  Image Service. You can install any of these projects separately and then
-  configure them either as standalone or connected entities. </para>
+  <para>The OpenStack system has several key projects that are
+    separate installations but can work together depending on your
+    cloud needs: OpenStack Compute, OpenStack Block Storage, OpenStack
+    Object Storage, and the OpenStack Image Service. You can install
+    any of these projects separately and then configure them either as
+    standalone or connected entities. The installation process is
+    documented in the OpenStack Install Guide, for either Ubuntu or
+    RHEL/CentOS/Fedora. You can choose your guide at <link
+      xlink:href="http://docs.openstack.org/install/"
+      >docs.openstack.org/install</link>.</para>
 
   <xi:include href="../openstack-install/compute-sys-requirements.xml"/>
-
-  <section xml:id="example-installation-architecture">
-    <title>Example Installation Architectures</title>
-
-    <para>OpenStack Compute uses a shared-nothing, messaging-based
-    architecture. While very flexible, the fact that you can install each
-    nova- service on an independent server means there are many possible
-    methods for installing OpenStack Compute. Here are the types of
-    installation architectures:</para>
-
-    <itemizedlist>
-      <listitem>
-        <para>Single node: Only one server runs all nova- services and also
-        drives all the virtual instances. Use this configuration only for
-        trying out OpenStack Compute, or for development purposes.</para>
-      </listitem>
-
-      <listitem>
-        <para>Two nodes: A cloud controller node runs the nova- services
-        except for <command>nova-compute</command>, and a compute node runs
-        <command>nova-compute</command>. A client computer is likely needed to
-        bundle images and interfacing to the servers, but a client is not
-        required. Use this configuration for proof of concepts or development
-        environments.</para>
-      </listitem>
-
-      <listitem>
-        <para>Multiple nodes: You can add more compute nodes to the two node
-        installation by simply installing <command>nova-compute</command> on
-        an additional server and copying a <filename>nova.conf</filename> file
-        to the added node. This would result in a multiple node installation.
-        You can also add a volume controller and a network controller as
-        additional nodes in a more complex multiple node installation. A
-        minimum of 4 nodes is best for running multiple virtual instances that
-        require a lot of processing power.</para>
-      </listitem>
-    </itemizedlist>
-
-    <para>This is an illustration of one possible multiple server installation
-    of OpenStack Compute; virtual server networking in the cluster may
-    vary.</para>
-
-    <para><inlinemediaobject>
-        <imageobject>
-          <imagedata fileref="figures/NOVA_install_arch.png" scale="80"/>
-        </imageobject>
-      </inlinemediaobject></para>
-
-    <para>An alternative architecture would be to add more messaging servers
-    if you notice a lot of back up in the messaging queue causing performance
-    problems. In that case you would add an additional RabbitMQ server in
-    addition to or instead of scaling up the database server. Your
-    installation can run any nova- service on any server as long as the
-    <filename>nova.conf</filename> is configured to point to the RabbitMQ
-    server and the server can send messages to the server.</para>
-
-    <para>Multiple installation architectures are possible, here is another
-    example illustration.</para>
-
-    <para><inlinemediaobject>
-        <imageobject>
-          <imagedata fileref="figures/NOVA_compute_nodes.png" scale="40"/>
-        </imageobject>
-      </inlinemediaobject></para>
-
-    <xi:include href="../common/colocating-services.xml"/>
-  </section>
-
-  <section xml:id="service-architecture">
-    <title>Service Architecture</title>
-
-    <para>Because Compute has multiple services and many configurations are
-    possible, here is a diagram showing the overall service architecture and
-    communication systems between the services.</para>
-
-    <para><inlinemediaobject>
-        <imageobject>
-          <imagedata fileref="figures/NOVA_ARCH.png" scale="80"/>
-        </imageobject>
-      </inlinemediaobject></para>
-  </section>
-
-  <section xml:id="installing-openstack-compute-on-debian">
-    <title>Installing OpenStack Compute on Debian</title>
-    <para>Starting with Debian 7.0 "Wheezy", the OpenStack packages are 
-      provided as part of the distribution.</para>
-    <para>
-      For the management or controller node install the following packages: (via <command>apt-get install</command>)
-      
-<itemizedlist>
-  <listitem><para><literal>nova-api</literal></para></listitem>
-<listitem><para><literal>nova-scheduler</literal></para></listitem>
-<listitem><para><literal>glance</literal></para></listitem>
-<listitem><para><literal>keystone</literal></para></listitem>
-<listitem><para><literal>mysql-server</literal></para></listitem>
-<listitem><para><literal>rabbitmq</literal></para></listitem>
-<listitem><para><literal>memcached</literal></para></listitem>
-<listitem><para><literal>openstack-dashboard</literal></para></listitem>
-</itemizedlist>
-        
-    </para>
-    <para>
-      For the compute node(s) install the following packages:
-      <itemizedlist>
-<listitem><para><literal>nova-compute</literal></para></listitem>
-<listitem><para><literal>nova-network</literal></para></listitem>
-<listitem><para><literal>nova-api</literal></para></listitem>            
-        </itemizedlist>
-    </para>
-    <note>
-      <para>
-        Because this manual takes active advantage of the "sudo" command,
-        it would be easier for you to add to it your Debian system, by doing:</para>
-        
-<screen><prompt>#</prompt> <userinput>usermod -a -G sudo "myuser"</userinput></screen>
-              
-        <para>then re-login.
-        Otherwise you will have to replace every "<command>sudo</command>" call by executing from
-        root account.
-      </para>
-    </note>
-  </section>
   
-  <section xml:id="installing-openstack-compute-on-rhel6">
-    <title>Installing on Fedora or Red Hat Enterprise Linux 6</title>
-    <?dbhtml stop-chunking?>
-    <para>The Fedora project provides OpenStack packages in Fedora 16 and
-    later. Fedora also provides packages for RHEL6 via the EPEL (Extra
-    Packages for Enterprise Linux) 6 repository. If you would like to install
-    OpenStack on RHEL6, see this page for more information on enabling the use
-    of EPEL: <link
-    xlink:href="http://fedoraproject.org/wiki/EPEL">http://fedoraproject.org/wiki/EPEL</link>.</para>
-
-    <para>Detailed instructions for installing OpenStack Compute on
-      Fedora or RHEL6 can be found in the <link
-        xlink:href="http://docs.openstack.org/trunk/openstack-compute/install/yum/content/">OpenStack Install and Deploy
-      Manual - Red Hat.</link> </para>
-    <para>Here is a listing of known installation guides:</para>
-
-    <variablelist>
-      <varlistentry>
-        <term><link
-            xlink:href="http://docs.openstack.org/trunk/openstack-compute/install/yum/content/"
-            >OpenStack Install and Deploy Manual - Red Hat</link>
-          (Grizzly)</term>
-        <listitem>
-          <para>This guide walks through an installation using
-            packages available through Fedora 17 as well as on RHEL
-            and derivatives through the EPEL repository. It offers
-            explanations for the configuration choices as well as
-            sample configuration files.</para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term><link
-            xlink:href="https://fedoraproject.org/wiki/Getting_started_with_OpenStack_on_Fedora_18"
-            >Getting Started with OpenStack on Fedora 18</link>
-          (Folsom)</term>
-
-        <listitem>
-          <para>The Folsom release is in Fedora 18. This page discusses the
-          installation of Folsom on Fedora 18. Once EPEL 6 has been updated to
-          include Folsom, these instructions should be used if installing on
-          RHEL 6. The main difference between the Fedora 18 instructions and
-          what must be done on RHEL 6 is that RHEL 6 does not use systemd, so
-          the <command>systemctl</command> commands will have to substituted
-          with the RHEL 6 equivalent.</para>
-        </listitem>
-      </varlistentry>
-
-    </variablelist>
-  </section>
-
   <section xml:id="installing-openstack-compute-on-opensuse-and-sles">
     <title>Installing on openSUSE or SUSE Linux Enterprise Server</title>
     <?dbhtml stop-chunking?>
@@ -291,79 +124,45 @@ All repositories have been refreshed.</computeroutput>
             <command>zypper in PACKAGE</command>.</para>
     </section>
   </section>
-
-  <section xml:id="installing-openstack-compute-on-ubuntu">
-    <title>Installing on Ubuntu</title>
-    
-    <para>How you go about installing OpenStack Compute depends on your goals
-      for the installation. You can use an ISO image, you can use a scripted
-      installation, and you can manually install with a step-by-step
-      installation.</para>
-    
-    <section xml:id="iso-ubuntu-installation">
-      <title>ISO Installation</title>
+  <section xml:id="installing-openstack-compute-on-debian">
+    <title>Installing OpenStack Compute on Debian</title>
+    <para>Starting with Debian 7.0 "Wheezy", the OpenStack packages are 
+      provided as part of the distribution.</para>
+    <para>
+      For the management or controller node install the following packages: (via <command>apt-get install</command>)
       
-      <para>See <link
-          xlink:href="http://www.rackspace.com/knowledge_center/article/installing-rackspace-private-cloud-on-physical-hardware"
-          >Installing Rackspace Private Cloud on Physical
-          Hardware</link> for download links and instructions for the
-        Rackspace Private Cloud ISO. For documentation on the
-        Rackspace, see <link xlink:href="http://www.rackspace.com/cloud/private">http://www.rackspace.com/cloud/private</link>. </para>
-    </section>
-    
-    <section xml:id="scripted-ubuntu-installation">
-      <title>Scripted Installation</title>
+      <itemizedlist>
+        <listitem><para><literal>nova-api</literal></para></listitem>
+        <listitem><para><literal>nova-scheduler</literal></para></listitem>
+        <listitem><para><literal>glance</literal></para></listitem>
+        <listitem><para><literal>keystone</literal></para></listitem>
+        <listitem><para><literal>mysql-server</literal></para></listitem>
+        <listitem><para><literal>rabbitmq</literal></para></listitem>
+        <listitem><para><literal>memcached</literal></para></listitem>
+        <listitem><para><literal>openstack-dashboard</literal></para></listitem>
+      </itemizedlist>
       
-      <para>You can download a script for a standalone install for
-        proof-of-concept, learning, or for development purposes for Ubuntu 12.04
-        at <link
-          xlink:href="http://devstack.org">https://devstack.org</link>.</para>
+    </para>
+    <para>
+      For the compute node(s) install the following packages:
+      <itemizedlist>
+        <listitem><para><literal>nova-compute</literal></para></listitem>
+        <listitem><para><literal>nova-network</literal></para></listitem>
+        <listitem><para><literal>nova-api</literal></para></listitem>            
+      </itemizedlist>
+    </para>
+    <note>
+      <para>
+        Because this manual takes active advantage of the "sudo" command,
+        it would be easier for you to add to it your Debian system, by doing:</para>
       
-      <orderedlist>
-        <listitem>
-          <para>Install Ubuntu 12.04 or RHEL/CentOS/Fedora 16:</para>
-          
-          <para>In order to correctly install all the dependencies, we assume
-            a specific version of the OS to make it as easy as possible.</para>
-        </listitem>
-        
-        <listitem>
-          <para>Download DevStack:</para>
-          
-          <screen><prompt>$</prompt> <userinput>git clone git://github.com/openstack-dev/devstack.git</userinput></screen>
-          
-          <para>The devstack repo contains a script that installs OpenStack
-            Compute, Object Storage, the Image Service, Volumes, the Dashboard and the Identity Service and offers
-            templates for configuration files plus data scripts.</para>
-        </listitem>
-        
-        <listitem>
-          <para>Start the install:</para>
-          
-          <screen><prompt>$</prompt> <userinput>cd devstack; ./stack.sh</userinput></screen>
-          
-          <para>It takes a few minutes, we recommend <link
-            xlink:href="http://devstack.org/stack.sh.html">reading the
-            well-documented script</link> while it is building to learn more
-            about what is going on.</para>
-        </listitem>
-      </orderedlist>
-    </section>
-    
-    <section xml:id="manual-ubuntu-installation">
-      <title>Manual Installation on Ubuntu</title>
+      <screen><prompt>#</prompt> <userinput>usermod -a -G sudo "myuser"</userinput></screen>
       
-      <para>The manual installation involves installing from packages
-        shipped on Ubuntu 12.04 as a user with root (or sudo)
-        permission. The <link
-          xlink:href="http://docs.openstack.org/install/"
-          >OpenStack Install and Deploy Manuals</link> provide
-        instructions for installing using Ubuntu 12.04 packages. Refer
-        to those manuals for detailed instructions by going to <link
-          xlink:href="http://docs.openstack.org"
-          >http://docs.openstack.org</link> and clicking the links
-        next to the manual title.</para>
-    </section>
+      <para>then re-login.
+        Otherwise you will have to replace every "<command>sudo</command>" call by executing from
+        root account.
+      </para>
+    </note>
   </section>
 
   <section xml:id="manual-install-on-xenserver">
