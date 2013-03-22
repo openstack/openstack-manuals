@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="fibrechannel">
+   <title>Nova Compute Fibre Channel Support</title>
+    <section xml:id="overview"><title>Overview of Fibre Channel Support</title> 
+    <para>
+        <itemizedlist>
+            <listitem>
+                <para>Fibre Channel support in OpenStack Compute is remote block storage attached
+                    to Compute nodes for VMs.</para>
+            </listitem>
+            <listitem>
+                <para>Fibre Channel supports the KVM hypervisor in only the grizzly release.</para>
+            </listitem>
+            <listitem>
+                <para>There is no automatic zoning support in Nova or Cinder for Fibre Channel. 
+                    Fibre Channel arrays must be pre-zoned or directly attached to the KVM
+                    hosts.</para>
+            </listitem>
+        </itemizedlist>
+    </para>
+    </section>
+    <section>
+        <title>Requirements for KVM Hosts </title>
+        <para>The KVM host must have the following system packages installed:</para>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <filename>sysfstools</filename> - Nova uses the <filename>systool</filename>
+                        application in this package.</para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <filename>sg3-utils</filename> - Nova uses the <filename>sg_scan</filename>
+                        and <filename>sginfo</filename> applications.</para>
+                </listitem>
+            </itemizedlist>
+        </para>
+        <para>Installing the <filename>multipath-tools</filename> package is optional.</para>
+    </section>
+    <section>
+        <title>Installing the Required Packages</title>
+        <para>Use the following commands to install the system packages. </para>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para>For systems running Ubuntu: </para>
+                    <para>
+                        <programlisting language="bash"><prompt>$</prompt>sudo apt-get install sysfstools sg3-utils multipath-tools</programlisting>
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+        <itemizedlist>
+            <listitem>
+                <para>For systems running Red Hat: </para>
+                <para>
+                    <programlisting language="bash"><prompt>$</prompt>sudo yum install sysfstools sg3_utils multipath-tools</programlisting>
+                </para>
+            </listitem>
+        </itemizedlist>
+    </section>
+</section>
