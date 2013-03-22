@@ -20,48 +20,18 @@
     <!-- ################################################ -->
     <!-- USE "mvn clean generate-sources" to run this POM -->
     <!-- ################################################ -->
-    <profiles>
-        <profile>
-            <id>Rackspace Research Repositories</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <repositories>
-                <repository>
-                    <id>rackspace-research</id>
-                    <name>Rackspace Research Repository</name>
-                    <url>http://maven.research.rackspacecloud.com/content/groups/public/</url>
-                </repository>
-            </repositories>
-            <pluginRepositories>
-                <pluginRepository>
-                    <id>rackspace-research</id>
-                    <name>Rackspace Research Repository</name>
-                    <url>http://maven.research.rackspacecloud.com/content/groups/public/</url>
-                </pluginRepository>
-            </pluginRepositories>
-        </profile>
-    </profiles>
 
     <build>
-        <resources>
-            <resource>
-                <directory>target/docbkx/pdf</directory>
-                <excludes>
-                    <exclude>**/*.fo</exclude>
-                </excludes>
-            </resource>
-        </resources>
         <plugins>
 
             <plugin>
                 <groupId>com.rackspace.cloud.api</groupId>
                 <artifactId>clouddocs-maven-plugin</artifactId>
-                <version>1.7.1</version>
+                <version>1.7.2</version>
 
                 <executions>
                     <execution>
-                        <id>goal2</id>
+                        <id>generate-webhelp</id>
                         <goals>
                             <goal>generate-webhelp</goal>
                         </goals>
@@ -101,6 +71,24 @@
                             <pdfFilenameBase>openstack-ops-manual-${release.path.name}</pdfFilenameBase>
                             </configuration>
                     </execution>
+                    <execution>
+                        <id>cleanup</id>
+                        <goals>
+                            <goal>generate-webhelp</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+			<configuration>
+			  <includes>dummy.xml</includes>
+			  <postProcess>
+			    <delete includeemptydirs="true" verbose="true">
+			      <fileset dir="${basedir}/target/docbkx/webhelp/${release.path.name}" >
+				<include name="**/*"/>
+				<exclude name="openstack-ops/**"/>
+			      </fileset>
+			    </delete>
+			  </postProcess>
+			</configuration>
+		    </execution>
                 </executions>
                 <configuration>
                     <!-- These parameters apply to pdf and webhelp -->
@@ -114,4 +102,28 @@
 
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>Rackspace Research Repositories</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <repositories>
+                <repository>
+                    <id>rackspace-research</id>
+                    <name>Rackspace Research Repository</name>
+                    <url>http://maven.research.rackspacecloud.com/content/groups/public/</url>
+                </repository>
+            </repositories>
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>rackspace-research</id>
+                    <name>Rackspace Research Repository</name>
+                    <url>http://maven.research.rackspacecloud.com/content/groups/public/</url>
+                </pluginRepository>
+            </pluginRepositories>
+        </profile>
+    </profiles>
+
 </project>
