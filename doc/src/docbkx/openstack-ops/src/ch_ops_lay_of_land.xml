@@ -12,6 +12,7 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="lay_of_the_land">
+    <?dbhtml stop-chunking?>
     <title>Lay of the Land</title>
     <para>From this point forward in the guide, we assume that you
         have an OpenStack cloud up and running. This section helps you
@@ -24,7 +25,7 @@
             OpenStack Dashboard. Some users with a background in other
             cloud technologies may be using the EC2 Compatibility API,
             which uses somewhat different naming conventions from the
-            native API which we will highlight where required.</para>
+            native API. We highlight those differences.</para>
         <para>We strongly suggest that you install the command-line
             clients from the <link
                 xlink:href="https://pypi.python.org/">Python Package
@@ -40,22 +41,22 @@
             install some or all of the following packages:</para>
         <itemizedlist role="compact">
             <listitem>
-                <para>python-novaclient (nova CLI)</para>
+                <para>python-novaclient (<glossterm>nova</glossterm> CLI)</para>
             </listitem>
             <listitem>
-                <para>python-glanceclient (glance CLI)</para>
+                <para>python-glanceclient (<glossterm>glance</glossterm> CLI)</para>
             </listitem>
             <listitem>
-                <para>python-keystoneclient (keystone CLI)</para>
+                <para>python-keystoneclient (<glossterm>keystone</glossterm> CLI)</para>
             </listitem>
             <listitem>
-                <para>python-cinderclient (cinder CLI)</para>
+                <para>python-cinderclient (<glossterm>cinder</glossterm> CLI)</para>
             </listitem>
             <listitem>
-                <para>python-swiftclient (swift CLI)</para>
+                <para>python-swiftclient (<glossterm>swift</glossterm> CLI)</para>
             </listitem>
             <listitem>
-                <para>python-quantumclient (quantum CLI)</para>
+                <para>python-quantumclient (<glossterm>quantum</glossterm> CLI)</para>
             </listitem>
         </itemizedlist>
         <section xml:id="install_tools">
@@ -75,8 +76,8 @@
                 also install the "euca2ools" package or some other EC2
                 API tool so you can get the same view your users have.
                 Using EC2 API based tools is mostly out of the scope
-                of this guide, though we will discuss getting
-                credentials for use with it.</para>
+                of this guide, though we discuss getting credentials
+                for use with it.</para>
         </section>
         <section xml:id="admin_cli">
             <title>Administrative Command Line Tools</title>
@@ -102,51 +103,56 @@
                 access to the config files such as
                     <code>/etc/nova/nova.conf</code> and make queries
                 directly against the database rather than against the
-                OpenStack API endpoints.</para>
+                OpenStack <glossterm>API endpoint</glossterm>s.</para>
             <para>The existence of the <code>*-manage</code> tools is
                 a legacy issue. It is a goal of the OpenStack project
                 to eventually migrate all of the remaining
                 functionality in the <code>*-manage</code> tools into
                 the regular client tools. Until that day, you need to
-                SSH into the cloud controller node to perform some
+                SSH into the <glossterm>cloud controller node</glossterm> to perform some
                 maintenance operations that require one of the
                     <code>*-manage</code> tools.</para>
         </section>
-    </section>
-    <section xml:id="get_creds">
-        <title>Getting Credentials</title>
-        <para>You must have the appropriate credentials if you wish to
-            use the command line tools to make queries against your
-            OpenStack cloud. By far the easiest way to obtain
-            authentication credentials to use with command line
-            clients is to use the Horizon dashboard. From the top
-            right navigation row select the "Settings" link to access
-            the user settings page where you can set your language and
-            timezone preferences for the dashboard view, but more
-            importantly it changes the left hand navigation column to
-            include "OpenStack API" and "EC2 Credentials" links. These
-            links allow you to generate files you can source in your
-            shell to populate the environment variables the command
-            line tools need to know where your service endpoints are
-            as well as your authentication information.</para>
-        <para>For using the OpenStack native tools follow the
-            "OpenStack API" link. The top section lists the URLs of
-            your service endpoints and below that is a section titled
-            "Download OpenStack RC File". For looking at the cloud as
-            an administrator, you can choose admin from the drop-down
-            menu. In this section select the project you wish to get
-            credentials for and click the "Download RC" button. This
-            will generate a file called <code>openrc.sh</code> which
-            will looks something like this:</para>
-        <programlisting><?db-font-size 65%?>#!/bin/bash
+
+        <section xml:id="get_creds">
+            <title>Getting Credentials</title>
+            <para>You must have the appropriate credentials if you
+                wish to use the command line tools to make queries
+                against your OpenStack cloud. By far the easiest way
+                to obtain <glossterm>authentication</glossterm>
+                credentials to use with command line clients is to use
+                the horizon dashboard. From the top right navigation
+                row, select the <guilabel>Settings</guilabel> link to
+                access the user settings page where you can set your
+                language and timezone preferences for the dashboard
+                view. More importantly, this action changes the left
+                hand navigation column to include <guilabel>OpenStack
+                    API</guilabel> and <guilabel>EC2
+                    Credentials</guilabel> links, which let you to
+                generate files you can source in your shell to
+                populate the environment variables the command line
+                tools need to know where your service endpoints are as
+                well as your authentication information.</para>
+            <para>For using the OpenStack native tools follow the
+                    <guilabel>OpenStack API</guilabel> link. The top
+                section lists the URLs of your service endpoints and
+                below that is a section titled <guilabel>Download
+                    OpenStack RC File</guilabel>. For looking at the
+                cloud as an administrator, you can choose admin from
+                the drop-down menu. In this section select the project
+                you wish to get credentials for and click
+                    <guibutton>Download RC</guibutton>. This generates
+                a file called <code>openrc.sh</code>, which looks
+                something like this:</para>
+            <programlisting><?db-font-size 65%?>#!/bin/bash
       
 # With the addition of Keystone, to use an openstack cloud you should
 # authenticate against keystone, which returns a **Token** and **Service
 # Catalog**. The catalog contains the endpoint for all services the
 # user/tenant has access to - including nova, glance, keystone, swift.
 #
-# *NOTE*: Using the 2.0 *auth api* does not mean that compute api is 2.0. We
-# will use the 1.1 *compute api*
+# *NOTE*: Using the 2.0 *auth api* does not mean that compute api is 2.0. 
+# We use the 1.1 *compute api*
 export OS_AUTH_URL=http://203.0.113.10:5000/v2.0
       
 # With the addition of Keystone we have standardized on the term **tenant**
@@ -162,29 +168,32 @@ export OS_USERNAME=test-user
 echo "Please enter your OpenStack Password: "
 read -s OS_PASSWORD_INPUT
 export OS_PASSWORD=$OS_PASSWORD_INPUT</programlisting>
-        <para>Note that this does not save your password in plain
-            text, which is a good thing. But when you source or run
-            the script, it prompts for your password and then stores
-            your response in the environment variable
-                <code>OS_PASSWORD</code>. It is important to note that
-            this does require interactivity. It is possible to store a
-            value directly in the script if you require a non
-            interactive operation, but you then need to be extremely
-            cautious with the security and permissions of this
-            file.</para>
-        <para>EC2 compatibility credentials can be downloaded from the
-            "EC2 Credentials" link in the left hand navigation bar,
-            then selecting the project you want credentials for and
-            clicking "Download EC2 Credentials". This generates a zip
-            file with server x509 certificates and a shell script
-            fragment. Create a new directory in a secure location as,
-            unlike the default <code>openrc</code>, these are live
-            credentials containing all the authentication information
-            required to access your cloud identity. Extract the zip
-            file here. You should have cacert.pem, cert.pem, ec2rc.sh
-            and pk.pem. The <code>ec2rc.sh</code> is similar to
-            this:</para>
-        <programlisting><?db-font-size 65%?>#!/bin/bash
+            <note>
+                <para>This does not save your password in plain text,
+                    which is a good thing. But when you source or run
+                    the script, it prompts for your password and then
+                    stores your response in the environment variable
+                        <code>OS_PASSWORD</code>. It is important to
+                    note that this does require interactivity. It is
+                    possible to store a value directly in the script
+                    if you require a non interactive operation, but
+                    you then need to be extremely cautious with the
+                    security and permissions of this file.</para>
+            </note>
+            <para>EC2 compatibility credentials can be downloaded from
+                the "EC2 Credentials" link in the left hand navigation
+                bar, then selecting the project you want credentials
+                for and clicking "Download EC2 Credentials". This
+                generates a zip file with server x509 certificates and
+                a shell script fragment. Create a new directory in a
+                secure location as, unlike the default
+                    <code>openrc</code>, these are live credentials
+                containing all the authentication information required
+                to access your cloud identity. Extract the zip file
+                here. You should have cacert.pem, cert.pem, ec2rc.sh
+                and pk.pem. The <code>ec2rc.sh</code> is similar to
+                this:</para>
+            <programlisting><?db-font-size 65%?>#!/bin/bash
 
       
 NOVARC=$(readlink -f "${BASH_SOURCE:-${0}}" 2&gt;/dev/null) ||\
@@ -201,129 +210,138 @@ export EUCALYPTUS_CERT=${NOVA_CERT} # euca-bundle-image seems to require this se
       
 alias ec2-bundle-image="ec2-bundle-image --cert $EC2_CERT --privatekey $EC2_PRIVATE_KEY --user 42 --ec2cert $NOVA_CERT"
 alias ec2-upload-bundle="ec2-upload-bundle -a $EC2_ACCESS_KEY -s $EC2_SECRET_KEY --url $S3_URL --ec2cert $NOVA_CERT"</programlisting>
-        <para>To put the EC2 credentials into your environment source
-            the <code>ec2rc.sh</code> file.</para>
-    </section>
-    <section xml:id="cli_tricks">
-        <title>Command Line Tricks and Traps</title>
-        <para>The command line tools can be made to show the
-            OpenStack API calls it's making by passing it the
-                <code>--debug</code> flag for example:</para>
-        <programlisting><?db-font-size 65%?># nova --debug list</programlisting>
-        <para>This example shows the HTTP requests from the client and
-            the responses from the endpoints, which can be helpful in
-            creating custom tools written to the OpenStack API.</para>
-        <para>
-            <link
-                xlink:href="https://wiki.openstack.org/wiki/KeyringSupport"
-                >Keyring Support</link>
-            (https://wiki.openstack.org/wiki/KeyringSupport) can be a
-            source of confusion to the point that, as of the time of
-            this writing, there is a <link
-                xlink:href="https://bugs.launchpad.net/python-novaclient/+bug/1020238"
-                >bug report</link>
-            (https://bugs.launchpad.net/python-novaclient/+bug/1020238)
-            which has been open, closed as invalid, and reopened
-            through a few cycles. The issue is that under some
-            conditions the command line tools try to use a Python
-            keyring as a credential cache and, under a subset of those
-            conditions, another condition can arise where the tools
-            prompt for a keyring password on each use. If you find
-            yourself in this unfortunate subset, adding the
-                <code>--no-cache</code> flag or setting the
-            environment variable <code>OS_NO_CACHE=1</code> avoids the
-            credentials cache.</para>
-        <note>
-            <para>This causes the command line tool to authenticate on
-                each and every interaction with the cloud.</para>
-        </note>
-        <para>
-            <emphasis role="bold">cURL</emphasis>
-        </para>
-        <para>Underlying the use of the command line tools is the
-            OpenStack API. This is a RESTful API that runs over HTTP.
-            There may be cases where you want to interact with the API
-            directly or need to use it because of a suspected bug in
-            one of the CLI tools. The best way to do this is use a
-            combination of <link xlink:href="http://curl.haxx.se/"
-                >cURL</link> (http://curl.haxx.se/) and another
-            tool to parse the JSON, such as <link
-                xlink:href="http://stedolan.github.com/jq/"
-            >jq</link> (http://stedolan.github.com/jq/), from the
-            responses.</para>
-        <para>The first thing you must is authenticate with the cloud
-            using your credentials to get a token. Your credentials
-            are a combination of username, password, and tenant
-            (project). You can extract these values from the
-                <code>openrc.sh</code> discussed above. The token
-            allows you to interact with your other service endpoints
-            without needing to re-authenticate for every request.
-            Tokens are typically good for 24 hours, and when the token
-            expires, you will find out with a 401 (Unauthorized)
-            response and can request another token.</para>
-        <para>
-            <orderedlist>
-                <listitem>
+            <para>To put the EC2 credentials into your environment
+                source the <code>ec2rc.sh</code> file.</para>
+        </section>
+        <section xml:id="cli_tricks">
+            <title>Command Line Tricks and Traps</title>
+            <para>The command line tools can be made to show the
+                OpenStack API calls it's making by passing it the
+                    <code>--debug</code> flag for example:</para>
+            <programlisting><?db-font-size 65%?><prompt>#</prompt> nova --debug list</programlisting>
+            <para>This example shows the HTTP requests from the client
+                and the responses from the endpoints, which can be
+                helpful in creating custom tools written to the
+                OpenStack API.</para>
+            <para><link
+                    xlink:href="https://wiki.openstack.org/wiki/KeyringSupport"
+                    >Keyring Support</link>
+                (https://wiki.openstack.org/wiki/KeyringSupport) can
+                be a source of confusion to the point that, as of the
+                time of this writing, there is a <link
+                    xlink:href="https://bugs.launchpad.net/python-novaclient/+bug/1020238"
+                    >bug report</link>
+                (https://bugs.launchpad.net/python-novaclient/+bug/1020238)
+                which has been open, closed as invalid, and reopened
+                through a few cycles. The issue is that under some
+                conditions the command line tools try to use a Python
+                keyring as a credential cache and, under a subset of
+                those conditions, another condition can arise where
+                the tools prompt for a keyring password on each use.
+                If you find yourself in this unfortunate subset,
+                adding the <code>--no-cache</code> flag or setting the
+                environment variable <code>OS_NO_CACHE=1</code> avoids
+                the credentials cache.</para>
+            <note>
+                <para>This causes the command line tool to
+                    authenticate on each and every interaction with
+                    the cloud.</para>
+            </note>
+            <section xml:id="curl">
+                <title>cURL</title>
 
-                    <para>Look at your OpenStack service
-                        catalog:</para>
-                    <programlisting><?db-font-size 65%?><prompt>$</prompt> curl -s -X POST http://203.0.113.10:35357/v2.0/tokens \
+                <para>Underlying the use of the command line tools is
+                    the OpenStack API, which is a RESTful API that
+                    runs over HTTP. There may be cases where you want
+                    to interact with the API directly or need to use
+                    it because of a suspected bug in one of the CLI
+                    tools. The best way to do this is use a
+                    combination of <link
+                        xlink:href="http://curl.haxx.se/">cURL</link>
+                    (http://curl.haxx.se/) and another tool to parse
+                    the JSON, such as <link
+                        xlink:href="http://stedolan.github.com/jq/"
+                        >jq</link> (http://stedolan.github.com/jq/),
+                    from the responses.</para>
+
+                <para>The first thing you must do is authenticate with
+                    the cloud using your credentials to get an
+                        <glossterm>authentication token</glossterm>.
+                    Your credentials are a combination of username,
+                    password, and tenant (project). You can extract
+                    these values from the <code>openrc.sh</code>
+                    discussed above. The token allows you to interact
+                    with your other service endpoints without needing
+                    to re-authenticate for every request. Tokens are
+                    typically good for 24 hours, and when the token
+                    expires, you are alerted with a 401 (Unauthorized)
+                    response and you can request another token.</para>
+                <para>
+                    <orderedlist>
+                        <listitem>
+
+                            <para>Look at your OpenStack service
+                                   <glossterm>catalog</glossterm>:</para>
+                            <programlisting><?db-font-size 65%?><prompt>$</prompt> curl -s -X POST http://203.0.113.10:35357/v2.0/tokens \
     -d '{"auth": {"passwordCredentials": {"username":"test-user", "password":"test-password"}, "tenantName":"test-project"}}' \
     -H "Content-type: application/json" | jq .</programlisting>
-                </listitem>
-                <listitem>
-                    <para>Read through the JSON response to get a feel
-                        for how the catalog is laid out.</para>
-                    <para>To make working with subsequent requests
-                        easier, store the token in an environment
-                        variable.</para>
-                    <programlisting><?db-font-size 65%?><prompt>$</prompt> TOKEN=`curl -s -X POST http://203.0.113.10:35357/v2.0/tokens \
+                        </listitem>
+                        <listitem>
+                            <para>Read through the JSON response to
+                                get a feel for how the catalog is laid
+                                out.</para>
+                            <para>To make working with subsequent
+                                requests easier, store the token in an
+                                environment variable.</para>
+                            <programlisting><?db-font-size 65%?><prompt>$</prompt> TOKEN=`curl -s -X POST http://203.0.113.10:35357/v2.0/tokens \
     -d '{"auth": {"passwordCredentials": {"username":"test-user", "password":"test-password"}, "tenantName":"test-project"}}' \
     -H "Content-type: application/json" |  jq -r .access.token.id`</programlisting>
-                    <para>Now you can refer to your token on the
-                        command line as $TOKEN.</para>
-                </listitem>
-                <listitem>
-                    <para>Pick a service endpoint from your service
-                        catalog, such as compute, and try out a
-                        request like listing instances
-                        (servers).</para>
-                    <programlisting><?db-font-size 65%?><prompt>$</prompt> curl -s -H "X-Auth-Token: $TOKEN" http://203.0.113.10:8774/v2/98333aba48e756fa8f629c83a818ad57/servers | jq .</programlisting>
+                            <para>Now you can refer to your token on
+                                the command line as $TOKEN.</para>
+                        </listitem>
+                        <listitem>
+                            <para>Pick a service endpoint from your
+                                service catalog, such as compute, and
+                                try out a request like listing
+                                instances (servers).</para>
+                            <programlisting><?db-font-size 65%?><prompt>$</prompt> curl -s -H "X-Auth-Token: $TOKEN" http://203.0.113.10:8774/v2/98333aba48e756fa8f629c83a818ad57/servers | jq .</programlisting>
 
 
-                </listitem>
-            </orderedlist>
-        </para>
-        <para>To discover how API requests should be structured, read
-            the <link
-                xlink:href="http://api.openstack.org/api-ref.html"
-                >OpenStack API Reference</link>
-            (http://api.openstack.org/api-ref.html). To chew through
-            the responses using jq, see the <link
-                xlink:href="http://stedolan.github.com/jq/manual/">jq
-                Manual</link>
-            (http://stedolan.github.com/jq/manual/).</para>
-        <para>The <code>-s flag</code> used in the cURL commands above
-            are used to prevent the progress meter from being shown.
-            If you are having trouble running cURL commands, you'll
-            want to remove it. Likewise, to help you troubleshoot cURL
-            commands you can include the <code>-v</code> flag to show
-            you the verbose output. There are many more extremely
-            useful features in cURL, refer to the man page for all of
-            the options.</para>
-    </section>
-    <section xml:id="servers_services">
-        <title>Servers and Services</title>
-        <para>As an administrator, there are a few ways to discover
-            what your OpenStack cloud looks like simply by using the
-            OpenStack tools available. This section gives you an idea
-            of how to get an overview of your cloud, its shape, size,
-            and current state.</para>
-        <para>First, you can discover what servers belong to your
-            OpenStack cloud by running:</para>
-        <programlisting><?db-font-size 65%?><prompt>$</prompt> nova-manage service list | sort</programlisting>
-        <para>The output looks like the following:</para>
-        <programlisting><?db-font-size 65%?>Binary           Host              Zone Status  State Updated_At
+                        </listitem>
+                    </orderedlist>
+                </para>
+                <para>To discover how API requests should be
+                    structured, read the <link
+                        xlink:href="http://api.openstack.org/api-ref.html"
+                        >OpenStack API Reference</link>
+                    (http://api.openstack.org/api-ref.html). To chew
+                    through the responses using jq, see the <link
+                        xlink:href="http://stedolan.github.com/jq/manual/"
+                        >jq Manual</link>
+                    (http://stedolan.github.com/jq/manual/).</para>
+                <para>The <code>-s flag</code> used in the cURL
+                    commands above are used to prevent the progress
+                    meter from being shown. If you are having trouble
+                    running cURL commands, you'll want to remove it.
+                    Likewise, to help you troubleshoot cURL commands
+                    you can include the <code>-v</code> flag to show
+                    you the verbose output. There are many more
+                    extremely useful features in cURL, refer to the
+                    man page for all of the options.</para>
+            </section>
+        </section>
+        <section xml:id="servers_services">
+            <title>Servers and Services</title>
+            <para>As an administrator, there are a few ways to
+                discover what your OpenStack cloud looks like simply
+                by using the OpenStack tools available. This section
+                gives you an idea of how to get an overview of your
+                cloud, its shape, size, and current state.</para>
+            <para>First, you can discover what servers belong to your
+                OpenStack cloud by running:</para>
+            <programlisting><?db-font-size 65%?><prompt>$</prompt> nova-manage service list | sort</programlisting>
+            <para>The output looks like the following:</para>
+            <programlisting><?db-font-size 65%?>Binary           Host              Zone Status  State Updated_At
 nova-cert        cloud.example.com nova enabled  :-)  2013-02-25 19:32:38
 nova-compute     c01.example.com   nova enabled  :-)  2013-02-25 19:32:35
 nova-compute     c02.example.com   nova enabled  :-)  2013-02-25 19:32:32
@@ -333,40 +351,43 @@ nova-compute     c05.example.com   nova enabled  :-)  2013-02-25 19:32:41
 nova-consoleauth cloud.example.com nova enabled  :-)  2013-02-25 19:32:36
 nova-network     cloud.example.com nova enabled  :-)  2013-02-25 19:32:32
 nova-scheduler   cloud.example.com nova enabled  :-)  2013-02-25 19:32:33</programlisting>
-        <para>The output shows that there are five compute nodes and
-            one cloud controller. You see a smiley face like
-                <code>:-)</code> which indicates that the services are
-            up and running and functional. If a service is no longer
-            available, the <code>:-)</code> changes to an
-                <code>XXX</code>. This is an indication that you
-            should troubleshoot why the service is down.</para>
-        <para>If you are still using <code>nova-volume</code> (this
-            service is deprecated after the Folsom release), you might
-            also see entries for the nova-volume service.</para>
-        <para>If you are using Cinder, run the following command to
-            see a similar listing:</para>
+            <para>The output shows that there are five compute nodes
+                and one cloud controller. You see a smiley face like
+                    <code>:-)</code> which indicates that the services
+                are up and running and functional. If a service is no
+                longer available, the <code>:-)</code> changes to an
+                    <code>XXX</code>. This is an indication that you
+                should troubleshoot why the service is down.</para>
+            <para>If you are still using <code>nova-volume</code>
+                (this service is deprecated after the Folsom release),
+                you might also see entries for the nova-volume
+                service.</para>
+            <para>If you are using Cinder, run the following command
+                to see a similar listing:</para>
 
-        <programlisting><?db-font-size 65%?><prompt>$</prompt> cinder-manage host list | sort</programlisting>
+            <programlisting><?db-font-size 65%?><prompt>$</prompt> cinder-manage host list | sort</programlisting>
 
-        <programlisting><?db-font-size 65%?>host              zone
+            <programlisting><?db-font-size 65%?>host              zone
 c01.example.com   nova
 c02.example.com   nova
 c03.example.com   nova
 c04.example.com   nova
 c05.example.com   nova
 cloud.example.com nova</programlisting>
-        <para>With these two tables, you now have a good overview of
-            what servers and services make up your cloud.</para>
-        <para>You can also use the Identity Service (Keystone), to see
-            what services are available in your cloud as well as what
-            endpoints have been configured for the services.</para>
-        <para>The following commands will require you to have your
-            shell environment configured with the proper
-            administrative variables.</para>
+            <para>With these two tables, you now have a good overview
+                of what servers and services make up your
+                cloud.</para>
+            <para>You can also use the Identity Service (Keystone), to
+                see what services are available in your cloud as well
+                as what endpoints have been configured for the
+                services.</para>
+            <para>The following commands require you to have your
+                shell environment configured with the proper
+                administrative variables.</para>
 
-        <programlisting><?db-font-size 65%?><prompt>$</prompt> keystone service-list</programlisting>
+            <programlisting><?db-font-size 65%?><prompt>$</prompt> keystone service-list</programlisting>
 
-        <programlisting><?db-font-size 65%?>+-----+----------+----------+----------------------------+
+            <programlisting><?db-font-size 65%?>+-----+----------+----------+----------------------------+
 | id  | name     | type     | description                |
 +-----+----------+----------+----------------------------+
 | ... | cinder   | volume   | Cinder Service             |
@@ -375,11 +396,11 @@ cloud.example.com nova</programlisting>
 | ... | keystone | identity | OpenStack Identity Service |
 | ... | nova     | compute  | OpenStack Compute Service  |
 +-----+----------+----------+----------------------------+</programlisting>
-        <para>The output above shows that there are five services
-            configured.</para>
-        <para>To see the endpoint of each service, run: </para>
-        <programlisting><?db-font-size 65%?><prompt>$</prompt> keystone endpoint-list</programlisting>
-        <programlisting><?db-font-size 65%?>+-----+-----------------------------------------+-/+-----------------------------------------+
+            <para>The output above shows that there are five services
+                configured.</para>
+            <para>To see the endpoint of each service, run: </para>
+            <programlisting><?db-font-size 65%?><prompt>$</prompt> keystone endpoint-list</programlisting>
+            <programlisting><?db-font-size 65%?>+-----+-----------------------------------------+-/+-----------------------------------------+
 | id  |            publicurl                    | \|               adminurl                  |
 +-----+-----------------------------------------+-/+-----------------------------------------+
 | ... | http://example.com:8774/v2/%(tenant_id)s| \| http://example.com:8774/v2/%(tenant_id)s|
@@ -388,11 +409,12 @@ cloud.example.com nova</programlisting>
 | ... | http://example.com:5000/v2.0            | /| http://example.com:35357/v2.0           |
 | ... | http://example.com:8776/v1/%(tenant_id)s| \| http://example.com:8776/v1/%(tenant_id)s|
 +-----+-----------------------------------------+-/+-----------------------------------------+</programlisting>
-        <para>There should be a one-to-one mapping between a
-                <emphasis>service</emphasis> and
-                <emphasis>endpoint</emphasis>. Note the different URLs
-            and ports between the public URL and the admin URL for
-            some services.</para>
+            <para>There should be a one-to-one mapping between a
+                    <emphasis>service</emphasis> and
+                    <emphasis>endpoint</emphasis>. Note the different
+                URLs and ports between the public URL and the admin
+                URL for some services.</para>
+        </section>
     </section>
     <section xml:id="network">
         <title>Network</title>
@@ -465,11 +487,12 @@ None                             1.2.3.5 48a415e7-6f07-4d33-ad00-814e60b010ff no
 | ... | adam     | True    | adam@ossmanuals.net          |
 | ... | tom      | True    | fafield@univm.edu.au         |
 +-----+----------+---------+------------------------------+</programlisting>
-        <para>Note two things. Sometimes a user and a group have a
-            one-to-one mapping. This can happen if only one user will
-            ever be part of a group. Also, there will always be some
-            standard system accounts such as cinder, glance, nova, and
-            swift.</para>
+        <note>
+            <para>Sometimes a user and a group have a one-to-one
+                mapping. This happens for standard system accounts,
+                such as cinder, glance, nova, and swift, or when only
+                one user is ever part of a group. </para>
+        </note>
     </section>
     <section xml:id="running_instances">
         <title>Running Instances</title>
@@ -488,11 +511,11 @@ None                             1.2.3.5 48a415e7-6f07-4d33-ad00-814e60b010ff no
 | ... | initial          | ACTIVE | nova_network=10.1.7.4, 10.1.8.4           |
 | ... | lorin-head       | ACTIVE | nova_network=10.1.7.3, 10.1.8.3           |
 +-----+------------------+--------+-------------------------------------------+</programlisting>
-        <para>Unfortunately this command will not tell you various
+        <para>Unfortunately this command does not tell you various
             details about the running instances, such as what compute
             node the instance is running on, what flavor the instance
-            is, etc. You can use the following command to view details
-            about individual instances:</para>
+            is, and so on. You can use the following command to view
+            details about individual instances:</para>
 
         <programlisting><?db-font-size 65%?><prompt>$</prompt> nova show &lt;uuid&gt;</programlisting>
 

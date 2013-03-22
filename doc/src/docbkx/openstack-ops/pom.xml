@@ -1,17 +1,16 @@
-
 <project xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
     http://maven.apache.org/maven-v4_0_0.xsd">
-
+    
     <modelVersion>4.0.0</modelVersion>
-
+    
     <groupId>org.openstack.docs</groupId>
     <artifactId>openstack-ops-manual</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
     <name>OpenStack Manuals</name>
-
+    
     <properties>
         <!-- This is set by Jenkins according to the branch. -->
         <release.path.name>local</release.path.name>
@@ -20,15 +19,15 @@
     <!-- ################################################ -->
     <!-- USE "mvn clean generate-sources" to run this POM -->
     <!-- ################################################ -->
-
+    
     <build>
         <plugins>
-
+            
             <plugin>
                 <groupId>com.rackspace.cloud.api</groupId>
                 <artifactId>clouddocs-maven-plugin</artifactId>
                 <version>1.7.2</version>
-
+                
                 <executions>
                     <execution>
                         <id>generate-webhelp</id>
@@ -50,26 +49,26 @@
                             <sectionAutolabel>0</sectionAutolabel>
                             <tocSectionDepth>1</tocSectionDepth>
                             <formalProcedures>0</formalProcedures>
-                            <generateToc> 
+                            <generateToc>
                                 appendix toc,title
-                                article/appendix nop 
+                                article/appendix nop
                                 article toc,title
                                 book toc,title,figure,table,equation
-                                chapter toc 
+                                chapter toc
                                 part toc,title
                                 acknowledgements toc,title
                                 preface toc
-                                qandadiv toc 
-                                qandaset toc 
-                                reference toc,title 
-                                section toc 
+                                qandadiv toc
+                                qandaset toc
+                                reference toc,title
+                                section toc
                                 set toc,title
                             </generateToc>
-                          
+                            
                             <targetDirectory>target/docbkx/webhelp/${release.path.name}</targetDirectory>
                             <webhelpDirname>openstack-ops</webhelpDirname>
                             <pdfFilenameBase>openstack-ops-manual-${release.path.name}</pdfFilenameBase>
-                            </configuration>
+                        </configuration>
                     </execution>
                     <execution>
                         <id>cleanup</id>
@@ -77,18 +76,18 @@
                             <goal>generate-webhelp</goal>
                         </goals>
                         <phase>generate-sources</phase>
-			<configuration>
-			  <includes>dummy.xml</includes>
-			  <postProcess>
-			    <delete includeemptydirs="true" verbose="true">
-			      <fileset dir="${basedir}/target/docbkx/webhelp/${release.path.name}" >
-				<include name="**/*"/>
-				<exclude name="openstack-ops/**"/>
-			      </fileset>
-			    </delete>
-			  </postProcess>
-			</configuration>
-		    </execution>
+                        <configuration>
+                            <includes>dummy.xml</includes>
+                            <postProcess>
+                                <delete includeemptydirs="true" verbose="true">
+                                    <fileset dir="${basedir}/target/docbkx/webhelp/${release.path.name}" >
+                                        <include name="**/*"/>
+                                        <exclude name="openstack-ops/**"/>
+                                    </fileset>
+                                </delete>
+                            </postProcess>
+                        </configuration>
+                    </execution>
                 </executions>
                 <configuration>
                     <!-- These parameters apply to pdf and webhelp -->
@@ -99,10 +98,10 @@
                     <branding>openstack</branding>
                 </configuration>
             </plugin>
-
+            
         </plugins>
     </build>
-
+    
     <profiles>
         <profile>
             <id>Rackspace Research Repositories</id>
@@ -125,5 +124,5 @@
             </pluginRepositories>
         </profile>
     </profiles>
-
+    
 </project>

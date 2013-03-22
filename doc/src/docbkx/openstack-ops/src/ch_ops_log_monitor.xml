@@ -12,6 +12,7 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="logging_monitoring">
+    <?dbhtml stop-chunking?>
     <title>Logging and Monitoring</title>
     <para>As an OpenStack cloud is composed of so many different
         services, there are a large number of log files. This section
@@ -19,7 +20,7 @@
         other ways to track the status of your deployment.</para>
 
     <section xml:id="where_are_logs">
-        <title>Where are the Logs?</title>
+        <title>Where Are the Logs?</title>
         <para>On Ubuntu, most services use the convention of writing
             their log files to subdirectories of the <code>/var/log
                 directory</code>.</para>
@@ -103,12 +104,12 @@
         <title>How to Read the Logs</title>
         <para>OpenStack services use the standard logging levels, at
             increasing severity: DEBUG, INFO, AUDIT, WARNING, ERROR,
-            CRITICAL, TRACE. That is, messages will only appear in the
-            logs if they are more "severe" than the particular log
-            level with DEBUG allowing all log statements through. For
-            example, TRACE will only log if the software has a stack
-            trace, while INFO will log every message including those
-            that are only for information.</para>
+            CRITICAL, TRACE. That is, messages only appear in the logs
+            if they are more "severe" than the particular log level
+            with DEBUG allowing all log statements through. For
+            example, TRACE is logged only if the software has a stack
+            trace, while INFO is logged for every message including
+            those that are only for information.</para>
         <para>To disable DEBUG-level logging, edit
                 <code>/etc/nova/nova.conf</code>:</para>
         <programlisting>debug=false</programlisting>
@@ -192,11 +193,11 @@
         <para>Here the ID associated with the instance is
                 <code>faf7ded8-4a46-413b-b113-f19590746ffe</code>. If
             you search for this string on the cloud controller in the
-                <code>/var/log/nova-*.log</code> files, it will appear
-            in <code>nova-api.log</code>,
+                <code>/var/log/nova-*.log</code> files, it appears in
+                <code>nova-api.log</code>,
                 <code>nova-scheduler.log</code>. If you search for
             this on the compute nodes in
-                <code>/var/log/nova-*.log</code>, it will appear
+                <code>/var/log/nova-*.log</code>, it appears
                 <code>nova-network.log</code> and
                 <code>nova-compute.log</code>. If no ERROR or CRITICAL
             messages appear, the most recent log entry that reports
@@ -229,8 +230,8 @@ LOG = logging.getLogger(__name__)</programlisting>
             internationalization library. You don't need to do this
             for your own custom log messages. However, if you want to
             contribute the code back to the OpenStack project that
-            includes logging statements, you will need to surround
-            your log messages with underscore and parentheses.</para>
+            includes logging statements, you must surround your log
+            messages with underscore and parentheses.</para>
     </section>
     <section xml:id="rabbitmq">
         <title>RabbitMQ Web Management Interface</title>
@@ -241,8 +242,8 @@ LOG = logging.getLogger(__name__)</programlisting>
             controller:</para>
         <programlisting># /usr/lib/rabbitmq/bin/rabbitmq-plugins enable rabbitmq_management
 # service rabbitmq-server restart</programlisting>
-        <para>The RabbitMQ web management interface will be accessible
-            on your cloud controller at http://localhost:55672.</para>
+        <para>The RabbitMQ web management interface is accessible on
+            your cloud controller at http://localhost:55672.</para>
         <para>Note: Ubuntu 12.04 installs RabbitMQ version, which uses
             port 55672. RabbitMQ versions 3.0 and above use port 15672
             instead. You can check which version of RabbitMQ you have
@@ -255,12 +256,11 @@ Version: 2.7.1-0ubuntu4</programlisting>
     </section>
     <section xml:id="manage_logs_centrally">
         <title>Centrally Managing Logs</title>
-        <para>Since your cloud will most likely be composed of many
-            servers, you'll have to check logs on each of those
-            servers in order to properly piece an event together. A
-            better solution is to send the logs of all servers to a
-            central location so they can all be accessed from the same
-            area.</para>
+        <para>Because your cloud is most likely composed of many
+            servers, you must check logs on each of those servers to
+            properly piece an event together. A better solution is to
+            send the logs of all servers to a central location so they
+            can all be accessed from the same area.</para>
         <para>Ubuntu uses rsyslog as the default logging service.
             Since it is natively able to send logs to a remote
             location, you don't have to install anything extra to
@@ -337,7 +337,7 @@ local0.* ?NovaAll
                 server that runs on port 512. Next, it creates a
                 series of logging templates. Logging templates control
                 where received logs are stored. Using the example
-                above, a nova log from c01.example.com will go to the
+                above, a nova log from c01.example.com goes to the
                 following locations:</para>
             <itemizedlist>
                 <listitem>
@@ -351,7 +351,7 @@ local0.* ?NovaAll
                     </para>
                 </listitem>
             </itemizedlist>
-            <para>This is useful as logs from c02.example.com will go
+            <para>This is useful as logs from c02.example.com go
                 to:</para>
             <itemizedlist>
                 <listitem>
@@ -430,13 +430,13 @@ root 24121 0.0 0.0 11688 912 pts/5 S+ 13:07 0:00 grep nova-api</programlisting>
             <para>Then on the actual compute node, create the
                 following NRPE configuration:</para>
             <programlisting>command[check_nova-compute]=/usr/lib/nagios/plugins/check_procs -c 1: -a nova-compute</programlisting>
-            <para>Nagios will now check and see if at least one
-                nova-compute service is running at all times.</para>
+            <para>Nagios checks that at least one nova-compute service
+                is running at all times.</para>
         </section>
         <section xml:id="resource_alerting">
             <title>Resource Alerting</title>
             <para>Resource alerting provides notifications when one or
-                more resources is critically low. While the monitoring
+                more resources are critically low. While the monitoring
                 thresholds should be tuned to your specific OpenStack
                 environment, monitoring resource usage is not specific
                 to OpenStack at all – any generic type of alert will
@@ -473,9 +473,9 @@ root 24121 0.0 0.0 11688 912 pts/5 S+ 13:07 0:00 grep nova-api</programlisting>
             <para>On the compute node, add the following to your NRPE
                 configuration:</para>
             <programlisting>command[check_all_disks]=/usr/lib/nagios/plugins/check_disk -w $ARG1$ -c $ARG2$ -e</programlisting>
-            <para>Nagios will now alert you with a WARNING when any
-                disk on the compute node is 80% full and CRITICAL when
-                90% is full.</para>
+            <para>Nagios alerts you with a WARNING when any disk on
+                the compute node is 80% full and CRITICAL when 90% is
+                full.</para>
         </section>
         <section xml:id="os_resources">
             <title>OpenStack-specific Resources</title>
@@ -490,17 +490,17 @@ root 24121 0.0 0.0 11688 912 pts/5 S+ 13:07 0:00 grep nova-api</programlisting>
             <para>The first is through the <code>nova</code>
                 command:</para>
             <programlisting># nova usage-list</programlisting>
-            <para>This command will display a list of how many
-                instances a tenant has running and some light usage
-                statistics about the combined instances. This command
-                is useful for a quick overview of your cloud, but
-                doesn't really get into a lot of details.</para>
+            <para>This command displays a list of how many instances a
+                tenant has running and some light usage statistics
+                about the combined instances. This command is useful
+                for a quick overview of your cloud, but doesn't really
+                get into a lot of details.</para>
             <para>Next, the <code>nova</code> database contains three
                 tables that store usage information.</para>
             <para>The <code>nova.quotas</code> and
                     <code>nova.quota_usages</code> tables store quota
                 information. If a tenant's quota is different than the
-                default quota settings, their quota will be stored in
+                default quota settings, their quota is stored in
                     <code>nova.quotas</code> table. For
                 example:</para>
             <programlisting>mysql&gt; select project_id, resource, hard_limit from quotas; 
@@ -517,9 +517,9 @@ root 24121 0.0 0.0 11688 912 pts/5 S+ 13:07 0:00 grep nova-api</programlisting>
 | 628df59f091142399e0689a2696f5baa | volumes                     | 10         |
 | 628df59f091142399e0689a2696f5baa | cores                       | 20         |
 +----------------------------------+-----------------------------+------------+ </programlisting>
-            <para>The <code>nova.quota_usages</code> table will keep
-                track of how many resources the tenant currently has
-                in use:</para>
+            <para>The <code>nova.quota_usages</code> table keeps track
+                of how many resources the tenant currently has in
+                use:</para>
             <programlisting>mysql&gt; select project_id, resource, in_use from quota_usages where project_id like '628%';
 +----------------------------------+--------------+--------+ 
 | project_id                       | resource     | in_use | 
@@ -561,11 +561,13 @@ root 24121 0.0 0.0 11688 912 pts/5 S+ 13:07 0:00 grep nova-api</programlisting>
 +-----------------------------------+------------+-------------+---------------+</programlisting>
             <para>The above was generated using a custom script which
                 can be found on GitHub
-                (https://github.com/cybera/novac/blob/dev/libexec/novac-quota-report).
-                Note that this script is very specific to a certain
-                OpenStack installation and will need modified to fit
-                your environment. However, the logic should easily be
-                transferable.</para>
+                (https://github.com/cybera/novac/blob/dev/libexec/novac-quota-report). </para>
+            <note>
+                <para>This script is specific to a certain OpenStack
+                    installation and must be modified to fit your
+                    environment. However, the logic should easily be
+                    transferable.</para>
+            </note>
         </section>
         <section xml:id="intelligent_alerting">
             <title>Intelligent Alerting</title>
@@ -594,10 +596,12 @@ glance image-create --name='cirros image' --is-public=true --container-format=ba
             <para>By taking this script and rolling it into an alert
                 for your monitoring system (such as Nagios), you now
                 have an automated way of ensuring image uploads to the
-                Image Catalog are working. Note that you will want to
-                remove the image after each test -- even better, test
-                to see if an image can successfully be deleted from
-                the Image Service.</para>
+                Image Catalog are working.</para>
+            <note>
+                <para>You must remove the image after each test. Even
+                    better, test whether you can successfully delete
+                    an image from the Image Service.</para>
+            </note>
             <para>Intelligent alerting takes a considerable more
                 amount of time to plan and implement than the other
                 alerts described in this chapter. A good outline to
@@ -688,9 +692,9 @@ glance image-create --name='cirros image' --is-public=true --container-format=ba
                 wc</para>
             <para>By running this command periodically and keeping a
                 record of the result, you can create a trending report
-                over time that will show if your <code>nova-api</code>
-                usage is increasing, decreasing, or keeping
-                steady.</para>
+                over time that shows whether your
+                    <code>nova-api</code> usage is increasing,
+                decreasing, or keeping steady.</para>
             <para>A tool such as collectd can be used to store this
                 information. While collectd is out of the scope of
                 this book, a good starting point would be to use

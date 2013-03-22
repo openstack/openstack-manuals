@@ -12,6 +12,7 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="customize">
+    <?dbhtml stop-chunking?>
     <title>Customize</title>
     <para>OpenStack might not do everything you need it to do out of
         the box. In these cases, you can follow one of two major
@@ -51,10 +52,12 @@
             or another project, you must configure DevStack
             differently. For the middleware example below, you must
             install with the Object Store enabled.</para>
-        <para>To run DevStack for the stable Folsom branch on an
-            instance, complete the following steps:</para>
-        <orderedlist>
-            <listitem>
+
+        <procedure>
+            <title>To run DevStack for the stable Folsom branch on an
+                instance:</title>
+
+            <step>
                 <para>Boot an instance from the Dashboard or the nova
                     command-line interface (CLI) with the following
                     parameters.</para>
@@ -77,35 +80,36 @@
                     specify <code>--flavor 6</code> on the <code>nova
                         boot</code> command to get adequate memory and
                     disk sizes.</para>
-            </listitem>
-            <listitem>
+            </step>
+            <step>
                 <para>If your images have only a root user, you must
                     create a "stack" user. Otherwise you run into
                     permission issues with screen if you let
                         <code>stack.sh</code> create the "stack" user
                     for you. If your images already have a user other
                     than root, you can skip this step.</para>
-                <itemizedlist>
-                    <listitem>
+                <substeps>
+
+                    <step>
                         <para>
                             <code>ssh root@&lt;IP Address&gt;</code>
                         </para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>
                             <code>adduser --gecos "" stack</code>
                         </para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>Enter a new password at the
                             prompt.</para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>
                             <code>adduser stack sudo</code>
                         </para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>
                             <code>grep -q
                                 "^#includedir.*/etc/sudoers.d"
@@ -113,57 +117,58 @@
                                 /etc/sudoers.d" &gt;&gt;
                                 /etc/sudoers</code>
                         </para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>
                             <code>( umask 226 &amp;&amp; echo "stack
                                 ALL=(ALL) NOPASSWD:ALL" &gt;
                                 /etc/sudoers.d/50_stack_sh )</code>
                         </para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>
                             <code>exit</code>
                         </para>
-                    </listitem>
-                </itemizedlist>
-            </listitem>
-            <listitem>
+                    </step>
+
+                </substeps>
+            </step>
+            <step>
                 <para>Now login as the stack user and set up
                     DevStack.</para>
-                <itemizedlist>
-                    <listitem>
+                <substeps>
+                    <step>
                         <para>
                             <code>ssh stack@&lt;IP address&gt;</code>
                         </para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>At the prompt, enter the password that
                             you created for the stack user. </para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>
                             <code>sudo apt-get -y update</code>
                         </para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>
                             <code>sudo apt-get -y install git</code>
                         </para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>
                             <code>git clone
                                 https://github.com/openstack-dev/devstack.git -b
                                 stable/folsom devstack/</code>
                         </para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>
                             <code>cd devstack</code>
                         </para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>
                             <code>vim localrc</code>
                             <itemizedlist>
@@ -184,48 +189,53 @@
                                    localrc</emphasis> below</para>
                                 </listitem>
                             </itemizedlist></para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>
                             <code>./stack.sh</code>
                         </para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>
                             <code>screen -r stack</code> </para>
-                    </listitem>
-                </itemizedlist>
-            </listitem>
-        </orderedlist>
-        <note>
-            <para><itemizedlist>
-                    <listitem>
-                        <para>The <code>stack.sh</code> script takes a
-                            while to run. Perhaps take this
-                            opportunity to <link
-                                xlink:href="http://www.openstack.org/join/"
-                                >join the OpenStack foundation</link>
-                            (http://www.openstack.org/join/).</para>
-                    </listitem>
-                    <listitem>
-                        <para>When you run <code>stack.sh</code>, you
-                            might see an error message that reads
-                            “ERROR: at least one RPC back-end must be
-                            enabled”. Don’t worry about it; swift and
-                            keystone do not need an RPC (AMQP)
-                            back-end. You can also ignore any
-                                <code>ImportErrors</code>.</para>
-                    </listitem>
-                    <listitem>
-                        <para>Screen is a useful program for viewing
-                            many related services at once. For more
-                            information, see <link
-                                xlink:href="http://aperiodic.net/screen/quick_reference"
-                                >GNU screen quick reference</link>.
-                            (http://aperiodic.net/screen/quick_reference)</para>
-                    </listitem>
-                </itemizedlist></para>
-        </note>
+                    </step>
+                </substeps>
+                <note>
+                    <para><itemizedlist>
+                            <listitem>
+                                <para>The <code>stack.sh</code> script
+                                   takes a while to run. Perhaps take
+                                   this opportunity to <link
+                                   xlink:href="http://www.openstack.org/join/"
+                                   >join the OpenStack
+                                   foundation</link>
+                                   (http://www.openstack.org/join/).</para>
+                            </listitem>
+                            <listitem>
+                                <para>When you run
+                                   <code>stack.sh</code>, you might
+                                   see an error message that reads
+                                   “ERROR: at least one RPC back-end
+                                   must be enabled”. Don’t worry about
+                                   it; swift and keystone do not need
+                                   an RPC (AMQP) back-end. You can
+                                   also ignore any
+                                   <code>ImportErrors</code>.</para>
+                            </listitem>
+                            <listitem>
+                                <para>Screen is a useful program for
+                                   viewing many related services at
+                                   once. For more information, see
+                                   <link
+                                   xlink:href="http://aperiodic.net/screen/quick_reference"
+                                   >GNU screen quick reference</link>.
+                                   (http://aperiodic.net/screen/quick_reference)</para>
+                            </listitem>
+                        </itemizedlist></para>
+                </note>
+            </step>
+
+        </procedure>
         <para>Now that you have an OpenStack development environment,
             you're free to hack around without worrying about damaging
             your production deployment. Proceed to either the
@@ -248,7 +258,7 @@ SWIFT_REPLICAS=1
 # Uncomment the BRANCHes below to use stable versions
             
             
-# unified auth system (manages accounts/tokens)
+# unified auth system (manages <glossterm>account</glossterm>s/<glossterm>token</glossterm>s)
 KEYSTONE_BRANCH=stable/folsom</programlisting>
         <programlisting># object storage
 SWIFT_BRANCH=stable/folsom 
@@ -300,9 +310,9 @@ HORIZON_BRANCH=stable/folsom</programlisting>
             features to a project by placing some custom code in a
             project's pipeline without having to change any of the
             core code.</para>
-        <para>To demonstrate customizing OpenStack like this we'll
-            create a piece of middleware for swift that will only
-            allow access to a container from a set of IP addresses as
+        <para>To demonstrate customizing OpenStack like this, we'll
+            create a piece of middleware for swift that allows access
+            to a container from only a set of IP addresses, as
             determined by the container's metadata items. Such an
             example could be useful in many contexts. For example, you
             might have public access to one of your containers, but
@@ -341,36 +351,37 @@ HORIZON_BRANCH=stable/folsom</programlisting>
                     </emphasis>. The swift proxy service.</para>
             </listitem>
         </itemizedlist>
-        <para>Complete these steps to create the middleware and plug
-            it in through Paste configuration.</para>
-        <orderedlist>
-            <listitem>
+        <procedure>
+            <title>To create the middleware and plug it in through
+                Paste configuration:</title>
+
+            <step>
                 <para>All of the code for OpenStack lives in
                         <code>/opt/stack</code>. Go to the swift
                     directory in the shell screen and edit your
                     middleware module.</para>
-                <itemizedlist>
-                    <listitem>
+                <substeps>
+                    <step>
                         <para>
                             <code>cd /opt/stack/swift</code>
                         </para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>
                             <code>vim
                                 swift/common/middleware/ip_whitelist.py</code>
                         </para>
-                    </listitem>
-                </itemizedlist>
-            </listitem>
-            <listitem>
+                    </step>
+                </substeps>
+            </step>
+            <step>
                 <para>Copy in the following code. When you're done,
                     save and close the file.</para>
                 <programlisting># Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-
+                     
 #    http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
@@ -379,84 +390,84 @@ HORIZON_BRANCH=stable/folsom</programlisting>
 # implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-      import socket
-      
+import socket
+ 
 from swift.common.utils import get_logger
 from swift.proxy.controllers.base import get_container_info
 from swift.common.swob import Request, Response
-      
+ 
 class IPWhitelistMiddleware(object):
 """
 IP Whitelist Middleware
-
-Middleware that will only allow access to a container from a set of IP
+ 
+Middleware that allows access to a container from only a set of IP
 addresses as determined by the container's metadata items that start
 with the prefix 'allow'. E.G. allow-dev=192.168.0.20
 """
-
+ 
 def __init__(self, app, conf, logger=None):
 self.app = app
-
+ 
 if logger:
 self.logger = logger
 else:
 self.logger = get_logger(conf, log_route='ip_whitelist')
-
+ 
 self.deny_message = conf.get('deny_message', "IP Denied")
 self.local_ip = socket.gethostbyname(socket.gethostname())
-
+ 
 def __call__(self, env, start_response):
 """
 WSGI entry point.
 Wraps env in swob.Request object and passes it down.
-
+ 
 :param env: WSGI environment dictionary
 :param start_response: WSGI callable
 """
 req = Request(env)
-
+ 
 try:
-version, account, container, obj = req.split_path(1, 4, True)
-except ValueError:
-return self.app(env, start_response)
-
-container_info = get_container_info(
-req.environ, self.app, swift_source='IPWhitelistMiddleware')
-
-remote_ip = env['REMOTE_ADDR']
-self.logger.debug(_("Remote IP: %(remote_ip)s"),
-{'remote_ip': remote_ip})
-
-meta = container_info['meta']
-allow = {k:v for k,v in meta.iteritems() if k.startswith('allow')}
-allow_ips = set(allow.values())
-allow_ips.add(self.local_ip)
-self.logger.debug(_("Allow IPs: %(allow_ips)s"),
-{'allow_ips': allow_ips})
-
-if remote_ip in allow_ips:
-return self.app(env, start_response)
-else:
-self.logger.debug(
-_("IP %(remote_ip)s denied access to Account=%(account)s "
-"Container=%(container)s. Not in %(allow_ips)s"), locals())
-return Response(
-status=403,
-body=self.deny_message,
-request=req)(env, start_response)
-
-
-def filter_factory(global_conf, **local_conf):
-"""
-paste.deploy app factory for creating WSGI proxy apps.
-"""
-conf = global_conf.copy()
-conf.update(local_conf)
-
-def ip_whitelist(app):
-return IPWhitelistMiddleware(app, conf)
-return ip_whitelist
-</programlisting>
+ version, account, container, obj = req.split_path(1, 4, True)
+ except ValueError:
+ return self.app(env, start_response)
+ 
+ container_info = get_container_info(
+ req.environ, self.app, swift_source='IPWhitelistMiddleware')
+ 
+ remote_ip = env['REMOTE_ADDR']
+ self.logger.debug(_("Remote IP: %(remote_ip)s"),
+ {'remote_ip': remote_ip})
+ 
+ meta = container_info['meta']
+ allow = {k:v for k,v in meta.iteritems() if k.startswith('allow')}
+ allow_ips = set(allow.values())
+ allow_ips.add(self.local_ip)
+ self.logger.debug(_("Allow IPs: %(allow_ips)s"),
+ {'allow_ips': allow_ips})
+ 
+ if remote_ip in allow_ips:
+ return self.app(env, start_response)
+ else:
+ self.logger.debug(
+ _("IP %(remote_ip)s denied access to Account=%(account)s "
+ "Container=%(container)s. Not in %(allow_ips)s"), locals())
+ return Response(
+ status=403,
+ body=self.deny_message,
+ request=req)(env, start_response)
+ 
+ 
+ def filter_factory(global_conf, **local_conf):
+ """
+ paste.deploy app factory for creating WSGI proxy apps.
+ """
+ conf = global_conf.copy()
+ conf.update(local_conf)
+ 
+ def ip_whitelist(app):
+ return IPWhitelistMiddleware(app, conf)
+ return ip_whitelist
+                 </programlisting>
                 <para>There is a lot of useful information in
                         <code>env</code> and <code>conf</code> that
                     you can use to decide what to do with the request.
@@ -468,20 +479,13 @@ return ip_whitelist
                 <para>and the following log statement into the
                         <code>__call__</code> method</para>
                 <programlisting>self.logger.debug(_("env = %(env)s"), locals())</programlisting>
-            </listitem>
-            <listitem>
+            </step>
+            <step>
                 <para>To plug this middleware into the Swift pipeline
                     you'll need to edit one configuration file.</para>
-                <itemizedlist>
-                    <listitem>
-                        <para>
-                            <code>vim
-                                /etc/swift/proxy-server.conf</code>
-                        </para>
-                    </listitem>
-                </itemizedlist>
-            </listitem>
-            <listitem>
+                <programlisting><prompt>$</prompt> vim /etc/swift/proxy-server.conf</programlisting>
+            </step>
+            <step>
                 <para>Find the <code>[filter:ratelimit]</code> section
                     and copy in the following configuration
                     section.</para>
@@ -494,70 +498,70 @@ paste.filter_factory = swift.common.middleware.ip_whitelist:filter_factory
 # set log_headers = False
 # set log_address = /dev/log
 deny_message = You shall not pass!</programlisting>
-            </listitem>
-            <listitem>
+            </step>
+            <step>
                 <para>Find the <code>[pipeline:main]</code> section
                     and add <code>ip_whitelist</code> to the list like
                     so. When you're done, save and close the
                     file.</para>
                 <programlisting>[pipeline:main]
 pipeline = catch_errors healthcheck cache ratelimit ip_whitelist authtoken keystoneauth proxy-logging proxy-server</programlisting>
-            </listitem>
-            <listitem>
+            </step>
+            <step>
                 <para>Restart the Swift Proxy service to make Swift
                     use your middleware. Start by switching to the
                     swift screen.</para>
-                <itemizedlist>
-                    <listitem>
+                <substeps>
+                    <step>
                         <para>Press Ctrl-A followed by pressing 2,
                             where 2 is the label of the screen. You
                             can also press Ctrl-A followed by pressing
                             n to go to the next screen.</para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>Press Ctrl-C to kill the service.</para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>Press Up Arrow to bring up the last
                             command.</para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>Press Enter to run it.</para>
-                    </listitem>
-                </itemizedlist>
-            </listitem>
-            <listitem>
+                    </step>
+                </substeps>
+            </step>
+            <step>
                 <para>Test your middleware with the Swift CLI. Start
                     by switching to the shell screen and finish by
                     switching back to the swift screen to check the
                     log output.</para>
-                <itemizedlist>
-                    <listitem>
+                <substeps>
+                    <step>
                         <para>Press Ctrl-A followed by pressing
                             0</para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>
                             <code>cd ~/devstack</code>
                         </para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>
                             <code>source openrc</code>
                         </para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>
                             <code>swift post middleware-test</code>
                         </para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>Press Ctrl-A followed by pressing
                             2</para>
-                    </listitem>
-                </itemizedlist>
-            </listitem>
-            <listitem>
+                    </step>
+                </substeps>
+            </step>
+            <step>
                 <para>Among the log statements you'll see the
                     lines.</para>
                 <programlisting>proxy-server Invalid user token - deferring reject downstreamproxy-server Authorizing from an overriding middleware ...
@@ -570,13 +574,13 @@ proxy-server Allow IPs: set(['203.0.113.68']) (txn: ...)</programlisting>
                     services. The last 2 statements are produced by
                     our middleware and show that the request was sent
                     from our DevStack instance and was allowed.</para>
-            </listitem>
-            <listitem>
+            </step>
+            <step xml:id="test_middleware_step">
                 <para>Test the middleware from outside of DevStack on
                     a remote machine that has access to your DevStack
                     instance.</para>
-                <itemizedlist>
-                    <listitem>
+                <substeps>
+                    <step>
                         <para>
                             <code>swift
                                 --os-auth-url=http://203.0.113.68:5000/v2.0/
@@ -585,15 +589,15 @@ proxy-server Allow IPs: set(['203.0.113.68']) (txn: ...)</programlisting>
                                 --os-password=devstack list
                                 middleware-test</code>
                         </para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>Container GET failed:
                             http://203.0.113.68:8080/v1/AUTH_.../middleware-test?format=json
                             403 Forbidden   You shall not pass!</para>
-                    </listitem>
-                </itemizedlist>
-            </listitem>
-            <listitem>
+                    </step>
+                </substeps>
+            </step>
+            <step>
                 <para>Check the Swift log statements again and among
                     the log statements you'll see the lines.</para>
                 <programlisting>proxy-server Invalid user token - deferring reject downstream
@@ -605,49 +609,49 @@ proxy-server IP 198.51.100.12 denied access to Account=AUTH_... Container=None. 
                 <para>Here we can see that the request was denied
                     because the remote IP address wasn't in the set of
                     allowed IPs.</para>
-            </listitem>
-            <listitem>
+            </step>
+            <step>
                 <para>Back on your DevStack instance add some metadata
                     to your container to allow the request from the
                     remote machine.</para>
-                <itemizedlist>
-                    <listitem>
+                <substeps>
+                    <step>
                         <para>Press Ctrl-A followed by pressing
                             0</para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para><code>swift post --meta
                                 allow-dev:198.51.100.12
                                 middleware-test</code>
                         </para>
-                    </listitem>
-                </itemizedlist>
-            </listitem>
-            <listitem>
-                <para>Now try the command from step #9 again and it
-                    will succeed.</para>
-            </listitem>
-        </orderedlist>
+                    </step>
+                </substeps>
+            </step>
+            <step>
+                <para>Now try the command from <xref
+                        linkend="test_middleware_step"/> again and it
+                    succeeds.</para>
+            </step>
+        </procedure>
         <para>Functional testing like this is not a replacement for
             proper unit and integration testing but it serves to get
             you started.</para>
         <para>A similar pattern can be followed in all other projects
             that use the Python Paste framework. Simply create a
             middleware module and plug it in through configuration.
-            The middleware will execute in sequence as part of that
-            project's pipeline and can call out to other services as
-            necessary. No project core code will even need to be
-            touched. Look for a <code>pipeline</code> value in the
-            project's <code>conf</code> or <code>ini</code>
-            configuration files in <code>/etc/&lt;project&gt;</code>
-            to identify projects that use Paste. </para>
+            The middleware runs in sequence as part of that project's
+            pipeline and can call out to other services as necessary.
+            No project core code is touched. Look for a
+                <code>pipeline</code> value in the project's
+                <code>conf</code> or <code>ini</code> configuration
+            files in <code>/etc/&lt;project&gt;</code> to identify
+            projects that use Paste. </para>
         <para>When your middleware is done, we encourage you to open
             source it and let the community know on the OpenStack
-            mailing list. Perhaps there are others in need of the same
-            functionality. They will be able to use your code, provide
-            feedback, and possibly contribute. If there is enough
-            support for it, perhaps you can propose that it be added
-            to the official Swift <link
+            mailing list. Perhaps others need the same functionality.
+            They can use your code, provide feedback, and possibly
+            contribute. If enough support exists for it, perhaps you
+            can propose that it be added to the official Swift <link
                 xlink:href="https://github.com/openstack/swift/tree/master/swift/common/middleware"
                 >middleware</link>
             (https://github.com/openstack/swift/tree/master/swift/common/middleware).</para>
@@ -698,7 +702,7 @@ proxy-server IP 198.51.100.12 denied access to Account=AUTH_... Container=None. 
             </listitem>
         </itemizedlist>
         <para>To demonstrate customizing OpenStack, we'll create an
-            example of a nova scheduler that will randomly place an
+            example of a nova scheduler that randomly places an
             instance on a subset of hosts depending on the originating
             IP address of the request and the prefix of the hostname.
             Such an example could be useful when you have a group of
@@ -747,27 +751,29 @@ proxy-server IP 198.51.100.12 denied access to Account=AUTH_... Container=None. 
                     </emphasis>. The nova scheduler service.</para>
             </listitem>
         </itemizedlist>
-        <para>Here are the steps to create the scheduler and plug it
-            in through configuration.</para>
-        <orderedlist>
-            <listitem>
+
+        <procedure>
+            <title>To create the scheduler and plug it in through
+                configuration:</title>
+
+            <step>
                 <para>The code for OpenStack lives in
                         <code>/opt/stack</code> so go to the nova
                     directory and edit your scheduler module.</para>
-                <itemizedlist>
-                    <listitem>
+                <substeps>
+                    <step>
                         <para>
                             <code>cd /opt/stack/nova</code>
                         </para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>
                             <code>vim nova/scheduler/ip_scheduler.py</code>
                         </para>
-                    </listitem>
-                </itemizedlist>
-            </listitem>
-            <listitem>
+                    </step>
+                </substeps>
+            </step>
+            <step>
                 <para>Copy in the following code. When you're done,
                     save and close the file.</para>
                 <programlisting><?db-font-size 65%?># vim: tabstop=4 shiftwidth=4 softtabstop=4
@@ -889,104 +895,105 @@ instance_type, host, reservations)</programlisting>
                     the <code>schedule_run_instance</code> method of
                     the scheduler above.</para>
                 <programlisting><?db-font-size 65%?>LOG.debug(_("context = %(context)s") % {'context': context.__dict__})LOG.debug(_("request_spec = %(request_spec)s") % locals())LOG.debug(_("filter_properties = %(filter_properties)s") % locals())</programlisting>
-            </listitem>
-            <listitem>
+            </step>
+            <step>
                 <para>To plug this scheduler into Nova you'll need to
                     edit one configuration file.</para>
                 <programlisting><?db-font-size 65%?>LOG$ vim /etc/nova/nova.conf</programlisting>
-            </listitem>
-            <listitem>
+            </step>
+            <step>
                 <para>Find the <code>compute_scheduler_driver</code>
                     config and change it like so.</para>
                 <programlisting><?db-font-size 65%?>LOGcompute_scheduler_driver=nova.scheduler.ip_scheduler.IPScheduler</programlisting>
-            </listitem>
-            <listitem>
+            </step>
+            <step>
                 <para>Restart the Nova scheduler service to make Nova
                     use your scheduler. Start by switching to the
                         <code>n-sch</code> screen.</para>
-                <itemizedlist>
-                    <listitem>
+                <substeps>
+                    <step>
                         <para>Press Ctrl-A followed by pressing
                             8</para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>Press Ctrl-C to kill the service</para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>Press Up Arrow to bring up the last
                             command</para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>Press Enter to run it</para>
-                    </listitem>
-                </itemizedlist>
-            </listitem>
-            <listitem>
+                    </step>
+                </substeps>
+            </step>
+            <step>
                 <para>Test your scheduler with the Nova CLI. Start by
                     switching to the shell screen and finish by
                     switching back to the <code>n-sch</code> screen to
                     check the log output.</para>
-                <itemizedlist>
-                    <listitem>
+                <substeps>
+                    <step>
                         <para>Press Ctrl-A followed by pressing
                             0</para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>
                             <code>cd ~/devstack</code>
                         </para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>
                             <code>source openrc</code>
                         </para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>
                             <code>IMAGE_ID=`nova image-list | egrep
                                 cirros | egrep -v "kernel|ramdisk" |
                                 awk '{print $2}'`</code>
                         </para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>
                             <code>nova boot --flavor 1 --image
                                 $IMAGE_ID scheduler-test</code>
                         </para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>Press Ctrl-A followed by pressing
                             8</para>
-                    </listitem>
-                </itemizedlist>
-            </listitem>
-            <listitem>
+                    </step>
+                </substeps>
+            </step>
+            <step>
                 <para>Among the log statements you'll see the
                     line.</para>
                 <programlisting><?db-font-size 65%?>LOG2013-02-27 17:39:31 DEBUG nova.scheduler.ip_scheduler [req-... demo demo] Request from 50.56.172.78 scheduled to
 devstack-nova from (pid=4118) _schedule /opt/stack/nova/nova/scheduler/ip_scheduler.py:73</programlisting>
-            </listitem>
-        </orderedlist>
+            </step>
+
+
+        </procedure>
+
         <para>Functional testing like this is not a replacement for
             proper unit and integration testing but it serves to get
             you started.</para>
         <para>A similar pattern can be followed in all other projects
             that use the driver architecture. Simply create a module
             and class that conform to the driver interface and plug it
-            in through configuration. Your code will execute when that
-            feature is used and can call out to other services as
-            necessary. No project core code will even need to be
-            touched. Look for a "driver" value in the project's conf
-            configuration files in <code>/etc/&lt;project&gt;</code>
-            to identify projects that use a driver
-            architecture.</para>
+            in through configuration. Your code runs when that feature
+            is used and can call out to other services as necessary.
+            No project core code is touched. Look for a "driver" value
+            in the project's conf configuration files in
+                <code>/etc/&lt;project&gt;</code> to identify projects
+            that use a driver architecture.</para>
         <para>When your scheduler is done, we encourage you to open
             source it and let the community know on the OpenStack
-            mailing list. Perhaps there are others in need of the same
-            functionality. They will be able to use your code, provide
-            feedback, and possibly contribute. If there is enough
-            support for it, perhaps you can propose that it be added
-            to the official Nova <link
+            mailing list. Perhaps others need the same functionality.
+            They can use your code, provide feedback, and possibly
+            contribute. If enough support exists for it, perhaps you
+            can propose that it be added to the official Nova <link
                 xlink:href="https://github.com/openstack/nova/tree/master/nova/scheduler"
                 >schedulers</link> (https://github.com/openstack/nova/tree/master/nova/scheduler).</para>
     </section>

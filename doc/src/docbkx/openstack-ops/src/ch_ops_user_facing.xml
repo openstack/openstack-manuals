@@ -12,18 +12,20 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="user_facing_operations">
+
     <title>User-facing Operations</title>
     <para>This guide is for OpenStack operators and does not seek to
         be an exhaustive reference for users, but as an operator it is
         important that you have a basic understanding of how to use
         the cloud facilities. This chapter looks at OpenStack from a
-        basic user perspective, which helps you understand you
-        users needs and determine when you get a trouble ticket
-        whether it is a user issue or a service issue. The main
-        concepts covered are images, flavors, security groups, blocks
-        storage and instances.</para>
+        basic user perspective, which helps you understand you users
+        needs and determine when you get a trouble ticket whether it
+        is a user issue or a service issue. The main concepts covered
+        are images, flavors, security groups, blocks storage and
+        instances.</para>
     <section xml:id="user_facing_images">
         <title>Images</title>
+        <?dbhtml stop-chunking?>
         <para>OpenStack images can often be thought of as "virtual
             machine templates". Images can also be standard
             installation mediums like ISO images. Essentially, they
@@ -49,8 +51,8 @@
                 can be found. Upon launching an instance of that
                 image, Glance accesses the image from the location
                 specified.</para>
-            <para>The <code>copy-from</code> option will copy the
-                image from the location specified into the
+            <para>The <code>copy-from</code> option copies the image
+                from the location specified into the
                     <code>/var/lib/glance/images</code> directory. The
                 same thing is done when using the STDIN redirection
                 such as shown in the example.</para>
@@ -62,10 +64,10 @@
             <title>Deleting Images</title>
             <para>To delete an image, just execute:</para>
             <programlisting><?db-font-size 65%?>$ glance image-delete &lt;image uuid&gt;</programlisting>
-            <para>Note that deleting an image will not affect
-                instances that are based off of the image. As well,
-                deleting images will not affect any snapshots that
-                were created from the image.</para>
+            <note>
+                <para>Deleting an image does not affect instances or
+                    snapshots that were based off the image.</para>
+            </note>
         </section>
         <section xml:id="other_cli">
             <title>Other CLI Options</title>
@@ -100,7 +102,7 @@
             <para>One interesting example is modifying the table of
                 images and the owner of that image. This can be easily
                 done if you simply display the unique ID of the owner,
-                this example will go one step further and display the
+                this example goes one step further and displays the
                 readable name of the owner:</para>
             <programlisting><?db-font-size 65%?>$ mysql&gt; select glance.images.id, glance.images.name, keystone.tenant.name, is_public from glance.images inner join keystone.tenant on glance.images.owner=keystone.tenant.id;</programlisting>
             <para>Another example is displaying all properties for a
@@ -110,6 +112,7 @@
     </section>
     <?hard-pagebreak?>
     <section xml:id="flavors">
+        <?dbhtml stop-chunking?>
         <title>Flavors</title>
         <para>Virtual hardware templates are called "flavors" in
             OpenStack, defining sizes for RAM, disk, number of cores
@@ -250,6 +253,7 @@
     </section>
     <?hard-pagebreak?>
     <section xml:id="security_groups">
+        <?dbhtml stop-chunking?>
         <title>Security groups</title>
         <para>One of the most common new user issues with OpenStack is
             failing to set appropriate security group when launching
@@ -283,26 +287,26 @@
             that security group. Obviously modifying existing groups
             can be done from this "edit" interface. There is a "Create
             Security Group" button on the main Access &amp; Security
-            page for creating new groups. We will discuss the terms
-            used in these fields when explaining the command line
-            equivalents below.</para>
+            page for creating new groups. We discuss the terms used in
+            these fields when we explain the command line
+            equivalents.</para>
         <para>From the command line you can get a list of security
             groups for the project you're acting in using the nova
             command:</para>
-        <para>
-            <code>$ nova secgroup-list</code>
-        </para>
+
+        <programlisting><prompt>$</prompt> nova secgroup-list</programlisting>
+
         <programlisting><?db-font-size 65%?>+---------+-------------+
-      | Name    | Description |
-      +---------+-------------+
-      | default | default     |
-      | open    | all ports   |
-      +---------+-------------+
+| Name    | Description |
++---------+-------------+
+| default | default     |
+| open    | all ports   |
++---------+-------------+
       </programlisting>
         <para>To view the details of the "open" security group:</para>
-        <para>
-            <code>$ nova secgroup-list-rules open</code>
-        </para>
+
+        <programlisting><prompt>$</prompt> nova secgroup-list-rules open</programlisting>
+
         <programlisting><?db-font-size 65%?>+-------------+-----------+---------+-----------+--------------+ 
  | IP Protocol | From Port | To Port | IP Range  | Source Group | 
  +-------------+-----------+---------+-----------+--------------+ 
@@ -356,10 +360,10 @@ $ nova secgroup-add-rule global_http tcp 80 80 0.0.0.0/0
             sets can be built up through multiple invocations of nova
             secgroup-add-rule. For example if you want to pass both
             http and https traffic:</para>
-        <para>
-            <code>$ nova secgroup-add-rule global_http tcp 443 443
-                0.0.0.0/0</code>
-        </para>
+
+        <programlisting><prompt>$</prompt> nova secgroup-add-rule global_http tcp 443 443
+                0.0.0.0/0</programlisting>
+
         <programlisting><?db-font-size 65%?>+-------------+-----------+---------+-----------+--------------+
 | IP Protocol | From Port | To Port | IP Range  | Source Group |
 +-------------+-----------+---------+-----------+--------------+
@@ -388,13 +392,13 @@ $ nova secgroup-add-rule global_http tcp 80 80 0.0.0.0/0
         <para>usage: nova secgroup-add-group-rule &lt;secgroup&gt;
             &lt;source-group&gt; &lt;ip-proto&gt; &lt;from-port&gt;
             &lt;to-port&gt; </para>
-        <para> $ nova secgroup-add-group-rule cluster global-http tcp
-            22 22 </para>
-        <para> The "cluster" rule will allow ssh access from any other
-            Instance that uses the "global-http" group. </para>
+        <programlisting><prompt>$</prompt> nova secgroup-add-group-rule cluster global-http tcp 22 22</programlisting>
+        <para> The "cluster" rule allows ssh access from any other
+            instance that uses the "global-http" group. </para>
     </section>
     <?hard-pagebreak?>
     <section xml:id="user_facing_block_storage">
+        <?dbhtml stop-chunking?>
         <title>Block Storage</title>
         <para>OpenStack volumes are persistent block storage devices
             which may be attached and detached from instances, but can
@@ -425,31 +429,29 @@ $ nova secgroup-add-rule global_http tcp 80 80 0.0.0.0/0
         <para>To add new volumes you only need a name and a volume
             size in gigabytes, ether put these into the "create
             volume" web form or using the command line:</para>
-        <programlisting><?db-font-size 65%?>$ cinder create --display-name test-volume 10</programlisting>
-        <para>This will create a 10GB volume named "test-volume". To
-            list existing volumes and the instances they are connected
-            to if any:</para>
-        <programlisting><?db-font-size 65%?>$ cinder list     </programlisting>
+        <programlisting><?db-font-size 65%?><prompt>$</prompt> cinder create --display-name test-volume 10</programlisting>
+        <para>This creates a 10 GB volume named "test-volume." To list
+            existing volumes and the instances they are connected to
+            if any:</para>
+        <programlisting><?db-font-size 65%?><prompt>$</prompt> cinder list     </programlisting>
         <programlisting><?db-font-size 65%?>+------------+---------+--------------------+------+-------------+-------------+
 |     ID     | Status  |    Display Name    | Size | Volume Type | Attached to |
 +------------+---------+--------------------+------+-------------+-------------+
 | 0821...19f |  active |    test-volume     |  10  |     None    |             |
-+------------+---------+--------------------+------+-------------+-------------+
-      
-      </programlisting>
++------------+---------+--------------------+------+-------------+-------------+    </programlisting>
         <para>The Block Storage service also allows for creating
             snapshots of volumes. Remember this is a block level
-            snapshot which will be crash consistent so it is best if
-            the volume is not connected to an instance when the
-            snapshot is taken and second best if the volume is not in
-            use on the instance it is attached to. If the volume is
-            under heavy use, the snapshot may have an inconsistent
-            file system. In fact, by default, the volume service will
-            not take a snapshot of a volume that is attached to an
-            image, though it can be forced. To take a volume snapshot
-            either select "Create Snapshot" from the actions column
-            next to the volume name in the dashboard volume page, or
-            from the command line:</para>
+            snapshot which is crash consistent so it is best if the
+            volume is not connected to an instance when the snapshot
+            is taken and second best if the volume is not in use on
+            the instance it is attached to. If the volume is under
+            heavy use, the snapshot may have an inconsistent file
+            system. In fact, by default, the volume service does not
+            take a snapshot of a volume that is attached to an image,
+            though it can be forced. To take a volume snapshot either
+            select "Create Snapshot" from the actions column next to
+            the volume name in the dashboard volume page, or from the
+            command line:</para>
         <programlisting><?db-font-size 65%?>usage: cinder snapshot-create [--force &lt;True|False&gt;]
 [--display-name &lt;display-name&gt;]
 [--display-description &lt;display-description&gt;]
@@ -467,10 +469,11 @@ Optional snapshot description. (Default=None)</programlisting>
                 volume's UUID. First try the log files on the cloud
                 controller and then try the storage node where they
                 volume was attempted to be created:</para>
-            <programlisting><?db-font-size 65%?># grep 903b85d0-bacc-4855-a261-10843fc2d65b /var/log/cinder/*.log </programlisting>
+            <programlisting><?db-font-size 65%?><prompt>#</prompt> grep 903b85d0-bacc-4855-a261-10843fc2d65b /var/log/cinder/*.log </programlisting>
         </section>
     </section>
     <section xml:id="instances">
+        <?dbhtml stop-chunking?>
         <title>Instances</title>
         <para>Instances are the running virtual machines within an
             OpenStack cloud. This section deals with how to work with
@@ -480,15 +483,15 @@ Optional snapshot description. (Default=None)</programlisting>
             <title>Starting Instances</title>
             <para>To launch an instance you need to select an image, a
                 flavor, and a name. The name needn't be unique but
-                your life will be simpler if it is because many tools
-                will use the name in place of UUID so long as the name
-                is unique. This can be done from the dashboard either
+                your life is simpler if it is because many tools will
+                use the name in place of UUID so long as the name is
+                unique. This can be done from the dashboard either
                 from the "Launch Instance" button on the "Instances"
                 page or by selecting the "Launch" action next to an
                 image or snapshot on the "Images &amp; Snapshots"
                 page.</para>
             <para>On the command line:</para>
-            <programlisting><?db-font-size 65%?>$ nova boot --flavor &lt;flavor&gt; --image &lt;image&gt; &lt;name&gt;</programlisting>
+            <programlisting><?db-font-size 65%?><prompt>$</prompt> nova boot --flavor &lt;flavor&gt; --image &lt;image&gt; &lt;name&gt;</programlisting>
             <para>There are a number of optional items that can be
                 specified. You should read the rest of this instances
                 section before trying to start one, but this is the
@@ -497,9 +500,9 @@ Optional snapshot description. (Default=None)</programlisting>
             <para>To delete instances from the dashboard select the
                 "Terminate instance" action next to the instance on
                 the "Instances" page, from the command line:</para>
-            <programlisting><?db-font-size 65%?>$ nova delete &lt;instance-uuid&gt;</programlisting>
+            <programlisting><?db-font-size 65%?><prompt>$</prompt> nova delete &lt;instance-uuid&gt;</programlisting>
             <para>It is important to note that powering off an
-                instance will not terminate it in the OpenStack
+                instance does not terminate it in the OpenStack
                 sense.</para>
         </section>
         <section xml:id="instance_boot_failures">
@@ -515,9 +518,9 @@ Optional snapshot description. (Default=None)</programlisting>
                 In these cases the error is apparent doing a
                     <code>nova show</code> on the faulted
                 instance.</para>
-            <para>
-                <code>$ nova show test-instance</code>
-            </para>
+
+            <programlisting><prompt>$</prompt> nova show test-instance</programlisting>
+
             <programlisting><?db-font-size 65%?>+------------------------+--------------------------------------------------------------\
 | Property               | Value                                                        /
 +------------------------+--------------------------------------------------------------\
@@ -542,8 +545,7 @@ Optional snapshot description. (Default=None)</programlisting>
 | tenant_id              | 98333a1a28e746fa8c629c83a818ad57                             /
 | updated                | 2013-03-01T19:28:26Z                                         \
 | user_id                | a1ef823458d24a68955fec6f3d390019                             /
-+------------------------+--------------------------------------------------------------\
-      </programlisting>
++------------------------+--------------------------------------------------------------\   </programlisting>
             <para>In this case looking at the "fault" message shows
                 NoValidHost indicating the scheduler was unable to
                 match the instance requirements.</para>
@@ -557,7 +559,7 @@ Optional snapshot description. (Default=None)</programlisting>
             <para>Using <code>nova show</code> as an admin user will
                 show the compute node the instance was scheduled on as
                     <code>hostId</code>, if the instance failed during
-                scheduling this field will be blank.</para>
+                scheduling this field is blank.</para>
         </section>
         <section xml:id="instance_specific_data">
             <title>Instance-specific Data</title>
@@ -566,21 +568,21 @@ Optional snapshot description. (Default=None)</programlisting>
                 metadata service, and file injection.</para>
             <para>Users can generate and register ssh keys using the
                 nova command</para>
-            <programlisting><?db-font-size 65%?>$ nova keypair-add mykey &gt; mykey.pem</programlisting>
-            <para>This will create a key named mykey which you can
+            <programlisting><?db-font-size 65%?><prompt>$</prompt> nova keypair-add mykey &gt; mykey.pem</programlisting>
+            <para>This creates a key named mykey which you can
                 associate with instances. The file mykey.pem is the
                 private key which should be saved to a secure location
-                as it will allow root access to instances the mykey
-                key is associated with.</para>
+                as it allows root access to instances the mykey key is
+                associated with.</para>
             <para>You can register an existing public key with
                 OpenStack using this command</para>
-            <programlisting><?db-font-size 65%?>$ nova keypair-add --pub-key mykey.pub mykey</programlisting>
-            <para>You will need to have the matching private key to
-                access instances associated with this key.</para>
+            <programlisting><?db-font-size 65%?><prompt>$</prompt> nova keypair-add --pub-key mykey.pub mykey</programlisting>
+            <para>You must have the matching private key to access
+                instances associated with this key.</para>
             <para> To associate a key with an instance on boot add
                 --key_name mykey to your command line for
                 example:</para>
-            <programlisting><?db-font-size 65%?>$ nova boot --image ubuntu-cloudimage --flavor 1 --key_name mykey</programlisting>
+            <programlisting><?db-font-size 65%?><prompt>$</prompt> nova boot --image ubuntu-cloudimage --flavor 1 --key_name mykey</programlisting>
             <para>When booting a server, you can also add metadata, so
                 that you can more easily identify it amongst other
                 running instances. Use the --meta option with a
@@ -588,12 +590,12 @@ Optional snapshot description. (Default=None)</programlisting>
                 both the key and the value. For example, you could add
                 a description and also the creator of the
                 server.</para>
-            <programlisting><?db-font-size 65%?>$ nova boot --image=test-image --flavor=1 smallimage --meta description='Small test image'</programlisting>
+            <programlisting><?db-font-size 65%?><prompt>$ </prompt>nova boot --image=test-image --flavor=1 smallimage --meta description='Small test image'</programlisting>
             <para>When viewing the server information, you can see the
                 metadata included on the metadata line:</para>
-            <para>
-                <code> $ nova show smallimage</code>
-            </para>
+
+            <programlisting><prompt>$</prompt> nova show smallimage</programlisting>
+
             <programlisting><?db-font-size 65%?>+------------------------+-----------------------------------------+
 |     Property           |                   Value                 |
 +------------------------+-----------------------------------------+
@@ -634,7 +636,7 @@ Optional snapshot description. (Default=None)</programlisting>
                 system and then passed in at instance creation with
                 the flag --user-data &lt;user-data-file&gt; for
                 example:</para>
-            <programlisting><?db-font-size 65%?>$ nova boot --image ubuntu-cloudimage --flavor 1 --user-data mydata.file </programlisting>
+            <programlisting><?db-font-size 65%?><prompt>$</prompt> nova boot --image ubuntu-cloudimage --flavor 1 --user-data mydata.file </programlisting>
             <para>Arbitrary local files can also be placed into the
                 instance file system at creation time using the --file
                 &lt;dst-path=src-path&gt; option. You may store up to
@@ -643,7 +645,7 @@ Optional snapshot description. (Default=None)</programlisting>
                 that you want to put on the instance rather than using
                 the regular ssh key injection for some reason you can
                 use the following command:</para>
-            <programlisting><?db-font-size 65%?>$ nova boot --image ubuntu-cloudimage --flavor 1 --file /root/.ssh/authorized_keys=special_authorized_keysfile</programlisting>
+            <programlisting><?db-font-size 65%?><prompt>$</prompt> nova boot --image ubuntu-cloudimage --flavor 1 --file /root/.ssh/authorized_keys=special_authorized_keysfile</programlisting>
 
         </section>
     </section>
@@ -662,8 +664,8 @@ Optional snapshot description. (Default=None)</programlisting>
         <para>It is also possible to add and remove security groups
             when an instance is running. Currently this is only
             available through the command line tools.</para>
-        <programlisting><?db-font-size 65%?>$ nova add-secgroup &lt;server&gt; &lt;securitygroup&gt;</programlisting>
-        <programlisting><?db-font-size 65%?>$ nova remove-secgroup &lt;server&gt; &lt;securitygroup&gt;</programlisting>
+        <programlisting><?db-font-size 65%?><prompt>$</prompt> nova add-secgroup &lt;server&gt; &lt;securitygroup&gt;</programlisting>
+        <programlisting><?db-font-size 65%?><prompt>$</prompt> nova remove-secgroup &lt;server&gt; &lt;securitygroup&gt;</programlisting>
     </section>
     <section xml:id="floating_ips">
         <title>Floating IPs</title>
@@ -672,8 +674,9 @@ Optional snapshot description. (Default=None)</programlisting>
             are available for use. To allocate a Floating IP to a
             project there is an "Allocate IP to Project" button on the
             "Access &amp; Security" page of the dashboard or on the
-            command line using <code>nova floating-ip-create</code>
-        </para>
+            command line by using:</para>
+        <programlisting><prompt>$</prompt> nova floating-ip-create</programlisting>
+
         <para>Once allocated, Floating IP can be assigned to running
             instances from the Dashboard either by selecting the
             "Associate Floating IP" from the actions drop down next to
@@ -682,108 +685,126 @@ Optional snapshot description. (Default=None)</programlisting>
             on the "Instances" page. The inverse action, "Dissociate
             Floating IP", is only available from the "Access &amp;
             Security" page and not from the Instances page.</para>
-        <para>From the command line these tasks are done with
-                <code>nova add-floating-ip &lt;server&gt;
-                &lt;address&gt;</code> and <code>nova
-                remove-floating-ip &lt;server&gt;
-                &lt;address&gt;</code>
-        </para>
+        <para>From the command line, enter the following command to
+            complete these tasks:</para>
+        <programlisting><prompt>$</prompt> nova add-floating-ip &lt;server&gt;
+                &lt;address&gt;</programlisting>
+        <programlisting><prompt>$</prompt> nova remove-floating-ip &lt;server&gt; &lt;address&gt;</programlisting>
+
     </section>
     <section xml:id="attach_block_storage">
         <title>Attaching Block Storage</title>
-        <para>Block storage can be attached to instances from the
-            Dashboard on the "Volumes" page using the "Edit
-            Attachments" action next to the volume you wish to attach.
-            From the command line this is done with:</para>
-        <programlisting><?db-font-size 65%?>$ nova volume-attach &lt;server&gt; &lt;volume&gt; </programlisting>
+        <para>You can attach block storage to instances from the
+            dashboard on the <guilabel>Volumes</guilabel> page. Click
+            the <guibutton>Edit Attachments</guibutton> action next to
+            the volume you wish to attach. </para>
+        <para>To perform this action from command line, run the
+            following command: </para>
+        <programlisting><?db-font-size 65%?><prompt>$</prompt> nova volume-attach &lt;server&gt; &lt;volume&gt; </programlisting>
         <para>You can also specify block device mapping at instance
-            boot time when using the nova command line tool
-            using:</para>
-        <programlisting><?db-font-size 65%?> --block-device-mapping &lt;dev-name=mapping&gt; </programlisting>
+            boot time through the nova command-line client, as
+            follows:</para>
+        <programlisting><?db-font-size 65%?>--block-device-mapping &lt;dev-name=mapping&gt; </programlisting>
         <para>The block device mapping format is
-            &lt;dev-name=&lt;id&gt;:&lt;type&gt;:&lt;size(GB)&gt;:&lt;delete-on-terminate&gt;,
+                <code>&lt;dev-name=&lt;id&gt;:&lt;type&gt;:&lt;size(GB)&gt;:&lt;delete-on-terminate&gt;</code>,
             where:</para>
-        <para>
-            <literal xmlns:db="http://docbook.org/ns/docbook"
-                >dev-name</literal>
-        </para>
-        <para>A device name where the volume will be attached in the
-            system at <code>/dev/<replaceable>dev_name</replaceable>
-            </code>.</para>
-        <para>
-            <literal xmlns:db="http://docbook.org/ns/docbook"
-                >id</literal>
-        </para>
-        <para>The ID of the volume to boot from, as shown in the
-            output of nova volume-list.</para>
-        <para>
-            <literal xmlns:db="http://docbook.org/ns/docbook"
-                >type</literal>
-        </para>
-        <para>This is either <literal
-                xmlns:db="http://docbook.org/ns/docbook"
-                >snap</literal>, which means that the volume was
-            created from a snapshot, or anything other than <literal
-                xmlns:db="http://docbook.org/ns/docbook"
-                >snap</literal> (a blank string is valid). In the
-            example above, the volume was not created from a snapshot,
-            so we will leave this field blank in our example
-            below.</para>
-        <para>
-            <literal xmlns:db="http://docbook.org/ns/docbook">size
-                (GB)</literal>
-        </para>
-        <para>The size of the volume, in GB. It is safe to leave this
-            blank and have the Compute service infer the size.</para>
-        <para>
-            <literal xmlns:db="http://docbook.org/ns/docbook"
-                >delete-on-terminate</literal>
-        </para>
-        <para>A boolean to indicate whether the volume should be
-            deleted when the instance is terminated. True can be
-            specified as <literal
-                xmlns:db="http://docbook.org/ns/docbook"
-                >True</literal> or <literal
-                xmlns:db="http://docbook.org/ns/docbook">1</literal>.
-            False can be specified as <literal
-                xmlns:db="http://docbook.org/ns/docbook"
-                >False</literal> or <literal
-                xmlns:db="http://docbook.org/ns/docbook"
-            >0</literal>.</para>
+        <variablelist>
+            <varlistentry>
+                <term>dev-name</term>
+                <listitem>
+                    <para>A device name where the volume is attached
+                        in the system at
+                                <code>/dev/<replaceable>dev_name</replaceable>
+                        </code>.</para>
+                    <para>
+                        <literal
+                            xmlns:db="http://docbook.org/ns/docbook"
+                            >id</literal>
+                    </para>
+                    <para>The ID of the volume to boot from, as shown
+                        in the output of nova volume-list.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>type</term>
+                <listitem>
+                    <para>Either <literal
+                            xmlns:db="http://docbook.org/ns/docbook"
+                            >snap</literal>, which means that the
+                        volume was created from a snapshot, or
+                        anything other than <literal
+                            xmlns:db="http://docbook.org/ns/docbook"
+                            >snap</literal> (a blank string is valid).
+                        In the example above, the volume was not
+                        created from a snapshot, so we leave this
+                        field blank in our example below.</para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>size (GB)</term>
+                <listitem>
+                    <para>The size of the volume, in GB. It is safe to
+                        leave this blank and have the Compute service
+                        infer the size.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>delete-on-terminate</term>
+                <listitem>
+                    <para>A boolean to indicate whether the volume
+                        should be deleted when the instance is
+                        terminated. True can be specified as <literal
+                            xmlns:db="http://docbook.org/ns/docbook"
+                            >True</literal> or <literal
+                            xmlns:db="http://docbook.org/ns/docbook"
+                            >1</literal>. False can be specified as
+                            <literal
+                            xmlns:db="http://docbook.org/ns/docbook"
+                            >False</literal> or <literal
+                            xmlns:db="http://docbook.org/ns/docbook"
+                            >0</literal>.</para>
+                </listitem>
+            </varlistentry>
+
+
+
+        </variablelist>
         <para>If you have previously prepared the block storage with a
             bootable file system image it is even possible to boot
             from persistent block storage. The following example will
             attempt boot from volume with ID=<literal
                 xmlns:db="http://docbook.org/ns/docbook">13</literal>,
-            it will not delete on terminate. Replace the <literal
+            it does not delete on terminate. Replace the <literal
                 xmlns:db="http://docbook.org/ns/docbook"
                 >--image</literal> flag with a valid image on your
             system, and the <literal
                 xmlns:db="http://docbook.org/ns/docbook"
                 >--key-name</literal> with a valid keypair
             name:</para>
-        <programlisting><?db-font-size 65%?>$ nova boot --image f4addd24-4e8a-46bb-b15d-fae2591f1a35 --flavor 2 --key-name mykey \
-      --block-device-mapping vda=13:::0 boot-from-vol-test</programlisting>
+        <programlisting><?db-font-size 65%?><prompt>$</prompt> nova boot --image f4addd24-4e8a-46bb-b15d-fae2591f1a35 --flavor 2 --key-name mykey \
+   --block-device-mapping vda=13:::0 boot-from-vol-test</programlisting>
         <para>Because of bug <link
                 xlink:title="OpenStack Image Service"
                 xlink:href="https://bugs.launchpad.net/nova/+bug/1008622"
                 >#1008622</link>
             (https://bugs.launchpad.net/nova/+bug/1008622) you must
             specify an image when booting from a volume, even though
-            this image will not be used, this is marked as fixed in
+            this image is not used, this is marked as fixed in
             development at this time, but still affect the Folsom
             release documented in this guide.</para>
         <para>To boot normally form an image and attach block storage,
             map to a device other than vda.</para>
     </section>
     <section xml:id="snapsnots">
+        <?dbhtml stop-chunking?>
         <title>Taking Snapshots</title>
         <para>OpenStack's snapshot mechanism allows you to create new
             images from running instances. This is a very convenient
             for upgrading base images or taking a published image and
             customizing for local use. To snapshot a running instance
             to an image using the CLI:</para>
-        <programlisting><?db-font-size 65%?>$ nova image-create &lt;instance name or uuid&gt; &lt;name of new image&gt;</programlisting>
+        <programlisting><?db-font-size 65%?><prompt>$</prompt> nova image-create &lt;instance name or uuid&gt; &lt;name of new image&gt;</programlisting>
         <para>The Dashboard interface for snapshots can be confusing
             because the Images &amp; Snapshots page splits content up
             into:</para>
@@ -875,25 +896,25 @@ Optional snapshot description. (Default=None)</programlisting>
                 running services normally.</para>
             <para>To deal with the "dirty" buffer issue, we recommend
                 using the sync command before snapshotting:</para>
-            <programlisting><?db-font-size 65%?># sync</programlisting>
+            <programlisting><?db-font-size 65%?><prompt>#</prompt> sync</programlisting>
             <para>Running <code>sync</code> writes dirty buffer
                 (buffered block that have been modified but not
                 written yet to the disk block) to disk.</para>
             <para>Just running <code>sync</code> is not enough to
                 ensure the file system is consistent. We recommend you
-                use the <code>fsfreeze</code> tool, which will halt
-                new access to the file system and create a stable
-                image on disk that is suitable for snapshotting.
-                fsfreeze supports several file systems, including
-                ext3, ext4, and XFS. If your virtual machine instance
-                is running on Ubuntu, install the util-linux package
-                to get fsfreeze:</para>
-            <programlisting><?db-font-size 65%?># apt-get install util-linux</programlisting>
+                use the <code>fsfreeze</code> tool, which halts new
+                access to the file system and create a stable image on
+                disk that is suitable for snapshotting. fsfreeze
+                supports several file systems, including ext3, ext4,
+                and XFS. If your virtual machine instance is running
+                on Ubuntu, install the util-linux package to get
+                fsfreeze:</para>
+            <programlisting><?db-font-size 65%?><prompt>#</prompt> apt-get install util-linux</programlisting>
             <para>If your operating system doesn't have a version of
                 fsfreeze available, you can use xfs_freeze instead,
                 which is available on Ubuntu in the xfsprogs package.
-                Despite the "xfs" in the name, xfs_freeze will also
-                work on ext3 and ext4 if you are using a Linux kernel
+                Despite the "xfs" in the name, xfs_freeze also works
+                on ext3 and ext4 if you are using a Linux kernel
                 version 2.6.29 or greater, since it works at the
                 virtual file system (VFS) level starting at 2.6.29.
                 xfs_freeze supports the same command-line arguments as
@@ -914,10 +935,10 @@ Optional snapshot description. (Default=None)</programlisting>
             <para>To freeze the volume in preparation for
                 snapshotting, you would do, as root, inside of the
                 instance:</para>
-            <programlisting><?db-font-size 65%?># fsfreeze -f /mnt</programlisting>
-            <para>Note: the file system <emphasis role="bold">must be
-                    mounted</emphasis> before running the fsfreeze
-                command.</para>
+            <programlisting><?db-font-size 65%?><prompt>#</prompt> fsfreeze -f /mnt</programlisting>
+            <para>You <emphasis role="bold">must mount the file
+                    system</emphasis> before you run the
+                    <command>fsfreeze</command> command.</para>
             <para>When the "fsfreeze -f" command is issued, all
                 ongoing transactions in the file system are allowed to
                 complete, new write system calls are halted, and other
@@ -926,27 +947,28 @@ Optional snapshot description. (Default=None)</programlisting>
                 information are written to disk.</para>
             <para>Once the volume has been frozen, do not attempt to
                 read from or write to the volume, as these operations
-                will hang. The operating system will stop every I/O
-                operation and any I/O attempts will be delayed until
-                the file system has been unfrozen.</para>
+                hang. The operating system stops every I/O operation
+                and any I/O attempts is delayed until the file system
+                has been unfrozen.</para>
             <para>Once you have issued the fsfreeze command, it is
                 safe to perform the snapshot. For example, if your
                 instance was named mon-instance, and you wanted to
                 snapshot it to an image, named mon-snapshot, you could
                 now run the following:</para>
-            <programlisting><?db-font-size 65%?>$ nova image-create mon-instance mon-snapshot</programlisting>
-            <para>When the snapshot is done, you can thaw the files
-                ystem with the following command, as root, inside of
+            <programlisting><?db-font-size 65%?><prompt>$</prompt> nova image-create mon-instance mon-snapshot</programlisting>
+            <para>When the snapshot is done, you can thaw the file
+                system with the following command, as root, inside of
                 the instance:</para>
-            <programlisting><?db-font-size 65%?># fsfreeze -u /mnt</programlisting>
+            <programlisting><?db-font-size 65%?><prompt>#</prompt> fsfreeze -u /mnt</programlisting>
             <para>If you want to backup the root files ystem, you
                 can't simply do the command above because it will
                 freeze the prompt. Instead, run the following
                 one-liner, as root, inside of the instance:</para>
-            <programlisting><?db-font-size 65%?># fsfreeze -f / &amp;&amp; sleep 30 &amp;&amp; fsfreeze -u /</programlisting>
+            <programlisting><?db-font-size 65%?><prompt>#</prompt> fsfreeze -f / &amp;&amp; sleep 30 &amp;&amp; fsfreeze -u /</programlisting>
         </section>
     </section>
     <section xml:id="database_instances">
+        <?dbhtml stop-chunking?>
         <title>Instances in the Database</title>
         <para>While instance information is stored in a number of
             database tables, the table operators are most likely to
@@ -977,9 +999,8 @@ Optional snapshot description. (Default=None)</programlisting>
             it is launched. The "display-name" is initially the same
             as hostname but can be reset using the nova rename
             command.</para>
-        <para>There's also a number of time related fields that are
-            useful in tracking when state changes happened on an
-            instance:</para>
+        <para>A number of time related fields are useful for tracking
+            when state changes happened on an instance:</para>
         <itemizedlist role="compact">
             <listitem>
                 <para>created_at</para>

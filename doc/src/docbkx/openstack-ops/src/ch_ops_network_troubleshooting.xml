@@ -12,6 +12,7 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="network_troubleshooting">
+    <?dbhtml stop-chunking?>
     <title>Network Troubleshooting</title>
     <para>Network troubleshooting can unfortunately be a very
         difficult and confusing procedure. A network issue can cause a
@@ -74,8 +75,9 @@
                 <para> If you run FlatDHCPManager, one bridge is on
                     the compute node. If you run VlanManager, one
                     bridge exists for each VLAN. </para>
-                <para> You can see what bridge the packet will use by
-                    running the command: <code>$ brctl show</code>
+                <para>To see which bridge the packet will use, run the
+                    command:
+                    <programlisting><prompt>$</prompt> brctl show</programlisting>
                 </para>
                 <para>Look for the vnet NIC. You can also reference
                     nova.conf and look for the flat_interface_bridge
@@ -104,7 +106,7 @@
             reply.</para>
         <para>From this path, you can see that a single packet travels
             across four different NICs. If a problem occurs with any
-            of these NICs, you will experience a network issue.</para>
+            of these NICs, a network issue occurs.</para>
     </section>
     <section xml:id="failure_in_path">
         <title>Finding a Failure in the Path</title>
@@ -370,14 +372,14 @@ root 2439 0.0 0.0 27512 472 ? S Feb26 0:00 /usr/sbin/dnsmasq --strict-order --bi
         <title>Debugging DNS Issues</title>
         <para>If you are able to ssh into an instance, but it takes a
             very long time (on the order of a minute) to get a prompt,
-            then you may be having a DNS issue. The reason a DNS issue
+            then you might have a DNS issue. The reason a DNS issue
             can cause this problem is that the ssh server does a
             reverse DNS lookup on the IP address that you are
             connecting from. If DNS lookup isn't working on your
-            instances, then you will need to wait for the DNS reverse
-            lookup timeout to occur for the ssh login process to
+            instances, then you must wait for the DNS reverse lookup
+            timeout to occur for the ssh login process to
             complete.</para>
-        <para>A quick way to check if DNS is working is to try to
+        <para>A quick way to check if DNS is working is to 
             resolve a hostname inside your instance using the
                 <code>host</code> command. If DNS is working, you
             should see:</para>
