@@ -12,6 +12,7 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="backup_and_recovery">
+    <?dbhtml stop-chunking?>
     <title>Backup and Recovery</title>
     <para>Standard backup best practices apply when creating your
         OpenStack backup policy. For example, how often to backup your
@@ -40,13 +41,12 @@
         <para>While OpenStack is composed of many components and
             moving parts, backing up the critical data is quite
             simple.</para>
-        <para>Please note, though, that this chapter will only talk
-            about backing up configuration files and databases that
-            are needed for the various OpenStack components to run.
-            This chapter will not talk about backing up objects inside
-            Object Storage or data contained inside Block Storage.
-            Generally these areas are left for the user to back up on
-            their own.</para>
+        <para>This chapter describes only how to back up configuration
+            files and databases that the various OpenStack components
+            need to run. This chapter does not describe how to back up
+            objects inside Object Storage or data contained inside
+            Block Storage. Generally these areas are left for the user
+            to back up on their own.</para>
     </section>
     <section xml:id="database_backups">
         <title>Database Backups</title>
@@ -67,8 +67,7 @@
         <para>where <code>nova</code> is the database you want to back
             up.</para>
         <para>You can easily automate this process by creating a cron
-            job that will run the following script once per
-            day:</para>
+            job that runs the following script once per day:</para>
         <programlisting>#!/bin/bash
 backup_dir="/var/lib/backups/mysql"
 filename="${backup_dir}/mysql-`hostname`-`eval date +%Y%m%d`.sql.gz"
@@ -76,8 +75,8 @@ filename="${backup_dir}/mysql-`hostname`-`eval date +%Y%m%d`.sql.gz"
 /usr/bin/mysqldump --opt --all-databases | gzip &gt; $filename 
 # Delete backups older than 7 days
 find $backup_dir -ctime +7 -type f -delete</programlisting>
-        <para>This script will dump the entire MySQL database and
-            delete any backups older than 7 days.</para>
+        <para>This script dumps the entire MySQL database and delete
+            any backups older than 7 days.</para>
     </section>
     <section xml:id="file_system_backups">
         <title>File System Backups</title>
@@ -95,15 +94,15 @@ find $backup_dir -ctime +7 -type f -delete</programlisting>
                 <code>/var/lib/nova</code> is another important
                 directory to backup. The exception to this is the
                     <code>/var/lib/nova/instances</code> subdirectory
-                on compute nodes. This subdirectory will contain the
-                KVM images of running instances. You would only want
-                to back up this directory if you need to maintain
-                backup copies of all instances. Under most
-                circumstances you will not need to do this, but this
-                can vary from cloud to cloud and your service levels.
-                Also be aware that making a backup of a live KVM
-                instance will probably cause that instance to not boot
-                properly if it is ever restored from a backup.</para>
+                on compute nodes. This subdirectory contains the KVM
+                images of running instances. You would only want to
+                back up this directory if you need to maintain backup
+                copies of all instances. Under most circumstances, you
+                do not need to do this, but this can vary from cloud
+                to cloud and your service levels. Also be aware that
+                making a backup of a live KVM instance can cause that
+                instance to not boot properly if it is ever restored
+                from a backup.</para>
         </section>
         <section xml:id="image_catalog_delivery">
             <title>Image Catalog and Delivery</title>
@@ -117,13 +116,13 @@ find $backup_dir -ctime +7 -type f -delete</programlisting>
                     <code>/var/lib/glance/images</code>. If you are
                 using a file-based back-end of Glance,
                     <code>/var/lib/glance/images</code> is where the
-                images will be stored and care should be taken.</para>
+                images are stored and care should be taken.</para>
             <para>There are two ways to ensure stability with this
                 directory. The first is to make sure this directory is
-                run on a RAID array. This way if a disk fails, the
-                directory will still be available. The second way is
-                to use a tool such as rsync to replicate the images to
-                another server:</para>
+                run on a RAID array. If a disk fails, the directory is
+                available. The second way is to use a tool such as
+                rsync to replicate the images to another
+                server:</para>
             <para># rsync -az --progress /var/lib/glance/images
                 backup-server:/var/lib/glance/images/</para>
         </section>
@@ -154,11 +153,12 @@ find $backup_dir -ctime +7 -type f -delete</programlisting>
                 <code>/etc/swift</code> is very important to have
                 backed up. This directory contains the Swift
                 configuration files as well as the ring files and ring
-                builder files, which if lost render the data on your
-                cluster inaccessible. A best practice is to copy the
-                builder files to all storage nodes along with the ring
-                files. This way you will have multiple backups copies
-                spread throughout your storage cluster.</para>
+                    <glossterm>builder file</glossterm>s, which if
+                lost render the data on your cluster inaccessible. A
+                best practice is to copy the builder files to all
+                storage nodes along with the ring files. Multiple
+                backups copies are spread throughout your storage
+                cluster.</para>
         </section>
     </section>
     <section xml:id="recovering_backups">

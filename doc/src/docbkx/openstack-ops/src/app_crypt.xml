@@ -13,8 +13,10 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="app_crypt">
     <title>Tales From the Cryp^H^H^H^H Cloud</title>
-    <partintro><para>Herein lies a selection of takes from OpenStack cloud
-        operators. Read, and learn from their wisdom.</para></partintro>
+    <partintro>
+        <para>Herein lies a selection of takes from OpenStack cloud
+            operators. Read, and learn from their wisdom.</para>
+    </partintro>
     <chapter xml:id="double_vlan">
         <title>Double VLAN</title>
         <para>I was on-site in Kelowna, British Columbia, Canada
@@ -48,15 +50,17 @@
             it was an MTU issue. Great! MTU! Something to go on!
             What's MTU and why would it cause a problem? </para>
         <para>MTU is maximum transmission unit. It specifies the
-            maximum number of bytes that the interface accepts for each
-            packet. If two interfaces have two different MTUs, bytes might get chopped off and weird
-            things happen -- such as random session lockups. It's
-            important to note that not all packets will have a size of
-            1500. Running the ls command over SSH might only create a
-            single packets less than 1500 bytes. However, running a
-            command with heavy output, such as <command>ps
-                aux</command> requires several packets of 1500
-            bytes. </para>
+            maximum number of bytes that the interface accepts for
+            each packet. If two interfaces have two different MTUs,
+            bytes might get chopped off and weird things happen --
+            such as random session lockups.</para>
+        <note>
+            <para>Not all packets have a size of 1500. Running the ls
+                command over SSH might only create a single packets
+                less than 1500 bytes. However, running a command with
+                heavy output, such as <command>ps aux</command>
+                requires several packets of 1500 bytes. </para>
+        </note>
         <para>OK, so where is the MTU issue coming from? Why haven't
             we seen this in any other deployment? What's new in this
             situation? Well, new data center, new uplink, new
@@ -76,17 +80,17 @@
             third, tcpdump on the compute node. And the forth had
             tcpdump on the instance. For background, this cloud was a
             multi-node, non-multi-host setup. </para>
-        <para>There was one cloud controller that acted as a gateway
-            to all compute nodes. VlanManager was used for the network
-            config. This means that the cloud controller and all
-            compute nodes had a different VLAN for each OpenStack
-            project. We used the -s option of ping to change the
-            packet size. We watched as sometimes packets would fully
-            return, sometimes they'd only make it out and never back
-            in, and sometimes the packets would stop at a random
-            point. We changed tcpdump to start displaying the hex dump
-            of the packet. We pinged between every combination of
-            outside, controller, compute, and instance. </para>
+        <para>One cloud controller acted as a gateway to all compute
+            nodes. VlanManager was used for the network config. This
+            means that the cloud controller and all compute nodes had
+            a different VLAN for each OpenStack project. We used the
+            -s option of ping to change the packet size. We watched as
+            sometimes packets would fully return, sometimes they'd
+            only make it out and never back in, and sometimes the
+            packets would stop at a random point. We changed tcpdump
+            to start displaying the hex dump of the packet. We pinged
+            between every combination of outside, controller, compute,
+            and instance. </para>
         <para>Finally, Alvaro noticed something. When a packet from
             the outside hits the cloud controller, it should not be
             configured with a VLAN. We verified this as true. When the
@@ -110,7 +114,7 @@
         <para>"If you did, you'd add an extra 4 bytes to the
             packet&hellip;"</para>
         <para>Then it all made sense…</para>
-        <programlisting>$ grep vlan_interface /etc/nova/nova.conf
+        <programlisting><prompt>$</prompt> grep vlan_interface /etc/nova/nova.conf
 vlan_interface=vlan20</programlisting>
         <para>In <code>nova.conf</code>, <code>vlan_interface</code>
             specifies what interface OpenStack should attach all VLANs
@@ -144,7 +148,7 @@ vlan_interface=vlan20</programlisting>
         <para>A few nights later, it happened again.</para>
         <para>We reviewed both sets of logs. The one thing that stood
             out the most was DHCP. OpenStack, by default, sets DHCP
-            leases for one minute. This means that every instance 
+            leases for one minute. This means that every instance
             contacts the cloud controller (DHCP server) to renew its
             fixed IP. For some reason, this instance could not renew
             its IP. We correlated the instance's logs with the logs on
@@ -366,7 +370,7 @@ vlan_interface=vlan20</programlisting>
         <para>This past Valentine's Day, I received an alert that a
             compute node was no longer available in the cloud
             — meaning,</para>
-        <programlisting>nova-manage service list</programlisting>
+        <programlisting><prompt>$</prompt> nova-manage service list</programlisting>
         <para>showed this particular node with a status of
                 <code>XXX</code>.</para>
         <para>I logged into the cloud controller and was able to both

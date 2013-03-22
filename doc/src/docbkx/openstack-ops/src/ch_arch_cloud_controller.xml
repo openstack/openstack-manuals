@@ -12,6 +12,7 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="cloud_controller_design">
+    <?dbhtml stop-chunking?>
     <title>Cloud Controller Design</title>
     <para>OpenStack is designed to be massively horizontally scalable,
         which allows all services to be distributed widely. However,
@@ -20,10 +21,10 @@
             <emphasis>cloud controller</emphasis> (see the <xref
             linkend="example_architecture"/> for more details on the
         overall architecture). As described in this guide, the cloud
-        controller is a single node that hosts the databases, the
-        message queue service, the authentication and authorization
-        service, the image management service, user dashboard and API
-        endpoints.</para>
+        controller is a single node that hosts the databases, message
+        queue service, authentication and authorization service, image
+        management service, user dashboard, and <glossterm>API
+            endpoint</glossterm>s.</para>
     <para>The cloud controller provides the central management system
         for multi-node OpenStack deployments. Typically the cloud
         controller manages authentication and sends messaging to all
@@ -32,10 +33,10 @@
         components that represent the global state of the cloud, talks
         to services such as authentication, maintains information
         about the cloud in a database, communicates to all compute
-        nodes and storage workers through a queue, and provides API
-        access. Each service running on a designated cloud controller
-        may be broken out into separate nodes for scalability or
-        availability.</para>
+        nodes and storage <glossterm>worker</glossterm>s through a
+        queue, and provides API access. Each service running on a
+        designated cloud controller may be broken out into separate
+        nodes for scalability or availability.</para>
     <section xml:id="hardware_consid">
         <title>Hardware Considerations</title>
         <para>A cloud controller's hardware can be the same as a
@@ -66,7 +67,8 @@
             </listitem>
             <listitem>
                 <para>Whether users authenticate against an external
-                    system (such as, LDAP or Active Directory)</para>
+                    system (such as, LDAP or <glossterm>Active
+                        Directory</glossterm>)</para>
             </listitem>
             <listitem>
                 <para>How long you expect single instances to
@@ -89,8 +91,8 @@
                     <td xmlns:db="http://docbook.org/ns/docbook"
                             ><para>Size your database server
                             accordingly, and scale out beyond one
-                            cloud controller if many instances will be
-                            reporting status at the same time and
+                            cloud controller if many instances will
+                            report status at the same time and
                             scheduling where a new instance starts up
                             needs computing power.</para></td>
                 </tr>
@@ -99,8 +101,8 @@
                             ><para>How many compute nodes will run at
                             once?</para></td>
                     <td xmlns:db="http://docbook.org/ns/docbook"
-                            ><para>Ensure your messaging queue is
-                            handling the requests well and sized
+                            ><para>Ensure that your messaging queue
+                            handles requests successfully and size
                             accordingly.</para></td>
                 </tr>
                 <tr>
@@ -108,19 +110,19 @@
                             ><para>How many users will access the
                             API?</para></td>
                     <td xmlns:db="http://docbook.org/ns/docbook"
-                            ><para>If many users will be making
-                            multiple requests, ensure the CPU load for
-                            the cloud controller can handle
-                        it.</para></td>
+                            ><para>If many users will make multiple
+                            requests, make sure that the CPU load for
+                            the cloud controller can handle.
+                            it.</para></td>
                 </tr>
                 <tr>
                     <td xmlns:db="http://docbook.org/ns/docbook"
                             ><para>How many users will access the
-                            Dashboard?</para></td>
+                                <glossterm>dashboard</glossterm>?</para></td>
                     <td xmlns:db="http://docbook.org/ns/docbook"
-                            ><para>The Dashboard makes many requests,
+                            ><para>The dashboard makes many requests,
                             even more than the API access, so add even
-                            more CPU if your Dashboard is the main
+                            more CPU if your dashboard is the main
                             interface for your users.</para></td>
                 </tr>
                 <tr>
@@ -240,10 +242,9 @@
         <title>Database</title>
         <para>Most OpenStack Compute central services, and currently
             also the nova-compute nodes, use the database for stateful
-            information. The loss of access to this ability will lead
-            to errors. As a result, we recommend that you cluster your
-            databases in some way to make them failure
-            tolerant.</para>
+            information. Loss of this ability leads to errors. As a
+            result, we recommend that you cluster your databases in
+            some way to make them failure tolerant.</para>
     </section>
     <section xml:id="message_queue">
         <title>Message Queue</title>
@@ -257,15 +258,16 @@
             this.</para>
     </section>
     <section xml:id="api">
-        <title>API</title>
-        <para>All public access, whether it is direct, through a
-            command line client, or through the web-based dashboard
-            uses the API service. Find the API reference at <link
+        <title>Application Programming Interface
+                (API)</title>
+        <para>All public access, whether direct, through a command
+            line client, or through the web-based dashboard, uses the
+            API service. Find the API reference at <link
                 xlink:href="http://api.openstack.org/"
                 >http://api.openstack.org/</link>.</para>
         <para>You must choose whether you want to support the Amazon
             EC2 compatibility APIs, or just the OpenStack APIs. One
-            issue you may encounter when running both APIs is an
+            issue you might encounter when running both APIs is an
             inconsistent experience when referring to images and
             instances. For example, the EC2 API refers to instances
             using IDs that contain hexadecimal whereas the OpenStack
@@ -278,9 +280,10 @@
             Despite this, EC2 compatibility can assist users migrating
             to your cloud.</para>
         <para>Like databases and message queues, having more than one
-            API server is a good thing. Traditional HTTP load
-            balancing techniques can be used to achieve a highly
-            available <code>nova-api</code> service.</para>
+                <glossterm>API server</glossterm> is a good thing.
+            Traditional HTTP load balancing techniques can be used to
+            achieve a highly available <code>nova-api</code>
+            service.</para>
     </section>
     <section xml:id="extensions">
         <title>Extensions</title>
@@ -369,10 +372,11 @@
     <section xml:id="dashboard">
         <title>Dashboard</title>
         <para>The OpenStack Dashboard is implemented as a Python web
-            application that runs in Apache <code>httpd</code>.
-            Therefore, you may treat it the same as any other web
-            application, provided it can reach the API servers
-            (including their admin endpoints) over the network.</para>
+            application that runs in <glossterm>Apache</glossterm>
+            <code>httpd</code>. Therefore, you may treat it the same
+            as any other web application, provided it can reach the
+            API servers (including their admin endpoints) over the
+            network.</para>
     </section>
     <?hard-pagebreak?>
     <section xml:id="authentication">
@@ -391,9 +395,9 @@
             that provides the authentication decisions and user
             attribute information, which is then used by the other
             OpenStack services to perform authorization. Policy is set
-            in files known as policy.json - see the <emphasis
-                role="bold">User Support chapter</emphasis> for
-            information on how to configure these.</para>
+            in the policy.json file. For information on how to
+            configure these, see <xref
+                linkend="projects_users"/>.</para>
         <para>The Identity Service supports different plugins for
             back-end authentication decisions, and storing
             information. These range from pure storage choices to
@@ -422,24 +426,22 @@
         <title>Network Considerations</title>
         <para>Because the cloud controller handles so many different
             services, it must be able to handle the amount of traffic
-            that will be hitting it. For example, if you choose to
-            host the OpenStack Imaging Service on the cloud
-            controller, the cloud controller should be able to support
-            the transferring of the images at an acceptable
-            speed.</para>
+            that hits it. For example, if you choose to host the
+            OpenStack Imaging Service on the cloud controller, the
+            cloud controller should be able to support the
+            transferring of the images at an acceptable speed.</para>
         <para>As another example, if you choose to use single-host
-            networking where the cloud controller will be the network
+            networking where the cloud controller is the network
             gateway for all instances, then the Cloud Controller must
-            be able to support the total amount of traffic going to
-            and from the public Internet that you will expect from
-            your cloud.</para>
+            support the total amount of traffic that travels between
+            your cloud and the public Internet. </para>
         <para>It is recommended to use a fast NIC, such as 10 GB. You
             can also choose to use two 10gb NICs and bond them
             together. While you might not be able to get a full bonded
-            20gb speed, different transmission streams will utilize
-            different NICs. For example, the Cloud Controller is
-            transferring two images, each image will use a different
-            NIC and get a full 10 GB of bandwidth.</para>
+            20gb speed, different transmission streams use different
+            NICs. For example, if the Cloud Controller transfers two
+            images, each image uses a different NIC and gets a full 10
+            GB of bandwidth.</para>
     </section>
 
 
