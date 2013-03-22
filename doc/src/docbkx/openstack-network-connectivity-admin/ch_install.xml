@@ -191,6 +191,49 @@ nvp_controller_connection=10.0.0.4:443:admin:admin:30:10:2:2
                     new settings.</para>
                 <screen><computeroutput>service quantum-server restart</computeroutput></screen>
             </section>
+            <section xml:id="ryu_plugin">
+                <title>Configuring Ryu Plugin</title>
+                <para>Make sure the ryu plugin is installed using:</para>
+                <screen><computeroutput>apt-get -y install quantum-plugin-ryu</computeroutput></screen>
+		<para>To configure Openstack Networking to user Ryu plugin first
+		    edit
+		        <filename>/etc/quantum/quantum.conf</filename>
+		    and set:</para>
+                <screen><computeroutput>core_plugin = quantum.plugins.ryu.ryu_quantum_plugin.RyuQuantumPluginV2</computeroutput></screen>
+		<para>Edit
+                        <filename>/etc/quantum/plugins/ryu/ryu.ini</filename>
+	            in order to configure the plugin.
+		    In the [DATABASE] section, specify the quantum database
+		    created in the previous step using the following line,
+                    substituting your database server user/password/IP address/port
+		    based on your setting:</para>
+                <screen><computeroutput>sql_connection = mysql://&lt;user&gt;:&lt;password&gt;@&lt;ip-address&gt;:&lt;port&gt;/quantum?charset=utf8</computeroutput></screen>
+		<para>In [OVS] section, set the necessary values for
+		    ryu-quantum-agent.
+		    openflow_rest_api is used to tell where Ryu is
+                    listening for REST API.  Substitute ip-address and port-no
+		    based on your ryu setup.
+                    <literal>ovsdb_interface</literal> is used for Ryu
+		    to access ovsdb-server.  Substitute eth0 based on your
+		    setup. IP address is derived from the interface name.  If
+		    you want to change those value irrelevant to the interafce
+		    name, ovsdb_ip can be specified. If you use non-default
+		    port for ovsdb-server, it can be specified by ovsdb_port.
+		    tunnel_interface needs to be set to tell what IP address is
+		    used for tunneling.  (If tunneling isn't used, this value
+		    will be ignored.) The IP address is derived from the
+		    network interface name. The same configuration file can be used
+		    for many compute-node by using network interface name with
+		    different IP address.
+		</para>
+                <screen><computeroutput>openflow_rest_api = &lt;ip-address&gt;:&lt;port-no&gt;
+ovsdb_interface = &lt;eth0&gt;
+tunnel_interface = &lt;eth0&gt;
+</computeroutput></screen>
+                <para>Lastly, restart quantum-server to pick up the
+                    new settings.</para>
+                <screen><computeroutput>service quantum-server restart</computeroutput></screen>
+	    </section>
         </section>
         <section xml:id="install_quantum_agent">
             <title>Install Software on Data Forwarding Nodes</title>
@@ -251,6 +294,25 @@ nvp_controller_connection=10.0.0.4:443:admin:admin:30:10:2:2
                 to confirm that the node is properly connected to the NVP
                 Controller Cluster and that the NVP Controller Cluster is seeing the integration bridge "br-int".</para>
             </section>
+            <section xml:id="install_quantum_agent_ryu">
+                <title>Node Setup: Ryu Plugin</title>
+                <para>The Ryu plugin requires Open vSwitch and ryu. Please install ryu and openvswitch
+		    in addition to ryu agent package.</para>
+		<para>Install ryu. There isn't ryu package for ubuntu yet.</para>
+                <screen><computeroutput>pip install ryu</computeroutput></screen>
+                <para>Install the Ryu agent package and openvswitch package: </para>
+                <screen><computeroutput>apt-get -y install quantum-plugin-ryu-agent openvswitch-switch python-openvswitch openvswitch-datapath-dkms</computeroutput></screen>
+                <para>The ovs_ryu_plugin.ini and quantum.conf created in the above
+                    step must be replicated on all nodes
+                    quantum-plugin-ryu-agent. </para>
+                <para>Then restart the agent</para>
+                <screen><computeroutput>service quantum-plugin-ryu-agent restart</computeroutput></screen>
+                <para>All hosts running
+                    quantum-plugin-ryu-agent also requires
+                    that an OVS bridge named "br-int" exists. To
+                    create it, run:</para>
+                <screen><computeroutput>ovs-vsctl add-br br-int</computeroutput></screen>
+            </section>
         </section>
         <section xml:id="install_quantum_dhcp">
             <title>Install DHCP Agent</title>
@@ -282,6 +344,16 @@ ovs_use_veth = True
 enable_metadata_network = True
 enable_isolated_metadata = True
 use_namespaces = True
+interface_driver = quantum.agent.linux.interface.OVSInterfaceDriver
+</computeroutput></screen>
+            </section>
+            <section xml:id="dhcp_agent_ryu">
+                <title>DHCP Agent Setup: Ryu Plugin</title>
+                <para>The following DHCP agent options are required for the Ryu plugin:</para>
+<screen><computeroutput>
+[DEFAULT]
+ovs_use_veth = True
+use_namespace = True
 interface_driver = quantum.agent.linux.interface.OVSInterfaceDriver
 </computeroutput></screen>
             </section>
