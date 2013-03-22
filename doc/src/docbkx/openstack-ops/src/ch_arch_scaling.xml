@@ -12,8 +12,9 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="scaling">
+    <?dbhtml stop-chunking?>
     <title>Scaling</title>
-    <para>If your cloud is successful, you will eventually need to add
+    <para>If your cloud is successful, eventually you must add
         resources to meet the increasing demand. OpenStack is designed
         to be horizontally scalable. Rather than switching to larger
         servers, you procure more servers. Ideally, you scale out and
@@ -28,11 +29,11 @@
         <para>The starting point for most is the core count of your
             cloud. By applying some ratios, you can gather information
             about the number of virtual machines (VMs) you expect to
-            run ((overcommit fraction × cores) / virtual cores per
-            instance), how much storage will be required (flavor disk
-            size × number of instances). You can then use these ratios
-            to determine how much additional infrastructure you will
-            require to support your cloud.</para>
+            run <code>((overcommit fraction × cores) / virtual cores
+                per instance)</code>, how much storage is required
+                <code>(flavor disk size × number of instances)</code>.
+            You can use these ratios to determine how much additional
+            infrastructure you need to support your cloud.</para>
         <para>The default OpenStack flavors are:</para>
         <informaltable rules="all">
             <thead>
@@ -108,10 +109,10 @@
             hosting platform with one running integration tests for a
             development project that creates one VM per code commit.
             In the former, the heavy work of creating a VM happens
-            only every few months, whereas the latter will put
-            constant heavy load on the cloud controller. You must
-            consider your average VM lifetime, as a larger number
-            generally means less load on the cloud controller.</para>
+            only every few months, whereas the latter puts constant
+            heavy load on the cloud controller. You must consider your
+            average VM lifetime, as a larger number generally means
+            less load on the cloud controller.</para>
         <?hard-pagebreak?>
         <para>Aside from the creation and termination of VMs, you must
             consider the impact of users accessing the service
@@ -134,8 +135,7 @@
             (RAM/core), network bandwidth (Gbps/core), and overall CPU
             performance (CPU/core).</para>
         <para>For which metrics to track to determine how to scale
-            your cloud, see the <emphasis role="bold">Monitoring
-                </emphasis>chapter<emphasis role="bold">.</emphasis>
+            your cloud, see <xref linkend="logging_monitoring"/>.
         </para>
     </section>
     <?hard-pagebreak?>
@@ -201,7 +201,8 @@
                     <td><para><emphasis role="bold">Use when you
                                 need</emphasis>
                         </para></td>
-                    <td><para>A single API endpoint for compute, or
+                    <td><para>A single <glossterm>API
+                                endpoint</glossterm> for compute, or
                             you require a second level of
                             scheduling.</para></td>
                     <td><para>Discrete regions with separate API
@@ -290,12 +291,12 @@
         <para>This array of options can be best divided into two
             — those which result in running separate nova deployments
             (cells and regions), and those which merely divide a
-            single deployment (availability zones and host
-            aggregates).</para>
+            single deployment (<glossterm>availability
+                zone</glossterm>s and host aggregates).</para>
         <?hard-pagebreak?>
         <section xml:id="cells_regions">
             <title>Cells and Regions</title>
-            <para>OpenStack Compute cells is designed to allow running
+            <para>OpenStack Compute cells are designed to allow running
                 the cloud in a distributed fashion without having to
                 use more complicated technologies, or being invasive
                 to existing nova installations. Hosts in a cloud are
@@ -371,8 +372,8 @@
                 they would like their instance or volume to come from.
                 This allows cloud consumers to ensure that their
                 application resources are spread across multiple
-                disparate machines in order to achieve high
-                availability in the event of hardware failure.</para>
+                disparate machines to achieve high availability in the
+                event of hardware failure.</para>
         </section>
     </section>
     <section xml:id="scalable_hardware">
@@ -390,17 +391,17 @@
                 terminated at will. While this may be true, it does
                 not mean that your servers must be volatile. Ensuring
                 your cloud’s hardware is stable and configured
-                correctly means your cloud environment will stay up
-                and running. Basically, put effort into creating a
-                stable hardware environment so you can host a cloud
-                that users may treat as unstable and volatile.</para>
+                correctly means your cloud environment remains up and
+                running. Basically, put effort into creating a stable
+                hardware environment so you can host a cloud that
+                users may treat as unstable and volatile.</para>
             <para>OpenStack can be deployed on any hardware supported
                 by an OpenStack-compatible Linux distribution, such as
                 Ubuntu 12.04 as used in this books' reference
                 architecture.</para>
             <para>Hardware does not have to be consistent, but should
-                at least have the same type of CPU in order to support
-                instance migration.</para>
+                at least have the same type of CPU to support instance
+                migration.</para>
             <para>The typical hardware recommended for use with
                 OpenStack is "commodity". That is, very standard
                 "value-for-money" offerings that most hardware vendors
@@ -428,9 +429,10 @@
                 take care of differences in sizing to do with core
                 count and RAM amounts, however you should consider the
                 user experience changes with differing CPU speeds.
-                When adding object storage nodes, a weight should be
-                specified that reflects the capability of the
-                node.</para>
+                When adding object storage nodes, a
+                    <glossterm>weight</glossterm> should be specified
+                that reflects the <glossterm>capability</glossterm> of
+                the node.</para>
             <para>Monitoring the resource usage and user growth will
                 enable you to know when to procure. The <emphasis
                     role="bold">Monitoring</emphasis> chapter details

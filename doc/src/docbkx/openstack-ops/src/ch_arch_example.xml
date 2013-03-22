@@ -11,15 +11,17 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="example_architecture">
+    <?dbhtml stop-chunking?>
     <title>Example Architecture</title>
     <para>Because OpenStack is highly configurable, with many
-        different back-ends and network configuration options, it is
-        difficult to write documentation that covers all possible
-        OpenStack deployments. Therefore, in this guide we have
-        defined an <emphasis>example architecture</emphasis> to
-        simplify the task of documenting, as well as to scope this
-        guide so that it is focused on a configuration where the
-        authors have direct deployment experience.</para>
+        different <glossterm>back-ends</glossterm> and network
+        configuration options, it is difficult to write documentation
+        that covers all possible OpenStack deployments. Therefore,
+        this guide defines an <emphasis>example
+            architecture</emphasis> to simplify the task of
+        documenting, as well as to scope this guide so that it is
+        focused on a configuration where the authors have direct
+        deployment experience.</para>
     <section xml:id="overview">
         <title>Overview</title>
         <informaltable rules="all">
@@ -101,19 +103,23 @@
                 the example architecture documented in this guide, but
                 are optional: <itemizedlist role="compact">
                     <listitem>
-                        <para>Dashboard</para>
+                        <para><glossterm>dashboard</glossterm></para>
                     </listitem>
                     <listitem>
-                        <para>Block storage</para>
+                        <para><glossterm>block
+                            storage</glossterm></para>
                     </listitem>
                     <listitem>
-                        <para>Floating IPs</para>
+                        <para><glossterm>floating IP
+                                address</glossterm>es</para>
                     </listitem>
                     <listitem>
-                        <para>Live migration</para>
+                        <para><glossterm>live
+                            migration</glossterm></para>
                     </listitem>
                     <listitem>
-                        <para>Object storage</para>
+                        <para><glossterm>object
+                            storage</glossterm></para>
                     </listitem>
                 </itemizedlist></para>
         </note>
@@ -122,37 +128,38 @@
     <section xml:id="rationale">
         <title>Rationale</title>
         <para>This example architecture has been selected based on the
-            current default feature set of OpenStack Folsom, with an
-            emphasis on stability. In particular, if none of the guide
-            authors had experience deploying the Folsom release of
-            OpenStack with a specific back-end or configuration, we
-            did not consider it for the example architecture. We
-            believe that many clouds currently running OpenStack in
-            production will have made similar choices.</para>
-        <para>The first selection to make is the Operating System that
-            will run on all of the physical nodes. While OpenStack is
-            supported on several distributions of Linux, we used
-                <emphasis role="bold">Ubuntu 12.04 LTS (Long Term
-                Support)</emphasis>. This is due to several factors,
-            including its use by the majority of the development
-            community, feature completeness compared with other
-            distributions and clear future support plans.</para>
+            current default feature set of OpenStack
+                <glossterm>Folsom</glossterm>, with an emphasis on
+            stability. In particular, if none of the guide authors had
+            experience deploying the Folsom release of OpenStack with
+            a specific back-end or configuration, we did not consider
+            it for the example architecture. We believe that many
+            clouds that currently run OpenStack in production have
+            made similar choices.</para>
+        <para>You must first choose the operating system that runs on
+            all of the physical nodes. While OpenStack is supported on
+            several distributions of Linux, we used <emphasis
+                role="bold">Ubuntu 12.04 LTS (Long Term
+                Support)</emphasis>, which is used by the majority of
+            the development community, has feature completeness
+            compared with other distributions, and has clear future
+            support plans.</para>
         <para>We recommend that you do not use the default Ubuntu
             OpenStack install packages and instead use the <link
                 xlink:href="https://wiki.ubuntu.com/ServerTeam/CloudArchive"
                 >Ubuntu Cloud Archive</link>
             (https://wiki.ubuntu.com/ServerTeam/CloudArchive). The
             Cloud Archive is a package repository supported by
-            Canonical that will allow you to upgrade to future
-            OpenStack releases while still remaining on Ubuntu
-            12.04.</para>
-        <para><emphasis role="bold">KVM</emphasis> as a hypervisor
-            complements the choice of Ubuntu - being a matched pair in
-            terms of support, and also because of the significant
-            degree of attention it garners from the OpenStack
-            development community (including the authors, who mostly
-            use KVM). It is also feature complete, free from licensing
-            charges and restrictions.</para>
+            Canonical that allows you to upgrade to future OpenStack
+            releases while remaining on Ubuntu 12.04.</para>
+        <para><emphasis role="bold">KVM</emphasis> as a
+                <glossterm>hypervisor</glossterm> complements the
+            choice of Ubuntu - being a matched pair in terms of
+            support, and also because of the significant degree of
+            attention it garners from the OpenStack development
+            community (including the authors, who mostly use KVM). It
+            is also feature complete, free from licensing charges and
+            restrictions.</para>
         <para><emphasis role="bold">MySQL</emphasis> follows a similar
             trend. Despite its recent change of ownership, this
             database is the most tested for use with OpenStack and is
@@ -192,25 +199,23 @@
             this as the back-end instead, and a recommended
             approach.</para>
         <?hard-pagebreak?>
-        <para>The <emphasis role="bold">SQL back-end for Identify
-                Service (keystone)</emphasis> was selected over
-            others, such as LDAP, as it is the simplest to install and
-            has a large degree of robustness. The authors acknowledge
-            that many installations will desire binding with an
-            existing directory services, and caution careful
-            understanding of the <link
+        <para>We chose the <emphasis role="bold">SQL back-end for
+                Identity Service (keystone)</emphasis> over others,
+            such as LDAP. This back-end is simple to install and is
+            robust. The authors acknowledge that many installations
+            want to bind with existing directory services, and caution
+            careful understanding of the <link
                 xlink:title="LDAP config options"
                 xlink:href="http://docs.openstack.org/folsom/openstack-compute/admin/content/reference-for-ldap-config-options.html"
                 >array of options available</link>
             (http://docs.openstack.org/folsom/openstack-compute/admin/content/reference-for-ldap-config-options.html)</para>
-        <para>The Block Storage service (Cinder) will be installed
-            natively on external storage nodes and will use the
-                <emphasis role="bold">LVM/iSCSI plugin</emphasis>.
-            Most Block Storage Service plugins are tied to particular
-            vendor products and implementations limiting their use to
+        <para>The Block Storage service (cinder) is installed natively
+            on external storage nodes and uses the <emphasis
+                role="bold">LVM/iSCSI plugin</emphasis>. Most Block
+            Storage Service plugins are tied to particular vendor
+            products and implementations limiting their use to
             consumers of those hardware platforms, but LVM/iSCSI is
-            known to be robust and stable on commodity
-            hardware.</para>
+            robust and stable on commodity hardware.</para>
         <para>While the cloud can be run without the <emphasis
                 role="bold">OpenStack Dashboard</emphasis>, we
             consider it to be indispensable, not just for user
@@ -235,12 +240,11 @@
                 provides services such as network address translation
                 (NAT), DHCP, and DNS to the guest instances. If the
                 single node that runs the <code>nova-network</code>
-                service goes down, then you will not be able to access
-                your instances nor will the instances be able to
-                access the Internet. There is also the risk that the
+                service goes down, you cannot access your instances
+                and the instances cannot access the Internet. The
                 single node that runs the nova-network service can
-                become a bottleneck if there is excessive network
-                traffic coming in and out of the cloud.</para>
+                become a bottleneck if excessive network traffic comes
+                in and goes out of the cloud.</para>
             <para>
                 <link xlink:title="Multi-host"
                     xlink:href="http://docs.openstack.org/folsom/openstack-compute/admin/content/existing-ha-networking-options.html#d6e8906"
@@ -258,10 +262,10 @@
         <para>The reference architecture consists of multiple compute
             nodes, a cloud controller, an external NFS storage server
             for instance storage and an OpenStack Block Storage server
-            for volume storage. A network time service (Network Time
-            Protocol, NTP) synchronizes time for all the nodes.
-            FlatDHCPManager in multi-host mode is used for the
-            networking.</para>
+            for <glossterm>volume</glossterm> storage. A network time
+            service (Network Time Protocol, NTP) synchronizes time for
+            all the nodes. FlatDHCPManager in multi-host mode is used
+            for the networking.</para>
         <informalfigure>
             <mediaobject>
                 <imageobject>
@@ -270,7 +274,7 @@
                 </imageobject>
             </mediaobject>
         </informalfigure>
-        <para>The cloud controller runs: the Dashboard, the API
+        <para>The cloud controller runs: the dashboard, the API
             services, the database (MySQL), a message queue server
             (RabbitMQ), the scheduler for choosing compute resources
             (nova-scheduler), Identity services (keystone,
@@ -317,9 +321,8 @@
             follows:</para>
         <itemizedlist role="compact">
             <listitem>
-                <para>Add additional cloud controllers (see <emphasis
-                        role="bold">Maintenance, Debugging and
-                        Failures</emphasis>)</para>
+                <para>Add additional cloud controllers (see <xref
+                        linkend="maintenance"/>).</para>
             </listitem>
             <listitem>
                 <para>Add an OpenStack Storage service
@@ -327,8 +330,7 @@
             </listitem>
             <listitem>
                 <para>Add additional OpenStack Block Storage hosts
-                    (see <emphasis role="bold">Maintenance, Debugging
-                        and Failures</emphasis>)</para>
+                    (see <xref linkend="maintenance"/>).</para>
             </listitem>
         </itemizedlist>
     </section>
