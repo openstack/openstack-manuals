@@ -58,8 +58,7 @@
 
  </section>
     <section xml:id="configure-glance-files">
-        <title>Edit the Glance configuration files and paste ini
-            middleware files</title>
+        <title>Edit the Glance configuration files</title>
         <para>The Image service has a number of options that you can
             use to configure the Glance API server, optionally the Glance
             Registry server, and the various storage backends that
@@ -82,28 +81,14 @@
                 v2 Image API for your installation. The v1 API is
                 implemented on top of the glance-registry service
                 while the v2 API is not. </para>
-        </note><para> Most configuration is done via configuration files,
-            with the Glance API server (and possibly the Glance
-            Registry server) using separate configuration files. When
-            installing through an operating system package management
-            system, sample configuration files are installed in
-            /etc/glance. You configure the PasteDeploy configuration,
-            which controls the deployment of the WSGI application for
-            each component, in files named
-                <replaceable>component</replaceable>-paste.ini, such
-            as glance-api-paste.ini.</para>
+        </note>
+        <para> Most configuration is done via configuration files, with the Glance API server (and
+            possibly the Glance Registry server) using separate configuration files. When installing
+            through an operating system package management system, sample configuration files are
+            installed in <literal>/etc/glance</literal>. </para>
         <para>This walkthrough installs the image service using a file
             backend and the Identity service (Keystone) for
             authentication.</para>
-        <para>Update
-                <filename>/etc/glance/glance-api-paste.ini</filename>
-            and configure the
-                    <literal>admin_<replaceable>*</replaceable></literal>
-            values under <literal>[filter:authtoken]</literal>.</para>
-        <screen>[filter:authtoken]
-admin_tenant_name = service
-admin_user = glance
-admin_password = glance</screen>
         <para>Add the admin and service identifiers and
             flavor=keystone to the end of
                 <filename>/etc/glance/glance-api.conf</filename> as
