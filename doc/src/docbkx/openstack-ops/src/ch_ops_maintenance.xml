@@ -930,9 +930,13 @@ inner join nova.instances on cinder.volumes.instance_uuid=nova.instances.uuid
                     <code>glance-api</code> service refuses to start
                 and stay running, try launching the daemon from the
                 command line:</para>
-            <programlisting><?db-font-size 65%?># glance-api</programlisting>
-            <para>This might print the error and cause of the
-                problem.</para>
+            <programlisting><?db-font-size 65%?># sudo -u glance -H glance-api</programlisting>
+            <para>This might print the error and cause of the problem.<note>
+                    <para>The <literal>-H</literal> flag is required when running the daemons with
+                        sudo because some daemons will write files relative to the user's home
+                        directory, and this write may fail if <literal>-H</literal> is left
+                        off.</para>
+                </note></para>
         </section>
         <section xml:id="complexity">
             <?dbhtml stop-chunking?>
