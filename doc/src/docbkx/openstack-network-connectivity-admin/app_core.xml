@@ -5,8 +5,13 @@
     xml:id="app_core">
     <title>Core Configuration File Options</title>
     <section xml:id="quantum_conf">
+        <?dbhtml stop-chunking?>
         <title>quantum.conf</title>
-        <para>The configuration settings for the OpenStack Networking services are found in <filename>/etc/quantum/quantum.conf</filename>.</para>
+        <para>Find the configuration settings for the OpenStack
+            Networking services in
+                <filename>/etc/quantum/quantum.conf</filename>.</para>
+        <section xml:id="debug_options">
+            <title>Debugging Options</title>
             <table rules="all">
                 <caption>Debugging Options</caption>
                 <thead>
@@ -19,16 +24,20 @@
                 <tbody>
                     <tr>
                         <td>debug=False </td>
-                        <td>(BoolOpt) Print debugging output </td>
+                        <td>(BoolOpt) Prints debugging output. </td>
                     </tr>
                     <tr>
                         <td>verbose=False </td>
-                        <td>(BoolOpt) Print more verbose output </td>
+                        <td>(BoolOpt) Prints more verbose output.
+                        </td>
                     </tr>
                 </tbody>
             </table>
-    
-        <table rules="all">
+        </section>
+
+        <section xml:id="log_options">
+            <title>Logging Options</title>
+            <table rules="all">
                 <caption>Logging Options</caption>
                 <thead>
                     <tr>
@@ -39,19 +48,17 @@
                 <tbody>
                     <tr>
                         <td>log_config= </td>
-                        <td>(StrOpt) If this option is specified, the
-                            logging configuration file specified is
-                            used and overrides any other logging
-                            options specified. Please see the Python
-                            logging module documentation for details
-                            on logging configuration files. Print
-                            debugging output </td>
+                        <td>(StrOpt) The logging configuration file.
+                            Overrides any other logging options
+                            specified. See the Python logging module
+                            documentation for details on logging
+                            configuration files. </td>
                     </tr>
                     <tr>
                         <td>log_format=%(asctime)s %(levelname)8s
                             [%(name)s] %(message)s </td>
                         <td>(StrOpt) A logging.Formatter log message
-                            format string which may use any of the
+                            format string that can use any of the
                             available logging.LogRecord attributes.
                         </td>
                     </tr>
@@ -63,7 +70,7 @@
                     <tr>
                         <td>log_file= </td>
                         <td>(StrOpt) (Optional) Name of log file to
-                            output to.  If not set, logging will go to
+                            output to.  If not set, logging goes to
                             stdout. </td>
                     </tr>
                     <tr>
@@ -74,16 +81,81 @@
                     </tr>
                     <tr>
                         <td>use_syslog=False </td>
-                        <td>(BoolOpt) Use syslog for logging. </td>
+                        <td>(BoolOpt) Uses syslog for logging. </td>
                     </tr>
                     <tr>
                         <td>syslog_log_facility=LOG_USER </td>
-                        <td>(StrOpt) syslog facility to receive log
-                            lines </td>
+                        <td>(StrOpt) The syslog facility to receive
+                            log lines.</td>
                     </tr>
                 </tbody>
             </table>
-       <table rules="all">
+        </section>
+
+        <section xml:id="auth_options">
+            <title>Authentication Options</title>
+            <para>The auth_token middleware for keystone now enables
+                you to configure auth_token in the
+                    <filename>quantum.conf</filename> file. You no
+                longer have to edit the
+                    <filename>api-paste.ini</filename> file. This
+                change does not break backward compatibility. The
+                auth_token middleware first tries the configurations
+                in <filename>/etc/quantum/api-paste.ini</filename> and
+                then tries the <filename>quantum.conf</filename>
+                configuration. If you currently use
+                    <filename>api-paste.ini</filename>, you do not
+                need to change it.</para>
+
+            <table rules="all">
+                <caption>Authentication Options</caption>
+                <thead>
+                    <tr>
+                        <th>Configuration option=Default value</th>
+                        <th>(Type) Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>auth_host = 127.0.0.1</td>
+                        <td>(StrOpt) Authentication listening
+                            host.</td>
+                    </tr>
+                    <tr>
+                        <td>auth_port = 35357</td>
+                        <td>(IntOpt) Authentication listening
+                            port.</td>
+                    </tr>
+                    <tr>
+                        <td>auth_protocol = http</td>
+                        <td>(StrOpt) Authentication protocol.</td>
+                    </tr>
+                    <tr>
+                        <td>admin_tenant_name = </td>
+                        <td>(StrOpt) The administrative tenant
+                            name.</td>
+                    </tr>
+                    <tr>
+                        <td>admin_user = </td>
+                        <td>(StrOpt) The administrative user
+                            name.</td>
+                    </tr>
+                    <tr>
+                        <td>admin_password = </td>
+                        <td>(StrOpt) The password for the
+                            administrative user.</td>
+                    </tr>
+                    <tr>
+                        <td>signing_dir =
+                            /var/lib/quantum/keystone-signing</td>
+                        <td>(StrOpt) The signing directory. </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <section xml:id="service_options">
+            <title>Service Options</title>
+            <table rules="all">
                 <caption>Service Options</caption>
                 <thead>
                     <tr>
@@ -102,9 +174,9 @@
                     </tr>
                     <tr>
                         <td>api_paste_config=api-paste.ini </td>
-                        <td>(StrOpt) The paste configuration file.
-                            This is used to configure the WSGI
-                            application. </td>
+                        <td>(StrOpt) The paste configuration file,
+                            which configures the WSGI application.
+                        </td>
                     </tr>
                     <tr>
                         <td>api_extensions_path= </td>
@@ -132,15 +204,18 @@
                             service. </td>
                     </tr>
                     <tr>
-                        <td>
-                            pagination_max_limit=-1 </td>
-                        <td>(StrOpt) The maximum number of items returned
-                            in a single response. A value of 'infinite',
-                            or a negative integer means no limit. </td>
+                        <td> pagination_max_limit=-1 </td>
+                        <td>(StrOpt) The maximum number of items
+                            returned in a single response. A value of
+                            'infinite', or a negative integer means no
+                            limit. </td>
                     </tr>
                 </tbody>
             </table>
-        
+        </section>
+
+        <section xml:id="base_plugin_options">
+            <title>Plugin Options</title>
             <table rules="all">
                 <caption>Base Plugin Options</caption>
                 <thead>
@@ -166,40 +241,47 @@
                     </tr>
                     <tr>
                         <td>allow_bulk=True </td>
-                        <td>(BoolOpt) Enable or disable bulk
+                        <td>(BoolOpt) Enables or disables bulk
                             create/update/delete operations. </td>
                     </tr>
                     <tr>
                         <td>allow_pagination=False </td>
-                        <td><para>(BoolOpt) Enable or disable pagination.
-                                 If plugin doesn't support native pagination, it
-                                 will enable emulated pagination. Please note
-                                 native pagination depends on native sorting.
-                                 If native pagination is enabled, native emulated
-                                 sorting will be enabled automatically.</para>
+                        <td><para>(BoolOpt) Enables or disables
+                                pagination. If plugin doesn't support
+                                native pagination, it will enable
+                                emulated pagination. Please note
+                                native pagination depends on native
+                                sorting. If native pagination is
+                                enabled, native emulated sorting will
+                                be enabled automatically.</para>
                             <note>
-                                <para>If the plugin supports native pagination,
-                                      the plugin will returns the maximum limit
-                                      of items as request. If the plugin didn't
-                                      support that, quantum API can emulate the
-                                      pagination behavior. The performance of
-                                      native pagination is better than emulated
-                                      pagiantion. </para>
+                                <para>If the plugin supports native
+                                   pagination, the plugin will returns
+                                   the maximum limit of items as
+                                   request. If the plugin didn't
+                                   support that, quantum API can
+                                   emulate the pagination behavior.
+                                   The performance of native
+                                   pagination is better than emulated
+                                   pagination. </para>
                             </note>
                         </td>
                     </tr>
                     <tr>
                         <td>allow_sorting=False </td>
-                        <td><para>(BoolOpt) Enable or disable sorting. If plugin
-                            doesn't support native sorting, it will enable
-                            emulated sorting.</para>
+                        <td><para>(BoolOpt) Enables or disables
+                                sorting. If plugin doesn't support
+                                native sorting, it will enable
+                                emulated sorting.</para>
                             <note>
-                                <para>If the plugin supports native sorting, the
-                                     plugin will returns ordered items as request.
-                                     If the plugin didn't support that, quantum API
-                                     can emulate the sorting behavior. The performance
-                                     of native sorting is better than emulated sorting.
-                                </para>
+                                <para>If the plugin supports native
+                                   sorting, the plugin will returns
+                                   ordered items as request. If the
+                                   plugin didn't support that, quantum
+                                   API can emulate the sorting
+                                   behavior. The performance of native
+                                   sorting is better than emulated
+                                   sorting. </para>
                             </note>
                         </td>
                     </tr>
@@ -221,13 +303,16 @@
                     </tr>
                     <tr>
                         <td>dhcp_lease_duration=120 </td>
-                        <td>(IntOpt) The default expiration time for a
-                            DHCP address. This is in seconds. </td>
+                        <td>(IntOpt) The default expiration time, in
+                            seconds, for a DHCP address. </td>
                     </tr>
                 </tbody>
             </table>
-        
-        
+        </section>
+
+
+        <section xml:id="common_rpc_message_options">
+            <title>Common RPC Message Options</title>
             <table rules="all">
                 <caption>Common RPC Message Options</caption>
                 <thead>
@@ -240,14 +325,14 @@
                     <tr>
                         <td>control_exchange=quantum </td>
                         <td>(StrOpt) AMQP exchange to connect to if
-                            using RabbitMQ or QPID </td>
+                            using RabbitMQ or QPID. </td>
                     </tr>
                     <tr>
                         <td>
                             rpc_back_end=quantum.openstack.common.rpc.impl_kombu </td>
                         <td>(StrOpt) The messaging module to use,
                             defaults to kombu. For qpid, make use of
-                            quantum.openstack.common.rpc.impl_qpid
+                            quantum.openstack.common.rpc.impl_qpid.
                         </td>
                     </tr>
                     <tr>
@@ -262,7 +347,7 @@
                     <tr>
                         <td>rpc_response_timeout=60 </td>
                         <td>(IntOpt) Seconds to wait for a response
-                            from call or multicall </td>
+                            from call or multi call.</td>
                     </tr>
                     <tr>
                         <td>
@@ -275,11 +360,14 @@
                     <tr>
                         <td>fake_rabbit=False </td>
                         <td>(BoolOpt) If passed, use a fake RabbitMQ
-                            provider </td>
+                            provider.</td>
                     </tr>
                 </tbody>
             </table>
-       
+        </section>
+
+        <section xml:id="rabbit_rpc_options">
+            <title>Rabbit RPC Options</title>
             <table rules="all">
                 <caption>Rabbit RPC Options</caption>
                 <thead>
@@ -297,37 +385,36 @@
                     <tr>
                         <td>kombu_ssl_keyfile= </td>
                         <td>(StrOpt) SSL key file (valid only if SSL
-                            enabled) </td>
+                            enabled). </td>
                     </tr>
                     <tr>
                         <td>kombu_ssl_certfile= </td>
                         <td>(StrOpt) SSL cert file (valid only if SSL
-                            enabled) </td>
+                            enabled). </td>
                     </tr>
                     <tr>
                         <td>kombu_ssl_ca_certs= </td>
                         <td>(StrOpt) SSL certification authority file
-                            (valid only if SSL enabled) </td>
+                            (valid only if SSL enabled).</td>
                     </tr>
                     <tr>
                         <td>rabbit_host=localhost </td>
                         <td>(StrOpt) IP address of the RabbitMQ
-                            installation </td>
+                            installation. </td>
                     </tr>
                     <tr>
                         <td>rabbit_password=guest </td>
-                        <td>            Password of the RabbitMQ
-                            server </td>
+                        <td>Password of the RabbitMQ server. </td>
                     </tr>
                     <tr>
                         <td>rabbit_port=5672 </td>
                         <td>(IntOpt) Port where RabbitMQ server is
-                            running/listening </td>
+                            running/listening. </td>
                     </tr>
                     <tr>
                         <td>rabbit_userid=guest </td>
                         <td>(StrOpt) User ID used for RabbitMQ
-                            connections </td>
+                            connections. </td>
                     </tr>
                     <tr>
                         <td>rabbit_virtual_host=/ </td>
@@ -338,16 +425,19 @@
                         <td>rabbit_max_retries=0 </td>
                         <td>(IntOpt) Maximum retries with trying to
                             connect to RabbitMQ. The default of 0
-                            implies an infinite retry count </td>
+                            implies an infinite retry count. </td>
                     </tr>
                     <tr>
                         <td>rabbit_retry_interval=1 </td>
                         <td>(IntOpt) RabbitMQ connection retry
-                            interval </td>
+                            interval. </td>
                     </tr>
                 </tbody>
             </table>
-        
+        </section>
+
+        <section xml:id="qpid_rpc_options">
+            <title>QPID RPC Options</title>
             <table rules="all">
                 <caption>QPID RPC Options</caption>
                 <thead>
@@ -359,36 +449,36 @@
                 <tbody>
                     <tr>
                         <td>qpid_hostname=localhost </td>
-                        <td>(StrOpt) Qpid broker hostname </td>
+                        <td>(StrOpt) Qpid broker hostname. </td>
                     </tr>
                     <tr>
                         <td>qpid_port=5672 </td>
-                        <td>(IntOpt) Qpid broker port </td>
+                        <td>(IntOpt) Qpid broker port. </td>
                     </tr>
                     <tr>
                         <td>qpid_username= </td>
-                        <td>(StrOpt) Username for qpid connection
+                        <td>(StrOpt) Username for qpid connection.
                         </td>
                     </tr>
                     <tr>
                         <td>qpid_password= </td>
-                        <td>(StrOpt) Password for qpid connection
+                        <td>(StrOpt) Password for qpid connection.
                         </td>
                     </tr>
                     <tr>
                         <td>qpid_sasl_mechanisms= </td>
                         <td>(StrOpt) Space separated list of SASL
-                            mechanisms to use for auth </td>
+                            mechanisms to use for auth.</td>
                     </tr>
                     <tr>
                         <td>qpid_reconnect=True </td>
-                        <td>(BoolOpt) Automatically reconnect </td>
+                        <td>(BoolOpt) Automatically reconnect. </td>
                     </tr>
                     <tr>
                         <td>qpid_reconnect_timeout=0 </td>
                         <td>(IntOpt) The number of seconds to wait
                             before deciding that a reconnect attempt
-                            has failed </td>
+                            has failed. </td>
                     </tr>
                     <tr>
                         <td>qpid_reconnect_limit=0 </td>
@@ -399,34 +489,37 @@
                     <tr>
                         <td>qpid_reconnect_interval_min=0 </td>
                         <td>(IntOpt) Minimum seconds between
-                            reconnection attempts </td>
+                            reconnection attempts. </td>
                     </tr>
                     <tr>
                         <td>qpid_reconnect_interval_max=0 </td>
                         <td>(IntOpt) Maximum seconds between
-                            reconnection attempts </td>
+                            reconnection attempts. </td>
                     </tr>
                     <tr>
                         <td>qpid_reconnect_interval=0 </td>
                         <td>(IntOpt) Equivalent to setting max and min
-                            to the same value </td>
+                            to the same value. </td>
                     </tr>
                     <tr>
                         <td>qpid_heartbeat=60 </td>
                         <td>(IntOpt) Seconds between connection
-                            keepalive heartbeats </td>
+                            keepalive heartbeats. </td>
                     </tr>
                     <tr>
                         <td>qpid_protocol=tcp </td>
                         <td>(StrOpt) Transport to use, either 'tcp' or
-                            'ssl' </td>
+                            'ssl.' </td>
                     </tr>
                     <tr>
                         <td>qpid_tcp_nodelay=True </td>
-                        <td>(BoolOpt) Disable Nagle algorithm </td>
+                        <td>(BoolOpt) Disable Nagle algorithm. </td>
                     </tr>
                 </tbody>
             </table>
+        </section>
+        <section xml:id="notification_options">
+            <title>Notification Options</title>
             <table rules="all">
                 <caption>Notification Options</caption>
                 <thead>
@@ -447,27 +540,30 @@
                     <tr>
                         <td>default_notification_level=INFO </td>
                         <td>(StrOpt) Default notification level for
-                            outgoing notifications </td>
+                            outgoing notifications. </td>
                     </tr>
                     <tr>
                         <td>default_publisher_id=$host </td>
                         <td>(StrOpt) Default publisher_id for outgoing
-                            notifications </td>
+                            notifications. </td>
                     </tr>
                     <tr>
                         <td>
                             list_notifier_drivers='quantum.openstack.common.notifier.no_op_notifier' </td>
                         <td>(MultiStrOpt) List of drivers to send
-                            notifications </td>
+                            notifications. </td>
                     </tr>
                     <tr>
                         <td>notification_topics='notifications' </td>
                         <td>(ListOpt) AMQP topic used for openstack
-                            notifications </td>
+                            notifications. </td>
                     </tr>
                 </tbody>
             </table>
-        
+        </section>
+
+        <section xml:id="quota_options">
+            <title>Quota Options</title>
             <table rules="all">
                 <caption>Quota Options</caption>
                 <thead>
@@ -484,7 +580,7 @@
                             the configuration values below are in
                             effect. To limit quotas per tenant then
                             use:
-                            quantum.db.quota_db.DbQuotaDriver
+                                <literal>quantum.db.quota_db.DbQuotaDriver</literal>
                         </td>
                     </tr>
                     <tr>
@@ -495,34 +591,38 @@
                     <tr>
                         <td>default_quota=-1 </td>
                         <td>(IntOpt) Default number of resources
-                            allowed per tenant, minus for unlimited
+                            allowed per tenant, minus for unlimited.
                         </td>
                     </tr>
                     <tr>
                         <td>quota_network=10 </td>
                         <td>(IntOpt) Number of networks allowed per
-                            tenant, and minus means unlimited </td>
+                            tenant, and minus means unlimited. </td>
                     </tr>
                     <tr>
                         <td>quota_subnet=10 </td>
                         <td>(IntOpt) Number of subnets allowed per
-                            tenant, and minus means unlimited </td>
+                            tenant, and minus means unlimited. </td>
                     </tr>
                     <tr>
                         <td>quota_port=50 </td>
                         <td>(IntOpt) Number of ports allowed per
-                            tenant, and minus means unlimited </td>
+                            tenant, and minus means unlimited. </td>
                     </tr>
                 </tbody>
             </table>
+        </section>
     </section>
     <section xml:id="ovs_quantum_plugin">
-        <title>ovs_quantum_plugin.ini:</title>
-        <para>For information about the Open vSwitch plugin configurations,
-            see <link
+        <?dbhtml stop-chunking?>
+        <title>ovs_quantum_plugin.ini</title>
+        <para>For information about the Open vSwitch plugin
+            configurations, see <link
                 xlink:href="http://wiki.openstack.org/ConfigureOpenvswitch"
                 >http://wiki.openstack.org/ConfigureOpenvswitch</link>. </para>
-        <para><table rules="all">
+        <section xml:id="database_access_by_plugin">
+            <title>Database Access by Plugin</title>
+            <table rules="all">
                 <caption>Database Access by Plugin</caption>
                 <thead>
                     <tr>
@@ -538,36 +638,38 @@
                                 mysql://root:nova@127.0.0.1:3306/ovs_quantum.
                                 Replace 127.0.0.1 above with the IP
                                 address of the database used by the
-                                main OpenStack Networking server. (Leave it as is
-                                if the database runs on this
-                                host.).</para>
+                                main OpenStack Networking server.
+                                (Leave it as is if the database runs
+                                on this host.).</para>
                             <note>
-                                <para> This line must be changed to
-                                   ensure that the database values are
-                                   persistent. The sqlite is used for
-                                   testing. </para>
+                                <para>Change this line to ensure that
+                                   the database values are persistent.
+                                   The sqlite is used for testing. </para>
                             </note></td>
                     </tr>
                     <tr>
                         <td>sql_max_retries=10 </td>
-                        <td>(IntOpt) Database re-connection retry
-                            times. This is in the event connectivity
-                            is lost with the database. -1 implies an
-                            infinite retry count. </td>
+                        <td>(IntOpt) The number of database
+                            re-connection retry times. Used if
+                            connectivity is lost with the database. -1
+                            implies an infinite retry count. </td>
                     </tr>
                     <tr>
                         <td>reconnect_interval=2 </td>
-                        <td>(IntOpt) Database reconnection interval in
-                            seconds - in event connectivity is lost.
-                        </td>
+                        <td>(IntOpt) The database reconnection
+                            interval in seconds. Used if connectivity
+                            is lost. </td>
                     </tr>
                 </tbody>
-            </table></para>
-        <para><emphasis role="bold">OVS Options</emphasis> (This is in
-            the section OVS)</para>
-        <para>This section deals with the specific OVS options common
-            to the plugin and agent.</para>
-        <para>
+            </table>
+        </section>
+        <section xml:id="ovs_options">
+            <title>OVS Options</title>
+            <para>Specify these parameters in the
+                    <literal>OVS</literal> section. </para>
+            <para>These OVS options are common to the plugin and
+                agent.</para>
+
             <table rules="all">
                 <caption>OVS Options Common to Plugin and
                     Agent</caption>
@@ -595,21 +697,21 @@
                     </tr>
                     <tr>
                         <td>integration_bridge=br-int </td>
-                        <td>(StrOpt) This is the name of the OVS
-                            integration bridge. There is one per
-                            hypervisor. The integration bridge acts as
-                            a virtual "patch port". All VM VIFs are
-                            attached to this bridge and then "patched"
-                            according to their network connectivity.
-                            Do not change this parameter unless you
-                            have a good reason to. </td>
+                        <td>(StrOpt) The name of the OVS integration
+                            bridge. There is one per hypervisor. The
+                            integration bridge acts as a virtual
+                            "patch port". All VM VIFs are attached to
+                            this bridge and then "patched" according
+                            to their network connectivity. Do not
+                            change this parameter unless you have a
+                            good reason to. </td>
                     </tr>
                     <tr>
                         <td>tunnel_bridge=br-tun </td>
-                        <td>(StrOpt) Specifies the name of the OVS
-                            tunnel bridge used by the agent for GRE
-                            tunnels. Only used if tunnel_id_ranges is
-                            not empty. </td>
+                        <td>(StrOpt) The name of the OVS tunnel bridge
+                            used by the agent for GRE tunnels. Only
+                            used if tunnel_id_ranges is not empty.
+                        </td>
                     </tr>
                     <tr>
                         <td>bridge_mappings=default:br-eth1 </td>
@@ -623,9 +725,9 @@
                     </tr>
                     <tr>
                         <td>local_ip=10.0.0.3 </td>
-                        <td>(StrOpt) Set local-ip to be the local IP
-                            address of this hypervisor. This is used
-                            only when tunnel_id_ranges are used. </td>
+                        <td>(StrOpt) The local IP address of this
+                            hypervisor. Used only when
+                            tunnel_id_ranges are used. </td>
                     </tr>
                     <tr>
                         <td>enable_tunneling=False </td>
@@ -634,133 +736,16 @@
                             Open vSwitch support its GRE tunneling
                             feature, that is, it is not supported in
                             the Linux kernel source tree. This applies
-                            to both the server and agent </td>
-                    </tr>
-                </tbody>
-            </table></para>
-        <para>(This is in the section AGENT)</para>
-        <para>
-            <table rules="all">
-                <caption>Agent Options</caption>
-                <thead>
-                    <tr>
-                        <th>Configuration option=Default value</th>
-                        <th>(Type) Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>rpc=True </td>
-                        <td>(BoolOpt) If this is True then the agent
-                            will communicate with the plugin via the
-                            OpenStack RPC (configured in
-                            quantum.conf). If this is False then the
-                            agent will poll the database for changes.
-                            In the event that this is False then
-                            please update the relevant database
-                            settings on the agent so that it is able
-                            to access the database. </td>
-                    </tr>
-                    <tr>
-                        <td>polling_interval=2 </td>
-                        <td>(IntOpt) Agent's polling interval in
-                            seconds. </td>
-                    </tr>
-                    <tr>
-                        <td>root_helper=sudo </td>
-                        <td>(StrOpt) This enables limiting commands
-                            that can be run. Please refer to rootwrap
-                            section for more details. </td>
-                    </tr>
-                </tbody>
-            </table>    </para>
-    </section>
-    <section xml:id="linuxbridge_conf">
-        <title>linuxbridge_conf.ini:</title>
-        <para><table rules="all">
-                <caption>Database Access by Plugin</caption>
-                <thead>
-                    <tr>
-                        <th>Configuration option=Default value</th>
-                        <th>(Type) Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>sql_connection=sqlite:// </td>
-                        <td><para>(StrOpt) The details of the database
-                                connection. For example
-                                mysql://root:nova@127.0.0.1:3306/ovs_quantum.
-                                Replace 127.0.0.1 above with the IP
-                                address of the database used by the
-                                main OpenStack Networking server. (Leave it as is
-                                if the database runs on this
-                                host.).</para>
-                            <note>
-                                <para>This line must be changed to
-                                   ensure that the database values are
-                                   persistent. The sqlite is used for
-                                   testing.</para>
-                            </note></td>
-                    </tr>
-                    <tr>
-                        <td>sql_max_retries=10 </td>
-                        <td>(IntOpt) Database re-connection retry
-                            times. This is in the event connectivity
-                            is lost with the database. -1 implies an
-                            infinite retry count. </td>
-                    </tr>
-                    <tr>
-                        <td>reconnect_interval=2 </td>
-                        <td>(IntOpt) Database reconnection interval in
-                            seconds - in event connectivity is lost.
-                        </td>
+                            to both the server and agent. </td>
                     </tr>
                 </tbody>
             </table>
-        </para>
-        <para>  <table rules="all">
-                <caption>VLAN Configurations</caption>
-                <thead>
-                    <tr>
-                        <th>Configuration option=Default value</th>
-                        <th>(Type) Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>network_vlan_ranges=default:1000:2999 </td>
-                        <td>(ListOpt) Comma-separated list of
-                            &lt;physical_network&gt;:&lt;vlan_min&gt;:&lt;vlan_max&gt;
-                            tuples enumerating ranges of VLAN IDs on
-                            named physical networks that are available
-                            for allocation. </td>
-                    </tr>
-                </tbody>
-            </table></para>
-        <para>
-            <table rules="all">
-                <caption>Networking Options on the Agent</caption>
-                <thead>
-                    <tr>
-                        <th>Configuration option=Default value</th>
-                        <th>(Type) Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>physical_interface_mappings=default:eth1 </td>
-                        <td>(ListOpt) Comma-separated list of
-                            &lt;physical_network&gt;:&lt;physical_interface&gt;
-                            tuples mapping physical network names to
-                            agent's node-specific physical network
-                            interfaces. Server uses physical network
-                            names for validation but ignores
-                            interfaces. </td>
-                    </tr>
-                </tbody>
-            </table></para>
-        <para>
+        </section>
+        <section xml:id="agent_options">
+            <title>Agent Options</title>
+            <para>Specify these options in the
+                    <literal>AGENT</literal> section.</para>
+
             <table rules="all">
                 <caption>Agent Options</caption>
                 <thead>
@@ -772,15 +757,16 @@
                 <tbody>
                     <tr>
                         <td>rpc=True </td>
-                        <td>(BoolOpt) If this is True then the agent
-                            will communicate with the plugin via the
-                            OpenStack RPC (configured in
-                            quantum.conf). If this is False then the
-                            agent will poll the database for changes.
-                            In the event that this is False then
-                            please update the relevant database
-                            settings on the agent so that it is able
-                            to access the database. </td>
+                        <td>(BoolOpt) If <literal>True</literal>, the
+                            agent communicates with the plugin through
+                            the OpenStack RPC, which is configured in
+                                <filename>quantum.conf.</filename> If
+                                <literal>False</literal>, the agent
+                            polls the database for changes. If
+                                <literal>False</literal>, you must
+                            update the relevant database settings on
+                            the agent so that it can access the
+                            database. </td>
                     </tr>
                     <tr>
                         <td>polling_interval=2 </td>
@@ -789,47 +775,333 @@
                     </tr>
                     <tr>
                         <td>root_helper=sudo </td>
-                        <td>(StrOpt) This enables limiting commands
-                            that can be run. Please refer to rootwrap
-                            section for more details. </td>
+                        <td>(StrOpt) Limits the commands that can be
+                            run. See the rootwrap section for more
+                            details. </td>
                     </tr>
                 </tbody>
-            </table>  </para>
+            </table>
+        </section>
     </section>
+    <section xml:id="linuxbridge_conf">
+        <?dbhtml stop-chunking?>
+        <title>linuxbridge_conf.ini</title>
+        <section xml:id="database_access_by_plugin_linuxbridge">
+            <title>Database Access by Plugin</title>
+            <para><table rules="all">
+                    <caption>Database Access by Plugin</caption>
+                    <thead>
+                        <tr>
+                            <th>Configuration option=Default
+                                value</th>
+                            <th>(Type) Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>sql_connection=sqlite:// </td>
+                            <td><para>(StrOpt) The details of the
+                                   database connection. For example
+                                   mysql://root:nova@127.0.0.1:3306/ovs_quantum.
+                                   Replace 127.0.0.1 above with the IP
+                                   address of the database used by the
+                                   main OpenStack Networking server.
+                                   (Leave it as is if the database
+                                   runs on this host.).</para>
+                                <note>
+                                   <para>This line must be changed to
+                                   ensure that the database values are
+                                   persistent. The sqlite is used for
+                                   testing.</para>
+                                </note></td>
+                        </tr>
+                        <tr>
+                            <td>sql_max_retries=10 </td>
+                            <td>(IntOpt) Database re-connection retry
+                                times. Used if connectivity is lost
+                                with the database. -1 implies an
+                                infinite retry count. </td>
+                        </tr>
+                        <tr>
+                            <td>reconnect_interval=2 </td>
+                            <td>(IntOpt) Database reconnection
+                                interval in seconds. Used if
+                                connectivity is lost. </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </para>
+        </section>
+        <section xml:id="vlan_config">
+            <title>VLAN Configurations</title>
+            <para>  <table rules="all">
+                    <caption>VLAN Configurations</caption>
+                    <thead>
+                        <tr>
+                            <th>Configuration option=Default
+                                value</th>
+                            <th>(Type) Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>network_vlan_ranges=default:1000:2999 </td>
+                            <td>(ListOpt) Comma-separated list of
+                                &lt;physical_network&gt;:&lt;vlan_min&gt;:&lt;vlan_max&gt;
+                                tuples enumerating ranges of VLAN IDs
+                                on named physical networks that are
+                                available for allocation. </td>
+                        </tr>
+                    </tbody>
+                </table></para>
+        </section>
+        <section xml:id="networking_options_on_agent">
+            <title>Networking Options on the Agent</title>
+            <para>
+                <table rules="all">
+                    <caption>Networking Options on the Agent</caption>
+                    <thead>
+                        <tr>
+                            <th>Configuration option=Default
+                                value</th>
+                            <th>(Type) Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>physical_interface_mappings=default:eth1 </td>
+                            <td>(ListOpt) Comma-separated list of
+                                &lt;physical_network&gt;:&lt;physical_interface&gt;
+                                tuples mapping physical network names
+                                to agent's node-specific physical
+                                network interfaces. Server uses
+                                physical network names for validation
+                                but ignores interfaces. </td>
+                        </tr>
+                    </tbody>
+                </table></para>
+        </section>
+        <section xml:id="agent_options_linuxbridge">
+            <title>Agent Options</title>
+            <para>
+                <table rules="all">
+                    <caption>Agent Options</caption>
+                    <thead>
+                        <tr>
+                            <th>Configuration option=Default
+                                value</th>
+                            <th>(Type) Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>rpc=True </td>
+                            <td>(BoolOpt) If <literal>True</literal>,
+                                the agent communicates with the plugin
+                                through the OpenStack RPC, which is
+                                configured in
+                                   <filename>quantum.conf</filename>.
+                                If <literal>False</literal>, the agent
+                                polls the database for changes. If
+                                   <literal>False</literal>, you must
+                                update the relevant database settings
+                                on the agent so that it can access the
+                                database. </td>
+                        </tr>
+                        <tr>
+                            <td>polling_interval=2 </td>
+                            <td>(IntOpt) Agent's polling interval in
+                                seconds. </td>
+                        </tr>
+                        <tr>
+                            <td>root_helper=sudo </td>
+                            <td>(StrOpt) Limits the commands that can
+                                be run. See the rootwrap section for
+                                more details. </td>
+                        </tr>
+                    </tbody>
+                </table>  </para>
+        </section>
+    </section>
+
     <section xml:id="dhcp_agent_ini">
+        <?dbhtml stop-chunking?>
         <title>dhcp_agent.ini</title>
-        <para>
-            <table rules="all">
-                <caption>DHCP Specific Options</caption>
-                <thead>
-                    <tr>
-                        <th>Configuration option=Default value</th>
-                        <th>(Type) Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>root_helper=sudo </td>
-                        <td>(StrOpt) This enables limiting commands
-                            that can be run. Please refer to rootwrap
-                            section for more details. </td>
-                    </tr>
-                    <tr>
-                        <td>dhcp_driver=quantum.agent.linux.dhcp.Dnsmasq </td>
-                        <td>(StrOpt) The driver used to manage the
-                            DHCP server. </td>
-                    </tr>
-                    <tr>
-                        <td>use_namespaces=True </td>
-                        <td>(BoolOpt) Allow overlapping IP. (Note: If running
-                            multiple agents with different IP addresses on the
-                            same host this should be "True" if not you will
-                            get routing problems.)</td>
-                    </tr>
-                </tbody>
-            </table>  </para>
-        <para>
-            <table rules="all">
+        <para>For device manager options, see <xref
+                linkend="device_manager_options"/>.</para>
+        <section xml:id="dhcp_specific_options">
+            <title>DHCP-Specific Options</title>
+            <para>
+                <table rules="all">
+                    <caption>DHCP-Specific Options</caption>
+                    <thead>
+                        <tr>
+                            <th>Configuration option=Default
+                                value</th>
+                            <th>(Type) Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>root_helper=sudo </td>
+                            <td>(StrOpt) Limits the commands that can
+                                be run. See the rootwrap section for
+                                more details. </td>
+                        </tr>
+                        <tr>
+                            <td>dhcp_driver=quantum.agent.linux.dhcp.Dnsmasq </td>
+                            <td>(StrOpt) The driver used to manage the
+                                DHCP server. </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                dhcp_lease_relay_socket=$state_path/dhcp/lease_relay </td>
+                            <td>(StrOpt) Location to DHCP lease relay
+                                UNIX domain socket. </td>
+                        </tr>
+                        <tr>
+                            <td>use_namespaces=True </td>
+                            <td><para>(BoolOpt) Allows overlapping
+                                   IP.</para>
+                                <note>
+                                   <para>If you run multiple agents
+                                   with different IP addresses on the
+                                   same host, set this parameter to
+                                   <literal>True</literal>. Otherwise,
+                                   routing problems occur.</para>
+                                </note></td>
+                        </tr>
+                    </tbody>
+                </table></para>
+        </section>
+
+        <section xml:id="dnsmasq_options">
+            <title>dnsmasq Options</title>
+            <para>
+                <table rules="all">
+                    <caption>dnsmasq Options</caption>
+                    <thead>
+                        <tr>
+                            <th>Configuration option=Default
+                                value</th>
+                            <th>(Type) Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>dhcp_confs=$state_path/dhcp </td>
+                            <td>(StrOpt) Location to store DHCP server
+                                config files.</td>
+                        </tr>
+                        <tr>
+                            <td>dhcp_lease_time=120 </td>
+                            <td>(IntOpt) Lifetime of a DHCP lease in
+                                seconds.</td>
+                        </tr>
+                        <tr>
+                            <td>dhcp_domain=openstacklocal </td>
+                            <td>(StrOpt) Domain to use for building
+                                the host names.</td>
+                        </tr>
+                        <tr>
+                            <td>dnsmasq_config_file= </td>
+                            <td>(StrOpt) Overrides the default dnsmasq
+                                settings with this file. </td>
+                        </tr>
+                        <tr>
+                            <td>dnsmasq_dns_server= </td>
+                            <td>(StrOpt) Specifies whether to use
+                                another DNS server before any in
+                                   <filename>/etc/resolv.conf</filename>.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table></para>
+        </section>
+    </section>
+    <section xml:id="l3_agent">
+        <?dbhtml stop-chunking?>
+        <title>l3_agent.ini</title>
+        <para>For device manager options, see <xref
+                linkend="device_manager_options"/>.</para>
+        <section xml:id="specific_options">
+            <title>Specific Options</title>
+            <para>
+                <table rules="all">
+                    <caption>L3 Specific Options</caption>
+                    <thead>
+                        <tr>
+                            <th>Configuration option=Default
+                                value</th>
+                            <th>(Type) Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>root_helper=sudo </td>
+                            <td>(StrOpt) Limits the commands that can
+                                be run. See the rootwrap section for
+                                more details. </td>
+                        </tr>
+                        <tr>
+                            <td>external_network_bridge=br-ex </td>
+                            <td>(StrOpt) Name of bridge used for
+                                external network traffic. </td>
+                        </tr>
+                        <tr>
+                            <td>use_namespaces=True </td>
+                            <td><para>(BoolOpt) Allows overlapping IP. </para><note>
+                                   <para>If you run multiple agents
+                                   with different IP addresses on the
+                                   same host, set this parameter to
+                                   <literal>True</literal>. Otherwise,
+                                   routing problems occur.</para>
+                                </note></td>
+                        </tr>
+
+                        <tr>
+                            <td>polling_interval=3 </td>
+                            <td>(IntOpt) The time, in seconds, between
+                                state poll requests. </td>
+                        </tr>
+                        <tr>
+                            <td>metadata_ip= </td>
+                            <td>(StrOpt) IP address used by OpenStack
+                                Compute metadata server. </td>
+                        </tr>
+                        <tr>
+                            <td>metadata_port=8775 </td>
+                            <td>(IntOpt) TCP Port used by OpenStack
+                                Compute metadata server. </td>
+                        </tr>
+                        <tr>
+                            <td>router_id= </td>
+                            <td>(StrOpt) If namespaces is disabled,
+                                the l3 agent can only configure a
+                                router whose ID matches this
+                                parameter. </td>
+                        </tr>
+                        <tr>
+                            <td>handle_internal_only_routers=True </td>
+                            <td>(BoolOpt) Agent should implement
+                                routers with no gateway. </td>
+                        </tr>
+                        <tr>
+                            <td>gateway_external_network_id= </td>
+                            <td>(StrOpt) UUID of external network for
+                                routers implemented by the agents.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table></para>
+        </section>
+    </section>
+    <section xml:id="device_manager_options">
+        <title>Common Device Manager Options</title>
+        <para>Use the following device manager options in the
+                <filename>dhcp_agent.ini</filename> file for the DHCP
+            agent or the <filename>l3_agent.ini</filename> file for
+            the L3 agent.<table rules="all">
                 <caption>Device Manager Options</caption>
                 <thead>
                     <tr>
@@ -839,44 +1111,56 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>admin_user= </td>
-                        <td>(StrOpt) Name of the admin user for OpenStack Networking, which is defined in
-                            <link xlink:href="keystone.html">OpenStack Identity</link> (keystone) </td>
-                    </tr>
-                    <tr>
-                        <td>admin_password= </td>
-                        <td>(StrOpt) The users password </td>
-                    </tr>
-                    <tr>
-                        <td>admin_tenant_name= </td>
-                        <td>(StrOpt) The admin tenant name </td>
-                    </tr>
-                    <tr>
-                        <td>auth_url= </td>
-                        <td>(StrOpt) The URL used to validate tokens.
-                            `auth_protocol`://`auth_host`:`auth_port`/v2.0
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>auth_strategy=keystone </td>
-                        <td>(StrOpt) The strategy to use for
-                            authentication. Supports noauth or
-                            keystone. </td>
-                    </tr>
-                    <tr>
-                        <td>auth_region= </td>
-                        <td>(StrOpt) The authentication region </td>
-                    </tr>
-                    <tr>
                         <td>interface_driver= </td>
                         <td>(StrOpt) The driver used to manage the
                             virtual interface. </td>
                     </tr>
                     <tr>
-                        <td>
-                            dhcp_lease_relay_socket=$state_path/dhcp/lease_relay </td>
-                        <td>(StrOpt) Location to DHCP lease relay UNIX
-                            domain socket </td>
+                        <td>ovs_use_veth=False</td>
+                        <td>(BoolOpt) Specifies whether to use veth
+                            for an interface. Set to
+                                <literal>True</literal> for OVS-based
+                            plugins that use Open vSwitch as OpenFlow
+                            switch and check port status.</td>
+                    </tr>
+                    <tr>
+                        <td>admin_user= </td>
+                        <td>(StrOpt) The administrative user name for
+                            OpenStack Networking, which is defined in
+                                <link xlink:href="keystone.html"
+                                >OpenStack Identity</link> (keystone).
+                            Only relevant if using MetaPlugin.</td>
+                    </tr>
+                    <tr>
+                        <td>admin_password= </td>
+                        <td>(StrOpt) The password for the
+                            administrative user. Only relevant if
+                            using MetaPlugin.</td>
+                    </tr>
+                    <tr>
+                        <td>admin_tenant_name= </td>
+                        <td>(StrOpt) The administrative user's tenant
+                            name. Only relevant if using
+                            MetaPlugin.</td>
+                    </tr>
+                    <tr>
+                        <td>auth_url= </td>
+                        <td>(StrOpt) The URL used to validate tokens.
+                            For example,
+                                <code>`auth_protocol`://`auth_host`:`auth_port`/v2.0</code>.
+                            Only relevant if using MetaPlugin.</td>
+                    </tr>
+                    <tr>
+                        <td>auth_strategy=keystone </td>
+                        <td>(StrOpt) The strategy to use for
+                            authentication. Supports noauth or
+                            keystone. Only relevant if using
+                            MetaPlugin.</td>
+                    </tr>
+                    <tr>
+                        <td>auth_region= </td>
+                        <td>(StrOpt) The authentication region. Only
+                            relevant if using MetaPlugin.</td>
                     </tr>
                     <tr>
                         <td>ovs_integration_bridge=br-int </td>
@@ -889,11 +1173,11 @@
                         <td>(StrOpt) MTU setting for device. Only
                             relevant if using Open vSwitch. </td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <td>ryu_api_host=127.0.0.1:8080 </td>
                         <td>(StrOpt) OpenFlow Ryu REST API host:port.
                             Only relevant if using Ryu. </td>
-                    </tr>
+                    </tr>-->
                     <tr>
                         <td>meta_flavor_driver_mappings= </td>
                         <td>(StrOpt). Mappings between flavors and
@@ -902,162 +1186,18 @@
                     </tr>
                     <tr>
                         <td>resync_interval=30 </td>
-                        <td>(IntOpt) If there is an exception on the
-                            quantum-server service, then the DHCP agent will
-                            ensure that it syncs with the quantum.conf
+                        <td>(IntOpt) If an exception occurs on the
+                            quantum-server service, the DHCP agent
+                            ensures that it syncs with the
+                                <filename>quantum.conf</filename>
                             configuration. The validation about
-                            syncing is done every resync_interval
+                            syncing occurs every
+                                <literal>resync_interval</literal>
                             seconds. </td>
                     </tr>
                 </tbody>
-            </table>    </para>
-        <para>
-            <table rules="all">
-                <caption>dnsmasq Options</caption>
-                <thead>
-                    <tr>
-                        <th>Configuration option=Default value</th>
-                        <th>(Type) Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>dhcp_confs=$state_path/dhcp </td>
-                        <td>(StrOpt) Location to store DHCP server
-                            config files </td>
-                    </tr>
-                    <tr>
-                        <td>dhcp_lease_time=120 </td>
-                        <td>(IntOpt) Lifetime of a DHCP lease in
-                            seconds </td>
-                    </tr>
-                    <tr>
-                        <td>dhcp_domain=openstacklocal </td>
-                        <td>(StrOpt) Domain to use for building the
-                            hostnames </td>
-                    </tr>
-                    <tr>
-                        <td>dnsmasq_config_file= </td>
-                        <td>(StrOpt) Override the default dnsmasq
-                            settings with this file </td>
-                    </tr>
-                    <tr>
-                        <td>dnsmasq_dns_server= </td>
-                        <td>(StrOpt) Use another DNS server before any
-                            in /etc/resolv.conf. </td>
-                    </tr>
-                </tbody>
             </table></para>
     </section>
-    <section xml:id="l3_agent">
-        <title>l3_agent.ini</title>
-        <para>
-            <table rules="all">
-                <caption>L3 Specific Options</caption>
-                <thead>
-                    <tr>
-                        <th>Configuration option=Default value</th>
-                        <th>(Type) Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>root_helper=sudo </td>
-                        <td>(StrOpt) This enables limiting commands
-                            that can be run. Please refer to rootwrap
-                            section for more details. </td>
-                    </tr>
-                    <tr>
-                        <td>external_network_bridge=br-ex </td>
-                        <td>(StrOpt) Name of bridge used for external
-                            network traffic. </td>
-                    </tr>
-                    <tr>
-                        <td>use_namespaces=True </td>
-                        <td>(BoolOpt) Allow overlapping IP. (Note: If running
-                            multiple agents with different IP addresses on the
-                            same host this should be "True" if not you will
-                            get routing problems.)</td>
-                    </tr>
-                   
-                    <tr>
-                        <td>polling_interval=3 </td>
-                        <td>(IntOpt) The time in seconds between state
-                            poll requests. </td>
-                    </tr>
-                    <tr>
-                        <td>metadata_ip= </td>
-                        <td>(StrOpt) IP address used by OpenStack Compute metadata
-                            server. </td>
-                    </tr>
-                    <tr>
-                        <td>metadata_port=8775 </td>
-                        <td>(IntOpt) TCP Port used by OpenStack Compute metadata
-                            server. </td>
-                    </tr>
-                    <tr>
-                        <td>router_id= </td>
-                        <td>(StrOpt) If namespaces is disabled, the l3
-                            agent can only configure a router whose ID
-                            matches this parameter. </td>
-                    </tr>
-                    <tr>
-                        <td>handle_internal_only_routers=True </td>
-                        <td>(BoolOpt) Agent should implement routers
-                            with no gateway. </td>
-                    </tr>
-                    <tr>
-                        <td>gateway_external_network_id= </td>
-                        <td>(StrOpt) UUID of external network for routers
-                            implemented by the agents. </td>
-                    </tr>
-                </tbody>
-            </table></para>
-        <para>
-            <table rules="all">
-                <caption>Device Manager Options</caption>
-                <thead>
-                    <tr>
-                        <th>Configuration option=Default value</th>
-                        <th>(Type) Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>admin_user= </td>
-                        <td>(StrOpt) Name of the admin user for OpenStack Networking, which is defined in
-                            <link xlink:href="keystone.html">OpenStack Identity</link> (keystone)</td>
-                    </tr>
-                    <tr>
-                        <td>admin_password= </td>
-                        <td>(StrOpt) The users password </td>
-                    </tr>
-                    <tr>
-                        <td>admin_tenant_name= </td>
-                        <td>(StrOpt) The admin tenant name </td>
-                    </tr>
-                    <tr>
-                        <td>auth_url= </td>
-                        <td>(StrOpt) The URL used to validate tokens.
-                            `auth_protocol`://`auth_host`:`auth_port`/v2.0
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>auth_strategy=keystone </td>
-                        <td>(StrOpt) The strategy to use for
-                            authentication. Supports noauth or
-                            keystone. </td>
-                    </tr>
-                    <tr>
-                        <td>auth_region= </td>
-                        <td>(StrOpt) The authentication region </td>
-                    </tr>
-                    <tr>
-                        <td>interface_driver= </td>
-                        <td>(StrOpt) The driver used to manage the
-                            virtual interface. </td>
-                    </tr>
-                </tbody>
-            </table></para>
-    </section>
+
+
 </appendix>
