@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <section 
+            xmlns="http://docbook.org/ns/docbook"
+            xmlns:xi="http://www.w3.org/2001/XInclude"
+            xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+            xml:id="huawei-storage-driver">
+            <title> Huawei Storage Driver</title>
+            <para>Huawei storage drivers integrate OceanStor T series unified storage with OceanStor
+                Dorado high-performance storage to provide block storage services for
+                OpenStack.</para>
+            <simplesect>
+                <title>Supported Operations</title>
+                <para>OceanStor T series unified storage supports the following operations:<itemizedlist>
+                        <listitem>
+                            <para>Create volume</para>
+                        </listitem>
+                        <listitem>
+                            <para>Delete volume</para>
+                        </listitem>
+                        <listitem>
+                            <para>Attach volume</para>
+                        </listitem>
+                        <listitem>
+                            <para>Detach volume</para>
+                        </listitem>
+                        <listitem>
+                            <para>Create snapshot</para>
+                        </listitem>
+                        <listitem>
+                            <para>Delete snapshot</para>
+                        </listitem>
+                        <listitem>
+                            <para>Create volume from snapshot</para>
+                        </listitem>
+                    </itemizedlist>OceanStor Dorado5100 supports the following operations :<itemizedlist>
+                        <listitem>
+                            <para>Create volume</para>
+                        </listitem>
+                        <listitem>
+                            <para>Delete volume</para>
+                        </listitem>
+                        <listitem>
+                            <para>Attach volume</para>
+                        </listitem>
+                        <listitem>
+                            <para>Detach volume</para>
+                        </listitem>
+                        <listitem>
+                            <para>Create snapshot</para>
+                        </listitem>
+                        <listitem>
+                            <para>Delete snapshot</para>
+                        </listitem>
+                    </itemizedlist>OceanStor Dorado2100 G2 supports the following operations :<itemizedlist>
+                        <listitem>
+                            <para>Create volume</para>
+                        </listitem>
+                        <listitem>
+                            <para>Delete volume</para>
+                        </listitem>
+                        <listitem>
+                            <para>Attach volume</para>
+                        </listitem>
+                        <listitem>
+                            <para>Detach volume</para>
+                        </listitem>
+                    </itemizedlist></para>
+            </simplesect>
+            <simplesect>
+                <title>Configuring Cinder Nodes</title>
+                <para>In <filename>/etc/cinder</filename>, create the driver configuration file
+                    named <filename>cinder_huawei_conf.xml</filename>.</para>
+                <para>For OceanStor T series unified storage, the driver configuration file is shown
+                    as follows:</para>
+                <programlisting>
+&lt;?xml version='1.0' encoding='UTF-8'?>
+&lt;config>
+    &lt;Storage>
+        &lt;ControllerIP0>x.x.x.x&lt;/ControllerIP0>
+        &lt;ControllerIP1>x.x.x.x&lt;/ControllerIP1>
+        &lt;UserName>xxxxxxxx&lt;/UserName>
+        &lt;UserPassword>xxxxxxxx&lt;/UserPassword>
+    &lt;/Storage>
+    &lt;LUN>
+        &lt;LUNType>Thick&lt;/LUNType>
+        &lt;StripUnitSize>64&lt;/StripUnitSize>
+        &lt;WriteType>1&lt;/WriteType>
+        &lt;MirrorSwitch>1&lt;/MirrorSwitch>
+        &lt;Prefetch Type="3" value="0"/>
+        &lt;StoragePool Name="xxxxxxxx"/>
+        &lt;StoragePool Name="xxxxxxxx"/>
+    &lt;/LUN>
+    &lt;iSCSI>
+        &lt;DefaultTargetIP>x.x.x.x&lt;/DefaultTargetIP>
+        &lt;Initiator Name="xxxxxxxx" TargetIP="x.x.x.x"/>
+        &lt;Initiator Name="xxxxxxxx" TargetIP="x.x.x.x"/>
+    &lt;/iSCSI>
+&lt;/config>
+</programlisting>
+                <para>For OceanStor Dorado5100, the driver configuration file is shown as
+                    follows:</para>
+                <programlisting>
+&lt;?xml version='1.0' encoding='UTF-8'?>
+&lt;config>
+    &lt;Storage>
+        &lt;ControllerIP0>x.x.x.x&lt;/ControllerIP0>
+        &lt;ControllerIP1>x.x.x.x&lt;/ControllerIP1>
+        &lt;UserName>xxxxxxxx&lt;/UserName>
+        &lt;UserPassword>xxxxxxxx&lt;/UserPassword>
+    &lt;/Storage>
+    &lt;LUN>
+        &lt;StripUnitSize>64&lt;/StripUnitSize>
+        &lt;WriteType>1&lt;/WriteType>
+        &lt;MirrorSwitch>1&lt;/MirrorSwitch>
+        &lt;StoragePool Name="xxxxxxxx"/>
+        &lt;StoragePool Name="xxxxxxxx"/>
+    &lt;/LUN>
+    &lt;iSCSI>
+        &lt;DefaultTargetIP>x.x.x.x&lt;/DefaultTargetIP>
+        &lt;Initiator Name="xxxxxxxx" TargetIP="x.x.x.x"/>
+        &lt;Initiator Name="xxxxxxxx" TargetIP="x.x.x.x"/>
+    &lt;/iSCSI>
+&lt;/config>
+</programlisting>
+                <para>For OceanStor Dorado2100 G2, the driver configuration file is shown as
+                    follows:</para>
+                <programlisting>
+&lt;?xml version='1.0' encoding='UTF-8'?>
+&lt;config>
+    &lt;Storage>
+        &lt;ControllerIP0>x.x.x.x&lt;/ControllerIP0>
+        &lt;ControllerIP1>x.x.x.x&lt;/ControllerIP1>
+        &lt;UserName>xxxxxxxx&lt;/UserName>
+        &lt;UserPassword>xxxxxxxx&lt;/UserPassword>
+    &lt;/Storage>
+    &lt;LUN>
+        &lt;LUNType>Thick&lt;/LUNType>
+        &lt;WriteType>1&lt;/WriteType>
+        &lt;MirrorSwitch>1&lt;/MirrorSwitch>
+    &lt;/LUN>
+    &lt;iSCSI>
+        &lt;DefaultTargetIP>x.x.x.x&lt;/DefaultTargetIP>
+        &lt;Initiator Name="xxxxxxxx" TargetIP="x.x.x.x"/>
+        &lt;Initiator Name="xxxxxxxx" TargetIP="x.x.x.x"/>
+    &lt;/iSCSI>
+&lt;/config>
+</programlisting>
+                <para>To add <literal>volume-driver</literal> and
+                        <literal>cinder_huawei_conf_file</literal> items, you can modify
+                    configuration file <filename>cinder.conf</filename> as follows:</para>
+                <programlisting>
+volume_driver = cinder.volume.drivers.huawei.huawei_iscsi.HuaweiISCSIDriver
+cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf.xml
+</programlisting>
+            </simplesect>
+            <simplesect>
+                <title>Configuration File Details</title>
+                <para>All flags of a configuration file are described as follows:<table rules="all">
+                        <caption>List of configuration flags for Huawei Storage Driver</caption>
+                        <col width="35%"/>
+                        <col width="15%"/>
+                        <col width="15%"/>
+                        <col width="35%"/>
+                        <thead>
+                            <tr>
+                                <td>Flag name</td>
+                                <td>Type</td>
+                                <td>Default</td>
+                                <td>Description</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <para><literal>ControllerIP0</literal></para>
+                                </td>
+                                <td>
+                                    <para>Mandatory</para>
+                                </td>
+                                <td>
+                                    <para/>
+                                </td>
+                                <td>
+                                    <para>IP address of a primary controller.</para>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <para><literal>ControllerIP1</literal></para>
+                                </td>
+                                <td>
+                                    <para>Mandatory</para>
+                                </td>
+                                <td>
+                                    <para/>
+                                </td>
+                                <td>
+                                    <para>IP address of a secondary controller.</para>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <para><literal>UserName</literal></para>
+                                </td>
+                                <td>
+                                    <para>Mandatory</para>
+                                </td>
+                                <td>
+                                    <para/>
+                                </td>
+                                <td>
+                                    <para>Administrator user name.</para>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <para><literal>UserPassword</literal>
+                                    </para>
+                                </td>
+                                <td>
+                                    <para>Mandatory</para>
+                                </td>
+                                <td>
+                                    <para/>
+                                </td>
+                                <td>
+                                    <para>Administrator password.</para>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <para><literal>LUNType</literal></para>
+                                </td>
+                                <td>
+                                    <para>Optional</para>
+                                </td>
+                                <td>
+                                    <para>Thick</para>
+                                </td>
+                                <td>
+                                    <para>Type of a created LUN. The value can be
+                                            <literal>Thick</literal> or
+                                        <literal>Thin</literal>.</para>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <para><literal>StripUnitSize</literal>
+                                    </para>
+                                </td>
+                                <td>
+                                    <para>Optional</para>
+                                </td>
+                                <td>
+                                    <para>64</para>
+                                </td>
+                                <td>
+                                    <para>Stripe depth of a created LUN. The value is expressed in
+                                        KB.</para>
+                                    <para>Note: This flag is invalid for a thin LUN.</para>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <para><literal>WriteType</literal>
+                                    </para>
+                                </td>
+                                <td>
+                                    <para>Optional</para>
+                                </td>
+                                <td>
+                                    <para>1</para>
+                                </td>
+                                <td>
+                                    <para>Cache write method. The method can be write back, write
+                                        through, or mandatory write back. The default value is
+                                            <literal>1</literal>, indicating write back.</para>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <para><literal>MirrorSwitch</literal></para>
+                                </td>
+                                <td>
+                                    <para>Optional</para>
+                                </td>
+                                <td>
+                                    <para>1</para>
+                                </td>
+                                <td>
+                                    <para>Cache mirroring policy. The default value is
+                                            <literal>1</literal>, indicating that a mirroring policy
+                                        is used.</para>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><literal>Prefetch Type</literal></td>
+                                <td>Optional</td>
+                                <td>
+                                    <para>3</para>
+                                </td>
+                                <td>
+                                    <para>Cache prefetch strategy. The strategy can be constant
+                                        prefetch, variable prefetch, or intelligent prefetch. The
+                                        default value is <literal>3</literal>, indicating
+                                        intelligent prefetch.</para>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><literal>Prefetch Value</literal></td>
+                                <td>Optional</td>
+                                <td>
+                                    <para>0</para>
+                                </td>
+                                <td>
+                                    <para>Cache prefetch value.</para>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><literal>StoragePool</literal></td>
+                                <td>Mandatory</td>
+                                <td>
+                                    <para/>
+                                </td>
+                                <td>
+                                    <para>Name of a storage pool that you want to use.</para>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><literal>DefaultTargetIP</literal></td>
+                                <td>Mandatory</td>
+                                <td>
+                                    <para/>
+                                </td>
+                                <td>
+                                    <para>Default IP address of the iSCSI port provided for compute
+                                        nodes.</para>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><literal>Initiator Name</literal></td>
+                                <td>Optional</td>
+                                <td>
+                                    <para/>
+                                </td>
+                                <td>
+                                    <para>Name of a compute node initiator.</para>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><literal>Initiator TargetIP</literal></td>
+                                <td>Optional</td>
+                                <td>
+                                    <para/>
+                                </td>
+                                <td>
+                                    <para>IP address of the iSCSI port provided for compute
+                                        nodes.</para>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table><note>
+                        <para>Multiple initiators can be configured in one configuration file,
+                            supporting multiple compute nodes. If a compute node initiator is not
+                            configured, the compute node connects the default target.</para>
+                        <para>Multiple storage pools can be configured in one configuration file,
+                            supporting multiple storage pools in a storage system.</para>
+                        <para>For more details, see command <literal>createlun</literal> in a
+                            specific command-line interface (CLI) reference or run <command>help -c
+                                createlun</command> in a storage system CLI.</para>
+                        <para>After a driver is loaded, the storage system obtains any modification
+                            of the driver configuration file in real time and you do not need to
+                            restart the cinder-volume service.</para>
+                    </note></para>
+            </simplesect>
+        </section>
+
