@@ -36,14 +36,11 @@ format="SVG" scale="60"/>
         is an outline the division of responsibilities to make understanding the system a little bit
         easier. </para>
     <para>Currently, Services are nova-api, nova-objectstore (which can be replaced with Glance, the
-        OpenStack Image Service), nova-compute, nova-volume, and nova-network. Managers and Drivers
-        are specified by configuration options and loaded using utils.load_object(). Managers are responsible for a
-        certain aspect of the system. It is a logical grouping of code relating to a portion of the
-        system. In general other components should be using the manager to make changes to the
+        OpenStack Image Service), nova-compute, and nova-network. Managers and Drivers are specified
+        by configuration options and loaded using utils.load_object(). Managers are responsible for
+        a certain aspect of the system. It is a logical grouping of code relating to a portion of
+        the system. In general other components should be using the manager to make changes to the
         components that it is responsible for. </para>
-    <para>For example, other components that need to deal with volumes in some way, should do so by
-        calling methods on the VolumeManager instead of directly changing fields in the database.
-        This allows us to keep all of the code relating to volumes in the same place. </para>
     <itemizedlist>
         <listitem>
             <para>nova-api - The nova-api service receives xml requests and sends them to the rest
@@ -64,11 +61,6 @@ format="SVG" scale="60"/>
                 ComputeManager via Remote Procedure Call (RPC).</para>
         </listitem>
         <listitem>
-            <para>nova-volume - The nova-volume service is responsible for managing attachable block
-                storage devices. It loads a Service object which exposes the public methods on
-                VolumeManager via RPC.</para>
-        </listitem>
-        <listitem>
             <para>nova-network - The nova-network service is responsible for managing floating and
                 fixed IPs, DHCP, bridging and VLANs. It loads a Service object which exposes the
                 public methods on one of the subclasses of NetworkManager. Different networking
@@ -80,52 +72,81 @@ format="SVG" scale="60"/>
     </itemizedlist>
 
     <section xml:id="understanding-the-compute-service-architecture">
-
         <title>Understanding the Compute Service Architecture</title>
-        <para>These basic categories describe the service architecture and what's going on within the cloud controller.</para>
-        <simplesect><title>API Server</title>
-
-            <para>At the heart of the cloud framework is an API Server. This API Server makes command and control of the hypervisor, storage, and networking programmatically available to users in realization of the definition of cloud computing.
-            </para>
-            <para>The API endpoints are basic http web services which handle authentication, authorization, and basic command and control functions using various API interfaces under the Amazon, Rackspace, and related models. This enables API compatibility with multiple existing tool sets created for interaction with offerings from other vendors. This broad compatibility prevents vendor lock-in.
-            </para> </simplesect>
-        <simplesect><title>Message Queue</title>
-            <para>
-            A messaging queue brokers the interaction between compute nodes (processing), volumes (block storage), the networking controllers (software which controls network infrastructure), API endpoints, the scheduler (determines which physical hardware to allocate to a virtual resource), and similar components. Communication to and from the cloud controller is by HTTP requests through multiple API endpoints.</para>
-
-<para>            A typical message passing event begins with the API server receiving a request from a user. The API server authenticates the user and ensures that the user is permitted to issue the subject command. Availability of objects implicated in the request is evaluated and, if available, the request is routed to the queuing engine for the relevant workers. Workers continually listen to the queue based on their role, and occasionally their type hostname. When such listening produces a work request, the worker takes assignment of the task and begins its execution. Upon completion, a response is dispatched to the queue which is received by the API server and relayed to the originating user. Database entries are queried, added, or removed as necessary throughout the process.
-</para>
-</simplesect>
-        <simplesect><title>Compute Worker</title>
-
-            <para>Compute workers manage computing instances on host machines. Through the API, commands are dispatched to compute workers to:</para>
-
+        <para>These basic categories describe the service architecture and what's going on within
+            the cloud controller.</para>
+        <simplesect>
+            <title>API Server</title>
+            <para>At the heart of the cloud framework is an API Server. This API Server makes
+                command and control of the hypervisor, storage, and networking programmatically
+                available to users in realization of the definition of cloud computing. </para>
+            <para>The API endpoints are basic http web services which handle authentication,
+                authorization, and basic command and control functions using various API interfaces
+                under the Amazon, Rackspace, and related models. This enables API compatibility with
+                multiple existing tool sets created for interaction with offerings from other
+                vendors. This broad compatibility prevents vendor lock-in. </para>
+        </simplesect>
+        <simplesect>
+            <title>Message Queue</title>
+            <para> A messaging queue brokers the interaction between compute nodes (processing), the
+                networking controllers (software which controls network infrastructure), API
+                endpoints, the scheduler (determines which physical hardware to allocate to a
+                virtual resource), and similar components. Communication to and from the cloud
+                controller is by HTTP requests through multiple API endpoints.</para>
+            <para> A typical message passing event begins with the API server receiving a request
+                from a user. The API server authenticates the user and ensures that the user is
+                permitted to issue the subject command. Availability of objects implicated in the
+                request is evaluated and, if available, the request is routed to the queuing engine
+                for the relevant workers. Workers continually listen to the queue based on their
+                role, and occasionally their type hostname. When such listening produces a work
+                request, the worker takes assignment of the task and begins its execution. Upon
+                completion, a response is dispatched to the queue which is received by the API
+                server and relayed to the originating user. Database entries are queried, added, or
+                removed as necessary throughout the process. </para>
+        </simplesect>
+        <simplesect>
+            <title>Compute Worker</title>
+            <para>Compute workers manage computing instances on host machines. Through the API,
+                commands are dispatched to compute workers to:</para>
             <itemizedlist>
-            <listitem><para>Run instances</para></listitem>
-            <listitem><para>Terminate instances</para></listitem>
-            <listitem><para>Reboot instances</para></listitem>
-            <listitem><para>Attach volumes</para></listitem>
-            <listitem><para>Detach volumes</para></listitem>
-            <listitem><para>Get console output</para></listitem></itemizedlist>
-            </simplesect>
-            <simplesect><title>Network Controller</title>
-
-            <para>The Network Controller manages the networking resources on host machines. The API server dispatches commands through the message queue, which are subsequently processed by Network Controllers. Specific operations include:</para>
-
-            <itemizedlist><listitem><para>Allocate fixed IP addresses</para></listitem>
-            <listitem><para>Configuring VLANs for projects</para></listitem>
-            <listitem><para>Configuring networks for compute nodes</para></listitem></itemizedlist>
-            </simplesect>
-<simplesect><title>Volume Workers</title>
-
-            <para>Volume Workers interact with iSCSI storage to manage LVM-based instance volumes. Specific functions include:
-            </para>
+                <listitem>
+                    <para>Run instances</para>
+                </listitem>
+                <listitem>
+                    <para>Terminate instances</para>
+                </listitem>
+                <listitem>
+                    <para>Reboot instances</para>
+                </listitem>
+                <listitem>
+                    <para>Attach volumes</para>
+                </listitem>
+                <listitem>
+                    <para>Detach volumes</para>
+                </listitem>
+                <listitem>
+                    <para>Get console output</para>
+                </listitem>
+            </itemizedlist>
+        </simplesect>
+        <simplesect>
+            <title>Network Controller</title>
+            <para>The Network Controller manages the networking resources on host machines. The API
+                server dispatches commands through the message queue, which are subsequently
+                processed by Network Controllers. Specific operations include:</para>
             <itemizedlist>
-                <listitem><para>Create volumes</para></listitem>
-            <listitem><para>Delete volumes</para></listitem>
-            <listitem><para>Establish Compute volumes</para></listitem></itemizedlist>
-
-    <para>Volumes may easily be transferred between instances, but may be attached to only a single instance at a time.</para></simplesect></section>
+                <listitem>
+                    <para>Allocate fixed IP addresses</para>
+                </listitem>
+                <listitem>
+                    <para>Configuring VLANs for projects</para>
+                </listitem>
+                <listitem>
+                    <para>Configuring networks for compute nodes</para>
+                </listitem>
+            </itemizedlist>
+        </simplesect>
+    </section>
     <section xml:id="managing-compute-users">
         <title>Managing Compute Users</title>
         <para>Access to the Euca2ools (ec2) API is controlled by an access and secret key. The
@@ -363,7 +384,6 @@ from above.</para>
                 <programlisting>
 <prompt>#</prompt> <userinput>nova-manage service list</userinput>
 <![CDATA[HostA nova-scheduler enabled  :-) None
-HostA nova-volume enabled  :-) None
 HostA nova-network enabled  :-) None
 HostB nova-compute enabled  :-) None
 HostC nova-compute enabled  :-) None
@@ -548,16 +568,13 @@ nova services or updating the <literal>vm_state</literal> and
                 cut, etc. In this example, we suppose the following
                 setup : <orderedlist>
                     <listitem>
-                        <para> A cloud controller (nova-api,
-                            nova-objecstore, nova-volume,
-                            nova-network) </para>
+                        <para> A cloud controller (nova-api, nova-objecstore, nova-network) </para>
                     </listitem>
                     <listitem>
                         <para> A compute node (nova-compute) </para>
                     </listitem>
                     <listitem>
-                        <para> A Storage Area Network used by
-                            nova-volumes (aka SAN) </para>
+                        <para> A Storage Area Network used by cinder-volumes (aka SAN) </para>
                     </listitem>
                 </orderedlist>The example disaster will be the worst
                 one : a power loss. That power loss applies to the
@@ -565,14 +582,12 @@ nova services or updating the <literal>vm_state</literal> and
                     what runs and how it runs before the
                     crash</emphasis> : <itemizedlist>
                     <listitem>
-                        <para>From the SAN to the cloud controller, we
-                            have an active iscsi session (used for the
-                            "nova-volumes" LVM's VG). </para>
+                        <para>From the SAN to the cloud controller, we have an active iscsi session
+                            (used for the "cinder-volumes" LVM's VG). </para>
                     </listitem>
                     <listitem>
-                        <para>From the cloud controller to the compute
-                            node we also have active iscsi sessions
-                            (managed by nova-volume). </para>
+                        <para>From the cloud controller to the compute node we also have active
+                            iscsi sessions (managed by cinder-volume). </para>
                     </listitem>
                     <listitem>
                         <para>For every volume an iscsi session is
@@ -671,30 +686,26 @@ nova services or updating the <literal>vm_state</literal> and
                         <para>We need to get the current relation from
                             a volume to its instance, since we will
                             recreate the attachment : </para>
-                        <para>This relation could be figured by
-                            running
-                                <command>nova volume-list</command>
-                        </para>
+                        <para>This relation could be figured by running <command>nova
+                                volume-list</command>  (note that nova client includes ability to
+                            get volume info from cinder)</para>
                     </listitem>
                     <listitem>
                         <para><emphasis role="bold"> Database Update
                             </emphasis>
                         </para>
-                        <para>Second, we need to update the database
-                            in order to clean the stalled state. Now
-                            that we have saved the attachments we need
-                            to restore for every volume, the database
-                            can be cleaned with the following queries:
+                        <para>Second, we need to update the database in order to clean the stalled
+                            state. Now that we have saved the attachments we need to restore for
+                            every volume, the database can be cleaned with the following queries:
                             <programlisting>
-<prompt>mysql></prompt> <userinput>use nova;</userinput>
+<prompt>mysql></prompt> <userinput>use cinder;</userinput>
 <prompt>mysql></prompt> <userinput>update volumes set mountpoint=NULL;</userinput>
 <prompt>mysql></prompt> <userinput>update volumes set status="available" where status &lt;&gt;"error_deleting";</userinput>
 <prompt>mysql></prompt> <userinput>update volumes set attach_status="detached";</userinput>
 <prompt>mysql></prompt> <userinput>update volumes set instance_id=0;</userinput>
                 </programlisting>Now,
-                            when running
-                                <command>nova volume-list</command>
-                            all volumes should be available. </para>
+                            when running <command>nova volume-list</command> all volumes should be
+                            available. </para>
                     </listitem>
                     <listitem>
                         <para><emphasis role="bold"> Instances Restart
@@ -783,18 +794,13 @@ done &lt; $volumes_tmp_file
                                 errors=remount</literal> in the
                                 <filename>fstab</filename> file, which
                             will prevent data corruption.</para>
-                        <para> The system would lock any write to the
-                            disk if it detects an I/O error. This
-                            configuration option should be added into
-                            the nova-volume server (the one which
-                            performs the ISCSI connection to the SAN),
-                            but also into the instances'
-                                <filename>fstab</filename>
-                            file.</para>
+                        <para> The system would lock any write to the disk if it detects an I/O
+                            error. This configuration option should be added into the cinder-volume
+                            server (the one which performs the ISCSI connection to the SAN), but
+                            also into the instances' <filename>fstab</filename> file.</para>
                     </listitem>
                     <listitem>
-                        <para>Do not add the entry for the SAN's disks
-                            to the nova-volume's
+                        <para>Do not add the entry for the SAN's disks to the cinder-volume's
                                 <filename>fstab</filename> file. </para>
                         <para>Some systems will  hang on that step,
                             which means you could lose access to your

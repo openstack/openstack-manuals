@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="ch_volumes">
+    <title>System Administration for OpenStack Block Storage</title>
+    <para>There are a number of concepts and ideas that are helpful in
+        understanding administration of the OpenStack Block Storage
+        service. There are a number of choices in terms of configuring
+        the Block Storage service in OpenStack, but the bulk of the
+        options come down to two choices, single node or multi-node
+        install. You can read a longer discussion about storage
+        decisions in the <link xlink:href="../openstack-ops/content/storage_decision.html">OpenStack Operations Guide</link>.</para>
+    <para>The OpenStack Block Storage service works via the interaction of a series of daemon
+        processes named cinder-* that reside persistently on the host machine or machines.  The
+        binaries can all be run from a single node, or spread across multiple nodes.  They can also
+        be run on the same node as other OpenStack services.</para>
+    <para>The current services available in OpenStack Block Storage are:</para>
+    <para>
+        <itemizedlist>
+            <listitem>
+                <para>cinder-api - The cinder-api service is a WSGI app that authenticates and
+                    routes requests throughout the Block Storage system.  It supports the OpenStack
+                    API's only, although there is a translation that can be done via Nova's EC2
+                    interface which calls in to the cinderclient.</para>
+            </listitem>
+        </itemizedlist>
+    </para>
+    <para>
+        <itemizedlist>
+            <listitem>
+                <para> cinder-scheduler - The cinder-scheduler is responsible for scheduling/routing
+                    requests to the appropriate volume service.  As of Grizzly; depending upon your
+                    configuration this may be simple round-robin scheduling to the running volume
+                    services, or it can be more sophisticated through the use of the Filter
+                    Scheduler.  The Filter Scheduler is the default in Grizzly and enables filter on
+                    things like Capacity, Avaialability Zone, Volume Types and Capabilities as well
+                    as custom filters.</para>
+            </listitem>
+        </itemizedlist>
+    </para>
+    <para>
+        <itemizedlist>
+            <listitem>
+                <para>cinder-volume - The cinder-volume service is responsible for managing Block
+                    Storage devices, specifically the back-end devices themeselves.</para>
+            </listitem>
+        </itemizedlist>
+    </para>
+    <para>
+        <itemizedlist>
+            <listitem>
+                <para> cinder-backup - The cinder-backup service provides a means to back up a
+                    Cinder Volume to OpenStack Object Store (SWIFT). </para>
+            </listitem>
+        </itemizedlist>
+    </para>
+
+    <section xml:id="managing-volumes">
+        <title>Managing Volumes</title>
+        <para>Cinder is the OpenStack service that allows you to give extra block level storage to
+            your OpenStack Compute instances. You may recognize this as a similar offering from
+            Amazon EC2 known as Elastic Block Storage (EBS).  The default Cinder implementation is
+            an iSCSI solution that employs the use of Logical Volume Manager (LVM) for Linux. Note
+            that a volume may only be attached to one instance at a time. This is not a ‘shared
+            storage’ solution like a SAN of NFS on which multiple servers can attach to.  It's also
+            important to note that Cinder also includes a number of drivers to allow you to use a
+            number of other vendor's back-end storage devices in addition to or instead of the base
+            LVM implementation.</para>
+        <para>Here is brief walk-through of a simple create/attach sequence, keep in mind this
+            requires proper configuration of both OpenStack Compute via nova.conf and OpenStack
+            Block Storage via cinder.conf.</para>
+        <orderedlist>
+            <listitem>
+                <para>The volume is created via <command>cinder create</command>; which creates an
+                    LV into the volume group (VG) "cinder-volumes" </para>
+            </listitem>
+            <listitem>
+                <para>The volume is attached to an instance via <command>nova volume-attach</command>; which creates a
+                    unique iSCSI IQN that will be exposed to the compute node </para>
+            </listitem>
+            <listitem>
+                <para>The compute node which run the concerned instance has now an active ISCSI
+                    session; and a new local storage (usually a /dev/sdX disk) </para>
+            </listitem>
+            <listitem>
+                <para>libvirt uses that local storage as a storage for the instance; the instance
+                    get a new disk (usually a /dev/vdX disk) </para>
+            </listitem>
+        </orderedlist>
+        <xi:include href="troubleshoot-cinder.xml"/>
+    </section>
+    <section xml:id="volume-drivers">
+        <title>Volume drivers</title>
+        <para>The default cinder-volume behaviour can be altered by using different volume drivers
+            that are included in Nova codebase. To set volume driver, use
+                <literal>volume_driver</literal> flag. The default is as follows:</para>
+        <programlisting>
+volume_driver=nova.volume.driver.ISCSIDriver
+iscsi_helper=tgtadm
+        </programlisting>
+        <xi:include href="drivers/ceph-rbd-volume-driver.xml" />
+        <xi:include href="drivers/emc-volume-driver.xml" />
+        <xi:include href="drivers/hp-lefthand-driver.xml" />
+        <xi:include href="drivers/ibm-storwize-svc-driver.xml" />
+        <xi:include href="drivers/netapp-volume-driver.xml" />
+		<xi:include href="drivers/nexenta-volume-driver.xml" />
+        <xi:include href="drivers/solidfire-volume-driver.xml" />
+        <xi:include href="drivers/xenapi-nfs.xml" />
+        <xi:include href="drivers/xen-sm-driver.xml" />
+
+    </section>
+</chapter>

@@ -15,10 +15,8 @@
         service. If the request seems to be logged, and there are no
         errors or trace-backs then you can move to the <literal>cinder-volume</literal>
         log and look for errors or trace-backs there.</para>
-    <para>There are some common issues with both <literal>nova-volume</literal>
-        and Cinder on Folsom to look out for, the following refers to
-        Cinder only, but is applicable to both <literal>nova-volume</literal> and Cinder
-        unless otherwise specified.</para>
+    <para>There are some common issues to look out for. The following describes
+	    some common issues hit during configuration and some suggested solutions.</para>
     <para><emphasis role="bold"><emphasis role="underline">Create commands are in cinder-api log
                 with no error</emphasis></emphasis></para>
     <para>
@@ -49,8 +47,7 @@
                     to be configured to look in the correct place for the persist files. This is a
                     simple entry in <filename>/etc/tgt/conf.d</filename>, and you should have created this when you went
                     through the install guide. If you haven't or you're running into issues, verify
-                    that you have a file <filename>/etc/tgt/conf.d/cinder.conf</filename> (for <literal>nova-volume</literal>, this will be
-                    <filename>/etc/tgt/conf.d/nova.conf</filename>).</para>
+                    that you have a file <filename>/etc/tgt/conf.d/cinder.conf</filename>.</para>
                 <para>If the files not there, you can create it easily by doing the
                     following:<programlisting>
 sudo sh -c "echo 'include /var/lib/cinder/volumes/*' >> /etc/tgt/conf.d/cinder.conf"
@@ -58,7 +55,7 @@ sudo sh -c "echo 'include /var/lib/cinder/volumes/*' >> /etc/tgt/conf.d/cinder.c
             </listitem>
         </itemizedlist>
     </para>
-    <para><emphasis role="bold"><emphasis role="underline">No sign of create call in the <literal>cinder-api</literal>
+    <para><emphasis role="bold"><emphasis role="underline">No sign of attach call in the <literal>cinder-api</literal>
                 log</emphasis></emphasis></para>
     <para>This is most likely going to be a minor adjustment to you
             <filename>nova.conf </filename>file. Make sure that your
@@ -72,17 +69,17 @@ enabled_apis=ec2,osapi_compute,metadata
     </programlisting>
     </para>
     <para><emphasis role="bold">Failed to create iscsi target error in the <filename>cinder-volume.log</filename></emphasis></para>
-        
+
         <programlisting language="bash">2013-03-12 01:35:43 1248 TRACE cinder.openstack.common.rpc.amqp ISCSITargetCreateFailed: Failed to create iscsi target for volume volume-137641b2-af72-4a2f-b243-65fdccd38780.
-</programlisting>        
+</programlisting>
         <para>You may see this error in <filename>cinder-volume.log</filename> after trying to create a volume that is 1 GB. To fix this issue:
         </para>
     <para>Change content of the <filename>/etc/tgt/targets.conf</filename> from "include /etc/tgt/conf.d/*.conf" to:
-    include /etc/tgt/conf.d/cinder_tgt.conf:</para>    
+    include /etc/tgt/conf.d/cinder_tgt.conf:</para>
         <programlisting language="bash">
             include /etc/tgt/conf.d/cinder_tgt.conf
             include /etc/tgt/conf.d/cinder.conf
             default-driver iscsi</programlisting>
-        
+
         <para>Then restart tgt and <literal>cinder-*</literal> services so they pick up the new configuration.</para>
 </section>
