@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="multi_backend" xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="1.0">
+    <title>Configuring Multiple Storage Backend</title>
+    <para>This section presents the multi-backend storage feature
+        introduced with the Grizzly release. Multi-backend allows
+        the creation of several backend storage solutions serving the same
+        OpenStack Compute configuration. Basically, multi-backend launches
+        one <literal>cinder-volume</literal> per backend.</para>
+    <para>In a multi-backend configuration, each backend has a name (<literal>volume_backend_name</literal>).
+        Several backends can have the same name. In that case, the scheduler properly decides in which backend the volume has to be created.
+    </para>
+    <para>The name of the backend is declared as an extra-specification of a volume type (e.g. <literal>volume_backend_name=LVM_iSCSI</literal>).
+        At a volume creation, according to the volume type specified by the user, the scheduler will choose an appropriate backend to handle the request.
+    </para>
+    <simplesect>
+        <title>Enable Multi-Backend</title>
+        <para>The multi-backend configuration is done into the <literal>cinder.conf</literal> file.
+            The <literal>enabled_backends</literal> flag has to be set up. This flag defines the names (separated by a comma) of the config groups for the different backends: one name is associated to one config group for a backend (e.g. <literal>[lvmdriver-1]</literal>).
+            <note><para>The config group name is not related to the <literal>volume_backend_name</literal>.</para></note>
+            The options for a config group have to be defined in the group (or default options will be used). All the standard Cinder configuration options (<literal>volume_group</literal>, <literal>volume_driver</literal>, etc) may be used in a config group.
+            Config values in the <literal>[DEFAULT]</literal> config group will not be used.
+        </para>
+        <para>Below is presented a full example with 3 backends:
+            <programlisting># a list of backends that will be served by this compute node
+enabled_backends=lvmdriver-1,lvmdriver-2,lvmdriver-3
+[lvmdriver-1]
+volume_group=cinder-volumes-1
+volume_driver=cinder.volume.drivers.lvm.LVMISCSIDriver
+volume_backend_name=LVM_iSCSI
+[lvmdriver-2]
+volume_group=cinder-volumes-2
+volume_driver=cinder.volume.drivers.lvm.LVMISCSIDriver
+volume_backend_name=LVM_iSCSI
+[lvmdriver-3]
+volume_group=cinder-volumes-3
+volume_driver=cinder.volume.drivers.lvm.LVMISCSIDriver
+volume_backend_name=LVM_iSCSI_b
+        </programlisting>
+            In this configuration <literal>lvmdriver-1</literal> and <literal>lvmdriver-2</literal> have the same <literal>volume_backend_name</literal>.
+            This means that, if a volume creation requests the <literal>LVM_iSCSI</literal> backend name, the scheduler will choose between <literal>lvmdriver-1</literal> and <literal>lvmdriver-2</literal> which one is the most suitable. This is done thanks to the capacity filter scheduler which is enabled by default (the following section gives more information on that point).
+            In addition, this example presents a third backend named <literal>lvmdriver-3</literal>. This one has a different backend name.
+        </para>
+    </simplesect>
+    <simplesect>
+        <title>Cinder Scheduler Configuration With Multi-Backend</title>
+        <para>Multi-backend has to be used with <literal>filter_scheduler</literal> enabled. Filter scheduler acts in two steps:
+            <orderedlist>
+                <listitem>
+                    <para>First, filter scheduler filters the available backends. By default, <literal>AvailabilityZoneFilter</literal>, <literal>CapacityFilter</literal> and <literal>CapabilitiesFilter</literal> are enabled.</para>
+                </listitem>
+                <listitem>
+                    <para>Secondly, filter scheduler weights the previously filtered backends. By default, <literal>CapacityWeigher</literal> is enabled. The <literal>CapacityWeigher</literal> attributes high score to backends with the most available space.</para>
+                </listitem>
+            </orderedlist>
+            According to the filtering and weighing, the scheduler will be able to pick "the best" backend in order to handle the request. In that way, filter scheduler achieves the goal that one can explicitly creates volume on specifics backends using volume types.
+            <note><para>To enable the filter scheduler, the following line has to be added into the <literal>cinder.conf</literal> configuration file: <programlisting>scheduler_driver=cinder.scheduler.filter_scheduler.FilterScheduler</programlisting></para>
+        <para>However, <literal>filter_scheduler</literal> is the default Cinder Scheduler in Grizzly, this line is not mandatory.</para></note>
+            <!-- TODO: when filter/weighing scheduler documentation will be up, a ref should be added here -->
+        </para>
+    </simplesect>
+    <simplesect>
+        <title>Volume Type</title>
+        <para>Before using it, a volume type has to be declared to Cinder. This can be done by the following command:
+        <programlisting language="bash">$ cinder --os-username admin --os-tenant-name admin type-create lvm</programlisting>
+        Then, an extra-specification have to be created to linked the volume type to a backend name.
+        This can be done by the following command:
+        <programlisting language="bash">$ cinder --os-username admin --os-tenant-name admin type-key lvm set volume_backend_name=LVM_iSCSI
+        </programlisting>
+            In this example we have created a volume type named <literal>lvm</literal> with <literal>volume_backend_name=LVM_iSCSI</literal> as extra-specifications.
+        </para>
+        <para>We complete this example by creating another volume type:
+            <programlisting language="bash">$ cinder --os-username admin --os-tenant-name admin type-create lvm_gold
+$ cinder --os-username admin --os-tenant-name admin type-key lvm_gold set volume_backend_name=LVM_iSCSI_b
+            </programlisting>
+            This second volume type is named <literal>lvm_gold</literal> and has <literal>LVM_iSCSI_b</literal> as backend name.
+        </para>
+        <note>
+            <para>To list the extra-specifications, use the following command line:
+                <programlisting>$ cinder --os-username admin --os-tenant-name admin extra-specs-list</programlisting>
+            </para>
+        </note>
+        <note>
+            <para>If a volume type points to a <literal>volume_backend_name</literal> which does not exist in the Cinder configuration, the <literal>filter_scheduler</literal> will return an error mentioning that it is not able to find a valid host with the suitable backend.
+        </para>
+        </note>
+    </simplesect>
+    <simplesect>
+        <title>Usage</title>
+        <para>When creating a volume, the volume type has to be specified.
+            The extra-specifications of the volume type will be used to determine which backend have to be used.
+            <programlisting>cinder create --volume_type lvm --display_name test_multi_backend 1</programlisting>
+            Considering the <literal>cinder.conf</literal> described above, the scheduler will create this volume on <literal>lvmdriver-1</literal> or <literal>lvmdriver-2</literal>.
+            <programlisting>cinder create --volume_type lvm_gold --display_name test_multi_backend 1</programlisting>
+            This second volume will be created on <literal>lvmdriver-3</literal>.
+        </para>
+    </simplesect>
+</section>
