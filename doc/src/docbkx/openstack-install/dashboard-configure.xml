@@ -4,19 +4,15 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
     <title>Configuring the Dashboard</title>
-    <para>A full example <filename>local_settings.py</filename> file is included in the Appendix of the OpenStack
-        Install and Deploy manual. Here are some common options:</para>
-       <itemizedlist>
-       <listitem>
-            <para><literal>SWIFT_ENABLED</literal>: If an Object Storage (Swift) endpoint is
-                available and configured in the Identity service catalog, set <literal>SWIFT_ENABLED
-                    = True</literal>. </para>
-        </listitem>
-        <listitem>
-            <para><literal>QUANTUM_ENABLED</literal>: If a Network Connection (Quantum) service is
-                available and configured in the Identity service catalog, set
-                    <literal>QUANTUM_ENABLED = True</literal>. Else keep it FALSE if you are not
-                using Quantum.</para>
-        </listitem>
-        </itemizedlist>
+    <para>
+        Specify the host for your OpenStack Identity Service endpoint
+        in the local_settings.py file with the OPENSTACK_HOST setting.
+        An example is included: 
+    </para>
+    <programlisting><xi:include parse="text" href="samples/local_settings.py"/></programlisting>
+        <para>The HORIZON_CONFIG dictionary contains all the settings for
+        the Dashboard. Whether or not a service is in the Dashboard
+        depends on the Service Catalog configuration in the Identity
+        service. Refer to <link xlink:href="http://docs.openstack.org/developer/horizon/topics/settings.html">Horizon Settings and Configuration</link> for the
+        full listing.</para>
 </section>

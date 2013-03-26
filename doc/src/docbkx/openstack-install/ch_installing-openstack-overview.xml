@@ -17,11 +17,18 @@
         Identity, then goes through Image and Compute and also
         provides deployment information about an Object Storage
         installation.</para>
+    <para>If you are interested in how to plan for and operate an
+        OpenStack cloud, refer to the <link
+            xlink:href="http://docs.openstack.org/ops/">OpenStack
+            Operations Guide</link>.</para>
     <para>Here are the overall steps for a manual install:</para>
-        <orderedlist>
-            <listitem><para>Review the most supported platforms. Red Hat Enterprise Linux,
-                Scientific Linux, CentOS, Fedora, Debian, and Ubuntu
-                are the most tested platforms currently. </para></listitem>
+    <orderedlist>
+        <listitem>
+            <para>Review the most supported platforms. Red Hat
+                Enterprise Linux, Scientific Linux, CentOS, Fedora,
+                Debian, and Ubuntu are the most tested platforms
+                currently. </para>
+        </listitem>
         <listitem>
             <para>Install the Identity Service (Keystone).</para>
         </listitem>
@@ -34,7 +41,7 @@
         <listitem>
             <para>Configure the Image Service.</para>
         </listitem>
-            <listitem>
+        <listitem>
             <para>Install Compute (Nova).</para>
         </listitem>
         <listitem>
@@ -42,9 +49,10 @@
                 Compute.</para>
         </listitem>
         <listitem>
-            <para>Configure Compute with FlatDHCP networking
-                using <literal>192.168.100.0/24</literal> as the fixed range for our guest
-                VMs on a bridge named <literal>br100</literal>. </para>
+            <para>Configure Compute with FlatDHCP networking using
+                    <literal>192.168.100.0/24</literal> as the fixed
+                range for our guest VMs on a bridge named
+                    <literal>br100</literal>. </para>
         </listitem>
         <listitem>
             <para>Create and initialize the Compute database with
@@ -71,78 +79,90 @@
             <para>Launch an image through the Dashboard to verify the
                 entire installation.</para>
         </listitem>
-        </orderedlist>
-    
-    <section xml:id="installing-openstack-compute-on-ubuntu" os="ubuntu">
+    </orderedlist>
+
+    <section xml:id="installing-openstack-compute-on-ubuntu"
+        os="ubuntu">
         <title>Installing on Ubuntu</title>
-        
-        <para>How you go about installing OpenStack Compute depends on your goals
-            for the installation. You can use an ISO image, you can use a scripted
-            installation, and you can manually install with a step-by-step
-            installation as described in this manual.</para>
-        
-        <section xml:id="iso-ubuntu-installation">
+
+        <para>How you go about installing OpenStack Compute depends on
+            your goals for the installation. You can use an ISO image,
+            you can use a scripted installation, and you can manually
+            install with a step-by-step installation as described in
+            this manual.</para>
+
+        <section xml:id="iso-ubuntu-installation" os="ubuntu">
             <title>ISO Installation</title>
-            
+
             <para>See <link
-                xlink:href="http://www.rackspace.com/knowledge_center/article/installing-rackspace-private-cloud-on-physical-hardware"
-                >Installing Rackspace Private Cloud on Physical
-                Hardware</link> for download links and instructions for the
-                Rackspace Private Cloud ISO. For documentation on the
-                Rackspace, see <link xlink:href="http://www.rackspace.com/cloud/private">http://www.rackspace.com/cloud/private</link>. </para>
+                    xlink:href="http://www.rackspace.com/knowledge_center/article/installing-rackspace-private-cloud-on-physical-hardware"
+                    >Installing Rackspace Private Cloud on Physical
+                    Hardware</link> for download links and
+                instructions for the Rackspace Private Cloud ISO. For
+                documentation on the Rackspace, see <link
+                    xlink:href="http://www.rackspace.com/cloud/private"
+                    >http://www.rackspace.com/cloud/private</link>.
+            </para>
         </section>
-        
-        <section xml:id="manual-ubuntu-installation">
+
+        <section xml:id="manual-ubuntu-installation" os="ubuntu">
             <title>Manual Installation on Ubuntu</title>
-            
-            <para>The manual installation involves installing from packages
-                shipped on Ubuntu 12.10 using the Cloud Archive as a user with root (or sudo)
-                permission. This guide provides
-                instructions for installing using Ubuntu packages. </para>
+
+            <para>The manual installation involves installing from
+                packages shipped on Ubuntu 12.10 using the Cloud
+                Archive as a user with root (or sudo) permission. This
+                guide provides instructions for installing using
+                Ubuntu packages. </para>
         </section>
-        <section xml:id="scripted-dev-installation">
-            <title>Scripted Development Installation</title>
-            
-            <para>You can download a script for a standalone install for
-                proof-of-concept, learning, or for development purposes for Ubuntu 12.04 or Fedora 16
-                at <link
-                    xlink:href="http://devstack.org">https://devstack.org</link>.</para>
-            
-            <orderedlist>
-                <listitem>
-                    <para>Install Ubuntu 12.04 or Fedora 16:</para>
-                    
-                    <para>In order to correctly install all the dependencies, we assume
-                        a specific version of the OS to make it as easy as possible.</para>
-                </listitem>
+    </section>
+    <section xml:id="scripted-dev-installation">
+        <title>Scripted Development Installation</title>
+        
+        <para>You can download a script for a standalone install
+            for proof-of-concept, learning, or for development
+            purposes for Ubuntu 12.04 or Fedora 16 at <link
+                xlink:href="http://devstack.org"
+                >https://devstack.org</link>.</para>
+        
+        <orderedlist>
+            <listitem>
+                <para>Install Ubuntu 12.04 or Fedora 16:</para>
                 
-                <listitem>
-                    <para>Download DevStack:</para>
-                    
-                    <screen><prompt>$</prompt> <userinput>git clone git://github.com/openstack-dev/devstack.git</userinput></screen>
-                    
-                    <para>The devstack repository contains a script that installs OpenStack
-                        Compute, Object Storage, the Image Service, Volumes, the Dashboard and the Identity Service and offers
-                        templates for configuration files plus data scripts.</para>
-                </listitem>
+                <para>In order to correctly install all the
+                    dependencies, we assume a specific version of
+                    the OS to make it as easy as possible.</para>
+            </listitem>
+            
+            <listitem>
+                <para>Download DevStack:</para>
                 
-                <listitem>
-                    <para>Start the install:</para>
-                    
-                    <screen><prompt>$</prompt> <userinput>cd devstack; ./stack.sh</userinput></screen>
-                    
-                    <para>It takes a few minutes, we recommend <link
-                        xlink:href="http://devstack.org/stack.sh.html">reading the
-                        well-documented script</link> while it is building to learn more
-                        about what is going on.</para>
-                </listitem>
-            </orderedlist>
-        </section>
+                <screen><prompt>$</prompt> <userinput>git clone git://github.com/openstack-dev/devstack.git</userinput></screen>
+                
+                <para>The devstack repository contains a script
+                    that installs OpenStack Compute, Object
+                    Storage, the Image Service, Volumes, the
+                    Dashboard and the Identity Service and offers
+                    templates for configuration files plus data
+                    scripts.</para>
+            </listitem>
+            
+            <listitem>
+                <para>Start the install:</para>
+                
+                <screen><prompt>$</prompt> <userinput>cd devstack; ./stack.sh</userinput></screen>
+                
+                <para>It takes a few minutes, we recommend <link
+                    xlink:href="http://devstack.org/stack.sh.html"
+                    >reading the well-documented script</link>
+                    while it is building to learn more about what
+                    is going on.</para>
+            </listitem>
+        </orderedlist>
     </section>
     <xi:include href="example-installation-arch.xml"/>
     <xi:include href="service-arch.xml"/>
-    <xi:include href="compute-sys-requirements.xml" />
-    <xi:include href="compute-network-planning.xml" />
+    <xi:include href="compute-sys-requirements.xml"/>
+    <xi:include href="compute-network-planning.xml"/>
     <xi:include href="installing-ntp.xml"/>
     <xi:include href="installing-mysql.xml"/>
     <xi:include href="installing-rabbitmq.xml"/>
