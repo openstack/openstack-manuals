@@ -12,12 +12,15 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="maintenance">
+
+    <?dbhtml stop-chunking?>
     <title>Maintenance, Failures, and Debugging</title>
     <para>Downtime, whether planned or unscheduled, is a certainty
         when running a cloud. This chapter aims to provide useful
         information for dealing proactively, or reactively with these
         occurrences.</para>
     <section xml:id="cloud_controller_storage">
+        <?dbhtml stop-chunking?>
         <title>Cloud Controller and Storage Proxy Failures and
             Maintenance</title>
         <para>The cloud controller and storage proxy are very similar
@@ -32,6 +35,7 @@
             storage traffic is possible until it is back up and
             running.</para>
         <section xml:id="planned_maintenance">
+            <?dbhtml stop-chunking?>
             <title>Planned Maintenance</title>
             <para>One way to plan for cloud controller or storage
                 proxy maintenance is to simply do it off-hours, such
@@ -41,6 +45,7 @@
                 you must look into High Availability options.</para>
         </section>
         <section xml:id="reboot_cloud_controller">
+            <?dbhtml stop-chunking?>
             <title>Rebooting a cloud controller or Storage
                 Proxy</title>
             <para>All in all, just issue the "reboot" command. The
@@ -50,20 +55,21 @@
                 reboot.</para>
         </section>
         <section xml:id="after_a_cc_reboot">
+            <?dbhtml stop-chunking?>
             <title>After a Cloud Controller or Storage Proxy
                 Reboots</title>
             <para>After a cloud controller reboots, ensure that all
                 required services were successfully started:</para>
             <programlisting><?db-font-size 65%?># ps aux | grep nova-
-      # grep AMQP /var/log/nova/nova-*.log
-      # ps aux | grep glance-
-      # ps aux | grep keystone
-      # ps aux | grep cinder</programlisting>
+# grep AMQP /var/log/nova/nova-*.log
+# ps aux | grep glance-
+# ps aux | grep keystone
+# ps aux | grep cinder</programlisting>
             <para>Also check that all services are functioning:</para>
             <programlisting><?db-font-size 65%?># source openrc
-      # glance index
-      # nova list
-      # keystone tenant-list</programlisting>
+# glance index
+# nova list
+# keystone tenant-list</programlisting>
             <para>For the storage proxy, ensure that the Object
                 Storage service has resumed:</para>
             <programlisting><?db-font-size 65%?># ps aux | grep swift</programlisting>
@@ -71,14 +77,15 @@
             <programlisting><?db-font-size 65%?># swift stat</programlisting>
         </section>
         <section xml:id="cc_failure">
+            <?dbhtml stop-chunking?>
             <title>Total Cloud Controller Failure</title>
-            <para>Unfortunately, this is a rough situation to be in.
-                The cloud controller is a integral part of your cloud
-                and if you have only one controller, many services
-                will be missing.</para>
-            <para>The best way to never get into this situation is to
-                create a highly available cloud controller cluster.
-                This is outside the scope of this document.</para>
+            <para>Unfortunately, this is a rough situation. The cloud
+                controller is a integral part of your cloud. If you
+                have only one controller, many services are
+                missing.</para>
+            <para>To avoid this situation, create a highly available
+                cloud controller cluster. This is outside the scope of
+                this document.</para>
             <para>The next best way is to use a configuration
                 management tool such as Puppet to automatically build
                 a cloud controller. This should not take more than 15
@@ -89,10 +96,12 @@
         </section>
     </section>
     <section xml:id="compute_node_failures">
+        <?dbhtml stop-chunking?>
         <title>Compute Node Failures and Maintenance</title>
         <para>Sometimes a compute node either crashes unexpectedly or
             requires a reboot for maintenance reasons.</para>
         <section xml:id="planned_maintenance_compute_node">
+            <?dbhtml stop-chunking?>
             <title>Planned Maintenance</title>
             <para>If you need to reboot a compute node due to planned
                 maintenance (such as a software or hardware upgrade),
@@ -131,25 +140,27 @@
                 their original compute node.</para>
         </section>
         <section xml:id="after_compute_node_reboot">
+            <?dbhtml stop-chunking?>
             <title>After a Compute Node Reboots</title>
             <para>When you reboot a compute node, first verify that it
                 booted successfully. This includes ensuring the
                     <code>nova-compute</code> service is
                 running:</para>
             <programlisting><?db-font-size 65%?># ps aux | grep nova-compute
-      # status nova-compute</programlisting>
+# status nova-compute</programlisting>
             <para>Also ensure that it has successfully connected to
                 the AMQP server:</para>
             <programlisting><?db-font-size 65%?># grep AMQP /var/log/nova/nova-compute
 2013-02-26 09:51:31 12427 INFO nova.openstack.common.rpc.common [-] Connected to AMQP server on 199.116.232.36:5672</programlisting>
             <para>After the compute node is successfully running, you
                 must deal with the instances that are hosted on that
-                compute node as none of them will be running.
-                Depending on your SLA with your users/customers, you
-                might have to start each instance and ensure they
-                start correctly.</para>
+                compute node as none of them is running. Depending on
+                your SLA with your users or customers, you might have
+                to start each instance and ensure they start
+                correctly.</para>
         </section>
         <section xml:id="maintenance_instances">
+            <?dbhtml stop-chunking?>
             <title>Instances</title>
             <para>You can create a list of instances that are hosted
                 on the compute node by performing the following
@@ -165,15 +176,15 @@
                 require an <code>fsck</code> on the root partition. If
                 this happens, the user can use the Dashboard VNC
                 console to fix this.</para>
-            <para>If an instance is not booting at all, meaning
-                    <code>virsh list</code> will never show the
-                instance as even attempting to boot, then do the
-                following on the compute node:</para>
+            <para>If an instance does not boot, meaning <code>virsh
+                    list</code> never shows the instance as even
+                attempting to boot, do the following on the compute
+                node:</para>
             <programlisting><?db-font-size 65%?># tail -f /var/log/nova/nova-compute.log</programlisting>
             <para>Try executing the <code>nova reboot</code> command
                 again. You should see an error message about why the
                 instance was not able to boot</para>
-            <para>In most cases the error will be due to something in
+            <para>In most cases, the error is due to something in
                 libvirt's XML file
                     (<code>/etc/libvirt/qemu/instance-xxxxxxxx.xml</code>)
                 that no longer exists. You can enforce recreation of
@@ -182,19 +193,21 @@
             <programlisting><?db-font-size 65%?># nova reboot --hard &lt;uuid&gt;</programlisting>
         </section>
         <section xml:id="inspect_and_recover_failed_instances">
+            <?dbhtml stop-chunking?>
             <title>Inspecting and Recovering Data from Failed
                 Instances</title>
-            <para>There are scenarios where instances will be running
-                but inaccessible through SSH or responding to any
+            <para>In some scenarios, instances are running but are
+                inaccessible through SSH and do not respond to any
                 command. VNC console could be displaying a boot
                 failure or kernel panic error messages. This could be
                 an indication of a file system corruption on the VM
                 itself. If you need to recover files or inspect the
                 content of the instance, qemu-nbd can be used to mount
                 the disk.</para>
-            <para>Please note: you will be accessing/viewing the
-                user's content and data - get their approval
-                first!</para>
+            <note>
+                <para>If you access or view the user's content and
+                    data, get their approval first!</para>
+            </note>
             <para>To access the instance's disk
                 (/var/lib/nova/instances/instance-xxxxxx/disk), the
                 following steps must be followed:</para>
@@ -221,29 +234,28 @@
                 </listitem>
             </orderedlist>
             <para>If you do not follow the steps from 4-6, OpenStack
-                Compute cannot manage the instance any longer. It will
-                fail to respond to any command issued by OpenStack
-                Compute and it will be marked as shutdown.</para>
-            <para>Once the disk file is mounted, you should be able
-                access it and treated as normal directories with files
-                and a directory structure. However, we do not
-                recommend to edit or touch any files as this could
-                change the acls and make the instance unbootable if it
-                is not already.</para>
+                Compute cannot manage the instance any longer. It
+                fails to respond to any command issued by OpenStack
+                Compute and it is marked as shutdown.</para>
+            <para>Once you mount the disk file, you should be able
+                access it and treat it as normal directories with
+                files and a directory structure. However, we do not
+                recommend that you edit or touch any files because
+                this could change the acls and make the instance
+                unbootable if it is not already.</para>
             <orderedlist>
                 <listitem>
                     <para>Suspend the instance using the virsh command
                         - taking note of the internal ID.</para>
                     <programlisting><?db-font-size 65%?>root@compute-node:~# virsh list
-                  Id Name                 State
-                  ----------------------------------
-                  1 instance-00000981    running
-                  2 instance-000009f5    running
-                  30 instance-0000274a    running
+Id Name                 State
+----------------------------------
+1 instance-00000981    running
+2 instance-000009f5    running 
+30 instance-0000274a    running
                   
-                  root@compute-node:~# virsh suspend 30
-                  Domain 30 suspended
-              </programlisting>
+root@compute-node:~# virsh suspend 30
+Domain 30 suspended</programlisting>
                 </listitem>
                 <listitem>
                     <para>Connect the qemu-nbd device to the
@@ -258,15 +270,15 @@ root@compute-node:/var/lib/nova/instances/instance-0000274a# qemu-nbd -c /dev/nb
                 </listitem>
                 <listitem>
                     <para>Mount the qemu-nbd device.</para>
-                    <para>The qemu-nbd device will try to export the
+                    <para>The qemu-nbd device tries to export the
                         instance disk's different partitions as
                         separate devices. For example if vda as the
                         disk and vda1 as the root partition, qemu-nbd
-                        will export the device as /dev/nbd0 and
+                        exports the device as /dev/nbd0 and
                         /dev/nbd0p1 respectively.</para>
                     <programlisting><?db-font-size 65%?>#mount the root partition of the device
 root@compute-node:/var/lib/nova/instances/instance-0000274a# mount /dev/nbd0p1 /mnt/
-# List the directories of mnt, and the vm's folder will be display
+# List the directories of mnt, and the vm's folder is display
 # You can inspect the folders and access the /var/log/ files            </programlisting>
                     <para>To examine the secondary or ephemeral disk,
                         use an alternate mount point if you want both
@@ -321,6 +333,7 @@ Domain 30 resumed            </programlisting>
             </orderedlist>
         </section>
         <section xml:id="volumes">
+            <?dbhtml stop-chunking?>
             <title>Volumes</title>
             <para>If the affected instances also had attached volumes,
                 first generate a list of instance and volume
@@ -345,12 +358,12 @@ inner join nova.instances on cinder.volumes.instance_uuid=nova.instances.uuid
                 screen before doing the above.</para>
         </section>
         <section xml:id="totle_compute_node_failure">
+            <?dbhtml stop-chunking?>
             <title>Total Compute Node Failure</title>
-            <para>If a compute node has failed and will likely not
-                ever be fixed or at least not fixed for a few hours,
-                you can relaunch all instances that are hosted on the
-                failed node if you are using shared storage for
-                    <code>/var/lib/nova/instances</code>.</para>
+            <para>If a compute node fails and won't be fixed for a few
+                hours or ever, you can relaunch all instances that are
+                hosted on the failed node if you use shared storage
+                for <code>/var/lib/nova/instances</code>.</para>
             <para>To do this, generate a list of instance UUIDs that
                 are hosted on the failed node by running the following
                 query on the nova database:</para>
@@ -368,13 +381,14 @@ inner join nova.instances on cinder.volumes.instance_uuid=nova.instances.uuid
                     node Reboots</emphasis>.</para>
         </section>
         <section xml:id="var_lib_nova_instances">
+            <?dbhtml stop-chunking?>
             <title>/var/lib/nova/instances</title>
             <para>It's worth mentioning this directory in the context
                 of failed compute nodes. This directory contains the
                 libvirt KVM file-based disk images for the instances
                 that are hosted on that compute node. If you are not
                 running your cloud in a shared storage environment,
-                this directory will be unique across all compute
+                this directory is unique across all compute
                 nodes.</para>
             <para>
                 <code>/var/lib/nova/instances</code> contains two
@@ -398,25 +412,27 @@ inner join nova.instances on cinder.volumes.instance_uuid=nova.instances.uuid
                 named. The files in _base are uniquely titled for the
                 glance image that they are based on and the directory
                 names <code>instance-xxxxxxxx</code> are uniquely
-                titled for that particular instance. If you were to
-                hypothetically copy all data from
+                titled for that particular instance. For example, if
+                you copy all data from
                     <code>/var/lib/nova/instances</code> on one
-                compute node to another, you will not overwrite any
+                compute node to another, you do not overwrite any
                 files or cause any damage to images that have the same
-                unique name (because they are essentially the same
-                file).</para>
+                unique name, because they are essentially the same
+                file.</para>
             <para>Although this method is not documented or supported,
-                it is possible to do in situations when your compute
-                node will be permanently offline but you have
-                instances locally stored on it.</para>
+                you can use it when your compute node is permanently
+                offline but you have instances locally stored on
+                it.</para>
         </section>
     </section>
     <section xml:id="storage_node_failures">
+        <?dbhtml stop-chunking?>
         <title>Storage Node Failures and Maintenance</title>
         <para>Due to the Object Storage's high redundancy, dealing
             with object storage node issues is a lot easier than
             dealing with compute node issues.</para>
         <section xml:id="reboot_storage_node">
+            <?dbhtml stop-chunking?>
             <title>Rebooting a Storage Node</title>
             <para>If a storage node requires a reboot, simply reboot
                 it. Requests for data hosted on that node are
@@ -424,6 +440,7 @@ inner join nova.instances on cinder.volumes.instance_uuid=nova.instances.uuid
                 rebooting.</para>
         </section>
         <section xml:id="shut_down_storage_node">
+            <?dbhtml stop-chunking?>
             <title>Shutting Down a Storage Node</title>
             <para>If you need to shut down a storage node for an
                 extended period of time (1+ days), consider removing
@@ -451,6 +468,7 @@ inner join nova.instances on cinder.volumes.instance_uuid=nova.instances.uuid
                 commands.</para>
         </section>
         <section xml:id="replace_swift_disk">
+            <?dbhtml stop-chunking?>
             <title>Replacing a Swift Disk</title>
             <para>If a hard drive fails in a Object Storage node,
                 replacing it is relatively easy. This assumes that
@@ -479,6 +497,7 @@ inner join nova.instances on cinder.volumes.instance_uuid=nova.instances.uuid
         </section>
     </section>
     <section xml:id="complete_failure">
+        <?dbhtml stop-chunking?>
         <title>Handling a Complete Failure</title>
         <para>A common way of dealing with the recovery from a full
             system failure, such as a power outage of a data center is
@@ -585,6 +604,7 @@ inner join nova.instances on cinder.volumes.instance_uuid=nova.instances.uuid
             mismatches.</para>
     </section>
     <section xml:id="config_mgmt">
+        <?dbhtml stop-chunking?>
         <title>Configuration Management</title>
         <para>Maintaining an OpenStack cloud requires that you manage
             multiple physical servers, and this number might grow over
@@ -624,6 +644,7 @@ inner join nova.instances on cinder.volumes.instance_uuid=nova.instances.uuid
             (http://bcfg2.org).</para>
     </section>
     <section xml:id="hardware">
+        <?dbhtml stop-chunking?>
         <title>Working with Hardware</title>
         <para>Similar to your initial deployment, you should ensure
             all hardware is appropriately burned in before adding it
@@ -633,6 +654,7 @@ inner join nova.instances on cinder.volumes.instance_uuid=nova.instances.uuid
             software so you also get a good idea of the performance of
             your system.</para>
         <section xml:id="add_new_node">
+            <?dbhtml stop-chunking?>
             <title>Adding a Compute Node</title>
             <para>If you find that you have reached or are reaching
                 the capacity limit of your computing resources, you
@@ -645,10 +667,9 @@ inner join nova.instances on cinder.volumes.instance_uuid=nova.instances.uuid
                 management system install and configure the OpenStack
                 Compute service. Once the Compute service has been
                 installed and configured in the same way as the other
-                compute nodes, it will automatically attach itself to
-                the cloud. The cloud controller will notice the new
-                node(s) and begin scheduling instances to launch
-                there.</para>
+                compute nodes, it automatically attaches itself to the
+                cloud. The cloud controller notices the new node(s)
+                and begin scheduling instances to launch there.</para>
             <para>If your OpenStack Block Storage nodes are separate
                 from your compute nodes, the same procedure still
                 applies as the same queuing and polling system is used
@@ -656,9 +677,10 @@ inner join nova.instances on cinder.volumes.instance_uuid=nova.instances.uuid
             <para>We recommend that you use the same hardware for new
                 compute and block storage nodes. At the very least,
                 ensure that the CPUs are similar in the compute nodes
-                in order to not break live migration.</para>
+                to not break live migration.</para>
         </section>
         <section xml:id="add_new_object_node">
+            <?dbhtml stop-chunking?>
             <title>Adding an Object Storage Node</title>
             <para>Adding a new object storage node is different than
                 adding compute or block storage nodes. You still want
@@ -673,14 +695,16 @@ inner join nova.instances on cinder.volumes.instance_uuid=nova.instances.uuid
                 node. Once this has been done, rebalance the ring and
                 copy the resulting ring files to the other storage
                 nodes.</para>
-            <para>It's important to note that if your new object
-                storage node has a different number of disks than the
-                original nodes, the command to add the new node will
-                be different than the original commands. These
-                parameters will vary from environment to
-                environment.</para>
+            <note>
+                <para>If your new object storage node has a different
+                    number of disks than the original nodes have, the
+                    command to add the new node is different than the
+                    original commands. These parameters vary from
+                    environment to environment.</para>
+            </note>
         </section>
         <section xml:id="replace_components">
+            <?dbhtml stop-chunking?>
             <title>Replacing Components</title>
             <para>Failures of hardware are common in large scale
                 deployments such as an infrastructure cloud. Consider
@@ -694,6 +718,7 @@ inner join nova.instances on cinder.volumes.instance_uuid=nova.instances.uuid
         </section>
     </section>
     <section xml:id="databases">
+        <?dbhtml stop-chunking?>
         <title>Databases</title>
         <para>Almost all OpenStack components have an underlying
             database to store persistent information. Usually this
@@ -710,6 +735,7 @@ inner join nova.instances on cinder.volumes.instance_uuid=nova.instances.uuid
             terminated but the status was not updated in the database.
             These tricks are discussed throughout this book.</para>
         <section xml:id="database_connect">
+            <?dbhtml stop-chunking?>
             <title>Database Connectivity</title>
             <para>Review the components configuration file to see how
                 each OpenStack component accesses its corresponding
@@ -720,12 +746,13 @@ inner join nova.instances on cinder.volumes.instance_uuid=nova.instances.uuid
 	sql_connection = mysql://nova:nova@cloud.alberta.sandbox.cybera.ca/nova
 	sql_connection = mysql://glance:password@cloud.example.com/glance 
 	sql_connection = mysql://glance:password@cloud.example.com/glance 
-sql_connection=mysql://cinder:password@cloud.example.com/cinder 
+    sql_connection=mysql://cinder:password@cloud.example.com/cinder 
 	connection = mysql://keystone_admin:password@cloud.example.com/keystone</programlisting>
             <para>The connection strings take this format:</para>
             <programlisting><?db-font-size 65%?>mysql:// &lt;username&gt; : &lt;password&gt; @ &lt;hostname&gt; / &lt;database name&gt;</programlisting>
         </section>
         <section xml:id="perf_and_opt">
+            <?dbhtml stop-chunking?>
             <title>Performance and Optimizing</title>
             <para>As your cloud grows, MySQL is utilized more and
                 more. If you suspect that MySQL might be becoming a
@@ -738,11 +765,13 @@ sql_connection=mysql://cinder:password@cloud.example.com/cinder
         </section>
     </section>
     <section xml:id="hdmy">
+        <?dbhtml stop-chunking?>
         <title>HDWMY</title>
         <para>Here's a quick list of various to-do items each hour,
             day, week, month, and year. Please note these tasks are
             neither required nor definitive, but helpful ideas:</para>
         <section xml:id="hourly">
+            <?dbhtml stop-chunking?>
             <title>Hourly</title>
             <itemizedlist>
                 <listitem>
@@ -756,6 +785,7 @@ sql_connection=mysql://cinder:password@cloud.example.com/cinder
             </itemizedlist>
         </section>
         <section xml:id="daily">
+            <?dbhtml stop-chunking?>
             <title>Daily</title>
             <itemizedlist>
                 <listitem>
@@ -769,6 +799,7 @@ sql_connection=mysql://cinder:password@cloud.example.com/cinder
             </itemizedlist>
         </section>
         <section xml:id="weekly">
+            <?dbhtml stop-chunking?>
             <title>Weekly</title>
             <itemizedlist>
                 <listitem>
@@ -798,6 +829,7 @@ sql_connection=mysql://cinder:password@cloud.example.com/cinder
             </itemizedlist>
         </section>
         <section xml:id="monthly">
+            <?dbhtml stop-chunking?>
             <title>Monthly</title>
             <itemizedlist>
                 <listitem>
@@ -815,6 +847,7 @@ sql_connection=mysql://cinder:password@cloud.example.com/cinder
             </itemizedlist>
         </section>
         <section xml:id="quarterly">
+            <?dbhtml stop-chunking?>
             <title>Quarterly</title>
             <itemizedlist>
                 <listitem>
@@ -836,6 +869,7 @@ sql_connection=mysql://cinder:password@cloud.example.com/cinder
             </itemizedlist>
         </section>
         <section xml:id="semiannual">
+            <?dbhtml stop-chunking?>
             <title>Semi-Annually</title>
             <itemizedlist>
                 <listitem>
@@ -849,6 +883,7 @@ sql_connection=mysql://cinder:password@cloud.example.com/cinder
         </section>
     </section>
     <section xml:id="broken_component">
+        <?dbhtml stop-chunking?>
         <title>Determining which Component Is Broken</title>
         <para>OpenStack's collection of different components interact
             with each other strongly. For example, uploading an image
@@ -859,6 +894,7 @@ sql_connection=mysql://cinder:password@cloud.example.com/cinder
             where problems lie. Assisting in this is the purpose of
             this section.</para>
         <section xml:id="tailing_logs">
+            <?dbhtml stop-chunking?>
             <title>Tailing Logs</title>
             <para>The first place to look is the log file related to
                 the command you are trying to run. For example, if
@@ -885,6 +921,7 @@ sql_connection=mysql://cinder:password@cloud.example.com/cinder
         </section>
 
         <section xml:id="daemons_cli">
+            <?dbhtml stop-chunking?>
             <title>Running Daemons on the CLI</title>
             <para>Unfortunately, sometimes the error is not apparent
                 from the log files. In this case, switch tactics and
@@ -898,6 +935,7 @@ sql_connection=mysql://cinder:password@cloud.example.com/cinder
                 problem.</para>
         </section>
         <section xml:id="complexity">
+            <?dbhtml stop-chunking?>
             <title>Example of Complexity</title>
             <para>One morning, a compute node failed to run any
                 instances. The log files were a bit vague, claiming
@@ -920,6 +958,7 @@ sql_connection=mysql://cinder:password@cloud.example.com/cinder
                 soon everything was back up and running.</para>
         </section>
         <section xml:id="upgrades">
+            <?dbhtml stop-chunking?>
             <title>Upgrades</title>
             <para>With the exception of Object Storage, an upgrade
                 from one version of OpenStack to another is a great

@@ -11,28 +11,30 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="projects_users">
+    <?dbhtml stop-chunking?>
     <title>Managing Projects and Users</title>
     <para>An OpenStack cloud does not have much value without users.
         This chapter covers topics that relate to managing users,
         projects, and quotas.</para>
-    <para>
-        <emphasis role="bold">Projects or tenants?</emphasis>
-    </para>
-    <para>In OpenStack user interfaces and documentation, you will
-        sometimes see the term "project" to refer to a group of users,
-        and other times you will see the term "tenant". These terms
-        are interchangeable.</para>
-    <para>The reason behind this bifurcation is historical. The
-        initial implementation of the OpenStack Compute Service (nova)
-        had its own authentication system and used the term "project".
-        When authentication was broken out into the OpenStack Identity
-        Service (keystone) project, the new project used the term
-        "tenant" to refer to a group of users. Because of this legacy,
-        some of the OpenStack tools refer to "projects" and some refer
-        to "tenants".</para>
-    <para>In this guide, we will use the term "project" unless we are
-        showing an example interaction with a tool that uses the term
-        "tenant".</para>
+    <section xml:id="projects_or_tenants">
+        <title>Projects or Tenants?</title>
+        <para>In OpenStack user interfaces and documentation, a group
+            of users is referred to as a
+                <glossterm>project</glossterm> or
+                <glossterm>tenant</glossterm>. These terms are
+            interchangeable.</para>
+        <para>The initial implementation of the OpenStack Compute
+            Service (nova) had its own authentication system and used
+            the term <literal>project</literal>. When authentication
+            moved into the OpenStack Identity Service (keystone)
+            project, it used the term <literal>tenant</literal> to
+            refer to a group of users. Because of this legacy, some of
+            the OpenStack tools refer to projects and some refer to
+            tenants.</para>
+        <para>This guide uses the term <literal>project</literal>,
+            unless an example shows interaction with a tool that uses
+            the term <literal>tenant</literal>.</para>
+    </section>
     <section xml:id="managing_projects">
         <title>Managing Projects</title>
         <para>Users must be associated with at least one project,
@@ -54,11 +56,10 @@
                         top right.</para>
                 </listitem>
             </orderedlist>
-            <para>This will pop up a form asking from asking for a
-                project name and an optional, but recommended,
-                description. There is also a check box at the bottom
-                of the form to enable this project, by default this is
-                enabled.</para>
+            <para>You are prompted for a project name and an optional,
+                but recommended, description. Select the check box at
+                the bottom of the form to enable this project. By
+                default, this is enabled.</para>
             <informalfigure>
                 <mediaobject>
                     <imageobject>
@@ -78,15 +79,15 @@
             <para>To add a project through the command line, you must
                 use the keystone utility, which uses "tenant" in place
                 of "project": </para>
-            <programlisting># keystone tenant-create --name=demo</programlisting>
-            <para>This will create a new project named "demo".
+            <programlisting><prompt>#</prompt> keystone tenant-create --name=demo</programlisting>
+            <para>This command creates a project named "demo".
                 Optionally, you can add a description string by
                 appending <code>--description
                     &lt;tenant-description&gt;,</code> which can be
-                very useful. It is also possible to create a group in
-                a disabled state by appending <code>--enabled
-                    false</code>. By default, projects are created in
-                an enabled state.</para>
+                very useful. You can also create a group in a disabled
+                state by appending <code>--enabled false</code> to the
+                command. By default, projects are created in an
+                enabled state.</para>
         </section>
     </section>
     <?hard-pagebreak?>
@@ -298,12 +299,14 @@ injected_file_content_bytes: 10240
 floating_ips: 10
 injected_files: 5
 cores: 2048</programlisting>
-        <para>Note: Confusingly, <code>nova-manage project
-                quota</code> will silently accept any string at the
-            end of the command and report the default quotas. In
-            particular, if you enter the project name rather than the
-            ID, <code>nova-manage</code> won't complain, it will just
-            lie.</para>
+        <note>
+            <para>Confusingly, <code>nova-manage project quota</code>
+                silently accepts any string at the end of the command
+                and reports the default quotas. In particular, if you
+                enter the project name rather than the ID,
+                    <code>nova-manage</code> does not complain, it
+                just lies.</para>
+        </note>
         <para>To change these values you append <code>--key</code> and
                 <code>--value</code> flags to the above command. To
             increase the tenant quota of Floating IPs from 10 to
@@ -336,7 +339,7 @@ cores: 2048</programlisting>
     </section>
     <section xml:id="create_new_users">
         <title>Creating New Users</title>
-        <para>To create a new user you will need the following
+        <para>To create a user, you need the following
             information:</para>
         <itemizedlist role="compact">
             <listitem>
@@ -425,8 +428,9 @@ cores: 2048</programlisting>
             limited by typing a substring of the user name you are
             looking for in the filter field at the top of the
             column.</para>
-        <para>From here, clicking on the "+" will add users to the
-            project and clicking the "-" will remove them.</para>
+        <para>From here, click the <guiicon>+</guiicon> icon to add
+            users to the project. Click the <guiicon>-</guiicon> to
+            remove them.</para>
         <para>The dangerous possibility comes in the ability to change
             member roles. This is the drop down list after the user
             name in the "Project Members" list. In virtually all cases
@@ -448,10 +452,10 @@ cores: 2048</programlisting>
             projects.</para>
         <section xml:id="customize_auth">
             <title>Customizing Authorization</title>
-            <para>The default authorization settings only allow
-                administrative users to create resources on behalf of
-                a different project. OpenStack handles two kind of
-                authorization policies:</para>
+            <para>The default <glossterm>authorization</glossterm>
+                settings only allow administrative users to create
+                resources on behalf of a different project. OpenStack
+                handles two kind of authorization policies:</para>
             <itemizedlist role="compact">
                 <listitem>
                     <para>
@@ -479,8 +483,8 @@ cores: 2048</programlisting>
                 distribution, for nova it is typically in
                     <code>/etc/nova/policy.json</code>. You can update
                 entries while the system is running, and you do not
-                have to restart services. Currently the only way of
-                updating such policies is to edit the policy
+                have to restart services. Currently the only way to
+                update such policies is to edit the policy
                 file.</para>
             <para>The OpenStack service's policy engine matches a
                 policy directly. A rule indicates evaluation of the
@@ -496,16 +500,17 @@ cores: 2048</programlisting>
                     <code>create:compute</code> policy every time a
                 user sends a <code>POST /v2/{tenant_id}servers</code>
                 request to the OpenStack Compute API server. Policies
-                can be also related to specific API extensions. For
-                instance, if a user needs an extension like
+                can be also related to specific <glossterm>API
+                    extension</glossterm>s. For instance, if a user
+                needs an extension like
                     <code>compute_extension:rescue</code> the
                 attributes defined by the provider extensions trigger
                 the rule test for that operation.</para>
             <para>An authorization policy can be composed by one or
                 more rules. If more rules are specified, evaluation
-                policy will be successful if any of the rules
-                evaluates successfully; if an API operation matches
-                multiple policies, then all the policies must evaluate
+                policy is successful if any of the rules evaluates
+                successfully; if an API operation matches multiple
+                policies, then all the policies must evaluate
                 successfully. Also, authorization rules are recursive.
                 Once a rule is matched, the rule(s) can be resolved to
                 another rule, until a terminal rule is reached. These
@@ -551,16 +556,16 @@ cores: 2048</programlisting>
 
                 </listitem>
             </itemizedlist>
-            <para>Here are snippets of the default nova policy.json
-                file:</para>
+            <para>Here are snippets of the default nova
+                    <filename>policy.json</filename> file:</para>
             <programlisting><?db-font-size 65%?>{
 	"context_is_admin":  [["role:admin"]],
 	"admin_or_owner":  [["is_admin:True"], ["project_id:%(project_id)s"]], <emphasis role="bold">[1]</emphasis>
 	"default": [["rule:admin_or_owner"]], <emphasis role="bold">[2]</emphasis>
-	"compute:create": [],
-	"compute:create:attach_network": [],
-	"compute:create:attach_volume": [],
-	"compute:get_all": [],
+	"compute:create": [ ],
+	"compute:create:attach_network": [ ],
+	"compute:create:attach_volume": [ ],
+	"compute:get_all": [ ],
     "admin_api": [["is_admin:True"]],
 	"compute_extension:accounts": [["rule:admin_api"]],
 	"compute_extension:admin_actions": [["rule:admin_api"]],
@@ -571,10 +576,10 @@ cores: 2048</programlisting>
 	...
 	"compute_extension:admin_actions:migrate": [["rule:admin_api"]],
 	"compute_extension:aggregates": [["rule:admin_api"]],
-	"compute_extension:certificates": [],
+	"compute_extension:certificates": [ ],
 	"compute_extension:cloudpipe": [["rule:admin_api"]],
 	...
-	"compute_extension:flavorextraspecs": [],
+	"compute_extension:flavorextraspecs": [ ],
 	"compute_extension:flavormanage": [["rule:admin_api"]],  <emphasis role="bold">[3]</emphasis>
 	}
 	</programlisting>
@@ -596,8 +601,7 @@ cores: 2048</programlisting>
             <programlisting><?db-font-size 65%?>"compute_extension:flavormanage": [ ],</programlisting>
         </section>
         <section xml:id="problem_users">
-            <title>Problematic Users (Users that Disrupt Other
-                Users)</title>
+            <title>Users that Disrupt Other Users</title>
             <para>Users on your cloud can disrupt other users,
                 sometimes intentionally and maliciously and other
                 times by accident. Understanding the situation allows

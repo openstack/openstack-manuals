@@ -12,6 +12,7 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="storage_decision">
+    <?dbhtml stop-chunking?>
     <title>Storage Decisions</title>
     <para>Storage is found in many parts of the OpenStack stack, and
         the differing types can cause confusion to even experienced
@@ -43,9 +44,9 @@
                 <tr>
                     <td><para>Accessed through&hellip;</para></td>
                     <td><para>A file system</para></td>
-                    <td><para>A block device that can be partitioned,
-                            formatted and mounted (such as,
-                            /dev/vdc)</para></td>
+                    <td><para>A <glossterm>block device</glossterm>
+                            that can be partitioned, formatted and
+                            mounted (such as, /dev/vdc)</para></td>
                     <td><para>REST API</para></td>
                 </tr>
                 <tr>
@@ -106,9 +107,9 @@
                 through a REST API. You may be familiar with Amazon
                 S3, which is a well-known example of an object storage
                 system. If your intended users need to archive or
-                manage large datasets, you will likely want to provide
-                them with object storage. In addition, OpenStack can
-                store your virtual machine images inside of an object
+                manage large datasets, you want to provide them with
+                object storage. In addition, OpenStack can store your
+                virtual machine (VM) images inside of an object
                 storage system, as an alternative to storing the
                 images on a file system.</para>
         </section>
@@ -120,7 +121,7 @@
                 interact with block storage by attaching volumes to
                 their running virtual machine instances. These volumes
                 are persistent: they can be detached from one instance
-                and re-attached to another, and the data will remain
+                and re-attached to another, and the data remains
                 intact. Block storage is implemented in OpenStack by
                 the OpenStack Block Storage (Cinder) project, which
                 supports multiple back-ends in the form of drivers.
@@ -148,7 +149,8 @@
     <?hard-pagebreak?>
     <section xml:id="storage_backends">
         <title>Choosing Storage Back-ends</title>
-        <para>In general, when you select storage, ask the following
+        <para>In general, when you select <glossterm>storage
+                back-end</glossterm>s, ask the following
             questions:</para>
         <itemizedlist role="compact">
             <listitem>
@@ -281,7 +283,7 @@
         </itemizedlist>
         <section xml:id="commodity_storage_backends">
             <title>Commodity Storage Back-end Technologies</title>
-            <para>Here we provide a high-level overview of the
+            <para>This section provides a high-level overview of the
                 differences among the different commodity storage
                 back-end technologies. </para>
 
@@ -381,15 +383,18 @@
                     <para>On each host that will house block storage,
                         an administrator must initially create a
                         volume group dedicated to Block Storage
-                        volumes. Blocks will be created from LVM
-                        logical volumes. Note that LVM does
-                            <emphasis>not</emphasis> provide any
-                        replication. Typically, administrators
-                        configure RAID on nodes that use LVM as block
-                        storage, in order to protect against failures
-                        of individual hard drives. However, RAID does
-                        not protect against a failure of the entire
-                        host.</para>
+                        volumes. Blocks are created from LVM logical
+                        volumes.</para>
+                    <note>
+                        <para>LVM does <emphasis>not</emphasis>
+                            provide any replication. Typically,
+                            administrators configure RAID on nodes
+                            that use LVM as block storage to protect
+                            against failures of individual hard
+                            drives. However, RAID does not protect
+                            against a failure of the entire
+                            host.</para>
+                    </note>
                     <para>The Solaris iSCSI driver for OpenStack Block
                         Storage implements blocks as <emphasis
                             role="bold">ZFS</emphasis> entities. ZFS
@@ -468,20 +473,33 @@
             servers. Consider spreading them widely throughout your
             data centre's network and power failure zones. Is a zone a
             rack, a server or a disk?</para>
-        <para>Object Storage's network patterns may be unfamiliar at
-            first. There are three main traffic flows to consider:
-            among object/container/account servers, between those
-            servers and the proxies, and between the proxies and your
-            users. Object Storage is very 'chatty' among servers
-            hosting data - even a small cluster does megabytes/second
-            of traffic which is predominantly "Do you have the
-            object?"/"Yes I have the object!". Of course, if the
+        <para>Object Storage's network patterns might seem unfamiliar
+            at first. </para>
+        <para>Consider these main traffic flows: <itemizedlist>
+                <listitem>
+                    <para>Among <glossterm>object</glossterm>,
+                            <glossterm>container</glossterm>, and
+                            <glossterm>account
+                        server</glossterm>s</para>
+                </listitem>
+                <listitem>
+                    <para>Between those servers and the proxies</para>
+                </listitem>
+                <listitem>
+                    <para>Between the proxies and your users</para>
+
+                </listitem>
+            </itemizedlist></para>
+        <para>Object Storage is very 'chatty' among servers hosting
+            data - even a small cluster does megabytes/second of
+            traffic, which is predominantly "Do you have the
+            object?"/"Yes I have the object!." Of course, if the
             answer to the aforementioned question is negative or times
-            out, then replication of the object begins. Consider the
-            scenario where an entire server fails, and 24 TB of data
-            needs to be transferred "immediately" to remain at three
-            copies - this can put significant load on the
-            network.</para>
+            out, replication of the object begins. </para>
+        <para>Consider the scenario where an entire server fails, and
+            24 TB of data needs to be transferred "immediately" to
+            remain at three copies - this can put significant load on
+            the network.</para>
         <para>Another oft forgotten fact is that when a new file is
             being uploaded, the proxy server must write out as many
             streams as there are replicas - giving a multiple of
@@ -494,9 +512,10 @@
             with unencrypted, unauthenticated rsync for performance -
             you do want the private network to be private.</para>
         <para>The remaining point on bandwidth is the public facing
-            portion. swift-proxy is stateless, meaning you can easily
-            add more and use http load-balancing methods to share
-            bandwidth and availability between them. More proxies
-            means more bandwidth, if your storage can keep up.</para>
+            portion. swift-proxy is stateless, which means that you
+            can easily add more and use http load-balancing methods to
+            share bandwidth and availability between them. </para>
+        <para>More proxies means more bandwidth, if your storage can
+            keep up.</para>
     </section>
 </section>
