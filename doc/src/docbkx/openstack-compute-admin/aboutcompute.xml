@@ -188,19 +188,21 @@
        </mediaobject>
      </figure>
 
-     <para>The OpenStack system copies the base image from the image
-                store to local disk which is used as the first disk of
-                the instance (vda), having small images will result in
-                faster start up of your instances as less data needs
-                to be copied across the network. The system also
-                creates a new empty disk image to present as the
-                second disk (vdb). The compute node attaches to the
-                requested nova-volume using iSCSI and maps this to the
-                third disk (vdc) as requested. The vCPU and memory
-                resources are provisioned and the instance is booted
-                from the first dive. The instance runs and changes
-                data on the disks indicated in red in the
-                diagram.</para>
+            <para>The OpenStack system copies the base image from the
+                image store to local disk which is used as the first
+                disk of the instance (vda), having small images will
+                result in faster start up of your instances as less
+                data needs to be copied across the network. The system
+                also creates a new empty disk image to present as the
+                second disk (vdb). Be aware that the second disk is an
+                empty disk with an emphemeral life as it is destroyed
+                when you delete the instance. The compute node
+                attaches to the requested nova-volume using iSCSI and
+                maps this to the third disk (vdc) as requested. The
+                vCPU and memory resources are provisioned and the
+                instance is booted from the first drive. The instance
+                runs and changes data on the disks indicated in red in
+                the diagram.</para>
 
      <para>There are many possible variations in the details of the
      scenario, particularly in terms of what the backing storage is
