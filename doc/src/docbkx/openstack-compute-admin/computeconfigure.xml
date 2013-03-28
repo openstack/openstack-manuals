@@ -987,13 +987,6 @@ after : listen_tcp = 1
 add: auth_tcp = "none"
                             </programlisting>
 
-          <para>Modify <filename>/etc/init/libvirt-bin.conf</filename></para>
-
-          <programlisting>
-before : exec /usr/sbin/libvirtd -d
-after : exec /usr/sbin/libvirtd -d -l
-                            </programlisting>
-
           <para>Modify <filename>/etc/default/libvirt-bin</filename></para>
 
           <programlisting>
@@ -1004,7 +997,7 @@ after :libvirtd_opts=" -d -l"
           <para>Restart libvirt. After executing the command, ensure
             that libvirt is succesfully restarted.</para>
 
-          <screen><prompt>$</prompt> <userinput>stop libvirt-bin &amp;&amp; start libvirt-bin</userinput>
+          <screen><prompt>$</prompt> <userinput>service libvirt-bin restart</userinput>
 <prompt>$</prompt> <userinput>ps -ef | grep libvirt</userinput></screen>
 
           <programlisting language="bash">
