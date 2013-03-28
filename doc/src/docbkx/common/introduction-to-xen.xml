@@ -271,7 +271,7 @@ PXE boot installations of XenServer or XCP</link>.
 You can also package up any post install changes you wish to make
 to your XenServer by
 <link xlink:href="http://docs.vmd.citrix.com/XenServer/6.0.0/1.0/en_gb/supplemental_pack_ddk.html">
-creating your own XenServer supplimental pack</link>.</para>
+creating your own XenServer supplemental pack</link>.</para>
 
 <para>It is also possible to get XCP by installing the <emphasis
                 role="bold">xcp-xenapi</emphasis> package on Debian
@@ -284,22 +284,23 @@ creating your own XenServer supplimental pack</link>.</para>
                 xlink:href="http://wiki.xen.org/wiki/Project_Kronos">
                 http://wiki.xen.org/wiki/Project_Kronos </link></para>
 
+<para><important><para>
+Ensure you are using the EXT type of storage repository (SR). Features that
+require access to VHD files (such as copy on write, snapshot and migration) do
+not work when using the LVM SR. Storage repository (SR) is a XenAPI specific
+term relating to the physical storage on which virtual disks are stored.</para>
+
+<para>On the XenServer/XCP installation screen, this is selected by choosing
+"XenDesktop Optimized" option. In case you are using an answer file, make sure
+you use <literal>srtype="ext"</literal> within the <literal>
+installation</literal> tag of the answer file.</para></important></para>
+
 <section xml:id="xenapi-post-install">
 <title>Post install steps</title>
 
-<para>Now you have installed XenServer or XCP, it is time to start running
-OpenStack. Before you can start running OpenStack you must ensure:
+<para>You are now ready to install OpenStack onto your XenServer system.
+This process involves the following steps:
 <itemizedlist>
-    <listitem>
-        <para>Ensure you are using the EXT type of storage repository
-                            (SR). Features that require access to VHD
-                            files (such as copy on write, snapshot and
-                            migration) do not work when using the LVM
-                            SR. Storage repository (SR) is a XenAPI
-                            specific term relating to the physical
-                            storage on which virtual disks are
-                            stored.</para>
-    </listitem>
     <listitem>
         <para>For resize and migrate functionality, please perform the changes
         described in the
@@ -307,11 +308,6 @@ OpenStack. Before you can start running OpenStack you must ensure:
         Configuring Resize</link>
         section of the OpenStack Compute Administration Manual.</para>
     </listitem>
-</itemizedlist></para>
-
-<para>You are now ready to install OpenStack onto your XenServer system.
-This process involves the following steps:
-<itemizedlist>
     <listitem>
         <para>Install the VIF isolation rules to help prevent mac and ip address
         spoofing.</para>
