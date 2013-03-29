@@ -1,0 +1,64 @@
+<section xml:id="GlusterFS-driver"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0">
+    <title>GlusterFS Driver</title>
+    <para>GlusterFS is an open-source scalable distributed filesystem that is able 
+        to grow to petabytes and beyond in size. More information can be found on
+        <link xlink:href="http://www.gluster.org/">Gluster's homepage</link>.</para>
+    <para>This driver enables use of GlusterFS in a similar fashion as the NFS driver. 
+        It supports basic volume operations, and like NFS, does not support snapshot/clone.
+    </para>
+    <para>To use Cinder with GlusterFS, first set the <literal>volume_driver</literal> 
+        in <literal>cinder.conf</literal>:</para>
+    <programlisting>
+volume_driver=cinder.volume.drivers.glusterfs.GlusterfsDriver
+    </programlisting>
+    <table rules="all">
+        <caption>List of configuration flags for GlusterFS</caption>
+        <col width="35%"/>
+        <col width="15%"/>
+        <col width="15%"/>
+        <col width="35%"/>
+        <thead>
+            <tr>
+                <td>Flag Name</td>
+                <td>Type</td>
+                <td>Default</td>
+                <td>Description</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><para><literal>glusterfs_shares_config</literal></para></td>
+                <td><para>Mandatory</para></td>
+                <td><para></para></td>
+                <td><para>File with the list of available gluster shares.</para></td>
+            </tr>
+            <tr>
+                <td><para><literal>glusterfs_mount_point_base</literal></para></td>
+                <td><para>Optional</para></td>
+                <td><para><literal>$state_path/mnt</literal></para></td>
+                <td><para>Base dir where gluster expected to be mounted.</para></td>
+            </tr>
+            <tr>
+                <td><para><literal>glusterfs_disk_util</literal></para></td>
+                <td><para>Optional</para></td>
+                <td><para><literal>df</literal></para></td>
+                <td><para>Use <literal>du</literal> or <literal>df</literal> for free space calculation.</para></td>
+            </tr>
+            <tr>
+                <td><para><literal>glusterfs_sparsed_volumes</literal></para></td>
+                <td><para>Optional</para></td>
+                <td><para>True</para></td>
+                <td><para>Create volumes as sparsed files which take no space. If set to
+                        False, volume is created using
+                            "<command>dd</command>" or a similar
+                        command to create the full-sized file, so
+                        volume creation takes a greater amount of
+                        time. </para></td>
+            </tr>
+        </tbody>
+    </table>
+</section>
