@@ -5,8 +5,12 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
     <title>Installation Assumptions</title>
     <para>OpenStack Compute has a large number of configuration
-        options. To simplify this installation guide, we make
-        a number of assumptions about the target installation.</para>
+        options. To simplify this installation guide, we make a number
+        of assumptions about the target installation. If you want a
+        longer conceptual planning guide that discusses considerations
+        of these decisions, refer to the <link
+            xlink:href="../openstack-ops/content/">OpenStack
+            Operations Guide</link>.</para>
         <itemizedlist>
             <listitem>
                 <para os="rhel;centos;fedora">You have a collection of
@@ -69,9 +73,10 @@
         </listitem>
             <listitem os="ubuntu">
             <para>On Ubuntu, enable the <link
-                    xlink:href="https://wiki.ubuntu.com/ServerTeam/CloudArchive">Cloud
-                    Archive</link> repository by adding the following to
-                /etc/apt/sources.list.d/folsom.list:<screen>deb http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/folsom main</screen></para>
+                    xlink:href="https://wiki.ubuntu.com/ServerTeam/CloudArchive"
+                    >Cloud Archive</link> repository by adding the
+                following to
+                /etc/apt/sources.list.d/grizzly.list:<screen>deb http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/grizzly main</screen></para>
                 <para>Prior to running apt-get update and apt-get upgrade, install the keyring :</para>
                 <screen>sudo apt-get install ubuntu-cloud-keyring</screen>
         </listitem>
@@ -84,8 +89,8 @@
                         <command>apt-get upgrade</command> prior to
                     the installation.</para>
             </listitem>
-            <listitem os="rhel;fedora;centos"><para>On RHEL (and derivatives) enable the EPEL repository by running:</para>
-            <screen><prompt>$</prompt> <userinput>sudo rpm -Uvh http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm</userinput></screen></listitem>
+            <listitem os="rhel;fedora;centos"><para>On RHEL (and derivatives) enable this testing repo for grizzly. </para>
+            <screen><prompt>$</prompt> <userinput>wget http://repos.fedorapeople.org/repos/openstack/openstack-grizzly/epel-openstack-grizzly.repo -O /etc/yum.repos.d/epel-openstack-grizzly.repo</userinput></screen></listitem>
         </itemizedlist>
     <para>This installation process walks through installing a cloud
         controller node and a compute node using a set of packages
