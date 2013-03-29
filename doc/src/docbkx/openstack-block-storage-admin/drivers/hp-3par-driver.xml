@@ -3,19 +3,18 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink"
     version="5.0">
-<title>HP 3PAR Fibre Channel and iSCSI Drivers</title>
+    <title>HP 3PAR Fibre Channel and iSCSI Drivers</title>
     <para>The <filename>HP3PARFCDriver</filename> and <filename>HP3PARISCSIDriver</filename> are
         based on the Block Storage (Cinder) plug-in architecture. The drivers execute
         the volume operations by communicating with the HP 3PAR storage system over
         HTTP/HTTPS and SSH connections. The HTTP/HTTPS communications use the
         <filename>hp3parclient</filename>, which is part of the Python standard library.</para>
-    <para/>
     <para>For information about managing HP 3PAR storage systems, refer to the HP 3PAR user
         documentation.</para>
-    <section>
+    <section xml:id="hp-3par-sys-reqs">
         <title>System Requirements</title>
         <para>To use the HP 3PAR drivers, install the following software and components on the
-              HP 3PAR storage system:</para>
+            HP 3PAR storage system:</para>
         <para>
             <itemizedlist>
                 <listitem>
@@ -35,7 +34,7 @@
             </itemizedlist>
         </para>
     </section>
-    <section>
+    <section xml:id="hp-3par-supported-ops">
         <title>Supported Operations</title>
         <para>
             <itemizedlist>
@@ -73,7 +72,7 @@
         </para>
         <para>Volume type support for both HP 3PAR drivers includes the ability to set the following
             capabilities in the OpenStack Cinder API
-                <filename>cinder.api.contrib.types_extra_specs</filename> volume type extra specs
+            <filename>cinder.api.contrib.types_extra_specs</filename> volume type extra specs
             extension module:</para>
         <para>
             <itemizedlist>
@@ -104,9 +103,9 @@
                 </listitem>
                 <listitem>
                     <para><literal>snap_cpg</literal> - Defaults to the
-                            <literal>hp3par_snap</literal> setting in the
-                            <filename>cinder.conf</filename> file. If <literal>hp3par_snap</literal> is
-                            not set, it defaults to the <literal>hp3par_cpg</literal> setting.</para>
+                        <literal>hp3par_snap</literal> setting in the
+                        <filename>cinder.conf</filename> file. If <literal>hp3par_snap</literal> is
+                        not set, it defaults to the <literal>hp3par_cpg</literal> setting.</para>
                 </listitem>
                 <listitem>
                     <para><literal>provisioning</literal> - Defaults to thin provisioning, the valid
@@ -114,17 +113,17 @@
                 </listitem>
                 <listitem>
                     <para><literal>persona</literal> - Defaults to the <literal>1 –
-                            Generic</literal>persona. The valid values are, <literal>1 –
+                        Generic</literal>persona. The valid values are, <literal>1 –
                             Generic</literal>, <literal>2 - Generic-ALUA</literal> , <literal>6 -
-                            Generic-legacy</literal> , <literal>7 - HPUX-legacy</literal> ,
-                            <literal>8 - AIX-legacy</literal> , <literal>9 – EGENERA</literal>,
-                            <literal>10 - ONTAP-legacy</literal> , and <literal>11 –
+                                Generic-legacy</literal> , <literal>7 - HPUX-legacy</literal> ,
+                        <literal>8 - AIX-legacy</literal> , <literal>9 – EGENERA</literal>,
+                        <literal>10 - ONTAP-legacy</literal> , and <literal>11 –
                             VMware</literal>.</para>
                 </listitem>
             </itemizedlist>
         </para>
     </section>
-    <section>
+    <section xml:id="enable-hp-3par-fibre-channel">
         <title>Enabling the HP 3PAR Fibre Channel and iSCSI Drivers</title>
         <para>The <filename>HP3PARFCDriver</filename> and <filename>HP3PARISCSIDriver</filename> are
             installed with the OpenStack software.</para>
@@ -167,9 +166,9 @@
                         on the HP 3PAR storage system to be used as the default location for
                         creating volumes.</para>
                 </listitem>
-                    <listitem>
+                <listitem>
                     <para>Make the following changes in the
-                            <filename>/etc/cinder/cinder.conf</filename> file.</para>
+                        <filename>/etc/cinder/cinder.conf</filename> file.</para>
                     <programlisting>
                         <emphasis role="bold">## REQUIRED SETTINGS</emphasis>
 # 3PAR WS API Server URL
