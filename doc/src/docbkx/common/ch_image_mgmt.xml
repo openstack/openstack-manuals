@@ -778,51 +778,33 @@ brw-rw---- 1 root disk 43, 51 2012-03-05 15:32 /dev/nbd3p3</computeroutput></scr
     </section>
     <section xml:id="specify-host-to-boot-instances-on">
         <title>Select a specific host to boot instances on</title>
-        <para>With the Folsom release it was not possible to
-            indicate a specific compute host to use to boot an
-            instance with the --force_hosts parameter. See bug <link
-                xlink:href="https://bugs.launchpad.net/ubuntu/+source/nova/+bug/1061665"
-                >1061665</link> for further discussion.</para>
-        <para>With the Grizzly release, the provider can change the
-            policy to enable users to choose a specific host to launch
-            a VM instance upon using the create:forced_host setting
-            within <filename>policy.json</filename> on certain roles,
-            such as an admin role.</para>
-        <para>Once the role is in place, users with the correct role
-            can retrieve the current active node by running:</para>
-        <programlisting>
-            $nova-manage service list
-            server1 nova-network enabled  :- ) 2011-04-06 17:05:11
-            server1 nova-compute enabled  :- ) 2011-04-06 17:05:13
-            server1 nova-scheduler enabled :- ) 2011-04-06 17:05:17
-            server2 nova-compute disabled  :- ) 2011-04-06 17:05:19</programlisting>
-        <para>We see here our "server2" runs as a node. You can now
-            select the host on which the instance would be spawned,
-            using the "--hint" flag:</para>
-        <para>
-            <screen><prompt>$</prompt> <userinput>nova boot --image 1 --flavor 2 --key_name test --hint force_hosts=server2 my-first-server</userinput></screen></para>
-    </section>
-    <section xml:id="specify-zone-to-boot-instances-on">
-        <title>Select a specific zone to boot instances on</title>
-        <para> It is possible to specify which availability zone to
-            run the instance on using the nova client. In order to use
-            such feature, make sure you are using an admin account. </para>
-        <para>You can determine the current active zone by looking at
-            the nova.conf file for the compute node and seeing the
-            node_availability_zone=yyyyy where yyyyy is the name of
-            the zone the host is affiliated with. </para>
-        <para>We see here our "server2" lives in the "nova"
-            availability zone. You can now select the host on which the
-            instance would be spawned, using the "--availability-zone"
-            parameter as an admin. </para>
-        <note>
-            <para>The --force_hosts scheduler hint has been replaced
-                with --availability_zone in the Folsom release.
-            </para>
-        </note>
+        <para>If you have the appropriate permissions, you can select the specific host where the
+            instance will be launched. This is done using the <literal>--availability_zone
+                    <replaceable>zone</replaceable>:<replaceable>host</replaceable></literal>
+            arguments to the <command>nova boot</command> command. For example:</para>
         <para>
             <screen><prompt>$</prompt> <userinput>nova boot --image &lt;uuid&gt; --flavor m1.tiny --key_name test --availability-zone nova:server2</userinput></screen>
         </para>
+        <para>Starting with the Grizzly release, you can specify which roles are permitted to boot
+            an instance to a specific host with the <literal>create:forced_host</literal> setting
+            within <filename>policy.json</filename> on the desired roles. By default, only the admin
+            role has this setting enabled.</para>
+        <para>You can view the list of valid compute hosts by using the <command>nova
+                hypervisor-list </command>command, for
+            example:<screen><prompt>$</prompt> <userinput>nova hypervisor-list</userinput>
+<computeroutput>+----+---------------------+
+| ID | Hypervisor hostname |
++----+---------------------+
+| 1  | server2             |
+| 2  | server3             |
+| 3  | server4             |
++----+---------------------+</computeroutput></screen></para>
+        <note>
+            <para>The <literal>--availability_zone
+                        <replaceable>zone</replaceable>:<replaceable>host</replaceable></literal>
+                flag replaced the <literal>--force_hosts</literal> scheduler hint for specifying a
+                specific host, starting with the Folsom release.</para>
+        </note>
     </section>
     <section xml:id="creating-custom-images">
         <info>
