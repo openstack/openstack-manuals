@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE section [
+<!DOCTYPE chapter [
 <!-- Some useful entities borrowed from HTML -->
 <!ENTITY ndash  "&#x2013;">
 <!ENTITY mdash  "&#x2014;">
@@ -8,7 +8,7 @@
         
        
 ]>
-<section xmlns="http://docbook.org/ns/docbook"
+<chapter xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="cloud_controller_design">
@@ -18,34 +18,37 @@
         which allows all services to be distributed widely. However,
         to simplify this guide we have decided to discuss services of
         a more central nature using the concept of a single
-            <emphasis>cloud controller</emphasis> (see the <xref
-            linkend="example_architecture"/> for more details on the
-        overall architecture). As described in this guide, the cloud
-        controller is a single node that hosts the databases, message
-        queue service, authentication and authorization service, image
-        management service, user dashboard, and <glossterm>API
+            <emphasis>cloud controller</emphasis>. </para>
+    <para>For more details about the overall architecture, see the
+            <xref linkend="example_architecture"/>. </para>
+    <para>As described in this guide, the cloud controller is a single
+        node that hosts the databases, message queue service,
+        authentication and authorization service, image management
+        service, user dashboard, and <glossterm>API
             endpoint</glossterm>s.</para>
     <para>The cloud controller provides the central management system
         for multi-node OpenStack deployments. Typically the cloud
         controller manages authentication and sends messaging to all
-        the systems through a message queue. For our example, the
-        cloud controller has a collection of <code>nova-*</code>
-        components that represent the global state of the cloud, talks
-        to services such as authentication, maintains information
-        about the cloud in a database, communicates to all compute
-        nodes and storage <glossterm>worker</glossterm>s through a
-        queue, and provides API access. Each service running on a
-        designated cloud controller may be broken out into separate
-        nodes for scalability or availability.</para>
+        the systems through a message queue. </para>
+    <para>For our example, the cloud controller has a collection of
+            <code>nova-*</code> components that represent the global
+        state of the cloud, talks to services such as authentication,
+        maintains information about the cloud in a database,
+        communicates to all compute nodes and storage
+            <glossterm>worker</glossterm>s through a queue, and
+        provides API access. Each service running on a designated
+        cloud controller may be broken out into separate nodes for
+        scalability or availability.</para>
     <section xml:id="hardware_consid">
+
         <title>Hardware Considerations</title>
         <para>A cloud controller's hardware can be the same as a
             compute node, though you may want to further specify based
-            on the size and type of cloud that you run. It's also
-            possible to use virtual machines for all or some of the
-            services that the cloud controller manages, such as the
-            message queuing. In this guide, we assume that all
-            services are running directly on the cloud
+            on the size and type of cloud that you run. </para>
+        <para>It's also possible to use virtual machines for all or
+            some of the services that the cloud controller manages,
+            such as the message queuing. In this guide, we assume that
+            all services are running directly on the cloud
             controller.</para>
         <para>To size the server correctly, and determine whether to
             virtualize any part of it, you should estimate:</para>
@@ -75,8 +78,9 @@
                     run</para>
             </listitem>
         </itemizedlist>
-        <?hard-pagebreak?>
         <informaltable rules="all">
+            <col width="25%"/>
+            <col width="75%"/>
             <thead>
                 <tr>
                     <th>Consideration</th>
@@ -159,6 +163,7 @@
             </tbody>
         </informaltable>
     </section>
+    <?hard-pagebreak?>
     <section xml:id="separate_services">
         <title>Separation of Services</title>
         <para>While our example contains all central services in a
@@ -257,9 +262,9 @@
             message queue - and RabbitMQ has in-build abilities to do
             this.</para>
     </section>
+
     <section xml:id="api">
-        <title>Application Programming Interface
-                (API)</title>
+        <title>Application Programming Interface (API)</title>
         <para>All public access, whether direct, through a command
             line client, or through the web-based dashboard, uses the
             API service. Find the API reference at <link
@@ -269,14 +274,15 @@
             EC2 compatibility APIs, or just the OpenStack APIs. One
             issue you might encounter when running both APIs is an
             inconsistent experience when referring to images and
-            instances. For example, the EC2 API refers to instances
-            using IDs that contain hexadecimal whereas the OpenStack
-            API uses names and digits. Similarly, the EC2 API tends to
-            rely on DNS aliases for contacting virtual machines, as
-            opposed to OpenStack which typically lists IP addresses.
-            If OpenStack is not setup in the right way, it is simple
-            to have scenarios where users are unable to contact their
-            instances due to only having an incorrect DNS alias.
+            instances. </para>
+        <para>For example, the EC2 API refers to instances using IDs
+            that contain hexadecimal whereas the OpenStack API uses
+            names and digits. Similarly, the EC2 API tends to rely on
+            DNS aliases for contacting virtual machines, as opposed to
+            OpenStack which typically lists IP addresses. </para>
+        <para>If OpenStack is not set up in the right way, it is
+            simple to have scenarios where users are unable to contact
+            their instances due to only having an incorrect DNS alias.
             Despite this, EC2 compatibility can assist users migrating
             to your cloud.</para>
         <para>Like databases and message queues, having more than one
@@ -308,20 +314,22 @@
             introduction of vendor-specific niche
             functionality.</para>
     </section>
+    <?hard-pagebreak?>
     <section xml:id="scheduler">
         <title>Scheduler</title>
         <para>Fitting various sized virtual machines (different
                 <emphasis>flavors</emphasis>) into different sized
             physical nova-compute nodes is a challenging problem -
             researched generically in Computer Science as a packing
-            problem. There are various techniques for handling this
-            problem, one of which is to have flavor sizes scale
-            linearly, be a proportional fraction of your physical node
-            capacity, though solving this problem is out of the scope
-            of this book. To support your scheduling choices,
-            OpenStack Compute provides several different types of
-            scheduling drivers, a full discussion of which is found in
-            the <link xlink:title="API Specifications"
+            problem. </para>
+        <para>You can use various techniques to handle this problem,
+            one of which is to have flavor sizes scale linearly, be a
+            proportional fraction of your physical node capacity,
+            though solving this problem is out of the scope of this
+            book. To support your scheduling choices, OpenStack
+            Compute provides several different types of scheduling
+            drivers, a full discussion of which is found in the <link
+                xlink:title="API Specifications"
                 xlink:href="http://docs.openstack.org/folsom/openstack-compute/admin/content/ch_scheduling.html"
                 >reference manual</link>
             (http://docs.openstack.org/folsom/openstack-compute/admin/content/ch_scheduling.html).</para>
@@ -378,7 +386,7 @@
             API servers (including their admin endpoints) over the
             network.</para>
     </section>
-    <?hard-pagebreak?>
+  
     <section xml:id="authentication">
         <title>Authentication and Authorization</title>
         <para>The concepts supporting OpenStack's authentication and
@@ -386,18 +394,19 @@
             used systems of a similar nature. Users have credentials
             they can use to authenticate, and they can be a member of
             one or more groups (known as projects or tenants
-            interchangeably). For example a cloud administrator might
-            be able to list all instances in the cloud, whereas a user
-            can only see those in their current group. Resources
-            quotas, such as the number of cores that can be used, disk
-            space, and so on, are associated with a project.</para>
+            interchangeably). </para>
+        <para>For example, a cloud administrator might be able to list
+            all instances in the cloud, whereas a user can only see
+            those in their current group. Resources quotas, such as
+            the number of cores that can be used, disk space, and so
+            on, are associated with a project.</para>
         <para>The OpenStack Identity Service (Keystone) is the point
             that provides the authentication decisions and user
             attribute information, which is then used by the other
             OpenStack services to perform authorization. Policy is set
             in the policy.json file. For information on how to
-            configure these, see <xref
-                linkend="projects_users"/>.</para>
+            configure these, see <xref linkend="projects_users"
+            />.</para>
         <para>The Identity Service supports different plugins for
             back-end authentication decisions, and storing
             information. These range from pure storage choices to
@@ -435,14 +444,14 @@
             gateway for all instances, then the Cloud Controller must
             support the total amount of traffic that travels between
             your cloud and the public Internet. </para>
-        <para>It is recommended to use a fast NIC, such as 10 GB. You
-            can also choose to use two 10gb NICs and bond them
+        <para>We recommend that you use a fast NIC, such as 10 GB. You
+            can also choose to use two 10 GB NICs and bond them
             together. While you might not be able to get a full bonded
-            20gb speed, different transmission streams use different
+            20 GB speed, different transmission streams use different
             NICs. For example, if the Cloud Controller transfers two
             images, each image uses a different NIC and gets a full 10
             GB of bandwidth.</para>
     </section>
 
 
-</section>
+</chapter>

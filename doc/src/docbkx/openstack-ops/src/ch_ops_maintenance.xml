@@ -169,13 +169,13 @@
             <para>After you have the list, you can use the nova
                 command to start each instance:</para>
             <programlisting><?db-font-size 65%?># nova reboot &lt;uuid&gt;</programlisting>
-            <para>
-                <emphasis role="bold">Note</emphasis>: Any time an
-                instance shuts down unexpectedly, it might have
-                problems on boot. For example, the instance might
-                require an <code>fsck</code> on the root partition. If
-                this happens, the user can use the Dashboard VNC
-                console to fix this.</para>
+            <note>
+                <para> Any time an instance shuts down unexpectedly,
+                    it might have problems on boot. For example, the
+                    instance might require an <code>fsck</code> on the
+                    root partition. If this happens, the user can use
+                    the Dashboard VNC console to fix this.</para>
+            </note>
             <para>If an instance does not boot, meaning <code>virsh
                     list</code> never shows the instance as even
                 attempting to boot, do the following on the compute
@@ -279,14 +279,14 @@ root@compute-node:/var/lib/nova/instances/instance-0000274a# qemu-nbd -c /dev/nb
                     <programlisting><?db-font-size 65%?>#mount the root partition of the device
 root@compute-node:/var/lib/nova/instances/instance-0000274a# mount /dev/nbd0p1 /mnt/
 # List the directories of mnt, and the vm's folder is display
-# You can inspect the folders and access the /var/log/ files            </programlisting>
+# You can inspect the folders and access the /var/log/ files</programlisting>
                     <para>To examine the secondary or ephemeral disk,
                         use an alternate mount point if you want both
                         primary and secondary drives mounted at the
                         same time.</para>
                     <programlisting><?db-font-size 65%?># umount /mnt
 # qemu-nbd -c /dev/nbd1 `pwd`/disk.local
-# mount /dev/nbd1 /mnt/            </programlisting>
+# mount /dev/nbd1 /mnt/</programlisting>
                     <programlisting><?db-font-size 65%?>root@compute-node:/var/lib/nova/instances/instance-0000274a# ls -lh /mnt/
 total 76K
 lrwxrwxrwx.  1 root root    7 Oct 15 00:44 bin -&gt; usr/bin
@@ -308,7 +308,7 @@ drwxr-xr-x.  2 root root 4.0K Feb  3  2012 srv
 drwxr-xr-x.  2 root root 4.0K Oct 15 00:42 sys
 drwxrwxrwt.  9 root root 4.0K Oct 15 16:29 tmp
 drwxr-xr-x. 13 root root 4.0K Oct 15 00:44 usr
-drwxr-xr-x. 17 root root 4.0K Oct 15 00:44 var             </programlisting>
+drwxr-xr-x. 17 root root 4.0K Oct 15 00:44 var</programlisting>
                 </listitem>
                 <listitem>
                     <para>Once you have completed the inspection,
@@ -316,7 +316,7 @@ drwxr-xr-x. 17 root root 4.0K Oct 15 00:44 var             </programlisting>
                         qemu-nbd device</para>
                     <programlisting><?db-font-size 65%?>root@compute-node:/var/lib/nova/instances/instance-0000274a# umount /mnt
 root@compute-node:/var/lib/nova/instances/instance-0000274a# qemu-nbd -d /dev/nbd0
-/dev/nbd0 disconnected             </programlisting>
+/dev/nbd0 disconnected</programlisting>
                 </listitem>
                 <listitem>
                     <para>Resume the instance using virsh</para>
@@ -328,7 +328,7 @@ Id Name                 State
 30 instance-0000274a    paused
                   
 root@compute-node:/var/lib/nova/instances/instance-0000274a# virsh resume 30
-Domain 30 resumed            </programlisting>
+Domain 30 resumed</programlisting>
                 </listitem>
             </orderedlist>
         </section>
@@ -343,7 +343,7 @@ cinder.volumes.attach_status, cinder.volumes.mountpoint, cinder.volumes.display_
 inner join nova.instances on cinder.volumes.instance_uuid=nova.instances.uuid 
  where nova.instances.host = 'c01.example.com';</programlisting>
             <para>You should see a result like the following:</para>
-            <programlisting><?db-font-size 65%?>+---------------+-------------+--------+---------------+------------+--------------+ 
+            <programlisting><?db-font-size 55%?>+---------------+-------------+--------+---------------+------------+--------------+ 
 | instance_uuid | volume_uuid | status | attach_status | mountpoint | display_name | 
 +---------------+-------------+--------+---------------+------------+--------------+ 
 | 9b969a05      | 1f0fbf36    | in-use | attached      | /dev/vdc   | test         | 
@@ -932,10 +932,11 @@ inner join nova.instances on cinder.volumes.instance_uuid=nova.instances.uuid
                 command line:</para>
             <programlisting><?db-font-size 65%?># sudo -u glance -H glance-api</programlisting>
             <para>This might print the error and cause of the problem.<note>
-                    <para>The <literal>-H</literal> flag is required when running the daemons with
-                        sudo because some daemons will write files relative to the user's home
-                        directory, and this write may fail if <literal>-H</literal> is left
-                        off.</para>
+                    <para>The <literal>-H</literal> flag is required
+                        when running the daemons with sudo because
+                        some daemons will write files relative to the
+                        user's home directory, and this write may fail
+                        if <literal>-H</literal> is left off.</para>
                 </note></para>
         </section>
         <section xml:id="complexity">

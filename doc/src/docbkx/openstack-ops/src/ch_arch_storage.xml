@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE section [
+<!DOCTYPE chapter [
 <!-- Some useful entities borrowed from HTML -->
 <!ENTITY ndash  "&#x2013;">
 <!ENTITY mdash  "&#x2014;">
 <!ENTITY hellip "&#x2026;">
 <!ENTITY plusmn "&#xB1;">
-        
+<!ENTITY CHECK  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
+<imageobject>
+<imagedata fileref="figures/Check_mark_23x20_02.svg"
+format="SVG" scale="60"/>
+</imageobject>
+</inlinemediaobject>'>        
      
 ]>
-<section xmlns="http://docbook.org/ns/docbook"
+<chapter xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="storage_decision">
@@ -113,34 +118,36 @@
                 storage system, as an alternative to storing the
                 images on a file system.</para>
         </section>
-        <?hard-pagebreak?>
+      
         <section xml:id="block_storage">
             <title>Block Storage</title>
             <para>Block storage (sometimes referred to as volume
                 storage) exposes a block device to the user. Users
                 interact with block storage by attaching volumes to
-                their running virtual machine instances. These volumes
-                are persistent: they can be detached from one instance
-                and re-attached to another, and the data remains
-                intact. Block storage is implemented in OpenStack by
-                the OpenStack Block Storage (Cinder) project, which
-                supports multiple back-ends in the form of drivers.
-                Your choice of a storage back-end must be supported by
-                a Block Storage driver.</para>
-            <para>Most block storage drivers allow the instance to have 
-                direct access to the underlying storage hardware's block
-                device. This helps increase the overall read/write IO.</para>
-            <para>Experimental support for utilizing files as volumes 
-                began in the Folsom release. This initially
-                started as a reference driver for using NFS with Cinder. 
-                By Grizzly's release, this has expanded into a full NFS driver
-                as well as a GlusterFS driver.</para>
-            <para>These drivers work a little differently than a traditional
-                "block" storage driver. On an NFS or GlusterFS filesystem, a 
-                single file is created and then mapped as a "virtual" volume 
-                into the instance. This mapping/translation is similar to how
-                OpenStack utilizes QEMU's file-based virtual machines stored in
-                <code>/var/lib/nova/instances</code>.</para>
+                their running VM instances. </para>
+            <para>These volumes are persistent: they can be detached
+                from one instance and re-attached to another, and the
+                data remains intact. Block storage is implemented in
+                OpenStack by the OpenStack Block Storage (Cinder)
+                project, which supports multiple back-ends in the form
+                of drivers. Your choice of a storage back-end must be
+                supported by a Block Storage driver.</para>
+            <para>Most block storage drivers allow the instance to
+                have direct access to the underlying storage
+                hardware's block device. This helps increase the
+                overall read/write IO.</para>
+            <para>Experimental support for utilizing files as volumes
+                began in the Folsom release. This initially started as
+                a reference driver for using NFS with Cinder. By
+                Grizzly's release, this has expanded into a full NFS
+                driver as well as a GlusterFS driver.</para>
+            <para>These drivers work a little differently than a
+                traditional "block" storage driver. On an NFS or
+                GlusterFS file system, a single file is created and
+                then mapped as a "virtual" volume into the instance.
+                This mapping/translation is similar to how OpenStack
+                utilizes QEMU's file-based virtual machines stored in
+                    <code>/var/lib/nova/instances</code>.</para>
         </section>
         <section xml:id="file_level_storage">
             <title>File-level Storage</title>
@@ -150,9 +157,9 @@
                 solution before, have encountered this form of
                 networked storage. In the Unix world, the most common
                 form of this is NFS. In the Windows world, the most
-                common form is called CIFS (previously, SMB).
-                OpenStack clouds do not present file-level storage to
-                end users. However, it is important to consider
+                common form is called CIFS (previously, SMB). </para>
+            <para>OpenStack clouds do not present file-level storage
+                to end users. However, it is important to consider
                 file-level storage for storing instances under
                     <code>/var/lib/nova/instances</code> when
                 designing your cloud, since you must have a shared
@@ -217,38 +224,38 @@
             <tbody>
                 <tr>
                     <td><para>Swift</para></td>
-                    <td><para>✓</para></td>
+                    <td><para>&CHECK;</para></td>
                     <td><para> </para></td>
                     <td><para> </para></td>
                 </tr>
                 <tr>
                     <td><para>LVM</para></td>
                     <td><para> </para></td>
-                    <td><para>✓</para></td>
+                    <td><para>&CHECK;</para></td>
                     <td><para> </para></td>
                 </tr>
                 <tr>
                     <td><para>Ceph</para></td>
-                    <td><para>✓</para></td>
-                    <td><para>✓</para></td>
+                    <td><para>&CHECK;</para></td>
+                    <td><para>&CHECK;</para></td>
                     <td><para>experimental</para></td>
                 </tr>
                 <tr>
                     <td><para>Gluster</para></td>
-                    <td><para>✓</para></td>
+                    <td><para>&CHECK;</para></td>
                     <td><para> </para></td>
-                    <td><para>✓</para></td>
+                    <td><para>&CHECK;</para></td>
                 </tr>
                 <tr>
                     <td><para>NFS</para></td>
-                    <td><para></para></td>
-                    <td><para>✓</para></td>
-                    <td><para>✓</para></td>
+                    <td><para/></td>
+                    <td><para>&CHECK;</para></td>
+                    <td><para>&CHECK;</para></td>
                 </tr>
                 <tr>
                     <td><para>ZFS</para></td>
                     <td><para> </para></td>
-                    <td><para>✓</para></td>
+                    <td><para>&CHECK;</para></td>
                     <td><para> </para></td>
                 </tr>
                 <tr>
@@ -261,9 +268,9 @@
         </informaltable>
         <para>* This list of open-source file-level shared storage
             solutions is not exhaustive, other open source solutions
-            exist (MooseFS). Your organization may
-            already have deployed a file-level shared storage solution
-            which you can use.</para>
+            exist (MooseFS). Your organization may already have
+            deployed a file-level shared storage solution which you
+            can use.</para>
         <para>In addition to the open-source technologies, there are a
             number of proprietary solutions that are officially
             supported by OpenStack Block Storage. They are offered by
@@ -455,6 +462,7 @@
             </itemizedlist>
         </section>
     </section>
+    <?hard-pagebreak?>
     <section xml:id="openstack_object_storage">
         <title>Notes on OpenStack Object Storage</title>
         <para>OpenStack Object Storage provides a highly scalable,
@@ -494,8 +502,7 @@
             data centre's network and power failure zones. Is a zone a
             rack, a server or a disk?</para>
         <para>Object Storage's network patterns might seem unfamiliar
-            at first. </para>
-        <para>Consider these main traffic flows: <itemizedlist>
+            at first. Consider these main traffic flows: <itemizedlist>
                 <listitem>
                     <para>Among <glossterm>object</glossterm>,
                             <glossterm>container</glossterm>, and
@@ -538,4 +545,4 @@
         <para>More proxies means more bandwidth, if your storage can
             keep up.</para>
     </section>
-</section>
+</chapter>

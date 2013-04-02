@@ -92,12 +92,12 @@
 
                     <step>
                         <para>
-                            <code>ssh root@&lt;IP Address&gt;</code>
+                            <programlisting language="bash"><?db-font-size 75%?>ssh root@&lt;IP Address&gt;</programlisting>
                         </para>
                     </step>
                     <step>
                         <para>
-                            <code>adduser --gecos "" stack</code>
+                            <programlisting language="bash"><?db-font-size 75%?>adduser --gecos "" stack</programlisting>
                         </para>
                     </step>
                     <step>
@@ -106,28 +106,28 @@
                     </step>
                     <step>
                         <para>
-                            <code>adduser stack sudo</code>
+                            <programlisting language="bash"><?db-font-size 75%?>adduser stack sudo</programlisting>
                         </para>
                     </step>
                     <step>
                         <para>
-                            <code>grep -q
+                            <programlisting language="bash"><?db-font-size 75%?>grep -q
                                 "^#includedir.*/etc/sudoers.d"
                                 /etc/sudoers || echo "#includedir
                                 /etc/sudoers.d" &gt;&gt;
-                                /etc/sudoers</code>
+                                /etc/sudoers</programlisting>
                         </para>
                     </step>
                     <step>
                         <para>
-                            <code>( umask 226 &amp;&amp; echo "stack
+                            <programlisting language="bash"><?db-font-size 75%?>( umask 226 &amp;&amp; echo "stack
                                 ALL=(ALL) NOPASSWD:ALL" &gt;
-                                /etc/sudoers.d/50_stack_sh )</code>
+                                /etc/sudoers.d/50_stack_sh )</programlisting>
                         </para>
                     </step>
                     <step>
                         <para>
-                            <code>exit</code>
+                            <programlisting language="bash"><?db-font-size 75%?>exit</programlisting>
                         </para>
                     </step>
 
@@ -139,7 +139,7 @@
                 <substeps>
                     <step>
                         <para>
-                            <code>ssh stack@&lt;IP address&gt;</code>
+                            <programlisting language="bash"><?db-font-size 75%?>ssh stack@&lt;IP address&gt;</programlisting>
                         </para>
                     </step>
                     <step>
@@ -148,29 +148,29 @@
                     </step>
                     <step>
                         <para>
-                            <code>sudo apt-get -y update</code>
+                            <programlisting language="bash"><?db-font-size 75%?>sudo apt-get -y update</programlisting>
                         </para>
                     </step>
                     <step>
                         <para>
-                            <code>sudo apt-get -y install git</code>
+                            <programlisting language="bash"><?db-font-size 75%?>sudo apt-get -y install git</programlisting>
                         </para>
                     </step>
                     <step>
                         <para>
-                            <code>git clone
+                            <programlisting language="bash"><?db-font-size 75%?>git clone
                                 https://github.com/openstack-dev/devstack.git -b
-                                stable/folsom devstack/</code>
+                                stable/folsom devstack/</programlisting>
                         </para>
                     </step>
                     <step>
                         <para>
-                            <code>cd devstack</code>
+                            <programlisting language="bash"><?db-font-size 75%?>cd devstack</programlisting>
                         </para>
                     </step>
                     <step>
                         <para>
-                            <code>vim localrc</code>
+                            <programlisting language="bash"><?db-font-size 75%?>vim localrc</programlisting>
                             <itemizedlist>
                                 <listitem>
                                    <para>For Swift only, used in the
@@ -192,12 +192,12 @@
                     </step>
                     <step>
                         <para>
-                            <code>./stack.sh</code>
+                            <programlisting language="bash"><?db-font-size 75%?>./stack.sh</programlisting>
                         </para>
                     </step>
                     <step>
                         <para>
-                            <code>screen -r stack</code> </para>
+                            <programlisting language="bash"><?db-font-size 75%?>screen -r stack</programlisting> </para>
                     </step>
                 </substeps>
                 <note>
@@ -242,11 +242,12 @@
                 <emphasis role="bold">Middleware Example</emphasis>
             for a Swift-only environment, or the <emphasis role="bold"
                 >Nova Scheduler Example</emphasis> for all other
-            projects.</para>
+                projects.</para>
+        <?hard-pagebreak?>
         <para>
             <emphasis role="bold">[1] Swift only localrc</emphasis>
         </para>
-        <programlisting>ADMIN_PASSWORD=devstack
+        <programlisting language="bash"><?db-font-size 75%?>ADMIN_PASSWORD=devstack
 MYSQL_PASSWORD=devstack
 RABBIT_PASSWORD=devstack
 SERVICE_PASSWORD=devstack
@@ -260,7 +261,7 @@ SWIFT_REPLICAS=1
             
 # unified auth system (manages <glossterm>account</glossterm>s/<glossterm>token</glossterm>s)
 KEYSTONE_BRANCH=stable/folsom</programlisting>
-        <programlisting># object storage
+        <programlisting language="bash"><?db-font-size 75%?># object storage
 SWIFT_BRANCH=stable/folsom 
             
 disable_all_services
@@ -269,7 +270,7 @@ enable_service key swift mysql</programlisting>
             <emphasis role="bold">[2] All other projects
                 localrc</emphasis>
         </para>
-        <programlisting>ADMIN_PASSWORD=devstack
+        <programlisting language="bash"><?db-font-size 75%?>ADMIN_PASSWORD=devstack
 MYSQL_PASSWORD=devstack
 RABBIT_PASSWORD=devstack
 SERVICE_PASSWORD=devstack
@@ -318,17 +319,17 @@ HORIZON_BRANCH=stable/folsom</programlisting>
             might have public access to one of your containers, but
             what you really want to restrict it to is a set of IPs
             based on a whitelist.</para>
-        <para>
-            <emphasis role="bold">Note: This example is for
-                illustrative purposes only. It should not be used as a
-                container IP whitelist solution without further
-                development and extensive security testing.</emphasis>
-        </para>
+        <warning>
+            <para> This example is for illustrative purposes only. It
+                should not be used as a container IP whitelist
+                solution without further development and extensive
+                security testing. </para>
+        </warning>
         <para>When you join the screen session that
                 <code>stack.sh</code> starts with <code>screen -r
                 stack</code>, you're greeted with three screens if you
             used the localrc file with just Swift installed.</para>
-        <programlisting>0$ shell*  1$ key  2$ swift</programlisting>
+        <programlisting language="bash"><?db-font-size 75%?>0$ shell*  1$ key  2$ swift</programlisting>
         <para>The asterisk * indicates which screen you are on.</para>
         <itemizedlist>
             <listitem>
@@ -377,7 +378,7 @@ HORIZON_BRANCH=stable/folsom</programlisting>
             <step>
                 <para>Copy in the following code. When you're done,
                     save and close the file.</para>
-                <programlisting># Licensed under the Apache License, Version 2.0 (the "License");
+                <programlisting language="bash"><?db-font-size 75%?># Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
@@ -475,21 +476,21 @@ try:
                     available, you can insert the following log
                     statement into the <code>__init__</code>
                     method</para>
-                <programlisting>self.logger.debug(_("conf = %(conf)s"), locals())</programlisting>
+                <programlisting language="bash"><?db-font-size 75%?>self.logger.debug(_("conf = %(conf)s"), locals())</programlisting>
                 <para>and the following log statement into the
                         <code>__call__</code> method</para>
-                <programlisting>self.logger.debug(_("env = %(env)s"), locals())</programlisting>
+                <programlisting language="bash"><?db-font-size 75%?>self.logger.debug(_("env = %(env)s"), locals())</programlisting>
             </step>
             <step>
                 <para>To plug this middleware into the Swift pipeline
                     you'll need to edit one configuration file.</para>
-                <programlisting><prompt>$</prompt> vim /etc/swift/proxy-server.conf</programlisting>
+                <programlisting language="bash"><?db-font-size 75%?> vim /etc/swift/proxy-server.conf</programlisting>
             </step>
             <step>
                 <para>Find the <code>[filter:ratelimit]</code> section
                     and copy in the following configuration
                     section.</para>
-                <programlisting>[filter:ip_whitelist]
+                <programlisting language="bash"><?db-font-size 75%?>[filter:ip_whitelist]
 paste.filter_factory = swift.common.middleware.ip_whitelist:filter_factory
 # You can override the default log routing for this filter here:
 # set log_name = ratelimit
@@ -504,7 +505,7 @@ deny_message = You shall not pass!</programlisting>
                     and add <code>ip_whitelist</code> to the list like
                     so. When you're done, save and close the
                     file.</para>
-                <programlisting>[pipeline:main]
+                <programlisting language="bash"><?db-font-size 75%?>[pipeline:main]
 pipeline = catch_errors healthcheck cache ratelimit ip_whitelist authtoken keystoneauth proxy-logging proxy-server</programlisting>
             </step>
             <step>
@@ -564,8 +565,7 @@ pipeline = catch_errors healthcheck cache ratelimit ip_whitelist authtoken keyst
             <step>
                 <para>Among the log statements you'll see the
                     lines.</para>
-                <programlisting>proxy-server Invalid user token - deferring reject downstreamproxy-server Authorizing from an overriding middleware ...
-proxy-server ... IPWhitelistMiddleware
+                <programlisting language="bash"><?db-font-size 75%?>proxy-server ... IPWhitelistMiddleware
 proxy-server Remote IP: 203.0.113.68 (txn: ...)
 proxy-server Allow IPs: set(['203.0.113.68']) (txn: ...)</programlisting>
                 <para>The first three statements basically have to do
@@ -600,7 +600,7 @@ proxy-server Allow IPs: set(['203.0.113.68']) (txn: ...)</programlisting>
             <step>
                 <para>Check the Swift log statements again and among
                     the log statements you'll see the lines.</para>
-                <programlisting>proxy-server Invalid user token - deferring reject downstream
+                <programlisting language="bash"><?db-font-size 75%?>proxy-server Invalid user token - deferring reject downstream
 proxy-server Authorizing from an overriding middleware (i.e: tempurl) (txn: ...)
 proxy-server ... IPWhitelistMiddleware
 proxy-server Remote IP: 198.51.100.12 (txn: ...)

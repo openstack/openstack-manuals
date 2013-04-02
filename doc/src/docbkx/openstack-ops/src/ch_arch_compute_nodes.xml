@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE section [
+<!DOCTYPE chapter [
 <!-- Some useful entities borrowed from HTML -->
 <!ENTITY ndash  "&#x2013;">
 <!ENTITY mdash  "&#x2014;">
@@ -8,7 +8,7 @@
         
       
 ]>
-<section xmlns="http://docbook.org/ns/docbook"
+<chapter xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="compute_nodes">
@@ -35,6 +35,7 @@
             hyper-threading on and off to determine what is more
             appropriate in your case. </para>
     </section>
+    <?hard-pagebreak?>
     <section xml:id="hypervisor_choice">
         <title>Hypervisor Choice</title>
         <para>OpenStack Compute supports many hypervisors to various
@@ -60,12 +61,13 @@
             hypervisor is your current usage or experience. Aside from
             that, there are practical concerns to do with feature
             parity, documentation, and the level of community
-            experience. For example, KVM is the most widely adopted
-            hypervisor in the OpenStack community. Besides KVM, more
-            deployments exist running Xen, LXC, VMWare and Hyper-V
-            than the others listed — however, each of these are
-            lacking some feature support or the documentation on how
-            to use them with OpenStack is out of date.</para>
+            experience. </para>
+        <para>For example, KVM is the most widely adopted hypervisor
+            in the OpenStack community. Besides KVM, more deployments
+            exist running Xen, LXC, VMWare and Hyper-V than the others
+            listed — however, each of these are lacking some feature
+            support or the documentation on how to use them with
+            OpenStack is out of date.</para>
         <para>The best information available to support your choice is
             found on the <link xlink:title="reference manual"
                 xlink:href="https://wiki.openstack.org/wiki/HypervisorSupportMatrix"
@@ -75,12 +77,14 @@
                 xlink:href="http://docs.openstack.org/folsom/openstack-compute/admin/content/ch_hypervisors.html"
                 >reference manual</link>
             (http://docs.openstack.org/folsom/openstack-compute/admin/content/ch_hypervisors.html).</para>
-        <para>Note: It is also possible to run multiple hypervisors in
-            a single deployment using Host Aggregates or Cells.
-            However, an individual compute node can only run a single
-            hypervisor at a time.</para>
+        <note>
+            <para>It is also possible to run multiple hypervisors in a
+                single deployment using Host Aggregates or Cells.
+                However, an individual compute node can only run a
+                single hypervisor at a time.</para>
+        </note>
     </section>
-    <?hard-pagebreak?>
+
     <section xml:id="instance_storage">
         <title>Instance Storage Solutions</title>
         <para>As part of the procurement for a compute cluster, you
@@ -88,7 +92,8 @@
             instantiated instance runs. There are three main
             approaches to providing this temporary-style storage, and
             it is important to understand the implications of the
-            choice. They are:</para>
+            choice. </para>
+        <para>They are:</para>
         <itemizedlist role="compact">
             <listitem>
                 <para>Off compute node storage – shared file
@@ -141,12 +146,13 @@
                 long as you don't have any instances currently running
                 on a compute host, you can take it offline or wipe it
                 completely without having any effect on the rest of
-                your cloud. However, if you are more restricted in the
-                number of physical hosts you have available for
-                creating your cloud and you want to be able to
-                dedicate as many of your hosts as possible to running
-                instances, it makes sense to run compute and storage
-                on the same machines.</para>
+                your cloud. </para>
+            <para>However, if you are more restricted in the number of
+                physical hosts you have available for creating your
+                cloud and you want to be able to dedicate as many of
+                your hosts as possible to running instances, it makes
+                sense to run compute and storage on the same
+                machines.</para>
             <para>In this option, the disks storing the running
                 instances are hosted in servers outside of the compute
                 nodes. There are also several advantages to this
@@ -169,7 +175,8 @@
                         storage for other purposes.</para>
                 </listitem>
             </itemizedlist>
-            <para>The two main downsides to this approach are:</para>
+            <?hard-pagebreak?>
+            <para>The main downsides to this approach are:</para>
             <itemizedlist role="compact">
                 <listitem>
                     <para>Depending on design, heavy I/O usage from
@@ -189,14 +196,9 @@
                 is specified with a significant amount of disks, but a
                 distributed file system ties the disks from each
                 compute node into a single mount. The main advantage
-                of this approach is:</para>
-            <itemizedlist role="compact">
-                <listitem>
-                    <para>If additional storage is required, this
-                        option can scale to external storage.</para>
-                </listitem>
-            </itemizedlist>
-            <para>This approach does have several downsides:</para>
+                of this option is that it scales to external storage
+                when you require additional storage. </para>
+            <para>However, this option has several downsides:</para>
             <itemizedlist role="compact">
                 <listitem>
                     <para>Running a distributed file system can make
@@ -218,6 +220,7 @@
                 </listitem>
             </itemizedlist>
         </section>
+
         <section xml:id="on_compute_node_storage_nonshared">
             <title>On Compute Node Storage – Non-shared File
                 System</title>
@@ -236,6 +239,7 @@
                         performance.</para>
                 </listitem>
             </itemizedlist>
+            <?hard-pagebreak?>
             <para>This has several downsides:</para>
             <itemizedlist role="compact">
                 <listitem>
@@ -266,19 +270,20 @@
                 ability to seamlessly move instances from one physical
                 host to another, a necessity for performing upgrades
                 that require reboots of the compute hosts, but only
-                works well with shared storage. Theoretically live
-                migration can be done with non-shared storage, using a
-                feature known as <emphasis>KVM live block
-                    migration</emphasis>. However, this is a
-                little-known feature in OpenStack, with limited
-                testing when compared to live migration, and is slated
-                for deprecation in KVM upstream.</para>
+                works well with shared storage. </para>
+            <para>Theoretically live migration can be done with
+                non-shared storage, using a feature known as
+                    <emphasis>KVM live block migration</emphasis>.
+                However, this is a little-known feature in OpenStack,
+                with limited testing when compared to live migration,
+                and is slated for deprecation in KVM upstream.</para>
         </section>
         <section xml:id="file_systems">
             <title>Choice of File System</title>
             <para>If you want to support shared storage live
                 migration, you'll need to configure a distributed file
-                system. Possible options include:</para>
+                system. </para>
+            <para>Possible options include:</para>
             <itemizedlist role="compact">
                 <listitem>
                     <para>NFS (default for Linux)</para>
@@ -298,7 +303,7 @@
                 operating.</para>
         </section>
     </section>
-    <?hard-pagebreak?>
+
     <section xml:id="overcommit">
         <title>Overcommitting</title>
         <para>OpenStack allows you to overcommit CPU and RAM on
@@ -325,11 +330,12 @@
             that the scheduler allocates instances to a physical node
             as long as the total amount of RAM associated with the
             instances is less than 1.5 times the amount of RAM
-            available on the physical node. For example, if a physical
-            node has 48 GB of RAM, the scheduler allocates instances
-            to that node until the sum of the RAM associated with the
-            instances reaches 72 GB (such as 6 instances, in the case
-            where each instance has 8GB of RAM).</para>
+            available on the physical node. </para>
+        <para>For example, if a physical node has 48 GB of RAM, the
+            scheduler allocates instances to that node until the sum
+            of the RAM associated with the instances reaches 72 GB
+            (such as six instances, in the case where each instance
+            has 8 GB of RAM).</para>
         <para>You must select the appropriate CPU and RAM allocation
             ratio for your particular use case.</para>
     </section>
@@ -338,15 +344,16 @@
         <para>Logging is detailed more fully in <xref
                 linkend="logging"/>. However it is an important design
             consideration to take into account before commencing
-            operations of your cloud. OpenStack produces a great deal
-            of useful logging information, however, in order for it to
-            be useful for operations purposes you should consider
-            having a central logging server to send logs to, and a log
-            parsing/analysis system (such as logstash).</para>
+            operations of your cloud. </para>
+        <para>OpenStack produces a great deal of useful logging
+            information, however, in order for it to be useful for
+            operations purposes you should consider having a central
+            logging server to send logs to, and a log parsing/analysis
+            system (such as logstash).</para>
     </section>
     <section xml:id="networking">
         <title>Networking</title>
         <para>Networking in OpenStack is a complex, multi-faceted
             challenge. See <xref linkend="network_design"/>.</para>
     </section>
-</section>
+</chapter>
