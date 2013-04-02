@@ -3,15 +3,15 @@ bind_port = 8888
 user = demo
 
 [pipeline:main]
-pipeline = healthcheck cache swift3 authtoken keystone proxy-server
+pipeline = healthcheck cache swift3 authtoken keystoneauth proxy-server
 
 [app:proxy-server]
 use = egg:swift#proxy
 allow_account_management = true
 account_autocreate = true
 
-[filter:keystone]
-paste.filter_factory = keystoneclient.middleware.swift_auth:filter_factory
+[filter:keystoneauth]
+use = egg:swift#keystoneauth
 operator_roles = Member,admin, swiftoperator
 
 [filter:authtoken]
