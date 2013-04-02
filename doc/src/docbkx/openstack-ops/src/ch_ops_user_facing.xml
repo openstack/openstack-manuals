@@ -114,16 +114,12 @@
     <section xml:id="flavors">
         <?dbhtml stop-chunking?>
         <title>Flavors</title>
-        <para>Virtual hardware templates are called "flavors" in
-            OpenStack, defining sizes for RAM, disk, number of cores
-            and so on. The default install provides a range of five
-            flavors. These are configurable by admin users (this too
-            is configurable and may be delegated by redefining the
-            access controls for
-                <code>compute_extension:flavormanage</code> in
-                <code>/etc/nova/policy.json</code> on the
-                <code>nova-api</code> server). To get a list of
-            available flavors on your system run:</para>
+        <para>Virtual hardware templates are called "flavors" in OpenStack, defining sizes for RAM,
+            disk, number of cores and so on. The default install provides a range of five flavors.
+            These are configurable by admin users (this too is configurable and may be delegated by
+            redefining the access controls for <code>compute_extension:flavormanage</code> in
+                <code>/etc/nova/policy.json</code> on the <code>nova-api</code> server). To get a
+            list of available flavors on your system run:</para>
         <para>
             <code><?db-font-size 65%?>$ nova flavor-list</code>
         </para>
@@ -137,9 +133,8 @@
 | 5  | m1.xlarge | 16384     | 10   | 160       |/| 8     | /| {}          |
 +----+-----------+-----------+------+-----------+\+-------+-\+-------------+
       </programlisting>
-        <para>The <code>nova flavor-create</code> command allows
-            authorized users to create new flavors. Additional flavor
-            manipulation commands can be shown with the command
+        <para>The <code>nova flavor-create</code> command allows authorized users to create new
+            flavors. Additional flavor manipulation commands can be shown with the command
                 <code>nova help | grep flavor.</code>
         </para>
         <para>Flavors define a number of elements:</para>
@@ -148,108 +143,121 @@
             <col width="75%"/>
             <tbody>
                 <tr>
-                    <td xmlns:db="http://docbook.org/ns/docbook"><para>
+                    <td xmlns:db="http://docbook.org/ns/docbook">
+                        <para>
                             <emphasis role="bold">Column</emphasis>
-                        </para></td>
-                    <td xmlns:db="http://docbook.org/ns/docbook"><para>
-                            <emphasis role="bold"
-                                >Description</emphasis>
-                        </para></td>
+                        </para>
+                    </td>
+                    <td xmlns:db="http://docbook.org/ns/docbook">
+                        <para>
+                            <emphasis role="bold">Description</emphasis>
+                        </para>
+                    </td>
                 </tr>
                 <tr>
-                    <td xmlns:db="http://docbook.org/ns/docbook"
-                            ><para>ID</para></td>
-                    <td xmlns:db="http://docbook.org/ns/docbook"
-                            ><para>A unique numeric id.</para></td>
+                    <td xmlns:db="http://docbook.org/ns/docbook">
+                        <para>ID</para>
+                    </td>
+                    <td xmlns:db="http://docbook.org/ns/docbook">
+                        <para>A unique numeric id.</para>
+                    </td>
                 </tr>
                 <tr>
-                    <td xmlns:db="http://docbook.org/ns/docbook"
-                            ><para>Name</para></td>
-                    <td xmlns:db="http://docbook.org/ns/docbook"
-                            ><para>a descriptive name. xx.size_name is
-                            conventional not required, though some
-                            third party tools may rely on
-                        it.</para></td>
+                    <td xmlns:db="http://docbook.org/ns/docbook">
+                        <para>Name</para>
+                    </td>
+                    <td xmlns:db="http://docbook.org/ns/docbook">
+                        <para>a descriptive name. xx.size_name is conventional not required, though
+                            some third party tools may rely on it.</para>
+                    </td>
                 </tr>
                 <tr>
-                    <td xmlns:db="http://docbook.org/ns/docbook"
-                            ><para>Memory_MB</para></td>
-                    <td xmlns:db="http://docbook.org/ns/docbook"
-                            ><para>Memory_MB: virtual machine memory
-                            in megabytes.</para></td>
+                    <td xmlns:db="http://docbook.org/ns/docbook">
+                        <para>Memory_MB</para>
+                    </td>
+                    <td xmlns:db="http://docbook.org/ns/docbook">
+                        <para>Memory_MB: virtual machine memory in megabytes.</para>
+                    </td>
                 </tr>
                 <tr>
-                    <td xmlns:db="http://docbook.org/ns/docbook"
-                            ><para>Disk</para></td>
-                    <td xmlns:db="http://docbook.org/ns/docbook"
-                            ><para>Virtual root disk size in
-                            gigabytes. This is an ephemeral disk the
-                            base image is copied into. When booting
-                            from a persistent volume it is not used.
-                            The "0" size is a special case which uses
-                            the native base image size as the size of
-                            the ephemeral root volume.</para></td>
+                    <td xmlns:db="http://docbook.org/ns/docbook">
+                        <para>Disk</para>
+                    </td>
+                    <td xmlns:db="http://docbook.org/ns/docbook">
+                        <para>Virtual root disk size in gigabytes. This is an ephemeral disk the
+                            base image is copied into. When booting from a persistent volume it is
+                            not used. The "0" size is a special case which uses the native base
+                            image size as the size of the ephemeral root volume.</para>
+                    </td>
                 </tr>
                 <tr>
-                    <td xmlns:db="http://docbook.org/ns/docbook"
-                            ><para>Ephemeral</para></td>
-                    <td xmlns:db="http://docbook.org/ns/docbook"
-                            ><para>Specifies the size of a secondary
-                            ephemeral data disk. This is an empty,
-                            unformatted disk and exists only for the
-                            life of the instance.</para></td>
+                    <td xmlns:db="http://docbook.org/ns/docbook">
+                        <para>Ephemeral</para>
+                    </td>
+                    <td xmlns:db="http://docbook.org/ns/docbook">
+                        <para>Specifies the size of a secondary ephemeral data disk. This is an
+                            empty, unformatted disk and exists only for the life of the
+                            instance.</para>
+                    </td>
                 </tr>
                 <tr>
-                    <td xmlns:db="http://docbook.org/ns/docbook"
-                            ><para>Swap</para></td>
-                    <td xmlns:db="http://docbook.org/ns/docbook"
-                            ><para>Optional swap space allocation for
-                            the instance.</para></td>
+                    <td xmlns:db="http://docbook.org/ns/docbook">
+                        <para>Swap</para>
+                    </td>
+                    <td xmlns:db="http://docbook.org/ns/docbook">
+                        <para>Optional swap space allocation for the instance.</para>
+                    </td>
                 </tr>
                 <tr>
-                    <td xmlns:db="http://docbook.org/ns/docbook"
-                            ><para>VCPUs</para></td>
-                    <td xmlns:db="http://docbook.org/ns/docbook"
-                            ><para>Number of virtual CPUs presented to
-                            the instance.</para></td>
+                    <td xmlns:db="http://docbook.org/ns/docbook">
+                        <para>VCPUs</para>
+                    </td>
+                    <td xmlns:db="http://docbook.org/ns/docbook">
+                        <para>Number of virtual CPUs presented to the instance.</para>
+                    </td>
                 </tr>
                 <tr>
-                    <td xmlns:db="http://docbook.org/ns/docbook"
-                            ><para>RXTX_Factor</para></td>
-                    <td xmlns:db="http://docbook.org/ns/docbook"
-                            ><para>Optional property allows created
-                            servers to have a different bandwidth cap
-                            than that defined in the network they are
-                            attached to. This factor is multiplied by
-                            the rxtx_base property of the network.
-                            Default value is 1.0 (that is, the same as
-                            attached network).</para></td>
+                    <td xmlns:db="http://docbook.org/ns/docbook">
+                        <para>RXTX_Factor</para>
+                    </td>
+                    <td xmlns:db="http://docbook.org/ns/docbook">
+                        <para>Optional property allows created servers to have a different bandwidth
+                            cap than that defined in the network they are attached to. This factor
+                            is multiplied by the rxtx_base property of the network. Default value is
+                            1.0 (that is, the same as attached network).</para>
+                    </td>
                 </tr>
                 <tr>
-                    <td xmlns:db="http://docbook.org/ns/docbook"
-                            ><para>Is_Public</para></td>
-                    <td xmlns:db="http://docbook.org/ns/docbook"
-                            ><para>Boolean value, whether flavor is
-                            available to all users or private to the
-                            tenant it was created in. Defaults to
-                            True.</para></td>
+                    <td xmlns:db="http://docbook.org/ns/docbook">
+                        <para>Is_Public</para>
+                    </td>
+                    <td xmlns:db="http://docbook.org/ns/docbook">
+                        <para>Boolean value, whether flavor is available to all users or private to
+                            the tenant it was created in. Defaults to True.</para>
+                    </td>
                 </tr>
                 <tr>
-                    <td xmlns:db="http://docbook.org/ns/docbook"
-                            ><para>extra_specs</para></td>
-                    <td xmlns:db="http://docbook.org/ns/docbook"
-                            ><para>Additional optional restrictions on
-                            which compute nodes the flavor can run on.
-                            This is implemented as key/value pairs
-                            that must match against the corresponding
-                            key/value pairs on compute nodes. Can be
-                            used to implement things like special
-                            resources (such as flavors that can only
-                            run on compute nodes with GPU
-                            hardware).</para></td>
+                    <td xmlns:db="http://docbook.org/ns/docbook">
+                        <para>extra_specs</para>
+                    </td>
+                    <td xmlns:db="http://docbook.org/ns/docbook">
+                        <para>Additional optional restrictions on which compute nodes the flavor can
+                            run on. This is implemented as key/value pairs that must match against
+                            the corresponding key/value pairs on compute nodes. Can be used to
+                            implement things like special resources (such as flavors that can only
+                            run on compute nodes with GPU hardware).</para>
+                    </td>
                 </tr>
             </tbody>
         </informaltable>
+        <simplesect>
+            <title>How do I modify an existing flavor?</title>
+            <para>Unfortunately, OpenStack does not provide an interface for modifying flavors, only
+                for creating and deleting them. The OpenStack Dashboard simulates the ability to
+                modify a flavor by deleting an existing flavor and creating a new one with the same
+                name.</para>
+        </simplesect>
+        
     </section>
     <?hard-pagebreak?>
     <section xml:id="security_groups">
