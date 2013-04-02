@@ -868,6 +868,27 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                                 this value &gt; 0 and all sleeps greater than
                                 the number will be logged.</td>
                         </tr>
+                       <tr>
+                        <td>log_name</td>
+                        <td>swift</td>
+                        <td>Label used when logging</td>
+                    </tr>
+                    <tr>
+                        <td>log_facility</td>
+                        <td>LOG_LOCAL0</td>
+                        <td>Syslog log facility</td>
+                    </tr>
+                    <tr>
+                        <td>log_level</td>
+                        <td>INFO</td>
+                        <td>Logging level</td>
+                    </tr>
+                     <tr>
+                        <td>log_headers</td>
+                        <td>False</td>
+                        <td>If True, log headers in each request</td>
+                    </tr>
+ 
                         <tr><td>account_ratelimit</td>
                             <td>0</td>
                             <td>If set, will limit all requests to
@@ -895,7 +916,15 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                                 and PUTs and DELETEs to
                                 /account_name/container_name/object_name</td>
 
-                        </tr></tbody>
+                        </tr>
+                        <tr><td>rate_buffer_seconds</td>
+                            <td>5</td>
+                            <td>Number of seconds the rate counter can drop
+                            and be allowed to catch up (faster than the listed
+                            rate). A larger number will result in larger average
+                            spikes but better average accuracy.</td>
+                        </tr>
+                </tbody>
 
                 </table>
                 <para>The container rate limits are linearly interpolated from the values given.  A
