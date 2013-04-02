@@ -451,7 +451,10 @@ service quantum-server restart</computeroutput></screen>
     <section xml:id="install_fedora">
         <title>Installing Packages (Fedora) </title>
         <para>The OpenStack packages for Fedora can be retrieved from:
-                <uri>https://apps.fedoraproject.org/packages/s/openstack</uri>.</para>
+                <uri>https://apps.fedoraproject.org/packages/s/openstack</uri>. Additional
+            information can be found at <link
+                xlink:href="https://fedoraproject.org/wiki/OpenStack"
+                >https://fedoraproject.org/wiki/OpenStack</link></para>
         <section xml:id="fedora_rpc_setup">
             <title xml:id="qpid_rpc_setup">RPC Setup </title>
             <para>OpenStack Networking uses RPC to allow DHCP agents and any plugin
@@ -487,20 +490,23 @@ qpid_hostname = &lt;mgmt-IP-of-qpid-host></computeroutput></screen>
         </section>
         <section  xml:id="fedora_q_server">
             <title>Install quantum-server and plugin </title>
-            <para>Install quantum-server and plugin. <emphasis
-                    role="bold">Note</emphasis> the client is
-                installed as a dependency for the OpenStack Networking
-                service.</para>
+            <para>Install quantum-server and plugin. <emphasis role="bold">Note</emphasis> the
+                client is installed as a dependency for the OpenStack Networking service. Each
+                plugin has its own package, named openstack-quantum-&lt;plugin>. openvswitch will be
+                used in the examples below. A complete list of the supported plugins can be seen at:
+                    <link
+                    xlink:href="https://fedoraproject.org/wiki/Quantum#Quantum_Plugins"
+                    >https://fedoraproject.org/wiki/Quantum#Quantum_Plugins</link>.</para>
             <screen><computeroutput>sudo yum install -y openstack-quantum
 sudo yum install -y openstack-quantum-openvswitch</computeroutput></screen>
             <para>Most plugins require a database to be installed and
                 configured in a plugin configuration file.  The Fedora
                 packaging for OpenStack Networking a server setup utility scripts
                 that will take care of this. For example: </para>
-            <screen><computeroutput>sudo quantum-server-setup --plugin openvswitch </computeroutput></screen>
+            <screen><computeroutput>sudo quantum-server-setup --plugin openvswitch</computeroutput></screen>
             <para>Enable and start the service:</para>
-            <screen><computeroutput>sudo systemctl enable quantum-server.service
-sudo systemctl start quantum-server.service</computeroutput></screen>
+            <screen><computeroutput>sudo chkconfig quantum-server on
+sudo service quantum-server start</computeroutput></screen>
         </section>
         <section  xml:id="fedora_q_plugin">
             <title>Install quantum-plugin-*-agent</title>
@@ -512,20 +518,20 @@ sudo systemctl start quantum-server.service</computeroutput></screen>
                 agent, this section describes how to run the agent for
                 this plugin, as well as the basic configuration
                 options.</para>
-            <section  xml:id="fedora_q_agent">
+            <section xml:id="fedora_q_agent">
                 <title>Open vSwitch Agent</title>
                 <para>Install the OVS agent: </para>
                 <screen><computeroutput>sudo yum install -y openstack-quantum-openvswitch</computeroutput></screen>
                 <para>Run the agent setup script:</para>
                 <screen><computeroutput>sudo quantum-node-setup --plugin openvswitch</computeroutput></screen>
-                <para>All hosts running
-                    quantum-plugin-openvswitch-agent also requires
-                    that an OVS bridge named "br-int" exists. To
-                    create it, run:</para>
+                <para>All hosts running quantum-plugin-openvswitch-agent also requires that an OVS
+                    bridge named "br-int" exists. To create it, run:</para>
                 <screen><computeroutput>ovs-vsctl add-br br-int</computeroutput></screen>
                 <para>Enable and start the agent:</para>
-                <screen><computeroutput>sudo systemctl enable quantum-openvswitch-agent.service
-sudo systemctl start quantum-openvswitch-agent.service</computeroutput></screen>
+                <screen><computeroutput>sudo chkconfig quantum-openvswitch-agent on
+sudo service quantum-openvswitch-agent start</computeroutput></screen>
+                <para>Enable the ovs cleanup utility:</para>
+                <screen><computeroutput>sudo chkconfig quantum-ovs-cleanup on</computeroutput></screen>
             </section>
         </section>
         <section  xml:id="fedora_q_dhcp">
@@ -536,8 +542,8 @@ sudo systemctl start quantum-openvswitch-agent.service</computeroutput></screen>
             <para>Run the agent setup script:</para>
             <screen><computeroutput>sudo quantum-dhcp-setup --plugin openvswitch</computeroutput></screen>
             <para>Enable and start the agent:</para>
-            <screen><computeroutput>sudo systemctl enable quantum-dhcp-agent.service
- sudo systemctl start quantum-dhcp-agent.service </computeroutput></screen>
+            <screen><computeroutput>sudo chkconfig quantum-dhcp-agent on
+sudo service quantum-dhcp-agent start</computeroutput></screen>
         </section>
         <section  xml:id="fedora_q_l3">
             <title>Install quantum-l3-agent </title>
@@ -563,8 +569,11 @@ sudo ovs-vsctl add-port br-ex eth1</computeroutput></screen>
             <para>Run the agent setup script:</para>
             <screen><computeroutput>sudo quantum-l3-setup --plugin openvswitch</computeroutput></screen>
             <para>Enable and start the agent:</para>
-            <screen><computeroutput>sudo systemctl enable quantum-l3-agent.service
-sudo systemctl start quantum-l3-agent.service</computeroutput></screen>
+            <screen><computeroutput>sudo chkconfig enable quantum-l3-agent on
+sudo start start quantum-l3-agent</computeroutput></screen>
+            <para>Enable and start the meta data agent:</para>
+            <screen><computeroutput>sudo chkconfig quantum-metadata-agent on
+sudo service quantum-metadata-agent start</computeroutput></screen>
         </section>
         <section xml:id="fedora_q_client">
             <title>Install OpenStack Networking CLI client</title>
