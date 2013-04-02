@@ -1,0 +1,159 @@
+<section xml:id="NFS-driver"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0">
+    <title>NFS Driver</title>
+    <para>NFS, the Network Filesystem, is a remote file system protocol dating back to
+        the 80's. An NFS server <emphasis>exports</emphasis> one or more of its own file systems
+        (known as <emphasis>shares</emphasis>). An NFS client can then mount these exported 
+        shares onto its own file system. Normal file actions can then be performed on this 
+        mounted remote file system as if the file system was local.</para>
+    <simplesect xml:id="nfs-driver-background">
+        <title>How the NFS Driver Works</title>
+        <para>The NFS driver, and other drivers based off of it, work quite a bit differently
+            than a traditional block storage driver.</para>
+        <para>
+            The NFS driver doesn't actually allow an instance to have access to a storage 
+            device at the block-level. Instead, files are created on an NFS share and then 
+            mapped to instances, emulated as a block device. This works very similarly to how 
+            QEMU stores instances under <literal>/var/lib/nova/instances</literal>.
+        </para>
+    </simplesect>
+    <simplesect xml:id="nfs-driver-options">
+        <title>Enabling the NFS Driver and Related Options</title>
+        <para>To use Cinder with the NFS driver, first set the <literal>volume_driver</literal> 
+            in <literal>cinder.conf</literal>:</para>
+        <programlisting>
+volume_driver=cinder.volume.drivers.nfs.NfsDriver
+    </programlisting>
+        <para>The following table contains the options supported by the NFS driver.</para>
+        <table rules="all">
+            <caption>List of configuration flags for NFS</caption>
+            <col width="35%"/>
+            <col width="15%"/>
+            <col width="15%"/>
+            <col width="35%"/>
+            <thead>
+                <tr>
+                    <td>Flag Name</td>
+                    <td>Type</td>
+                    <td>Default</td>
+                    <td>Description</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><para><literal>nfs_shares_config</literal></para></td>
+                    <td><para>Mandatory</para></td>
+                    <td><para></para></td>
+                    <td><para>(StrOpt) File with the list of available NFS shares.</para></td>
+                </tr>
+                <tr>
+                    <td><para><literal>nfs_mount_point_base</literal></para></td>
+                    <td><para>Optional</para></td>
+                    <td><para><literal>$state_path/mnt</literal></para></td>
+                    <td><para>(StrOpt) Base dir where nfs shares are expected to be mounted.</para></td>
+                </tr>
+                <tr>
+                    <td><para><literal>nfs_disk_util</literal></para></td>
+                    <td><para>Optional</para></td>
+                    <td><para><literal>df</literal></para></td>
+                    <td><para>(StrOpt) Use <literal>du</literal> or <literal>df</literal> for free space calculation.</para></td>
+                </tr>
+                <tr>
+                    <td><para><literal>nfs_sparsed_volumes</literal></para></td>
+                    <td><para>Optional</para></td>
+                    <td><para>True</para></td>
+                    <td><para>(BoolOpt) Create volumes as sparsed files which take no space. If set 
+                        to False, volume is created as regular file. In such case
+                        volume creation takes a lot of time.
+                    </para></td>
+                </tr>
+                <tr>
+                    <td><para><literal>nfs_mount_options</literal></para></td>
+                    <td><para>Optional</para></td>
+                    <td><para>None</para></td>
+                    <td><para>(StrOpt) Mount options passed to the nfs client. See section 
+                        of the nfs man page for details.</para></td>
+                </tr>
+            </tbody>
+        </table>
+    </simplesect>
+    <simplesect xml:id="nfs-driver-howto">
+        <title>How to Use the NFS Driver</title>
+        <para>First, you need access to one or more NFS servers. Creating an NFS server is outside 
+        the scope of this document. For example purposes, access to the following NFS servers and
+        mountpoints will be assumed:</para>
+        <para>
+            <itemizedlist>
+               <listitem>
+                   <para><literal>192.168.1.200:/storage</literal></para>
+               </listitem>
+               <listitem>
+                   <para><literal>192.168.1.201:/storage</literal></para>
+               </listitem>
+               <listitem>
+                   <para><literal>192.168.1.202:/storage</literal></para>
+               </listitem>
+            </itemizedlist>
+        </para>
+        <para>Three different NFS servers are used in this example to highlight that you can
+        utilize more than one NFS server with this driver. Multiple servers are not required.
+        One will probably be enough in most cases.</para>
+        <para>Add your list of NFS servers to the file you specified with the 
+            <literal>nfs_shares_config</literal> option. For example, if the value of this option
+            was set to <literal>/etc/cinder/shares.txt</literal>, then:</para>
+        <programlisting>
+            # cat /etc/cinder/shares.txt
+            192.168.1.200:/storage
+            192.168.1.201:/storage
+            192.168.1.202:/storage
+        </programlisting>
+        <para>Comments are allowed in this file. They begin with a <literal>#</literal>.</para>
+        <para>The next step is to configure the <literal>nfs_mount_point_base</literal>
+            option. This is a directory where <literal>cinder-volume</literal> will mount all
+            NFS shares stored in <literal>shares.txt</literal>. For this example, 
+            <literal>/var/lib/cinder/nfs</literal> will be used. You can, of course, use the
+            default value of <literal>$state_path/mnt</literal>.</para>
+        <para>Once these options are set, start the <literal>cinder-volume</literal>
+            service. <literal>/var/lib/cinder/nfs</literal> should now contain a directory
+            for each NFS share specified in <literal>shares.txt</literal>. The name of each
+            directory will be a hashed name:</para>
+        <programlisting>
+            # ls /var/lib/cinder/nfs
+            ...
+            46c5db75dc3a3a50a10bfd1a456a9f3f
+            ...
+        </programlisting>
+        <para>You can now create volumes as you normally would:</para>
+        <programlisting>
+            # nova volume-create --display-name=myvol 5
+            # ls /var/lib/cinder/nfs/46c5db75dc3a3a50a10bfd1a456a9f3f
+            volume-a8862558-e6d6-4648-b5df-bb84f31c8935
+        </programlisting>
+        <para>This volume can also be attached and deleted just like other volumes. However,
+        snapshotting is <emphasis>not</emphasis> supported.</para>
+    </simplesect>
+    <simplesect xml:id="nfs-driver-notes">
+        <title>NFS Driver Notes</title>
+        <para>
+            <itemizedlist>
+                <listitem><para><literal>cinder-volume</literal> manages the mounting of
+                the NFS shares as well as volume creation on the shares. Keep this in mind
+                when planning your OpenStack architecture. If you have one master NFS server,
+                it might make sense to only have one <literal>cinder-volume</literal> service
+                to handle all requests to that NFS server. However, if that single server
+                is unable to handle all requests, more than one <literal>cinder-volume</literal>
+                service will be needed as well as potentially more than one NFS server.</para>
+                </listitem>
+                <listitem><para>Since data is stored in a file and not actually on a block storage
+                device, you might not see the same IO performance as you would with a traditional
+                block storage driver. Please test accordingly.</para></listitem>
+                <listitem><para>Despite possible IO performance loss, having volume data stored in
+                a file might be beneficial. For example, backing up volumes can be as easy as
+                copying the volume files (note: regular IO flushing and syncing still stands).</para></listitem>
+            </itemizedlist>
+        </para>
+    </simplesect>
+</section>

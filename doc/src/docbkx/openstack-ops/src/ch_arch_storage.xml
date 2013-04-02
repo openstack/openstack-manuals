@@ -127,6 +127,20 @@
                 supports multiple back-ends in the form of drivers.
                 Your choice of a storage back-end must be supported by
                 a Block Storage driver.</para>
+            <para>Most block storage drivers allow the instance to have 
+                direct access to the underlying storage hardware's block
+                device. This helps increase the overall read/write IO.</para>
+            <para>Experimental support for utilizing files as volumes 
+                began in the Folsom release. This initially
+                started as a reference driver for using NFS with Cinder. 
+                By Grizzly's release, this has expanded into a full NFS driver
+                as well as a GlusterFS driver.</para>
+            <para>These drivers work a little differently than a traditional
+                "block" storage driver. On an NFS or GlusterFS filesystem, a 
+                single file is created and then mapped as a "virtual" volume 
+                into the instance. This mapping/translation is similar to how
+                OpenStack utilizes QEMU's file-based virtual machines stored in
+                <code>/var/lib/nova/instances</code>.</para>
         </section>
         <section xml:id="file_level_storage">
             <title>File-level Storage</title>
@@ -226,6 +240,12 @@
                     <td><para>✓</para></td>
                 </tr>
                 <tr>
+                    <td><para>NFS</para></td>
+                    <td><para></para></td>
+                    <td><para>✓</para></td>
+                    <td><para>✓</para></td>
+                </tr>
+                <tr>
                     <td><para>ZFS</para></td>
                     <td><para> </para></td>
                     <td><para>✓</para></td>
@@ -241,7 +261,7 @@
         </informaltable>
         <para>* This list of open-source file-level shared storage
             solutions is not exhaustive, other open source solutions
-            exist (such as, NFS, MooseFS). Your organization may
+            exist (MooseFS). Your organization may
             already have deployed a file-level shared storage solution
             which you can use.</para>
         <para>In addition to the open-source technologies, there are a
