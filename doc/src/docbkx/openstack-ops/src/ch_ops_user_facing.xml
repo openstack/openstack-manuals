@@ -799,23 +799,17 @@ Optional snapshot description. (Default=None)</programlisting>
                 xmlns:db="http://docbook.org/ns/docbook">13</literal>,
             it does not delete on terminate. Replace the <literal
                 xmlns:db="http://docbook.org/ns/docbook"
-                >--image</literal> flag with a valid image on your
-            system, and the <literal
-                xmlns:db="http://docbook.org/ns/docbook"
                 >--key-name</literal> with a valid keypair
             name:</para>
-        <programlisting><?db-font-size 65%?><prompt>$</prompt> nova boot --image f4addd24-4e8a-46bb-b15d-fae2591f1a35 --flavor 2 --key-name mykey \
-   --block-device-mapping vda=13:::0 boot-from-vol-test</programlisting>
+        <programlisting><?db-font-size 65%?><prompt>$</prompt> nova boot --flavor 2 --key-name mykey --block-device-mapping vda=13:::0 boot-from-vol-test</programlisting>
         <para>Because of bug <link
                 xlink:title="OpenStack Image Service"
-                xlink:href="https://bugs.launchpad.net/nova/+bug/1008622"
-                >#1008622</link>
-            (https://bugs.launchpad.net/nova/+bug/1008622) you must
-            specify an image when booting from a volume, even though
-            this image is not used, this is marked as fixed in
-            development at this time, but still affect the Folsom
-            release documented in this guide.</para>
-        <para>To boot normally form an image and attach block storage,
+                xlink:href="https://bugs.launchpad.net/nova/+bug/1163566"
+            >1163566</link>
+            (https://bugs.launchpad.net/nova/+bug/1163566) you must
+            specify an image when booting from a volume in Horizon, 
+            even though this image is not used.</para>
+        <para>To boot normally from an image and attach block storage,
             map to a device other than vda.</para>
     </section>
     <section xml:id="snapsnots">

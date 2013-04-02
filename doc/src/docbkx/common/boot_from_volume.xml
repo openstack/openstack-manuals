@@ -9,91 +9,162 @@
   <para>The Compute service has support for booting an instance from a
   volume.</para>
   <simplesect>
-    <title>Creating a bootable volume</title>
-    <para>To create a bootable volume, mount the volume to an existing instance, and then
-    build a volume-backed image. Here is an example based on <link
-    xlink:href="https://github.com/openstack-dev/devstack/blob/master/exercises/boot_from_volume.sh"
-    >exercises/boot_from_volume.sh</link>. This example assumes that you have a
-    running instance with a 1GB volume mounted at <literal>/dev/vdc</literal>. These
-    commands will make the mounted volume bootable using a CirrOS image. As
-    root:<screen><prompt>#</prompt> <userinput>mkfs.ext3 -b 1024 /dev/vdc 1048576</userinput>
-    <prompt>#</prompt> <userinput>mkdir /tmp/stage</userinput>
-    <prompt>#</prompt> <userinput>mount /dev/vdc /tmp/stage</userinput>
-    
-    <prompt>#</prompt> <userinput>cd /tmp</userinput>
-    <prompt>#</prompt> <userinput>wget https://launchpad.net/cirros/trunk/0.3.0/+download/cirros-0.3.0-x86_64-rootfs.img.gz</userinput>
-    <prompt>#</prompt> <userinput>gunzip cirros-0.3.0-x86_64-rootfs.img.gz</userinput>
-    <prompt>#</prompt> <userinput>mkdir /tmp/cirros</userinput>
-    <prompt>#</prompt> <userinput>mount /tmp/cirros-0.3.0-x86_64-rootfs.img /tmp/cirros</userinput>
-    
-    <prompt>#</prompt> <userinput>cp -pr /tmp/cirros/* /tmp/stage</userinput>
-    <prompt>#</prompt> <userinput>umount /tmp/cirros</userinput>
-    <prompt>#</prompt> <userinput>sync</userinput>
-    <prompt>#</prompt> <userinput>umount /tmp/stage</userinput></screen></para>
+    <title>Manually Creating a Bootable Volume</title>
+    <para>To manually create a bootable volume, mount the volume to an existing instance, and then
+      build a volume-backed image. Here is an example based on <link
+        xlink:href="https://github.com/openstack-dev/devstack/blob/master/exercises/boot_from_volume.sh"
+        >exercises/boot_from_volume.sh</link>. This example assumes that you have a
+      running instance with a 1GB volume mounted at <literal>/dev/vdc</literal>. These
+      commands will make the mounted volume bootable using a CirrOS image. As
+      root:<screen><prompt>#</prompt> <userinput>mkfs.ext3 -b 1024 /dev/vdc 1048576</userinput>
+<prompt>#</prompt> <userinput>mkdir /tmp/stage</userinput>
+<prompt>#</prompt> <userinput>mount /dev/vdc /tmp/stage</userinput>
+
+<prompt>#</prompt> <userinput>cd /tmp</userinput>
+<prompt>#</prompt> <userinput>wget https://launchpad.net/cirros/trunk/0.3.0/+download/cirros-0.3.0-x86_64-rootfs.img.gz</userinput>
+<prompt>#</prompt> <userinput>gunzip cirros-0.3.0-x86_64-rootfs.img.gz</userinput>
+<prompt>#</prompt> <userinput>mkdir /tmp/cirros</userinput>
+<prompt>#</prompt> <userinput>mount /tmp/cirros-0.3.0-x86_64-rootfs.img /tmp/cirros</userinput>
+
+<prompt>#</prompt> <userinput>cp -pr /tmp/cirros/* /tmp/stage</userinput>
+<prompt>#</prompt> <userinput>umount /tmp/cirros</userinput>
+<prompt>#</prompt> <userinput>sync</userinput>
+<prompt>#</prompt> <userinput>umount /tmp/stage</userinput></screen></para>
     <para>Detach the volume once you are done.</para>
   </simplesect>
   <simplesect>
-    <title>Booting an instance from the volume</title>
-    <para>To boot a new instance from the volume, use
-    the <command>nova boot</command> command with use
-    the <literal>--block-device-mapping</literal>
-    flag. The output for <command>nova help
-    boot</command> shows the following
-    documentation about this
-    flag:<screen><computeroutput> --block-device-mapping &lt;dev-name=mapping&gt;
-    Block device mapping in the format
-    &lt;dev-name=&lt;id&gt;:&lt;type&gt;:&lt;size(GB)&gt;:&lt;delete-on-terminate&gt;.
-    </computeroutput></screen></para>
-    <para>The command arguments are:<variablelist>
-    <varlistentry>
-      <term><literal>dev-name</literal></term>
-      <listitem>
-	<para>A device name where the volume will be attached in the system at
-	<filename>/dev/<replaceable>dev_name</replaceable></filename>.
-	This value is typically <literal>vda</literal>.</para>
-      </listitem>
-    </varlistentry>
-    <varlistentry>
-      <term><literal>id</literal></term>
-      <listitem>
-	<para>The ID of the volume to boot from, as shown in the output of
-	<command>nova volume-list</command>.</para>
-      </listitem>
-    </varlistentry>
-    <varlistentry>
-      <term><literal>type</literal></term>
-      <listitem>
-	<para>This is either <literal>snap</literal>, which means that the
-	volume was created from a snapshot, or anything other than
-	<literal>snap</literal> (a blank string is valid). In the
-	example above, the volume was not created from a snapshot, so we
-	will leave this field blank in our example below.</para>
-      </listitem>
-    </varlistentry>
-    <varlistentry>
-      <term><literal>size (GB)</literal></term>
-      <listitem>
-	<para>The size of the volume, in GB. It is safe to leave this blank and
-	have the Compute service infer the size.</para>
-      </listitem>
-    </varlistentry>
-    <varlistentry>
-      <term><literal>delete-on-terminate</literal></term>
-      <listitem>
-	<para>A boolean to indicate whether the volume should be deleted when
-	the instance is terminated. True can be specified as
-	<literal>True</literal> or <literal>1</literal>. False can be
-	specified as <literal>False</literal> or
-	<literal>0</literal>.</para>
-      </listitem>
-    </varlistentry>
-    </variablelist></para>
+    <title>Creating a Bootable Volume from an Image</title>
+    <para>Cinder has the ability to create a bootlable volume from an image stored in Glance.
+      <screen>
+<prompt>#</prompt> <userinput>cinder create --image-id &lt;image_id> --display-name my-bootable-vol &lt;size></userinput>  
+      </screen>
+    </para>
+    <para>This feature is also mirrored in Nova:
+      <screen>
+<prompt>#</prompt> <userinput>nova volume-create --image-id &lt;image_id> --display-name my-bootable-vol &lt;size></userinput>
+      </screen>
+    </para>
     <para>
-      The following example will attempt boot from volume with
-      ID=<literal>13</literal>, it will not delete on terminate. Replace the
-      <literal>--image</literal> flag with a valid image on your system, and the
-      <literal>--key-name</literal> with a valid keypair
-      name:<screen><prompt>$</prompt> <userinput>nova boot --image <replaceable>f4addd24-4e8a-46bb-b15d-fae2591f1a35</replaceable> --flavor 2 --key-name <replaceable>mykey</replaceable> \
-    --block-device-mapping vda=13:::0 boot-from-vol-test</userinput></screen></para>
+      <note>
+        <para>As of Grizzly, the following block storage drivers are compatible: iSCSI-based, LVM, and Ceph.</para>
+      </note>
+    </para>
+    <para>Make sure you configure Cinder with the relevant Glance options:</para>
+    <table rules="all">
+      <caption>List of configuration flags for NFS</caption>
+      <col width="35%"/>
+      <col width="15%"/>
+      <col width="15%"/>
+      <col width="35%"/>
+      <thead>
+        <tr>
+          <td>Flag Name</td>
+          <td>Type</td>
+          <td>Default</td>
+          <td>Description</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><para><literal>glance_host</literal></para></td>
+          <td><para>Optional</para></td>
+          <td><para><literal>$my_ip</literal></para></td>
+          <td><para>(StrOpt) default glance hostname or ip</para></td>
+        </tr>
+        <tr>
+          <td><para><literal>glance_port</literal></para></td>
+          <td><para>Optional</para></td>
+          <td><para><literal>9292</literal></para></td>
+          <td><para>(IntOpt) default glance port</para></td>
+        </tr>
+        <tr>
+          <td><para><literal>glance_api_servers</literal></para></td>
+          <td><para>Optional</para></td>
+          <td><para><literal>$glance_host:$glance_port</literal></para></td>
+          <td><para>(ListOpt) A list of the glance api servers available to cinder: <literal>([hostname|ip]:port) (list value)</literal></para></td>
+        </tr>
+        <tr>
+          <td><para><literal>glance_api_version</literal></para></td>
+          <td><para>Optional</para></td>
+          <td><para><literal>1</literal></para></td>
+          <td><para>(IntOpt) default version of the glance api to use</para></td>
+        </tr>
+        <tr>
+          <td><para><literal>glance_num_retries</literal></para></td>
+          <td><para>Optional</para></td>
+          <td><para><literal>0</literal></para></td>
+          <td><para>(IntOpt) Number retries when downloading an image from glance</para></td>
+        </tr>
+        <tr>
+          <td><para><literal>glance_api_insecure</literal></para></td>
+          <td><para>Optional</para></td>
+          <td><para><literal>false</literal></para></td>
+          <td><para>(BoolOpt) Allow to perform insecure SSL (https) requests to glance</para></td>
+        </tr>
+      </tbody>
+    </table>
+           
+  </simplesect>
+  <simplesect>
+    <title>Booting an instance from the volume</title>
+    <para>To boot a new instance from the volume, use the
+      <command>nova boot</command> command with the
+      <literal>--block_device_mapping</literal> flag.
+      The output for <command>nova help boot</command> shows
+      the following documentation about this
+      flag:<screen><computeroutput> --block_device_mapping &lt;dev_name=mapping>
+                        Block device mapping in the format &lt;dev_name>=&lt;id>:&lt;type>:&lt;size(GB)>:&lt;delete_on_terminate>.
+ </computeroutput></screen></para>
+    <para>The command arguments are:<variablelist>
+      <varlistentry>
+        <term><literal>dev_name</literal></term>
+        <listitem>
+          <para>A device name where the volume will be attached in the system at
+            <filename>/dev/<replaceable>dev_name</replaceable></filename>.
+            This value is typically <literal>vda</literal>.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><literal>id</literal></term>
+        <listitem>
+          <para>The ID of the volume to boot from, as shown in the output of
+            <command>nova volume-list</command>.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><literal>type</literal></term>
+        <listitem>
+          <para>This is either <literal>snap</literal>, which means that the
+            volume was created from a snapshot, or anything other than
+            <literal>snap</literal> (a blank string is valid). In the
+            example above, the volume was not created from a snapshot, so we
+            will leave this field blank in our example below.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><literal>size (GB)</literal></term>
+        <listitem>
+          <para>The size of the volume, in GB. It is safe to leave this blank and
+            have the Compute service infer the size.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><literal>delete_on_terminate</literal></term>
+        <listitem>
+          <para>A boolean to indicate whether the volume should be deleted when
+            the instance is terminated. True can be specified as
+            <literal>True</literal> or <literal>1</literal>. False can be
+            specified as <literal>False</literal> or
+            <literal>0</literal>.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist></para>
+    <para><note>
+      <para>Because of bug <link xlink:href="https://bugs.launchpad.net/nova/+bug/1163566">#1163566</link>, 
+        you must specify an image when booting from a volume in Horizon, even though this image will not be used.</para>
+    </note>The following example will attempt boot from volume on the command line with
+      ID=<literal>13</literal>, it will not delete on terminate. Replace  the
+      <literal>--key_name</literal> with a valid keypair
+      name:<screen><prompt>$</prompt> <userinput>nova boot --flavor 2 --key_name <replaceable>mykey</replaceable> --block_device_mapping vda=13:::0 boot-from-vol-test</userinput></screen></para>
   </simplesect>
 </section>
