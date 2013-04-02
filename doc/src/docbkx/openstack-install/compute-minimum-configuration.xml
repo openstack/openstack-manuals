@@ -4,9 +4,60 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
     <title>Configuring OpenStack Compute</title>
-    <para>This section describes the relevant <filename>nova.conf</filename> settings for getting a minimal install
-        running. Refer to the OpenStack Compute Administration Manual for guidance on more
-        configuration options.</para>
+    <simplesect><title>Overview</title>
+    <para>This section describes the relevant <filename>api-paste.ini</filename> and
+            <filename>nova.conf</filename> settings for getting a minimal install running. Refer to
+        the OpenStack Compute Administration Manual for guidance on more configuration
+        options.</para>
+    </simplesect>
+    <simplesect>
+        <title>api-paste.ini</title>
+        <para>OpenStack Compute uses an <filename>/etc/nova/api-paste.ini</filename> file to
+            configure various middleware components. In general, you should not need to modify this
+            file, with one important exception, described below.</para>
+        <para>Configuration options for authenticating against the OpenStack Identity Service can be
+            specified in either the <filename>api-paste.ini</filename> file
+                (<literal>filter:authtoken</literal> section) in or the
+                <filename>nova.conf</filename> file (<literal>keystone_authtoken</literal> section).
+            We recommend you specify this information in the <filename>nova.conf</filename> file so
+            that  all of your deployment-specific configuration options are contained in a single
+            file. Unfortunately, the default <filename>api-paste.ini</filename> file is pre-filled
+            with authentication fields. If these fields are not removed, OpenStack Compute services
+            will not function properly even if the authentication configuration has been specified
+            in <filename>nova.conf</filename>.</para>
+        <para>Therefore, we recommend that you delete authentication options from your
+                <filename>api-paste.ini</filename> file. The following options should be deleted
+            from the <literal>filter:authtoken</literal> section of <literal>api-paste.ini</literal>.<itemizedlist>
+                <listitem>
+                    <para><literal>auth_host</literal></para>
+                </listitem>
+                <listitem>
+                    <para><literal>auth_port</literal></para>
+                </listitem>
+                <listitem>
+                    <para><literal>auth_protocol</literal></para>
+                </listitem>
+                <listitem>
+                    <para><literal>admin_tenant_name</literal></para>
+                </listitem>
+                <listitem>
+                    <para><literal>admin_user</literal></para>
+                </listitem>
+                <listitem>
+                    <para><literal>admin_password</literal></para>
+                </listitem>
+                <listitem>
+                    <para><literal>signing_dirname</literal></para>
+                </listitem>
+            </itemizedlist>After deleting these options, the <literal>filter:authtoken</literal>
+            section should contain only the following
+            options:<programlisting>[filter:authtoken]
+paste.filter_factory = keystone.middleware.auth_token:filter_factory
+# Workaround for https://bugs.launchpad.net/nova/+bug/1154809
+auth_version = v2.0</programlisting></para>
+    </simplesect>
+    <simplesect>
+        <title>nova.conf</title>
     <para>In general, you can use the same <filename>nova.conf</filename> file across the controller and compute nodes.
         However, the following configuration options need to be changed on each compute host: <itemizedlist>
             <listitem>
@@ -95,4 +146,5 @@ flat_network_bridge=br100</programlisting>
     <screen os="rhel;fedora;centos">
         <prompt>$></prompt> <userinput>for svc in api objectstore compute network volume scheduler cert; do sudo service openstack-nova-$svc stop ; sudo chkconfig openstack-nova-$svc on ;  done</userinput>
     </screen>
+    </simplesect>
 </section>
