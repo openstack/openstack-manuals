@@ -17,9 +17,10 @@
     <para>Standard backup best practices apply when creating your
         OpenStack backup policy. For example, how often to backup your
         data is closely related to how quickly you need to recover
-        from data loss (side note: if you cannot have any data loss at
-        all, you should be focusing on High Availability as well as
-        backups).</para>
+        from data loss.</para>
+        <note><para>If you cannot have any data loss at
+        all, you should focus on High Availability as well as
+        backups.</para></note>
     <para>Other backup considerations include:</para>
     <itemizedlist>
         <listitem>
@@ -55,20 +56,18 @@
             the databases for Nova, Glance, Cinder, and Keystone. With
             all of these databases in one place, it's very easy to
             create a database backup:</para>
-        <para>
-            <code># mysqldump --opt --all-databases &gt;
-                openstack.sql</code>
-        </para>
+
+        <programlisting language="bash"><?db-font-size 75%?><prompt>#</prompt> mysqldump --opt --all-databases &gt;
+                openstack.sql</programlisting>
+
         <para>If you only want to backup a single database, you can
             instead run:</para>
-        <para>
-            <code># mysqldump --opt nova &gt; nova.sql</code>
-        </para>
+        <programlisting language="bash"><?db-font-size 75%?><prompt>#</prompt> mysqldump --opt nova &gt; nova.sql</programlisting>
         <para>where <code>nova</code> is the database you want to back
             up.</para>
         <para>You can easily automate this process by creating a cron
             job that runs the following script once per day:</para>
-        <programlisting>#!/bin/bash
+        <programlisting language="bash"><?db-font-size 65%?><prompt>#</prompt>!/bin/bash
 backup_dir="/var/lib/backups/mysql"
 filename="${backup_dir}/mysql-`hostname`-`eval date +%Y%m%d`.sql.gz"
 # Dump the entire MySQL database
@@ -80,6 +79,7 @@ find $backup_dir -ctime +7 -type f -delete</programlisting>
     </section>
     <section xml:id="file_system_backups">
         <title>File System Backups</title>
+        <para>This section discusses which files and directories should be backed up regularly, organized by service. </para>
         <section xml:id="compute">
             <title>Compute</title>
             <para>The <code>/etc/nova</code> directory on both the
@@ -168,23 +168,23 @@ find $backup_dir -ctime +7 -type f -delete</programlisting>
             running. For example, to do a full recovery of nova on the
             cloud controller, first stop all <code>nova</code>
             services:</para>
-        <programlisting># stop nova-api
+        <programlisting language="bash"><?db-font-size 65%?><prompt>#</prompt> stop nova-api
       # stop nova-cert
       # stop nova-consoleauth
       # stop nova-novncproxy
       # stop nova-objectstore
       # stop nova-scheduler</programlisting>
         <para>Once that's done, stop MySQL:</para>
-        <programlisting># stop mysql</programlisting>
+        <programlisting language="bash"><?db-font-size 65%?><prompt>#</prompt> stop mysql</programlisting>
         <para>Now you can import a previously backed up
             database:</para>
-        <programlisting># mysql nova &lt; nova.sql</programlisting>
+        <programlisting language="bash"><?db-font-size 65%?><prompt>#</prompt> mysql nova &lt; nova.sql</programlisting>
         <para>As well as restore backed up nova directories:</para>
-        <programlisting># mv /etc/nova{,.orig}
+        <programlisting language="bash"><?db-font-size 65%?><prompt>#</prompt> mv /etc/nova{,.orig}
       # cp -a /path/to/backup/nova /etc/</programlisting>
         <para>Once the files are restored, start everything back
             up:</para>
-        <programlisting># start mysql
+        <programlisting language="bash"><?db-font-size 65%?><prompt>#</prompt> start mysql
       # for i in nova-api nova-cert nova-consoleauth nova-novncproxy nova-objectstore nova-scheduler
       &gt; do
       &gt; start $i

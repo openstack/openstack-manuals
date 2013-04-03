@@ -60,7 +60,7 @@
                 but recommended, description. Select the check box at
                 the bottom of the form to enable this project. By
                 default, this is enabled.</para>
-            <informalfigure>
+          <!--  <informalfigure>
                 <mediaobject>
                     <imageobject>
                         <imagedata width="5in"
@@ -68,8 +68,8 @@
                         />
                     </imageobject>
                 </mediaobject>
-            </informalfigure>
-            <para>As you can see from here, it is also possible to add
+            </informalfigure> -->
+            <para>It is also possible to add
                 project members and adjust the project quotas. We'll
                 discuss those later, but in practice it can be quite
                 convenient to deal with all these operations at one
@@ -79,7 +79,7 @@
             <para>To add a project through the command line, you must
                 use the keystone utility, which uses "tenant" in place
                 of "project": </para>
-            <programlisting><prompt>#</prompt> keystone tenant-create --name=demo</programlisting>
+            <programlisting><?db-font-size 75%?><prompt>#</prompt> keystone tenant-create --name=demo</programlisting>
             <para>This command creates a project named "demo".
                 Optionally, you can add a description string by
                 appending <code>--description
@@ -251,8 +251,7 @@
                 </tr>
             </tbody>
         </table>
-        <para>Configuration
-            (http://docs.openstack.org/folsom/openstack-compute/admin/content/list-of-compute-config-options.html)</para>
+        <para>Configuration table excerpted from http://docs.openstack.org/folsom/openstack-compute/admin/content/list-of-compute-config-options.html.</para>
         <para>The simplest way to change the default project quotas is
             to edit the <code>nova.conf</code> file on your cloud
             controller. Quotas are enforced by the
@@ -268,7 +267,7 @@
             guide, your configuration management system will
             automatically ensure all your schedulers have consistent
             configurations.</para>
-        <para>To view and edit quotas for an individual project via
+        <para>To view and edit quotas for an individual project through the
             Dashboard:</para>
         <orderedlist>
             <listitem>
@@ -281,25 +280,27 @@
                     a the end of the line.  </para>
             </listitem>
         </orderedlist>
-        <para>To view and edit quotas for an individual project via
+        <para>To view and edit quotas for an individual project through the
             CLI, follow these steps:</para>
         <para>You can access and modify quotas from the command line
             but it is a bit complicated. This is done using Keystone
             to get the ID and then <code>nova-manage.</code>
         </para>
-        <para>1. To list a project's quota, you must first find its ID
-            using the Keystone CLI tool.</para>
-        <programlisting><?db-font-size 65%?># keystone tenant-list | grep &lt;tenant-name&gt;
- 
-      
+        <orderedlist><listitem>
+                <para>To list a project's quota, you must first find
+                    its ID using the Keystone CLI tool.</para>
+                <programlisting><?db-font-size 65%?># keystone tenant-list | grep &lt;tenant-name&gt; 
 | 98333a1a28e746fa8c629c83a818ad57 | &lt;tenant-name&gt; | True | </programlisting>
-        <para>2. Recall that the Keystone CLI tool uses "tenant" where
-            the Nova CLI tool uses "project" for the same concept. To
-            show the quota for the project, for the example above, we
-            must use the ID
-                <code>98333a1a28e746fa8c629c83a818ad57</code>:</para>
-        <programlisting language="bash"># nova-manage project quota 98333a1a28e746fa8c629c83a818ad57</programlisting>
-        <programlisting language="bash">metadata_items: 128
+            </listitem>
+            <listitem>
+                <para>Recall that the Keystone CLI tool uses "tenant"
+                    where the Nova CLI tool uses "project" for the
+                    same concept. </para>
+                <para>To show the quota for the project, for the
+                    example above, we must use the ID
+                        <code>98333a1a28e746fa8c629c83a818ad57</code>:</para>
+                <programlisting language="bash"># nova-manage project quota 98333a1a28e746fa8c629c83a818ad57</programlisting>
+                <programlisting language="bash">metadata_items: 128
 volumes: 10
 gigabytes: 1000
 ram: 6291456
@@ -310,20 +311,21 @@ injected_file_content_bytes: 10240
 floating_ips: 10
 injected_files: 5
 cores: 2048</programlisting>
-        <note>
-            <para>Confusingly, <code>nova-manage project quota</code>
-                silently accepts any string at the end of the command
-                and reports the default quotas. In particular, if you
-                enter the project name rather than the ID,
-                    <code>nova-manage</code> does not complain, it
-                just lies.</para>
-        </note>
-        <para>To change these values you append <code>--key</code> and
-                <code>--value</code> flags to the above command. To
-            increase the tenant quota of Floating IPs from 10 to
-            20:</para>
-        <programlisting><?db-font-size 65%?># nova-manage project quota 98333a1a28e746fa8c629c83a818ad57 --key floating_ips --value 20 </programlisting>
-        <programlisting><?db-font-size 65%?>metadata_items: 128 
+                <note>
+                    <para>Confusingly, <code>nova-manage project
+                            quota</code> silently accepts any string
+                        at the end of the command and reports the
+                        default quotas. In particular, if you enter
+                        the project name rather than the ID,
+                            <code>nova-manage</code> does not
+                        complain, it just lies.</para>
+                </note>
+                <para>To change these values you append
+                        <code>--key</code> and <code>--value</code>
+                    flags to the above command. To increase the tenant
+                    quota of Floating IPs from 10 to 20:</para>
+                <programlisting><?db-font-size 65%?># nova-manage project quota 98333a1a28e746fa8c629c83a818ad57 --key floating_ips --value 20 </programlisting>
+                <programlisting><?db-font-size 65%?>metadata_items: 128 
 volumes: 10
 gigabytes: 1000
 ram: 6291456
@@ -334,6 +336,8 @@ injected_file_content_bytes: 10240
 floating_ips: 20
 injected_files: 5
 cores: 2048</programlisting>
+            </listitem>
+        </orderedlist>
     </section>
     <section xml:id="user_mgmt">
         <title>User Management</title>
@@ -447,12 +451,9 @@ cores: 2048</programlisting>
             name in the "Project Members" list. In virtually all cases
             this value should be set to "Member". This example
             purposefully show and administrative user where this value
-            is "admin". <emphasis role="bold">It is extremely
-                important to note that the "admin" is global not per
-                project so granting a user the admin role in any
-                project gives the administrative rights across the
-                whole cloud.</emphasis>
-        </para>
+            is "admin".</para><important><para>The "admin" is global not per project so granting a user the
+                admin role in any project gives the administrative
+                rights across the whole cloud. </para></important>
         <para>Typical use is to only create administrative users in a
             single project, by convention the "admin" project which is
             created by default during cloud setup. If your
@@ -582,13 +583,10 @@ cores: 2048</programlisting>
 	"compute_extension:admin_actions": [["rule:admin_api"]],
 	"compute_extension:admin_actions:pause": [["rule:admin_or_owner"]],
 	"compute_extension:admin_actions:unpause": [["rule:admin_or_owner"]],
-	"compute_extension:admin_actions:suspend": [["rule:admin_or_owner"]],
-	"compute_extension:admin_actions:resume": [["rule:admin_or_owner"]],
 	...
 	"compute_extension:admin_actions:migrate": [["rule:admin_api"]],
 	"compute_extension:aggregates": [["rule:admin_api"]],
 	"compute_extension:certificates": [ ],
-	"compute_extension:cloudpipe": [["rule:admin_api"]],
 	...
 	"compute_extension:flavorextraspecs": [ ],
 	"compute_extension:flavormanage": [["rule:admin_api"]],  <emphasis role="bold">[3]</emphasis>

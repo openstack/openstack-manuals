@@ -184,7 +184,7 @@
         <para>The typical way is to trace the UUID associated with an
             instance across the service logs.</para>
         <para>Consider the following example:</para>
-        <programlisting><?db-font-size 65%?>ubuntu@initial:~$ nova list
+        <programlisting><?db-font-size 60%?>ubuntu@initial:~$ nova list
 +--------------------------------------+--------+--------+---------------------------+
 | ID                                   | Name   | Status | Networks                  |
 +--------------------------------------+--------+--------+---------------------------+
@@ -214,14 +214,14 @@
         <para>To add logging statements, the following line should be
             near the top of the file. For most files, these should
             already be there:</para>
-        <programlisting>from nova.openstack.common import log as logging
+        <programlisting><?db-font-size 75%?>from nova.openstack.common import log as logging
 LOG = logging.getLogger(__name__)</programlisting>
         <para>To add a DEBUG logging statement, you would do:</para>
-        <programlisting>LOG.debug("This is a custom debugging statement")</programlisting>
+        <programlisting><?db-font-size 75%?>LOG.debug("This is a custom debugging statement")</programlisting>
         <para>You may notice that all of the existing logging messages
             are preceded by an underscore and surrounded by
             parentheses, for example:</para>
-        <programlisting>LOG.debug(_("Logging statement appears here"))</programlisting>
+        <programlisting><?db-font-size 75%?>LOG.debug(_("Logging statement appears here"))</programlisting>
         <para>This is used to support translation of logging messages
             into different languages using the <link
                 xlink:href="http://docs.python.org/2/library/gettext.html"
@@ -240,16 +240,19 @@ LOG = logging.getLogger(__name__)</programlisting>
             issues. Instead, we recommend you use the RabbitMQ web
             management interface. Enable it on your cloud
             controller:</para>
-        <programlisting># /usr/lib/rabbitmq/bin/rabbitmq-plugins enable rabbitmq_management
+        <programlisting><?db-font-size 75%?># /usr/lib/rabbitmq/bin/rabbitmq-plugins enable rabbitmq_management
 # service rabbitmq-server restart</programlisting>
         <para>The RabbitMQ web management interface is accessible on
             your cloud controller at http://localhost:55672.</para>
-        <para>Note: Ubuntu 12.04 installs RabbitMQ version, which uses
-            port 55672. RabbitMQ versions 3.0 and above use port 15672
-            instead. You can check which version of RabbitMQ you have
-            running on your local Ubuntu machine by doing:</para>
-        <programlisting>$ dpkg -s rabbitmq-server | grep "Version:"
+        <note>
+            <para>Ubuntu 12.04 installs RabbitMQ version 2.7.1, which
+                uses port 55672. RabbitMQ versions 3.0 and above use
+                port 15672 instead. You can check which version of
+                RabbitMQ you have running on your local Ubuntu machine
+                by doing:</para>
+            <programlisting><?db-font-size 75%?>$ dpkg -s rabbitmq-server | grep "Version:"
 Version: 2.7.1-0ubuntu4</programlisting>
+        </note>
         <para>Items to monitor for RabbitMQ include the number of
             items in each of the queues and the processing time
             statistics for the server.</para>
@@ -278,26 +281,26 @@ Version: 2.7.1-0ubuntu4</programlisting>
                 central server.</para>
             <para>
                 <code>nova.conf</code>:</para>
-            <programlisting>use_syslog=True
+            <programlisting><?db-font-size 75%?>use_syslog=True
 syslog_log_facility=LOG_LOCAL0</programlisting>
             <para>
                 <code>glance-api.conf</code> and
                     <code>glance-registry.conf</code>:</para>
-            <programlisting>use_syslog=True
+            <programlisting><?db-font-size 75%?>use_syslog=True
 syslog_log_facility=LOG_LOCAL1</programlisting>
             <para>
                 <code>cinder.conf</code>:</para>
-            <programlisting>use_syslog=True
+            <programlisting><?db-font-size 75%?>use_syslog=True
 syslog_log_facility=LOG_LOCAL2</programlisting>
             <para>
                 <code>keystone.conf</code>:</para>
-            <programlisting>use_syslog=True
+            <programlisting><?db-font-size 75%?>use_syslog=True
 syslog_log_facility=LOG_LOCAL3</programlisting>
             <para>Swift</para>
             <para>By default, Swift logs to syslog.</para>
             <para>Next, create /etc/rsyslog.d/client.conf with the
                 following line:</para>
-            <programlisting>*.* @192.168.1.10</programlisting>
+            <programlisting><?db-font-size 75%?>*.* @192.168.1.10</programlisting>
             <para>This instructs rsyslog to send all logs to the IP
                 listed. In this example, the IP points to the Cloud
                 Controller.</para>
@@ -382,7 +385,7 @@ local0.* ?NovaAll
             (https://wiki.openstack.org/wiki/SystemUsageData).</para>
         <para>To enable nova to send notifications, add the following
             to <code>nova.conf</code>:</para>
-        <programlisting>notification_topics=monitor 
+        <programlisting><?db-font-size 75%?>notification_topics=monitor 
 notification_driver=nova.openstack.common.notifier.rabbit_notifier</programlisting>
         <para>Once <code>nova</code> is sending notifications, install
             and configure StackTach. Since StackTach is relatively new
@@ -407,7 +410,7 @@ notification_driver=nova.openstack.common.notifier.rabbit_notifier</programlisti
                 and see if a required process is running. For example,
                 ensure that the <code>nova-api</code> service is
                 running on the Cloud Controller:</para>
-            <programlisting>[ root@cloud ~ ] # ps aux | grep nova-api
+            <programlisting><?db-font-size 75%?>[ root@cloud ~ ] # ps aux | grep nova-api
 nova 12786 0.0 0.0 37952 1312 ? Ss Feb11 0:00 su -s /bin/sh -c exec nova-api --config-file=/etc/nova/nova.conf nova
 nova 12787 0.0 0.1 135764 57400 ? S Feb11 0:01 /usr/bin/python /usr/bin/nova-api --config-file=/etc/nova/nova.conf
 nova 12792 0.0 0.0 96052 22856 ? S Feb11 0:01 /usr/bin/python /usr/bin/nova-api --config-file=/etc/nova/nova.conf
@@ -419,8 +422,8 @@ root 24121 0.0 0.0 11688 912 pts/5 S+ 13:07 0:00 grep nova-api</programlisting>
                 ensure that the <code>nova-compute</code> process is
                 running on compute nodes, create an alert on your
                 Nagios server that looks like this:</para>
-            <programlisting>define service {</programlisting>
-            <programlisting>    host_name c01.example.com 
+            <programlisting><?db-font-size 75%?>define service { 
+    host_name c01.example.com 
     check_command check_nrpe_1arg!check_nova-compute 
     use generic-service 
     notification_period 24x7 
@@ -429,18 +432,18 @@ root 24121 0.0 0.0 11688 912 pts/5 S+ 13:07 0:00 grep nova-api</programlisting>
 }</programlisting>
             <para>Then on the actual compute node, create the
                 following NRPE configuration:</para>
-            <programlisting>command[check_nova-compute]=/usr/lib/nagios/plugins/check_procs -c 1: -a nova-compute</programlisting>
+            <programlisting><?db-font-size 75%?>command[check_nova-compute]=/usr/lib/nagios/plugins/check_procs -c 1: -a nova-compute</programlisting>
             <para>Nagios checks that at least one nova-compute service
                 is running at all times.</para>
         </section>
         <section xml:id="resource_alerting">
             <title>Resource Alerting</title>
             <para>Resource alerting provides notifications when one or
-                more resources are critically low. While the monitoring
-                thresholds should be tuned to your specific OpenStack
-                environment, monitoring resource usage is not specific
-                to OpenStack at all – any generic type of alert will
-                work fine.</para>
+                more resources are critically low. While the
+                monitoring thresholds should be tuned to your specific
+                OpenStack environment, monitoring resource usage is
+                not specific to OpenStack at all – any generic type of
+                alert will work fine.</para>
             <para>Some of the resources that you want to monitor
                 include:</para>
             <itemizedlist>
@@ -463,7 +466,7 @@ root 24121 0.0 0.0 11688 912 pts/5 S+ 13:07 0:00 grep nova-api</programlisting>
             <para>For example, to monitor disk capacity on a compute
                 node with Nagios, add the following to your Nagios
                 configuration:</para>
-            <programlisting>define service { 
+            <programlisting><?db-font-size 75%?>define service { 
     host_name c01.example.com 
     check_command check_nrpe!check_all_disks!20% 10% 
     use generic-service 
@@ -472,7 +475,7 @@ root 24121 0.0 0.0 11688 912 pts/5 S+ 13:07 0:00 grep nova-api</programlisting>
 }</programlisting>
             <para>On the compute node, add the following to your NRPE
                 configuration:</para>
-            <programlisting>command[check_all_disks]=/usr/lib/nagios/plugins/check_disk -w $ARG1$ -c $ARG2$ -e</programlisting>
+            <programlisting><?db-font-size 75%?>command[check_all_disks]=/usr/lib/nagios/plugins/check_disk -w $ARG1$ -c $ARG2$ -e</programlisting>
             <para>Nagios alerts you with a WARNING when any disk on
                 the compute node is 80% full and CRITICAL when 90% is
                 full.</para>
@@ -489,7 +492,7 @@ root 24121 0.0 0.0 11688 912 pts/5 S+ 13:07 0:00 grep nova-api</programlisting>
                 OpenStack resource usage.</para>
             <para>The first is through the <code>nova</code>
                 command:</para>
-            <programlisting># nova usage-list</programlisting>
+            <programlisting><?db-font-size 75%?># nova usage-list</programlisting>
             <para>This command displays a list of how many instances a
                 tenant has running and some light usage statistics
                 about the combined instances. This command is useful
@@ -503,7 +506,7 @@ root 24121 0.0 0.0 11688 912 pts/5 S+ 13:07 0:00 grep nova-api</programlisting>
                 default quota settings, their quota is stored in
                     <code>nova.quotas</code> table. For
                 example:</para>
-            <programlisting>mysql&gt; select project_id, resource, hard_limit from quotas; 
+            <programlisting><?db-font-size 65%?>mysql&gt; select project_id, resource, hard_limit from quotas; 
 +----------------------------------+-----------------------------+------------+
 | project_id                       | resource                    | hard_limit |
 +----------------------------------+-----------------------------+------------+
@@ -520,7 +523,7 @@ root 24121 0.0 0.0 11688 912 pts/5 S+ 13:07 0:00 grep nova-api</programlisting>
             <para>The <code>nova.quota_usages</code> table keeps track
                 of how many resources the tenant currently has in
                 use:</para>
-            <programlisting>mysql&gt; select project_id, resource, in_use from quota_usages where project_id like '628%';
+            <programlisting><?db-font-size 65%?>mysql&gt; select project_id, resource, in_use from quota_usages where project_id like '628%';
 +----------------------------------+--------------+--------+ 
 | project_id                       | resource     | in_use | 
 +----------------------------------+--------------+--------+ 
@@ -538,7 +541,7 @@ root 24121 0.0 0.0 11688 912 pts/5 S+ 13:07 0:00 grep nova-api</programlisting>
                 10, then they are using 10% of their Floating IP
                 quota. You can take this procedure and turn it into a
                 formatted report:</para>
-            <programlisting>+-----------------------------------+------------+-------------+---------------+ 
+            <programlisting><?db-font-size 65%?>+-----------------------------------+------------+-------------+---------------+ 
 | some_tenant                                                                  | 
 +-----------------------------------+------------+-------------+---------------+ 
 | Resource                          | Used       | Limit       |               | 
@@ -583,7 +586,7 @@ root 24121 0.0 0.0 11688 912 pts/5 S+ 13:07 0:00 grep nova-api</programlisting>
                 disk that Image Service is storing the images on is
                 full or the S3 back-end is down. You could naturally
                 check this by doing a quick image upload:</para>
-            <programlisting>#!/bin/bash 
+            <programlisting><?db-font-size 75%?>#!/bin/bash 
 # 
 # assumes that resonable credentials have been stored at 
 # /root/auth 

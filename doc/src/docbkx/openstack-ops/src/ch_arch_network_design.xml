@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE section [
+<!DOCTYPE chapter [
 <!-- Some useful entities borrowed from HTML -->
 <!ENTITY ndash  "&#x2013;">
 <!ENTITY mdash  "&#x2014;">
@@ -8,7 +8,7 @@
         
         
 ]>
-<section xmlns="http://docbook.org/ns/docbook"
+<chapter xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="network_design">
@@ -117,11 +117,12 @@
                 </tr>
                 <tr>
                     <td><para>in-band remote management</para></td>
-                    <td><para>Often, an extra (such as, 1 GB) interface
-                            on compute or storage nodes is used for
-                            system administrators or monitoring tools
-                            to access the host instead of going
-                            through the public interface.</para></td>
+                    <td><para>Often, an extra (such as, 1 GB)
+                            interface on compute or storage nodes is
+                            used for system administrators or
+                            monitoring tools to access the host
+                            instead of going through the public
+                            interface.</para></td>
                 </tr>
                 <tr>
                     <td><para>spare space for future
@@ -136,7 +137,7 @@
             Compute and Object Storage, with private ranges
             172.22.42.0/24 and 172.22.87.0/26 available. One way to
             segregate the space might be:</para>
-        <programlisting><?db-font-size 65%?>172.22.42.0/24
+        <programlisting><?db-font-size 55%?>172.22.42.0/24
 172.22.42.1   - 172.22.42.3   - subnet routers
 172.22.42.4   - 172.22.42.20  - spare for networks
 172.22.42.21  - 172.22.42.104 - Compute node remote access controllers (inc spare)
@@ -148,8 +149,7 @@
 172.22.87.0/26:
 172.22.87.1  - 172.22.87.3    - subnet routers
 172.22.87.4  - 172.22.87.24   - Swift proxy server internal interfaces (inc spare)
-172.22.87.25 - 172.22.87.63   - Swift object server internal interfaces (inc spare)
-      </programlisting>
+172.22.87.25 - 172.22.87.63   - Swift object server internal interfaces (inc spare)</programlisting>
         <para>A similar approach can be taken with public IP
             addresses, taking note that large, flat ranges are
             preferred for use with guest instance IPs. Take into
@@ -227,11 +227,10 @@
             <para>VLAN configuration can be as simple or as
                 complicated as desired. The use of VLANs has the
                 benefit of allowing each project its own subnet and
-                broadcast segregation from other projects. to
-                allow OpenStack to efficiently use VLANs, you must
-                allocate a VLAN range (one for each project) and turn
-                each compute node switch port into a trunk
-                port.</para>
+                broadcast segregation from other projects. to allow
+                OpenStack to efficiently use VLANs, you must allocate
+                a VLAN range (one for each project) and turn each
+                compute node switch port into a trunk port.</para>
             <para>For example, if you estimate that your cloud must
                 support a max of 100 projects, pick a free VLAN range
                 that your network infrastructure is currently not
@@ -272,10 +271,10 @@
                 cloud controller is not available, instances cannot
                 communicate on the network. This is not true with
                 multi-host, but multi-host requires that each compute
-                node has a public IP address to communicate
-                on the Internet. If you are not able to obtain a
-                significant block of public IP addresses, multi-host
-                might not be an option.</para>
+                node has a public IP address to communicate on the
+                Internet. If you are not able to obtain a significant
+                block of public IP addresses, multi-host might not be
+                an option.</para>
         </section>
     </section>
     <section xml:id="services_for_networking">
@@ -310,4 +309,4 @@
             </section>
         </section>
     </section>
-</section>
+</chapter>

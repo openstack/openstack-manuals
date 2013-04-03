@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE section [
+<!DOCTYPE chapter [
  <!-- Some useful entities borrowed from HTML -->
 <!ENTITY ndash  "&#x2013;">
 <!ENTITY mdash  "&#x2014;">
@@ -8,7 +8,7 @@
         
 
 ]>
-<section xmlns="http://docbook.org/ns/docbook"
+<chapter xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="section_arch_provision">
@@ -17,21 +17,22 @@
     <para>A critical part of a cloud's scalability is the amount of
         effort that it takes to run your cloud. To minimize the
         operational cost of running your cloud, set up and use an
-        automated deployment and configuration infrastructure. This
-        includes systems to automatically install the operating
-        system's initial configuration and to later coordinate the
-        configuration of all services automatically and centrally,
-        which reduces both manual effort and chance for error.</para>
+        automated deployment and configuration infrastructure. </para>
+    <para>This infrastructure includes systems to automatically
+        install the operating system's initial configuration and later
+        coordinate the configuration of all services automatically and
+        centrally, which reduces both manual effort and chance for
+        error.</para>
     <section xml:id="automated_deploy">
         <title>Automated Deployment</title>
         <para>An automated deployment system installs and configures
             operating systems on new servers, without intervention,
-            after the absolute minimum amount of manual work (physical
-            racking, MAC to IP assignment, power configuration, and so
-            on). Typically solutions rely on wrappers around PXE boot
-            and TFTP servers for the basic operating system install,
-            then hand off to an automated configuration management
-            system.</para>
+            after the absolute minimum amount of manual work,
+            including physical racking, MAC to IP assignment, power
+            configuration, and so on. Typically solutions rely on
+            wrappers around PXE boot and TFTP servers for the basic
+            operating system install, then hand off to an automated
+            configuration management system.</para>
         <para>Ubuntu and Red Hat Linux both include mechanisms for
             configuring the operating system, including preseed and
             kickstart, that you can use after a network boot.
@@ -71,12 +72,14 @@
                 </listitem>
             </itemizedlist>
             <para>RAID is not used in this setup.</para>
-            <para><emphasis role="bold">Note:</emphasis> This option
-                is not recommended for production because if the hard
-                drive fails, that entire server is down. Instead, we
-                recommend that you use more than one disk. The number
-                of disks determine what types of RAID arrays to
-                build.</para>
+            <note>
+                <para>This option is not recommended for production
+                    because if the hard drive fails, that entire
+                    server is down. Instead, we recommend that you use
+                    more than one disk. The number of disks determine
+                    what types of RAID arrays to build.</para>
+            </note>
+            <?hard-pagebreak?>
             <para>We recommend that you choose one of the following
                 multiple disk options:</para>
             <itemizedlist role="compact">
@@ -159,33 +162,35 @@
             management tools ensures that components of the cloud
             systems are in particular states, in addition to
             simplifying deployment, and configuration change
-            propagation. These tools also make it possible to test and
-            roll back changes, as they are fully repeatable.
-            Conveniently, a large body of work has been done by the
-            OpenStack community in this space. Puppet – a
-            configuration management tool – even provides official
-            modules for OpenStack.</para>
+            propagation. </para>
+        <para>These tools also make it possible to test and roll back
+            changes, as they are fully repeatable. Conveniently, a
+            large body of work has been done by the OpenStack
+            community in this space. Puppet – a configuration
+            management tool – even provides official modules for
+            OpenStack.</para>
         <para>An integral part of a configuration management system is
             the items that it controls. You should carefully consider
             all of the items that you want, or do not want, to be
             automatically managed.</para>
     </section>
+    <?hard-pagebreak?>
     <section xml:id="remote_mgmt">
         <title>Remote Management</title>
         <para>In our experience, most operators don't sit right next
             to the servers running the cloud, and many don't
             necessarily enjoy visiting the data center. OpenStack
             should be entirely remotely configurable, but sometimes
-            not everything goes according to plan. In this instance,
-            having an out-of-band access into nodes running OpenStack
-            components, is a boon. The IPMI protocol is the de-facto
-            standard here, and acquiring hardware that supports it is
-            highly recommended to achieve that lights-out data center
-            aim.</para>
+            not everything goes according to plan. </para>
+        <para>In this instance, having an out-of-band access into
+            nodes running OpenStack components, is a boon. The IPMI
+            protocol is the de-facto standard here, and acquiring
+            hardware that supports it is highly recommended to achieve
+            that lights-out data center aim.</para>
         <para>In addition, consider remote power control as well.
             While IPMI usually controls the server's power state,
             having remote access to the PDU that the server is plugged
             into can really be useful for situations when everything
             seems wedged.</para>
     </section>
-</section>
+</chapter>

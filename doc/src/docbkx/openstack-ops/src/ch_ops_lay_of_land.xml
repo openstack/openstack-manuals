@@ -33,45 +33,52 @@
             of from the Ubuntu or Fedora packages. The clients are
             under heavy development and it is very likely at any given
             time the version of the packages distributed by your
-            operating system vendor are out of date. The "pip" utility
-            is used to manage package installation from the PyPI
-            archive and is available in the "python-pip" package in
-            most Linux distributions. Each OpenStack project has its
-            own client, so depending on which services your site runs,
-            install some or all of the following packages:</para>
+            operating system vendor are out of date. </para>
+        <para>The "pip" utility is used to manage package installation
+            from the PyPI archive and is available in the "python-pip"
+            package in most Linux distributions. Each OpenStack
+            project has its own client, so depending on which services
+            your site runs, install some or all of the following
+            packages:</para>
         <itemizedlist role="compact">
             <listitem>
-                <para>python-novaclient (<glossterm>nova</glossterm> CLI)</para>
+                <para>python-novaclient (<glossterm>nova</glossterm>
+                    CLI)</para>
             </listitem>
             <listitem>
-                <para>python-glanceclient (<glossterm>glance</glossterm> CLI)</para>
+                <para>python-glanceclient
+                        (<glossterm>glance</glossterm> CLI)</para>
             </listitem>
             <listitem>
-                <para>python-keystoneclient (<glossterm>keystone</glossterm> CLI)</para>
+                <para>python-keystoneclient
+                        (<glossterm>keystone</glossterm> CLI)</para>
             </listitem>
             <listitem>
-                <para>python-cinderclient (<glossterm>cinder</glossterm> CLI)</para>
+                <para>python-cinderclient
+                        (<glossterm>cinder</glossterm> CLI)</para>
             </listitem>
             <listitem>
-                <para>python-swiftclient (<glossterm>swift</glossterm> CLI)</para>
+                <para>python-swiftclient (<glossterm>swift</glossterm>
+                    CLI)</para>
             </listitem>
             <listitem>
-                <para>python-quantumclient (<glossterm>quantum</glossterm> CLI)</para>
+                <para>python-quantumclient
+                        (<glossterm>quantum</glossterm> CLI)</para>
             </listitem>
         </itemizedlist>
         <section xml:id="install_tools">
             <title>Installing the Tools</title>
             <para>To install (or upgrade) a package from the PyPI
                 archive with pip, as root:</para>
-            <programlisting><?db-font-size 65%?># pip install [--upgrade] &lt;package-name&gt;</programlisting>
+            <programlisting><?db-font-size 60%?># pip install [--upgrade] &lt;package-name&gt;</programlisting>
             <para>To remove the package:</para>
-            <programlisting><?db-font-size 65%?># pip uninstall &lt;package-name&gt;</programlisting>
+            <programlisting><?db-font-size 60%?># pip uninstall &lt;package-name&gt;</programlisting>
             <para>If you need even newer versions of the clients, pip
                 can install directly from the upstream git repository
                 using the <code>-e</code> flag. You must specify a
                 name for the Python egg that is installed. For
                 example:</para>
-            <programlisting><?db-font-size 65%?># pip install -e git+https://github.com/openstack/python-novaclient.git#egg=python-novaclient</programlisting>
+            <programlisting><?db-font-size 60%?># pip install -e git+https://github.com/openstack/python-novaclient.git#egg=python-novaclient</programlisting>
             <para>If you support the EC2 API on your cloud you should
                 also install the "euca2ools" package or some other EC2
                 API tool so you can get the same view your users have.
@@ -109,11 +116,12 @@
                 to eventually migrate all of the remaining
                 functionality in the <code>*-manage</code> tools into
                 the regular client tools. Until that day, you need to
-                SSH into the <glossterm>cloud controller node</glossterm> to perform some
-                maintenance operations that require one of the
+                SSH into the <glossterm>cloud controller
+                    node</glossterm> to perform some maintenance
+                operations that require one of the
                     <code>*-manage</code> tools.</para>
         </section>
-
+        <?hard-pagebreak?>
         <section xml:id="get_creds">
             <title>Getting Credentials</title>
             <para>You must have the appropriate credentials if you
@@ -144,7 +152,7 @@
                     <guibutton>Download RC</guibutton>. This generates
                 a file called <code>openrc.sh</code>, which looks
                 something like this:</para>
-            <programlisting><?db-font-size 65%?>#!/bin/bash
+            <programlisting><?db-font-size 60%?>#!/bin/bash
       
 # With the addition of Keystone, to use an openstack cloud you should
 # authenticate against keystone, which returns a **Token** and **Service
@@ -193,8 +201,7 @@ export OS_PASSWORD=$OS_PASSWORD_INPUT</programlisting>
                 here. You should have cacert.pem, cert.pem, ec2rc.sh
                 and pk.pem. The <code>ec2rc.sh</code> is similar to
                 this:</para>
-            <programlisting><?db-font-size 65%?>#!/bin/bash
-
+            <programlisting><?db-font-size 50%?>#!/bin/bash
       
 NOVARC=$(readlink -f "${BASH_SOURCE:-${0}}" 2&gt;/dev/null) ||\
 NOVARC=$(python -c 'import os,sys; print os.path.abspath(os.path.realpath(sys.argv[1]))' "${BASH_SOURCE:-${0}}")
@@ -218,7 +225,7 @@ alias ec2-upload-bundle="ec2-upload-bundle -a $EC2_ACCESS_KEY -s $EC2_SECRET_KEY
             <para>The command line tools can be made to show the
                 OpenStack API calls it's making by passing it the
                     <code>--debug</code> flag for example:</para>
-            <programlisting><?db-font-size 65%?><prompt>#</prompt> nova --debug list</programlisting>
+            <programlisting><?db-font-size 60%?><prompt>#</prompt> nova --debug list</programlisting>
             <para>This example shows the HTTP requests from the client
                 and the responses from the endpoints, which can be
                 helpful in creating custom tools written to the
@@ -233,13 +240,14 @@ alias ec2-upload-bundle="ec2-upload-bundle -a $EC2_ACCESS_KEY -s $EC2_SECRET_KEY
                     >bug report</link>
                 (https://bugs.launchpad.net/python-novaclient/+bug/1020238)
                 which has been open, closed as invalid, and reopened
-                through a few cycles. The issue is that under some
-                conditions the command line tools try to use a Python
-                keyring as a credential cache and, under a subset of
-                those conditions, another condition can arise where
-                the tools prompt for a keyring password on each use.
-                If you find yourself in this unfortunate subset,
-                adding the <code>--no-cache</code> flag or setting the
+                through a few cycles. </para>
+            <para>The issue is that under some conditions the command
+                line tools try to use a Python keyring as a credential
+                cache and, under a subset of those conditions, another
+                condition can arise where the tools prompt for a
+                keyring password on each use. If you find yourself in
+                this unfortunate subset, adding the
+                    <code>--no-cache</code> flag or setting the
                 environment variable <code>OS_NO_CACHE=1</code> avoids
                 the credentials cache.</para>
             <note>
@@ -266,8 +274,8 @@ alias ec2-upload-bundle="ec2-upload-bundle -a $EC2_ACCESS_KEY -s $EC2_SECRET_KEY
 
                 <para>The first thing you must do is authenticate with
                     the cloud using your credentials to get an
-                        <glossterm>authentication token</glossterm>.
-                    Your credentials are a combination of username,
+                        <glossterm>authentication token</glossterm>. </para>
+                <para>Your credentials are a combination of username,
                     password, and tenant (project). You can extract
                     these values from the <code>openrc.sh</code>
                     discussed above. The token allows you to interact
@@ -282,7 +290,7 @@ alias ec2-upload-bundle="ec2-upload-bundle -a $EC2_ACCESS_KEY -s $EC2_SECRET_KEY
 
                             <para>Look at your OpenStack service
                                    <glossterm>catalog</glossterm>:</para>
-                            <programlisting><?db-font-size 65%?><prompt>$</prompt> curl -s -X POST http://203.0.113.10:35357/v2.0/tokens \
+                            <programlisting language="bash"><?db-font-size 55%?><prompt>$</prompt> curl -s -X POST http://203.0.113.10:35357/v2.0/tokens \
     -d '{"auth": {"passwordCredentials": {"username":"test-user", "password":"test-password"}, "tenantName":"test-project"}}' \
     -H "Content-type: application/json" | jq .</programlisting>
                         </listitem>
@@ -293,7 +301,7 @@ alias ec2-upload-bundle="ec2-upload-bundle -a $EC2_ACCESS_KEY -s $EC2_SECRET_KEY
                             <para>To make working with subsequent
                                 requests easier, store the token in an
                                 environment variable.</para>
-                            <programlisting><?db-font-size 65%?><prompt>$</prompt> TOKEN=`curl -s -X POST http://203.0.113.10:35357/v2.0/tokens \
+                            <programlisting language="bash"><?db-font-size 55%?><prompt>$</prompt> TOKEN=`curl -s -X POST http://203.0.113.10:35357/v2.0/tokens \
     -d '{"auth": {"passwordCredentials": {"username":"test-user", "password":"test-password"}, "tenantName":"test-project"}}' \
     -H "Content-type: application/json" |  jq -r .access.token.id`</programlisting>
                             <para>Now you can refer to your token on
@@ -304,10 +312,11 @@ alias ec2-upload-bundle="ec2-upload-bundle -a $EC2_ACCESS_KEY -s $EC2_SECRET_KEY
                                 service catalog, such as compute, and
                                 try out a request like listing
                                 instances (servers).</para>
-                            <programlisting><?db-font-size 65%?><prompt>$</prompt> curl -s -H "X-Auth-Token: $TOKEN" http://203.0.113.10:8774/v2/98333aba48e756fa8f629c83a818ad57/servers | jq .</programlisting>
+                            <programlisting><?db-font-size 60%?><prompt>$</prompt> curl -s \
+                                  -H "X-Auth-Token: $TOKEN" \
+                                   http://203.0.113.10:8774/v2/98333aba48e756fa8f629c83a818ad57/servers | jq .</programlisting>
 
-
-                        </listitem>
+</listitem>
                     </orderedlist>
                 </para>
                 <para>To discover how API requests should be
@@ -339,9 +348,9 @@ alias ec2-upload-bundle="ec2-upload-bundle -a $EC2_ACCESS_KEY -s $EC2_SECRET_KEY
                 cloud, its shape, size, and current state.</para>
             <para>First, you can discover what servers belong to your
                 OpenStack cloud by running:</para>
-            <programlisting><?db-font-size 65%?><prompt>$</prompt> nova-manage service list | sort</programlisting>
+            <programlisting><?db-font-size 60%?><prompt>$</prompt> nova-manage service list | sort</programlisting>
             <para>The output looks like the following:</para>
-            <programlisting><?db-font-size 65%?>Binary           Host              Zone Status  State Updated_At
+            <programlisting><?db-font-size 60%?>Binary           Host              Zone Status  State Updated_At
 nova-cert        cloud.example.com nova enabled  :-)  2013-02-25 19:32:38
 nova-compute     c01.example.com   nova enabled  :-)  2013-02-25 19:32:35
 nova-compute     c02.example.com   nova enabled  :-)  2013-02-25 19:32:32
@@ -365,9 +374,9 @@ nova-scheduler   cloud.example.com nova enabled  :-)  2013-02-25 19:32:33</progr
             <para>If you are using Cinder, run the following command
                 to see a similar listing:</para>
 
-            <programlisting><?db-font-size 65%?><prompt>$</prompt> cinder-manage host list | sort</programlisting>
+            <programlisting><?db-font-size 60%?><prompt>$</prompt> cinder-manage host list | sort</programlisting>
 
-            <programlisting><?db-font-size 65%?>host              zone
+            <programlisting><?db-font-size 60%?>host              zone
 c01.example.com   nova
 c02.example.com   nova
 c03.example.com   nova
@@ -385,9 +394,9 @@ cloud.example.com nova</programlisting>
                 shell environment configured with the proper
                 administrative variables.</para>
 
-            <programlisting><?db-font-size 65%?><prompt>$</prompt> keystone service-list</programlisting>
+            <programlisting><?db-font-size 60%?><prompt>$</prompt> keystone service-list</programlisting>
 
-            <programlisting><?db-font-size 65%?>+-----+----------+----------+----------------------------+
+            <programlisting><?db-font-size 60%?>+-----+----------+----------+----------------------------+
 | id  | name     | type     | description                |
 +-----+----------+----------+----------------------------+
 | ... | cinder   | volume   | Cinder Service             |
@@ -399,8 +408,8 @@ cloud.example.com nova</programlisting>
             <para>The output above shows that there are five services
                 configured.</para>
             <para>To see the endpoint of each service, run: </para>
-            <programlisting><?db-font-size 65%?><prompt>$</prompt> keystone endpoint-list</programlisting>
-            <programlisting><?db-font-size 65%?>+-----+-----------------------------------------+-/+-----------------------------------------+
+            <programlisting><?db-font-size 60%?><prompt>$</prompt> keystone endpoint-list</programlisting>
+            <programlisting><?db-font-size 55%?>+-----+-----------------------------------------+-/+-----------------------------------------+
 | id  |            publicurl                    | \|               adminurl                  |
 +-----+-----------------------------------------+-/+-----------------------------------------+
 | ... | http://example.com:8774/v2/%(tenant_id)s| \| http://example.com:8774/v2/%(tenant_id)s|
@@ -421,9 +430,9 @@ cloud.example.com nova</programlisting>
         <para>Next, take a look at what Fixed IP networks are
             configured in your cloud:</para>
 
-        <programlisting><?db-font-size 65%?><prompt>$</prompt> nova-manage network list</programlisting>
+        <programlisting><?db-font-size 60%?><prompt>$</prompt> nova-manage network list</programlisting>
 
-        <programlisting><?db-font-size 65%?>id IPv4        IPv6 start address DNS1 DNS2 VlanID project   uuid 
+        <programlisting><?db-font-size 60%?>id IPv4        IPv6 start address DNS1 DNS2 VlanID project   uuid 
 1  10.1.0.0/24 None 10.1.0.3      None None 300    2725bbd   beacb3f2
 2  10.1.1.0/24 None 10.1.1.3      None None 301    none      d0b1a796</programlisting>
         <para>This output shows that two networks are configured, each
@@ -436,9 +445,9 @@ cloud.example.com nova</programlisting>
         <para>To find out if any floating IPs are available in your
             cloud, run:</para>
 
-        <programlisting><?db-font-size 65%?><prompt>$</prompt> nova-manage floating list</programlisting>
+        <programlisting><?db-font-size 60%?><prompt>$</prompt> nova-manage floating list</programlisting>
 
-        <programlisting><?db-font-size 65%?>2725bbd458e2459a8c1bd36be859f43f 1.2.3.4                                 None nova vlan20
+        <programlisting><?db-font-size 55%?>2725bbd458e2459a8c1bd36be859f43f 1.2.3.4 None                                 nova vlan20
 None                             1.2.3.5 48a415e7-6f07-4d33-ad00-814e60b010ff nova vlan20</programlisting>
         <para>Here, two floating IPs are available. The first has been
             allocated to a project while the other is
@@ -449,9 +458,9 @@ None                             1.2.3.5 48a415e7-6f07-4d33-ad00-814e60b010ff no
         <para>To see a list of projects that have been added to the
             cloud, run:</para>
 
-        <programlisting><?db-font-size 65%?><prompt>$</prompt> keystone tenant-list</programlisting>
+        <programlisting><?db-font-size 60%?><prompt>$</prompt> keystone tenant-list</programlisting>
 
-        <programlisting><?db-font-size 65%?>+-----+----------+---------+
+        <programlisting><?db-font-size 60%?>+-----+----------+---------+
 | id  | name     | enabled |
 +-----+----------+---------+
 | ... | jtopjian | True    |
@@ -466,11 +475,12 @@ None                             1.2.3.5 48a415e7-6f07-4d33-ad00-814e60b010ff no
 | ... | tom      | True    |
 | ... | adam     | True    |
 +-----+----------+---------+</programlisting>
+        <?hard-pagebreak?>
         <para>To see a list of users, run:</para>
 
-        <programlisting><?db-font-size 65%?><prompt>$</prompt> keystone user-list</programlisting>
+        <programlisting><?db-font-size 60%?><prompt>$</prompt> keystone user-list</programlisting>
 
-        <programlisting><?db-font-size 65%?>+-----+----------+---------+------------------------------+
+        <programlisting><?db-font-size 60%?>+-----+----------+---------+------------------------------+
 | id  | name     | enabled | email                        |
 +-----+----------+---------+------------------------------+
 | ... | everett  | True    | everett.towne@backspace.com  |
@@ -498,9 +508,9 @@ None                             1.2.3.5 48a415e7-6f07-4d33-ad00-814e60b010ff no
         <title>Running Instances</title>
         <para>To see a list of running instances, run:</para>
 
-        <programlisting><?db-font-size 65%?><prompt>$</prompt> nova list --all-tenants</programlisting>
+        <programlisting><?db-font-size 60%?><prompt>$</prompt> nova list --all-tenants</programlisting>
 
-        <programlisting><?db-font-size 65%?>+-----+------------------+--------+-------------------------------------------+
+        <programlisting><?db-font-size 60%?>+-----+------------------+--------+-------------------------------------------+
 | ID  | Name             | Status | Networks                                  |
 +-----+------------------+--------+-------------------------------------------+
 | ... | Windows          | ACTIVE | novanetwork_1=10.1.1.3, 199.116.232.39    |
@@ -517,10 +527,10 @@ None                             1.2.3.5 48a415e7-6f07-4d33-ad00-814e60b010ff no
             is, and so on. You can use the following command to view
             details about individual instances:</para>
 
-        <programlisting><?db-font-size 65%?><prompt>$</prompt> nova show &lt;uuid&gt;</programlisting>
-
+        <programlisting><?db-font-size 60%?><prompt>$</prompt> nova show &lt;uuid&gt;</programlisting>
+        <?hard-pagebreak?>
         <para>For example:
-            <programlisting><?db-font-size 65%?># nova show 81db556b-8aa5-427d-a95c-2a9a6972f630</programlisting><programlisting><?db-font-size 65%?>+-------------------------------------+-----------------------------------+
+            <programlisting><?db-font-size 60%?># nova show 81db556b-8aa5-427d-a95c-2a9a6972f630</programlisting><programlisting><?db-font-size 60%?>+-------------------------------------+-----------------------------------+
 | Property                            | Value                             |
 +-------------------------------------+-----------------------------------+
 | OS-DCF:diskConfig                   | MANUAL                            |

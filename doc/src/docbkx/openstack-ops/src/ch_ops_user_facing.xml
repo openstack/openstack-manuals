@@ -110,19 +110,23 @@
             <programlisting><?db-font-size 65%?>$ mysql&gt; select name, value from image_properties where id = &lt;image_id&gt;</programlisting>
         </section>
     </section>
-    <?hard-pagebreak?>
+
     <section xml:id="flavors">
-        <?dbhtml stop-chunking?>
+     
         <title>Flavors</title>
-        <para>Virtual hardware templates are called "flavors" in OpenStack, defining sizes for RAM,
-            disk, number of cores and so on. The default install provides a range of five flavors.
-            These are configurable by admin users (this too is configurable and may be delegated by
-            redefining the access controls for <code>compute_extension:flavormanage</code> in
-                <code>/etc/nova/policy.json</code> on the <code>nova-api</code> server). To get a
-            list of available flavors on your system run:</para>
-        <para>
-            <code><?db-font-size 65%?>$ nova flavor-list</code>
-        </para>
+
+        <para>Virtual hardware templates are called "flavors" in
+            OpenStack, defining sizes for RAM, disk, number of cores
+            and so on. The default install provides a range of five
+            flavors. These are configurable by admin users (this too
+            is configurable and may be delegated by redefining the
+            access controls for
+                <code>compute_extension:flavormanage</code> in
+                <code>/etc/nova/policy.json</code> on the
+                <code>nova-api</code> server). To get a list of
+            available flavors on your system run:</para>
+            <programlisting><?db-font-size 65%?>$ nova flavor-list</programlisting>
+
         <programlisting><?db-font-size 65%?>+----+-----------+-----------+------+-----------+\+-------+-\+-------------+
 | ID | Name      | Memory_MB | Disk | Ephemeral |/| VCPUs | /| extra_specs |
 +----+-----------+-----------+------+-----------+\+-------+-\+-------------+
@@ -131,12 +135,12 @@
 | 3  | m1.medium | 4096      | 10   | 40        |/| 2     | /| {}          |
 | 4  | m1.large  | 8192      | 10   | 80        |\| 4     | \| {}          |
 | 5  | m1.xlarge | 16384     | 10   | 160       |/| 8     | /| {}          |
-+----+-----------+-----------+------+-----------+\+-------+-\+-------------+
-      </programlisting>
++----+-----------+-----------+------+-----------+\+-------+-\+-------------+</programlisting>
         <para>The <code>nova flavor-create</code> command allows authorized users to create new
-            flavors. Additional flavor manipulation commands can be shown with the command
-                <code>nova help | grep flavor.</code>
+            flavors. Additional flavor manipulation commands can be shown with the command:
+                <programlisting language="bash"><?db-font-size 75%?><prompt>$</prompt> nova help | grep flavor.</programlisting>
         </para>
+        <?hard-pagebreak?>
         <para>Flavors define a number of elements:</para>
         <informaltable rules="all">
             <col width="25%"/>
@@ -309,8 +313,7 @@
 +---------+-------------+
 | default | default     |
 | open    | all ports   |
-+---------+-------------+
-      </programlisting>
++---------+-------------+</programlisting>
         <para>To view the details of the "open" security group:</para>
 
         <programlisting><prompt>$</prompt> nova secgroup-list-rules open</programlisting>
@@ -348,9 +351,7 @@
 | Name        | Description                         |
 +-------------+-------------------------------------+
 | global_http | allow web traffic from the internet |
-+-------------+-------------------------------------+
-
-      </programlisting>
++-------------+-------------------------------------+</programlisting>
         <para>This creates the empty security group to make it do what
             we want we need to add some rules.</para>
         <programlisting><?db-font-size 65%?>$ nova secgroup-add-rule &lt;secgroup&gt; &lt;ip-proto&gt; &lt;from-port&gt; &lt;to-port&gt;
@@ -369,8 +370,7 @@ $ nova secgroup-add-rule global_http tcp 80 80 0.0.0.0/0
             secgroup-add-rule. For example if you want to pass both
             http and https traffic:</para>
 
-        <programlisting><prompt>$</prompt> nova secgroup-add-rule global_http tcp 443 443
-                0.0.0.0/0</programlisting>
+        <programlisting><?db-font-size 65%?><prompt>$</prompt> nova secgroup-add-rule global_http tcp 443 443 0.0.0.0/0</programlisting>
 
         <programlisting><?db-font-size 65%?>+-------------+-----------+---------+-----------+--------------+
 | IP Protocol | From Port | To Port | IP Range  | Source Group |
@@ -441,12 +441,12 @@ $ nova secgroup-add-rule global_http tcp 80 80 0.0.0.0/0
         <para>This creates a 10 GB volume named "test-volume." To list
             existing volumes and the instances they are connected to
             if any:</para>
-        <programlisting><?db-font-size 65%?><prompt>$</prompt> cinder list     </programlisting>
+        <programlisting><?db-font-size 65%?><prompt>$</prompt> cinder list</programlisting>
         <programlisting><?db-font-size 65%?>+------------+---------+--------------------+------+-------------+-------------+
 |     ID     | Status  |    Display Name    | Size | Volume Type | Attached to |
 +------------+---------+--------------------+------+-------------+-------------+
 | 0821...19f |  active |    test-volume     |  10  |     None    |             |
-+------------+---------+--------------------+------+-------------+-------------+    </programlisting>
++------------+---------+--------------------+------+-------------+-------------+</programlisting>
         <para>The Block Storage service also allows for creating
             snapshots of volumes. Remember this is a block level
             snapshot which is crash consistent so it is best if the
@@ -529,7 +529,7 @@ Optional snapshot description. (Default=None)</programlisting>
 
             <programlisting><prompt>$</prompt> nova show test-instance</programlisting>
 
-            <programlisting><?db-font-size 65%?>+------------------------+--------------------------------------------------------------\
+            <programlisting><?db-font-size 55%?>+------------------------+--------------------------------------------------------------\
 | Property               | Value                                                        /
 +------------------------+--------------------------------------------------------------\
 | OS-DCF:diskConfig      | MANUAL                                                       /
@@ -599,6 +599,7 @@ Optional snapshot description. (Default=None)</programlisting>
                 a description and also the creator of the
                 server.</para>
             <programlisting><?db-font-size 65%?><prompt>$ </prompt>nova boot --image=test-image --flavor=1 smallimage --meta description='Small test image'</programlisting>
+            <?hard-pagebreak?>
             <para>When viewing the server information, you can see the
                 metadata included on the metadata line:</para>
 
@@ -695,8 +696,7 @@ Optional snapshot description. (Default=None)</programlisting>
             Security" page and not from the Instances page.</para>
         <para>From the command line, enter the following command to
             complete these tasks:</para>
-        <programlisting><prompt>$</prompt> nova add-floating-ip &lt;server&gt;
-                &lt;address&gt;</programlisting>
+        <programlisting><prompt>$</prompt> nova add-floating-ip &lt;server&gt; &lt;address&gt;</programlisting>
         <programlisting><prompt>$</prompt> nova remove-floating-ip &lt;server&gt; &lt;address&gt;</programlisting>
 
     </section>
@@ -708,11 +708,11 @@ Optional snapshot description. (Default=None)</programlisting>
             the volume you wish to attach. </para>
         <para>To perform this action from command line, run the
             following command: </para>
-        <programlisting><?db-font-size 65%?><prompt>$</prompt> nova volume-attach &lt;server&gt; &lt;volume&gt; </programlisting>
+        <programlisting><prompt>$</prompt> nova volume-attach &lt;server&gt; &lt;volume&gt; </programlisting>
         <para>You can also specify block device mapping at instance
             boot time through the nova command-line client, as
             follows:</para>
-        <programlisting><?db-font-size 65%?>--block-device-mapping &lt;dev-name=mapping&gt; </programlisting>
+        <programlisting>--block-device-mapping &lt;dev-name=mapping&gt; </programlisting>
         <para>The block device mapping format is
                 <code>&lt;dev-name=&lt;id&gt;:&lt;type&gt;:&lt;size(GB)&gt;:&lt;delete-on-terminate&gt;</code>,
             where:</para>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE section [
+<!DOCTYPE chapter [
 <!-- Some useful entities borrowed from HTML -->
 <!ENTITY ndash  "&#x2013;">
 <!ENTITY mdash  "&#x2014;">
@@ -8,7 +8,7 @@
         
       
 ]>
-<section xmlns="http://docbook.org/ns/docbook"
+<chapter xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="scaling">
@@ -83,7 +83,10 @@
                 </tr>
             </tbody>
         </informaltable>
-        <para>If we assume the following:</para>
+        <?hard-pagebreak?>
+        <para>Assume that the following set-up supports (200 / 2) × 16
+            = 1600 VM instances and requires 80 TB of storage for
+                <code>/var/lib/nova/instances</code>:</para>
         <itemizedlist>
             <listitem>
                 <para>200 physical cores</para>
@@ -98,22 +101,19 @@
                     nova.conf) of 16:1</para>
             </listitem>
         </itemizedlist>
-        <para>Then this would support (200 / 2) × 16 = 1600 VM
-            instances and requires 80 TB of storage for
-                <code>/var/lib/nova/instances</code>.</para>
         <para>However, you need more than the core count alone to
             estimate the load that the API services, database servers,
             and queue servers are likely to encounter. You must also
-            consider the usage patterns of your cloud. As a specific
-            example, compare a cloud that supports a managed web
-            hosting platform with one running integration tests for a
-            development project that creates one VM per code commit.
-            In the former, the heavy work of creating a VM happens
-            only every few months, whereas the latter puts constant
-            heavy load on the cloud controller. You must consider your
-            average VM lifetime, as a larger number generally means
-            less load on the cloud controller.</para>
-        <?hard-pagebreak?>
+            consider the usage patterns of your cloud. </para>
+        <para>As a specific example, compare a cloud that supports a
+            managed web hosting platform with one running integration
+            tests for a development project that creates one VM per
+            code commit. In the former, the heavy work of creating a
+            VM happens only every few months, whereas the latter puts
+            constant heavy load on the cloud controller. You must
+            consider your average VM lifetime, as a larger number
+            generally means less load on the cloud controller.</para>
+     
         <para>Aside from the creation and termination of VMs, you must
             consider the impact of users accessing the service
             — particularly on nova-api and its associated database.
@@ -296,11 +296,11 @@
         <?hard-pagebreak?>
         <section xml:id="cells_regions">
             <title>Cells and Regions</title>
-            <para>OpenStack Compute cells are designed to allow running
-                the cloud in a distributed fashion without having to
-                use more complicated technologies, or being invasive
-                to existing nova installations. Hosts in a cloud are
-                partitioned into groups called
+            <para>OpenStack Compute cells are designed to allow
+                running the cloud in a distributed fashion without
+                having to use more complicated technologies, or being
+                invasive to existing nova installations. Hosts in a
+                cloud are partitioned into groups called
                     <emphasis>cells</emphasis>. Cells are configured
                 in a tree. The top-level cell ("API cell") has a host
                 that runs the <code>nova-api</code> service, but no
@@ -451,4 +451,4 @@
                 days.</para>
         </section>
     </section>
-</section>
+</chapter>

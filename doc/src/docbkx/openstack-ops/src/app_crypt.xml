@@ -105,7 +105,7 @@
         <para>That made no sense. </para>
         <para>While bouncing this idea around in our heads, I was
             randomly typing commands on the compute node: </para>
-        <programlisting><prompt>$</prompt> ip a
+        <programlisting language="bash"><?db-font-size 65%?><prompt>$</prompt> ip a
 &hellip;
 10: vlan100@vlan20: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue master br100 state UP
 &hellip;</programlisting>
@@ -114,12 +114,12 @@
         <para>"If you did, you'd add an extra 4 bytes to the
             packet&hellip;"</para>
         <para>Then it all made sense…</para>
-        <programlisting><prompt>$</prompt> grep vlan_interface /etc/nova/nova.conf
+        <programlisting language="bash"><?db-font-size 65%?><prompt>$</prompt> grep vlan_interface /etc/nova/nova.conf
 vlan_interface=vlan20</programlisting>
         <para>In <code>nova.conf</code>, <code>vlan_interface</code>
             specifies what interface OpenStack should attach all VLANs
-            to. The correct setting should have been:</para>
-        <programlisting>vlan_interface=bond0</programlisting>
+            to. The correct setting should have been:
+            <code>vlan_interface=bond0</code>.</para>
         <para>As this would be the server's bonded NIC.</para>
         <para>vlan20 is the VLAN that the data center gave us for
             outgoing public internet access. It's a correct VLAN and
@@ -370,7 +370,7 @@ vlan_interface=vlan20</programlisting>
         <para>This past Valentine's Day, I received an alert that a
             compute node was no longer available in the cloud
             — meaning,</para>
-        <programlisting><prompt>$</prompt> nova-manage service list</programlisting>
+        <programlisting language="bash"><?db-font-size 75%?><prompt>$</prompt> nova-manage service list</programlisting>
         <para>showed this particular node with a status of
                 <code>XXX</code>.</para>
         <para>I logged into the cloud controller and was able to both
@@ -424,7 +424,7 @@ vlan_interface=vlan20</programlisting>
             problem: the switches detected spanning tree packets
             coming from the two compute nodes and immediately shut the
             ports down to prevent spanning tree loops:</para>
-        <programlisting>Feb 15 01:40:18 SW-1 Stp: %SPANTREE-4-BLOCK_BPDUGUARD: Received BPDU packet on Port-Channel35 with BPDU guard enabled. Disabling interface. (source mac fa:16:3e:24:e7:22)
+        <programlisting><?db-font-size 75%?>Feb 15 01:40:18 SW-1 Stp: %SPANTREE-4-BLOCK_BPDUGUARD: Received BPDU packet on Port-Channel35 with BPDU guard enabled. Disabling interface. (source mac fa:16:3e:24:e7:22)
 Feb 15 01:40:18 SW-1 Ebra: %ETH-4-ERRDISABLE: bpduguard error detected on Port-Channel35. 
 Feb 15 01:40:18 SW-1 Mlag: %MLAG-4-INTF_INACTIVE_LOCAL: Local interface Port-Channel35 is link down. MLAG 35 is inactive.
 Feb 15 01:40:18 SW-1 Ebra: %LINEPROTO-5-UPDOWN: Line protocol on Interface Port-Channel35 (Server35), changed state to down
@@ -483,7 +483,7 @@ Feb 15 01:40:19 SW-1 Ebra: %LINEPROTO-5-UPDOWN: Line protocol on Interface Ether
         <para>After finding the instance ID we headed over to
                 <code>/var/lib/nova/instances</code> to find the
                 <code>console.log</code>:</para>
-        <programlisting>adm@cc12:/var/lib/nova/instances/instance-00000e05# wc -l console.log
+        <programlisting language="bash"><?db-font-size 75%?>adm@cc12:/var/lib/nova/instances/instance-00000e05# wc -l console.log
       92890453 console.log
       adm@cc12:/var/lib/nova/instances/instance-00000e05# ls -sh console.log
       5.5G console.log</programlisting>
