@@ -234,7 +234,8 @@ LOG = logging.getLogger(__name__)</programlisting>
             messages with underscore and parentheses.</para>
     </section>
     <section xml:id="rabbitmq">
-        <title>RabbitMQ Web Management Interface</title>
+        <title>RabbitMQ Web Management Interface or
+            rabbitmqctl</title>
         <para>Aside from connection failures, RabbitMQ log files are
             generally not useful for debugging OpenStack related
             issues. Instead, we recommend you use the RabbitMQ web
@@ -253,6 +254,13 @@ LOG = logging.getLogger(__name__)</programlisting>
             <programlisting><?db-font-size 75%?>$ dpkg -s rabbitmq-server | grep "Version:"
 Version: 2.7.1-0ubuntu4</programlisting>
         </note>
+        <para>An alternative to enabling the RabbitMQ Web Management
+            Interface is to use the <command>rabbitmqctl</command> commands. For example,
+                <command>rabbitmqctl list_queues| grep
+                cinder</command> displays any messages
+            left in the queue. If there are, it's a possible sign that
+            cinder services didn't connect properly to rabbitmq and
+            might have to be restarted.</para>
         <para>Items to monitor for RabbitMQ include the number of
             items in each of the queues and the processing time
             statistics for the server.</para>
