@@ -985,31 +985,10 @@ $ nova aggregate-set-metadata &lt;aggregate-id&gt; operational_state=created</pr
     configuration; this section describes the required configuration
     steps for each hypervisor layer provided by OpenStack.</para>
     <section xml:id="xenserver-resize">
-      <title>XenServer</title>
-      <para>To get resize to work with XenServer (and XCP) you need to:</para>
-      <itemizedlist>
-         <listitem><para>Establish a root trust between all hypervisor
-         nodes of your deployment:</para>
-     <para>You can simply do so, by generating an ssh key-pair (with <command>ssh-keygen</command>)
-         and then ensuring that each of your dom0's <filename>authorized_keys</filename> file
-         (located in <filename>/root/.ssh/authorized_keys</filename>) contains the public key fingerprint
-         (located in <filename>/root/.ssh/id_rsa.pub</filename>).</para>
-         </listitem>
-         <listitem><para>Provide a <filename>/images</filename> mountpoint to your hypervisor's dom0:</para>
-         <para>Dom0 space is a premium so creating a directory in dom0 is kind of
-         dangerous, and almost surely bound to fail especially when resizing big servers.
-         The least you can do is to symlink <filename>/images</filename> to your local storage SR. The
-         instructions below work for an English based installation of XenServer (and XCP)
-         and in the case of ext3 based SR (with which the resize functionality is
-         known to work correctly).</para>
-         <programlisting>
-sr_uuid=$(xe sr-list name-label="Local storage" params=uuid --minimal)
-img_dir="/var/run/sr-mount/$sr_uuid/images"
-mkdir -p "$img_dir"
-ln -s  $img_dir /images
-         </programlisting>
-         </listitem>
-      </itemizedlist>
+        <title>XenServer</title>
+            <para>To get resize to work with XenServer (and XCP), please refer
+            to the <link linkend="xapi-resize-setup">Dom0 Modifications for
+            Resize/Migration Support</link> section.</para>
     </section> <!-- End of XenServer/Resize -->
   </section> <!-- End of configuring resize -->
   <section xml:id="installing-moosefs-as-backend">
