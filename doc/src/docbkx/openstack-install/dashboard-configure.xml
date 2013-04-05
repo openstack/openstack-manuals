@@ -4,15 +4,93 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
     <title>Configuring the Dashboard</title>
-    <para>
-        Specify the host for your OpenStack Identity Service endpoint
-        in the local_settings.py file with the OPENSTACK_HOST setting.
-        An example is included: 
-    </para>
-    <programlisting><xi:include parse="text" href="samples/local_settings.py"/></programlisting>
-        <para>The HORIZON_CONFIG dictionary contains all the settings for
-        the Dashboard. Whether or not a service is in the Dashboard
-        depends on the Service Catalog configuration in the Identity
-        service. Refer to <link xlink:href="http://docs.openstack.org/developer/horizon/topics/settings.html">Horizon Settings and Configuration</link> for the
-        full listing.</para>
+    <orderedlist>
+        <listitem>
+            <para><emphasis role="bold">Simple deployment (HTTP)</emphasis></para>
+            <para>Specify the host for your OpenStack Identity Service endpoint in the
+                    <filename>/etc/openstack-dashboard/local_settings.py</filename> file with the
+                OPENSTACK_HOST setting. An example is included: </para>
+            <programlisting><xi:include parse="text" href="samples/local_settings.py"/></programlisting>
+            <para>The HORIZON_CONFIG dictionary contains all the settings for
+                the Dashboard. Whether or not a service is in the Dashboard
+                depends on the Service Catalog configuration in the Identity
+                service. Refer to <link xlink:href="http://docs.openstack.org/developer/horizon/topics/settings.html">Horizon Settings and Configuration</link> for the
+                full listing.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">Secured deployment (HTTPS)</emphasis></para>
+            <para>While the standard installation uses a non-encrypted
+                channel (HTTP), it is possible to enable the SSL
+                support for the OpenStack Dashboard. In the following
+                example, we use the domain
+                "http://openstack.example.com", make sure to use one
+                that fits your current setup.</para>
+            <itemizedlist>
+                <listitem>
+                    <para> In<filename>/etc/openstack-dashboard/local_settings.py</filename> update
+                        the following
+                        directive:<programlisting>USE_SSL = True</programlisting></para>
+                </listitem>
+                <listitem>
+                    <para> Edit <filename>/etc/apache2/ports.conf</filename> and add the following
+                        line: <programlisting>NameVirtualHost *:443</programlisting></para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Edit <filename>/etc/apache2/conf.d/openstack-dashboard.conf:</filename></para>
+                    
+                    <para> Before:
+                        <programlisting>WSGIScriptAlias / /usr/share/openstack-dashboard/openstack_dashboard/wsgi/django.wsgi
+WSGIDaemonProcess horizon user=www-data group=www-data processes=3 threads=10
+Alias /static /usr/share/openstack-dashboard/openstack_dashboard/static/
+&lt;Directory /usr/share/openstack-dashboard/openstack_dashboard/wsgi&gt;
+    Order allow,deny
+    Allow from all
+&lt;/Directory&gt;
+                        </programlisting>
+                    </para>
+                    
+                    <para> After:
+                        <programlisting>&lt;VirtualHost *:80&gt;
+    ServerName openstack.example.com
+    RedirectPermanent / https://openstack.example.com
+&lt;/VirtualHost&gt;
+&lt;VirtualHost *:443&gt;
+    ServerName openstack.example.com
+
+    SSLEngine On
+    SSLCertificateFile /etc/apache2/SSL/openstack.example.com.crt
+    SSLCACertificateFile /etc/apache2/SSL/openstack.example.com.crt
+    SSLCertificateKeyFile /etc/apache2/SSL/openstack.example.com.key
+    SetEnvIf User-Agent &quot;.*MSIE.*&quot; nokeepalive ssl-unclean-shutdown
+
+    WSGIScriptAlias / /usr/share/openstack-dashboard/openstack_dashboard/wsgi/django.wsgi
+    WSGIDaemonProcess horizon user=www-data group=www-data processes=3 threads=10
+    Alias /static /usr/share/openstack-dashboard/openstack_dashboard/static/
+    &lt;Directory /usr/share/openstack-dashboard/openstack_dashboard/wsgi&gt;
+        Order allow,deny
+        Allow from all
+    &lt;/Directory&gt;
+&lt;/VirtualHost&gt;
+                        </programlisting>
+                    </para>
+                    
+                    <para>In this configuration, we instruct Apache to
+                        listen on the port 443 and to redirect all the
+                        hits to the HTTPs protocol for all the
+                        non-secured requests. In the secured section,
+                        we define as well the private key, the public
+                        key, and the certificate to use.</para>
+                    
+                </listitem>
+                <listitem>
+                    <para>Finally restart Apache and memcached:</para>
+                    <screen><prompt>#</prompt> <userinput>service apache2 restart</userinput>
+<prompt>#</prompt> <userinput>service memcached restart</userinput>                                   </screen>
+                    
+                </listitem>
+            </itemizedlist>
+            <para>You should now be redirected to the HTTPs page if you call the HTTP version of the dashboard via your browser.</para>     
+        </listitem>
+    </orderedlist>
 </section>
