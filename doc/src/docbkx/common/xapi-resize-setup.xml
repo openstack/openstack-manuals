@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="xapi-resize-setup">
+<?dbhtml stop-chunking?>
+<title>Dom0 Modifications for Resize/Migration Support</title>
+    <para>To get resize to work with XenServer (and XCP) you need to:</para>
+    <itemizedlist>
+        <listitem>
+            <para>Establish a root trust between all hypervisor nodes of your
+            deployment:</para>
+
+            <para>You can do so by generating an ssh key-pair (with
+                    <command>ssh-keygen</command>) and then ensuring
+                that each of your dom0's
+                    <filename>authorized_keys</filename> file (located
+                in <filename>/root/.ssh/authorized_keys</filename>)
+                contains the public key fingerprint (located in
+                    <filename>/root/.ssh/id_rsa.pub</filename>).</para>
+        </listitem>
+        <listitem>
+            <para>Provide an <filename>/images</filename> mount point
+                to your hypervisor's dom0:</para>
+
+            <para>Dom0 space is a premium so creating a directory in
+                dom0 is kind of dangerous, and almost surely bound to
+                fail especially when resizing big servers. The least
+                you can do is to symlink <filename>/images</filename>
+                to your local storage SR. The instructions below work
+                for an English-based installation of XenServer (and
+                XCP) and in the case of ext3 based SR (with which the
+                resize functionality is known to work
+                correctly).</para>
+<screen>
+<prompt># </prompt><userinput>LOCAL_SR=$(xe sr-list name-label="Local storage" --minimal)</userinput>
+<prompt># </prompt><userinput>IMG_DIR="/var/run/sr-mount/$LOCAL_SR/images"</userinput>
+<prompt># </prompt><userinput>mkdir -p "$IMG_DIR"</userinput>
+<prompt># </prompt><userinput>ln -s "$IMG_DIR" /images</userinput>
+</screen>
+        </listitem>
+    </itemizedlist>
+</section>
