@@ -574,6 +574,21 @@ Optional snapshot description. (Default=None)</programlisting>
             <para>There are a variety of ways to inject custom data
                 including authorized_keys key injection, user-data,
                 metadata service, and file injection.</para>
+            <para>To clarify user-data versus metadata, understand
+                that "user-data" is a chunk of data, set when an
+                instance is not running. This user-data is accessible
+                from within the instance when it is running. People
+                use this user-data to store configuration, a script,
+                or anything the tenant wants.</para>
+            <para>For Compute, instance metadata is a collection of
+                key/value pairs associated with an instance. Compute
+                reads and writes to these key/value pairs any time
+                during the instance lifetime, from inside and outside
+                the instance, when the end-user uses the Compute API
+                to do so. However, you cannot query the instance
+                associated key/value pairs via the metadata service
+                that is compatible with the Amazon EC2 metadata
+                service.</para>
             <para>Users can generate and register ssh keys using the
                 nova command</para>
             <programlisting><?db-font-size 65%?><prompt>$</prompt> nova keypair-add mykey &gt; mykey.pem</programlisting>
@@ -599,7 +614,6 @@ Optional snapshot description. (Default=None)</programlisting>
                 a description and also the creator of the
                 server.</para>
             <programlisting><?db-font-size 65%?><prompt>$ </prompt>nova boot --image=test-image --flavor=1 smallimage --meta description='Small test image'</programlisting>
-            <?hard-pagebreak?>
             <para>When viewing the server information, you can see the
                 metadata included on the metadata line:</para>
 

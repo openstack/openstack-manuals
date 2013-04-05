@@ -85,7 +85,12 @@
                 missing.</para>
             <para>To avoid this situation, create a highly available
                 cloud controller cluster. This is outside the scope of
-                this document.</para>
+                this document, but you can read more in the draft
+                    <link
+                    xlink:title="OpenStack High Availability Guide"
+                    xlink:href="http://docs.openstack.org/trunk/openstack-ha/content/ch-intro.html"
+                    >OpenStack High Availability Guide</link>
+                (http://docs.openstack.org/trunk/openstack-ha/content/ch-intro.html).</para>
             <para>The next best way is to use a configuration
                 management tool such as Puppet to automatically build
                 a cloud controller. This should not take more than 15
@@ -93,6 +98,11 @@
                 the controller rebuilds, restore any backups taken
                 (see the <emphasis role="bold">Backup and
                     Recovery</emphasis> chapter).</para>
+            <para>Also, in practice, sometimes the nova-compute
+                services on the compute nodes do not reconnect cleanly
+                to rabbitmq hosted on the controller when it comes
+                back up after a long reboot and a restart on the nova
+                services on the compute nodes is required.</para>
         </section>
     </section>
     <section xml:id="compute_node_failures">

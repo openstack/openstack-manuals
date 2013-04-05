@@ -293,9 +293,14 @@ wget: can't connect to remote host (169.254.169.254): Network is unreachable</pr
         <para>After you establish that the instance booted properly,
             the task is to figure out where the failure is.</para>
         <para>A DHCP problem might be caused by a misbehaving dnsmasq
-            process. The simplest way to rule this out is to kill all
-            of the dnsmasq processes on the machine, and restart
-            nova-network. As root:</para>
+            process. First, debug by checking logs and then
+            restart the dnsmasq processes only for that project
+            (tenant). In VLAN mode there is a dnsmasq process for each
+            tenant. Once you have restarted targeted dnsmasq
+            processes, the simplest way to rule out dnsmasq causes is
+            to kill all of the dnsmasq processes on the machine, and
+            restart nova-network. As a last resort, do this as
+            root:</para>
         <programlisting># killall dnsmasq
 # restart nova-network</programlisting>
         <para>Several minutes after nova-network is restarted, you
@@ -378,6 +383,10 @@ root 2439 0.0 0.0 27512 472 ? S Feb26 0:00 /usr/sbin/dnsmasq --strict-order --bi
             instances, then you must wait for the DNS reverse lookup
             timeout to occur for the ssh login process to
             complete.</para>
+        <para>When debugging DNS issues, start by making sure the host
+            where the dnsmasq process for that instance runs is able
+            to correctly resolve. If the host cannot resolve, then the
+            instances won't be able either.  </para>
         <para>A quick way to check if DNS is working is to 
             resolve a hostname inside your instance using the
                 <code>host</code> command. If DNS is working, you
@@ -404,7 +413,10 @@ ping: bad address 'openstack.org'</programlisting>
             mentioned in the previous section, the simplest way to
             rule out a misbehaving dnsmasq process is to kill all of
             the dnsmasq processes on the machine, and restart
-            nova-network. As root:</para>
+            nova-network. However, be aware that this command affects
+            everyone running instances on this node, including tenants
+            that have not seen the issue. As a last resort, as
+            root:</para>
         <programlisting># killall dnsmasq
 # restart nova-network</programlisting>
         <para>After the dnsmasq processes start again, check if DNS is
