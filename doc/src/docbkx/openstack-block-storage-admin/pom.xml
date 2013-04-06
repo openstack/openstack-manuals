@@ -13,7 +13,7 @@
 
     <properties>
         <!-- This is set by Jenkins according to the branch. -->
-        <release.path.name>trunk</release.path.name>
+        <release.path.name>local</release.path.name>
         <comments.enabled>1</comments.enabled>
     </properties>
     <!-- ################################################ -->
@@ -48,7 +48,7 @@
             <plugin>
                 <groupId>com.rackspace.cloud.api</groupId>
                 <artifactId>clouddocs-maven-plugin</artifactId>
-                <version>1.7.2</version>
+                <version>1.7.1</version>
                 <executions>
                     <execution>
                         <id>goal1</id>
@@ -91,14 +91,14 @@
                             <!-- The following elements sets the autonumbering of sections in output for chapter numbers but no numbered sections-->
                             <sectionAutolabel>0</sectionAutolabel>
                             <sectionLabelIncludesComponentLabel>0</sectionLabelIncludesComponentLabel>
-                            <targetDirectory>target/docbkx/webhelp/${release.path.name}/openstack-block-storage</targetDirectory>
+                            <targetDirectory>${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-block-storage</targetDirectory>
                             <webhelpDirname>admin</webhelpDirname>
                             <pdfFilenameBase>bk-block-storage-adminguide-${release.path.name}</pdfFilenameBase>
                             <postProcess>
 
                                 <!--Deletes leftover uneeded directories -->
 
-                                <delete dir="${basedir}/target/docbkx/webhelp/bk-block-storage-adminguide"/>
+                                <!--<delete dir="${basedir}/target/docbkx/webhelp/bk-block-storage-adminguide"/>-->
 
                             </postProcess>
                         </configuration>
