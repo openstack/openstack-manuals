@@ -11,6 +11,11 @@
         Networking sections on each of the nodes. </para>
     <para>The <emphasis role="bold">Basic Install</emphasis> document uses gre tunnels. This
         document will describe how to use vlans for separation instead.</para>
+     <para>The diagram below shows the setup:</para>
+     <note><para>Since we are running DHCP agent and L3 agent on one node,
+     we should set <literal>use_namespaces</literal> to
+     <literal>True</literal>(which is True by default) in both agents' configuration file.
+     Please refer to <link linkend="ch_limitations">Limitations</link>.</para></note>
     <mediaobject>
         <imageobject>
             <imagedata fileref="figures/Quantum-PhysNet-Diagram.png"
@@ -163,7 +168,7 @@ admin_tenant_name = service
 admin_user = quantum 
 admin_password = password
 metadata_ip = 192.168.0.1
-use_namespaces = False</userinput></screen>
+use_namespaces = True</userinput></screen>
                     </listitem>
                     <listitem>
                         <para>Edit , <emphasis role="bold">/etc/quantum/api-paste.ini </emphasis>
@@ -177,7 +182,7 @@ admin_password = password</userinput></screen>
                     <listitem>
                         <para>Edit , <emphasis role="bold">/etc/quantum/dhcp_agent.ini </emphasis>
                             file and modify:</para>
-                        <screen><userinput>use_namespaces = False</userinput></screen>
+                        <screen><userinput>use_namespaces = True</userinput></screen>
                     </listitem>
                                 <listitem>
                                     <para>Restart networking services</para>
