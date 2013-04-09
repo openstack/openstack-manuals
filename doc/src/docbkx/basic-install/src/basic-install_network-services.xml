@@ -23,7 +23,34 @@ ovs-vsctl add-br br-ex
 ovs-vsctl add-port br-ex eth2
 ip link set up br-ex </screen></para>
             </listitem>
-        </orderedlist>
+            <listitem><para>A crucial step for configuring Open vSwitch and the Linux bridge
+                        means you must move your IP address to the
+                        bridge interface instead of the physical
+                        interface. This is described below and also in
+                <link linkend="basic-network-common">Common services</link>.</para> 
+                <para>As an example, if you tie eth0 to a bridge, such
+                        as <userinput>ovs-vsctl add-br br-eth0
+                            &amp;&amp; ovs-vsctl add-port br-eth0
+                            eth0</userinput> (where eth0 had an IP
+                        address of 192.168.100.51/24), then you need
+                        to modify your
+                            <filename>/etc/network/interfaces</filename>
+                        as such:</para>
+            <screen>
+auto eth0
+iface eth0 inet manual
+up ifconfig $IFACE up
+up ip link $IFACE promisc on
+down ifconfig $IFACE down
+
+auto br-eth0
+iface br-eth0 inet static
+address 192.168.100.51
+netmask 255.255.255.0
+gateway 192.168.100.X
+dns-nameservers 8.8.8.8
+            </screen></listitem>
+            </orderedlist>
     </para>
     </section>
     <section xml:id="network-quantum">
