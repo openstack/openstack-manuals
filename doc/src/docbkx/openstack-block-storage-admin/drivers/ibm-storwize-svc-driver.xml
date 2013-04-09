@@ -12,12 +12,14 @@
             <title>Configuring the Storwize family and SVC system
             </title>
             <simplesect>
-                <title>iSCSI configuration</title>
-                <para>The Storwize family or SVC system must be
-                configured for iSCSI.
-                Each Storwize family or SVC node should have
-                at least one iSCSI IP address.
-                The driver uses an iSCSI IP address associated
+                <title>Network configuration</title>
+
+            	<para>The Storwize family or SVC system must be
+                configured for iSCSI, Fibre Channel, or both.</para>
+
+                <para>If using iSCSI, each Storwize family or SVC node should
+                have at least one iSCSI IP address.
+                The IBM Storwize/SVC driver uses an iSCSI IP address associated
                 with the volume's preferred
                 node (if available) to attach the volume to the
                 instance, otherwise it uses the first available
@@ -25,21 +27,67 @@
                 The driver obtains the iSCSI IP address
                 directly from the storage system;
                 there is no need to provide these
-                iSCSI IP addresses directly to the driver. </para>
+                iSCSI IP addresses directly to the driver.</para>
                 <note>
-                    <para>You should make sure that the compute nodes
+                    <para>If using iSCSI, ensure that the compute nodes
                     have iSCSI network access to the Storwize family
+                    or SVC system. </para>
+                </note>
+                <note>
+                    <para>OpenStack Nova's Grizzly version supports iSCSI
+                    multipath.
+                    Once this is configured on the Nova host (outside the
+                    scope of this documentation), multipath will be enabled.
+                    </para>
+                </note>
+
+                <para>If using Fibre Channel (FC), each Storwize family or SVC
+                node should have at least one WWPN port configured.
+                If the <literal>storwize_svc_multipath_enabled</literal> flag
+                is set to True in the Cinder configuration file, the driver
+                will use all available WWPNs to attach the volume to the
+                instance (details about the configuration flags appear in the
+                <link linkend="ibm-storwize-svc-driver2"> next section</link>).
+                If the flag is not set, the driver uses the WWPN
+                associated with the volume's preferred node (if available),
+                otherwise it uses the first available WWPN of the system.
+                The driver obtains the WWPNs directly from the storage system;
+                there is no need to provide these WWPNs directly to the driver.
+                </para>
+                <note>
+                    <para>If using FC, ensure that the compute nodes
+                    have FC connectivity to the Storwize family
                     or SVC system. </para>
                 </note>
             </simplesect>
             <simplesect>
+                <title>iSCSI CHAP authentication</title>
+                <para>If using iSCSI for data access, all new hosts created by
+                the driver on the Storwize family or SVC system will have a
+                randomly-generated CHAP secret associated with them.
+                OpenStack compute nodes will use these secrets when creating
+                iSCSI connections.
+                <note>
+                    <para>CHAP secrets will not be added to existing hosts.
+                    </para>
+                </note>
+                <note>
+                    <para>CHAP secrets are passed from Cinder to Nova in
+                    cleartext.
+                    This communication should be secured to ensure that CHAP
+                    secrets are not discovered.
+                    </para>
+                </note>
+                </para>
+            </simplesect>
+            <simplesect>
                 <title>Configuring storage pools</title>
-                <para>The driver allocates all volumes in a single
-                pool.
+                <para>The IBM Storwize/SVC driver allocates all volumes in a
+                single pool.
                 The pool should be created in advance and be
                 provided to the driver using the
                 <literal>storwize_svc_volpool_name</literal>
-                flag.
+                configuration flag.
                 Details about the configuration flags and how
                 to provide the flags to the driver appear in the
                 <link linkend="ibm-storwize-svc-driver2">
@@ -62,7 +110,7 @@
                     be port 22 (SSH). </para>
                 <note>
                     <para>Make sure the compute node running
-                          the cinder-volume management driver has SSH
+                          the nova-volume management driver has SSH
                           network access to
                           the storage system. </para>
                 </note>
@@ -116,7 +164,7 @@
                 by running:
                 </para>
                 <programlisting>
-                ssh-keygen -t rsa
+ssh-keygen -t rsa
                 </programlisting>
                 <para>The command prompts for a file to save the key
                 pair.
@@ -138,6 +186,10 @@
                 uploaded to the Storwize family or SVC system
                 using the storage management GUI or command
                 line interface. </para>
+                <note>
+                    <para>Ensure that Cinder has read permissions on
+                    the private key file.</para>
+                </note>
             </simplesect>
         </section>
         <section xml:id="ibm-storwize-svc-driver2">
@@ -149,16 +201,18 @@
                 <para>Set the volume driver to the Storwize family and
                         SVC driver by setting the
                             <literal>volume_driver</literal> option in
-                            <filename>nova.conf</filename> as follows: </para>
+                            <filename>cinder.conf</filename> as follows: </para>
                 <programlisting>
-volume_driver=nova.volume.storwize_svc.StorwizeSVCDriver
+volume_driver = cinder.volume.drivers.storwize_svc.StorwizeSVCDriver
                 </programlisting>
             </simplesect>
             <simplesect>
                 <title>Configuring options for the Storwize family and
-                        SVC driver in nova.conf</title>
-                <para>The following options apply to all volumes and
-                        cannot be changed for a specific volume. </para>
+                        SVC driver in cinder.conf</title>
+                <para>The following options specify default values for all
+                volumes.
+                Some can be over-ridden using volume types, which 
+                are described below. </para>
                 <table rules="all">
                 <caption>List of configuration flags for Storwize
                             storage and SVC driver</caption>
@@ -238,24 +292,7 @@ volume_driver=nova.volume.storwize_svc.StorwizeSVCDriver
                         </td>
                         <td><para>Required</para></td>
                         <td><para></para></td>
-                        <td><para>Pool name for volumes</para></td>
-                    </tr>
-                    <tr>
-                        <td><para>
-                        <literal>storwize_svc_vol_vtype</literal>
-                        </para>
-                        </td>
-                        <td><para>Optional</para></td>
-                        <td><para>Striped</para></td>
-                        <td><para>Volume virtualization type
-                        <footnote xml:id='storwize-svc-fn2'>
-                        <para>More details on this configuration
-                        option are available in the Storwize
-                        family and SVC command line
-                        documentation under the
-                        <literal>mkvdisk</literal> command.
-                        </para></footnote>
-                        </para></td>
+                        <td><para>Default pool name for volumes</para></td>
                     </tr>
                     <tr>
                         <td><para>
@@ -263,15 +300,15 @@ volume_driver=nova.volume.storwize_svc.StorwizeSVCDriver
                         </para>
                         </td>
                         <td><para>Optional</para></td>
-                        <td><para>2%</para></td>
-                        <td><para>Initial physical allocation
+                        <td><para>2</para></td>
+                        <td><para>Initial physical allocation (percentage)
                             <footnote xml:id='storwize-svc-fn3'>
                             <para>
                             The driver creates thin-provisioned
                             volumes by default. The
                             <literal>storwize_svc_vol_rsize</literal>
                             flag defines the initial physical
-                            allocation size for thin-provisioned
+                            allocation percentage for thin-provisioned
                             volumes, or if set to
                             <literal>-1</literal>,
                             the driver creates full allocated
@@ -290,7 +327,8 @@ volume_driver=nova.volume.storwize_svc.StorwizeSVCDriver
                         <td><para>Optional</para></td>
                         <td><para>0 (disabled)</para></td>
                         <td><para>Space allocation warning threshold
-                            <footnoteref linkend='storwize-svc-fn2'/>
+                                  (percentage)
+                            <footnoteref linkend='storwize-svc-fn3'/>
                             </para></td>
                     </tr>
                     <tr>
@@ -327,7 +365,7 @@ volume_driver=nova.volume.storwize_svc.StorwizeSVCDriver
                         <td><para>Optional</para></td>
                         <td><para>256</para></td>
                         <td><para>Volume grain size
-                            <footnoteref linkend='storwize-svc-fn2'/>
+                            <footnoteref linkend='storwize-svc-fn3'/>
                             in KB</para></td>
                     </tr>
                     <tr>
@@ -339,7 +377,7 @@ volume_driver=nova.volume.storwize_svc.StorwizeSVCDriver
                         <td><para>Optional</para></td>
                         <td><para>False</para></td>
                         <td><para>
-                        Enable or disable Real-Time Compression
+                        Enable or disable Real-time Compression
                         <footnote xml:id='storwize-svc-fn5'>
                         <para>Defines whether Real-time Compression
                             is used for the volumes created with
@@ -391,10 +429,171 @@ volume_driver=nova.volume.storwize_svc.StorwizeSVCDriver
                                    or SVC system to prepare a new
                                    FlashCopy mapping. The driver
                                    accepts a maximum wait time of 600
-                                   seconds (10 minutes). </para></footnote> (seconds)</para></td>
+                                   seconds (10 minutes). </para></footnote>
+                            (seconds)</para></td>
+                    </tr>
+                    <tr>
+                        <td><para>
+                        <literal>storwize_svc_connection_protocol
+                        </literal>
+                        </para>
+                        </td>
+                        <td><para>Optional</para></td>
+                        <td><para>iSCSI</para></td>
+                        <td><para>Connection protocol to use (currently
+                                  supports 'iSCSI' or 'FC')
+                        </para></td>
+                    </tr>
+                    <tr>
+                        <td><para>
+                        <literal>storwize_svc_multipath_enabled
+                        </literal>
+                        </para>
+                        </td>
+                        <td><para>Optional</para></td>
+                        <td><para>False</para></td>
+                        <td><para>Enable multipath for FC connections
+                            <footnote xml:id='storwize-svc-fn8'>
+                            <para>Multipath for iSCSI connections requires no
+                                   storage-side configuration and is enabled
+                                   if the compute host has multipath configured.
+                            </para></footnote>
+                        </para></td>
                     </tr>
                 </tbody>
             </table>
+            </simplesect>
+            <simplesect>
+                <title>Working with multiple back-ends</title>
+                <para>Cinder has support for multiple back-ends.
+                This can be accomplished by running multiple instances of
+                cinder-volume, each with its own configuration file, or by
+                including multiple sections in one configuration file.
+                For example:
+                <programlisting>
+[DEFAULT]
+...
+enabled_backends = v7k1,v7k2
+
+[v7k1]
+...
+
+[v7k2]
+...
+                </programlisting>
+                Here, common options are placed under
+                <literal>[DEFAULT]</literal>, while options specific to a
+                back-end are placed in the appropriate section. </para>
+
+                <para>By default, volumes will be allocated between back-ends
+                to balance allocated space.
+                However, <literal>volume types</literal> can be used to have
+                finer-grained control over where volumes will be allocated.
+                Each volume type contains a set of key-value pairs called
+                <literal>extra specs</literal>.
+                Volume types are typically set a priori by an administrator,
+                and can be managed using the cinder client, using the
+                <literal>type-create</literal>, <literal>type-delete</literal>, 
+                <literal>type-key</literal>, and <literal>type-list</literal>
+                arguments. </para>
+
+                <para>The <literal>extra specs</literal> keys which have the
+                "capabilities" prefix (called "scope") are interpreted by the
+                Cinder scheduler and used to make placement decisions according
+                to the capabilities of the available back-ends.</para>
+
+                <para>The following are examples of supported key-values:
+                </para>
+
+                <para>In the following example, the volume will be placed on a
+                controller named <literal>myv7000</literal>, in a pool named
+                <literal>openstack</literal>:
+                <programlisting>
+capabilities:volume_backend_name=my7000_openstack
+                </programlisting></para>
+
+                <para>In the next example, the volume will be placed on a
+                controller that supports compression.
+                Specifying False will require the volume to be placed on a
+                back-end that does not support compression (if no contraints
+                on compression support are required, do not set this key):
+                <programlisting>
+capabilities:compression_support='&lt;is&gt; True'
+                </programlisting></para>
+
+                <para>The next example shows how Easy Tier support can be with
+                set with the same semantics as
+                <literal>compression_support</literal>:
+                <programlisting>
+capabilities:easytier_support='&lt;is&gt; True'
+                </programlisting></para>
+
+                <para>The connection protocol used to attach volumes to
+                instances can also be specified using volume types.
+                In this example, the volume will be placed on a controller
+                that supports Fibre Channel, and Fibre Channel will be used
+                when attaching that volume.
+                FC can also be replaced with iSCSI.
+                <programlisting>
+capabilities:storage_protocol='&lt;in&gt; FC'
+                </programlisting></para>
+            </simplesect>
+            <simplesect>
+                <title>Configuring per-volume creation options</title>
+                <para>The volume types previously described can also be used to
+                pass options to the IBM Storwize/SVC driver, which over-ride
+                the default values set in the configuration file.
+                Contrary to the previous examples where the "capabilities"
+                scope was used to pass parameters to the Cinder scheduler,
+                options can be passed to the IBM Storwize/SVC driver with the 
+                "drivers" scope, or by ommitting the scope.</para>
+
+                <para>The following <literal>extra specs</literal> keys are
+                supported by the IBM Storwize/SVC driver:
+                <itemizedlist>
+                    <listitem><para>rsize</para></listitem>
+                    <listitem><para>warning</para></listitem>
+                    <listitem><para>autoexpand</para></listitem>
+                    <listitem><para>grainsize</para></listitem>
+                    <listitem><para>compression</para></listitem>
+                    <listitem><para>easytier</para></listitem>
+                    <listitem><para>multipath</para></listitem>
+                </itemizedlist>
+                These keys have the same semantics as their counterparts in the
+                configuration file.  They are set similarly; for example,
+                <literal>rsize=2</literal> or
+                <literal>compression=False</literal>.
+                </para>
+            </simplesect>
+            <simplesect>
+                <title>Complete volume type examples</title>
+                <para>In the following example, the volume will be placed on
+                    a controller named that supports Fibre Channel and
+                    compression, FC will be used when attaching the volume,
+                    and compression will be enabled:</para>
+                <programlisting>
+cinder type-create compressed
+cinder type-key compressed set capabilities:storage_protocol=''&lt;in&gt; FC' capabilities:compression_support='&lt;is&gt; True' drivers:compression=True
+                </programlisting>
+
+                <para>Volume types can be used, for example, to provide users
+                with different
+                <itemizedlist>
+                    <listitem><para>
+                    performance levels (e.g., allocating entirely on an HDD
+                    tier, using Easy Tier for an HDD-SDD mix, or allocating
+                    entirely on an SSD tier)
+                    </para></listitem>
+                    <listitem><para>
+                    resiliency levels (e.g., allocating volumes in
+                    pools with different RAID levels)
+                    </para></listitem>
+                    <listitem><para>
+                    features (e.g., enabling/disabling Real-time
+                    Compression)
+                    </para></listitem>
+                </itemizedlist>
+                </para>
             </simplesect>
         </section>
         </section>
