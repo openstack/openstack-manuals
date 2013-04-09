@@ -1445,7 +1445,131 @@ $ swift-dispersion-report -j
                 </table>
             </section>
 
+    <section xml:id="static-large-objects">
+    <title>Static Large Object (SLO) support</title>
+<para>
+This feature is very similar to Dynamic Large Object (DLO) support in that
+it allows the user to upload many objects concurrently and afterwards
+download them as a single object. It is different in that it does not rely
+on eventually consistent container listings to do so. Instead, a user
+defined manifest of the object segments is used.
+</para>
+<section xml:id="slo-uploading-manifest">
+<title>Uploading the Manifest</title>
+<para>
+After the user has uploaded the objects to be concatenated a manifest is
+uploaded. The request must be a PUT with the query parameter::
 
+    <programlisting>?multipart-manifest=put</programlisting>
+
+The body of this request will be an ordered list of files in
+json data format. The data to be supplied for each segment is:
+<itemizedlist>
+    <listitem><para>path: the path to the segment (not including account)
+          /container/object_name</para></listitem>
+    <listitem><para>etag: the etag given back when the segment was PUT</para></listitem>
+    <listitem><para>size_bytes: the size of the segment in bytes</para></listitem>
+</itemizedlist>
+The format of the list will be:
+<programlisting>
+    json:
+    [{"path": "/cont/object",
+      "etag": "etagoftheobjectsegment",
+      "size_bytes": 1048576}, ...]
+</programlisting>
+
+The number of object segments is limited to a configurable amount, default
+1000. Each segment, except for the final one, must be at least 1 megabyte
+(configurable). On upload, the middleware will head every segment passed in and
+verify the size and etag of each. If any of the objects do not match (not
+found, size/etag mismatch, below minimum size) then the user will receive a 4xx
+error response. If everything does match, the user will receive a 2xx response
+and the SLO object is ready for downloading.
+</para>
+<para>
+Behind the scenes, on success, a json manifest generated from the user input is
+sent to object servers with an extra "X-Static-Large-Object: True" header
+and a modified Content-Type. The parameter: swift_bytes=$total_size will be
+appended to the existing Content-Type, where total_size is the sum of all
+the included segments' size_bytes. This extra parameter will be hidden from
+the user.
+</para>
+<para>
+Manifest files can reference objects in separate containers, which
+will improve concurrent upload speed. Objects can be referenced by
+multiple manifests.
+</para>
+</section>
+<section xml:id="slo-retrieving">
+<title>Retrieving a Large Object</title>
+<para>A GET request to the manifest object will return the concatenation of the
+objects from the manifest much like DLO. If any of the segments from the
+manifest are not found or their Etag/Content Length no longer match the
+connection will drop. In this case a 409 Conflict will be logged in the proxy
+logs and the user will receive incomplete results.
+</para><para>
+The headers from this GET or HEAD request will return the metadata attached
+to the manifest object itself with some exceptions:
+
+<itemizedlist>
+    <listitem><para>Content-Length: the total size of the SLO (the sum of the sizes of
+                    the segments in the manifest)</para></listitem>
+    <listitem><para>X-Static-Large-Object: True</para></listitem>
+    <listitem><para>Etag: the etag of the SLO (generated the same way
+      as DLO)</para></listitem>
+</itemizedlist>
+A GET request with the query parameter::
+
+   <programlisting>?multipart-manifest=get</programlisting>
+
+Will return the actual manifest file itself. This is generated json and does
+not match the data sent from the original multipart-manifest=put. This call's
+main purpose is for debugging.
+</para><para>
+When the manifest object is uploaded you are more or less guaranteed that
+every segment in the manifest exists and matched the specifications.
+However, there is nothing that prevents the user from breaking the
+SLO download by deleting/replacing a segment referenced in the manifest. It is
+left to the user use caution in handling the segments.
+</para>
+</section>
+<section xml:id="slo-deleting">
+<title>Deleting a Large Object</title>
+
+<para>
+A DELETE request will just delete the manifest object itself.
+
+A DELETE with a query parameter:
+
+    <programlisting>?multipart-manifest=delete</programlisting>
+
+will delete all the segments referenced in the manifest and then, if
+successful, the manifest itself. The failure response will be similar to
+the bulk delete middleware.
+</para>
+</section>
+<section xml:id="slo-modifying">
+<title>Modifying a Large Object</title>
+<para>
+PUTs / POSTs will work as expected, PUTs will just overwrite the manifest
+object for example.
+</para>
+</section>
+<section xml:id="slo-listing">
+<title>Container Listings</title>
+<para>
+In a container listing the size listed for SLO manifest objects will be the
+total_size of the concatenated segments in the manifest. The overall
+X-Container-Bytes-Used for the container (and subsequently for the account)
+will not reflect total_size of the manifest but the actual size of the json
+data stored. The reason for this somewhat confusing discrepancy is we want the
+container listing to reflect the size of the manifest object when it is
+downloaded. We do not, however, want to count the bytes-used twice (for both
+the manifest and the segments it's referring to) in the container and account
+metadata which can be used for stats purposes.
+</para>
+</section>
+    </section>
 
     </section>
 
