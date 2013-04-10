@@ -234,6 +234,31 @@ tunnel_interface = &lt;eth0&gt;
                     new settings.</para>
                 <screen><computeroutput>service quantum-server restart</computeroutput></screen>
 	    </section>
+            <section xml:id="PLUMgridplugin">
+                <title>Configuring PLUMgrid Plugin</title>
+                <para>To configure OpenStack Networking to use the
+                    PLUMgrid plugin first edit
+                        <filename>/etc/quantum/quantum.conf</filename>
+                    and set:</para>
+                <screen><computeroutput>core_plugin = quantum.plugins.plumgrid.plumgrid_nos_plugin.plumgrid_plugin.QuantumPluginPLUMgridV2</computeroutput></screen>
+                <para>Edit
+                        <filename>/etc/quantum/plugins/plumgrid/plumgrid.ini</filename>
+                    in order to configure the plugin. The quantum
+                    database created previously will be used by
+                    setting:</para>
+                <screen><computeroutput>sql_connection = mysql://&lt;user&gt;:&lt;password&gt;@localhost/plumgrid_quantum?charset=utf8</computeroutput></screen>
+                <para>Under the [PLUMgridNOS] section specify the IP
+                    address of the PLUMgrid EVO Cube director also
+                    known as NOS. Behind the director information
+                    admin username and password are also
+                    required:</para>
+                <screen><computeroutput>servers=&lt;plumgrid_NOS_IP>
+username=&lt;username>
+password=&lt;password></computeroutput></screen>
+                <para>Lastly, restart quantum-server to pick up the
+                    new settings.</para>
+                <screen><computeroutput>service quantum-server restart</computeroutput></screen>
+            </section>
         </section>
         <section xml:id="install_quantum_agent">
             <title>Install Software on Data Forwarding Nodes</title>
@@ -369,6 +394,7 @@ interface_driver = quantum.agent.linux.interface.OVSInterfaceDriver
             <itemizedlist>
             <listitem><para>Nicira NVP Plugin</para></listitem>
             <listitem><para>Floodlight/Bigswitch Plugin</para></listitem>
+            <listitem><para>PLUMgrid Plugin</para></listitem>
             </itemizedlist>
             </para>
             <warning>
