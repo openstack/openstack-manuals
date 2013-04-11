@@ -405,9 +405,10 @@ echo 'Extra user data here'</computeroutput></screen>
                 <para>Set the <literal>network_manager</literal> option in nova.conf.</para>
             </listitem>
             <listitem>
-                <para>Use the <code>nova-manage network create label
-                        CIDR n n</code> command to create the subnet
-                    that the VMs reside on.</para>
+                <para>Use the <code>nova network-create label --fixed-range-v4 CIDR [--vlan
+                            <replaceable>vlan_id</replaceable>]</code> command to create the subnet
+                    that the VMs reside on, specifying a VLAN if running in VLAN Network
+                    Mode.</para>
             </listitem>
             <listitem>
                 <para>Integrate the bridge with your network. </para>
@@ -433,10 +434,9 @@ echo 'Extra user data here'</computeroutput></screen>
                 </para>
             </listitem>
         </itemizedlist>
-        <para>When you issue the <literal>nova-manage network create</literal> command, it uses the
-            settings from the nova.conf configuration options file. Use the following command to
-            create the subnet that your VMs will run on :
-            <literallayout class="monospaced"><literal>nova-manage network create private 192.168.0.0/24 1 256</literal></literallayout>
+        <para>Use the following command to create a subnet (named <emphasis>private</emphasis> in
+            this example) that your VMs will run on :
+            <literallayout class="monospaced"><literal>nova network-create private --fixed-range-v4 192.168.0.0/24</literal></literallayout>
         </para>
         <para>When using the XenAPI compute driver, the OpenStack services run
             in a virtual machine. This means networking is
@@ -855,10 +855,10 @@ firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlis
                 time . The example above uses a network size of
                     <literal>256</literal>, which corresponds to a
                     <literal>/24</literal> network.</para>
-            <para>Networks are created with the <command>nova-manage network create</command>
-                command. Here is an example of how to create a network consistent with the above
-                example configuration options, as
-                root:<screen><prompt>#</prompt> <userinput>nova-manage network create --label=example-net --fixed_range_v4=172.16.169.0/24 --vlan=169 --bridge=br169 --project_id=a421ae28356b4cc3a25e1429a0b02e98 --num_networks=1</userinput> </screen></para>
+            <para>Networks are created with the <command>nova network-create</command> command. Here
+                is an example of how to create a network consistent with the above example
+                configuration options, as
+                root:<screen><prompt>#</prompt> <userinput>nova network-create example-net --fixed-range-v4=172.16.169.0/24 --vlan=169 --bridge=br169 --project-id=a421ae28356b4cc3a25e1429a0b02e98</userinput> </screen></para>
             <para>This creates a network called <literal>example-net</literal> associated with
                 tenant <literal>a421ae28356b4cc3a25e1429a0b02e98</literal>. The subnet is
                     <literal>172.16.169.0/24</literal> with a VLAN tag of <literal>169</literal>
@@ -872,60 +872,51 @@ firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlis
                     <literal>--project_id</literal> flag which corresponds to the tenant ID. Use the
                     <command>keystone tenant-list</command> command to list the tenants and
                 corresponding IDs that you have already created.</para>
-            <para>Instead of manually specifying a VLAN, bridge, and project id, you can create many
-                networks at once and have the Compute service automatically associate these networks
-                with tenants as needed, as well as automatically generating the VLAN IDs and bridge
-                interface names. For example, the following command would create 100 networks, from
-                    <literal>172.16.100.0/24</literal> to <literal>172.16.199.0/24</literal>. (This
-                assumes the <literal>network_size=256</literal> option has been set at nova.conf,
-                though this can also be specified by passing <literal>--network_size=256</literal>
-                as a flag to the <command>nova-manage</command>
-                command)<screen><prompt>#</prompt> nova-manage network create --num_networks=100 --fixed_range_v4=172.16.100.0/24 </screen></para>
-            <para>The <command>nova-manage network create</command> command supports many
-                configuration options, which are displayed when called with the
-                    <literal>--help</literal> flag:</para>
-            <programlisting>Usage: nova-manage network create &lt;args> [options]
+            <para>The <command>nova network-create</command> command supports many configuration
+                options, which are displayed when called with the <command>nova help
+                    network-create</command>:</para>
+            <programlisting>usage: nova network-create [--fixed-range-v4 &lt;x.x.x.x/yy>]
+                           [--fixed-range-v6 CIDR_V6] [--vlan &lt;vlan id>]
+                           [--vpn &lt;vpn start>] [--gateway GATEWAY]
+                           [--gateway-v6 GATEWAY_V6] [--bridge &lt;bridge>]
+                           [--bridge-interface &lt;bridge interface>]
+                           [--multi-host &lt;'T'|'F'>] [--dns1 &lt;DNS Address>]
+                           [--dns2 &lt;DNS Address>] [--uuid &lt;network uuid>]
+                           [--fixed-cidr &lt;x.x.x.x/yy>]
+                           [--project-id &lt;project id>] [--priority &lt;number>]
+                           &lt;network_label>
 
-Options:
-  -h, --help            show this help message and exit
-  --label=&lt;label>       Label for network (ex: public)
-  --fixed_range_v4=&lt;x.x.x.x/yy>
+Create a network.
+
+Positional arguments:
+  &lt;network_label>       Label for network
+
+Optional arguments:
+  --fixed-range-v4 &lt;x.x.x.x/yy>
                         IPv4 subnet (ex: 10.0.0.0/8)
-  --num_networks=&lt;number>
-                        Number of networks to create
-  --network_size=&lt;number>
-                        Number of IPs per network
-  --vlan=&lt;vlan id>      vlan id
-  --vpn=VPN_START       vpn start
-  --fixed_range_v6=FIXED_RANGE_V6
-                        IPv6 subnet (ex: fe80::/64)
-  --gateway=GATEWAY     gateway
-  --gateway_v6=GATEWAY_V6
+  --fixed-range-v6 CIDR_V6
+                        IPv6 subnet (ex: fe80::/64
+  --vlan &lt;vlan id>      vlan id
+  --vpn &lt;vpn start>     vpn start
+  --gateway GATEWAY     gateway
+  --gateway-v6 GATEWAY_V6
                         ipv6 gateway
-  --bridge=&lt;bridge>     VIFs on this network are connected to this bridge
-  --bridge_interface=&lt;bridge interface>
+  --bridge &lt;bridge>     VIFs on this network are connected to this bridge
+  --bridge-interface &lt;bridge interface>
                         the bridge is connected to this interface
-  --multi_host=&lt;'T'|'F'>
+  --multi-host &lt;'T'|'F'>
                         Multi host
-  --dns1=&lt;DNS Address>  First DNS
-  --dns2=&lt;DNS Address>  Second DNS
-  --uuid=&lt;network uuid>
+  --dns1 &lt;DNS Address>  First DNS
+  --dns2 &lt;DNS Address>  Second DNS
+  --uuid &lt;network uuid>
                         Network UUID
-  --fixed_cidr=&lt;x.x.x.x/yy>
+  --fixed-cidr &lt;x.x.x.x/yy>
                         IPv4 subnet for fixed IPS (ex: 10.20.0.0/16)
-  --project_id=&lt;project id>
+  --project-id &lt;project id>
                         Project id
-  --priority=&lt;number>   Network interface priority
-                    </programlisting>
-            <para>In particular, flags to the <command>nova-mange network create</command> command
-                can be used to override settings from <filename>nova.conf</filename>:<variablelist>
-                    <varlistentry>
-                        <term><literal>--network_size</literal></term>
-                        <listitem>
-                            <para>Overrides the <literal>network_size</literal> configuration
-                                option</para>
-                        </listitem>
-                    </varlistentry>
+  --priority &lt;number>   Network interface priority                   </programlisting>
+            <para>In particular, flags to the <command>nova network-create</command> command can be
+                used to override settings from <filename>nova.conf</filename>:<variablelist>
                     <varlistentry>
                         <term><literal>--bridge_interface</literal></term>
                         <listitem>
@@ -935,8 +926,10 @@ Options:
                     </varlistentry>
                 </variablelist></para>
             <para>To view a list of the networks that have been created, as
-                root:<screen><prompt>#</prompt> <userinput>nova-manage network list</userinput></screen></para>
-            <para>To modify an existing network, use the <command>nova-manage network
+                root:<screen><prompt>#</prompt> <userinput>nova network-list</userinput></screen></para>
+            <para>The <command>nova</command> command-line tool does not yet support network
+                modifications. To modify an existing network, you must use the
+                    <command>nova-manage</command> command. Use the <command>nova-manage network
                     modify</command> command, as
                 root:<screen><prompt>#</prompt> <userinput>nova-manage network modify --help</userinput>
 <computeroutput>Usage: nova-manage network modify &lt;args> [options]
@@ -951,7 +944,10 @@ Options:
   --disassociate-project
                         Disassociate Network from Project
   --disassociate-host   Disassociate Host from Project</computeroutput></screen></para>
-            <para>To delete a network, use <command>nova-manage network delete</command>, as
+            <para>The <command>nova</command> command-line tool does not yet support network
+                deletions.. To delete an existing network, you must use the
+                    <command>nova-manage</command> command. To delete a network, use
+                    <command>nova-manage network delete</command>, as
                 root:<screen><prompt>#</prompt> <userinput>nova-manage network delete --help</userinput><computeroutput>
 Usage: nova-manage network delete &lt;args> [options]
 
@@ -961,7 +957,7 @@ Options:
                         Network to delete
   --uuid=&lt;uuid>         UUID of network to delete</computeroutput></screen></para>
             <para>Note that a network must first be disassociated from a project using the
-                    <command>nova-manage network modify</command> command before it can be
+                    <command>nova network-disassociate</command> command before it can be
                 deleted.</para>
             <para>Creating a network will automatically cause the Compute database to populate with
                 a list of available fixed IP addresses. You can view the list of fixed IP addresses
@@ -2040,8 +2036,8 @@ auto_assign_floating_ip=True
             <title>Using the multinic feature</title>
             <para> In order to use the multinic feature, first create two networks, and attach them
                 to your project :
-                <screen><prompt>$</prompt> <userinput>nova-manage network create --fixed_range_v4=20.20.0.0/24 --num_networks=1 --network_size=256 --label=first-net --project=$your-project</userinput>
-<prompt>$</prompt> <userinput>nova-manage network create --fixed_range_v4=20.20.10.0/24 --num_networks=1 --network_size=256 --label=second-net --project=$your-project</userinput>              </screen>
+                <screen><prompt>$</prompt> <userinput>nova network-create first-net --fixed-range-v4=20.20.0.0/24 --project-id=$your-project</userinput>
+<prompt>$</prompt> <userinput>nova network-create second-net --fixed-range-v4=20.20.10.0/24 --project-id=$your-project</userinput>              </screen>
                 Now every time you spawn a new instance, it gets two IP addresses from the
                 respective DHCP servers : <screen><prompt>$</prompt> <userinput>nova list</userinput>
 <computeroutput>+-----+------------+--------+----------------------------------------+
@@ -2177,12 +2173,10 @@ enabled_apis=ec2,osapi_compute,osapi_volume,metadata</programlisting></para>
                 Other options become available when you configure <literal>multi_host</literal> nova networking please
                 refer to <link linkend="list-of-compute-config-options"> Configuration: nova.conf</link>.</para>
             <note>
-                <para>You must specify the
-                        <literal>multi_host</literal> option on the
-                    command line when creating fixed networks. For
-                    example:
+                <para>You must specify the <literal>multi_host</literal> option on the command line
+                    when creating fixed networks. For example:
                     <screen>
-              <prompt>#</prompt> <userinput> nova-manage network create --fixed_range_v4=192.168.0.0/24 --num_networks=1 --network_size=256 --multi_host=T --label=test</userinput>
+<prompt>#</prompt> <userinput> nova network-create test --fixed-range-v4=192.168.0.0/24 --multi-host=T</userinput>
             </screen></para>
             </note>
         </simplesect>
@@ -2243,17 +2237,16 @@ enabled_apis=ec2,osapi_compute,osapi_volume,metadata</programlisting></para>
                             172.16.100.1, the file would contain the
                             line:<programlisting>dhcp-option=option:router,<replaceable>172.16.100.1</replaceable></programlisting></para>
                         <para>If running in VLAN mode, a separate router must be specified for each
-                            network. The networks are identified by the <literal>--label</literal>
-                            argument when calling <command>nova-manage network create</command> to
-                            create the networks as documented in the <link
-                                linkend="configuring-vlan-networking">Configuring VLAN Networking
-                                subsection</link>. Assuming you have three VLANs, that are labeled
-                                <literal>red</literal>, <literal>green</literal>, and
-                                <literal>blue</literal>, with corresponding hardware routers at
-                                <literal>172.16.100.1</literal>, <literal>172.16.101.1</literal> and
-                                <literal>172.16.102.1</literal>, the <systemitem class="service"
-                                >dnsmasq</systemitem>configuration file  (e.g.,
-                                <filename>/etc/dnsmasq-nova.conf</filename>) would contain the
+                            network. The networks are identified by the first  argument when calling
+                                <command>nova network-create</command> to create the networks as
+                            documented in the <link linkend="configuring-vlan-networking"
+                                >Configuring VLAN Networking subsection</link>. Assuming you have
+                            three VLANs, that are labeled <literal>red</literal>,
+                                <literal>green</literal>, and <literal>blue</literal>, with
+                            corresponding hardware routers at <literal>172.16.100.1</literal>,
+                                <literal>172.16.101.1</literal> and <literal>172.16.102.1</literal>,
+                            the <systemitem class="service">dnsmasq</systemitem>configuration file
+                            (e.g., <filename>/etc/dnsmasq-nova.conf</filename>) would contain the
                             following:<programlisting>dhcp-option=tag:'red',option:router,172.16.100.1
 dhcp-option=tag:'green',option:router,172.16.101.1
 dhcp-option=tag:'blue',option:router,172.16.102.1</programlisting></para>

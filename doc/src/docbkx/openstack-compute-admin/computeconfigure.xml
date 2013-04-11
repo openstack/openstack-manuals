@@ -91,42 +91,6 @@
         schema is current:</para>
 
       <screen><prompt>$</prompt> <userinput>nova-manage db sync</userinput></screen>
-<para>You also need to populate the database with the network
-        configuration information that Compute obtains from the
-          <filename>nova.conf</filename> file. You can find out more
-        about the nova-manage network create command with
-          <userinput>nova-manage network create --help</userinput>.
-        The possible commands with <userinput>nova-manage network</userinput> are: <userinput>create</userinput>,
-        <userinput>delete</userinput>, <userinput>list</userinput>, and <userinput>modify</userinput>.</para>
-<screen><prompt>$</prompt> <userinput>nova-manage network create <replaceable>&lt;network-label&gt; &lt;project-network&gt; &lt;number-of-networks-in-project&gt; &lt;addresses-in-each-network&gt;</replaceable></userinput>
-</screen>
-
-      <para>Here is an example of what this looks like with real values
-      entered:</para>
-
-      <screen><prompt>$</prompt> <userinput>nova-manage db sync</userinput>
-<prompt>$</prompt> <userinput>nova-manage network create novanet 192.168.0.0/24 1 256</userinput></screen>
-
-      <para>For this example, the number of IPs is <literal>/24</literal>
-      since that falls inside the <literal>/16</literal> range that was set in
-      <literal>fixed-range</literal> in <filename>nova.conf</filename>.
-      Currently, there can only be one network, and this set up would use the
-      max IPs available in a <literal>/24</literal>. You can choose values
-      that let you use any valid amount that you would like.</para>
-
-      <para>The <command>nova-manage</command> service assumes that the first IP address is your
-          network (like <literal>192.168.0.0</literal>), that the 2nd IP is your gateway
-          (<literal>192.168.0.1</literal>), and that the broadcast is the very last IP in the range
-          you defined (<literal>192.168.0.255</literal>). If this is not the case you will need to
-          manually edit the sql db <literal>networks</literal> table.</para>
-
-      <para>When you run the <command>nova-manage network create</command>
-      command, entries are made in the <literal>networks</literal> and
-      <literal>fixed_ips</literal> tables. However, one of the networks listed
-      in the <literal>networks</literal> table needs to be marked as bridge in
-      order for the code to know that a bridge exists. The network in the Nova
-      networks table is marked as bridged automatically for Flat
-      Manager.</para>
     </section>
     <section xml:id="creating-credentials"><title>Creating Credentials</title>
       <para>The credentials you will use to launch
@@ -200,6 +164,30 @@ source ~/.bashrc</userinput></screen>
         <screen><prompt>#</prompt> <userinput>nova x509-get-root-cert</userinput>
 <prompt>#</prompt> <userinput>nova x509-create-cert </userinput></screen>
       </para>
+     </section>
+
+    <section xml:id="creating-networks">
+      <title>Creating networks</title>
+      <para>You need to populate the database with the network configuration information that
+        Compute obtains from the <filename>nova.conf</filename> file. You can find out more about
+        the <command>nova network-create</command> command with <userinput>nova help network-create</userinput>.
+    </para>
+      <para>Here is an example of what this looks like with real values entered. This example would
+        be appropriate for FlatDHCP mode, for VLAN Manager mode you would also need to specify a
+        VLAN.</para>
+      <screen><prompt>$</prompt> <userinput>nova network-create novanet --fixed-range-v4 192.168.0.0/24</userinput></screen>
+      <para>For this example, the number of IPs is <literal>/24</literal> since that falls inside
+        the <literal>/16</literal> range that was set in <literal>fixed-range</literal> in
+          <filename>nova.conf</filename>. Currently, there can only be one network, and this set up
+        would use the max IPs available in a <literal>/24</literal>. You can choose values that let
+        you use any valid amount that you would like. </para>
+      <para>OpenStack Compute assumes that the first IP address is your network (like
+          <literal>192.168.0.0</literal>), that the 2nd IP is your gateway
+          (<literal>192.168.0.1</literal>), and that the broadcast is the very last IP in the range
+        you defined (<literal>192.168.0.255</literal>). You can alter the gateway using the
+          <literal>--gateway</literal> flag when invoking <command>nova network-create</command>.
+        You are unlikely to need to modify the network or broadcast addresseses, but if you do, you
+        will need to manually edit the <literal>networks</literal> table in the database.</para>
      </section>
 
     <section xml:id="enabling-access-to-vms-on-the-compute-node">
@@ -568,30 +556,25 @@ xenapi_remap_vbd_dev=true
       set the use_ipv6 configuration option to True. Restart all
       nova- services.</para>
 
-    <para>When using the command <command>nova-manage network create</command> you can add a
-    fixed range for IPv6 addresses. You must specify public or private after
-    the create parameter.</para>
+    <para>When using the command <command>nova network-create</command> you can add a fixed range
+      for IPv6 addresses. You must specify public or private after the create parameter.</para>
 
-    <screen><prompt>$</prompt> <userinput>nova-manage network create public <replaceable>fixed_range</replaceable> <replaceable>num_networks</replaceable> <replaceable>network_size</replaceable> <replaceable>vlan_start</replaceable> <replaceable>vpn_start</replaceable> <replaceable>fixed_range_v6</replaceable></userinput></screen>
+    <screen><prompt>$</prompt> <userinput>nova network-create public --fixed-range-v4 <replaceable>fixed_range</replaceable> --vlan <replaceable>vlan_id</replaceable> --vpn <replaceable>vpn_start</replaceable> --fixed-range-v6 <replaceable>fixed_range_v6</replaceable></userinput></screen>
 
-    <para>You can set IPv6 global routing prefix by using the
-        <literal>fixed_range_v6</literal> parameter. The default
-      is: <literal>fd00::/48</literal>. When you use <literal>FlatDHCPManager</literal>, the command uses
-      the original value of <literal>fixed_range_v6</literal>. When you use <literal>VlanManager</literal>,
-      the command creates prefixes of subnet by incrementing subnet
-      id. Guest VMs uses this prefix for generating their IPv6 global
-      unicast address.</para>
+    <para>You can set IPv6 global routing prefix by using the <literal>--fixed_range_v6</literal>
+      parameter. The default is: <literal>fd00::/48</literal>. When you use
+        <literal>FlatDHCPManager</literal>, the command uses the original value of
+        <literal>--fixed_range_v6</literal>. When you use <literal>VlanManager</literal>, the
+      command creates prefixes of subnet by incrementing subnet id. Guest VMs uses this prefix for
+      generating their IPv6 global unicast address.</para>
 
     <para>Here is a usage example for <literal>VlanManager</literal>:</para>
 
-    <screen><prompt>$</prompt> <userinput>nova-manage network create public 10.0.1.0/24 3 32 100 1000 fd00:1::/48 </userinput></screen>
+    <screen><prompt>$</prompt> <userinput>nova network-create public --fixed-range-v4 10.0.1.0/24 --vlan 100 --vpn 1000 --fixed-range-v6 fd00:1::/48 </userinput></screen>
 
     <para>Here is a usage example for <literal>FlatDHCPManager</literal>:</para>
 
-    <screen><prompt>$</prompt> <userinput>nova-manage network create public 10.0.2.0/24 3 32 0 0 fd00:1::/48 </userinput></screen>
-
-    <para>Note that <literal>vlan_start</literal> and <literal>vpn_start</literal> parameters are not used by
-    <literal>FlatDHCPManager</literal>.</para>
+    <screen><prompt>$</prompt> <userinput>nova network-create public  --fixed-range-v4 10.0.2.0/24 --fixed-range-v6 fd00:1::/48 </userinput></screen>
 
     <xi:include href="tables/ipv6-nova-conf.xml"/>
   </section>
