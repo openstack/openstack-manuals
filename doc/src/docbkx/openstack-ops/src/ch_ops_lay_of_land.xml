@@ -427,14 +427,21 @@ cloud.example.com nova</programlisting>
     </section>
     <section xml:id="network">
         <title>Network</title>
-        <para>Next, take a look at what Fixed IP networks are
-            configured in your cloud:</para>
+        <para>Next, take a look at what Fixed IP networks are configured in your cloud. You can use
+            the <command>nova</command> command-line client to get the IP
+            ranges.<screen><prompt>$</prompt> <userinput>nova network-list</userinput>
+<computeroutput>+--------------------------------------+--------+--------------+
+| ID                                   | Label  | Cidr         |
++--------------------------------------+--------+--------------+
+| 3df67919-9600-4ea8-952e-2a7be6f70774 | test01 |  10.1.0.0/24 |
+| 8283efb2-e53d-46e1-a6bd-bb2bdef9cb9a | test02 |  10.1.1.0/24 |
++--------------------------------------+--------+--------------+</computeroutput></screen></para>
+        <para>The <command>nova-manage</command> tool can provide some additional details.</para>
 
-        <programlisting><?db-font-size 60%?><prompt>$</prompt> nova-manage network list</programlisting>
-
-        <programlisting><?db-font-size 60%?>id IPv4        IPv6 start address DNS1 DNS2 VlanID project   uuid 
+<screen><prompt>$</prompt> <userinput>nova-manage network list</userinput>
+<computeroutput>id IPv4        IPv6 start address DNS1 DNS2 VlanID project   uuid 
 1  10.1.0.0/24 None 10.1.0.3      None None 300    2725bbd   beacb3f2
-2  10.1.1.0/24 None 10.1.1.3      None None 301    none      d0b1a796</programlisting>
+2  10.1.1.0/24 None 10.1.1.3      None None 301    none      d0b1a796</computeroutput></screen>
         <para>This output shows that two networks are configured, each
             network containing 255 IPs (a /24 subnet). The first
             network has been assigned to a certain project while the

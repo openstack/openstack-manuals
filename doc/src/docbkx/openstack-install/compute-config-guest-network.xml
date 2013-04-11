@@ -15,7 +15,7 @@
     <itemizedlist os="ubuntu"><listitem><para>eth0: public IP, gateway</para></listitem>
         <listitem><para>br100: no ports, stp off, fd 0, first address from fixed_range set in nova.conf files.</para></listitem></itemizedlist> 
     <para os="ubuntu">Here's an Ubuntu/Debian example:</para>
-    <para os="ubuntu"><literallayout class="monospaced"># The loopback network interface
+    <para os="ubuntu"><programlisting># The loopback network interface
 auto lo
 iface lo inet loopback
 
@@ -29,11 +29,11 @@ iface br100 inet static
 address 192.168.100.1 
 netmask 255.255.255.0 
 bridge_stp off
-bridge_fd 0</literallayout></para>
+bridge_fd 0</programlisting></para>
     <para os="centos;fedora;rhel">Here's an example network setup for RHEL, Fedora, or CentOS. Create
         
         <filename>/etc/sysconfig/network-scripts/ifcfg-br100</filename>:</para>
-    <literallayout os="centos;fedora;rhel" class="monospaced">
+    <programlisting os="centos;fedora;rhel">
 DEVICE=br100
 TYPE=Bridge
 ONBOOT=yes
@@ -41,14 +41,13 @@ DELAY=0
 BOOTPROTO=static
 IPADDR=192.168.100.1
 NETMASK=255.255.255.0   
-    </literallayout>
+    </programlisting>
     <para>Also install bridge-utils:</para>
     <screen os="ubuntu"><prompt>$</prompt><userinput>sudo apt-get install bridge-utils</userinput></screen>
     <screen os="rhel;centos;fedora"><prompt>$</prompt><userinput>sudo yum install bridge-utils</userinput></screen>
-    <para>Ensure that you set up the bridge, although if you use
-        flat_network_bridge=br100 in your <filename>nova.conf</filename> file, nova
-        will set up the bridge for you when you run the
-        nova-manage network command. </para>
+    <para>Ensure that you set up the bridge, although if you use flat_network_bridge=br100 in your
+            <filename>nova.conf</filename> file, nova will set up the bridge for you when you run
+            the <command>nova network-create</command> command. </para>
     <literallayout class="monospaced">sudo brctl addbr br100</literallayout>
     <para>Lastly, restart networking to have these changes take
         effect. (This method is deprecated but "<code>restart
