@@ -7,7 +7,8 @@
         <para>
                 <orderedlist>
                     <listitem>
-                        <para>Install the packages :<screen><userinput>apt-get install glance glance-api glance-registry python-glanceclient glance-common</userinput></screen></para>
+                        <para>Install the packages
+                    :<screen os="ubuntu"><userinput>apt-get install glance glance-api glance-registry python-glanceclient glance-common</userinput></screen><screen os="centos;rhel;fedora"><userinput>yum install openstack-glance openstack-glance-api openstack-glance-registry python-glanceclient glance-common</userinput></screen></para>
                     </listitem>
                     <listitem>
                         <para>Configure Glance :</para>
@@ -18,20 +19,23 @@ admin_tenant_name = service
 admin_user = glance
 admin_password = password</userinput></screen>For
                                         <emphasis role="bold">glance-api.conf</emphasis>, modify :
-                                    <screen><userinput>notifier_strategy = rabbit
-rabbit_password = password</userinput></screen></para>
+                                    <screen os="ubuntu"><userinput>notifier_strategy = rabbit
+rabbit_password = password</userinput></screen><screen os="centos;rhel;fedora"><userinput>notifier_strategy = qpid
+qpid_password = password</userinput></screen></para>
                             </listitem>
                             <listitem>
-                                <para>Restart Glance services :<screen><userinput>service glance-api restart &amp;&amp; service glance-registry restart</userinput></screen></para>
+                                <para>Restart Glance services :<screen os="ubuntu"><userinput>service glance-api restart &amp;&amp; service glance-registry restart</userinput></screen><screen os="centos;rhel;fedora"><userinput>service openstack-glance-api restart &amp;&amp; service openstack-glance-registry restart</userinput></screen></para>
                             </listitem>
                             <listitem>
                                 <para>Create Glance tables into the database :<screen><userinput>glance-manage db_sync</userinput></screen></para>
                             </listitem>
                             <listitem>
-                                <para>Download and import Ubuntu 12.04 LTS UEC Image
+                                <para os="ubuntu">Download and import Ubuntu 12.04 LTS UEC Image
                             :<screen>glance image-create \
     --location http://uec-images.ubuntu.com/releases/12.04/release/ubuntu-12.04-server-cloudimg-amd64-disk1.img \
-    --is-public true --disk-format qcow2 --container-format bare --name "Ubuntu"</screen></para>
+    --is-public true --disk-format qcow2 --container-format bare --name "Ubuntu"</screen></para><para os="centos;rhel;fedora">Download and import Cirros QCOW2 Image
+                            :<screen>wget http://download.cirros-cloud.net/0.3.1/cirros-0.3.1-x86_64-disk.img </screen><screen>glance image-create \
+    --is-public true --disk-format qcow2 --container-format bare --name "Cirros" &lt; linuz </screen></para>
                             </listitem>
                             <listitem>
                                 <para>Check if the image has been introduced in the index

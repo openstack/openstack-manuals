@@ -9,16 +9,25 @@
     <para>
         <orderedlist>
             <listitem>
-                <para>Install the packages :<screen><userinput>apt-get install quantum-plugin-openvswitch-agent \
-quantum-dhcp-agent quantum-l3-agent</userinput></screen></para>
+                <para>Install the packages
+                        :<screen os="ubuntu"><userinput>apt-get install quantum-plugin-openvswitch-agent \
+quantum-dhcp-agent quantum-l3-agent</userinput></screen><screen os="centos;rhel;fedora"><userinput>yum install openstack-quantum openstack-quantum-openvswitch\
+openvswitch-switch</userinput></screen></para><para os="centos;rhel;fedora">The Open vSwitch kernel module in Fedora
+                        has been compiled without tunnel support. If
+                        gre tunnels and network namespaces are
+                        desired, then this package must be recompiled
+                        from source. Directions can be found on the
+                        Open vSwitch site. If the kernel module is
+                        recompiled then the existing one must be
+                        removed and deleted.</para>
             </listitem>
             <listitem>
                 <para>Start Open vSwitch:
-                     <screen>service openvswitch-switch start</screen></para>
+                    <screen>service openvswitch-switch start</screen><screen os="centos;rhel;fedora">chkconfig openvswitch-switch on</screen></para>
             </listitem>
             <listitem>
-                <para>Create Virtual Bridging
-                        :<screen>ovs-vsctl add-br br-int
+                <para>Create Virtual
+                        Bridging:<screen>ovs-vsctl add-br br-int
 ovs-vsctl add-br br-ex
 ovs-vsctl add-port br-ex eth2
 ip link set up br-ex </screen></para>
@@ -55,7 +64,7 @@ dns-nameservers 8.8.8.8
     </section>
     <section xml:id="network-quantum">
         <title>Quantum</title>
-            <para>Configure Quantum services :</para>
+            <para>Configure Quantum services:</para>
             <itemizedlist>
                 <listitem>
                     <para>Edit <emphasis role="bold">/etc/quantum/l3_agent.ini</emphasis> file and modify :<screen><userinput>auth_url = http://192.168.0.1:35357/v2.0
@@ -66,14 +75,19 @@ metadata_ip = 192.168.0.1
 use_namespaces = False</userinput></screen></para>
                 </listitem>
                 <listitem>
-                <para>Edit <emphasis role="bold">/etc/quantum/api-paste.ini</emphasis> file and modify :<screen><userinput>
+                <para>Edit <emphasis role="bold"
+                        >/etc/quantum/api-paste.ini</emphasis> file
+                    and
+                    modify:<screen><userinput>
 auth_host = 192.168.0.1
 admin_tenant_name = service
 admin_user = quantum
 admin_password = password</userinput></screen></para>
                 </listitem>
                 <listitem>
-                    <para>Edit <emphasis role="bold">/etc/quantum/quantum.conf</emphasis> file and modify :<screen><userinput>core_plugin = \
+                    <para>Edit <emphasis role="bold"
+                        >/etc/quantum/quantum.conf</emphasis> file and
+                    modify:<screen><userinput>core_plugin = \
     quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPluginV2
 auth_strategy = keystone
 fake_rabbit = False
@@ -82,8 +96,8 @@ rabbit_password = password</userinput></screen></para>
                 </listitem>
                 <listitem>
                     <para>Edit <emphasis role="bold"
-                        >/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</emphasis> file and
-                    modify :<screen>[DATABASE]
+                        >/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</emphasis>
+                    file and modify:<screen>[DATABASE]
 sql_connection = mysql://quantum:password@192.168.0.1:3306/quantum
 [OVS]
 tenant_network_type = gre 
@@ -100,14 +114,24 @@ local_ip = 10.10.10.1</screen>
                     </db:note></para>
                 </listitem>
                 <listitem>
-                    <para>Edit <emphasis role="bold">/etc/quantum/dhcp_agent.ini</emphasis> file and add :<screen><userinput>use_namespaces = False</userinput></screen></para>
+                    <para>Edit <emphasis role="bold"
+                        >/etc/quantum/dhcp_agent.ini</emphasis> file
+                    and
+                    add:<screen><userinput>use_namespaces = False</userinput></screen></para>
                 </listitem>
             </itemizedlist>
 
-            <para>Start the services
-                :<screen>service quantum-plugin-openvswitch-agent start
+            <para>Start the
+            services:<screen os="ubuntu">service quantum-plugin-openvswitch-agent start
 service quantum-dhcp-agent restart
-service quantum-l3-agent restart</screen></para>
+service quantum-l3-agent restart</screen><screen os="centos;rhel;fedora">service quantum-server restart
+service quantum-openvswitch-agent restart
+service quantum-dhcp-agent restart
+service quantum-l3-agent restart
+chkconfig quantum-server on
+chkconfig quantum-openvswitch-agent on
+chkconfig quantum-dhcp-agent on
+chkconfig quantum-l3-agent on</screen></para>
         
     </section>
 </section>

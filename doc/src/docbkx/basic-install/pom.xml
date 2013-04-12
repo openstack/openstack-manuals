@@ -12,11 +12,11 @@
   
   <properties>
     <!-- This is set by Jenkins according to the branch. -->
-    <release.path.name>folsom</release.path.name>
+    <release.path.name>grizzly</release.path.name>
     <comments.enabled>1</comments.enabled>
-    <operating.system>local</operating.system>
+    <operating.system>apt</operating.system>
     <!-- This is set by Jenkins to run twice for each similar operating system group -->
-    <profile.os>ubuntu</profile.os>
+    <profile.os>centos;rhel;fedora</profile.os>
   </properties>
   
   <!-- ################################################ -->
@@ -59,7 +59,7 @@
       <plugin>
         <groupId>com.rackspace.cloud.api</groupId>
         <artifactId>clouddocs-maven-plugin</artifactId>
-        <version>1.5.1</version>
+        <version>1.7.2</version>
         <executions>
           <execution>
             <id>goal1</id>
@@ -105,24 +105,6 @@
               <sectionAutolabel>0</sectionAutolabel>
               <sectionLabelIncludesComponentLabel>0</sectionLabelIncludesComponentLabel>
               <postProcess>
-                <!-- Copies the figures to the correct location for webhelp -->
-                <copy todir="${basedir}/target/docbkx/webhelp/${release.path.name}/basic-install/content/figures">
-                  <fileset dir="${basedir}/src/figures">
-                    <include name="**/*.*" />
-                  </fileset>
-                </copy>
-                <!-- Copies webhelp (HTML output) to desired URL location on docs.openstack.org -->
-                <copy
-                  todir="${basedir}/target/docbkx/webhelp/${release.path.name}/basic-install/">
-                  <fileset
-                    dir="${basedir}/target/docbkx/webhelp/bk-basic-install/">
-                    <include name="**/*" />
-                  </fileset>
-                </copy>
-                <!--Moves PDF to the needed placement -->
-                <move failonerror="false"
-                  file="${basedir}/target/docbkx/pdf/bk-basic-install.pdf"
-                  tofile="${basedir}/target/docbkx/webhelp/${release.path.name}/basic-install/content/basic-install-${release.path.name}.pdf"/> 
                 <!--Deletes leftover uneeded directories -->
                 <delete dir="${basedir}/target/docbkx/webhelp/bk-basic-install"/>
               </postProcess>
@@ -139,6 +121,7 @@
           <canonicalUrlBase>http://docs.openstack.org/${release.path.name}/basic-install/content/</canonicalUrlBase>
           <profileSecurity>reviewer</profileSecurity>
           <branding>openstack</branding>
+          <profileOs>${profile.os}</profileOs>
 	</configuration>
       </plugin>
     </plugins>

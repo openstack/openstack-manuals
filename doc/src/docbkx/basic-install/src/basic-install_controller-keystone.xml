@@ -8,10 +8,12 @@
         <orderedlist>
             <listitem>
                 <para>Install the packages
-                    :<screen><userinput>apt-get install keystone python-keystone python-keystoneclient</userinput></screen></para>
+                    :<screen os="ubuntu"><userinput>apt-get install keystone python-keystone python-keystoneclient</userinput></screen><screen os="rhel;centos;fedora"><userinput>yum install openstack-keystone python-keystone python-keystoneclient</userinput></screen></para>
             </listitem>
             <listitem>
-                <para>Edit <emphasis role="bold">/etc/keystone/keystone.conf</emphasis> :<programlisting>[DEFAULT]
+                <para>Edit <emphasis role="bold"
+                        >/etc/keystone/keystone.conf</emphasis>
+                    :<programlisting>[DEFAULT]
 admin_token = password
 bind_host = 0.0.0.0
 public_port = 5000
@@ -21,7 +23,7 @@ verbose = True
 debug = True
 log_file = keystone.log
 log_dir = /var/log/keystone
-log_config = /etc/keystone/logging.conf
+# log_config = /etc/keystone/logging.conf
 
 [sql]
 connection = mysql://keystone:password@localhost:3306/keystone
@@ -36,9 +38,11 @@ driver = keystone.catalog.backends.sql.Catalog
 (...)</programlisting></para>
             </listitem>
             <listitem>
-                <para>Restart Keystone and create the tables in the database
-                    :<screen><userinput>service keystone restart
-keystone-manage db_sync</userinput></screen></para>
+                <para>Restart Keystone and create the tables in the
+                    database
+                    :<screen os="ubuntu"><userinput>service keystone restart
+keystone-manage db_sync</userinput></screen><screen os="rhel;centos;fedora"><userinput>service openstack-keystone restart
+ openstack-db --init --service keystone </userinput></screen></para>
             </listitem>
             <listitem>
                 <para>Load environment variables :</para>
