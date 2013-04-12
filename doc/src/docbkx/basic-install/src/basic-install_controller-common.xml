@@ -72,6 +72,11 @@ net.ipv4.conf.default.rp_filter = 0  </programlisting>
                         <listitem>
                             <para>Set up old ethernet nic device names:</para>
                             <para><screen><prompt>#</prompt> <userinput>sed -i 's/# GOTO="netdevicename_end"/GOTO="netdevicename_end"/g' /lib/udev/rules.d/71-biosdevname.rules</userinput></screen></para>
+                            <para>Disable NetworkManager and enable the network service
+                                <screen>service NetworkManager stop
+service network start
+chkconfig NetworkManager off
+chkconfig network on</screen></para>
                             <para>Edit the <emphasis role="bold"
                                     >/etc/sysconfig/network-scripts/ifcfg-eth0</emphasis> file:</para>
                         </listitem>
@@ -210,9 +215,9 @@ EOF</userinput></screen></para>
                         <screen os="ubuntu;deb"><prompt>$</prompt> <userinput>apt-get install rabbitmq-server</userinput></screen><screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install qpid-cpp-server</userinput></screen></para>
                     </listitem>
                     <listitem>
-                        <para os="ubuntu;deb">Change the default password :</para><para os="rhel;fedora;centos">Disable authentication :</para>
-                        <screen os="ubuntu;deb"><userinput># echo auth=no >> /etc/qpid.conf</userinput></screen>
-                        <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>sed -i -e 's/auth=.*/auth=no/g' /etc/qpidd.conf</userinput></screen>
+                        <para os="ubuntu;deb">Change the default password :</para><para os="rhel;fedora;centos">Enable authentication:</para>
+                        <screen os="ubuntu;deb"><userinput># echo auth=1 >> /etc/qpid.conf</userinput></screen>
+                        <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>echo auth=1 >> /etc/qpidd.conf</userinput></screen>
                     </listitem>
                     <listitem>
                         <para>Enable the messaging service:</para>

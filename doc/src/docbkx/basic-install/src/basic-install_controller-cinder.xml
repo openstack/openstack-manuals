@@ -26,19 +26,32 @@ chkconfig iscsi on</userinput></screen></para>
                         <itemizedlist>
                             <listitem>
                                 <para>Edit <emphasis role="bold">/etc/cinder/cinder.conf</emphasis>
-                            file and modify
-                            :<screen><userinput>[DEFAULT]
-sql_connection = mysql://cinder:password@localhost:3306/cinder
-rabbit_password = password</userinput></screen></para>
+                            file and modify:
+                                    <screen>
+                                        <userinput>[DEFAULT]
+sql_connection = mysql://cinder:password@localhost:3306/cinder</userinput></screen>
+<screen><userinput os='ubuntu'>rabbit_password = password</userinput>
+                                    </screen>
+                                    <screen><userinput os='centos;rhel;fedora'>rpc_backend = cinder.openstack.common.rpc.impl_qpid
+qpid_user = guest
+qpid_password = quest
+                                    </userinput>
+                                    </screen>
+                                    <screen><userinput>
+[keystone_authtoken]
+admin_tenant_name = service
+admin_user = cinder
+admin_password = password
+</userinput></screen></para>
                             </listitem>
                             <listitem>
-                                <para>Edit <emphasis role="bold">/etc/cinder/api-paste.ini</emphasis> file and modify :<screen><userinput>admin_tenant_name = service
+                                <para>Edit <emphasis role="bold">/etc/cinder/api-paste.ini</emphasis> file and modify:
+                                    <screen><userinput>admin_tenant_name = service
 admin_user = cinder 
 admin_password = password</userinput></screen></para>
                             </listitem>
                             <listitem>
-                                <para>Create the volume (on the second disk)
-                            :<screen><userinput>fdisk /dev/sdb
+                                <para>Create the volume (on the second disk):<screen><userinput>fdisk /dev/sdb
 
 [Create a Linux partition]
 
@@ -49,9 +62,15 @@ vgcreate cinder-volumes /dev/sdb1</userinput></screen></para>
                                 <para>Create Cinder tables into the database :<screen><userinput>cinder-manage db sync</userinput></screen></para>
                             </listitem>
                             <listitem>
-                                <para>Restart the services :<screen><userinput>service cinder-api restart
+                                <para>Restart the services :<screen os='ubuntu'><userinput>service cinder-api restart
 service cinder-scheduler restart
-service cinder-volume restart</userinput></screen></para>
+service cinder-volume restart</userinput></screen>
+                                    <screen os='centos;rhel;fedora'><userinput>service openstack-cinder-api restart
+service openstack-cinder-scheduler restart
+service openstack-cinder-volume restart
+chkconfig openstack-cinder-api on
+chkconfig openstack-cinder-scheduler on
+chkconfig openstack-cinder-volume on</userinput></screen></para>
                             </listitem>
                         </itemizedlist>
                     </listitem>

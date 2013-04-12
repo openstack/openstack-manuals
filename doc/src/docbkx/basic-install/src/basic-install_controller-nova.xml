@@ -12,17 +12,26 @@
     nova-scheduler python-nova python-novaclient nova-consoleauth novnc \
     nova-novncproxy</userinput></screen><screen os="centos;rhel;fedora"><userinput>yum install -y openstack-nova-api openstack-nova-scheduler openstack-nova-cert \
         openstack-nova-console openstack-nova-doc genisoimage openstack-dashboard \
-        openstack-nova-novncproxy novnc</userinput></screen></para>
+        openstack-nova-novncproxy openstack-nova-conductor novnc</userinput></screen></para>
                     </listitem>
                     <listitem>
                         <para>Configure Nova :</para>
                         <itemizedlist>
                             <listitem>
                                 <para>Edit <emphasis role="bold">/etc/nova/api-paste.ini</emphasis>
-                            file and modify
-                            :<screen><userinput>admin_tenant_name = service 
+                            file and modify:<screen><userinput os='ubuntu'>admin_tenant_name = service 
 admin_user = nova 
-admin_password = password</userinput></screen>
+admin_password = password</userinput>
+                                </screen><screen><userinput os='centos;rhel;fedora'>[filter:authtoken]
+paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
+service_protocol = http
+service_host = 127.0.0.1
+service_port = 5000
+admin_tenant_name = service
+admin_user  = nova
+admin_password = password
+# Workaround for https://bugs.launchpad.net/nova/+bug/1154809
+auth_version = v2.0</userinput></screen>
                             <screen>============================================================
 [composite:osapi_volume]
 use = call:nova.api.openstack.urlmap:urlmap_factory
@@ -58,8 +67,17 @@ paste.app_factory = nova.api.openstack.volume.versions:Versions.factory
 # MySQL Connection #
 sql_connection=mysql://nova:password@192.168.0.1/nova
 
-# nova-scheduler #
+                                    </userinput></screen>
+                                    <screen><userinput os='ubuntu'># nova-scheduler #
 rabbit_password=password
+                                    </userinput></screen>
+                                    <screen><userinput os='centos;rhel;fedora'>
+# nova-scheduler #
+qpid_username=guest
+qpid_password=guest
+rpc_backend = nova.openstack.common.rpc.impl_qpid
+                                    </userinput></screen>
+                                    <screen><userinput>                  
 scheduler_driver=nova.scheduler.filter_scheduler.FilterScheduler
 
 # nova-api #
@@ -115,11 +133,23 @@ verbose=true</userinput></screen></para>
                                 <para>Create Nova tables into the database :<screen><userinput>nova-manage db sync</userinput></screen></para>
                             </listitem>
                             <listitem>
-                                <para>Restart Nova services :<screen><userinput>service nova-api restart
+                                <para>Restart Nova services :<screen os='ubuntu'><userinput>service nova-api restart
 service nova-cert restart
 service nova-consoleauth restart
 service nova-scheduler restart
-service nova-novncproxy restart</userinput></screen></para>
+service nova-novncproxy restart</userinput></screen>
+                                    <screen os='centos;rhel;fedora'><userinput>service openstack-nova-api restart
+service openstack-nova-cert restart
+service openstack-nova-consoleauth restart
+service openstack-nova-scheduler restart
+service openstack-nova-conductor restart
+service openstack-nova-novncproxy restart
+chkconfig openstack-nova-api on
+chkconfig openstack-nova-cert on
+chkconfig openstack-nova-consoleauth on
+chkconfig openstack-nova-scheduler on
+chkconfig openstack-nova-conductor on
+chkconfig openstack-nova-novncproxy on</userinput></screen></para>
                             </listitem>
                         </itemizedlist>
                     </listitem>
