@@ -20,10 +20,21 @@ auth_protocol = http
 admin_tenant_name = service
 admin_user = cinder
 admin_password = openstack</programlisting></para>
-    <para>Edit /etc/cinder/cinder.conf.</para>
-    <programlisting><xi:include parse="text" href="samples/cinder.conf"/></programlisting>
-    <para>Configure RabbitMQ in /etc/cinder/cinder.conf.</para>
-    <programlisting>[DEFAULT]
+    <para>Edit /etc/cinder/cinder.conf to reflect your settings.</para>
+    <programlisting>
+[DEFAULT]
+rootwrap_config=/etc/cinder/rootwrap.conf
+sql_connection = mysql://cinder:openstack@192.168.127.130/cinder
+api_paste_config = /etc/cinder/api-paste.ini
+
+iscsi_helper=tgtadm
+volume_name_template = volume-%s
+volume_group = cinder-volumes
+verbose = True
+auth_strategy = keystone
+#osapi_volume_listen_port=5900</programlisting>
+    <para>Configure RabbitMQ also in /etc/cinder/cinder.conf.</para>
+    <programlisting>
 # Add these when not using the defaults.
 rabbit_host = 10.10.10.10
 rabbit_port = 5672
