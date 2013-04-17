@@ -15,20 +15,20 @@
     <orderedlist>
         <listitem>
             <para>Install swift-proxy service:</para>
-            <para><screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install swift-proxy memcached python-keystone-auth-token python-swiftclient</userinput></screen>
+            <para><screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install swift-proxy memcached python-keystoneclient python-swiftclient python-webob</userinput></screen>
             <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-swift-proxy memcached openstack-utils python-swiftclient python-keystone-auth-token</userinput></screen></para>
         </listitem>
         <listitem>
             <para>Create self-signed cert for SSL:</para>
             <para>
-                <screen><prompt>#</prompt><userinput>cd /etc/swift</userinput>
-<prompt>#</prompt><userinput>openssl req -new -x509 -nodes -out cert.crt -keyout cert.key</userinput>                </screen>
+                <screen><prompt>#</prompt> <userinput>cd /etc/swift</userinput>
+<prompt>#</prompt> <userinput>openssl req -new -x509 -nodes -out cert.crt -keyout cert.key</userinput>                </screen>
             </para>
         </listitem>
         <listitem>
             <para>Modify memcached to listen on the default interfaces.
                 Preferably this should be on a local, non-public network.
-                Edit the following line in /etc/memcached.conf,
+                Edit the following line in <filename>/etc/memcached.conf</filename>,
                 changing:</para>
             <para>
                 <literallayout class="monospaced">-l 127.0.0.1 
@@ -39,7 +39,7 @@ to
         <listitem>
             <para>Restart the memcached server:</para>
             <para>
-                <screen><prompt>#</prompt><userinput>service memcached restart</userinput></screen></para>
+                <screen><prompt>#</prompt> <userinput>service memcached restart</userinput></screen></para>
         </listitem>
         <listitem os="rhel;centos;fedora">
             <para>RHEL/CentOS/Fedora Only: To set up Object Storage to authenticate tokens we need to set the keystone Admin
@@ -49,7 +49,7 @@ to
             </para>
         </listitem>
         <listitem>
-            <para>Create /etc/swift/proxy-server.conf:</para>
+            <para>Create <filename>/etc/swift/proxy-server.conf</filename>:</para>
             <para>
                 <literallayout class="monospaced"><xi:include parse="text" href="samples/proxy-server.conf.txt" /></literallayout>
             </para>
@@ -60,6 +60,14 @@ to
                     <literallayout class="monospaced">10.1.2.3:11211,10.1.2.4:11211</literallayout>Only
                     the proxy server uses memcache.</para>
             </note>
+        </listitem>
+        <listitem>
+            <para>Create the <parameter class="option"
+                    >signing_dir</parameter> and set its permissions
+                accordingly.<screen>
+<prompt>#</prompt> <userinput>mkdir -p /home/swift/keystone-signing</userinput>
+<prompt>#</prompt> <userinput>chown -R swift:swift /home/swift/keystone-signing</userinput></screen>
+            </para>
         </listitem>
         <listitem>
             <para>Create the account, container and object rings. The
@@ -89,9 +97,11 @@ to
 <prompt>#</prompt> <userinput>swift-ring-builder container.builder add z&lt;ZONE&gt;-&lt;STORAGE_LOCAL_NET_IP_1&gt;:6001/&lt;DEVICE&gt; 100</userinput>
 <prompt>#</prompt> <userinput>swift-ring-builder object.builder add z&lt;ZONE&gt;-&lt;STORAGE_LOCAL_NET_IP_1&gt;:6000/&lt;DEVICE&gt; 100</userinput></screen>
             </para>
-			<para>For example, if you were setting up a storage node with a partition in Zone 1 on IP
-                10.0.0.1. The mount point of this partition is /srv/node/sdb1, and the path in
-                rsyncd.conf is /srv/node/, the DEVICE would be sdb1 and the commands would look
+			<para>For example, if you were setting up a storage node with a
+                partition in Zone 1 on IP 10.0.0.1. The mount point of
+                this partition is /srv/node/sdb1, and the path in
+                    <filename>rsyncd.conf </filename>is /srv/node/,
+                the DEVICE would be sdb1 and the commands would look
                 like:
                 <screen>
 <prompt>#</prompt> <userinput>swift-ring-builder account.builder add z1-10.0.0.1:6002/sdb1 100</userinput>
@@ -124,14 +134,14 @@ to
                 </screen>
             </para>
             <note>
-                <title>Note</title>
                 <para>Rebalancing rings can take some time.</para>
             </note>
         </listitem>
         <listitem>
-            <para>Copy the account.ring.gz, container.ring.gz, and
-                object.ring.gz files to each of the Proxy and Storage nodes
-                in /etc/swift.</para>
+            <para>Copy the <filename>account.ring.gz</filename>,
+                    <filename>container.ring.gz</filename>, and
+                    <filename>object.ring.gz</filename> files to each
+                of the Proxy and Storage nodes in /etc/swift.</para>
         </listitem>
         <listitem>
             <para>Make sure all the config files are owned by the swift
@@ -140,7 +150,7 @@ to
         </listitem>
         <listitem>
             <para>Start Proxy services:</para>
-            <para><screen><prompt>#</prompt> <userinput>swift-init proxy start</userinput></screen></para>
+            <para><screen><prompt>#</prompt> <userinput>service proxy-server start</userinput></screen></para>
         </listitem>
     </orderedlist>
 </section>
