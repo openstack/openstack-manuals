@@ -868,12 +868,13 @@ xenapi_remap_vbd_dev=true
         </listitem>
 
         <listitem>
-          <para>HostA is the "Cloud Controller", and should be running: nova-api, nova-scheduler,
-              nova-network, nova-volume, nova-objectstore, nova-scheduler.</para>
+          <para>HostA is the "Cloud Controller", and should be running the following services:
+              nova-api, nova-scheduler, nova-network, nova-volume, nova-objectstore,
+              nova-scheduler.</para>
         </listitem>
 
         <listitem>
-          <para>Host B and Host C are the "compute nodes", running nova-compute.</para>
+          <para>Host B and Host C are the "compute nodes", running the nova-compute service.</para>
         </listitem>
 
         <listitem>
@@ -891,11 +892,10 @@ xenapi_remap_vbd_dev=true
 
     <para><orderedlist>
         <listitem>
-          <para>Configure your DNS or <filename>/etc/hosts</filename> and
-             ensure it is consistent accross all hosts. Make sure that the three hosts
-            can perform name resolution with each other. As a test,
-            use the <command>ping</command> command to ping each host from one
-            another.</para>
+          <para>Configure your DNS server or <filename>/etc/hosts</filename> and ensure it is
+              consistent accross all hosts. Make sure that the three hosts can perform name
+              resolution with each other. As a test, use the <command>ping</command> command to ping
+              each host from one another.</para>
 
           <screen><prompt>$</prompt> <userinput>ping HostA</userinput>
 <prompt>$</prompt> <userinput>ping HostB</userinput>
@@ -914,11 +914,9 @@ setup an NFS server on HostA, and NFS Clients on HostB and HostC.</link> </para>
         and have it readable and writable by the nova user on HostB and HostC.</para>
         </listitem>
         <listitem>
-        <para>
-        Using your knowledge from the Ubuntu documentation, configure the
-        NFS server at HostA by adding a line to <filename>/etc/exports</filename>
-          <screen><prompt>$</prompt> <userinput>NOVA-INST-DIR/instances HostA/255.255.0.0(rw,sync,fsid=0,no_root_squash)</userinput></screen>
-        </para>
+        <para> Using your knowledge from the Ubuntu documentation, configure the NFS server at HostA
+              by adding a line to <filename>/etc/exports</filename>
+              <screen><prompt>$</prompt> <userinput>NOVA-INST-DIR/instances HostA/255.255.0.0(rw,sync,fsid=0,no_root_squash)</userinput></screen></para>
           <para>Change the subnet mask (<literal>255.255.0.0</literal>) to the appropriate
             value to include the IP addresses of HostB and HostC. Then
             restart the NFS server.</para>
@@ -949,23 +947,14 @@ setup an NFS server on HostA, and NFS Clients on HostB and HostC.</link> </para>
           directory can be seen at HostA</para>
 
           <screen><prompt>$</prompt> <userinput>ls -ld <filename><replaceable>NOVA-INST-DIR</replaceable>/instances/</filename></userinput></screen>
-
-
-          <programlisting language="bash">
-drwxr-xr-x 2 nova nova 4096 2012-05-19 14:34 nova-install-dir/instances/
-          </programlisting>
-
+          <screen><computeroutput>
+drwxr-xr-x 2 nova nova 4096 2012-05-19 14:34 nova-install-dir/instances/</computeroutput></screen>
           <para>Perform the same check at HostB and HostC - paying special
            attention to the permissions (nova should be able to write)</para>
 
           <screen><prompt>$</prompt> <userinput>ls -ld <filename><replaceable>NOVA-INST-DIR</replaceable>/instances/</filename></userinput></screen>
-
-          <programlisting language="bash">
-drwxr-xr-x 2 nova nova 4096 2012-05-07 14:34 nova-install-dir/instances/
-          </programlisting>
-
+          <screen><computeroutput>drwxr-xr-x 2 nova nova 4096 2012-05-07 14:34 nova-install-dir/instances/</computeroutput></screen>
           <screen><prompt>$</prompt> <userinput>df -k</userinput></screen>
-
           <programlisting language="bash">
 Filesystem           1K-blocks      Used Available Use% Mounted on
 /dev/sda1            921514972   4180880 870523828   1% /
@@ -978,11 +967,12 @@ HostA:        921515008 101921792 772783104  12% /var/lib/nova/instances  ( &lt;
 </programlisting>
         </listitem>
 
-        <listitem>
-          <para>Update the libvirt configurations. Modify
-              <filename>/etc/libvirt/libvirtd.conf</filename>:</para>
-
-          <programlisting>
+      <listitem>
+        <para>Update the libvirt configuration:</para>
+        <itemizedlist>
+          <listitem>
+            <para>Edit <filename>/etc/libvirt/libvirtd.conf</filename>:</para>
+              <programlisting>
 before : #listen_tls = 0
 after : listen_tls = 0
 
@@ -990,25 +980,30 @@ before : #listen_tcp = 1
 after : listen_tcp = 1
 
 add: auth_tcp = "none"
-                            </programlisting>
-
-          <para>Modify <filename>/etc/default/libvirt-bin</filename></para>
-
-          <programlisting>
+          </programlisting>
+          </listitem>
+          <listitem>
+            <para>
+              On Ubuntu, edit /etc/default/libvirt-bin:
+              <screen>
+<userinput>
 before :libvirtd_opts=" -d"
 after :libvirtd_opts=" -d -l"
-                            </programlisting>
+</userinput>            </screen></para>
+              <para>On RHEL, CentOS or Fedora, edit /etc/sysconfig/libvirtd:</para>
+              <para><screen>
+<userinput>before :# LIBVIRTD_ARGS="--listen"
+after :LIBVIRTD_ARGS="--listen"
+</userinput>            </screen>
+            </para>
+          </listitem>
+        </itemizedlist>
 
           <para>Restart libvirt. After executing the command, ensure
-            that libvirt is succesfully restarted.</para>
-
+              that libvirt is successfully restarted: </para>
           <screen><prompt>$</prompt> <userinput>service libvirt-bin restart</userinput>
 <prompt>$</prompt> <userinput>ps -ef | grep libvirt</userinput></screen>
-
-          <programlisting language="bash">
-
-root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l
-          </programlisting>
+          <screen><computeroutput>root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l</computeroutput>       </screen>
         </listitem>
         <listitem>
         <para> Configure your firewall to allow libvirt to communicate between nodes.</para>
