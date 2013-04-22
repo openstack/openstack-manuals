@@ -102,6 +102,10 @@ tenant_network_type=gre
 tunnel_id_ranges=1:1000
 # only required for nodes running agents
 local_ip=&lt;data-net-IP-address-of-node&gt;</computeroutput></screen>
+		<para>If you are using the Quantum DHCP agent, add the following to <filename>/etc/quantum/dhcp_agent.ini</filename></para>
+		<screen><computeroutput>dnsmasq_config_file=/etc/quantum/dnsmasq-quantum.conf</computeroutput></screen>
+		<para>And create <filename>/etc/quantum/dnsmasq-quantum.conf</filename>. Then add the following values to lower the MTU size on instances and prevent packet fragmentation over the GRE tunnel</para>
+		<screen><computeroutput>dhcp-option-force=26,1400</computeroutput></screen>
                 <para>After performing that change on the node running
                     quantum-server, restart quantum-server to pick up
                     the new settings.</para>
