@@ -26,7 +26,7 @@
                 for the operating system which should not be touched in this step. The other 10 or 11
                 disks should be partitioned with a single partition, then formatted in XFS.
             </para>
-            <para><screen><prompt>#</prompt><userinput>fdisk /dev/sdb</userinput></screen>
+            <para><screen><prompt>#</prompt> <userinput>fdisk /dev/sdb</userinput></screen>
                 <programlisting>mkfs.xfs -i size=1024 /dev/sdb1
 echo "/dev/sdb1 /srv/node/sdb1 xfs noatime,nodiratime,nobarrier,logbufs=8 0 0" &gt;&gt; /etc/fstab
 mkdir -p /srv/node/sdb1
@@ -67,97 +67,17 @@ lock file = /var/lock/object.lock         </programlisting>
                 <literallayout class="monospaced">RSYNC_ENABLE = true</literallayout></para>
         </listitem>
         <listitem><para>Start rsync daemon:</para>
-            <para><screen><prompt>#</prompt><userinput>service rsync start</userinput></screen></para>
+            <para><screen><prompt>#</prompt> <userinput>service rsync start</userinput></screen></para>
             <note><title>Note</title>
                 <para>The rsync daemon requires no authentication, so it should be run on
                     a local, private network.</para></note>
         </listitem>
         <listitem>
-            <para>Create <filename>/etc/swift/account-server.conf</filename>:</para>
-            <para>
-                <programlisting>[DEFAULT]
-bind_ip = &lt;STORAGE_LOCAL_NET_IP&gt;
-workers = 2
-
-[pipeline:main]
-pipeline = account-server
-
-[app:account-server]
-use = egg:swift#account
-
-[account-replicator]
-
-[account-auditor]
-
-[account-reaper]</programlisting></para>
-            
-        </listitem>
-        <listitem>
-            <para>Create <filename>/etc/swift/container-server.conf</filename>:</para>
-            <para>
-                <programlisting>[DEFAULT]
-bind_ip = &lt;STORAGE_LOCAL_NET_IP&gt;
-workers = 2
-
-[pipeline:main]
-pipeline = container-server
-
-[app:container-server]
-use = egg:swift#container
-
-[container-replicator]
-
-[container-updater]
-
-[container-auditor]</programlisting>
+            <para> Create the swift recon cache directory and set its
+                permissions.<screen>
+<prompt>#</prompt> <userinput>mkdir -p /var/swift/recon</userinput>
+<prompt>#</prompt> <userinput>chown -R swift:swift /var/swift/recon</userinput></screen>
             </para>
-        </listitem>
-        <listitem>
-            <para>Create <filename>/etc/swift/object-server.conf</filename>:</para>
-            <para>
-                <programlisting>[DEFAULT]
-bind_ip = &lt;STORAGE_LOCAL_NET_IP&gt;
-workers = 2
-
-[pipeline:main]
-pipeline = object-server
-
-[app:object-server]
-use = egg:swift#object
-
-[object-replicator]
-
-[object-updater]
-
-[object-auditor]
-
-[object-expirer]</programlisting>
-            </para>
-        </listitem>
-        <listitem>
-            <para>Start the storage services:</para>
-            <para>
-                <programlisting>swift-init object-server start
-swift-init object-replicator start
-swift-init object-updater start
-swift-init object-auditor start
-swift-init container-server start
-swift-init container-replicator start
-swift-init container-updater start
-swift-init container-auditor start
-swift-init account-server start
-swift-init account-replicator start
-swift-init account-auditor start</programlisting>
-            </para>
-        <warning><title>Don't Panic</title><para> If you are
-        following these instructions in a linear manner, at this
-        point the ring files may not be present on the storage
-        nodes. This may cause some of the services such as the
-        <literal>*-replicator</literal> to fail to start. After
-        you have created the ring files and distributed them to
-        the storage nodes, a service restart should allow these
-        to start.
-        </para></warning>
         </listitem>
     </orderedlist>
 </section>
