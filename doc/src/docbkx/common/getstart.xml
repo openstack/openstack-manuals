@@ -183,11 +183,11 @@ xml:id="ch_getting-started-with-openstack">
             xlink:href="http://quantum.openstack.org/"
             >"Quantum"</link>) provides "network connectivity as a
           service" between interface devices managed by other
-          OpenStack services (most likely Nova). The service works
-          by allowing users to create their own networks and then
-          attach interfaces to them. Quantum has a pluggable architecture 
-          to support many popular networking vendors and technologies.
-        </para>
+          OpenStack services (most likely Nova). The service works by
+          allowing users to create their own networks and then attach
+          interfaces to them. OpenStack Network has a pluggable
+          architecture to support many popular networking vendors and
+          technologies. </para>
       </listitem>
       <listitem>
         <para>Block Storage (codenamed <link
@@ -266,6 +266,36 @@ xml:id="ch_getting-started-with-openstack">
     </section>
     <section xml:id="logical-architecture">
       <title>Logical Architecture</title>
+    <para>The following paragraphs give some details on the main
+      modules in the OpenStack components. </para>
+    <para>These details are not meant to be exhaustive; the objective
+      is to describe the relevant aspects that administrators need to
+      know to better understand how to design the deployment, and
+      install and configure the whole platform.</para>
+    <para>Modules are organized according to the functional area they
+      belong (i.e. the kind of functions they implement or deliver)
+      and classified according to their type.  </para>
+    <para>These are the types:</para>
+    <itemizedlist>
+      <listitem>
+        <para>daemon: runs as a daemon and, on Linux platforms, is
+          usually installed as a service;</para>
+      </listitem>
+      <listitem>
+        <para>script: a script run by an external module when some
+          event happens (at the moment, it is used as a co-routine of
+          dnsmasq for managing IP Addresses released to instances via
+          DHCP protocol);</para>
+      </listitem>
+      <listitem>
+        <para>client: a client for accessing the Python bindings for a
+          service</para>
+      </listitem>
+      <listitem>
+        <para>CLI: a Command Line Interpreter for submitting commands
+          to OpenStack Compute for example</para>
+      </listitem>
+    </itemizedlist>
 
       <para>As you can imagine, the logical architecture is far
         more complicated than the conceptual architecture shown above.
@@ -357,21 +387,32 @@ xml:id="ch_getting-started-with-openstack">
     <section xml:id="overview-compute-arch">
       <title>Compute</title>
 
-      <para>Nova is the most complicated and distributed component of 
-        OpenStack. A large number of processes cooperate to turn end 
-        user API requests into running virtual machines. Below is a 
-        list of these processes and their functions:</para>
-
+      <para>Nova is the most complicated and distributed component of
+        OpenStack. A large number of processes cooperate to turn end
+        user API requests into running virtual machines. Main modules
+        are implemented in Python. The following lists are organized by functional areas:</para>
+<para>API</para>
       <itemizedlist>
         <listitem>
           <para><code>nova-api</code> accepts and responds to end user
-            compute API calls. It supports OpenStack Compute 
-            API, Amazon's EC2 API and a special Admin API (for privileged
+            compute API calls. It supports OpenStack Compute API,
+            Amazon's EC2 API and a special Admin API (for privileged
             users to perform administrative actions). It also
             initiates most of the orchestration activities (such as
             running an instance) as well as enforces some policy.
-            </para>
+          </para>
         </listitem>
+        <listitem>
+          <para><code>nova-api-metadata</code> accepts metadata
+            requests from instances (<link
+              xlink:href="http://docs.openstack.org/trunk/openstack-compute/admin/content/metadata-service.html"
+              >more details</link>). The nova-api-metadata service is
+            generally only used when running in multi-host mode with
+            nova-network installations. </para>
+        </listitem>
+      </itemizedlist>
+      <para>Computing core</para>
+      <itemizedlist>
         <listitem>
           <para>The <code>nova-compute</code> process is primarily a
             worker daemon that creates and terminates virtual machine
@@ -384,15 +425,6 @@ xml:id="ch_getting-started-with-openstack">
             database.</para>
         </listitem>
         <listitem>
-          <para>The <code>nova-network</code> worker daemon is very
-            similar to <code>nova-compute</code>. It accepts networking tasks
-            from the queue and then performs tasks to manipulate the
-            network (such as setting up bridging interfaces or
-            changing iptables rules). This functionality is being
-            migrated to Quantum, a separate OpenStack service. 
-            </para>
-        </listitem>
-        <listitem>
           <para>The <code>nova-schedule</code> process is conceptually
             the simplest piece of code in OpenStack Nova: take a
             virtual machine instance request from the queue and
@@ -400,13 +432,84 @@ xml:id="ch_getting-started-with-openstack">
             compute server host it should run on).</para>
         </listitem>
         <listitem>
+          <para>The <code>nova-conductor</code> module, introduced in
+            the Grizzly release, works as a “mediator” between
+            nova-compute and the database. It is aimed at eliminating
+            all the direct accesses to the cloud database made by
+            nova-compute. The nova-conductor module scales
+            horizontally but it shouldn’t be deployed on the same
+            node(s) where nova-compute runs. You can <link
+              xlink:href="http://russellbryantnet.wordpress.com/2012/11/19/a-new-nova-service-nova-conductor/"
+              >read more about the new service here</link>. </para>
+        </listitem>
+      </itemizedlist>
+      <para>Networking for VMs</para>
+      <itemizedlist>
+        <listitem>
+          <para>The <code>nova-network</code> worker daemon is very
+            similar to <code>nova-compute</code>. It accepts
+            networking tasks from the queue and then performs tasks to
+            manipulate the network (such as setting up bridging
+            interfaces or changing iptables rules). This functionality
+            is being migrated to OpenStack Networking, a separate
+            OpenStack service. </para>
+        </listitem>
+        <listitem><para><code>nova-dhcpbridge</code> (script) This script tracks IP
+            address leases and records them in the database using
+            dnsmasq's dhcp-script facility. This functionality is also
+            migrated to OpenStack Networking; a different script is
+            provided when using OpenStack Networking (code-named
+            Quantum). </para></listitem>
+      </itemizedlist>
+      <para>Console Interface</para>
+      <itemizedlist> 
+        <listitem><para>The <code>nova-consoleauth</code> daemon authorizes user’s tokens that console proxies provide (see nova-novncproxy and nova-xvpnvcproxy).
+          This service must be running in order for console proxies to work. Many proxies of either type can be run against a single nova-consoleauth service in a cluster
+          configuration. <link xlink:href="http://docs.openstack.org/trunk/openstack-compute/admin/content/about-nova-consoleauth.html">Read more details</link>.
+        </para></listitem>
+        <listitem><para>The <code>nova-novncproxy</code> (daemon) provides a proxy for accessing running instances through a VNC connection.
+          It supports browser-based novnc clients.</para></listitem>
+        <listitem>
+          <para>The deprecated <code>nova-console</code> daemon is no
+            longer used with Grizzly, and the nova-xvpnvncproxy is
+            used instead.</para>
+        </listitem>
+        <listitem><para>The <code>nova-xvpnvncproxy</code> daemon is a proxy for
+            accessing running instances through a VNC connection. It
+            supports a Java client specifically designed for
+            OpenStack. </para></listitem>
+        <listitem><para>The <code>nova-cert</code> daemon manages x509 certificates.</para></listitem>
+      </itemizedlist>
+      <para>Image Management (EC2 scenario)</para>
+      <itemizedlist>
+        <listitem><para>The <code>nova-objectstore</code> daemon provides an S3 interface for registering images onto the image management service (see glance)
+          It is mainly used for installations that need to support euca2ools. The euca2ools tools talk to nova-objectore in “S3 language” and nova-objectstore translates S3 requests into glance requests
+        </para>
+        </listitem>
+        <listitem><para>The <code>euca2ools</code> client is not an OpenStack module but
+            it can be supported by OpenStack. It’s a set of command
+            line interpreter commands for managing cloud resources.
+            Provided that nova-api is configured to support EC2
+            interface, euca2ools can be used to issue cloud management
+            commands. For more information on euca2ools, see <link
+              xlink:href="http://www.eucalyptus.com/eucalyptus-cloud/documentation/2.0"
+              >http://www.eucalyptus.com/eucalyptus-cloud/documentation/2.0</link>. </para></listitem>
+      </itemizedlist>
+      <para>Command Line Interpreter/Interfaces</para>
+      <itemizedlist>
+        <listitem><para>The <code>nova</code> client enables you to submit either tenant administrator’s commands or cloud user’s commands.
+        </para></listitem>
+        <listitem><para>The <code>nova-manage</code> client submits cloud administrator commands. </para></listitem>
+      </itemizedlist>
+      <itemizedlist>  
+        <listitem>
           <para>The queue provides a central hub for passing messages
             between daemons. This is usually implemented with <link
               xlink:href="http://www.rabbitmq.com/">RabbitMQ</link>
             today, but could be any AMPQ message queue (such as <link
               xlink:href="http://qpid.apache.org/">Apache
-            Qpid</link>), or
-            <link xlink:href="http://www.zeromq.org/">Zero MQ</link>.</para>
+            Qpid</link>), or <link xlink:href="http://www.zeromq.org/"
+              >Zero MQ</link>.</para>
         </listitem>
         <listitem>
           <para>The SQL database stores most of the build-time and
@@ -418,20 +521,15 @@ xml:id="ch_getting-started-with-openstack">
             used are sqlite3 (only appropriate for test and
             development work), MySQL and PostgreSQL.</para>
         </listitem>
-        <listitem>
-          <para>Nova also provides console services to allow end users to
-            access their virtual instance's console through a proxy. This
-            involves several daemons (<code>nova-console</code>, 
-             <code>nova-novncproxy</code> and 
-             <code>nova-consoleauth</code>).</para>
-        </listitem>
+       
       </itemizedlist>
 
-      <para>Nova interacts with many other OpenStack services: 
-        Keystone for authentication, Glance for images and Horizon for web
-        interface. The Glance interactions are central. The API
-        process can upload and query Glance while <code>nova-compute</code> will
-        download images for use in launching images.</para>
+      <para>Nova interacts with many other OpenStack services:
+        Keystone for authentication, Glance for images and Horizon for
+        web interface. The Glance interactions are central. The API
+        process can upload and query Glance while
+          <code>nova-compute</code> will download images for use in
+        launching images.</para>
     </section>
     <section xml:id="overview-object-store-arch">
       <title>Object Store</title>
@@ -544,31 +642,45 @@ xml:id="ch_getting-started-with-openstack">
     <section xml:id="overview-network-arch">
       <title>Network</title>
 
-      <para>Quantum provides "network connectivity as a service" 
-        between interface devices managed by other OpenStack 
-        services (most likely Nova). The service works by allowing 
-        users to create their own networks and then attach interfaces 
-        to them. Like many of the OpenStack services, Quantum is highly 
-        configurable due to it's plug-in architecture. These plug-ins
-        accommodate different networking equipment and software. As such,
-        the architecture and deployment can vary dramatically. In the 
-        above architecture, a simple Linux networking plug-in is shown.</para>
+      <para>OpenStack Networking provides "network connectivity as a
+        service" between interface devices managed by other OpenStack
+        services (most likely Compute). The service works by allowing
+        users to create their own networks and then attach interfaces
+        to them. Like many of the OpenStack services, OpenStack
+        Networking is highly configurable due to its plug-in
+        architecture. These plug-ins accommodate different networking
+        equipment and software. As such, the architecture and
+        deployment can vary dramatically. In the above architecture, a
+        simple Linux networking plug-in is shown.</para>
         
       <itemizedlist>
         <listitem>
-          <para><code>quantum-server</code> accepts API requests and then routes them to the appropriate quantum plugin for action.</para>
+          <para><code>quantum-server</code> accepts API requests and
+            then routes them to the appropriate OpenStack Networking
+            plugin for action.</para>
         </listitem>
         <listitem>
-          <para>Quantum plugins and agents perform the actual actions such as plugging and unplugging ports, creating networks or subnets and IP addressing. These plugins and agents differ depending on the vendor and technologies used in the particular cloud. Quantum ships with plugins and agents for: Cisco virtual and physical switches, Nicira NVP product, NEC OpenFlow products, Open vSwitch, Linux bridging and the Ryu Network Operating System.</para>
+          <para>OpenStack Networking plugins and agents perform the
+            actual actions such as plugging and unplugging ports,
+            creating networks or subnets and IP addressing. These
+            plugins and agents differ depending on the vendor and
+            technologies used in the particular cloud. OpenStack
+            Networking ships with plugins and agents for: Cisco
+            virtual and physical switches, Nicira NVP product, NEC
+            OpenFlow products, Open vSwitch, Linux bridging and the
+            Ryu Network Operating System.</para>
           <para>The common agents are L3 (layer 3), DHCP (dynamic host IP addressing) and the specific plug-in agent.</para>
         </listitem>
            <listitem>
-             <para>Most Quantum installations will also make use of a messaging queue to route information between the quantum-server and various agents as well as a database to store networking state for particular plugins.</para>
+             <para>Most OpenStack Networking installations also make
+            use of a messaging queue to route information between the
+            quantum-server and various agents as well as a database to
+            store networking state for particular plugins.</para>
            </listitem>
       </itemizedlist>
-      <para>Quantum will interact mainly with Nova, where it will provide 
-        networks and connectivity for its instances.
-      </para>
+      <para>OpenStack Networking interacts mainly with OpenStack
+        Compute, where it provides networks and connectivity for its
+        instances. </para>
 
     </section>
     <section xml:id="overview-block-storage-arch">
@@ -587,10 +699,15 @@ xml:id="ch_getting-started-with-openstack">
           <para>Much like <code>nova-scheduler</code>, the <code>cinder-scheduler</code> daemon picks the optimal block storage provider node to create the volume on.</para>
         </listitem>
         <listitem>
-          <para>Cinder deployments will also make use of a messaging queue to route information between the cinder processes as well as a database to store volume state.</para>
+          <para>OpenStack Block Storage deployments will also make use
+            of a messaging queue to route information between the
+            cinder processes as well as a database to store volume
+            state.</para>
         </listitem>
       </itemizedlist>
-      <para>Like Quantum, Cinder will mainly interact with Nova, providing volumes for its instances.</para>
+      <para>Like OpenStack Network, OpenStack Block Storage will
+        mainly interact with OpenStack Compute, providing volumes for
+        its instances.</para>
     </section>
   </section>  
   <xi:include href="storage-concepts.xml"/>
