@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE part [
+<!DOCTYPE appendix [
         <!-- Some useful entities borrowed from HTML -->
         <!ENTITY ndash  "&#x2013;">
         <!ENTITY mdash  "&#x2014;">
         <!ENTITY hellip "&#x2026;">
         <!ENTITY plusmn "&#xB1;">
-        
-       
+     
 ]>
-<part xmlns="http://docbook.org/ns/docbook"
+<appendix xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
-    xml:id="app_crypt">
+    xml:id="app_crypt" label="B">
     <title>Tales From the Cryp^H^H^H^H Cloud</title>
-    <partintro>
-        <para>Herein lies a selection of takes from OpenStack cloud
-            operators. Read, and learn from their wisdom.</para>
-    </partintro>
-    <chapter xml:id="double_vlan">
+
+    <para>Herein lies a selection of takes from OpenStack cloud
+        operators. Read, and learn from their wisdom.</para>
+
+    <section xml:id="double_vlan">
         <title>Double VLAN</title>
         <para>I was on-site in Kelowna, British Columbia, Canada
             setting up a new OpenStack cloud. The deployment was fully
@@ -53,7 +52,14 @@
             maximum number of bytes that the interface accepts for
             each packet. If two interfaces have two different MTUs,
             bytes might get chopped off and weird things happen --
-            such as random session lockups.</para>
+            such as random session lockups.<note>
+                <para>Not all packets have a size of 1500. Running the
+                    ls command over SSH might only create a single
+                    packets less than 1500 bytes. However, running a
+                    command with heavy output, such as <command>ps
+                        aux</command> requires several packets of 1500
+                    bytes. </para>
+            </note></para>
         <note>
             <para>Not all packets have a size of 1500. Running the ls
                 command over SSH might only create a single packets
@@ -119,7 +125,7 @@ vlan_interface=vlan20</programlisting>
         <para>In <code>nova.conf</code>, <code>vlan_interface</code>
             specifies what interface OpenStack should attach all VLANs
             to. The correct setting should have been:
-            <code>vlan_interface=bond0</code>.</para>
+                <code>vlan_interface=bond0</code>.</para>
         <para>As this would be the server's bonded NIC.</para>
         <para>vlan20 is the VLAN that the data center gave us for
             outgoing public internet access. It's a correct VLAN and
@@ -132,8 +138,8 @@ vlan_interface=vlan20</programlisting>
             interface that only accepted 1500!</para>
         <para>As soon as this setting was fixed, everything
             worked.</para>
-    </chapter>
-    <chapter xml:id="the_issue">
+    </section>
+    <section xml:id="issue">
         <title>"The Issue"</title>
         <para>At the end of August 2012, a post-secondary school in
             Alberta, Canada migrated its infrastructure to an
@@ -261,8 +267,8 @@ vlan_interface=vlan20</programlisting>
             we were confident. The rest is history. You can search the
             bug report for "joe" to find my comments and actual
             tests.</para>
-    </chapter>
-    <chapter xml:id="disappear_images">
+    </section>
+    <section xml:id="disappear_images">
         <title>Disappearing Images</title>
         <para>At the end of 2012, Cybera (a nonprofit with a mandate
             to oversee the development of cyberinfrastructure in
@@ -360,8 +366,8 @@ vlan_interface=vlan20</programlisting>
             in use and is deleted. When the compute node comes back
             online, the instance hosted on that node is unable to
             start.</para>
-    </chapter>
-    <chapter xml:id="valentines">
+    </section>
+    <section xml:id="valentines">
         <title>The Valentine's Day Compute Node Massacre</title>
         <para>Although the title of this story is much more dramatic
             than the actual event, I don't think, or hope, that I'll
@@ -446,8 +452,8 @@ Feb 15 01:40:19 SW-1 Ebra: %LINEPROTO-5-UPDOWN: Line protocol on Interface Ether
         <para>This is an ongoing and hot topic in networking circles
             — especially with the raise of virtualization and virtual
             switches.</para>
-    </chapter>
-    <chapter xml:id="rabbithole">
+    </section>
+    <section xml:id="rabbithole">
         <title>Down the Rabbit Hole</title>
         <para>Users being able to retrieve console logs from running
             instances is a boon for support — many times they can
@@ -501,5 +507,5 @@ Feb 15 01:40:19 SW-1 Ebra: %LINEPROTO-5-UPDOWN: Line protocol on Interface Ether
             (https://bugs.launchpad.net/nova/+bug/832507) doesn't have
             a permanent resolution, but we look forward to the
             discussion at the next summit.</para>
-    </chapter>
-</part>
+    </section>
+</appendix>
