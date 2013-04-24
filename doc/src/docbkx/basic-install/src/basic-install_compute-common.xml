@@ -4,85 +4,146 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="basic-install_compute-common">
                 <title>Common services</title>
-                <orderedlist>
-                <listitem>
-                    <para>Install Ubuntu with this parameters :<itemizedlist>
+          	<section xml:id="compute-os">
+        <title>Operating System</title>
+        <orderedlist>
+            <listitem>
+                <para>Install <phrase os="rhel;centos;fedora">Fedora 18</phrase>
+                    <phrase os="ubuntu">Ubuntu</phrase> with these parameters :<itemizedlist>
                         <listitem>
                             <para>Time zone : <emphasis role="bold">UTC</emphasis></para>
                         </listitem>
                         <listitem>
-                            <para>Hostname : <emphasis role="bold">grizzly-compute</emphasis></para>
+                            <para>Hostname : <emphasis role="bold">controller</emphasis></para>
                         </listitem>
                         <listitem>
                             <para>Packages : <emphasis role="bold">OpenSSH-Server</emphasis></para>
                         </listitem>
                     </itemizedlist></para>
-                    <para>After OS Installation, reboot the server .</para>
-                </listitem>
-                <listitem>
-                    <para>Since the default OpenStack version in Ubuntu 12.04 LTS is older, we are going to use
-                Cloud Archives for Grizzly :<screen>apt-get install ubuntu-cloud-keyring</screen>Edit
-                    <emphasis role="bold">/etc/apt/sources.list.d/cloud-archive.list</emphasis>
-                :<screen>deb http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/grizzly main </screen>Upgrade
-                the system (and reboot if you need)
-                :<screen>apt-get update &amp;&amp; apt-get upgrade</screen></para>
-                </listitem>
-                <listitem>
-                    <para>Configure the network :</para>
-                    <para><itemizedlist>
-                    <listitem>
-                        <para>Edit <emphasis role="bold">/etc/network/interfaces</emphasis> file
-                            :</para>
-                    </listitem>
-                </itemizedlist><screen><userinput># Management Network
+                <para>After OS Installation, reboot the server.</para>
+            </listitem>
+            <listitem>
+                <para os="ubuntu">Since the default OpenStack release in Ubuntu 12.04 LTS is older,
+                    we are going to use the Ubuntu Cloud Archive for Grizzly
+                    :<screen><prompt>$</prompt> <userinput>apt-get install ubuntu-cloud-keyring</userinput></screen>Edit
+                        <emphasis role="bold">/etc/apt/sources.list.d/cloud-archive.list</emphasis>
+                    :<screen><prompt>$</prompt> <userinput>sudo deb http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/grizzly main </userinput></screen>Upgrade
+                    the system (and reboot if you need)
+                    :<screen><prompt>$</prompt> <userinput>sudo apt-get update &amp;&amp; apt-get upgrade</userinput></screen></para>
+                <para os="rhel;centos;fedora">Use the Fedora
+                    repositories for Grizzly
+                    :<screen><prompt>#</prompt> <userinput>wget http://repos.fedorapeople.org/repos/openstack/openstack-grizzly/fedora-openstack-grizzly.repo</userinput></screen><screen><prompt>#</prompt> <userinput> sudo yum install -y  <link xlink:href="http://repos.fedorapeople.org/repos/openstack/openstack-grizzly/rdo-release-grizzly-1.noarch.rpm">http://repos.fedorapeople.org/repos/openstack/openstack-grizzly/rdo-release-grizzly-1.noarch.rpm</link> </userinput></screen></para>
+            </listitem>
+            <listitem>
+                <para>Configure the network :</para>
+                <para os="ubuntu">
+                    <itemizedlist>
+                        <listitem>
+                            <para>Edit <emphasis role="bold">/etc/network/interfaces</emphasis> file
+                                :</para>
+                        </listitem>
+                    </itemizedlist>
+                    <screen><userinput># Management Network
+# Management Network
 auto eth0
-    iface eth0 inet static
-    address 192.168.0.3
-    netmask 255.255.255.0
-    gateway 192.168.0.254
-    dns-nameservers 8.8.8.8
+iface eth0 inet static
+address 192.168.0.3
+netmask 255.255.255.0
+gateway 192.168.0.254
+dns-nameservers 8.8.8.8
 
 # Data Network
 auto eth1
-    iface eth1 inet static
-    address 10.10.10.2
-    netmask 255.255.255.0</userinput></screen>
-                    </para>
-                    <para>
-                        <itemizedlist>
-                            <listitem>
-                                <para>Edit <emphasis role="bold">/etc/sysctl.conf
-                            </emphasis>:</para>
-                            </listitem>
-                        </itemizedlist>
-                        <programlisting>net.ipv4.conf.all.rp_filter = 0
+iface eth1 inet static
+address 10.10.10.2
+netmask 255.255.255.0
+</userinput></screen>
+                </para>
+                <para  os="ubuntu">
+                    <itemizedlist>
+                        <listitem>
+                            <para>Edit <emphasis role="bold">/etc/sysctl.conf </emphasis>:</para>
+                        </listitem>
+                    </itemizedlist><programlisting>net.ipv4.conf.all.rp_filter = 0
 net.ipv4.conf.default.rp_filter = 0  </programlisting>
-                        Then, restart network service
-                        :<screen><userinput>service networking restart</userinput></screen>
-                   </para>
-                   <para>
-                       <itemizedlist>
-                            <listitem>
-                                <para>Edit the <emphasis role="bold">/etc/hosts</emphasis> file and
-                            add <emphasis role="bold">grizzly-controller</emphasis>, <emphasis
-                                role="bold">grizzly-network</emphasis> and <emphasis role="bold"
-                                >grizzly-compute</emphasis> hostnames with correct IP.</para>
-                            </listitem>
-                        </itemizedlist>
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>Install &amp; Configure NTP :<itemizedlist>
+                    Then, restart network service :
+                    <screen><userinput>service networking restart</userinput></screen>
+                </para>
+                <para os="rhel;centos;fedora">
+                    <itemizedlist>
                         <listitem>
-                            <para>Install the package :<screen><userinput>apt-get install -y ntp</userinput></screen></para>
+                            <para>Set up old ethernet nic device names:</para>
+                            <para><screen><prompt>#</prompt> <userinput>sed -i 's/# GOTO="netdevicename_end"/GOTO="netdevicename_end"/g'/lib/udev/rules.d/71-biosdevname.rules</userinput></screen></para>
+                            <para>Edit the <emphasis role="bold"
+                                    >/etc/sysconf/network-scripts/ifcfg-eth0</emphasis> file
+                                :</para>
+                        </listitem>
+                    </itemizedlist>
+                    <screen><userinput># Management Network
+DEVICE=eth0
+TYPE=Ethernet
+BOOTPROTO=static
+IPADDR=192.168.0.3
+NETMASK=255.255.255.0
+GATEWAY=192.168.0.254
+DNS1=8.8.8.8
+DEFROUTE=yes
+ONBOOT=yes
+    </userinput></screen>
+                    <itemizedlist>
+                        <listitem>
+                            <para>Edit the <emphasis role="bold"
+                                    >/etc/sysconf/network-scripts/ifcfg-eth1</emphasis> file
+                                :</para>
+                        </listitem>
+                    </itemizedlist>
+                    <screen><userinput># Data Network
+DEVICE=eth1
+TYPE=Ethernet
+BOOTPROTO=static
+IPADDR=10.0.0.2
+NETMASK=255.255.255.0
+DEFROUTE=yes
+ONBOOT=yes
+    </userinput></screen>
+                </para>
+                <para os="rhel;centos;fedora">
+                    Reboot
+                </para>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para>Edit the <emphasis role="bold">/etc/hosts</emphasis> file and add
+                                    <emphasis role="bold">controller</emphasis>, <emphasis
+                                    role="bold">networknode</emphasis> and <emphasis role="bold"
+                                    >compute1</emphasis> hostnames with correct IP.</para>
+                        </listitem>
+                    </itemizedlist>
+                    <programlisting>127.0.0.1       localhost
+127.0.1.1       controller
+192.168.0.1     controller
+192.168.0.2     network
+192.168.0.3     compute</programlisting>
+                </para>
+            </listitem>
+            <listitem>
+                <para>Install Configure NTP :<itemizedlist>
+                        <listitem>
+                            <para>Install the package
+                                :<screen os="ubuntu;deb"><userinput>apt-get install -y ntp</userinput></screen><screen os="rhel;fedora;centos"><userinput>yum install -y ntp</userinput></screen></para>
                         </listitem>
                         <listitem>
-                            <para>Configure <emphasis role="bold">/etc/ntp.conf</emphasis> file :<screen><userinput>server 192.168.0.1</userinput></screen></para>
+                            <para>Configure <emphasis role="bold">/etc/ntp.conf</emphasis> file
+                                :<screen><userinput>server ntp.ubuntu.com iburst
+server 127.127.1.0
+fudge 127.127.1.0 stratum 10</userinput></screen></para>
                         </listitem>
                         <listitem>
-                            <para>Restart the service :<screen><userinput>service ntp restart</userinput></screen></para>
+                            <para>Restart the service
+                                :<screen os="ubuntu;deb"><prompt>$</prompt> <userinput>sudo service ntp restart</userinput></screen><screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>service ntp restart</userinput></screen></para>
                         </listitem>
                     </itemizedlist></para>
-                </listitem>
-                </orderedlist>
+            </listitem>
+        </orderedlist>
+    </section>
 </section>

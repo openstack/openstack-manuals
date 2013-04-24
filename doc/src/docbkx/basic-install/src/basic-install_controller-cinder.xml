@@ -7,13 +7,19 @@
 	<para>
                 <orderedlist>
                     <listitem>
-                        <para>Install the packages :<screen><userinput>apt-get install -y cinder-api cinder-scheduler cinder-volume iscsitarget \
-    open-iscsi iscsitarget-dkms python-cinderclient linux-headers-`uname -r`</userinput></screen></para>
+                        <para>Install the packages
+                    :<screen os="ubuntu"><userinput>apt-get install -y cinder-api cinder-scheduler cinder-volume iscsitarget \
+    open-iscsi iscsitarget-dkms python-cinderclient linux-headers-`uname -r`</userinput></screen><screen os="centos;rhel;fedora"><userinput>yum install -y openstack-cinder openstack-cinder-doc \
+        iscsi-initiator-utils scsi-target-utils</userinput></screen></para>
                     </listitem>
                     <listitem>
-                        <para>Configure &amp; start the iSCSI services :<screen><userinput>sed -i 's/false/true/g' /etc/default/iscsitarget
+                        <para>Configure &amp; start the iSCSI services
+                    :<screen os="ubuntu"><userinput>sed -i 's/false/true/g' /etc/default/iscsitarget
 service iscsitarget start
-service open-iscsi start</userinput></screen></para>
+service open-iscsi start</userinput></screen><screen os="centos;rhel;fedora"><userinput>service tgtd start
+service iscsi start
+chkconfig tgtd on
+chkconfig iscsi on</userinput></screen></para>
                     </listitem>
                     <listitem>
                         <para>Configure Cinder :</para>

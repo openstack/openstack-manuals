@@ -8,17 +8,24 @@
             <orderedlist>
                 <listitem>
                     <para>Install the packages
-                    :<screen><userinput>apt-get install quantum-server</userinput></screen></para>
+                        :<screen os="ubuntu"><userinput>apt-get install quantum-server</userinput></screen><screen os="centos;rhel;fedora"><userinput>yum install openstack-quantum</userinput></screen></para>
                 </listitem>
                 <listitem>
                     <para>Configure Quantum services :</para>
                     <itemizedlist>
                         <listitem>
-                            <para>Edit <emphasis role="bold">/etc/quantum/quantum.conf</emphasis> file and modify :<screen><userinput>core_plugin = \
+                            <para>Edit <emphasis role="bold"
+                                >/etc/quantum/quantum.conf</emphasis>
+                            file and modify
+                            :<screen os="ubuntu"><userinput>core_plugin = \
     quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPluginV2
 auth_strategy = keystone
 fake_rabbit = False
-rabbit_password = password</userinput></screen></para>
+rabbit_password = password</userinput></screen><screen os="centos;rhel;fedora"><userinput>core_plugin = \
+    quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPluginV2
+auth_strategy = keystone
+fake_rabbit = False
+rpc_backend=quantum.openstack.common.rpc.impl_qpid</userinput></screen></para>
                         </listitem>
                         <listitem>
                             <para>Edit <emphasis role="bold"
@@ -46,7 +53,8 @@ admin_password = password</userinput></screen></para>
                 </listitem>
                 <listitem>
                     <para>Start the services
-                    :<screen><userinput>service quantum-server restart</userinput></screen></para>
+                        :<screen><userinput>service quantum-server restart</userinput></screen><screen os="centos;rhel;fedora"><userinput>service quantum-server restart
+                        chkconfig quantum-server on</userinput></screen></para>
                 </listitem>
             </orderedlist>
         </para>
