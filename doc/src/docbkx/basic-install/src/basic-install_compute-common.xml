@@ -31,7 +31,10 @@
                     the system (and reboot if you need)
                     :<screen><prompt>$</prompt> <userinput>sudo apt-get update &amp;&amp; apt-get upgrade</userinput></screen></para>
                 <para os="rhel;centos;fedora">Use the Fedora repositories for Grizzly
-                    :<screen><prompt>#</prompt> <userinput>wget http://repos.fedorapeople.org/repos/openstack/openstack-grizzly/fedora-openstack-grizzly.repo</userinput></screen><screen><prompt>#</prompt> <userinput>mv fedora-openstack-grizzly.repo /etc/yum.repos.d/</userinput></screen></para>
+                    :<screen><prompt>#</prompt> 
+                        <userinput>wget http://repos.fedorapeople.org/repos/openstack/openstack-grizzly/fedora-openstack-grizzly.repo</userinput></screen>
+                    <screen><prompt>#</prompt> <userinput> sudo yum install -y  
+                        http://repos.fedorapeople.org/repos/openstack/openstack-grizzly/rdo-release-grizzly-1.noarch.rpm </userinput></screen></para>
             </listitem>
             <listitem>
                 <para>Configure the network :</para>
@@ -58,26 +61,26 @@ address 10.10.10.2
 netmask 255.255.255.0
 </userinput></screen>
                 </para>
-                <para  os="ubuntu">
-                    <itemizedlist>
+                    <itemizedlist os="ubuntu">
                         <listitem>
                             <para>Edit <emphasis role="bold">/etc/sysctl.conf </emphasis>:</para>
-                        </listitem>
-                    </itemizedlist><programlisting>net.ipv4.conf.all.rp_filter = 0
-net.ipv4.conf.default.rp_filter = 0  </programlisting>
-                    Then, restart network service :
+                        
+                    <programlisting>net.ipv4.conf.all.rp_filter = 0
+net.ipv4.conf.default.rp_filter = 0  </programlisting></listitem>
+                    <listitem>
+                        <para>Then, restart network service :
                     <screen><userinput>service networking restart</userinput></screen>
                 </para>
-                <para os="rhel;centos;fedora">
-                    <itemizedlist>
+            </listitem></itemizedlist>
+        
+                    <itemizedlist os="rhel;centos;fedora">
                         <listitem>
                             <para>Set up old ethernet nic device names:</para>
                             <para><screen><prompt>#</prompt> <userinput>sed -i 's/# GOTO="netdevicename_end"/GOTO="netdevicename_end"/g'/lib/udev/rules.d/71-biosdevname.rules</userinput></screen></para>
                             <para>Edit the <emphasis role="bold"
-                                    >/etc/sysconf/network-scripts/ifcfg-eth0</emphasis> file
-                                :</para>
-                        </listitem>
-                    </itemizedlist>
+                                    >/etc/sysconf/network-scripts/ifcfg-eth0</emphasis> file:</para>
+                        
+                    
                     <screen><userinput># Management Network
 DEVICE=eth0
 TYPE=Ethernet
@@ -88,8 +91,8 @@ GATEWAY=192.168.0.254
 DNS1=8.8.8.8
 DEFROUTE=yes
 ONBOOT=yes
-    </userinput></screen>
-                    <itemizedlist>
+    </userinput></screen></listitem>
+                    
                         <listitem>
                             <para>Edit the <emphasis role="bold"
                                     >/etc/sysconf/network-scripts/ifcfg-eth1</emphasis> file
@@ -105,9 +108,9 @@ NETMASK=255.255.255.0
 DEFROUTE=yes
 ONBOOT=yes
     </userinput></screen>
-                </para>
+                
                 <para os="rhel;centos;fedora">
-                    Reboot
+                    Reboot.
                 </para>
                 <para>
                     <itemizedlist>
@@ -128,18 +131,22 @@ ONBOOT=yes
             <listitem>
                 <para>Install Configure NTP :<itemizedlist>
                         <listitem>
-                            <para>Install the package
-                                :<screen os="ubuntu;deb"><userinput>apt-get install -y ntp</userinput></screen><screen os="rhel;fedora;centos"><userinput>yum install -y ntp</userinput></screen></para>
+                            <para>Install the package:<screen os="ubuntu;deb"><userinput>apt-get install -y ntp</userinput></screen>
+                                <screen os="rhel;fedora;centos"><userinput>yum install -y ntp</userinput></screen></para>
                         </listitem>
                         <listitem>
-                            <para>Configure <emphasis role="bold">/etc/ntp.conf</emphasis> file
-                                :<screen><userinput>server ntp.ubuntu.com iburst
+                            <para>Configure <emphasis role="bold">/etc/ntp.conf</emphasis> file:
+                                <screen os="ubuntu"><userinput>server ntp.ubuntu.com iburst
+server 127.127.1.0
+fudge 127.127.1.0 stratum 10</userinput></screen>
+                                <screen os="rhel;fedora;centos"><userinput>server 0.fedora.pool.ntp.org iburst
 server 127.127.1.0
 fudge 127.127.1.0 stratum 10</userinput></screen></para>
                         </listitem>
                         <listitem>
-                            <para>Restart the service
-                                :<screen os="ubuntu;deb"><prompt>$</prompt> <userinput>sudo service ntp restart</userinput></screen><screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>service ntp restart</userinput></screen></para>
+                            <para>Restart the service:
+                                <screen os="ubuntu;deb"><prompt>$</prompt> <userinput>sudo service ntp restart</userinput></screen>
+                                <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>systemctl restart ntpd.service</userinput></screen></para>
                         </listitem>
                     </itemizedlist></para>
             </listitem>
