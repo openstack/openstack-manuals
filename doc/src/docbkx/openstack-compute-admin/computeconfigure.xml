@@ -774,6 +774,11 @@ xenapi_remap_vbd_dev=true
       because euca2ools can only upload images to an S3-compatible image
       store.</para>
     <xi:include href="tables/s3-nova-conf.xml"/>
+
+    <para>Because of a <link xlink:href="https://bugs.launchpad.net/nova/+bug/1078594">serious issue</link> with Nova image cache
+      management on shared storage, the image cache manager is disabled by default in Folsom.
+      In cases where shared storage isn't in use, it is strongly advised to re-enable by setting image_cache_manager_interval = 40 in nova.conf.
+      If you don't configure this parameter, you could have some disk space issues on your compute nodes after a while.</para>
   </section>
 
   <section xml:id="configuring-migrations">
