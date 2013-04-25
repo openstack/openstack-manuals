@@ -18,11 +18,12 @@
                         <para>Configure Nova :</para>
                         <itemizedlist>
                             <listitem>
-                                <para>Edit <emphasis role="bold">/etc/nova/api-paste.ini</emphasis>
-                            file and modify:<screen><userinput os='ubuntu'>admin_tenant_name = service 
+                                <para>Edit <filename>/etc/nova/api-paste.ini</filename>
+                            file and modify
+                            :<screen><userinput os='ubuntu'>admin_tenant_name = service 
 admin_user = nova 
-admin_password = password</userinput>
-                                </screen><screen><userinput os='centos;rhel;fedora'>[filter:authtoken]
+admin_password = password</userinput></screen>
+                                    <screen><userinput os='centos;rhel;fedora'>[filter:authtoken]
 paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
 service_protocol = http
 service_host = 127.0.0.1
@@ -68,16 +69,13 @@ paste.app_factory = nova.api.openstack.volume.versions:Versions.factory
 sql_connection=mysql://nova:password@192.168.0.1/nova
 
                                     </userinput></screen>
-                                    <screen><userinput os='ubuntu'># nova-scheduler #
-rabbit_password=password
-                                    </userinput></screen>
-                                    <screen><userinput os='centos;rhel;fedora'>
+                                        <screen><userinput os='centos;rhel;fedora'>
 # nova-scheduler #
 qpid_username=guest
 qpid_password=guest
 rpc_backend = nova.openstack.common.rpc.impl_qpid
-                                    </userinput></screen>
-                                    <screen><userinput>                  
+                                </userinput></screen>
+                                <screen><userinput>
 scheduler_driver=nova.scheduler.filter_scheduler.FilterScheduler
 
 # nova-api #
