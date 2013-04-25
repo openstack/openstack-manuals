@@ -38,15 +38,15 @@ enable_tunneling = True</userinput></screen>
                                  <screen os="centos;rhel;fedora"><userinput>[DATABASE]
 sql_connection = mysql://quantum:password@localhost:3306/quantum
 [OVS]
-enable_tunneling = False</userinput></screen>
-                            <db:note xmlns:db="http://docbook.org/ns/docbook">
-                                <db:para os="ubuntu">It's more handy to choose
+enable_tunneling = False</userinput></screen></para>
+                            <note os="ubuntu">
+                                <para>It's more handy to choose
                                <emphasis role="bold">tunnel
                                mode</emphasis> since you don't
                                have to configure your physical
-                               switches for VLANs.</db:para>
-                                <db:para os="centos;rhel;fedora">The Fedora kernel module for OpenVSwitch has been compiles with out support for tunnels. To use gre tunnels the module will have to be recompiled.</db:para>
-                            </db:note></para>
+                               switches for VLANs.</para></note>
+                                <note os="centos;rhel;fedora"><para>The Fedora kernel module for OpenVSwitch has been compiled 
+                                    with out support for tunnels. To use gre tunnels the module will have to be recompiled.</para></note>
                         </listitem>
                         <listitem>
                             <para os="ubuntu">Edit <emphasis role="bold">/etc/quantum/api-paste.ini</emphasis> file and modify :<screen><userinput>admin_tenant_name = service
@@ -70,13 +70,13 @@ admin_password = password
                 </listitem>
                 <listitem os="centos;rhel;fedora">
                     <para>Set SELinux to permissive mode:
-                        <screen os="ubuntu"><userinput>setenforce 0    
+                        :<screen><userinput>setenforce 0    
 sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/sysconfig/selinux</userinput></screen></para>
                 </listitem>
                 <listitem>
-                    <para>Start the services
-                        :<screen os="ubuntu"><userinput>service quantum-server restart</userinput></screen><screen os="centos;rhel;fedora"><userinput>service quantum-server restart
-                        chkconfig quantum-server on</userinput></screen></para>
+                    <para>Start the services:
+                        <screen os="ubuntu"><userinput>service quantum-server restart</userinput></screen><screen os="centos;rhel;fedora"><userinput>service quantum-server restart
+chkconfig quantum-server on</userinput></screen></para>
                 </listitem>
             </orderedlist>
         </para>

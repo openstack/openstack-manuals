@@ -26,13 +26,14 @@ chkconfig iscsi on</userinput></screen></para>
                         <itemizedlist>
                             <listitem>
                                 <para>Edit <emphasis role="bold">/etc/cinder/cinder.conf</emphasis>
-                            file and modify
-                            :<screen><userinput>[DEFAULT]
-sql_connection = mysql://cinder:password@localhost:3306/cinder
-                            </userinput></screen>
-                                    <screen><userinput os="ubuntu">rabbit_password = password</userinput></screen>
->>>>>>> b0a8bfa... Changes that did not get included in patch 7
-                                    <screen><userinput os="centos;rhel;fedora">rpc_backend = cinder.openstack.common.rpc.impl_qpid
+                            file and modify:
+                                    <screen>
+                                        <userinput>[DEFAULT]
+sql_connection = mysql://cinder:password@localhost:3306/cinder</userinput></screen>
+<screen><userinput os="ubuntu">rabbit_password = password</userinput>
+                                    </screen>
+                                    <screen><userinput os='centos;rhel;fedora'>rpc_backend = cinder.openstack.common.rpc.impl_qpid
+>>>>>>> bcf1da0... fixes for a failed rebase on the previous patch set.
 qpid_user = guest
 qpid_password = quest
                                     </userinput>
@@ -61,7 +62,7 @@ vgcreate cinder-volumes /dev/sdb1</userinput></screen></para>
                                 <para>Create Cinder tables into the database :<screen><userinput>cinder-manage db sync</userinput></screen></para>
                             </listitem>
                             <listitem>
-                                <para>Restart the services :<screen os='ubuntu'><userinput>service cinder-api restart
+                                <para>Restart the services :<screen os="ubuntu"><userinput>service cinder-api restart
 service cinder-scheduler restart
 service cinder-volume restart</userinput></screen>
                                     <screen os='centos;rhel;fedora'><userinput>service openstack-cinder-api restart

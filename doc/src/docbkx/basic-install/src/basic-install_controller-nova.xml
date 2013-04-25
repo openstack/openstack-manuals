@@ -20,7 +20,7 @@
                             <listitem>
                                 <para>Edit <filename>/etc/nova/api-paste.ini</filename>
                             file and modify
-                            :<screen><userinput os='ubuntu'>admin_tenant_name = service 
+                            :<screen><userinput os="ubuntu">admin_tenant_name = service 
 admin_user = nova 
 admin_password = password</userinput></screen>
                                     <screen><userinput os='centos;rhel;fedora'>[filter:authtoken]
@@ -69,13 +69,16 @@ paste.app_factory = nova.api.openstack.volume.versions:Versions.factory
 sql_connection=mysql://nova:password@192.168.0.1/nova
 
                                     </userinput></screen>
-                                        <screen><userinput os='centos;rhel;fedora'>
+                                    <screen><userinput os="ubuntu"># nova-scheduler #
+rabbit_password=password
+                                    </userinput></screen>
+                                    <screen><userinput os='centos;rhel;fedora'>
 # nova-scheduler #
 qpid_username=guest
 qpid_password=guest
 rpc_backend = nova.openstack.common.rpc.impl_qpid
-                                </userinput></screen>
-                                <screen><userinput>
+                                    </userinput></screen>
+                                    <screen><userinput>                  
 scheduler_driver=nova.scheduler.filter_scheduler.FilterScheduler
 
 # nova-api #
@@ -131,7 +134,7 @@ verbose=true</userinput></screen></para>
                                 <para>Create Nova tables into the database :<screen><userinput>nova-manage db sync</userinput></screen></para>
                             </listitem>
                             <listitem>
-                                <para>Restart Nova services :<screen os='ubuntu'><userinput>service nova-api restart
+                                <para>Restart Nova services :<screen os="ubuntu"><userinput>service nova-api restart
 service nova-cert restart
 service nova-consoleauth restart
 service nova-scheduler restart

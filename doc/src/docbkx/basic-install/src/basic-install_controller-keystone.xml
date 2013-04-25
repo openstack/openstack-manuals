@@ -39,14 +39,15 @@ driver = keystone.catalog.backends.sql.Catalog
             </listitem>
             <listitem>
                 <para>Create the ssl keys:
-                    :<screen><userinput>keystone-manage pki_setup
+                    <screen><userinput>keystone-manage pki_setup
 chown -R keystone:keystone /etc/keystone/*</userinput></screen></para>
             </listitem>
             <listitem>
-                <para>Restart Keystone and create the tables in the database
-                    :<screen  os="ubuntu"><userinput>service keystone restart
-keystone-manage db_sync</userinput></screen><screen  os="rhel;centos;fedora"><userinput>service openstack-keystone restart
-keystone-manage db_sync</userinput></screen></para>
+                <para>Restart Keystone and create the tables in the
+                    database
+                    :<screen os="ubuntu"><userinput>service keystone restart
+keystone-manage db_sync</userinput></screen><screen os="rhel;centos;fedora"><userinput>service openstack-keystone restart
+ openstack-db --init --service keystone </userinput></screen></para>
             </listitem>
             <listitem>
                 <para>Load environment variables :</para>
