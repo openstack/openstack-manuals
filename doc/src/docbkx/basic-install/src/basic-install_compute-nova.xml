@@ -3,100 +3,91 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="basic-install_compute-nova">
-    <title>Nova</title>
-            <para>
-                <orderedlist>
-                    <listitem>
-                        <para>Install the packages :<screen os="ubuntu"><userinput>apt-get install nova-compute-kvm</userinput></screen><screen os="centos;rhel;fedora"><userinput>yum install openstack-nova-compute</userinput></screen></para>
-                    </listitem>
-                    <listitem>
-                        <para>Configure Nova :</para>
+    <title>OpenStack Compute (Compute Node services)</title>
+    <para>Just like with the Cloud Controller, the OpenStack Compute service is installed on the Compute Node. However,
+        this time the <literal>nova-compute</literal> service is installed. This provides the Compute Node the capability
+        to host virtual machines.
+        <orderedlist>
+            <listitem>
+                <para>Install the Nova Compute package:
+                    <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install nova-compute-kvm</userinput></screen>
+                    <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-nova-compute</userinput></screen>
+                    <note os="ubuntu">
+                        <para><literal>nova-compute-kvm</literal>
+                            requires that your CPU supports
+                            hardware-assisted virtualization (HVM)
+                            such as Intel VT-x or AMD-V. If your CPU
+                            does not support this, or if you are
+                            already running in a virtualized
+                            environment, you can instead use the
+                                <literal>nova-compute-qemu</literal>
+                            package. This package provides
+                            software-based virtualization.</para>
+                    </note>                            
+                </para>
+            </listitem>
+            <listitem>
+                        <para>Configure Nova:</para>
                         <itemizedlist>
                             <listitem>
-                                <para>Edit <emphasis role="bold">/etc/nova/api-paste.ini</emphasis>
-                                    file and modify :<screen><userinput>auth_host = 192.168.0.1
+                                <para>Edit <emphasis role="bold">/etc/nova/api-paste.ini</emphasis>:
+                                    <programlisting>[filter:authtoken]
+auth_host = 10.10.10.10
 admin_tenant_name = service 
 admin_user = nova 
-admin_password = password</userinput></screen></para>
+admin_password = password</programlisting>
+                                </para>
                             </listitem>
                             <listitem>
-                                <para>Edit <emphasis role="bold"
-                                        >/etc/nova/nova-compute.conf</emphasis> file and modify :<screen><userinput>[DEFAULT]
-libvirt_type=kvm
-libvirt_ovs_bridge=br-int
-libvirt_vif_type=ethernet
-libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver
-libvirt_use_virtio_for_bridges=True</userinput></screen></para>
-                            </listitem>
-                            <listitem>
-                                <para>Edit <emphasis role="bold">/etc/nova/nova.conf</emphasis> file
-                            and modify
-                            :<screen><userinput>[DEFAULT]
+                                <para>Edit <emphasis role="bold">/etc/nova/nova.conf</emphasis>:
+                                    <programlisting>[DEFAULT]
 
-# MySQL Connection #
-sql_connection=mysql://nova:password@192.168.0.1/nova
-
-# nova-scheduler #
-rabbit_host=192.168.0.1
+# General
+verbose=True
+rabbit_host=10.10.10.10
 rabbit_password=password
-scheduler_driver=nova.scheduler.filter_scheduler.FilterScheduler
 
-# nova-api #
-cc_host=192.168.0.1
 auth_strategy=keystone
-s3_host=192.168.0.1
-ec2_host=192.168.0.1
-nova_url=http://192.168.0.1:8774/v1.1/
-ec2_url=http://192.168.0.1:8773/services/Cloud
-keystone_ec2_url=http://192.168.0.1:5000/v2.0/ec2tokens
-api_paste_config=/etc/nova/api-paste.ini
-allow_admin_api=true
-ec2_private_dns_show_ip=True
-dmz_cidr=169.254.169.254/32
-ec2_dmz_host=192.168.0.1
-metadata_host=192.168.0.1
-metadata_listen=0.0.0.0
-enabled_apis=metadata
+ec2_host=10.10.10.10
+ec2_url=http://10.10.10.10:8773/services/Cloud
 
-# Networking #
+# Networking
+libvirt_use_virtio_for_bridges=True
 network_api_class=nova.network.quantumv2.api.API
-quantum_url=http://192.168.0.1:9696
+quantum_url=http://10.10.10.10:9696
 quantum_auth_strategy=keystone
 quantum_admin_tenant_name=service
 quantum_admin_username=quantum
 quantum_admin_password=password
-quantum_admin_auth_url=http://192.168.0.1:35357/v2.0
-libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver
-linuxnet_interface_driver=nova.network.linux_net.LinuxOVSInterfaceDriver
-firewall_driver=nova.virt.libvirt.firewall.IptablesFirewallDriver
+quantum_admin_auth_url=http://10.10.10.10:35357/v2.0
+
+# Security Groups                                    
+firewall_driver=nova.virt.firewall.NoopFirewallDriver
+security_group_api=quantum                           
 
 # Compute #
 compute_driver=libvirt.LibvirtDriver
 connection_type=libvirt 
 
-# Cinder #
+# Cinder
 volume_api_class=nova.volume.cinder.API
 
-# Glance #
-glance_api_servers=192.168.0.1:9292
+# Glance
+glance_api_servers=10.10.10.10:9292
 image_service=nova.image.glance.GlanceImageService
 
-# novnc #
-novnc_enable=true
-novncproxy_base_url=http://7.7.7.7:6080/vnc_auto.html
-vncserver_proxyclient_address=192.168.0.3
-vncserver_listen=0.0.0.0
-
-# Misc #
-logdir=/var/log/nova
-state_path=/var/lib/nova
-lock_path=/var/lock/nova
-rootwrap_config=/etc/nova/rootwrap.conf
-verbose=true</userinput></screen></para>
+# novnc
+vnc_enabled=true                                            
+vncserver_proxyclient_address=10.10.10.11                  
+novncproxy_base_url=http://10.0.0.10:6080/vnc_auto.html
+vncserver_listen=0.0.0.0</programlisting></para>
                             </listitem>
                             <listitem>
-                                <para>Restart Nova services :<screen os="ubuntu"><userinput>service nova-compute restart</userinput></screen><screen os="centos;rhel;fedora"><userinput>service openstack-nova-compute restart
-chkconfig openstack-nova-compute on</userinput></screen></para>
+                                <para>Restart Nova services:
+                                    <screen os="ubuntu"><prompt>#</prompt> <userinput>service nova-compute restart</userinput></screen>
+                                    <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>service openstack-nova-compute restart</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-nova-compute on</userinput></screen>
+                                </para>
                             </listitem>
                         </itemizedlist>
                     </listitem>

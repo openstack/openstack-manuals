@@ -3,10 +3,12 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="basic-install_controller-dashboard">
-    <title>Dashboard (Horizon)</title>
-<para>Install the packages
-        :<screen os="ubuntu"><userinput>apt-get install apache2 libapache2-mod-wsgi openstack-dashboard \
-    memcached python-memcache</userinput></screen><screen os="centos;rhel;fedora"><userinput>yum install httpd memcached
+    <title>OpenStack Dashboard</title>
+    <para>The OpenStack Dashboard service provides users of the cloud environment with a web-accessible GUI as an alternative
+        to using the command-line tools.</para>
+    <para>To enable it, install the Horizon package and its dependencies:
+        <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install -y openstack-dashboard memcached python-memcache</userinput></screen>
+        <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install httpd memcached
  ( cat | sudo tee -a /etc/openstack-dashboard/local_settings ) &lt;&lt;EOF
 DATABASES = {
     'default': {
@@ -18,12 +20,21 @@ DATABASES = {
         'PORT': '',
     }
 }
-EOF</userinput></screen></para>
-        <para os="ubuntu">OpenStack Dashboard is now available at <emphasis role="bold"
-            >http://&lt;controller_node&gt;/horizon</emphasis>. We can login with <emphasis role="bold">admin</emphasis> / <emphasis role="bold">password</emphasis> credentials or
-            <emphasis role="bold">demo</emphasis> / <emphasis role="bold">password</emphasis>.</para>
-        <para os="centos;rhel;fedora">OpenStack Dashboard is now available at <emphasis role="bold">http://&lt;controller_node&gt;/dashboard</emphasis>. We can login with <emphasis
-        role="bold">admin</emphasis> / <emphasis role="bold">password</emphasis> credentials or
-        <emphasis role="bold">demo</emphasis> / <emphasis role="bold">password</emphasis>.</para>    
+EOF</userinput></screen>
+        <note os="ubuntu">
+            <para>Optional, but recommended: remove the <literal>openstack-dashboard-ubuntu-theme</literal> package. 
+                This theme prevents several menus as well as the network map from rendering correctly:
+                <screen><userinput>apt-get remove --purge openstack-dashboard-ubuntu-theme</userinput></screen>            
+            </para>
+        </note>
+        
+    OpenStack Dashboard is now available at <emphasis role="bold">http://cloud/horizon</emphasis>.
+    We can login with the <emphasis role="bold">admin</emphasis> / <emphasis role="bold">password</emphasis> credentials
+    or <emphasis role="bold">demo</emphasis> / <emphasis role="bold">password</emphasis>.
+    
+    <note><para>Check the <literal>/var/log/apache/error.log</literal> file for errors that wold prevent
+        either the Apache service or the Dashboard service from successfully starting.</para></note>
+        </para>
+    
 </section>
 

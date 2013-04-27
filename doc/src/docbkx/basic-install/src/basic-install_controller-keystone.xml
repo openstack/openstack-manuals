@@ -3,87 +3,163 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="basic-install_controller-keystone">
-    <title>Keystone</title>
-    <para>
+    <title>OpenStack Identity Service</title>
+    <para>The OpenStack Identity Service provides the cloud environment with an authentication and authorization system. In this system,
+        users are a part of one or more projects. In each of these projects, they hold a specific role. 
         <orderedlist>
             <listitem>
-                <para>Install the packages
-                    :<screen os="ubuntu"><userinput>apt-get install keystone python-keystone python-keystoneclient</userinput></screen><screen os="rhel;centos;fedora"><userinput>yum install openstack-keystone python-keystone python-keystoneclient</userinput></screen></para>
+                <para>Install the packages:
+                    <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install -y keystone python-keystone python-keystoneclient</userinput></screen>
+                    <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-keystone python-keystone python-keystoneclient</userinput></screen></para>
             </listitem>
             <listitem>
-                <para>Edit <emphasis role="bold"
-                        >/etc/keystone/keystone.conf</emphasis>
-                    :<programlisting>[DEFAULT]
+                <para>Edit <emphasis role="bold">/etc/keystone/keystone.conf</emphasis>:
+                    <programlisting>[DEFAULT]
 admin_token = password
-bind_host = 0.0.0.0
-public_port = 5000
-admin_port = 35357
-compute_port = 8774
-verbose = True
 debug = True
-log_file = keystone.log
-log_dir = /var/log/keystone
-# log_config = /etc/keystone/logging.conf
+verbose = True
 
 [sql]
-connection = mysql://keystone:password@localhost:3306/keystone
-idle_timeout = 200
-
-[identity]
-driver = keystone.identity.backends.sql.Identity
-
-[catalog]
-driver = keystone.catalog.backends.sql.Catalog
-
-(...)</programlisting></para>
+connection = mysql://keystone:password@localhost/keystone</programlisting></para>
             </listitem>
-            <listitem>
+            <listitem os="rhel;centos;fedora">
                 <para>Create the ssl keys:
-                    <screen><userinput>keystone-manage pki_setup
-chown -R keystone:keystone /etc/keystone/*</userinput></screen></para>
+                    <screen><prompt>#</prompt> <userinput>keystone-manage pki_setup</userinput>
+<prompt>#</prompt> <userinput>chown -R keystone:keystone /etc/keystone/*</userinput></screen></para>
             </listitem>
             <listitem>
-                <para>Restart Keystone and create the tables in the
-                    database
-                    :<screen os="ubuntu"><userinput>service keystone restart
-keystone-manage db_sync</userinput></screen><screen os="rhel;centos;fedora"><userinput>service openstack-keystone restart
- openstack-db --init --service keystone </userinput></screen></para>
+                <para>Restart Keystone and create the tables in the database:
+                    <screen os="ubuntu"><prompt>#</prompt> <userinput>service keystone restart</userinput>
+<prompt>#</prompt> <userinput>keystone-manage db_sync</userinput>
+                    </screen>
+                    <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>service openstack-keystone restart</userinput>
+<prompt>#</prompt> <userinput>openstack-db --init --service keystone </userinput></screen>
+                    <note>
+                        <para>Check the <literal>/var/log/keystone/keystone.log</literal> file for errors that would
+                            prevent the Identity Service from successfully starting.</para>
+                    </note>                    
+                </para>
             </listitem>
             <listitem>
-                <para>Load environment variables :</para>
+                <para>Create an <literal>openrc</literal> File</para>
                 <para>
                     <itemizedlist>
                         <listitem>
-                            <para>Create <emphasis role="bold">novarc</emphasis> file
-                                :<screen><userinput>export OS_TENANT_NAME=admin
+                            <para>Create a file called <emphasis role="bold">~/openrc</emphasis>. This
+                                file contains the OpenStack admin credentials that will be used when interacting with the OpenStack 
+                                environment on the command line.
+                                <programlisting>export OS_TENANT_NAME=admin
 export OS_USERNAME=admin
 export OS_PASSWORD=password
 export OS_AUTH_URL="http://localhost:5000/v2.0/"
 export SERVICE_ENDPOINT="http://localhost:35357/v2.0"
-export SERVICE_TOKEN=password</userinput></screen></para>
+export SERVICE_TOKEN=password</programlisting></para>
                         </listitem>
                     </itemizedlist>
                 </para>
                 <itemizedlist>
                     <listitem>
-                        <para>Export the variables
-                            :<screen><userinput>source novarc
-echo "source novarc">>.bashrc</userinput></screen></para>
+                        <para>Source the credentials into your environment:
+                            <screen><userinput>source ~/openrc</userinput></screen></para></listitem>
+                    <listitem>
+                        <para>
+                            Configure the Bash shell to load these credentials upon each login:
+                            <screen><userinput>echo "source ~/openrc" >> ~/.bashrc</userinput></screen>
+                        </para>
                     </listitem>
                 </itemizedlist>
             </listitem>
             <listitem>
-                <para>Download the <link
-                        xlink:href="https://github.com/EmilienM/openstack-grizzly-guide/raw/master/scripts/keystone-data.sh"
-                        >data script</link> and fill Keystone database
-                    with data (users, tenants, services)
-                    :<screen><userinput>./keystone-data.sh</userinput></screen></para>
-            </listitem>
-            <listitem>
-                <para>Download the <link
-                    xlink:href="https://github.com/EmilienM/openstack-grizzly-guide/raw/master/scripts/keystone-endpoints.sh">endpoint script</link> and create the endpoints (for projects) :<screen><userinput>./keystone-endpoints.sh</userinput></screen>
-                If an IP address of the management network on the controller node is different from this example, please use the following:<screen><userinput>./keystone-endpoints.sh -K &lt;ip address of the management network&gt;</userinput></screen></para>
+                <para>The following bash script will populate Keystone with some initial data:
+                    <itemizedlist>
+                        <listitem><para>Projects: admin and services</para></listitem>
+                        <listitem><para>Roles: admin, Member</para></listitem>
+                        <listitem><para>Users: admin, demo, nova, glance, quantum, and cinder</para></listitem>
+                        <listitem><para>Services: compute, volume, image, identity, ec2, and network</para></listitem>
+                    </itemizedlist>
+                    <programlisting>#!/bin/bash
+
+# Modify these variables as needed
+ADMIN_PASSWORD=${ADMIN_PASSWORD:-password}
+SERVICE_PASSWORD=${SERVICE_PASSWORD:-$ADMIN_PASSWORD}
+DEMO_PASSWORD=${DEMO_PASSWORD:-$ADMIN_PASSWORD}
+export OS_SERVICE_TOKEN="password"
+export OS_SERVICE_ENDPOINT="http://localhost:35357/v2.0"
+SERVICE_TENANT_NAME=${SERVICE_TENANT_NAME:-service}
+#
+MYSQL_USER=keystone
+MYSQL_DATABASE=keystone
+MYSQL_HOST=localhost
+MYSQL_PASSWORD=password
+#
+KEYSTONE_REGION=RegionOne
+KEYSTONE_HOST=10.10.10.10
+
+# Shortcut function to get a newly generated ID
+function get_field() {
+    while read data; do
+        if [ "$1" -lt 0 ]; then
+            field="(\$(NF$1))"
+        else
+            field="\$$(($1 + 1))"
+        fi
+        echo "$data" | awk -F'[ \t]*\\|[ \t]*' "{print $field}"
+    done
+}
+
+# Tenants
+ADMIN_TENANT=$(keystone tenant-create --name=admin | grep " id " | get_field 2)
+DEMO_TENANT=$(keystone tenant-create --name=demo | grep " id " | get_field 2)
+SERVICE_TENANT=$(keystone tenant-create --name=$SERVICE_TENANT_NAME | grep " id " | get_field 2)
+
+# Users
+ADMIN_USER=$(keystone user-create --name=admin --pass="$ADMIN_PASSWORD" --email=admin@domain.com | grep " id " | get_field 2)
+DEMO_USER=$(keystone user-create --name=demo --pass="$DEMO_PASSWORD" --email=demo@domain.com --tenant-id=$DEMO_TENANT | grep " id " | get_field 2)
+NOVA_USER=$(keystone user-create --name=nova --pass="$SERVICE_PASSWORD" --tenant-id $SERVICE_TENANT --email=nova@domain.com | grep " id " | get_field 2)
+GLANCE_USER=$(keystone user-create --name=glance --pass="$SERVICE_PASSWORD" --tenant-id $SERVICE_TENANT --email=glance@domain.com | grep " id " | get_field 2)
+QUANTUM_USER=$(keystone user-create --name=quantum --pass="$SERVICE_PASSWORD" --tenant-id $SERVICE_TENANT --email=quantum@domain.com | grep " id " | get_field 2)
+CINDER_USER=$(keystone user-create --name=cinder --pass="$SERVICE_PASSWORD" --tenant-id $SERVICE_TENANT --email=cinder@domain.com | grep " id " | get_field 2)
+
+# Roles
+ADMIN_ROLE=$(keystone role-create --name=admin | grep " id " | get_field 2)
+MEMBER_ROLE=$(keystone role-create --name=Member | grep " id " | get_field 2)
+
+# Add Roles to Users in Tenants
+keystone user-role-add --user-id $ADMIN_USER --role-id $ADMIN_ROLE --tenant-id $ADMIN_TENANT
+keystone user-role-add --tenant-id $SERVICE_TENANT --user-id $NOVA_USER --role-id $ADMIN_ROLE
+keystone user-role-add --tenant-id $SERVICE_TENANT --user-id $GLANCE_USER --role-id $ADMIN_ROLE
+keystone user-role-add --tenant-id $SERVICE_TENANT --user-id $QUANTUM_USER --role-id $ADMIN_ROLE
+keystone user-role-add --tenant-id $SERVICE_TENANT --user-id $CINDER_USER --role-id $ADMIN_ROLE
+keystone user-role-add --tenant-id $DEMO_TENANT --user-id $DEMO_USER --role-id $MEMBER_ROLE
+
+# Create services
+COMPUTE_SERVICE=$(keystone service-create --name nova --type compute --description 'OpenStack Compute Service' | grep " id " | get_field 2)
+VOLUME_SERVICE=$(keystone service-create --name cinder --type volume --description 'OpenStack Volume Service' | grep " id " | get_field 2)
+IMAGE_SERVICE=$(keystone service-create --name glance --type image --description 'OpenStack Image Service' | grep " id " | get_field 2)
+IDENTITY_SERVICE=$(keystone service-create --name keystone --type identity --description 'OpenStack Identity' | grep " id " | get_field 2)
+EC2_SERVICE=$(keystone service-create --name ec2 --type ec2 --description 'OpenStack EC2 service' | grep " id " | get_field 2)
+NETWORK_SERVICE=$(keystone service-create --name quantum --type network --description 'OpenStack Networking service' | grep " id " | get_field 2)
+
+# Create endpoints
+keystone endpoint-create --region $KEYSTONE_REGION --service-id $COMPUTE_SERVICE --publicurl 'http://'"$KEYSTONE_HOST"':8774/v2/$(tenant_id)s' --adminurl 'http://'"$KEYSTONE_HOST"':8774/v2/$(tenant_id)s' --internalurl 'http://'"$KEYSTONE_HOST"':8774/v2/$(tenant_id)s'
+keystone endpoint-create --region $KEYSTONE_REGION --service-id $VOLUME_SERVICE --publicurl 'http://'"$KEYSTONE_HOST"':8776/v1/$(tenant_id)s' --adminurl 'http://'"$KEYSTONE_HOST"':8776/v1/$(tenant_id)s' --internalurl 'http://'"$KEYSTONE_HOST"':8776/v1/$(tenant_id)s'
+keystone endpoint-create --region $KEYSTONE_REGION --service-id $IMAGE_SERVICE --publicurl 'http://'"$KEYSTONE_HOST"':9292/v2' --adminurl 'http://'"$KEYSTONE_HOST"':9292/v2' --internalurl 'http://'"$KEYSTONE_HOST"':9292/v2'
+keystone endpoint-create --region $KEYSTONE_REGION --service-id $IDENTITY_SERVICE --publicurl 'http://'"$KEYSTONE_HOST"':5000/v2.0' --adminurl 'http://'"$KEYSTONE_HOST"':35357/v2.0' --internalurl 'http://'"$KEYSTONE_HOST"':5000/v2.0'
+keystone endpoint-create --region $KEYSTONE_REGION --service-id $EC2_SERVICE --publicurl 'http://'"$KEYSTONE_HOST"':8773/services/Cloud' --adminurl 'http://'"$KEYSTONE_HOST"':8773/services/Admin' --internalurl 'http://'"$KEYSTONE_HOST"':8773/services/Cloud'
+keystone endpoint-create --region $KEYSTONE_REGION --service-id $NETWORK_SERVICE --publicurl 'http://'"$KEYSTONE_HOST"':9696/' --adminurl 'http://'"$KEYSTONE_HOST"':9696/' --internalurl 'http://'"$KEYSTONE_HOST"':9696/'
+                    </programlisting>                    
+                </para>
             </listitem>
         </orderedlist>
+        <note>
+            <para>
+                If you make a mistake during this guide, you can reset the Keystone database by performing the following steps:
+                <screen><prompt>#</prompt> <userinput>mysql -u root -p keystone -e "drop database keystone"</userinput>
+<prompt>#</prompt> <userinput>mysql -u root -p keystone -e "create database keystone"</userinput>
+<prompt>#</prompt> <userinput>mysql -u root -p keystone -e "grant all privileges on keystone.* TO 'keystone'@'localhost' identified by 'password'"</userinput>
+<prompt>#</prompt> <userinput>keystone-manage db_sync</userinput></screen>
+                And finally, re-run the above bash script.
+            </para>
+        </note>
     </para>
 </section>

@@ -3,77 +3,79 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="basic-install_controller-cinder">
-    <title>Cinder</title>
-	<para>
-                <orderedlist>
+    <title>OpenStack Block Storage</title>
+    <para>While Cinder contains many different storage drivers, the
+        most common and basic configuration uses LVM and iSCSI. This
+        guide illustrates how to use one disk
+            (<literal>/dev/sdb</literal>) in an LVM Volume Group
+        called <literal>cinder-volumes</literal>. When a user requests
+        a block storage volume, a Logical Volume is created from this
+        Volume Group and then mounted on the user's instance by way of
+        iSCSI. <orderedlist>
+            <listitem>
+                <para>Install the Cinder packages: <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install -y cinder-api cinder-scheduler cinder-volume iscsitarget \
+    open-iscsi iscsitarget-dkms python-cinderclient linux-headers-`uname -r`</userinput></screen>
+                    <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install -y openstack-cinder openstack-cinder-doc \
+        iscsi-initiator-utils scsi-target-utils</userinput></screen>
+                </para>
+            </listitem>
+            <listitem>
+                <para>Configure &amp; start the iSCSI services: <screen os="ubuntu"><prompt>#</prompt> <userinput>sed -i 's/false/true/g' /etc/default/iscsitarget</userinput>
+<prompt>#</prompt> <userinput>service iscsitarget start</userinput>
+<prompt>#</prompt> <userinput>service open-iscsi start</userinput></screen>
+                    <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>service tgtd start</userinput>
+<prompt>#</prompt> <userinput>service iscsi start</userinput>
+<prompt>#</prompt> <userinput>chkconfig tgtd on</userinput>
+<prompt>#</prompt> <userinput>chkconfig iscsi on</userinput></screen></para>
+            </listitem>
+            <listitem>
+                <para>Configure Cinder:</para>
+                <itemizedlist>
                     <listitem>
-                        <para>Install the packages
-                    :<screen os="ubuntu"><userinput>apt-get install -y cinder-api cinder-scheduler cinder-volume iscsitarget \
-    open-iscsi iscsitarget-dkms python-cinderclient linux-headers-`uname -r`</userinput></screen><screen os="centos;rhel;fedora"><userinput>yum install -y openstack-cinder openstack-cinder-doc \
-        iscsi-initiator-utils scsi-target-utils</userinput></screen></para>
-                    </listitem>
-                    <listitem>
-                        <para>Configure &amp; start the iSCSI services
-                    :<screen os="ubuntu"><userinput>sed -i 's/false/true/g' /etc/default/iscsitarget
-service iscsitarget start
-service open-iscsi start</userinput></screen><screen os="centos;rhel;fedora"><userinput>service tgtd start
-service iscsi start
-chkconfig tgtd on
-chkconfig iscsi on</userinput></screen></para>
-                    </listitem>
-                    <listitem>
-                        <para>Configure Cinder :</para>
-                        <itemizedlist>
-                            <listitem>
-                                <para>Edit <emphasis role="bold">/etc/cinder/cinder.conf</emphasis>
-                            file and modify:
-                                    <screen>
-                                        <userinput>[DEFAULT]
-sql_connection = mysql://cinder:password@localhost:3306/cinder</userinput></screen>
-<screen><userinput os="ubuntu">rabbit_password = password</userinput>
-                                    </screen>
-                                    <screen><userinput os='centos;rhel;fedora'>rpc_backend = cinder.openstack.common.rpc.impl_qpid
->>>>>>> bcf1da0... fixes for a failed rebase on the previous patch set.
+                        <para>Edit <emphasis role="bold"
+                                >/etc/cinder/cinder.conf</emphasis>: <programlisting os="ubuntu">[DEFAULT]
+sql_connection = mysql://cinder:password@localhost/cinder
+rabbit_password = password</programlisting>
+                            <programlisting os="centos;rhel;fedora">[DEFAULT]
+rpc_backend = cinder.openstack.common.rpc.impl_qpid
+sql_connection = mysql://cinder:password@localhost/cinder
 qpid_user = guest
-qpid_password = quest
-                                    </userinput>
-                                    </screen>
-                                    <screen><userinput>
-[keystone_authtoken]
-admin_tenant_name = service
-admin_user = cinder
-admin_password = password</userinput></screen></para>
-                            </listitem>
-                            <listitem>
-                                <para>Edit <emphasis role="bold">/etc/cinder/api-paste.ini</emphasis> file and modify:
-                                    <screen><userinput>admin_tenant_name = service
-admin_user = cinder 
-admin_password = password</userinput></screen></para>
-                            </listitem>
-                            <listitem>
-                                <para>Create the volume (on the second disk):<screen><userinput>fdisk /dev/sdb
-
-[Create a Linux partition]
-
-pvcreate /dev/sdb1
-vgcreate cinder-volumes /dev/sdb1</userinput></screen></para>
-                            </listitem>
-                            <listitem>
-                                <para>Create Cinder tables into the database :<screen><userinput>cinder-manage db sync</userinput></screen></para>
-                            </listitem>
-                            <listitem>
-                                <para>Restart the services :<screen os="ubuntu"><userinput>service cinder-api restart
-service cinder-scheduler restart
-service cinder-volume restart</userinput></screen>
-                                    <screen os='centos;rhel;fedora'><userinput>service openstack-cinder-api restart
-service openstack-cinder-scheduler restart
-service openstack-cinder-volume restart
-chkconfig openstack-cinder-api on
-chkconfig openstack-cinder-scheduler on
-chkconfig openstack-cinder-volume on</userinput></screen></para>
-                            </listitem>
-                        </itemizedlist>
+qpid_password = quest</programlisting>
+                        </para>
                     </listitem>
-                </orderedlist>
-            </para>
+                    <listitem>
+                        <para>Edit <emphasis role="bold"
+                                >/etc/cinder/api-paste.ini</emphasis>:
+                            <programlisting>admin_tenant_name = service
+admin_user = cinder 
+admin_password = password</programlisting>
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>Create the LVM Physical Volume and
+                            Logical Volume:
+                            <screen><prompt>#</prompt> <userinput>pvcreate /dev/sdb</userinput>
+<prompt>#</prompt> <userinput>vgcreate cinder-volumes /dev/sdb</userinput></screen>
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>Create Cinder tables into the database:
+                            <screen><prompt>#</prompt> <userinput>cinder-manage db sync</userinput></screen>
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>Restart the services: <screen os="ubuntu"><prompt>#</prompt> <userinput>service cinder-api restart</userinput>
+<prompt>#</prompt> <userinput>service cinder-scheduler restart</userinput>
+<prompt>#</prompt> <userinput>service cinder-volume restart</userinput></screen>
+                            <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>service openstack-cinder-api restart</userinput>
+<prompt>#</prompt> <userinput>service openstack-cinder-scheduler restart</userinput>
+<prompt>#</prompt> <userinput>service openstack-cinder-volume restart</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-cinder-api on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-cinder-scheduler on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-cinder-volume on</userinput></screen></para>
+                    </listitem>
+                </itemizedlist>
+            </listitem>
+        </orderedlist>
+    </para>
 </section>
