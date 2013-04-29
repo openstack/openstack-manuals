@@ -305,7 +305,7 @@
             needed.</para>
         <simplesect>
             <title>Create an empty image (raw)</title>
-            <para>Here we create a a 5GB raw image using the
+            <para>Here we create a 5GB raw image using the
                     <command>kvm-img</command> command:
                 <screen><prompt>$</prompt> <userinput>IMAGE=centos-6.2.img</userinput>
 <prompt>$</prompt> <userinput>kvm-img create -f raw $IMAGE 5G</userinput></screen></para>
@@ -658,7 +658,7 @@ brw-rw---- 1 root disk 43, 51 2012-03-05 15:32 /dev/nbd3p3</computeroutput></scr
             images are often shared by many users, it is not advised
             to put passwords into the images. Nova therefore supports
             injecting ssh keys into instances before they are booted.
-            This allows a user to login to the instances that he or
+            This allows a user to log in to the instances that he or
             she creates securely. Generally the first thing that a
             user does when using the system is create a keypair. </para>
         <para>Keypairs provide secure authentication to your
@@ -692,7 +692,7 @@ brw-rw---- 1 root disk 43, 51 2012-03-05 15:32 /dev/nbd3p3</computeroutput></scr
             <listitem>
                 <para>
                     <literal>-key_name</literal>: the name of the key
-                    to inject in to the instance at launch.</para>
+                    to inject into the instance at launch.</para>
             </listitem>
         </itemizedlist>
         <para>Check the status of the instance you launched:</para>
@@ -885,7 +885,7 @@ kvm-img create -f raw server.img 5G
                 <screen>
 wget http://releases.ubuntu.com/natty/ubuntu-11.04-server-amd64.iso
 </screen>
-                <para>Boot a KVM Instance with the OS installer ISO in
+                <para>Boot a KVM instance with the OS installer ISO in
                     the virtual CD-ROM. This will start the
                     installation process. The command below also sets
                     up a VNC display at port 0</para>
@@ -894,7 +894,7 @@ sudo kvm -m 256 -cdrom ubuntu-11.04-server-amd64.iso -drive   file=server.img,if
 </screen>
                 <para>Connect to the VM through VNC (use display
                     number :0) and finish the installation.</para>
-                <para>For Example, where 10.10.10.4 is the IP address
+                <para>For example, where 10.10.10.4 is the IP address
                     of client1:</para>
                 <screen>
  vncviewer 10.10.10.4 :0
@@ -938,14 +938,14 @@ chkconfig sshd on
                 <screen>
 sudo rm -rf /etc/udev/rules.d/70-persistent-net.rules
 </screen>
-                <para>Shutdown the Virtual machine and proceed with
+                <para>Shut down the Virtual machine and proceed with
                     the next steps.</para>
             </simplesect>
             <simplesect>
                 <title>Extracting the EXT4 partition</title>
                 <para>The image that needs to be uploaded to OpenStack
                     needs to be an ext4 filesystem image. Here are the
-                    steps to create a ext4 filesystem image from the
+                    steps to create an ext4 filesystem image from the
                     raw image i.e server.img</para>
                 <screen>
 sudo losetup  -f  server.img
@@ -984,9 +984,9 @@ Device Boot      Start         End      Blocks   Id  System
                 <screen>
 sudo losetup -d /dev/loop0
 </screen>
-                <para>Now mount only the partition(/dev/loop0p1) of
+                <para>Now mount only the partition (/dev/loop0p1) of
                     server.img which we had previously noted down, by
-                    adding the -o parameter with value previously
+                    adding the -o parameter with the previously
                     calculated value</para>
                 <screen>
 sudo losetup -f -o 1048576 server.img
@@ -1019,7 +1019,7 @@ sudo losetup -d /dev/loop0
                     resize the disk at the time of launch of instances
                     based on the instance type chosen. This can make
                     the UUID of the disk invalid. Hence we have to use
-                    File system label as the identifier for the
+                    a file system label as the identifier for the
                     partition instead of the UUID.</para>
                 <para>Loop mount the serverfinal.img, by
                     running</para>

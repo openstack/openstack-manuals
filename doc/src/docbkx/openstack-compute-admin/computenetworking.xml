@@ -1259,10 +1259,10 @@ mute 20</programlisting>
                         <para>Create the network scripts</para>
                         <para> The next step is to create both scripts that will be used when the
                             network components will start up and shut down. The scripts will be
-                            respectively saved under <filename>/etc/openvpn.up.sh</filename> and
+                            respectively saved under <filename>/etc/openvpn/up.sh</filename> and
                                 <filename>/etc/openvpn/down.sh</filename> :</para>
                         <para>
-                            <filename> /etc/openvpn/up/sh </filename>
+                            <filename> /etc/openvpn/up.sh </filename>
                             <programlisting>#!/bin/sh
 # Openvpn startup script.
 
@@ -2344,7 +2344,7 @@ valid_lft forever preferred_lft forever
                 as
                 root:<screen><prompt>#</prompt> <userinput>sysctl -w net.ipv4.conf.<replaceable>eth2</replaceable>.rp_filter=0</userinput></screen></para>
             <para>If this solves your issue, add the following line to
-                    <filename>/etc/sysctl.conf</filename> so that the revesrse path filter will be
+                    <filename>/etc/sysctl.conf</filename> so that the reverse path filter will be
                 disabled the next time the compute host
                 reboots:<programlisting>net.ipv4.conf.rp_filter=0</programlisting></para>
 
@@ -2382,7 +2382,7 @@ valid_lft forever preferred_lft forever
                 multiple times. If the network configuration is correct, the command should return
                 immediately each time. If it is not functioning properly, the command will hang for
                 several seconds.</para>
-            <para>If the <command>nslookup</command> command somteimes hangs, and there are packets
+            <para>If the <command>nslookup</command> command sometimes hangs, and there are packets
                 that appear in the first terminal but not the second, then the problem may be due to
                 filtering done on the bridges. Try to disable filtering, as
                 root:<screen><prompt>#</prompt> <userinput>sysctl -w net.bridge.bridge-nf-call-arptables=0</userinput>
