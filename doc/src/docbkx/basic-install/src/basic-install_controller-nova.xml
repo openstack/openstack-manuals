@@ -3,27 +3,29 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="basic-install_controller-nova">
-    <title>Nova</title>
-	<para>
+    <title>OpenStack Compute (Cloud Controller services)</title>
+    <para>The OpenStack Compute Service provides the cloud environment with the ability to manage the scheduling,
+        creation and deletion of virtual machines (instances).
                 <orderedlist>
                     <listitem>
-                        <para>Install the packages
-                    :<screen os="ubuntu"><userinput>apt-get install nova-api nova-cert nova-common nova-conductor \
+                        <para>Install the Nova packages:
+                            <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install -y nova-api nova-cert nova-common nova-conductor \
     nova-scheduler python-nova python-novaclient nova-consoleauth novnc \
-    nova-novncproxy</userinput></screen><screen os="centos;rhel;fedora"><userinput>yum install -y openstack-nova-api openstack-nova-scheduler openstack-nova-cert \
+    nova-novncproxy</userinput></screen>
+                            <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install -y openstack-nova-api openstack-nova-scheduler openstack-nova-cert \
         openstack-nova-console openstack-nova-doc genisoimage openstack-dashboard \
-        openstack-nova-novncproxy openstack-nova-conductor novnc</userinput></screen></para>
+        openstack-nova-novncproxy openstack-nova-conductor novnc</userinput></screen>
+                        </para>
                     </listitem>
                     <listitem>
-                        <para>Configure Nova :</para>
+                        <para>Configure Nova:</para>
                         <itemizedlist>
                             <listitem>
-                                <para>Edit <filename>/etc/nova/api-paste.ini</filename>
-                            file and modify
-                            :<screen><userinput os="ubuntu">admin_tenant_name = service 
+                                <para>Edit <filename>/etc/nova/api-paste.ini</filename>:
+                                    <programlisting os="ubuntu">admin_tenant_name = service 
 admin_user = nova 
-admin_password = password</userinput></screen>
-                                    <screen><userinput os='centos;rhel;fedora'>[filter:authtoken]
+admin_password = password</programlisting>
+                                    <programlisting os='centos;rhel;fedora'>[filter:authtoken]
 paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
 service_protocol = http
 service_host = 127.0.0.1
@@ -32,125 +34,126 @@ admin_tenant_name = service
 admin_user  = nova
 admin_password = password
 # Workaround for https://bugs.launchpad.net/nova/+bug/1154809
-auth_version = v2.0</userinput></screen>
-                            <screen>============================================================
-[composite:osapi_volume]
-use = call:nova.api.openstack.urlmap:urlmap_factory
-/: osvolumeversions
-/v1: openstack_volume_api_v1
-============================================================
-
-============================================================
-[composite:openstack_volume_api_v1]
-use = call:nova.api.auth:pipeline_factory
-noauth = faultwrap sizelimit noauth ratelimit osapi_volume_app_v1
-keystone = faultwrap sizelimit authtoken keystonecontext ratelimit osapi_volume_app_v1
-keystone_nolimit = faultwrap sizelimit authtoken keystonecontext osapi_volume_app_v1
-============================================================
-
-============================================================
-[app:osapi_volume_app_v1]
-paste.app_factory = nova.api.openstack.volume:APIRouter.factory
-============================================================
-
-============================================================
-[pipeline:osvolumeversions]
-pipeline = faultwrap osvolumeversionapp
-
-[app:osvolumeversionapp]
-paste.app_factory = nova.api.openstack.volume.versions:Versions.factory
-============================================================</screen></para>
+auth_version = v2.0</programlisting>
+</para>
                             </listitem>
                             <listitem>
-                                <para>Edit <emphasis role="bold">/etc/nova/nova.conf</emphasis> file
-                                    and modify :<screen><userinput>[DEFAULT]
+                                <para>Add the following to the <emphasis role="bold">/etc/nova/nova.conf</emphasis> file. This file is
+                                    the main configuration file of Nova. There is a large amount of configuration options
+                                    that can go in this file. This guide illustrates the minimum needed for a simple environment.
+                                    Note that the nova.conf file supplied by your distribution will have some options already set. Leave
+                                    them as-is.
+                                    <programlisting os="ubuntu">[DEFAULT]
 
-# MySQL Connection #
-sql_connection=mysql://nova:password@192.168.0.1/nova
-
-                                    </userinput></screen>
-                                    <screen><userinput os="ubuntu"># nova-scheduler #
+sql_connection=mysql://nova:password@localhost/nova
 rabbit_password=password
-                                    </userinput></screen>
-                                    <screen><userinput os='centos;rhel;fedora'>
-# nova-scheduler #
-qpid_username=guest
-qpid_password=guest
-rpc_backend = nova.openstack.common.rpc.impl_qpid
-                                    </userinput></screen>
-                                    <screen><userinput>                  
-scheduler_driver=nova.scheduler.filter_scheduler.FilterScheduler
-
-# nova-api #
-cc_host=192.168.0.1
 auth_strategy=keystone
-s3_host=192.168.0.1
-ec2_host=192.168.0.1
-nova_url=http://192.168.0.1:8774/v1.1/
-ec2_url=http://192.168.0.1:8773/services/Cloud
-keystone_ec2_url=http://192.168.0.1:5000/v2.0/ec2tokens
-api_paste_config=/etc/nova/api-paste.ini
-allow_admin_api=true
-ec2_private_dns_show_ip=True
-dmz_cidr=169.254.169.254/32
-ec2_dmz_host=192.168.0.1
-metadata_host=192.168.0.1
-metadata_listen=0.0.0.0
-enabled_apis=ec2,osapi_compute,metadata
 
-# Networking #
+# Networking
 network_api_class=nova.network.quantumv2.api.API
-quantum_url=http://192.168.0.1:9696
+quantum_url=http://10.10.10.10:9696
 quantum_auth_strategy=keystone
 quantum_admin_tenant_name=service
 quantum_admin_username=quantum
 quantum_admin_password=password
-quantum_admin_auth_url=http://192.168.0.1:35357/v2.0
+quantum_admin_auth_url=http://10.10.10.10:35357/v2.0
 libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver
 linuxnet_interface_driver=nova.network.linux_net.LinuxOVSInterfaceDriver  
-firewall_driver=nova.virt.libvirt.firewall.IptablesFirewallDriver
 
-# Cinder #
+# Security Groups                                    
+firewall_driver=nova.virt.firewall.NoopFirewallDriver
+security_group_api=quantum                           
+                                                     
+# Metadata                                           
+quantum_metadata_proxy_shared_secret=password          
+service_quantum_metadata_proxy=true                  
+metadata_listen = 10.10.10.10        
+metadata_listen_port = 8775                          
+
+# Cinder
 volume_api_class=nova.volume.cinder.API
 
-# Glance #
-glance_api_servers=192.168.0.1:9292
+# Glance
+glance_api_servers=10.10.10.10:9292
 image_service=nova.image.glance.GlanceImageService
 
-# novnc #
-novnc_enable=true
-novncproxy_base_url=http://7.7.7.7:6080/vnc_auto.html
-vncserver_proxyclient_address=192.168.0.1
-vncserver_listen=0.0.0.0
+# novnc
+novnc_enable=true             
+novncproxy_port=6080          
+novncproxy_host=10.0.0.10
+vncserver_listen=0.0.0.0      
+</programlisting>
+<programlisting os='centos;rhel;fedora'>
+# General
+verbose = True
+qpid_username=guest
+qpid_password=guest
+rpc_backend = nova.openstack.common.rpc.impl_qpid
 
-# Misc #
-logdir=/var/log/nova
-state_path=/var/lib/nova
-lock_path=/var/lock/nova
-rootwrap_config=/etc/nova/rootwrap.conf
-verbose=true</userinput></screen></para>
+# Networking
+network_api_class=nova.network.quantumv2.api.API
+quantum_url=http://10.10.10.10:9696
+quantum_auth_strategy=keystone
+quantum_admin_tenant_name=service
+quantum_admin_username=quantum
+quantum_admin_password=password
+quantum_admin_auth_url=http://10.10.10.10:35357/v2.0
+libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver
+linuxnet_interface_driver=nova.network.linux_net.LinuxOVSInterfaceDriver  
+
+# Security Groups                                    
+firewall_driver=nova.virt.firewall.NoopFirewallDriver
+security_group_api=quantum                           
+                                                     
+# Metadata                                           
+quantum_metadata_proxy_shared_secret=password          
+service_quantum_metadata_proxy=true                  
+metadata_listen = 10.10.10.10        
+metadata_listen_port = 8775                          
+
+# Cinder
+volume_api_class=nova.volume.cinder.API
+
+# Glance
+glance_api_servers=10.10.10.10:9292
+image_service=nova.image.glance.GlanceImageService
+
+# novnc
+novnc_enable=true             
+novncproxy_port=6080          
+novncproxy_host=10.0.0.10
+vncserver_listen=0.0.0.0      
+</programlisting>
+                                </para>
                             </listitem>
                             <listitem>
-                                <para>Create Nova tables into the database :<screen><userinput>nova-manage db sync</userinput></screen></para>
-                            </listitem>
+                                <para>Create Nova tables into the database:
+                                    <screen><prompt>#</prompt> <userinput>nova-manage db sync</userinput></screen></para>
+                            </listitem>                    
                             <listitem>
-                                <para>Restart Nova services :<screen os="ubuntu"><userinput>service nova-api restart
-service nova-cert restart
-service nova-consoleauth restart
-service nova-scheduler restart
-service nova-novncproxy restart</userinput></screen>
-                                    <screen os='centos;rhel;fedora'><userinput>service openstack-nova-api restart
-service openstack-nova-cert restart
-service openstack-nova-consoleauth restart
-service openstack-nova-scheduler restart
-service openstack-nova-conductor restart
-service openstack-nova-novncproxy restart
-chkconfig openstack-nova-api on
-chkconfig openstack-nova-cert on
-chkconfig openstack-nova-consoleauth on
-chkconfig openstack-nova-scheduler on
-chkconfig openstack-nova-conductor on
-chkconfig openstack-nova-novncproxy on</userinput></screen></para>
+                                <para>Restart Nova services:
+                                    <screen os="ubuntu"><prompt>#</prompt> <userinput>service nova-api restart</userinput>
+<prompt>#</prompt> <userinput>service nova-cert restart</userinput>
+<prompt>#</prompt> <userinput>service nova-consoleauth restart</userinput>
+<prompt>#</prompt> <userinput>service nova-scheduler restart</userinput>
+<prompt>#</prompt> <userinput>service nova-novncproxy restart</userinput></screen>
+                                    <screen os='centos;rhel;fedora'><prompt>#</prompt> <userinput>service openstack-nova-api restart</userinput>
+<prompt>#</prompt> <userinput>service openstack-nova-cert restart</userinput>
+<prompt>#</prompt> <userinput>service openstack-nova-consoleauth restart</userinput>
+<prompt>#</prompt> <userinput>service openstack-nova-scheduler restart</userinput>
+<prompt>#</prompt> <userinput>service openstack-nova-conductor restart</userinput>
+<prompt>#</prompt> <userinput>service openstack-nova-novncproxy restart</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-nova-api on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-nova-cert on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-nova-consoleauth on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-nova-scheduler on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-nova-conductor on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-nova-novncproxy on</userinput></screen>
+                                    <note>
+                                        <para>Check the <literal>/var/log/nova/nova-*</literal> files for any errors
+                                            that would prevent the Compute Service from successfully starting.</para>
+                                    </note>
+                                </para>
                             </listitem>
                         </itemizedlist>
                     </listitem>

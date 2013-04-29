@@ -3,20 +3,30 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="basic-install_compute-quantum">
-    <title>Quantum</title>
+    <title>OpenStack Networking (Compute Node)</title>
         <section xml:id="compute-ovs">
             <title>Open vSwitch</title>
             <para>
                 <orderedlist>
                     <listitem>
-                        <para>Install the packages:<screen os="ubuntu"><userinput>apt-get install -y openvswitch-switch</userinput></screen><screen os="centos;rhel;fedora"><userinput>yum install -y openvswitch-switch</userinput></screen></para>
+                        <para>Install the packages:
+                            <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install -y openvswitch-switch</userinput></screen>
+                            <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install -y openvswitch-switch</userinput></screen>
+                        </para>
                     </listitem>
                     <listitem>
-                        <para>Start Open vSwitch service<screen os="ubuntu"><userinput>service openvswitch-switch start</userinput></screen><screen os="centos;rhel;fedora"><userinput>service openvswitch-switch start
-chkconfig openvswitch-switch on</userinput></screen></para>
+                        <para>Start Open vSwitch service
+                            <screen os="ubuntu"><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput></screen>
+                            <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput>
+<prompt>#</prompt> <userinput>chkconfig openvswitch-switch on</userinput></screen>
+                        </para>
                     </listitem>
                     <listitem>
-                        <para>Configure Virtual Bridging<screen><userinput>ovs-vsctl add-br br-int</userinput></screen></para>
+                        <para>Create an internal bridge. Just as described in the Introduction to this guide, the Compute Node
+                            does not provide an external bridge. This enforces all instances' network traffic to go through
+                            the Network Controller. This is known as a "single-node" networking setup. 
+                            <screen><prompt>#</prompt> <userinput>ovs-vsctl add-br br-int</userinput></screen>
+                        </para>
                     </listitem>
                 </orderedlist>
             </para>
@@ -26,40 +36,51 @@ chkconfig openvswitch-switch on</userinput></screen></para>
             <para>
                 <orderedlist>
                     <listitem>
-                        <para>Install the packages:<screen><userinput>apt-get install -y quantum-plugin-openvswitch-agent</userinput></screen><screen><userinput>yum install -y openstack-quantum-openvswitch</userinput></screen></para>
+                        <para>Install the packages:
+                            <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install -y quantum-plugin-openvswitch-agent</userinput></screen>
+                            <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install -y openstack-quantum-openvswitch</userinput></screen>
+                        </para>
                     </listitem>
                     <listitem>
-                        <para>Edit <emphasis role="bold">/etc/quantum/quantum.conf</emphasis> file and modify:
-                            <screen><userinput>core_plugin = \
-    quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPluginV2
-auth_strategy = keystone
-                            </userinput>
-                                <userinput os="ubuntu">
-fake_rabbit = False
-rabbit_host = 192.168.0.1
-rabbit_password = password</userinput></screen><screen os="centos;rhel;fedora">rpc_backend=quantum.openstack.common.rpc.impl_qpid</screen></para>
+                        <para>Edit <emphasis role="bold">/etc/quantum/quantum.conf</emphasis>:
+                            <programlisting os="ubuntu">[DEFAULT]
+rabbit_host = 10.10.10.10
+rabbit_password = password
+verbose = True</programlisting>
+                            <programlisting os="centos;rhel;fedora">verbose = True
+rpc_backend=quantum.openstack.common.rpc.impl_qpid</programlisting>
+                        </para>
                     </listitem>
                     <listitem>
-                        <para>Edit <emphasis role="bold"
-                        >/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</emphasis> file and
-                    modify:<screen><userinput>[DATABASE]
-sql_connection = mysql://quantum:password@192.168.0.1:3306/quantum
+                        <para>Edit <emphasis role="bold">/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</emphasis>:
+                            <programlisting>[DATABASE]
+sql_connection = mysql://quantum:password@10.10.10.1/quantum
 [OVS]
 tenant_network_type = gre
 tunnel_id_ranges = 1:1000
-integration_bridge = br-int
-tunnel_bridge = br-tun
-local_ip = 10.10.10.2
-enable_tunneling = True</userinput></screen><screen os="centos;rhel;fedora">ln -s /etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini /etc/quantum/plugin.ini</screen></para>
+local_ip = 10.10.10.11
+enable_tunneling = True
+[SECURITYGROUP]
+firewall_driver = quantum.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
+                            </programlisting>
+                            <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>ln -s /etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini /etc/quantum/plugin.ini</userinput></screen>
+                        </para>
                     </listitem>
                     <listitem>
-                        <para>Start the Agent:<screen os="ubuntu"><userinput>service quantum-plugin-openvswitch-agent restart</userinput></screen><screen><userinput>service quantum-openvswitch-agent restart
-chkconfig quantum-openvswitch-agent on</userinput></screen></para>
+                        <para>Start the Agent:
+                            <screen os="ubuntu"><prompt>#</prompt> <userinput>service quantum-plugin-openvswitch-agent restart</userinput></screen>
+                            <screen os="centos;rhel;fedora"><userinput>service quantum-openvswitch-agent restart</userinput>
+<prompt>#</prompt> <userinput>chkconfig quantum-openvswitch-agent on</userinput></screen>
+                        </para>
                     </listitem>
-                    <listitem os="centos;rhel;fedora">
-                        <para>Ensure the cleanup utility is started on future boots:</para><screen><prompt>#</prompt> <userinput>chkconfig quantum-ovs-cleanup on</userinput></screen>
+                    <listitem>
+                        <para>Ensure the cleanup utility is started on future boots:</para>
+                        <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>chkconfig quantum-ovs-cleanup on</userinput></screen>
                     </listitem>
                 </orderedlist>
+                <note><para>Check the <literal>/var/log/quantum/openvswitch-agent.log</literal> file for errors that would
+                    prevent the Networking service from successfully starting.</para></note>
+                
             </para>
          </section>
 </section>

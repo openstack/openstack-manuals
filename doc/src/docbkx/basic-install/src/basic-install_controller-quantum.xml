@@ -3,56 +3,63 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="basic-install_controller-quantum">
-    <title>Quantum</title>
-        <para>
+    <title>OpenStack Network Service (Cloud Controller)</title>
+    <para>The OpenStack Network Service provides a comprehensive and extendible networking service to the cloud. Some features include,
+        but are not limited to, the ability for instances to reach an external network outside of the cloud as well as the ability
+        for each user of the cloud to create multiple internal subnets of their own.
             <orderedlist>
                 <listitem>
-                    <para>Install the packages:<screen os="ubuntu"><userinput>apt-get install quantum-server</userinput></screen>
-                        <screen os="centos;rhel;fedora"><userinput>yum install openstack-quantum openstack-quantum-openvswitch</userinput></screen></para>
+                    <para>Install the Quantum Server:
+                        <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install -y quantum-server</userinput></screen>
+                        <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-quantum openstack-quantum-openvswitch</userinput></screen>
+                    </para>
                 </listitem>
                 <listitem>
-                    <para>Configure Quantum services :</para>
+                    <para>Configure the Quantum service:</para>
                     <itemizedlist>
                         <listitem>
-                            <para>Edit <emphasis role="bold">/etc/quantum/quantum.conf</emphasis>
-                            file and modify:<screen os="ubuntu"><userinput>core_plugin = \
-    quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPluginV2
-auth_strategy = keystone
-fake_rabbit = False
-rabbit_password = password</userinput></screen><screen os="centos;rhel;fedora"><userinput>core_plugin = \
+                            <para>Edit <emphasis role="bold">/etc/quantum/quantum.conf</emphasis>:
+                                <programlisting os="ubuntu">[DEFAULT]
+verbose = True
+rabbit_password = password
+[keystone_authtoken]
+admin_tenant_name = service
+admin_user = quantum 
+admin_password = password</programlisting>
+                                <programlisting os="centos;rhel;fedora">[DEFAULT]
+core_plugin = \
     quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPluginV2
 auth_strategy = keystone
 fake_rabbit = False
 rpc_backend=quantum.openstack.common.rpc.impl_qpid
 qpid_username = guest
-qpid_password = guest</userinput></screen></para>
+qpid_password = guest</programlisting>
+                            </para>
                         </listitem>
                         <listitem>
-                            <para>Edit <filename>/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</filename>
-                            file and modify :<screen os="ubuntu"><userinput>[DATABASE]
-sql_connection = mysql://quantum:password@localhost:3306/quantum
+                            <para>Edit <emphasis role="bold">/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</emphasis>:
+                                <programlisting>[DATABASE]
+sql_connection = mysql://quantum:password@localhost/quantum
 [OVS]
-tenant_network_type = gre
+tenant_network_type = gre 
 tunnel_id_ranges = 1:1000
-enable_tunneling = True</userinput></screen>
-                                 <screen os="centos;rhel;fedora"><userinput>[DATABASE]
-sql_connection = mysql://quantum:password@localhost:3306/quantum
+enable_tunneling = True
+local_ip = 10.10.10.10</programlisting>
+                                 <programlisting os="centos;rhel;fedora">[DATABASE]
+sql_connection = mysql://quantum:password@localhost/quantum
 [OVS]
-enable_tunneling = False</userinput></screen></para>
-                            <note os="ubuntu">
-                                <para>It's more handy to choose
-                               <emphasis role="bold">tunnel
-                               mode</emphasis> since you don't
+enable_tunneling = False</programlisting></para>
+                            <note>
+                                <para os="ubuntu">It's more handy to choose
+                               <emphasis role="bold">tunnel mode</emphasis> since you don't
                                have to configure your physical
-                               switches for VLANs.</para></note>
-                                <note os="centos;rhel;fedora"><para>The Fedora kernel module for OpenVSwitch has been compiled 
-                                    with out support for tunnels. To use gre tunnels the module will have to be recompiled.</para></note>
+                               switches for VLANs.</para>
+                                <para os="centos;rhel;fedora">The Fedora kernel module for OpenVSwitch has been compiles with out support for tunnels. To use gre tunnels the module will have to be recompiled.</para>
+                            </note>
                         </listitem>
-                        <listitem>
-                            <para os="ubuntu">Edit <emphasis role="bold">/etc/quantum/api-paste.ini</emphasis> file and modify :<screen><userinput>admin_tenant_name = service
-admin_user = quantum 
-admin_password = password</userinput></screen></para>
-                            <para os="centos;rhel;fedora">Edit <emphasis role="bold">/etc/quantum/api-paste.ini</emphasis> file and change:<screen><userinput>[filter:authtoken]
+                        <listitem os="centos;rhel;fedora">                      
+                            <para>Edit <emphasis role="bold">/etc/quantum/api-paste.ini</emphasis>:
+                                <programlisting>[filter:authtoken]
 paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
 auth_host = 127.0.0.1
 auth_port = 35357
@@ -60,23 +67,25 @@ auth_protocol = http
 admin_tenant_name = service
 admin_user = quantum
 admin_password = password
-</userinput></screen></para>
+</programlisting></para>
                         </listitem>
                     </itemizedlist>
                 </listitem>
                 <listitem os="centos;rhel;fedora">
                     <para>Enable the OVS plugin:
-                        :<screen os="ubuntu"><userinput>ln -s /etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini /etc/quantum/plugin.ini</userinput></screen></para>
+                        <screen os="ubuntu"><prompt>#</prompt> <userinput>ln -s /etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini /etc/quantum/plugin.ini</userinput></screen></para>
                 </listitem>
                 <listitem os="centos;rhel;fedora">
                     <para>Set SELinux to permissive mode:
-                        :<screen><userinput>setenforce 0    
-sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/sysconfig/selinux</userinput></screen></para>
+                        <screen os="ubuntu"><prompt>#</prompt> <userinput>setenforce 0</userinput>    
+<prompt>#</prompt> <userinput>sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/sysconfig/selinux</userinput></screen>
+                    </para>
                 </listitem>
                 <listitem>
                     <para>Start the services:
-                        <screen os="ubuntu"><userinput>service quantum-server restart</userinput></screen><screen os="centos;rhel;fedora"><userinput>service quantum-server restart
-chkconfig quantum-server on</userinput></screen></para>
+                        <screen os="ubuntu"><prompt>#</prompt> <userinput>service quantum-server restart</userinput></screen>
+                        <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>service quantum-server restart</userinput>
+<prompt>#</prompt> <userinput>chkconfig quantum-server on</userinput></screen></para>
                 </listitem>
             </orderedlist>
         </para>

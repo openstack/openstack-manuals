@@ -3,16 +3,18 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="basic-install_network-services">
-    <title>Network Services</title>
+    <title>OpenStack Networking (Network Controller)</title>
     <section xml:id="network-ovs">
-    <title>Open-vSwitch</title>
+    <title>Open vSwitch</title>
     <para>
         <orderedlist>
             <listitem>
-                <para>Install the packages
-                        :<screen os="ubuntu"><userinput>apt-get install quantum-plugin-openvswitch-agent \
-quantum-dhcp-agent quantum-l3-agent</userinput></screen><screen os="centos;rhel;fedora"><userinput>yum install openstack-quantum openstack-quantum-openvswitch\
-openvswitch-switch</userinput></screen></para><para os="centos;rhel;fedora">The Open vSwitch kernel module in Fedora
+                <para>Install the packages:
+                    <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install quantum-plugin-openvswitch-agent \
+quantum-dhcp-agent quantum-l3-agent</userinput></screen>
+                    <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-quantum openstack-quantum-openvswitch\
+openvswitch-switch</userinput></screen></para>
+                <para os="centos;rhel;fedora">The Open vSwitch kernel module in Fedora
                         has been compiled without tunnel support. If
                         gre tunnels and network namespaces are
                         desired, then this package must be recompiled
@@ -23,115 +25,138 @@ openvswitch-switch</userinput></screen></para><para os="centos;rhel;fedora">The 
             </listitem>
             <listitem>
                 <para>Start Open vSwitch:
-                    <screen>service openvswitch-switch start</screen><screen os="centos;rhel;fedora">chkconfig openvswitch-switch on</screen></para>
+                    <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput>
+<prompt>#</prompt> <userinput>chkconfig openvswitch-switch on</userinput></screen>
+                    <screen os="ubuntu"><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput></screen>
+                </para>
             </listitem>
             <listitem>
-                <para>Create Virtual
-                        Bridging:<screen>ovs-vsctl add-br br-int
-ovs-vsctl add-br br-ex
-ovs-vsctl add-port br-ex eth2
-ip link set up br-ex </screen></para>
+                <para>Create an internal and external network bridge. The purposes of these bridges are described in the Introduction of this guide.                     
+                    <screen><prompt>#</prompt> <userinput>ovs-vsctl add-br br-ex</userinput>
+<prompt>#</prompt> <userinput>ovs-vsctl add-port br-ex eth0</userinput>
+<prompt>#</prompt> <userinput>ovs-vsctl add-br br-int</userinput>
+</screen></para>
             </listitem>
-            <listitem><para>A crucial step for configuring Open vSwitch and the Linux bridge
-                        means you must move your IP address to the
-                        bridge interface instead of the physical
-                        interface. This is described below and also in
-                <link linkend="basic-network-common">Common services</link>.</para> 
-                <para>As an example, if you tie eth0 to a bridge, such
-                        as <userinput>ovs-vsctl add-br br-eth0
-                            &amp;&amp; ovs-vsctl add-port br-eth0
-                            eth0</userinput> (where eth0 had an IP
-                        address of 192.168.100.51/24), then you need
-                        to modify your
-                            <filename>/etc/network/interfaces</filename>
-                        as such:</para>
-            <screen>
-auto eth0
-iface eth0 inet manual
-up ifconfig $IFACE up
-up ip link $IFACE promisc on
-down ifconfig $IFACE down
-
-auto br-eth0
-iface br-eth0 inet static
-address 192.168.100.51
-netmask 255.255.255.0
-gateway 192.168.100.X
-dns-nameservers 8.8.8.8
-            </screen></listitem>
-            </orderedlist>
+            <listitem>
+                <para>Configure the bridges:
+                    <itemizedlist>
+                        <listitem os="ubuntu">
+                            <para>Change the <literal>eth0</literal> entry in <emphasis role="bold">/etc/network/interfaces</emphasis> to look like:
+                            <programlisting>auto eth0
+iface eth0 inet manual              
+    up ip address add 0/0 dev $IFACE
+    up ip link set $IFACE up        
+    down ip link set $IFACE down</programlisting>
+                        </para>
+                        </listitem>
+                        <listitem os="ubuntu">
+                            <para>Add <literal>br-ex</literal> to <emphasis role="bold">/etc/network/interfaces</emphasis>:
+                                <programlisting>auto br-ex
+iface br-ex inet static
+    address 10.0.0.9
+    netmask 255.255.255.0
+    gateway 10.0.0.1
+</programlisting></para>
+                        </listitem>
+                        <listitem>
+                            <para>Remove the IP address from <literal>eth0</literal> add it to <literal>br-ex</literal>:
+                                <screen><prompt>#</prompt> <userinput>ip addr del 10.0.0.9/24 dev eth0</userinput>
+<prompt>#</prompt> <userinput>ip addr add 10.0.0.9/24 dev br-ex</userinput></screen>
+                            </para>
+                        </listitem>
+                        <listitem os="ubuntu">
+                            <para>Restart networking:
+                                <screen><prompt>#</prompt> <userinput>service networking restart</userinput></screen>
+                            </para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+            </listitem>
+            <listitem>
+                            <para>Finally, enable a simple NAT service so that the Compute Node(s) can access the Internet throug
+                                the Cloud Controller:
+                                <screen><userinput>echo 1 > /proc/sys/net/ipv4/conf/all/forwarding
+iptables -A FORWARD -s 10.10.10.0/24 -m conntrack --ctstate NEW -j ACCEPT
+iptables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+iptables -A POSTROUTING -s 10.10.10.0/24 -t nat -j MASQUERADE</userinput></screen></para>
+            </listitem>
+        </orderedlist>
     </para>
     </section>
     <section xml:id="network-quantum">
         <title>Quantum</title>
-            <para>Configure Quantum services:</para>
+            <para>Configure the Quantum services:</para>
             <itemizedlist>
                 <listitem>
-                    <para>Edit <emphasis role="bold">/etc/quantum/l3_agent.ini</emphasis> file and modify :<screen><userinput>auth_url = http://192.168.0.1:35357/v2.0
+                    <para>Edit <emphasis role="bold">/etc/quantum/quantum.conf</emphasis>:
+                        <programlisting>[DEFAULT]
+verbose = True
+rabbit_password = password
+rabbit_host = 10.10.10.10
+[keystone_authtoken]
+auth_host = 10.10.10.10
 admin_tenant_name = service
 admin_user = quantum 
-admin_password = password
-metadata_ip = 192.168.0.1
-use_namespaces = False</userinput></screen></para>
+admin_password = password</programlisting></para>
                 </listitem>
                 <listitem>
-                <para>Edit <emphasis role="bold"
-                        >/etc/quantum/api-paste.ini</emphasis> file
-                    and
-                    modify:<screen><userinput>
-auth_host = 192.168.0.1
-admin_tenant_name = service
-admin_user = quantum
-admin_password = password</userinput></screen></para>
-                </listitem>
-                <listitem>
-                    <para>Edit <emphasis role="bold"
-                        >/etc/quantum/quantum.conf</emphasis> file and
-                    modify:<screen><userinput>core_plugin = \
-    quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPluginV2
-auth_strategy = keystone
-fake_rabbit = False
-rabbit_host = 192.168.0.1
-rabbit_password = password</userinput></screen></para>
-                </listitem>
-                <listitem>
-                    <para>Edit <emphasis role="bold"
-                        >/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</emphasis>
-                    file and modify:<screen>[DATABASE]
-sql_connection = mysql://quantum:password@192.168.0.1:3306/quantum
+                    <para>Edit <emphasis role="bold">/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</emphasis>:
+                        <programlisting>[DATABASE]
+sql_connection = mysql://quantum:password@10.10.10.10/quantum
 [OVS]
 tenant_network_type = gre 
 tunnel_id_ranges = 1:1000
 enable_tunneling = True
-integration_bridge = br-int
-tunnel_bridge = br-tun
-local_ip = 10.10.10.1</screen>
-                    <db:note xmlns:db="http://docbook.org/ns/docbook">
-                        <db:para>It's more handy to choose <emphasis
-                                role="bold">tunnel mode</emphasis>
+local_ip = 10.10.10.9
+[SECURITYGROUP]                                                                        
+firewall_driver = quantum.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver</programlisting>
+                    <note xmlns:db="http://docbook.org/ns/docbook">
+                        <para>It's more handy to choose <emphasis role="bold">tunnel mode</emphasis>
                             since you don't have to configure your
-                            physical switches for VLANs.</db:para>
-                    </db:note></para>
+                            physical switches for VLANs.</para>
+                    </note></para>
                 </listitem>
                 <listitem>
-                    <para>Edit <emphasis role="bold"
-                        >/etc/quantum/dhcp_agent.ini</emphasis> file
-                    and
-                    add:<screen><userinput>use_namespaces = False</userinput></screen></para>
+                    <para>Edit <emphasis role="bold">/etc/quantum/dhcp_agent.ini</emphasis>:
+                        <programlisting>[DEFAULT]
+enable_isolated_metadata = True
+enable_metadata_network = True</programlisting></para>
+                </listitem>
+                <listitem>
+                    <para>Edit <emphasis role="bold">/etc/quantum/metadata_agent.ini</emphasis>:
+                    <programlisting>[DEFAULT]
+auth_url = http://10.10.10.10:35357/v2.0
+auth_region = RegionOne               
+admin_tenant_name = service           
+admin_user = quantum                  
+admin_password = password
+nova_metadata_ip = 10.10.10.10
+metadata_proxy_shared_secret = password
+                    </programlisting></para>
                 </listitem>
             </itemizedlist>
 
-            <para>Start the
-            services:<screen os="ubuntu">service quantum-plugin-openvswitch-agent start
-service quantum-dhcp-agent restart
-service quantum-l3-agent restart</screen><screen os="centos;rhel;fedora">service quantum-server restart
-service quantum-openvswitch-agent restart
-service quantum-dhcp-agent restart
-service quantum-l3-agent restart
-chkconfig quantum-server on
-chkconfig quantum-openvswitch-agent on
-chkconfig quantum-dhcp-agent on
-chkconfig quantum-l3-agent on</screen></para>
-        
+            <para>Start the services:
+                <screen os="ubuntu"><prompt>#</prompt> <userinput>service quantum-plugin-openvswitch-agent start</userinput>
+<prompt>#</prompt> <userinput>service quantum-dhcp-agent restart</userinput>
+<prompt>#</prompt> <userinput>service quantum-metadata-agent restart</userinput>
+<prompt>#</prompt> <userinput>service quantum-l3-agent restart</userinput></screen>
+                <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>service quantum-server restart</userinput>
+<prompt>#</prompt> <userinput>service quantum-openvswitch-agent restart</userinput>
+<prompt>#</prompt> <userinput>service quantum-dhcp-agent restart</userinput>
+<prompt>#</prompt> <userinput>service quantum-l3-agent restart</userinput>
+<prompt>#</prompt> <userinput>chkconfig quantum-server on</userinput>
+<prompt>#</prompt> <userinput>chkconfig quantum-openvswitch-agent on</userinput>
+<prompt>#</prompt> <userinput>chkconfig quantum-dhcp-agent on</userinput>
+<prompt>#</prompt> <userinput>chkconfig quantum-l3-agent on</userinput></screen>
+            
+            </para>
+    <note>
+        <para>
+            Check the <literal>/var/log/quantum/*.log</literal> files for errors that would prevent
+            the Networking Service from successfully starting.
+        </para>
+    </note>    
+       
     </section>
 </section>
