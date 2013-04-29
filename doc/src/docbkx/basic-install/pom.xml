@@ -104,9 +104,13 @@
               <!-- The following elements sets the autonumbering of sections in output for chapter numbers but no numbered sections-->
               <sectionAutolabel>0</sectionAutolabel>
               <sectionLabelIncludesComponentLabel>0</sectionLabelIncludesComponentLabel>
+              <webhelpDirname>${operating.system}</webhelpDirname>
+              <targetDirectory>${basedir}/target/docbkx/webhelp/${release.path.name}/basic-install</targetDirectory>
+              <includeDateInPdfFilename>0</includeDateInPdfFilename>
+              <pdfFilenameBase>openstack-basic-install-${operating.system}-${release.path.name}</pdfFilenameBase>
               <postProcess>
                 <!--Deletes leftover uneeded directories -->
-                <delete dir="${basedir}/target/docbkx/webhelp/bk-basic-install"/>
+                <delete dir="${basedir}/target/docbkx/webhelp/bk-basic-install-external"/>
               </postProcess>
             </configuration>
           </execution>
@@ -118,13 +122,12 @@
           <includes>
             bk-basic-install.xml
           </includes>
-          <canonicalUrlBase>http://docs.openstack.org/${release.path.name}/basic-install/content/</canonicalUrlBase>
           <profileSecurity>reviewer</profileSecurity>
           <branding>openstack</branding>
           <profileOs>${profile.os}</profileOs>
-	</configuration>
+        </configuration>
       </plugin>
     </plugins>
   </build>
-
+  
 </project>
