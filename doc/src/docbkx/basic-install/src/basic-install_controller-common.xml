@@ -178,34 +178,39 @@ ONBOOT=yes
             <info>
                 <title>MySQL Database Service</title>
             </info>
-                <para>The various OpenStack components store persistant data in a relational database. MySQL is the most popular choice.
-                <orderedlist>
-                    <listitem>
-                        <para>Install the packages:
-                            <screen os="ubuntu;deb"><prompt>#</prompt> <userinput>apt-get install -y python-mysqldb mysql-server</userinput></screen>
-                            <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install mysql mysql-server MySQL-python</userinput></screen>
-                            <note os="ubuntu;deb">
-                                <para><literal>apt-get</literal> will prompt you to set the MySQL root password.</para>
-                            </note>
-                            
-                        </para>
-                    </listitem>
-                    <listitem>
-                        <para>By default, MySQL will only accept connections from localhost. This needs changed so that
-                            the compute nodes can access the OpenStack Networking service. Database requests for the OpenStack
-                            Compute service are proxied through the <literal>nova-conductor</literal> service.
-                            <screen os="ubuntu"><prompt>#</prompt> <userinput>sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/my.cnf</userinput></screen>
-                            <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>sed -i 's/127.0.0.1/0.0.0.0/g' /etc/my.cnf</userinput></screen></para>
-                    </listitem>
-                    <listitem>
-                        <para>Restart the service:
-                        <screen os="ubuntu;deb"><prompt>#</prompt> <userinput>service mysql restart</userinput></screen>
-                            <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>systemctl start mysqld.service</userinput></screen>
-                            <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>chkconfig mysqld on</userinput></screen></para>
-                    </listitem>
-                    <listitem>
-                        <para>The various databases that the OpenStack services require need created. Additionally, MySQL accounts
-                            to access those databases need created, too:
+                <para>The various OpenStack components store
+            persistent data in a relational database. MySQL is the
+            most popular choice. <orderedlist>
+                <listitem>
+                    <para>Install the packages: <screen os="ubuntu;deb"><prompt>#</prompt> <userinput>apt-get install -y python-mysqldb mysql-server</userinput></screen>
+                        <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install mysql mysql-server MySQL-python</userinput></screen>
+                        <note os="ubuntu;deb">
+                            <para><literal>apt-get</literal> will
+                                prompt you to set the MySQL root
+                                password.</para>
+                        </note>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>By default, MySQL will only accept
+                        connections from localhost. This needs changed
+                        so that the compute nodes can access the
+                        OpenStack Networking service. Database
+                        requests for the OpenStack Compute service are
+                        proxied through the
+                            <literal>nova-conductor</literal> service. <screen os="ubuntu"><prompt>#</prompt> <userinput>sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/my.cnf</userinput></screen>
+                        <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>sed -i 's/127.0.0.1/0.0.0.0/g' /etc/my.cnf</userinput></screen></para>
+                </listitem>
+                <listitem>
+                    <para>Restart the service: <screen os="ubuntu;deb"><prompt>#</prompt> <userinput>service mysql restart</userinput></screen>
+                        <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>systemctl start mysqld.service</userinput></screen>
+                        <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>chkconfig mysqld on</userinput></screen></para>
+                </listitem>
+                <listitem>
+                    <para>The various databases that the OpenStack
+                        services require need created. Additionally,
+                        MySQL accounts to access those databases need
+                        created, too:
                         <screen><prompt>#</prompt> <userinput>mysql -u root -p &lt;&lt;EOF
 CREATE DATABASE nova;
 GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'localhost' \
@@ -228,9 +233,9 @@ GRANT ALL PRIVILEGES ON quantum.* TO 'quantum'@'10.10.10.11' \
 IDENTIFIED BY 'password';
 FLUSH PRIVILEGES;
 EOF</userinput></screen></para>
-                    </listitem>
-                </orderedlist>
-            </para>
+                </listitem>
+            </orderedlist>
+        </para>
             </section>
             <section xml:id="controller-rabbitmq">
                 <title> <phrase os="rhel;centos;fedora">Qpid</phrase>
