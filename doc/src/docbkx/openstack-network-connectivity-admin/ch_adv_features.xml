@@ -671,4 +671,31 @@ quantum security-group-rule-create --direction ingress --protocol tcp --port_ran
             <screen><computeroutput>quantum port-update --no-security-groups &lt;port_id&gt;</computeroutput></screen>
         </section>
     </section>
+    <section xml:id="lbaas">
+        <title>Load-Balancer-as-a-Service</title>
+         <note><para>The Load-Balancer-as-a-Service API is an experimental API meant to give early adopters and
+                vendors a chance to build implementations against. The reference implementation
+                should probably not be run in production environments.</para></note>
+        <section xml:id="lbaas_workflow">
+            <title>Common Load-Balancer-as-a-Service Workflow</title>
+            <para>Create a load balancer pool:</para>
+            <screen><computeroutput>
+quantum lb-pool-create --lb-method ROUND_ROBIN --name mypool --protocol HTTP --subnet-id &lt;subnet-uuid&gt;</computeroutput></screen>
+            <para>Associate two web servers with pool:</para>
+            <screen><computeroutput>
+quantum lb-member-create --address  &lt;webserver one IP&gt; --protocol-port 80 mypool
+quantum lb-member-create --address  &lt;webserver two IP&gt; --protocol-port 80 mypool</computeroutput></screen>
+            <para>Create a health monitor which checks to make sure our instances are still running on the specified protocol-port:</para>
+            <screen><computeroutput>
+quantum lb-healthmonitor-create --delay 3 --type HTTP --max-retries 3 --timeout 3</computeroutput></screen>
+            <para>Associate health monitor with pool:</para>
+            <screen><computeroutput>
+quantum lb-healthmonitor-associate  &lt;healthmonitor-uuid&gt; mypool</computeroutput></screen>
+            <para>Create a Virtual IP Address (VIP) that when accessed via the load balancer will
+                direct the requests to one of the pool members:</para>
+            <screen><computeroutput>
+quantum lb-vip-create --name myvip --protocol-port 80 --protocol HTTP --subnet-id &lt;subnet-uuid&gt; mypool</computeroutput></screen>
+            </section>
+     </section>
+
 </chapter>
