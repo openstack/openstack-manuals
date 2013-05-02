@@ -2,7 +2,7 @@
 <section xml:id="multi_backend" xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink"
     version="1.0">
-    <title>Configuring Multiple Storage Backend</title>
+    <title>Configure a Multiple-Storage Backend</title>
     <para>This section presents the multi-backend storage feature
         introduced with the Grizzly release. Multi-backend allows
         the creation of several backend storage solutions serving the same
@@ -22,7 +22,7 @@
             The options for a config group have to be defined in the group (or default options will be used). All the standard Cinder configuration options (<literal>volume_group</literal>, <literal>volume_driver</literal>, etc) may be used in a config group.
             Config values in the <literal>[DEFAULT]</literal> config group will not be used.
         </para>
-        <para>Below is presented a full example with 3 backends:
+        <para>The following example shows three backends:</para>
             <programlisting># a list of backends that will be served by this compute node
 enabled_backends=lvmdriver-1,lvmdriver-2,lvmdriver-3
 [lvmdriver-1]
@@ -38,7 +38,7 @@ volume_group=cinder-volumes-3
 volume_driver=cinder.volume.drivers.lvm.LVMISCSIDriver
 volume_backend_name=LVM_iSCSI_b
         </programlisting>
-            In this configuration <literal>lvmdriver-1</literal> and <literal>lvmdriver-2</literal> have the same <literal>volume_backend_name</literal>.
+            <para>In this configuration <literal>lvmdriver-1</literal> and <literal>lvmdriver-2</literal> have the same <literal>volume_backend_name</literal>.
             This means that, if a volume creation requests the <literal>LVM_iSCSI</literal> backend name, the scheduler will choose between <literal>lvmdriver-1</literal> and <literal>lvmdriver-2</literal> which one is the most suitable. This is done thanks to the capacity filter scheduler which is enabled by default (the following section gives more information on that point).
             In addition, this example presents a third backend named <literal>lvmdriver-3</literal>. This one has a different backend name.
         </para>
@@ -70,11 +70,11 @@ volume_backend_name=LVM_iSCSI_b
         </programlisting>
             In this example we have created a volume type named <literal>lvm</literal> with <literal>volume_backend_name=LVM_iSCSI</literal> as extra-specifications.
         </para>
-        <para>We complete this example by creating another volume type:
+        <para>We complete this example by creating another volume type:</para>
             <programlisting language="bash">$ cinder --os-username admin --os-tenant-name admin type-create lvm_gold
 $ cinder --os-username admin --os-tenant-name admin type-key lvm_gold set volume_backend_name=LVM_iSCSI_b
             </programlisting>
-            This second volume type is named <literal>lvm_gold</literal> and has <literal>LVM_iSCSI_b</literal> as backend name.
+            <para>This second volume type is named <literal>lvm_gold</literal> and has <literal>LVM_iSCSI_b</literal> as backend name.
         </para>
         <note>
             <para>To list the extra-specifications, use the following command line:
