@@ -27,7 +27,7 @@
             <para>Typically the language-specific APIs handle authentication, token passing, and HTTPS
                 request/response communication.</para>
         </note>
-    
+
         <para>You can implement access control for objects either for users or accounts using
             X-Container-Read: accountname and X-Container-Write: accountname:username, which allows
             any user from the accountname account to read but only allows the username user from the
@@ -53,11 +53,12 @@
             within your account. Data must be stored in a container so you must have at least one
             container defined in your account prior to uploading data.</para>
         <para>The only restrictions on container names is that they cannot contain a forward slash
-            (<code>/</code>) and must be less than 256 bytes in length. Please note that the length
+            (<code>/</code>) or an ascii null (<code>%00</code>) and must be less than 257 bytes in length.
+            Please note that the length
             restriction applies to the name after it has been URL encoded. For example, a container name
             of <code>Course Docs</code> would be URL encoded as <code>Course%20Docs</code> and therefore
             be 13 bytes in length rather than the expected 11.</para>
-   
+
         <para>An object is the basic storage entity and any optional metadata that represents the
             files you store in the OpenStack Object Storage system. When you upload data to OpenStack Object Storage, the data is
             stored as-is (no compression or encryption) and consists of a location (container), the
@@ -89,7 +90,7 @@
             <para> All operations must include a valid authorization token from your authorization system. </para>
         </important>
     </section>
-   
+
     <section xml:id="language-specific-api-bindings">
         <title>Language-Specific API Bindings</title>
         <para>A set of supported API bindings in several popular languages are available from the
