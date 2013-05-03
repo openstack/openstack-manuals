@@ -8,7 +8,7 @@
         <title>Operating System</title>
         <orderedlist>
             <listitem>
-                <para>Install <phrase os="rhel;centos;fedora">Fedora 18</phrase>
+                <para>Install <phrase os="rhel;centos;fedora">Fedora 18</phrase> <phrase os="debian">Deepian Wheezy</phrase>
                     <phrase os="ubuntu">Ubuntu 12.04 or 13.04</phrase>. 
                     The exact installation procedure is outside the scope of 
                     this document, but please note the following 
@@ -37,14 +37,23 @@
                 </para>
             </listitem>
             <listitem>
-                <para os="ubuntu">Since the default OpenStack release in 
-                    Ubuntu 12.04 LTS is older, we are going to use the Ubuntu 
-                    Cloud Archive for Grizzly:
+                <para os="ubuntu">Since the default OpenStack release in Ubuntu 12.04 LTS is older,
+                    we are going to use the Ubuntu Cloud Archive for Grizzly:
                         <screen><prompt>#</prompt> <userinput>apt-get install ubuntu-cloud-keyring</userinput></screen>
                     Edit <emphasis role="bold">/etc/apt/sources.list.d/cloud-archive.list</emphasis>:
                         <programlisting>deb http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/grizzly main</programlisting>
                     Upgrade the system (and reboot if you need):
-                        <screen><prompt>#</prompt> <userinput>apt-get update &amp;&amp; apt-get dist-upgrade</userinput></screen>
+                        <screen><prompt>#</prompt> <userinput>sudo apt-get update &amp;&amp; apt-get upgrade</userinput></screen>
+                </para>
+		<para os="debian">Since all OpenStack packages have not been introduced into Debian official repositories, we can use a
+                repository which supports Grizzly release.
+                    Edit <emphasis role="bold">/etc/apt/sources.list.d/grizzly.list</emphasis>:
+                        <programlisting>deb http://archive.gplhost.com/debian grizzly main
+                   	deb http://archive.gplhost.com/debian grizzly-backports main
+			apt-get update
+			apt-get install gplhost-archive-keyring</programlisting>
+                    Upgrade the system (and reboot if you need):
+                        <screen><prompt>#</prompt> <userinput>sudo apt-get update &amp;&amp; apt-get upgrade</userinput></screen>
                 </para>
                 <para os="rhel;centos;fedora">Use the Fedora
                     repositories for Grizzly:
@@ -55,7 +64,7 @@
             </listitem>
             <listitem>
                 <para>Configure the network:</para>
-                <para os="ubuntu">
+                <para os="ubuntu;debian">
                     <itemizedlist>
                         <listitem>
                             <para>Edit <emphasis role="bold">/etc/network/interfaces</emphasis>:
@@ -75,7 +84,7 @@ auto eth0
                                 
                             </para>
                         </listitem>
-                        <listitem os="ubuntu">
+                        <listitem os="ubuntu;debian">
                             <para>Edit <emphasis role="bold">/etc/sysctl.conf</emphasis>:
                                 <programlisting>net.ipv4.conf.all.rp_filter = 0
 net.ipv4.conf.default.rp_filter = 0</programlisting>
@@ -200,7 +209,7 @@ ONBOOT=yes
                         OpenStack Networking service. Database
                         requests for the OpenStack Compute service are
                         proxied through the
-                            <literal>nova-conductor</literal> service. <screen os="ubuntu"><prompt>#</prompt> <userinput>sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/my.cnf</userinput></screen>
+                            <literal>nova-conductor</literal> service. <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/my.cnf</userinput></screen>
                         <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>sed -i 's/127.0.0.1/0.0.0.0/g' /etc/my.cnf</userinput></screen></para>
                 </listitem>
                 <listitem>
@@ -241,7 +250,7 @@ EOF</userinput></screen></para>
             </section>
             <section xml:id="controller-rabbitmq">
                 <title> <phrase os="rhel;centos;fedora">Qpid</phrase>
-                    <phrase os="ubuntu">RabbitMQ</phrase> Messaging Service</title>
+                    <phrase os="ubuntu;debian">RabbitMQ</phrase> Messaging Service</title>
                 <para>The OpenStack components also communicate through a queuing service. For example, the Cloud Controller
                     places a request to launch an instance on the queue. The Compute Node then picks this request up
                     and launches the instance. OpenStack can work with several different queuing services. 

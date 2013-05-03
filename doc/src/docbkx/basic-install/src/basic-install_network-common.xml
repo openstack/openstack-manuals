@@ -8,7 +8,7 @@
         <title>Operating System</title>
         <orderedlist>
             <listitem>
-                <para>Install <phrase os="rhel;centos;fedora">Fedora 18</phrase>
+                <para>Install <phrase os="rhel;centos;fedora">Fedora 18</phrase> <phrase os="debian">Debian Wheezy</phrase>
                     <phrase os="ubuntu">Ubuntu 12.04</phrase>. The exact installation procedure is outside the scope of this document, but please note the following configurations:<itemizedlist>
                         <listitem>
                             <para>Time zone: <emphasis role="bold">UTC</emphasis></para>
@@ -23,14 +23,23 @@
                 <para>Once installation has finished, the server will reboot.</para>
             </listitem>
             <listitem>
-                <para os="ubuntu">Since the default OpenStack release
-                    in Ubuntu 12.04 LTS is older, we are going to use
-                    the Ubuntu Cloud Archive for Grizzly:
+                <para os="ubuntu">Since the default OpenStack release in Ubuntu 12.04 LTS is older,
+                    we are going to use the Ubuntu Cloud Archive for Grizzly:
                         <screen><prompt>#</prompt> <userinput>apt-get install ubuntu-cloud-keyring</userinput></screen>
                     Edit <emphasis role="bold">/etc/apt/sources.list.d/cloud-archive.list</emphasis>:
                         <programlisting>deb http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/grizzly main</programlisting>
-                    Upgrade the system (and reboot if needed):
-                        <screen><prompt>#</prompt> <userinput>apt-get update &amp;&amp; apt-get dist-upgrade</userinput></screen>
+                    Upgrade the system (and reboot if you need):
+                        <screen><prompt>#</prompt> <userinput>sudo apt-get update &amp;&amp; apt-get upgrade</userinput></screen>
+                </para>
+		<para os="debian">Since all OpenStack packages have not been introduced into Debian official repositories, we can use a
+                repository which supports Grizzly release.
+                    Edit <emphasis role="bold">/etc/apt/sources.list.d/grizzly.list</emphasis>:
+                        <programlisting>deb http://archive.gplhost.com/debian grizzly main
+                   	deb http://archive.gplhost.com/debian grizzly-backports main
+			apt-get update
+			apt-get install gplhost-archive-keyring</programlisting>
+                    Upgrade the system (and reboot if you need):
+                        <screen><prompt>#</prompt> <userinput>sudo apt-get update &amp;&amp; apt-get upgrade</userinput></screen>
                 </para>
                 <para os="rhel;centos;fedora">Use the Fedora repositories for Grizzly:
                     <screen><prompt>#</prompt> <userinput>wget http://rdo.fedorapeople.org/openstack/openstack-grizzly/fedora-openstack-grizzly.repo</userinput></screen>
@@ -39,7 +48,7 @@
             </listitem>
             <listitem>
                 <para>Configure the network:</para>
-                <para os="ubuntu">
+                <para os="ubuntu;debian">
                     <itemizedlist>
                         <listitem>
                             <para>Edit <emphasis role="bold">/etc/network/interfaces</emphasis>:
@@ -65,7 +74,7 @@ iface eth1 inet static
                         </listitem>
                     </itemizedlist>
                 </para>
-                <para  os="ubuntu">
+                <para  os="ubuntu;debian">
                     <itemizedlist>
                         <listitem>
                             <para>Edit <emphasis role="bold">/etc/sysctl.conf</emphasis>:
