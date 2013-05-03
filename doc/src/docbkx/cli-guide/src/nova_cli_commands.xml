@@ -4,7 +4,26 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="novaclient_commands">
     <title>Command List for nova Client</title>
-    <literallayout class="monospaced">
+    <example>
+        <title>nova Usage</title>
+        <screen><computeroutput>usage: nova [--version] [--debug] [--os-cache] [--timings]
+            [--timeout &lt;seconds>] [--os-username &lt;auth-user-name>]
+            [--os-password &lt;auth-password>]
+            [--os-tenant-name &lt;auth-tenant-name>] [--os-auth-url &lt;auth-url>]
+            [--os-region-name &lt;region-name>] [--os-auth-system &lt;auth-system>]
+            [--service-type &lt;service-type>] [--service-name &lt;service-name>]
+            [--volume-service-name &lt;volume-service-name>]
+            [--endpoint-type &lt;endpoint-type>]
+            [--os-compute-api-version &lt;compute-api-ver>]
+            [--os-cacert &lt;ca-certificate>] [--insecure]
+            [--bypass-url &lt;bypass-url>]
+            &lt;subcommand> ...
+
+Command-line interface to the OpenStack Nova API.</computeroutput></screen>
+    </example>
+    <example>
+        <title>Positional arguments</title>
+        <screen><computeroutput>&lt;subcommand>
     absolute-limits     Print a list of absolute limits for a user
     actions             Retrieve server actions.
     add-fixed-ip        Add new IP address to network.
@@ -72,7 +91,11 @@
     floating-ip-list    List floating ips for this tenant.
     floating-ip-pool-list
                         List all floating ip pools.
-    get-vnc-console     Get a vnc console to a server.
+
+    get-password        Get password for a server.
+    get-spice-console   Get a spice console to a server.
+    get-vnc-console     Get a vnc console to a server.</computeroutput></screen>
+        <screen><computeroutput>
     host-action         Perform a power action on a host.
     host-describe       Describe a specific host
     host-list           List all hosts by service
@@ -132,7 +155,12 @@
     secgroup-list       List security groups for the current tenant.
     secgroup-list-rules
                         List rules for a security group.
-    service-list        List nova services
+
+    service-disable     Enable the service
+    service-enable      Enable the service
+    service-list        Show a list of all running services. Filter by host and
+                        service name.</computeroutput></screen>
+<screen><computeroutput>
     show                Show details about the given server.
     ssh                 SSH into a server.
     start               Start a server.
@@ -161,5 +189,98 @@
     volume-type-list    Print a list of available 'volume types'.
     x509-create-cert    Create x509 cert for a user in tenant.
     x509-get-root-cert  Fetches the x509 root cert.
-    bash-completion     Prints all of the commands and options to stdout.</literallayout>
+    bash-completion     Prints all of the commands and options to stdout so
+                        that the
+    help                Display help about this program or one of its
+                        subcommands.
+    network             Show a network
+    network-create      Create a network
+    network-delete      Delete a network
+    network-list        List networks
+    network             Show a network
+    network-create      Create a network
+    network-delete      Delete a network
+    network-list        List networks
+    virtual-interface-create
+                        Add a new virtual interface to an instance
+    virtual-interface-delete
+                        Removes the specified virtual interface from an
+                        instance
+    virtual-interface-list
+                        Add a new virtual interface to an instance
+    backup-schedule     Show or edit the backup schedule for a server.
+    backup-schedule-delete
+                        Delete the backup schedule for a server.
+    backup              Backup a server.
+    service-config      List available service attributes.
+    service-details     List available service attributes.
+    service-disable     Disable a specified service.
+    service-enable      Enable a specified service.
+    service-list        List available service attributes.
+    service-servers     List available service attributes.
+    service-show        List available service attributes.
+    service-version     List available service attributes.
+    baremetal-interface-add
+                        Add a network interface to a baremetal node
+    baremetal-interface-list
+                        List network interfaces associated with a baremetal
+                        node
+    baremetal-interface-remove
+                        Remove a network interface from a baremetal node
+    baremetal-node-create
+                        Create a baremetal node
+    baremetal-node-delete
+                        Remove a baremetal node and any associated interfaces
+    baremetal-node-list
+                        Print a list of available baremetal nodes
+    baremetal-node-show
+                        Show information about a baremetal node
+    list-extensions     List all the os-api extensions that are available.
+    net                 Show a network
+    net-create          Create a network
+    net-delete          Delete a network
+    net-list            List networks</computeroutput></screen>
+    </example>
+
+    <example>
+        <title>Optional arguments</title>
+        <screen><computeroutput>   
+    --version             show program's version number and exit
+    --debug                  Print debugging output
+    --os-cache               Use the auth token cache.
+    --timings                Print call timing info
+    --timeout &lt;seconds>   Set HTTP call timeout (in seconds)
+    --os-username &lt;auth-user-name>    
+                             Defaults to env[OS_USERNAME].
+    --os-password &lt;auth-password>
+                             Defaults to env[OS_PASSWORD].
+    --os-tenant-name &lt;auth-tenant-name>
+                             Defaults to env[OS_TENANT_NAME].
+    --os-auth-url &lt;auth-url>
+                             Defaults to env[OS_AUTH_URL].
+    --os-region-name &lt;region-name>
+                             Defaults to env[OS_REGION_NAME].
+    --os-auth-system &lt;auth-system>
+                             Defaults to env[OS_AUTH_SYSTEM].
+    --service-type &lt;service-type>
+                             Defaults to compute for most actions
+    --service-name &lt;service-name>
+                             Defaults to env[NOVA_SERVICE_NAME]
+    --volume-service-name &lt;volume-service-name>
+                             Defaults to env[NOVA_VOLUME_SERVICE_NAME]
+    --endpoint-type &lt;endpoint-type>
+                             Defaults to env[NOVA_ENDPOINT_TYPE] or publicURL.
+    --os-compute-api-version &lt;compute-api-ver>
+                             Accepts 1.1, defaults to env[OS_COMPUTE_API_VERSION].
+    --os-cacert &lt;ca-certificate>
+                             Specify a CA bundle file to use in verifying a TLS
+    (https) server certificate. Defaults to env[OS_CACERT]
+    --insecure               Explicitly allow novaclient to perform "insecure" SSL
+                             (https) requests. The server's certificate will not be
+                             verified against any certificate authorities. This
+                             option should be used with caution.
+    --bypass-url &lt;bypass-url>
+                             Use this API endpoint instead of the Service Catalog</computeroutput></screen>
+    </example>
+
 </section>
