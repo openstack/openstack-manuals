@@ -10,7 +10,7 @@
         <orderedlist>
             <listitem>
                 <para>Install the packages:
-                    <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install neutron-plugin-openvswitch-agent \
+                    <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install neutron-plugin-openvswitch-agent \
 neutron-dhcp-agent neutron-l3-agent</userinput></screen>
                     <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-neutron openstack-neutron-openvswitch\
 openvswitch-switch</userinput></screen>
@@ -30,7 +30,7 @@ openvswitch-switch</userinput></screen>
                 <para>Start Open vSwitch:
                     <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openvswitch-switch on</userinput></screen>
-                    <screen os="ubuntu"><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput></screen>
+                    <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput></screen>
                     <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl start openvswitch-switch.service</userinput>
 <prompt>#</prompt> <userinput>systemctl enable openvswitch-switch.service</userinput></screen>
                 </para>
@@ -45,7 +45,7 @@ openvswitch-switch</userinput></screen>
             <listitem>
                 <para>Configure the bridges:
                     <itemizedlist>
-                        <listitem os="ubuntu">
+                        <listitem os="ubuntu;debian">
                             <para>Change the <literal>eth1</literal> entry in <filename>
                             /etc/network/interfaces</filename> to look like:
                                     <programlisting>auto eth1
@@ -55,7 +55,7 @@ iface eth1 inet manual
     down ip link set $IFACE down</programlisting>
                                 </para>
                         </listitem>
-                        <listitem os="ubuntu">
+                        <listitem os="ubuntu;debian">
                             <para>Add <literal>br-ex</literal> to <filename>/etc/network/interfaces</filename>:
                                 <programlisting>auto br-ex
 iface br-ex inet static
@@ -94,7 +94,7 @@ ONBOOT=yes</programlisting>
 <prompt>#</prompt> <userinput>ip addr add 10.0.0.9/24 dev br-ex</userinput></screen>
                                 </para>
                         </listitem>
-                        <listitem os="ubuntu">
+                        <listitem os="ubuntu;debian">
                             <para>Restart networking:
                                 <screen><prompt>#</prompt> <userinput>service networking restart</userinput></screen>
                             </para>
@@ -190,7 +190,7 @@ metadata_proxy_shared_secret = password</programlisting></para>
             </itemizedlist>
 
             <para>Start the services:
-                <screen os="ubuntu"><prompt>#</prompt> <userinput>service neutron-plugin-openvswitch-agent start</userinput>
+                <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service neutron-plugin-openvswitch-agent start</userinput>
 <prompt>#</prompt> <userinput>service neutron-dhcp-agent restart</userinput>
 <prompt>#</prompt> <userinput>service neutron-metadata-agent restart</userinput>
 <prompt>#</prompt> <userinput>service neutron-l3-agent restart</userinput></screen>

@@ -9,7 +9,7 @@
                 <orderedlist>
                     <listitem>
                         <para>Install the OpenStack Compute packages:
-                            <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install nova-api nova-cert nova-common nova-conductor \
+                            <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install nova-api nova-cert nova-common nova-conductor \
     nova-scheduler python-nova python-novaclient nova-consoleauth novnc \
     nova-novncproxy</userinput></screen>
                             <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-nova-api openstack-nova-scheduler openstack-nova-cert \
@@ -25,7 +25,7 @@
                         <itemizedlist>
                             <listitem>
                                 <para>Edit <filename>/etc/nova/api-paste.ini</filename>:
-                                    <programlisting os="ubuntu">admin_tenant_name = service
+                                    <programlisting os="ubuntu;debian">admin_tenant_name = service
 admin_user = nova
 admin_password = password</programlisting>
                                     <programlisting os='centos;rhel;fedora'>[filter:authtoken]
@@ -49,7 +49,7 @@ admin_password = password</programlisting>
                                     that can go in this file. This guide illustrates the minimum needed for a simple environment.
                                     Note that the nova.conf file supplied by your distribution has some options already set. Leave
                                     them as-is.
-                                    <programlisting os="ubuntu">[DEFAULT]
+                                    <programlisting os="ubuntu;debian">[DEFAULT]
 
 sql_connection=mysql://nova:password@localhost/nova
 my_ip=10.10.10.10
@@ -176,7 +176,7 @@ vncserver_listen=0.0.0.0
                             </listitem>
                             <listitem>
                                 <para>Restart OpenStack Compute services:
-                                    <screen os="ubuntu"><prompt>#</prompt> <userinput>service nova-api restart</userinput>
+                                    <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service nova-api restart</userinput>
 <prompt>#</prompt> <userinput>service nova-cert restart</userinput>
 <prompt>#</prompt> <userinput>service nova-consoleauth restart</userinput>
 <prompt>#</prompt> <userinput>service nova-scheduler restart</userinput>

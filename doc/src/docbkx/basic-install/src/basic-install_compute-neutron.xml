@@ -10,14 +10,14 @@
                 <orderedlist>
                     <listitem>
                         <para>Install the packages:
-                            <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install openvswitch-switch</userinput></screen>
+                            <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install openvswitch-switch</userinput></screen>
                             <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openvswitch-switch</userinput></screen>
                             <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install openvswitch-switch</userinput></screen>
                         </para>
                     </listitem>
                     <listitem>
                         <para>Start Open vSwitch service
-                            <screen os="ubuntu"><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput></screen>
+                            <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput></screen>
                             <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openvswitch-switch on</userinput></screen>
                             <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl start openvswitch-switch</userinput>
@@ -40,14 +40,14 @@
                 <orderedlist>
                     <listitem>
                         <para>Install the packages:
-                            <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install neutron-plugin-openvswitch-agent</userinput></screen>
+                            <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install neutron-plugin-openvswitch-agent</userinput></screen>
                             <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-neutron-openvswitch</userinput></screen>
                             <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install openstack-neutron-openvswitch-agent</userinput></screen>
                         </para>
                     </listitem>
                     <listitem>
                         <para>Edit <filename>/etc/neutron/neutron.conf</filename>:
-                            <programlisting os="ubuntu" language="bash">[DEFAULT]
+                            <programlisting os="ubuntu;debian" language="bash">[DEFAULT]
 rabbit_host = 10.10.10.10
 rabbit_password = password
 verbose = True</programlisting>
@@ -76,7 +76,7 @@ firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewal
                     </listitem>
                     <listitem>
                         <para>Start the Agent:
-                            <screen os="ubuntu"><prompt>#</prompt> <userinput>service neutron-plugin-openvswitch-agent restart</userinput></screen>
+                            <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service neutron-plugin-openvswitch-agent restart</userinput></screen>
                             <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>service neutron-openvswitch-agent restart</userinput>
 <prompt>#</prompt> <userinput>chkconfig neutron-openvswitch-agent on</userinput></screen>
                             <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl restart openstack-neutron-openvswitch-agent</userinput>
