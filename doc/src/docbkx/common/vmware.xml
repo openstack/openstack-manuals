@@ -3,54 +3,173 @@
 xmlns:xi="http://www.w3.org/2001/XInclude"
 xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
 xml:id="vmware">
-  <title>VMware ESX/ESXi Server Support</title>
+  <title>VMware vSphere</title>
   <?dbhtml stop-chunking?>
   <section xml:id="vmware-intro">
     <title>Introduction</title>
-    <para>OpenStack Compute supports the VMware ESX hypervisor. This section
+    <para>OpenStack Compute supports the VMware vSphere product family. This section
       describes the additional configuration required to launch VMWare-based
-     virtual machine images.</para>
-        <informalfigure>
-      <mediaobject>
-        <imageobject>
-          <imagedata fileref="figures/vmwareapi_blockdiagram.jpg" contentwidth="6in"/>
-        </imageobject>
-      </mediaobject>
-    </informalfigure>
-
+      virtual machine images.  vSphere versions 4.1 and greater are supported.</para>
+    <para>There are two OpenStack Compute drivers that can be used with vSphere:</para>  
+    <itemizedlist>
+      <listitem><para>vmwareapi.VMwareVCDriver: a driver that lets nova-compute 
+      communicte with a VMware vCenter server managing a cluster of ESX hosts.  With
+      this driver and access to shared storage, advanced vSphere features like 
+      vMotion, High Availability, and Dynamic Resource Scheduling (DRS) are availabile.
+      With this driver, one nova-compute service is run per vCenter cluster. 
+      </para></listitem> 
+      <listitem><para>vmwareapi.VMwareESXDriver: a driver that lets nova-compute
+      communicate directly to an ESX host, but does not support advanced VMware
+      features.  With this driver, one nova-compute service is run per ESX host.
+      </para></listitem> 
+   </itemizedlist>
   </section>
   <section xml:id="vmware-prereqs">
     <title>Prerequisites</title>
-    <para>You will need to install the following software:</para>
+    <para>You will need to install the following software installed on each 
+	nova-compute node:</para>
     <itemizedlist>
-      <listitem><para>python-suds: This software is needed by the nova-compute service. If not installed, the "nova-compute" service shuts down with the message: "Unable to import suds".</para>
+      <listitem>
+	<para>python-suds: This software is needed by the nova-compute service to
+	communicate with vSphere APIs. If not installed, the "nova-compute" service 
+	shuts down with the message: "Unable to import suds".</para>
     </listitem>
-    <listitem><para>SSH server</para></listitem>
-    <listitem><para>Tomcat server</para></listitem>
+    <listitem>
+	<para>Tomcat server: This is required to serve up a local version of 
+	the vSphere WSDL file (see below).</para></listitem>
    </itemizedlist>
-   <para>On ubuntu, these packages can be installed by doing (as root):</para>
-<screen><prompt>#</prompt> apt-get install python-suds openssh-server tomcat6
-</screen>
-</section>
-  <section xml:id="vmware-wsdl">
-    <title>Configure Tomcat to serve WSDL files</title>
-  <para>Download the the SDK from <link xlink:href="http://www.vmware.com/support/developer/vc-sdk/">http://www.vmware.com/support/developer/vc-sdk/</link> and copy it into 
- <filename>/var/lib/tomcat6/webapps</filename>. You should ensure that the WSDL is available, in eg <filename> /var/lib/tomcat6/webapps/vmware/SDK/wsdl/vim25/vimService.wsdl</filename>.</para>
+   <para>On ubuntu, these packages can be installed by running:</para>
+<screen>sudo apt-get install python-suds tomcat6 </screen>
+  <para>Next, download the the SDK from <link xlink:href="http://www.vmware.com/support/developer/vc-sdk/">http://www.vmware.com/support/developer/vc-sdk/</link> and copy it into 
+ <filename>/var/lib/tomcat6/webapps</filename>. You should ensure that the WSDL is available, in eg <filename> /var/lib/tomcat6/webapps/vmware/SDK/wsdl/vim25/vimService.wsdl</filename>.  Below we will point nova.conf to fetch this WSDL
+file from Tomcat using a URL pointing to localhost.</para>
   </section>
-  <section xml:id="VMWare_configuration_options">
-    <title>VMWare configuration options</title>
-<para>Configure nova.conf with the following VMWare-specific config options:
+
+<section xml:id="VMWareVCDriver_details">
+<title>Using the VMwareVCDriver</title> 
+<para>This section covers details of using the VMwareVCDriver.</para> 
+<section xml:id="VMWareVCDriver_configuration_options">
+    <title>VMWareVCDriver configuration options</title>
+<para>When using the VMwareVCDriver (i.e., vCenter) with OpenStack Compute, 
+nova.conf must include the following VMWare-specific config options:
 </para>
 
-<programlisting>vmwareapi_host_ip=&lt;ESX hypervisor machine IP&gt;
-vmwareapi_host_username=&lt; ESX hypervisor username&gt;
-vmwareapi_host_password=&lt; ESX hypervisor password&gt;
+<programlisting>vmwareapi_host_ip=&lt;vCenter host IP&gt;
+vmwareapi_host_username=&lt; vCenter username&gt;
+vmwareapi_host_password=&lt; vCenter password&gt;
+vmwareapi_cluster_name=&lt; vCenter cluster name&gt;
 vmwareapi_wsdl_loc=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl
 </programlisting>
+<para>Remember that you will have only one nova-compute service per cluster. 
+It is recommended that this host run as a VM with high-availability enabled as
+part of that same cluster.</para>
+<para>Also note that many of the nova.conf options mentioned elsewhere in this
+document that are relevant to libvirt do not apply to using this driver.</para>
+</section>
+<section xml:id="VMwareVCDriver_limitations">
+<title>Requirements + Limitations</title> 
+<para>The VMwareVCDriver is new in Grizzly, and as a result there are 
+some important deployment requirements and limitations to be aware of.  
+In many cases, these items will be addressed in future releases.</para> 
+    <itemizedlist>
+      <listitem>
+	<para>Each cluster can only be configured with a single Datastore.  If multiple
+	Datastores are configured, the first one returned via the vSphere API will be
+	used.  
+	</para>
+    </listitem>
+      <listitem>
+	<para>Because a single nova-compute is used per cluster, the nova-scheduler
+         views this as a single host with resources amounting to the aggregate 
+	resources of all ESX hosts managed by the cluster.  This may result in 
+	unexpected behavior depending on your choice of scheduler.
+	</para>
+    </listitem>
+      <listitem>
+	<para>Security Groups are not supported if Nova-Network is used.  
+         Security Groups are only supported if the VMware driver is used 
+	in conjunction with the 
+	the OpenStack Networking Service running the Nicira NVP plugin.  
+	</para>
+    </listitem>
+   </itemizedlist>
+</section> 
+</section>  
 
+<section xml:id="VMWareESXDriver_details">
+<title>Using the VMwareESXDriver</title> 
+<para>This section covers details of using the VMwareESXDriver.</para> 
+<section xml:id="VMWareESXDriver_configuration_options">
+    <title>VMWareESXDriver configuration options</title>
+<para>When using the VMwareESXDriver (i.e., no vCenter) with OpenStack Compute, 
+configure nova.conf with the following VMWare-specific config options:
+</para>
+
+<programlisting>vmwareapi_host_ip=&lt;ESXi host IP&gt;
+vmwareapi_host_username=&lt; ESXi host username&gt;
+vmwareapi_host_password=&lt; ESXi host password&gt;
+vmwareapi_wsdl_loc=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl
+</programlisting>
+<para>Remember that you will have one nova-compute service per ESXi host. 
+It is recommended that this host run as a VM on the same ESXi host it is 
+managing.</para> 
+<para>Also note that many of the nova.conf options mentioned elsewhere in this
+document that are relevant to libvirt do not apply to using this driver.</para>
+</section> 
+<section xml:id="VMwareESXDriver_limitations">
+<title>Requirements + Limitations</title> 
+<para>The ESXDriver is unable to take advantage of many of the advanced capabilities
+associated with the vSphere platform, namely vMotion, High Availability, and 
+Dynamic Resource Scheduler (DRS).</para> 
+</section> 
+</section>
+
+<section xml:id="VMWare_images">
+<title>Images with VMware vSphere</title> 
+<para>When using either VMware driver, images should be uploaded to the OpenStack
+Image Service in the VMDK format.  For example:</para> 
+<screen>glance add name="ubuntuLTS" disk_format=vmdk container_format=ovf \
+is_public=true vmware_adaptertype="lsiLogic" vmware_disktype="preallocated" \
+vmware_ostype="ubuntu64Guest" &lt; ubuntuLTS-flat.vmdk </screen>
+</section>
+
+<section xml:id="VMWare_networking">
+<title>Networking with VMware vSphere</title> 
+   <para>The VMware driver support networking with both Nova-Network and the 
+	Openstack Networking Service.</para> 
+   <itemizedlist>
+      <listitem>
+	<para>If using nova-network with the FlatManager or FlatDHCPManager, before
+	provisioning VMs, create a port group with the same name as the 
+	'flat_network_bridge' value in nova.conf (default is 'br100').  All VM NICs
+	will be attached to this port group.</para> 
+    </listitem>
+      <listitem>
+	<para>If using nova-network with the VlanManager, before provisioning VMs, 
+	make sure the 'vmwareapi_vlan_interface' configuration option is set to match
+        the ESX host interface that will handle VLAN-tagged VM traffic.
+        OpenStack Compute will automatically create the corresponding port
+	groups.</para> 
+    </listitem>
+      <listitem>
+       <para>If using the OpenStack Networking Service, before provisining VMs, 
+       create a port group with the same name as the 'vmware.integration_bridge' 
+       value in nova.conf (default is 'br-int').  All VM NICs will be attached to this
+       port group for management by the OpenStack Networking Plugin.</para>   
+    </listitem>
+   </itemizedlist>
+</section>
+
+<section xml:id="VMWare_volumes">
+<title>Volumes with VMware vSphere</title> 
+<para>The VMware driver has limited support for attaching Volumes from the 
+OpenStack Block Storage service, supporting attachments only if the volume
+driver type is 'iscsi'.  There is no support for volumes based on vCenter Datastores
+in this release.</para> 
 </section>
 <section xml:id="VMWare_config">
 <title>Configuration Reference</title>
 <xi:include href="tables/nova-vmware.xml"/>
 </section>
 </section>
+
