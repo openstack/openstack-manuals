@@ -13,14 +13,14 @@
         Volume Group and then mounted on the user's instance by way of
         iSCSI. <orderedlist>
             <listitem>
-                <para>Install the Cinder packages: <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install -y cinder-api cinder-scheduler cinder-volume iscsitarget \
+                <para>Install the Cinder packages: <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install -y cinder-api cinder-scheduler cinder-volume iscsitarget \
     open-iscsi iscsitarget-dkms python-cinderclient linux-headers-`uname -r`</userinput></screen>
                     <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install -y openstack-cinder openstack-cinder-doc \
         iscsi-initiator-utils scsi-target-utils</userinput></screen>
                 </para>
             </listitem>
             <listitem>
-                <para>Configure &amp; start the iSCSI services: <screen os="ubuntu"><prompt>#</prompt> <userinput>sed -i 's/false/true/g' /etc/default/iscsitarget</userinput>
+                <para>Configure &amp; start the iSCSI services: <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>sed -i 's/false/true/g' /etc/default/iscsitarget</userinput>
 <prompt>#</prompt> <userinput>service iscsitarget start</userinput>
 <prompt>#</prompt> <userinput>service open-iscsi start</userinput></screen>
                     <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>service tgtd start</userinput>
@@ -33,7 +33,7 @@
                 <itemizedlist>
                     <listitem>
                         <para>Edit <emphasis role="bold"
-                                >/etc/cinder/cinder.conf</emphasis>: <programlisting os="ubuntu">[DEFAULT]
+                                >/etc/cinder/cinder.conf</emphasis>: <programlisting os="ubuntu;debian">[DEFAULT]
 sql_connection = mysql://cinder:password@localhost/cinder
 rabbit_password = password</programlisting>
                             <programlisting os="centos;rhel;fedora">[DEFAULT]
@@ -64,7 +64,7 @@ admin_password = password</programlisting>
                         </para>
                     </listitem>
                     <listitem>
-                        <para>Restart the services: <screen os="ubuntu"><prompt>#</prompt> <userinput>service cinder-api restart</userinput>
+                        <para>Restart the services: <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service cinder-api restart</userinput>
 <prompt>#</prompt> <userinput>service cinder-scheduler restart</userinput>
 <prompt>#</prompt> <userinput>service cinder-volume restart</userinput></screen>
                             <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>service openstack-cinder-api restart</userinput>

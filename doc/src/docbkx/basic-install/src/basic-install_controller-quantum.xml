@@ -10,7 +10,7 @@
             <orderedlist>
                 <listitem>
                     <para>Install the Quantum Server:
-                        <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install -y quantum-server</userinput></screen>
+                        <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install -y quantum-server</userinput></screen>
                         <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-quantum openstack-quantum-openvswitch</userinput></screen>
                     </para>
                 </listitem>
@@ -19,7 +19,7 @@
                     <itemizedlist>
                         <listitem>
                             <para>Edit <emphasis role="bold">/etc/quantum/quantum.conf</emphasis>:
-                                <programlisting os="ubuntu">[DEFAULT]
+                                <programlisting os="ubuntu;debian">[DEFAULT]
 verbose = True
 rabbit_password = password
 [keystone_authtoken]
@@ -50,7 +50,7 @@ sql_connection = mysql://quantum:password@localhost/quantum
 [OVS]
 enable_tunneling = False</programlisting></para>
                             <note>
-                                <para os="ubuntu">It's more handy to choose
+                                <para os="ubuntu;debian">It's more handy to choose
                                <emphasis role="bold">tunnel mode</emphasis> since you don't
                                have to configure your physical
                                switches for VLANs.</para>
@@ -84,7 +84,7 @@ admin_password = password
                 </listitem>
                 <listitem>
                     <para>Start the services:
-                        <screen os="ubuntu"><prompt>#</prompt> <userinput>service quantum-server restart</userinput></screen>
+                        <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service quantum-server restart</userinput></screen>
                         <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>service quantum-server restart</userinput>
 <prompt>#</prompt> <userinput>chkconfig quantum-server on</userinput></screen></para>
                 </listitem>
