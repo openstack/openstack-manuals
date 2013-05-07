@@ -117,10 +117,21 @@ iptables -A POSTROUTING -s 10.10.10.0/24 -t nat -j MASQUERADE</userinput></scree
             <itemizedlist>
                 <listitem>
                     <para>Edit <emphasis role="bold">/etc/quantum/quantum.conf</emphasis>:
-                        <programlisting>[DEFAULT]
+                        <programlisting os="ubuntu">[DEFAULT]
 verbose = True
 rabbit_password = password
 rabbit_host = 10.10.10.10
+[keystone_authtoken]
+auth_host = 10.10.10.10
+admin_tenant_name = service
+admin_user = quantum 
+admin_password = password</programlisting>
+                        <programlisting os="centos;rhel;fedora">[DEFAULT]
+verbose = True
+rpc_backend = cinder.openstack.common.rpc.impl_qpid
+sql_connection = mysql://cinder:password@localhost/cinder
+qpid_user = guest
+qpid_password = quest
 [keystone_authtoken]
 auth_host = 10.10.10.10
 admin_tenant_name = service
