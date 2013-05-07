@@ -3,16 +3,15 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink"
     version="5.0">
-            <title>IBM Storwize family and SVC volume driver</title>
+            <title>IBM Storwize Family and SVC Volume Driver</title>
             <para>The volume management driver for Storwize family and
                 SAN Volume Controller (SVC) provides OpenStack Compute
                 instances with access to IBM Storwize family or SVC
                 storage systems.</para>
         <section xml:id="ibm-storwize-svc-driver1">
-            <title>Configuring the Storwize family and SVC system
-            </title>
+            <title>Configuring the Storwize Family and SVC System </title>
             <simplesect>
-                <title>Network configuration</title>
+                <title>Network Configuration</title>
 
             	<para>The Storwize family or SVC system must be
                 configured for iSCSI, Fibre Channel, or both.</para>
@@ -61,22 +60,21 @@
                 </note>
             </simplesect>
             <simplesect>
-                <title>iSCSI CHAP authentication</title>
+                <title>iSCSI CHAP Authentication</title>
                 <para>If using iSCSI for data access, all new hosts created by
                 the driver on the Storwize family or SVC system will have a
                 randomly-generated CHAP secret associated with them.
                 OpenStack compute nodes will use these secrets when creating
                 iSCSI connections.
                 <note>
-                    <para>CHAP secrets will not be added to existing hosts.
-                    </para>
+                    <para>CHAP secrets are not added to existing
+                        hosts. </para>
                 </note>
                 <note>
-                    <para>CHAP secrets are passed from Cinder to Nova in
-                    cleartext.
-                    This communication should be secured to ensure that CHAP
-                    secrets are not discovered.
-                    </para>
+                    <para>CHAP secrets are passed from Cinder to Nova
+                        in clear text. This communication should be
+                        secured to ensure that CHAP secrets are not
+                        discovered. </para>
                 </note>
                 </para>
             </simplesect>
@@ -177,7 +175,7 @@ ssh-keygen -t rsa
                 <literal>key.pub</literal> holds the public
                 SSH key.
                 </para>
-                <para>The command also prompts for a passphrase,
+                <para>The command also prompts for a pass phrase,
                 which should be empty.</para>
                 <para>The private key file should be provided to the
                 driver using the
@@ -193,8 +191,7 @@ ssh-keygen -t rsa
             </simplesect>
         </section>
         <section xml:id="ibm-storwize-svc-driver2">
-            <title>Configuring the Storwize family and SVC driver
-            </title>
+            <title>Configuring the Storwize Family and SVC Driver </title>
             <simplesect>
                 <title>Enabling the Storwize family and SVC driver
                 </title>
@@ -465,11 +462,11 @@ volume_driver = cinder.volume.drivers.storwize_svc.StorwizeSVCDriver
             </simplesect>
             <simplesect>
                 <title>Working with multiple back-ends</title>
-                <para>Cinder has support for multiple back-ends.
-                This can be accomplished by running multiple instances of
-                cinder-volume, each with its own configuration file, or by
-                including multiple sections in one configuration file.
-                For example:
+                <para>Cinder has support for multiple back-ends. This
+                can be accomplished by running multiple instances of
+                cinder-volume, each with its own configuration file,
+                or by including multiple sections in one configuration
+                file. For example:
                 <programlisting>
 [DEFAULT]
 ...
@@ -480,10 +477,11 @@ enabled_backends = v7k1,v7k2
 
 [v7k2]
 ...
-                </programlisting>
-                Here, common options are placed under
-                <literal>[DEFAULT]</literal>, while options specific to a
-                back-end are placed in the appropriate section. </para>
+                </programlisting>Here,
+                common options are placed under
+                    <literal>[DEFAULT]</literal>, while options
+                specific to a back-end are placed in the appropriate
+                section. </para>
 
                 <para>By default, volumes will be allocated between back-ends
                 to balance allocated space.
@@ -512,11 +510,12 @@ enabled_backends = v7k1,v7k2
 capabilities:volume_backend_name=my7000_openstack
                 </programlisting></para>
 
-                <para>In the next example, the volume will be placed on a
-                controller that supports compression.
-                Specifying False will require the volume to be placed on a
-                back-end that does not support compression (if no contraints
-                on compression support are required, do not set this key):
+                <para>In the next example, the volume will be placed
+                on a controller that supports compression. Specifying
+                False will require the volume to be placed on a
+                back-end that does not support compression (if no
+                constraints on compression support are required, do
+                not set this key):
                 <programlisting>
 capabilities:compression_support='&lt;is&gt; True'
                 </programlisting></para>
@@ -540,13 +539,14 @@ capabilities:storage_protocol='&lt;in&gt; FC'
             </simplesect>
             <simplesect>
                 <title>Configuring per-volume creation options</title>
-                <para>The volume types previously described can also be used to
-                pass options to the IBM Storwize/SVC driver, which over-ride
-                the default values set in the configuration file.
-                Contrary to the previous examples where the "capabilities"
-                scope was used to pass parameters to the Cinder scheduler,
-                options can be passed to the IBM Storwize/SVC driver with the 
-                "drivers" scope, or by ommitting the scope.</para>
+                <para>The volume types previously described can also
+                be used to pass options to the IBM Storwize/SVC
+                driver, which over-ride the default values set in the
+                configuration file. Contrary to the previous examples
+                where the "capabilities" scope was used to pass
+                parameters to the Cinder scheduler, options can be
+                passed to the IBM Storwize/SVC driver with the
+                "drivers" scope, or by omitting the scope.</para>
 
                 <para>The following <literal>extra specs</literal> keys are
                 supported by the IBM Storwize/SVC driver:

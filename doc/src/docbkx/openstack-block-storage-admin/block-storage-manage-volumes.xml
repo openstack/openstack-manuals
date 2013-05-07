@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="managing-volumes">
+    <title>Manage Volumes</title>
+    <?dbhtml stop-chunking?>
+    <para>The OpenStack Block Storage service enables you to add extra
+        block-level storage to your OpenStack Compute instances. This
+        service is similar to the Amazon EC2 Elastic Block Storage
+        (EBS) offering.</para>
+    <para>The default OpenStack Block Storage service implementation
+        is an iSCSI solution that uses Logical Volume Manager (LVM)
+        for Linux.</para>
+    <note>
+        <para>The OpenStack Block Storage service is not a shared
+            storage solution like SAN of NFS, where you can attach a
+            volume to multiple servers. With the OpenStack Block
+            Storage service, you can attach a volume to only one
+            instance at a time. </para>
+        <para>The OpenStack Block Storage service also provides
+            drivers that enable you to use several vendors' back-end
+            storage devices, in addition to or instead of the base LVM
+            implementation.</para>
+    </note>
+    <para>The following high-level procedure shows you how to create
+        and attach a volume to a server instance. </para>
+    <procedure>
+        <title>To create and attach a volume to a server
+            instance:</title>
+        <para>You must configure both OpenStack Compute and the
+            OpenStack Block Storage service through the
+                <filename>cinder.conf</filename> file.</para>
+        <step>
+
+            <para>Create a volume is created through the
+                    <command>cinder create</command> command. This
+                command creates an LV into the volume group (VG)
+                "cinder-volumes." </para>
+        </step>
+
+        <step>
+            <para>Attach the volume to an instance through the
+                    <command>nova volume-attach</command> command.
+                This command creates a unique iSCSI IQN that is
+                exposed to the compute node.</para>
+        </step>
+        <step>
+            <para>The compute node, which runs the instance, now has
+                an active ISCSI session and new local storage (usually
+                a /dev/sdX disk).</para>
+        </step>
+        <step>
+            <para>libvirt uses that local storage as storage for the
+                instance. The instance get a new disk, usually a
+                /dev/vdX disk.</para>
+        </step>
+    </procedure>
+    <xi:include href="troubleshoot-cinder.xml"/>
+    <xi:include href="multi_backend.xml"/>
+</chapter>
