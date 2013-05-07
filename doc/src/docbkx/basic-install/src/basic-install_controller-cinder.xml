@@ -32,23 +32,46 @@
                 <para>Configure Cinder:</para>
                 <itemizedlist>
                     <listitem>
-                        <para>Edit <emphasis role="bold"
-                                >/etc/cinder/cinder.conf</emphasis>: <programlisting os="ubuntu">[DEFAULT]
+                        <para>Edit <filename>/etc/cinder/cinder.conf</filename>:
+                            <programlisting os="ubuntu">[DEFAULT]
 sql_connection = mysql://cinder:password@localhost/cinder
-rabbit_password = password</programlisting>
-                            <programlisting os="centos;rhel;fedora">[DEFAULT]
+rabbit_password = password
+
+[keystone_authtoken]
+admin_tenant_name = service
+admin_user = cinder 
+admin_password = password
+service_protocol = http
+service_host = localhost
+service_port = 5000
+auth_host = localhost
+auth_port = 35357
+auth_protocol = http</programlisting><programlisting os="centos;rhel;fedora">[DEFAULT]
 rpc_backend = cinder.openstack.common.rpc.impl_qpid
 sql_connection = mysql://cinder:password@localhost/cinder
 qpid_user = guest
-qpid_password = quest</programlisting>
-                        </para>
+qpid_password = quest
+
+[keystone_authtoken]
+admin_tenant_name = service
+admin_user = cinder 
+admin_password = password
+service_protocol = http
+service_host = localhost
+service_port = 5000
+auth_host = localhost
+auth_port = 35357
+auth_protocol = http</programlisting></para>
                     </listitem>
                     <listitem>
-                        <para>Edit <emphasis role="bold"
-                                >/etc/cinder/api-paste.ini</emphasis>:
-                            <programlisting>admin_tenant_name = service
-admin_user = cinder 
-admin_password = password</programlisting>
+                        <para>Edit <filename>/etc/cinder/api-paste.ini</filename> in the
+                                <literal>filter_authtoken</literal> section so it does not contain
+                            any of the variables defined in the
+                                <literal>keystone_authtoken</literal> section of
+                                <filename>cinder.conf</filename>:
+                            <programlisting>[filter:authtoken]
+paste.filter_factory = keystone.middleware.auth_token:filter_factory
+# This section should not contain any other config options</programlisting>
                         </para>
                     </listitem>
                     <listitem>
