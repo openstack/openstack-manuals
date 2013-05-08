@@ -44,25 +44,29 @@ admin_password = password</programlisting>
                                     <screen><prompt>#</prompt> <userinput>glance-manage db_sync</userinput></screen></para>
                             </listitem>
                             <listitem>
-                                <para os="ubuntu;debian">Download and import Ubuntu 12.04 LTS UEC Image:
+                                <para>Download and import Ubuntu 12.04 LTS UEC Image:
                                     <screen><prompt># </prompt><userinput>wget http://uec-images.ubuntu.com/releases/12.04/release/ubuntu-12.04-server-cloudimg-amd64-disk1.img</userinput>
 <prompt>#</prompt> <userinput>glance image-create --is-public true --disk-format qcow2 --container-format bare --name "Ubuntu" &lt; ubuntu-12.04-server-cloudimg-amd64-disk1.img</userinput>
                                     </screen>
                                 </para>
                                 <para>Download and import Cirros QCOW2 Image:
-                                    <screen><prompt>#</prompt> <userinput>wget http://download.cirros-cloud.net/0.3.1/cirros-0.3.1-x86_64-disk.img</userinput>
-<prompt>#</prompt> <userinput>glance image-create --is-public true --disk-format qcow2 --container-format bare --name "Cirros" &lt; cirros-0.3.1-x86_64-disk.img</userinput></screen>
-                                </para>
+                            <screen><prompt>#</prompt> <userinput>wget http://download.cirros-cloud.net/0.3.1/cirros-0.3.1-x86_64-disk.img</userinput>
+<prompt>#</prompt> <userinput>glance image-create --is-public true --disk-format qcow2 --container-format bare --name "Cirros 0.3.1" &lt; cirros-0.3.1-x86_64-disk.img</userinput></screen>
+                        </para>
                             </listitem>
                             <listitem>
-                                <para>Check if the image has been introduced in the index:
-                                    <screen><prompt>#</prompt> <userinput>glance image-list</userinput>
+                                <para>Check if the images have been introduced in the index:
+                            <screen><prompt>#</prompt> <userinput>glance image-list</userinput>
 <userinput>
-+--------------------------------------+--------+-------------+------------------+-----------+--------+
-| ID                                   | Name   | Disk Format | Container Format | Size      | Status |
-+--------------------------------------+--------+-------------+------------------+-----------+--------+
-| 0d2664d3-cda9-4937-95b2-909ecf8ea362 | Ubuntu | qcow2       | bare             | 233701376 | active |
-+--------------------------------------+--------+-------------+------------------+-----------+--------+</userinput></screen></para>
++--------------------------------------+---------------------------------+-------------+------------------+-----------+--------+
+| ID                                   | Name                            | Disk Format | Container Format | Size      | Status |
++--------------------------------------+---------------------------------+-------------+------------------+-----------+--------+
+| acafc7c0-40aa-4026-9673-b879898e1fc2 | Cirros 0.3.1                    | qcow2       | bare             | 13147648  | active |
+| 10ccdf86-e59e-41ac-ab41-65af91ea7a9c | cirros-0.3.0-x86_64-uec         | ami         | ami              | 25165824  | active |
+| 8473f43f-cd1f-47cc-8d88-ccd9a62e566f | cirros-0.3.0-x86_64-uec-kernel  | aki         | aki              | 4731440   | active |
+| 75c1bb27-a406-462c-a379-913e4e6221c9 | cirros-0.3.0-x86_64-uec-ramdisk | ari         | ari              | 2254249   | active |
+| 62f9278e-a26e-4fa0-9537-1eb503aa2f01 | Ubuntu                          | qcow2       | bare             | 251985920 | active |
++--------------------------------------+---------------------------------+-------------+------------------+-----------+--------+</userinput></screen></para>
                             </listitem>
                         </itemizedlist>
                     </listitem>

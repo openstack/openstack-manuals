@@ -20,98 +20,40 @@
         <para>Then you would source these environment variables by running <userinput>source openrc</userinput>.</para></note>
     <screen>glance --os-username=admin --os-password=secrete --os-tenant-name=demo --os-auth-url=http://192.168.206.130:5000/v2.0 \
 image-create \
---name="tty-linux-kernel" \
---disk-format=aki \
---container-format=aki &lt; ttylinux-uec-amd64-12.1_2.6.35-22_1-vmlinuz</screen>
+--name="Cirros 0.3.1" \
+--disk-format=qcow2 \
+--container-format bare &lt; cirros-0.3.1-x86_64-disk.img</screen>
     <programlisting>+------------------+--------------------------------------+
 | Property         | Value                                |
 +------------------+--------------------------------------+
-| checksum         | 79adac8c671790504a142ab2392cf927     |
-| container_format | aki                                  |
-| created_at       | 2012-11-01T20:48:25                  |
+| checksum         | d972013792949d0d3ba628fbe8685bce     |
+| container_format | bare                                 |
+| created_at       | 2013-05-08T18:59:18                  |
 | deleted          | False                                |
 | deleted_at       | None                                 |
-| disk_format      | aki                                  |
-| id               | 599907ff-296d-4042-a671-d015e34317d2 |
+| disk_format      | qcow2                                |
+| id               | acafc7c0-40aa-4026-9673-b879898e1fc2 |
 | is_public        | False                                |
 | min_disk         | 0                                    |
 | min_ram          | 0                                    |
-| name             | tty-linux-kernel                     |
-| owner            | 71bcb9b723c04eeb9b5ace0ac9ce418b     |
+| name             | Cirros 0.3.1                         |
+| owner            | efa984b0a914450e9a47788ad330699d     |
 | protected        | False                                |
-| size             | 4731440                              |
+| size             | 13147648                             |
 | status           | active                               |
-| updated_at       | 2012-11-01T20:48:25                  |
+| updated_at       | 2013-05-08T18:59:18                  |
 +------------------+--------------------------------------+</programlisting>
-    
-    <para>Upload the initrd.</para>
-    <screen>glance --os-username=admin --os-password=secrete --os-tenant-name=demo --os-auth-url=http://192.168.206.130:5000/v2.0 \
-image-create \
---name="tty-linux-ramdisk" \
---disk-format=ari \
---container-format=ari &lt; ttylinux-uec-amd64-12.1_2.6.35-22_1-loader </screen>
-    <programlisting>+------------------+--------------------------------------+
-| Property         | Value                                |
-+------------------+--------------------------------------+
-| checksum         | 0754dbc6abcbfec42b345948654a05ad     |
-| container_format | ari                                  |
-| created_at       | 2012-11-01T20:48:27                  |
-| deleted          | False                                |
-| deleted_at       | None                                 |
-| disk_format      | ari                                  |
-| id               | 7d9f0378-1640-4e43-8959-701f248d999d |
-| is_public        | False                                |
-| min_disk         | 0                                    |
-| min_ram          | 0                                    |
-| name             | tty-linux-ramdisk                    |
-| owner            | 71bcb9b723c04eeb9b5ace0ac9ce418b     |
-| protected        | False                                |
-| size             | 2254249                              |
-| status           | active                               |
-| updated_at       | 2012-11-01T20:48:27                  |
-+------------------+--------------------------------------+</programlisting>
-    
-    <para>Upload the image.</para>
-    <screen>glance --os-username=admin --os-password=secrete --os-tenant-name=demo --os-auth-url=http://192.168.206.130:5000/v2.0 \
-image-create \
---name="tty-linux" \
---disk-format=ami \
---container-format=ami \
---property kernel_id=599907ff-296d-4042-a671-d015e34317d2 \
---property ramdisk_id=7d9f0378-1640-4e43-8959-701f248d999d &lt; ttylinux-uec-amd64-12.1_2.6.35-22_1.img </screen>
-    <programlisting>
-+-----------------------+--------------------------------------+
-| Property              | Value                                |
-+-----------------------+--------------------------------------+
-| Property 'kernel_id'  | 599907ff-296d-4042-a671-d015e34317d2 |
-| Property 'ramdisk_id' | 7d9f0378-1640-4e43-8959-701f248d999d |
-| checksum              | 2f81976cae15c16ef0010c51e3a6c163     |
-| container_format      | ami                                  |
-| created_at            | 2012-11-01T20:48:30                  |
-| deleted               | False                                |
-| deleted_at            | None                                 |
-| disk_format           | ami                                  |
-| id                    | 21b421e5-44d4-4903-9db0-4f134fdd0793 |
-| is_public             | False                                |
-| min_disk              | 0                                    |
-| min_ram               | 0                                    |
-| name                  | tty-linux                            |
-| owner                 | 71bcb9b723c04eeb9b5ace0ac9ce418b     |
-| protected             | False                                |
-| size                  | 25165824                             |
-| status                | active                               |
-| updated_at            | 2012-11-01T20:48:30                  |
-+-----------------------+--------------------------------------+</programlisting>
 
 
-    <para>Now a glance image-list should show three images.</para>
+    <para>Now a glance image-list should show these image IDs.</para>
     <programlisting>glance --os-username=admin --os-password=secrete --os-tenant-name=demo --os-auth-url=http://192.168.206.130:5000/v2.0 image-list
 +--------------------------------------+---------------------------------+-------------+------------------+----------+--------+
 | ID                                   | Name                            | Disk Format | Container Format | Size     | Status |
 +--------------------------------------+---------------------------------+-------------+------------------+----------+--------+
-| 21b421e5-44d4-4903-9db0-4f134fdd0793 | tty-linux                       | ami         | ami              | 25165824 | active |
-| 7d9f0378-1640-4e43-8959-701f248d999d | tty-linux-ramdisk               | ari         | ari              | 2254249  | active |
-| 599907ff-296d-4042-a671-d015e34317d2 | tty-linux-kernel                | aki         | aki              | 4731440  | active |
+| acafc7c0-40aa-4026-9673-b879898e1fc2 | Cirros 0.3.1                    | qcow2       | bare             | 13147648 | active |
+| 10ccdf86-e59e-41ac-ab41-65af91ea7a9c | cirros-0.3.0-x86_64-uec         | ami         | ami              | 25165824 | active |
+| 8473f43f-cd1f-47cc-8d88-ccd9a62e566f | cirros-0.3.0-x86_64-uec-kernel  | aki         | aki              | 4731440  | active |
+| 75c1bb27-a406-462c-a379-913e4e6221c9 | cirros-0.3.0-x86_64-uec-ramdisk | ari         | ari              | 2254249  | active |
 +--------------------------------------+---------------------------------+-------------+------------------+----------+--------+</programlisting>
     
     </section>
