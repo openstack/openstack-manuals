@@ -4,12 +4,13 @@
     xmlns:xlink="http://www.w3.org/1999/xlink"
     version="5.0">
     <title>EMC SMI-S iSCSI Driver</title>
-    <para>The EMCSMISISCSIDriver is based on the existing ISCSIDriver,
-        with the ability to create/delete and attach/detach volumes and
-        create/delete snapshots, etc.</para>
-    <para>The EMCSMISISCSIDriver executes the volume operations by
-        communicating with the backend EMC storage. It uses a CIM client
-        in python called PyWBEM to make CIM operations over HTTP.</para>
+    <para>The EMCISCSIDriver is based on the existing ISCSIDriver,
+        with the ability to create/delete and attach/detach volumes
+        and create/delete snapshots, and so on.</para>
+    <para>The EMCISCSIDriver executes the volume operations by
+        communicating with the backend EMC storage. It uses a CIM
+        client in python called PyWBEM to make CIM operations over
+        HTTP.</para>
     <para>The EMC CIM Object Manager (ECOM) is packaged with the EMC SMI-S
         Provider. It is a CIM server that allows CIM clients to make CIM
         operations over HTTP, using SMI-S in the backend for EMC storage
@@ -17,15 +18,15 @@
     <para>The EMC SMI-S Provider supports the SNIA Storage Management
         Initiative (SMI), an ANSI standard for storage management. It
         supports VMAX and VNX storage systems.</para>
-    <simplesect>
-        <title>Requirements</title>
+    <section xml:id="emc-reqs">
+        <title>System Requirements</title>
         <para>EMC SMI-S Provider V4.5.1 and higher is required. SMI-S
             can be downloaded from <link xlink:href="http://powerlink.emc.com">
                 EMC's Powerlink</link> web site. Refer to the EMC SMI-S Provider
             release notes for installation instructions.</para>
         <para>EMC storage VMAX Family and VNX Series are supported.</para>
-    </simplesect>
-    <simplesect>
+    </section>
+    <section xml:id="emc-supported-ops">
         <title>Supported Operations</title>
         <para>The following operations will be supported on both VMAX
             and VNX arrays:</para>
@@ -45,8 +46,8 @@
             <listitem><para>Create volume from snapshot</para></listitem>
         </itemizedlist>
         <para>Only thin provisioning is supported.</para>
-    </simplesect>
-    <simplesect>
+    </section>
+    <section xml:id="emc-prep">
         <title>Preparation</title>
         <itemizedlist>
             <listitem><para>Install python-pywbem package.  For example:</para>
@@ -58,8 +59,8 @@
             <listitem><para>Register with VNX.</para></listitem>
             <listitem><para>Create Masking View on VMAX.</para></listitem>
         </itemizedlist>
-    </simplesect>
-    <simplesect>
+    </section>
+    <section xml:id="register-emc">
         <title>Register with VNX</title>
         <para>For a VNX volume to be exported to a Compute node, the node needs
             to be registered with VNX first.</para>
@@ -86,10 +87,14 @@
             <screen>
 <prompt>$</prompt> <userinput>sudo iscsiadm -m node -T <literal>iqn.1992-04.com.emc:cx.apm01234567890.a0</literal> -p <literal>10.10.61.35</literal> -l</userinput>
                         </screen></para>
-        <para>
-            Assume <literal>iqn.1993-08.org.debian:01:1a2b3c4d5f6g</literal> is the initiator name of the Compute node.
-            Login to Unisphere, go to <literal>VNX00000</literal>->Hosts->Initiators, Refresh and wait until initiator
-            <literal>iqn.1993-08.org.debian:01:1a2b3c4d5f6g</literal> with SP Port <literal>A-8v0</literal> appears.</para>
+        <para>Assume
+                <literal>iqn.1993-08.org.debian:01:1a2b3c4d5f6g</literal>
+            is the initiator name of the Compute node. Login to
+            Unisphere, go to
+            <literal>VNX00000</literal>->Hosts->Initiators, Refresh
+            and wait until initiator
+                <literal>iqn.1993-08.org.debian:01:1a2b3c4d5f6g</literal>
+            with SP Port <literal>A-8v0</literal> appears.</para>
         <para>Click the "Register" button, select "CLARiiON/VNX" and enter the host name <literal>myhost1</literal>
             and IP address <literal>myhost1</literal>.  Click Register. Now host <literal>1.1.1.1</literal> will appear
             under Hosts->Host List as well.</para>
@@ -106,15 +111,15 @@
         <screen>
 <prompt>$</prompt> <userinput>sudo iscsiadm -m node -u</userinput>
                         </screen>
-    </simplesect>
-    <simplesect>
+    </section>
+    <section xml:id="create-masking">
         <title>Create Masking View on VMAX</title>
         <para>For VMAX, user needs to do initial setup on the Unisphere for VMAX server first. On the Unisphere for VMAX server,
             create initiator group, storage group, port group, and put them in a masking view.
             Initiator group contains the initiator names of the openstack hosts. Storage group
             should have at least 6 gatekeepers.</para>
-    </simplesect>
-    <simplesect>
+    </section>
+    <section xml:id="emc-config-file">
         <title>Config file <filename>cinder.conf</filename></title>
         <para>Make the following changes in <filename>/etc/cinder/cinder.conf</filename>.</para>
         <para>For VMAX, we have the following entries where <literal>10.10.61.45</literal> is the IP address of the
@@ -134,8 +139,8 @@ volume_driver = cinder.volume.emc.EMCISCSIDriver
 cinder_emc_config_file = /etc/cinder/cinder_emc_config.xml
                          </programlisting>
         <para>Restart the cinder-volume service.</para>
-    </simplesect>
-    <simplesect>
+    </section>
+    <section xml:id="emc-config-file-2">
         <title>Config file <filename>cinder_emc_config.xml</filename></title>
         <para>Create the file <filename>/etc/cinder/cinder_emc_config.xml</filename>.
             We don't need to restart service for this change.</para>
@@ -172,5 +177,5 @@ cinder_emc_config_file = /etc/cinder/cinder_emc_config.xml
         <para>EcomServerIp and EcomServerPort are the IP address and port number of the
             ECOM server which is packaged with SMI-S. EcomUserName and EcomPassword are
             credentials for the ECOM server.</para>
-    </simplesect>
+    </section>
 </section>

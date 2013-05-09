@@ -2,15 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>org.openstack.docs</groupId>
     <artifactId>openstack-guide</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>OpenStack Guides</name>
-
+    <name>OpenStack Administration Guides</name>
     <properties>
         <!-- This is set by Jenkins according to the branch. -->
         <release.path.name>local</release.path.name>
@@ -41,10 +38,8 @@
             </pluginRepositories>
         </profile>
     </profiles>
-
     <build>
         <plugins>
-
             <plugin>
                 <groupId>com.rackspace.cloud.api</groupId>
                 <artifactId>clouddocs-maven-plugin</artifactId>
@@ -60,6 +55,7 @@
                             <highlightSource>false</highlightSource>
                             <!-- The following elements sets the autonumbering of sections in output for chapter numbers but no numbered sections-->
                             <sectionAutolabel>0</sectionAutolabel>
+                            <tocSectionDepth>1</tocSectionDepth>
                             <sectionLabelIncludesComponentLabel>0</sectionLabelIncludesComponentLabel>
                         </configuration>
                     </execution>
@@ -90,16 +86,14 @@
                             </generateToc>
                             <!-- The following elements sets the autonumbering of sections in output for chapter numbers but no numbered sections-->
                             <sectionAutolabel>0</sectionAutolabel>
+                            <tocSectionDepth>1</tocSectionDepth>
                             <sectionLabelIncludesComponentLabel>0</sectionLabelIncludesComponentLabel>
                             <targetDirectory>${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-block-storage</targetDirectory>
                             <webhelpDirname>admin</webhelpDirname>
                             <pdfFilenameBase>bk-block-storage-adminguide-${release.path.name}</pdfFilenameBase>
                             <postProcess>
-
                                 <!--Deletes leftover uneeded directories -->
-
                                 <!--<delete dir="${basedir}/target/docbkx/webhelp/bk-block-storage-adminguide"/>-->
-
                             </postProcess>
                         </configuration>
                     </execution>
@@ -111,14 +105,12 @@
                     <includes>
                         bk-block-storage-adminguide.xml
                     </includes>
-
                     <canonicalUrlBase>http://docs.openstack.org/${release.path.name}/openstack-block-storage/admin/content/</canonicalUrlBase>
                     <profileSecurity>reviewer</profileSecurity>
                     <branding>openstack</branding>
                     <strictImageValidation>false</strictImageValidation>
                 </configuration>
             </plugin>
-
         </plugins>
     </build>
 </project>
