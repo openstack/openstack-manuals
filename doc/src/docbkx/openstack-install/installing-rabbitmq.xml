@@ -4,10 +4,70 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
     <title>Installing A Messaging Server</title>
-    <para>Install the messaging queue server. Typically this is either Qpid or RabbitMQ but ZeroMQ (0MQ) is also available.</para>
-    <para>
-        If Qpid is to be installed, refer to the Compute
-        Administration Manual for configuration instructions, including adding rpc_backend=nova.rpc.impl_qpid to your <filename>nova.conf</filename>.</para>
+    <para>Install the messaging queue server. Typically this is
+          <phrase os="ubuntu">RabbitMQ</phrase><phrase os="centos;rhel;fedora">Qpid</phrase>
+          but <phrase os="ubuntu">Qpid</phrase><phrase os="centos;rhel;fedora">RabbitMQ</phrase>
+          and ZeroMQ (0MQ) are also available.</para>
     <screen os="ubuntu">sudo apt-get install rabbitmq-server</screen>
-    <screen os="centos;rhel;fedora">sudo yum install openstack-utils memcached qpid-cpp-server</screen>
+    <procedure os="centos;rhel;fedora">
+      <step>
+        <para>
+          All steps in this procedure require the privileges of the
+          <systemitem>root</systemitem> user. If you are not logged
+          in as the <systemitem>root</systemitem> user then either escalate
+          your privileges using the <command>su</command> command or
+          prefix each command with <command>sudo</command>, depending on the
+          configuration of your system.
+        </para>
+      </step>
+      <step>
+        <para>
+          Install the Qpid message broker and supporting utilities that will
+          be needed in subsequent procedures.
+        </para>
+        <screen><prompt>#</prompt>yum install qpid-cpp-server memcached openstack-utils</screen>
+      </step>
+      <step>
+        <para>
+          Disable Qpid authentication by setting the value of the
+          <literal>auth</literal> configuration key to <literal>no</literal>
+          in the <filename>/etc/qpidd.conf</filename> file.
+        </para>
+        <screen><prompt>#</prompt> echo "auth=no" >> /etc/qpidd.conf</screen>
+      </step>
+      <step>
+        <para>
+          Start the Qpid message broker.
+        </para>
+        <screen><prompt>#</prompt> service qpidd start</screen>
+      </step>
+      <step>
+        <para>
+          Configure the Qpid message broker to start automatically in future.
+        </para>
+        <screen><prompt>#</prompt> chkconfig qpidd on</screen>
+      </step>
+      <step>
+        <para>
+          Configure Nova to use the Qpid message broker for remote procedure
+          calls by setting the value of the <literal>rpc_backend</literal>
+          configuration key in <filename>/etc/nova/nova.conf</filename>.
+        </para>
+        <screen><prompt>#</prompt> openstack-config --set /etc/nova/nova.conf \
+                   DEFAULT rpc_backend nova.rpc.impl_qpid</screen>
+      </step>
+      <step>
+        <para>
+          Configure Nova to use the Qpid message broker by setting the value of
+          the <literal>qpid_hostname</literal> configuration key in
+          <filename>/etc/nova/nova.conf</filename>.
+        </para>
+        <screen><prompt>#</prompt> openstack-config --set /etc/nova/nova.conf \
+                   DEFAULT qpid_hostname <replaceable>127.0.0.1</replaceable></screen>
+        <para>
+          Replace <replaceable>127.0.0.1</replaceable> with the IP address or
+          host name of your message broker.
+        </para>
+      </step>
+    </procedure>
 </section>
