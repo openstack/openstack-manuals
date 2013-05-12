@@ -405,6 +405,7 @@ $ <userinput>sudo service nova-compute restart</userinput></screen>
         top-level directory for storing data related to the state of
         Compute including images if you are using the Compute object
         store. </para>
+  <xi:include href="../common/tables/nova-common.xml"/>
   </section>
 
   <section xml:id="sample-nova-configuration-files">
@@ -486,7 +487,7 @@ xenapi_remap_vbd_dev=true
     <para>To customize log formats for
       OpenStack Compute, use these configuration option
       settings.</para>
-    <xi:include href="tables/log-file-nova-conf.xml"/>
+    <xi:include href="../common/tables/nova-logging.xml"/>
   </section>
 
   <section xml:id="configuring-hypervisors">
@@ -502,7 +503,7 @@ xenapi_remap_vbd_dev=true
       details. To customize hypervisor support in OpenStack Compute,
       refer to these configuration settings in
         <filename>nova.conf</filename>.</para>
-    <xi:include href="tables/hypervisors-nova-conf.xml"/>
+    <xi:include href="../common/tables/nova-hypervisor.xml"/>
   </section>
 
   <section xml:id="configuring-authentication-authorization">
@@ -515,11 +516,11 @@ xenapi_remap_vbd_dev=true
     <para>To customize authorization settings for Compute, see these
       configuration settings in <filename>nova.conf</filename>.</para>
 
-    <xi:include href="tables/auth-nova-conf.xml"/>
+    <xi:include href="../common/tables/nova-authentication.xml"/>
     <para>To customize certificate authority settings for Compute, see these configuration settings in <filename>nova.conf</filename>.</para>
-    <xi:include href="tables/ca-nova-conf.xml"/>
+    <xi:include href="../common/tables/nova-ca.xml"/>
     <para>To customize Compute and the Identity service to use LDAP as a backend, refer to these configuration settings in <filename>nova.conf</filename>.</para>
-    <xi:include href="tables/ldap-nova-conf.xml"/>
+    <xi:include href="../common/tables/nova-ldap.xml"/>
   </section>
 
   <section xml:id="configuring-compute-to-use-ipv6-addresses">
@@ -576,7 +577,7 @@ xenapi_remap_vbd_dev=true
 
     <screen><prompt>$</prompt> <userinput>nova network-create public  --fixed-range-v4 10.0.2.0/24 --fixed-range-v6 fd00:1::/48 </userinput></screen>
 
-    <xi:include href="tables/ipv6-nova-conf.xml"/>
+    <xi:include href="../common/tables/nova-ipv6.xml"/>
   </section>
 
   <section xml:id="configuring-compute-to-use-the-image-service">
@@ -587,12 +588,14 @@ xenapi_remap_vbd_dev=true
       is configured by default to use the OpenStack Image service (Glance),
       which is the only currently supported image service.</para>
 
+    <xi:include href="../common/tables/nova-glance.xml"/>
+
     <para>If your installation requires the use of euca2ools for registering
       new images, you will need to run the <literal>nova-objectstore</literal> service.
       This service provides an Amazon S3 frontend for Glance, which is needed
       because euca2ools can only upload images to an S3-compatible image
       store.</para>
-    <xi:include href="tables/s3-nova-conf.xml"/>
+    <xi:include href="../common/tables/nova-s3.xml"/>
   </section>
 
   <section xml:id="configuring-migrations">
@@ -848,7 +851,7 @@ root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l
             following chart is for advanced usage only.</para>
         </listitem>
       </orderedlist></para>
-    <xi:include href="tables/live-migration-nova-conf.xml"/>
+    <xi:include href="../common/tables/nova-livemigration.xml"/>
 
     <section xml:id="true-live-migration-kvm-libvirt">
       <title>Enabling true live migration</title>
@@ -1263,7 +1266,7 @@ mfsmount 	/var/lib/nova/instances fuse mfsmaster=mfsmaster,_netdev 	0 	0
         by the <literal>nova-scheduler</literal> service, although all the services need to be able
         to update entries in the database. Use these settings to configure the
         connection string for the nova database.</para>
-        <xi:include href="tables/database-nova-conf.xml"/>
+        <xi:include href="../common/tables/nova-db.xml"/>
   </section>
 
   <!-- Oslo rpc mechanism (i.e. Rabbit, Qpid, ZeroMQ) -->
@@ -1502,7 +1505,7 @@ limits =(POST, "*", .*, 10, MINUTE);(POST, "*/servers", ^/servers, 50, DAY);(PUT
   <para>To customize these options for OpenStack EC2 API, use these
   configuration option settings.</para>
 
-  <xi:include href="tables/nova-ec2-nova-conf.xml" />
+  <xi:include href="../common/tables/nova-ec2.xml" />
 
   </section>
    <section xml:id="configuring-quotas">
@@ -1555,5 +1558,6 @@ parenthesis):<itemizedlist>
         <screen><userinput><prompt>$</prompt> nova-manage project quota --project=1113f5f266f3477ac03da4e4f82d0568 --key=cores --value=40</userinput></screen>
         Alternately, quota settings are available through the OpenStack Dashboard in the "Edit
         Project" page. </para>
+        <xi:include href="../common/tables/nova-quota.xml"/>
   </section>
 </chapter>
