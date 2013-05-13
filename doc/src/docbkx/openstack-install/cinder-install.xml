@@ -6,8 +6,11 @@
     version="5.0">
     <title>Installing and configuring Block Storage (Cinder)</title>
     <para>Install the packages for OpenStack Block Storage (cinder) on the cloud
-        controller.<screen><prompt>$</prompt> <userinput>sudo apt-get install cinder-api
-cinder-scheduler cinder-volume open-iscsi python-cinderclient tgt</userinput></screen></para>
+        controller.</para>
+        <screen os="ubuntu"><prompt>$</prompt> <userinput>sudo apt-get install cinder-api
+cinder-scheduler cinder-volume open-iscsi python-cinderclient tgt</userinput></screen>
+    <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-cinder openstack-cinder-doc \
+        iscsi-initiator-utils scsi-target-utils</userinput></screen>
     <para>Edit /etc/cinder/api-paste.ini (filter
         authtoken).<programlisting>[filter:authtoken]
 paste.filter_factory = keystone.middleware.auth_token:filter_factory
@@ -34,19 +37,21 @@ verbose = True
 auth_strategy = keystone
 #osapi_volume_listen_port=5900</programlisting>
     <para>Configure messaging (RabbitMQ or Qpid) also in /etc/cinder/cinder.conf.</para>
-    <programlisting>
-# Ubuntu
+    <programlisting># Ubuntu
 rabbit_host = 10.10.10.10
 rabbit_port = 5672
 rabbit_userid = rabbit
 rabbit_password = secure_password
 rabbit_virtual_host = /nova</programlisting>
-    <programlisting>
-# Red Hat, Fedora, CentOS
+    <programlisting># Red Hat, Fedora, CentOS
 qpid_hostname=192.168.206.130</programlisting>
     <para>Verify entries in <filename>nova.conf</filename>. The volume_api_class setting is the default setting for
         grizzly.</para>
     <programlisting>volume_api_class=nova.volume.cinder.API</programlisting>
+    <para>Set up the cinder database.</para>
+    <programlisting>CREATE DATABASE cinder;
+GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'localhost' \
+IDENTIFIED BY 'password';</programlisting>
     <para>Add a filter entry to the devices section <filename>/etc/lvm/lvm.conf</filename> to keep LVM from scanning devices used by virtual machines. NOTE: You must add every physical volume that is needed for LVM on the Cinder host. You can get a list by running <command>pvdisplay</command>. Each item in the filter array starts with either an "<literal>a</literal>" for accept, or an "<literal>r</literal>" for reject. Physical volumes that are needed on the Cinder host begin with "<literal>a</literal>". The array must end with "<literal>r/.*/</literal>"</para>
     <programlisting>devices {
 ...
