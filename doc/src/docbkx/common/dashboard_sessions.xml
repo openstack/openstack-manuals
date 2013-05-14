@@ -9,7 +9,9 @@
  for handling user 
  session data; however that’s not the end of the story. There are
  numerous session backends available, which are controlled through
- the SESSION_ENGINE setting in your local_settings.py file. What
+ the SESSION_ENGINE setting in your <filename os="centos;fedora;rhel">
+ /etc/openstack-dashboard/local_settings</filename>
+<filename os="ubuntu">local_settings.py</filename> file. What
  follows is a quick discussion of the pros and cons of each of 
  the common options as they pertain to deploying Horizon specifically.</para>
 <section xml:id="dashboard-session-local">
@@ -80,7 +82,8 @@ CACHES = {
         'yourpassword';</userinput></screen></para>
     <para>Enter quit at the <literal>mysql></literal> prompt to exit MySQL.</para>
 
- <para>In the <filename>/etc/openstack-dashboard/local_settings.py</filename>
+ <para>In the <filename os="ubuntu">/etc/openstack-dashboard/local_settings.py</filename>
+ <filename os="centos;fedora;rhel">/etc/openstack-dashboard/local_settings</filename>
  file, change these options:</para>
 
  <programlisting language="python">
@@ -97,7 +100,9 @@ DATABASES = {
     }
 }
 </programlisting>
- <para>After configuring the <filename>local_settings.py</filename> as shown, you can run
+ <para>After configuring the <filename os="ubuntu">local_settings.py</filename>
+    <filename os="centos;fedora;rhel">/etc/openstack-dashboard/local_settings</filename> 
+        as shown, you can run
         the <command>manage.py syncdb</command> command to populate this newly-created
         database.</para>
     <screen><prompt>$</prompt> /usr/share/openstack-dashboard/manage.py syncdb </screen>
@@ -106,14 +111,14 @@ DATABASES = {
 Installing indexes ...
 DEBUG:django.db.backends:(0.008) CREATE INDEX `django_session_c25c2c28` ON `django_session` (`expire_date`);; args=()
 No fixtures found.</computeroutput></screen>
-    <para>If you want to avoid a warning when restarting apache2, create a blackhole directory in the dashboard directory like so:</para>
-    <screen><prompt>#</prompt> <userinput> sudo mkdir -p /var/lib/dash/.blackhole</userinput></screen>
+    <para os="ubuntu">If you want to avoid a warning when restarting apache2, create a blackhole directory in the dashboard directory like so:</para>
+    <screen os="ubuntu"><prompt>#</prompt> <userinput> sudo mkdir -p /var/lib/dash/.blackhole</userinput></screen>
    <para>Restart Apache to pick up the default site and symbolic link settings.</para>
     <screen os="ubuntu"><prompt>#</prompt> <userinput>/etc/init.d/apache2 restart</userinput></screen>
     <screen os="centos;fedora;rhel"><prompt>#</prompt> <userinput>service httpd restart</userinput></screen>
-    <para>Restart the nova-api service to ensure the API server can connect to the Dashboard and to
+    <para os="ubuntu">Restart the nova-api service to ensure the API server can connect to the Dashboard and to
         avoid an error displayed in the Dashboard. </para>
-    <screen><userinput>sudo restart nova-api</userinput></screen>
+    <screen os="ubuntu"><userinput>sudo restart nova-api</userinput></screen>
 
 </section>
 <section xml:id="dashboard-session-cached-database">
