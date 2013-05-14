@@ -51,7 +51,8 @@ qpid_hostname=192.168.206.130</programlisting>
     <para>Set up the cinder database.</para>
     <programlisting>CREATE DATABASE cinder;
 GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'localhost' \
-IDENTIFIED BY 'password';</programlisting>
+IDENTIFIED BY 'password';
+FLUSH PRIVILEGES;</programlisting>
     <para>Add a filter entry to the devices section <filename>/etc/lvm/lvm.conf</filename> to keep LVM from scanning devices used by virtual machines. NOTE: You must add every physical volume that is needed for LVM on the Cinder host. You can get a list by running <command>pvdisplay</command>. Each item in the filter array starts with either an "<literal>a</literal>" for accept, or an "<literal>r</literal>" for reject. Physical volumes that are needed on the Cinder host begin with "<literal>a</literal>". The array must end with "<literal>r/.*/</literal>"</para>
     <programlisting>devices {
 ...
