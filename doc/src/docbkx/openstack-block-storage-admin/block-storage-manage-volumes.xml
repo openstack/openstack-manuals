@@ -3,8 +3,7 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="managing-volumes">
-    <title>Manage Volumes</title>
-    <?dbhtml stop-chunking?>
+    <title>Managing Volumes</title>
     <para>The OpenStack Block Storage service enables you to add extra
         block-level storage to your OpenStack Compute instances. This
         service is similar to the Amazon EC2 Elastic Block Storage
@@ -28,9 +27,9 @@
     <procedure>
         <title>To create and attach a volume to a server
             instance:</title>
-        <para>You must configure both OpenStack Compute and the
+        <step><para>You must configure both OpenStack Compute and the
             OpenStack Block Storage service through the
-                <filename>cinder.conf</filename> file.</para>
+                <filename>cinder.conf</filename> file.</para></step>
         <step>
 
             <para>Create a volume through the <command>cinder create</command> command. This command
@@ -42,18 +41,67 @@
                     <command>nova volume-attach</command> command.
                 This command creates a unique iSCSI IQN that is
                 exposed to the compute node.</para>
-        </step>
-        <step>
-            <para>The compute node, which runs the instance, now has
-                an active ISCSI session and new local storage (usually
-                a /dev/sdX disk).</para>
-        </step>
-        <step>
-            <para>libvirt uses that local storage as storage for the
-                instance. The instance get a new disk, usually a
-                /dev/vdX disk.</para>
+            <substeps>
+                <step>
+                    <para>The compute node, which runs the instance, now has an active ISCSI session
+                        and new local storage (usually a /dev/sdX disk).</para>
+                </step>
+                <step>
+                    <para>libvirt uses that local storage as storage for the instance. The instance
+                        get a new disk, usually a /dev/vdX disk.</para>
+                </step>
+            </substeps>
         </step>
     </procedure>
+    <para>For this particular walk through, there is one cloud
+        controller running <literal>nova-api</literal>,
+        <literal>nova-scheduler</literal>,
+        <literal>nova-objectstore</literal>,
+        <literal>nova-network</literal> and
+        <literal>cinder-*</literal> services. There are two
+        additional compute nodes running
+        <literal>nova-compute</literal>. The walk through uses
+        a custom partitioning scheme that carves out 60GB of space
+        and labels it as LVM. The network uses
+        <literal>FlatManger</literal> is the
+        <literal>NetworkManager</literal> setting for
+        OpenStack Compute (Nova). </para>
+    <para>Please note that the network mode doesn't interfere at
+        all with the way cinder works, but networking must be set
+        up for cinder to work. Please refer to <link
+            xlink:href="http://docs.openstack.org/grizzly/openstack-network/admin/content/">Networking Administration</link> for more
+        details.</para>
+    <para>To set up Compute to use volumes, ensure that Block
+        Storage is installed along with lvm2. The guide will be
+        split in four parts : </para>
+    <para>
+        <itemizedlist>
+            <listitem>
+                <para>Installing the Block Storage service on the
+                    cloud controller.</para>
+            </listitem>
+            <listitem>
+                <para>Configuring the
+                    <literal>cinder-volumes</literal> volume
+                    group on the compute nodes.</para>
+            </listitem>
+            <listitem>
+                <para>Troubleshooting your installation.</para>
+            </listitem>
+            <listitem>
+                <para>Backup your nova volumes.</para>
+            </listitem>
+        </itemizedlist>
+    </para>
+    <xi:include href="../openstack-install/cinder-install.xml"/>
+    <xi:include href="backup-block-storage-disks.xml"/>
     <xi:include href="troubleshoot-cinder.xml"/>
     <xi:include href="multi_backend.xml"/>
+    <xi:include href="add-volume-node.xml"/>
+    <section xml:id="boot-from-volume">
+        <title>Boot From Volume</title>
+        <para>In some cases, instances can be stored and run from inside volumes. This is explained in further detail in the <link xlink:href="http://docs.openstack.org/grizzly/openstack-compute/admin/content/instance-creation.html#boot_from_volume">Boot From Volume</link> 
+            section of the Compute Admin manual.</para>
+    </section>
+    
 </chapter>

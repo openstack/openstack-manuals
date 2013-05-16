@@ -3,5 +3,22 @@
     xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink"
     version="1.0">
     <title>Adding Block Storage Nodes</title>
-    <para>To offer more storage to your tenant's VMs, add another volume node running cinder services. Install the required packages for cinder. Creat a volume group called cinder-volumes (configurable using the cinder_volume parameter in <filename>cinder.conf</filename>). Configure tgtd with its targets.conf file and start the tgtd service. Connect the node to the cinder database by configuring the <filename>cinder.conf</filename> file with the connection information. Make sure the iscsi_ip_address setting in cinder.conf matches the public IP of the node you're installing, then restart the cinder services. When you issue a <command>cinder-manage host list</command> command you should see the new volume node listed. If not, look at the logs in <filename>/var/log/cinder/volume.log</filename> for issues. </para>
+    <para>To offer more storage to your tenant's VMs, add another volume node running cinder services by following these steps. </para>
+       <orderedlist> 
+        <listitem><para>Install the required packages for cinder.</para></listitem> 
+        
+        <listitem><para>Create a volume group called cinder-volumes (configurable using the
+                    <literal>cinder_volume</literal> parameter in <filename>cinder.conf</filename>). </para></listitem>
+        
+        <listitem><para>Configure tgtd with its <filename>targets.conf</filename> file and start the
+                    <literal>tgtd</literal> service.</para></listitem> 
+        
+        <listitem><para>Connect the node to the Block Storage (cinder) database by configuring the
+                    <filename>cinder.conf</filename> file with the connection information.</para></listitem> 
+        
+        <listitem><para>Make sure the <literal>iscsi_ip_address</literal> setting in <filename>cinder.conf</filename>
+                                matches the public IP of the node you're installing, then restart
+                                the cinder services. </para></listitem>
+        </orderedlist>
+        <para>When you issue a <command>cinder-manage host list</command> command you should see the new volume node listed. If not, look at the logs in <filename>/var/log/cinder/volume.log</filename> for issues. </para>
 </section>
