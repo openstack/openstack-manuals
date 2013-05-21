@@ -25,46 +25,46 @@
   <section xml:id="installing-openstack-compute-on-opensuse-and-sles">
     <title>Installing on openSUSE or SUSE Linux Enterprise Server</title>
     <?dbhtml stop-chunking?>
+
+    <para>The <link xlink:href="https://build.opensuse.org">openSUSE
+    Build Service</link> is used for packaging and publishing of
+    different OpenStack versions for openSUSE and SUSE Linux
+    Enterprise releases. It thus allows to install newer OpenStack
+    releases.</para>
+
+    <para>Packages are created in subprojects of
+    <link
+	xlink:href="https://build.opensuse.org/project/show?project=Cloud%3AOpenStack">Cloud:OpenStack</link>
+    named after the OpenStack release,
+    e.g. <link xlink:href="https://build.opensuse.org/project/show?project=Cloud%3AOpenStack%3AGrizzly">Cloud:OpenStack:Grizzly</link>.</para>
+
+
     <para><link xlink:href="http://www.b1-systems.de">B1 Systems GmbH</link>
     provides packages for openSUSE 12.2 and SUSE Linux Enterprise Server 11 SP2
     on the <link xlink:href="https://build.opensuse.org/">openSUSE Open Build
     Server</link>.</para>
 
-    <para>For the Grizzly release you can find the packages in the project <link
-    xlink:href="https://build.opensuse.org/project/show?project=isv:B1-Systems:OpenStack:release:Grizzly"
-    >isv:B1-Systems:OpenStack:release:Grizzly</link>.</para>
+    <para>These packages are currently build for active openSUSE releases and
+    SUSE Linux Enterprise 11 and can be downloaded from
+    <link xlink:href="http://download.opensuse.org/repositories/Cloud:/OpenStack:/">download.opensuse.org</link>.</para>
 
     <section xml:id="installing-openstack-compute-on-sles">
       <title>SUSE Linux Enterprise Server</title>
         <para>
-        First of all you have to import the signing key of the repository.
+        Declare the repository to libzypp with <command>zypper ar</command>.
         <screen>
-<prompt>#</prompt> <userinput>rpm --import http://download.opensuse.org/repositories/isv:/B1-Systems:/OpenStack:/release:/Grizzly/SLE_11_SP2/repodata/repomd.xml.key</userinput>
-        </screen>
-        </para>
-        <para>
-        Now you can declare the repository to libzypp with <command>zypper ar</command>.
-        <screen>
-<prompt>#</prompt> <userinput>zypper ar http://download.opensuse.org/repositories/isv:/B1-Systems:/OpenStack:/release:/Grizzly/SLE_11_SP2/isv:B1-Systems:OpenStack:release:Grizzly.repo</userinput>
-<computeroutput>Adding repository 'OpenStack Grizzly (latest stable release) (SLE_11_SP2)' [done]
-Repository 'OpenStack Grizzly (latest stable release) (SLE_11_SP2)' successfully added
+<prompt>#</prompt> <userinput> zypper ar -f http://download.opensuse.org/repositories/Cloud:/OpenStack:/Grizzly/SLE_11_SP2/Cloud:OpenStack:Grizzly.repo
+</userinput>
+<computeroutput>
+Adding repository 'OpenStack Grizzly (Stable branch) (SLE_11_SP2)' ......................................................................[done]
+Repository 'OpenStack Grizzly (Stable branch) (SLE_11_SP2)' successfully added
 Enabled: Yes
-Autorefresh: No
+Autorefresh: Yes
 GPG check: Yes
-URI: http://download.opensuse.org/repositories/isv:/B1-Systems:/OpenStack:/release:/Grizzly/SLE_11_SP2/</computeroutput>
+URI: http://download.opensuse.org/repositories/Cloud:/OpenStack:/Grizzly/SLE_11_SP2/</computeroutput>
         </screen>
         </para>
 
-        <para>
-        After declaring the repository you have to update the metadata with <command>zypper ref</command>.
-        <screen>
-<prompt>#</prompt> <userinput>zypper ref</userinput>
-<computeroutput>[...]
-Retrieving repository 'OpenStack Grizzly (latest stable release) (SLE_11_SP2)' metadata [done]
-Building repository 'OpenStack Grizzly (latest stable release) (SLE_11_SP2)' cache [done]
-All repositories have been refreshed.</computeroutput>
-        </screen>
-        </para>
         <para> You can list all available packages for OpenStack with
           <command>zypper se openstack</command>. You can install packages with
           <command>zypper in PACKAGE</command>.</para>
@@ -91,32 +91,15 @@ All repositories have been refreshed.</computeroutput>
     <section xml:id="installing-openstack-compute-on-opensuse">
       <title>openSUSE</title>
         <para>
-        First of all you have to import the signing key of the repository.
+        Declare the repository to libzypp with <command>zypper ar</command>.
         <screen>
-<prompt>#</prompt> <userinput>rpm --import http://download.opensuse.org/repositories/isv:/B1-Systems:/OpenStack:/release:/Grizzly/openSUSE_12.2/repodata/repomd.xml.key</userinput>
-        </screen>
-        </para>
-        <para>
-        Now you can declare the repository to libzypp with <command>zypper ar</command>.
-        <screen>
-<prompt>#</prompt> <userinput>zypper ar http://download.opensuse.org/repositories/isv:/B1-Systems:/OpenStack:/release:/Grizzly/openSUSE_12.2/isv:B1-Systems:OpenStack:release:Grizzly.repo</userinput>
-<computeroutput>Adding repository 'OpenStack Grizzly (latest stable release) (openSUSE_12.2)' [done]
-Repository 'OpenStack Grizzly (latest stable release) (openSUSE_12.2)' successfully added
+<prompt>#</prompt> <userinput>zypper ar -f http://download.opensuse.org/repositories/Cloud:/OpenStack:/Grizzly/openSUSE_12.3/Cloud:OpenStack:Grizzly.repo</userinput>
+<computeroutput>Adding repository 'OpenStack Grizzly (Stable branch) (openSUSE_12.3)' ...................................................................[done]
+Repository 'OpenStack Grizzly (Stable branch) (openSUSE_12.3)' successfully added
 Enabled: Yes
-Autorefresh: No
+Autorefresh: Yes
 GPG check: Yes
-URI: http://download.opensuse.org/repositories/isv:/B1-Systems:/OpenStack:/release:/Grizzly/openSUSE_12.2/</computeroutput>
-        </screen>
-        </para>
-
-        <para>
-        After declaring the repository you have to update the metadata with <command>zypper ref</command>.
-        <screen>
-<prompt>#</prompt> <userinput>zypper ref</userinput>
-<computeroutput>[...]
-Retrieving repository 'OpenStack Grizzly (latest stable release) (openSUSE_12.2)' metadata [done]
-Building repository 'OpenStack Grizzly (latest stable release) (openSUSE_12.2)' cache [done]
-All repositories have been refreshed.</computeroutput>
+URI: http://download.opensuse.org/repositories/Cloud:/OpenStack:/Grizzly/openSUSE_12.3/</computeroutput>
         </screen>
         </para>
         <para> You can list all available packages for OpenStack with
