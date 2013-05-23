@@ -1,99 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter xmlns="http://docbook.org/ns/docbook"
-    xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
-    xml:id="basic-install_operate">
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+        xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="basic-install_operate">
         <title>Create Your First VM</title>
-<para>You can use OpenStack API or the
-                Dashboard to manage your own IaaS: go to <link
-                        xlink:href="http://10.0.0.10/horizon"
-                        >http://10.0.0.10/horizon</link> with demo /
-                password credentials.</para>
+        <para>You can use OpenStack API or the Dashboard to manage your own IaaS: go to <link
+                        xlink:href="http://10.0.0.10/horizon">http://10.0.0.10/horizon</link> with
+                demo / password credentials.</para>
         <para>In the Dashboard:</para>
         <orderedlist>
                 <listitem>
-                        <para>Edit the security group "Default" to
-                                allow ICMP and SSH.</para>
+                        <para>Edit the security group "Default" to allow ICMP and SSH.</para>
                 </listitem>
                 <listitem>
                         <para>Create a personal keypair.</para>
                 </listitem>
                 <listitem>
-                        <para>Go to "Instances" and click "Launch
-                                Instance" for spawning a new
+                        <para>Go to "Instances" and click "Launch Instance" for spawning a new
                                 VM.</para>
-                </listitem>                
+                </listitem>
         </orderedlist>
-        <para>Alternatively, you can do this all on the command line
-                at the Cloud Controller: <orderedlist>
-                        <listitem>
-                                <para>Copy the
-                                   <literal>~/openrc</literal> file as
-                                   <literal>~/demorc</literal> and
-                                   edit the contents to suit the demo
-                                   user.</para>
-                        </listitem>
-                        <listitem>
-                                <para>Create an SSH keypair and add it
-                                   to Nova:
-                                   <screen><prompt>#</prompt> <userinput>ssh-keygen -f ~/.ssh/id_rsa -t rsa -N ''</userinput>
+        <para>Alternatively, you can do this all on the command line at the Cloud Controller: </para>
+        <orderedlist>
+                <listitem>
+                        <para>Copy the <literal>~/openrc</literal> file as
+                                        <literal>~/demorc</literal> and edit the contents to suit
+                                the demo user.</para>
+                </listitem>
+                <listitem>
+                        <para>Create an SSH keypair and add it to Nova:
+                                <screen><prompt>#</prompt> <userinput>ssh-keygen -f ~/.ssh/id_rsa -t rsa -N ''</userinput>
 <prompt>#</prompt> <userinput>nova keypair-add --pub_key ~/.ssh/id_rsa.pub default_key</userinput> </screen></para>
-                        </listitem>
-                        <listitem>
-                                <para>Edit the "default" Security
-                                   Group to allow SSH and ICMP:
-                                   <screen><prompt>#</prompt> <userinput>nova secgroup-add-rule default tcp 22 22 0.0.0.0/24</userinput>
+                </listitem>
+                <listitem>
+                        <para>Edit the "default" Security Group to allow SSH and ICMP:
+                                <screen><prompt>#</prompt> <userinput>nova secgroup-add-rule default tcp 22 22 0.0.0.0/24</userinput>
 <prompt>#</prompt> <userinput>nova secgroup-add-rule default icmp -1 -1 0.0.0.0/24</userinput></screen></para>
-                        </listitem>
-                        <listitem>
-                                <para>Query the Image Service and note
-                                   the ID of the image you want to
-                                   launch:
-                                   <screen><prompt>#</prompt> <userinput>nova image-list</userinput></screen></para>
-                        </listitem>
-                        <listitem>
-                                <para>Launch an instance:
-                                   <screen><prompt>#</prompt> <userinput>nova boot --flavor 1 --image &lt;image_id> --key-name default_key my_instance</userinput></screen></para>
-                        </listitem>
-                        <listitem>
-                                <para>Wait a few seconds and check the
-                                   status of your instance:
-                                   <screen><prompt>#</prompt> <userinput>nova show my_instance</userinput></screen></para>
-                        </listitem>
-                        <listitem>
-                                <para>If the status is in Error state,
-                                   check the
-                                   <literal>nova-scheduler</literal>
-                                   log:
-                                   <screen><prompt>#</prompt> <userinput>tail /var/log/nova/nova-scheduler.log</userinput> </screen></para>
-                        </listitem>
-                        <listitem>
-                                <para>If the status is in Available
-                                   state, check the instance's console
-                                   for booting status:
-                                   <screen><prompt>#</prompt> <userinput>nova console-log my_instance</userinput></screen></para>
-                        </listitem>
-                </orderedlist></para>
-        <para>After your instance has successfully booted and the
-                console log is showing a log in prompt, you may now
-                SSH into your instance. In order to do this, though,
-                you have to work with the Linux network namespaces on
-                the Cloud Controller: <orderedlist>
-                        <listitem>
-                                <para>Print a list of all namespaces:
-                                   <screen><prompt>#</prompt> <userinput>ip netns</userinput></screen>The
-                                   output should contain two lines:
-                                   one beginning with
-                                   <literal>qrouter</literal> and the
-                                   other beginning with
-                                   <literal>qdhcp</literal>
-                                </para>
-                        </listitem>
-                        <listitem>
-                                <para>Run SSH inside the
-                                   <literal>qdhcp</literal> namespace:
-                                   <screen><prompt>#</prompt> <userinput>ip netns exec qdhcp-c73d082f-d7ed-4b53-ac93-7a6a4c3fa3aa ssh 10.5.5.2</userinput></screen></para>
-                        </listitem>
-                </orderedlist>
-        </para>
+                </listitem>
+                <listitem>
+                        <para>Query the Image Service and note the ID of the image you want to
+                                launch:
+                                <screen><prompt>#</prompt> <userinput>nova image-list</userinput></screen></para>
+                </listitem>
+                <listitem>
+                        <para>Launch an instance:
+                                <screen><prompt>#</prompt> <userinput>nova boot --flavor 1 --image &lt;image_id> --key-name default_key my_instance</userinput></screen></para>
+                </listitem>
+                <listitem>
+                        <para>Wait a few seconds and check the status of your instance:
+                                <screen><prompt>#</prompt> <userinput>nova show my_instance</userinput></screen></para>
+                </listitem>
+                <listitem>
+                        <para>If the status is in Error state, check the
+                                        <literal>nova-scheduler</literal> log:
+                                <screen><prompt>#</prompt> <userinput>tail /var/log/nova/nova-scheduler.log</userinput> </screen></para>
+                </listitem>
+                <listitem>
+                        <para>If the status is in Available state, check the instance's console for
+                                booting status:
+                                <screen><prompt>#</prompt> <userinput>nova console-log my_instance</userinput></screen></para>
+                </listitem>
+        </orderedlist>
+        <para>After your instance has successfully booted and the console log is showing a log in
+                prompt, you may now SSH into your instance. In order to do this, though, you have to
+                work with the Linux network namespaces on the Network Controller: </para>
+        <orderedlist>
+                <listitem>
+                        <para>Print a list of all namespaces:
+                                <screen><prompt>#</prompt> <userinput>ip netns</userinput></screen>The
+                                output should contain two lines: one beginning with
+                                        <literal>qrouter</literal> and the other beginning with
+                                        <literal>qdhcp</literal>
+                        </para>
+                </listitem>
+                <listitem>
+                        <para>Run SSH inside the <literal>qdhcp</literal> namespace:
+                                <screen><prompt>#</prompt> <userinput>ip netns exec qdhcp-c73d082f-d7ed-4b53-ac93-7a6a4c3fa3aa ssh 10.5.5.2</userinput></screen></para>
+                </listitem>
+        </orderedlist>
 </chapter>
