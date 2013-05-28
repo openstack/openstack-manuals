@@ -44,6 +44,17 @@ def validation_failed(schema, doc):
         any(log.type_name != "DTD_UNKNOWN_ID" for log in schema.error_log)
 
 
+def verify_section_tags_have_xmid(doc):
+    """Check that all section tags have an xml:id attribute
+
+    Will throw an exception if there's at least one missing"""
+    ns = {"docbook": "http://docbook.org/ns/docbook"}
+    for node in doc.xpath('//docbook:section', namespaces=ns):
+        if "{http://www.w3.org/XML/1998/namespace}id" not in node.attrib:
+            raise ValueError("section missing xml:id attribute, line %d" %
+                             node.sourceline)
+
+
 def error_message(error_log):
     """Return a string that contains the error message.
 
@@ -78,7 +89,11 @@ def main(rootdir):
                     if validation_failed(schema, doc):
                         any_failures = True
                         print error_message(schema.error_log)
+                    verify_section_tags_have_xmid(doc)
                 except etree.XMLSyntaxError as e:
+                    any_failures = True
+                    print "%s: %s" % (path, e)
+                except ValueError as e:
                     any_failures = True
                     print "%s: %s" % (path, e)
 
