@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <section
+        xmlns="http://docbook.org/ns/docbook"
+        xmlns:xi="http://www.w3.org/2001/XInclude"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        version="5.0"
+        xml:id="windows-image">
+<title>Microsoft Windows image</title>
+    <para>We do not yet have a fully documented example of how to create a Microsoft Windows image.
+        You can use libvirt to install Windows from an installation DVD using the same approach as
+        with the CentOS and Ubuntu examples. Once the initial install is done, you will need to
+        perform some Windows-specific customizations.</para>
+        <simplesect>
+            <title>Install VirtIO drivers</title>
+            <para>Installing the <link
+                xlink:href="http://www.linux-kvm.org/page/WindowsGuestDrivers/Download_Drivers"
+                >VirtIO paravirtualizaion drivers for Windows</link> will improve virtual machine
+            performance when using KVM as the hypervisor to run Windows.</para>
+        </simplesect>
+        <simplesect><title>Sysprep</title>
+            <para>Microsoft has a special tool called <link
+                xlink:href="http://technet.microsoft.com/en-us/library/cc766049(v=ws.10).aspx"
+                >Sysprep</link> that must be run inside of a Windows guest to prepare it for use as
+            a virtual machine image. </para>
+        </simplesect>
+    <simplesect>
+        <title>cloudbase-init</title>
+        <para><link xlink:href="http://www.cloudbase.it/cloud-init-for-windows-instances/"
+                >cloudbase-init</link> is a Windows port of cloud-init that should be installed
+            inside of the guest. The <link xlink:href="https://github.com/cloudbase/cloudbase-init"
+                >source code</link> is available on github.</para>
+    </simplesect>
+        <simplesect>
+            <title>Jordan Rinke's OpenStack Windows resources</title>
+            <para>Jordan Rinke maintains <link xlink:href="https://github.com/jordanrinke/openstack"
+                >a collection of resources</link> for managing OpenStack Windows virtual machine
+            guests. </para>
+        </simplesect>
+
+
+    </section>
