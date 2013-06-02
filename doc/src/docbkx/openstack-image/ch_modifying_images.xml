@@ -136,6 +136,45 @@ Type: 'help' for help on commands
                         converting Xen and VMWare images to KVM images</para>
                 </listitem>
             </itemizedlist></para>
+        <simplesect>
+            <title>Resize an image</title>
+            <para>Here's a simple of example of how to use <command>virt-resize</command> to resize
+                an image. Assume we have a 16GB Windows image in qcow2 format that we want to resize
+                to 50GB. First, we use <command>virt-filesystems</command> to identify the
+                partitions:<screen><prompt>#</prompt> <userinput>virt-filesystems --long --parts --blkdevs -h -a /data/images/win2012.qcow2</userinput>
+<computeroutput>Name       Type       MBR  Size  Parent
+/dev/sda1  partition  07   350M  /dev/sda
+/dev/sda2  partition  07   16G   /dev/sda
+/dev/sda   device     -    16G   -
+</computeroutput></screen></para>
+            <para>In this case, it's the <filename>/dev/sda2</filename> partition that we want to
+                resize. We create a new qcow2 image and use the <command>virt-resize</command>
+                command to write a resized copy of the original into the new
+                image<screen><prompt>#</prompt> <userinput>qemu-img create -f qcow2 /data/images/win2012-50gb.qcw2 50G</userinput>
+<prompt>#</prompt> <userinput>virt-resize --expand /dev/sda2 /data/images/win2012.qcow2 /data/images/win2012-50gb.qcow2</userinput>
+<computeroutput>Examining /data/images/win2012.qcow2 ...
+**********
+
+Summary of changes:
+
+/dev/sda1: This partition will be left alone.
+
+/dev/sda2: This partition will be resized from 15.7G to 49.7G.  The
+    filesystem ntfs on /dev/sda2 will be expanded using the
+    'ntfsresize' method.
+
+**********
+Setting up initial partition table on /data/images/win2012-50gb.qcow2 ...
+Copying /dev/sda1 ...
+ 100% ⟦▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓⟧ 00:00
+Copying /dev/sda2 ...
+ 100% ⟦▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓⟧ 00:00
+Expanding /dev/sda2 using the 'ntfsresize' method ...
+
+Resize operation completed with no errors.  Before deleting the old
+disk, carefully check that the resized disk boots and works correctly.
+</computeroutput></screen></para>
+        </simplesect>
     </section>
     <section xml:id="losetup-kpartx-nbd">
         <title>Loop devices, kpartx, network block devices</title>

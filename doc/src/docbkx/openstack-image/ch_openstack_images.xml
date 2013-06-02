@@ -104,12 +104,21 @@
                 </itemizedlist></para>
             <para>The simplest way to support this in your image is to install the <link
                     xlink:href="https://launchpad.net/cloud-utils">cloud-utils</link>package
-                (contains the <command>growpart</command> tool for extending partitions) and the
-                    <link xlink:href="https://launchpad.net/cloud-init">cloud-init</link> package
-                into your image. With these installed, the image will perform the root partition
-                resize on boot (e.g., in <filename>/etc/rc.local</filename>). These packages are in
-                the Ubuntu package repository, as well as the EPEL repository (for
+                (contains the <command>growpart</command> tool for extending partitions), the <link
+                    xlink:href="https://launchpad.net/cloud-initramfs-tools"
+                    >cloud-initramfs-tools</link> package (which will support resizing root
+                partition on the first boot), and the <link
+                    xlink:href="https://launchpad.net/cloud-init">cloud-init</link> package into
+                your image. With these installed, the image will perform the root partition resize
+                on boot (e.g., in <filename>/etc/rc.local</filename>). These packages are in the
+                Ubuntu nd Debian package repository, as well as the EPEL repository (for
                 Fedora/RHEL/CentOS/Scientific Linux guests).</para>
+            <para>If you are not able to install <literal>cloud-initramfs-tools</literal>, Robert
+                Plestenjak has a github project called <link
+                    xlink:href="https://github.com/flegmatik/centos-image-resize"
+                    >centos-image-resize</link> that contains scripts that will update a ramdisk
+                using <command>growpart</command> so that the image will resize properly on
+                boot.</para>
             <para>If you are able to install the cloud-utils and cloud-init packages, we recommend
                 that when you create your images, you create a single ext3 or ext4 partition (not
                 managed by LVM). </para>
