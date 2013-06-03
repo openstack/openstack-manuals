@@ -1,16 +1,12 @@
-
 <project xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    
     <modelVersion>4.0.0</modelVersion>
-    
     <groupId>org.openstack.docs</groupId>
     <artifactId>openstack-guide</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>OpenStack Guides</name>
-    
     <properties>
         <!-- This is set by Jenkins according to the branch. -->
         <release.path.name>local</release.path.name>
@@ -22,15 +18,12 @@
     <!-- ################################################ -->
     <!-- USE "mvn clean generate-sources" to run this POM -->
     <!-- ################################################ -->
-    
     <build>
-        <plugins>
-            
+        <plugins>  
             <plugin>
                 <groupId>com.rackspace.cloud.api</groupId>
                 <artifactId>clouddocs-maven-plugin</artifactId>
                 <version>1.8.0</version>
-                
                 <executions>
                     <execution>
                         <id>generate-webhelp</id>
@@ -61,12 +54,10 @@
                             <!-- The following elements sets the autonumbering of sections in output for chapter numbers but no numbered sections-->
                             <sectionAutolabel>0</sectionAutolabel>
                             <sectionLabelIncludesComponentLabel>0</sectionLabelIncludesComponentLabel>
-			    
                             <webhelpDirname>${operating.system}</webhelpDirname>
 			    <targetDirectory>${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-compute/install</targetDirectory>
 			    <includeDateInPdfFilename>0</includeDateInPdfFilename>
 			    <pdfFilenameBase>openstack-install-guide-${operating.system}-${release.path.name}</pdfFilenameBase>
-
                         </configuration>
                     </execution>
                     <execution>
@@ -87,7 +78,6 @@
 			  </postProcess>
 			</configuration>
 		    </execution>
-
                 </executions>
                 <configuration>
                     <!-- These parameters apply to pdf and webhelp -->
@@ -101,10 +91,8 @@
                     <profileOs>${profile.os}</profileOs>
                 </configuration>
             </plugin>
-            
         </plugins>
     </build>
-
     <profiles>
         <profile>
             <id>Rackspace Research Repositories</id>
@@ -127,5 +115,4 @@
             </pluginRepositories>
         </profile>
     </profiles>
-
 </project>
