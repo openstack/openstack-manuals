@@ -27,7 +27,7 @@
             <plugin>
                 <groupId>com.rackspace.cloud.api</groupId>
                 <artifactId>clouddocs-maven-plugin</artifactId>
-                <version>1.7.2</version>
+                <version>1.8.0</version>
                 <executions>
                     <execution>
                         <id>networking-admin-webhelp</id>
@@ -46,6 +46,7 @@
                             <!-- The following elements sets the autonumbering of sections in output for chapter numbers but no numbered sections-->
                             <sectionAutolabel>0</sectionAutolabel>
                             <tocSectionDepth>1</tocSectionDepth>
+                            <tocChapterDepth>1</tocChapterDepth>
                             <sectionLabelIncludesComponentLabel>0</sectionLabelIncludesComponentLabel>
 
 			    <webhelpDirname>admin</webhelpDirname>
@@ -83,6 +84,20 @@
                     <canonicalUrlBase>http://docs.openstack.org/${release.path.name}/openstack-network/admin/content/</canonicalUrlBase>
                     <profileSecurity>reviewer</profileSecurity>
                     <branding>openstack</branding>
+                    <generateToc> 
+                        appendix toc,title
+                        article/appendix nop 
+                        article toc,title
+                        book toc,title,figure,table,equation
+                        chapter toc 
+                        part toc,title 
+                        preface toc
+                        qandadiv toc 
+                        qandaset toc
+                        reference toc,title 
+                        section toc
+                        set toc,title
+                    </generateToc>
                 </configuration>
             </plugin>
 
