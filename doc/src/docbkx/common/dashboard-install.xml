@@ -1,43 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section xml:id="installing-openstack-dashboard" xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-    <title>Installing the OpenStack Dashboard</title>
-    <para>Here are the overall steps for creating the OpenStack
-        dashboard. Details about deployment are available at <link xlink:href="http://docs.openstack.org/developer/horizon/topics/deployment.html">Deploying
-        Horizon</link>.</para>
-    <orderedlist>
-        <listitem>
-            <para>Install the OpenStack Dashboard framework including Apache and related
-                modules.</para>
-        </listitem>
-        <listitem>
-            <para>Configure the Dashboard.</para>
-        </listitem>
-        <listitem>
-            <para>Restart and run the Apache server.</para>
-        </listitem>
-    </orderedlist>
-    <para>Install the OpenStack Dashboard, as root:</para>
+    <title>Install the OpenStack Dashboard</title>
+    <procedure><title>To install the OpenStack Dashboard:</title><step><para>Install the OpenStack Dashboard as root:</para>
     <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install -y memcached libapache2-mod-wsgi openstack-dashboard</userinput></screen>
-    <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install -y memcached python-memcached mod_wsgi openstack-dashboard</userinput></screen>
-    <para>Next, modify the variable <literal>CACHE_BACKEND</literal> in
-            <filename os="ubuntu">/etc/openstack-dashboard/local_settings.py</filename><filename os="centos;fedora;rhel">/etc/openstack-dashboard/local_settings</filename> to match the ones set in
-        <filename os="ubuntu">/etc/memcached.conf</filename><filename os="centos;fedora;rhel">/etc/sysconfig/memcached.conf</filename>. Open
-            <filename os="ubuntu">/etc/openstack-dashboard/local_settings.py</filename><filename os="centos;fedora;rhel">/etc/openstack-dashboard/local_settings</filename> and look for this
-        line:</para>
+    <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install -y memcached python-memcached mod_wsgi openstack-dashboard</userinput></screen></step>
+        <step><para>Modify the <literal>CACHE_BACKEND</literal> environment variable
+                in <filename os="ubuntu"
+                    >/etc/openstack-dashboard/local_settings.py</filename><filename
+                    os="centos;fedora;rhel"
+                    >/etc/openstack-dashboard/local_settings</filename>
+                to match the ones set in <filename os="ubuntu"
+                    >/etc/memcached.conf</filename><filename
+                    os="centos;fedora;rhel"
+                    >/etc/sysconfig/memcached.conf</filename>.</para><para>Open
+                    <filename os="ubuntu"
+                    >/etc/openstack-dashboard/local_settings.py</filename><filename
+                    os="centos;fedora;rhel"
+                    >/etc/openstack-dashboard/local_settings</filename>
+                and look for this line:</para>
     <programlisting>CACHE_BACKEND = 'memcached://127.0.0.1:11211/'</programlisting>
-    <note><para>The address and port in the new value need to be equal to
-        the ones set in <filename os="ubuntu">/etc/memcached.conf</filename><filename os="centos;fedora;rhel">/etc/sysconfig/memcached</filename>.</para></note>
-    <para>If you change the memcached settings, restart the Apache web
-        server for the changes to take effect.</para>
-    <note><para>This guide has selected memcache as a session store for OpenStack Dashboard. There are other
-            options available, each with benefits and drawbacks. Refer to the OpenStack Dashboard
-            Session Storage section for more information.</para></note>
+    <note><para>The address and port must match the ones set in <filename
+                        os="ubuntu"
+                        >/etc/memcached.conf</filename><filename
+                        os="centos;fedora;rhel"
+                        >/etc/sysconfig/memcached</filename>.</para>
+    <para>If you change the memcached settings, you must restart the Apache web
+        server for the changes to take effect.</para></note>
+    <note><para>In this example, memcached is the session store for the OpenStack Dashboard. You can use other options. Each 
+          option has benefits and drawbacks. For more information, see <xref linkend="dashboard-sessions"/>.</para></note>
     <para>
         <note>
-            <para>In order to change the timezone you can use either dashboard or inside
-                <filename os="centos;fedora;rhel">/etc/openstack-dashboard/local_settings</filename><filename os="ubuntu">/etc/openstack-dashboard/local_settings.py</filename> you can
-                change below mentioned parameter.<programlisting>TIME_ZONE = "UTC"</programlisting>
-            </para>
+            <para>To change the timezone, use the dashboard or edit
+                        the <filename os="centos;fedora;rhel"
+                            >/etc/openstack-dashboard/local_settings</filename><filename
+                            os="ubuntu"
+                            >/etc/openstack-dashboard/local_settings.py</filename>
+                        file. </para>
+                    <para>Change the following parameter:
+                        <programlisting>TIME_ZONE = "UTC"</programlisting>
+                    </para>
         </note>
-    </para>
+    </para></step></procedure>
 </section>
