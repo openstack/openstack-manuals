@@ -3,22 +3,24 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" 
     version="5.0">
-<title>OpenStack Dashboard Session Storage</title>
-<para>Horizon uses 
- <link xlink:href="https://docs.djangoproject.com/en/dev/topics/http/sessions/">Django’s sessions framework</link>
- for handling user 
- session data; however that’s not the end of the story. There are
- numerous session backends available, which are controlled through
- the SESSION_ENGINE setting in your <filename os="centos;fedora;rhel">
- /etc/openstack-dashboard/local_settings</filename>
-<filename os="ubuntu">local_settings.py</filename> file. What
- follows is a quick discussion of the pros and cons of each of 
- the common options as they pertain to deploying Horizon specifically.</para>
+<title>Set up Dashboard Session Storage</title>
+<para>The dashboard uses <link
+            xlink:href="https://docs.djangoproject.com/en/dev/topics/http/sessions/"
+            >Django’s sessions framework</link> to handle user session
+        data. However, you can use any available session back-end. You
+        customize the session back-end through the
+            <literal>SESSION_ENGINE</literal> setting in your
+            <filename os="centos;fedora;rhel">
+            /etc/openstack-dashboard/local_settings</filename>
+        <filename os="ubuntu">local_settings.py</filename> file. </para>
+    <para>The following sections describe the pros and cons of each
+        option as it pertains to deploying the dashboard.  </para>
 <section xml:id="dashboard-session-local">
 <title>Local Memory Cache</title>
- <para> Local memory storage is the quickest and easiest session
- backend to set up, as it has no external dependencies whatsoever. 
-  However, it has two significant drawbacks:</para>
+ <para>Local memory storage is the quickest and easiest session
+            backend to set up, as it has no external dependencies
+            whatsoever. It has the following significant
+            drawbacks:</para>
  <orderedlist>
   <listitem><para>No shared storage across processes or workers.</para></listitem>
   <listitem><para>No persistence after a process terminates.</para></listitem>
@@ -26,12 +28,10 @@
  <para>The local memory backend is enabled as the default for Horizon
  solely because it has no dependencies. It is not recommended for
  production use, or even for serious development work. Enabled by:</para>
- <programlisting language="python">
-SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+ <programlisting language="python">SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 CACHES = {
     'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
-}
- </programlisting>
+}</programlisting>
 </section>
 
 <section xml:id="dashboard-session-memcache">
@@ -50,13 +50,11 @@ CACHES = {
    <listitem><para>Python memcached module installed.</para></listitem>
  </orderedlist>
 <para>Enabled by:</para>
- <programlisting language="python">
-SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+ <programlisting language="python">SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 CACHES = {
     'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache'
     'LOCATION': 'my_memcached_host:11211',
-}
-</programlisting>
+}</programlisting>
 </section>
 <section xml:id="dashboard-session-database">
  <title>Database</title>
@@ -86,8 +84,7 @@ CACHES = {
  <filename os="centos;fedora;rhel">/etc/openstack-dashboard/local_settings</filename>
  file, change these options:</para>
 
- <programlisting language="python">
-SESSION_ENGINE = 'django.core.cache.backends.db.DatabaseCache'
+ <programlisting language="python">SESSION_ENGINE = 'django.core.cache.backends.db.DatabaseCache'
 DATABASES = {
     'default': {
         # Database configuration here
@@ -98,8 +95,7 @@ DATABASES = {
         'HOST': 'localhost',
         'default-character-set': 'utf8'
     }
-}
-</programlisting>
+}</programlisting>
  <para>After configuring the <filename os="ubuntu">local_settings.py</filename>
     <filename os="centos;fedora;rhel">/etc/openstack-dashboard/local_settings</filename> 
         as shown, you can run
@@ -130,9 +126,7 @@ No fixtures found.</computeroutput></screen>
  hybrid setting by configuring both your database and cache as
  discussed above and then using:</para>
 
- <programlisting language="python">
-SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
- </programlisting>
+ <programlisting language="python">SESSION_ENGINE = "django.contrib.sessions.backends.cached_db" </programlisting>
 </section>
 <section xml:id="dashboard-session-cookies">
  <title>Cookies</title>
