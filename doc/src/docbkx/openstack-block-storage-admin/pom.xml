@@ -1,16 +1,12 @@
-
 <project xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>org.openstack.docs</groupId>
     <artifactId>openstack-guide</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>OpenStack Guides</name>
-
     <properties>
         <!-- This is set by Jenkins according to the branch. -->
         <release.path.name>grizzly</release.path.name>
@@ -41,14 +37,12 @@
             </pluginRepositories>
         </profile>
     </profiles>
-
     <build>
         <plugins>
-
             <plugin>
                 <groupId>com.rackspace.cloud.api</groupId>
                 <artifactId>clouddocs-maven-plugin</artifactId>
-                <version>1.7.1</version>
+                <version>1.8.0</version>
                 <executions>
                     <execution>
                         <id>goal1</id>
@@ -79,10 +73,11 @@
                                 appendix  toc,title
                                 article/appendix  nop
                                 article   toc,title
-                                book      title,figure,table,example,equation
-                                chapter   toc,title
-                                part      toc,title
-                                preface   toc,title
+                                book      toc,title,figure,table,example,equation
+                                chapter   toc
+                                section   toc
+                                part      toc
+                                preface   toc
                                 qandadiv  toc
                                 qandaset  toc
                                 reference toc,title
@@ -95,11 +90,6 @@
                             <webhelpDirname>admin</webhelpDirname>
                             <pdfFilenameBase>bk-block-storage-adminguide-${release.path.name}</pdfFilenameBase>
                             <postProcess>
-
-                                <!--Deletes leftover uneeded directories -->
-
-                                <!--<delete dir="${basedir}/target/docbkx/webhelp/bk-block-storage-adminguide"/>-->
-
                             </postProcess>
                         </configuration>
                     </execution>
@@ -111,14 +101,12 @@
                     <includes>
                         bk-block-storage-adminguide.xml
                     </includes>
-
                     <canonicalUrlBase>http://docs.openstack.org/${release.path.name}/openstack-block-storage/admin/content/</canonicalUrlBase>
                     <profileSecurity>reviewer</profileSecurity>
                     <branding>openstack</branding>
                     <strictImageValidation>false</strictImageValidation>
                 </configuration>
             </plugin>
-
         </plugins>
     </build>
 </project>
