@@ -1,26 +1,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  
   <modelVersion>4.0.0</modelVersion>
-  
   <groupId>org.openstack.docs</groupId>
   <artifactId>openstack-cli-guide</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>OpenStack CLI Guides</name>
-  
   <!-- ################################################ -->
   <!-- USE "mvn clean generate-sources" to run this POM -->
   <!-- ################################################ -->
-  
   <build>
     <plugins>
-      
       <plugin>
         <groupId>com.rackspace.cloud.api</groupId>
         <artifactId>clouddocs-maven-plugin</artifactId>
-        <version>1.7.2</version>
+        <version>1.8.0</version>
         <executions>
           <execution>
             <id>generate-webhelp</id>
@@ -38,10 +33,11 @@
                 appendix  toc,title
                 article/appendix  nop
                 article   toc,title
-                book      title,figure,table,example,equation
-                chapter   toc,title
-                part      toc,title
-                preface   toc,title
+                book      toc,title,figure,table,example,equation
+                chapter   toc
+                section   toc
+                part      toc
+                preface   toc
                 qandadiv  toc
                 qandaset  toc
                 reference toc,title
@@ -50,7 +46,6 @@
               <!-- The following elements sets the autonumbering of sections in output for chapter numbers but no numbered sections-->
               <sectionAutolabel>0</sectionAutolabel>
               <sectionLabelIncludesComponentLabel>0</sectionLabelIncludesComponentLabel>
-
 	      <webhelpDirname>cli-guide</webhelpDirname>
 	      <includeDateInPdfFilename>0</includeDateInPdfFilename>	
 	      <pdfFilenameBase>cli-guide.pdf</pdfFilenameBase>
@@ -74,7 +69,6 @@
 	      </postProcess>
 	    </configuration>
 	  </execution>
-
         </executions>
         <configuration>
           <!-- These parameters apply to pdf and webhelp -->
@@ -112,5 +106,4 @@
       </pluginRepositories>
     </profile>
   </profiles>
-
 </project>
