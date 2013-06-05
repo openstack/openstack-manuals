@@ -111,6 +111,10 @@ Type: 'help' for help on commands
         <para>The <link xlink:href="http://libguestfs.org/">libguestfs</link> project has a number
             of other useful tools, including:<itemizedlist>
                 <listitem>
+                    <para><link xlink:href="http://libguestfs.org/virt-edit.1.html">virt-edit</link> for
+                        editing a file inside of an image.</para>
+                </listitem>
+                <listitem>
                     <para><link xlink:href="http://libguestfs.org/virt-df.1.html">virt-df</link> for
                         displaying free space inside of an image.</para>
                 </listitem>
@@ -136,6 +140,20 @@ Type: 'help' for help on commands
                         converting Xen and VMWare images to KVM images</para>
                 </listitem>
             </itemizedlist></para>
+        <simplesect>
+            <title>Modify a single file inside of an image</title>
+            <para>This example shows how to use <command>virt-edit</command> to modify a file.  The
+                command can take either a filename as an argument with the <literal>-a</literal>
+                flag, or a domain name as an argument with the <literal>-d</literal> flag. The
+                following examples shows how to use this to modify the
+                    <filename>/etc/shadow</filename> file in instance with libvirt domain name
+                    <literal>instance-000000e1</literal> that is currently running:</para>
+            <para>
+                <screen><prompt>#</prompt> <userinput>virsh shutdown instance-000000e1</userinput>
+<prompt>#</prompt> <userinput>virt-edit -d instance-000000e1 /etc/shadow</userinput>
+<prompt>#</prompt> <userinput>virsh start instance-000000e1</userinput></screen>
+            </para>
+        </simplesect>
         <simplesect>
             <title>Resize an image</title>
             <para>Here's a simple of example of how to use <command>virt-resize</command> to resize
