@@ -1,0 +1,567 @@
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="ch_under_the_hood">
+    <title>Under the Hood</title>
+    <para>This chapter describes two networking scenarios and how the Open vSwitch plugin and
+        the Linux bridging plugin implement these scenarios.</para>
+    <section xml:id="under_the_hood_openvswitch">
+        <title>Open vSwitch</title>
+        <para>This section describes how the Open vSwitch plugin implements the OpenStack
+            Networking abstractions.</para>
+        <simplesect>
+            <title>Configuration</title>
+            <para>This example uses VLAN isolation on the switches to isolate tenant networks. This configuration labels the physical
+                network associated with the public network as <literal>physnet1</literal>, and the
+                physical network associated with the data network as <literal>physnet2</literal>,
+                which leads to the following configuration options in
+                    <filename>ovs_quantum_plugin.ini</filename>:<programlisting>[OVS]
+tenant_network_type = vlan
+network_vlan_ranges = physnet2:100:110
+integration_bridge = br-int
+bridge_mappings = physnet2:br-eth1</programlisting></para>
+
+        </simplesect>
+        <simplesect>
+            <title>Scenario 1: one tenant, two networks, one router</title>
+            <para>The first scenario has two private networks (<literal>net01</literal>, and
+                    <literal>net02</literal>), each with one subnet
+                    (<literal>net01_subnet01</literal>: 192.168.101.0/24,
+                    <literal>net02_subnet01</literal>, 192.168.102.0/24). Both private networks are
+                attached to a router that contains them to the public network (10.64.201.0/24). </para>
+
+     <mediaobject>
+        <imageobject>
+            <imagedata fileref="figures/under-the-hood-scenario-1.png" contentwidth="6in"/>
+        </imageobject>
+    </mediaobject>
+            <para>Under the <literal>service</literal> tenant, create the shared router, define the
+                public network, and set it as the default gateway of the
+                router<screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list | awk '/service/ {print $2}')</userinput>
+<prompt>$</prompt> <userinput>quantum router-create router01</userinput>
+<prompt>$</prompt> <userinput>quantum net-create --tenant-id $tenant public01 \
+          --provider:network_type flat \
+          --provider:physical_network physnet1 \
+          --router:external=True</userinput>
+<prompt>$</prompt> <userinput>quantum subnet-create --tenant-id $tenant --name public01_subnet01 \
+          --gateway 10.64.201.254 public01 10.64.201.0/24 --enable_dhcp False</userinput>
+<prompt>$</prompt> <userinput>quantum router-gateway-set router01 public01</userinput></screen></para>
+            <para>Under the <literal>demo</literal> user tenant, create the private network
+                    <literal>net01</literal> and corresponding subnet, and connect it to the
+                    <literal>router01</literal> router. Configure it to use VLAN ID 101 on the
+                physical
+                switch.<screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list|awk '/demo/ {print $2}'</userinput>
+<prompt>$</prompt> <userinput>quantum net-create --tenant-id $tenant net01 \
+          --provider:network_type vlan \
+          --provider:physical_network physnet2 \
+          --provider:segmentation_id 101</userinput>
+<prompt>$</prompt> <userinput>quantum subnet-create --tenant-id $tenant --name net01_subnet01 net01 192.168.101.0/24</userinput>
+<prompt>$</prompt> <userinput>quantum router-interface-add router01 net01_subnet01</userinput></screen></para>
+            <para>Similarly, for <literal>net02</literal>, using VLAN ID 102 on the physical
+                switch:<screen><prompt>$</prompt> <userinput>quantum net-create --tenant-id $tenant net02 \
+                --provider:network_type vlan \
+                --provider:physical_network physnet2 \
+                --provider:segmentation_id 102</userinput>
+            <prompt>$</prompt> <userinput>quantum subnet-create --tenant-id $tenant --name net02_subnet01 net02 192.168.102.0/24</userinput>
+            <prompt>$</prompt> <userinput>quantum router-interface-add router01 net02_subnet01</userinput></screen></para>
+
+        </simplesect>
+        <simplesect>
+            <title>Scenario 1: Compute host config</title>
+            <para>The following figure shows how to configure various Linux networking devices on the compute host:
+
+            </para>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="figures/under-the-hood-scenario-1-ovs-compute.png" contentwidth="6in"/>
+                </imageobject>
+            </mediaobject>
+
+            </simplesect>
+        <simplesect>
+            <title>Types of network devices</title>
+            <note><para>There are four distinct type of virtual networking devices: TAP devices,
+                veth pairs, Linux bridges, and Open vSwitch bridges. For an ethernet frame to travel
+                from <literal>eth0</literal> of virtual machine <literal>vm01</literal>, to the
+                physical network, it must pass through nine devices inside of the host: TAP
+                    <literal>vnet0</literal>, Linux bridge
+                        <literal>qbr<replaceable>XXX</replaceable></literal>, veth pair
+                        <literal>(qcb<replaceable>XXX</replaceable>,
+                        qvo<replaceable>XXX</replaceable>)</literal>, Open vSwitch bridge
+                    <literal>br-int</literal>, veth pair <literal>(int-br-eth1,
+                    phy-br-eth1)</literal>, and, finally, the physical network interface card
+                    <literal>eth1</literal>.</para></note>
+            <para>A <emphasis role="italic">TAP device</emphasis>, such as <literal>vnet0</literal>
+                is how hypervisors such as KVM and Xen implement a virtual network interface card
+                (typically called a VIF or vNIC). An ethernet frame sent to a TAP device is received
+                by the guest operating system.</para>
+            <para>A <emphasis role="italic">veth pair</emphasis> is a pair of virtual network
+                interfaces correctly directly together. An ethernet frame sent to one end of a veth
+                pair is received by the other end of a veth pair. OpenStack networking makes use of
+                veth pairs as virtual patch cables in order to make connections between virtual
+                bridges.</para>
+            <para>A <emphasis role="italic">Linux bridge</emphasis> behaves like a hub: you can
+                connect multiple (physical or virtual) network interfaces devices to a Linux bridge.
+                Any ethernet frames that come in from one interface attached to the bridge is
+                transmitted to all of the other devices.</para>
+            <para>An <emphasis role="italic">Open vSwitch bridge</emphasis> behaves like a virtual
+                switch: network interface devices connect to Open vSwitch bridge's ports, and the
+                ports can be configured much like a physical switch's ports, including VLAN
+                configurations.</para>
+        </simplesect>
+        <simplesect>
+            <title>Integration bridge</title>
+            <para>The <literal>br-int</literal> OpenvSwitch bridge is the integration bridge: all of
+                the guests running on the compute host connect to this bridge. OpenStack Networking
+                implements isolation across these guests by configuring the
+                    <literal>br-int</literal> ports.</para>
+        </simplesect>
+        <simplesect>
+            <title>Physical connectivity bridge</title>
+            <para> The <literal>br-eth1</literal> bridge provides connectivity to the physical
+                network interface card, <literal>eth1</literal>. It connects to the integration
+                bridge by a veth pair: <literal>(int-br-eth1, phy-br-eth1)</literal>.</para>
+        </simplesect>
+        <simplesect>
+            <title>VLAN translation</title>
+            <para>In this example, net01 and net02 have VLAN ids of 1 and 2, respectively. However,
+                the physical network in our example only supports VLAN IDs in the range 101 through 110. The
+                Open vSwitch agent is responsible for configuring flow rules on
+                    <literal>br-int</literal> and <literal>br-eth1</literal> to do VLAN translation.
+                When <literal>br-eth1</literal> receives a frame marked with VLAN ID 1 on the port
+                associated with <literal>phy-br-eth1</literal>, it modifies the VLAN ID in the frame
+                to 101. Similarly, when <literal>br-int</literal> receives a frame marked with VLAN ID 101 on the port
+                associated with <literal>int-br-eth1</literal>, it modifies the VLAN ID in the frame
+                to 1.</para>
+        </simplesect>
+        <simplesect>
+            <title>Security groups: iptables and Linux bridges</title>
+            <para>Ideally, the TAP device <literal>vnet0</literal> would be connected directly to
+                the integration bridge, <literal>br-int</literal>. Unfortunately, this isn't
+                possible because of how OpenStack security groups are currently implemented.
+                OpenStack uses iptables rules on the TAP devices such as <literal>vnet0</literal> to
+                implement security groups, and Open vSwitch is not compatible with iptables rules
+                that are applied directly on TAP devices that are connected to an Open vSwitch
+                port.</para>
+            <para>OpenStack Networking uses an extra Linux bridge and a veth pair as a workaround for
+                this issue. Instead of connecting <literal>vnet0</literal> to an Open vSwitch
+                bridge, it is connected to a Linux bridge,
+                        <literal>qbr<replaceable>XXX</replaceable></literal>. This bridge is
+                connected to the integration bridge, <literal>br-int</literal>, via the
+                        <literal>(qvb<replaceable>XXX</replaceable>,
+                        qvo<replaceable>XXX</replaceable>)</literal> veth pair.</para>
+        </simplesect>
+        <simplesect>
+            <title>Scenario 1: Network host config</title>
+            <para>Recall that the network host runs the quantum-openvswitch-plugin-agent, the
+                quantum-dhcp-agent, quantum-l3-agent, and quantum-metadata-agent services.</para>
+            <para>On the network host, assume that eth0 is connected to the external network, and
+                eth1 is connected it to the data network, which leads to the following configuration
+                options in
+                <filename>ovs_quantum_plugin.ini</filename>:<programlisting>[OVS]
+tenant_network_type = vlan
+network_vlan_ranges = physnet2:101:110
+integration_bridge = br-int
+bridge_mappings = physnet1:br-ex,physnet2:br-eth1</programlisting>
+                The
+                following figure shows the network devices on the network host:</para>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="figures/under-the-hood-scenario-1-ovs-network.png" contentwidth="6in"/>
+                </imageobject>
+            </mediaobject>
+            <para>As on the compute host, there is an Open vSwitch integration bridge
+                    (<literal>br-int</literal>) and an Open vSwitch bridge connected to the data
+                network (<literal>br-eth1</literal>), and the two are connected by a veth pair, and
+                the quantum-openvswitch-plugin-agent configures the ports on both switches to do
+                VLAN translation.</para>
+            <para>There is also an additional Open vSwitch bridge, <literal>br-ex</literal>, which
+                connects to the physical interface that is connected to the external network. In
+                this example, that physical interface is <literal>eth0</literal>.</para>
+            <note><para>While the integration bridge and the external bridge are connected by
+                a veth pair <literal>(int-br-ex, phy-br-ex)</literal>, this example uses layer 3
+                connectivity to route packets from the internal networks to the public network: no
+                packets traverse that veth pair in this example.</para></note>
+        </simplesect>
+        <simplesect><title>Open vSwitch internal ports</title>
+            <para>The network host uses Open vSwitch <emphasis role="italic">internal
+                ports</emphasis>. Internal ports are a mechanism that allows you to assign one
+                or more IP addresses to an Open vSwitch bridge. In previous example, the
+                    <literal>br-int</literal> bridge has four internal
+                        ports: <literal>tap<replaceable>XXX</replaceable></literal>,
+                        <literal>qr-<replaceable>YYY</replaceable></literal>,
+                        <literal>qr-<replaceable>ZZZ</replaceable></literal>,
+                        <literal>tap<replaceable>WWW</replaceable></literal>. Each internal port has
+                a separate IP address associated with it. There is also an internal port,
+                    <literal>qg-VVV</literal>, on the <literal>br-ex</literal> bridge.</para>
+            </simplesect>
+            <simplesect><title>DHCP agent</title>
+                <para>By default, The OpenStack Networking DHCP agent uses a program called dnsmasq
+                to provide DHCP services to guests.  OpenStack Networking must create an internal
+                port for each network that requires DHCP services and attach a dnsmasq process to
+                that port. In the previous example, the interface
+                        <literal>tap<replaceable>XXX</replaceable></literal> is on subnet
+                    <literal>net01_subnet01</literal>, and the interface
+                        <literal>tap<replaceable>WWW</replaceable></literal> is on
+                    <literal>net02_subnet01</literal>.</para>
+                </simplesect>
+        <simplesect>
+            <title>L3 agent (routing)</title>
+            <para>The OpenStack Networking L3 agent implements routing through the use of Open
+                vSwitch internal ports and relies on the network host to route the packets across
+                the interfaces. In this example: interface<literal>qr-YYY</literal>, which is on
+                subnet <literal>net01_subnet01</literal>, has an IP address of 192.168.101.1/24,
+                interface <literal>qr-<replaceable>ZZZ</replaceable></literal>, which is on subnet
+                    <literal>net02_subnet01</literal>, has an IP address of
+                    <literal>192.168.102.1/24</literal>, and interface
+                        <literal>qg-<replaceable>VVV</replaceable></literal>, which has an IP
+                address of <literal>10.64.201.254/24</literal>.  Because of each of these interfaces
+                is visible to the network host operating system, it will route the packets
+                appropriately across the interfaces, as long as an administrator has enabled IP
+                forwarding.</para>
+            <para>The L3 agent uses iptables to implement floating IPs to do the network address
+                translation (NAT).</para>
+        </simplesect>
+            <simplesect>
+                <title>Overlapping subnets and network namespaces</title>
+                <para>One problem with using the host to implement routing is that there is a chance
+                that one of the OpenStack Networking subnets might overlap with one of the physical
+                networks that the host uses. For example, if the management network is implemented
+                on <literal>eth2</literal> (not shown in the previous example), by coincidence happens
+                to also be on the <literal>192.168.101.0/24</literal> subnet, then this will cause
+                routing problems because it is impossible ot determine whether a packet on this
+                subnet should be sent to <literal>qr-YYY</literal> or <literal>eth2</literal>. In
+                general, if end-users are permitted to create their own logical networks and
+                subnets, then the system must be designed to avoid the possibility of such
+                collisions.</para>
+            <para>OpenStack Networking uses Linux <emphasis role="italic">network namespaces
+                </emphasis>to prevent collisions between the physical networks on the network host,
+                and the logical networks used by the virtual machines. It also prevents collisions
+                across different logical networks that are not routed to each other, as you will see
+                in the next scenario. </para>
+            <para>A network namespace can be thought of as an isolated environment that has its own
+                networking stack. A network namespace has its own network interfaces, routes, and
+                iptables rules. You can think of like a chroot jail, except for networking instead
+                of a file system. As an aside, LXC (Linux containers) use network namespaces to
+                implement networking virtualization.</para>
+            <para>OpenStack Networking creates network namespaces on the network host in order
+                to avoid subnet collisions. </para>
+            <para>Tn this example, there are three network namespaces, as depicted in the following figure.<itemizedlist>
+                    <listitem>
+                        <para><literal>qdhcp-<replaceable>aaa</replaceable></literal>: contains the
+                                    <literal>tap<replaceable>XXX</replaceable></literal> interface
+                            and the dnsmasq process that listens on that interface, to provide DHCP
+                            services for <literal>net01_subnet01</literal>. This allows overlapping
+                            IPs between <literal>net01_subnet01</literal> and any other subnets on
+                            the network host.</para>
+                    </listitem>
+                    <listitem>
+                        <para><literal>qrouter-<replaceable>bbbb</replaceable></literal>: contains
+                            the <literal>qr-<replaceable>YYY</replaceable></literal>,
+                                    <literal>qr-<replaceable>ZZZ</replaceable></literal>, and
+                                    <literal>qg-<replaceable>VVV</replaceable></literal> interfaces,
+                            and the corresponding routes. This namespace implements
+                                <literal>router01</literal> in our example. </para>
+                    </listitem>
+                    <listitem>
+                        <para><literal>qdhcp-<replaceable>ccc</replaceable></literal>: contains the
+                                    <literal>tap<replaceable>WWW</replaceable></literal> interface
+                            and the dnsmasq process that listens on that interface, to provide DHCP
+                            services for <literal>net02_subnet01</literal>. This allows overlapping
+                            IPs between <literal>net02_subnet01</literal> and any other subnets on
+                            the network host.</para>
+                    </listitem>
+                </itemizedlist></para>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="figures/under-the-hood-scenario-1-ovs-netns.png" contentwidth="6in"/>
+                </imageobject>
+            </mediaobject>
+
+        </simplesect>
+        <simplesect>
+            <title>Scenario 2: two tenants, two networks, two routers</title>
+            <para>The second scenario has two tenants (A, B). Each tenant has a network with
+                one subnet, and each one has a router that connects them to the public
+                Internet.</para>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="figures/under-the-hood-scenario-2.png" contentwidth="6in"/>
+                </imageobject>
+            </mediaobject>
+            <para>Under the <literal>service</literal> tenant, define the public
+                network:<screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list | awk '/service/ {print $2}')</userinput>
+<prompt>$</prompt> <userinput>quantum net-create --tenant-id $tenant public01 \
+	--provider:network_type flat \
+	--provider:physical_network physnet1 \
+	--router:external=True</userinput>
+<prompt>$</prompt> <userinput>quantum subnet-create --tenant-id $tenant --name public01_subnet01 \
+	--gateway 10.64.201.254 public01 10.64.201.0/24 --enable_dhcp False</userinput></screen></para>
+            <para>Under the <literal>tenantA</literal> user tenant, create the tenant router and set
+                its gateway for the public
+                network.<screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list|awk '/tenantA/ {print $2}')</userinput>
+<prompt>$</prompt> <userinput>quantum router-create --tenant-id $tenant router01</userinput>
+<prompt>$</prompt> <userinput>quantum router-gateway-set router01 public01</userinput></screen>
+                Then, define private network <literal>net01</literal> using VLAN ID 102 on the
+                physical switch, along with its subnet, and connect it to the router.
+                <screen><prompt>$</prompt> <userinput>quantum net-create --tenant-id $tenant net01 \
+	--provider:network_type vlan \
+	--provider:physical_network physnet2 \
+	--provider:segmentation_id 101</userinput>
+<prompt>$</prompt> <userinput>quantum subnet-create --tenant-id $tenant --name net01_subnet01 net01 192.168.101.0/24</userinput>
+<prompt>$</prompt> <userinput>quantum router-interface-add router01 net01_subnet01</userinput></screen></para>
+            <para>Similarly, for <literal>tenantB</literal>, create a router and another network,
+                using VLAN ID 102 on the physical
+                switch:<screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list|awk '/tenantB/ {print $2}')</userinput>
+<prompt>$</prompt> <userinput>quantum router-create --tenant-id $tenant router02</userinput>
+<prompt>$</prompt> <userinput>quantum router-gateway-set router02 public01</userinput>
+<prompt>$</prompt> <userinput>quantum net-create --tenant-id $tenant net02 \
+	--provider:network_type vlan \
+	--provider:physical_network physnet2 \
+	--provider:segmentation_id 102</userinput>
+<prompt>$</prompt> <userinput>quantum subnet-create --tenant-id $tenant --name net02_subnet01 net01 192.168.101.0/24</userinput>
+<prompt>$</prompt> <userinput>quantum router-interface-add router02 net02_subnet01</userinput></screen></para>
+
+        </simplesect>
+        <simplesect>
+            <title>Scenario 2: Compute host config</title>
+            <para>The following figure shows how the various Linux networking devices would be configured on the
+                compute host under this scenario.
+            </para>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="figures/under-the-hood-scenario-2-ovs-compute.png" contentwidth="6in"/>
+                </imageobject>
+            </mediaobject>
+            <note><para>The configuration on the compute host is very similar to the configuration in scenario 1. The
+                only real difference is that scenario 1 had a guest that was connected to two
+                subnets, and in this scenario the subnets belong to different tenants.</para></note>
+        </simplesect>
+        <simplesect>
+            <title>Scenario 2: Network host config</title>
+            <para>The following figure shows the network devices on the network host for the second
+                scenario.</para>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="figures/under-the-hood-scenario-2-ovs-network.png" contentwidth="6in"/>
+                </imageobject>
+            </mediaobject>
+            <para>The main difference between the configuration in this scenario and the previous one
+                is the organization of the network namespaces, in order to provide isolation
+                across the two subnets, as shown in the following figure.</para>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="figures/under-the-hood-scenario-2-ovs-netns.png" contentwidth="6in"/>
+                </imageobject>
+            </mediaobject>
+            <para>In this scenario, there are four network namespaces
+                        (<literal>qhdcp-<replaceable>aaa</replaceable></literal>,
+                        <literal>qrouter-<replaceable>bbbb</replaceable></literal>,
+                        <literal>qrouter-<replaceable>cccc</replaceable></literal>, and
+                        <literal>qhdcp-<replaceable>dddd</replaceable></literal>), instead of three.
+                Since there is no connectivity between the two networks, and so each router is
+                implemented by a separate namespace.</para>
+        </simplesect>
+
+    </section>
+    <section xml:id="under_the_hood_linuxbridge">
+        <title>Linux bridge</title>
+        <para>This section describes how the Linux bridge plugin implements the OpenStack
+            Networking abstractions. It does not discuss the DHCP or L3 agents in detail in this
+            section, because they are covered in the previous section.</para>
+        <simplesect>
+            <title>Configuration</title>
+            <para>This example uses VLAN isolation on the switches to isolate tenant networks. This configuration labels the physical
+                network associated with the public network as <literal>physnet1</literal>, and the
+                physical network associated with the data network as <literal>physnet2</literal>,
+                which leads to the following configuration options in
+                    <filename>linuxbridge_conf.ini</filename>:<programlisting>[VLANS]
+tenant_network_type = vlan
+network_vlan_ranges = physnet2:100:110
+
+[LINUX_BRIDGE]
+physical_interface_mappings: physnet2:eth1</programlisting></para>
+
+        </simplesect>
+        <simplesect>
+            <title>Scenario 1: one tenant, two networks, one router</title>
+            <para>The first scenario has two private networks (<literal>net01</literal>, and
+                <literal>net02</literal>), each with one subnet
+                (<literal>net01_subnet01</literal>: 192.168.101.0/24,
+                <literal>net02_subnet01</literal>, 192.168.102.0/24). Both private networks are
+                attached to a router that contains them to the public network (10.64.201.0/24). </para>
+
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="figures/under-the-hood-scenario-1.png" contentwidth="6in"/>
+                </imageobject>
+            </mediaobject>
+            <para>Under the <literal>service</literal> tenant, create the shared router, define the
+                public network, and set it as the default gateway of the
+                router<screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list | awk '/service/ {print $2}')</userinput>
+<prompt>$</prompt> <userinput>quantum router-create router01</userinput>
+<prompt>$</prompt> <userinput>quantum net-create --tenant-id $tenant public01 \
+          --provider:network_type flat \
+          --provider:physical_network physnet1 \
+          --router:external=True</userinput>
+<prompt>$</prompt> <userinput>quantum subnet-create --tenant-id $tenant --name public01_subnet01 \
+          --gateway 10.64.201.254 public01 10.64.201.0/24 --enable_dhcp False</userinput>
+<prompt>$</prompt> <userinput>quantum router-gateway-set router01 public01</userinput></screen></para>
+            <para>Under the <literal>demo</literal> user tenant, create the private network
+                <literal>net01</literal> and corresponding subnet, and connect it to the
+                <literal>router01</literal> router. Configure it to use VLAN ID 101 on the
+                physical
+                switch.<screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list|awk '/demo/ {print $2}'</userinput>
+<prompt>$</prompt> <userinput>quantum net-create --tenant-id $tenant net01 \
+          --provider:network_type vlan \
+          --provider:physical_network physnet2 \
+          --provider:segmentation_id 101</userinput>
+<prompt>$</prompt> <userinput>quantum subnet-create --tenant-id $tenant --name net01_subnet01 net01 192.168.101.0/24</userinput>
+<prompt>$</prompt> <userinput>quantum router-interface-add router01 net01_subnet01</userinput></screen></para>
+            <para>Similarly, for <literal>net02</literal>, using VLAN ID 102 on the physical
+                switch:<screen><prompt>$</prompt> <userinput>quantum net-create --tenant-id $tenant net02 \
+                --provider:network_type vlan \
+                --provider:physical_network physnet2 \
+                --provider:segmentation_id 102</userinput>
+            <prompt>$</prompt> <userinput>quantum subnet-create --tenant-id $tenant --name net02_subnet01 net02 192.168.102.0/24</userinput>
+            <prompt>$</prompt> <userinput>quantum router-interface-add router01 net02_subnet01</userinput></screen></para>
+
+        </simplesect>
+        <simplesect>
+            <title>Scenario 1: Compute host config</title>
+            <para>The following figure shows how to configure the various Linux networking devices on the
+                compute host.
+            </para>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="figures/under-the-hood-scenario-1-linuxbridge-compute.png" contentwidth="6in"/>
+                </imageobject>
+            </mediaobject>
+
+        </simplesect>
+        <simplesect>
+            <title>Types of network devices</title>
+            <note><para>There are three distinct type of virtual networking devices: TAP devices,
+                VLAN devices, and Linux bridges. For an ethernet frame to travel from
+                    <literal>eth0</literal> of virtual machine <literal>vm01</literal>, to the
+                physical network, it must pass through four devices inside of the host: TAP
+                    <literal>vnet0</literal>, Linux bridge
+                        <literal>brq<replaceable>XXX</replaceable></literal>, VLAN
+                    <literal>eth1.101)</literal>,  and, finally, the physical network interface card
+                    <literal>eth1</literal>.</para></note>
+            <para>A <emphasis role="italic">TAP device</emphasis>, such as <literal>vnet0</literal>
+                is how hypervisors such as KVM and Xen implement a virtual network interface card
+                (typically called a VIF or vNIC). An ethernet frame sent to a TAP device is received
+                by the guest operating system.</para>
+            <para>A <emphasis role="italic">VLAN device</emphasis> is associated with a VLAN tag
+                attaches to an existing interface device and adds or removes VLAN tags. In the
+                preceding example, VLAN device <literal>eth1.101</literal> is associated with VLAN ID
+                101 and is attached to interface <literal>eth1</literal>. Packets received from the
+                outside by <literal>eth1</literal> with VLAN tag 101 will be passed to device
+                    <literal>eth1.101</literal>, which will then strip the tag. In the other
+                direction, any ethernet frame sent directly to eth1.101 will have VLAN tag 101 added
+                and will be forward to <literal>eth1</literal> for sending out to the
+                network.</para>
+            <para>A <emphasis role="italic">Linux bridge</emphasis> behaves like a hub: you can
+                connect multiple (physical or virtual) network interfaces devices to a Linux bridge.
+                Any ethernet frames that come in from one interface attached to the bridge is
+                transmitted to all of the other devices.</para>
+        </simplesect>
+        <simplesect>
+            <title>Scenario 1: Network host config</title>
+            <para>The following figure shows the network devices on the network host. </para>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="figures/under-the-hood-scenario-1-linuxbridge-network.png" contentwidth="6in"/>
+                </imageobject>
+            </mediaobject>
+            <para>The following figure shows how the Linux bridge plugin uses network namespaces to
+                provide isolation. </para><note><para>veth pairs form connections between the
+                Linux bridges and the network namespaces.</para></note><mediaobject>
+                    <imageobject>
+                        <imagedata fileref="figures/under-the-hood-scenario-1-linuxbridge-netns.png" contentwidth="6in"/>
+                    </imageobject>
+                </mediaobject>
+        </simplesect>
+        <simplesect>
+            <title>Scenario 2: two tenants, two networks, two routers</title>
+            <para>The second scenario has two tenants (A, B). Each tenant has a network with
+                one subnet, and each one has a router that connects them to the public
+                Internet.</para>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="figures/under-the-hood-scenario-2.png" contentwidth="6in"/>
+                </imageobject>
+            </mediaobject>
+            <para>Under the <literal>service</literal> tenant, define the public
+                network:<screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list | awk '/service/ {print $2}')</userinput>
+<prompt>$</prompt> <userinput>quantum net-create --tenant-id $tenant public01 \
+	--provider:network_type flat \
+	--provider:physical_network physnet1 \
+	--router:external=True</userinput>
+<prompt>$</prompt> <userinput>quantum subnet-create --tenant-id $tenant --name public01_subnet01 \
+	--gateway 10.64.201.254 public01 10.64.201.0/24 --enable_dhcp False</userinput></screen></para>
+            <para>Under the <literal>tenantA</literal> user tenant, create the tenant router and set
+                its gateway for the public
+                network.<screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list|awk '/tenantA/ {print $2}')</userinput>
+<prompt>$</prompt> <userinput>quantum router-create --tenant-id $tenant router01</userinput>
+<prompt>$</prompt> <userinput>quantum router-gateway-set router01 public01</userinput></screen>
+                Then, define private network <literal>net01</literal> using VLAN ID 102 on the
+                physical switch, along with its subnet, and connect it to the router.
+                <screen><prompt>$</prompt> <userinput>quantum net-create --tenant-id $tenant net01 \
+	--provider:network_type vlan \
+	--provider:physical_network physnet2 \
+	--provider:segmentation_id 101</userinput>
+<prompt>$</prompt> <userinput>quantum subnet-create --tenant-id $tenant --name net01_subnet01 net01 192.168.101.0/24</userinput>
+<prompt>$</prompt> <userinput>quantum router-interface-add router01 net01_subnet01</userinput></screen></para>
+            <para>Similarly, for <literal>tenantB</literal>, create a router and another network,
+                using VLAN ID 102 on the physical
+                switch:<screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list|awk '/tenantB/ {print $2}')</userinput>
+<prompt>$</prompt> <userinput>quantum router-create --tenant-id $tenant router02</userinput>
+<prompt>$</prompt> <userinput>quantum router-gateway-set router02 public01</userinput>
+<prompt>$</prompt> <userinput>quantum net-create --tenant-id $tenant net02 \
+	--provider:network_type vlan \
+	--provider:physical_network physnet2 \
+	--provider:segmentation_id 102</userinput>
+<prompt>$</prompt> <userinput>quantum subnet-create --tenant-id $tenant --name net02_subnet01 net01 192.168.101.0/24</userinput>
+<prompt>$</prompt> <userinput>quantum router-interface-add router02 net02_subnet01</userinput></screen></para>
+
+        </simplesect>
+        <simplesect>
+            <title>Scenario 2: Compute host config</title>
+            <para>The following figure shows how the various Linux networking devices would be configured on the
+                compute host under this scenario.
+            </para>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="figures/under-the-hood-scenario-2-linuxbridge-compute.png" contentwidth="6in"/>
+                </imageobject>
+            </mediaobject>
+            <note><para>The configuration on the compute host is very similar to the configuration in scenario 1. The
+                only real difference is that scenario 1 had a guest that was connected to two
+                subnets, and in this scenario, the subnets belong to different tenants.</para></note>
+        </simplesect>
+        <simplesect>
+            <title>Scenario 2: Network host config</title>
+            <para>The following figure shows the network devices on the network host for the second
+                scenario.</para>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="figures/under-the-hood-scenario-2-linuxbridge-network.png" contentwidth="6in"/>
+                </imageobject>
+            </mediaobject>
+            <para>The main difference between the configuration in this scenario and the previous one
+                is the organization of the network namespaces, in order to provide isolation
+                across the two subnets, as shown in the following figure.</para>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="figures/under-the-hood-scenario-2-linuxbridge-netns.png" contentwidth="6in"/>
+                </imageobject>
+            </mediaobject>
+            <para>In this scenario, there are four network namespaces
+                (<literal>qhdcp-<replaceable>aaa</replaceable></literal>,
+                <literal>qrouter-<replaceable>bbbb</replaceable></literal>,
+                <literal>qrouter-<replaceable>cccc</replaceable></literal>, and
+                <literal>qhdcp-<replaceable>dddd</replaceable></literal>), instead of three.
+                Since there is no connectivity between the two networks, and so each router is
+                implemented by a separate namespace.</para>
+        </simplesect>
+    </section>
+</chapter>
