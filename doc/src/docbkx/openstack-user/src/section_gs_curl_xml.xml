@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section [
+<!-- Some useful entities borrowed from HTML -->
+<!ENTITY ndash  "&#x2013;">
+<!ENTITY mdash  "&#x2014;">
+<!ENTITY hellip "&#x2026;">
+<!ENTITY plusmn "&#xB1;">
+
+<!-- Useful for describing APIs -->
+<!ENTITY GET    '<command xmlns="http://docbook.org/ns/docbook">GET</command>'>
+<!ENTITY PUT    '<command xmlns="http://docbook.org/ns/docbook">PUT</command>'>
+<!ENTITY POST   '<command xmlns="http://docbook.org/ns/docbook">POST</command>'>
+<!ENTITY DELETE '<command xmlns="http://docbook.org/ns/docbook">DELETE</command>'>
+
+<!ENTITY CHECK  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
+<imageobject role="fo">
+<imagedata fileref="figures/Check_mark_23x20_02.svg"
+format="SVG" scale="60"/>
+</imageobject>
+<imageobject role="html">
+<imagedata fileref="../figures/Check_mark_23x20_02.png"
+format="PNG" />
+</imageobject>
+</inlinemediaobject>'>
+
+<!ENTITY ARROW  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
+<imageobject role="fo">
+<imagedata fileref="figures/Arrow_east.svg"
+format="SVG" scale="60"/>
+</imageobject>
+<imageobject role="html">
+<imagedata fileref="../figures/Arrow_east.png"
+format="PNG" />
+</imageobject>
+</inlinemediaobject>'>
+]>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:svg="http://www.w3.org/2000/svg"
+    xmlns:m="http://www.w3.org/1998/Math/MathML"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:db="http://docbook.org/ns/docbook" version="5.0"
+    xml:id="curl_summary_xml">
+
+    <title>XML Requests and Responses</title>
+    <para>The following example shows a cURL command that specifies an
+        XML request body and returns an XML response. The command
+        creates a server:</para>
+    <example xml:id="xml_example">
+        <title>cURL Command Example: XML Request and Response</title>
+        <programlistingco>
+            <areaspec>
+                <area xml:id="xml_curl.txt.endpoint"
+                    units="linecolumn" coords="1 87"/>
+                <area xml:id="xml_curl.txt.content" units="linecolumn"
+                    coords="4 46"/>
+                <area xml:id="xml_curl.txt.accept" units="linecolumn"
+                    coords="5 40"/>
+                <area xml:id="xml_curl.txt.file" units="linecolumn"
+                    coords="7 29"/>
+                <area xml:id="xml_curl.txt.ppxml" units="linecolumn"
+                    coords="7 40"/>
+            </areaspec>
+            <programlisting language="bash" role="gutter: false"><?db-font-size 65%?><prompt>$</prompt> <xi:include href="samples/xml_curl.txt" parse="text"/></programlisting>
+        </programlistingco>
+    </example>
+    <para>The example, <xref linkend="xml_example"/>, includes the
+        following changes:<calloutlist>
+            <callout arearefs="xml_curl.txt.endpoint">
+                <para>Append <literal>.xml</literal> to the endpoint
+                    in the cURL command to return an XML
+                    response.</para>
+            </callout>
+            <callout arearefs="xml_curl.txt.content">
+                <para>The <literal>Content-Type:</literal> header
+                    specifies <literal>application/xml</literal>
+                    instead of <literal>application/json</literal>.
+                </para>
+            </callout>
+            <callout arearefs="xml_curl.txt.accept">
+                <para>The <literal>Accept:</literal> header specifies
+                        <literal>application/xml</literal> instead of
+                        <literal>application/json</literal>. </para>
+            </callout>
+            <callout arearefs="xml_curl.txt.file">
+                <para>If the request requires a request body, specify
+                    it in XML format. In this example, the XML body is
+                    passed in the
+                        <filename>server_post_req.xml</filename>
+                    file.</para>
+            </callout>
+            <callout arearefs="xml_curl.txt.ppxml">
+                <para>To pretty-print the XML output, set the <literal
+                        xmlns:svg="http://www.w3.org/2000/svg"
+                        xmlns:m="http://www.w3.org/1998/Math/MathML"
+                        xmlns:html="http://www.w3.org/1999/xhtml"
+                        xmlns:db="http://docbook.org/ns/docbook"
+                        >ppxml</literal> alias, as follows: </para>
+                <programlisting language="bash" role="gutter: false"><?db-font-size 50%?><prompt>$</prompt> alias ppxml='python -c "import sys, xml.dom.minidom; print xml.dom.minidom.parseString(sys.stdin.read()).toprettyxml()"'</programlisting>
+                <para xmlns:svg="http://www.w3.org/2000/svg"
+                    xmlns:m="http://www.w3.org/1998/Math/MathML"
+                    xmlns:html="http://www.w3.org/1999/xhtml"
+                    xmlns:db="http://docbook.org/ns/docbook">Then,
+                    append the <literal>ppxml</literal> alias to your
+                    cURL command. </para>
+            </callout>
+        </calloutlist></para>
+    <para>The following example shows the contents of the
+            <filename>server_post_req.xml</filename> file:</para>
+<programlisting language="xml"><?db-font-size 55%?><xi:include href="samples/server-post-req.xml" parse="text"/></programlisting>
+    <?hard-pagebreak?>
+    <para><emphasis role="bold">Output:</emphasis> The cURL command
+        returns information about the new server in XML format, as
+        shown in the following example:</para>
+    <programlisting language="xml"><?db-font-size 65%?><xi:include href="samples/server-post-resp.xml" parse="text"/></programlisting>
+</section>

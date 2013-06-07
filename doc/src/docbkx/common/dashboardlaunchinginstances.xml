@@ -5,21 +5,23 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" 
     version="5.0"
     xml:id="Launching_Instances_using_Dashboard">
-    <title>Launching Instances using Dashboard</title>
+    <title>Launch instances</title>
     <?dbhtml stop-chunking?>
-    <para>The Dashboard can be used to launch instances. This
-        section explains the various steps to be followed to
-        launch a instance.</para>
+    <para>Instances are virtual machines that run inside the cloud.
+    You can launch an instance directly from one of the available OpenStack 
+images or from an image that you have copied to a persistent volume. 
+The OpenStack Image Service provides a pool of images that are accessible 
+to members of different projects.</para>
     <section xml:id="Modify_Security_Groups">
-        <title>Modify Security Groups</title>
-        <para>Before launching a VM, first modify the Security
-            Groups rules to allow us to ping and SSH to the
-            instances. This is done by editing the default
-            security group or adding a new security group. For
-            ease of understanding, modify the default security
-            group.</para>
-        <para>
-            <mediaobject>
+        <title>Add security group rules</title>
+        <para>Before you launch a virtual machine, you can add
+            security group rules to enable users to ping and SSH to
+            the instances. To do so, you either add rules to the
+            default security group or add a security group with rules. </para>
+        <para>The following procedure shows you how to add rules to
+            the default security group.</para>
+       
+          <!--  <mediaobject>
                 <imageobject role="fo">
                     <imagedata
                         fileref="figures/Security-Group.png"
@@ -30,17 +32,69 @@
                         fileref="figures/Security-Group.png"
                         format="PNG"/>
                 </imageobject>
-            </mediaobject>
-        </para>
-        <para>Select IP protocol TCP and enter 22 in "From Port"
-            and "To Port" and CIDR 0.0.0.0/0. This opens port 22
-            for requests from any IP. If you want requests from
-            particular range of IP, provide it in CIDR
-            field.</para>
-        <para>Select IP protocol ICMP and enter -1 in "From Port"
+            </mediaobject> -->
+      
+    <procedure><title>To add rules to the default security group:</title>
+        <step>
+            <para>Log in to the OpenStack dashboard.</para>
+        </step>
+        <step>
+            <para>If you are a member of multiple projects,
+                select a project from the drop-down list at
+                the top of the <guilabel>Project</guilabel>
+                tab. </para>
+        </step>
+        <step>
+            <para>Click the <guilabel>Access &amp;
+                Security</guilabel> category. </para>
+            <para>The dashboard shows the security groups that 
+                are available for this project. </para><figure>
+                    <title>OpenStack dashboard - Security Groups</title>
+                    <mediaobject>
+                        <imageobject role="fo">
+                            <imagedata
+                                fileref="figures/access_security.png"
+                                format="PNG" scale="60"/>
+                        </imageobject>
+                        <imageobject role="html">
+                            <imagedata
+                                fileref="figures/access_security.png"
+                                format="PNG"/>
+                        </imageobject>
+                    </mediaobject> 
+                </figure>
+        </step>
+        <step>
+            <para>Select the default security group and click
+                <guibutton>Edit Rules</guibutton>. The
+                <guilabel>Security Group Rules</guilabel> page
+                appears: </para><figure>
+                    <title>OpenStack dashboard - Security Group Rules</title>
+                    <mediaobject>
+                        <imageobject role="fo">
+                            <imagedata
+                                fileref="figures/add_rule.png"
+                                format="PNG" scale="60"/>
+                        </imageobject>
+                        <imageobject role="html">
+                            <imagedata
+                                fileref="figures/add_rule.png"
+                                format="PNG"/>
+                        </imageobject>
+                    </mediaobject> 
+                </figure>
+        </step>
+        <step><title>Add a TCP rule</title><para>Click <guibutton>Add Rule</guibutton>.  The <guilabel>Add
+            Rule</guilabel> window appears. </para><substeps><step><para>Select IP protocol TCP and enter 22 in "From Port"
+                and "To Port" and CIDR 0.0.0.0/0. This opens port 22
+                for requests from any IP. If you want requests from
+                particular range of IP, provide it in CIDR
+                field.</para></step></substeps>
+</step>
+        <step><title>Add an ICMP rule</title><para>Select IP protocol ICMP and enter -1 in "From Port"
             and "To Port" and CIDR 0.0.0.0/0. This allows ping
             from any IP. If you want ping requests from particular
-            range of IP, provide it in CIDR field.</para>
+            range of IP, provide it in CIDR field.</para></step></procedure>
     </section>
     <section xml:id="Adding_Keypair">
         <title>Adding Keypair</title>

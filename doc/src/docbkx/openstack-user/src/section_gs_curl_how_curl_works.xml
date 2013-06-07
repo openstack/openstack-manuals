@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section [
+<!-- Some useful entities borrowed from HTML -->
+<!ENTITY ndash  "&#x2013;">
+<!ENTITY mdash  "&#x2014;">
+<!ENTITY hellip "&#x2026;">
+<!ENTITY plusmn "&#xB1;">
+
+<!-- Useful for describing APIs -->
+<!ENTITY GET    '<command xmlns="http://docbook.org/ns/docbook">GET</command>'>
+<!ENTITY PUT    '<command xmlns="http://docbook.org/ns/docbook">PUT</command>'>
+<!ENTITY POST   '<command xmlns="http://docbook.org/ns/docbook">POST</command>'>
+<!ENTITY DELETE '<command xmlns="http://docbook.org/ns/docbook">DELETE</command>'>
+
+<!ENTITY CHECK  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
+<imageobject>
+<imagedata fileref="figures/Check_mark_23x20_02.svg"
+format="SVG" scale="60"/>
+</imageobject>
+</inlinemediaobject>'>
+
+<!ENTITY ARROW  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
+<imageobject>
+<imagedata fileref="figures/Arrow_east.svg"
+format="SVG" scale="60"/>
+</imageobject>
+</inlinemediaobject>'>
+]>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="curl">
+    <title>How cURL Commands Work</title>
+    <para>cURL is a command-line tool that you can use to interact
+        with REST interfaces. cURL lets you to
+        transmit and receive HTTP requests and
+        responses from the command line or a shell script, which
+        enables you to work with the API directly. It is available for
+        Linux distributions, Mac OS X, and Windows. For information
+        about cURL, see <link xlink:href="http://curl.haxx.se/"
+            >http://curl.haxx.se/</link>. </para>
+    <para>To use XML requests and responses, see
+            <xref linkend="curl_summary_xml"/>.</para>
+    
+    <para>To run the cURL request examples shown in this guide, copy
+        each example from the HTML version of this guide directly to
+        the command line or a script.</para>
+
+    <para>The following command is an example cURL command that
+        provisions a server with an isolated network:</para>
+
+    <programlisting language="bash" role="gutter: false"><?db-font-size 60%?><prompt>$</prompt> curl https://dfw.servers.api.rackspacecloud.com/v2/$account/servers \
+       -X POST \
+       -H "X-Auth-Project-Id: $account" \
+       -H "Content-Type: application/json" \
+       -H "Accept: application/json" \
+       -H "X-Auth-Token: $token" \
+       -d '{"server": {"name": "my_server_with_network", "imageRef": "d42f821e-c2d1-4796-9f07-af5ed7912d0e", "flavorRef": "2", "max_count": 1, "min_count": 1, "networks": [{"uuid": "538a112a-34d1-47ff-bf1e-c40639e886e2"}, {"uuid": "00000000-0000-0000-0000-000000000000"}, {"uuid": "11111111-1111-1111-1111-111111111111"}]}}' \
+      | python -m json.tool</programlisting>
+    <note>
+        <para>The carriage returns in the cURL request examples are
+            escaped with a backslash (<literal>\</literal>) character.
+            The escape character allows continuation of the command
+            across multiple lines. However, do not include the escape
+            character in the JSON or XML request body within the cURL
+            command.</para>
+    </note>
+    <?hard-pagebreak?>
+    <para>The cURL examples in this guide use the following
+        command-line options:</para>
+    <table xml:id="curl_options" rules="all" width="75%">
+        <caption>cURL Command-Line Options</caption>
+        
+        <thead>
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <option>-d</option>
+                </td>
+                <td>
+                    <para>Sends the specified data in a &POST; request
+                        to the HTTP server. Use this option to send a
+                        JSON or XML request body to the server.</para>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <option>-H</option>
+                </td>
+                <td>
+                    <para>Specifies an extra HTTP header in the
+                        request. You can specify any number of extra
+                        headers. Precede each header with the
+                            <option>-H</option> option. </para>
+                    <para>Common headers in Rackspace API requests are:<itemizedlist>
+                            <listitem>
+                                <para><literal>Content-Type</literal>.
+                                   Required for operations with a
+                                   request body. </para>
+                                <para>Specifies the format of the
+                                   request body. The syntax for the
+                                   <literal>Content-Type</literal>
+                                   header is:</para>
+                                <screen><computeroutput>Content-Type: application/<parameter>format</parameter></computeroutput></screen>
+                                <para>Where
+                                   <parameter>format</parameter> is
+                                   either <literal>json</literal> or
+                                   <literal>xml</literal>.</para>
+                            </listitem>
+                            <listitem>
+                                <para><literal>X-Auth-Project-Id</literal>.
+                                   Optional. Specifies the project ID,
+                                   which can be your account number or
+                                   another value.</para>
+                            </listitem>
+                            <listitem>
+                                <para><literal>Accept</literal>.
+                                   Optional. </para>
+                                <para>Specifies the format of the
+                                   response body. The syntax for the
+                                   <literal>Accept</literal> header
+                                   is:</para>
+                                <screen><computeroutput>Accept: application/<parameter>format</parameter></computeroutput></screen>
+                                <para>Where
+                                   <parameter>format</parameter> is
+                                   either <literal>json</literal> or
+                                   <literal>xml</literal>. Default is
+                                   <literal>json</literal>.</para>
+                            </listitem>
+                            <listitem>
+                                <para><literal>X-Auth-Token</literal>.
+                                   Required. Specifies the
+                                   authentication token.</para>
+                            </listitem>
+                        </itemizedlist></para>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <option>-i</option>
+                </td>
+                <td>
+                    <para>Includes the HTTP header in the output.
+                    </para>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <option>-s</option>
+                </td>
+                <td>
+                    <para>Silent or quiet mode. Does not show progress
+                        or error messages. Makes cURL mute. </para>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <option>-T</option>
+                </td>
+                <td>
+                    <para>Transfers the specified local file to the
+                        remote URL.</para>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <option>-X</option>
+                </td>
+                <td>
+                    <para>Specifies the request method to use when
+                        communicating with the HTTP server. The
+                        specified request is used instead of the
+                        default method, which is &GET;. </para>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <note xml:id="json_tool">
+        <title>json.tool</title>
+        <para>For commands that return a response, you can append the
+            following code to the command to call the json.tool to
+            pretty-print output: </para>
+        <programlisting language="bash" role="gutter: false">| python -m json.tool</programlisting>
+        <para>To use the json.tool, import the json module. For
+            information about the json.tool, see <link
+                xlink:href="http://docs.python.org/2/library/json.html"
+                >json — JSON encoder and decoder</link>. </para>
+        <para>If you run a Python version older than 2.6, import the
+            simplejson module and use the simplejson.tool. For
+            information about the simple.json tool, see <link
+                xlink:href="http://simplejson.googlecode.com/svn/tags/simplejson-2.0.9/docs/index.html"
+                >simplejson — JSON encoder and decoder</link>.</para>
+        <para>If you do not want to pretty-print JSON output, omit
+            this code. </para>
+    </note>
+    <?hard-pagebreak?>
+    <xi:include href="section_gs_curl_xml.xml"/>
+</section>
