@@ -396,14 +396,19 @@ interface_driver = quantum.agent.linux.interface.OVSInterfaceDriver
             <para>
             <itemizedlist>
             <listitem><para>Nicira NVP Plugin</para></listitem>
-            <listitem><para>Floodlight/Bigswitch Plugin</para></listitem>
+            <listitem><para>Floodlight/BigSwitch Plugin (L3 functionality with BigSwitch only)</para></listitem>
             <listitem><para>PLUMgrid Plugin</para></listitem>
             </itemizedlist>
             </para>
             <warning>
-             <para> Do NOT configure or use <filename>quantum-l3-agent</filename> if you are using one of thes above
-             plugins.</para>
+             <para> Do NOT configure or use <filename>quantum-l3-agent</filename> if you are using
+                    one of the above plugins.</para>
             </warning>
+            <note><para>The Floodlight/BigSwitch plugin supports both the open source <link
+                        xlink:href="http://www.projectfloodlight.org/floodlight/">Floodlight</link>
+                    controller and the proprietary BigSwitch controller. However, only the
+                    proprietary BigSwitch controller implements L3 functionality. When using
+                    Floodlight as your OpenFlow controller, L3 functionality is not available. </para></note>
             <para>For all other plugins, install the quantum-l3-agent binary on the network node. </para>
             <screen><computeroutput>apt-get -y install quantum-l3-agent</computeroutput></screen>
             <para>Create a bridge "br-ex" that will be used to uplink
