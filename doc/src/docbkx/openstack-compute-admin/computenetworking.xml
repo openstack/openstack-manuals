@@ -1903,48 +1903,13 @@ public_interface=vlan100
                         create command.</para>
                 </listitem>
             </itemizedlist>
+            <para>Refer to <link
+                    xlink:href="http://docs.openstack.org/cli/quick-start/content/nova_client.html#floating_ip_addresses"
+                    >Manage Floating IP Addresses</link> in the <emphasis role="italic">OpenStack
+                    Clients Guide</emphasis> for information on how to associate floating IPs to
+                instances.</para>
 
         </section>
-        <section xml:id="Adding_a_Floating_IP_to_an_Instance">
-            <title>Adding a Floating IP to an Instance</title>
-            <para>Adding a floating IP to an instance is a two step
-                process:</para>
-            <orderedlist>
-                <listitem>
-                    <para><command>nova floating-ip-create</command>:
-                        Allocate a floating IP address from the list
-                        of available addresses.</para>
-                </listitem>
-                <listitem>
-                    <para><command>nova add-floating-ip</command>: Add
-                        an allocated floating IP address to a running
-                        instance.</para>
-                </listitem>
-            </orderedlist>
-
-            <para>Here's an example of how to add a floating IP to a
-                running instance with an ID of 12</para>
-            <screen>
-<prompt>$</prompt> <userinput>nova floating-ip-create</userinput>
-<computeroutput>
-+-----------------+-------------+----------+------+
-|        Ip       | Instance Id | Fixed Ip | Pool |
-+-----------------+-------------+----------+------+
-|    68.99.26.170 | None        | None     |      |
-+-----------------+-------------+----------+------+
-</computeroutput>
-<prompt>$</prompt> <userinput>nova add-floating-ip 12 68.99.26.170</userinput>
-        </screen>
-
-            <para>If the instance no longer needs a public address,
-                remove the floating IP address from the instance and
-                de-allocate the address:</para>
-            <screen>
-<prompt>$</prompt> <userinput>nova remove-floating-ip 12 68.99.26.170</userinput>
-<prompt>$</prompt> <userinput>nova floating-ip-delete 68.99.26.170</userinput>
-    </screen>
-        </section>
-
         <section xml:id="Automatically_adding_floating_IPs">
             <title>Automatically adding floating IPs</title>
             <para>The nova-network service can be configured to
