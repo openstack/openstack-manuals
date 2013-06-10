@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="ch_cells">
+    <title>Cells</title>
+
+    <para><emphasis role="italic">Cells</emphasis> functionality allows you to scale an OpenStack
+        Compute cloud in a more distributed fashion without having to use complicated technologies
+        like database and message queue clustering. It is intended to support very large
+        deployments.</para>
+    <para>When this functionality is enabled, the hosts in an OpenStack Compute cloud are
+        partitioned  into groups called cells. Cells are configured as a tree. The top-level cell
+        should have a host that runs a <systemitem class="service">nova-api</systemitem> service,
+        but no <systemitem class="service">nova-compute</systemitem> services. Each child
+        cell should run all of the typical <systemitem class="service">nova-*</systemitem> services
+        in a regular Compute cloud except for <systemitem class="service">nova-api</systemitem>.
+        You can think of a cells as a normal Compute deployment in that each cell has its
+        own database server and message queue broker.</para>
+    <para>The <systemitem class="service">nova-cells</systemitem> service handles communication
+        between cells and selecting a cell for new instances. This service is required for every cell.
+        Communication between cells is pluggable, with the only option currently implemented being
+        communication via RPC.</para>
+    <para>Cells scheduling is separate from host scheduling. nova-cells first picks a cell
+        (currently randomly, future releases will add filtering/weighing functionality and decisions
+        can be based on broadcasts of capacity/capabilities). Once a cell has been selected and the
+        new build request has reached its nova-cells service, it will be sent over to the host
+        scheduler in that cell and the build proceeds as it does without cells.</para>
+        <warning>
+            <para>Cell functionality is currently considered experimental.</para>
+        </warning>
+    <simplesect>
+        <title>Cell configuration options</title>
+        <para>Cells are disabled by default. All cell-related configuration options go under a
+                <literal>[cells]</literal> section in <filename>nova.conf</filename>. The following
+            cell-related options are currently supported:<variablelist>
+                <varlistentry>
+                    <term><literal>enable</literal></term>
+                    <listitem>
+                        <para>Set this is <literal>True</literal> to turn on cell functionality,
+                            which is off by default.</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><literal>name</literal></term>
+                    <listitem>
+                        <para>Name of the current cell. This must be unique for each cell. </para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><literal>capabilities</literal></term>
+                    <listitem>
+                        <para>List of arbitrary
+                                    <literal><replaceable>key</replaceable>=<replaceable>value</replaceable></literal>
+                            pairs defining capabilities of the current cell. These are sent to
+                            parent cells, but aren't used in scheduling until later filter/weight
+                            support is added. </para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><literal>call_timeout</literal></term>
+                    <listitem>
+                        <para>How long to wait for replies from calls between cells.</para>
+                    </listitem>
+                </varlistentry>
+            </variablelist></para>
+    </simplesect>
+    <simplesect>
+        <title>Configuring the API (top-level) cell</title>
+        <para>The compute API class must be changed in the API cell so that requests can be proxied
+            via nova-cells down to the correct cell properly. Add the following to
+                <filename>nova.conf</filename> in the API
+            cell:<programlisting>[DEFAULT]
+compute_api_class=nova.compute.cells_api.ComputeCellsAPI
+...
+
+[cells]
+enable=True
+name=api</programlisting></para>
+    </simplesect>
+    <simplesect>
+        <title>Configuring the child cells</title>
+        <para>Add the following to <filename>nova.conf</filename> in the child cells, replacing
+                <replaceable>cell1</replaceable> with the name of each
+            cell:<programlisting>[DEFAULT]
+# Disable quota checking in child cells.  Let API cell do it exclusively.
+quota_driver=nova.quota.NoopQuotaDriver
+
+[cells]
+enable=True
+name=<replaceable>cell1</replaceable></programlisting></para>
+    </simplesect>
+    <simplesect>
+        <title>Configuring the database in each cell</title>
+        <para>Before bringing the services online, the database in each cell needs to be configured
+            with information about related cells. In particular, the API cell needs to know about
+            its immediate children, and the child cells need to know about their immediate agents.
+            The information needed is the <application>RabbitMQ</application> server credentials
+            for the particular cell.</para>
+        <para>Use the <command>nova-manage cell create</command> command to add this information to
+            the database in each
+            cell:<screen><prompt>$</prompt> <userinput>nova-manage cell create -h</userinput>
+<computeroutput>Options:
+  -h, --help            show this help message and exit
+  --name=&lt;name>         Name for the new cell
+  --cell_type=&lt;parent|child>
+                        Whether the cell is a parent or child
+  --username=&lt;username>
+                        Username for the message broker in this cell
+  --password=&lt;password>
+                        Password for the message broker in this cell
+  --hostname=&lt;hostname>
+                        Address of the message broker in this cell
+  --port=&lt;number>       Port number of the message broker in this cell
+  --virtual_host=&lt;virtual_host>
+                        The virtual host of the message broker in this cell
+  --woffset=&lt;float>
+  --wscale=&lt;float></computeroutput></screen></para>
+        <para>As an example, assume we have an API cell named <literal>api</literal> and a child
+            cell named <literal>cell1</literal>. Within the api cell, we have the following RabbitMQ
+            server
+            info:<programlisting>rabbit_host=10.0.0.10
+rabbit_port=5672
+rabbit_username=api_user
+rabbit_password=api_passwd
+rabbit_virtual_host=api_vhost</programlisting></para>
+        <para>And in the child cell named <literal>cell1</literal> we have the following RabbitMQ
+            server
+            info:<programlisting>rabbit_host=10.0.1.10
+rabbit_port=5673
+rabbit_username=cell1_user
+rabbit_password=cell1_passwd
+rabbit_virtual_host=cell1_vhost</programlisting></para>
+        <para>We would run this in the API cell, as
+            root.<screen><prompt>#</prompt> <userinput>nova-manage cell create --name=cell1 --cell_type=child --username=cell1_user --password=cell1_passwd --hostname=10.0.1.10 --port=5673 --virtual_host=cell1_vhost --woffset=1.0 --wscale=1.0</userinput></screen></para>
+        <para>Repeat the above for all child cells.</para>
+        <para>In the child cell, we would run the following, as
+            root:<screen><prompt>#</prompt> <userinput>nova-manage cell create --name=api --cell_type=parent --username=api1_user --password=api1_passwd --hostname=10.0.0.10 --port=5672 --virtual_host=api_vhost --woffset=1.0 --wscale=1.0
+</userinput></screen></para>
+<xi:include href="../common/tables/nova-cells.xml"/>
+    </simplesect>
+</chapter>
