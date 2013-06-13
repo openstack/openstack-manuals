@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="cli_launch_instances">
+    <title>Launch instances</title>
+
+    <para>Instances are virtual machines that run inside the
+        cloud.</para>
+    <para>You can launch an instance directly from one of the
+        available OpenStack images or from an image that you have
+        copied to a persistent volume. The OpenStack Image Service
+        provides a pool of images that are accessible to members of
+        different projects.</para>
+    <para>To launch an instance, you must specify the following
+        parameters:</para>
+    <itemizedlist>
+        <listitem>
+            <para>The <guilabel>instance source</guilabel>, which is
+                an image or snapshot. Alternatively, you can boot from
+                a volume, which is block storage, to which you've
+                copied an image or snapshot.</para>
+        </listitem>
+        <listitem>
+            <para>The <guilabel>image</guilabel> or
+                    <guilabel>snapshot</guilabel>, which represents
+                the operating system.</para>
+        </listitem>
+        <listitem>
+            <para>A <guilabel>name</guilabel> for your instance.
+            </para>
+        </listitem>
+        <listitem>
+            <para>The <emphasis role="bold">flavor</emphasis> for your
+                instance, which defines the compute, memory, and
+                storage capacity of nova computing instances. A flavor
+                is an available hardware configuration for a server.
+                It defines the "size" of a virtual server that can be
+                launched. For more details and a list of default
+                flavors available, see Section 1.5, "Managing
+                Flavors," (↑ User Guide for Administrators ). </para>
+        </listitem>
+        <listitem>
+            <para>Access and security credentials, which include one
+                or both of the following credentials:</para>
+            <itemizedlist>
+                <listitem>
+                    <para>A <emphasis role="bold">keypair</emphasis>
+                        for your instance, which are SSH credentials
+                        that are injected into images when they are
+                        launched. For this to work, the image must
+                        contain the <literal>cloud-init</literal>
+                        package. Create at least one keypair for each
+                        project. If you already have generated a
+                        keypair with an external tool, you can import
+                        it into OpenStack. You can use the keypair for
+                        multiple instances that belong to that
+                        project. For details, refer to Section 1.5.1,
+                        Creating or Importing Keys. </para>
+                </listitem>
+                <listitem>
+                    <para>A <emphasis role="bold">security
+                            group</emphasis>, which defines which
+                        incoming network traffic is forwarded to
+                        instances. Security groups hold a set of
+                        firewall policies, known as <emphasis
+                            role="italic">security group
+                            rules</emphasis>. For details, see xx.
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </listitem>
+        <listitem>
+            <para>If needed, you can assign a <emphasis role="bold"
+                    >floating (public) IP address</emphasis> to a
+                running instance and attach a block storage device, or
+                volume, for persistent storage. For details, see
+                Section 1.5.3, Managing IP Addresses and Section 1.7,
+                Managing Volumes.</para>
+        </listitem>
+    </itemizedlist>
+    <procedure>
+        <title>To launch an instance:</title>
+        <para>After you gather the parameters you need to launch an
+            instance, you can launch it.</para>
+        <step>
+            <para>On a shell, source the OpenStack RC file. See <xref
+                    linkend="cli_openrc"/>. </para>
+        </step>
+        <step>
+            <para>List the available flavors:</para>
+            <programlisting language="bash"><prompt>$</prompt> nova flavor-list</programlisting>
+            <para>Note the ID of the flavor that you want to use for
+                your instance. </para>
+        </step>
+        <step>
+            <para>List the available images:</para>
+            <programlisting language="bash"><prompt>$</prompt> nova image-list</programlisting>
+            <para>Note the ID of the image that you want to boot your
+                instance from. </para>
+        </step>
+        <step>
+            <para>List the available security groups:</para>
+            <programlisting language="bash"><prompt>$</prompt> nova secgroup-list</programlisting>
+            <para>If you have not created any security groups, you can
+                assign the instance to only the default security
+                group. </para>
+        </step>
+        <step>
+            <para>List the keypairs. </para>
+            <programlisting><prompt>$</prompt> nova keypair-list</programlisting>
+            <para>Note the name of the keypair that you use for SSH
+                access.</para>
+        </step>
+        <step>
+            <para>Now you have all the parameters required to launch
+                an instance, run the following command:</para>
+            <programlisting language="bash"><prompt>$</prompt> nova boot --flavor FLAVOR_ID --imageIMAGE_ID --key_name KEY_NAME \
+        --security_group NAME_OF_SEC_GROUP NAME_FOR_INSTANCE </programlisting>
+            <para>The command returns a list of instance properties,
+                including the status of the instance. </para>
+            <para>The status BUILD indicates that the instance has
+                started, but is not yet online. </para>
+        </step>
+        <step>
+            <para>Check if the instance is online:</para>
+            <programlisting language="bash"><prompt>$</prompt> nova list</programlisting>
+            <para>This command lists all instances of the project you
+                belong to, including their ID, their name, their
+                status, and their private (and if assigned, their
+                public) IP addresses. </para>
+            <para>If your instance's status is ACTIVE, the instance is
+                online. </para>
+            <para>To view the available options for the <command>nova
+                    list</command> command, run the following
+                command:</para>
+            <programlisting language="bash"><prompt>$</prompt> nova help list</programlisting>
+        </step>
+        <step>
+            <para>If you did not provide a keypair, security groups,
+                or rules, you can only access the instance from inside
+                the cloud through VNC. Even pinging the instance is
+                not possible. </para>
+            <para>To change this, proceed to <xref
+                    linkend="cli_configure_instances"/>.</para>
+        </step>
+    </procedure>
+</section>

@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="dashboard_launch_instances_from_volume">
+    <title>Launch instances from a volume</title>
+    <?dbhtml stop-chunking?>
+    <para>Instances are virtual machines that run inside the
+        cloud.</para>
+    <para>You can launch an instance directly from an image that has
+        been copied to a persistent volume. </para>
+    <para>In that case, the instance is booted from the volume, which
+        is provided by nova-volume, through iSCSI.</para>
+    <para>For preparation details, see <xref linkend="create_volume"
+        />. </para>
+    <para>To boot an instance from the volume, follow this
+        procedure.</para>
+    <para>Especially note the following steps: <itemizedlist>
+            <listitem>
+                <para>To be able to select from which volume to boot,
+                    launch an instance from an arbitrary image. The
+                    image you select does not boot. It is replaced by
+                    the image on the volume that you choose in the
+                    next steps. </para>
+                <para>In case you want to boot a Xen image from a
+                    volume, note the following requirement: The image
+                    you launch in must be the same type, fully
+                    virtualized or paravirtualized, as the one on the
+                    volume. </para>
+            </listitem>
+            <listitem>
+                <para>Select the volume or volume snapshot to boot
+                    from. </para>
+                <para>Enter a device name. Enter
+                        <literal>vda</literal> for KVM images or
+                        <literal>xvda</literal> for Xen images.</para>
+            </listitem>
+        </itemizedlist></para>
+    <section xml:id="instance_parameters-iv">
+        <title>Parameters</title>
+        <para>To launch an instance, you must specify the following
+            parameters:</para>
+        <itemizedlist>
+            <listitem>
+                <para>The <guilabel>instance source</guilabel>, which
+                    is a volume to which you've copied an image or
+                    snapshot.</para>
+            </listitem>
+
+            <listitem>
+                <para>A <guilabel>name</guilabel> for your instance.
+                </para>
+            </listitem>
+            <listitem>
+                <para>The <emphasis role="bold">flavor</emphasis> for
+                    your instance, which defines the compute, memory,
+                    and storage capacity of nova computing instances.
+                    A flavor is an available hardware configuration
+                    for a server. It defines the "size" of a virtual
+                    server that can be launched. For more details and
+                    a list of default flavors available, see Section
+                    1.5, "Managing Flavors," (↑ User Guide for
+                    Administrators ). </para>
+            </listitem>
+            <listitem>
+                <para>Access and security credentials, which include
+                    one or both of the following credentials:</para>
+
+                <itemizedlist>
+                    <listitem>
+                        <para>A <emphasis role="bold"
+                                >keypair</emphasis> for your instance,
+                            which are SSH credentials that are
+                            injected into images when they are
+                            launched. For this to work, the image must
+                            contain the <literal>cloud-init</literal>
+                            package. Create at least one keypair for
+                            each project. If you already have
+                            generated a keypair with an external tool,
+                            you can import it into OpenStack. You can
+                            use the keypair for multiple instances
+                            that belong to that project. For details,
+                            refer to Section 1.5.1, Creating or
+                            Importing Keys. </para>
+                    </listitem>
+                    <listitem>
+                        <para>A <emphasis role="bold">security
+                                group</emphasis>, which defines which
+                            incoming network traffic is forwarded to
+                            instances. Security groups hold a set of
+                            firewall policies, known as <emphasis
+                                role="italic">security group
+                                rules</emphasis>. For details, see xx.
+                        </para>
+                    </listitem>
+                </itemizedlist>
+            </listitem>
+        </itemizedlist>
+        <para>If needed, you can assign a floating (public) IP address
+            to a running instance and attach a block storage device
+            (volume) for persistent storage. For details, see Section
+            1.5.3, Managing IP Addresses and Section 1.7, Managing
+            Volumes.</para>
+    </section>
+    <section xml:id="dashboard_boot_instance_from_volume">
+        <title>Boot an instance from a volume</title>
+        <para>You can start an instance directly from one of the
+            images available through the OpenStack Image Service or
+            from an image that you have copied to a persistent volume.
+            For the preparation of the volume, see <xref
+                linkend="dashboard_boot_instance_from_volume"/>. When
+            booting an image from a volume, the procedure is basically
+            the same as when launching an instance from an image in
+            OpenStack Image Service, except for some additional
+            steps.</para>
+        <section xml:id="create_volume">
+            <title>Create and prepare the volume</title>
+            <procedure>
+                <title>To create the volume and copy an image to
+                    it:</title>
+                <step>
+                    <para>Create a volume as described in xxx. </para>
+                    <para>It must be large enough to store an unzipped
+                        image. </para>
+                </step>
+                <step>
+                    <para>Create an image. </para>
+                    <para>For details, see <link
+                            xlink:href="http://docs.openstack.org/trunk/openstack-image/content/ch_creating_images_manually.html"
+                            >Creating images manually</link> in the
+                            <citetitle>OpenStack Virtual Machine Image
+                            Guide</citetitle>.</para>
+                </step>
+                <step>
+                    <para>Launch an instance as described in <xref
+                            linkend="launch_instance"/>. </para>
+                </step>
+                <step>
+                    <para>Attach the volume to the instance as
+                        described in xxx. </para>
+                </step>
+                <step>
+                    <para>Assuming that the attached volume is mounted
+                        as <literal>/dev/vdb</literal>, use one of the
+                        following commands to copy the image to the
+                        attached volume: <itemizedlist>
+                            <listitem>
+                                <para>For a raw image:
+                                   <programlisting><prompt>$</prompt> cat IMAGE >/dev/null</programlisting>Alternatively,
+                                   use <command>dd</command>.</para>
+                            </listitem>
+                            <listitem>
+                                <para>For a non-raw image:
+                                   <programlisting><prompt>$</prompt> qemu-img convert -O raw IMAGE /dev/vdb </programlisting></para>
+                            </listitem>
+                            <listitem>
+                                <para>For a *.tar.bz2 image:
+                                   <programlisting><prompt>$</prompt> tar xfjO IMAGE >/dev/null</programlisting></para>
+                            </listitem>
+                        </itemizedlist></para>
+                </step>
+                <step>
+                    <para>As only <emphasis role="italic"
+                            >detached</emphasis> volumes are available
+                        for booting, detach the volume. </para>
+                    <para>For details, see xxxx. </para>
+                </step>
+                <step>
+                    <para>To boot an instance from the volume,
+                        continue with <xref linkend="launch_instance"
+                        />.</para>
+                </step>
+            </procedure>
+        </section>
+        <section xml:id="launch_instance_from_volume">
+            <title>Launch an instance</title>
+            <para>You can launch an instance directly from one of the
+                images available through the OpenStack Image Service.
+                When you do that, OpenStack creates a local copy of
+                the image on the respective compute node where the
+                instance is started.</para>
+            <note>
+                <title>Launch instances from a volume</title>
+                <para>Alternatively, you can start an instance from an
+                    image that has been copied to a persistent volume.
+                    In that case, the instance is booted from the
+                    volume, which is provided by nova-volume, through
+                    iSCSI.</para>
+                <para>For preparation details, see <xref
+                        linkend="create_volume"/>. </para>
+                <para>To boot an instance from the volume, follow
+                        <xref linkend="launch_instance"/>. </para>
+                <para>Especially note the following steps: <itemizedlist>
+                        <listitem>
+                            <para>To be able to select from which
+                                volume to boot, launch an instance
+                                from an arbitrary image. The image you
+                                select does not boot. It is replaced
+                                by the image on the volume that you
+                                choose in the next steps. </para>
+                            <para>In case you want to boot a Xen image
+                                from a volume, note the following
+                                requirement: The image you launch in
+                                must be the same type, fully
+                                virtualized or paravirtualized, as the
+                                one on the volume. </para>
+                        </listitem>
+                        <listitem>
+                            <para>Select the volume or volume snapshot
+                                to boot from. </para>
+                            <para>Enter a device name. Enter
+                                   <literal>vda</literal> for KVM
+                                images or <literal>xvda</literal> for
+                                Xen images.</para>
+                        </listitem>
+                    </itemizedlist></para>
+            </note>
+        </section>
+    </section>
+</section>
