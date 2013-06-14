@@ -30,10 +30,9 @@
             attributes on all virtual networks, and are able to
             specify these attributes in order to create provider
             networks.</para>
-        <para>The provider extension is
-            supported by the openvswitch and linuxbridge plugins.
-            Configuration of these plugins requires familiarity with
-            this extension.</para>
+        <para>The provider extension is supported by the openvswitch
+            and linuxbridge plugins. Configuration of these plugins
+            requires familiarity with this extension.</para>
         <section xml:id="provider_terminology">
             <title>Terminology</title>
             <para>A number of terms are used in the provider extension
@@ -137,10 +136,10 @@
                 additional attributes:</para>
             <table rules="all">
                 <caption>Provider Network Attributes</caption>
-		<col width="25%"/>
-		<col width="10%"/>
-		<col width="25%"/>
-		<col width="40%"/>
+                <col width="25%"/>
+                <col width="10%"/>
+                <col width="25%"/>
+                <col width="40%"/>
                 <thead>
                     <tr>
                         <th> Attribute name </th>
@@ -251,7 +250,7 @@
     <section xml:id="l3_router_and_nat">
         <title>L3 Routing and NAT</title>
         <para>Just like the core OpenStack Networking API provides
-            abstract L2 network segments that are decopuled from the
+            abstract L2 network segments that are decoupled from the
             technology used to implement the L2 network, OpenStack
             Networking includes an API extension that provides
             abstract L3 routers that API users can dynamically
@@ -279,10 +278,10 @@
             <title>L3 API Abstractions</title>
             <table rules="all">
                 <caption>Router</caption>
-		<col width="20%"/>
-		<col width="20%"/>
-		<col width="20%"/>
-		<col width="40%"/>
+                <col width="20%"/>
+                <col width="20%"/>
+                <col width="20%"/>
+                <col width="40%"/>
                 <thead>
                     <tr>
                         <th> Attribute name </th>
@@ -318,7 +317,7 @@
                         <td>String </td>
                         <td>N/A </td>
                         <td><para>Indicates whether router is
-                                  currently operational. </para></td>
+                                currently operational. </para></td>
                     </tr>
                     <tr>
                         <td>tenant_id </td>
@@ -330,7 +329,8 @@
                     </tr>
                     <tr>
                         <td>external_gateway_info</td>
-                        <td>dict contain 'network_id' key-value pair</td>
+                        <td>dict contain 'network_id' key-value
+                            pair</td>
                         <td>Null</td>
                         <td>External network that this router connects
                             to for gateway services (e.g., NAT)</td>
@@ -339,10 +339,10 @@
             </table>
             <table rules="all">
                 <caption>Floating IP</caption>
-		<col width="20%"/>
-		<col width="20%"/>
-		<col width="20%"/>
-		<col width="40%"/>
+                <col width="20%"/>
+                <col width="20%"/>
+                <col width="20%"/>
+                <col width="40%"/>
                 <thead>
                     <tr>
                         <th> Attribute name </th>
@@ -363,24 +363,25 @@
                         <td>string (IP address)</td>
                         <td>allocated by OpenStack Networking</td>
                         <td>The external network IP address available
-                            to be mapped to an internal IP address.</td>
+                            to be mapped to an internal IP
+                            address.</td>
                     </tr>
                     <tr>
                         <td>floating_network_id</td>
                         <td>uuid-str</td>
                         <td>N/A</td>
-                        <td><para>The network indicating the set of subnets
-                                  from which the floating IP should be
-                                  allocated</para></td>
+                        <td><para>The network indicating the set of
+                                subnets from which the floating IP
+                                should be allocated</para></td>
                     </tr>
                     <tr>
                         <td>router_id </td>
                         <td>uuid-str </td>
                         <td>N/A</td>
                         <td>Read-only value indicating the router that
-                            connects the external network to the associated
-                            internal port, if a port is associated.
-                        </td>
+                            connects the external network to the
+                            associated internal port, if a port is
+                            associated. </td>
                     </tr>
                     <tr>
                         <td>port_id</td>
@@ -403,9 +404,9 @@
                         <td>tenant_id </td>
                         <td>uuid-str </td>
                         <td>N/A </td>
-                        <td>Owner of the Floating IP. Only admin users can
-                            specify a tenant_id other than its own.
-                        </td>
+                        <td>Owner of the Floating IP. Only admin users
+                            can specify a tenant_id other than its
+                            own. </td>
                     </tr>
                 </tbody>
             </table>
@@ -489,42 +490,51 @@ quantum floatingip-associate &lt;floatingip-id&gt; &lt;internal VM port-id&gt; <
     </section>
     <section xml:id="securitygroups">
         <title>Security Groups</title>
-        <para>Security groups and security group rules allows administrators and
-              tenants the ability to specify the type of traffic and direction
-              (ingress/egress) that is allowed to pass through a port. A security
-              group is a container for security group rules.</para>
+        <para>Security groups and security group rules allows
+            administrators and tenants the ability to specify the type
+            of traffic and direction (ingress/egress) that is allowed
+            to pass through a port. A security group is a container
+            for security group rules.</para>
         <para>When a port is created in OpenStack Networking it is
             associated with a security group. If a security group is
             not specified the port will be associated with a 'default'
             security group. By default this group will drop all
             ingress traffic and allow all egress. Rules can be added
             to this group in order to change the behaviour.</para>
-        <para>If one desires to use the OpenStack Compute security group APIs and/or
-            have OpenStack Compute orchestrate the creation of new ports for instances
-            on specific security groups, additional configuration is needed. To enable
+        <para>If one desires to use the OpenStack Compute security
+            group APIs and/or have OpenStack Compute orchestrate the
+            creation of new ports for instances on specific security
+            groups, additional configuration is needed. To enable
             this, one must configure the following file
-            <filename>/etc/nova/nova.conf</filename> and set the
-            config option security_group_api=quantum on every node running
-            nova-compute and nova-api. After this change is made restart
-            nova-api and nova-compute in order to pick up this change. After this change
-            is made one will be able to use both the OpenStack Compute and OpenStack
-            Network security group API at the sametime.</para>
-       <note><para>In order to use the OpenStack Compute security group API with
-           OpenStack Networking the OpenStack Networking plugin must implement
-           the security group api. The following plugins currently implement this:
-           Nicira NVP, Open vSwitch, Linux Bridge, NEC, and Ryu.</para></note>
-       <note><para>When using the security group API through OpenStack Compute,
-           security groups are applied to all ports on an instance. The reason
-           for this is that OpenStack Compute security group APIs are instances based
-           and not port based as OpenStack Networking.</para></note>
+                <filename>/etc/nova/nova.conf</filename> and set the
+            config option security_group_api=quantum on every node
+            running nova-compute and nova-api. After this change is
+            made restart nova-api and nova-compute in order to pick up
+            this change. After this change is made one will be able to
+            use both the OpenStack Compute and OpenStack Network
+            security group API at the same time.</para>
+        <note>
+            <para>In order to use the OpenStack Compute security group
+                API with OpenStack Networking the OpenStack Networking
+                plugin must implement the security group api. The
+                following plugins currently implement this: Nicira
+                NVP, Open vSwitch, Linux Bridge, NEC, and Ryu.</para>
+        </note>
+        <note>
+            <para>When using the security group API through OpenStack
+                Compute, security groups are applied to all ports on
+                an instance. The reason for this is that OpenStack
+                Compute security group APIs are instances based and
+                not port based as OpenStack Networking.</para>
+        </note>
         <section xml:id="securitygroup_api_abstractions">
             <title>Security Group API Abstractions</title>
             <table rules="all">
                 <caption>Security Group Attributes</caption>
-		<col width="20%"/>
-		<col width="20%"/>
-		<col width="20%"/>
-		<col width="40%"/>
+                <col width="20%"/>
+                <col width="20%"/>
+                <col width="20%"/>
+                <col width="40%"/>
                 <thead>
                     <tr>
                         <th> Attribute name </th>
@@ -544,9 +554,10 @@ quantum floatingip-associate &lt;floatingip-id&gt; &lt;internal VM port-id&gt; <
                         <td>name </td>
                         <td>String </td>
                         <td>None </td>
-                        <td>Human-readable name for the security group. Might
-                            not be unique. Cannot be named default as that is
-									 automatically created for a tenant.</td>
+                        <td>Human-readable name for the security
+                            group. Might not be unique. Cannot be
+                            named default as that is automatically
+                            created for a tenant.</td>
                     </tr>
                     <tr>
                         <td>description </td>
@@ -559,18 +570,18 @@ quantum floatingip-associate &lt;floatingip-id&gt; &lt;internal VM port-id&gt; <
                         <td>tenant_id </td>
                         <td>uuid-str </td>
                         <td>N/A </td>
-                        <td>Owner of the security group. Only admin users can
-                            specify a tenant_id other than their own.
-                        </td>
+                        <td>Owner of the security group. Only admin
+                            users can specify a tenant_id other than
+                            their own. </td>
                     </tr>
                 </tbody>
             </table>
             <table rules="all">
                 <caption>Security Group Rules</caption>
-		<col width="20%"/>
-		<col width="20%"/>
-		<col width="20%"/>
-		<col width="40%"/>
+                <col width="20%"/>
+                <col width="20%"/>
+                <col width="20%"/>
+                <col width="40%"/>
                 <thead>
                     <tr>
                         <th> Attribute name </th>
@@ -590,7 +601,8 @@ quantum floatingip-associate &lt;floatingip-id&gt; &lt;internal VM port-id&gt; <
                         <td>security_group_id</td>
                         <td>uuid-str or Integer</td>
                         <td>allocated by OpenStack Networking</td>
-                        <td>The security group to associate rule with.</td>
+                        <td>The security group to associate rule
+                            with.</td>
                     </tr>
                     <tr>
                         <td>direction</td>
@@ -611,38 +623,40 @@ quantum floatingip-associate &lt;floatingip-id&gt; &lt;internal VM port-id&gt; <
                         <td>None</td>
                         <td>Port at start of range</td>
                     </tr>
-                     <tr>
+                    <tr>
                         <td>port_range_max</td>
                         <td>Integer</td>
                         <td>None</td>
                         <td>Port at end of range</td>
                     </tr>
-                     <tr>
+                    <tr>
                         <td>ethertype</td>
                         <td>String</td>
                         <td>None</td>
-                        <td>ethertype in L2 packet (IPv4, IPv6, etc)</td>
+                        <td>ethertype in L2 packet (IPv4, IPv6,
+                            etc)</td>
                     </tr>
-                     <tr>
+                    <tr>
                         <td>remote_ip_prefix</td>
                         <td>string (IP cidr)</td>
                         <td>None</td>
                         <td>CIDR for address range</td>
                     </tr>
-                     <tr>
+                    <tr>
                         <td>remote_group_id</td>
                         <td>uuid-str or Integer</td>
                         <td>allocated by OpenStack Networking or
                             OpenStack Compute</td>
-                        <td>Source security group to apply to rule.</td>
+                        <td>Source security group to apply to
+                            rule.</td>
                     </tr>
                     <tr>
                         <td>tenant_id </td>
                         <td>uuid-str </td>
                         <td>N/A </td>
-                        <td>Owner of the security group rule. Only admin users can
-                            specify a tenant_id other than its own.
-                        </td>
+                        <td>Owner of the security group rule. Only
+                            admin users can specify a tenant_id other
+                            than its own. </td>
                     </tr>
                 </tbody>
             </table>
@@ -664,8 +678,9 @@ quantum security-group-rule-create --direction ingress --protocol tcp --port_ran
             <para>Delete a security group rule:</para>
             <screen><computeroutput>quantum security-group-rule-delete &lt;security_group_rule_uuid&gt;</computeroutput></screen>
             <para>Delete security group:</para>
-                <screen><computeroutput>quantum security-group-delete &lt;security_group_uuid&gt; </computeroutput></screen>
-            <para>Create a port and associated two security groups:</para>
+            <screen><computeroutput>quantum security-group-delete &lt;security_group_uuid&gt; </computeroutput></screen>
+            <para>Create a port and associated two security
+                groups:</para>
             <screen><computeroutput>quantum port-create --security-group &lt;security_group_id1&gt; --security-group &lt;security_group_id2&gt; &lt;network_id&gt;</computeroutput></screen>
             <para>Remove security groups from a port:</para>
             <screen><computeroutput>quantum port-update --no-security-groups &lt;port_id&gt;</computeroutput></screen>
@@ -673,9 +688,13 @@ quantum security-group-rule-create --direction ingress --protocol tcp --port_ran
     </section>
     <section xml:id="lbaas">
         <title>Load-Balancer-as-a-Service</title>
-         <note><para>The Load-Balancer-as-a-Service API is an experimental API meant to give early adopters and
-                vendors a chance to build implementations against. The reference implementation
-                should probably not be run in production environments.</para></note>
+        <note>
+            <para>The Load-Balancer-as-a-Service API is an
+                experimental API meant to give early adopters and
+                vendors a chance to build implementations against. The
+                reference implementation should probably not be run in
+                production environments.</para>
+        </note>
         <section xml:id="lbaas_workflow">
             <title>Common Load-Balancer-as-a-Service Workflow</title>
             <para>Create a load balancer pool:</para>
@@ -685,17 +704,150 @@ quantum lb-pool-create --lb-method ROUND_ROBIN --name mypool --protocol HTTP --s
             <screen><computeroutput>
 quantum lb-member-create --address  &lt;webserver one IP&gt; --protocol-port 80 mypool
 quantum lb-member-create --address  &lt;webserver two IP&gt; --protocol-port 80 mypool</computeroutput></screen>
-            <para>Create a health monitor which checks to make sure our instances are still running on the specified protocol-port:</para>
+            <para>Create a health monitor which checks to make sure
+                our instances are still running on the specified
+                protocol-port:</para>
             <screen><computeroutput>
 quantum lb-healthmonitor-create --delay 3 --type HTTP --max-retries 3 --timeout 3</computeroutput></screen>
             <para>Associate health monitor with pool:</para>
             <screen><computeroutput>
 quantum lb-healthmonitor-associate  &lt;healthmonitor-uuid&gt; mypool</computeroutput></screen>
-            <para>Create a Virtual IP Address (VIP) that when accessed via the load balancer will
-                direct the requests to one of the pool members:</para>
+            <para>Create a Virtual IP Address (VIP) that when accessed
+                via the load balancer will direct the requests to one
+                of the pool members:</para>
             <screen><computeroutput>
 quantum lb-vip-create --name myvip --protocol-port 80 --protocol HTTP --subnet-id &lt;subnet-uuid&gt; mypool</computeroutput></screen>
+        </section>
+    </section>
+    <section xml:id="plugin_specific_extensions">
+        <title>Plugin Specific Extensions</title>
+        <?dbhtml stop-chunking?>
+        <para>Each vendor may choose to implement additional API
+            extensions to the core API. This section describes the
+            extensions for each plugin.</para>
+        <section xml:id="nicira_extensions">
+            <title>Nicira NVP Extensions</title>
+            <para>The Nicira NVP plugin Extensions</para>
+            <section xml:id="nicira_nvp_plugin_qos_extension">
+                <title>Nicira NVP QoS Extension</title>
+                <para>The Nicira NVP QoS extension rate-limits network
+                    ports to guarantee a specific amount of bandwidth
+                    for each port. This extension, by default, is only
+                    accessible by a tenant with an admin role but is
+                    configurable through the
+                        <filename>policy.json</filename> file. To use
+                    this extension, create a queue and specify the
+                    min/max bandwidth rates (kbps) and optionally set
+                    the QoS Marking and DSCP value (if your network
+                    fabric uses these values to make forwarding
+                    decisions). Once created, you can associate a
+                    queue with a network. Then, when ports are created
+                    on that network they are automatically created and
+                    associated with the specific queue size that was
+                    associated with the network. Because one size
+                    queue for a every port on a network may not be
+                    optimal, a scaling factor from the nova flavor
+                    'rxtx_factor' is passed in from OpenStack Compute
+                    when creating the port to scale the queue.</para>
+                <para>Lastly, if you want to set a specific baseline
+                    QoS policy for the amount of bandwidth a single
+                    port can use (unless a network queue is specified
+                    with the network a port is created on) a default
+                    queue can be created in quantum which then causes
+                    ports created to be associated with a queue of
+                    that size times the rxtx scaling factor. One thing
+                    to note is that after a network queue or default
+                    queue is specified this will not add queues to
+                    ports previously created and will only create
+                    queues for ports created thereafter.</para>
+                <section xml:id="nicira_nvp_qos_api_abstractions">
+                    <title>Nicira NVP QoS API Abstractions</title>
+                    <table rules="all">
+                        <caption>Nicira NVP QoS Attributes</caption>
+                        <col width="20%"/>
+                        <col width="20%"/>
+                        <col width="20%"/>
+                        <col width="40%"/>
+                        <thead>
+                            <tr>
+                                <th> Attribute name </th>
+                                <th> Type </th>
+                                <th> Default Value </th>
+                                <th> Description </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>id </td>
+                                <td>uuid-str </td>
+                                <td>generated </td>
+                                <td>UUID for the QoS queue. </td>
+                            </tr>
+                            <tr>
+                                <td>default </td>
+                                <td>Boolean </td>
+                                <td>False by default</td>
+                                <td>If True ports will be created with
+                                   this queue size unless the network
+                                   port is created or associated with
+                                   a queue at port creation time.</td>
+                            </tr>
+                            <tr>
+                                <td>name </td>
+                                <td>String </td>
+                                <td>None </td>
+                                <td>Name for QoS queue. </td>
+                            </tr>
+                            <tr>
+                                <td>min </td>
+                                <td>Integer </td>
+                                <td>0 </td>
+                                <td>Minimum Bandwidth Rate (kbps).
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>max </td>
+                                <td>Integer </td>
+                                <td>N/A </td>
+                                <td>Maximum Bandwidth Rate (kbps).
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>qos_marking </td>
+                                <td>String</td>
+                                <td>untrusted by default </td>
+                                <td>Whether QoS marking should be
+                                   trusted or untrusted. </td>
+                            </tr>
+                            <tr>
+                                <td>dscp </td>
+                                <td>Integer </td>
+                                <td>0 </td>
+                                <td>DSCP Marking value. </td>
+                            </tr>
+                            <tr>
+                                <td>tenant_id </td>
+                                <td>uuid-str </td>
+                                <td>N/A </td>
+                                <td>The owner of the QoS queue.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+                <section xml:id="nicira_nvp_qos_walk_through">
+                    <title>Nicira NVP QoS Walk Through</title>
+                    <para>Create QoS Queue (admin-only) </para>
+                    <screen><computeroutput>quantum queue-create--min 10 --max 1000 myqueue</computeroutput></screen>
+                    <para>Associate queue with a network</para>
+                    <screen><computeroutput>quantum net-create network --queue_id=&lt;queue_id&gt;</computeroutput></screen>
+                    <para>Create default system queue</para>
+                    <screen><computeroutput>quantum queue-create --default True --min 10 --max 2000 default</computeroutput></screen>
+                    <para>List QoS Queues: </para>
+                    <screen><computeroutput>quantum queue-list</computeroutput></screen>
+                    <para>Delete QoS Queue: </para>
+                    <screen><computeroutput>quantum queue-delete &lt;queue_id or name&gt;'</computeroutput></screen>
+                </section>
             </section>
-     </section>
-
+        </section>
+    </section>
 </chapter>
