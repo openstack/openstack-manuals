@@ -1,22 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <section xml:id="dashboard-custom-brand"
     xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" 
-    version="5.0">
-<title>Custom Brand the Dashboard</title>
-    <para>Adapted from a <link xlink:href="http://www.prestonlee.com/2012/05/09/how-to-custom-brand-the-openstack-horizon-dashboard/">blog post by Preston Lee</link>. </para>
-<para>When you deploy OpenStack
-    on <link xlink:href="http://www.ubuntu.com/">Ubuntu Server</link> 12.04, you can have the 
-    <literal>openstack-dashboard</literal> package installed to provide the web-based “Horizon” 
-    GUI component. Canonical also provides an 
-    <literal>openstack-dashboard-ubuntu-theme</literal> package that brands the Python-based Django GUI. 
-    </para>
-<para><link
-            xlink:href="http://horizon.openstack.org/topics/branding.html"
-            >The Horizon documents briefly mention branding
-            customization</link> to provide a head start. The
-        following example shows a custom-branded Horizon dashboard
-        with custom colors, logo, and site title:</para>
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Customize the dashboard</title>
+    <para>Adapted from <link
+            xlink:href="http://www.prestonlee.com/2012/05/09/how-to-custom-brand-the-openstack-horizon-dashboard/"
+            >How To Custom Brand The OpenStack “Horizon”
+            Dashboard</link>. </para>
+    <para>You install the OpenStack dashboard through the
+            <literal>openstack-dashboard</literal> package. You can
+        customize the dashboard with your own colors, logo, and site
+        title through a CSS file.</para>
+    <para>Canonical also provides an
+            <literal>openstack-dashboard-ubuntu-theme</literal>
+        package that brands the Python-based Django interface. </para>
+    <para>The following example shows a customized dashboard with
+        custom colors, logo, and site title:</para>
     <mediaobject>
         <imageobject role="fo">
             <imagedata
@@ -30,37 +30,53 @@
         </imageobject>
     </mediaobject>
     <mediaobject>
-            <imageobject role="fo">
-                <imagedata
-                    fileref="figures/Flavors-–-TGen-Cloud-Dashboard.png"
-                    format="PNG" contentwidth="6in"/>
-            </imageobject>
-            <imageobject role="html">
-                <imagedata
-                    fileref="figures/Flavors-–-TGen-Cloud-Dashboard.png"
-                    format="PNG"/>
-            </imageobject>
-        </mediaobject>
-<procedure><title>To customize the dashboard:</title>
-
-    <step><para>Create a graphical logo with a transparent background. The text “TGen Cloud” 
-        in this example is actually rendered via .png files of multiple sizes created with 
-        a graphics program. Use a 200×27 for the logged-in banner graphic, and 365×50 for 
-        the login screen graphic.</para></step>
-    <step><para>Set the HTML title (shown at the top of the browser window) by adding the 
-        following line to <filename>/etc/openstack-dashboard/local_settings.py</filename>: <code>SITE_BRANDING = "Example, Inc. Cloud"</code></para>
-    </step>
-    <step><para>Upload your new graphic files to:
-        <screen>/usr/share/openstack-dashboard/openstack_dashboard/static/dashboard/img/</screen></para>
-    </step>
-    <step><para>Create a new CSS style sheet — we’ll call ours custom.css — in the directory:
-        <screen>/usr/share/openstack-dashboard/openstack_dashboard/static/dashboard/css/</screen></para>
-    </step>
-    <step><para>Edit your CSS file using the 
-        following as a starting point for customization, which simply overrides the Ubuntu 
-        customizations made in the ubuntu.css file. </para>
-    <para>Change the colors and image file names as appropriate, though the relative directory paths should be the same.
-        <programlisting language="bash">/*
+        <imageobject role="fo">
+            <imagedata
+                fileref="figures/Flavors-–-TGen-Cloud-Dashboard.png"
+                format="PNG" scale="60"/>
+        </imageobject>
+        <imageobject role="html">
+            <imagedata
+                fileref="figures/Flavors-–-TGen-Cloud-Dashboard.png"
+                format="PNG"/>
+        </imageobject>
+    </mediaobject>
+    <procedure>
+        <title>To customize the dashboard:</title>
+        <step>
+            <para>Create a graphical logo with a transparent
+                background. The text <literal>TGen Cloud</literal> in
+                this example is rendered through
+                    <filename>.png</filename> files of multiple sizes
+                created with a graphics program. </para>
+            <para>Use a 200×27 for the logged-in banner graphic, and
+                365×50 for the login screen graphic.</para>
+        </step>
+        <step>
+            <para>Set the HTML title, which appears at the top of the
+                browser window, by adding the following line to
+                    <filename>/etc/openstack-dashboard/local_settings.py</filename>: </para>
+            <para><code>SITE_BRANDING = "Example, Inc.
+                Cloud"</code></para>
+        </step>
+        <step>
+            <para>Upload your new graphic files to the following
+                location:
+                <screen>/usr/share/openstack-dashboard/openstack_dashboard/static/dashboard/img/</screen></para>
+        </step>
+        <step>
+            <para>Create a CSS style sheet in the following directory:
+                <screen>/usr/share/openstack-dashboard/openstack_dashboard/static/dashboard/css/</screen></para>
+        </step>
+        <step>
+            <para>Edit your CSS file to override the Ubuntu
+                customizations in the <filename>ubuntu.css</filename>
+                file. </para>
+            <para>Change the colors and image file names as
+                appropriate, though the relative directory paths
+                should be the same. The following example file shows
+                you how to customize your CSS
+                file:<programlisting language="bash"><?db-font-size 65%?>/*
 * New theme colors for dashboard that override the defaults:
 *  dark blue: #355796 / rgb(53, 87, 150)
 *  light blue: #BAD3E1 / rgb(186, 211, 225)
@@ -92,19 +108,30 @@ border: none;
 box-shadow: none;
 background-color: #BAD3E1 !important;
 text-decoration: none;
-}</programlisting></para></step>
-    <step><para>Open the following HTML template in an editor:
-        <screen>/usr/share/openstack-dashboard/openstack_dashboard/templates/_stylesheets.html</screen></para></step>
-    <step><para>Add a line to include your new style sheet pointing to
-                custom.css: (I’ve highlighted the new line in
-                    <emphasis>bold</emphasis>.)
-                <programlisting language="bash">...
+}</programlisting></para>
+        </step>
+        <step>
+            <para>Open the following HTML template in an editor:
+                <screen>/usr/share/openstack-dashboard/openstack_dashboard/templates/_stylesheets.html</screen></para>
+        </step>
+        <step>
+            <para>Add a line to include your
+                    <filename>custom.css</filename> file:
+                <programlisting language="bash"><?db-font-size 65%?>...
  &lt;link href='{{ STATIC_URL }}bootstrap/css/bootstrap.min.css' media='screen' rel='stylesheet' /&gt;
  &lt;link href='{{ STATIC_URL }}dashboard/css/{% choose_css %}' media='screen' rel='stylesheet' /&gt;
  <emphasis>&lt;link href='{{ STATIC_URL }}dashboard/css/custom.css' media='screen' rel='stylesheet' /&gt;</emphasis>
- ...</programlisting></para></step>
-    <step><para>Restart apache just for good measure: <code os="ubuntu">sudo service apache2 restart</code><code os="centos;fedora;rhel">sudo service httpd restart</code></para>
+ ...</programlisting></para>
         </step>
-    <step><para>Reload the dashboard in your browser and fine tune your CSS appropriate.</para></step>
-</procedure>
+        <step>
+            <para>Restart apache:</para>
+            <programlisting language="bash" os="ubuntu">sudo service apache2 restart</programlisting>
+            <programlisting language="bash" os="centos;fedora;rhel">sudo service httpd restart</programlisting>
+        </step>
+        <step>
+            <para>Reload the dashboard in your browser to view your
+                changes.</para>
+            <para>Modify your CSS file as appropriate.</para>
+        </step>
+    </procedure>
 </section>
