@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0"
+    xml:id="keystone-configuration-file">
+    <title>Configuration Files</title>
+    <para>
+        The Identity configuration file is an 'ini' file format with
+        sections, extended from
+        <link xlink:href="http://pythonpaste.org/">Paste</link>, a common
+        system used to configure python WSGI based applications. In
+        addition to the paste config entries, general configuration values
+        are stored under <literal>[DEFAULT]</literal>,
+        <literal>[sql]</literal>, <literal>[ec2]</literal> and then
+        drivers for the various services are included in
+        individual sections.
+    </para>
+    <para> The services include: </para>
+    <itemizedlist>
+        <listitem>
+            <para>
+                <literal>[DEFAULT]</literal> - general configuration
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <literal>[sql]</literal> - optional storage backend
+                configuration
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <literal>[ec2]</literal> - Amazon EC2 authentication driver
+                configuration
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <literal>[s3]</literal> - Amazon S3 authentication driver
+                configuration.
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <literal>[identity]</literal> - identity system driver
+                configuration
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <literal>[catalog]</literal> - service catalog driver
+                configuration
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <literal>[token]</literal> - token driver configuration
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <literal>[policy]</literal> - policy system driver configuration
+                for RBAC
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <literal>[signing]</literal> - cryptographic signatures for PKI
+                based tokens
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <literal>[ssl]</literal> - SSL configuration
+            </para>
+        </listitem>
+    </itemizedlist>
+    <para>
+        The configuration file is expected to be named
+        <filename>keystone.conf</filename>. When starting Identity, you
+        can specify a different configuration file to use with
+        <literal>--config-file</literal>. If you do
+        <emphasis role="strong">not</emphasis> specify a configuration
+        file, keystone looks in the following directories for a
+        configuration file, in the following order:
+    </para>
+    <orderedlist>
+        <listitem>
+            <para>
+                <literal>~/.keystone</literal>
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <literal>~/</literal>
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <literal>/etc/keystone</literal>
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <literal>/etc</literal>
+            </para>
+        </listitem>
+    </orderedlist>
+</section>

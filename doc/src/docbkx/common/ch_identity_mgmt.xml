@@ -51,115 +51,11 @@ pipeline = stats_monitoring url_normalize token_auth admin_token_auth xml_body j
 -H &quot;X_Auth_Token: &lt;authtokenid&gt;&quot; -d '{&quot;user&quot;: {&quot;password&quot;: &quot;ABCD&quot;, &quot;original_password&quot;: &quot;DCBA&quot;}}'
 </screen>
     <para>
-      In addition to changing their password all of the users current
-      tokens will be deleted (if the backend used is kvs or sql)
+    If the backend is kvs or sql, all users' passwords are changed
+    and their tokens are deleted.
     </para>
   </section>
-  <section xml:id="keystone-configuration-file">
-    <title>Configuration Files</title>
-    <para>
-      The Identity configuration file is an 'ini' file format with
-      sections, extended from
-      <link xlink:href="http://pythonpaste.org/">Paste</link>, a common
-      system used to configure python WSGI based applications. In
-      addition to the paste config entries, general configuration values
-      are stored under <literal>[DEFAULT]</literal>,
-      <literal>[sql]</literal>, <literal>[ec2]</literal> and then
-      drivers for the various services are included under their
-      individual sections.
-    </para>
-    <para> The services include: </para>
-      <itemizedlist>
-      <listitem>
-        <para>
-          <literal>[DEFAULT]</literal> - general configuration
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <literal>[sql]</literal> - optional storage backend
-          configuration
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <literal>[ec2]</literal> - Amazon EC2 authentication driver
-          configuration
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <literal>[s3]</literal> - Amazon S3 authentication driver
-          configuration.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <literal>[identity]</literal> - identity system driver
-          configuration
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <literal>[catalog]</literal> - service catalog driver
-          configuration
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <literal>[token]</literal> - token driver configuration
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <literal>[policy]</literal> - policy system driver configuration
-          for RBAC
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <literal>[signing]</literal> - cryptographic signatures for PKI
-          based tokens
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <literal>[ssl]</literal> - SSL configuration
-        </para>
-      </listitem>
-    </itemizedlist>
-    <para>
-      The configuration file is expected to be named
-      <filename>keystone.conf</filename>. When starting Identity, you
-      can specify a different configuration file to use with
-      <literal>--config-file</literal>. If you do
-      <emphasis role="strong">not</emphasis> specify a configuration
-      file, keystone will look in the following directories for a
-      configuration file, in order:
-    </para>
-    <itemizedlist>
-      <listitem>
-        <para>
-          <literal>~/.keystone</literal>
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <literal>~/</literal>
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <literal>/etc/keystone</literal>
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <literal>/etc</literal>
-        </para>
-      </listitem>
-    </itemizedlist>
-  </section>
+  <xi:include href="../common/identity-configure.xml"/>
   <section xml:id="keystone-logging">
     <title>Logging</title>
     <para> Logging is configured externally to the rest of Identity,
@@ -257,21 +153,7 @@ $ curl -H 'X-Auth-Token: ADMIN' -X DELETE http://localhost:35357/v2.0/OS-STATS/s
 </screen>
   </section>
   <xi:include href="certificates-for-pki.xml"/>
-    <section xml:id="sample-configuration-files">
-      <title>Sample Configuration Files</title>
-      <itemizedlist>
-        <listitem>
-          <para>
-            <filename>etc/keystone.conf</filename>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <literal>etc/logging.conf.sample</literal>
-          </para>
-        </listitem>
-      </itemizedlist>
-    </section>
+  <xi:include href="keystone-sample-conf-files.xml"/>  
   
   <section xml:id="running-keystone">
     <title>Running</title>
