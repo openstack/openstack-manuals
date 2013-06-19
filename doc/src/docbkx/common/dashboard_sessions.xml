@@ -1,90 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <section xml:id="dashboard-sessions"
     xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" 
-    version="5.0">
-<title>Set up Dashboard Session Storage</title>
-<para>The dashboard uses <link
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Set up session storage for the dashboard</title>
+    <para>The dashboard uses <link
             xlink:href="https://docs.djangoproject.com/en/dev/topics/http/sessions/"
             >Django’s sessions framework</link> to handle user session
-        data. However, you can use any available session back-end. You
-        customize the session back-end through the
+        data. However, you can use any available session backend. You
+        customize the session backend through the
             <literal>SESSION_ENGINE</literal> setting in your
             <filename os="centos;fedora;rhel">
             /etc/openstack-dashboard/local_settings</filename>
         <filename os="ubuntu">local_settings.py</filename> file. </para>
     <para>The following sections describe the pros and cons of each
-        option as it pertains to deploying the dashboard.  </para>
-<section xml:id="dashboard-session-local">
-<title>Local Memory Cache</title>
- <para>Local memory storage is the quickest and easiest session
+        option as it pertains to deploying the dashboard. </para>
+    <section xml:id="dashboard-session-local">
+        <title>Local memory cache</title>
+        <para>Local memory storage is the quickest and easiest session
             backend to set up, as it has no external dependencies
             whatsoever. It has the following significant
             drawbacks:</para>
- <orderedlist>
-  <listitem><para>No shared storage across processes or workers.</para></listitem>
-  <listitem><para>No persistence after a process terminates.</para></listitem>
- </orderedlist>
- <para>The local memory backend is enabled as the default for Horizon
- solely because it has no dependencies. It is not recommended for
- production use, or even for serious development work. Enabled by:</para>
- <programlisting language="python">SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+        <itemizedlist>
+            <listitem>
+                <para>No shared storage across processes or
+                    workers.</para>
+            </listitem>
+            <listitem>
+                <para>No persistence after a process
+                    terminates.</para>
+            </listitem>
+        </itemizedlist>
+        <para>The local memory backend is enabled as the default for
+            Horizon solely because it has no dependencies. It is not
+            recommended for production use, or even for serious
+            development work. Enabled by:</para>
+        <programlisting language="python">SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 CACHES = {
     'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
 }</programlisting>
-</section>
-
-<section xml:id="dashboard-session-memcache">
- <title>Memcached</title>
- <para>External caching using an application such as memcached 
- offers persistence and shared storage, and can be very useful
- for small-scale deployment and/or development. However, for
- distributed and high-availability scenarios memcached has 
- inherent problems which are beyond the scope of this documentation.</para>
- <para>Memcached is an extremely fast and efficient cache backend for
-            cases where it fits the deployment need, but it’s not
-            appropriate for all scenarios.</para>
- <para>Requirements:</para>
- <orderedlist>
-  <listitem><para>Memcached service running and accessible.</para></listitem>
-   <listitem><para>Python memcached module installed.</para></listitem>
- </orderedlist>
-<para>Enabled by:</para>
- <programlisting language="python">SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+    </section>
+    <section xml:id="dashboard-session-memcache">
+        <title>Memcached</title>
+        <para>External caching using an application such as memcached
+            offers persistence and shared storage, and can be very
+            useful for small-scale deployment and/or development.
+            However, for distributed and high-availability scenarios
+            memcached has inherent problems which are beyond the scope
+            of this documentation.</para>
+        <para>Memcached is an extremely fast and efficient cache
+            backend for cases where it fits the deployment need, but
+            it’s not appropriate for all scenarios.</para>
+        <para>Requirements:</para>
+        <itemizedlist>
+            <listitem>
+                <para>Memcached service running and accessible.</para>
+            </listitem>
+            <listitem>
+                <para>Python memcached module installed.</para>
+            </listitem>
+        </itemizedlist>
+        <para>Enabled by:</para>
+        <programlisting language="python">SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 CACHES = {
     'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache'
     'LOCATION': 'my_memcached_host:11211',
 }</programlisting>
-</section>
-<section xml:id="dashboard-session-database">
- <title>Database</title>
- <para>Database-backed sessions are scalable (using an appropriate
- database strategy), persistent, and can be made high-concurrency
- and highly-available.</para>
-
- <para>The downside to this approach is that database-backed sessions
- are one of the slower session storages, and incur a high overhead
- under heavy usage. Proper configuration of your database deployment
- can also be a substantial undertaking and is far beyond the scope
- of this documentation. To enable, follow the below steps to
- initialise the database and configure it for use</para>
-
-  <para>Start the mysql command line client by running:</para>
-    <screen><prompt>$ </prompt><userinput>mysql -u root -p</userinput></screen>
-    <para>Enter the MySQL root user's password when prompted.</para>
-    <para>To configure the MySQL database, create the dash database. </para>
-    <para><screen><prompt>mysql></prompt> <userinput>CREATE DATABASE dash;</userinput></screen></para>
-    <para>Create a MySQL user for the newly-created dash database that
-        has full control of the database. </para>
-    <para><screen><prompt>mysql></prompt> <userinput>GRANT ALL ON dash.* TO 'dash'@'%' IDENTIFIED BY
-        'yourpassword';</userinput></screen></para>
-    <para>Enter quit at the <literal>mysql></literal> prompt to exit MySQL.</para>
-
- <para>In the <filename os="ubuntu">/etc/openstack-dashboard/local_settings.py</filename>
- <filename os="centos;fedora;rhel">/etc/openstack-dashboard/local_settings</filename>
- file, change these options:</para>
-
- <programlisting language="python">SESSION_ENGINE = 'django.core.cache.backends.db.DatabaseCache'
+    </section>
+    <section xml:id="dashboard-session-database">
+        <title>Database</title>
+        <para>Database-backed sessions are scalable, persistent, and
+            can be made high-concurrency and highly-available.</para>
+        <para>However, database-backed sessions are one of the slower
+            session storages and incur a high overhead under heavy
+            usage. Proper configuration of your database deployment
+            can also be a substantial undertaking and is far beyond
+            the scope of this documentation. </para>
+        <procedure>
+            <title>To initialize and configure the database:</title>
+            <step>
+                <para>Start the mysql command line client:</para>
+                <screen><prompt>$ </prompt><userinput>mysql -u root -p</userinput></screen>
+            </step>
+            <step>
+                <para>Enter the MySQL root user's password when
+                    prompted.</para>
+            </step>
+            <step>
+                <para>To configure the MySQL database, create the dash
+                    database:</para>
+                <para><screen><prompt>mysql></prompt> <userinput>CREATE DATABASE dash;</userinput></screen></para>
+            </step>
+            <step>
+                <para>Create a MySQL user for the newly-created dash
+                    database that has full control of the
+                    database:</para>
+                <para><screen><prompt>mysql></prompt> <userinput>GRANT ALL ON dash.* TO 'dash'@'%' IDENTIFIED BY 'yourpassword';</userinput></screen></para>
+            </step>
+            <step>
+                <para>Enter quit at the <literal>mysql></literal>
+                    prompt to exit MySQL.</para>
+            </step>
+            <step>
+                <para>In the <filename os="ubuntu"
+                        >/etc/openstack-dashboard/local_settings.py</filename>
+                    <filename os="centos;fedora;rhel"
+                        >/etc/openstack-dashboard/local_settings</filename>
+                    file, change these options:</para>
+                <programlisting language="python">SESSION_ENGINE = 'django.core.cache.backends.db.DatabaseCache'
 DATABASES = {
     'default': {
         # Database configuration here
@@ -96,57 +119,74 @@ DATABASES = {
         'default-character-set': 'utf8'
     }
 }</programlisting>
- <para>After configuring the <filename os="ubuntu">local_settings.py</filename>
-    <filename os="centos;fedora;rhel">/etc/openstack-dashboard/local_settings</filename> 
-        as shown, you can run
-        the <command>manage.py syncdb</command> command to populate this newly-created
-        database.</para>
-    <screen><prompt>$</prompt> /usr/share/openstack-dashboard/manage.py syncdb </screen>
-    <para>As a result, you should see the following at the end of what returns:</para>
-    <screen><computeroutput>Installing custom SQL ...
+            </step>
+            <step>
+                <para>After configuring the <filename os="ubuntu"
+                        >local_settings.py</filename>
+                    <filename os="centos;fedora;rhel"
+                        >/etc/openstack-dashboard/local_settings</filename>
+                    as shown, you can run the <command>manage.py
+                        syncdb</command> command to populate this
+                    newly-created database.</para>
+                <screen><prompt>$</prompt> /usr/share/openstack-dashboard/manage.py syncdb </screen>
+                <para>As a result, the following output is
+                    returned:</para>
+                <screen><computeroutput>Installing custom SQL ...
 Installing indexes ...
 DEBUG:django.db.backends:(0.008) CREATE INDEX `django_session_c25c2c28` ON `django_session` (`expire_date`);; args=()
 No fixtures found.</computeroutput></screen>
-    <para os="ubuntu">If you want to avoid a warning when restarting apache2, create a blackhole directory in the dashboard directory like so:</para>
-    <screen os="ubuntu"><prompt>#</prompt> <userinput> sudo mkdir -p /var/lib/dash/.blackhole</userinput></screen>
-   <para>Restart Apache to pick up the default site and symbolic link settings.</para>
-    <screen os="ubuntu"><prompt>#</prompt> <userinput>/etc/init.d/apache2 restart</userinput></screen>
-    <screen os="centos;fedora;rhel"><prompt>#</prompt> <userinput>service httpd restart</userinput></screen>
-    <para os="ubuntu">Restart the nova-api service to ensure the API server can connect to the Dashboard and to
-        avoid an error displayed in the Dashboard. </para>
-    <screen os="ubuntu"><userinput>sudo restart nova-api</userinput></screen>
-
-</section>
-<section xml:id="dashboard-session-cached-database">
- <title>Cached Database</title>
- <para>To mitigate the performance issues of database queries, you
- can also consider using Django’s cached_db session backend which
- utilizes both your database and caching infrastructure to perform
- write-through caching and efficient retrieval. You can enable this
- hybrid setting by configuring both your database and cache as
- discussed above and then using:</para>
-
- <programlisting language="python">SESSION_ENGINE = "django.contrib.sessions.backends.cached_db" </programlisting>
-</section>
-<section xml:id="dashboard-session-cookies">
- <title>Cookies</title>
- <para>If you’re using Django 1.4 or later, a new session backend
- is available to you which avoids server load and scaling problems:
- the signed_cookies backend!</para>
- <para>This backend stores session data in a cookie which is stored
- by the user’s browser. The backend uses a cryptographic signing
- technique to ensure session data is not tampered with during
- transport (this is not the same as encryption, session data is still
- readable by an attacker).</para>
- <para>The pros of this session engine are that it doesn’t require
- any additional dependencies or infrastructure overhead, and it
- scales indefinitely as long as the quantity of session data being
- stored fits into a normal cookie.</para>
- <para>The biggest downside is that it places session data into
- storage on the user’s machine and transports it over the wire. It
- also limits the quantity of session data which can be stored.</para>
- <para>For a thorough discussion of the security implications of
- this session backend, please read the Django documentation on
- <link xlink:href="https://docs.djangoproject.com/en/dev/topics/http/sessions/#using-cookie-based-sessions">cookie-based sessions.</link></para>
-</section>
+            </step>
+            <step os="ubuntu">
+                <para>If you want to avoid a warning when you restart
+                    apache2, create a blackhole directory in the
+                    dashboard directory, as follows:</para>
+                <screen><prompt>#</prompt> <userinput> sudo mkdir -p /var/lib/dash/.blackhole</userinput></screen>
+            </step>
+            <step>
+                <para>Restart Apache to pick up the default site and
+                    symbolic link settings:</para>
+                <screen os="ubuntu"><prompt>#</prompt> <userinput>/etc/init.d/apache2 restart</userinput></screen>
+                <screen os="centos;fedora;rhel"><prompt>#</prompt> <userinput>service httpd restart</userinput></screen>
+            </step>
+            <step os="ubuntu">
+                <para>Restart the nova-api service to ensure that the
+                    API server can connect to the dashboard without
+                    error: </para>
+                <screen><prompt>#</prompt> <userinput>sudo restart nova-api</userinput></screen>
+            </step>
+        </procedure>
+    </section>
+    <section xml:id="dashboard-session-cached-database">
+        <title>Cached Database</title>
+        <para>To mitigate the performance issues of database queries,
+            you can use the Django cached_db session backend, which
+            utilizes both your database and caching infrastructure to
+            perform write-through caching and efficient retrieval. </para>
+        <para>Enable this hybrid setting by configuring both your
+            database and cache, as discussed previously. Then, set the
+            following value: </para>
+        <programlisting language="python">SESSION_ENGINE = "django.contrib.sessions.backends.cached_db" </programlisting>
+    </section>
+    <section xml:id="dashboard-session-cookies">
+        <title>Cookies</title>
+        <para>If you use Django 1.4 or later, the signed_cookies
+            backend avoids server load and scaling problems.</para>
+        <para>This backend stores session data in a cookie, which is
+            stored by the user’s browser. The backend uses a
+            cryptographic signing technique to ensure session data is
+            not tampered with during transport. This is not the same
+            as encryption; session data is still readable by an
+            attacker.</para>
+        <para>The pros of this engine are that it requires no
+            additional dependencies or infrastructure overhead, and it
+            scales indefinitely as long as the quantity of session
+            data being stored fits into a normal cookie.</para>
+        <para>The biggest downside is that it places session data into
+            storage on the user’s machine and transports it over the
+            wire. It also limits the quantity of session data that can
+            be stored.</para>
+        <para>See the Django <link
+                xlink:href="https://docs.djangoproject.com/en/dev/topics/http/sessions/#using-cookie-based-sessions"
+                >cookie-based sessions</link> documentation.</para>
+    </section>
 </section>
