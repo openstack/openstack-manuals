@@ -15,7 +15,6 @@
         options:</para>
     <programlisting>
 scheduler_driver=nova.scheduler.multi.MultiScheduler
-volume_scheduler_driver=nova.scheduler.chance.ChanceScheduler
 compute_scheduler_driver=nova.scheduler.filter_scheduler.FilterScheduler
 scheduler_available_filters=nova.scheduler.filters.all_filters
 scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
@@ -26,9 +25,6 @@ compute_fill_first_cost_fn_weight=-1.0
         Scheduler, which allows the admin to specify different
         scheduling behavior for compute requests versus volume
         requests. </para>
-    <para>The volume scheduler is configured by default as a Chance
-        Scheduler, which picks a host at random that has the
-            <command>cinder-volume</command> service running.</para>
     <para> The compute scheduler is configured by default as a Filter
         Scheduler, described in detail in the next section. In the
         default configuration, this scheduler will only consider hosts
