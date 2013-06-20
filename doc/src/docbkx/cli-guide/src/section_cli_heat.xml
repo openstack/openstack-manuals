@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:svg="http://www.w3.org/2000/svg"
+    xmlns:html="http://www.w3.org/1999/xhtml" version="5.0"
+    xml:id="heat-stack-create">
+    <title>Create and manage stacks</title>
+    <procedure>
+        <title>To create a stack from an example template file</title>
+        <step>
+            <para>To create a stack, or template, from an <link
+                    xlink:href="https://github.com/openstack/heat/blob/master/templates/WordPress_Single_Instance.template"
+                    >example template file</link>, run following
+                command:</para>
+            <screen><prompt>$</prompt> <userinput>heat stack-create mystack --template-file=/path/to/heat/templates/WordPress_Single_Instance.template
+--parameters="InstanceType=m1.large;DBUsername=wp;DBPassword=verybadpassword;KeyName=heat_key;LinuxDistribution=F17"</userinput></screen>
+<para>The <literal>--parameters</literal> values that you specify
+                depend on which parameters are defined in the
+                template. If the template file is hosted on a website,
+                you can specify the URL with
+                    <literal>--template-url</literal> parameter
+                instead of the <literal>--template-file</literal>
+                parameter.</para>
+            <para>The command returns the following output:</para>
+            <screen><computeroutput>+--------------------------------------+---------------+--------------------+----------------------+
+| id                                   | stack_name    | stack_status       | creation_time        |
++--------------------------------------+---------------+--------------------+----------------------+
+| 4c712026-dcd5-4664-90b8-0915494c1332 | mystack       | CREATE_IN_PROGRESS | 2013-04-03T23:22:08Z |
++--------------------------------------+---------------+--------------------+----------------------+</computeroutput></screen>
+        </step>
+        <step>
+            <para>You can also use the <command>stack-create</command>
+                command to validate a template file without creating a
+                stack from it. </para>
+            <para>To do so, run the following command:</para>
+            <screen><prompt>$</prompt> <userinput>heat stack-create mystack --template-file=/path/to/heat/templates/WordPress_Single_Instance.template</userinput></screen>
+            <para>If validation fails, the response returns an error
+                message.</para>
+        </step>
+    </procedure>
+    <procedure>
+        <title>To list stacks</title>
+        <step>
+            <para>To see which stacks are visible to the current user,
+                run the following command:
+                <screen><prompt>$</prompt> <userinput>heat stack-list</userinput></screen><screen><computeroutput>+--------------------------------------+---------------+-----------------+----------------------+
+| id                                   | stack_name    | stack_status    | creation_time        |
++--------------------------------------+---------------+-----------------+----------------------+
+| 4c712026-dcd5-4664-90b8-0915494c1332 | mystack       | CREATE_COMPLETE | 2013-04-03T23:22:08Z |
+| 7edc7480-bda5-4e1c-9d5d-f567d3b6a050 | my-otherstack | CREATE_FAILED   | 2013-04-03T23:28:20Z |
++--------------------------------------+---------------+-----------------+----------------------+</computeroutput></screen></para>
+        </step>
+    </procedure>
+    <procedure xml:id="heat-stack-details">
+        <title>To view stack details</title>
+        <para>To explore the state and history of a particular stack, you can run a number of commands. </para>
+        <step>
+            <para>To show the details of a stack, run the following
+                command:</para>
+            <screen><prompt>$</prompt> <userinput>heat stack-show mystack</userinput></screen></step>
+           <step><para>A stack consists of a collection of resources. To list the
+                resources, including their status, in a stack, run the
+                following command:</para>
+            <screen><prompt>$</prompt> <userinput>heat resource-list mystack</userinput></screen>
+<screen><computeroutput>+---------------------+--------------------+-----------------+----------------------+
+| logical_resource_id | resource_type      | resource_status | updated_time         |
++---------------------+--------------------+-----------------+----------------------+
+| WikiDatabase        | AWS::EC2::Instance | CREATE_COMPLETE | 2013-04-03T23:25:56Z |
++---------------------+--------------------+-----------------+----------------------+</computeroutput></screen>
+           </step>
+<step>
+            <para>To show the details for the specified resource in a
+                stack, run the following command:</para>
+            <screen><prompt>$</prompt> <userinput>heat resource-show mystack WikiDatabase</userinput></screen>
+            <para>Some resources have associated metadata which can
+                change throughout the life-cycle of a resource:</para>
+            <screen><prompt>$</prompt> <userinput>heat resource-metadata mystack WikiDatabase</userinput></screen></step>
+           <step><para>A series of events is generated during the
+                life-cycle of a stack. This command will display those
+                events.</para>
+            <screen><prompt>$</prompt> <userinput>heat event-list mystack</userinput></screen><screen><computeroutput>+---------------------+----+------------------------+-----------------+----------------------+
+| logical_resource_id | id | resource_status_reason | resource_status | event_time           |
++---------------------+----+------------------------+-----------------+----------------------+
+| WikiDatabase        | 1  | state changed          | IN_PROGRESS     | 2013-04-03T23:22:09Z |
+| WikiDatabase        | 2  | state changed          | CREATE_COMPLETE | 2013-04-03T23:25:56Z |
++---------------------+----+------------------------+-----------------+----------------------+</computeroutput></screen>
+            </step><step><para>To show the details for a particular event, run the following
+                command:</para>
+            <screen><prompt>$</prompt> <userinput>heat event-show WikiDatabase 1</userinput></screen>
+        </step>
+    </procedure>
+    <procedure xml:id="heat-stack-update">
+        <title>To update a stack</title>
+        <step>
+            <para>To update an existing stack from a modified template
+                file, run a command like the following
+                command:</para><screen><prompt>$</prompt> <userinput>heat stack-update mystack --template-file=/path/to/heat/templates/WordPress_Single_Instance_v2.template
+     --parameters="InstanceType=m1.large;DBUsername=wp;DBPassword=verybadpassword;KeyName=heat_key;LinuxDistribution=F17"</userinput></screen><screen><computeroutput>+--------------------------------------+---------------+-----------------+----------------------+
+| id                                   | stack_name    | stack_status    | creation_time        |
++--------------------------------------+---------------+-----------------+----------------------+
+| 4c712026-dcd5-4664-90b8-0915494c1332 | mystack       | UPDATE_COMPLETE | 2013-04-03T23:22:08Z |
+| 7edc7480-bda5-4e1c-9d5d-f567d3b6a050 | my-otherstack | CREATE_FAILED   | 2013-04-03T23:28:20Z |
++--------------------------------------+---------------+-----------------+----------------------+</computeroutput></screen>
+            <para>Some resources are updated in-place, while others
+                are replaced with new resources.</para>
+        </step>
+    </procedure>
+</section>

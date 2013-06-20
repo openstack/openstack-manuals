@@ -1,23 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section xmlns="http://docbook.org/ns/docbook"
-    xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
-    xml:id="cinder_commands">
-    <title>cinder Command Reference</title>
-    <literallayout class="monospaced">
-Command-line interface to the OpenStack Volume API.
-
-Positional arguments:
-  &lt;subcommand>
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+  xml:id="cinder_commands">
+  <title>cinder commands</title>
+  <para>Describes commands for cinder, which is the command-line
+    interface for the OpenStack Identity API.</para>
+  <para>For help on a specific cinder command, enter:</para>
+  <screen><userinput><command>cinder</command> <option>help</option> <replaceable>COMMAND</replaceable></userinput></screen>
+  <example>
+    <title>Usage</title>
+    <screen><computeroutput>cinder [--version] [--debug] [--os-username &lt;auth-user-name>]
+       [--os-password &lt;auth-password>]
+       [--os-tenant-name &lt;auth-tenant-name>]
+       [--os-tenant-id &lt;auth-tenant-id>] [--os-auth-url &lt;auth-url>]
+       [--os-region-name &lt;region-name>] [--service-type &lt;service-type>]
+       [--service-name &lt;service-name>]
+       [--volume-service-name &lt;volume-service-name>]
+       [--endpoint-type &lt;endpoint-type>]
+       [--os-volume-api-version &lt;compute-api-ver>]
+       [--os-cacert &lt;ca-certificate>] [--retries &lt;retries>]
+       &lt;subcommand> ...</computeroutput></screen>
+  </example>
+  <example>
+    <title>Positional arguments</title>
+    <screen><computeroutput>&lt;subcommand>
     absolute-limits     Print a list of absolute limits for a user
+    backup-create       Creates a backup.
+    backup-delete       Remove a backup.
+    backup-list         List all the backups.
+    backup-restore      Restore a backup.
+    backup-show         Show details about a backup.
     create              Add a new volume.
-    credentials         Show user credentials returned from auth
+    credentials         Show user credentials returned from auth.
     delete              Remove a volume.
     endpoints           Discover endpoints that get returned from the
-                        authenticate services
+                        authenticate services.
     extra-specs-list    Print a list of current 'volume types and extra specs'
                         (Admin Only).
+    force-delete        Attempt forced removal of a volume, regardless of its
+                        state.
     list                List all the volumes.
+    metadata            Set or Delete metadata on a volume.
     quota-class-show    List the quotas for a quota class.
     quota-class-update  Update the quotas for a quota class.
     quota-defaults      List the default quotas for a tenant.
@@ -32,16 +56,18 @@ Positional arguments:
     snapshot-rename     Rename a snapshot.
     snapshot-show       Show details about a snapshot.
     type-create         Create a new volume type.
-    type-delete         Delete a specific volume type
+    type-delete         Delete a specific volume type.
     type-key            Set or unset extra_spec for a volume type.
     type-list           Print a list of available 'volume types'.
-    bash-completion     Prints all of the commands and options to stdout so
-                        that the
+    upload-to-image     Upload volume to image service as image.
+    bash-completion     Print arguments for bash_completion.
     help                Display help about this program or one of its
                         subcommands.
-    list-extensions     List all the os-api extensions that are available.
-
-Optional arguments:
+    list-extensions     List all the os-api extensions that are available.</computeroutput></screen>
+  </example>
+  <example>
+    <title>Optional arguments</title>
+    <screen><computeroutput>  --version             show program's version number and exit
   --debug               Print debugging output
   --os-username &lt;auth-user-name>
                         Defaults to env[OS_USERNAME].
@@ -49,6 +75,8 @@ Optional arguments:
                         Defaults to env[OS_PASSWORD].
   --os-tenant-name &lt;auth-tenant-name>
                         Defaults to env[OS_TENANT_NAME].
+  --os-tenant-id &lt;auth-tenant-id>
+                        Defaults to env[OS_TENANT_ID].
   --os-auth-url &lt;auth-url>
                         Defaults to env[OS_AUTH_URL].
   --os-region-name &lt;region-name>
@@ -62,12 +90,10 @@ Optional arguments:
   --endpoint-type &lt;endpoint-type>
                         Defaults to env[CINDER_ENDPOINT_TYPE] or publicURL.
   --os-volume-api-version &lt;compute-api-ver>
-                        Accepts 1,defaults to env[OS_VOLUME_API_VERSION].
+                        Accepts 1 or 2,defaults to env[OS_VOLUME_API_VERSION].
   --os-cacert &lt;ca-certificate>
                         Specify a CA bundle file to use in verifying a TLS
                         (https) server certificate. Defaults to env[OS_CACERT]
-  --retries &lt;retries>   Number of retries.
-
-See "cinder help COMMAND" for help on a specific command.
-    </literallayout>
+  --retries &lt;retries>   Number of retries.</computeroutput></screen>
+  </example>
 </section>

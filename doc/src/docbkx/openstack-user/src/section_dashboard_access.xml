@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section [ 
+ <!-- Some useful entities borrowed from HTML -->
+<!ENTITY ndash  "&#x2013;">
+<!ENTITY mdash  "&#x2014;">
+<!ENTITY hellip "&#x2026;">  
+]>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:raxm="http://docs.rackspace.com/api/metadata" version="5.0"
+    xml:id="section_dashboard_overview">
+    <info>
+        <title>Log in to the dashboard</title>
+    </info>
+    <?dbhtml stop-chunking?>
+    <para>Learn how to log in to the dashboard and get a short
+        overview of the interface.</para>
+    <note>
+        <para>To use the VNC client with the dashboard, the browser
+            must support HTML5 Canvas and HTML5 WebSockets. </para>
+        <para>For details about browsers that support noVNC, see <link
+                xlink:href="https://github.com/kanaka/noVNC/blob/master/README.md"
+                >noVNC: HTML5 VNC Client</link>, and <link
+                xlink:href="https://github.com/kanaka/noVNC/wiki/Browser-support"
+                >Browser support</link>, respectively. </para>
+    </note>
+    <procedure>
+        <title>To log in to the dashboard</title>
+        <step>
+            <para>Ask your cloud operator for the following
+                information:</para>
+            <itemizedlist>
+                <listitem>
+                    <para>The host name or public IP address from
+                        which you can access the dashboard.</para>
+                    <para>The dashboard is available on the node that
+                        has the <literal>nova-dashboard</literal>
+                        server role. </para>
+                </listitem>
+                <listitem>
+                    <para>The user name and password with which you
+                        can log in to the dashboard. </para>
+                </listitem>
+            </itemizedlist>
+        </step>
+        <step>
+            <para>Open a Web browser that supports HTML5. Make sure
+                that JavaScript and cookies are enabled. </para>
+        </step>
+        <step>
+            <para>As a URL, enter the host name or IP address that you
+                got from the cloud operator.</para>
+            <literallayout>https://IP_ADDRESS_OR_HOSTNAME/</literallayout>
+            <note>
+                <title>Certificate Warning</title>
+                <para>You might get a certificate warning when you try
+                    to access the URL for the first time depending on
+                    your browser and browser options. In case no
+                    certificate is provided when the cloud operator
+                    sets up the dashboard, the OpenStack cloud uses a
+                    self-signed certificate that is not considered
+                    trustworthy by default. In this case, verify the
+                    certificate. To proceed anyway, you can add an
+                    exception in the browser to bypass the warning.
+                </para>
+            </note>
+        </step>
+        <step>
+            <para>On the dashboard log in page, enter your user name
+                and password and click <guibutton>Sign In</guibutton>. </para>
+            <figure>
+                <title>OpenStack dashboard &ndash; Log In</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="figures/dashboard.png"
+                            format="PNG" contentwidth="4in"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+        </step>
+        <step>
+            <para>After you log in, the following page appears:
+                    <figure xml:id="dashboard_main_page_user">
+                    <title>OpenStack dashboard &ndash; Log In</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata
+                                fileref="figures/dashboard-project.png"
+                                format="PNG" contentwidth="4in"/>
+                        </imageobject>
+                    </mediaobject>
+                </figure>
+            </para>
+            <para>The top-level row of the main page shows the user
+                name that you logged in with. </para>
+            <para>It also allows you to access the
+                    <guilabel>Settings</guilabel> or to
+                    <guibutton>Sign Out</guibutton> of the Web
+                interface. </para>
+            <note>
+                <para>The visible tabs and functions in the dashboard
+                    depend on the access permissions of the user that
+                    is logged in. They are defined by roles. </para>
+            </note>
+            <para>If you are logged in as a user, the main screen
+                shows only the <guilabel>Project</guilabel> tab. </para>
+            <para>This tab shows details for the projects, or tenants,
+                of which you are a member.</para>
+        </step>
+        <step>
+            <para>Select a project from the drop-down list on the
+                left-hand side to access the following categories: <itemizedlist>
+                    <listitem>
+                        <para><guilabel>Overview</guilabel>. Shows
+                            basic reports on the project. </para>
+                    </listitem>
+                    <listitem>
+                        <para><guilabel>Instances</guilabel>. Lists
+                            instances and volumes created by users of
+                            the project. </para>
+                        <para>From here, you can stop, pause, or
+                            reboot any instances or connect to them
+                            through virtual network computing (VNC).
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para><guilabel>Volumes</guilabel>. Lists
+                            volumes created by users of the project. </para>
+                        <para>From here, you can create or delete
+                            volumes. </para>
+                    </listitem>
+                    <listitem>
+                        <para><guilabel> Images &amp;
+                                Snapshots</guilabel>. Lists images and
+                            snapshots created by users of the project,
+                            plus any images that are publicly
+                            available. Includes volume snapshots. From
+                            here, you can create and delete images and
+                            snapshots, and launch instances from
+                            images and snapshots. </para>
+                    </listitem>
+                    <listitem>
+                        <para><guilabel>Access &amp;
+                                Security</guilabel>. </para>
+                        <para>On the <guilabel>Security
+                                Groups</guilabel> tab, you can list,
+                            create, and delete security groups and
+                            edit rules for security groups. </para>
+                        <para>On the <guilabel>Keypairs</guilabel>
+                            tab, you can list, create, and import
+                            keypairs, and delete keypairs. </para>
+                        <para>On the <guilabel>Floating IPs</guilabel>
+                            tab, you can allocate an IP address to or
+                            release it from a project. </para>
+                        <para>On the <guilabel>API Access</guilabel>
+                            tab, you can list the API
+                            endpoints.</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+        </step>
+    </procedure>
+</section>

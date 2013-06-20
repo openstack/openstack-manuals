@@ -3,32 +3,37 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="novaclient_commands">
-    <title>Command List for nova Client</title>
+    <title>nova commands</title>
+    <para>Describes commands for nova, which is the command-line
+        interface for the OpenStack Compute API.</para>
+    <para>For help on a specific nova command, enter:</para>
+    <screen><userinput><command>nova</command> <option>help</option> <replaceable>COMMAND</replaceable></userinput></screen>
     <example>
-        <title>nova Usage</title>
-        <screen><computeroutput>usage: nova [--version] [--debug] [--os-cache] [--timings]
-            [--timeout &lt;seconds>] [--os-username &lt;auth-user-name>]
-            [--os-password &lt;auth-password>]
-            [--os-tenant-name &lt;auth-tenant-name>] [--os-auth-url &lt;auth-url>]
-            [--os-region-name &lt;region-name>] [--os-auth-system &lt;auth-system>]
-            [--service-type &lt;service-type>] [--service-name &lt;service-name>]
-            [--volume-service-name &lt;volume-service-name>]
-            [--endpoint-type &lt;endpoint-type>]
-            [--os-compute-api-version &lt;compute-api-ver>]
-            [--os-cacert &lt;ca-certificate>] [--insecure]
-            [--bypass-url &lt;bypass-url>]
-            &lt;subcommand> ...
-
-Command-line interface to the OpenStack Nova API.</computeroutput></screen>
+        <title>Usage</title>
+        <screen><computeroutput>nova [--version] [--debug] [--os-cache] [--timings]
+     [--timeout &lt;seconds>] [--os-username &lt;auth-user-name>]
+     [--os-password &lt;auth-password>]
+     [--os-tenant-name &lt;auth-tenant-name>] [--os-auth-url &lt;auth-url>]
+     [--os-region-name &lt;region-name>] [--os-auth-system &lt;auth-system>]
+     [--service-type &lt;service-type>] [--service-name &lt;service-name>]
+     [--volume-service-name &lt;volume-service-name>]
+     [--endpoint-type &lt;endpoint-type>]
+     [--os-compute-api-version &lt;compute-api-ver>]
+     [--os-cacert &lt;ca-certificate>] [--insecure]
+     [--bypass-url &lt;bypass-url>]
+     &lt;subcommand> ...</computeroutput></screen>
     </example>
     <example>
         <title>Positional arguments</title>
         <screen><computeroutput>&lt;subcommand>
     absolute-limits     Print a list of absolute limits for a user
-    actions             Retrieve server actions.
-    add-fixed-ip        Add new IP address to network.
+    add-fixed-ip        Add new IP address on a network to server.
     add-floating-ip     Add a floating IP address to a server.
     add-secgroup        Add a Security Group to a server.
+    agent-create        Creates a new agent build.
+    agent-delete        Deletes an existing agent build.
+    agent-list          List all builds
+    agent-modify        Modify an existing agent build.
     aggregate-add-host  Add the host to the specified aggregate.
     aggregate-create    Create a new aggregate with the specified details.
     aggregate-delete    Delete the aggregate by its id.
@@ -41,28 +46,22 @@ Command-line interface to the OpenStack Nova API.</computeroutput></screen>
                         Update the metadata associated with the aggregate.
     aggregate-update    Update the aggregate's name and optionally
                         availability zone.
-    baremetal-interface-add
-                        Add a network interface to a baremetal node
-    baremetal-interface-list
-                        List network interfaces associated with a baremetal
-                        node
-    baremetal-interface-remove
-                        Remove a network interface from a baremetal node
-    baremetal-node-create
-                        Create a baremetal node
-    baremetal-node-delete
-                        Remove a baremetal node and any associated interfaces
-    baremetal-node-list
-                        Print a list of available baremetal nodes
-    baremetal-node-show
-                        Show information about a baremetal node
+    availability-zone-list
+                        List all the availability zones.</computeroutput></screen>
+        <screen><computeroutput>    backup              Backup a instance by create a 'backup' type snapshot
     boot                Boot a new server.
+    clear-password      Clear password for a server.
+    cloudpipe-configure
+                        Update the VPN IP/port of a cloudpipe instance
     cloudpipe-create    Create a cloudpipe instance for the given project
     cloudpipe-list      Print a list of all cloudpipe instances.
-    cloudpipe-update   Update a cloudpipe instance
     console-log         Get console log output of a server.
+    coverage-report     Generate a coverage report
+    coverage-reset      Reset coverage data.
+    coverage-start      Start Nova coverage reporting
+    coverage-stop       Stop Nova coverage reporting
     credentials         Show user credentials returned from auth
-    delete              Immediately shut down and delete a server.
+    delete              Immediately shut down and delete specified server(s).
     diagnostics         Retrieve server diagnostics.
     dns-create          Create a DNS entry for domain, name and ip.
     dns-create-private-domain
@@ -73,29 +72,37 @@ Command-line interface to the OpenStack Nova API.</computeroutput></screen>
     dns-delete-domain   Delete the specified DNS domain.
     dns-domains         Print a list of available dns domains.
     dns-list            List current DNS entries for domain and ip or domain
-                        and name.
-    endpoints           Discover endpoints that get returned from the
+                        and name.</computeroutput></screen>
+        <screen><computeroutput>    endpoints           Discover endpoints that get returned from the
                         authenticate services
-    evacuate            Evacuates server from failed host
-    fixed-ip-get        Show information for a fixed IP
-    fixed-ip-reserve    Reserve a fixed IP
-    fixed-ip-unreserve  Unreserve fixed IP
+    evacuate            Evacuate server from failed host to specified one.
+    fixed-ip-get        Get info on a fixed ip
+    fixed-ip-reserve    Reserve a fixed ip
+    fixed-ip-unreserve  Unreserve a fixed ip
+    flavor-access-add   Add flavor access for the given tenant.
+    flavor-access-list  Print access information about the given flavor.
+    flavor-access-remove
+                        Remove flavor access for the given tenant.
     flavor-create       Create a new flavor
     flavor-delete       Delete a specific flavor
     flavor-key          Set or unset extra_spec for a flavor.
     flavor-list         Print a list of available 'flavors' (sizes of
                         servers).
     flavor-show         Show details about the given flavor.
+    floating-ip-bulk-create
+                        Bulk create floating ips by range
+    floating-ip-bulk-delete
+                        Bulk delete floating ips by range
+    floating-ip-bulk-list
+                        List all floating ips
     floating-ip-create  Allocate a floating IP for the current tenant.
     floating-ip-delete  De-allocate a floating IP.
     floating-ip-list    List floating ips for this tenant.
     floating-ip-pool-list
-                        List all floating ip pools.
-
-    get-password        Get password for a server.
+                        List all floating ip pools.</computeroutput></screen>
+        <screen><computeroutput>    get-password        Get password for a server.
     get-spice-console   Get a spice console to a server.
-    get-vnc-console     Get a vnc console to a server.</computeroutput></screen>
-        <screen><computeroutput>
+    get-vnc-console     Get a vnc console to a server.
     host-action         Perform a power action on a host.
     host-describe       Describe a specific host
     host-list           List all hosts by service
@@ -107,25 +114,38 @@ Command-line interface to the OpenStack Nova API.</computeroutput></screen>
     hypervisor-uptime   Display the uptime of the specified hypervisor.
     image-create        Create a new image by taking a snapshot of a running
                         server.
-    image-delete        Delete an image.
+    image-delete        Delete specified image(s).
     image-list          Print a list of available images to boot from.
     image-meta          Set or Delete metadata on an image.
     image-show          Show details about the given image.
+    interface-attach    Attach a network interface to an instance.
+    interface-detach    Detach a network interface from an instance.
+    interface-list      List interfaces attached to an instance.
     keypair-add         Create a new key pair for use with instances
-    keypair-delete      Delete keypair by its id
+    keypair-delete      Delete keypair by its name
     keypair-list        Print a list of keypairs for a user
     list                List active servers.
-    list-extensions     List available extensions
     live-migration      Migrates a running instance to a new machine.
     lock                Lock a server.
     meta                Set or Delete metadata on a server.
-    migrate             Migrate a server.
+    migrate             Migrate a server. The new host will be selected by the
+                        scheduler.</computeroutput></screen>
+        <screen><computeroutput>    network-associate-host
+                        Associate host with network.
+    network-associate-project
+                        Associate project with network.
+    network-create      Create a network.
+    network-disassociate
+                        Disassociate host and/or project from the given
+                        network.
     network-list        Print a list of available networks.
     network-show        Show details about the given network.
     pause               Pause a server.
     quota-class-show    List the quotas for a quota class.
     quota-class-update  Update the quotas for a quota class.
     quota-defaults      List the default quotas for a tenant.
+    quota-delete        Delete quota for a tenant so their quota will revert
+                        back to default.
     quota-show          List the quotas for a tenant.
     quota-update        Update the quotas for a tenant.
     rate-limits         Print a list of rate limits for a user
@@ -136,13 +156,15 @@ Command-line interface to the OpenStack Nova API.</computeroutput></screen>
     remove-secgroup     Remove a Security Group from a server.
     rename              Rename a server.
     rescue              Rescue a server.
+    reset-network       Reset network of an instance.
     reset-state         Reset the state of an instance
     resize              Resize a server.
     resize-confirm      Confirm a previous resize.
     resize-revert       Revert a previous resize (and return to the previous
                         VM).
     resume              Resume a server.
-    root-password       Change the root password for a server.
+    root-password       Change the root password for a server.</computeroutput></screen>
+        <screen><computeroutput>    scrub               Deletes data associated with the project
     secgroup-add-group-rule
                         Add a source group rule to a security group.
     secgroup-add-rule   Add a rule to a security group.
@@ -155,21 +177,21 @@ Command-line interface to the OpenStack Nova API.</computeroutput></screen>
     secgroup-list       List security groups for the current tenant.
     secgroup-list-rules
                         List rules for a security group.
-
-    service-disable     Enable the service
+    secgroup-update     Update a security group.
+    service-disable     Disable the service
     service-enable      Enable the service
-    service-list        Show a list of all running services. Filter by host and
-                        service name.</computeroutput></screen>
-<screen><computeroutput>
+    service-list        Show a list of all running services. Filter by host &amp;
+                        binary.
     show                Show details about the given server.
     ssh                 SSH into a server.
     start               Start a server.
     stop                Stop a server.
-    suspend             Suspend a server.
-    unlock              Unlock a server.
+    suspend             Suspend a server.</computeroutput></screen>
+        <screen><computeroutput>    unlock              Unlock a server.
     unpause             Unpause a server.
     unrescue            Unrescue a server.
-    usage-list          List usage data for all tenants
+    usage               Show usage data for a single tenant
+    usage-list          List usage data for all tenants    
     volume-attach       Attach a volume to a server.
     volume-create       Add a new volume.
     volume-delete       Remove a volume.
@@ -185,41 +207,14 @@ Command-line interface to the OpenStack Nova API.</computeroutput></screen>
     volume-snapshot-show
                         Show details about a snapshot.
     volume-type-create  Create a new volume type.
-    volume-type-delete  Delete a specific flavor.
-    volume-type-list    Print a list of available 'volume types'.
-    x509-create-cert    Create x509 cert for a user in tenant.
+    volume-type-delete  Delete a specific flavor
+    volume-type-list    Print a list of available 'volume types'.</computeroutput></screen>
+        <screen><computeroutput>    x509-create-cert    Create x509 cert for a user in tenant
     x509-get-root-cert  Fetches the x509 root cert.
     bash-completion     Prints all of the commands and options to stdout so
                         that the
     help                Display help about this program or one of its
                         subcommands.
-    network             Show a network
-    network-create      Create a network
-    network-delete      Delete a network
-    network-list        List networks
-    network             Show a network
-    network-create      Create a network
-    network-delete      Delete a network
-    network-list        List networks
-    virtual-interface-create
-                        Add a new virtual interface to an instance
-    virtual-interface-delete
-                        Removes the specified virtual interface from an
-                        instance
-    virtual-interface-list
-                        Add a new virtual interface to an instance
-    backup-schedule     Show or edit the backup schedule for a server.
-    backup-schedule-delete
-                        Delete the backup schedule for a server.
-    backup              Backup a server.
-    service-config      List available service attributes.
-    service-details     List available service attributes.
-    service-disable     Disable a specified service.
-    service-enable      Enable a specified service.
-    service-list        List available service attributes.
-    service-servers     List available service attributes.
-    service-show        List available service attributes.
-    service-version     List available service attributes.
     baremetal-interface-add
                         Add a network interface to a baremetal node
     baremetal-interface-list
@@ -235,52 +230,55 @@ Command-line interface to the OpenStack Nova API.</computeroutput></screen>
                         Print a list of available baremetal nodes
     baremetal-node-show
                         Show information about a baremetal node
+    host-evacuate       Evacuate all instances from failed host to specified
+                        one.
+    instance-action     Show an action.
+    instance-action-list
+                        List actions on a server.
     list-extensions     List all the os-api extensions that are available.
+    host-meta           Set or Delete metadata on all instances of a host.
     net                 Show a network
     net-create          Create a network
     net-delete          Delete a network
     net-list            List networks</computeroutput></screen>
     </example>
-
     <example>
         <title>Optional arguments</title>
-        <screen><computeroutput>   
-    --version             show program's version number and exit
-    --debug                  Print debugging output
-    --os-cache               Use the auth token cache.
-    --timings                Print call timing info
-    --timeout &lt;seconds>   Set HTTP call timeout (in seconds)
-    --os-username &lt;auth-user-name>    
-                             Defaults to env[OS_USERNAME].
-    --os-password &lt;auth-password>
-                             Defaults to env[OS_PASSWORD].
-    --os-tenant-name &lt;auth-tenant-name>
-                             Defaults to env[OS_TENANT_NAME].
-    --os-auth-url &lt;auth-url>
-                             Defaults to env[OS_AUTH_URL].
-    --os-region-name &lt;region-name>
-                             Defaults to env[OS_REGION_NAME].
-    --os-auth-system &lt;auth-system>
-                             Defaults to env[OS_AUTH_SYSTEM].
-    --service-type &lt;service-type>
-                             Defaults to compute for most actions
-    --service-name &lt;service-name>
-                             Defaults to env[NOVA_SERVICE_NAME]
-    --volume-service-name &lt;volume-service-name>
-                             Defaults to env[NOVA_VOLUME_SERVICE_NAME]
-    --endpoint-type &lt;endpoint-type>
-                             Defaults to env[NOVA_ENDPOINT_TYPE] or publicURL.
-    --os-compute-api-version &lt;compute-api-ver>
-                             Accepts 1.1, defaults to env[OS_COMPUTE_API_VERSION].
-    --os-cacert &lt;ca-certificate>
-                             Specify a CA bundle file to use in verifying a TLS
-    (https) server certificate. Defaults to env[OS_CACERT]
-    --insecure               Explicitly allow novaclient to perform "insecure" SSL
-                             (https) requests. The server's certificate will not be
-                             verified against any certificate authorities. This
-                             option should be used with caution.
-    --bypass-url &lt;bypass-url>
-                             Use this API endpoint instead of the Service Catalog</computeroutput></screen>
+        <screen><computeroutput>  --version             show program's version number and exit
+  --debug               Print debugging output
+  --os-cache            Use the auth token cache.
+  --timings             Print call timing info
+  --timeout &lt;seconds>   Set HTTP call timeout (in seconds)
+  --os-username &lt;auth-user-name>
+                        Defaults to env[OS_USERNAME].
+  --os-password &lt;auth-password>
+                        Defaults to env[OS_PASSWORD].
+  --os-tenant-name &lt;auth-tenant-name>
+                        Defaults to env[OS_TENANT_NAME].
+  --os-auth-url &lt;auth-url>
+                        Defaults to env[OS_AUTH_URL].
+  --os-region-name &lt;region-name>
+                        Defaults to env[OS_REGION_NAME].
+  --os-auth-system &lt;auth-system>
+                        Defaults to env[OS_AUTH_SYSTEM].
+  --service-type &lt;service-type>
+                        Defaults to compute for most actions
+  --service-name &lt;service-name>
+                        Defaults to env[NOVA_SERVICE_NAME]
+  --volume-service-name &lt;volume-service-name>
+                        Defaults to env[NOVA_VOLUME_SERVICE_NAME]
+  --endpoint-type &lt;endpoint-type>
+                        Defaults to env[NOVA_ENDPOINT_TYPE] or publicURL.
+  --os-compute-api-version &lt;compute-api-ver>
+                        Accepts 1.1, defaults to env[OS_COMPUTE_API_VERSION].
+  --os-cacert &lt;ca-certificate>
+                        Specify a CA bundle file to use in verifying a TLS
+                        (https) server certificate. Defaults to env[OS_CACERT]
+  --insecure            Explicitly allow novaclient to perform "insecure" SSL
+                        (https) requests. The server's certificate will not be
+                        verified against any certificate authorities. This
+                        option should be used with caution.
+  --bypass-url &lt;bypass-url>
+                        Use this API endpoint instead of the Service Catalog</computeroutput></screen>
     </example>
-
 </section>

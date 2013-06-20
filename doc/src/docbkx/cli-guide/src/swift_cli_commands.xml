@@ -1,27 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section xmlns="http://docbook.org/ns/docbook"
-    xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
-    xml:id="swift_commands">
-    <title>swift Command Reference</title>
-    <literallayout class="monospaced">
-Usage: swift &lt;command> [options] [args]
-
-Commands:
-  stat [container] [object]
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+  xml:id="swift_commands">
+  <title>swift commands</title>
+  <para>Describes the commands for swift, which is the command-line
+    interface for the OpenStack Object Storage API.</para>
+  <para>For help on a specific swift command, enter:</para>
+  <screen><userinput><command>swift</command> <option>help</option> <replaceable>COMMAND</replaceable></userinput></screen>
+  <example>
+    <title>Usage</title>
+    <screen><computeroutput><command>swift</command> <replaceable>COMMAND</replaceable> <option>[options]</option> <option>[args]</option></computeroutput></screen>
+  </example>
+  <example>
+    <title>Commands</title>
+    <screen><computeroutput>  stat [container] [object]
     Displays information for the account, container, or object depending on the
     args given (if any).
+
   list [options] [container]
     Lists the containers for the account or the objects for a container. -p or
     --prefix is an option that will only list items beginning with that prefix.
+    -l produces output formatted like 'ls -l' and --lh like 'ls -lh'.
     -d or --delimiter is option (for container listings only) that will roll up
-    items with the given delimiter (see Cloud Files general documentation for
-    what this means).
+    items with the given delimiter (see http://docs.openstack.org/
+        api/openstack-object-storage/1.0/content/list-objects.html)
+
   upload [options] container file_or_directory [file_or_directory] [...]
     Uploads to the given container the files and directories specified by the
     remaining args. -c or --changed is an option that will only upload files
     that have changed since the last upload. -S &lt;size> or --segment-size &lt;size>
-    and --leave-segments are options as well (see --help for more).
+    will upload the files in segments no larger than size. -C &lt;container> or
+    --segment-container &lt;container> will specify the location of the segments
+    to &lt;container>. --leave-segments are options as well (see --help for more).
+
   post [options] [container] [object]
     Updates meta information for the account, container, or object depending on
     the args given. If the container is not found, it will be created
@@ -30,19 +42,31 @@ Commands:
     or --meta option is allowed on all and used to define the user meta data
     items to set in the form Name:Value. This option can be repeated. Example:
     post -m Color:Blue -m Size:Large
+
   download --all OR download container [options] [object] [object] ...
     Downloads everything in the account (with --all), or everything in a
     container, or a list of objects depending on the args given. For a single
     object download, you may use the -o [--output] &lt;filename> option to
     redirect the output to a specific file or if "-" then just redirect to
     stdout.
+
   delete [options] --all OR delete container [options] [object] [object] ...
     Deletes everything in the account (with --all), or everything in a
     container, or a list of objects depending on the args given. Segments of
     manifest objects will be deleted as well, unless you specify the
-    --leave-segments option.
+    --leave-segments option.</computeroutput></screen>
+  </example>
+  <example>
+    <title>Examples</title>
+    <screen><computeroutput>  swift -A https://auth.api.rackspacecloud.com/v1.0 -U user -K key stat
 
-Example:
-  swift -A https://auth.api.rackspacecloud.com/v1.0 -U user -K key stat
-    </literallayout>
+  swift --os-auth-url https://api.example.com/v2.0 --os-tenant-name tenant \
+      --os-usernameuser --os-password password list
+
+  swift --os-auth-token 6ee5eb33efad4e45ab46806eac010566 \
+      --os-storage-url https://10.1.5.2:8080/v1/AUTH_ced809b6a4baea7aeab61a \
+      list
+
+  swift list --lh</computeroutput></screen>
+  </example>
 </section>

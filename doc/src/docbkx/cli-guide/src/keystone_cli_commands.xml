@@ -3,20 +3,32 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="keystone_client_commands">
-    <title>keystone Command Reference</title>
-    <literallayout class="monospaced">usage: keystone [--os-username &lt;auth-user-name>]
-                [--os-password &lt;auth-password>]
-                [--os-tenant-name &lt;auth-tenant-name>]
-                [--os-tenant-id &lt;tenant-id>] [--os-auth-url &lt;auth-url>]
-                [--os-region-name &lt;region-name>]
-                [--os-identity-api-version &lt;identity-api-version>]
-                [--token &lt;service-token>] [--endpoint &lt;service-endpoint>]
-                [--os-cacert &lt;ca-certificate>] [--os-cert &lt;certificate>]
-                [--os-key &lt;key>] [--insecure] [--username &lt;auth-user-name>]
-                [--password &lt;auth-password>] [--tenant_name &lt;tenant-name>]
-                [--auth_url &lt;auth-url>] [--region_name &lt;region-name>]
-                </literallayout>
-    <literallayout class="monospaced">catalog             List service catalog, possibly filtered by service.
+    <title>keystone commands</title>
+    <para>Describes commands for keystone, which is the command-line
+        interface for the OpenStack Identity API.</para>
+    <para>For help on a specific keystone command, enter:</para>
+    <screen><userinput><command>keystone</command> <option>help</option> <replaceable>COMMAND</replaceable></userinput></screen>
+    <example>
+        <title>Usage</title>
+        <screen><computeroutput>
+keystone [--version] [--timeout &lt;seconds>]
+         [--os-username &lt;auth-user-name>]
+         [--os-password &lt;auth-password>]
+         [--os-tenant-name &lt;auth-tenant-name>]
+         [--os-tenant-id &lt;tenant-id>] [--os-auth-url &lt;auth-url>]
+         [--os-region-name &lt;region-name>]
+         [--os-identity-api-version &lt;identity-api-version>]
+         [--os-token &lt;service-token>]
+         [--os-endpoint &lt;service-endpoint>]
+         [--os-cacert &lt;ca-certificate>] [--insecure]
+         [--os-cert &lt;certificate>] [--os-key &lt;key>] [--os-cache]
+         [--force-new-token] [--stale-duration &lt;seconds>]
+         &lt;subcommand> ...</computeroutput></screen>
+    </example>
+    <example>
+        <title>Positional arguments</title>
+        <screen><computeroutput>&lt;subcommand>
+    catalog             List service catalog, possibly filtered by service.
     ec2-credentials-create
                         Create EC2-compatible credentials for user per tenant
     ec2-credentials-delete
@@ -30,6 +42,7 @@
     endpoint-get        Find endpoint filtered by a specific attribute or
                         service type
     endpoint-list       List configured service endpoints
+    password-update     Update own password
     role-create         Create new role
     role-delete         Delete role
     role-get            Display role details
@@ -37,8 +50,8 @@
     service-create      Add service to Service Catalog
     service-delete      Delete service from Service Catalog
     service-get         Display service from Service Catalog
-    service-list        List all services in Service Catalog
-    tenant-create       Create new tenant
+    service-list        List all services in Service Catalog</computeroutput></screen>
+        <screen><computeroutput>tenant-create       Create new tenant
     tenant-delete       Delete tenant
     tenant-get          Display tenant details
     tenant-list         List all tenants
@@ -54,49 +67,65 @@
     user-role-list      List roles granted to a user
     user-role-remove    Remove role from user
     user-update         Update user's name, email, and enabled status
-    discover            Discover Keystone servers and show authentication
-                        protocols and
+    discover            Discover Keystone servers, supported API versions and
+                        extensions.
+    bootstrap           Grants a new role to a new user on a new tenant, after
+                        creating each.
     bash-completion     Prints all of the commands and options to stdout.
     help                Display help about this program or one of its
-    subcommands.</literallayout>
-    <literallayout class="monospaced">
-        Optional arguments:
+                        subcommands.</computeroutput></screen>
+    </example>
+
+    <example>
+        <title>Optional arguments</title>
+        <screen><computeroutput>--version             Shows the client version and exits
+  --timeout &lt;seconds>   Set request timeout (in seconds)
   --os-username &lt;auth-user-name>
-                        Defaults to env[OS_USERNAME]
+                        Name used for authentication with the OpenStack
+                        Identity service. Defaults to env[OS_USERNAME]
   --os-password &lt;auth-password>
-                        Defaults to env[OS_PASSWORD]
+                        Password used for authentication with the OpenStack
+                        Identity service. Defaults to env[OS_PASSWORD]
   --os-tenant-name &lt;auth-tenant-name>
-                        Defaults to env[OS_TENANT_NAME]
+                        Tenant to request authorization on. Defaults to
+                        env[OS_TENANT_NAME]
   --os-tenant-id &lt;tenant-id>
-                        Defaults to env[OS_TENANT_ID]
+                        Tenant to request authorization on. Defaults to
+                        env[OS_TENANT_ID]
   --os-auth-url &lt;auth-url>
-                        Defaults to env[OS_AUTH_URL]
+                        Specify the Identity endpoint to use for
+                        authentication. Defaults to env[OS_AUTH_URL]
   --os-region-name &lt;region-name>
                         Defaults to env[OS_REGION_NAME]
   --os-identity-api-version &lt;identity-api-version>
-                        Defaults to env[OS_IDENTITY_API_VERSION] or 2.0
-  --token &lt;service-token>
-                        Defaults to env[SERVICE_TOKEN]
-  --endpoint &lt;service-endpoint>
-                        Defaults to env[SERVICE_ENDPOINT]
+                        Defaults to env[OS_IDENTITY_API_VERSION] or 2.0</computeroutput></screen>
+        <screen><computeroutput>--os-token &lt;service-token>
+                        Specify an existing token to use instead of retrieving
+                        one via authentication (e.g. with username &amp;
+                        password). Defaults to env[OS_SERVICE_TOKEN]
+  --os-endpoint &lt;service-endpoint>
+                        Specify an endpoint to use instead of retrieving one
+                        from the service catalog (via authentication).
+                        Defaults to env[OS_SERVICE_ENDPOINT]
   --os-cacert &lt;ca-certificate>
-                        Defaults to env[OS_CA_CERT]
+                        Specify a CA bundle file to use in verifying a TLS
+                        (https) server certificate. Defaults to env[OS_CACERT]
+  --insecure            Explicitly allow keystoneclient to perform "insecure"
+                        TLS (https) requests. The server's certificate will
+                        not be verified against any certificate authorities.
+                        This option should be used with caution.
   --os-cert &lt;certificate>
                         Defaults to env[OS_CERT]
   --os-key &lt;key>        Defaults to env[OS_KEY]
-  --insecure            Explicitly allow keystoneclient to perform "insecure"
-                        SSL (https) requests. The server's certificate will
-                        not be verified against any certificate authorities.
-                        This option should be used with caution.
-  --username &lt;auth-user-name>
-                        Deprecated
-  --password &lt;auth-password>
-                        Deprecated
-  --tenant_name &lt;tenant-name>
-                        Deprecated
-  --auth_url &lt;auth-url>
-                        Deprecated
-  --region_name &lt;region-name>
-                        Deprecated
-    </literallayout>
+  --os-cache            Use the auth token cache. Defaults to env[OS_CACHE]
+  --force-new-token     If the keyring is available and in use, token will
+                        always be stored and fetched from the keyring until
+                        the token has expired. Use this option to request a
+                        new token and replace the existing one in the keyring.
+  --stale-duration &lt;seconds>
+                        Stale duration (in seconds) used to determine whether
+                        a token has expired when retrieving it from keyring.
+                        This is useful in mitigating process or network
+                        delays. Default is 30 seconds.</computeroutput></screen>
+    </example>
 </section>

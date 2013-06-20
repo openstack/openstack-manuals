@@ -10,33 +10,12 @@
     <para>This chapter describes how to use the nova client.</para>
     <para>To install the client, see <xref linkend="install_clients"
         />.</para>
-
-
-    <!--<section xml:id="nova_help">
-        <title>Get Command, Parameter, and Subcommand Help</title>
-        <para>Help for commands, parameters, and subcommands is
-            available with the <command>nova help</command> command.</para>
-            <screen><prompt>$</prompt> <userinput>nova help</userinput></screen>
-        <para>Include the command name to get usage information about
-            an individual command, as in the following example.
-            <screen><prompt>$</prompt> <userinput>nova help actions</userinput>
-usage: nova actions &lt;server>
-
-Retrieve server actions.
-
-Positional arguments:
-  &lt;server>  Name or ID of server.      </screen></para>
-    </section> -->
     <section xml:id="listing">
         <title>List Instances, Images, and Flavors</title>
-        <para>Before you can go about the business of building your
-            cloud, you want to know what images are available to you
-            by asking the image service what kinds of configurations
-            are available. The image service could be compared to
-            iTunes for your cloud - you can view the playlist of
-            images before using your favorite image to create a new
-            instance in the cloud. To get the list of images, their
-            names, status, and ID, use this command:
+        <para>Before you can build a cloud, you must discover which
+            images are available by asking the image service which
+            configurations are available. To list images, their names,
+            status, and ID, use this command:
             <screen>
 <prompt>$</prompt> <userinput>nova image-list</userinput>
 +--------------------------------------+----------------+--------+--------+
@@ -93,10 +72,8 @@ Positional arguments:
         <section xml:id="launch_procedure">
             <title>Before Launch</title>
 
-            <para>With the information about what is available to you,
-                you can choose the combination of image and flavor to
-                create your virtual servers and launch instances.
-            </para>
+            <para>Now you have the information you need to create your
+                virtual servers and launch instances. </para>
         </section>
 
         <xi:include href="../../common/nova_cli_boot.xml"/>
@@ -109,15 +86,15 @@ Positional arguments:
     </section>
 
     <xi:include href="../../common/nova_cli_resizerebuild.xml"/>
-    <xi:include href="../../common/nova_cli_evacuate.xml" />
-    <xi:include href="../../common/nova_cli_startstop.xml" />
+    <xi:include href="../../common/nova_cli_evacuate.xml"/>
+    <xi:include href="../../common/nova_cli_startstop.xml"/>
 
     <section xml:id="reboot">
         <title>Rebooting an instance</title>
         <para><command>nova reboot</command> performs a reboot of a
             running instance. By default, this is a "soft" reboot,
             which will attempt a graceful shutdown and restart of the
-            instance. To perform a "hard" reboot (i.e., a power cycle
+            instance. To perform a "hard" reboot (a power cycle
             of the instance), pass the <literal>--hard</literal> flag
             as an argument.</para>
     </section>
@@ -136,13 +113,17 @@ Positional arguments:
     </section>
     <section xml:id="baremetal">
         <title>Managing Bare metal Nodes</title>
-        <para>If you are using the Bare metal driver, you must inform each Nova Compute
-            host of the physical hardware that it should manage. This is done via the
-            baremetal admin extension.</para>
-        <para>Create a node with <command>nova baremetal-node-create</command>, and then
-            add network interface information to it with <command>nova baremetal-interface-add
-            </command>. Nodes and interfaces can be listed and deleted. When a node is in use,
-            its status includes the UUID of the Nova instance that is running on it.
+        <para>If you are using the Bare metal driver, you must inform
+            each Nova Compute host of the physical hardware that it
+            should manage. This is done through the bare metal admin
+            extension.</para>
+        <para>Create a node with <command>nova
+                baremetal-node-create</command>, and then add network
+            interface information to it with <command>nova
+                baremetal-interface-add </command>. Nodes and
+            interfaces can be listed and deleted. When a node is in
+            use, its status includes the UUID of the Nova instance
+            that is running on it.</para>
         <screen>
 <prompt>$</prompt> <userinput>nova baremetal-node-create</userinput> --pm_address=1.2.3.4 --pm_user=ipmi --pm_password=ipmi $(hostname -f) 1 512 10 aa:bb:cc:dd:ee:ff
 +------------------+-------------------+
@@ -210,11 +191,8 @@ Positional arguments:
 | id               | 1                                    |
 | pm_user          | ipmi                                 |
 | terminal_port    | None                                 |
-+------------------+--------------------------------------+
-
-        </screen></para>
++------------------+--------------------------------------+</screen>
     </section>
-    <xi:include href="nova_cli_commands.xml"/>
     <xi:include href="../../common/nova_cli_usage_statistics.xml"/>
-
+    <xi:include href="nova_cli_commands.xml"/>
 </chapter>

@@ -1,0 +1,760 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section [
+        <!-- Some useful entities borrowed from HTML -->
+        <!ENTITY ndash  "&#x2013;">
+        <!ENTITY mdash  "&#x2014;">
+        <!ENTITY hellip "&#x2026;">  
+        <!-- Useful for describing APIs -->
+        <!ENTITY GET    '<command xmlns="http://docbook.org/ns/docbook">GET</command>'>
+        <!ENTITY PUT    '<command xmlns="http://docbook.org/ns/docbook">PUT</command>'>
+        <!ENTITY POST   '<command xmlns="http://docbook.org/ns/docbook">POST</command>'>
+        <!ENTITY DELETE '<command xmlns="http://docbook.org/ns/docbook">DELETE</command>'>      
+]>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="section_cli_swift">
+    <title>swift</title>
+    <para>Use the following OpenStack swift client commands to perform
+        API operations: </para>
+    <section xml:id="swift_summary_limits">
+        <title>Limits</title>
+        <cmdsynopsis>
+            <command>add</command>
+            <group>
+                <arg>test</arg>
+                <option>test2</option>
+            </group>
+        </cmdsynopsis>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Get rate limits</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> swift rate-limits</programlisting>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Get absolute
+                        limits</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> swift absolute-limits</programlisting>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </section>
+    <section xml:id="swift_summary_servers">
+        <title>Servers</title>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">List servers</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> swift list</programlisting>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Create server</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> swift boot &lt;name&gt; --flavor &lt;flavor&gt; --image &lt;image&gt;</programlisting>
+                    <itemizedlist>
+                        <title>Arguments</title>
+                        <listitem>
+                            <para><parameter>name</parameter>. The
+                                name of the server.</para>
+                        </listitem>
+                        <listitem>
+                            <para><option>--flavor</option>
+                                <parameter>flavor</parameter>. The
+                                name or ID of the flavor.</para>
+                        </listitem>
+                        <listitem>
+                            <para><option>--image</option>
+                                <parameter>image</parameter>. The name
+                                or ID of the image.</para>
+                        </listitem>
+                    </itemizedlist>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Get server
+                        details</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> swift show &lt;server&gt;</programlisting>
+                    <para>Where <parameter>server</parameter> is the
+                        server ID or name.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Change administrative
+                        password</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> swift root-password &lt;server&gt;</programlisting>
+                    <para>Where <parameter>server</parameter> is the
+                        server ID or name.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Update server
+                        name</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> swift meta &lt;server&gt; set "My Server Name"="Ubuntu 11.10 server test"</programlisting>
+                    <para>Where <parameter>server</parameter> is the
+                        server ID or name.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Delete server</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> swift delete &lt;server&gt;</programlisting>
+                    <para>Where <parameter>server</parameter> is the
+                        server ID or name.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </section>
+    <?hard-pagebreak?>
+    <section xml:id="swift_summary_serveractions">
+        <title>Server Actions</title>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Reboot server</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> swift reboot &lt;server&gt; --hard</programlisting>
+                    <para>Where <parameter>server</parameter> is the
+                        server ID or name. </para>
+                    <para>Omit the <option>--hard</option> option to
+                        perform a soft reboot.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Rebuild server</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> swift rebuild &lt;server&gt;</programlisting>
+                    <para>Where <parameter>server</parameter> is the
+                        server ID or name.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Resize server</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> swift resize [--poll] &lt;server&gt; &lt;flavor&gt;</programlisting>
+                    <para>Where <parameter>server</parameter> is the
+                        server ID or name and
+                            <parameter>flavor</parameter> is the ID or
+                        name of the new flavor. </para>
+                    <para>Specify the optional <option>--poll</option>
+                        option to block while the instance resizes so
+                        that progress can be reported.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Confirm resize</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> swift resize-confirm &lt;server&gt;</programlisting>
+                    <para>Where <parameter>server</parameter> is the
+                        server ID or name.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Revert resize
+                        server</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> swift resize-revert &lt;server&gt;</programlisting>
+                    <para>Where <parameter>server</parameter> is the
+                        server ID or name.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Rescue server</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> swift rescue &lt;server&gt;</programlisting>
+                    <para>Where <parameter>server</parameter> is the
+                        server ID or name.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Unrescue server</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> swift unrescue &lt;server&gt;</programlisting>
+                    <para>Where <parameter>server</parameter> is the
+                        server ID.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Create image from
+                        server</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> swift image-create &lt;server&gt; &lt;name&gt;</programlisting>
+                    <para>Where <parameter>server</parameter> is the
+                        server ID or name, and
+                            <parameter>name</parameter> is the name of
+                        the snapshot.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Rebuild server from
+                        image</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> swift rebuild &lt;server&gt; &lt;image&gt; --rebuild_password &lt;rebuild_password&gt;</programlisting>
+                    <itemizedlist>
+                        <title>Arguments</title>
+                        <listitem>
+                            <para><parameter>server</parameter>. The
+                                server ID or name.</para>
+                        </listitem>
+                        <listitem>
+                            <para><parameter>image</parameter>. The
+                                image ID.</para>
+                        </listitem>
+                        <listitem>
+                            <para><parameter>rebuild_password</parameter>.
+                                Optional. The password for the rebuilt
+                                image.</para>
+                        </listitem>
+                    </itemizedlist>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </section>
+    <?hard-pagebreak?>
+    <section xml:id="swift_summary_flavors">
+        <title>Flavors</title>
+
+
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">List flavors</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> swift flavor-list</programlisting>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Get flavor
+                        details</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> swift flavor-show &lt;flavor&gt;</programlisting>
+                    <para>Where <parameter>flavor</parameter> is the
+                        name or ID of the flavor.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </section>
+    <section xml:id="swift_summary_images">
+        <title>Images</title>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">List images</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> swift image-list</programlisting>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Get image details</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> swift image-show &lt;image&gt;</programlisting>
+                    <para>Where <parameter>image</parameter> is the
+                        name or ID of the image.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Delete image</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> swift image-delete &lt;image&gt;</programlisting>
+                    <para>Where <parameter>image</parameter> is the
+                        name or ID of the image.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </section>
+    <section xml:id="swift_summary_metadata">
+        <title>Metadata</title>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Show server
+                        metadata</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> swift show &lt;server&gt;</programlisting>
+                    <para>Where <parameter>server</parameter> is the
+                        server ID or name.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Show image
+                        metadata</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> swift image-show &lt;image&gt;</programlisting>
+                    <para>Where <parameter>image</parameter> is the
+                        server ID or name.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Set or delete server
+                        metadata</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> swift meta &lt;server&gt;</programlisting>
+                    <para>Where <parameter>server</parameter> is the
+                        server ID or name.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Set or delete image
+                        metadata</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> swift image-meta &lt;image&gt;</programlisting>
+                    <para>Where <parameter>image</parameter> is the
+                        image ID or name.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </section>
+    <section xml:id="swift_summary_networks">
+        <title>Networks</title>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">List networks</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> swift network-list</programlisting>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Show network
+                        information</emphasis>
+                </term>
+                <listitem>
+                    <para>
+                        <programlisting language="bash" role="gutter: false"><prompt>$</prompt> swift network-show &lt;network&gt;</programlisting>
+                    </para>
+
+                    <itemizedlist>
+                        <title>Argument</title>
+                        <listitem>
+                            <para><parameter>network</parameter>. The
+                                UUID or label of the network.</para>
+                        </listitem>
+                    </itemizedlist>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Create network</emphasis>
+                </term>
+                <listitem>
+                    <para>
+                        <programlisting language="bash" role="gutter: false"><prompt>$</prompt> <?db-font-size 75%?>swift network-create &lt;network_label&gt; &lt;cidr&gt;</programlisting>
+                    </para>
+
+                    <itemizedlist>
+                        <title>Positional arguments</title>
+                        <listitem>
+                            <para><parameter>network_label</parameter>.
+                                The network label, such as
+                                   <literal>my_new_network</literal>,
+                            </para>
+                        </listitem>
+                        <listitem>
+                            <para><parameter>cidr</parameter>. The IP
+                                block from which to allocate, such as
+                                   <literal>172.16.0.0/24</literal> or
+                                   <literal>2001:DB8::/64</literal>.</para>
+                        </listitem>
+                    </itemizedlist>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Provision server with
+                        isolated network</emphasis>
+                </term>
+                <listitem>
+                    <para>
+                        <programlisting language="bash" role="gutter: false"><prompt>$</prompt> <?db-font-size 75%?>swift boot &lt;name&gt; --flavor &lt;flavor&gt; --image &lt;image&gt; --nic [net-id=&lt;private-net-uuid&gt; [--no-public] [--no-service-net]</programlisting>
+                    </para>
+                    <itemizedlist
+                        xmlns:svg="http://www.w3.org/2000/svg"
+                        xmlns:m="http://www.w3.org/1998/Math/MathML"
+                        xmlns:html="http://www.w3.org/1999/xhtml"
+                        xmlns:db="http://docbook.org/ns/docbook">
+                        <title>Positional arguments</title>
+                        <listitem>
+                            <para><parameter>name</parameter>. The
+                                name of the server.</para>
+                        </listitem>
+                    </itemizedlist>
+                    <itemizedlist
+                        xmlns:svg="http://www.w3.org/2000/svg"
+                        xmlns:m="http://www.w3.org/1998/Math/MathML"
+                        xmlns:html="http://www.w3.org/1999/xhtml"
+                        xmlns:db="http://docbook.org/ns/docbook">
+                        <title>Optional arguments</title>
+                        <listitem>
+                            <para><option>--no-service-net</option>.
+                                Optional. Opts out of attaching
+                                ServiceNet to your server.</para>
+                            <note>
+                                <para>RackConnect and Managed Cloud
+                                   customers will receive an error if
+                                   they opt out of attaching
+                                   ServiceNet to their server.</para>
+                            </note>
+                            <para>For example, to opt out of attaching
+                                ServiceNet to your server, issue the
+                                following command:
+                                <programlisting language="bash" role="gutter: false"><prompt>$</prompt> swift boot &lt;name&gt; --flavor &lt;flavor&gt; --image &lt;image&gt; --nic net-id=&lt;private-net-uuid&gt; --no-service-net</programlisting></para>
+                        </listitem>
+                        <listitem>
+                            <para><option>--no-public</option>.
+                                Optional. Opts out of attaching
+                                PublicNet to your server. </para>
+                            <note>
+                                <para>RackConnect and Managed Cloud
+                                   customers will receive an error if
+                                   they opt out of attaching PublicNet
+                                   to their server.</para>
+                            </note>
+                            <para>For example, to opt out of attaching
+                                the Internet to your server, issue the
+                                following command:
+                                <programlisting language="bash" role="gutter: false"><prompt>$</prompt> swift boot &lt;name&gt; --flavor &lt;flavor&gt; --image &lt;image&gt; --nic net-id=&lt;private-net-uuid&gt; --no-public</programlisting></para>
+                        </listitem>
+                        <listitem>
+                            <para><option>--disk-config</option>
+                                   {<literal>auto</literal>|<literal>manual</literal>}.
+                                Specifies whether to expand the
+                                primary partition to fill the disk.
+                                This value overrides the value
+                                inherited from the image.</para>
+                        </listitem>
+                        <listitem>
+                            <para><option>--flavor</option>
+                                <parameter>flavor</parameter>.
+                                Required. The flavor ID for the new
+                                server. To get a list of flavors,
+                                issue <command>swift
+                                   flavor-list</command>.</para>
+                        </listitem>
+                        <listitem>
+                            <para><option>--image</option>
+                                <parameter>image</parameter>.
+                                Required. The image ID for the new
+                                server. To get a list of images, issue
+                                   <command>swift
+                                image-list</command>.</para>
+                        </listitem>
+                        <listitem>
+                            <para><option>--meta</option>
+                                <option>key</option><command>=</command><parameter>value</parameter>.
+                                Arbitrary key and value metadata that
+                                is written to
+                                   <filename>/meta.js</filename> on
+                                the new server. Can be specified
+                                multiple times. </para>
+                        </listitem>
+                        <listitem>
+                            <para><option>--file</option>
+                                <parameter>dst-path</parameter>=<parameter>src-path</parameter>.
+                                Stores arbitrary files from
+                                   <parameter>src-path</parameter>
+                                locally to <parameter>dst-
+                                   path</parameter> on the new server.
+                                You can store up to five files.
+                            </para>
+                        </listitem>
+                        <listitem>
+                            <para><option>--key_name</option>
+                                <parameter>key_name</parameter>. Key
+                                name of key pair. First, create the
+                                key pair with the
+                                   <command>keypair-add</command>
+                                command.</para>
+                        </listitem>
+                        <?sbr?>
+                        <listitem>
+                            <para><option>--user_data</option>
+                                <parameter>user-data</parameter>. User
+                                data file, which is exposed by the
+                                metadata server. </para>
+                        </listitem>
+                        <listitem>
+                            <para><option>--availability_zone</option>
+                                <parameter>availability-zone</parameter>.
+                                The availability zone for instance
+                                placement. </para>
+                        </listitem>
+                        <listitem>
+                            <para><option>--security_groups</option>
+                                <parameter>security_groups</parameter>.
+                                A comma-separated list of security
+                                group names. </para>
+                        </listitem>
+                        <listitem>
+                            <para><option>--block_device_mapping</option>
+                                <parameter>dev_name=mapping</parameter>.
+                                Block device mapping in the format:
+                                <programlisting language="bash" role="gutter: false"><prompt>$</prompt> dev_name=<parameter>id</parameter>:type:<parameter>size(GB)</parameter>:delete_on_terminate</programlisting></para>
+                        </listitem>
+                        <listitem>
+                            <para><option>--hint</option>
+                                <parameter>key</parameter>=<parameter>value</parameter>.
+                                Arbitrary key and value pairs that are
+                                sent to the scheduler for custom use.
+                            </para>
+                        </listitem>
+                        <listitem>
+                            <para><option>--nic
+                                   net-id=</option><parameter>private-net-id</parameter>,
+                                   <option>v4-fixed-ip=</option><parameter>ip-addr</parameter>.
+                                Creates a NIC on the server. Specify
+                                this option multiple times to create
+                                multiple NICs. Optionally, to attach a
+                                NIC with a specified UUID to a
+                                network, specify the
+                                   <option>net-id</option>=<parameter>private-net-id</parameter>
+                                parameter. </para>
+                            <para>Optionally, specify the
+                                   <option>v4-fixed-ip=</option><parameter>ip-addr</parameter>
+                                parameter to specify an IPv4 fixed
+                                address for NIC. </para>
+                            <para>If you do not specify any networks
+                                on the <option>--nic</option>
+                                parameter, the Internet and ServiceNet
+                                are attached to your server. </para>
+                            <note>
+                                <para>ServiceNet is labeled as
+                                   <literal>private</literal> and the
+                                   Internet is labeled as
+                                   <literal>public</literal> in the
+                                   network list.</para>
+                            </note>
+                            <para>If you specify additional networks
+                                through the <option>—nic</option>
+                                parameter, these networks, in addition
+                                to the Internet and ServiceNet, are
+                                attached to your server.</para>
+                            <para>You can specify the optional
+                                   <option>--no-public</option> and
+                                   <option>--no-service-net</option>
+                                parameters to opt out of attaching the
+                                Internet and ServiceNet to your
+                                server.</para>
+                            <para>Specify the
+                                   <option>--no-public</option>
+                                parameter to opt out of attaching the
+                                Internet to your server.</para>
+                            <para>Specify the
+                                   <option>--no-service-net</option>
+                                parameter to opt out of attaching
+                                ServiceNet to your server.</para>
+                        </listitem>
+                        <listitem>
+                            <para><option>--config-drive</option>
+                                <parameter>value</parameter>. Enables
+                                a configuration drive. </para>
+                        </listitem>
+                        <listitem>
+                            <para><option>--poll</option>. Blocks
+                                while the instance builds so progress
+                                can be reported. </para>
+                        </listitem>
+                    </itemizedlist>
+                    <para>For example, you might issue the following
+                        command to attach a NIC to your server.
+                        Additionally, the Internet and ServiceNet are
+                        attached to your
+                        server.<programlisting language="bash" role="gutter: false"><prompt>$</prompt> swift boot my_server_with_network --flavor 2 --image d42f821e-c2d1-4796-9f07-af5ed7912d0e --nic net-id=e65accc0-1d98-45eb-af76-ab3d31edc7d2</programlisting></para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Delete isolated
+                        network</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> swift network-delete &lt;network_id&gt;</programlisting>
+                    <itemizedlist>
+                        <title>Positional argument</title>
+                        <listitem>
+                            <para><parameter>network_id</parameter>.
+                                The ID of the network to
+                                delete.</para>
+                        </listitem>
+                    </itemizedlist>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </section>
+    <section xml:id="swift_summary_virtualints">
+        <title>Virtual Interfaces</title>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">List virtual interfaces for
+                        an existing server</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> swift virtual-interface-list &lt;instance_id&gt;</programlisting>
+                    <itemizedlist>
+                        <title>Positional argument</title>
+                        <listitem>
+                            <para><parameter>instance_id</parameter>.
+                                The ID of the instance for which you
+                                want to list virtual
+                                interfaces.</para>
+                        </listitem>
+                    </itemizedlist>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Attach virtual interface to
+                        an existing server</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> swift virtual-interface-create &lt;network_id&gt; &lt;instance_id&gt;</programlisting>
+                    <itemizedlist>
+                        <title>Positional arguments</title>
+                        <listitem>
+                            <para><parameter>network_id</parameter>.
+                                The ID of the network to attach to the
+                                server.</para>
+                        </listitem>
+                        <listitem>
+                            <para><parameter>instance_id</parameter>.
+                                The ID of the instance to which you
+                                want to attach the virtual
+                                interface.</para>
+                        </listitem>
+                    </itemizedlist>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Delete a virtual interface
+                        and detach it from an instance</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> swift virtual-interface-delete &lt;instance_id&gt; &lt;interface_id&gt;</programlisting>
+                    <itemizedlist>
+                        <title>Positional arguments</title>
+                        <listitem>
+                            <para><parameter>instance_id</parameter>.
+                                The ID of the instance from which you
+                                want to remove the virtual
+                                interface.</para>
+                        </listitem>
+                        <listitem>
+                            <para><parameter>network_id</parameter>.
+                                The ID of the network to remove from
+                                the instance.</para>
+                        </listitem>
+                    </itemizedlist>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </section>
+</section>

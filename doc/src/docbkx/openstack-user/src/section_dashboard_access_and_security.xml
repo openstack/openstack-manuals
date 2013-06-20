@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="Launching_Instances_using_Dashboard">
+    <title>Set up access and security</title>
+    <?dbhtml stop-chunking?>
+    <para>Before you launch a virtual machine, you can add security
+        group rules to enable users to ping and SSH to the instances.
+        To do so, you either add rules to the default security group
+        or add a security group with rules. For information, see <xref
+            linkend="security_groups_add_rule"/>.</para>
+    <para>Keypairs are SSH credentials that are injected into images
+        when they are launched. For this to work, the image must
+        contain the <literal>cloud-init</literal> package. For information, see <xref
+            linkend="keypair_add"/>.</para>
+    <section xml:id="security_groups_add_rule">
+        <title>Add security group rules</title>
+        <para>The following procedure shows you how to add rules to
+            the default security group.</para>
+        <procedure>
+            <title>To add rules to the default security group:</title>
+            <step>
+                <para>Log in to the OpenStack dashboard.</para>
+            </step>
+            <step>
+                <para>If you are a member of multiple projects, select
+                    a project from the drop-down list at the top of
+                    the <guilabel>Project</guilabel> tab. </para>
+            </step>
+            <step>
+                <para>Click the <guilabel>Access &amp;
+                        Security</guilabel> category. </para>
+                <para>The dashboard shows the security groups that are
+                    available for this project. </para>
+                <figure>
+                    <title>OpenStack dashboard - Security
+                        Groups</title>
+                    <mediaobject>
+                        <imageobject role="fo">
+                            <imagedata
+                                fileref="../../common/figures/access_security.png"
+                                format="PNG" scale="60"/>
+                        </imageobject>
+                        <imageobject role="html">
+                            <imagedata
+                                fileref="../../common/figures/access_security.png"
+                                format="PNG"/>
+                        </imageobject>
+                    </mediaobject>
+                </figure>
+            </step>
+            <step>
+                <para>Select the default security group and click
+                        <guibutton>Edit Rules</guibutton>. </para>
+                <para>The <guilabel>Security Group Rules</guilabel>
+                    page appears: </para>
+                <figure>
+                    <title>OpenStack dashboard - Security Group
+                        Rules</title>
+                    <mediaobject>
+                        <imageobject role="fo">
+                            <imagedata
+                                fileref="../../common/figures/security_group_rules.png"
+                                format="PNG" scale="60"/>
+                        </imageobject>
+                        <imageobject role="html">
+                            <imagedata
+                                fileref="../../common/figures/security_group_rules.png"
+                                format="PNG"/>
+                        </imageobject>
+                    </mediaobject>
+                </figure>
+            </step>
+            <step>
+                <title>Add a TCP rule</title>
+                <para>Click <guibutton>Add Rule</guibutton>. </para>
+                <para>The <guilabel>Add Rule</guilabel> window
+                    appears. </para>
+                <figure>
+                    <title>OpenStack dashboard - Add Rule</title>
+                    <mediaobject>
+                        <imageobject role="fo">
+                            <imagedata
+                                fileref="../../common/figures/add_rule.png"
+                                format="PNG" scale="60"/>
+                        </imageobject>
+                        <imageobject role="html">
+                            <imagedata
+                                fileref="../../common/figures/add_rule.png"
+                                format="PNG"/>
+                        </imageobject>
+                    </mediaobject>
+                </figure>
+                <substeps>
+                    <step>
+                        <para>In the <guilabel>IP Protocol</guilabel>
+                            list, select <literal>TCP</literal>.
+                        </para>
+                    </step>
+                    <step>
+                        <para>In the <guilabel>Open</guilabel> list,
+                            select <literal>Port</literal>.</para>
+                    </step>
+                    <step>
+                        <para>In the <guilabel>Port</guilabel> box,
+                            enter <literal>22</literal>. </para>
+                    </step>
+                    <step>
+                        <para>In the <guilabel>Source</guilabel> list,
+                            select <literal>CIDR</literal>. </para>
+                    </step>
+                    <step>
+                        <para>In the <guilabel>CIDR</guilabel> box,
+                            enter <literal>0.0.0.0/0</literal>.</para>
+                    </step>
+                    <step>
+                        <para>Click <guibutton>Add</guibutton>.</para>
+                        <para>Port 22 is now open for requests from
+                            any IP address. </para>
+                        <para>If you want to accept requests from a
+                            particular range of IP addresses, specify
+                            the IP address block in the
+                                <guilabel>CIDR</guilabel> box.</para>
+                    </step>
+                </substeps>
+            </step>
+            <step>
+                <title>Add an ICMP rule</title>
+                <para>Click <guibutton>Add Rule</guibutton>. </para>
+                <para>The <guilabel>Add Rule</guilabel> window
+                    appears. </para>
+                <substeps>
+                    <step>
+                        <para>In the <guilabel>IP Protocol</guilabel>
+                            list, select <literal>ICMP</literal>.
+                        </para>
+                    </step>
+                    <step>
+                        <para>In the <guilabel>Type</guilabel> box,
+                            enter <literal>-1</literal>.</para>
+                    </step>
+                    <step>
+                        <para>In the <guilabel>Code</guilabel> box,
+                            enter <literal>-1</literal>. </para>
+                    </step>
+                    <step>
+                        <para>In the <guilabel>Source</guilabel> list,
+                            select <literal>CIDR</literal>. </para>
+                    </step>
+                    <step>
+                        <para>In the <guilabel>CIDR</guilabel> box,
+                            enter <literal>0.0.0.0/0</literal>.</para>
+                    </step>
+                    <step>
+                        <para>Click <guibutton>Add</guibutton>.</para>
+                    </step>
+                </substeps>
+            </step>
+        </procedure>
+    </section>
+    <section xml:id="keypair_add">
+        <title>Add keypair</title>
+        <para>Create at
+            least one keypair for each project. If you have generated a
+            keypair with an external tool, you can import it into
+            OpenStack. The keypair can be used for multiple instances that
+            belong to a project.</para>
+        <procedure>
+            <title>To add a keypair:</title>
+            <step>
+                <para>Log in to the OpenStack dashboard.</para>
+            </step>
+            <step>
+                <para>If you are a member of multiple projects, select
+                    a project from the drop-down list at the top of
+                    the <guilabel>Project</guilabel> tab. </para>
+            </step>
+            <step>
+                <para>Click the <guilabel>Access &amp;
+                        Security</guilabel> category. </para>
+            </step>
+            <step>
+                <para>Click the <guilabel>Keypairs</guilabel> tab. The
+                    dashboard shows the keypairs that are available
+                    for this project. </para>
+            </step>
+            <step>
+                <title>To add a keypair:</title>
+                <para>Click <guibutton>Create Keypair</guibutton>. </para>
+                <para>The <guilabel>Create Keypair</guilabel> window
+                    appears. </para>
+                <figure>
+                    <title>OpenStack dashboard - Create
+                        Keypair</title>
+                    <mediaobject>
+                        <imageobject role="fo">
+                            <imagedata
+                                fileref="../../common/figures/create_keypair.png"
+                                format="PNG" scale="60"/>
+                        </imageobject>
+                        <imageobject role="html">
+                            <imagedata
+                                fileref="../../common/figures/create_keypair.png"
+                                format="PNG"/>
+                        </imageobject>
+                    </mediaobject>
+                </figure>
+                <substeps>
+                    <step>
+                        <para>In the <guilabel>Keypair Name</guilabel>
+                            box, enter a name for your keypair.
+                        </para>
+                    </step>
+                    <step>
+                        <para>Click <guibutton>Create
+                                Keypair</guibutton>.</para>
+                    </step>
+                    <step>
+                        <para>Respond to the prompt to download the
+                            keypair.</para>
+                    </step>
+                </substeps>
+            </step>
+            <step>
+                <title>To import a keypair:</title>
+                <para>Click <guibutton>Import Keypair</guibutton>. </para>
+                <para>The <guilabel>Import Keypair</guilabel> window
+                    appears.</para>
+                <substeps>
+                    <step>
+                        <para>In the <guilabel>Keypair Name</guilabel>
+                            box, enter the name of your keypair.
+                        </para>
+                    </step>
+                    <step>
+                        <para>In the <guilabel>Public Key</guilabel>
+                            box, copy the public key. </para>
+                    </step>
+                    <step>
+                        <para>Click <guibutton>Import
+                                Keypair</guibutton>.</para>
+                    </step>
+                </substeps>
+            </step>
+            <step>
+                <para>Save the <filename>*.pem</filename> file locally
+                    and change its permissions so that only you can
+                    read and write to the file:</para>
+                <para>
+                    <screen><userinput><prompt>$</prompt> chmod 0600 MY_PRIV_KEY.pem</userinput></screen>
+                </para>
+            </step>
+            <step>
+                <para>Use the <command>ssh-add</command> command to
+                    make the keypair known to
+                    SSH:<screen><userinput><prompt>$</prompt> ssh-add MY_PRIV_KEY.pem</userinput></screen></para>
+            </step>
+        </procedure>
+        <para>The public key of the keypair is registered in the Nova
+            database. </para>
+        <para>The dashboard lists the keypair in the <guilabel>Access
+                &amp; Security</guilabel> category, as follows:</para>
+        <figure>
+            <title>OpenStack dashboard - Keypairs</title>
+            <mediaobject>
+                <imageobject role="fo">
+                    <imagedata
+                        fileref="../../common/figures/keypairs.png"
+                        format="PNG" scale="60"/>
+                </imageobject>
+                <imageobject role="html">
+                    <imagedata
+                        fileref="../../common/figures/keypairs.png"
+                        format="PNG"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+    </section>
+</section>

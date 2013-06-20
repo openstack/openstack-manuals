@@ -1,43 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section [
+<!-- Some useful entities borrowed from HTML -->
+<!ENTITY ndash  "&#x2013;">
+<!ENTITY mdash  "&#x2014;">
+<!ENTITY hellip "&#x2026;">      
+]>
 <section xml:id="installing-openstack-dashboard"
     xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
     <title>Install and configure the dashboard</title>
     <para>Before you can install and configure the dashboard, meet the
-        following system requirements:</para>
-    <itemizedlist role="compact">
-        <title>Dashboard system requirements:</title>
-        <listitem>
-            <para>OpenStack Compute installation. The cloud operator must set up an OpenStack Compute
-                installation and enable the Identity Service for user
-                and project management. </para>
-            <para><emphasis role="bold">User:</emphasis> Note the URLs
-                of the Identity Service and Compute endpoints.</para>
-        </listitem>
-        <listitem>
-            <para>Identity Service user with sudo privileges. Because Apache does not serve content from a root
-                user, the cloud operator must set up an Identity
-                Service user with sudo privileges. </para>
-            <para><emphasis role="bold">User:</emphasis> Note the
-                credentials of this user.</para>
-        </listitem>
-        <listitem>
-            <para>git. Install <emphasis role="bold">git</emphasis> by
-                running the following command:</para>
-            <programlisting language="bash" linenumbering="unnumbered"><prompt>$</prompt> sudo apt-get install git-core</programlisting>
-        </listitem>
-        <listitem>
-            <para>Python 2.6 or 2.7. The Python version must support Django. These
-                instructions were tested with Ubuntu 10.10. </para>
-            <para>The Python version should run on any system,
-                including Mac OS X. </para>
-            <para>The installation prerequisites might differ by
-                platform. </para>
-        </listitem>
-    </itemizedlist>
+        requirements in <xref linkend="dashboard-system-requirements"
+        />.</para>
+    <para>For more information about how to deploy the dashboard, see
+            <link
+            xlink:href="http://docs.openstack.org/developer/horizon/topics/deployment.html"
+            >Deploying Horizon</link>.</para>
     <procedure>
-        <title>To install the dashboard:</title>
+        <title>To install the dashboard</title>
         <step>
             <para>Install the dashboard on the node that can contact
                 the Identity Service as root:</para>
@@ -120,6 +101,134 @@
                         >https://github.com/kanaka/noVNC/wiki/Browser-support</link>,
                     respectively. </para>
             </note>
+        </step>
+        <step>
+            <para>You can configure the dashboard for a simple HTTP
+                deployment or a secured HTTPS deployment. While the
+                standard installation uses a non-encrypted HTTP
+                channel, you can enable SSL support for the dashboard. </para>
+            <para>To configure the dashboard for HTTP, proceed to
+                    <xref linkend="dashboard-config-http"/>.</para>
+            <para>To configure the dashboard for HTTPS, proceed to
+                    <xref linkend="dashboard-config-https"/>.</para>
+        </step>
+    </procedure>
+    <procedure xml:id="dashboard-config-http">
+        <title>To configure the dashboard for HTTP</title>
+        <step>
+            <para>Specify the host for your OpenStack Identity Service
+                endpoint in the
+                    <filename>/etc/openstack-dashboard/local_settings.py</filename>
+                file with the <literal>OPENSTACK_HOST</literal>
+                setting. </para>
+            <para>The following example shows this setting: </para>
+            <programlisting language="python"><?db-font-size 65%?><xi:include parse="text" href="samples/local_settings.py"/></programlisting>
+            <para>The <literal>HORIZON_CONFIG</literal> dictionary
+                contains all the settings for the dashboard. Whether
+                or not a service is in the dashboard depends on the
+                Service Catalog configuration in the Identity Service.
+                For the full listing, see <link
+                    xlink:href="http://docs.openstack.org/developer/horizon/topics/settings.html"
+                    >Horizon Settings and Configuration</link>.</para>
+        </step>
+        <step>
+            <para>Point your browser to the public IP address for your
+                instance. For example:</para>
+            <para><code>http://192.168.206.130</code></para>
+        </step>
+        <step>
+            <para>After you connect to the dashboard through the URL,
+                a login page appears. </para>
+            <para>Enter the credentials for any user that you created
+                with the OpenStack Identity Service. </para>
+            <para>For example, enter <literal>admin</literal> for the
+                user name and <literal>secrete</literal> for the
+                password.</para>
+        </step>
+    </procedure>
+    <procedure xml:id="dashboard-config-https">
+        <title>To configure the dashboard for HTTPS</title>
+        <para>The following example uses the domain,
+                <literal>http://openstack.example.com</literal>. Use a
+            domain that fits your current set up.</para>
+        <step>
+            <para>In<filename>/etc/openstack-dashboard/local_settings.py</filename>,
+                update the following
+                parameter:<programlisting>USE_SSL = True</programlisting></para>
+        </step>
+        <step>
+            <para>Edit <filename>/etc/apache2/ports.conf</filename>
+                and add the following line:</para>
+            <programlisting>NameVirtualHost *:443</programlisting>
+        </step>
+        <step>
+            <para>Edit
+                    <filename>/etc/apache2/conf.d/openstack-dashboard.conf</filename>.
+                Change the contents of the file to match the <xref
+                    linkend="conf_after"/>. </para>
+            <example xml:id="conf_before">
+                <title>openstack-dashboard.conf &ndash; before
+                    editing</title>
+                <programlisting><?db-font-size 65%?>WSGIScriptAlias / /usr/share/openstack-dashboard/openstack_dashboard/wsgi/django.wsgi
+WSGIDaemonProcess horizon user=www-data group=www-data processes=3 threads=10
+Alias /static /usr/share/openstack-dashboard/openstack_dashboard/static/
+&lt;Directory /usr/share/openstack-dashboard/openstack_dashboard/wsgi&gt;
+Order allow,deny
+Allow from all
+&lt;/Directory&gt;</programlisting>
+            </example>
+            <example xml:id="conf_after">
+                <title>openstack-dashboard.conf &ndash; after
+                    editing</title>
+                <programlisting><?db-font-size 65%?>&lt;VirtualHost *:80&gt;
+ServerName openstack.example.com
+RedirectPermanent / https://openstack.example.com
+&lt;/VirtualHost&gt;
+&lt;VirtualHost *:443&gt;
+ServerName openstack.example.com
+
+SSLEngine On
+SSLCertificateFile /etc/apache2/SSL/openstack.example.com.crt
+SSLCACertificateFile /etc/apache2/SSL/openstack.example.com.crt
+SSLCertificateKeyFile /etc/apache2/SSL/openstack.example.com.key
+SetEnvIf User-Agent &quot;.*MSIE.*&quot; nokeepalive ssl-unclean-shutdown
+
+WSGIScriptAlias / /usr/share/openstack-dashboard/openstack_dashboard/wsgi/django.wsgi
+WSGIDaemonProcess horizon user=www-data group=www-data processes=3 threads=10
+Alias /static /usr/share/openstack-dashboard/openstack_dashboard/static/
+&lt;Directory /usr/share/openstack-dashboard/openstack_dashboard/wsgi&gt;
+Order allow,deny
+Allow from all
+&lt;/Directory&gt;
+&lt;/VirtualHost&gt;</programlisting>
+            </example>
+            <para>In this configuration, Apache listens on the port
+                443 and redirects all the hits to the HTTPS protocol
+                for all the non-secured requests. In the secured
+                section, the private key, public key, and certificate
+                to use are defined.</para>
+        </step>
+        <step>
+            <para>Restart Apache and memcached:</para>
+            <screen><prompt>#</prompt> <userinput>service apache2 restart</userinput>
+<prompt>#</prompt> <userinput>service memcached restart</userinput></screen>
+            <para>If you call the HTTP version of the dashboard
+                through your browser, you are redirected to the HTTPS
+                page.</para>
+        </step>
+        <step>
+            <para>Point your browser to the public IP address for your
+                instance. For example:</para>
+            <para><code>https://192.168.206.130</code></para>
+        </step>
+        <step>
+            <para>After you connect to the dashboard through the URL,
+                a login page appears. </para>
+            <para>Enter the credentials for any user that you created
+                with the OpenStack Identity Service. </para>
+            <para>For example, enter <literal>admin</literal> for the
+                user name and <literal>secrete</literal> for the
+                password.</para>
         </step>
     </procedure>
 </section>
