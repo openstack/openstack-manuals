@@ -54,13 +54,7 @@ volume_driver=cinder.volume.drivers.nfs.NfsDriver
                     <td><para>Optional</para></td>
                     <td><para><literal>$state_path/mnt</literal></para></td>
                     <td><para>(StrOpt) Base dir where nfs shares are expected to be mounted.</para></td>
-                </tr>
-                <tr>
-                    <td><para><literal>nfs_disk_util</literal></para></td>
-                    <td><para>Optional</para></td>
-                    <td><para><literal>df</literal></para></td>
-                    <td><para>(StrOpt) Use <literal>du</literal> or <literal>df</literal> for free space calculation.</para></td>
-                </tr>
+                </tr>              
                 <tr>
                     <td><para><literal>nfs_sparsed_volumes</literal></para></td>
                     <td><para>Optional</para></td>
@@ -77,6 +71,21 @@ volume_driver=cinder.volume.drivers.nfs.NfsDriver
                     <td><para>(StrOpt) Mount options passed to the nfs client. See section 
                         of the nfs man page for details.</para></td>
                 </tr>
+                <tr>
+                    <td><para><literal>nfs_used_ratio</literal></para></td>
+                    <td><para>Optional</para></td>
+                    <td><para><literal>0.95</literal></para></td>
+                    <td><para>(FloatOpt) Percent of ACTUAL usage of the underlying volume before no new volumes can be
+                            allocated to the volume destination. </para></td>
+                </tr>
+                <tr>
+                    <td><para><literal>nfs_oversub_ratio</literal></para></td>
+                    <td><para>Optional</para></td>
+                    <td><para><literal>1.0</literal></para></td>
+                    <td><para>(FloatOpt) This will compare the allocated to available space on the volume destination. 
+                        If the ratio exceeds this number, the destination will no longer be valid.
+                    </para></td>
+                </tr>                 
             </tbody>
         </table>
     </simplesect>
