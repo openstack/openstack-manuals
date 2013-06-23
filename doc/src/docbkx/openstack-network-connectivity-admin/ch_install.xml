@@ -25,30 +25,26 @@
         </note>
         <para>Point to Grizzly PPAs:                        
                                                             </para>
-        <screen><prompt>#</prompt> <userinput>echo deb http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/grizzly main >>/etc/apt/sources.list.d/grizzly.list</userinput>
-    <prompt>#</prompt> <userinput>apt-get install ubuntu-cloud-keyring </userinput>
-    <prompt>#</prompt> <userinput>apt-get update</userinput>
-    <prompt>#</prompt> <userinput>apt-get upgrade</userinput>   </screen>
-        <note>
-            <para> Please use "sudo" in order to install and configure
-                packages with superuser privileges.</para>
-        </note>
+        <screen><prompt>$</prompt> <userinput>echo deb http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/grizzly main | sudo tee /etc/apt/sources.list.d/grizzly.list</userinput>
+<prompt>$</prompt> <userinput>sudo apt-get install ubuntu-cloud-keyring</userinput>
+<prompt>$</prompt> <userinput>sudo apt-get update</userinput>
+<prompt>$</prompt> <userinput>sudo apt-get upgrade</userinput></screen>
         <section xml:id="install_quantum_server">
             <title>Install quantum-server </title>
             <para>Install quantum-server and CLI for accessing the
                 API: </para>
-            <screen><computeroutput>apt-get -y install quantum-server python-quantumclient</computeroutput></screen>
+            <screen><prompt>$</prompt> <userinput>sudo apt-get -y install quantum-server python-quantumclient</userinput></screen>
             <para>You will also want to install the plugin you choose
                 to use, for example: </para>
-            <screen><computeroutput>apt-get -y install quantum-plugin-&lt;plugin-name&gt;</computeroutput></screen>
+            <screen><prompt>$</prompt> <userinput>sudo apt-get -y install quantum-plugin-&lt;plugin-name&gt;</userinput></screen>
             <para>Most plugins require a database to be installed and
                 configured in a plugin configuration file.  For
                 example: </para>
-            <screen><computeroutput>apt-get -y install mysql-server python-mysqldb python-sqlalchemy </computeroutput></screen>
+            <screen><prompt>$</prompt> <userinput>sudo apt-get -y install mysql-server python-mysqldb python-sqlalchemy </userinput></screen>
             <para>A database that you are already using for other
                 OpenStack services will work fine for this.  Simply
                 create a ‘quantum’ database: </para>
-            <screen><computeroutput>mysql -u &lt;user&gt; -p &lt;pass&gt; -e “create database quantum”</computeroutput></screen>
+            <screen><prompt>$</prompt> <userinput>mysql -u &lt;user&gt; -p &lt;pass&gt; -e “create database quantum”</userinput></screen>
             <para>And then configure the plugin’s configuration file
                 to use this database.  Find the plugin configuration
                 file in <filename>/etc/quantum/plugins/&lt;plugin-name&gt;</filename> (For
@@ -69,8 +65,7 @@
                     case because of deploying another service like
                     Nova, this existing RabbitMQ setup is
                     sufficient):  </para>
-                <screen><computeroutput>apt-get install rabbitmq-server   
-rabbitmqctl change_password guest &lt;password&gt;</computeroutput></screen>
+                <screen><prompt>$</prompt> <userinput>sudo apt-get install rabbitmq-server rabbitmqctl change_password guest &lt;password&gt;</userinput></screen>
                 <para>Then update /etc/quantum/quantum.conf with these
                     values: </para>
                 <screen><computeroutput>rabbit_host=&lt;mgmt-IP-of-rabbit-host&gt;
@@ -105,12 +100,12 @@ local_ip=&lt;data-net-IP-address-of-node&gt;</computeroutput></screen>
                 <para>After performing that change on the node running
                     quantum-server, restart quantum-server to pick up
                     the new settings.</para>
-                <screen><computeroutput>service quantum-server restart</computeroutput></screen>
+                <screen><prompt>$</prompt> <userinput>sudo service quantum-server restart</userinput></screen>
             </section>
             <section xml:id="nvp_plugin">
                 <title>Plugin Configuration: Nicira NVP Plugin</title>
                 <para> Make sure the NVP plugin is installed using:</para>
-                <screen><computeroutput>apt-get -y install quantum-plugin-nicira</computeroutput></screen>
+                <screen><prompt>$</prompt> <userinput>sudo apt-get -y install quantum-plugin-nicira</userinput></screen>
 
                 <para>To configure OpenStack Networking to use the NVP plugin first
                     edit
@@ -153,7 +148,7 @@ local_ip=&lt;data-net-IP-address-of-node&gt;</computeroutput></screen>
                 </warning>
                 <para>Lastly, restart quantum-server to pick up the
                     new settings.</para>
-                <screen><computeroutput>service quantum-server restart</computeroutput></screen>
+                <screen><prompt>$</prompt> <userinput>sudo service quantum-server restart</userinput></screen>
                 <para>An example quantum.conf file to use with NVP would be:
                 </para>
                 <screen><computeroutput>core_plugin = quantum.plugins.nicira.nicira_nvp_plugin.QuantumPlugin.NvpPluginV2
@@ -190,12 +185,12 @@ nvp_controller_connection=10.0.0.4:443:admin:admin:30:10:2:2
                 <screen><computeroutput>server = &lt;controller-ip&gt;:&lt;port&gt;</computeroutput></screen>
                 <para>Lastly, restart quantum-server to pick up the
                     new settings.</para>
-                <screen><computeroutput>service quantum-server restart</computeroutput></screen>
+                <screen><prompt>$</prompt> <userinput>sudo service quantum-server restart</userinput></screen>
             </section>
             <section xml:id="ryu_plugin">
                 <title>Configuring Ryu Plugin</title>
                 <para>Make sure the ryu plugin is installed using:</para>
-                <screen><computeroutput>apt-get -y install quantum-plugin-ryu</computeroutput></screen>
+                <screen><prompt>$</prompt> <userinput>sudo apt-get -y install quantum-plugin-ryu</userinput></screen>
 		<para>To configure OpenStack Networking to use the Ryu plugin first
                     edit
                         <filename>/etc/quantum/quantum.conf</filename>
@@ -233,7 +228,7 @@ tunnel_interface = &lt;eth0&gt;
 </computeroutput></screen>
                 <para>Lastly, restart quantum-server to pick up the
                     new settings.</para>
-                <screen><computeroutput>service quantum-server restart</computeroutput></screen>
+                <screen><prompt>$</prompt> <userinput>sudo service quantum-server restart</userinput></screen>
 	    </section>
             <section xml:id="PLUMgridplugin">
                 <title>Configuring PLUMgrid Plugin</title>
@@ -258,7 +253,7 @@ username=&lt;username>
 password=&lt;password></computeroutput></screen>
                 <para>Lastly, restart quantum-server to pick up the
                     new settings.</para>
-                <screen><computeroutput>service quantum-server restart</computeroutput></screen>
+                <screen><prompt>$</prompt> <userinput>sudo service quantum-server restart</userinput></screen>
             </section>
         </section>
         <section xml:id="install_quantum_agent">
@@ -285,7 +280,7 @@ password=&lt;password></computeroutput></screen>
                 to be installed on each Data Forwarding Node.</para>
                 <para>Install the OVS agent agent package, will pull in the
                 Open vSwitch software as a dependency: </para>
-                <screen><computeroutput>apt-get -y install quantum-plugin-openvswitch-agent</computeroutput></screen>
+                <screen><prompt>$</prompt> <userinput>sudo apt-get -y install quantum-plugin-openvswitch-agent</userinput></screen>
                 <para>The ovs_quantum_plugin.ini created in the above
                     step must be replicated on all nodes
                     quantum-plugin-openvswitch-agent. When using
@@ -296,14 +291,14 @@ password=&lt;password></computeroutput></screen>
                     value in the ovs_quantum_plugin.ini file. </para>
                 <para>Then restart Open vSwitch to properly load the kernel
                 module:</para>
-                <screen><computeroutput>service openvswitch-switch restart</computeroutput></screen>
+                <screen><prompt>$</prompt> <userinput>sudo service openvswitch-switch restart</userinput></screen>
                 <para>And restart the agent:</para>
-                <screen><computeroutput>service quantum-plugin-openvswitch-agent restart</computeroutput></screen>
+                <screen><prompt>$</prompt> <userinput>sudo service quantum-plugin-openvswitch-agent restart</userinput></screen>
                 <para>All hosts running
                     quantum-plugin-openvswitch-agent also requires
                     that an OVS bridge named "br-int" exists. To
                     create it, run:</para>
-                <screen><computeroutput>ovs-vsctl add-br br-int</computeroutput></screen>
+                <screen><prompt>$</prompt> <userinput>sudo ovs-vsctl add-br br-int</userinput></screen>
             </section>
             <section xml:id="install_quantum_agent_nvp">
                 <title>Node Setup: Nicira NVP Plugin</title>
@@ -328,19 +323,19 @@ password=&lt;password></computeroutput></screen>
                 <para>The Ryu plugin requires Open vSwitch and ryu. Please install ryu and openvswitch
 		    in addition to ryu agent package.</para>
 		<para>Install ryu. There isn't ryu package for ubuntu yet.</para>
-                <screen><computeroutput>pip install ryu</computeroutput></screen>
+                <screen><prompt>$</prompt> <userinput>sudo pip install ryu</userinput></screen>
                 <para>Install the Ryu agent package and openvswitch package: </para>
-                <screen><computeroutput>apt-get -y install quantum-plugin-ryu-agent openvswitch-switch python-openvswitch openvswitch-datapath-dkms</computeroutput></screen>
+                <screen><prompt>$</prompt> <userinput>sudo apt-get -y install quantum-plugin-ryu-agent openvswitch-switch python-openvswitch openvswitch-datapath-dkms</userinput></screen>
                 <para>The ovs_ryu_plugin.ini and quantum.conf created in the above
                     step must be replicated on all nodes
                     quantum-plugin-ryu-agent. </para>
                 <para>Then restart the agent</para>
-                <screen><computeroutput>service quantum-plugin-ryu-agent restart</computeroutput></screen>
+                <screen><prompt>$</prompt> <userinput>sudo service quantum-plugin-ryu-agent restart</userinput></screen>
                 <para>All hosts running
                     quantum-plugin-ryu-agent also requires
                     that an OVS bridge named "br-int" exists. To
                     create it, run:</para>
-                <screen><computeroutput>ovs-vsctl add-br br-int</computeroutput></screen>
+                <screen><prompt>$</prompt> <userinput>sudo ovs-vsctl add-br br-int</userinput></screen>
             </section>
         </section>
         <section xml:id="install_quantum_dhcp">
@@ -350,7 +345,7 @@ password=&lt;password></computeroutput></screen>
             <para>The host running the quantum-dhcp-agent must be configured as a "data forwarding node" according to your
             plugin's requirements (see section above).</para>
             <para>In addition, you must install the DHCP agent:</para>
-            <screen><computeroutput>apt-get -y install quantum-dhcp-agent</computeroutput></screen>
+            <screen><prompt>$</prompt> <userinput>sudo apt-get -y install quantum-dhcp-agent</userinput></screen>
             <para>Some options in <filename>/etc/quantum/dhcp_agent.ini</filename> must have certain values that
              depend on the plugin in use.  The sub-sections below will indicate those values for certain plugins.</para>
             <note><para>Please note that the agent requires at least dnsmasq 2.59 to fully  support all the
@@ -413,7 +408,7 @@ interface_driver = quantum.agent.linux.interface.OVSInterfaceDriver
                     proprietary BigSwitch controller implements L3 functionality. When using
                     Floodlight as your OpenFlow controller, L3 functionality is not available. </para></note>
             <para>For all other plugins, install the quantum-l3-agent binary on the network node. </para>
-            <screen><computeroutput>apt-get -y install quantum-l3-agent</computeroutput></screen>
+            <screen><prompt>$</prompt> <userinput>sudo apt-get -y install quantum-l3-agent</userinput></screen>
             <para>Create a bridge "br-ex" that will be used to uplink
                 this node running quantum-l3-agent to the external
                 network, then attach the NIC attached to the external
@@ -437,8 +432,8 @@ interface_driver = quantum.agent.linux.interface.OVSInterfaceDriver
             </warning>
             <para>For example, with Open vSwitch and NIC eth1 connect
                 to the external network, run:</para>
-            <screen><computeroutput>ovs-vsctl add-br br-ex
-ovs-vsctl add-port br-ex eth1</computeroutput></screen>
+            <screen><prompt>$</prompt> <userinput>sudo ovs-vsctl add-br br-ex</userinput>
+<prompt>$</prompt> <userinput>sudo ovs-vsctl add-port br-ex eth1</userinput></screen>
             <para>The node running quantum-l3-agent should not have an
                 IP address manually configured on the NIC connected to
                 the external network. Rather, you must have a range of
@@ -471,7 +466,7 @@ ip netns exec qrouter-47af3868-0fa8-4447-85f6-1304de32153b ping &lt;fixed-ip&gt;
             <title>Install LBaaS Agent</title>
             <para>When using the reference implemenation of Load-Balancer-as-a-Service (LBaaS) it requires the quantum-lbaas-agent to be running on the network node.
                   To install this agent run:</para>
-            <screen><computeroutput>apt-get install quantum-lbaas-agent</computeroutput></screen>
+            <screen><prompt>$</prompt> <userinput>sudo apt-get install quantum-lbaas-agent</userinput></screen>
             <para>If you are using an OVS based plugin (OVS, NVP, Ryu, NEC, BigSwitch/Floodlight) you'll want to set:</para>
             <screen><computeroutput>interface_driver = quantum.agent.linux.interface.OVSInterfaceDriver</computeroutput></screen>
             <para>Otherwise if you are using a plugin that uses LinuxBridge you'll want to set:</para>
@@ -484,16 +479,16 @@ ip netns exec qrouter-47af3868-0fa8-4447-85f6-1304de32153b ping &lt;fixed-ip&gt;
         <section xml:id="install_quantum_client">
             <title>Install OpenStack Networking CLI Client</title>
             <para>Install the OpenStack Networking CLI client:</para>
-            <screen><computeroutput>apt-get -y install python-pyparsing python-cliff python-quantumclient</computeroutput></screen>
+            <screen><prompt>$</prompt> <userinput>sudo apt-get -y install python-pyparsing python-cliff python-quantumclient</userinput></screen>
         </section>
         <section xml:id="init_config">
             <title>Init, Config, and Log File Locations</title>
             <para>Services can be started and stopped using the
                 'service' command. For example:</para>
-            <screen><computeroutput>service quantum-server stop
-service quantum-server status
-service quantum-server start
-service quantum-server restart</computeroutput></screen>
+            <screen><prompt>$</prompt> <userinput>sudo service quantum-server stop</userinput>
+<prompt>$</prompt> <userinput>sudo service quantum-server status</userinput>
+<prompt>$</prompt> <userinput>sudo service quantum-server start</userinput>
+<prompt>$</prompt> <userinput>sudo service quantum-server restart</userinput></screen>
             <para> Log files are found in /var/log/quantum. </para>
             <para> Configuration files are in /etc/quantum.</para>
         </section>
@@ -518,9 +513,9 @@ service quantum-server restart</computeroutput></screen>
                 the management network (if this is already the case
                 because of deploying another service like Nova, this
                 existing QPID setup is sufficient):  </para>
-            <screen><computeroutput>sudo yum -y install qpid-cpp-server qpid-cpp-server-daemon
-sudo chkconfig qpidd on
-sudo service qpidd start</computeroutput></screen>
+            <screen><prompt>$</prompt> <userinput>sudo yum -y install qpid-cpp-server qpid-cpp-server-daemon</userinput>
+<prompt>$</prompt> <userinput>sudo chkconfig qpidd on</userinput>
+<prompt>$</prompt> <userinput>sudo service qpidd start</userinput></screen>
             <para>Then update /etc/quantum/quantum.conf with these
                 values: </para>
             <screen><computeroutput>rpc_backend = quantum.openstack.common.rpc.impl_qpid
@@ -548,16 +543,16 @@ qpid_hostname = &lt;mgmt-IP-of-qpid-host></computeroutput></screen>
                     <link
                     xlink:href="https://fedoraproject.org/wiki/Quantum#Quantum_Plugins"
                     >https://fedoraproject.org/wiki/Quantum#Quantum_Plugins</link>.</para>
-            <screen><computeroutput>sudo yum install -y openstack-quantum
-sudo yum install -y openstack-quantum-openvswitch</computeroutput></screen>
+            <screen><prompt>$</prompt> <userinput>sudo yum install -y openstack-quantum</userinput>
+<prompt>$</prompt> <userinput>sudo yum install -y openstack-quantum-openvswitch</userinput></screen>
             <para>Most plugins require a database to be installed and
                 configured in a plugin configuration file.  The Fedora
                 packaging for OpenStack Networking a server setup utility scripts
                 that will take care of this. For example: </para>
-            <screen><computeroutput>sudo quantum-server-setup --plugin openvswitch</computeroutput></screen>
+            <screen><prompt>$</prompt> <userinput>sudo quantum-server-setup --plugin openvswitch</userinput></screen>
             <para>Enable and start the service:</para>
-            <screen><computeroutput>sudo chkconfig quantum-server on
-sudo service quantum-server start</computeroutput></screen>
+            <screen><prompt>$</prompt> <userinput>sudo chkconfig quantum-server on</userinput>
+<prompt>$</prompt> <userinput>sudo service quantum-server start</userinput></screen>
         </section>
         <section  xml:id="fedora_q_plugin">
             <title>Install quantum-plugin-*-agent</title>
@@ -572,31 +567,31 @@ sudo service quantum-server start</computeroutput></screen>
             <section xml:id="fedora_q_agent">
                 <title>Open vSwitch Agent</title>
                 <para>Install the OVS agent: </para>
-                <screen><computeroutput>sudo yum install -y openstack-quantum-openvswitch</computeroutput></screen>
+                <screen><prompt>$</prompt> <userinput>sudo yum install -y openstack-quantum-openvswitch</userinput></screen>
                 <para>Run the agent setup script:</para>
-                <screen><computeroutput>sudo quantum-node-setup --plugin openvswitch</computeroutput></screen>
+                <screen><prompt>$</prompt> <userinput>sudo quantum-node-setup --plugin openvswitch</userinput></screen>
                 <para>All hosts running quantum-plugin-openvswitch-agent also requires that an OVS
                     bridge named "br-int" exists. To create it, run:</para>
-                <screen><computeroutput>ovs-vsctl add-br br-int</computeroutput></screen>
+                <screen><prompt>$</prompt> <userinput>sudo ovs-vsctl add-br br-int</userinput></screen>
                 <para>Enable and start the agent:</para>
-                <screen><computeroutput>sudo chkconfig quantum-openvswitch-agent on
-sudo service quantum-openvswitch-agent start
-sudo chkconfig openvswitch on
-sudo service openvswitch start</computeroutput></screen>
+                <screen><prompt>$</prompt> <userinput>sudo chkconfig quantum-openvswitch-agent on</userinput>
+<prompt>$</prompt> <userinput>sudo service quantum-openvswitch-agent start</userinput>
+<prompt>$</prompt> <userinput>sudo chkconfig openvswitch on</userinput>
+<prompt>$</prompt> <userinput>sudo service openvswitch start</userinput></screen>
                 <para>Enable the ovs cleanup utility:</para>
-                <screen><computeroutput>sudo chkconfig quantum-ovs-cleanup on</computeroutput></screen>
+                <screen><prompt>$</prompt> <userinput>sudo chkconfig quantum-ovs-cleanup on</userinput></screen>
             </section>
         </section>
         <section  xml:id="fedora_q_dhcp">
             <title>Install quantum-dhcp-agent</title>
             <para>The DHCP agent is part of the openstack-quantum
                 package.</para>
-            <screen><computeroutput>sudo yum install -y openstack-quantum</computeroutput></screen>
+            <screen><prompt>$</prompt> <userinput>sudo yum install -y openstack-quantum</userinput></screen>
             <para>Run the agent setup script:</para>
-            <screen><computeroutput>sudo quantum-dhcp-setup --plugin openvswitch</computeroutput></screen>
+            <screen><prompt>$</prompt> <userinput>sudo quantum-dhcp-setup --plugin openvswitch</userinput></screen>
             <para>Enable and start the agent:</para>
-            <screen><computeroutput>sudo chkconfig quantum-dhcp-agent on
-sudo service quantum-dhcp-agent start</computeroutput></screen>
+            <screen><prompt>$</prompt> <userinput>sudo chkconfig quantum-dhcp-agent on</userinput>
+<userinput>sudo service quantum-dhcp-agent start</userinput></screen>
             <note><para>Please note that the agent requires at least dnsmasq 2.59 to fully  support all the
 options it requires.</para></note>
         </section>
@@ -610,8 +605,8 @@ options it requires.</para></note>
                 network to this bridge. For example, with Open vSwitch
                 and NIC eth1 connect to the external network,
                 run:</para>
-            <screen><computeroutput>sudo ovs-vsctl add-br br-ex
-sudo ovs-vsctl add-port br-ex eth1</computeroutput></screen>
+            <screen><prompt>$</prompt> <userinput>sudo ovs-vsctl add-br br-ex</userinput>
+<userinput>sudo ovs-vsctl add-port br-ex eth1</userinput></screen>
             <para>The node running quantum-l3-agent should not have an
                 IP address manually configured on the NIC connected to
                 the external network. Rather, you must have a range of
@@ -620,29 +615,29 @@ sudo ovs-vsctl add-port br-ex eth1</computeroutput></screen>
                 external network. This range must be large enough to
                 have an IP address for each router in the deployment,
                 as well as each floating IP.</para>
-            <screen><computeroutput>sudo yum install -y openstack-quantum</computeroutput></screen>
+            <screen><prompt>$</prompt> <userinput>sudo yum install -y openstack-quantum</userinput></screen>
             <para>Run the agent setup script:</para>
-            <screen><computeroutput>sudo quantum-l3-setup --plugin openvswitch</computeroutput></screen>
+            <screen><prompt>$</prompt> <userinput>sudo quantum-l3-setup --plugin openvswitch</userinput></screen>
             <para>Enable and start the agent:</para>
-            <screen><computeroutput>sudo chkconfig enable quantum-l3-agent on
-sudo start start quantum-l3-agent</computeroutput></screen>
+            <screen><prompt>$</prompt> <userinput>sudo chkconfig enable quantum-l3-agent on</userinput>
+<prompt>$</prompt> <userinput>sudo start start quantum-l3-agent</userinput></screen>
             <para>Enable and start the meta data agent:</para>
-            <screen><computeroutput>sudo chkconfig quantum-metadata-agent on
-sudo service quantum-metadata-agent start</computeroutput></screen>
+            <screen><prompt>$</prompt> <userinput>sudo chkconfig quantum-metadata-agent on</userinput>
+<prompt>$</prompt> <userinput>sudo service quantum-metadata-agent start</userinput></screen>
         </section>
         <section xml:id="fedora_q_client">
             <title>Install OpenStack Networking CLI client</title>
             <para>Install the OpenStack Networking CLI client:</para>
-            <screen><computeroutput>sudo yum install -y python-quantumclient</computeroutput></screen>
+            <screen><prompt>$</prompt> <userinput>sudo yum install -y python-quantumclient</userinput></screen>
         </section>
         <section xml:id="fedora_misc">
-            <title><?sbr?>Init, Config, and Log File Locations</title>
+            <title>Init, Config, and Log File Locations</title>
             <para>Services can be started and stopped using the
                 'service' command. For example:</para>
-            <screen><computeroutput>sudo service quantum-server stop
-sudo service quantum-server status
-sudo service quantum-server start
-sudo service quantum-server restart</computeroutput></screen>
+            <screen><prompt>$</prompt> <userinput>sudo service quantum-server stop</userinput>
+<prompt>$</prompt> <userinput>sudo service quantum-server status</userinput>
+<prompt>$</prompt> <userinput>sudo service quantum-server start</userinput>
+<prompt>$</prompt> <userinput>sudo service quantum-server restart</userinput></screen>
             <para>Log files are found in /var/log/quantum. </para>
             <para>Configuration files are in /etc/quantum.</para>
         </section>
