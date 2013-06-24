@@ -4,10 +4,10 @@
     xmlns:xlink="http://www.w3.org/1999/xlink"
     version="5.0">
     <title>EMC SMI-S iSCSI Driver</title>
-    <para>The EMCISCSIDriver is based on the existing ISCSIDriver,
+    <para>The EMCSMISISCSIDriver is based on the existing ISCSIDriver,
         with the ability to create/delete and attach/detach volumes
         and create/delete snapshots, and so on.</para>
-    <para>The EMCISCSIDriver executes the volume operations by
+    <para>The EMCSMISISCSIDriver executes the volume operations by
         communicating with the backend EMC storage. It uses a CIM
         client in python called PyWBEM to make CIM operations over
         HTTP.</para>
@@ -127,7 +127,7 @@
         <programlisting>
 iscsi_target_prefix = iqn.1992-04.com.emc
 iscsi_ip_address = 10.10.61.45
-volume_driver = cinder.volume.emc.EMCISCSIDriver
+volume_driver = cinder.volume.drivers.emc.emc_smis_iscsi.EMCSMISISCSIDriver
 cinder_emc_config_file = /etc/cinder/cinder_emc_config.xml
                         </programlisting>
         <para>For VNX, we have the following entries where <literal>10.10.61.35</literal> is the IP address of the
@@ -135,7 +135,7 @@ cinder_emc_config_file = /etc/cinder/cinder_emc_config.xml
         <programlisting>
 iscsi_target_prefix = iqn.2001-07.com.vnx
 iscsi_ip_address = 10.10.61.35
-volume_driver = cinder.volume.emc.EMCISCSIDriver
+volume_driver = cinder.volume.drivers.emc.emc_smis_iscsi.EMCSMISISCSIDriver
 cinder_emc_config_file = /etc/cinder/cinder_emc_config.xml
                          </programlisting>
         <para>Restart the cinder-volume service.</para>
