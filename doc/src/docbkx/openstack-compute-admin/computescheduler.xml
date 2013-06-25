@@ -15,7 +15,6 @@
         options:</para>
     <programlisting>
 scheduler_driver=nova.scheduler.multi.MultiScheduler
-volume_scheduler_driver=nova.scheduler.chance.ChanceScheduler
 compute_scheduler_driver=nova.scheduler.filter_scheduler.FilterScheduler
 scheduler_available_filters=nova.scheduler.filters.all_filters
 scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
@@ -26,9 +25,6 @@ compute_fill_first_cost_fn_weight=-1.0
         Scheduler, which allows the admin to specify different
         scheduling behavior for compute requests versus volume
         requests. </para>
-    <para>The volume scheduler is configured by default as a Chance
-        Scheduler, which picks a host at random that has the
-            <command>cinder-volume</command> service running.</para>
     <para> The compute scheduler is configured by default as a Filter
         Scheduler, described in detail in the next section. In the
         default configuration, this scheduler will only consider hosts
@@ -124,9 +120,9 @@ scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
         <section xml:id="aggregate-multi-tenancy-isolation">
             <title>AggregateMultiTenancyIsolation</title>
             <para>Isolates tenants to specific<link linkend="host-aggregates"
-                    >host aggregates</link>. If a host is in an 
+                    >host aggregates</link>. If a host is in an
                 aggregate that has the metadata key <literal>filter_tenant_id</literal>
-                it will only create instances from that tenant (or list of tenants). 
+                it will only create instances from that tenant (or list of tenants).
                 A host can be
                 in different aggregates. If a host does not belong to an
                 aggregate with the metadata key, it can create instances from
@@ -258,7 +254,7 @@ scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
 	  <title>DiskFilter</title>
 	  <para> Only schedule instances on hosts if there are
 	  sufficient Disk available for ephemeral storage. </para>
-	  
+
 	  <para>This filter can be configured to allow a fixed
 	  amount of disk overcommitment by using the
 	  <literal>disk_allocation_ratio </literal>
@@ -276,9 +272,9 @@ scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
 	  that is sparse or copy on write such that each virtual
 	  instance does not require a 1:1 allocation of virtual disk
 	  to physical storage.</para>
-	  
+
 	</section>
-	
+
         <section xml:id="groupantiaffinityfilter">
             <title>GroupAntiAffinityFilter</title>
             <para> The GroupAntiAffinityFilter ensures that each
