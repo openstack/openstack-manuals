@@ -1065,14 +1065,8 @@
                                 state poll requests. </td>
                         </tr>
                         <tr>
-                            <td>metadata_ip= </td>
-                            <td>(StrOpt) IP address used by OpenStack
-                                Compute metadata server. </td>
-                        </tr>
-                        <tr>
-                            <td>metadata_port=8775 </td>
-                            <td>(IntOpt) TCP Port used by OpenStack
-                                Compute metadata server. </td>
+                            <td>metadata_port=9697 </td>
+                            <td>(IntOpt) TCP Port used by metadata namespace proxy.</td>
                         </tr>
                         <tr>
                             <td>router_id= </td>
@@ -1095,6 +1089,60 @@
                     </tbody>
                 </table></para>
         </section>
+    </section>
+    <section xml:id="metadata_agent_options">
+        <title>metadata_agent.ini</title>
+        <para>Use the following options in the <filename>metadata_agent.ini</filename> file for the
+            Metadata agent.<table rules="all">
+                <caption>Metadata Agent Options</caption>
+                <thead>
+                    <tr>
+                        <th>Configuration option=Default value</th>
+                        <th>(Type) Description </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>nova_metadata_ip=127.0.0.1 </td>
+                        <td>(StrOpt) The IP address of the Nova metadata service. </td>
+                    </tr>
+                    <tr>
+                        <td>nova_metadata_port=8775 </td>
+                        <td>(IntOpt) The TCP port of the Nova metadata service. </td>
+                    </tr>
+                    <tr>
+                        <td>metadata_proxy_shared_secret= </td>
+                        <td>(StrOpt) When proxying metadata requests, Quantum signs the Instance-ID
+                            header with a shared secret to prevent spoofing. You may select any
+                            string for a secret, but it must match here and in the configuration
+                            used by the Nova Metadata Server. NOTE: Nova uses a different key:
+                            quantum_metadata_proxy_shared_secret </td>
+                    </tr>
+                    <tr>
+                        <td>admin_user= </td>
+                        <td>(StrOpt) The administrative user name for OpenStack Networking, which is
+                            defined in <link xlink:href="keystone.html">OpenStack Identity</link>
+                            (keystone). </td>
+                    </tr>
+                    <tr>
+                        <td>admin_password= </td>
+                        <td>(StrOpt) The password for the administrative user.</td>
+                    </tr>
+                    <tr>
+                        <td>admin_tenant_name= </td>
+                        <td>(StrOpt) The administrative user's tenant name.</td>
+                    </tr>
+                    <tr>
+                        <td>auth_url= </td>
+                        <td>(StrOpt) The URL used to validate tokens. For example,
+                                <code>`auth_protocol`://`auth_host`:`auth_port`/v2.0</code>. </td>
+                    </tr>
+                    <tr>
+                        <td>auth_region= </td>
+                        <td>(StrOpt) The authentication region.</td>
+                    </tr>
+                </tbody>
+            </table></para>
     </section>
     <section xml:id="device_manager_options">
         <title>Common Device Manager Options</title>

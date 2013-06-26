@@ -413,23 +413,6 @@ interface_driver = quantum.agent.linux.interface.OVSInterfaceDriver
                 this node running quantum-l3-agent to the external
                 network, then attach the NIC attached to the external
                 network to this bridge.</para>
-            <warning>
-                <para>OpenStack does not manage this routing for you,
-                    so you need to make sure that your host running
-                    the metadata service always has a route to reach
-                    each private network's subnet via the external
-                    network IP of that subnet's OpenStack Networking router. To do
-                    this, you can run OpenStack Networking without namespaces, and
-                    run the quantum-l3-agent on the same host as
-                    nova-api. Alternatively, you can identify an IP
-                    prefix that includes all private network subnet's
-                    (e.g., 10.0.0.0/8) and then make sure that your
-                    metadata server has a route for that prefix with
-                    the OpenStack Networking router's external IP address as the
-                    next hop. For more validation information, refer
-                    to <link linkend="adv_cfg_l3_agent_metadata"
-                        >Advanced configuration</link></para>
-            </warning>
             <para>For example, with Open vSwitch and NIC eth1 connect
                 to the external network, run:</para>
             <screen><prompt>$</prompt> <userinput>sudo ovs-vsctl add-br br-ex</userinput>
