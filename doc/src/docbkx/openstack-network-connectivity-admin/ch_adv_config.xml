@@ -289,48 +289,5 @@ external_network_bridge = br-ex</computeroutput></screen>
 gateway_external_network_id = e828e54c-850a-4e74-80a8-8b79c6a285d8
 external_network_bridge = br-ex-2</computeroutput></screen>
         </section>
-        <section xml:id="adv_cfg_l3_agent_metadata">
-            <title>OpenStack Compute Metadata Server Support</title>
-            <para> To use OpenStack Compute metadata service, metadata_ip and metadata_port in the L3 agent
-                configuration file need to be configured. Accessing from VMs to OpenStack Compute metadata
-                service is forwarded to an external network through OpenStack Networking L3 router. OpenStack Compute metadata
-                service must be reachable from the external network. As the <link
-                    linkend="ch_limitations">Limitations section </link> says, note that OpenStack Networking
-                overlapping IPs support and OpenStack Compute metadata service cannot be used together. </para>
-            <para>Allowing VMs to reach the metadata service is a big point of confusion with
-                OpenStack Networking. We need to make sure instructions for how to set this up are displayed more
-                prominently than they already are, and that there are instructions for how to
-                validate and troubleshoot in this scenario.</para>
-            <para>Example validation includes:</para>
-            <para><emphasis role="bold">VALIDATION STEP #1</emphasis></para>
-            <para>- on network node(l3_agent running) ping to <literal>nova_metadata_ip</literal>
-            specified in <literal>metadata_agent.ini</literal></para>
-            <para> if you are not using namespace, just run:</para>
-            
-                <screen>  ping &lt;metadata_ip></screen>
-                <para>for example, if the metadata server IP is 172.16.10.5, run:</para>
-                <screen><prompt>$</prompt><userinput>ping 172.16.10.5 </userinput></screen>
-            
-            <para>if you are using namespaces, identify the UUID of the router and run:</para>
-            
-                <screen>ip netns exec qrouter-&lt;router uuid> ping &lt;metadata_ip></screen>
-                <para>for example, if the router uuid is d7e9ec57-77c2-4046-aebf-d978ed4a4f83 and
-                    the metadata server IP is 172.16.10.5, run:</para>
-                <screen><prompt>$</prompt> <userinput>ip netns exec qrouter-d7e9ec57-77c2-4046-aebf-d978ed4a4f83 ping 172.16.10.5</userinput></screen>
-            
-            <para><emphasis role="bold">VALIDATION STEP #2</emphasis></para>
-            <para>- on metadata server(nova_api server) check connection to vm's subnets using an un-NATed IP address of the VM, such as 10.0.0.2:</para>
-            <para><screen><prompt>$</prompt><userinput>ping 10.0.0.2</userinput></screen></para>
-            <para><emphasis role="bold">NOTE</emphasis></para>
-            <para>OpenStack does not manage this routing for you, so you need to make sure that your
-                host running the metadata service always has a route to reach each private network's
-                subnet via the external network IP of that subnet's OpenStack Networking router. To do this, you
-                can either run OpenStack Networking without namespaces, and run the quantum-l3-agent on the same
-                host as nova-api. Otherwise, you can identify an IP prefix that includes all private
-                network subnet's (e.g., 10.0.0.0/8) and then make sure that your metadata server has
-                a route for that prefix with the OpenStack Networking router's external IP address as the
-                next hop. </para>
-           
-        </section>
     </section>
 </chapter>
