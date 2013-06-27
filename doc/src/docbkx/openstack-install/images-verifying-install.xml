@@ -8,21 +8,22 @@
             <userinput>glance help</userinput> at the command
         line.</para>
     <para>Obtain a test image.</para>
-    <screen>mkdir /tmp/images
-    cd /tmp/images/
-    wget  http://download.cirros-cloud.net/0.3.1/cirros-0.3.1-x86_64-disk.img </screen>
-    <para>Upload the kernel.</para>
-    <note><para>This example shows inputting --os-username, --os-password,
-        --os-tenant-name, --os-auth-url on the command line for
-        reference. You could also use the OS_* environment
-        variables by setting them in an openrc file: </para>
+    <screen><prompt>$</prompt> <userinput>mkdir /tmp/images</userinput>
+<prompt>$</prompt> <userinput>cd /tmp/images/</userinput>
+<prompt>$</prompt> <userinput>wget http://download.cirros-cloud.net/0.3.1/cirros-0.3.1-x86_64-disk.img</userinput></screen>
+    <para>Upload the image.</para>
+    <note><para>This example shows inputting <literal>--os-username</literal>,
+        <literal>--os-password</literal>, <literal>--os-tenant-name</literal>,
+        <literal>--os-auth-url</literal> on the command line for reference. You
+        could also use the <literal>OS_*</literal> environment variables by
+        setting them in an <filename>openrc</filename> file: </para>
         <programlisting><xi:include parse="text" href="samples/openrc.txt"/></programlisting>
         <para>Then you would source these environment variables by running <userinput>source openrc</userinput>.</para></note>
-    <screen>glance --os-username=admin --os-password=secrete --os-tenant-name=demo --os-auth-url=http://192.168.206.130:5000/v2.0 \
+    <screen><prompt>$</prompt> <userinput>glance --os-username=admin --os-password=secrete --os-tenant-name=demo --os-auth-url=http://192.168.206.130:5000/v2.0 \
 image-create \
 --name="Cirros 0.3.1" \
 --disk-format=qcow2 \
---container-format bare &lt; cirros-0.3.1-x86_64-disk.img</screen>
+--container-format bare &lt; cirros-0.3.1-x86_64-disk.img</userinput></screen>
     <programlisting>+------------------+--------------------------------------+
 | Property         | Value                                |
 +------------------+--------------------------------------+
@@ -45,15 +46,12 @@ image-create \
 +------------------+--------------------------------------+</programlisting>
 
 
-    <para>Now a glance image-list should show these image IDs.</para>
-    <programlisting>glance --os-username=admin --os-password=secrete --os-tenant-name=demo --os-auth-url=http://192.168.206.130:5000/v2.0 image-list
-+--------------------------------------+---------------------------------+-------------+------------------+----------+--------+
+    <para>Now a <userinput>glance image-list</userinput> should show the image ID.</para>
+    <screen><prompt>$</prompt> <userinput>glance --os-username=admin --os-password=secrete --os-tenant-name=demo --os-auth-url=http://192.168.206.130:5000/v2.0 image-list </userinput></screen>
+<programlisting>+--------------------------------------+---------------------------------+-------------+------------------+----------+--------+
 | ID                                   | Name                            | Disk Format | Container Format | Size     | Status |
 +--------------------------------------+---------------------------------+-------------+------------------+----------+--------+
 | acafc7c0-40aa-4026-9673-b879898e1fc2 | Cirros 0.3.1                    | qcow2       | bare             | 13147648 | active |
-| 10ccdf86-e59e-41ac-ab41-65af91ea7a9c | cirros-0.3.0-x86_64-uec         | ami         | ami              | 25165824 | active |
-| 8473f43f-cd1f-47cc-8d88-ccd9a62e566f | cirros-0.3.0-x86_64-uec-kernel  | aki         | aki              | 4731440  | active |
-| 75c1bb27-a406-462c-a379-913e4e6221c9 | cirros-0.3.0-x86_64-uec-ramdisk | ari         | ari              | 2254249  | active |
 +--------------------------------------+---------------------------------+-------------+------------------+----------+--------+</programlisting>
     
     </section>
