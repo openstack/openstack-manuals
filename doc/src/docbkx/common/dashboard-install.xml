@@ -45,8 +45,8 @@
             <programlisting language="bash" linenumbering="unnumbered" os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install -y memcached python-memcached mod_wsgi openstack-dashboard</userinput></programlisting>
         </step>
         <step>
-            <para>Modify the <literal>CACHE_BACKEND</literal>
-                environment variable in <filename os="ubuntu"
+            <para>Modify the value of <literal>CACHES['default']['LOCATION']</literal>
+                in <filename os="ubuntu"
                     >/etc/openstack-dashboard/local_settings.py</filename><filename
                     os="centos;fedora;rhel"
                     >/etc/openstack-dashboard/local_settings</filename>
@@ -58,8 +58,14 @@
                     >/etc/openstack-dashboard/local_settings.py</filename><filename
                     os="centos;fedora;rhel"
                     >/etc/openstack-dashboard/local_settings</filename>
-                and look for this line: <code>CACHE_BACKEND =
-                    'memcached://127.0.0.1:11211/'</code></para>
+                and look for this line:</para>
+            <programlisting language="bash" linenumbering="unnumbered">CACHES = {
+	'default': {
+		'BACKEND' : 'django.core.cache.backends.memcached.MemcachedCache',
+		'LOCATION' : '127.0.0.1:11211'
+	}
+}
+            </programlisting>
             <note xlink:href="#installing-openstack-dashboard"
                 xlink:title="Notes">
                 <title>Notes</title>
