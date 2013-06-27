@@ -28,7 +28,12 @@ SECRET_KEY = 'elj1IWiLoWHgryYxFT6j7cM5fGOOxWY0'
 
 LOCAL_PATH = os.path.dirname(os.path.abspath(__file__))
 
-CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
+CACHES = {
+	'default': {
+		'BACKEND' : 'django.core.cache.backends.memcached.MemcachedCache',
+		'LOCATION' : '127.0.0.1:11211'
+	}
+}
 
 # Send email to the console by default
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
