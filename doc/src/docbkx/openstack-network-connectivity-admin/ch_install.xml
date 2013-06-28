@@ -115,13 +115,13 @@ local_ip=&lt;data-net-IP-address-of-node&gt;</computeroutput></screen>
                 <para>Edit
                         <filename>/etc/quantum/plugins/nicira/nvp.ini</filename>
                     in order to configure the plugin.</para>
-                <para>In the [DATABASE] section, specify the quantum database
+                <para>In the [database] section, specify the quantum database
                     created in the previous step using the following line,
                     substituting your database server IP address for localhost
                      if the database is not local:</para>
                 <screen><computeroutput>sql_connection = mysql://&lt;user&gt;:&lt;password&gt;@localhost/quantum?charset=utf8</computeroutput></screen>
                 <para>In order to tell OpenStack Networking about a controller
-                 cluster, create a new [CLUSTER:&lt;name&gt;] section in the
+                 cluster, create a new [cluster:&lt;name&gt;] section in the
                 config file, and add the following entries:</para>
                 <para>The UUID of the NVP Transport Zone that should be used
                 by default when a tenant creates a network.  This value can
@@ -156,10 +156,10 @@ rabbit_host = 192.168.203.10
 allow_overlapping_ips = True
 </computeroutput></screen>
                 <para>An example nvp.ini file to use with NVP would be:</para>
-<screen><computeroutput>[DATABASE]
+<screen><computeroutput>[database]
 sql_connection=mysql://root:root@127.0.0.1/quantum
 
-[CLUSTER:main]
+[cluster:main]
 default_tz_uuid = d3afb164-b263-4aaa-a3e4-48e0e09bb33c
 default_l3_gw_service_uuid=5c8622cc-240a-40a1-9693-e6a5fca4e3cf
 nvp_controller_connection=10.0.0.2:443:admin:admin:30:10:2:2
@@ -199,12 +199,12 @@ nvp_controller_connection=10.0.0.4:443:admin:admin:30:10:2:2
 		<para>Edit
                         <filename>/etc/quantum/plugins/ryu/ryu.ini</filename>
 	            in order to configure the plugin.
-		    In the [DATABASE] section, specify the quantum database
+		    In the [database] section, specify the quantum database
 		    created in the previous step using the following line,
                     substituting your database server user/password/IP address/port
 		    based on your setting:</para>
                 <screen><computeroutput>sql_connection = mysql://&lt;user&gt;:&lt;password&gt;@&lt;ip-address&gt;:&lt;port&gt;/quantum?charset=utf8</computeroutput></screen>
-		<para>In [OVS] section, set the necessary values for
+		<para>In [ovs] section, set the necessary values for
 		    ryu-quantum-agent.
 		    openflow_rest_api is used to tell where Ryu is
                     listening for REST API.  Substitute ip-address and port-no
@@ -243,7 +243,7 @@ tunnel_interface = &lt;eth0&gt;
                     database created previously will be used by
                     setting:</para>
                 <screen><computeroutput>sql_connection = mysql://&lt;user&gt;:&lt;password&gt;@localhost/plumgrid_quantum?charset=utf8</computeroutput></screen>
-                <para>Under the [PLUMgridNOS] section specify the IP
+                <para>Under the [plumgridnos] section specify the IP
                     address of the PLUMgrid director also
                     known as NOS. Behind the director information
                     admin username and password are also
