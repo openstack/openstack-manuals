@@ -71,7 +71,16 @@ catalog.$Region.network.name = Network Service</programlisting>
                     role. Kindly check the ID for user, role and
                     tenant.</para>
                 <para>For example: </para>
-
+                <note><para>A <literal>get_id</literal> shell function is used
+                to store the id of newly created objects. This function needs
+                to be defined:
+                <screen><prompt>$</prompt> <userinput>function get_id () {
+     echo `"$@" | awk '/ id / { print $4 }'`
+}</userinput></screen>
+                It can be stored in your shell configuration file
+                (usually <filename>~/.bashrc</filename>) to make it permanently
+                available.
+                </para></note>
                 <screen><prompt>$</prompt> <userinput>ADMIN_ROLE=$(get_id keystone role-create --name=admin)
 </userinput></screen>
                 <screen><prompt>$</prompt> <userinput>QUANTUM_USER=$(get_id keystone user-create --name=quantum --pass="$QUANTUM_PASSWORD" --email=demo@example.com --tenant-id service)
