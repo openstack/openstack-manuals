@@ -43,13 +43,33 @@ instances.
 
 [[stateless-vs-stateful]]
 === Stateless vs. Stateful services
-(Coming soon)
+
+How to prevent a single point of failure depends partially on whether a service is stateless or not. For example, the nova-scheduler service is stateless; you make a request, it provides a response, and no further attention is required; subsequent requests do not depend on the results of the first. All you need to do to make nova-scheduler highly-available is to provide redundant instances and load balance them. OpenStack services that are stateless include nova-api, nova-conductor, glance-api, keystone-api, quantum-api and nova-scheduler.
+
+Stateful services, on the other hand, are more difficult to manage; a single action typically involves more than one request, so simply providing additional instances and load balancing will not solve the problem. One user-facing example of a stateful OpenStack service would be Horizon; if the UI reset itself every time the user went to a new page, it wouldn't be very useful. On a more basic level, the OpenStack database and message queue are also stateful, and must be managed accordingly to provide high-availability.
+
+How you manage stateful services depends partially on whether you choose an Active/Passive or Active/Active configuration.
 
 [[ap-intro]]
 === Active/Passive
-(Coming soon)
+
+In an active/passive configuration, systems are set up to prevent availability and data loss problems by ensuring that in the event of a problem, additional resources can be brought online to replace those that have failed. For example, OpenStack would write to the main database while maintaining a disaster recovery database that can be brought online in the event that the main database fails.
+
+Typically, an Active/Passive installation looks like this:
+
+ * Redundant instances of stateless services are available, and requests are load balanced using a virtual IP address and a load balancer such as HAProxy.
+ * Stateful services are managed in such a way that in the event of a system failure, a replacement resource can be brought online. A separate application (such as Pacemaker/Corosync) monitors these services, bringing the backup online as necessary. 
 
 [[aa-intro]]
 === Active/Active
-(Coming soon)
+
+In an active/active configuration, the system is also set up with a backup, but rather than bringing it online when there's a problem, the system manages both the main and redundant systems concurrently. This way, if there's a problem, the user is unlikely to even notice; the backup system is already online, and takes on the increased load while the problem system is dealt with.
+
+Typically, an Active/Active installation looks like this:
+
+ * Redundant instances of stateless services are available, and requests are load balanced using a virtual IP address and a load balancer such as HAProxy.
+ * Stateful services are managed in such a way that services are redundant, and that all instances have an identical state. For example, updates to one instance of a database would also update all other instances. This way a request to one instance is the same as a request to any other. A load balancer manages the traffic to these systems, ensuring that working systems always handle the request.
+
+This document discusses some of the more common ways to implement these architectures, but they are by no means the only ways to do it. The important thing is to make sure that your services are redundant, and available; how you achieve that is up to you. Let's look at some options for making that happen.
+
 
