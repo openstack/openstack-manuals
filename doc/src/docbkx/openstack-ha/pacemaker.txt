@@ -1,5 +1,5 @@
 [[ch-pacemaker]]
-== The Pacemaker Cluster Stack
+=== The Pacemaker Cluster Stack
 
 OpenStack infrastructure high availability relies on the
 http://www.clusterlabs.org[Pacemaker] cluster stack, the
@@ -21,7 +21,7 @@ databases or virtual IP addresses), existing third-party RAs (such as
 for RabbitMQ), and native OpenStack RAs (such as those managing the
 OpenStack Identity and Image Services).
 
-=== Installing Packages
+==== Installing Packages
 
 On any host that is meant to be part of a Pacemaker cluster, you must
 first establish cluster communications through the Corosync messaging
@@ -36,7 +36,7 @@ automatically):
   agents from +cluster-glue+)
 * +resource-agents+
 
-=== Setting up Corosync
+==== Setting up Corosync
 
 Besides installing the +corosync+ package, you will also have to
 create a configuration file, stored in
@@ -95,7 +95,7 @@ Once created, the +corosync.conf+ file (and the +authkey+ file if the
 +secauth+ option is enabled) must be synchronized across all cluster
 nodes.
 
-=== Starting Corosync
+==== Starting Corosync
 
 Corosync is started as a regular system service. Depending on your
 distribution, it may ship with a LSB (System V style) init script, an
@@ -140,7 +140,7 @@ runtime.totem.pg.mrp.srp.983895584.status=joined
 You should see a +status=joined+ entry for each of your constituent
 cluster nodes.
 
-=== Starting Pacemaker
+==== Starting Pacemaker
 
 Once the Corosync services have been started, and you have established
 that the cluster is communicating properly, it is safe to start
@@ -169,7 +169,7 @@ Version: 1.1.6-9971ebba4494012a93c03b40a2c58ec0eb60f50c
 Online: [ node2 node1 ]
 ----
 
-=== Setting basic cluster properties
+==== Setting basic cluster properties
 
 Once your Pacemaker cluster is set up, it is recommended to set a few
 basic cluster properties. To do so, start the +crm+ shell and change

@@ -1,5 +1,5 @@
 [[s-cinder-api]]
-=== Highly available Cinder API
+==== Highly available Cinder API
 
 Cinder is the block storage service in OpenStack.
 Making the Cinder API service highly available in active / passive mode involves
@@ -11,7 +11,7 @@ Making the Cinder API service highly available in active / passive mode involves
 NOTE: Here is the http://docs.openstack.org/trunk/openstack-compute/install/apt/content/osfolubuntu-cinder.html[documentation] for installing Cinder service.
 
 
-==== Adding Cinder API resource to Pacemaker
+===== Adding Cinder API resource to Pacemaker
 
 First of all, you need to download the resource agent to your system :
   
@@ -43,7 +43,7 @@ Once completed, commit your configuration changes by entering +commit+
 from the +crm configure+ menu. Pacemaker will then start the Cinder API
 service, and its dependent resources, on one of your nodes.
 
-==== Configuring Cinder API service
+===== Configuring Cinder API service
 
 Edit +/etc/cinder/cinder.conf+ :
 ----
@@ -59,7 +59,7 @@ rabbit_host = 192.168.42.102
 ----
 
 
-==== Configuring OpenStack Services to use High Available Cinder API
+===== Configuring OpenStack Services to use High Available Cinder API
 
 Your OpenStack services must now point their Cinder API configuration to
 the highly available, virtual cluster IP address -- rather than a
