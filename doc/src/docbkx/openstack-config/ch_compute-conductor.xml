@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="ch_conductor">
+    <title>Conductor</title>
+<para>
+The nova-conductor service is key to allowing OpenStack to function 
+without compute nodes accessing the database. Conceptually, it
+implements a new layer on top of nova-compute. It should not be
+deployed on compute nodes, or else the security benefits of removing
+database access from nova-compute will be negated. Just like other
+nova services such as nova-api or nova-scheduler, it can be scaled
+horizontally. You can run multiple instances of nova-conductor on
+different machines as needed for scaling purposes.</para>
+<para>
+In the Grizzly release, the methods exposed by nova-conductor will
+be relatively simple methods used by nova-compute to offload its
+ database operations.
+Places where nova-compute previously did database access will now be
+ talking to nova-conductor. However, we have plans in the medium to
+long term to move more and more of what is currently in nova-compute
+up to the nova-conductor layer. The compute service will start to
+look like a less intelligent slave service to nova-conductor. The
+conductor service will implement long running complex operations,
+ensuring forward progress and graceful error handling.
+This will be especially beneficial for operations that cross multiple
+compute nodes, such as migrations or resizes
+</para>
+<xi:include href="../common/tables/nova-conductor.xml"/>
+</chapter>
