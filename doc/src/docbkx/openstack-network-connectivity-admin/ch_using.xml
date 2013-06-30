@@ -15,15 +15,12 @@
         admin on behalf of the tenant.  </para>
     <section xml:id="api_features">
         <title>Core OpenStack Networking API Features</title>
-        <para>Once OpenStack Networking is installed and running, both tenants and
-            admins primarily interact with the service via
-            create-read-update-delete (CRUD) API operations performed
-            either directly against the API, or more commonly via the
-            'quantum' CLI tool.  Like other OpenStack CLI tools, the
-            'quantum' tool is just a basic wrapper around the OpenStack Networking
-            API, so any operation that can be performed via the CLI
-            has an equivalent API call that can be performed
-            programmatically.  </para>
+        <para>Once OpenStack Networking is installed and running, both tenants and admins primarily
+            interact with the service via create-read-update-delete (CRUD) API operations performed
+            either directly against the API, or more commonly via the 'neutron' CLI tool.  Like
+            other OpenStack CLI tools, the 'neutron' tool is just a basic wrapper around the
+            OpenStack Networking API, so any operation that can be performed via the CLI has an
+            equivalent API call that can be performed programmatically.  </para>
         <para>The CLI supports many options for filtering results, limiting fields show, etc.  For
             details, refer to the OpenStack Networking CLI documentation.   </para>
         <section xml:id="api_abstractions">
@@ -442,21 +439,25 @@ nova boot --image &lt;img&gt; --flavor &lt;flavor&gt; --nic port-id=&lt;port-id&
 	</section>
    <section xml:id="enabling_ping_and_ssh">
      <title>Security Groups (Enabling Ping and SSH on VMs)</title>
-     <para>If using a plugin that implements quantum security groups you can configure security group rules directly
-     by using quantum security-group-rule-create to enable access to your VMs. The example below allows <command>ping</command>
-     and <command>ssh</command> to your VMs.
-     <screen>
+     <para>If using a plugin that implements neutron security groups you can configure security
+                group rules directly by using quantum security-group-rule-create to enable access to
+                your VMs. The example below allows <command>ping</command> and
+                    <command>ssh</command> to your VMs.
+                <screen>
      <prompt>$</prompt> <userinput>quantum security-group-rule-create --protocol icmp --direction ingress default</userinput>
      <prompt>$</prompt> <userinput>quantum security-group-rule-create --protocol tcp --port-range-min 22 --port-range-max 22 --direction ingress default</userinput>
      </screen></para>
-     <para>If your plugin does not implement quantum security group, security groups can still be leveraged via OpenStack Compute.
-     This can be done using <command>nova secgroup-add-rule</command> or <command>euca-authorize</command> command to enable accesses to your VMs.
-     Below are the nova commands to allow <command>ping</command> and <command>ssh</command> to your VMs.</para>
+     <para>If your plugin does not implement neutron security group, security groups can still be
+                leveraged via OpenStack Compute. This can be done using <command>nova
+                    secgroup-add-rule</command> or <command>euca-authorize</command> command to
+                enable accesses to your VMs. Below are the nova commands to allow
+                    <command>ping</command> and <command>ssh</command> to your VMs.</para>
      <screen>
      <prompt>$</prompt> <userinput>nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0</userinput>
      <prompt>$</prompt> <userinput>nova secgroup-add-rule default tcp 22 22 0.0.0.0/0</userinput></screen>
 
-     <note><para>If your plugin implements quantum security groups you can still leverage nova security groups by setting security_group_api = quantum in <filename>nova.conf</filename>.
-           After setting this all nova security group commands will be proxied to quantum.</para></note></section>
+     <note><para>If your plugin implements neutron security groups you can still leverage nova security groups
+                    by setting security_group_api = quantum in <filename>nova.conf</filename>. After
+                    setting this all nova security group commands will be proxied to quantum.</para></note></section>
     </section>
 </chapter>
