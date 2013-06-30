@@ -1,5 +1,5 @@
 [[s-keystone]]
-=== Highly available Keystone
+==== Highly available Keystone
 
 Keystone is the Identity Service in OpenStack and used by many services.
 Making the Keystone service highly available in active / passive mode involves
@@ -11,7 +11,7 @@ Making the Keystone service highly available in active / passive mode involves
 NOTE: Here is the http://docs.openstack.org/trunk/openstack-compute/install/apt/content/ch_installing-openstack-identity-service.html[documentation] for installing Keystone service.
 
 
-==== Adding Keystone resource to Pacemaker
+===== Adding Keystone resource to Pacemaker
 
 First of all, you need to download the resource agent to your system :
 
@@ -43,7 +43,7 @@ Once completed, commit your configuration changes by entering +commit+
 from the +crm configure+ menu. Pacemaker will then start the Keystone 
 service, and its dependent resources, on one of your nodes.
 
-==== Configuring Keystone service
+===== Configuring Keystone service
 
 You need to edit your Keystone configuration file (+keystone.conf+) and change the bind parameter :
 ----
@@ -61,7 +61,7 @@ driver = keystone.identity.backends.sql.Identity
 ----
 
 
-==== Configuring OpenStack Services to use High Available Keystone
+===== Configuring OpenStack Services to use High Available Keystone
 
 Your OpenStack services must now point their Keystone configuration to
 the highly available, virtual cluster IP address -- rather than a
