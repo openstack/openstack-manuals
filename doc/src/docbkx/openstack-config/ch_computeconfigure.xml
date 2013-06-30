@@ -15,6 +15,7 @@
   decisions to make, and the <link xlink:href="http://docs.openstack.org/trunk/openstack-compute/install/content/">OpenStack Install Guide</link>
     covers a basic walkthrough.</para>
 
+    <!--status: right place-->
     <section xml:id="configuring-openstack-compute-basics">
     <?dbhtml stop-chunking?>
     <title>Post-Installation Configuration for OpenStack Compute</title>
@@ -27,6 +28,7 @@
       configured many ways. You can find networking options and
       hypervisor options described in separate chapters.</para>
 
+    <!--status: right place-->
     <section xml:id="setting-flags-in-nova-conf-file">
       <title>Setting Configuration Options in the
           <filename>nova.conf</filename> File</title>
@@ -51,18 +53,12 @@
         such as br100, the NETWORK_INTERFACE represents an interface
         to your VLAN setup, and passwords are represented as
         DB_PASSWORD_COMPUTE for your Compute (nova) database password,
-        and RABBIT PASSWORD represents the password to your rabbit
+        and RABBIT PASSWORD represents the password to your message queue
         installation.</para>
 
       <programlisting>
       <xi:include  parse="text" href="../openstack-install/samples/nova.conf"/>
       </programlisting>
-
-      <note>
-        <para>If your OpenStack deployment uses Qpid as the message queue instead
-        of RabbitMQ (e.g., on Fedora, CentOS, RHEL), you would see 
-        <literal>qpid_hostname</literal> instead of <literal>rabbit_host</literal>
-        in the <filename>nova.conf</filename> file.</para></note>
 
 <para>Create a <literal>nova</literal> group, so you can set permissions on the
       configuration file:</para>
@@ -90,6 +86,8 @@
 
       <screen><prompt>$</prompt> <userinput>nova-manage db sync</userinput></screen>
     </section>
+
+    <!--status: TODO - needs to move elsewhere, eg the user guide-->
     <section xml:id="creating-credentials"><title>Creating Credentials</title>
       <para>The credentials you will use to launch
         instances, bundle images, and all the other assorted
@@ -154,6 +152,8 @@ export EUCALYPTUS_CERT=${NOVA_CERT} # euca-bundle-image seems to require this se
       <screen><prompt>$</prompt> <userinput>cat /root/creds/openrc >> ~/.bashrc
 source ~/.bashrc</userinput></screen>
     </section>
+
+    <!--status: TODO needs to move elsewhere - user guide-->
     <section xml:id="creating-certifications">
       <title>Creating Certificates</title>
       <para>You can create certificates contained within pem
@@ -164,6 +164,7 @@ source ~/.bashrc</userinput></screen>
       </para>
      </section>
 
+    <!--status: TODO needs to move elsewhere - user guide-->
     <section xml:id="creating-networks">
       <title>Creating networks</title>
       <para>You need to populate the database with the network configuration information that
@@ -188,6 +189,7 @@ source ~/.bashrc</userinput></screen>
         will need to manually edit the <literal>networks</literal> table in the database.</para>
      </section>
 
+    <!--status: TODO needs to move elsewhere - user guide-->
     <section xml:id="enabling-access-to-vms-on-the-compute-node">
       <title>Enabling Access to VMs on the Compute Node</title>
 
@@ -224,6 +226,7 @@ source ~/.bashrc</userinput></screen>
       <screen><prompt>$</prompt> <userinput>sudo service nova-network start</userinput></screen>
     </section>
 
+    <!--status: TODO needs to move elsewhere - install guide-->
     <section xml:id="configuring-multiple-compute-nodes">
       <title>Configuring Multiple Compute Nodes</title>
 
@@ -323,6 +326,7 @@ $ <userinput>sudo service nova-compute restart</userinput></screen>
       <command>nova-compute</command> from this list.</para>
     </section>
 
+    <!--status: TODO needs to move elsewhere - user guide-->
     <section xml:id="determining-version-of-compute">
       <title>Determining the Version of Compute</title>
 
@@ -332,6 +336,7 @@ $ <userinput>sudo service nova-compute restart</userinput></screen>
       <screen><prompt>$</prompt> <userinput>nova-manage version list</userinput></screen>
     </section>
 
+    <!--status: TODO needs to move elsewhere - operations guide, user guide-->
       <section xml:id="diagnose-compute">
         <title>Diagnose your compute nodes</title>
 
@@ -380,6 +385,7 @@ $ <userinput>sudo service nova-compute restart</userinput></screen>
       </section>
     </section>
 
+    <!--status: good, right place-->
   <section xml:id="general-compute-configuration-overview">
     <title>General Compute Configuration Overview</title>
 
@@ -406,6 +412,7 @@ $ <userinput>sudo service nova-compute restart</userinput></screen>
   <xi:include href="../common/tables/nova-common.xml"/>
   </section>
 
+    <!--status: good, right place-->
   <section xml:id="sample-nova-configuration-files">
   <title>Example <filename>nova.conf</filename> Configuration Files</title>
   <para>
@@ -503,6 +510,7 @@ xenapi_remap_vbd_dev=true
     <xi:include href="../common/tables/nova-hypervisor.xml"/>
   </section>
 
+    <!--status: good, right place-->
   <section xml:id="configuring-authentication-authorization">
     <title>Configuring Authentication and Authorization</title>
 
@@ -519,63 +527,9 @@ xenapi_remap_vbd_dev=true
     <xi:include href="../common/tables/nova-ldap.xml"/>
   </section>
 
-  <section xml:id="configuring-compute-to-use-ipv6-addresses">
-    <title>Configuring Compute to use IPv6 Addresses</title>
+  <xi:include href="compute-configure-ipv6.xml"/>
 
-    <para>You can configure Compute to use both IPv4 and IPv6 addresses for
-    communication by putting it into a IPv4/IPv6 dual stack mode. In IPv4/IPv6
-    dual stack mode, instances can acquire their IPv6 global unicast address
-    by stateless address autoconfiguration mechanism [RFC 4862/2462].
-    IPv4/IPv6 dual stack mode works with <literal>VlanManager</literal> and <literal>FlatDHCPManager</literal>
-    networking modes. In <literal>VlanManager</literal>, different 64bit global routing prefix is used for
-    each project. In <literal>FlatDHCPManager</literal>, one 64bit global routing prefix is used
-    for all instances.</para>
-
-    <para>This configuration has been tested with VM images
-    that have IPv6 stateless address autoconfiguration capability (must use
-    EUI-64 address for stateless address autoconfiguration), a requirement for
-    any VM you want to run with an IPv6 address. Each node that executes a
-    <literal>nova-*</literal> service must have <literal>python-netaddr</literal>
-    and <literal>radvd</literal> installed.</para>
-
-    <para>On all nova-nodes, install python-netaddr:</para>
-
-    <screen><prompt>$</prompt> <userinput>sudo apt-get install -y python-netaddr</userinput></screen>
-
-    <para>On all <literal>nova-network</literal> nodes install <literal>radvd</literal> and configure IPv6
-    networking:</para>
-
-    <screen><prompt>$</prompt> <userinput>sudo apt-get install -y radvd</userinput>
-<prompt>$</prompt> <userinput>sudo bash -c "echo 1 &gt; /proc/sys/net/ipv6/conf/all/forwarding"</userinput>
-<prompt>$</prompt> <userinput>sudo bash -c "echo 0 &gt; /proc/sys/net/ipv6/conf/all/accept_ra"</userinput></screen>
-
-    <para>Edit the <filename>nova.conf</filename> file on all nodes to
-      set the use_ipv6 configuration option to True. Restart all
-      nova- services.</para>
-
-    <para>When using the command <command>nova network-create</command> you can add a fixed range
-      for IPv6 addresses. You must specify public or private after the create parameter.</para>
-
-    <screen><prompt>$</prompt> <userinput>nova network-create public --fixed-range-v4 <replaceable>fixed_range</replaceable> --vlan <replaceable>vlan_id</replaceable> --vpn <replaceable>vpn_start</replaceable> --fixed-range-v6 <replaceable>fixed_range_v6</replaceable></userinput></screen>
-
-    <para>You can set IPv6 global routing prefix by using the <literal>--fixed_range_v6</literal>
-      parameter. The default is: <literal>fd00::/48</literal>. When you use
-        <literal>FlatDHCPManager</literal>, the command uses the original value of
-        <literal>--fixed_range_v6</literal>. When you use <literal>VlanManager</literal>, the
-      command creates prefixes of subnet by incrementing subnet id. Guest VMs uses this prefix for
-      generating their IPv6 global unicast address.</para>
-
-    <para>Here is a usage example for <literal>VlanManager</literal>:</para>
-
-    <screen><prompt>$</prompt> <userinput>nova network-create public --fixed-range-v4 10.0.1.0/24 --vlan 100 --vpn 1000 --fixed-range-v6 fd00:1::/48 </userinput></screen>
-
-    <para>Here is a usage example for <literal>FlatDHCPManager</literal>:</para>
-
-    <screen><prompt>$</prompt> <userinput>nova network-create public  --fixed-range-v4 10.0.2.0/24 --fixed-range-v6 fd00:1::/48 </userinput></screen>
-
-    <xi:include href="../common/tables/nova-ipv6.xml"/>
-  </section>
-
+    <!--status: good, right place-->
   <section xml:id="configuring-compute-to-use-the-image-service">
     <title>Configuring Image Service and Storage for Compute</title>
 
@@ -615,6 +569,7 @@ xenapi_remap_vbd_dev=true
 <xi:include href="../common/tables/glance-wsgi.xml"/>
   </section>
 
+    <!--status: good, right place-->
   <section xml:id="configuring-migrations">
     <?dbhtml stop-chunking?>
     <title>Configuring Migrations</title>
@@ -659,6 +614,7 @@ xenapi_remap_vbd_dev=true
       for migrations using the KVM and XenServer hypervisors.
     </para>
 
+    <!--status: good, right place-->
     <section xml:id="configuring-migrations-kvm-libvirt">
     <title>KVM-Libvirt</title>
 
@@ -889,6 +845,7 @@ root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l
     </section>
     </section>
 
+    <!--status: good, right place-->
     <section xml:id="configuring-migrations-xenserver">
     <title>XenServer</title>
 
@@ -1005,20 +962,14 @@ $ nova aggregate-set-metadata &lt;aggregate-id&gt; operational_state=created</pr
       <para>To get resize to work with XenServer (and XCP), please refer to the Dom0 Modifications
         for Resize/Migration Support section in the OpenStack Compute Administration Guide.</para>
     </section> <!-- End of XenServer/Resize -->
-  </section> <!-- End of configuring resize -->  <section xml:id="configuring-database-connections">
-    <title>Configuring Database Connections</title>
+  </section> <!-- End of configuring resize -->  
 
-    <para>You can configure OpenStack Compute to use any SQLAlchemy-compatible
-        database. The database name is <literal>nova</literal> and entries to it are mostly written
-        by the <literal>nova-scheduler</literal> service, although all the services need to be able
-        to update entries in the database. Use these settings to configure the
-        connection string for the nova database.</para>
-        <xi:include href="../common/tables/nova-db.xml"/>
-  </section>
+   <xi:include href="compute-configure-db.xml"/>
 
   <!-- Oslo rpc mechanism (i.e. Rabbit, Qpid, ZeroMQ) -->
   <xi:include href="../common/rpc.xml" />
 
+    <!--status: good, right place-->
   <section xml:id="configuring-compute-API">
   <title>Configuring the Compute API</title>
   <simplesect>
@@ -1241,70 +1192,8 @@ limits =(POST, "*", .*, 10, MINUTE);(POST, "*/servers", ^/servers, 50, DAY);(PUT
     </simplesect>
   </section>
 
-  <section xml:id="configuring-ec2-API">
-  <title>Configuring the EC2 API</title>
-
-  <para>You can use <filename>nova.conf</filename> configuration
-  options to control which network address and port the EC2 API will
-  listen on, the formatting of some API responses, and authentication
-  related options.</para>
-
-  <para>To customize these options for OpenStack EC2 API, use these
-  configuration option settings.</para>
-
-  <xi:include href="../common/tables/nova-ec2.xml" />
-
-  </section>
-   <section xml:id="configuring-quotas">
-        <title>Configuring Quotas</title>
-
-        <para>For tenants, quota controls are available to limit the (flag and default shown in
-parenthesis):<itemizedlist>
-                <listitem>
-                    <para>Number of volumes which may be created (volumes=10)</para>
-                </listitem>
-                <listitem>
-                    <para>Total size of all volumes within a project as measured in GB (gigabytes=1000)</para>
-                </listitem>
-                <listitem>
-                    <para>Number of instances which may be launched (instances=10)</para>
-                </listitem>
-                <listitem>
-                    <para>Number of processor cores which may be allocated (cores=20)</para>
-                </listitem>
-                <listitem>
-                    <para>Publicly accessible IP addresses for
-            persistence in DNS assignment (floating_ips=10)</para>
-                </listitem>
-                <listitem>
-                    <para>Privately (or publicly) accessible IP
-            addresses for management purposes (fixed_ips=-1
-            unlimited)</para>
-                </listitem>
-                <listitem>
-                    <para>Amount of RAM that can be allocated in MB (ram=512000)</para>
-                </listitem>
-                <listitem>
-                    <para>Number of files that can be injected (injected_files=5)</para>
-                </listitem>
-                 <listitem>
-                    <para>Maximal size of injected files in B (injected_file_content_bytes=10240)</para>
-                </listitem> 
-                <listitem>
-                    <para>Number of security groups that may be created (security_groups=10)</para>
-                </listitem> 
-                 <listitem>
-                    <para>Number of rules per security group (security_group_rules=20)</para>
-                </listitem>
-        </itemizedlist></para>
-        <para> The defaults may be modified by setting the variable in
-         <literal>nova.conf</literal>, then restarting the <literal>nova-api</literal>
-         service.</para>
-        <para>To modify a value for a specific project, the <command>nova-manage</command>
-         command should be used. For example:
-        <screen><userinput><prompt>$</prompt> nova-manage project quota --project=1113f5f266f3477ac03da4e4f82d0568 --key=cores --value=40</userinput></screen>
-        Alternately, quota settings are available through the OpenStack Dashboard in the "Edit
-        Project" page. </para>
-        <xi:include href="../common/tables/nova-quota.xml"/>
-  </section>
+    <!--status: good, right place-->
+  <xi:include href="compute-configure-ec2.xml" />
+  <xi:include href="compute-configure-quotas.xml" />
+  <xi:include href="compute-configure-console.xml" />
 </chapter>
