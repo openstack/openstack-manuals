@@ -285,10 +285,21 @@ commands and options. </para>
                 thorough testing with our use cases and hardware configurations, XFS was
                 the best all-around choice. If you decide to use a filesystem other than
                 XFS, we highly recommend thorough testing.</para>
+            <para>
+                 For operating systems with more recent kernels (for example Ubuntu 12.04 Precise),
+                 we recommend using the default settings (including the default inode size
+                 of 256 bytes) when creating the file system::
+            </para>
+            <para><code>mkfs.xfs -f /dev/sda1</code></para>
+             <para>
+             In 2011 and 2012, XFS made great improvements in how inodes
+             are allocated and used.  Using the default inode size no longer has an
+             impact on performance.
 
-            <para>If you are using XFS, some settings that can dramatically impact
-                performance. We recommend the following when creating the XFS
-                partition:</para>
+              For operating systems with older kernels (for example Ubuntu 10.04 Lucid),
+              some settings can dramatically impact performance. We recommend the
+              following when creating the file system:
+            </para>
             <para><code>mkfs.xfs -i size=1024 -f /dev/sda1</code></para>
 
             <para>Setting the inode size is important, as XFS stores xattr data in the inode.
