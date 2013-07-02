@@ -1,43 +1,125 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section xml:id="installing-openstack-dashboard" xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-    <title>Installing the OpenStack Dashboard</title>
-    <para>Here are the overall steps for creating the OpenStack
-        dashboard. Details about deployment are available at <link xlink:href="http://docs.openstack.org/developer/horizon/topics/deployment.html">Deploying
-        Horizon</link>.</para>
-    <orderedlist>
+<section xml:id="installing-openstack-dashboard"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Install and configure the dashboard</title>
+    <para>Before you can install and configure the dashboard, meet the
+        following system requirements:</para>
+    <itemizedlist role="compact">
+        <title>Dashboard system requirements:</title>
         <listitem>
-            <para>Install the OpenStack Dashboard framework including Apache and related
-                modules.</para>
+            <para>OpenStack Compute installation. The cloud operator must set up an OpenStack Compute
+                installation and enable the Identity Service for user
+                and project management. </para>
+            <para><emphasis role="bold">User:</emphasis> Note the URLs
+                of the Identity Service and Compute endpoints.</para>
         </listitem>
         <listitem>
-            <para>Configure the Dashboard.</para>
+            <para>Identity Service user with sudo privileges. Because Apache does not serve content from a root
+                user, the cloud operator must set up an Identity
+                Service user with sudo privileges. </para>
+            <para><emphasis role="bold">User:</emphasis> Note the
+                credentials of this user.</para>
         </listitem>
         <listitem>
-            <para>Restart and run the Apache server.</para>
+            <para>git. Install <emphasis role="bold">git</emphasis> by
+                running the following command:</para>
+            <programlisting language="bash" linenumbering="unnumbered"><prompt>$</prompt> sudo apt-get install git-core</programlisting>
         </listitem>
-    </orderedlist>
-    <para>Install the OpenStack Dashboard, as root:</para>
-    <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install -y memcached libapache2-mod-wsgi openstack-dashboard</userinput></screen>
-    <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install -y memcached python-memcached mod_wsgi openstack-dashboard</userinput></screen>
-    <para>Next, modify the variable <literal>CACHE_BACKEND</literal> in
-            <filename os="ubuntu">/etc/openstack-dashboard/local_settings.py</filename><filename os="centos;fedora;rhel">/etc/openstack-dashboard/local_settings</filename> to match the ones set in
-        <filename os="ubuntu">/etc/memcached.conf</filename><filename os="centos;fedora;rhel">/etc/sysconfig/memcached.conf</filename>. Open
-            <filename os="ubuntu">/etc/openstack-dashboard/local_settings.py</filename><filename os="centos;fedora;rhel">/etc/openstack-dashboard/local_settings</filename> and look for this
-        line:</para>
-    <programlisting>CACHE_BACKEND = 'memcached://127.0.0.1:11211/'</programlisting>
-    <note><para>The address and port in the new value need to be equal to
-        the ones set in <filename os="ubuntu">/etc/memcached.conf</filename><filename os="centos;fedora;rhel">/etc/sysconfig/memcached</filename>.</para></note>
-    <para>If you change the memcached settings, restart the Apache web
-        server for the changes to take effect.</para>
-    <note><para>This guide has selected memcache as a session store for OpenStack Dashboard. There are other
-            options available, each with benefits and drawbacks. Refer to the OpenStack Dashboard
-            Session Storage section for more information.</para></note>
-    <para>
-        <note>
-            <para>In order to change the timezone you can use either dashboard or inside
-                <filename os="centos;fedora;rhel">/etc/openstack-dashboard/local_settings</filename><filename os="ubuntu">/etc/openstack-dashboard/local_settings.py</filename> you can
-                change below mentioned parameter.<programlisting>TIME_ZONE = "UTC"</programlisting>
-            </para>
-        </note>
-    </para>
+        <listitem>
+            <para>Python 2.6 or 2.7. The Python version must support Django. These
+                instructions were tested with Ubuntu 10.10. </para>
+            <para>The Python version should run on any system,
+                including Mac OS X. </para>
+            <para>The installation prerequisites might differ by
+                platform. </para>
+        </listitem>
+    </itemizedlist>
+    <procedure>
+        <title>To install the dashboard:</title>
+        <step>
+            <para>Install the dashboard on the node that can contact
+                the Identity Service as root:</para>
+            <programlisting language="bash" linenumbering="unnumbered" os="ubuntu"><prompt>#</prompt> <userinput>apt-get install -y memcached libapache2-mod-wsgi openstack-dashboard</userinput></programlisting>
+            <programlisting language="bash" linenumbering="unnumbered" os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install -y memcached python-memcached mod_wsgi openstack-dashboard</userinput></programlisting>
+        </step>
+        <step>
+            <para>Modify the value of <literal>CACHES['default']['LOCATION']</literal>
+                in <filename os="ubuntu"
+                    >/etc/openstack-dashboard/local_settings.py</filename><filename
+                    os="centos;fedora;rhel"
+                    >/etc/openstack-dashboard/local_settings</filename>
+                to match the ones set in <filename os="ubuntu"
+                    >/etc/memcached.conf</filename><filename
+                    os="centos;fedora;rhel"
+                    >/etc/sysconfig/memcached.conf</filename>.</para>
+            <para>Open <filename os="ubuntu"
+                    >/etc/openstack-dashboard/local_settings.py</filename><filename
+                    os="centos;fedora;rhel"
+                    >/etc/openstack-dashboard/local_settings</filename>
+                and look for this line:</para>
+            <programlisting language="bash" linenumbering="unnumbered">CACHES = {
+	'default': {
+		'BACKEND' : 'django.core.cache.backends.memcached.MemcachedCache',
+		'LOCATION' : '127.0.0.1:11211'
+	}
+}
+            </programlisting>
+            <note xlink:href="#installing-openstack-dashboard"
+                xlink:title="Notes">
+                <title>Notes</title>
+                <itemizedlist>
+                    <listitem>
+                        <para>The address and port must match the ones
+                            set in <filename os="ubuntu"
+                                >/etc/memcached.conf</filename><filename
+                                os="centos;fedora;rhel"
+                                >/etc/sysconfig/memcached</filename>.</para>
+                        <para>If you change the memcached settings,
+                            you must restart the Apache web server for
+                            the changes to take effect.</para>
+                    </listitem>
+                    <listitem>
+                        <para>You can use options other than memcached
+                            option for session storage. Set the
+                            session back-end through the
+                                <parameter>SESSION_ENGINE</parameter>
+                            option.</para>
+                    </listitem>
+                    <listitem>
+                        <para>To change the timezone, use the
+                            dashboard or edit the <filename
+                                os="centos;fedora;rhel"
+                                >/etc/openstack-dashboard/local_settings</filename><filename
+                                os="ubuntu"
+                                >/etc/openstack-dashboard/local_settings.py</filename>
+                            file. </para>
+                        <para>Change the following parameter:
+                                <code>TIME_ZONE = "UTC"</code>
+                        </para>
+                    </listitem>
+
+                </itemizedlist>
+            </note>
+        </step>
+        <step>
+            <para>Make sure that the web browser on your local machine
+                supports HTML5. </para>
+            <para>Enable cookies and JavaScript. </para>
+            <note>
+                <para>To use the VNC client with the dashboard, the
+                    browser must support HTML5 Canvas and HTML5
+                    WebSockets. </para>
+                <para>For details about browsers that support noVNC,
+                    see <link
+                        xlink:href="https://github.com/kanaka/noVNC/blob/master/README.md"
+                        >https://github.com/kanaka/noVNC/blob/master/README.md</link>,
+                    and <link
+                        xlink:href="https://github.com/kanaka/noVNC/wiki/Browser-support"
+                        >https://github.com/kanaka/noVNC/wiki/Browser-support</link>,
+                    respectively. </para>
+            </note>
+        </step>
+    </procedure>
 </section>
