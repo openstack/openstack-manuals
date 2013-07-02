@@ -47,7 +47,7 @@
     </listitem>
     <listitem>
       <para> Transparently deals with hypervisor-specific connection
-        details to provide a uniform client experience. 
+        details to provide a uniform client experience.
           <figure xml:id="novnc-process">
             <title>NoVNC Process</title>
             <mediaobject>
@@ -158,22 +158,19 @@
             0.0.0.0) </para>
         </listitem>
       </itemizedlist>
-      <para> As a client, you will need a special Java client, which
-        is a version of TightVNC slightly modified to support our
-        token auth: </para>
-      <screen>
-<prompt>$</prompt> <userinput>git clone https://github.com/cloudbuilders/nova-xvpvncviewer</userinput>
-<prompt>$</prompt> <userinput>cd nova-xvpvncviewer</userinput>
-<prompt>$</prompt> <userinput>make</userinput>
-</screen>
-      <para> Then, to create a session, first request an access URL
-        using <command>python-novaclient</command> and then run the client like so. To retrieve access URL: </para>
-      <screen>
-<prompt>$</prompt> <userinput>nova get-vnc-console <replaceable>[server_id]</replaceable> xvpvnc</userinput>
-      </screen>
-      <para>To run client:</para>
-<screen><prompt>$</prompt> <userinput>java -jar VncViewer.jar <replaceable>[access_url]</replaceable></userinput>
-</screen>
+      <para>As a client, you need a special Java client, which is a
+        slightly modified version of TightVNC that supports our token
+        auth: </para>
+      <programlisting language="bash" role="gutter: false"><prompt>$</prompt> <userinput>git clone https://github.com/cloudbuilders/nova-xvpvncviewer</userinput>
+<prompt>$</prompt> <userinput>cd nova-xvpvncviewer/viewer</userinput>
+<prompt>$</prompt> <userinput>make</userinput></programlisting>
+      <para>To create a session, request an access URL by using
+          <command>python-novaclient</command>. Then, run the client
+        as follows. </para>
+      <para>To get an access URL: </para>
+      <programlisting language="bash" role="gutter: false"><prompt>$</prompt> <userinput>nova get-vnc-console <replaceable>[server_id]</replaceable> xvpvnc</userinput>   </programlisting>
+      <para>To run the client:</para>
+      <programlisting language="bash" role="gutter: false"><prompt>$</prompt> <userinput>java -jar VncViewer.jar <replaceable>[access_url]</replaceable></userinput></programlisting>
     </section>
     <section xml:id="nova-vncproxy-replaced-with-nova-novncproxy">
       <info>
@@ -198,8 +195,8 @@
           <para>This configuration option allow you to specify the address for the vnc service to
             bind on, make sure it is assigned one of the compute node interfaces. This address will
             be the one used by your domain file.  </para>
-          <para><computeroutput> 
-&lt;graphics type="vnc" autoport="yes" keymap="en-us" listen="0.0.0.0"/> 
+          <para><computeroutput>
+&lt;graphics type="vnc" autoport="yes" keymap="en-us" listen="0.0.0.0"/>
           </computeroutput>
           </para>
           <note>
@@ -291,7 +288,7 @@ vncserver_listen=192.168.1.2
         <para>
           A: Make sure you have python-numpy installed, which is
           required to support a newer version of the WebSocket protocol
-          (HyBi-07+). 
+          (HyBi-07+).
         </para>
       </listitem>
       <listitem>
@@ -307,6 +304,6 @@ vncserver_listen=192.168.1.2
  &lt;iframe src="{{ vnc_url }}" width="720" height="430"&gt;&lt;/iframe&gt;
  </programlisting>
       </listitem>
-    </itemizedlist>    
+    </itemizedlist>
   </section>
 </section>
