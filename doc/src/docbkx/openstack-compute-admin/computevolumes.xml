@@ -13,7 +13,7 @@
             Nova-Volumes is deprecated and will be removed at the
             release of Grizzly. </para>
         <para>See the Cinder section of the <link
-                xlink:href="http://docs.openstack.org/trunk/openstack-compute/install/apt/content/osfolubuntu-cinder.html"
+                xlink:href="http://docs.openstack.org/folsom/openstack-compute/install/apt/content/osfolubuntu-cinder.html"
                 >Folsom Install Guide</link> for Cinder-specific
             information.</para>
     </section>
@@ -105,8 +105,8 @@
                 <literal>volume_driver</literal> flag. The default is
             as follows:</para>
         <programlisting>
-volume_driver=nova.volume.driver.ISCSIDriver
-iscsi_helper=tgtadm
+            volume_driver=nova.volume.driver.ISCSIDriver
+            iscsi_helper=tgtadm
         </programlisting>
 
         <section xml:id="ceph-rados">
@@ -394,7 +394,7 @@ iscsi_helper=tgtadm
                             <literal>volume_driver</literal> option in
                             <filename>nova.conf</filename> as follows: </para>
                 <programlisting>
-volume_driver=nova.volume.storwize_svc.StorwizeSVCDriver
+                    volume_driver=nova.volume.storwize_svc.StorwizeSVCDriver
                 </programlisting>
             </simplesect>
             <simplesect>
@@ -1025,5 +1025,38 @@ san_password=sfpassword     # your cluster admin password
                     <literal>--key_name</literal> with a valid keypair
                 name:<screen><prompt>$</prompt> <userinput>nova boot --image <replaceable>f4addd24-4e8a-46bb-b15d-fae2591f1a35</replaceable> --flavor 2 --key_name <replaceable>mykey</replaceable> --block_device_mapping vda=13:::0 boot-from-vol-test</userinput></screen></para>
         </simplesect>
+    </section>
+    <section xml:id="cinder-multiple-volumes">
+        <title>Multiple Cinder volumes</title>
+        <para> There is possibility for adding one or more volumes to an already existing Cinder
+            setup. Cinder uses by default in Folsom <literal>SimpleScheduler</literal> scheduler for
+            electing a volume and consequently allows multiple volume backends. <note>
+                <para>Detailed steps for LVM as backend and Ubuntu 12.04 are given in <link
+                        xlink:href="http://sbauza.wordpress.com/2013/06/03/adding-a-second-cinder-volume-with-folsom/"
+                        >http://sbauza.wordpress.com/2013/06/03/adding-a-second-cinder-volume-with-folsom/</link></para>
+            </note></para>
+        <orderedlist>
+            <listitem>
+                <para><emphasis role="bold">Create the LVM cinder-volumes volume group on the new
+                        Cinder host</emphasis></para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Install the Cinder-volume package on the new
+                        host</emphasis></para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Configure <literal>/etc/cinder/cinder.conf</literal> and
+                            <literal>/etc/cinder/api-paste.ini</literal> to match the correct values
+                        for SQL backend, <literal>iscsi_ip_adress</literal> and API
+                        credentials</emphasis></para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Restart <literal>tgt</literal> and
+                            <literal>cinder-volume</literal> services on the new
+                    host</emphasis></para>
+            </listitem>
+        </orderedlist>
+        <para>In order to check, you can issue <literal>cinder-manage host list</literal> which prompts you all your Cinder backends.</para>
+
     </section>
 </chapter>
