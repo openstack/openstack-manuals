@@ -1,0 +1,60 @@
+<section xml:id="configuring-quotas"
+         xmlns="http://docbook.org/ns/docbook"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:ns5="http://www.w3.org/1999/xhtml"
+         xmlns:ns4="http://www.w3.org/2000/svg"
+         xmlns:ns3="http://www.w3.org/1998/Math/MathML"
+         xmlns:ns="http://docbook.org/ns/docbook">
+        <title>Configuring Quotas</title>
+
+        <para>For tenants, quota controls are available to limit the (flag and default shown in
+parenthesis):<itemizedlist>
+                <listitem>
+                    <para>Number of volumes which may be created (volumes=10)</para>
+                </listitem>
+                <listitem>
+                    <para>Total size of all volumes within a project as measured in GB (gigabytes=1000)</para>
+                </listitem>
+                <listitem>
+                    <para>Number of instances which may be launched (instances=10)</para>
+                </listitem>
+                <listitem>
+                    <para>Number of processor cores which may be allocated (cores=20)</para>
+                </listitem>
+                <listitem>
+                    <para>Publicly accessible IP addresses for
+            persistence in DNS assignment (floating_ips=10)</para>
+                </listitem>
+                <listitem>
+                    <para>Privately (or publicly) accessible IP
+            addresses for management purposes (fixed_ips=-1
+            unlimited)</para>
+                </listitem>
+                <listitem>
+                    <para>Amount of RAM that can be allocated in MB (ram=512000)</para>
+                </listitem>
+                <listitem>
+                    <para>Number of files that can be injected (injected_files=5)</para>
+                </listitem>
+                 <listitem>
+                    <para>Maximal size of injected files in B (injected_file_content_bytes=10240)</para>
+                </listitem>
+                <listitem>
+                    <para>Number of security groups that may be created (security_groups=10)</para>
+                </listitem>
+                 <listitem>
+                    <para>Number of rules per security group (security_group_rules=20)</para>
+                </listitem>
+        </itemizedlist></para>
+        <para> The defaults may be modified by setting the variable in
+         <literal>nova.conf</literal>, then restarting the <literal>nova-api</literal>
+         service.</para>
+        <para>To modify a value for a specific project, the <command>nova-manage</command>
+         command should be used. For example:
+        <screen><userinput><prompt>$</prompt> nova-manage project quota --project=1113f5f266f3477ac03da4e4f82d0568 --key=cores --value=40</userinput></screen>
+        Alternately, quota settings are available through the OpenStack Dashboard in the "Edit
+        Project" page. </para>
+        <xi:include href="../common/tables/nova-quota.xml"/>
+
+</section>

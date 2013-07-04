@@ -1,0 +1,44 @@
+<section 
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" 
+    version="5.0"
+    xml:id="remote-console-access">
+    <title>Configure remote console access</title>
+    <!--<?dbhtml stop-chunking?>-->
+    <para>OpenStack has two main methods for providing a remote
+        console or remote desktop access to guest Virtual
+        Machines. They are VNC, and SPICE HTML5 and can be used
+        either through the OpenStack dashboard and the command
+        line. Best practice is to select one or the other to
+        run.</para>
+ <xi:include href="compute-configure-vnc.xml"/>
+
+ <section 
+  xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" 
+  version="5.0"
+  xml:id="spice-console">
+  <title>Spice Console</title>
+  <para>OpenStack Compute has long had support for VNC consoles to
+    guests. The VNC protocol is fairly limited, lacking support for
+    multiple monitors, bi-directional audio, reliable cut+paste, video
+    streaming and more. SPICE is a new protocol which aims to address
+    all the limitations in VNC, to provide good remote desktop
+    support.</para>
+  <para> SPICE support in OpenStack Compute shares a similar
+    architecture to the VNC implementation. The OpenStack Dashboard
+    uses a SPICE-HTML5 widget in its console tab, that communicates to
+    the <literal>nova-spicehtml5proxy</literal> service using
+    SPICE-over-websockets. The <literal>nova-spicehtml5proxy</literal>
+    service communicates directly with the hypervisor process using
+    SPICE.</para>
+  <para>Options for configuring SPICE as the console for OpenStack Compute can be found below.</para>
+     <xi:include href="../common/tables/nova-spice.xml"/>
+     <!--<note><para>If you intend to support <link linkend="configuring-migrations">live migration</link>,
+              you cannot specify a specific IP address for <literal>server_listen</literal>,
+              because that IP address will not exist on the destination host.</para></note>-->
+</section>
+
+</section>
