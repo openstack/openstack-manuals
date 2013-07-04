@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://docbook.org/ns/docbook" xmlns:db="http://docbook.org/ns/docbook" version="5.0" xml:id="ch033_securing-neutron-services"><?dbhtml stop-chunking?>
+    <title>Securing Openstack Networking Services</title>
+    <para>In order to secure OpenStack Networking, an understanding of the workflow process for tenant instance creation needs to be mapped to security domains. </para>
+    <para>There are four main services that interact with OpenStack Networking. In a typical OpenStack deployment these services map to the following security domains:</para>
+    <itemizedlist><listitem>
+        <para> Openstack Dashboard: Public and Management</para>
+      </listitem>
+<listitem>
+        <para> Openstack Identity: Management</para>
+      </listitem>
+<listitem>
+        <para> Openstack Compute Node: Management and Guest</para>
+      </listitem>
+<listitem>
+        <para> Openstack Network Node: Management, Guest, and possibly Public depending upon quantum-plugin in use.</para>
+      </listitem>
+<listitem>
+        <para> SDN Services Node: Management, Guest and and possibly Public depending upon product used.</para>
+      </listitem>
+</itemizedlist>
+    <para><inlinemediaobject><imageobject role="html">
+          <imagedata contentdepth="454" contentwidth="682" fileref="static/1aa-logical-quantum-flow.png" format="PNG" scalefit="1"/>
+        </imageobject>
+<imageobject role="fo">
+          <imagedata contentdepth="100%" fileref="static/1aa-logical-quantum-flow.png" format="PNG" scalefit="1" width="100%"/>
+        </imageobject>
+</inlinemediaobject></para>
+    <para>In order to isolate sensitive data communication between the OpenStack Networking services and other OpenStack core services, we strongly recommend that these communication channels be configured to only allow communications over an isolated management network. </para>
+    <section xml:id="ch033_securing-neutron-services-idp55312">
+      <title>Openstack Networking Service Configuration</title>
+      <section xml:id="ch033_securing-neutron-services-idp56016">
+        <title>Restrict Bind Address of the API server: quantum-server</title>
+        <para>To restrict the interface or IP address on which the OpenStack Networking API service binds a network socket for incoming client connections, specify the bind_host and bind_port in the quantum.conf file as shown:</para>
+        <screen> 
+# Address to bind the API server
+bind_host = &lt;ip address of server&gt;
+
+# Port the bind the API server to
+bind_port = 9696</screen>
+      </section>
+      <section xml:id="ch033_securing-neutron-services-idp58320">
+        <title>Restrict DB and RPC communication of the OpenStack Networking services:</title>
+        <para>Various components of the OpenStack Networking services use either the messaging queue or database connections to communicate with other components in OpenStack Networking.</para>
+        <para>It is recommended that you follow the guidelines provided in the Database Authentication and Access Control chapter in the Database section for all components that require direct DB connections.</para>
+        <para>It is recommended that you follow the guidelines provided in the Queue Authentication and Access Control chapter in the Messaging section for all components that require RPC communication.</para>
+      </section>
+    </section>
+  </chapter>

@@ -1,0 +1,68 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.openstack.apidocs</groupId>
+    <artifactId>openstack-security-guide</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>OpenStack Security Guide Docs</name>
+    <properties>
+        <!-- This is set by Jenkins according to the branch. -->
+        <release.path.name>local</release.path.name>
+        <comments.enabled>1</comments.enabled>
+    </properties>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.rackspace.cloud.api</groupId>
+                <artifactId>clouddocs-maven-plugin</artifactId>
+                <version>1.8.0</version>
+                <executions>
+                    <execution>
+                        <id>security-guide</id>
+                        <goals>
+                            <goal>generate-webhelp</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <includes>book.xml</includes>
+			    <sourceDirectory>.</sourceDirectory>
+			    <canonicalUrlBase>http://docs.openstack.org/${release.path.name}/openstack-security/content/</canonicalUrlBase>
+                            <targetDirectory>${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-security</targetDirectory>
+                            <webhelpDirname>/</webhelpDirname>
+                            <pdfFilenameBase>bk-security-guide-${release.path.name}</pdfFilenameBase>
+                            <enableDisqus>${comments.enabled}</enableDisqus>
+                        </configuration>			
+                    </execution>
+                </executions>
+                <configuration>
+                    <branding>openstack</branding>
+		    <showXslMessages>true</showXslMessages>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <profiles>
+        <profile>
+            <id>Rackspace Research Repositories</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <repositories>
+                <repository>
+                    <id>rackspace-research</id>
+                    <name>Rackspace Research Repository</name>
+                    <url>http://maven.research.rackspacecloud.com/content/groups/public/</url>
+                </repository>
+            </repositories>
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>rackspace-research</id>
+                    <name>Rackspace Research Repository</name>
+                    <url>http://maven.research.rackspacecloud.com/content/groups/public/</url>
+                </pluginRepository>
+            </pluginRepositories>
+        </profile>
+    </profiles>
+</project>

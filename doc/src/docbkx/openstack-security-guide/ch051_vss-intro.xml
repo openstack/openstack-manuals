@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://docbook.org/ns/docbook" xmlns:db="http://docbook.org/ns/docbook" version="5.0" xml:id="ch051_vss-intro"><?dbhtml stop-chunking?>
+    <title>Hypervisor Selection</title>
+    <para>Virtualization provides flexibility and other key benefits that enable cloud building. However, a virtualization stack also needs to be secured appropriately to reduce the risks associated with hypervisor breakout attacks. That is, while a virtualization stack can provide isolation between instances, or guest virtual machines, there are situations where that isolation can be less than perfect. Making intelligent selections for virtualization stack as well as following the best practices outlined in this chapter can be included in a layered approach to cloud security. Finally, securing your virtualization stack is critical in order to deliver on the npromise of multitennancy, either between customers in a public cloud, between business units in a private cloud, or some mixture of the two in a hybrid cloud.</para>
+    <para>In this chapter, we discuss the hypervisor selection process.  In the chapters that follow, we provide the foundational information needed for securing a virtualization stack.</para>
+    <section xml:id="ch051_vss-intro-idp236592">
+      <title>Hypervisors in OpenStack</title>
+      <para>Whether OpenStack is deployed within private data centers or as a public cloud service, the underlying virtualization technology provides enterprise-level capabilities in the realms of scalability, resource efficiency, and uptime. While such high-level benefits are generally available across many OpenStack-supported hypervisor technologies, there are significant differences in each hypervisor's security architecture and features, particularly when considering the security threat vectors which are unique to elastic OpenStack environments. As applications consolidate into single Infrastructure as a Service (IaaS) platforms, instance isolation at the hypervisor level becomes paramount. The requirement for secure isolation holds true across commercial, government, and military communities.</para>
+      <para>Within the framework of OpenStack you can choose from any number of hypervisor platforms and corresponding OpenStack plugins to optimize your cloud environment. In the context of the OpenStack Security guide, we will be highlighting hypervisor selection considerations as they pertains to feature sets that are critical to security. However, these considerations are not meant to be an exhaustive investigation into the pros and cons of particular hypervisors. NIST provides additional guidance in Special Publication 800-125, "<emphasis>Guide to Security for Full Virtualization Technologies</emphasis>".</para>
+    </section>
+    <section xml:id="ch051_vss-intro-idp242144">
+      <title>Selection Criteria</title>
+      <para>As part of your hypervisor selection process, you will need to consider a number of important factors to help increase your security posture. Specifically, we will be looking into the following areas:</para>
+      <itemizedlist><listitem>
+          <para> Team Expertise</para>
+        </listitem>
+<listitem>
+          <para> Product or Project maturity</para>
+        </listitem>
+<listitem>
+          <para> Certifications, Attestations</para>
+        </listitem>
+<listitem>
+          <para> Additional Security Features</para>
+        </listitem>
+<listitem>
+          <para> Hypervisor vs. Baremetal</para>
+        </listitem>
+<listitem>
+          <para> Hardware Concerns</para>
+        </listitem>
+<listitem>
+          <para> Common Criteria</para>
+        </listitem>
+</itemizedlist>
+      <para>Additionally, the following security-related criteria are highly encouraged to be evaluated when selecting a hypervisor for OpenStack deployments:<itemizedlist><listitem>
+            <para> Has the hypervisor undergone Common Criteria certification? If so, to what levels?</para>
+          </listitem>
+<listitem>
+            <para> Is the underlying cryptography certified by a third-party?</para>
+          </listitem>
+</itemizedlist><bridgehead>Team Expertise</bridgehead> Most likely, the most important aspect in hypervisor selection is the expertise of your staff in managing and maintaining a particular hypervisor platform. The more familiar your team is with a given product, its configuration, and its eccentricities, the less likely will there be configuration mistakes. Additionally, having staff expertise spread across an organization on a given hypervisor will increase availability of your systems, allow for developing a segregation of duties, and mitigate problems in the event that a team member is unavailable.</para>
+      <section xml:id="ch051_vss-intro-idp252752">
+        <title>Product or Project Maturity</title>
+        <para>The maturity of a given hypervisor product or project is critical to your security posture as well. Product maturity will have a number of effects once you have deployed your cloud, in the context of this security guide we are interested in the following:</para>
+        <itemizedlist><listitem>
+            <para> Availability of expertise</para>
+          </listitem>
+<listitem>
+            <para>Active developer and user communities</para>
+          </listitem>
+<listitem>
+            <para> Timeliness and Availability of updates</para>
+          </listitem>
+<listitem>
+            <para> Incidence response</para>
+          </listitem>
+</itemizedlist>
+        <para>One of the biggest indicators of a hypervisor's maturity is the size and vibrancy of the community that surrounds it. As this concerns security, the quality of the community will affect the availability of expertise should you need additional cloud operators. It is also a sign of how widely deployed the hypervisor is, in turn leading to the battle readiness of any reference architectures and best practices.</para>
+        <para>Further, the quality of community, as it surrounds an open source hypervisor like KVM or Xen, will have a direct impact on the timeliness of bug fixes and security updates. When investigating both commercial and open source hypervisors, you will want to look into their release and support cycles as well as the time delta between the announcement of a bug or security issue and a patch or response. Lastly, the supported capabilities of OpenStack compute vary depending on the hypervisor chosen. Refer to the OpenStack Hypervisor Support Matrix (https://wiki.openstack.org/wiki/HypervisorSupportMatrix) for OpenStack compute feature support by hypervisor.</para>
+      </section>
+      <section xml:id="ch051_vss-intro-idp260720">
+        <title>Certifications and Attestations</title>
+        <para>One additional consideration when selecting a hypervisor is the availability of various formal certifications and attestations. While they may not be requirements for your specific organization, these certifications and attestations speak to the maturity, production readiness, and thoroughness of the testing a particular hypervisor platform has been subjected to. </para>
+      </section>
+      <section xml:id="ch051_vss-intro-idp262672">
+        <title>Common Criteria</title>
+        <para>Common Criteria is an internationally standardized software evaluation process, used by governments and commercial companies to validate software technologies perform as advertised. In the government sector, NSTISSP No. 11 mandates that U.S. Government agencies only procure software which has been Common Criteria certified, a policy which has been in place since July 2002. It should be specifically noted that OpenStack has not undergone Common Criteria certification, however many of the available hypervisors have. </para>
+        <para>In addition to validating a technologies capabilities, the Common Criteria process evaluates <emphasis>how</emphasis> technologies are developed.</para>
+        <itemizedlist><listitem>
+            <para> How is source code management performed?</para>
+          </listitem>
+<listitem>
+            <para> How are users granted access to build systems?</para>
+          </listitem>
+<listitem>
+            <para> Is the technology cryptographically signed before distribution?</para>
+          </listitem>
+</itemizedlist>
+        <para>The KVM hypervisor has been Common Criteria certified through the U.S. Government and commercial distributions, which have been validated to separate the runtime environment of virtual machines from each other, providing foundational technology to enforce instance isolation. In addition to virtual machine isolation, KVM has been Common Criteria certified to</para>
+        <blockquote>
+          <para> "<emphasis>provide system-inherent separation mechanisms to the resources of virtual machines. This separation ensures that large software component used for virtualizing and simulating devices executing for each virtual machine cannot interfere with each other. Using the SELinux multi-category mechanism, the virtualization and simulation software instances are isolated. The virtual machine management framework configures SELinux multi-category settings transparently to the administrator</emphasis>"</para>
+        </blockquote>
+        <para>While many hypervisor vendors, such as Red Hat, Microsoft, and VMWare have achieved Common Criteria Certification their underlying certified feature set differs. It is recommended to evaluate vendor claims to ensure they minimally satisfy the following requirements:</para>
+        
+          <informaltable rules="all" width="80%"><colgroup><col/><col/></colgroup>
+            
+            
+            <tbody>
+              <tr>
+                <td><para>Identification and Authentication</para></td>
+                <td><para> Identification and authentication using pluggable authentication modules (PAM) based upon user passwords. The quality of the passwords used can be enforced through configuration options.</para></td>
+              </tr>
+              <tr>
+                <td><para>Audit</para></td>
+                <td><para> The system provides the capability to audit a large number of events including individual system calls as well as events generated by trusted processes. Audit data is collected in regular files in ASCII format. The system provides a program for the purpose of searching the audit records. </para><para>The system administrator can define a rule base to restrict auditing to the events they are interested in. This includes the ability to restrict auditing to specific events, specific users, specific objects or a combination of all of this. </para><para>Audit records can be transferred to a remote audit daemon.</para></td>
+              </tr>
+              <tr>
+                <td><para>Discretionary Access Control</para></td>
+                <td><para> Discretionary Access Control (DAC) restricts access to file system objects based on Access Control Lists (ACLs) that include the standard UNIX permissions for user, group and others. Access control mechanisms also protect IPC objects from unauthorized access.</para><para>The system includes the ext4 file system, which supports POSIX ACLs. This allows defining access rights to files within this type of file system down to the granularity of a single user.</para></td>
+              </tr>
+              <tr>
+                <td><para>Mandatory Access Control</para></td>
+                <td><para> Mandatory Access Control (MAC) restricts access to objects based on labels assigned to subjects and objects. Sensitivity labels are automatically attached to processes and objects. The access control policy enforced using these labels is derived from the BellLaPadula access control model.</para><para>SELinux categories are attached to virtual machines and its resources. The access control policy enforced using these categories grant virtual machines access to resources if the category of the virtual machine is identical to the category of the accessed resource.</para><para>The TOE implements non-hierarchical categories to control access to virtual machines.</para></td>
+              </tr>
+              <tr>
+                <td><para>Role-Based Access Control</para></td>
+                <td><para>Role-based access control (RBAC) allows separation of roles to eliminate the need for an all-powerful system administrator.</para></td>
+              </tr>
+              <tr>
+                <td><para>Object Reuse</para></td>
+                <td><para>File system objects as well as memory and IPC objects will be cleared before they can be reused by a process belonging to a different user.</para></td>
+              </tr>
+              <tr>
+                <td><para>Security Management</para></td>
+                <td><para>The management of the security critical parameters of the system is performed by administrative users. A set of commands that require root privileges (or specific roles when RBAC is used) are used for system management. Security parameters are stored in specific files that are protected by the access control mechanisms of the system against unauthorized access by users that are not administrative users.</para></td>
+              </tr>
+              <tr>
+                <td><para>Secure Communication</para></td>
+                <td><para> The system supports the definition of trusted channels using SSH. Password based authentication is supported. Only a restricted number of cipher suites are supported for those protocols in the evaluated configuration.</para></td>
+              </tr>
+              <tr>
+                <td><para>Storage Encryption</para></td>
+                <td><para> The system supports encrypted block devices to provide storage confidentiality via dm_crypt.</para></td>
+              </tr>
+              <tr>
+                <td><para>TSF Protection</para></td>
+                <td><para> While in operation, the kernel software and data are protected by the hardware memory protection mechanisms. The memory and process management components of the kernel ensure a user process cannot access kernel storage or storage belonging to other processes.</para><para>Non-kernel TSF software and data are protected by DAC and process isolation  mechanisms. In the evaluated configuration, the reserved user ID root owns the directories and files that define the TSF configuration. In general, files and directories containing internal TSF data (e.g., configuration files, batch job queues) are also protected from reading by DAC permissions.</para><para>The system and the hardware and firmware components are required to be physically protected from unauthorized access. The system kernel mediates all access to the hardware mechanisms themselves, other than program visible CPU instruction functions.</para><para>In addition, mechanisms for protection against stack overflow attacks are provided.</para></td>
+              </tr>
+            </tbody>
+          </informaltable>
+        
+      </section>
+      <section xml:id="ch051_vss-intro-idp324896">
+        <title>Cryptography Standards</title>
+        <para>Several cryptography algorithms are available within OpenStack for identification and authorization, data transfer and protection of data at rest. When selecting a hypervisor, the following are recommended algorithms and implementation standards to ensure the virtualization layer supports:</para>
+        
+          <informaltable rules="all" width="80%"><colgroup><col/><col/><col/><col/><col/></colgroup>
+            
+            
+            
+            
+            
+            <tbody>
+              <tr>
+                <td><para><emphasis role="bold">Algorithm</emphasis></para></td>
+                <td><para> <emphasis role="bold">Key Length</emphasis></para></td>
+                <td><para> <emphasis role="bold">Intended Purpose</emphasis></para></td>
+                <td><para> <emphasis role="bold">Security Function</emphasis></para></td>
+                <td><para> <emphasis role="bold">implementation Standard</emphasis></para></td>
+              </tr>
+              <tr>
+                <td><para>AES</para></td>
+                <td><para> 128 bits,192 bits,</para><para>256 bits </para></td>
+                <td><para>Encryption / Decryption </para></td>
+                <td><para>Protected Data Transfer,Protection for Data at Rest </para></td>
+                <td><para>RFC 4253</para></td>
+              </tr>
+              <tr>
+                <td><para>TDES</para></td>
+                <td><para> 168 bits</para></td>
+                <td><para>Encryption /Decryption </para></td>
+                <td><para>Protected Data Transfer</para></td>
+                <td><para>RFC 4253</para></td>
+              </tr>
+              <tr>
+                <td><para>RSA</para></td>
+                <td><para> 1024 bits,2048 bits,</para><para>3072 bits </para></td>
+                <td><para>Authentication,Key Exchange </para></td>
+                <td><para>identification andAuthentication, ProtectedData Transfer</para></td>
+                <td><para>U.S. NIST FIPS PUB 186-3</para></td>
+              </tr>
+              <tr>
+                <td><para>DSA</para></td>
+                <td><para> L=1024,N=160 bits </para></td>
+                <td><para>Authentication,Key Exchange </para></td>
+                <td><para> Identification andAuthentication, ProtectedData Transfer </para></td>
+                <td><para>U.S. NIST FIPS PUB 186-3</para></td>
+              </tr>
+              <tr>
+                <td><para>Serpent</para></td>
+                <td><para> 128, 196, or256 bit </para></td>
+                <td><para>Encryption /Decryption </para></td>
+                <td><para>Protection of Data at Rest</para></td>
+                <td><para>http://www.cl.cam.ac.uk/~rj a14/Papers/serpent.pdf</para></td>
+              </tr>
+              <tr>
+                <td><para>Twofish</para></td>
+                <td><para>128, 196, or256 bit </para></td>
+                <td><para>Encryption /Decryption </para></td>
+                <td><para>Protection of Data at Rest</para></td>
+                <td><para>http://www.schneier.com/paper-twofish-paper.html</para></td>
+              </tr>
+              <tr>
+                <td><para>SHA-1</para></td>
+                <td><para>-</para></td>
+                <td><para>MessageDigest </para></td>
+                <td><para>Protection of Data at Rest,Protected Data Transfer </para></td>
+                <td><para> U.S. NIST FIPS 180-3</para></td>
+              </tr>
+              <tr>
+                <td><para>SHA-2(224-, 256-,</para><para>384-, 512 bit)</para></td>
+                <td><para>-</para></td>
+                <td><para>MessageDigest </para></td>
+                <td><para>Protection for Data at Rest,Identification and Authentication </para></td>
+                <td><para>U.S. NIST FIPS 180-3 </para></td>
+              </tr>
+            </tbody>
+          </informaltable>
+        
+        <section xml:id="ch051_vss-intro-idp362768">
+          <title>FIPS 140-2</title>
+          <para>In the United States the National Institute of Science and Technology (NIST) certifies cryptographic algorithms through a process known the Cryptographic Module Validation Program. NIST certifies algorithms for conformance against Federal Information Processing Standard 140-2 (FIPS 140-2), which ensures:</para>
+          <blockquote>
+            <para> <emphasis>Products validated as conforming to FIPS 140-2 are accepted by the Federal agencies of both countries [United States and Canada] for the protection of sensitive information (United States) or Designated Information (Canada). The goal of the CMVP is to promote the use of validated cryptographic modules and provide Federal agencies with a security metric to use in procuring equipment containing validated cryptographic modules.</emphasis></para>
+          </blockquote>
+          <para>When evaluating base hypervisor technologies, consider if the hypervisor has been certified against FIPS 140-2. Not only is conformance against FIPS 140-2 mandated per U.S. Government policy, formal certification indicates that a given implementation of a cryptographic algorithm has been reviewed for conformance against module specification, cryptographic module ports and interfaces; roles, services, and authentication; finite state model; physical security; operational environment; cryptographic key management; electromagnetic interference/electromagnetic compatibility (EMI/EMC); self-tests; design assurance; and mitigation of other attacks.</para>
+        </section>
+      </section>
+      <section xml:id="ch051_vss-intro-idp367552">
+        <title>Hardware Concerns</title>
+        <para>Further, when evaluating a hypervisor platform the supportability of the hardware the hypervisor will run on should be considered. Additionally, consider the additional features available in the hardware and how those features are supported by the hypervisor you chose as part of the OpenStack deployment. To that end, hypervisors will each have their own hardware compatibility lists (HCLs). When selecting compatible hardware it is important to know in advance which hardware-based virtualization technologies are important from a security perspective.</para>
+        
+          <informaltable rules="all" width="80%"><colgroup><col/><col/><col/></colgroup>
+            
+            
+            
+            <tbody>
+              <tr>
+                <td><para><emphasis role="bold">Description</emphasis></para></td>
+                <td><para><emphasis role="bold">Technology</emphasis></para></td>
+                <td><para><emphasis role="bold">Explanation</emphasis></para></td>
+              </tr>
+              <tr>
+                <td><para>I/O MMU</para></td>
+                <td><para>VT-d / AMD-Vi</para></td>
+                <td><para>Required for protecting PCI-passthrough</para></td>
+              </tr>
+              <tr>
+                <td><para>Trusted Execution Technology</para></td>
+                <td><para>TXT / SEM</para></td>
+                <td><para>Required for dynamic attestation services</para></td>
+              </tr>
+              <tr>
+                <td><para> <anchor xml:id="PCI-SIG_I.2FO_virtualization_.28IOV.29"/>PCI-SIG I/O virtualization</para></td>
+                <td><para>SR-IOV, MR-IOV, ATS</para></td>
+                <td><para>Required to allow secure sharing of PCI Express devices</para></td>
+              </tr>
+              <tr>
+                <td><para>Network virtualization</para></td>
+                <td><para>VT-c</para></td>
+                <td><para>Improves performance of network I/O on hypervisors</para></td>
+              </tr>
+            </tbody>
+          </informaltable>
+        
+      </section>
+      <section xml:id="ch051_vss-intro-idp396976">
+        <title>Hypervisor vs. Baremetal</title>
+        <para>To wrap up our discussion around hypervisor selection, it is important to call out the differences between using LXC (Linux Containers) or Baremetal systems vs using a hypervisor like KVM. Specifically, the focus of this security guide will be largely based on having a hypervisor and virtualization platform. However, should your implementation require the use of a baremetal or LXC environment, you will want to pay attention to the particular differences in regard to deployment of that environment. In particular, you will need to provide your end users with assurances that the node has been properly sanitized of their data prior to re-provisioning. Additionally, prior to reusing a node, you will need to provide assurances that the hardware has not been tampered or otherwise compromised.</para>
+        <para>It should be noted that while OpenStack has a baremetal project, a discussion of the particular security implications of running baremetal is beyond the scope of this book.</para>
+        <para>Finally, due to the time constraints around a book sprint, the team chose to use KVM as the hypervisor in our example implementations and architectures.</para>
+        <para>Note: There is an OpenStack Security Note pertaining to the use of LXC in Nova: https://bugs.launchpad.net/ossn/+bug/1098582</para>
+      </section>
+      <section xml:id="ch051_vss-intro-idp401408">
+        <title>Additional Security Features</title>
+        <para>Another thing to look into when selecting a hypervisor platform is the availability of specific security features. In particular, we are referring to features like Xen Server's XSM or Xen Security Modules, sVirt, TXT, and AppArmor. The presence of these features will help increase your security profile as well as provide a good foundation.</para>
+        <para>The following table calls out these features by common hypervisor platforms. </para>
+        
+          <informaltable rules="all" width="80%"><colgroup><col/><col/><col/><col/><col/><col/><col/><col/></colgroup>
+            
+            
+            
+            
+            
+            
+            
+            
+            <tbody>
+              <tr>
+                <td><para> </para></td>
+                <td><para>KSM</para></td>
+                <td><para>XSM</para></td>
+                <td><para>sVirt</para></td>
+                <td><para>TXT</para></td>
+                <td><para>AppArmor</para></td>
+                <td><para>cGroups</para></td>
+                <td><para>MAC Policy</para></td>
+              </tr>
+              <tr>
+                <td><para>KVM</para></td>
+                <td><para>X</para></td>
+                <td><para> </para></td>
+                <td><para>X</para></td>
+                <td><para>X</para></td>
+                <td><para><address>x</address></para></td>
+                <td><para>x</para></td>
+                <td><para>x</para></td>
+              </tr>
+              <tr>
+                <td><para>Xen</para></td>
+                <td><para> </para></td>
+                <td><para>X</para></td>
+                <td><para> </para></td>
+                <td><para> X</para></td>
+                <td><para> </para></td>
+                <td><para> </para></td>
+                <td><para>x</para></td>
+              </tr>
+              <tr>
+                <td><para>ESXi</para></td>
+                <td><para> </para></td>
+                <td><para> </para></td>
+                <td><para> </para></td>
+                <td><para> X</para></td>
+                <td><para> </para></td>
+                <td><para> </para></td>
+                <td><para> </para></td>
+              </tr>
+              <tr>
+                <td><para>Hyper-V</para></td>
+                <td><para> </para></td>
+                <td><para> </para></td>
+                <td><para> </para></td>
+                <td><para> </para></td>
+                <td><para> </para></td>
+                <td><para> </para></td>
+                <td><para> </para></td>
+              </tr>
+            </tbody>
+          </informaltable>
+        
+        <para>KSM: Kernel Samepage Merging - http://www.linux-kvm.org/page/KSM</para>
+        <para>XSM: Xen Security Modules - http://wiki.xen.org/wiki/Xen_Security_Modules_:_XSM-FLASK</para>
+        <para>xVirt: Mandatory Access Control for Linux-based virtualization - http://selinuxproject.org/page/SVirt</para>
+        <para>TXT: Intel Trusted Execution Technology - http://www.intel.com/txt</para>
+        <para>AppArmor: Linux security module implementing MAC - http://wiki.apparmor.net/index.php/Main_Page</para>
+        <para>cGroups: Linux kernel feature to control resource usage - https://www.kernel.org/doc/Documentation/cgroups/cgroups.txt</para>
+        <para>MAC Policy: Mandatory Access Control; may be implemented with SELinux or other operating systems</para>
+        <para>* Features in this table may not be applicable to all hypervisors or directly mappable between hypervisors.</para>
+      </section>
+    </section>
+  </chapter>

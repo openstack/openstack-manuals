@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://docbook.org/ns/docbook" xmlns:db="http://docbook.org/ns/docbook" version="5.0" xml:id="ch020_ssl-everywhere"><?dbhtml stop-chunking?>
+    <title>SSL Proxies and HTTP Services</title>
+    <para>OpenStack endpoints are HTTP services providing APIs to both end-users on public networks and to other OpenStack services within the same deployment operating over the management network. It is highly recommended these requests, both those internal and external, operate over SSL.</para>
+    <para>In order for API requests to be encrypted by SSL it's necessary to position the API services behind a proxy that will establish and terminate SSL sessions. The following table offers a non-exhaustive list of software services that can proxy SSL traffic for API requests:</para>
+    <itemizedlist><listitem>
+        <para> Pound (http://www.apsis.ch/pound)</para>
+      </listitem>
+<listitem>
+        <para> Stud (https://github.coapm/bumptech/stud)</para>
+      </listitem>
+<listitem>
+        <para> nginx (http://nginx.org/)</para>
+      </listitem>
+<listitem>
+        <para> Apache httpd (http://www.apache.org/)</para>
+      </listitem>
+<listitem>
+        <para> Hardware appliance SSL acceleration proxies</para>
+      </listitem>
+</itemizedlist>
+    <para>It is important to be mindful of the size of requests that will be processed by any chosen SSL proxy.</para>
+    <section xml:id="ch020_ssl-everywhere-idp44384">
+      <title>Examples</title>
+      <para>Below we provide some sample configuration setting for enabling SSL in some of the most popular web servers/SSL terminators with recommended configurations. Note that we have SSL v3 enabled in some of these examples as this will be required in many deployments for client compatibility.</para>
+      <section xml:id="ch020_ssl-everywhere-idp45712">
+        <title>Pound - with AES-NI acceleration</title>
+        <screen> 
+## see pound(8) for details
+daemon      1
+######################################################################
+## global options:
+User        "swift"
+Group       "swift"
+#RootJail   "/chroot/pound"
+## Logging: (goes to syslog by default)
+##  0   no logging
+##  1   normal
+##  2   extended
+##  3   Apache-style (common log format)
+LogLevel    0
+## turn on dynamic scaling (off by default)
+# Dyn Scale 1
+## check backend every X secs:
+Alive       30
+## client timeout
+#Client     10
+## allow 10 second proxy connect time
+ConnTO      10
+## use hardware-accelleration card supported by openssl(1):
+SSLEngine   "aesni"
+# poundctl control socket
+Control "/var/run/pound/poundctl.socket"
+######################################################################
+## listen, redirect and ... to:
+## redirect all swift requests on port 443 to local swift proxy
+ListenHTTPS
+    Address 0.0.0.0
+    Port    443
+    Cert    "/etc/pound/cert.pem"
+    ## Certs to accept from clients
+    ##  CAlist      "CA_file"
+    ## Certs to use for client verification
+    ##  VerifyList  "Verify_file"
+    ## Request client cert - don't verify
+    ##  Ciphers     "AES256-SHA"
+    ## allow PUT and DELETE also (by default only GET, POST and HEAD)?:
+    NoHTTPS11   0
+    ## allow PUT and DELETE also (by default only GET, POST and HEAD)?:
+    xHTTP       1
+    Service
+        BackEnd
+            Address 127.0.0.1
+            Port    80
+        End
+    End
+End</screen>
+      </section>
+      <section xml:id="ch020_ssl-everywhere-idp50320">
+        <title>Stud</title>
+        <para>This stud example enables SSL v3 for client compatibility.  The ciphers line can be tweaked based on your needs, however this is a reasonable starting place.</para>
+        <screen> 
+# SSL x509 certificate file.
+pem-file = "
+# SSL protocol.
+ssl = on
+# List of allowed SSL ciphers.
+# OpenSSL's high-strength ciphers which require authentication
+# NOTE: This list does not include any RC4 ciphers.
+ciphers = "HIGH:!aNULL:!eNULL:!DES:!3DES"
+# Enforce server cipher list order
+prefer-server-ciphers = on
+# Number of worker processes
+workers = 4
+# Listen backlog size
+backlog = 1000
+# TCP socket keepalive interval in seconds
+keepalive = 3600
+# Chroot directory
+chroot = ""
+# Set uid after binding a socket
+user = "www-data"
+# Set gid after binding a socket
+group = "www-data"
+# Quiet execution, report only error messages
+quiet = off
+# Use syslog for logging
+syslog = on
+# Syslog facility to use
+syslog-facility = "daemon"
+# Run as daemon
+daemon = off
+# Report client address using SENDPROXY protocol for haproxy
+# Disabling this until we upgrade to HAProxy 1.5
+write-proxy = off</screen>
+      </section>
+    </section>
+    <section xml:id="ch020_ssl-everywhere-idp53424">
+      <title>nginx</title>
+      <para>This nginx example requires TLS v1.1 or v1.2 for maximum security. The ssl_ciphers line can be tweaked based on your needs, however this is a reasonable starting place.</para>
+      <screen> 
+server {
+    listen : ssl;
+    ssl_certificate ;
+    ssl_certificate_key ;
+    ssl_protocols TLSv1.1 TLSv1.2;
+    ssl_ciphers HIGH:!aNULL:!eNULL:!DES:!3DES;
+
+    server_name _;
+    keepalive_timeout 5;
+
+    location / {
+
+    }
+}</screen>
+      <section xml:id="ch020_ssl-everywhere-idp55264">
+        <title>Apache</title>
+        <screen> 
+&lt;VirtualHost &lt;ip address&gt;:80&gt;
+  ServerName &lt;site FQDN&gt;
+  RedirectPermanent / https://&lt;site FQDN&gt;/
+&lt;/VirtualHost&gt;
+&lt;VirtualHost &lt;ip address&gt;:443&gt;
+  ServerName &lt;site FQDN&gt;
+  SSLEngine On
+  SSLProtocol +SSLv3 +TLSv1 +TLSv1.1 +TLSv1.2,
+  SSLCipherSuite HIGH:!aNULL:!eNULL:!DES:!3DES;
+  SSLCertificateFile    /path/&lt;site FQDN&gt;.crt
+  SSLCACertificateFile  /path/&lt;site FQDN&gt;.crt
+  SSLCertificateKeyFile /path/&lt;site FQDN&gt;.key
+  WSGIScriptAlias / &lt;WSGI script location&gt;
+  WSGIDaemonProcess horizon user=&lt;user&gt; group=&lt;group&gt; processes=3 threads=10
+  Alias /static &lt;static files location&gt;
+  &lt;Directory &lt;WSGI dir&gt;&gt;
+    Order allow,deny
+    Allow from all
+  &lt;/Directory&gt;
+&lt;/VirtualHost&gt;</screen>
+        <para>Compute API SSL endpoint in Apache2, which needs to be paired with a short WSGI script</para>
+        <screen> 
+&lt;VirtualHost &lt;ip address&gt;:8447&gt;
+  ServerName &lt;site FQDN&gt;
+  SSLEngine On
+  SSLProtocol +SSLv3 +TLSv1 +TLSv1.1 +TLSv1.2,
+  SSLCipherSuite HIGH:!aNULL:!eNULL:!DES:!3DES;
+  SSLCertificateFile    /path/&lt;site FQDN&gt;.crt
+  SSLCACertificateFile  /path/&lt;site FQDN&gt;.crt
+  SSLCertificateKeyFile /path/&lt;site FQDN&gt;.key
+  WSGIScriptAlias / &lt;WSGI script location&gt;
+  WSGIDaemonProcess osapi user=&lt;user&gt; group=&lt;group&gt; processes=3 threads=10
+  &lt;Directory &lt;WSGI dir&gt;&gt;
+    Order allow,deny
+    Allow from all
+  &lt;/Directory&gt;
+&lt;/VirtualHost&gt;</screen>
+      </section>
+    </section>
+    <section xml:id="ch020_ssl-everywhere-idp59152">
+      <title>HTTP Strict Transport Security</title>
+      <para>We recommend that all production deployments use HSTS. This header prevents browsers from making insecure connections after they have made a single secure one. If you have deployed your HTTP services on a public or an untrusted domain, HSTS is especially important. To enable HSTS, configure your web server to send a header like this with all requests:</para>
+      <screen> 
+Strict-Transport-Security: max-age=31536000; includeSubDomains</screen>
+      <para>Start with a short timeout of 1 day during testing, and raise it to one year after testing has shown that you haven't introduced problems for users. Note that once this header is set to a large timeout, it is (by design) very difficult to disable.</para>
+    </section>
+  </chapter>

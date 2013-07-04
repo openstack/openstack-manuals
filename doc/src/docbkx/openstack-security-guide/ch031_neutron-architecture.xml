@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://docbook.org/ns/docbook" xmlns:db="http://docbook.org/ns/docbook" version="5.0" xml:id="ch031_neutron-architecture"><?dbhtml stop-chunking?>
+    <title>Networking Architecture</title>
+    <para>Openstack Networking is a standalone service that often involves deploying several processes across a number of nodes. These processes interact with each other and with other Openstack services. The main process of the Openstack Networking service is quantum-server, a Python daemon that exposes the Openstack Networking API and passes tenant requests to a suite of plugins for additional processing.</para>
+    <para>Openstack Networking components encompasses the following elements:</para>
+    <itemizedlist><listitem>
+        <para><emphasis role="bold">quantum server</emphasis>  (<literal>quantum-server</literal> and <literal>quantum-*-plugin</literal>): This service runs on the network node to service the Networking API and its extensions. It also enforces the network model and IP addressing of each port. The quantum-server and plugin agents require access to a database for persistent storage and access to a message queue for inter-communication.</para>
+      </listitem>
+<listitem>
+        <para><emphasis role="bold">plugin agent</emphasis>  (<literal>quantum-*-agent</literal>): Runs on each Nova compute node to manage local virtual switch (vswitch) configuration. The agents to be run will depend on which plugin you are using. This service requires message queue access. <emphasis>Optional depending on plugin.</emphasis></para>
+      </listitem>
+<listitem>
+        <para><emphasis role="bold">DHCP agent</emphasis>  (<literal>quantum-dhcp-agent</literal>): Provides DHCP services to tenant networks. This agent is the same across all plugins and is responsible for maintaining DHCP configuration. The quantum-dhcp-agent requires message queue access.</para>
+      </listitem>
+<listitem>
+        <para><emphasis role="bold">l3 agent</emphasis>  (<literal>quantum-l3-agent</literal>): Provides L3/NAT forwarding for external network access of VMs on tenant networks. Requires message queue access. <emphasis>Optional depending on plugin.</emphasis></para>
+      </listitem>
+<listitem>
+        <para><emphasis role="bold">network provider services</emphasis>  (SDN server/services). Provide additional networking services that are provided to tenant networks. These SDN services may interact with the quantum-server, quantum-plugin, and/or plugin-agents via REST APIs or other communication channels.</para>
+      </listitem>
+</itemizedlist>
+    <para>The figure that follows provides an architectural and networking flow diagram of the OpenStack Networking components:</para>
+    <para><inlinemediaobject><imageobject role="html">
+          <imagedata contentdepth="319" contentwidth="536" fileref="static/sdn-connections.png" format="PNG" scalefit="1"/>
+        </imageobject>
+<imageobject role="fo">
+          <imagedata contentdepth="100%" fileref="static/sdn-connections.png" format="PNG" scalefit="1" width="100%"/>
+        </imageobject>
+</inlinemediaobject></para>
+    <section xml:id="ch031_neutron-architecture-idp61360">
+      <title>OS Networking Service placement on Physical Servers</title>
+      <para>In this guide, we focus primarily on a standard architecture that includes a <emphasis>cloud controller</emphasis> host, a <emphasis>network</emphasis> host, and a set of <emphasis>compute</emphasis> hypervisors for running VMs.</para>
+      <section xml:id="ch031_neutron-architecture-idp63888">
+        <title>Network Connectivity of Physical Servers</title>
+        <para><inlinemediaobject><imageobject role="html">
+              <imagedata contentdepth="364" contentwidth="536" fileref="static/1aa-network-domains-diagram.png" format="PNG" scalefit="1"/>
+            </imageobject>
+<imageobject role="fo">
+              <imagedata contentdepth="100%" fileref="static/1aa-network-domains-diagram.png" format="PNG" scalefit="1" width="100%"/>
+            </imageobject>
+</inlinemediaobject></para>
+        <para>A standard OpenStack Networking setup has up to four distinct physical data center networks:</para>
+        <itemizedlist><listitem>
+            <para><emphasis role="bold">Management network</emphasis> Used for internal communication between OpenStack Components. The IP addresses on this network should be reachable only within the data center and is considered the Management Security Domain.</para>
+          </listitem>
+<listitem>
+            <para><emphasis role="bold">Guest network</emphasis> Used for VM data communication within the cloud deployment. The IP addressing requirements of this network depend on the OpenStack Networking plugin in use and the network configuration choices of the virtual networks made by the tenant. This network is considered the Guest Security Domain.</para>
+          </listitem>
+<listitem>
+            <para><emphasis role="bold">External network</emphasis> Used to provide VMs with Internet access in some deployment scenarios. The IP addresses on this network should be reachable by anyone on the Internet and is considered to be in the Public Security Domain.</para>
+          </listitem>
+<listitem>
+            <para><emphasis role="bold">API network</emphasis> Exposes all OpenStack APIs, including the OpenStack Networking API, to tenants. The IP addresses on this network should be reachable by anyone on the Internet. This may be the same network as the external network, as it is possible to create a subnet for the external network that uses IP allocation ranges to use only less than the full range of IP addresses in an IP block. This network is considered the Public Security Domain.</para>
+          </listitem>
+</itemizedlist>
+        <para>For additional information see http://docs.openstack.org/grizzly/openstack-network/admin/content/arch_overview.html.</para>
+      </section>
+    </section>
+  </chapter>
