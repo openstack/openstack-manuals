@@ -15,16 +15,20 @@
         options:</para>
     <programlisting>
 scheduler_driver=nova.scheduler.multi.MultiScheduler
+volume_scheduler_driver=nova.scheduler.chance.ChanceScheduler
 compute_scheduler_driver=nova.scheduler.filter_scheduler.FilterScheduler
 scheduler_available_filters=nova.scheduler.filters.all_filters
 scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
-least_cost_functions=nova.scheduler.least_cost.compute_fill_first_cost_fn
-compute_fill_first_cost_fn_weight=-1.0
+scheduler_weight_classes=nova.scheduler.weights.all_weighers
+ram_weight_multiplier=1.0
 </programlisting>
     <para> Compute is configured by default to use the Multi
         Scheduler, which allows the admin to specify different
         scheduling behavior for compute requests versus volume
         requests. </para>
+    <para>The volume scheduler is configured by default as a Chance
+        Scheduler, which picks a host at random that has the
+            <command>cinder-volume</command> service running.</para>
     <para> The compute scheduler is configured by default as a Filter
         Scheduler, described in detail in the next section. In the
         default configuration, this scheduler will only consider hosts
@@ -33,18 +37,6 @@ compute_fill_first_cost_fn_weight=-1.0
         sufficient RAM available (<literal>RamFilter</literal>), and
         that are actually capable of servicing the request
             (<literal>ComputeFilter</literal>).</para>
-    <para> From the resulting filtered list of eligible hosts, the
-        scheduler will assign a cost to each host based on the amount
-        of free RAM
-            (<literal>nova.scheduler.least_cost.compute_fill_first_cost_fn</literal>),
-        will multiply each cost value by -1
-            (<literal>compute_fill_first_cost_fn_weight</literal>),
-        and will select the host with the minimum cost. This is
-        equivalent to selecting the host with the maximum amount of
-        RAM available. </para>
-    <para>For information on the volume scheduler, see the <link
-        xlink:href="http://docs.openstack.org/grizzly/openstack-block-storage/admin/content/">OpenStack Block Storage
-            Service Administration Guide</link> for information. </para>
     <section xml:id="filter-scheduler">
         <title>Filter Scheduler</title>
         <para>The Filter Scheduler
@@ -66,9 +58,8 @@ compute_fill_first_cost_fn_weight=-1.0
             resource. Filters are binary: either a host is accepted by
             the filter, or it is rejected. Hosts that are accepted by
             the filter are then processed by a different algorithm to
-            decide which hosts to use for that request, described in
-            the <link linkend="costs-and-weights">costs and weight
-            </link> section. <figure xml:id="filter-figure">
+            decide which hosts to use for that request, described in the
+            <link linkend="weights">Weights</link> section. <figure xml:id="filter-figure">
                 <title>Filtering</title>
                 <mediaobject>
                     <imageobject>
@@ -505,89 +496,28 @@ ram_allocation_ratio=1.5
 }
 </programlisting>
         </section>
-
     </section>
 
-    <section xml:id="costs-and-weights">
-        <title>Costs and Weights</title>
+    <section xml:id="weights">
+        <title>Weights</title>
         <?dbhtml stop-chunking?>
-        <para>
-            <figure xml:id="cost-figure">
-                <title>Computing weighted costs</title>
-                <mediaobject>
-                    <imageobject>
-                        <imagedata
-                            fileref="figures/filteringWorkflow2.png "
-                            scale="80"/>
-                    </imageobject>
-                </mediaobject>
-            </figure></para>
 
-        <para> The Filter Scheduler takes the hosts that remain after
-            the filters have been applied and applies one or more cost
-            function to each host to get numerical scores for each
-            host. Each cost score is multiplied by a weighting
-            constant specified in the <filename>nova.conf</filename>
-            config file. The weighting constant configuration option
-            is the name of the cost function, with the
-                <literal>_weight</literal> string appended. Here is an
-            example of specifying a cost function and its
-            corresponding weight:</para>
+        <para>The Filter Scheduler weighs hosts based on the config 
+            option <literal>scheduler_weight_classes</literal>, this
+            defaults to <literal>nova.scheduler.weights.all_weighers</literal>,
+            which selects the only weigher available -- the RamWeigher.
+            Hosts are then weighed and sorted with the largest weight winning.
+        </para>
         <programlisting>
-least_cost_functions=nova.scheduler.least_cost.compute_fill_first_cost_fn
-compute_fill_first_cost_fn_weight=-1.0
-            </programlisting>
-        <para> Multiple cost functions can be specified in the
-                <literal>least_cost_functions</literal> configuration
-            option, separated by commas. For example:</para>
-        <programlisting>
-least_cost_functions=nova.scheduler.least_cost.compute_fill_first_cost_fn,nova.scheduler.least_cost.noop_cost_fn
-compute_fill_first_cost_fn_weight=-1.0
-noop_cost_fn_weight=1.0
-</programlisting>
-        <para> If there are multiple cost functions, then the weighted
-            cost scores are added together. The scheduler selects the
-            host that has the minimum weighted cost.</para>
-        <para> The Compute service comes with three cost functions: </para>
-        <section xml:id="compute_fill_first_cost_fn">
-            <title>nova.scheduler.least_cost.compute_fill_first_cost_fn</title>
-            <para>This cost function calculates the amount of free
-                memory (RAM) available on the node. Because the
-                scheduler minimizes cost, if this cost function is
-                used as a weight of +1, by doing:
-                <programlisting>
-compute_fill_first_cost_fn_weight=1.0
-</programlisting>
-                then the scheduler will tend to "fill up" hosts,
-                scheduling virtual machine instances to the same host
-                until there is no longer sufficient RAM to service the
-                request, and then moving to the next node</para>
-            <para>If the user specifies a weight of -1 by doing:
-                <programlisting>
-compute_fill_first_cost_fn_weight=-1.0
-</programlisting>
-                then the scheduler will favor hosts that have the most
-                amount of available RAM, leading to a "spread-first"
-                behavior.</para>
-        </section>
-        <section xml:id="compute_retry_host_cost_fn">
-            <title>nova.scheduler.least_cost.retry_host_cost_fn</title>
-            <para>This cost function adds additional cost for retrying
-                scheduling a host that was already used for a previous
-                scheduling attempt. </para>
-            <para> The normal method of using this function is to set
-                    <literal>retry_host_cost_fn_weight</literal> to a
-                positive value, so that hosts which consistently
-                encounter build failures will be used less
-                often.</para>
-        </section>
-        <section xml:id="noop_cost_fn">
-            <title>nova.scheduler.least_cost.noop_cost_fn</title>
-            <para>This cost function returns 1 for all hosts. It is a
-                "no-op" cost function (i.e., it does not do anything
-                to discriminate among hosts). In practice, this cost
-                function is never used.</para>
-        </section>
+scheduler_weight_classes=nova.scheduler.weights.all_weighers
+ram_weight_multiplier=1.0
+        </programlisting>
+        <para>
+            The default is to spread instances across all hosts evenly.
+            Set the <literal>ram_weight_multiplier</literal> option
+            to a negative number if you prefer stacking instead of spreading.
+        </para>
+
     </section>
 
     <section xml:id="other-schedulers">
@@ -616,8 +546,4 @@ compute_fill_first_cost_fn_weight=-1.0
         </section>
     </section>
     <xi:include href="../common/host_aggregates.xml"/>
-    <section xml:id="compute-scheduler-config-ref">
-    <title>Configuration Reference</title>
-    <xi:include href="../common/tables/nova-scheduling.xml"/>
-    </section>
 </chapter>
