@@ -160,36 +160,7 @@ scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
 
         <section xml:id="computefilter">
             <title> ComputeFilter </title>
-            <para> Filters hosts by flavor (also known as instance
-                type) and image properties. The scheduler will check
-                to ensure that a compute host has sufficient
-                capabilities to run a virtual machine instance that
-                corresponds to the specified flavor. If the image has
-                properties specified, this filter will also check that
-                the host can support them. The image properties that
-                the filter checks for are:</para>
-            <itemizedlist>
-                <listitem>
-                    <para><literal>architecture</literal>: Architecture describes the
-                        machine architecture required by the image.
-                        Examples are i686, x86_64, arm, and
-                        ppc64.</para>
-                </listitem>
-                <listitem>
-                    <para><literal>hypervisor_type</literal>: Hypervisor type describes
-                        the hypervisor required by the image. Examples
-                        are xen, kvm, qemu, xenapi, and
-                        powervm.</para>
-                </listitem>
-                <listitem>
-                    <para><literal>vm_mode</literal>: Virtual machine mode describes the
-                        hypervisor application binary interface (ABI)
-                        required by the image. Examples are 'xen' for
-                        Xen 3.0 paravirtual ABI, 'hvm' for native ABI,
-                        'uml' for User Mode Linux paravirtual ABI, exe
-                        for container virt executable ABI.</para>
-                </listitem>
-            </itemizedlist>
+            <para> Passes all hosts that are operational and enabled.</para>
             <para>In general, this filter should always be enabled.
             </para>
         </section>
@@ -293,6 +264,31 @@ scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
                 these properties using
                 <programlisting>glance image-update img-uuid --property architecture=arm --property hypervisor_type=qemu</programlisting>
             </para>
+            <para>
+                The image properties that
+                the filter checks for are:</para>
+            <itemizedlist>
+                <listitem>
+                    <para><literal>architecture</literal>: Architecture describes the
+                        machine architecture required by the image.
+                        Examples are i686, x86_64, arm, and
+                        ppc64.</para>
+                </listitem>
+                <listitem>
+                    <para><literal>hypervisor_type</literal>: Hypervisor type describes
+                        the hypervisor required by the image. Examples
+                        are xen, kvm, qemu, xenapi, and
+                        powervm.</para>
+                </listitem>
+                <listitem>
+                    <para><literal>vm_mode</literal>: Virtual machine mode describes the
+                        hypervisor application binary interface (ABI)
+                        required by the image. Examples are 'xen' for
+                        Xen 3.0 paravirtual ABI, 'hvm' for native ABI,
+                        'uml' for User Mode Linux paravirtual ABI, exe
+                        for container virt executable ABI.</para>
+                </listitem>
+            </itemizedlist>
         </section>
 
 
