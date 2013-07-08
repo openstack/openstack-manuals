@@ -122,15 +122,18 @@ scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
 
         <section xml:id="aggregate-multi-tenancy-isolation">
             <title>AggregateMultiTenancyIsolation</title>
-            <para>Isolates tenants to specific<link linkend="host-aggregates"
-                    >host aggregates</link>. If a host is in an 
-                aggregate that has the metadata key <literal>filter_tenant_id</literal>
-                it will only create instances from that tenant (or list of tenants). 
-                A host can be
-                in different aggregates. If a host does not belong to an
-                aggregate with the metadata key, it can create instances from
-                all tenants.
-            </para>
+            <para>Isolates tenants to specific <link linkend="host-aggregates">host
+                    aggregates</link>. If a host is in an aggregate that has the metadata key
+                    <literal>filter_tenant_id</literal> it will only create instances from that
+                tenant (or list of tenants). A host can be in different aggregates. If a host does
+                not belong to an aggregate with the metadata key, it can create instances from all
+                tenants. </para>
+        </section>
+        <section xml:id="aggregate-ram-filter">
+            <title>AggregateRamFilter </title>
+            <para>Implements blueprint <literal>per-aggregate-resource-ratio</literal>. Supports per-aggregate
+                <literal>ram_allocation_ratio</literal>. If per-aggregate value is not found, it falls back to the
+                    <link linkend="compute-scheduler-config-ref">default setting</link>.</para>
         </section>
 
         <section xml:id="allhostsfilter">
