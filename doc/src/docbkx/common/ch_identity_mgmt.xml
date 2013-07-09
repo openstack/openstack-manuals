@@ -7,7 +7,8 @@
   <para>
     The default identity management system for OpenStack is the OpenStack Identity Service, code-named Keystone.
     Once Identity is installed, it is configured via a primary
-    configuration file (<filename>etc/keystone.conf</filename>), possibly
+    configuration file (<filename>etc/keystone.conf</filename>), a PasteDeploy
+    configuration file (<filename>etc/keystone-paste.ini</filename>), possibly
     a separate logging configuration file, and initializing data into
     keystone using the command line client.
   </para>
@@ -34,7 +35,7 @@
       you should define a <literal>user_crud_extension</literal> filter, insert it after
       the <literal>*_body</literal> middleware and before the
       <literal>public_service</literal> app in the public_api WSGI
-      pipeline in <filename>keystone.conf</filename> e.g.:
+      pipeline in <filename>keystone-paste.ini</filename> e.g.:
     </para>
     <screen>
 [filter:user_crud_extension]
@@ -116,7 +117,7 @@ pipeline = stats_monitoring url_normalize token_auth admin_token_auth xml_body j
     <para>
       Enable data collection by defining a
       <literal>stats_monitoring</literal> filter and including it at the
-      beginning of any desired WSGI pipelines:
+      beginning of any desired WSGI pipelines in <filename>keystone-paste.ini</filename>:
     </para>
     <screen>
 [filter:stats_monitoring]
@@ -166,11 +167,11 @@ keystone-all
 </screen>
     <para>
       Invoking this command starts up two wsgi.Server instances,
-      configured by the <filename>keystone.conf</filename> file as
-      described above. One of these wsgi 'servers' is
-      <literal>admin</literal> (the administration API) and the other is
-      <literal>main</literal> (the primary/public API interface). Both
-      of these run in a single process.
+      configured by the <filename>keystone.conf</filename> and
+      <filename>keystone-paste.ini</filename> files as described above. One of
+      these wsgi 'servers' is <literal>admin</literal> (the administration API)
+      and the other is <literal>main</literal> (the primary/public API
+      interface). Both of these run in a single process.
     </para>
   </section>
   <section xml:id="initializing-keystone">
