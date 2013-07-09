@@ -315,24 +315,24 @@
 	<section xml:id="basic_operations">
 	  <title>Basic Operations</title>
 	  <para>Create a network</para>
-	  <screen><prompt>$</prompt> <userinput>quantum net-create net1</userinput></screen>
+	  <screen><prompt>$</prompt> <userinput>neutron net-create net1</userinput></screen>
 	  <para>Create a subnet associated with net1</para>
-	  <screen><prompt>$</prompt> <userinput>quantum subnet-create net1 10.0.0.0/24</userinput></screen>
+	  <screen><prompt>$</prompt> <userinput>neutron subnet-create net1 10.0.0.0/24</userinput></screen>
 	  <para>List ports on a tenant</para>
-	  <screen><prompt>$</prompt> <userinput>quantum port-list</userinput></screen>
+	  <screen><prompt>$</prompt> <userinput>neutron port-list</userinput></screen>
 	  <para><emphasis role="italic">device_owner</emphasis> field describes who owns the port.
 	  A port whose <emphasis role="italic">device_owner</emphasis> begins with "network:" is created by OpenStack Networking
 	  and a port whose <emphasis role="italic">device_owner</emphasis> begins with "compute:" is created by OpenStack Compute (compute service).</para>
-	  <screen><prompt>$</prompt> <userinput>quantum port-list -c id -c fixed_ips -c device_owner</userinput></screen>
+	  <screen><prompt>$</prompt> <userinput>neutron port-list -c id -c fixed_ips -c device_owner</userinput></screen>
           <para><command>port-show</command> shows a detail of a specified port.</para>
-	  <screen><prompt>$</prompt> <userinput>quantum port-show &lt;port-id&gt;</userinput></screen>
+	  <screen><prompt>$</prompt> <userinput>neutron port-show &lt;port-id&gt;</userinput></screen>
 	</section>
         <section xml:id="admin_api_config">
             <title>Admin API configuration</title>
             <para>These same calls can be performed by the cloud admin
                 on behalf of the tenants by specifying a tenant_id in
                 the request, for example:</para>
-            <screen><computeroutput>quantum net-create --tenant-id=&lt;tenant-id&gt; net1</computeroutput></screen>
+            <screen><computeroutput>neutron net-create --tenant-id=&lt;tenant-id&gt; net1</computeroutput></screen>
             <para>This tenant_id should be the tenant ID from
                 OpenStack Identity. To view all OpenStack Identity tenant IDs, run the
                 following command as an OpenStack Identity (keystone) admin user:</para>
@@ -345,27 +345,27 @@
                 <itemizedlist>
                     <listitem>
                         <para>Create a "shared" network (i.e., a network that can be used by all tenants)</para>
-                        <screen><computeroutput>quantum net-create --shared public-net</computeroutput></screen>
+                        <screen><computeroutput>neutron net-create --shared public-net</computeroutput></screen>
                     </listitem>
                     <listitem>
                         <para>Create a subnet that has a specific gateway IP address.</para>
-                        <screen><computeroutput>quantum subnet-create --gateway 10.0.0.254 net1 10.0.0.0/24</computeroutput></screen>
+                        <screen><computeroutput>neutron subnet-create --gateway 10.0.0.254 net1 10.0.0.0/24</computeroutput></screen>
                     </listitem>
                     <listitem>
                         <para>Create a subnet that has no gateway IP address.</para>
-                        <screen><computeroutput>quantum subnet-create --no-gateway net1 10.0.0.0/24</computeroutput></screen>
+                        <screen><computeroutput>neutron subnet-create --no-gateway net1 10.0.0.0/24</computeroutput></screen>
                     </listitem>
                     <listitem>
                         <para>Create a subnet for which DHCP is disabled.</para>
-                        <screen><computeroutput>quantum subnet-create net1 10.0.0.0/24 --enable_dhcp False</computeroutput></screen>
+                        <screen><computeroutput>neutron subnet-create net1 10.0.0.0/24 --enable_dhcp False</computeroutput></screen>
                     </listitem>
                     <listitem>
                         <para>Create subnet with a specific set of host routes:</para>
-                        <screen><computeroutput>quantum subnet-create test-net1 40.0.0.0/24 --host_routes type=dict list=true destination=40.0.1.0/24,nexthop=40.0.0.2</computeroutput></screen>
+                        <screen><computeroutput>neutron subnet-create test-net1 40.0.0.0/24 --host_routes type=dict list=true destination=40.0.1.0/24,nexthop=40.0.0.2</computeroutput></screen>
                     </listitem>
                     <listitem>
                         <para>Create subnet with a specific set of dns nameserver:</para>
-                        <screen><computeroutput>quantum subnet-create test-net1 40.0.0.0/24 --dns_nameservers list=true 8.8.8.7 8.8.8.8</computeroutput></screen>
+                        <screen><computeroutput>neutron subnet-create test-net1 40.0.0.0/24 --dns_nameservers list=true 8.8.8.7 8.8.8.8</computeroutput></screen>
                     </listitem>
                 </itemizedlist>
             </section>
@@ -374,7 +374,7 @@
                 <itemizedlist>
                     <listitem>
                         <para>Find all Ports/IPs allocated on a network.</para>
-                        <screen><computeroutput>quantum port-list -- --network_id &lt;net-id&gt;</computeroutput></screen>
+                        <screen><computeroutput>neutron port-list -- --network_id &lt;net-id&gt;</computeroutput></screen>
                     </listitem>
                 </itemizedlist>
             </section>
@@ -385,7 +385,7 @@
         <section xml:id="basic_workflow_with_nova">
             <title>Basic Workflow </title>
             <para>Check available networks:</para>
-            <screen><prompt>$</prompt> <userinput>quantum net-list</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>neutron net-list</userinput></screen>
             <para>Boot the VM with a single NIC on the selected network (net1):</para>
             <screen><prompt>$</prompt> <userinput>nova boot --image &lt;img&gt; --flavor &lt;flavor&gt; --nic net-id=&lt;net-id&gt; &lt;vm-name&gt;</userinput></screen>
             <para>Congrats, you have booted a VM on an OpenStack Networking network.
@@ -397,18 +397,18 @@
                 following command, which searches for all ports with a
                 "device_id" corresponding to the OpenStack Compute instance
                 UUID:</para>
-            <screen><prompt>$</prompt> <userinput>quantum port-list -- --device_id=&lt;vm-id&gt;</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>neutron port-list -- --device_id=&lt;vm-id&gt;</userinput></screen>
             <para>To view only a few fields of the port, you can limit
                 output using -c.  For example to see only the
                 mac_address of the port, use:</para>
-            <screen><prompt>$</prompt> <userinput>quantum port-list -c mac_address -- --device_id=&lt;vm-id&gt;</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>neutron port-list -c mac_address -- --device_id=&lt;vm-id&gt;</userinput></screen>
             <para>You could temporarily disable the port from sending
                 traffic by updating it to have
                 admin_state_up=False:</para>
-            <screen><prompt>$</prompt> <userinput>quantum port-update &lt;port-id&gt; --admin_state_up=False</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>neutron port-update &lt;port-id&gt; --admin_state_up=False</userinput></screen>
             <para>When we delete the OpenStack Compute VM, the underlying OpenStack Networking
                 port is automatically deleted:</para>
-            <screen><prompt>$</prompt> <userinput>quantum port-list -c mac_address -- --device_id=&lt;vm-id&gt;</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>neutron port-list -c mac_address -- --device_id=&lt;vm-id&gt;</userinput></screen>
         </section>
 	<section xml:id="advanceed_vm_creation">
 	  <title>Advanced VM creation</title>
@@ -423,7 +423,7 @@
 		<para>Booting a VM with a specific IP address.
 		To do this, we need to create an OpenStack Networking port with a specific IP address first,
 		and then boot a VM specifying a port-id rather than a net-id.</para>
-		<screen><prompt>$</prompt> <userinput>quantum port-create --fixed-ip subnet_id=&lt;subnet-id&gt;,ip_address=192.168.57.101 &lt;net-id&gt;
+		<screen><prompt>$</prompt> <userinput>neutron port-create --fixed-ip subnet_id=&lt;subnet-id&gt;,ip_address=192.168.57.101 &lt;net-id&gt;
 nova boot --image &lt;img&gt; --flavor &lt;flavor&gt; --nic port-id=&lt;port-id&gt; &lt;vm-name&gt;</userinput></screen>
                <note><para><command>v4-fixed-ip</command> parameter of <command>--nic</command> option
 	       in <command>nova</command> command is not supported with OpenStack Networking at the moment.</para></note>
@@ -440,12 +440,12 @@ nova boot --image &lt;img&gt; --flavor &lt;flavor&gt; --nic port-id=&lt;port-id&
    <section xml:id="enabling_ping_and_ssh">
      <title>Security Groups (Enabling Ping and SSH on VMs)</title>
      <para>If using a plugin that implements neutron security groups you can configure security
-                group rules directly by using quantum security-group-rule-create to enable access to
+                group rules directly by using neutron security-group-rule-create to enable access to
                 your VMs. The example below allows <command>ping</command> and
                     <command>ssh</command> to your VMs.
                 <screen>
-     <prompt>$</prompt> <userinput>quantum security-group-rule-create --protocol icmp --direction ingress default</userinput>
-     <prompt>$</prompt> <userinput>quantum security-group-rule-create --protocol tcp --port-range-min 22 --port-range-max 22 --direction ingress default</userinput>
+     <prompt>$</prompt> <userinput>neutron security-group-rule-create --protocol icmp --direction ingress default</userinput>
+     <prompt>$</prompt> <userinput>neutron security-group-rule-create --protocol tcp --port-range-min 22 --port-range-max 22 --direction ingress default</userinput>
      </screen></para>
      <para>If your plugin does not implement neutron security group, security groups can still be
                 leveraged via OpenStack Compute. This can be done using <command>nova
@@ -457,7 +457,7 @@ nova boot --image &lt;img&gt; --flavor &lt;flavor&gt; --nic port-id=&lt;port-id&
      <prompt>$</prompt> <userinput>nova secgroup-add-rule default tcp 22 22 0.0.0.0/0</userinput></screen>
 
      <note><para>If your plugin implements neutron security groups you can still leverage nova security groups
-                    by setting security_group_api = quantum in <filename>nova.conf</filename>. After
-                    setting this all nova security group commands will be proxied to quantum.</para></note></section>
+                    by setting security_group_api = neutron in <filename>nova.conf</filename>. After
+                    setting this all nova security group commands will be proxied to neutron.</para></note></section>
     </section>
 </chapter>

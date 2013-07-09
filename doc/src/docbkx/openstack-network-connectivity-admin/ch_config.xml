@@ -24,18 +24,18 @@
                     OpenStack Networking server ($IP), and service ID
                     ($ID) returned by the OpenStack Compute service
                     catalog, run: </para>
-                <screen><userinput><?db-font-size 75%?>keystone service-create --name quantum --type network --description 'OpenStack Networking Service'</userinput></screen>
+                <screen><userinput><?db-font-size 75%?>keystone service-create --name neutron --type network --description 'OpenStack Networking Service'</userinput></screen>
                 <para>Make a note of the ID returned by the command
                     and put it in the $ID location.</para>
 <screen><userinput>keystone endpoint-create --region $REGION --service-id $ID --publicurl 'http://$IP:9696/' --adminurl 'http://$IP:9696/' --internalurl 'http://$IP:9696/'</userinput></screen>
                 <para>Here's an example with real values:</para>
-                <screen><userinput><?db-font-size 75%?><prompt>$</prompt> <userinput>keystone service-create --name quantum --type network --description 'OpenStack Networking Service'</userinput></userinput></screen>
+                <screen><userinput><?db-font-size 75%?><prompt>$</prompt> <userinput>keystone service-create --name neutron --type network --description 'OpenStack Networking Service'</userinput></userinput></screen>
                 <screen>+-------------+----------------------------------+
 |   Property  |              Value               |
 +-------------+----------------------------------+
 | description | OpenStack Networking Service     |
 | id          | 26a55b340e254ad5bb78c0b14391e153 |
-| name        | quantum                          |
+| name        | neutron                          |
 | type        | network                          |
 +-------------+----------------------------------+</screen>
                 <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service-id 26a55b340e254ad5bb78c0b14391e153 \
@@ -59,17 +59,13 @@ catalog.$Region.network.name = Network Service</programlisting>
             <step>
                 <title>Create OpenStack Networking Service
                     User</title>
-                <para>For OpenStack Compute to speak to the OpenStack
-                    Networking API, and for some internal components
-                    of OpenStack Networking to communicate with the
-                    OpenStack Networking API, you need to provide them
-                    with admin user credentials that they can use when
-                    accessing the OpenStack Networking API.  The
-                    suggested approach is to create a special
-                    'service' tenant, create a ‘quantum’ user within
-                    this tenant, and to assign this user an 'admin'
-                    role. Kindly check the ID for user, role and
-                    tenant.</para>
+                <para>For OpenStack Compute to speak to the OpenStack Networking API, and for some
+                    internal components of OpenStack Networking to communicate with the OpenStack
+                    Networking API, you need to provide them with admin user credentials that they
+                    can use when accessing the OpenStack Networking API.  The suggested approach is
+                    to create a special 'service' tenant, create a ‘neutron’ user within this
+                    tenant, and to assign this user an 'admin' role. Kindly check the ID for user,
+                    role and tenant.</para>
                 <para>For example: </para>
                 <note><para>A <literal>get_id</literal> shell function is used
                 to store the id of newly created objects. This function needs
@@ -83,9 +79,9 @@ catalog.$Region.network.name = Network Service</programlisting>
                 </para></note>
                 <screen><prompt>$</prompt> <userinput>ADMIN_ROLE=$(get_id keystone role-create --name=admin)
 </userinput></screen>
-                <screen><prompt>$</prompt> <userinput>QUANTUM_USER=$(get_id keystone user-create --name=quantum --pass="$QUANTUM_PASSWORD" --email=demo@example.com --tenant-id service)
+                <screen><prompt>$</prompt> <userinput>NEUTRON_USER=$(get_id keystone user-create --name=neutron --pass="$NEUTRON_PASSWORD" --email=demo@example.com --tenant-id service)
 </userinput></screen>
-                <screen><prompt>$</prompt> <userinput>keystone user-role-add --user_id $QUANTUM_USER --role_id $ADMIN_ROLE --tenant_id service</userinput></screen>
+                <screen><prompt>$</prompt> <userinput>keystone user-role-add --user_id $NEUTRON_USER --role_id $ADMIN_ROLE --tenant_id service</userinput></screen>
             </step>
         </procedure>
         <para> See the OpenStack Installation Guides for more details
@@ -138,59 +134,49 @@ catalog.$Region.network.name = Network Service</programlisting>
                 by each nova-compute and nova-api instance:  </para>
             <itemizedlist>
                 <listitem>
-                    <para>network_api_class: must be modified from
-                        default to 'nova.network.quantumv2.api.API' to
-                        indicate that OpenStack Networking should be
-                        used rather than the traditional nova-network
-                        networking model.</para>
+                    <para>network_api_class: must be modified from default to
+                        'nova.network.neutronv2.api.API' to indicate that OpenStack Networking
+                        should be used rather than the traditional nova-network networking
+                        model.</para>
                 </listitem>
                 <listitem>
-                    <para>quantum_url: must include the hostname/IP and port
-                        of the quantum-server instance for this
-                        deployment.</para>
+                    <para>neutron_url: must include the hostname/IP and port of the neutron-server
+                        instance for this deployment.</para>
                 </listitem>
                 <listitem>
-                    <para>quantum_auth_strategy: should be kept as default
-                        'keystone' for all production deployments.</para>
+                    <para>neutron_auth_strategy: should be kept as default 'keystone' for all
+                        production deployments.</para>
                 </listitem>
                 <listitem>
-                    <para>quantum_admin_tenant_name: must be modified
-                        to be the name of the service tenant created
-                        in the above section on OpenStack Identity
+                    <para>neutron_admin_tenant_name: must be modified to be the name of the service
+                        tenant created in the above section on OpenStack Identity
                         configuration.</para>
                 </listitem>
                 <listitem>
-                    <para>quantum_admin_username: must be modified to
-                        be the name of the user created in the above
-                        section on OpenStack Identity
-                        configuration.</para>
+                    <para>neutron_admin_username: must be modified to be the name of the user
+                        created in the above section on OpenStack Identity configuration.</para>
                 </listitem>
                 <listitem>
-                    <para>quantum_admin_password: must be modified to
-                        be the password of the user created in the
-                        above section on OpenStack Identity
-                        configuration.</para>
+                    <para>neutron_admin_password: must be modified to be the password of the user
+                        created in the above section on OpenStack Identity configuration.</para>
                 </listitem>
                 <listitem>
-                    <para>quantum_admin_auth_url: must be modified to
-                        point to the OpenStack Identity server IP and
-                        port. This is the Identity (keystone) admin
-                        API server IP and port value, and not the
-                        Identity service API IP and port.</para>
+                    <para>neutron_admin_auth_url: must be modified to point to the OpenStack
+                        Identity server IP and port. This is the Identity (keystone) admin API
+                        server IP and port value, and not the Identity service API IP and
+                        port.</para>
                 </listitem>
             </itemizedlist>
         </section>
         <section xml:id="nova_config_security_groups">
         <title>Security Group Configuration</title>
-        <para>The OpenStack Networking Service provides security group
-        functionality using a mechanism that is more flexible and powerful
-        than the security group capabilities built into OpenStack
-        Compute.  Thus, when using OpenStack Networking, nova.conf should
-        always disable built-in security groups and proxy all security group
-        calls to the OpenStack Networking API.  Failure to do so will result
-        in conflicting security policies being simultaneously applied by
-        both services.  To proxy security groups to Quantum, use the
-        following configuration values:</para>
+        <para>The OpenStack Networking Service provides security group functionality using a
+                mechanism that is more flexible and powerful than the security group capabilities
+                built into OpenStack Compute. Thus, when using OpenStack Networking, nova.conf
+                should always disable built-in security groups and proxy all security group calls to
+                the OpenStack Networking API. Failure to do so will result in conflicting security
+                policies being simultaneously applied by both services. To proxy security groups to
+                Neutron, use the following configuration values:</para>
             <itemizedlist>
                 <listitem>
                     <para>
@@ -201,11 +187,8 @@ catalog.$Region.network.name = Network Service</programlisting>
                     </para>
                 </listitem>
                 <listitem>
-                    <para>
-                        security_group_api : must be set to 'quantum' so
-                        that all security group requests are proxied to
-                        the OpenStack Network Service.
-                    </para>
+                    <para> security_group_api : must be set to 'neutron' so that all security group
+                        requests are proxied to the OpenStack Network Service. </para>
                 </listitem>
             </itemizedlist>
         </section>
@@ -218,33 +201,24 @@ catalog.$Region.network.name = Network Service</programlisting>
                 setting the following fields in nova.conf: </para>
             <itemizedlist>
                 <listitem>
-                    <para>
-                    service_quantum_metadata_proxy: must be set to 'true',
-                    otherwise nova-api will not properly respond to requests
-                    from the quantum-metadata-agent.
-                    </para>
+                    <para> service_neutron_metadata_proxy: must be set to 'true', otherwise nova-api
+                        will not properly respond to requests from the neutron-metadata-agent. </para>
                 </listitem>
                 <listitem>
-                    <para>
-                    quantum_metadata_proxy_shared_secret: a string "password"
-                    value that should also be configured in the
-                    metadata_agent.ini file in order to authenticate requests
-                    made for metadata.  The default value of the
-                    empty string in both files will allow metadata to
-                    function, but will be insecure if any non-trusted
-                    entities have access to the metadata APIs exposed by
-                    nova-api.
-                    </para>
+                    <para> neutron_metadata_proxy_shared_secret: a string "password" value that
+                        should also be configured in the metadata_agent.ini file in order to
+                        authenticate requests made for metadata. The default value of the empty
+                        string in both files will allow metadata to function, but will be insecure
+                        if any non-trusted entities have access to the metadata APIs exposed by
+                        nova-api. </para>
                 </listitem>
             </itemizedlist>
-            <note><para>As a precaution, even when using
-            quantum_metadata_proxy_shared_secret, it is recommended that
-            you do not expose metadata using the same nova-api instances that
-            are used for tenants.  Instead, run a dedicated set of nova-api
-            instances for metadata available only on your management network.
-            Whether a given nova-api instance exposes metadata APIs is
-            determined by the value of 'enabled_apis' in its nova.conf.
-            </para></note>
+            <note><para>As a precaution, even when using neutron_metadata_proxy_shared_secret, it is recommended that
+                    you do not expose metadata using the same nova-api instances that are used for
+                    tenants. Instead, run a dedicated set of nova-api instances for metadata
+                    available only on your management network. Whether a given nova-api instance
+                    exposes metadata APIs is determined by the value of 'enabled_apis' in its
+                    nova.conf. </para></note>
         </section>
         <section xml:id="nova_with_quantum_vifplugging">
             <title>Vif-plugging Configuration</title>
@@ -322,19 +296,19 @@ catalog.$Region.network.name = Network Service</programlisting>
                 cloud controller node running OpenStack Compute and
                 OpenStack Networking with an IP address of 192.168.1.2
                 and vif-plugging using the LibvirtHybridOVSBridgeDriver. </para>
-            <screen><computeroutput>network_api_class=nova.network.quantumv2.api.API
-quantum_url=http://192.168.1.2:9696
-quantum_auth_strategy=keystone
-quantum_admin_tenant_name=service
-quantum_admin_username=quantum
-quantum_admin_password=password
-quantum_admin_auth_url=http://192.168.1.2:35357/v2.0
+            <screen><computeroutput>network_api_class=nova.network.neutronv2.api.API
+neutron_url=http://192.168.1.2:9696
+neutron_auth_strategy=keystone
+neutron_admin_tenant_name=service
+neutron_admin_username=neutron
+neutron_admin_password=password
+neutron_admin_auth_url=http://192.168.1.2:35357/v2.0
 
-security_group_api=quantum
+security_group_api=neutron
 firewall_driver=nova.virt.firewall.NoopFirewallDriver
 
-service_quantum_metadata_proxy=true
-quantum_metadata_proxy_shared_secret=foo
+service_neutron_metadata_proxy=true
+neutron_metadata_proxy_shared_secret=foo
 
 # needed only for nova-compute and only for some plugins
 libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver

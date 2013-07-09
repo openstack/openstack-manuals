@@ -20,15 +20,11 @@
                     in nova-network.</para>
             </listitem>
             <listitem>
-                <para><emphasis>Linux network namespace required on
-                        nodes running quantum-l3-agent or
-                        quantum-dhcp-agent if overlapping IPs are in use: </emphasis>.
-                    In order to
-                    support overlapping IP addresses, the OpenStack
-                    Networking DHCP and L3 agents use Linux network
-                    namespaces by default. The hosts running these
-                    processes must support network namespaces. To
-                    support network namespaces, the following are
+                <para><emphasis>Linux network namespace required on nodes running neutron-l3-agent
+                        or neutron-dhcp-agent if overlapping IPs are in use: </emphasis>. In order
+                    to support overlapping IP addresses, the OpenStack Networking DHCP and L3 agents
+                    use Linux network namespaces by default. The hosts running these processes must
+                    support network namespaces. To support network namespaces, the following are
                     required:</para>
                 <itemizedlist>
                     <listitem>
@@ -49,16 +45,16 @@ ip netns exec test-ns ifconfig</computeroutput></screen>
                     Ubuntu 12.04 or later support namespaces as does Fedora 17 and new, but some
                     older RHEL platforms do not by default. It may be possible to upgrade the
                     iproute2 package on a platform that does not support namespaces by default. </para>
-                <para> If you need to disable namespaces, make sure
-                    the <filename>quantum.conf</filename> used by
-                    quantum-server has the following setting:</para>
+                <para> If you need to disable namespaces, make sure the
+                        <filename>neutron.conf</filename> used by neutron-server has the following
+                    setting:</para>
                 <screen><computeroutput>allow_overlapping_ips=False</computeroutput></screen>
                 <para>and that the dhcp_agent.ini and l3_agent.ini have the following
                     setting:</para>
                 <screen><computeroutput>use_namespaces=False</computeroutput></screen>
                 <note><para> If the host does not support namespaces then the <systemitem class="service"
-                            >quantum-l3-agent</systemitem> and <systemitem class="service"
-                            >quantum-dhcp-agent</systemitem> should be run on different hosts. This
+                            >neutron-l3-agent</systemitem> and <systemitem class="service"
+                            >neutron-dhcp-agent</systemitem> should be run on different hosts. This
                         is due to the fact that there is no isolation between the IP addresses
                         created by the L3 agent and by the DHCP agent. By manipulating the routing
                         the user can ensure that these networks have access to one another.</para></note>
@@ -68,14 +64,14 @@ ip netns exec test-ns ifconfig</computeroutput></screen>
             </listitem>
         </itemizedlist>
         <itemizedlist><listitem>
-                <para><emphasis>No IPv6 support for L3 agent:</emphasis> The quantum-l3-agent, used
-                    by many plugins to implement L3 forwarding,
-                    supports only IPv4 forwarding. Currently, There are no errors provided if you
-                    configure IPv6 addresses via the API.</para>
+                <para><emphasis>No IPv6 support for L3 agent:</emphasis> The neutron-l3-agent, used
+                    by many plugins to implement L3 forwarding, supports only IPv4 forwarding.
+                    Currently, There are no errors provided if you configure IPv6 addresses via the
+                    API.</para>
             </listitem>
             <listitem>
                 <para><emphasis>ZeroMQ support is experimental</emphasis>: Some agents, including
-                    quantum-dhcp-agent, quantum-openvswitch-agent, and quantum-linuxbridge-agent use
+                    neutron-dhcp-agent, neutron-openvswitch-agent, and neutron-linuxbridge-agent use
                     RPC to communicate. ZeroMQ is an available option in the configuration file, but
                     has not been tested and should be considered experimental. In particular, there
                     are believed to be issues with ZeroMQ and the dhcp agent. </para>

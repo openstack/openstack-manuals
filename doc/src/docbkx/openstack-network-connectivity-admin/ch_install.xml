@@ -29,36 +29,31 @@
 <prompt>$</prompt> <userinput>sudo apt-get install ubuntu-cloud-keyring</userinput>
 <prompt>$</prompt> <userinput>sudo apt-get update</userinput>
 <prompt>$</prompt> <userinput>sudo apt-get upgrade</userinput></screen>
-        <section xml:id="install_quantum_server">
-            <title>Install quantum-server </title>
-            <para>Install quantum-server and CLI for accessing the
-                API: </para>
-            <screen><prompt>$</prompt> <userinput>sudo apt-get -y install quantum-server python-quantumclient</userinput></screen>
+        <section xml:id="install_neutron_server">
+            <title>Install neutron-server </title>
+            <para>Install neutron-server and CLI for accessing the API: </para>
+            <screen><prompt>$</prompt> <userinput>sudo apt-get -y install neutron-server python-neutronclient</userinput></screen>
             <para>You will also want to install the plugin you choose
                 to use, for example: </para>
-            <screen><prompt>$</prompt> <userinput>sudo apt-get -y install quantum-plugin-&lt;plugin-name&gt;</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>sudo apt-get -y install neutron-plugin-&lt;plugin-name&gt;</userinput></screen>
             <para>Most plugins require a database to be installed and
                 configured in a plugin configuration file.  For
                 example: </para>
             <screen><prompt>$</prompt> <userinput>sudo apt-get -y install mysql-server python-mysqldb python-sqlalchemy </userinput></screen>
-            <para>A database that you are already using for other
-                OpenStack services will work fine for this.  Simply
-                create a ‘quantum’ database: </para>
-            <screen><prompt>$</prompt> <userinput>mysql -u &lt;user&gt; -p &lt;pass&gt; -e “create database quantum”</userinput></screen>
-            <para>And then configure the plugin’s configuration file
-                to use this database.  Find the plugin configuration
-                file in <filename>/etc/quantum/plugins/&lt;plugin-name&gt;</filename> (For
-                example,
-                    <filename>/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</filename>)
+            <para>A database that you are already using for other OpenStack services will work fine
+                for this.  Simply create a ‘neutron’ database: </para>
+            <screen><prompt>$</prompt> <userinput>mysql -u &lt;user&gt; -p &lt;pass&gt; -e “create database neutron”</userinput></screen>
+            <para>And then configure the plugin’s configuration file to use this database.  Find the
+                plugin configuration file in
+                    <filename>/etc/neutron/plugins/&lt;plugin-name&gt;</filename> (For example,
+                    <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>)
                 and set: </para>
-            <screen><computeroutput>sql_connection = mysql://&lt;user&gt;:&lt;password&gt;@localhost/quantum?charset=utf8</computeroutput></screen>
+            <screen><computeroutput>sql_connection = mysql://&lt;user&gt;:&lt;password&gt;@localhost/neutron?charset=utf8</computeroutput></screen>
             <section xml:id="rpc_setup">
                 <title>RPC Setup </title>
-                <para>Many OpenStack Networking plugins uses RPC to
-                    allow agents to communicate with the main
-                    quantum-server process.  If your plugin requires agents,
-                    this can use the same RPC mechanism used by other OpenStack
-                    components like Nova.  </para>
+                <para>Many OpenStack Networking plugins uses RPC to allow agents to communicate with
+                    the main neutron-server process.  If your plugin requires agents, this can use
+                    the same RPC mechanism used by other OpenStack components like Nova.  </para>
                 <para>To use RabbitMQ as the message bus for RPC, make
                     sure that rabbit is installed on a host reachable
                     via the management network (if this is already the
@@ -66,16 +61,14 @@
                     Nova, this existing RabbitMQ setup is
                     sufficient):  </para>
                 <screen><prompt>$</prompt> <userinput>sudo apt-get install rabbitmq-server rabbitmqctl change_password guest &lt;password&gt;</userinput></screen>
-                <para>Then update /etc/quantum/quantum.conf with these
-                    values: </para>
+                <para>Then update /etc/neutron/neutron.conf with these values: </para>
                 <screen><computeroutput>rabbit_host=&lt;mgmt-IP-of-rabbit-host&gt;
 rabbit_password=&lt;password&gt;
 
 rabbit_userid=guest </computeroutput></screen>
             <important>
-                <para>This /etc/quantum/quantum.conf file should be
-                    copied to and used on all hosts running
-                    quantum-server or any quantum-*-agent binaries. </para>
+                <para>This /etc/neutron/neutron.conf file should be copied to and used on all hosts
+                        running neutron-server or any neutron-*-agent binaries. </para>
             </important>
         </section>
             <section xml:id="openvswitch_plugin">
@@ -90,40 +83,42 @@ rabbit_userid=guest </computeroutput></screen>
                     options are described in the <link
                         linkend="ch_adv_config"/></para>
                 <para>Edit
-                        <filename>/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</filename>
+                        <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
                     to specify the following values: </para>
                 <screen><computeroutput>enable_tunneling=True
 tenant_network_type=gre
 tunnel_id_ranges=1:1000
 # only required for nodes running agents
 local_ip=&lt;data-net-IP-address-of-node&gt;</computeroutput></screen>
-		<para>If you are using the Quantum DHCP agent, add the following to <filename>/etc/quantum/dhcp_agent.ini</filename></para>
-		<screen><computeroutput>dnsmasq_config_file=/etc/quantum/dnsmasq-quantum.conf</computeroutput></screen>
-		<para>And create <filename>/etc/quantum/dnsmasq-quantum.conf</filename>. Then add the following values to lower the MTU size on instances and prevent packet fragmentation over the GRE tunnel</para>
+		<para>If you are using the Neutron DHCP agent, add the following to
+                        <filename>/etc/neutron/dhcp_agent.ini</filename></para>
+		<screen><computeroutput>dnsmasq_config_file=/etc/neutron/dnsmasq-neutron.conf</computeroutput></screen>
+		<para>And create <filename>/etc/neutron/dnsmasq-neutron.conf</filename>. Then add the following
+                    values to lower the MTU size on instances and prevent packet fragmentation over
+                    the GRE tunnel</para>
 		<screen><computeroutput>dhcp-option-force=26,1400</computeroutput></screen>
-                <para>After performing that change on the node running
-                    quantum-server, restart quantum-server to pick up
-                    the new settings.</para>
-                <screen><prompt>$</prompt> <userinput>sudo service quantum-server restart</userinput></screen>
+                <para>After performing that change on the node running neutron-server, restart
+                    neutron-server to pick up the new settings.</para>
+                <screen><prompt>$</prompt> <userinput>sudo service neutron-server restart</userinput></screen>
             </section>
             <section xml:id="nvp_plugin">
                 <title>Plugin Configuration: Nicira NVP Plugin</title>
                 <para> Make sure the NVP plugin is installed using:</para>
-                <screen><prompt>$</prompt> <userinput>sudo apt-get -y install quantum-plugin-nicira</userinput></screen>
+                <screen><prompt>$</prompt> <userinput>sudo apt-get -y install neutron-plugin-nicira</userinput></screen>
 
                 <para>To configure OpenStack Networking to use the NVP plugin first
                     edit
-                        <filename>/etc/quantum/quantum.conf</filename>
+                        <filename>/etc/neutron/neutron.conf</filename>
                     and set:</para>
-                <screen><computeroutput>core_plugin = quantum.plugins.nicira.QuantumPlugin.NvpPluginV2</computeroutput></screen>
+                <screen><computeroutput>core_plugin = neutron.plugins.nicira.NeutronPlugin.NvpPluginV2</computeroutput></screen>
                 <para>Edit
-                        <filename>/etc/quantum/plugins/nicira/nvp.ini</filename>
+                        <filename>/etc/neutron/plugins/nicira/nvp.ini</filename>
                     in order to configure the plugin.</para>
-                <para>In the [database] section, specify the quantum database
+                <para>In the [database] section, specify the neutron database
                     created in the previous step using the following line,
                     substituting your database server IP address for localhost
                      if the database is not local:</para>
-                <screen><computeroutput>sql_connection = mysql://&lt;user&gt;:&lt;password&gt;@localhost/quantum?charset=utf8</computeroutput></screen>
+                <screen><computeroutput>sql_connection = mysql://&lt;user&gt;:&lt;password&gt;@localhost/neutron?charset=utf8</computeroutput></screen>
                 <para>In order to tell OpenStack Networking about a controller
                  cluster, create a new [cluster:&lt;name&gt;] section in the
                 config file, and add the following entries:</para>
@@ -144,24 +139,23 @@ local_ip=&lt;data-net-IP-address-of-node&gt;</computeroutput></screen>
                 </para>
                 <screen><computeroutput>default_l3_gw_service_uuid = &lt;uuid_of_the_gateway_service&gt;</computeroutput></screen>
                 <warning>
-                <para> Ubuntu packaging currently does not update the quantum
-                init script to point to the NVP config file.  Instead,
-                manually update <filename>/etc/default/quantum-server
-                </filename> to set:</para>
-                <screen><computeroutput>QUANTUM_PLUGIN_CONFIG = /etc/quantum/plugins/nicira/nvp.ini</computeroutput></screen>
+                <para> Ubuntu packaging currently does not update the neutron init script to point
+                        to the NVP config file. Instead, manually update
+                            <filename>/etc/default/neutron-server </filename> to set:</para>
+                <screen><computeroutput>NEUTRON_PLUGIN_CONFIG = /etc/neutron/plugins/nicira/nvp.ini</computeroutput></screen>
                 </warning>
-                <para>Lastly, restart quantum-server to pick up the
+                <para>Lastly, restart neutron-server to pick up the
                     new settings.</para>
-                <screen><prompt>$</prompt> <userinput>sudo service quantum-server restart</userinput></screen>
-                <para>An example quantum.conf file to use with NVP would be:
+                <screen><prompt>$</prompt> <userinput>sudo service neutron-server restart</userinput></screen>
+                <para>An example neutron.conf file to use with NVP would be:
                 </para>
-                <screen><computeroutput>core_plugin = quantum.plugins.nicira.QuantumPlugin.NvpPluginV2
+                <screen><computeroutput>core_plugin = neutron.plugins.nicira.NeutronPlugin.NvpPluginV2
 rabbit_host = 192.168.203.10
 allow_overlapping_ips = True
 </computeroutput></screen>
                 <para>An example nvp.ini file to use with NVP would be:</para>
 <screen><computeroutput>[database]
-sql_connection=mysql://root:root@127.0.0.1/quantum
+sql_connection=mysql://root:root@127.0.0.1/neutron
 
 [cluster:main]
 default_tz_uuid = d3afb164-b263-4aaa-a3e4-48e0e09bb33c
@@ -170,83 +164,64 @@ nvp_controller_connection=10.0.0.2:443:admin:admin:30:10:2:2
 nvp_controller_connection=10.0.0.3:443:admin:admin:30:10:2:2
 nvp_controller_connection=10.0.0.4:443:admin:admin:30:10:2:2
 </computeroutput></screen>
-            <note><para>In order to debug nvp.ini configuration issues run the following command: check-nvp-config &lt;path/to/nvp.ini&gt; from the host running quantum-server. This command will test that quantum-server can log into all of the NVP Controllers, SQL server, and that all of the UUID values are correct.</para></note>
+            <note><para>In order to debug nvp.ini configuration issues run the following command: check-nvp-config
+                        &lt;path/to/nvp.ini&gt; from the host running neutron-server. This command
+                        will test that neutron-server can log into all of the NVP Controllers, SQL
+                        server, and that all of the UUID values are correct.</para></note>
             </section>
             <section xml:id="bigswitch_floodlight_plugin">
                 <title>Configuring Big Switch, Floodlight REST Proxy Plugin</title>
-                <para>To configure OpenStack Networking to use the REST Proxy plugin first
-                    edit
-                        <filename>/etc/quantum/quantum.conf</filename>
-                    and set:</para>
-                <screen><computeroutput>core_plugin = quantum.plugins.bigswitch.plugin.QuantumRestProxyV2</computeroutput></screen>
-                <para>Edit
-                        <filename>/etc/quantum/plugins/bigswitch/restproxy.ini</filename>
-                    in order to configure the plugin. The quantum
-                    database created previously will be used by
-                    setting:</para>
-                <screen><computeroutput>sql_connection = mysql://&lt;user&gt;:&lt;password&gt;@localhost/restproxy_quantum?charset=utf8</computeroutput></screen>
+                <para>To configure OpenStack Networking to use the REST Proxy plugin first edit
+                        <filename>/etc/neutron/neutron.conf</filename> and set:</para>
+                <screen><computeroutput>core_plugin = neutron.plugins.bigswitch.plugin.NeutronRestProxyV2</computeroutput></screen>
+                <para>Edit <filename>/etc/neutron/plugins/bigswitch/restproxy.ini</filename> in
+                    order to configure the plugin. The neutron database created previously will be
+                    used by setting:</para>
+                <screen><computeroutput>sql_connection = mysql://&lt;user&gt;:&lt;password&gt;@localhost/restproxy_neutron?charset=utf8</computeroutput></screen>
                 <para>Specify a comma separated list controller_ip:port pairs:</para>
                 <screen><computeroutput>server = &lt;controller-ip&gt;:&lt;port&gt;</computeroutput></screen>
-                <para>Lastly, restart quantum-server to pick up the
-                    new settings.</para>
-                <screen><prompt>$</prompt> <userinput>sudo service quantum-server restart</userinput></screen>
+                <para>Lastly, restart neutron-server to pick up the new settings.</para>
+                <screen><prompt>$</prompt> <userinput>sudo service neutron-server restart</userinput></screen>
             </section>
             <section xml:id="ryu_plugin">
                 <title>Configuring Ryu Plugin</title>
                 <para>Make sure the ryu plugin is installed using:</para>
-                <screen><prompt>$</prompt> <userinput>sudo apt-get -y install quantum-plugin-ryu</userinput></screen>
-		<para>To configure OpenStack Networking to use the Ryu plugin first
-                    edit
-                        <filename>/etc/quantum/quantum.conf</filename>
-                    and set:</para>
-                <screen><computeroutput>core_plugin = quantum.plugins.ryu.ryu_quantum_plugin.RyuQuantumPluginV2</computeroutput></screen>
-		<para>Edit
-                        <filename>/etc/quantum/plugins/ryu/ryu.ini</filename>
-	            in order to configure the plugin.
-		    In the [database] section, specify the quantum database
-		    created in the previous step using the following line,
-                    substituting your database server user/password/IP address/port
-		    based on your setting:</para>
-                <screen><computeroutput>sql_connection = mysql://&lt;user&gt;:&lt;password&gt;@&lt;ip-address&gt;:&lt;port&gt;/quantum?charset=utf8</computeroutput></screen>
-		<para>In [ovs] section, set the necessary values for
-		    ryu-quantum-agent.
-		    openflow_rest_api is used to tell where Ryu is
-                    listening for REST API.  Substitute ip-address and port-no
-		    based on your ryu setup.
-                    <literal>ovsdb_interface</literal> is used for Ryu
-		    to access ovsdb-server.  Substitute eth0 based on your
-		    setup. IP address is derived from the interface name.  If
-		    you want to change those value irrelevant to the interafce
-		    name, ovsdb_ip can be specified. If you use non-default
-		    port for ovsdb-server, it can be specified by ovsdb_port.
-		    tunnel_interface needs to be set to tell what IP address is
-		    used for tunneling.  (If tunneling isn't used, this value
-		    will be ignored.) The IP address is derived from the
-		    network interface name. The same configuration file can be used
-		    for many compute-node by using network interface name with
-		    different IP address.
-		</para>
+                <screen><prompt>$</prompt> <userinput>sudo apt-get -y install neutron-plugin-ryu</userinput></screen>
+		<para>To configure OpenStack Networking to use the Ryu plugin first edit
+                        <filename>/etc/neutron/neutron.conf</filename> and set:</para>
+                <screen><computeroutput>core_plugin = neutron.plugins.ryu.ryu_neutron_plugin.RyuNeutronPluginV2</computeroutput></screen>
+		<para>Edit <filename>/etc/neutron/plugins/ryu/ryu.ini</filename> in order to configure the plugin.
+                    In the [database] section, specify the neutron database created in the previous
+                    step using the following line, substituting your database server
+                    user/password/IP address/port based on your setting:</para>
+                <screen><computeroutput>sql_connection = mysql://&lt;user&gt;:&lt;password&gt;@&lt;ip-address&gt;:&lt;port&gt;/neutron?charset=utf8</computeroutput></screen>
+		<para>In [ovs] section, set the necessary values for ryu-neutron-agent. openflow_rest_api is used
+                    to tell where Ryu is listening for REST API. Substitute ip-address and port-no
+                    based on your ryu setup. <literal>ovsdb_interface</literal> is used for Ryu to
+                    access ovsdb-server. Substitute eth0 based on your setup. IP address is derived
+                    from the interface name. If you want to change those value irrelevant to the
+                    interafce name, ovsdb_ip can be specified. If you use non-default port for
+                    ovsdb-server, it can be specified by ovsdb_port. tunnel_interface needs to be
+                    set to tell what IP address is used for tunneling. (If tunneling isn't used,
+                    this value will be ignored.) The IP address is derived from the network
+                    interface name. The same configuration file can be used for many compute-node by
+                    using network interface name with different IP address. </para>
                 <screen><computeroutput>openflow_rest_api = &lt;ip-address&gt;:&lt;port-no&gt;
 ovsdb_interface = &lt;eth0&gt;
 tunnel_interface = &lt;eth0&gt;
 </computeroutput></screen>
-                <para>Lastly, restart quantum-server to pick up the
-                    new settings.</para>
-                <screen><prompt>$</prompt> <userinput>sudo service quantum-server restart</userinput></screen>
+                <para>Lastly, restart neutron-server to pick up the new settings.</para>
+                <screen><prompt>$</prompt> <userinput>sudo service neutron-server restart</userinput></screen>
 	    </section>
             <section xml:id="PLUMgridplugin">
                 <title>Configuring PLUMgrid Plugin</title>
-                <para>To configure OpenStack Networking to use the
-                    PLUMgrid plugin first edit
-                        <filename>/etc/quantum/quantum.conf</filename>
-                    and set:</para>
-                <screen><computeroutput>core_plugin = quantum.plugins.plumgrid.plumgrid_nos_plugin.plumgrid_plugin.QuantumPluginPLUMgridV2</computeroutput></screen>
-                <para>Edit
-                        <filename>/etc/quantum/plugins/plumgrid/plumgrid.ini</filename>
-                    in order to configure the plugin. The quantum
-                    database created previously will be used by
+                <para>To configure OpenStack Networking to use the PLUMgrid plugin first edit
+                        <filename>/etc/neutron/neutron.conf</filename> and set:</para>
+                <screen><computeroutput>core_plugin = neutron.plugins.plumgrid.plumgrid_nos_plugin.plumgrid_plugin.NeutronPluginPLUMgridV2</computeroutput></screen>
+                <para>Edit <filename>/etc/neutron/plugins/plumgrid/plumgrid.ini</filename> in order
+                    to configure the plugin. The neutron database created previously will be used by
                     setting:</para>
-                <screen><computeroutput>sql_connection = mysql://&lt;user&gt;:&lt;password&gt;@localhost/plumgrid_quantum?charset=utf8</computeroutput></screen>
+                <screen><computeroutput>sql_connection = mysql://&lt;user&gt;:&lt;password&gt;@localhost/plumgrid_neutron?charset=utf8</computeroutput></screen>
                 <para>Under the [plumgridnos] section specify the IP
                     address of the PLUMgrid director also
                     known as NOS. Behind the director information
@@ -255,56 +230,47 @@ tunnel_interface = &lt;eth0&gt;
                 <screen><computeroutput>servers=&lt;plumgrid_NOS_IP>
 username=&lt;username>
 password=&lt;password></computeroutput></screen>
-                <para>Lastly, restart quantum-server to pick up the
-                    new settings.</para>
-                <screen><prompt>$</prompt> <userinput>sudo service quantum-server restart</userinput></screen>
+                <para>Lastly, restart neutron-server to pick up the new settings.</para>
+                <screen><prompt>$</prompt> <userinput>sudo service neutron-server restart</userinput></screen>
             </section>
         </section>
-        <section xml:id="install_quantum_agent">
+        <section xml:id="install_neutron_agent">
             <title>Install Software on Data Forwarding Nodes</title>
-            <para>Plugins commonly have requirements for particular software
-                that must be run on each node that handles data packets. This
-                includes any node running nova-compute, as well as nodes
-                running dedicated OpenStack Networking service agents like
-                quantum-dhcp-agent, quantum-l3-agent, quantum-lbaas-agent,
-                etc (see below for more information about
-                individual services agents).</para>
+            <para>Plugins commonly have requirements for particular software that must be run on
+                each node that handles data packets. This includes any node running nova-compute, as
+                well as nodes running dedicated OpenStack Networking service agents like
+                neutron-dhcp-agent, neutron-l3-agent, neutron-lbaas-agent, etc (see below for more
+                information about individual services agents).</para>
             <para>Commonly, any data forwarding node should have a network
                 interface with an IP address on the “management
                 network” and another interface on the “data network”. </para>
-            <para>In this section, we describe the requirements
-                for particular plugins, which may include the installation of
-                switching software (e.g., Open vSwitch) as well as agents
-                used to communicate with the quantum-server process
-                running elsewhere in the data center.</para>
-            <section xml:id="install_quantum_agent_ovs">
+            <para>In this section, we describe the requirements for particular plugins, which may
+                include the installation of switching software (e.g., Open vSwitch) as well as
+                agents used to communicate with the neutron-server process running elsewhere in the
+                data center.</para>
+            <section xml:id="install_neutron_agent_ovs">
                 <title>Node Setup: OVS Plugin</title>
-                <para>The Open vSwitch plugin requires Open vSwitch as well
-                as the quantum-plugin-openvswitch-agent agent
-                to be installed on each Data Forwarding Node.</para>
+                <para>The Open vSwitch plugin requires Open vSwitch as well as the
+                    neutron-plugin-openvswitch-agent agent to be installed on each Data Forwarding
+                    Node.</para>
                 <para>Install the OVS agent agent package, will pull in the
                 Open vSwitch software as a dependency: </para>
-                <screen><prompt>$</prompt> <userinput>sudo apt-get -y install quantum-plugin-openvswitch-agent</userinput></screen>
-                <para>The ovs_quantum_plugin.ini created in the above
-                    step must be replicated on all nodes
-                    quantum-plugin-openvswitch-agent. When using
-                    tunneling, each node running
-                    quantum-plugin-openvswitch agent should have an IP
-                    address configured on the Data Network, and that
-                    IP address should be specified using the local_ip
-                    value in the ovs_quantum_plugin.ini file. </para>
+                <screen><prompt>$</prompt> <userinput>sudo apt-get -y install neutron-plugin-openvswitch-agent</userinput></screen>
+                <para>The ovs_neutron_plugin.ini created in the above step must be replicated on all
+                    nodes neutron-plugin-openvswitch-agent. When using tunneling, each node running
+                    neutron-plugin-openvswitch agent should have an IP address configured on the
+                    Data Network, and that IP address should be specified using the local_ip value
+                    in the ovs_neutron_plugin.ini file. </para>
                 <para>Then restart Open vSwitch to properly load the kernel
                 module:</para>
                 <screen><prompt>$</prompt> <userinput>sudo service openvswitch-switch restart</userinput></screen>
                 <para>And restart the agent:</para>
-                <screen><prompt>$</prompt> <userinput>sudo service quantum-plugin-openvswitch-agent restart</userinput></screen>
-                <para>All hosts running
-                    quantum-plugin-openvswitch-agent also requires
-                    that an OVS bridge named "br-int" exists. To
-                    create it, run:</para>
+                <screen><prompt>$</prompt> <userinput>sudo service neutron-plugin-openvswitch-agent restart</userinput></screen>
+                <para>All hosts running neutron-plugin-openvswitch-agent also requires that an OVS
+                    bridge named "br-int" exists. To create it, run:</para>
                 <screen><prompt>$</prompt> <userinput>sudo ovs-vsctl add-br br-int</userinput></screen>
             </section>
-            <section xml:id="install_quantum_agent_nvp">
+            <section xml:id="install_neutron_agent_nvp">
                 <title>Node Setup: Nicira NVP Plugin</title>
                 <para>The Nicira NVP plugin requires a version of Open vSwitch to be installed on each data forwarding node, but
                 does not require an additional agent on data forwarding nodes.</para>
@@ -314,47 +280,46 @@ password=&lt;password></computeroutput></screen>
                 support portal for your version of the NVP Controller.</para></warning>
                 <para>Each data forwarding node should have an IP address on the "management network", as well as an IP address
                 on the "data network" used for tunneling data traffic.</para>
-                <para>For full details on configuring your forwarding node, please see the NVP Administrator Guide.  Next, use
-                the same guide to add the node as a "Hypervisor" using the NVP Manager GUI (Note: even if your forwarding node
-                has no VMs and is only used for services agents like quantum-dhcp-agent or quantum-lbaas-agent, it should be
-                added to NVP as a Hypervisor).</para>
+                <para>For full details on configuring your forwarding node, please see the NVP
+                    Administrator Guide. Next, use the same guide to add the node as a "Hypervisor"
+                    using the NVP Manager GUI (Note: even if your forwarding node has no VMs and is
+                    only used for services agents like neutron-dhcp-agent or neutron-lbaas-agent, it
+                    should be added to NVP as a Hypervisor).</para>
                 <para>After following the NVP Administrator Guide, use the page for this Hypervisor in the NVP Manager GUI
                 to confirm that the node is properly connected to the NVP
                 Controller Cluster and that the NVP Controller Cluster is seeing the integration bridge "br-int".</para>
             </section>
-            <section xml:id="install_quantum_agent_ryu">
+            <section xml:id="install_neutron_agent_ryu">
                 <title>Node Setup: Ryu Plugin</title>
                 <para>The Ryu plugin requires Open vSwitch and ryu. Please install ryu and openvswitch
 		    in addition to ryu agent package.</para>
 		<para>Install ryu. There isn't ryu package for ubuntu yet.</para>
                 <screen><prompt>$</prompt> <userinput>sudo pip install ryu</userinput></screen>
                 <para>Install the Ryu agent package and openvswitch package: </para>
-                <screen><prompt>$</prompt> <userinput>sudo apt-get -y install quantum-plugin-ryu-agent openvswitch-switch python-openvswitch openvswitch-datapath-dkms</userinput></screen>
-                <para>The ovs_ryu_plugin.ini and quantum.conf created in the above
-                    step must be replicated on all nodes
-                    quantum-plugin-ryu-agent. </para>
+                <screen><prompt>$</prompt> <userinput>sudo apt-get -y install neutron-plugin-ryu-agent openvswitch-switch python-openvswitch openvswitch-datapath-dkms</userinput></screen>
+                <para>The ovs_ryu_plugin.ini and neutron.conf created in the above step must be
+                    replicated on all nodes neutron-plugin-ryu-agent. </para>
                 <para>Then restart Open vSwitch to properly load the kernel
                 module:</para>
                 <screen><prompt>$</prompt> <userinput>sudo service openvswitch-switch restart</userinput></screen>
                 <para>And restart the agent:</para>
-                <screen><prompt>$</prompt> <userinput>sudo service quantum-plugin-ryu-agent restart</userinput></screen>
-                <para>All hosts running
-                    quantum-plugin-ryu-agent also requires
-                    that an OVS bridge named "br-int" exists. To
-                    create it, run:</para>
+                <screen><prompt>$</prompt> <userinput>sudo service neutron-plugin-ryu-agent restart</userinput></screen>
+                <para>All hosts running neutron-plugin-ryu-agent also requires that an OVS bridge
+                    named "br-int" exists. To create it, run:</para>
                 <screen><prompt>$</prompt> <userinput>sudo ovs-vsctl add-br br-int</userinput></screen>
             </section>
         </section>
-        <section xml:id="install_quantum_dhcp">
+        <section xml:id="install_neutron_dhcp">
             <title>Install DHCP Agent</title>
             <para>The DHCP service agent is compatible with all existing plugins and is required for all deployments
             where VMs should automatically receive IP addresses via DHCP.</para>
-            <para>The host running the quantum-dhcp-agent must be configured as a "data forwarding node" according to your
-            plugin's requirements (see section above).</para>
+            <para>The host running the neutron-dhcp-agent must be configured as a "data forwarding
+                node" according to your plugin's requirements (see section above).</para>
             <para>In addition, you must install the DHCP agent:</para>
-            <screen><prompt>$</prompt> <userinput>sudo apt-get -y install quantum-dhcp-agent</userinput></screen>
-            <para>Some options in <filename>/etc/quantum/dhcp_agent.ini</filename> must have certain values that
-             depend on the plugin in use.  The sub-sections below will indicate those values for certain plugins.</para>
+            <screen><prompt>$</prompt> <userinput>sudo apt-get -y install neutron-dhcp-agent</userinput></screen>
+            <para>Some options in <filename>/etc/neutron/dhcp_agent.ini</filename> must have certain
+                values that depend on the plugin in use. The sub-sections below will indicate those
+                values for certain plugins.</para>
             <note><para>Please note that the agent requires at least dnsmasq 2.59 to fully  support all the
             options it requires.</para></note>
             <section xml:id="dhcp_agent_ovs">
@@ -365,7 +330,7 @@ password=&lt;password></computeroutput></screen>
 ovs_use_veth = True
 enable_isolated_metadata = True
 use_namespaces = True
-interface_driver = quantum.agent.linux.interface.OVSInterfaceDriver
+interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
 </computeroutput></screen>
             </section>
             <section xml:id="dhcp_agent_nvp">
@@ -377,7 +342,7 @@ ovs_use_veth = True
 enable_metadata_network = True
 enable_isolated_metadata = True
 use_namespaces = True
-interface_driver = quantum.agent.linux.interface.OVSInterfaceDriver
+interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
 </computeroutput></screen>
             </section>
             <section xml:id="dhcp_agent_ryu">
@@ -387,11 +352,11 @@ interface_driver = quantum.agent.linux.interface.OVSInterfaceDriver
 [DEFAULT]
 ovs_use_veth = True
 use_namespace = True
-interface_driver = quantum.agent.linux.interface.OVSInterfaceDriver
+interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
 </computeroutput></screen>
             </section>
         </section>
-        <section xml:id="install_quantum-l3">
+        <section xml:id="install_neutron-l3">
             <title>Install L3 Agent</title>
             <para>Neutron has a widely used API extension to allow administrators and tenants to
                 create "routers" that connect to L2 networks.</para>
@@ -406,7 +371,7 @@ interface_driver = quantum.agent.linux.interface.OVSInterfaceDriver
             </itemizedlist>
             </para>
             <warning>
-             <para> Do NOT configure or use <filename>quantum-l3-agent</filename> if you are using
+             <para> Do NOT configure or use <filename>neutron-l3-agent</filename> if you are using
                     one of the above plugins.</para>
             </warning>
             <note><para>The Floodlight/BigSwitch plugin supports both the open source <link
@@ -414,9 +379,9 @@ interface_driver = quantum.agent.linux.interface.OVSInterfaceDriver
                     controller and the proprietary BigSwitch controller. However, only the
                     proprietary BigSwitch controller implements L3 functionality. When using
                     Floodlight as your OpenFlow controller, L3 functionality is not available. </para></note>
-            <para>For all other plugins, install the quantum-l3-agent binary on the network node. </para>
-            <screen><prompt>$</prompt> <userinput>sudo apt-get -y install quantum-l3-agent</userinput></screen>
-            <para>To uplink the node that runs quantum-l3-agent to the
+            <para>For all other plugins, install the neutron-l3-agent binary on the network node. </para>
+            <screen><prompt>$</prompt> <userinput>sudo apt-get -y install neutron-l3-agent</userinput></screen>
+            <para>To uplink the node that runs neutron-l3-agent to the
             external network, create a bridge named "br-ex" and attach
             the NIC for the external network to this bridge.
             </para>
@@ -424,63 +389,58 @@ interface_driver = quantum.agent.linux.interface.OVSInterfaceDriver
                 to the external network, run:</para>
             <screen><prompt>$</prompt> <userinput>sudo ovs-vsctl add-br br-ex</userinput>
 <prompt>$</prompt> <userinput>sudo ovs-vsctl add-port br-ex eth1</userinput></screen>
-            <para>The node running quantum-l3-agent should not have an
-                IP address manually configured on the NIC connected to
-                the external network. Rather, you must have a range of
-                IP addresses from the external network that can be
-                used by OpenStack Networking for routers that uplink to the
-                external network. This range must be large enough to
-                have an IP address for each router in the deployment,
-                as well as each floating IP.</para>
-            <para> The quantum-l3-agent uses the Linux IP stack and
-                iptables to perform L3 forwarding and NAT. In order to
-                support multiple routers with potentially overlapping
-                IP addresses, quantum-l3-agent defaults to using Linux
-                network namespaces to provide isolated forwarding
-                contexts. As a result, the IP addresses of routers
-                will not be visible simply by running "ip addr list"
-                or "ifconfig" on the node. Similarly, you will not be
-                able to directly ping fixed IPs. To do either of these
-                things, you must run the command within a particular
-                router's network namespace. The namespace will have
-                the name "qrouter-&lt;UUID of the router&gt;. The
-                following commands are examples of running commands in
-                the namespace of a router with UUID
-                47af3868-0fa8-4447-85f6-1304de32153b: </para>
+            <para>The node running neutron-l3-agent should not have an IP address manually
+                configured on the NIC connected to the external network. Rather, you must have a
+                range of IP addresses from the external network that can be used by OpenStack
+                Networking for routers that uplink to the external network. This range must be large
+                enough to have an IP address for each router in the deployment, as well as each
+                floating IP.</para>
+            <para> The neutron-l3-agent uses the Linux IP stack and iptables to perform L3
+                forwarding and NAT. In order to support multiple routers with potentially
+                overlapping IP addresses, neutron-l3-agent defaults to using Linux network
+                namespaces to provide isolated forwarding contexts. As a result, the IP addresses of
+                routers will not be visible simply by running "ip addr list" or "ifconfig" on the
+                node. Similarly, you will not be able to directly ping fixed IPs. To do either of
+                these things, you must run the command within a particular router's network
+                namespace. The namespace will have the name "qrouter-&lt;UUID of the router&gt;. The
+                following commands are examples of running commands in the namespace of a router
+                with UUID 47af3868-0fa8-4447-85f6-1304de32153b: </para>
             <screen>
             <computeroutput>ip netns exec qrouter-47af3868-0fa8-4447-85f6-1304de32153b ip addr list
 ip netns exec qrouter-47af3868-0fa8-4447-85f6-1304de32153b ping &lt;fixed-ip&gt;</computeroutput>
             </screen>
         </section>
-        <section xml:id="install_quantum-lbaas-agent">
+        <section xml:id="install_neutron-lbaas-agent">
             <title>Install LBaaS Agent</title>
-            <para>When using the reference implemenation of Load-Balancer-as-a-Service (LBaaS) it requires the quantum-lbaas-agent to be running on the network node.
-                  To install this agent run:</para>
-            <screen><prompt>$</prompt> <userinput>sudo apt-get install quantum-lbaas-agent</userinput></screen>
+            <para>When using the reference implemenation of Load-Balancer-as-a-Service (LBaaS) it
+                requires the neutron-lbaas-agent to be running on the network node. To install this
+                agent run:</para>
+            <screen><prompt>$</prompt> <userinput>sudo apt-get install neutron-lbaas-agent</userinput></screen>
             <para>If you are using an OVS based plugin (OVS, NVP, Ryu, NEC, BigSwitch/Floodlight) you'll want to set:</para>
-            <screen><computeroutput>interface_driver = quantum.agent.linux.interface.OVSInterfaceDriver</computeroutput></screen>
+            <screen><computeroutput>interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</computeroutput></screen>
             <para>Otherwise if you are using a plugin that uses LinuxBridge you'll want to set:</para>
-            <screen><computeroutput>interface_driver = quantum.agent.linux.interface.BridgeInterfaceDriver</computeroutput></screen>
+            <screen><computeroutput>interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver</computeroutput></screen>
             <para>In order to use the reference implemenation you'll also need to set:</para>
-            <screen><computeroutput>device_driver = quantum.plugins.services.agent_loadbalancer.drivers.haproxy.namespace_driver.HaproxyNSDriver</computeroutput></screen>
-            <para>Lastly, you'll need to make sure that you have the following setting in <filename>quantum.conf</filename> on the host running quantum-server:</para>
-            <screen><computeroutput>service_plugins = quantum.plugins.services.agent_loadbalancer.plugin.LoadBalancerPlugin</computeroutput></screen>
+            <screen><computeroutput>device_driver = neutron.plugins.services.agent_loadbalancer.drivers.haproxy.namespace_driver.HaproxyNSDriver</computeroutput></screen>
+            <para>Lastly, you'll need to make sure that you have the following setting in
+                    <filename>neutron.conf</filename> on the host running neutron-server:</para>
+            <screen><computeroutput>service_plugins = neutron.plugins.services.agent_loadbalancer.plugin.LoadBalancerPlugin</computeroutput></screen>
         </section>
-        <section xml:id="install_quantum_client">
+        <section xml:id="install_neutron_client">
             <title>Install OpenStack Networking CLI Client</title>
             <para>Install the OpenStack Networking CLI client:</para>
-            <screen><prompt>$</prompt> <userinput>sudo apt-get -y install python-pyparsing python-cliff python-quantumclient</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>sudo apt-get -y install python-pyparsing python-cliff python-neutronclient</userinput></screen>
         </section>
         <section xml:id="init_config">
             <title>Init, Config, and Log File Locations</title>
             <para>Services can be started and stopped using the
                 'service' command. For example:</para>
-            <screen><prompt>$</prompt> <userinput>sudo service quantum-server stop</userinput>
-<prompt>$</prompt> <userinput>sudo service quantum-server status</userinput>
-<prompt>$</prompt> <userinput>sudo service quantum-server start</userinput>
-<prompt>$</prompt> <userinput>sudo service quantum-server restart</userinput></screen>
-            <para> Log files are found in /var/log/quantum. </para>
-            <para> Configuration files are in /etc/quantum.</para>
+            <screen><prompt>$</prompt> <userinput>sudo service neutron-server stop</userinput>
+<prompt>$</prompt> <userinput>sudo service neutron-server status</userinput>
+<prompt>$</prompt> <userinput>sudo service neutron-server start</userinput>
+<prompt>$</prompt> <userinput>sudo service neutron-server restart</userinput></screen>
+            <para> Log files are found in /var/log/neutron. </para>
+            <para> Configuration files are in /etc/neutron.</para>
         </section>
 
     </section>
@@ -493,11 +453,9 @@ ip netns exec qrouter-47af3868-0fa8-4447-85f6-1304de32153b ping &lt;fixed-ip&gt;
                 >https://fedoraproject.org/wiki/OpenStack</link></para>
         <section xml:id="fedora_rpc_setup">
             <title xml:id="qpid_rpc_setup">RPC Setup </title>
-            <para>OpenStack Networking uses RPC to allow DHCP agents and any plugin
-                agents to communicate with the main quantum-server
-                process.  Commonly, this can use the same RPC
-                mechanism used by other OpenStack components like
-                Nova.</para>
+            <para>OpenStack Networking uses RPC to allow DHCP agents and any plugin agents to
+                communicate with the main neutron-server process.  Commonly, this can use the same
+                RPC mechanism used by other OpenStack components like Nova.</para>
             <para>To use QPID AMQP as the message bus for RPC, make
                 sure that QPID is installed on a host reachable via
                 the management network (if this is already the case
@@ -506,9 +464,8 @@ ip netns exec qrouter-47af3868-0fa8-4447-85f6-1304de32153b ping &lt;fixed-ip&gt;
             <screen><prompt>$</prompt> <userinput>sudo yum -y install qpid-cpp-server qpid-cpp-server-daemon</userinput>
 <prompt>$</prompt> <userinput>sudo chkconfig qpidd on</userinput>
 <prompt>$</prompt> <userinput>sudo service qpidd start</userinput></screen>
-            <para>Then update /etc/quantum/quantum.conf with these
-                values: </para>
-            <screen><computeroutput>rpc_backend = quantum.openstack.common.rpc.impl_qpid
+            <para>Then update /etc/neutron/neutron.conf with these values: </para>
+            <screen><computeroutput>rpc_backend = neutron.openstack.common.rpc.impl_qpid
 qpid_hostname = &lt;mgmt-IP-of-qpid-host></computeroutput></screen>
             <important>
                 <para>The Fedora packaging has a number of utility
@@ -525,111 +482,101 @@ qpid_hostname = &lt;mgmt-IP-of-qpid-host></computeroutput></screen>
             </important>
         </section>
         <section  xml:id="fedora_q_server">
-            <title>Install quantum-server and plugin </title>
-            <para>Install quantum-server and plugin. <emphasis role="bold">Note</emphasis> the
+            <title>Install neutron-server and plugin </title>
+            <para>Install neutron-server and plugin. <emphasis role="bold">Note</emphasis> the
                 client is installed as a dependency for the OpenStack Networking service. Each
-                plugin has its own package, named openstack-quantum-&lt;plugin>. openvswitch will be
+                plugin has its own package, named openstack-neutron-&lt;plugin>. openvswitch will be
                 used in the examples below. A complete list of the supported plugins can be seen at:
-                    <link
-                    xlink:href="https://fedoraproject.org/wiki/Quantum#Quantum_Plugins"
-                    >https://fedoraproject.org/wiki/Quantum#Quantum_Plugins</link>.</para>
-            <screen><prompt>$</prompt> <userinput>sudo yum install -y openstack-quantum</userinput>
-<prompt>$</prompt> <userinput>sudo yum install -y openstack-quantum-openvswitch</userinput></screen>
+                    <link xlink:href="https://fedoraproject.org/wiki/Neutron#Neutron_Plugins"
+                    >https://fedoraproject.org/wiki/Neutron#Neutron_Plugins</link>.</para>
+            <screen><prompt>$</prompt> <userinput>sudo yum install -y openstack-neutron</userinput>
+<prompt>$</prompt> <userinput>sudo yum install -y openstack-neutron-openvswitch</userinput></screen>
             <para>Most plugins require a database to be installed and
                 configured in a plugin configuration file.  The Fedora
                 packaging for OpenStack Networking a server setup utility scripts
                 that will take care of this. For example: </para>
-            <screen><prompt>$</prompt> <userinput>sudo quantum-server-setup --plugin openvswitch</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>sudo neutron-server-setup --plugin openvswitch</userinput></screen>
             <para>Enable and start the service:</para>
-            <screen><prompt>$</prompt> <userinput>sudo chkconfig quantum-server on</userinput>
-<prompt>$</prompt> <userinput>sudo service quantum-server start</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>sudo chkconfig neutron-server on</userinput>
+<prompt>$</prompt> <userinput>sudo service neutron-server start</userinput></screen>
         </section>
         <section  xml:id="fedora_q_plugin">
-            <title>Install quantum-plugin-*-agent</title>
-            <para>Some plugins utilize an agent that runs on each node
-                that handles data packets. This includes any node
-                running nova-compute, as well as nodes running
-                dedicated OpenStack Networking agents like quantum-dhcp-agent and
-                quantum-l3-agent (see below). If your plugin uses an
-                agent, this section describes how to run the agent for
-                this plugin, as well as the basic configuration
-                options.</para>
+            <title>Install neutron-plugin-*-agent</title>
+            <para>Some plugins utilize an agent that runs on each node that handles data packets.
+                This includes any node running nova-compute, as well as nodes running dedicated
+                OpenStack Networking agents like neutron-dhcp-agent and neutron-l3-agent (see
+                below). If your plugin uses an agent, this section describes how to run the agent
+                for this plugin, as well as the basic configuration options.</para>
             <section xml:id="fedora_q_agent">
                 <title>Open vSwitch Agent</title>
                 <para>Install the OVS agent: </para>
-                <screen><prompt>$</prompt> <userinput>sudo yum install -y openstack-quantum-openvswitch</userinput></screen>
+                <screen><prompt>$</prompt> <userinput>sudo yum install -y openstack-neutron-openvswitch</userinput></screen>
                 <para>Run the agent setup script:</para>
-                <screen><prompt>$</prompt> <userinput>sudo quantum-node-setup --plugin openvswitch</userinput></screen>
-                <para>All hosts running quantum-plugin-openvswitch-agent also requires that an OVS
+                <screen><prompt>$</prompt> <userinput>sudo neutron-node-setup --plugin openvswitch</userinput></screen>
+                <para>All hosts running neutron-plugin-openvswitch-agent also requires that an OVS
                     bridge named "br-int" exists. To create it, run:</para>
                 <screen><prompt>$</prompt> <userinput>sudo ovs-vsctl add-br br-int</userinput></screen>
                 <para>Enable and start the agent:</para>
-                <screen><prompt>$</prompt> <userinput>sudo chkconfig quantum-openvswitch-agent on</userinput>
-<prompt>$</prompt> <userinput>sudo service quantum-openvswitch-agent start</userinput>
+                <screen><prompt>$</prompt> <userinput>sudo chkconfig neutron-openvswitch-agent on</userinput>
+<prompt>$</prompt> <userinput>sudo service neutron-openvswitch-agent start</userinput>
 <prompt>$</prompt> <userinput>sudo chkconfig openvswitch on</userinput>
 <prompt>$</prompt> <userinput>sudo service openvswitch start</userinput></screen>
                 <para>Enable the ovs cleanup utility:</para>
-                <screen><prompt>$</prompt> <userinput>sudo chkconfig quantum-ovs-cleanup on</userinput></screen>
+                <screen><prompt>$</prompt> <userinput>sudo chkconfig neutron-ovs-cleanup on</userinput></screen>
             </section>
         </section>
         <section  xml:id="fedora_q_dhcp">
-            <title>Install quantum-dhcp-agent</title>
-            <para>The DHCP agent is part of the openstack-quantum
-                package.</para>
-            <screen><prompt>$</prompt> <userinput>sudo yum install -y openstack-quantum</userinput></screen>
+            <title>Install neutron-dhcp-agent</title>
+            <para>The DHCP agent is part of the openstack-neutron package.</para>
+            <screen><prompt>$</prompt> <userinput>sudo yum install -y openstack-neutron</userinput></screen>
             <para>Run the agent setup script:</para>
-            <screen><prompt>$</prompt> <userinput>sudo quantum-dhcp-setup --plugin openvswitch</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>sudo neutron-dhcp-setup --plugin openvswitch</userinput></screen>
             <para>Enable and start the agent:</para>
-            <screen><prompt>$</prompt> <userinput>sudo chkconfig quantum-dhcp-agent on</userinput>
-<userinput>sudo service quantum-dhcp-agent start</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>sudo chkconfig neutron-dhcp-agent on</userinput>
+<userinput>sudo service neutron-dhcp-agent start</userinput></screen>
             <note><para>Please note that the agent requires at least dnsmasq 2.59 to fully  support all the
 options it requires.</para></note>
         </section>
         <section  xml:id="fedora_q_l3">
-            <title>Install quantum-l3-agent </title>
-            <para>The L3 agent is part of the openstack-quantum
-                package.</para>
-            <para>Create a bridge "br-ex" that will be used to uplink
-                this node running quantum-l3-agent to the external
-                network, then attach the NIC attached to the external
-                network to this bridge. For example, with Open vSwitch
-                and NIC eth1 connect to the external network,
-                run:</para>
+            <title>Install neutron-l3-agent </title>
+            <para>The L3 agent is part of the openstack-neutron package.</para>
+            <para>Create a bridge "br-ex" that will be used to uplink this node running
+                neutron-l3-agent to the external network, then attach the NIC attached to the
+                external network to this bridge. For example, with Open vSwitch and NIC eth1 connect
+                to the external network, run:</para>
             <screen><prompt>$</prompt> <userinput>sudo ovs-vsctl add-br br-ex</userinput>
 <userinput>sudo ovs-vsctl add-port br-ex eth1</userinput></screen>
-            <para>The node running quantum-l3-agent should not have an
-                IP address manually configured on the NIC connected to
-                the external network. Rather, you must have a range of
-                IP addresses from the external network that can be
-                used by OpenStack Networking for routers that uplink to the
-                external network. This range must be large enough to
-                have an IP address for each router in the deployment,
-                as well as each floating IP.</para>
-            <screen><prompt>$</prompt> <userinput>sudo yum install -y openstack-quantum</userinput></screen>
+            <para>The node running neutron-l3-agent should not have an IP address manually
+                configured on the NIC connected to the external network. Rather, you must have a
+                range of IP addresses from the external network that can be used by OpenStack
+                Networking for routers that uplink to the external network. This range must be large
+                enough to have an IP address for each router in the deployment, as well as each
+                floating IP.</para>
+            <screen><prompt>$</prompt> <userinput>sudo yum install -y openstack-neutron</userinput></screen>
             <para>Run the agent setup script:</para>
-            <screen><prompt>$</prompt> <userinput>sudo quantum-l3-setup --plugin openvswitch</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>sudo neutron-l3-setup --plugin openvswitch</userinput></screen>
             <para>Enable and start the agent:</para>
-            <screen><prompt>$</prompt> <userinput>sudo chkconfig enable quantum-l3-agent on</userinput>
-<prompt>$</prompt> <userinput>sudo start start quantum-l3-agent</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>sudo chkconfig enable neutron-l3-agent on</userinput>
+<prompt>$</prompt> <userinput>sudo start start neutron-l3-agent</userinput></screen>
             <para>Enable and start the meta data agent:</para>
-            <screen><prompt>$</prompt> <userinput>sudo chkconfig quantum-metadata-agent on</userinput>
-<prompt>$</prompt> <userinput>sudo service quantum-metadata-agent start</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>sudo chkconfig neutron-metadata-agent on</userinput>
+<prompt>$</prompt> <userinput>sudo service neutron-metadata-agent start</userinput></screen>
         </section>
         <section xml:id="fedora_q_client">
             <title>Install OpenStack Networking CLI client</title>
             <para>Install the OpenStack Networking CLI client:</para>
-            <screen><prompt>$</prompt> <userinput>sudo yum install -y python-quantumclient</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>sudo yum install -y python-neutronclient</userinput></screen>
         </section>
         <section xml:id="fedora_misc">
             <title>Init, Config, and Log File Locations</title>
             <para>Services can be started and stopped using the
                 'service' command. For example:</para>
-            <screen><prompt>$</prompt> <userinput>sudo service quantum-server stop</userinput>
-<prompt>$</prompt> <userinput>sudo service quantum-server status</userinput>
-<prompt>$</prompt> <userinput>sudo service quantum-server start</userinput>
-<prompt>$</prompt> <userinput>sudo service quantum-server restart</userinput></screen>
-            <para>Log files are found in /var/log/quantum. </para>
-            <para>Configuration files are in /etc/quantum.</para>
+            <screen><prompt>$</prompt> <userinput>sudo service neutron-server stop</userinput>
+<prompt>$</prompt> <userinput>sudo service neutron-server status</userinput>
+<prompt>$</prompt> <userinput>sudo service neutron-server start</userinput>
+<prompt>$</prompt> <userinput>sudo service neutron-server restart</userinput></screen>
+            <para>Log files are found in /var/log/neutron. </para>
+            <para>Configuration files are in /etc/neutron.</para>
         </section>
     </section>
 </chapter>

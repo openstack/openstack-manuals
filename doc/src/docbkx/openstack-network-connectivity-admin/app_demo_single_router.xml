@@ -9,7 +9,7 @@
         Provider Router with Private Networks."</para>
     <para>We will follow the <link
             xlink:href="http://docs.openstack.org/grizzly/basic-install/content/basic-install_intro.html"
-            >Basic Install</link> document except for the Quantum,
+            >Basic Install</link> document except for the Neutron,
         Open-vSwitch, and Virtual Networking sections on each of the
         nodes. </para>
     <para>The <emphasis role="bold">Basic Install</emphasis> document
@@ -27,7 +27,7 @@
         <mediaobject>
             <imageobject>
                 <imagedata
-                    fileref="figures/Quantum-PhysNet-Diagram.png"
+                    fileref="figures/Neutron-PhysNet-Diagram.png"
                     contentwidth="6in"/>
             </imageobject>
         </mediaobject>
@@ -90,51 +90,51 @@
         </table></para>
     <section xml:id="demo_installions">
         <title>Installations</title>
-        <section xml:id="controller-install-quantum-server">
+        <section xml:id="controller-install-neutron-server">
             <title>Controller</title>
             <procedure>
                 <title>To install and configure the controller
                     node</title>
                 <step>
                     <para>Run the following command:</para>
-                    <screen><userinput>apt-get install -y quantum-server</userinput></screen>
+                    <screen><userinput>apt-get install -y neutron-server</userinput></screen>
                 </step>
                 <step>
-                    <para>Configure Quantum services:</para>
+                    <para>Configure Neutron services:</para>
                     <itemizedlist>
                         <listitem>
                             <para>Edit <emphasis role="bold"
-                                   >/etc/quantum/quantum.conf</emphasis>
+                                   >/etc/neutron/neutron.conf</emphasis>
                                 file and
                                 modify:<screen><userinput>core_plugin = \
-quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPluginV2
+neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2
 auth_strategy = keystone
 fake_rabbit = False
 rabbit_password = password</userinput></screen></para>
                         </listitem>
                         <listitem>
                             <para>Edit <emphasis role="bold"
-                                   >/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</emphasis>
+                                   >/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</emphasis>
                                 file and modify:</para>
                             <screen><userinput>[database]
-sql_connection = mysql://quantum:password@localhost:3306/quantum
+sql_connection = mysql://neutron:password@localhost:3306/neutron
 [ovs]
 tenant_network_type = vlan
 network_vlan_ranges = physnet1:100:2999</userinput></screen>
                         </listitem>
                         <listitem>
                             <para>Edit <emphasis role="bold"
-                                   >/etc/quantum/api-paste.ini</emphasis>
+                                   >/etc/neutron/api-paste.ini</emphasis>
                                 file and modify:</para>
                             <screen><userinput>admin_tenant_name = service
-admin_user = quantum 
+admin_user = neutron
 admin_password = password</userinput></screen>
                         </listitem>
                     </itemizedlist>
                 </step>
                 <step>
                     <para>Start the services:</para>
-                    <screen><userinput>service quantum-server restart</userinput></screen>
+                    <screen><userinput>service neutron-server restart</userinput></screen>
                 </step>
             </procedure>
         </section>
@@ -146,8 +146,8 @@ admin_password = password</userinput></screen>
                     node</title>
                 <step>
                     <para>Install the packages:</para>
-                    <screen><userinput>apt-get install -y quantum-plugin-openvswitch-agent \
-quantum-dhcp-agent quantum-l3-agent</userinput></screen>
+                    <screen><userinput>apt-get install -y neutron-plugin-openvswitch-agent \
+neutron-dhcp-agent neutron-l3-agent</userinput></screen>
                 </step>
                 <step>
                     <para>Start Open vSwitch:</para>
@@ -161,16 +161,16 @@ quantum-dhcp-agent quantum-l3-agent</userinput></screen>
                 <step>
                     <para>Update the OpenStack Networking
                         configuration file, <emphasis role="bold"
-                            >/etc/quantum/quantum.conf</emphasis>:</para>
+                            >/etc/neutron/neutron.conf</emphasis>:</para>
                     <screen><userinput>rabbit_password = password
 rabbit_host = 192.168.0.1</userinput></screen>
                 </step>
                 <step>
                     <para>Update the plugin configuration file,
                             <emphasis role="bold"
-                            >/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</emphasis>:</para>
+                            >/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</emphasis>:</para>
                     <screen><userinput>[database]
-sql_connection = mysql://quantum:password@192.168.0.1:3306/quantum
+sql_connection = mysql://neutron:password@192.168.0.1:3306/neutron
 [ovs]
 tenant_network_type=vlan
 network_vlan_ranges = physnet1:1:4094
@@ -192,37 +192,37 @@ sudo ovs-vsctl add-port br-ex eth2</userinput></screen>
                 </step>
                 <step>
                     <para>Edit the <emphasis role="bold"
-                            >/etc/quantum/l3_agent.ini </emphasis>
+                            >/etc/neutron/l3_agent.ini </emphasis>
                         file and modify:</para>
                     <screen><userinput>[DEFAULT]
 auth_url = http://192.168.0.1:35357/v2.0
 admin_tenant_name = service
-admin_user = quantum 
+admin_user = neutron
 admin_password = password
 metadata_ip = 192.168.0.1
 use_namespaces = True</userinput></screen>
                 </step>
                 <step>
                     <para>Edit the <emphasis role="bold"
-                            >/etc/quantum/api-paste.ini </emphasis>
+                            >/etc/neutron/api-paste.ini </emphasis>
                         file and modify:</para>
                     <screen><userinput>[DEFAULT]
 auth_host = 192.168.0.1
 admin_tenant_name = service
-admin_user = quantum 
+admin_user = neutron
 admin_password = password</userinput></screen>
                 </step>
                 <step>
                     <para>Edit the <emphasis role="bold"
-                            >/etc/quantum/dhcp_agent.ini </emphasis>
+                            >/etc/neutron/dhcp_agent.ini </emphasis>
                         file and modify:</para>
                     <screen><userinput>use_namespaces = True</userinput></screen>
                 </step>
                 <step>
                     <para>Restart networking services:</para>
-                    <screen><userinput>service quantum-plugin-openvswitch-agent start
-service quantum-dhcp-agent restart
-service quantum-l3-agent restart</userinput></screen>
+                    <screen><userinput>service neutron-plugin-openvswitch-agent start
+service neutron-dhcp-agent restart
+service neutron-l3-agent restart</userinput></screen>
                 </step>
             </procedure>
         </section>
@@ -234,7 +234,7 @@ service quantum-l3-agent restart</userinput></screen>
                     node</title>
                 <step>
                     <para>Install the
-                        packages:<screen><userinput>apt-get install -y openvswitch-switch quantum-plugin-openvswitch-agent</userinput></screen></para>
+                        packages:<screen><userinput>apt-get install -y openvswitch-switch neutron-plugin-openvswitch-agent</userinput></screen></para>
                 </step>
                 <step>
                     <para>Start open vSwitch
@@ -247,16 +247,16 @@ service quantum-l3-agent restart</userinput></screen>
                 <step>
                     <para>Update the OpenStack Networking
                         configuration file, <emphasis role="bold"
-                            >/etc/quantum/quantum.conf</emphasis>:</para>
+                            >/etc/neutron/neutron.conf</emphasis>:</para>
                     <screen><userinput>rabbit_password = password
 rabbit_host = 192.168.0.1</userinput></screen>
                 </step>
                 <step>
                     <para>Update the <emphasis role="bold"
-                            >/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</emphasis>
+                            >/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</emphasis>
                         file:</para>
                     <screen><userinput>[database]
-sql_connection = mysql://quantum:password@192.168.0.1:3306/quantum
+sql_connection = mysql://neutron:password@192.168.0.1:3306/neutron
 [ovs]
 tenant_network_type = vlan
 network_vlan_ranges = physnet1:1:4094
@@ -264,7 +264,7 @@ bridge_mappings = physnet1:br-eth1</userinput></screen>
                 </step>
                 <step>
                     <para>Start the DHCP agent:</para>
-                    <screen><userinput>service quantum-plugin-openvswitch-agent restart</userinput></screen>
+                    <screen><userinput>service neutron-plugin-openvswitch-agent restart</userinput></screen>
                 </step>
             </procedure>
         </section>
@@ -321,7 +321,7 @@ echo "source novarc">>.bashrc</userinput></screen></para>
                             role="bold">net1</emphasis> for tenant_A
                         ($TENANT_ID will be
                         e40fa60181524f9f9ee7aa1038748f08):</para>
-                    <screen><userinput>quantum net-create --tenant-id $TENANT_ID net1</userinput></screen>
+                    <screen><userinput>neutron net-create --tenant-id $TENANT_ID net1</userinput></screen>
                     <screen><computeroutput>+---------------------------+--------------------------------------+
 | Field                     | Value                                |
 +---------------------------+--------------------------------------+
@@ -342,7 +342,7 @@ echo "source novarc">>.bashrc</userinput></screen></para>
                     <para>Create a subnet on the network <emphasis
                             role="bold">net1</emphasis> (ID field
                         below is used as $SUBNET_ID later):</para>
-                    <screen><userinput>quantum subnet-create --tenant-id $TENANT_ID net1 10.5.5.0/24</userinput></screen>
+                    <screen><userinput>neutron subnet-create --tenant-id $TENANT_ID net1 10.5.5.0/24</userinput></screen>
                     <screen><computeroutput>+------------------+--------------------------------------------+
 | Field            | Value                                      |
 +------------------+--------------------------------------------+
@@ -368,7 +368,7 @@ echo "source novarc">>.bashrc</userinput></screen></para>
                     <para>Create a router named <emphasis role="bold"
                             >router1</emphasis> (ID is used as
                         $ROUTER_ID later):</para>
-                    <screen><userinput>quantum router-create router1</userinput></screen>
+                    <screen><userinput>neutron router-create router1</userinput></screen>
                     <screen><computeroutput>+-----------------------+--------------------------------------+
 | Field                 | Value                                |
 +-----------------------+--------------------------------------+
@@ -391,7 +391,7 @@ echo "source novarc">>.bashrc</userinput></screen></para>
                             >router1</emphasis> and attach it to the
                         subnet from <emphasis role="bold"
                             >net1</emphasis>:</para>
-                    <screen><userinput>quantum router-interface-add $ROUTER_ID $SUBNET_ID</userinput></screen>
+                    <screen><userinput>neutron router-interface-add $ROUTER_ID $SUBNET_ID</userinput></screen>
                     <screen><computeroutput>Added interface to router 685f64e7-a020-4fdf-a8ad-e41194ae124b</computeroutput></screen>
                     <note>
                         <para>You can repeat this step to add more
@@ -402,7 +402,7 @@ echo "source novarc">>.bashrc</userinput></screen></para>
                 <step>
                     <para>Create the external network named <emphasis
                             role="bold">ext_net</emphasis>:</para>
-                    <screen><userinput>quantum net-create ext_net --router:external=True</userinput></screen>
+                    <screen><userinput>neutron net-create ext_net --router:external=True</userinput></screen>
                     <screen><computeroutput>+---------------------------+--------------------------------------+
 | Field                     | Value                                |
 +---------------------------+--------------------------------------+
@@ -425,7 +425,7 @@ echo "source novarc">>.bashrc</userinput></screen></para>
                         <para>The DHCP service is disabled for this
                             subnet.</para>
                     </note>
-                    <screen><userinput>quantum subnet-create ext_net \
+                    <screen><userinput>neutron subnet-create ext_net \
 --allocation-pool start=7.7.7.130,end=7.7.7.150 \
 --gateway 7.7.7.1 7.7.7.0/24 -- --enable_dhcp=False</userinput></screen>
                     <screen><computeroutput>+------------------+--------------------------------------------------+
@@ -447,7 +447,7 @@ echo "source novarc">>.bashrc</userinput></screen></para>
                 <step>
                     <para>Set the router's gateway to be the external
                         network:</para>
-                    <screen><userinput>quantum router-gateway-set $ROUTER_ID $EXTERNAL_NETWORK_ID</userinput></screen>
+                    <screen><userinput>neutron router-gateway-set $ROUTER_ID $EXTERNAL_NETWORK_ID</userinput></screen>
                     <screen><computeroutput>Set gateway for router 685f64e7-a020-4fdf-a8ad-e41194ae124b</computeroutput></screen>
                 </step>
             </procedure></para>
@@ -468,7 +468,7 @@ echo "source novarc">>.bashrc</userinput></screen></para>
 | 1cdc671d-a296-4476-9a75-f9ca1d92fd26 | testvm | ACTIVE | net1=10.5.5.3 |
 +--------------------------------------+--------+--------+---------------+
 </computeroutput>
-<userinput>quantum port-list -- --device_id 1cdc671d-a296-4476-9a75-f9ca1d92fd26</userinput>
+<userinput>neutron port-list -- --device_id 1cdc671d-a296-4476-9a75-f9ca1d92fd26</userinput>
 
 <computeroutput>+--------------------------------------+------+-------------------+---------------------------------------------------------------------------------+
 | id                                   | name | mac_address       | fixed_ips                                                                       |
@@ -479,7 +479,7 @@ echo "source novarc">>.bashrc</userinput></screen></para>
                 <step>
                     <para>Allocate a floating IP (Used as
                         $FLOATING_ID):</para>
-                    <screen><userinput>quantum floatingip-create ext_net</userinput><computeroutput>
+                    <screen><userinput>neutron floatingip-create ext_net</userinput><computeroutput>
 
 +---------------------+--------------------------------------+
 | Field               | Value                                |
@@ -496,13 +496,13 @@ echo "source novarc">>.bashrc</userinput></screen></para>
                 <step>
                     <para>Associate the floating IP with the VM's
                         port:</para>
-                    <screen><userinput>quantum floatingip-associate $FLOATING_ID $PORT_ID</userinput><computeroutput>
+                    <screen><userinput>neutron floatingip-associate $FLOATING_ID $PORT_ID</userinput><computeroutput>
 
 Associated floatingip 40952c83-2541-4d0c-b58e-812c835079a5</computeroutput></screen>
                 </step>
                 <step>
                     <para>Show the floating IP:</para>
-                    <screen><userinput>quantum floatingip-show $FLOATING_ID</userinput><computeroutput>
+                    <screen><userinput>neutron floatingip-show $FLOATING_ID</userinput><computeroutput>
 
 +---------------------+--------------------------------------+
 | Field               | Value                                |

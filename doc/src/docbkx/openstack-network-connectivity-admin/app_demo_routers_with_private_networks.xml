@@ -100,10 +100,9 @@
                 addition to this there should be an image named tty.</para>
         </listitem>
         <listitem>
-            <para>OpenStack Identity is installed, configured and running. A
-                OpenStack Networking user named <emphasis role="bold">quantum</emphasis>
-                should be created on tenant <emphasis role="bold"
-                    >servicetenant</emphasis> with password <emphasis
+            <para>OpenStack Identity is installed, configured and running. A OpenStack Networking
+                user named <emphasis role="bold">neutron</emphasis> should be created on tenant
+                    <emphasis role="bold">servicetenant</emphasis> with password <emphasis
                     role="bold">servicepassword</emphasis>.</para>
         </listitem>
         <listitem>
@@ -136,36 +135,31 @@
                                 <para>Install the OpenStack Networking server.</para>
                             </listitem>
                             <listitem>
-                                <para>Create database <emphasis
-                                   role="bold">ovs_quantum</emphasis>.
-                                   See the section on the <link
-                                   linkend="arch_overview">Core
-                                   Plugins</link> for the exact
-                                   details.</para>
+                                <para>Create database <emphasis role="bold">ovs_neutron</emphasis>.
+                                    See the section on the <link linkend="arch_overview">Core
+                                        Plugins</link> for the exact details.</para>
                             </listitem>
                             <listitem>
-                                <para>Update the OpenStack Networking configuration
-                                   file, <emphasis role="bold"
-                                   >/etc/quantum/quantum.conf</emphasis>, with plugin
-                                choice and Identity Service user as necessary:</para>
+                                <para>Update the OpenStack Networking configuration file, <emphasis
+                                        role="bold">/etc/neutron/neutron.conf</emphasis>, with
+                                    plugin choice and Identity Service user as necessary:</para>
                                 <screen><computeroutput>[DEFAULT]
-core_plugin = quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPluginV2
-control_exchange = quantum
+core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2
+control_exchange = neutron
 rabbit_host = controlnode
-notification_driver = quantum.openstack.common.notifier.rabbit_notifier
+notification_driver = neutron.openstack.common.notifier.rabbit_notifier
 
 [keystone_authtoken]
 admin_tenant_name=servicetenant
-admin_user=quantum
+admin_user=neutron
 admin_password=servicepassword
 </computeroutput></screen>
                             </listitem>
                             <listitem>
-                                <para>Update the plugin configuration
-                                   file, <emphasis role="bold"
-                                   >/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</emphasis>:</para>
+                                <para>Update the plugin configuration file, <emphasis role="bold"
+                                        >/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</emphasis>:</para>
                                 <screen><computeroutput>[database]
-sql_connection = mysql://root:root@controlnode:3306/ovs_quantum?charset=utf8
+sql_connection = mysql://root:root@controlnode:3306/ovs_neutron?charset=utf8
 [ovs]
 tenant_network_type = gre
 tunnel_id_ranges = 1:1000
@@ -178,7 +172,7 @@ enable_tunneling = True
                                 The command may be different to start the service on different operating systems.
                                 One example of the command to run the OpenStack Networking server directly is:</para>
                                 <screen><computeroutput>
- sudo quantum-server --config-file /etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini --config-file /etc/quantum/quantum.conf
+ sudo neutron-server --config-file /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini --config-file /etc/neutron/neutron.conf
                                 </computeroutput></screen>
                             </listitem>
                         </orderedlist></para>
@@ -193,14 +187,14 @@ enable_tunneling = True
                                    file, <emphasis role="bold"
                                    >/etc/nova/nova.conf. Make sure the following is at the end of this file</emphasis>:</para>
                                 <screen><computeroutput>
-network_api_class=nova.network.quantumv2.api.API
+network_api_class=nova.network.neutronv2.api.API
 
-quantum_admin_username=quantum
-quantum_admin_password=servicepassword
-quantum_admin_auth_url=http://controlnode:35357/v2.0/
-quantum_auth_strategy=keystone
-quantum_admin_tenant_name=servicetenant
-quantum_url=http://controlnode:9696/
+neutron_admin_username=neutron
+neutron_admin_password=servicepassword
+neutron_admin_auth_url=http://controlnode:35357/v2.0/
+neutron_auth_strategy=keystone
+neutron_admin_tenant_name=servicetenant
+neutron_url=http://controlnode:9696/
 
 libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver</computeroutput></screen>
                             </listitem>
@@ -222,22 +216,20 @@ libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver</computero
                                 <screen><computeroutput>sudo ovs-vsctl add-br br-int</computeroutput></screen>
                             </listitem>
                             <listitem>
-                                <para>Update the OpenStack Networking configuration
-                                   file, <emphasis role="bold"
-                                   >/etc/quantum/quantum.conf</emphasis></para>
+                                <para>Update the OpenStack Networking configuration file, <emphasis
+                                        role="bold">/etc/neutron/neutron.conf</emphasis></para>
                                 <screen><computeroutput>[DEFAULT]
-core_plugin = quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPluginV2
-control_exchange = quantum
+core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2
+control_exchange = neutron
 rabbit_host = controlnode
-notification_driver = quantum.openstack.common.notifier.rabbit_notifier</computeroutput></screen>
+notification_driver = neutron.openstack.common.notifier.rabbit_notifier</computeroutput></screen>
                             </listitem>
                             <listitem>
-                                <para>Update the plugin configuration
-                                   file, <emphasis role="bold"
-                                   >/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</emphasis>.</para>
+                                <para>Update the plugin configuration file, <emphasis role="bold"
+                                        >/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</emphasis>.</para>
                                 <para>Compute Node:</para>
                                 <screen><computeroutput>[database]
-sql_connection = mysql://root:root@controlnode:3306/ovs_quantum?charset=utf8
+sql_connection = mysql://root:root@controlnode:3306/ovs_neutron?charset=utf8
 [ovs]
 tenant_network_type = gre
 tunnel_id_ranges = 1:1000
@@ -245,7 +237,7 @@ enable_tunneling = True
 local_ip = 9.181.89.202</computeroutput></screen>
                                 <para>Network Node:</para>
                                 <screen><computeroutput>[database]
-sql_connection = mysql://root:root@controlnode:3306/ovs_quantum?charset=utf8
+sql_connection = mysql://root:root@controlnode:3306/ovs_neutron?charset=utf8
 [ovs]
 tenant_network_type = gre
 tunnel_id_ranges = 1:1000
@@ -265,7 +257,7 @@ local_ip = 9.181.89.203</computeroutput></screen>
                                 The command may be different to start the service on different operating systems.
                                 However the command to run it directly is kind of like:</para>
                                 <screen><computeroutput>
-sudo quantum-openvswitch-agent --config-file /etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini --config-file /etc/quantum/quantum.conf
+sudo neutron-openvswitch-agent --config-file /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini --config-file /etc/neutron/neutron.conf
                                 </computeroutput></screen>
                             </listitem>
                         </orderedlist></para>
@@ -276,23 +268,21 @@ sudo quantum-openvswitch-agent --config-file /etc/quantum/plugins/openvswitch/ov
                                 <para>Install the DHCP agent.</para>
                             </listitem>
                             <listitem>
-                                <para>Update the OpenStack Networking configuration
-                                   file, <emphasis role="bold"
-                                   >/etc/quantum/quantum.conf</emphasis></para>
+                                <para>Update the OpenStack Networking configuration file, <emphasis
+                                        role="bold">/etc/neutron/neutron.conf</emphasis></para>
                                 <screen><computeroutput>[DEFAULT]
-core_plugin = quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPluginV2
-control_exchange = quantum
+core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2
+control_exchange = neutron
 rabbit_host = controlnode
-notification_driver = quantum.openstack.common.notifier.rabbit_notifier
+notification_driver = neutron.openstack.common.notifier.rabbit_notifier
 allow_overlapping_ips = True</computeroutput></screen>
                             <para><emphasis role="bold"> We set <literal>allow_overlapping_ips</literal> because we have
                             overlapping subnets for TenantA and TenantC.</emphasis></para>
                             </listitem>
                             <listitem>
-                                <para>Update the DHCP configuration
-                                   file <emphasis role="bold"
-                                   >/etc/quantum/dhcp_agent.ini</emphasis></para>
-                                <screen><computeroutput>interface_driver = quantum.agent.linux.interface.OVSInterfaceDriver</computeroutput></screen>
+                                <para>Update the DHCP configuration file <emphasis role="bold"
+                                        >/etc/neutron/dhcp_agent.ini</emphasis></para>
+                                <screen><computeroutput>interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</computeroutput></screen>
                             </listitem>
                             <listitem>
                                 <para>Start the DHCP agent</para>
@@ -300,7 +290,7 @@ allow_overlapping_ips = True</computeroutput></screen>
                                 The command may be different to start the service on different operating systems.
                                 However the command to run it directly is kind of like:</para>
                                 <screen><computeroutput>
-sudo quantum-dhcp-agent --config-file /etc/quantum/quantum.conf --config-file /etc/quantum/dhcp_agent.ini
+sudo neutron-dhcp-agent --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/dhcp_agent.ini
                                 </computeroutput></screen>
                             </listitem>
                         </orderedlist></para>
@@ -320,11 +310,10 @@ sudo quantum-dhcp-agent --config-file /etc/quantum/quantum.conf --config-file /e
                                 <screen><computeroutput>sudo ovs-vsctl add-port br-ex eth0</computeroutput></screen>
                             </listitem>
                             <listitem>
-                                <para>Update the L3 configuration
-                                   file <emphasis role="bold"
-                                   >/etc/quantum/l3_agent.ini</emphasis>:</para>
+                                <para>Update the L3 configuration file <emphasis role="bold"
+                                        >/etc/neutron/l3_agent.ini</emphasis>:</para>
                                 <screen><computeroutput>[DEFAULT]
-interface_driver=quantum.agent.linux.interface.OVSInterfaceDriver
+interface_driver=neutron.agent.linux.interface.OVSInterfaceDriver
 use_namespaces=True</computeroutput></screen>
                             <para><emphasis role="bold"> We set <literal>use_namespaces</literal> (It is True by default.) because we have
                             overlapping subnets for TenantA and TenantC and we are going to host the routers with one l3 agent network node.</emphasis></para>
@@ -335,7 +324,7 @@ use_namespaces=True</computeroutput></screen>
                                 The command may be different to start the service on different operating systems.
                                 However the command to run it directly is kind of like:</para>
                                 <screen><computeroutput>
-sudo quantum-l3-agent --config-file /etc/quantum/quantum.conf --config-file /etc/quantum/l3_agent.ini
+sudo neutron-l3-agent --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/l3_agent.ini
                                 </computeroutput></screen>
                             </listitem>
                         </orderedlist></para>
@@ -392,7 +381,7 @@ export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/</computeroutput></screen>
                                 <para>Create the external network and
                         its subnet by admin user:</para>
                                 <screen><computeroutput>
-quantum net-create Ext-Net --provider:network_type local --router:external true
+neutron net-create Ext-Net --provider:network_type local --router:external true
 Created a new network:
 +---------------------------+--------------------------------------+
 | Field                     | Value                                |
@@ -410,7 +399,7 @@ Created a new network:
 | tenant_id                 | b7445f221cda4f4a8ac7db6b218b1339     |
 +---------------------------+--------------------------------------+
 
-quantum subnet-create Ext-Net 30.0.0.0/24
+neutron subnet-create Ext-Net 30.0.0.0/24
 Created a new subnet:
 +------------------+--------------------------------------------+
 | Field            | Value                                      |
@@ -452,7 +441,7 @@ sudo ip link set br-ex up
                               <listitem>
                                 <para>Create a network for TenantA</para>
                                 <screen><computeroutput>
-quantum --os-tenant-name TenantA --os-username UserA --os-password password --os-auth-url=http://localhost:5000/v2.0 net-create TenantA-Net
+neutron --os-tenant-name TenantA --os-username UserA --os-password password --os-auth-url=http://localhost:5000/v2.0 net-create TenantA-Net
 Created a new network:
 +-----------------+--------------------------------------+
 | Field           | Value                                |
@@ -467,7 +456,7 @@ Created a new network:
 | tenant_id       | 247e478c599f45b5bd297e8ddbbc9b6a     |
 +-----------------+--------------------------------------+</computeroutput></screen>
                                 <para>After that we can use admin user to query the network's provider network information:</para>
-                                <screen><computeroutput> quantum net-show TenantA-Net
+                                <screen><computeroutput> neutron net-show TenantA-Net
 +---------------------------+--------------------------------------+
 | Field                     | Value                                |
 +---------------------------+--------------------------------------+
@@ -489,7 +478,7 @@ Created a new network:
                             <listitem>
                                 <para>Create a subnet on the network TenantA-Net</para>
                                 <screen><computeroutput>
-quantum --os-tenant-name TenantA --os-username UserA --os-password password --os-auth-url=http://localhost:5000/v2.0 subnet-create TenantA-Net 10.0.0.0/24
+neutron --os-tenant-name TenantA --os-username UserA --os-password password --os-auth-url=http://localhost:5000/v2.0 subnet-create TenantA-Net 10.0.0.0/24
 Created a new subnet:
 +------------------+--------------------------------------------+
 | Field            | Value                                      |
@@ -523,7 +512,7 @@ Created a new subnet:
                                 <para>Create and configure a router
                                 for TenantA:</para>
                                 <screen><computeroutput>
-quantum --os-tenant-name TenantA --os-username UserA --os-password password --os-auth-url=http://localhost:5000/v2.0 router-create TenantA-R1
+neutron --os-tenant-name TenantA --os-username UserA --os-password password --os-auth-url=http://localhost:5000/v2.0 router-create TenantA-R1
 Created a new router:
 +-----------------------+--------------------------------------+
 | Field                 | Value                                |
@@ -536,18 +525,18 @@ Created a new router:
 | tenant_id             | 247e478c599f45b5bd297e8ddbbc9b6a     |
 +-----------------------+--------------------------------------+
                         </computeroutput></screen>
-                       <screen><computeroutput>quantum --os-tenant-name TenantA --os-username UserA --os-password password --os-auth-url=http://localhost:5000/v2.0 router-interface-add TenantA-R1 51e2c223-0492-4385-b6e9-83d4e6d10657
+                       <screen><computeroutput>neutron --os-tenant-name TenantA --os-username UserA --os-password password --os-auth-url=http://localhost:5000/v2.0 router-interface-add TenantA-R1 51e2c223-0492-4385-b6e9-83d4e6d10657
 Added interface to router TenantA-R1
                         </computeroutput></screen>
                         <screen><computeroutput>
-quantum router-gateway-set TenantA-R1 Ext-Net
+neutron router-gateway-set TenantA-R1 Ext-Net
                         </computeroutput></screen>
                         <para><emphasis role="bold"> We are using admin user to run last command since our external network is owned by admin tenant.</emphasis></para>
                       </listitem>
                             <listitem>
                                 <para>Associate a floating IP for
                                 TenantA_VM1</para>
-                                <para>1. Create a floating IP</para><screen><computeroutput>quantum --os-tenant-name TenantA --os-username UserA --os-password password --os-auth-url=http://localhost:5000/v2.0 floatingip-create Ext-Net
+                                <para>1. Create a floating IP</para><screen><computeroutput>neutron --os-tenant-name TenantA --os-username UserA --os-password password --os-auth-url=http://localhost:5000/v2.0 floatingip-create Ext-Net
 Created a new floatingip:
 +---------------------+--------------------------------------+
 | Field               | Value                                |
@@ -562,7 +551,7 @@ Created a new floatingip:
 +---------------------+--------------------------------------+
 </computeroutput></screen>
 <para>2. Get the port ID of the VM with ID 7c5e6499-7ef7-4e36-8216-62c2941d21ff</para><screen><computeroutput>
-quantum --os-tenant-name TenantA --os-username UserA --os-password password --os-auth-url=http://localhost:5000/v2.0 port-list -- --device_id 7c5e6499-7ef7-4e36-8216-62c2941d21ff
+neutron --os-tenant-name TenantA --os-username UserA --os-password password --os-auth-url=http://localhost:5000/v2.0 port-list -- --device_id 7c5e6499-7ef7-4e36-8216-62c2941d21ff
 +--------------------------------------+------+-------------------+---------------------------------------------------------------------------------+
 | id                                   | name | mac_address       | fixed_ips                                                                       |
 +--------------------------------------+------+-------------------+---------------------------------------------------------------------------------+
@@ -570,9 +559,9 @@ quantum --os-tenant-name TenantA --os-username UserA --os-password password --os
 +--------------------------------------+------+-------------------+---------------------------------------------------------------------------------+
 </computeroutput></screen>
 <para>3. Associate the floating IP with the VM port</para><screen><computeroutput>
-quantum --os-tenant-name TenantA --os-username UserA --os-password password --os-auth-url=http://localhost:5000/v2.0 floatingip-associate 5a1f90ed-aa3c-4df3-82cb-116556e96bf1 6071d430-c66e-4125-b972-9a937c427520
+neutron --os-tenant-name TenantA --os-username UserA --os-password password --os-auth-url=http://localhost:5000/v2.0 floatingip-associate 5a1f90ed-aa3c-4df3-82cb-116556e96bf1 6071d430-c66e-4125-b972-9a937c427520
 Associated floatingip 5a1f90ed-aa3c-4df3-82cb-116556e96bf1
-quantum floatingip-list
+neutron floatingip-list
 +--------------------------------------+------------------+---------------------+--------------------------------------+
 | id                                   | fixed_ip_address | floating_ip_address | port_id                              |
 +--------------------------------------+------------------+---------------------+--------------------------------------+
@@ -623,13 +612,13 @@ rtt min/avg/max/mdev = 0.898/15.621/45.027/20.793 ms
                               <listitem>
                                 <para>Create networks and subnets for TenantC</para>
                                 <screen><computeroutput>
-quantum --os-tenant-name TenantC --os-username UserC --os-password password --os-auth-url=http://localhost:5000/v2.0 net-create TenantC-Net1
-quantum --os-tenant-name TenantC --os-username UserC --os-password password --os-auth-url=http://localhost:5000/v2.0 subnet-create TenantC-Net1 10.0.0.0/24 --name TenantC-Subnet1
-quantum --os-tenant-name TenantC --os-username UserC --os-password password --os-auth-url=http://localhost:5000/v2.0 net-create TenantC-Net2
-quantum --os-tenant-name TenantC --os-username UserC --os-password password --os-auth-url=http://localhost:5000/v2.0 subnet-create TenantC-Net2 10.0.1.0/24 --name TenantC-Subnet2
+neutron --os-tenant-name TenantC --os-username UserC --os-password password --os-auth-url=http://localhost:5000/v2.0 net-create TenantC-Net1
+neutron --os-tenant-name TenantC --os-username UserC --os-password password --os-auth-url=http://localhost:5000/v2.0 subnet-create TenantC-Net1 10.0.0.0/24 --name TenantC-Subnet1
+neutron --os-tenant-name TenantC --os-username UserC --os-password password --os-auth-url=http://localhost:5000/v2.0 net-create TenantC-Net2
+neutron --os-tenant-name TenantC --os-username UserC --os-password password --os-auth-url=http://localhost:5000/v2.0 subnet-create TenantC-Net2 10.0.1.0/24 --name TenantC-Subnet2
                                 </computeroutput></screen>
                                 <para>After that we can use admin user to query the network's provider network information:</para>
-                                <screen><computeroutput> quantum net-show TenantC-Net1
+                                <screen><computeroutput> neutron net-show TenantC-Net1
 +---------------------------+--------------------------------------+
 | Field                     | Value                                |
 +---------------------------+--------------------------------------+
@@ -645,7 +634,7 @@ quantum --os-tenant-name TenantC --os-username UserC --os-password password --os
 | subnets                   | cf03fd1e-164b-4527-bc87-2b2631634b83 |
 | tenant_id                 | 2b4fec24e62e4ff28a8445ad83150f9d     |
 +---------------------------+--------------------------------------+
-quantum net-show TenantC-Net2
+neutron net-show TenantC-Net2
 +---------------------------+--------------------------------------+
 | Field                     | Value                                |
 +---------------------------+--------------------------------------+
@@ -697,13 +686,13 @@ quantum net-show TenantC-Net2
                                 <para>Create and configure a router
                                 for TenantC:</para>
                                 <screen><computeroutput>
-quantum --os-tenant-name TenantC --os-username UserC --os-password password --os-auth-url=http://localhost:5000/v2.0 router-create TenantC-R1
+neutron --os-tenant-name TenantC --os-username UserC --os-password password --os-auth-url=http://localhost:5000/v2.0 router-create TenantC-R1
                         </computeroutput></screen>
-                        <screen><computeroutput>quantum --os-tenant-name TenantC --os-username UserC --os-password password --os-auth-url=http://localhost:5000/v2.0 router-interface-add TenantC-R1 cf03fd1e-164b-4527-bc87-2b2631634b83
-quantum --os-tenant-name TenantC --os-username UserC --os-password password --os-auth-url=http://localhost:5000/v2.0 router-interface-add TenantC-R1 38f0b2f0-9f98-4bf6-9520-f4abede03300
+                        <screen><computeroutput>neutron --os-tenant-name TenantC --os-username UserC --os-password password --os-auth-url=http://localhost:5000/v2.0 router-interface-add TenantC-R1 cf03fd1e-164b-4527-bc87-2b2631634b83
+neutron --os-tenant-name TenantC --os-username UserC --os-password password --os-auth-url=http://localhost:5000/v2.0 router-interface-add TenantC-R1 38f0b2f0-9f98-4bf6-9520-f4abede03300
                         </computeroutput></screen>
                        <screen><computeroutput>
-quantum router-gateway-set TenantC-R1 Ext-Net
+neutron router-gateway-set TenantC-R1 Ext-Net
                         </computeroutput></screen>
                        <para><emphasis role="bold"> We are using admin user to run last command since our external network is owned by admin tenant.</emphasis></para>
                       </listitem>

@@ -6,10 +6,9 @@
     <title>Core Configuration File Options</title>
     <section xml:id="quantum_conf">
         <?dbhtml stop-chunking?>
-        <title>quantum.conf</title>
-        <para>Find the configuration settings for the OpenStack
-            Networking services in
-                <filename>/etc/quantum/quantum.conf</filename>.</para>
+        <title>neutron.conf</title>
+        <para>Find the configuration settings for the OpenStack Networking services in
+                <filename>/etc/neutron/neutron.conf</filename>.</para>
         <section xml:id="debug_options">
             <title>Debugging Options</title>
             <table rules="all">
@@ -94,18 +93,13 @@
 
         <section xml:id="auth_options">
             <title>Authentication Options</title>
-            <para>The auth_token middleware for keystone now enables
-                you to configure auth_token in the
-                    <filename>quantum.conf</filename> file. You no
-                longer have to edit the
-                    <filename>api-paste.ini</filename> file. This
-                change does not break backward compatibility. The
-                auth_token middleware first tries the configurations
-                in <filename>/etc/quantum/api-paste.ini</filename> and
-                then tries the <filename>quantum.conf</filename>
-                configuration. If you currently use
-                    <filename>api-paste.ini</filename>, you do not
-                need to change it.</para>
+            <para>The auth_token middleware for keystone now enables you to configure auth_token in
+                the <filename>neutron.conf</filename> file. You no longer have to edit the
+                    <filename>api-paste.ini</filename> file. This change does not break backward
+                compatibility. The auth_token middleware first tries the configurations in
+                    <filename>/etc/neutron/api-paste.ini</filename> and then tries the
+                    <filename>neutron.conf</filename> configuration. If you currently use
+                    <filename>api-paste.ini</filename>, you do not need to change it.</para>
 
             <table rules="all">
                 <caption>Authentication Options</caption>
@@ -146,8 +140,7 @@
                             administrative user.</td>
                     </tr>
                     <tr>
-                        <td>signing_dir =
-                            /var/lib/quantum/keystone-signing</td>
+                        <td>signing_dir = /var/lib/neutron/keystone-signing</td>
                         <td>(StrOpt) The signing directory. </td>
                     </tr>
                 </tbody>
@@ -198,8 +191,7 @@
                             ‘keystone’ and ‘noauth’. </td>
                     </tr>
                     <tr>
-                        <td>
-                            core_plugin=quantum.plugins.sample.SamplePlugin.FakePlugin </td>
+                        <td> core_plugin=neutron.plugins.sample.SamplePlugin.FakePlugin </td>
                         <td>(StrOpt) The plugin to be loaded by the
                             service. </td>
                     </tr>
@@ -255,15 +247,11 @@
                                 enabled, native emulated sorting will
                                 be enabled automatically.</para>
                             <note>
-                                <para>If the plugin supports native
-                                   pagination, the plugin will returns
-                                   the maximum limit of items as
-                                   request. If the plugin didn't
-                                   support that, quantum API can
-                                   emulate the pagination behavior.
-                                   The performance of native
-                                   pagination is better than emulated
-                                   pagination. </para>
+                                <para>If the plugin supports native pagination, the plugin will
+                                    returns the maximum limit of items as request. If the plugin
+                                    didn't support that, neutron API can emulate the pagination
+                                    behavior. The performance of native pagination is better than
+                                    emulated pagination. </para>
                             </note>
                         </td>
                     </tr>
@@ -274,14 +262,10 @@
                                 native sorting, it will enable
                                 emulated sorting.</para>
                             <note>
-                                <para>If the plugin supports native
-                                   sorting, the plugin will returns
-                                   ordered items as request. If the
-                                   plugin didn't support that, quantum
-                                   API can emulate the sorting
-                                   behavior. The performance of native
-                                   sorting is better than emulated
-                                   sorting. </para>
+                                <para>If the plugin supports native sorting, the plugin will returns
+                                    ordered items as request. If the plugin didn't support that,
+                                    neutron API can emulate the sorting behavior. The performance of
+                                    native sorting is better than emulated sorting. </para>
                             </note>
                         </td>
                     </tr>
@@ -323,17 +307,14 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>control_exchange=quantum </td>
+                        <td>control_exchange=neutron </td>
                         <td>(StrOpt) AMQP exchange to connect to if
                             using RabbitMQ or QPID. </td>
                     </tr>
                     <tr>
-                        <td>
-                            rpc_back_end=quantum.openstack.common.rpc.impl_kombu </td>
-                        <td>(StrOpt) The messaging module to use,
-                            defaults to kombu. For qpid, make use of
-                            quantum.openstack.common.rpc.impl_qpid.
-                        </td>
+                        <td> rpc_back_end=neutron.openstack.common.rpc.impl_kombu </td>
+                        <td>(StrOpt) The messaging module to use, defaults to kombu. For qpid, make
+                            use of neutron.openstack.common.rpc.impl_qpid. </td>
                     </tr>
                     <tr>
                         <td>rpc_thread_pool_size=64 </td>
@@ -350,8 +331,7 @@
                             from call or multi call.</td>
                     </tr>
                     <tr>
-                        <td>
-                            allowed_rpc_exception_modules='quantum.openstack.common.exception',
+                        <td> allowed_rpc_exception_modules='neutron.openstack.common.exception',
                             'nova.exception' </td>
                         <td>(ListOpt) Modules of exceptions that are
                             permitted to be recreated upon receiving
@@ -530,8 +510,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>
-                            notification_driver=quantum.openstack.common.notifier.list_notifier </td>
+                        <td> notification_driver=neutron.openstack.common.notifier.list_notifier </td>
                         <td>(MultiStrOpt) Driver or drivers to handle
                             sending notifications. The default is set
                             as notifier as the DHCP agent makes use of
@@ -549,7 +528,7 @@
                     </tr>
                     <tr>
                         <td>
-                            list_notifier_drivers='quantum.openstack.common.notifier.no_op_notifier' </td>
+                            list_notifier_drivers='neutron.openstack.common.notifier.no_op_notifier' </td>
                         <td>(MultiStrOpt) List of drivers to send
                             notifications. </td>
                     </tr>
@@ -574,13 +553,11 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>quota_driver=quantum.quota.ConfDriver </td>
-                        <td>(StrOpt) Default driver to use for quota
-                            checks. If the default driver is used then
-                            the configuration values below are in
-                            effect. To limit quotas per tenant then
-                            use:
-                                <literal>quantum.db.quota_db.DbQuotaDriver</literal>
+                        <td>quota_driver=neutron.quota.ConfDriver </td>
+                        <td>(StrOpt) Default driver to use for quota checks. If the default driver
+                            is used then the configuration values below are in effect. To limit
+                            quotas per tenant then use:
+                                <literal>neutron.db.quota_db.DbQuotaDriver</literal>
                         </td>
                     </tr>
                     <tr>
@@ -615,7 +592,7 @@
     </section>
     <section xml:id="ovs_quantum_plugin">
         <?dbhtml stop-chunking?>
-        <title>ovs_quantum_plugin.ini</title>
+        <title>ovs_neutron_plugin.ini</title>
         <para>For information about the Open vSwitch plugin
             configurations, see <link
                 xlink:href="http://wiki.openstack.org/ConfigureOpenvswitch"
@@ -633,14 +610,11 @@
                 <tbody>
                     <tr>
                         <td>sql_connection=sqlite:// </td>
-                        <td><para>(StrOpt) The details of the database
-                                connection. For example
-                                mysql://root:nova@127.0.0.1:3306/ovs_quantum.
-                                Replace 127.0.0.1 above with the IP
-                                address of the database used by the
-                                main OpenStack Networking server.
-                                (Leave it as is if the database runs
-                                on this host.).</para>
+                        <td><para>(StrOpt) The details of the database connection. For example
+                                mysql://root:nova@127.0.0.1:3306/ovs_neutron. Replace 127.0.0.1
+                                above with the IP address of the database used by the main OpenStack
+                                Networking server. (Leave it as is if the database runs on this
+                                host.).</para>
                             <note>
                                 <para>Change this line to ensure that
                                    the database values are persistent.
@@ -757,16 +731,12 @@
                 <tbody>
                     <tr>
                         <td>rpc=True </td>
-                        <td>(BoolOpt) If <literal>True</literal>, the
-                            agent communicates with the plugin through
-                            the OpenStack RPC, which is configured in
-                                <filename>quantum.conf.</filename> If
-                                <literal>False</literal>, the agent
-                            polls the database for changes. If
-                                <literal>False</literal>, you must
-                            update the relevant database settings on
-                            the agent so that it can access the
-                            database. </td>
+                        <td>(BoolOpt) If <literal>True</literal>, the agent communicates with the
+                            plugin through the OpenStack RPC, which is configured in
+                                <filename>neutron.conf.</filename> If <literal>False</literal>, the
+                            agent polls the database for changes. If <literal>False</literal>, you
+                            must update the relevant database settings on the agent so that it can
+                            access the database. </td>
                     </tr>
                     <tr>
                         <td>polling_interval=2 </td>
@@ -800,14 +770,11 @@
                     <tbody>
                         <tr>
                             <td>sql_connection=sqlite:// </td>
-                            <td><para>(StrOpt) The details of the
-                                   database connection. For example
-                                   mysql://root:nova@127.0.0.1:3306/ovs_quantum.
-                                   Replace 127.0.0.1 above with the IP
-                                   address of the database used by the
-                                   main OpenStack Networking server.
-                                   (Leave it as is if the database
-                                   runs on this host.).</para>
+                            <td><para>(StrOpt) The details of the database connection. For example
+                                    mysql://root:nova@127.0.0.1:3306/ovs_neutron. Replace 127.0.0.1
+                                    above with the IP address of the database used by the main
+                                    OpenStack Networking server. (Leave it as is if the database
+                                    runs on this host.).</para>
                                 <note>
                                    <para>This line must be changed to
                                    ensure that the database values are
@@ -896,17 +863,12 @@
                     <tbody>
                         <tr>
                             <td>rpc=True </td>
-                            <td>(BoolOpt) If <literal>True</literal>,
-                                the agent communicates with the plugin
-                                through the OpenStack RPC, which is
-                                configured in
-                                   <filename>quantum.conf</filename>.
-                                If <literal>False</literal>, the agent
-                                polls the database for changes. If
-                                   <literal>False</literal>, you must
-                                update the relevant database settings
-                                on the agent so that it can access the
-                                database. </td>
+                            <td>(BoolOpt) If <literal>True</literal>, the agent communicates with
+                                the plugin through the OpenStack RPC, which is configured in
+                                    <filename>neutron.conf</filename>. If <literal>False</literal>,
+                                the agent polls the database for changes. If
+                                    <literal>False</literal>, you must update the relevant database
+                                settings on the agent so that it can access the database. </td>
                         </tr>
                         <tr>
                             <td>polling_interval=2 </td>
@@ -949,7 +911,7 @@
                                 more details. </td>
                         </tr>
                         <tr>
-                            <td>dhcp_driver=quantum.agent.linux.dhcp.Dnsmasq </td>
+                            <td>dhcp_driver=neutron.agent.linux.dhcp.Dnsmasq </td>
                             <td>(StrOpt) The driver used to manage the
                                 DHCP server. </td>
                         </tr>
@@ -1112,11 +1074,11 @@
                     </tr>
                     <tr>
                         <td>metadata_proxy_shared_secret= </td>
-                        <td>(StrOpt) When proxying metadata requests, Quantum signs the Instance-ID
+                        <td>(StrOpt) When proxying metadata requests, Neutron signs the Instance-ID
                             header with a shared secret to prevent spoofing. You may select any
                             string for a secret, but it must match here and in the configuration
                             used by the Nova Metadata Server. NOTE: Nova uses a different key:
-                            quantum_metadata_proxy_shared_secret </td>
+                            neutron_metadata_proxy_shared_secret </td>
                     </tr>
                     <tr>
                         <td>admin_user= </td>
@@ -1234,14 +1196,10 @@
                     </tr>
                     <tr>
                         <td>resync_interval=30 </td>
-                        <td>(IntOpt) If an exception occurs on the
-                            quantum-server service, the DHCP agent
-                            ensures that it syncs with the
-                                <filename>quantum.conf</filename>
-                            configuration. The validation about
-                            syncing occurs every
-                                <literal>resync_interval</literal>
-                            seconds. </td>
+                        <td>(IntOpt) If an exception occurs on the neutron-server service, the DHCP
+                            agent ensures that it syncs with the <filename>neutron.conf</filename>
+                            configuration. The validation about syncing occurs every
+                                <literal>resync_interval</literal> seconds. </td>
                     </tr>
                 </tbody>
             </table></para>

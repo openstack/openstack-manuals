@@ -4,17 +4,17 @@
     <title>Advanced Configuration Options</title>
     <para>This section describes advanced configurations options for various system components (i.e.
         config options where the default is usually ok, but that the user may want to tweak). After
-        installing from packages, $QUANTUM_CONF_DIR is <filename>/etc/quantum</filename>.</para>
+        installing from packages, $NEUTRON_CONF_DIR is <filename>/etc/neutron</filename>.</para>
     <section xml:id="quantum_server">
         <title>OpenStack Networking Server with Plugin</title>
-        <para>This is the web server that runs the OpenStack Networking API Web Server. It is responsible
-            for loading a plugin and passing the API calls to the plugin for processing. The
-            quantum-server should receive one of more configuration files as it its input, for
+        <para>This is the web server that runs the OpenStack Networking API Web Server. It is
+            responsible for loading a plugin and passing the API calls to the plugin for processing.
+            The neutron-server should receive one of more configuration files as it its input, for
             example:</para>
         <para>
-            <screen><computeroutput>quantum-server --config-file &lt;quantum config&gt; --config-file &lt;plugin config&gt;</computeroutput></screen>
+            <screen><computeroutput>neutron-server --config-file &lt;neutron config&gt; --config-file &lt;plugin config&gt;</computeroutput></screen>
         </para>
-        <para>The quantum config contains the common quantum configuration parameters. The plugin
+        <para>The neutron config contains the common neutron configuration parameters. The plugin
             config contains the plugin specific flags. The plugin that is run on the service is
             loaded via the configuration parameter ‘core_plugin’. In some cases a plugin may have an
             agent that performs the actual networking. Specific configuration details can be seen in
@@ -31,12 +31,12 @@ mysql&gt; create user '&lt;user-name&gt;'@'%' identified by '&lt;user-name&gt;';
 mysql&gt; grant all on &lt;database-name&gt;.* to '&lt;user-name&gt;'@'%';</computeroutput></screen>
         <para>Once the above is done you can update the settings in the relevant plugin
             configuration files. The plugin specific configuration files can be found at
-            $QUANTUM_CONF_DIR/plugins.</para>
+            $NEUTRON_CONF_DIR/plugins.</para>
         <para>Some plugins have a L2 agent that performs the actual networking. That is, the agent
             will attach the virtual machine NIC to the OpenStack Networking network. Each node should have an
             L2 agent running on it. Note that the agent receives the following input
             parameters:</para>
-        <screen><computeroutput>quantum-plugin-agent --config-file &lt;quantum config&gt; --config-file &lt;plugin config&gt;</computeroutput></screen>
+        <screen><computeroutput>neutron-plugin-agent --config-file &lt;neutron config&gt; --config-file &lt;plugin config&gt;</computeroutput></screen>
         <para>Two things need to be done prior to working with the plugin:</para>
         <orderedlist>
             <listitem>
@@ -63,40 +63,40 @@ mysql&gt; grant all on &lt;database-name&gt;.* to '&lt;user-name&gt;'@'%';</comp
                         <td/>
                     </tr>
                     <tr>
-                        <td>core_plugin ($QUANTUM_CONF_DIR/quantum.conf)</td>
-                        <td>quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPluginV2</td>
+                        <td>core_plugin ($NEUTRON_CONF_DIR/neutron.conf)</td>
+                        <td>neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2</td>
                     </tr>
                     <tr>
                         <td>sql_connection (in the plugin configuration file)</td>
-                        <td>mysql://&lt;username&gt;:&lt;password&gt;@localhost/ovs_quantum?charset=utf8</td>
+                        <td>mysql://&lt;username&gt;:&lt;password&gt;@localhost/ovs_neutron?charset=utf8</td>
                     </tr>
                     <tr>
                         <td>Plugin Configuration File</td>
-                        <td>$QUANTUM_CONF_DIR/plugins/openvswitch/ovs_quantum_plugin.ini</td>
+                        <td>$NEUTRON_CONF_DIR/plugins/openvswitch/ovs_neutron_plugin.ini</td>
                     </tr>
                     <tr>
                         <td>Agent </td>
-                        <td>quantum-openvswitch-agent</td>
+                        <td>neutron-openvswitch-agent</td>
                     </tr>
                     <tr>
                         <td><emphasis role="bold">Linux Bridge</emphasis></td>
                         <td/>
                     </tr>
                     <tr>
-                        <td>core_plugin ($QUANTUM_CONF_DIR/quantum.conf)</td>
-                        <td>quantum.plugins.linuxbridge.lb_quantum_plugin.LinuxBridgePluginV2</td>
+                        <td>core_plugin ($NEUTRON_CONF_DIR/neutron.conf)</td>
+                        <td>neutron.plugins.linuxbridge.lb_neutron_plugin.LinuxBridgePluginV2</td>
                     </tr>
                     <tr>
                         <td>sql_connection (in the plugin configuration file)</td>
-                        <td>mysql://&lt;username&gt;:&lt;password&gt;@localhost/quantum_linux_bridge?charset=utf8</td>
+                        <td>mysql://&lt;username&gt;:&lt;password&gt;@localhost/neutron_linux_bridge?charset=utf8</td>
                     </tr>
                     <tr>
                         <td>Plugin Configuration File</td>
-                        <td>$QUANTUM_CONF_DIR/plugins/linuxbridge/linuxbridge_conf.ini</td>
+                        <td>$NEUTRON_CONF_DIR/plugins/linuxbridge/linuxbridge_conf.ini</td>
                     </tr>
                     <tr>
                         <td>Agent </td>
-                        <td>quantum-linuxbridge-agent</td>
+                        <td>neutron-linuxbridge-agent</td>
                     </tr>
                 </tbody>
             </table></para>
@@ -109,7 +109,7 @@ mysql&gt; grant all on &lt;database-name&gt;.* to '&lt;user-name&gt;'@'%';</comp
             machines running on the network. When a subnet is created, by default, the
             subnet has DHCP enabled.</para>
         <para>The node that runs the DHCP agent should run:</para>
-        <screen><computeroutput>quantum-dhcp-agent --config-file &lt;quantum config&gt;
+        <screen><computeroutput>neutron-dhcp-agent --config-file &lt;neutron config&gt;
 --config-file &lt;dhcp config&gt;</computeroutput></screen>
         <para>Currently the DHCP agent uses dnsmasq to perform that static address
             assignment.</para>
@@ -130,16 +130,16 @@ mysql&gt; grant all on &lt;database-name&gt;.* to '&lt;user-name&gt;'@'%';</comp
                         <td/>
                     </tr>
                     <tr>
-                        <td>interface_driver ($QUANTUM_CONF_DIR/dhcp_agent.ini)</td>
-                        <td>quantum.agent.linux.interface.OVSInterfaceDriver</td>
+                        <td>interface_driver ($NEUTRON_CONF_DIR/dhcp_agent.ini)</td>
+                        <td>neutron.agent.linux.interface.OVSInterfaceDriver</td>
                     </tr>
                     <tr>
                         <td><emphasis role="bold">Linux Bridge</emphasis></td>
                         <td/>
                     </tr>
                     <tr>
-                        <td>interface_driver ($QUANTUM_CONF_DIR/dhcp_agent.ini)</td>
-                        <td>quantum.agent.linux.interface.BridgeInterfaceDriver</td>
+                        <td>interface_driver ($NEUTRON_CONF_DIR/dhcp_agent.ini)</td>
+                        <td>neutron.agent.linux.interface.BridgeInterfaceDriver</td>
                     </tr>
                 </tbody>
             </table></para>
@@ -161,7 +161,7 @@ mysql&gt; grant all on &lt;database-name&gt;.* to '&lt;user-name&gt;'@'%';</comp
         <title>L3 Agent</title>
         <para>There is an option to run a L3 agent that will give enable layer 3 forwarding and
             floating IP support. The node that runs the L3 agent should run:</para>
-        <screen><computeroutput>quantum-l3-agent --config-file &lt;quantum config&gt;
+        <screen><computeroutput>neutron-l3-agent --config-file &lt;neutron config&gt;
 --config-file &lt;l3 config&gt;</computeroutput></screen>
         <para>A driver needs to be configured that matches the plugin running on the service. The
             driver is used to create the routing interface. <table rules="all">
@@ -180,11 +180,11 @@ mysql&gt; grant all on &lt;database-name&gt;.* to '&lt;user-name&gt;'@'%';</comp
                         <td/>
                     </tr>
                     <tr>
-                        <td>interface_driver ($QUANTUM_CONF_DIR/l3_agent.ini) </td>
-                        <td>quantum.agent.linux.interface.OVSInterfaceDriver </td>
+                        <td>interface_driver ($NEUTRON_CONF_DIR/l3_agent.ini) </td>
+                        <td>neutron.agent.linux.interface.OVSInterfaceDriver </td>
                     </tr>
                     <tr>
-                        <td>external_network_bridge ($QUANTUM_CONF_DIR/l3_agent.ini) </td>
+                        <td>external_network_bridge ($NEUTRON_CONF_DIR/l3_agent.ini) </td>
                         <td>br-ex </td>
                     </tr>
                     <tr>
@@ -192,11 +192,11 @@ mysql&gt; grant all on &lt;database-name&gt;.* to '&lt;user-name&gt;'@'%';</comp
                         <td/>
                     </tr>
                     <tr>
-                        <td>interface_driver ($QUANTUM_CONF_DIR/l3_agent.ini) </td>
-                        <td>quantum.agent.linux.interface.BridgeInterfaceDriver</td>
+                        <td>interface_driver ($NEUTRON_CONF_DIR/l3_agent.ini) </td>
+                        <td>neutron.agent.linux.interface.BridgeInterfaceDriver</td>
                     </tr>
                     <tr>
-                        <td>external_network_bridge ($QUANTUM_CONF_DIR/l3_agent.ini) </td>
+                        <td>external_network_bridge ($NEUTRON_CONF_DIR/l3_agent.ini) </td>
                         <td>This field must be empty (or the bridge name for the external
                             network).</td>
                     </tr>
@@ -240,7 +240,7 @@ router_id = 1064ad16-36b7-4c2f-86f0-daa2bcbd6b2a</computeroutput></screen>
             <para> To configure it, you need to run the OpenStack Networking service and create a router, and
                 then set an ID of the router created to <emphasis>router_id</emphasis> in the L3
                 agent configuration file. </para>
-            <screen><computeroutput>$ quantum router-create myrouter1
+            <screen><computeroutput>$ neutron router-create myrouter1
 Created a new router:
 +-----------------------+--------------------------------------+
 | Field                 | Value                                |
@@ -280,9 +280,9 @@ Created a new router:
             <screen><computeroutput>handle_internal_only_routers = True
 gateway_external_network_id = 2118b11c-011e-4fa5-a6f1-2ca34d372c35
 external_network_bridge = br-ex</computeroutput></screen>
-            <screen><computeroutput>python /opt/stack/quantum/bin/quantum-l3-agent
- --config-file /etc/quantum/quantum.conf
- --config-file=/etc/quantum/l3_agent.ini</computeroutput></screen>
+            <screen><computeroutput>python /opt/stack/neutron/bin/neutron-l3-agent
+ --config-file /etc/neutron/neutron.conf
+ --config-file=/etc/neutron/l3_agent.ini</computeroutput></screen>
             <para> For the second (or later) agent, invoke it with the following l3_agent.ini where
                 handle_internal_only_routers is False. </para>
             <screen><computeroutput>handle_internal_only_routers = False
