@@ -123,6 +123,13 @@ novncproxy_base_url=http://10.0.0.10:6080/vnc_auto.html
 vncserver_listen=0.0.0.0</programlisting></para>
                             </listitem>
                             <listitem>
+                             <para>Edit <emphasis role="bold">/etc/nova/nova-compute.conf</emphasis>:
+                                   <programlisting>
+#For Security Group implementation add
+libvirt_vif_driver = nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver
+                                   </programlisting></para>
+                            </listitem>
+                            <listitem>
                                 <para>Restart Nova services:
                                     <screen os="ubuntu"><prompt>#</prompt> <userinput>service nova-compute restart</userinput></screen>
                                     <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>service openstack-nova-compute restart</userinput>
