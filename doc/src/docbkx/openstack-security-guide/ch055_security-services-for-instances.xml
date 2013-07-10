@@ -67,36 +67,19 @@
       <section xml:id="ch055_security-services-for-instances-idp151952">
         <title>Image Creation Process</title>
         <para>The OpenStack Documentation provides guidance on how to create and upload an image to Glance. Additionally it is assumed that you have a process by which you install and harden operating systems. Thus, the following items will provide additional guidance on how to ensure your images are built securely prior to upload. There are a variety of options for obtaining images. Each has specific steps that help validate the image's provenance.</para>
-        <para>The following examples use the Oz image builder. The OpenStack community has recently created a newer tool worth investigating: disk-image-builder. We have not evaluated this tool from a security perspective.</para>
-        <itemizedlist><listitem>
-            <para> Obtain boot media from a trusted source</para>
-          </listitem>
-<listitem>
-            <para/>
-          </listitem>
-</itemizedlist>
-        <para>Example:</para>
+        <para>The first option is to obtain boot media from a trusted source.</para>
         <screen> 
 mkdir -p /tmp/download_directorycd /tmp/download_directory
 
 wget http://mirror.anl.gov/pub/ubuntu-iso/CDs/precise/ubuntu-12.04.2-server-amd64.iso
 wget http://mirror.anl.gov/pub/ubuntu-iso/CDs/precise/SHA256SUMS
 wget http://mirror.anl.gov/pub/ubuntu-iso/CDs/precise/SHA256SUMS.gpg
-gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 0xFBB75451</screen>
-        <screen> 
+gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 0xFBB75451
 gpg --verify SHA256SUMS.gpg SHA256SUMSsha256sum -c SHA256SUMS 2&gt;&amp;1 | grep OK
-</screen>
-        <itemizedlist><listitem>
-            <para> If using the OpenStack guide for building images (http://docs.openstack.org/trunk/openstack-compute/admin/content/creating-custom-images.html), you will want to follow your organizations OS hardening guidelines, or those provided by a trusted third-party, such as the RHEL6 STIG (http://iase.disa.mil/stigs/os/unix/red_hat.html).</para>
-          </listitem>
-<listitem>
-            <para> Using an automated image builder</para>
-          </listitem>
-<listitem>
-            <para/>
-          </listitem>
-</itemizedlist>
-        <para>Example of RHEL 6 CCE-26976-1 which will help implement NIST 800-53 Section <emphasis>AC-19(d) in</emphasis> Oz</para>
+        </screen>
+        <para>The second option is to use the OpenStack guide for building images (http://docs.openstack.org/trunk/openstack-compute/admin/content/creating-custom-images.html). In this case, you will want to follow your organizations OS hardening guidelines or those provided by a trusted third-party such as the RHEL6 STIG (http://iase.disa.mil/stigs/os/unix/red_hat.html).</para>
+        <para>The final option is to use an automated image builder. The following example uses the Oz image builder. The OpenStack community has recently created a newer tool worth investigating: disk-image-builder. We have not evaluated this tool from a security perspective.</para>
+        <para>Example of RHEL 6 CCE-26976-1 which will help implement NIST 800-53 Section <emphasis>AC-19(d) in</emphasis> Oz.</para>
         <screen> 
 &lt;template&gt;
 &lt;name&gt;centos64&lt;/name&gt;
@@ -146,28 +129,13 @@ gpg --verify SHA256SUMS.gpg SHA256SUMSsha256sum -c SHA256SUMS 2&gt;&amp;1 | grep
     <section xml:id="ch055_security-services-for-instances-idp170576">
       <title>Instance Migrations</title>
       <para>OpenStack and the underlying virtualization layers provide for the Live Migration of images between OpenStack nodes allowing you to seamlessly perform rolling upgrades of your OpenStack Compute nodes without instance downtime. However, Live Migrations also come with their fair share of risk. To understand the risks involved, it is important to first understand how a live migration works. The following are the high level steps preformed during a live migration.</para>
-      <orderedlist><listitem>
-          <para> Start instance on destination host</para>
-        </listitem>
-<listitem>
-          <para> Transfer memory</para>
-        </listitem>
-<listitem>
-          <para/>
-        </listitem>
-<listitem>
-          <para> Stop the guest &amp; sync disks</para>
-        </listitem>
-<listitem>
-          <para> Transfer state</para>
-        </listitem>
-<listitem>
-          <para/>
-        </listitem>
-<listitem>
-          <para> Start the guest</para>
-        </listitem>
-</orderedlist>
+      <orderedlist>
+          <listitem> <para> Start instance on destination host</para> </listitem>
+          <listitem> <para> Transfer memory</para> </listitem>
+          <listitem> <para> Stop the guest &amp; sync disks</para> </listitem>
+          <listitem> <para> Transfer state</para> </listitem>
+          <listitem> <para> Start the guest</para> </listitem>
+      </orderedlist>
       <section xml:id="ch055_security-services-for-instances-idp177552">
         <title>Live Migration Risks</title>
         <para>At various stages of the live migration process the contents of an instances run time memory and disk are transmitted over the network in plain text. Thus there are several risks that need to be addressed when using live migration. The following in-exhaustive list details some of these risks:</para>
