@@ -1,30 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="app_demo_single_router">
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="app_demo_single_router">
     <title>Provider Router with Private Networks</title>
-    <para>This section describes how to install the OpenStack Networking service
-        and its components for the "Use Case: Provider
-            Router with Private Networks".</para>
-    <para> We will follow the <link
+    <para>This section describes how to install the OpenStack
+        Networking service and its components for the "Use Case:
+        Provider Router with Private Networks."</para>
+    <para>We will follow the <link
             xlink:href="http://docs.openstack.org/grizzly/basic-install/content/basic-install_intro.html"
-            >Basic Install</link> document except for the Quantum, Open-vSwitch and Virtual
-        Networking sections on each of the nodes. </para>
-    <para>The <emphasis role="bold">Basic Install</emphasis> document uses gre tunnels. This
-        document will describe how to use vlans for separation instead.</para>
-     <para>The diagram below shows the setup:</para>
-     <note><para>Since we are running DHCP agent and L3 agent on one node,
-     we should set <literal>use_namespaces</literal> to
-     <literal>True</literal>(which is True by default) in both agents' configuration file.
-     Please refer to <link linkend="ch_limitations">Limitations</link>.</para></note>
-     <informalfigure>
-         <mediaobject>
+            >Basic Install</link> document except for the Quantum,
+        Open-vSwitch, and Virtual Networking sections on each of the
+        nodes. </para>
+    <para>The <emphasis role="bold">Basic Install</emphasis> document
+        uses gre tunnels. This document describes how to use vlans for
+        separation instead.</para>
+    <para>The following figure shows the setup:</para>
+    <note>
+        <para>Because you run the DHCP agent and L3 agent on one node,
+            you must set <literal>use_namespaces</literal> to
+                <literal>True</literal> (which is the default) in both
+            agents' configuration files. See <link
+                linkend="ch_limitations">Limitations</link>.</para>
+    </note>
+    <informalfigure>
+        <mediaobject>
             <imageobject>
-                <imagedata fileref="figures/Quantum-PhysNet-Diagram.png"
+                <imagedata
+                    fileref="figures/Quantum-PhysNet-Diagram.png"
                     contentwidth="6in"/>
             </imageobject>
         </mediaobject>
     </informalfigure>
-    <para>There will be three nodes in the setup.<table rules="all">
+    <para>The following nodes are in the setup:<table rules="all">
             <caption>Nodes for Demo</caption>
             <thead>
                 <tr>
@@ -34,32 +42,49 @@
             </thead>
             <tbody>
                 <tr>
-                    <td> Controller Node</td>
-                    <td>Runs the OpenStack Networking service, OpenStack Identity and all of the
-                        OpenStack Compute services that are required to deploy a VM. The service
-                        must have at least two network interfaces The first should be connected to
-                        the "Management Network". This will be used to communicate with the compute
-                        and network nodes. The second interface will be connected to the API/public
-                        network</td>
+                    <td><para>Controller</para></td>
+                    <td><para>Runs the OpenStack Networking service,
+                            OpenStack Identity and all of the
+                            OpenStack Compute services that are
+                            required to deploy a VM. </para>
+                        <para>The service must have at least two
+                            network interfaces. The first should be
+                            connected to the "Management Network" to
+                            communicate with the compute and network
+                            nodes. The second interface should be
+                            connected to the API/public
+                            network.</para></td>
                 </tr>
                 <tr>
-                    <td>Compute Node</td>
-                    <td>Runs OpenStack Compute and the OpenStack Networking L2 agent. This node will
-                        not have access the public network. The node must have at least two network
-                        interfaces. The first is used to communicate with the controller node, via
-                        the management network.  The VM will be able to receive its IP address from
-                        the DHCP agent on this network.</td>
+                    <td><para>Compute</para></td>
+                    <td><para>Runs OpenStack Compute and the OpenStack
+                            Networking L2 agent. </para>
+                        <para>This node will not have access the
+                            public network. </para>
+                        <para>The node must have at least two network
+                            interfaces. The first is used to
+                            communicate with the controller node,
+                            through the management network. The VM
+                            will receive its IP address from the DHCP
+                            agent on this network.</para></td>
                 </tr>
                 <tr>
-                    <td>Network Node</td>
-                    <td>Runs OpenStack Networking L2 agent, the DHCP agent and the L3 agent. This
-                        node will have access to the public network. The DHCP agent will allocate IP
-                        addresses to the VMs on the network. The L3 agent will perform NAT and
-                        enable the VMs to access the public network. The node must have at least
-                        three network interfaces. The first is used to communicate with the
-                        controller node, this is via the management network. The second interface
-                        will be used for the VM traffic, this is on the data network. The third
-                        interface will be used to connect to the external gateway on the network. </td>
+                    <td><para>Network</para></td>
+                    <td><para>Runs OpenStack Networking L2 agent, DHCP
+                            agent, and L3 agent. </para>
+                        <para>This node will have access to the public
+                            network. The DHCP agent will allocate IP
+                            addresses to the VMs on the network. The
+                            L3 agent will perform NAT and enable the
+                            VMs to access the public network. </para>
+                        <para>The node must have at least three
+                            network interfaces. The first communicates
+                            with the controller node through the
+                            management network. The second interface
+                            is used for the VM traffic and is on the
+                            data network. The third interface connects
+                            to the external gateway on the network.
+                        </para></td>
                 </tr>
             </tbody>
         </table></para>
@@ -67,225 +92,237 @@
         <title>Installations</title>
         <section xml:id="controller-install-quantum-server">
             <title>Controller</title>
-        
-    
-    
-        <orderedlist>
-            <listitem>
-                <para>Install the packages
-                        :<screen><userinput>apt-get install -y quantum-server</userinput></screen></para>
-            </listitem>
-            <listitem>
-                <para>Configure Quantum services :</para>
-                <itemizedlist>
-                    <listitem>
-                        <para>Edit <emphasis role="bold">/etc/quantum/quantum.conf</emphasis> file
-                            and modify
-                            :<screen><userinput>core_plugin = \
-    quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPluginV2
+            <procedure>
+                <title>To install and configure the controller
+                    node</title>
+                <step>
+                    <para>Run the following command:</para>
+                    <screen><userinput>apt-get install -y quantum-server</userinput></screen>
+                </step>
+                <step>
+                    <para>Configure Quantum services:</para>
+                    <itemizedlist>
+                        <listitem>
+                            <para>Edit <emphasis role="bold"
+                                   >/etc/quantum/quantum.conf</emphasis>
+                                file and
+                                modify:<screen><userinput>core_plugin = \
+quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPluginV2
 auth_strategy = keystone
 fake_rabbit = False
 rabbit_password = password</userinput></screen></para>
-                    </listitem>
-                    <listitem>
-                        <para>Edit <emphasis role="bold"
-                                >/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</emphasis>
-                            file and modify
-                            :<screen><userinput>[database]
+                        </listitem>
+                        <listitem>
+                            <para>Edit <emphasis role="bold"
+                                   >/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</emphasis>
+                                file and modify:</para>
+                            <screen><userinput>[database]
 sql_connection = mysql://quantum:password@localhost:3306/quantum
 [ovs]
 tenant_network_type = vlan
-network_vlan_ranges = physnet1:100:2999</userinput></screen></para>
-                    </listitem>
-                    <listitem>
-                        <para>Edit <emphasis role="bold">/etc/quantum/api-paste.ini</emphasis> file
-                            and modify
-                            :<screen><userinput>admin_tenant_name = service
+network_vlan_ranges = physnet1:100:2999</userinput></screen>
+                        </listitem>
+                        <listitem>
+                            <para>Edit <emphasis role="bold"
+                                   >/etc/quantum/api-paste.ini</emphasis>
+                                file and modify:</para>
+                            <screen><userinput>admin_tenant_name = service
 admin_user = quantum 
-admin_password = password</userinput></screen></para>
-                    </listitem>
-                </itemizedlist>
-            </listitem>
-            <listitem>
-                <para>Start the services
-                    :<screen><userinput>service quantum-server restart</userinput></screen></para>
-            </listitem>
-        </orderedlist></section>
-        <section xml:id="network-node-install-plugin-openvswitch-agent">
-        <title>Network Node</title><para>
-          
-               
-           <orderedlist>
-               
-                            
-                                <listitem>
-                                    <para>Install the
-                            packages:<screen><userinput>apt-get install -y quantum-plugin-openvswitch-agent \
-quantum-dhcp-agent quantum-l3-agent</userinput></screen></para>
-                                </listitem>
-                                <listitem>
-                        <para>Start Open vSwitch:</para>
-                        <screen><userinput>service openvswitch-switch start</userinput></screen>
-                    </listitem>
-                    <listitem>
-                        <para>Add the integration bridge to the Open vSwitch:</para>
-                        <screen><userinput>sudo ovs-vsctl add-br br-int</userinput></screen>
-                    </listitem>
-                                <listitem>
-                                    <para>Update the OpenStack Networking configuration file,
-                                            <emphasis role="bold"
-                                            >/etc/quantum/quantum.conf</emphasis>:</para>
-                                    <screen><userinput>rabbit_password = password
+admin_password = password</userinput></screen>
+                        </listitem>
+                    </itemizedlist>
+                </step>
+                <step>
+                    <para>Start the services:</para>
+                    <screen><userinput>service quantum-server restart</userinput></screen>
+                </step>
+            </procedure>
+        </section>
+        <section
+            xml:id="network-node-install-plugin-openvswitch-agent">
+            <title>Network Node</title>
+            <procedure>
+                <title>To install and configure the network
+                    node</title>
+                <step>
+                    <para>Install the packages:</para>
+                    <screen><userinput>apt-get install -y quantum-plugin-openvswitch-agent \
+quantum-dhcp-agent quantum-l3-agent</userinput></screen>
+                </step>
+                <step>
+                    <para>Start Open vSwitch:</para>
+                    <screen><userinput>service openvswitch-switch start</userinput></screen>
+                </step>
+                <step>
+                    <para>Add the integration bridge to the Open
+                        vSwitch:</para>
+                    <screen><userinput>sudo ovs-vsctl add-br br-int</userinput></screen>
+                </step>
+                <step>
+                    <para>Update the OpenStack Networking
+                        configuration file, <emphasis role="bold"
+                            >/etc/quantum/quantum.conf</emphasis>:</para>
+                    <screen><userinput>rabbit_password = password
 rabbit_host = 192.168.0.1</userinput></screen>
-                                </listitem>
-                                <listitem>
-                                    <para>Update the plugin configuration file, <emphasis
-                                            role="bold"
-                                            >/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</emphasis>:</para>
-                                    <screen><userinput>[database]
+                </step>
+                <step>
+                    <para>Update the plugin configuration file,
+                            <emphasis role="bold"
+                            >/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</emphasis>:</para>
+                    <screen><userinput>[database]
 sql_connection = mysql://quantum:password@192.168.0.1:3306/quantum
 [ovs]
 tenant_network_type=vlan
 network_vlan_ranges = physnet1:1:4094
 bridge_mappings = physnet1:br-eth1</userinput></screen>
-                                </listitem>
-                                <listitem>
-                                    <para>Create the network bridge <emphasis role="bold"
-                                            >br-eth1</emphasis> (All VM communication between the
-                                        nodes will be done via eth1):</para>
-                                    <screen><userinput>sudo ovs-vsctl add-br br-eth1
+                </step>
+                <step>
+                    <para>Create the network bridge <emphasis
+                            role="bold">br-eth1</emphasis> (All VM
+                        communication between the nodes occurs through
+                        eth1):</para>
+                    <screen><userinput>sudo ovs-vsctl add-br br-eth1
 sudo ovs-vsctl add-port br-eth1 eth1</userinput></screen>
-                                </listitem>
-                                <listitem>
-                        <para>Create the external network bridge to the Open vSwitch:</para>
-                    
-                        <screen><userinput>sudo ovs-vsctl add-br br-ex
-sudo ovs-vsctl add-port br-ex eth2</userinput></screen></listitem>
-                    <listitem>
-                        <para>Edit , <emphasis role="bold">/etc/quantum/l3_agent.ini </emphasis>
-                            file and modify:</para>
-                        <screen><userinput>[DEFAULT]
+                </step>
+                <step>
+                    <para>Create the external network bridge to the
+                        Open vSwitch:</para>
+                    <screen><userinput>sudo ovs-vsctl add-br br-ex
+sudo ovs-vsctl add-port br-ex eth2</userinput></screen>
+                </step>
+                <step>
+                    <para>Edit the <emphasis role="bold"
+                            >/etc/quantum/l3_agent.ini </emphasis>
+                        file and modify:</para>
+                    <screen><userinput>[DEFAULT]
 auth_url = http://192.168.0.1:35357/v2.0
 admin_tenant_name = service
 admin_user = quantum 
 admin_password = password
 metadata_ip = 192.168.0.1
 use_namespaces = True</userinput></screen>
-                    </listitem>
-                    <listitem>
-                        <para>Edit , <emphasis role="bold">/etc/quantum/api-paste.ini </emphasis>
-                            file and modify:</para>
-                        <screen><userinput>[DEFAULT]
+                </step>
+                <step>
+                    <para>Edit the <emphasis role="bold"
+                            >/etc/quantum/api-paste.ini </emphasis>
+                        file and modify:</para>
+                    <screen><userinput>[DEFAULT]
 auth_host = 192.168.0.1
 admin_tenant_name = service
 admin_user = quantum 
 admin_password = password</userinput></screen>
-                    </listitem>
-                    <listitem>
-                        <para>Edit , <emphasis role="bold">/etc/quantum/dhcp_agent.ini </emphasis>
-                            file and modify:</para>
-                        <screen><userinput>use_namespaces = True</userinput></screen>
-                    </listitem>
-                                <listitem>
-                                    <para>Restart networking services</para>
-                                    <screen><userinput>service quantum-plugin-openvswitch-agent start
+                </step>
+                <step>
+                    <para>Edit the <emphasis role="bold"
+                            >/etc/quantum/dhcp_agent.ini </emphasis>
+                        file and modify:</para>
+                    <screen><userinput>use_namespaces = True</userinput></screen>
+                </step>
+                <step>
+                    <para>Restart networking services:</para>
+                    <screen><userinput>service quantum-plugin-openvswitch-agent start
 service quantum-dhcp-agent restart
 service quantum-l3-agent restart</userinput></screen>
-                                </listitem>
-                            
-                        
-              </orderedlist></para>
-        </section><section xml:id="compute-node-install-openvswitch"><title>Compute Node</title>
-                    <para>
-                <orderedlist>
-                    <listitem>
-                        <para>Install the
-                            packages.<screen><userinput>apt-get install -y openvswitch-switch quantum-plugin-openvswitch-agent</userinput></screen></para>
-                    </listitem>
-                    <listitem>
-                        <para>Start open vSwitch
-                            Service<screen><userinput>service openvswitch-switch start</userinput></screen></para>
-                    </listitem>
-                    <listitem>
-                        <para>Configure Virtual
-                            Bridging<screen><userinput>sudo ovs-vsctl add-br br-int</userinput></screen></para>
-                    </listitem>
-                    <listitem>
-                        <para>Update the OpenStack Networking configuration file, <emphasis
-                                role="bold">/etc/quantum/quantum.conf</emphasis>:</para>
-                        <screen><userinput>rabbit_password = password
+                </step>
+            </procedure>
+        </section>
+        <section xml:id="compute-node-install-openvswitch">
+            <title>Compute Node</title>
+
+            <procedure>
+                <title>To install and configure the compute
+                    node</title>
+                <step>
+                    <para>Install the
+                        packages:<screen><userinput>apt-get install -y openvswitch-switch quantum-plugin-openvswitch-agent</userinput></screen></para>
+                </step>
+                <step>
+                    <para>Start open vSwitch
+                        Service:<screen><userinput>service openvswitch-switch start</userinput></screen></para>
+                </step>
+                <step>
+                    <para>Configure Virtual
+                        Bridging:<screen><userinput>sudo ovs-vsctl add-br br-int</userinput></screen></para>
+                </step>
+                <step>
+                    <para>Update the OpenStack Networking
+                        configuration file, <emphasis role="bold"
+                            >/etc/quantum/quantum.conf</emphasis>:</para>
+                    <screen><userinput>rabbit_password = password
 rabbit_host = 192.168.0.1</userinput></screen>
-                    </listitem>
-                    <listitem>
-                        <para>Update <emphasis role="bold"
-                                >/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</emphasis>:</para>
-                        <screen><userinput>[database]
+                </step>
+                <step>
+                    <para>Update the <emphasis role="bold"
+                            >/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</emphasis>
+                        file:</para>
+                    <screen><userinput>[database]
 sql_connection = mysql://quantum:password@192.168.0.1:3306/quantum
 [ovs]
 tenant_network_type = vlan
 network_vlan_ranges = physnet1:1:4094
 bridge_mappings = physnet1:br-eth1</userinput></screen>
-                    </listitem>
-                    <listitem>
-                        <para>Start the DHCP agent</para><screen><userinput>service quantum-plugin-openvswitch-agent restart</userinput></screen>
-                    </listitem>
-                </orderedlist>
-            </para>
-                </section>
-            </section>
-      
-   
-  
+                </step>
+                <step>
+                    <para>Start the DHCP agent:</para>
+                    <screen><userinput>service quantum-plugin-openvswitch-agent restart</userinput></screen>
+                </step>
+            </procedure>
+        </section>
+    </section>
     <section xml:id="demo_logical_network_config">
         <title>Logical Network Configuration</title>
-        <para>All of the commands below can be done on the Network node.</para>
-        <para><emphasis role="bold">Note</emphasis> please ensure that
-            the following environment variables are set. These are
-            used by the various clients to access OpenStack Identity.</para>
+        <para>You can run the commands in the following procedures on
+            the network node.</para>
+        <note>
+            <para>Ensure that the following environment variables are
+                set. Various clients use these variables to access
+                OpenStack Identity.</para>
+        </note>
         <para><itemizedlist>
-            <listitem>
-                <para>Create <emphasis role="bold">novarc</emphasis> file
-                    :<screen><userinput>export OS_TENANT_NAME=admin
+                <listitem>
+                    <para>Create a <emphasis role="bold"
+                            >novarc</emphasis>
+                        file:<screen><userinput>export OS_TENANT_NAME=provider_tenant
 export OS_USERNAME=admin
 export OS_PASSWORD=password
 export OS_AUTH_URL="http://192.168.0.1:5000/v2.0/"
 export SERVICE_ENDPOINT="http://192.168.0.1:35357/v2.0"
 export SERVICE_TOKEN=password</userinput></screen></para>
-            </listitem>
-        </itemizedlist>
+                </listitem>
+            </itemizedlist>
         </para>
         <itemizedlist>
             <listitem>
-                <para>Export the variables
-                    :<screen><userinput>source novarc
+                <para>Export the
+                    variables:<screen><userinput>source novarc
 echo "source novarc">>.bashrc</userinput></screen></para>
             </listitem>
         </itemizedlist>
-      
-        <para>
-            <itemizedlist>
-                <listitem>
-                    <para><emphasis role="bold">Internal Networking Configuration</emphasis><orderedlist>
-                            <listitem>
-                                <para>Get the tenant ID (Used as
-                                   $TENANT_ID later).</para>
-                                <screen><userinput>keystone tenant-list</userinput></screen>
-                                <screen><computeroutput>+----------------------------------+--------------------+---------+
+        <para>The admin user creates a network and subnet on behalf of
+            tenant_A. A user from tenant_A can also complete these
+            steps. <procedure>
+                <title>To configure internal networking</title>
+
+                <step>
+                    <para>Get the tenant ID (Used as $TENANT_ID
+                        later).</para>
+                    <screen><userinput>keystone tenant-list</userinput></screen>
+                    <screen><computeroutput>+----------------------------------+--------------------+---------+
 |                id                |        name        | enabled |
 +----------------------------------+--------------------+---------+
-| 48fb81ab2f6b409bafac8961a594980f |       admin        |   True  |
+| 48fb81ab2f6b409bafac8961a594980f |  provider_tenant   |   True  |
 | cbb574ac1e654a0a992bfc0554237abf |      service       |   True  |
 | e371436fe2854ed89cca6c33ae7a83cd | invisible_to_admin |   True  |
-| e40fa60181524f9f9ee7aa1038748f08 |        demo        |   True  |
+| e40fa60181524f9f9ee7aa1038748f08 |      tenant_A      |   True  |
 +----------------------------------+--------------------+---------+</computeroutput></screen>
-                            </listitem>
-                            <listitem>
-                                <para>Create a internal network named <emphasis role="bold"
-                                        >net1</emphasis> on the demo tenant ($TENANT_ID will be
-                                    e40fa60181524f9f9ee7aa1038748f08):</para>
-                                <screen><userinput>quantum net-create --tenant-id $TENANT_ID net1 --provider:network_type vlan \
---provider:physical_network physnet1 --provider:segmentation_id 1024</userinput></screen>
-                                <screen><computeroutput>+---------------------------+--------------------------------------+
+                </step>
+                <step>
+                    <para>Create an internal network named <emphasis
+                            role="bold">net1</emphasis> for tenant_A
+                        ($TENANT_ID will be
+                        e40fa60181524f9f9ee7aa1038748f08):</para>
+                    <screen><userinput>quantum net-create --tenant-id $TENANT_ID net1</userinput></screen>
+                    <screen><computeroutput>+---------------------------+--------------------------------------+
 | Field                     | Value                                |
 +---------------------------+--------------------------------------+
 | admin_state_up            | True                                 |
@@ -300,13 +337,13 @@ echo "source novarc">>.bashrc</userinput></screen></para>
 | subnets                   |                                      |
 | tenant_id                 | e40fa60181524f9f9ee7aa1038748f08     |
 +---------------------------+--------------------------------------+</computeroutput></screen>
-                            </listitem>
-                            <listitem>
-                                <para>Create a subnet on the network <emphasis role="bold"
-                                        >net1</emphasis> (ID field below is used as $SUBNET_ID
-                                    later):</para>
-                                <screen><userinput>quantum subnet-create --tenant-id $TENANT_ID net1 10.5.5.0/24</userinput></screen>
-                                <screen><computeroutput>+------------------+--------------------------------------------+
+                </step>
+                <step>
+                    <para>Create a subnet on the network <emphasis
+                            role="bold">net1</emphasis> (ID field
+                        below is used as $SUBNET_ID later):</para>
+                    <screen><userinput>quantum subnet-create --tenant-id $TENANT_ID net1 10.5.5.0/24</userinput></screen>
+                    <screen><computeroutput>+------------------+--------------------------------------------+
 | Field            | Value                                      |
 +------------------+--------------------------------------------+
 | allocation_pools | {"start": "10.5.5.2", "end": "10.5.5.254"} |
@@ -321,16 +358,18 @@ echo "source novarc">>.bashrc</userinput></screen></para>
 | network_id       | e99a361c-0af8-4163-9feb-8554d4c37e4f       |
 | tenant_id        | e40fa60181524f9f9ee7aa1038748f08           |
 +------------------+--------------------------------------------+</computeroutput></screen>
-                            </listitem>
-                        </orderedlist></para>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">External Networking Configuration</emphasis><orderedlist>
-                            <listitem>
-                                <para>Create a router named <emphasis role="bold">router1</emphasis>
-                                    (ID is used as $ROUTER_ID later):</para>
-                                <screen><userinput>quantum router-create --tenant_id $TENANT_ID router1</userinput></screen>
-                                <screen><computeroutput>+-----------------------+--------------------------------------+
+                </step>
+            </procedure></para>
+        <para>A user with the admin role must complete the following
+            steps. In this procedure, the user is admin from provider_tenant.<procedure>
+                <title>To configure the router and external
+                    networking</title>
+                <step>
+                    <para>Create a router named <emphasis role="bold"
+                            >router1</emphasis> (ID is used as
+                        $ROUTER_ID later):</para>
+                    <screen><userinput>quantum router-create router1</userinput></screen>
+                    <screen><computeroutput>+-----------------------+--------------------------------------+
 | Field                 | Value                                |
 +-----------------------+--------------------------------------+
 | admin_state_up        | True                                 |
@@ -338,24 +377,33 @@ echo "source novarc">>.bashrc</userinput></screen></para>
 | id                    | 685f64e7-a020-4fdf-a8ad-e41194ae124b |
 | name                  | router1                              |
 | status                | ACTIVE                               |
-| tenant_id             | e40fa60181524f9f9ee7aa1038748f08     |
+| tenant_id             | 48fb81ab2f6b409bafac8961a594980f     |
 +-----------------------+--------------------------------------+</computeroutput></screen>
-                            </listitem>
-                            <listitem>
-                                <para>Add an interface to <emphasis role="bold">router1</emphasis>
-                                    and attach the <emphasis role="bold">net1</emphasis>
-                                    subnet:</para>
-                                <screen><userinput>quantum router-interface-add $ROUTER_ID $SUBNET_ID</userinput></screen>
-                                <screen><computeroutput>Added interface to router 685f64e7-a020-4fdf-a8ad-e41194ae124b</computeroutput></screen>
-                            </listitem>
-                            <listitem>
-                                <para>Create the external network named <emphasis role="bold"
-                                        >ext_net</emphasis>. Environment variables will attach this
-                                    to the <emphasis role="bold">admin</emphasis> tenant (Used as
-                                    $EXTERNAL_NETWORK_ID). <emphasis role="bold">Note</emphasis>
-                                    this is a different $TENANT_ID than used previously:</para>
-                                <screen><userinput>quantum net-create ext_net --router:external=True</userinput></screen>
-                                <screen><computeroutput>+---------------------------+--------------------------------------+
+                    <note>
+                        <para>The <literal>--tenant-id</literal>
+                            parameter is not specified, so this router
+                            is assigned to the provider_tenant
+                            tenant.</para>
+                    </note>
+                </step>
+                <step>
+                    <para>Add an interface to <emphasis role="bold"
+                            >router1</emphasis> and attach it to the
+                        subnet from <emphasis role="bold"
+                            >net1</emphasis>:</para>
+                    <screen><userinput>quantum router-interface-add $ROUTER_ID $SUBNET_ID</userinput></screen>
+                    <screen><computeroutput>Added interface to router 685f64e7-a020-4fdf-a8ad-e41194ae124b</computeroutput></screen>
+                    <note>
+                        <para>You can repeat this step to add more
+                            interfaces for other networks that belong
+                            to other tenants. </para>
+                    </note>
+                </step>
+                <step>
+                    <para>Create the external network named <emphasis
+                            role="bold">ext_net</emphasis>:</para>
+                    <screen><userinput>quantum net-create ext_net --router:external=True</userinput></screen>
+                    <screen><computeroutput>+---------------------------+--------------------------------------+
 | Field                     | Value                                |
 +---------------------------+--------------------------------------+
 | admin_state_up            | True                                 |
@@ -369,17 +417,18 @@ echo "source novarc">>.bashrc</userinput></screen></para>
 | status                    | ACTIVE                               |
 | subnets                   |                                      |
 | tenant_id                 | 48fb81ab2f6b409bafac8961a594980f     | 
-+---------------------------+--------------------------------------+
-</computeroutput></screen>
-                            </listitem>
-                            <listitem>
-                                <para>Create the subnet for floating
-                                   IPs. <emphasis role="bold"
-                                   >Note</emphasis> the DHCP service
-                                   is disabled for this subnet:</para>
-                                <screen><userinput>quantum subnet-create ext_net --allocation-pool start=7.7.7.130,end=7.7.7.150 \
++---------------------------+--------------------------------------+</computeroutput></screen>
+                </step>
+                <step>
+                    <para>Create the subnet for floating IPs.</para>
+                    <note>
+                        <para>The DHCP service is disabled for this
+                            subnet.</para>
+                    </note>
+                    <screen><userinput>quantum subnet-create ext_net \
+--allocation-pool start=7.7.7.130,end=7.7.7.150 \
 --gateway 7.7.7.1 7.7.7.0/24 -- --enable_dhcp=False</userinput></screen>
-                                <screen><computeroutput>+------------------+--------------------------------------------------+
+                    <screen><computeroutput>+------------------+--------------------------------------------------+
 | Field            | Value                                            |
 +------------------+--------------------------------------------------+
 | allocation_pools | {"start": "7.7.7.130", "end": "7.7.7.150"}       |
@@ -394,23 +443,24 @@ echo "source novarc">>.bashrc</userinput></screen></para>
 | network_id       | 8858732b-0400-41f6-8e5c-25590e67ffeb             |
 | tenant_id        | 48fb81ab2f6b409bafac8961a594980f                 |
 +------------------+--------------------------------------------------+</computeroutput></screen>
-                            </listitem>
-                            <listitem>
-                                <para>Set the router gateway towards the external network:</para>
-                                <screen><userinput>quantum router-gateway-set $ROUTER_ID $EXTERNAL_NETWORK_ID</userinput></screen>
-                                <screen><computeroutput>Set gateway for router 685f64e7-a020-4fdf-a8ad-e41194ae124b</computeroutput></screen>
-                            </listitem>
-                        </orderedlist></para>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">Floating IP Allocation</emphasis><orderedlist>
-                            <listitem>
-                                <para>After a VM is deployed a floating IP address can be associated
-                                    to the VM. A VM that is created will be allocated  an OpenStack
-                                    Networking port ($PORT_ID). The port ID for the VM can be
-                                    retrieved as follows (VIA the Controller or Compute Node)
-                                    :</para>
-                                <screen><userinput>nova list</userinput>
+                </step>
+                <step>
+                    <para>Set the router's gateway to be the external
+                        network:</para>
+                    <screen><userinput>quantum router-gateway-set $ROUTER_ID $EXTERNAL_NETWORK_ID</userinput></screen>
+                    <screen><computeroutput>Set gateway for router 685f64e7-a020-4fdf-a8ad-e41194ae124b</computeroutput></screen>
+                </step>
+            </procedure></para>
+        <para>A user from tenant_A completes the following steps, so
+            the credentials in the environment variables are different
+            than those in the previous procedure. <procedure>
+                <title>To allocate floating IP addresses</title>
+                <step>
+                    <para>A floating IP address can be associated with
+                        a VM after it starts. The ID of the port
+                        ($PORT_ID) that was allocated for the VM is
+                        required and can be found as follows:</para>
+                    <screen><userinput>nova list</userinput>
 
 <computeroutput>+--------------------------------------+--------+--------+---------------+
 |                  ID                  |  Name  | Status |    Networks   |
@@ -423,12 +473,13 @@ echo "source novarc">>.bashrc</userinput></screen></para>
 <computeroutput>+--------------------------------------+------+-------------------+---------------------------------------------------------------------------------+
 | id                                   | name | mac_address       | fixed_ips                                                                       |
 +--------------------------------------+------+-------------------+---------------------------------------------------------------------------------+
-| 9aa47099-b87b-488c-8c1d-32f993626a30 |      | fa:16:3e:b4:d6:6c | {"subnet_id": "c395cb5d-ba03-41ee-8a12-7e792d51a167", "ip_address": "10.0.0.3"} |
+| 9aa47099-b87b-488c-8c1d-32f993626a30 |      | fa:16:3e:b4:d6:6c | {"subnet_id": "c395cb5d-ba03-41ee-8a12-7e792d51a167", "ip_address": "10.5.5.3"} |
 +--------------------------------------+------+-------------------+---------------------------------------------------------------------------------+</computeroutput></screen>
-                            </listitem>
-                            <listitem>
-                                <para>Allocate a floating IP (Used as $FLOATING_ID):</para>
-                                <screen><userinput>quantum floatingip-create ext_net</userinput><computeroutput>
+                </step>
+                <step>
+                    <para>Allocate a floating IP (Used as
+                        $FLOATING_ID):</para>
+                    <screen><userinput>quantum floatingip-create ext_net</userinput><computeroutput>
 
 +---------------------+--------------------------------------+
 | Field               | Value                                |
@@ -441,16 +492,17 @@ echo "source novarc">>.bashrc</userinput></screen></para>
 | router_id           |                                      |
 | tenant_id           | e40fa60181524f9f9ee7aa1038748f08     |
 +---------------------+--------------------------------------+</computeroutput></screen>
-                            </listitem>
-                            <listitem>
-                                <para>Associate a floating IP to a VM
-                                   (in the case of the example it is
-                                   9aa47099-b87b-488c-8c1d-32f993626a30):</para>
-                                <screen><userinput>quantum floatingip-associate $FLOATING_ID $PORT_ID</userinput><computeroutput>
+                </step>
+                <step>
+                    <para>Associate the floating IP with the VM's
+                        port:</para>
+                    <screen><userinput>quantum floatingip-associate $FLOATING_ID $PORT_ID</userinput><computeroutput>
 
-Associated floatingip 40952c83-2541-4d0c-b58e-812c835079a5</computeroutput></screen></listitem><listitem>
-                                <para>Show the floating IP:</para>
-                                <screen><userinput>quantum floatingip-show $FLOATING_ID</userinput><computeroutput>
+Associated floatingip 40952c83-2541-4d0c-b58e-812c835079a5</computeroutput></screen>
+                </step>
+                <step>
+                    <para>Show the floating IP:</para>
+                    <screen><userinput>quantum floatingip-show $FLOATING_ID</userinput><computeroutput>
 
 +---------------------+--------------------------------------+
 | Field               | Value                                |
@@ -462,18 +514,18 @@ Associated floatingip 40952c83-2541-4d0c-b58e-812c835079a5</computeroutput></scr
 | port_id             | 9aa47099-b87b-488c-8c1d-32f993626a30 |
 | router_id           | 685f64e7-a020-4fdf-a8ad-e41194ae124b |
 | tenant_id           | e40fa60181524f9f9ee7aa1038748f08     |
-+---------------------+--------------------------------------+
-                                </computeroutput></screen></listitem><listitem><para>Test the floating IP:</para><screen>
-<userinput>ping 7.7.7.131</userinput>
++---------------------+--------------------------------------+</computeroutput></screen>
+                </step>
+                <step>
+                    <para>Test the floating IP:</para>
+                    <screen><userinput>ping 7.7.7.131</userinput>
 <computeroutput>
 PING 7.7.7.131 (7.7.7.131) 56(84) bytes of data.
 64 bytes from 7.7.7.131: icmp_req=2 ttl=64 time=0.152 ms
 64 bytes from 7.7.7.131: icmp_req=3 ttl=64 time=0.049 ms
 </computeroutput></screen>
-                            </listitem>
-                        </orderedlist></para>
-                </listitem>
-            </itemizedlist>
+                </step>
+            </procedure>
         </para>
     </section>
 </section>
