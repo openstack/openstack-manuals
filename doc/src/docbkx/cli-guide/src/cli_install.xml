@@ -103,7 +103,7 @@ format="SVG" scale="60"/>
                                 through the package manager for your system:<itemizedlist>
                                    <listitem>
                                    <para>Mac OS X
-                                   <programlisting language="bash" role="gutter: false"><prompt>$</prompt> sudo easy_install pip</programlisting></para>
+                                   <screen><prompt>$</prompt> sudo easy_install pip</screen></para>
                                    </listitem>
                                   <listitem>
                                    <para>Ubuntu 12.04</para>
@@ -112,15 +112,32 @@ format="SVG" scale="60"/>
                                    or <command>aptitude</command> to
                                    install the
                                    python-novaclient.</para>
-                                   <programlisting language="bash" role="gutter: false"><prompt>$</prompt> aptitude install python-novaclient </programlisting>
+                                   <screen><prompt>#</prompt> aptitude install python-novaclient</screen>
                                    </listitem>
                                    <listitem>
                                    <para>Ubuntu
-                                   <programlisting language="bash" role="gutter: false"><prompt>$</prompt> aptitude install python-pip </programlisting></para>
+                                   <screen><prompt>#</prompt> aptitude install python-pip</screen></para>
                                    </listitem>
                                    <listitem>
-                                   <para>RHEL, CentOS, or Fedora
-                                   <programlisting language="bash" role="gutter: false"><prompt>$</prompt> yum install python-pip</programlisting></para>
+                                   <para>RHEL, CentOS, or Fedora</para>
+                                   <para>
+                                     A packaged version available in
+                                     <link
+                                     xlink:href="http://openstack.redhat.com/"
+                                     >RDO</link> enables you to use
+                                     <command>yum</command> to install the
+                                     clients:
+                                     <screen><prompt>#</prompt> yum install python-<replaceable>PROJECT</replaceable>client</screen>
+                                     Replace <replaceable>PROJECT</replaceable>
+                                     with the lower case name of the client to
+                                     install, such as <literal>nova</literal>.
+                                     Repeat this step for each desired client.
+                                   </para>
+                                   <para>
+                                     Alternatively install <command>pip</command>
+                                     and use it to manage client installation:
+                                     <screen><prompt>#</prompt> yum install python-pip</screen>
+                                   </para>
                                    </listitem>
                                    <listitem>
                                    <para>openSUSE 12.2 and
@@ -131,19 +148,31 @@ format="SVG" scale="60"/>
                                    Open Build Service</link> enables
                                    you to use <command>rpm</command>
                                    or <command>zypper</command> to
-                                   install the the python-novaclient. </para>
-                                   <programlisting language="bash" role="gutter: false"><prompt>$</prompt> zypper install python-pip</programlisting>
-                                   <para>Alternatively, you can still
-                                   use <command>pip</command>.</para>
+                                   install the the python-novaclient.
+                                   <screen><prompt>#</prompt> zypper install python-<replaceable>PROJECT</replaceable></screen>
+                                     Replace <replaceable>PROJECT</replaceable>
+                                     with the lower case name of the client to
+                                     install, such as <literal>nova</literal>.
+                                     Repeat this step for each desired client.
+                                   </para>
+                                   <para>
+                                     Alternatively install <command>pip</command>
+                                     and use it to manage client installation:
+                                     <screen><prompt>#</prompt> zypper install python-pip</screen>
+                                   </para>
                                    </listitem>
                                    <listitem>
                                    <para>openSUSE 12.3</para>
                                    <para>A packaged version enables
                                    you to use <command>rpm</command>
                                    or <command>zypper</command> to
-                                   install the python-novaclient. </para>
-                                   <para>For example:</para>
-                                   <programlisting language="bash" role="gutter: false"><prompt>$</prompt> zypper install python-novaclient</programlisting>
+                                   install the clients:
+                                   <screen><prompt>#</prompt> zypper install python-<replaceable>PROJECT</replaceable>client</screen>
+                                     Replace <replaceable>PROJECT</replaceable>
+                                     with the lower case name of the client to
+                                     install, such as <literal>nova</literal>.
+                                     Repeat this step for each desired client.
+                                   </para>
                                    </listitem>
                                 </itemizedlist></para>
                         </td>
@@ -153,8 +182,18 @@ format="SVG" scale="60"/>
     </section>
     <section xml:id="install-clients">
         <title>Install the OpenStack Clients</title>
-
-
+        <para>
+          Follow the steps listed in this procedure to install the OpenStack
+          clients using <command>pip</command>.
+        </para>
+        <note>
+          <para>
+            If you already installed the OpenStack client packages using the
+            package management tools provided by your distribution then these
+            steps are not required. Skip this procedure and move on to
+            <xref linkend="authenticate" />
+          </para>
+        </note>
         <procedure>
             <title>To install the OpenStack clients:</title>
             <step>
@@ -162,7 +201,7 @@ format="SVG" scale="60"/>
                 <para>You must install each client separately.</para>
                 <para>Run the following command to install or update a
                     client package:</para>
-                <programlisting language="bash" role="gutter: false"><prompt>$</prompt> sudo pip install [--update] python-&lt;project>client</programlisting>
+                <screen><prompt>$</prompt> sudo pip install [--update] python-&lt;project&gt;client</screen>
                 <para>Where &lt;project&gt; is the project name and is
                     one of the following values:</para>
                 <itemizedlist>
@@ -197,13 +236,13 @@ format="SVG" scale="60"/>
                 </itemizedlist>
                 <para>For example, to install the nova client, run the
                     following command:</para>
-                <programlisting><prompt>$</prompt> sudo pip install python-novaclient</programlisting>
+                <screen><prompt>$</prompt> sudo pip install python-novaclient</screen>
                 <para>To update the nova client, run the following
                     command:</para>
-                <programlisting><prompt>$</prompt> sudo pip install --upgrade python-novaclient</programlisting>
+                <screen><prompt>$</prompt> sudo pip install --upgrade python-novaclient</screen>
                 <para>To remove the nova client, run the following
                     command:</para>
-                <programlisting><prompt>$</prompt> sudo pip uninstall python-novaclient</programlisting>
+                <screen><prompt>$</prompt> sudo pip uninstall python-novaclient</screen>
 
             </step>
             <step>
