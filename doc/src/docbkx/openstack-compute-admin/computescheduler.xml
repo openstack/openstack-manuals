@@ -80,21 +80,17 @@ compute_fill_first_cost_fn_weight=-1.0
             </figure>
         </para>
 
-        <para>The <literal>scheduler_available_filters</literal>
-            configuration option in <filename>nova.conf</filename>
-            provides the Compute service with the list of the filters
-            that will be used by the scheduler. The default setting
-            specifies all of the filter that are included with the
-            Compute service:
+        <para>The <literal>scheduler_available_filters</literal> configuration option in
+                <filename>nova.conf</filename> provides the Compute service with the list of the
+            filters that will be used by the scheduler. The default setting specifies all of the
+            filter that are included with the Compute service:
             <programlisting>
 scheduler_available_filters=nova.scheduler.filters.all_filters
-    </programlisting>
-            This configuration option can be specified multiple times.
-            For example, if you implemented your own custom filter in
-            Python called <literal>myfilter.MyFilter</literal> and you
-            wanted to use both the built-in filters and your custom
-            filter, your <filename>nova.conf</filename> file would
-            contain:
+    </programlisting>This
+            configuration option can be specified multiple times. For example, if you implemented
+            your own custom filter in Python called <literal>myfilter.MyFilter</literal> and you
+            wanted to use both the built-in filters and your custom filter, your
+                <filename>nova.conf</filename> file would contain:
             <programlisting>
 scheduler_available_filters=nova.scheduler.filters.all_filters
 scheduler_available_filters=myfilter.MyFilter
@@ -110,6 +106,12 @@ scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
      </programlisting>
         </para>
         <para>The available filters are described below.</para>
+        <section xml:id="aggregatecorefilter">
+            <title>AggregateCoreFilter</title>
+            <para>Implements blueprint per-aggregate-resource-ratio. AggregateCoreFilter supports
+                per-aggregate <literal>cpu_allocation_ratio</literal>. If the per-aggregate
+                value is not found, the value falls back to the global setting. </para>
+        </section>
 
         <section xml:id="aggregateinstanceextraspecsfilter">
             <title>AggregateInstanceExtraSpecsFilter</title>
@@ -141,9 +143,8 @@ scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
 
         <section xml:id="availabilityzonefilter">
             <title> AvailabilityZoneFilter </title>
-            <para> Filters hosts by availability zone. This filter
-                must be enabled for the scheduler to respect
-                availability zones in requests. </para>
+            <para>Filters hosts by availability zone. This filter must be enabled for the scheduler
+                to respect availability zones in requests. </para>
         </section>
 
         <section xml:id="computecapabilitiesfilter">
