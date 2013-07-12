@@ -1582,7 +1582,6 @@ metadata which can be used for stats purposes.
 </section>
     </section>
 
-
 <section xml:id="object-storage-container-quotas">
  <title>Container Quotas</title>
     <para>The container_quotas middleware implements simple quotas that can be
@@ -1607,8 +1606,64 @@ metadata which can be used for stats purposes.
     </itemizedlist>
     </para>
 </section>
-    </section>
+ <section xml:id="object-storage-extract-archive">
+   <title>Extract Archives on upload</title>
+    <para>The Extract Archives feature expands tar files into a swift account.
+    The request is a PUT call and must include the
+    header X-Extract-Archive, which specifies the format of archive file. Accepted
+    formats are tar, tar.gz, and tar.bz2.
+    </para>
+    <para>
+    For a PUT to the following url:
+    <programlisting>
+    https://[swift-server]/v1/AUTH_Account/$UPLOAD_PATH
+    </programlisting>
+    UPLOAD_PATH is where the files will be expanded to. UPLOAD_PATH can be a
+    container, a pseudo-directory within a container, or an empty string. The
+    destination of a file in the archive will be built as follows:
+    <programlisting>
+    https://[swift-server]/v1/AUTH_Account/$UPLOAD_PATH/$FILE_PATH
+    </programlisting>
+    Where FILE_PATH is the file name from the listing in the tar file.
+    </para>
+    <para>
+    If the UPLOAD_PATH is empty string, containers will be auto created
+    accordingly and files in the tar that do not map to any container (files
+    in the base directory) will be ignored.
+    </para>
+    <para>
+    Only regular files will be uploaded. Empty directories, symlinks, etc will
+    not be uploaded.
+    </para>
+    <para>
+    If all valid files upload successfully the HTTPCreated is returned.
+    If any files failed to be created will return an HTTPBadGateway
+    response. In both cases the response body is a json dictionary specifying
+    in the number of files successfully uploaded and a list of the files that
+    failed.
+    </para>
+</section>
 
+ <section xml:id="object-storage-bulk-delete">
+   <title>Bulk Delete</title>
+   <para>
+    Will delete multiple files from their account with a single request.
+    Responds to DELETE requests with a header 'X-Bulk-Delete: true_value'.
+    The body of the DELETE request will be a newline separated list of files
+    to delete. The files listed must be URL encoded and in the form:
+    <programlisting>
+    /container_name/obj_name
+    </programlisting>
+    </para>
+    <para> 
+    If all files were successfully deleted (or did not exist) will return an
+    HTTPOk. If any files failed to delete will return an HTTPBadGateway. In
+    both cases the response body is a json dictionary specifying in the number
+    of files successfully deleted, not found, and a list of the files that
+    failed.
+    </para>
+    </section>
+ </section>
     <section xml:id="configuring-openstack-object-storage-with-s3_api">
 
     <title>Configuring Object Storage with the S3 API</title>
