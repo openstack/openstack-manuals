@@ -4,12 +4,6 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="ch_hypervisors">
     <title>Hypervisors</title>
-    <para>This section assumes you have a working installation of OpenStack Compute and want to
-        select a particular hypervisor or run with multiple hypervisors. Before you try to get a VM
-        running within OpenStack Compute, be sure you have installed a hypervisor and used the
-        hypervisor's documentation to run a test VM and get it working.</para>
-    <section xml:id="selecting-a-hypervisor">
-      <title>Selecting a Hypervisor</title>
         <para>OpenStack Compute supports many hypervisors, an array of which must provide a bit of
             difficulty in selecting a hypervisor unless you are already familiar with one. Most 
             installations only use a single hypervisor, however it is 
@@ -53,13 +47,15 @@
                     pluggable sub-drivers (eg. PXE for image deployment, and
                     IPMI for power management).</para></listitem>
         </itemizedlist>
-    </section>
     <section xml:id="hypervisor-configuration-basics"><title>Hypervisor Configuration Basics</title>
        <para>The node where the nova-compute service is installed and running is the machine that
             runs all the virtual machines, referred to as the compute node in this guide. </para>
         <para>By default, the selected hypervisor is KVM. To change to another hypervisor, change
-            the libvirt_type option in nova.conf and restart the nova-compute service. </para>
-        <para>Here are the nova.conf options that are used to configure the compute node.</para>
+            the <literal>libvirt_type</literal> option in <literal>nova.conf</literal> and restart
+          the <literal>nova-compute</literal> service. </para>
+        <para>Here are the general <literal>nova.conf</literal> options that are used to configure the 
+        compute node's hypervisor. Specific options for particular hypervisors can be found in
+        following sections.</para>
         <xi:include href="../common/tables/nova-hypervisor.xml"/>
        </section>
 
@@ -71,7 +67,5 @@
     <xi:include href="../common/powervm.xml" />
     <xi:include href="../common/hyper-v.xml" />
     <xi:include href="../common/baremetal.xml" />
-    <xi:include href="../common/fibrechannel.xml" />
-
 </chapter>
 
