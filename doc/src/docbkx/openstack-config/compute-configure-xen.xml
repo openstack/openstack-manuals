@@ -1,0 +1,85 @@
+<section xml:id="configuring-compute-to-xen"
+         xmlns="http://docbook.org/ns/docbook"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:ns5="http://www.w3.org/1999/xhtml"
+         xmlns:ns4="http://www.w3.org/2000/svg"
+         xmlns:ns3="http://www.w3.org/1998/Math/MathML"
+         xmlns:ns="http://docbook.org/ns/docbook">
+<title>Xen Configuration Reference</title>
+<para>The following section discusses some commonly changed options in XenServer.
+      The table below provides a complete reference of all
+      configuration options available for configuring Xen with
+      OpenStack.</para>
+<para>The recommended way to use Xen with OpenStack is through the
+        XenAPI driver. To enable the XenAPI driver, add the following
+        configuration options <filename>/etc/nova/nova.conf</filename>
+        and restart the nova-compute service:</para>
+        <programlisting>compute_driver=xenapi.XenAPIDriver
+xenapi_connection_url=http://your_xenapi_management_ip_address
+xenapi_connection_username=root
+xenapi_connection_password=your_password</programlisting>
+<para>These connection details are used by the OpenStack Compute
+        service to contact your hypervisor and are the same details
+        you use to connect XenCenter, the XenServer management
+        console, to your XenServer or XCP box.</para>
+<note><para>
+The <literal>xenapi_connection_url</literal> is generally the management
+network IP address of the XenServer.  Though it is possible to use the
+internal network IP Address (169.250.0.1) to contact XenAPI, this does not
+allow live migration between hosts, and other functionalities like host aggregates
+do not work.
+</para></note>
+<para>It is possible to manage Xen using libvirt, though this is not
+        well-tested or supported.
+        To experiment using Xen through libvirt add the following
+        configuration options
+        <filename>/etc/nova/nova.conf</filename>:
+        <programlisting>compute_driver=libvirt.LibvirtDriver
+libvirt_type=xen</programlisting></para>
+<section xml:id="xen-agent">
+<title>Agent</title>
+<para>
+If you don't have the guest agent on your VMs, it will take a long time for nova to decide the VM has successfully started.
+Generally a large timeout is required for Windows instances, bug you may want to tweak <literal>agent_version_timeout</literal>
+</para></section>
+<section xml:id="xen-firewall">
+<title>Firewall</title>
+<para>
+If using nova-network, IPTables is supported: 
+<programlisting>
+firewall_driver=nova.virt.firewall.IptablesFirewallDriver
+</programlisting>
+    Alternately, doing the isolation in Dom0: 
+<programlisting>
+firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver
+</programlisting>
+</para></section>
+<section xml:id="xen-vnc">
+<title>VNC Proxy Address</title>
+<para>
+Assuming you are talking to XenAPI through the host local management network,
+and XenServer is on the address: 169.254.0.1, you can use the following:
+<literal>vncserver_proxyclient_address=169.254.0.1</literal>
+</para></section>
+<section xml:id="xen-storage">
+<title>Storage</title>
+<para>
+You can specify which Storage Repository to use with nova by looking at the
+following flag. The default is to use the local-storage setup by the default installer:
+<programlisting>
+sr_matching_filter="other-config:i18n-key=local-storage"
+</programlisting>
+Another good alternative is to use the "default" storage (for example
+ if you have attached NFS or any other shared storage):
+<programlisting>
+sr_matching_filter="default-sr:true"
+</programlisting>
+<note><para>To use a XenServer pool, you must create the pool
+by using the Host Aggregates feature.</para></note>
+</para></section>
+<section xml:id="xen-config-reference-table">
+<title>Configuration Reference Table for Xen</title>
+<xi:include href="../common/tables/nova-xen.xml"/>
+</section>
+</section>

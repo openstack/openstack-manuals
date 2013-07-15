@@ -16,96 +16,70 @@
         version of the plugins are in line with the nova installation
         by only installing plugins from a matching nova
         repository.</para>
-
-    <para>Manual Installation:</para>
-        <itemizedlist>
-        <listitem><para>Create temporary files/directories:
-<screen>
-<prompt>$ </prompt><userinput>NOVA_ZIPBALL=$(mktemp)</userinput>
-<prompt>$ </prompt><userinput>NOVA_SOURCES=$(mktemp -d)</userinput>
-</screen>
-        </para></listitem>
-        <listitem><para>Get the source from github. The example assumes the master
-                branch is used, please amend the URL to match the
-                version being used:
-                <screen>
-<prompt>$ </prompt><userinput>wget -qO "$NOVA_ZIPBALL" https://github.com/openstack/nova/archive/master.zip</userinput>
-<prompt>$ </prompt><userinput>unzip "$NOVA_ZIPBALL" -d "$NOVA_SOURCES"</userinput>
-</screen>
-                (Alternatively) Should you wish to use the official
-                Ubuntu packages, use the following commands to get the
-                nova codebase:
-                <screen>
-<prompt>$ </prompt><userinput>( cd $NOVA_SOURCES &amp;&amp; apt-get source python-nova --download-only )</userinput>
-<prompt>$ </prompt><userinput>( cd $NOVA_SOURCES &amp;&amp; for ARCHIVE in *.tar.gz; do tar -xzf $ARCHIVE; done )</userinput>
-</screen>
-            </para></listitem>
-        <listitem><para>Copy the plugins to the hypervisor:
-<screen>
-<prompt>$ </prompt><userinput>PLUGINPATH=$(find $NOVA_SOURCES -path '*/xapi.d/plugins' -type d -print)</userinput>
-<prompt>$ </prompt><userinput>tar -czf - -C "$PLUGINPATH" ./ | ssh root@xenserver tar -xozf - -C /etc/xapi.d/plugins/</userinput>
-</screen>
-        </para></listitem>
-        <listitem><para>Remove the temporary files/directories:
-<screen>
-<prompt>$ </prompt><userinput>rm "$NOVA_ZIPBALL"</userinput>
-<prompt>$ </prompt><userinput>rm -rf "$NOVA_SOURCES"</userinput>
-</screen>
-        </para></listitem>
-        </itemizedlist>
-        
+   <section xml:id="manual_install"> <title>Manual Installation</title>
+        <procedure><title>To manually install</title>
+        <step><para>Create temporary files/directories:
+                <screen><prompt>$ </prompt><userinput>NOVA_ZIPBALL=$(mktemp)</userinput>
+<prompt>$ </prompt><userinput>NOVA_SOURCES=$(mktemp -d)</userinput></screen></para></step>
+        <step><para>Get the source from github. The example assumes the master
+                    branch is used. Amend the URL to match the version
+                    being used:
+                    <screen><prompt>$ </prompt><userinput>wget -qO "$NOVA_ZIPBALL" https://github.com/openstack/nova/archive/master.zip</userinput>
+<prompt>$ </prompt><userinput>unzip "$NOVA_ZIPBALL" -d "$NOVA_SOURCES"</userinput></screen>(Alternatively)
+                    Should you wish to use the official Ubuntu
+                    packages, use the following commands to get the
+                    nova code base:
+                    <screen><prompt>$ </prompt><userinput>( cd $NOVA_SOURCES &amp;&amp; apt-get source python-nova --download-only )</userinput>
+<prompt>$ </prompt><userinput>( cd $NOVA_SOURCES &amp;&amp; for ARCHIVE in *.tar.gz; do tar -xzf $ARCHIVE; done )</userinput></screen></para></step>
+        <step><para>Copy the plugins to the hypervisor:
+                <screen><prompt>$ </prompt><userinput>PLUGINPATH=$(find $NOVA_SOURCES -path '*/xapi.d/plugins' -type d -print)</userinput>
+<prompt>$ </prompt><userinput>tar -czf - -C "$PLUGINPATH" ./ | ssh root@xenserver tar -xozf - -C /etc/xapi.d/plugins/</userinput></screen></para></step>
+        <step><para>Remove the temporary files/directories:
+                <screen><prompt>$ </prompt><userinput>rm "$NOVA_ZIPBALL"</userinput>
+<prompt>$ </prompt><userinput>rm -rf "$NOVA_SOURCES"</userinput> </screen></para></step>
+        </procedure>
+   </section>
+<section xml:id="packaged_install">
     
-                <para>Packaged Installation:</para>
+                <title>Packaged Installation</title>
             
                 <para>Follow these steps to produce a supplemental
-                    pack from the nova sources, and package it as a
-                    XenServer Supplemental Pack.</para> 
-        <itemizedlist>
-                        <listitem>
+            pack from the nova sources, and package it as a XenServer
+            supplemental pack.</para> 
+        <procedure><title>To package a XenServer supplemental pack</title>
+                        <step>
                             <para>Create RPM packages. Given you have
-                                the nova sources (use one of the
-                                methods mentioned at Manual
-                                Installation):
-                                <screen>
-<prompt>$ </prompt><userinput>cd nova/plugins/xenserver/xenapi/contrib</userinput>
-<prompt>$ </prompt><userinput>./build-rpm.sh</userinput>
-</screen>
-                                The above commands should leave an
-                                   <literal>.rpm</literal> file in the
-                                   <literal>rpmbuild/RPMS/noarch/</literal>
-                                directory. </para>
-                        </listitem>
-                        <listitem>
+                    the nova sources (use one of the methods mentioned
+                    at Manual Installation):
+                    <screen><prompt>$ </prompt><userinput>cd nova/plugins/xenserver/xenapi/contrib</userinput>
+<prompt>$ </prompt><userinput>./build-rpm.sh</userinput></screen>These
+                    commands leave an <literal>.rpm</literal> file in
+                    the <literal>rpmbuild/RPMS/noarch/</literal>
+                    directory. </para>
+                        </step>
+                        <step>
                             <para>Pack the RPM packages to a
-                                Supplemental Pack, using the XenServer
-                                DDK (the following command should be
-                                issued on the XenServer DDK virtual
-                                appliance, after the produced rpm file
-                                has been copied over):
-                                <screen>
-<prompt>$ </prompt><userinput>/usr/bin/build-supplemental-pack.sh \</userinput>
+                    Supplemental Pack, using the XenServer DDK (the
+                    following command should be issued on the
+                    XenServer DDK virtual appliance, after the
+                    produced rpm file has been copied over):
+                    <screen><prompt>$ </prompt><userinput>/usr/bin/build-supplemental-pack.sh \</userinput>
 <prompt>&gt; </prompt><userinput>--output=output_directory \</userinput>
 <prompt>&gt; </prompt><userinput>--vendor-code=novaplugin \</userinput>
 <prompt>&gt; </prompt><userinput>--vendor-name=openstack \</userinput>
 <prompt>&gt; </prompt><userinput>--label=novaplugins \</userinput>
 <prompt>&gt; </prompt><userinput>--text="nova plugins" \</userinput>
 <prompt>&gt; </prompt><userinput>--version=0 \</userinput>
-<prompt>&gt; </prompt><userinput>full_path_to_rpmfile</userinput>
-</screen>
-                                The above command should produce an
-                                   <literal>.iso</literal> file in the
-                                output directory specified. Copy that
-                                file to the hypervisor. </para>
-                        </listitem>
-                        <listitem>
+<prompt>&gt; </prompt><userinput>full_path_to_rpmfile</userinput></screen>This
+                    command produces an <literal>.iso</literal> file
+                    in the output directory specified. Copy that file
+                    to the hypervisor. </para>
+                        </step>
+                        <step>
                             <para>Install the Supplemental Pack. Log
-                                in to the hypervisor, and issue:
-                                <screen>
-<prompt># </prompt><userinput>xe-install-supplemental-pack path_to_isofile</userinput>
-</screen>
-                            </para>
-                        </listitem>
-                    </itemizedlist>
-
+                    in to the hypervisor, and issue:
+                    <screen><prompt># </prompt><userinput>xe-install-supplemental-pack path_to_isofile</userinput></screen></para>
+                        </step>
+                    </procedure>
 </section>
-
+</section>
