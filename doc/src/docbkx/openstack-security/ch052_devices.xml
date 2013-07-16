@@ -20,7 +20,22 @@
     </section>
     <section xml:id="ch052_devices-idp488320">
       <title>Virtual Hardware (QEMU)</title>
-      <para>When running a virtual machine, virtual hardware is a software layer that provides the hardware interface for the virtual machine. Instances use this functionality to provide network, storage, video, and and other devices that may be needed. With this in mind, most instances in your environment will exclusively use virtual hardware, with a minority that will require direct hardware access. The major open source hypervisors use QEMU for this functionality. While QEMU fills an important need for virtualization platforms, it has proven to be a very challenging software project to write and maintain. Much of the functionality in QEMU is implemented with low-level code that is difficult for most developers to comprehend. Furthermore, the hardware virtualized by QEMU includes many legacy devices that have their own set of quirks. Putting all of this together, QEMU has been the source of many security problems, including hypervisor breakout attacks.</para>
+      <para>When running a virtual machine, virtual hardware is a
+      software layer that provides the hardware interface for the
+      virtual machine. Instances use this functionality to provide
+      network, storage, video, and other devices that may be needed.
+      With this in mind, most instances in your environment will
+      exclusively use virtual hardware, with a minority that will
+      require direct hardware access. The major open source
+      hypervisors use QEMU for this functionality. While QEMU fills an
+      important need for virtualization platforms, it has proven to be
+      a very challenging software project to write and maintain. Much
+      of the functionality in QEMU is implemented with low-level code
+      that is difficult for most developers to comprehend.
+      Furthermore, the hardware virtualized by QEMU includes many
+      legacy devices that have their own set of quirks. Putting all of
+      this together, QEMU has been the source of many security
+      problems, including hypervisor breakout attacks.</para>
       <para>For the reasons stated above, it is important to take proactive steps to harden QEMU. We recommend three specific steps: minimizing the codebase, using compiler hardening, and using mandatory access controls, for example: sVirt, SELinux, or AppArmor.</para>
       <section xml:id="ch052_devices-idp490976">
         <title>Minimizing the Qemu Codebase</title>
@@ -79,7 +94,16 @@ CFLAGS="-arch x86_64 -fstack-protector-all -Wstack-protector --param ssp-buffer-
           <para><emphasis role="bold">Hypervisor threats</emphasis> A compromised application running within a virtual machine attacks the hypervisor to access underlying resources (e.g. the host OS, applications, or devices within the physical machine). This is a threat vector unique to virtualization and represents considerable risk as the underlying real machine can be compromised due to vulnerability in a single virtual application.</para>
         </listitem>
 <listitem>
-          <para><emphasis role="bold">Virtual Machine (multi-tenant) threats</emphasis> A compromised application running within a VM attacks the hypervisor to access/control another virtual machine and its resources. This is a threat vector unique to virtualization and represents considerable risk as a multitide of virtual machine file images could be compromised due to vulnerability in a single application. This virtual network attack is a major concern as the administrative techniques for protecting real networks do not directly apply to the virtual environment.</para>
+          <para><emphasis role="bold">Virtual Machine (multi-tenant)
+            threats</emphasis> A compromised application running
+          within a VM attacks the hypervisor to access/control another
+          virtual machine and its resources. This is a threat vector
+          unique to virtualization and represents considerable risk as
+          a multitude of virtual machine file images could be
+          compromised due to vulnerability in a single application.
+          This virtual network attack is a major concern as the
+          administrative techniques for protecting real networks do
+          not directly apply to the virtual environment.</para>
         </listitem>
 </itemizedlist>
       <para>Each KVM-based virtual machine is a process which is labeled by SELinux, effectively establishing a security boundary around each virtual machine. This security boundary is monitored and enforced by the Linux kernel, restricting the virtual machine's access to resources outside of its boundary such as host machine data files or other VMs.</para>
