@@ -62,10 +62,10 @@ NETMASK=255.255.255.0
             xlink:href="https://bugzilla.redhat.com/show_bug.cgi?id=734346"
             >https://bugzilla.redhat.com/show_bug.cgi?id=734346</link> /usr/bin/nova-dhcpbridge: No such file or
             directory.</para>
-        <para>If RHEL 6.2 based, use the openstack-config package to
-            turn off force DHCP releases.</para>
+        <para>If you are using a distribution based on RHEL 6.2 or earlier, use the <command>openstack-config</command> utility to
+              turn off forced DHCP releases:</para>
         <screen><prompt>$></prompt> <userinput>sudo openstack-config --set /etc/nova/nova.conf DEFAULT force_dhcp_release False</userinput></screen>
-        <para>If RHEL 6.3 based, install dnsmasq utilities.</para>
+        <para>If you are using a distribution based on RHEL 6.3 or later, install the dnsmasq utilities (<package>dnsmasq-utils</package>) package, which provides support for forced DHCP releases:</para>
         <screen><prompt>$></prompt> <userinput>sudo yum install dnsmasq-utils</userinput></screen>
         <para os="rhel;centos;fedora">If you intend to use guest images that don't have a single partition, then allow libguestfs to inspect the image so that files can be injected, by setting:
         </para>
