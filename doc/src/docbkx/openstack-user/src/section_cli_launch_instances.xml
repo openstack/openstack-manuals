@@ -4,7 +4,6 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="cli_launch_instances">
     <title>Launch instances</title>
-
     <para>Instances are virtual machines that run inside the
         cloud.</para>
     <para>You can launch an instance directly from one of the
@@ -12,129 +11,178 @@
         copied to a persistent volume. The OpenStack Image Service
         provides a pool of images that are accessible to members of
         different projects.</para>
-    <para>To launch an instance, you must specify the following
-        parameters:</para>
-    <itemizedlist>
-        <listitem>
-            <para>The <guilabel>instance source</guilabel>, which is
-                an image or snapshot. Alternatively, you can boot from
-                a volume, which is block storage, to which you've
-                copied an image or snapshot.</para>
-        </listitem>
-        <listitem>
-            <para>The <guilabel>image</guilabel> or
-                    <guilabel>snapshot</guilabel>, which represents
-                the operating system.</para>
-        </listitem>
-        <listitem>
-            <para>A <guilabel>name</guilabel> for your instance.
-            </para>
-        </listitem>
-        <listitem>
-            <para>The <emphasis role="bold">flavor</emphasis> for your
-                instance, which defines the compute, memory, and
-                storage capacity of nova computing instances. A flavor
-                is an available hardware configuration for a server.
-                It defines the "size" of a virtual server that can be
-                launched. For more details and a list of default
-                flavors available, see Section 1.5, "Managing
-                Flavors," (↑ User Guide for Administrators ). </para>
-        </listitem>
-        <listitem>
-            <para>Access and security credentials, which include one
-                or both of the following credentials:</para>
-            <itemizedlist>
-                <listitem>
-                    <para>A <emphasis role="bold">keypair</emphasis>
-                        for your instance, which are SSH credentials
-                        that are injected into images when they are
-                        launched. For this to work, the image must
-                        contain the <literal>cloud-init</literal>
-                        package. Create at least one keypair for each
-                        project. If you already have generated a
-                        keypair with an external tool, you can import
-                        it into OpenStack. You can use the keypair for
-                        multiple instances that belong to that
-                        project. For details, refer to Section 1.5.1,
-                        Creating or Importing Keys. </para>
-                </listitem>
-                <listitem>
-                    <para>A <emphasis role="bold">security
-                            group</emphasis>, which defines which
-                        incoming network traffic is forwarded to
-                        instances. Security groups hold a set of
-                        firewall policies, known as <emphasis
-                            role="italic">security group
-                            rules</emphasis>. For details, see xx.
-                    </para>
-                </listitem>
-            </itemizedlist>
-        </listitem>
-        <listitem>
-            <para>If needed, you can assign a <emphasis role="bold"
-                    >floating (public) IP address</emphasis> to a
-                running instance and attach a block storage device, or
-                volume, for persistent storage. For details, see
-                Section 1.5.3, Managing IP Addresses and Section 1.7,
-                Managing Volumes.</para>
-        </listitem>
-    </itemizedlist>
-    <procedure>
-        <title>To launch an instance:</title>
-        <para>After you gather the parameters you need to launch an
-            instance, you can launch it.</para>
+    <para>After you gather the <link
+        xlink:href="instance_parameters">parameters you need
+        to launch an instance</link>, you can launch
+        it.</para>
+ <section xml:id="launch_from_image"><title>Launch instance from an image</title><para>Use this procedure to launch an instance from an image.</para>   <procedure>
+        <title>To gather the parameters you need to launch an instance</title>
         <step>
             <para>On a shell, source the OpenStack RC file. See <xref
                     linkend="cli_openrc"/>. </para>
         </step>
         <step>
             <para>List the available flavors:</para>
-            <programlisting language="bash"><prompt>$</prompt> nova flavor-list</programlisting>
+            <screen><prompt>$</prompt> nova flavor-list</screen>
+            <screen><computeroutput>+----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
+| ID | Name      | Memory_MB | Disk | Ephemeral | Swap | VCPUs | RXTX_Factor | Is_Public |
++----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
+| 1  | m1.tiny   | 512       | 0    | 0         |      | 1     | 1.0         | True      |
+| 2  | m1.small  | 2048      | 20   | 0         |      | 1     | 1.0         | True      |
+| 3  | m1.medium | 4096      | 40   | 0         |      | 2     | 1.0         | True      |
+| 4  | m1.large  | 8192      | 80   | 0         |      | 4     | 1.0         | True      |
+| 42 | m1.nano   | 64        | 0    | 0         |      | 1     | 1.0         | True      |
+| 5  | m1.xlarge | 16384     | 160  | 0         |      | 8     | 1.0         | True      |
+| 84 | m1.micro  | 128       | 0    | 0         |      | 1     | 1.0         | True      |
++----+-----------+-----------+------+-----------+------+-------+-------------+-----------+</computeroutput></screen>
             <para>Note the ID of the flavor that you want to use for
                 your instance. </para>
         </step>
         <step>
             <para>List the available images:</para>
-            <programlisting language="bash"><prompt>$</prompt> nova image-list</programlisting>
+            <screen><prompt>$</prompt> <userinput>nova image-list</userinput></screen>
+            <screen><computeroutput>+--------------------------------------+---------------------------------+--------+--------+
+| ID                                   | Name                            | Status | Server |
++--------------------------------------+---------------------------------+--------+--------+
+| 397e713c-b95b-4186-ad46-6126863ea0a9 | cirros-0.3.1-x86_64-uec         | ACTIVE |        |
+| df430cc2-3406-4061-b635-a51c16e488ac | cirros-0.3.1-x86_64-uec-kernel  | ACTIVE |        |
+| 3cf852bd-2332-48f4-9ae4-7d926d50945e | cirros-0.3.1-x86_64-uec-ramdisk | ACTIVE |        |
++--------------------------------------+---------------------------------+--------+--------+</computeroutput></screen>
+            <para>You can also filter the image list by using grep to
+                find a specific image, like this: </para>
+            <screen><prompt>$</prompt> <userinput>nova image-list | grep 'kernel'</userinput></screen>
+            <screen><computeroutput>| df430cc2-3406-4061-b635-a51c16e488ac | cirros-0.3.1-x86_64-uec-kernel  | ACTIVE |        |</computeroutput></screen>
             <para>Note the ID of the image that you want to boot your
                 instance from. </para>
         </step>
         <step>
             <para>List the available security groups:</para>
-            <programlisting language="bash"><prompt>$</prompt> nova secgroup-list</programlisting>
+            <note>
+                <para>If you are an admin user, specify the
+                        <literal>--all-tenants</literal> parameter to
+                    list groups for all tenants. </para>
+            </note>
+            <screen><prompt>$</prompt> <userinput>nova secgroup-list --all-tenants</userinput></screen>
+            <screen><computeroutput>+----+---------+-------------+
+| Id | Name    | Description |
++----+---------+-------------+
+| 2  | default | default     |
++----+---------+-------------+</computeroutput></screen>
             <para>If you have not created any security groups, you can
                 assign the instance to only the default security
                 group. </para>
+            <para>You can also list rules for a specified security
+                group:</para>
+            <screen><prompt>$</prompt> <userinput>nova secgroup-list-rules default</userinput>           </screen>
+            <screen><computeroutput>+-------------+-----------+---------+----------+--------------+
+| IP Protocol | From Port | To Port | IP Range | Source Group |
++-------------+-----------+---------+----------+--------------+
++-------------+-----------+---------+----------+--------------+</computeroutput></screen>
+            <para>In this example, the default security group has been
+                modified to allow HTTP traffic on the instance by
+                permitting TCP traffic on Port 80.</para>
         </step>
         <step>
-            <para>List the keypairs. </para>
-            <programlisting><prompt>$</prompt> nova keypair-list</programlisting>
+            <para>List the available keypairs. </para>
+            <screen><prompt>$</prompt> <userinput>nova keypair-list</userinput></screen>
+            <screen><computeroutput>+------+-------------+
+| Name | Fingerprint |
++------+-------------+
++------+-------------+</computeroutput></screen>
             <para>Note the name of the keypair that you use for SSH
                 access.</para>
         </step>
-        <step>
-            <para>Now you have all the parameters required to launch
-                an instance, run the following command:</para>
-            <programlisting language="bash"><prompt>$</prompt> nova boot --flavor FLAVOR_ID --imageIMAGE_ID --key_name KEY_NAME \
-        --security_group NAME_OF_SEC_GROUP NAME_FOR_INSTANCE </programlisting>
-            <para>The command returns a list of instance properties,
-                including the status of the instance. </para>
-            <para>The status BUILD indicates that the instance has
-                started, but is not yet online. </para>
-        </step>
-        <step>
-            <para>Check if the instance is online:</para>
-            <programlisting language="bash"><prompt>$</prompt> nova list</programlisting>
+</procedure>
+<procedure><title>To launch an instance from an image</title>
+     <step>
+         <para>Now you have all the parameters required to launch
+             an instance, run the following command. Specify the
+             server name, flavor ID, and image ID. Optionally, you
+             can provide a key name for access control and security
+             group for security. You can also include metadata key
+             and value pairs. For example you can add a description
+             for your server by providing the <parameter>--meta
+                 description="My Server"</parameter>
+             parameter.</para>
+         <screen><prompt>$</prompt> <userinput>nova boot --flavor FLAVOR_ID --image IMAGE_ID --key_name KEY_NAME \
+--security_group NAME_OF_SEC_GROUP NAME_FOR_INSTANCE --meta KEY=VALUE --meta KEY=VALUE</userinput></screen>
+         <para>The command returns a list of server properties. </para>
+         <para>A status of <literal>BUILD</literal> indicates that the
+                    instance has started, but is not yet online. </para>
+         <para>A status of <literal>ACTIVE</literal> indicates that
+             your server is active. </para>
+         <informalexample>
+             <screen><computeroutput><?db-font-size 70%?>+-------------------------------------+--------------------------------------+
+| Property                            | Value                                |
++-------------------------------------+--------------------------------------+
+| OS-EXT-STS:task_state               | scheduling                           |
+| image                               | cirros-0.3.1-x86_64-uec              |
+| OS-EXT-STS:vm_state                 | building                             |
+| OS-EXT-SRV-ATTR:instance_name       | instance-00000002                    |
+| flavor                              | m1.small                             |
+| id                                  | b3cdc6c0-85a7-4904-ae85-71918f734048 |
+| security_groups                     | [{u'name': u'default'}]              |
+| user_id                             | 376744b5910b4b4da7d8e6cb483b06a8     |
+| OS-DCF:diskConfig                   | MANUAL                               |
+| accessIPv4                          |                                      |
+| accessIPv6                          |                                      |
+| progress                            | 0                                    |
+| OS-EXT-STS:power_state              | 0                                    |
+| OS-EXT-AZ:availability_zone         | nova                                 |
+| config_drive                        |                                      |
+| status                              | BUILD                                |
+| updated                             | 2013-07-16T16:25:34Z                 |
+| hostId                              |                                      |
+| OS-EXT-SRV-ATTR:host                | None                                 |
+| key_name                            | None                                 |
+| OS-EXT-SRV-ATTR:hypervisor_hostname | None                                 |
+| name                                | myCirrosServer                       |
+| adminPass                           | tVs5pL8HcPGw                         |
+| tenant_id                           | 66265572db174a7aa66eba661f58eb9e     |
+| created                             | 2013-07-16T16:25:34Z                 |
+| metadata                            | {}                                   |
++-------------------------------------+--------------------------------------</computeroutput></screen>
+         </informalexample>
+         <para>Copy the server ID value from the
+             <literal>id</literal> field in the output. You use
+             this ID to get details for or delete your server. </para>
+         <para>Copy the administrative password value from the
+             <literal>adminPass</literal> field. You use this
+             value to log into your server.</para>
+    
+               <note> <para>Arbitrary local files can also be placed into
+                    the instance file system at creation time using
+                    the <literal>--file
+                        &lt;dst-path=src-path&gt;</literal> option.
+                    You may store up to 5 files. For example if you
+                    have a special authorized_keys file named
+                        <filename>special_authorized_keysfile</filename>
+                    that you want to put on the instance rather than
+                    using the regular <link
+                        linkend="nova_cli_associatekey">ssh key
+                        injection</link> for some reason you can use
+                    the following
+                    command:<screen> <prompt>$</prompt><userinput>nova boot --image ubuntu-cloudimage --flavor 1 --file /root/.ssh/authorized_keys=special_authorized_keysfile</userinput></screen></para></note>
+     </step>
+     <step>
+         <para>Check if the instance is online:</para>
+         <screen><prompt>$</prompt> <userinput>nova list</userinput></screen>
+         <screen><computeroutput>+--------------------------------------+----------------------+--------+------------+-------------+------------------+
+             | ID                                   | Name                 | Status | Task State | Power State | Networks         |
+             +--------------------------------------+----------------------+--------+------------+-------------+------------------+
+             | 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5 | myCirrosServer       | ACTIVE | None       | Running     | private=10.0.0.3 |
+             | 8a99547e-7385-4ad1-ae50-4ecfaaad5f42 | myInstanceFromVolume | ACTIVE | None       | Running     | private=10.0.0.4 |
++--------------------------------------+----------------------+--------+------------+-------------+------------------+</computeroutput></screen>
             <para>This command lists all instances of the project you
                 belong to, including their ID, their name, their
                 status, and their private (and if assigned, their
                 public) IP addresses. </para>
-            <para>If your instance's status is ACTIVE, the instance is
-                online. </para>
+            <para>If the status for the instance is ACTIVE, the
+                instance is online. </para>
             <para>To view the available options for the <command>nova
                     list</command> command, run the following
                 command:</para>
-            <programlisting language="bash"><prompt>$</prompt> nova help list</programlisting>
+            <screen><prompt>$</prompt> <userinput>nova help list</userinput></screen>
         </step>
         <step>
             <para>If you did not provide a keypair, security groups,
@@ -144,5 +192,6 @@
             <para>To change this, proceed to <xref
                     linkend="cli_configure_instances"/>.</para>
         </step>
-    </procedure>
+    </procedure></section>
+    <xi:include href="../../common/boot_from_volume.xml"/>
 </section>

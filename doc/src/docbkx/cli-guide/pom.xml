@@ -1,19 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  
   <modelVersion>4.0.0</modelVersion>
-  
   <groupId>org.openstack.docs</groupId>
   <artifactId>openstack-cli-guide</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>OpenStack CLI Guides</name>
-  
   <!-- ################################################ -->
   <!-- USE "mvn clean generate-sources" to run this POM -->
-  <!-- ################################################ -->
-  
+  <!-- ################################################ --> 
   <build>
     <plugins>   
       <plugin>
@@ -37,8 +33,9 @@
                 appendix  toc,title
                 article/appendix  nop
                 article   toc,title
-                book      toc,title,figure,table,example,equation
-                chapter   toc,title
+                book      toc,title,figure,example,equation
+                chapter   toc
+                section   toc
                 part      toc,title
                 preface   toc,title
                 qandadiv  toc
@@ -77,7 +74,6 @@
 	      </postProcess>
 	    </configuration>
 	  </execution>
-
         </executions>
         <configuration>
           <!-- These parameters apply to pdf and webhelp -->
@@ -88,6 +84,7 @@
           </includes>
           <!--<canonicalUrlBase>http://docs.openstack.org/cli/content/</canonicalUrlBase>-->
           <profileSecurity>reviewer</profileSecurity>
+          <profileAudience>users</profileAudience>
           <branding>openstack</branding>
 	</configuration>
       </plugin>
@@ -115,5 +112,4 @@
       </pluginRepositories>
     </profile>
   </profiles>
-
 </project>

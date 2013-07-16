@@ -5,100 +5,138 @@
     xmlns:xlink="http://www.w3.org/1999/xlink"
     version="5.0"
     xml:id="images">
-
-    <title>Manage Images</title>
-  <para>
-
-Adding images and setting the access to them can be managed in Glance, but you
-can create images by taking a snapshot of a running instance and view
-available images, set or delete image metadata, and delete an image, using the
-nova CLI.
-
-</para>
-    <itemizedlist>
-        <listitem>
-            <para>
-                        <emphasis role="bold">Write data to disk</emphasis></para>
-                    <para> Before creating the image, ensure that you are not missing any buffered
-                content that wouldn't have been written to the instance's disk. See the <link
+    <title>Manage images</title>
+  <para>You can use the glance client to add images and set access for
+        images. </para>
+    <para>You can also use the nova client to take a snapshot of a
+        running instance to create a new image, list images, set and
+        delete image metadata, and delete images. </para>
+    <para>The safest approach is to shut down the instance before you
+        take a snapshot.</para>
+    <para>You cannot create a snapshot from an instance that has an
+        attached volume. Detach the volume, create the image, and
+        re-mount the volume.</para>
+    <procedure><title>To create an image</title>
+        <step>
+            <para>Write any buffered data to disk.</para>
+                    <para>For more information, see the <link
                     xlink:href="http://docs.openstack.org/trunk/openstack-ops/content/snapsnots.html"
-                    >Taking Snapshots Section of the OpenStack Operations Guide</link> for
-                information on how to do this. The safest approach is to shut down the instance
-                before taking a snapshot.</para>
-        </listitem>
-        <listitem>
-                    <para>
-                        <emphasis role="bold">Create the image</emphasis>
-                    </para>
-                    <para> To create the image, get the server ID:
-                <screen><prompt>$</prompt> <userinput>nova list</userinput>
-<computeroutput>+--------------------------------------+------------+--------+--------------------+
-| ID                                   | Name       | Status | Networks           |
-+--------------------------------------+------------+--------+--------------------+
-| 5717b98d-3766-43af-8570-51d6e5d38aaf | my-server  | ACTIVE | private=20.10.0.14 |
-+--------------------------------------+------------+--------+--------------------+
-</computeroutput></screen>In
-                this example, the server's name is <literal>my-server</literal>::
-                <screen><prompt>$</prompt> <userinput>nova image-create my-server my-image</userinput></screen>
-                The command creates a qemu snapshot and automatically uploads the image to your repository. <note>
-                    <para> The created image is flagged as "Private" (In glance,
-                            <literal>--is-public=False</literal>). Only the tenant has access to the image. </para>
-                </note>
+                    >Taking Snapshots</link> in the
+                    <citetitle>OpenStack Operations Guide</citetitle>. </para>
+        </step>
+        <step>   
+                    <para>To create the image, list instances to get
+                the server ID:</para>
+                <screen><prompt>$</prompt> <userinput>nova list</userinput></screen><screen><computeroutput>+--------------------------------------+----------------------+--------+------------+-------------+------------------+
+| ID                                   | Name                 | Status | Task State | Power State | Networks         |
++--------------------------------------+----------------------+--------+------------+-------------+------------------+
+| 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5 | myCirrosServer       | ACTIVE | None       | Running     | private=10.0.0.3 |
++--------------------------------------+----------------------+--------+------------+-------------+------------------+</computeroutput></screen><para>In this example, the server is named
+                    <literal>myCirrosServer</literal>. Use this server
+                to create a snapshot, as follows:
+                <screen><prompt>$</prompt> <userinput>nova image-create myCirrosServer myCirrosImage</userinput></screen>The
+                command creates a qemu snapshot and automatically
+                uploads the image to your repository. Only the tenant
+                that creates the image has access to it. 
             </para>
-                </listitem>
-                <listitem>
-                    <para>
-                        <emphasis role="bold">Check image status</emphasis>
-                    </para>
-                    <para> After a while the image state will change from <literal>SAVING</literal>
-                state to <literal>ACTIVE</literal>. Use the <command>nova image-list</command>
-                command to check the
-                status.<programlisting><prompt>$</prompt> <userinput>nova image-list</userinput>
-<computeroutput>+--------------------------------------+----------------- ---+--------+--------------------------------------+
-| ID                                   | Name                | Status | Server                               |
-+--------------------------------------+---------------------+--------+--------------------------------------+
-| e4d3dabb-c258-4458-9a48-3e1237b44cfa | my-image            | SAVING | 5717b98d-3766-43af-8570-51d6e5d38aaf |
-| a75be4af-ac35-4704-9f90-f2c903471b5f | cirros-0.3.0-x86_64 | ACTIVE |                                      |
-+--------------------------------------+---------------------+--------+--------------------------------------+
-</computeroutput>                       </programlisting>
-            </para>
-                </listitem>
-                <listitem>
-                    <para>
-                        <emphasis role="bold">Create an instance from the image</emphasis>
-                    </para>
-                    <para>You can now create an instance based on this image as you normally do for
-                other images
-                :<screen><prompt>$</prompt> <userinput>nova boot --flavor m1.medium --image my-image New_server</userinput></screen>
-            </para>
-                </listitem>
-                <listitem>
-                    <para>
-                        <emphasis role="bold"> Troubleshooting </emphasis>
-                    </para>
-                    <para>In general, it shouldn't take more than about five minutes for the image
-                to transition from  SAVING" to <literal>ACTIVE</literal> . If this takes longer than
-                five minutes, here are several hints: </para>
-            <itemizedlist>
-                <listitem>
-                    <para>The feature doesn't work while you have attached a volume to the instance.
-                        Thus, you should detach the volume first, create the image, and re-mount the
-                        volume.</para>
-                </listitem>
-                <listitem>
-                    <para>Make sure the version of qemu you are using is version 0.14 or greater.
-                        Using an older version of qemu will result in an "<literal>unknown option
-                            -s</literal>" error message in
+                </step>
+                <step>
+                    <para>Get details for your image to check its
+                status:</para><screen><prompt>$</prompt> <userinput>nova image-show <replaceable>IMAGE</replaceable></userinput></screen><screen><computeroutput>+-------------------------------------+--------------------------------------+
+| Property                            | Value                                |
++-------------------------------------+--------------------------------------+
+| metadata owner_id                   | 66265572db174a7aa66eba661f58eb9e     |
+| minDisk                             | 0                                    |
+| metadata instance_type_name         | m1.small                             |
+| metadata instance_type_id           | 5                                    |
+| metadata instance_type_memory_mb    | 2048                                 |
+| id                                  | 7e5142af-1253-4634-bcc6-89482c5f2e8a |
+| metadata instance_type_root_gb      | 20                                   |
+| metadata instance_type_rxtx_factor  | 1                                    |
+| metadata ramdisk_id                 | 3cf852bd-2332-48f4-9ae4-7d926d50945e |
+| metadata image_state                | available                            |
+| metadata image_location             | snapshot                             |
+| minRam                              | 0                                    |
+| metadata instance_type_vcpus        | 1                                    |
+| status                              | ACTIVE                               |
+| updated                             | 2013-07-22T19:46:42Z                 |
+| metadata instance_type_swap         | 0                                    |
+| metadata instance_type_vcpu_weight  | None                                 |
+| metadata base_image_ref             | 397e713c-b95b-4186-ad46-6126863ea0a9 |
+| progress                            | 100                                  |
+| metadata instance_type_flavorid     | 2                                    |
+| OS-EXT-IMG-SIZE:size                | 14221312                             |
+| metadata image_type                 | snapshot                             |
+| metadata user_id                    | 376744b5910b4b4da7d8e6cb483b06a8     |
+| name                                | myCirrosImage                        |
+| created                             | 2013-07-22T19:45:58Z                 |
+| metadata instance_uuid              | 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5 |
+| server                              | 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5 |
+| metadata kernel_id                  | df430cc2-3406-4061-b635-a51c16e488ac |
+| metadata instance_type_ephemeral_gb | 0                                    |
++-------------------------------------+--------------------------------------+</computeroutput></screen>
+                   <para>After a while, the image status changes from
+                    <literal>SAVING</literal> to
+                    <literal>ACTIVE</literal>.  Only the tenant who
+                creates the image has access to it. </para>
+                </step>
+                <step>
+                    
+                    <para>You can launch an instance from this image.
+                Include the image ID and flavor ID, as follows:</para>
+<screen><prompt>$</prompt> <userinput>nova boot newServer --image 7e5142af-1253-4634-bcc6-89482c5f2e8a --flavor 3</userinput></screen>
+<screen><computeroutput>+-------------------------------------+--------------------------------------+
+| Property                            | Value                                |
++-------------------------------------+--------------------------------------+
+| OS-EXT-STS:task_state               | scheduling                           |
+| image                               | myCirrosImage                        |
+| OS-EXT-STS:vm_state                 | building                             |
+| OS-EXT-SRV-ATTR:instance_name       | instance-00000007                    |
+| flavor                              | m1.medium                            |
+| id                                  | d7efd3e4-d375-46d1-9d57-372b6e4bdb7f |
+| security_groups                     | [{u'name': u'default'}]              |
+| user_id                             | 376744b5910b4b4da7d8e6cb483b06a8     |
+| OS-DCF:diskConfig                   | MANUAL                               |
+| accessIPv4                          |                                      |
+| accessIPv6                          |                                      |
+| progress                            | 0                                    |
+| OS-EXT-STS:power_state              | 0                                    |
+| OS-EXT-AZ:availability_zone         | nova                                 |
+| config_drive                        |                                      |
+| status                              | BUILD                                |
+| updated                             | 2013-07-22T19:58:33Z                 |
+| hostId                              |                                      |
+| OS-EXT-SRV-ATTR:host                | None                                 |
+| key_name                            | None                                 |
+| OS-EXT-SRV-ATTR:hypervisor_hostname | None                                 |
+| name                                | newServer                            |
+| adminPass                           | jis88nN46RGP                         |
+| tenant_id                           | 66265572db174a7aa66eba661f58eb9e     |
+| created                             | 2013-07-22T19:58:33Z                 |
+| metadata                            | {}                                   |
++-------------------------------------+--------------------------------------+</computeroutput></screen>
+                </step>           
+            </procedure>
+    <simplesect xml:id="troubleshoot"><title>Troubleshoot image creation</title>
+   
+    <itemizedlist>
+            <listitem>
+                <para>You cannot create a snapshot from an instance
+                    that has an attached volume. Detach the volume,
+                    create the image, and re-mount the volume.</para>
+            </listitem>
+            <listitem>
+                <para>Make sure the version of qemu you are using is
+                    version 0.14 or greater. Older versions of qemu
+                    result in an "<literal>unknown option
+                    -s</literal>" error message in the
                         <filename>nova-compute.log</filename>.</para>
-                </listitem>
-                <listitem>
-                    <para>Examine the <filename>/var/log/nova-api.log</filename> and
-                            <filename>/var/log/nova-compute.log</filename> log files for
-                            error messages.</para>
-                </listitem>
-            </itemizedlist>
-                </listitem>
-            </itemizedlist>
-
-
+            </listitem>
+            <listitem>
+                <para>Examine the
+                        <filename>/var/log/nova-api.log</filename> and
+                        <filename>/var/log/nova-compute.log</filename>
+                    log files for error messages.</para>
+            </listitem>
+    </itemizedlist></simplesect>
 </section>

@@ -1,145 +1,120 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section [
+        <!-- Some useful entities borrowed from HTML -->
+        <!ENTITY ndash  "&#x2013;">
+        <!ENTITY mdash  "&#x2014;">
+        <!ENTITY hellip "&#x2026;">  
+        <!-- Useful for describing APIs -->
+        <!ENTITY GET    '<command xmlns="http://docbook.org/ns/docbook">GET</command>'>
+        <!ENTITY PUT    '<command xmlns="http://docbook.org/ns/docbook">PUT</command>'>
+        <!ENTITY POST   '<command xmlns="http://docbook.org/ns/docbook">POST</command>'>
+        <!ENTITY DELETE '<command xmlns="http://docbook.org/ns/docbook">DELETE</command>'>      
+]>
 <section xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="cli_configure_instances">
-    <title>Configure access to instances</title>
-    <para>The following parameters influence access to an
-        instance:</para>
-
-    <itemizedlist>
-
-        <listitem>
-            <para><emphasis role="bold">Keypairs</emphasis>. SSH
-                credentials that are injected into images when they
-                are launched. For this to work, the image must contain
-                the <literal>cloud-init</literal> package. Create at
-                least one keypair for each project. For SSH access to
-                an instance, you usually provide a keypair at launch
-                time. </para>
-            <para>If you already have generated a keypair with an
-                external tool, you can import it into OpenStack. You
-                can use the keypair for multiple instances that belong
-                to that project. In case an image uses a static root
-                password or a static key set (neither is recommended),
-                you do not must provide a keypair on starting of the
-                instance. </para>
-        </listitem>
-        <listitem>
-            <para><emphasis role="bold">Security group</emphasis>.
-                Defines which incoming network traffic is forwarded to
-                instances. Security groups hold a set of firewall
-                policies, known as <emphasis role="italic">security
-                    group rules</emphasis>. The security rules need
-                adjustment, because the default rules block access to
-                SSH ports and prevent pinging an instance. You manage
-                security groups with the <command>nova
-                    secgroup-*</command> commands, provided by the
-                    <literal>python-novaclient</literal>
-                package.</para>
-        </listitem>
-        <listitem>
-            <para>Security Group Rules. You can adjust rules of the
-                default security group as well as rules of any other
-                security group that has been created. </para>
-            <para>As soon as the rules for a group are modified, the
-                new rules are automatically applied to all running
-                instances belonging to that security group. </para>
-            <para>Adjust the rules in a security group to allow access
-                to instances via different ports and protocols. This
-                is necessary to be able to access instances via SSH,
-                to ping them, or to allow UDP traffic (for example,
-                for a DNS server running on an instance). </para>
-            <para>Rules in security groups are specified by the
-                following parameters: </para>
-            <para>
-                <itemizedlist>
-                    <listitem>
-                        <para><emphasis role="bold">Source of
-                                traffic</emphasis> Decide whether to
-                            allow traffic to instances only from IP
-                            addresses inside the cloud (from other
-                            group members) or from all IP addresses.
-                        </para>
-                    </listitem>
-                    <listitem>
-                        <para><emphasis role="bold"
-                                >Protocol</emphasis> Choose between
-                            TCP (for SSH), ICMP (for pings), and UDP.
-                        </para>
-                    </listitem>
-                    <listitem>
-                        <para><emphasis role="bold">Destination Port
-                                on Virtual Machine</emphasis> Define a
-                            port range. To open a single port only,
-                            enter the same value twice. ICMP does not
-                            support ports. In that case, enter values
-                            that define the codes and types of ICMP
-                            traffic to be allowed. </para>
-                    </listitem>
-                </itemizedlist>
-            </para>
-            <para>If no further security groups have been created, any
-                instances are automatically assigned to the default
-                security group (if not specified otherwise). </para>
-            <para>Unless you change the rules for the default group,
-                those instances cannot be accessed from any IP
-                addresses outside the cloud. </para>
-        </listitem>
-        <listitem>
-            <para>If needed, you can assign a <emphasis role="bold"
-                    >floating (public) IP address</emphasis> to a
-                running instance and attach a block storage device, or
-                volume, for persistent storage. For details, see
-                Section 1.5.3, Managing IP Addresses and Section 1.7,
-                Managing Volumes.</para>
-        </listitem>
-    </itemizedlist>
+    <title>Set up access and security for instances</title>
+    <para>When you launch a virtual machine, you can inject a
+            <emphasis role="italic">keypair</emphasis>, which provides
+        SSH access to your instance. For this to work, the image must
+        contain the <literal>cloud-init</literal> package. Create at
+        least one keypair for each project. If you generate a keypair
+        with an external tool, you can import it into OpenStack. You
+        can use the keypair for multiple instances that belong to that
+        project. In case an image uses a static root password or a
+        static key set &ndash; neither is recommended &ndash; you must
+        not provide a keypair when you launch the instance. </para>
+    <para>A <emphasis role="italic">security group</emphasis> is a
+        named collection of network access rules that you use to limit
+        the types of traffic that have access to instances. When you
+        launch an instance, you can assign one or more security groups
+        to it. If you do not create security groups, new instances are
+        automatically assigned to the default security group, unless
+        you explicitly specify a different security group. The
+        associated <emphasis role="italic">rules</emphasis> in each
+        security group control the traffic to instances in the group.
+        Any incoming traffic that is not matched by a rule is denied
+        access by default. You can add rules to or remove rules from a
+        security group. You can modify rules for the default and any
+        other security group. </para>
+    <para>You must modify the rules for the default security group
+        because users cannot access instances that use the default
+        group from any IP address outside the cloud. </para>
+    <para>You can modify the rules in a security group to allow access
+        to instances through different ports and protocols. For
+        example, you can modify rules to allow access to instances
+        through SSH, to ping them, or to allow UDP traffic &ndash; for
+        example, for a DNS server running on an instance. You specify
+        the following parameters for rules: </para>
     <itemizedlist>
         <listitem>
-            <para><emphasis role="bold">Floating IP
-                address</emphasis>. To make the instance also
-                accessible from outside the cloud, assign a floating
-                (public) IP address.</para>
+            <para><emphasis role="bold">Source of traffic</emphasis>.
+                Enable traffic to instances from either IP addresses
+                inside the cloud from other group members or from all
+                IP addresses. </para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">Protocol</emphasis>. Choose
+                TCP for SSH, ICMP for pings, or UDP. </para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">Destination port on virtual
+                    machine</emphasis>. Defines a port range. To open
+                a single port only, enter the same value twice. ICMP
+                does not support ports: Enter values to define the
+                codes and types of ICMP traffic to be allowed. </para>
         </listitem>
     </itemizedlist>
+    <para>Rules are automatically enforced as soon as you create or
+        modify them.</para>
+    <para>You can also assign a floating IP address to a running
+        instance to make it accessible from outside the cloud. You
+        assign a floating IP address to an instance and attach a block
+        storage device, or volume, for persistent storage. See <xref
+            linkend="manage_ip_addresses"/>.</para>
     <section xml:id="create_import_keys">
-        <title>Create or import keys</title>
+        <title>Add or import keypairs</title>
         <procedure>
-            <title>To create or import keys:</title>
-            <para>Use the <command>nova keypair-add</command> command
-                to generate a keypair or upload an existing public
-                key. </para>
+            <title>To add or import keys</title>
+            <para>You can generate a keypair or upload an existing
+                public key. </para>
             <step>
                 <para>To generate a keypair, run the following
                     command:</para>
-                <programlisting language="bash" role="gutter: false"><prompt>$</prompt> nova keypair-add KEY_NAME > MY_KEY.pem</programlisting>
-                <para>The command generates a keypair named KEY_NAME,
-                    writing the private key to the file MY_KEY.pem and
-                    registering the public key at the Nova database. </para>
-                <para>To set the permissions of the
-                        <filename>MY_KEY.pem</filename> file, run the
-                    following command:</para>
-                <programlisting language="bash" role="gutter: false"><prompt>$</prompt> chmod 600 MY_KEY.pem</programlisting>
-                <para>The command changes the permissions of the
-                        <filename>MY_KEY.pem</filename> file so that
-                    only you can read and write to it.</para>
+                <screen><prompt>$</prompt> <userinput>nova keypair-add KEY_NAME > MY_KEY.pem</userinput></screen>
+                <para>The command generates a keypair named
+                        <replaceable>KEY_NAME</replaceable>, writes
+                    the private key to the
+                            <filename><replaceable>MY_KEY</replaceable>.pem</filename>
+                    file, and registers the public key at the Nova
+                    database. </para>
             </step>
             <step>
-                <para>If you have already generated a keypair, with
-                    the public key located at
-                        <filename>~/.ssh/id_rsa.pub</filename>, you
-                    can upload the public key with the following
-                    command:</para>
-                <programlisting language="bash" role="gutter: false"><prompt>$</prompt> nova keypair-add --pub_key ~/.ssh/id_rsa.pub KEY_NAME</programlisting>
+                <para>To set the permissions of the
+                            <filename><replaceable>MY_KEY</replaceable>.pem</filename>
+                    file, run the following command:</para>
+                <screen><prompt>$</prompt> <userinput>chmod 600 MY_KEY.pem</userinput></screen>
+                <para>The command changes the permissions of the
+                            <filename><replaceable>MY_KEY</replaceable>.pem</filename>
+                    file so that only you can read and write to
+                    it.</para>
+            </step>
+            <step>
+                <para>If you have already generated a keypair with the
+                    public key located at
+                        <filename>~/.ssh/id_rsa.pub</filename>, run
+                    the following command to upload the public
+                    key:</para>
+                <screen><prompt>$</prompt> <userinput>nova keypair-add --pub_key ~/.ssh/id_rsa.pub KEY_NAME</userinput></screen>
                 <para>The command registers the public key at the Nova
                     database and names the keypair
-                        <literal>KEY_NAME</literal>.</para>
+                            <literal><replaceable>KEY_NAME</replaceable></literal>.</para>
             </step>
             <step>
-                <para>Check if the uploaded keypair appears in the
-                    list of available keypairs:</para>
-                <programlisting language="bash" role="gutter: false"><prompt>$</prompt> nova keypair-list</programlisting>
+                <para>List keypairs to make sure that the uploaded
+                    keypair appears in the list:</para>
+                <screen><prompt>$</prompt> <userinput>nova keypair-list</userinput></screen>
             </step>
         </procedure>
 
@@ -148,80 +123,82 @@
     </section>
     <section xml:id="configure_security_groups_rules">
         <title>Configure security groups and rules</title>
-
-
         <procedure>
-            <title>To list security groups:</title>
+            <title>To list security groups</title>
             <step>
-                <programlisting language="bash" role="gutter: false"><prompt>$</prompt> nova secgroup-list</programlisting>
-                <para>Lists all security groups for the current
-                    project, including the groups'
-                    descriptions.</para>
-            </step>
-        </procedure>
-
-        <procedure>
-            <title>To create a security group:</title>
-            <step>
-                <programlisting language="bash" role="gutter: false"><prompt>$</prompt> nova secgroup-create SEC_GROUP_NAME GROUP_DESCRIPTION</programlisting>
-                <para>Creates a new security group with the specified
-                    name and description. </para>
+                <para>To list all security groups for the current
+                    project, including descriptions, enter the
+                    following command:</para>
+                <screen><prompt>$</prompt> <userinput>nova secgroup-list</userinput></screen>
             </step>
         </procedure>
         <procedure>
-            <title>To delete a security group:</title>
+            <title>To create a security group</title>
             <step>
-                <programlisting language="bash" role="gutter: false"><prompt>$</prompt> nova secgroup-delete SEC_GROUP_NAME </programlisting>
-                <para>Deletes the specified group.</para>
+                <para>To create a security group with a specified name
+                    and description, enter the following
+                    command:</para>
+                <screen><prompt>$</prompt> <userinput>nova secgroup-create SEC_GROUP_NAME GROUP_DESCRIPTION</userinput></screen>
+            </step>
+        </procedure>
+        <procedure>
+            <title>To delete a security group</title>
+            <step>
+                <para>To delete a specified group, enter the following
+                    command:</para>
+                <screen><prompt>$</prompt> <userinput>nova secgroup-delete SEC_GROUP_NAME </userinput></screen>
                 <note>
-                    <title>Deleting Security Groups</title>
-                    <para>The default security group for a project
-                        cannot be deleted. If another group cannot be
-                        deleted, it is because it is still assigned to
-                        a running instance.</para>
+                    <para>You cannot delete the default security group
+                        for a project. Also, you cannot delete a
+                        security group that is assigned to a running
+                        instance. </para>
                 </note>
             </step>
         </procedure>
-
         <procedure>
-            <title>To configure security group rules:</title>
-            <para>Modify security group rules with the nova
-                secgroup-*-rule commands. Proceed as follows: </para>
+            <title>To configure security group rules</title>
+            <para>Modify security group rules with the <command>nova
+                    secgroup-*-rule</command> commands. </para>
             <step>
                 <para>On a shell, source the OpenStack RC file. For
                     details, see <xref linkend="cli_openrc"/>.</para>
             </step>
             <step>
-                <para>Look up the existing rules for a security group:
-                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> nova secgroup-list-rules SEC_GROUP_NAME</programlisting></para>
+                <para>List the existing rules for a security group:
+                    <screen><prompt>$</prompt> <userinput>nova secgroup-list-rules SEC_GROUP_NAME</userinput></screen></para>
             </step>
             <step>
-                <para>To allow SSH access to the instances:</para>
+                <para>To allow SSH access to the instances, choose one
+                    of the following sub-steps:</para>
                 <substeps>
-                    <step>
+                    <step xml:id="sec_group_rule_add">
+                        <title>Add rule for all IP addresses</title>
                         <para>Either from all IP addresses (specified
                             as IP subnet in CIDR notation as
                             0.0.0.0/0):</para>
-                        <programlisting language="bash" role="gutter: false"><prompt>$</prompt> nova secgroup-add-rule SEC_GROUP_NAME tcp 22 22 0.0.0.0/0</programlisting>
+                        <screen><prompt>$</prompt> <userinput>nova secgroup-add-rule SEC_GROUP_NAME tcp 22 22 0.0.0.0/0</userinput></screen>
                     </step>
-                    <step>
+                    <step xml:id="sec_group_rule_add_alt">
+                        <title>Add rule for other security
+                            groups</title>
                         <para>Alternatively, you can allow only IP
                             addresses from other security groups
                             (source groups) to access the specified
                             port: </para>
-                        <programlisting language="bash" role="gutter: false"><prompt>$</prompt> nova secgroup-add-group-rule --ip_proto tcp --from_port 22 \
-     --to_port 22 SEC_GROUP_NAME SOURCE_GROUP_NAME</programlisting>
+                        <screen><prompt>$</prompt> <userinput>nova secgroup-add-group-rule --ip_proto tcp --from_port 22 \
+     --to_port 22 SEC_GROUP_NAME SOURCE_GROUP_NAME</userinput></screen>
                     </step>
                 </substeps>
             </step>
             <step>
-                <para>To allow pinging the instances:</para>
+                <para>To allow pinging the instances, choose from one
+                    of the following sub-steps:</para>
                 <substeps>
                     <step>
                         <para>Either from all IP addresses (specified
                             as IP subnet in CIDR notation as
                             0.0.0.0/0):</para>
-                        <programlisting language="bash" role="gutter: false"><prompt>$</prompt> nova secgroup-add-rule SEC_GROUP_NAME icmp -1 -1 0.0.0.0/0</programlisting>
+                        <screen><prompt>$</prompt> <userinput>nova secgroup-add-rule SEC_GROUP_NAME icmp -1 -1 0.0.0.0/0</userinput></screen>
                         <para>This command allows access to all codes
                             and all types of ICMP traffic,
                             respectively.</para>
@@ -230,165 +207,46 @@
                         <para>Alternatively, you can allow only
                             members of other security groups (source
                             groups) to ping instances:</para>
-                        <programlisting language="bash" role="gutter: false"><prompt>$</prompt> nova secgroup-add-group-rule --ip_proto icmp --from_port -1 \
-     --to_port -1 SEC_GROUP_NAME SOURCE_GROUP_NAME</programlisting>
+                        <screen><prompt>$</prompt> <userinput>nova secgroup-add-group-rule --ip_proto icmp --from_port -1 \
+     --to_port -1 SEC_GROUP_NAME SOURCE_GROUP_NAME</userinput></screen>
                     </step>
                 </substeps>
-
-
             </step>
             <step>
-                <para>To allow access through UDP port (for example,
-                    for a DNS server running on a VM):</para>
+                <para>To allow access through UDP port, such as
+                    allowing access to a DNS server that runs on a VM,
+                    complete one of the following sub-steps:</para>
                 <substeps>
                     <step>
                         <para>Either from all IP addresses (specified
                             as IP subnet in CIDR notation as
                             0.0.0.0/0):
-                            <programlisting language="bash" role="gutter: false"><prompt>$</prompt> nova secgroup-add-rule SEC_GROUP_NAME udp 53 53 0.0.0.0/0</programlisting></para>
+                            <screen><prompt>$</prompt> <userinput>nova secgroup-add-rule SEC_GROUP_NAME udp 53 53 0.0.0.0/0</userinput></screen></para>
                     </step>
                     <step>
                         <para>Alternatively, you can allow only IP
                             addresses from other security groups
                             (source groups) to access the specified
                             port:
-                            <programlisting language="bash" role="gutter: false"><prompt>$</prompt> nova secgroup-add-group-rule --ip_proto udp --from_port 53 \ 
-      --to_port 53 SEC_GROUP_NAME SOURCE_GROUP_NAME</programlisting></para>
+                            <screen><prompt>$</prompt> <userinput>nova secgroup-add-group-rule --ip_proto udp --from_port 53 \ 
+      --to_port 53 SEC_GROUP_NAME SOURCE_GROUP_NAME</userinput></screen></para>
                     </step>
                 </substeps>
             </step>
             <step>
                 <para>To delete security group rules, you must specify
                     the same arguments that you used to create the
-                    rule. For example: To delete the security rule
-                    that you created in Step 3.a: </para>
-                <programlisting language="bash" role="gutter: false"><prompt>$</prompt> nova secgroup-delete-rule SEC_GROUP_NAME tcp 22 22 0.0.0.0/0</programlisting>
+                    rule.</para>
                 <para>To delete the security rule that you created in
-                    Step 3.b:</para>
-                <programlisting language="bash" role="gutter: false"><prompt>$</prompt> nova secgroup-delete-group-rule --ip_proto tcp --from_port 22 \
-     --to_port 22 SEC_GROUP_NAME SOURCE_GROUP_NAME</programlisting>
-            </step>
-        </procedure>
-
-    </section>
-    <section xml:id="manage_ip_addresses">
-        <title>Manage IP addresses</title>
-        <para>Each instance can have two IP addresses: a private
-            (fixed) IP address and a public (floating) one. </para>
-        <para>Private IP addresses are used for communication between
-            instances, and public ones are used for communication with
-            the outside world. </para>
-        <para>When an instance is launched, it is automatically
-            assigned a private IP address, which stays the same until
-            the instance is explicitly terminated. (Rebooting the
-            instance does not have an effect on the private IP
-            address.) </para>
-        <para>A pool of floating IPs is available in OpenStack Nova,
-            as configured by the cloud operator. </para>
-        <para>You can allocate a certain number of these to a
-            project—the maximum number of floating IP addresses per
-            project is defined by the quota. </para>
-        <para>From this set, you can then add a floating IP address to
-            an instance of the project. Floating IP addresses can be
-            dynamically disassociated and associated with other
-            instances of the same project at any time. </para>
-        <para>Before you can assign a floating IP address to an
-            instance, you first must allocate floating IPs to a
-            project. After floating IP addresses have been allocated
-            to the current project, you can assign them to running
-            instances. </para>
-        <para>One floating IP address can be assigned to only one
-            instance at a time. Floating IP addresses can be managed
-            with the <command>nova *floating-ip-*</command> commands,
-            provided by the python-novaclient package.</para>
-
-        <procedure>
-            <title>To list pools with floating IP addresses:</title>
-
-            <step>
-                <programlisting language="bash" role="gutter: false"><prompt>$</prompt> nova floating-ip-pool-list</programlisting>
-
-                <para>Lists the name of all pools that provide
-                    floating IP addresses. </para>
-            </step>
-        </procedure>
-        <procedure>
-            <title>To allocate a floating IP address to the current
-                project:</title>
-            <step>
-                <programlisting language="bash" role="gutter: false"><prompt>$</prompt> nova floating-ip-pool-list</programlisting>
-
-                <para>The output of the command shows the freshly
-                    allocated IP address. If there is more than one
-                    pool of IP addresses available, you can also
-                    specify the pool from which to allocate the IP
-                    address (optional):</para>
-
-                <programlisting language="bash" role="gutter: false"><prompt>$</prompt> floating-ip-create POOL_NAME</programlisting>
-            </step>
-        </procedure>
-
-        <procedure>
-            <title>To list floating IP addresses allocated to the
-                current project:</title>
-
-            <step>
-                <programlisting language="bash" role="gutter: false"><prompt>$</prompt> nova floating-ip-list</programlisting>
-
-                <para>Lists all floating IP addresses that have been
-                    allocated to the current project. If an IP is
-                    already associated with an instance, the output
-                    also shows the instance's IP, the instance's fixed
-                    IP address and the name of the pool that provides
-                    the floating IP address.</para>
-            </step>
-        </procedure>
-        <procedure>
-            <title>To release a floating IP address from the current
-                project:</title>
-            <step>
-
-                <programlisting language="bash" role="gutter: false"><prompt>$</prompt> nova floating-ip-delete FLOATING_IP </programlisting>
-
-                <para>The IP address is put back into the pool of IP
-                    addresses that are available for all projects. If
-                    an IP address is currently assigned to a running
-                    instance, it will automatically be disassociated
-                    from the instance.</para>
-            </step>
-        </procedure>
-        <procedure>
-            <title>To assign a floating IP address to an
-                instance:</title>
-            <step>
-                <programlisting language="bash" role="gutter: false"><prompt>$</prompt> nova add-floating-ip INSTANCE_NAME_OR_ID FLOATING_IP </programlisting>
-                <para>To associate an IP address with an instance, one
-                    or multiple floating IP addresses must be
-                    allocated to the current project. Check this
-                    with:<programlisting language="bash" role="gutter: false"><prompt>$</prompt> nova floating-ip-list</programlisting>In
-                    addition, you must know the instance's name (or
-                    ID). To look up the instances that belong to the
-                    current project, use the <code>nova list</code>
-                    command. </para>
-                <para>After you assign the IP with <command>nova
-                        add-floating-ip</command>, the instance is now
-                    publicly available under the respective floating
-                    IP address (provided you have also configured the
-                    security group rules for the instance
-                    accordingly). For details, see <xref
-                        linkend="configure_security_groups_rules"
-                    />.</para>
-            </step>
-        </procedure>
-        <procedure>
-            <title>To remove a floating IP address from an
-                instance:</title>
-            <step>
-                <programlisting language="bash" role="gutter: false"><prompt>$</prompt>  nova remove-floating-ip INSTANCE_NAME_OR_ID FLOATING_IP </programlisting>
-                <para>To remove a floating IP address from an
-                    instance, you must specify the same arguments that
-                    you used to assign the IP.</para>
+                        <xref linkend="sec_group_rule_add"/>: </para>
+                <screen><prompt>$</prompt> <userinput>nova secgroup-delete-rule SEC_GROUP_NAME tcp 22 22 0.0.0.0/0</userinput></screen>
+                <para>To delete the security rule that you created in
+                        <xref linkend="sec_group_rule_add_alt"
+                    />:</para>
+                <screen><prompt>$</prompt> <userinput>nova secgroup-delete-group-rule --ip_proto tcp --from_port 22 \
+     --to_port 22 SEC_GROUP_NAME SOURCE_GROUP_NAME</userinput></screen>
             </step>
         </procedure>
     </section>
+
 </section>

@@ -1,42 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE chapter [
+<!DOCTYPE section [
+        <!-- Some useful entities borrowed from HTML -->
+        <!ENTITY ndash  "&#x2013;">
+        <!ENTITY mdash  "&#x2014;">
+        <!ENTITY hellip "&#x2026;">
+        <!ENTITY plusmn "&#xB1;">
+        
+        <!-- Useful for describing APIs -->
+        <!ENTITY GET    '<command xmlns="http://docbook.org/ns/docbook">GET</command>'>
+        <!ENTITY PUT    '<command xmlns="http://docbook.org/ns/docbook">PUT</command>'>
+        <!ENTITY POST   '<command xmlns="http://docbook.org/ns/docbook">POST</command>'>
+        <!ENTITY DELETE '<command xmlns="http://docbook.org/ns/docbook">DELETE</command>'>
+        
+        <!ENTITY CHECK  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
+                 <imageobject>
+                  <imagedata fileref="figures/Check_mark_23x20_02.svg"
+                             format="SVG" scale="60"/>
+                </imageobject>
+              </inlinemediaobject>'>
+<!ENTITY CLIall 'command-line interface (CLI)'>
+<!ENTITY CLIallp 'command-line interfaces (CLIs)'>
+        <!ENTITY ARROW  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
+                 <imageobject>
+                  <imagedata fileref="figures/Arrow_east.svg"
+                             format="SVG" scale="60"/>
+                </imageobject>
+              </inlinemediaobject>'>
 ]>
-<chapter xmlns="http://docbook.org/ns/docbook"
+<section xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-    xmlns:raxm="http://docs.rackspace.com/api/metadata" version="5.0"
-    xml:id="ch_cli">
-    <info>
-        <title>OpenStack command-line clients</title>
-    </info>
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="client_overview">
+    <title>Overview</title>
     <para>The OpenStack command-line clients let you run simple
-        commands to make OpenStack API calls and automate tasks
-        by using scripts. These open-source Python
-        clients  run on Linux or Mac OS X systems and are easy to learn and use.  Each OpenStack service has
-        its own command-line client. </para>  
+        commands to make OpenStack API calls. These open-source Python
+        clients are easy to learn and use. </para>
     <para>The OpenStack APIs are RESTful APIs that use the HTTP
         protocol, including methods, URIs, media types, and response
         codes. Internally, each client command runs cURL commands that
-        embed API requests. </para>  <para>You can use the OpenStack command-line clients to run simple
-        commands that make API calls. You can specify a <parameter
-            xmlns:svg="http://www.w3.org/2000/svg"
-            xmlns:m="http://www.w3.org/1998/Math/MathML"
-            xmlns:html="http://www.w3.org/1999/xhtml"
-            xmlns:db="http://docbook.org/ns/docbook">debug</parameter>
-        parameter on some client commands to show the underlying API
-        request for the command. This is a good way to become familiar
-        with the OpenStack API requests. </para>
-    <para>These examples walk you through the steps to create a server
-        instance with 2 GB of physical memory.</para>
-    <para>The exercises also help you learn how cURL commands and the
-        OpenStack APIs work.</para>
-    <para>You can modify these examples to create other types and
-        sizes of servers.</para>
+        embed API requests. </para>
     <para>To install an OpenStack client, see <xref
-        linkend="install_clients"/>.</para>
+            linkend="install_clients"/>.</para>
     <para>To request OpenStack services through either the clients or
         the APIs directly, you must source an
-        <filename>openrc</filename> file to set required
+            <filename>openrc</filename> file to set required
         environment variables.</para>
     <note>
         <para>An OpenStack common client is in development.</para>
@@ -70,55 +77,45 @@
                 <td><para>keystone</para></td>
                 <td><para>Identity service</para></td>
                 <td><para>Create and manage users, tenants, roles,
-                    endpoints, and credentials.</para></td>
+                        endpoints, and credentials.</para></td>
                 <td><para>python-keystoneclient</para></td>
             </tr>
             <tr>
                 <td><para>nova</para></td>
                 <td><para>Compute, Compute extensions</para></td>
                 <td><para>Create and manage instances and flavors.
-                </para></td>
+                    </para></td>
                 <td><para>python-novaclient</para></td>
             </tr>
             <tr>
                 <td><para>neutron</para></td>
                 <td><para>Networking</para></td>
                 <td><para>Configure networks for guest servers. <note>
-                    <para> The <literal>neutron</literal>
-                        client was previously known as
-                        <literal>quantum</literal>. </para>
-                </note></para></td>
+                            <para> The <literal>neutron</literal>
+                                client was previously known as
+                                   <literal>quantum</literal>. </para>
+                        </note></para></td>
                 <td><para>python-neutronclient</para></td>
             </tr>
             <tr>
                 <td><para>swift</para></td>
                 <td><para>Object storage</para></td>
                 <td><para>Gather statistics, list items, update
-                    metadata, upload, download and delete files
-                    stored by the object storage service. Provides
-                    access to a swift installation for ad hoc
-                    processing.</para></td>
+                        metadata, upload, download and delete files
+                        stored by the object storage service. Provides
+                        access to a swift installation for ad hoc
+                        processing.</para></td>
                 <td><para>python-swiftclient</para></td>
             </tr>
             <tr>
                 <td><para>heat</para></td>
                 <td><para>Orchestration</para></td>
                 <td><para>Launch stacks from templates, view details
-                    of running stacks (including events and
-                    resources), update and delete
+                        of running stacks (including events and
+                        resources), update and delete
                     stacks.</para></td>
                 <td><para>python-heatclient</para></td>
             </tr>
         </tbody>
     </table>
-<!--<xi:include href="cli_overview.xml"/> -->
-<xi:include href="cli_install.xml"/>
-    <xi:include href="section_cli_openrc.xml"/>
-    <xi:include href="section_cli_manage_images.xml"/>
-    <!--   <xi:include href="section_cli_launch_instances.xml"/> -->
-    <xi:include href="section_cli_configure_instances.xml"/>
-    <xi:include href="../../common/nova_cli_boot.xml"/>
-    <xi:include href="../../common/nova_cli_manage_instances.xml"/>
-    <xi:include href="section_cli_heat.xml"/>
-    <xi:include href="section_cli_manage_volumes.xml"/>
-</chapter>
+</section>

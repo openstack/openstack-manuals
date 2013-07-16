@@ -5,32 +5,34 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" 
     version="5.0"
     xml:id="terminating">
-  <title>Terminate an Instance</title>
-  <para>When you no longer need an instance, use the <command>nova
-  delete</command> command to terminate it. You can use the instance
-  name or the ID string. You will not receive a notification
-  indicating that the instance has been deleted, but if you run the
-  <command>nova list</command> command, the instance will no longer
-  appear in the list.</para>
-  <para>In this example, we will delete the instance
-  <literal>tinyimage</literal>, which is experiencing an
-  error
-  condition.<screen>
-<prompt>$</prompt> <userinput>nova list</userinput>
-+--------------------------------------+------------+--------+-------------------------------------------+
-|                  ID                  |    Name    | Status |                  Networks                 |
-+--------------------------------------+------------+--------+-------------------------------------------+
-| 30ed8924-f1a5-49c1-8944-b881446a6a51 | tinyimage  | ERROR  | public=10.4.113.11; private=172.16.101.11 |
-| 4bb825ea-ea43-4771-a574-ca86ab429dcb | tinyimage2 | ACTIVE |  public=10.4.113.6; private=172.16.101.6  |
-| 542235df-8ba4-4d08-90c9-b79f5a77c04f | smallimage | ACTIVE |  public=10.4.113.9; private=172.16.101.9  |
-+--------------------------------------+------------+--------+-------------------------------------------+
-<prompt>$</prompt> <userinput>nova delete tinyimage</userinput>
-<prompt>$</prompt> <userinput>nova list</userinput>
-+--------------------------------------+------------+--------+-------------------------------------------+
-|                  ID                  |    Name    | Status |                  Networks                 |
-+--------------------------------------+------------+--------+-------------------------------------------+
-| 4bb825ea-ea43-4771-a574-ca86ab429dcb | tinyimage2 | ACTIVE |  public=10.4.113.6; private=172.16.101.6  |
-| 542235df-8ba4-4d08-90c9-b79f5a77c04f | smallimage | ACTIVE |  public=10.4.113.9; private=172.16.101.9  |
-+--------------------------------------+------------+--------+-------------------------------------------+
-  </screen></para>
+  <title>Delete an instance</title>
+  <para>When you no longer need an instance, you can delete it. </para>
+<procedure><title>To delete an instance</title><step>
+  <para>List all instances:</para>
+        <screen><prompt>$</prompt> <userinput>nova list</userinput></screen>
+        <screen><computeroutput>+--------------------------------------+----------------------+--------+------------+-------------+------------------+
+| ID                                   | Name                 | Status | Task State | Power State | Networks         |
++--------------------------------------+----------------------+--------+------------+-------------+------------------+
+| 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5 | myCirrosServer       | ACTIVE | None       | Running     | private=10.0.0.3 |
+| 8a99547e-7385-4ad1-ae50-4ecfaaad5f42 | myInstanceFromVolume | ACTIVE | None       | Running     | private=10.0.0.4 |
+| d7efd3e4-d375-46d1-9d57-372b6e4bdb7f | newServer            | ERROR  | None       | NOSTATE     |                  |
++--------------------------------------+----------------------+--------+------------+-------------+------------------+</computeroutput></screen>
+       </step><step>
+      <para>Use the following command to delete the
+          <literal>newServer</literal> instance, which is in
+          <literal>ERROR</literal> state:</para>
+        <screen><prompt>$</prompt> <userinput>nova delete newServer</userinput></screen>
+</step><step><para>The command does not notify that your server was deleted. </para>
+      <para>Instead, run the <command>nova list</command>
+        command:</para>
+<screen><prompt>$</prompt> <userinput>nova list</userinput></screen>
+<screen><computeroutput>+--------------------------------------+----------------------+--------+------------+-------------+------------------+
+| ID                                   | Name                 | Status | Task State | Power State | Networks         |
++--------------------------------------+----------------------+--------+------------+-------------+------------------+
+| 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5 | myCirrosServer       | ACTIVE | None       | Running     | private=10.0.0.3 |
+| 8a99547e-7385-4ad1-ae50-4ecfaaad5f42 | myInstanceFromVolume | ACTIVE | None       | Running     | private=10.0.0.4 |
++--------------------------------------+----------------------+--------+------------+-------------+------------------+</computeroutput> </screen>
+  <para>The deleted instance does not appear in the list.</para>
+</step>
+</procedure>
 </section>

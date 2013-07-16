@@ -5,27 +5,29 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" 
     version="5.0"
     xml:id="nova_cli_stop_start">
-  <title>Stop and Start an Instance</title>
-  <para>There are two methods for stopping and starting an
-  instance: <itemizedlist>
-  <listitem><para><command>nova pause</command> / <command>nova unpause</command></para></listitem>
-  <listitem><para><command>nova suspend</command> / <command>nova resume</command></para></listitem>
-  </itemizedlist></para>
-  <section xml:id="nova_cli_pause_unpause">
-    <title>Pause and Unpause</title>
-    <para><command>nova pause</command> stores the state of the VM in
-    RAM. A paused instance continues to run, albeit in a "frozen"
-    state.</para>
-  </section>
-  <section xml:id="nova_cli_suspend_resume">
-    <title>Suspend and Resume</title>
-    <para><command>nova suspend</command> initiates a hypervisor-level
-    suspend operation. Suspending an instance stores the state of the
-    VM on disk; all memory is written to disk and the virtual machine
-    is stopped. Suspending an instance is thus similar to placing a
-    device in hibernation, and makes memory and vCPUs
-    available. Administrators may want to suspend an instance for
-    system maintenance, or if the instance is not frequently
-    used.</para>
-  </section>
+  <title>Stop and start an instance</title>
+  <para>Use one of the following methods to stop and start an
+    instance.</para>
+  <section xml:id="pause_server"><title>Pause and un-pause an instance</title><procedure xml:id="nova_cli_pause_unpause">
+    <title>To pause and un-pause a server</title>
+    <step> <para>To pause a server, run the following command:</para><screen><prompt>$</prompt> <userinput>nova pause</userinput> <replaceable>SERVER</replaceable></screen>
+      <para>This command stores the state of the VM in
+        RAM. A paused instance continues to run in a frozen
+        state. </para>
+      <para>To un-pause the server, run the following command:</para><screen><prompt>$</prompt> <userinput>nova unpause</userinput> <replaceable>SERVER</replaceable></screen></step>
+  </procedure></section>
+ <section xml:id="suspend_resume"><title>Suspend and resume an instance</title> <procedure xml:id="nova_cli_suspend_resume">
+    <title>To suspend and resume a server</title>
+<para>Administrative users might want to suspend an infrequently used
+      instance or to perform system maintenance. </para>
+    <step><para>When you suspend an instance, its VM state is stored on disk,
+        all memory is written to disk, and the virtual machine is
+        stopped. Suspending an instance is similar to placing a device
+        in hibernation; memory and vCPUs become available. </para><para>To initiate a hypervisor-level suspend operation,
+        run the following command:</para><screen><prompt>$</prompt> <userinput>nova suspend</userinput> <replaceable>SERVER</replaceable></screen>
+    </step>
+    <step><para>To resume a suspended server:</para>
+      <screen><prompt>$</prompt> <userinput>nova resume</userinput> <replaceable>SERVER</replaceable></screen>
+    </step>
+  </procedure></section>
 </section>

@@ -5,35 +5,9 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" 
     version="5.0"
     xml:id="nova_cli_security_groups">
-         <title>Manage Security Groups</title>
-        <para>A security group is a named collection of network access rules that can be used to
-            limit the types of traffic that have access to instances. When you spawn an instance,
-            you can assign it to one or more groups. For each security group, the associated rules
-            permit you to manage the allowed traffic to instances within the group. Any incoming
-            traffic which is not matched by a rule is denied by default. At any time, it is possible
-            to add or remove rules within a security group. Rules are automatically enforced as soon
-            as they are created.</para>
-        <para>Before you begin, use <command>nova
-                secgroup-list</command> to view the available security
-            groups (specify <literal>--all-tenants</literal> if you are a cloud administrator
-            wanting to view all tenants' groups) . You can also view the rules for a security group
-            with <command>nova secgroup-list-rules</command>.
-        <screen>
-<prompt>$</prompt> <userinput>nova secgroup-list</userinput>
-+---------+-------------+
-|   Name  | Description |
-+---------+-------------+
-| default |   default   |
-+---------+-------------+
-
-<prompt>$</prompt> <userinput>nova secgroup-list-rules default</userinput>
-+-------------+-----------+---------+-----------+--------------+
-| IP Protocol | From Port | To Port |  IP Range | Source Group |
-+-------------+-----------+---------+-----------+--------------+
-|     tcp     |     80    |    80   | 0.0.0.0/0 |              |
-+-------------+-----------+---------+-----------+--------------+
-        </screen>
-        In this example, the default security group has been modified to allow HTTP traffic on the instance by permitting TCP traffic on Port 80.</para>
+         <title>Add security group and rules</title>
+        <para>The following procedure shows you how to add security
+        groups and add rules to the default security group.</para>
 <section xml:id="secgroup_add-delete">
     <title>Add or delete a security group</title>
             <para>Security groups can be added with <command>nova

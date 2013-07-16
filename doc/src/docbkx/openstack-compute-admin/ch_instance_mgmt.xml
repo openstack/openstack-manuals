@@ -7,14 +7,13 @@
 
 	<para>Instances are the running virtual machines within an
 		OpenStack cloud. </para>
-<para><!--<phrase>The <link linkend="images-and-instances"
-			>Images and Instances</link> section</phrase>-->See <xref
+	<!--<para><phrase>The <link linkend="images-and-instances"
+			>Images and Instances</link> section</phrase>See <xref
 				linkend="ch_introduction-to-openstack-compute"/>
 			for
-		a high level overview of instances and their life cycle.</para>
+		a high level overview of instances and their life cycle.</para>-->
 
-	<para>This chapter describes how to manage that
-		life cycle.</para>
+	<para>Learn how to manage that life cycle.</para>
 
 	<section xml:id="instance-mgmt-interfaces">
 		<?dbhtml stop-chunking?>
@@ -78,13 +77,12 @@
 				</listitem>
 			</itemizedlist>
 
-			<para>For example if you have your <link
-					linkend="ch-identity-mgmt-config">Keytone</link>
-				identity management service running on the default
-				port (5000) on host keystone.example.com and want to
-				use the <application>nova</application> cli as the
-				user "demouser" with the password "demopassword" in
-				the "demoproject" tenant you can export the following
+			<para>For example if you have your Identity Service
+				running on the default port (5000) on host
+				keystone.example.com and want to use the
+					<application>nova</application> cli as the user
+				"demouser" with the password "demopassword" in the
+				"demoproject" tenant you can export the following
 				values in your shell environment or pass the
 				equivalent command line args (presuming these
 				identities already exist):</para>
@@ -140,9 +138,7 @@ header: Date: Thu, 13 Sep 2012 20:27:36 GMT
 +----+------+--------+----------+
 | ID | Name | Status | Networks |
 +----+------+--------+----------+
-+----+------+--------+----------+
- </computeroutput>
- </screen></para>
++----+------+--------+----------+</computeroutput></screen></para>
 
 		</simplesect>
 		<simplesect xml:id="instance-mgmt-ec2compat">
@@ -253,8 +249,7 @@ header: Date: Thu, 13 Sep 2012 20:27:36 GMT
 		<simplesect xml:id="instance-building-blocks-images">
 			<title>Images</title>
 			<para>In OpenStack the base operating system is usually
-				copied from an <link linkend="ch_image_mgmt"
-					>"image"</link> stored in the Glance image
+				copied from an image stored in the Glance image
 				service. This is the most common case and results in
 				an ephemeral instance which starts from a know
 				templated state and lose all accumulated state on
@@ -276,31 +271,28 @@ header: Date: Thu, 13 Sep 2012 20:27:36 GMT
  </computeroutput>
  </screen>
 			</para>
-			<para> The displayed image attributes are <itemizedlist>
-					<listitem>
-						<para>ID: the automatically generate UUID of
-							the image</para>
-					</listitem>
-					<listitem>
-						<para>Name: a free form human readable name
-							given to the image</para>
-					</listitem>
-					<listitem>
-						<para>Status: shows the status of the image
-							ACTIVE images are available for
-							use.</para>
-					</listitem>
-					<listitem>
-						<para>Server: for images that are created as
-							snapshots of running instance this is the
-							UUID of the instance the snapshot derives
-							from, for uploaded images it is
-							blank</para>
-					</listitem>
-				</itemizedlist>
-			</para>
+			<para>The displayed image attributes are:</para>
+			<itemizedlist>
+				<listitem>
+					<para>ID: the automatically generate UUID of the
+						image</para>
+				</listitem>
+				<listitem>
+					<para>Name: a free form human readable name given
+						to the image</para>
+				</listitem>
+				<listitem>
+					<para>Status: shows the status of the image ACTIVE
+						images are available for use.</para>
+				</listitem>
+				<listitem>
+					<para>Server: for images that are created as
+						snapshots of running instance this is the UUID
+						of the instance the snapshot derives from, for
+						uploaded images it is blank</para>
+				</listitem>
+			</itemizedlist>
 		</simplesect>
-
 		<simplesect xml:id="instance-building-blocks-flavors">
 			<title>Flavors</title>
 			<para>Virtual hardware templates are called "flavors" in
@@ -311,8 +303,8 @@ header: Date: Thu, 13 Sep 2012 20:27:36 GMT
 				"compute_extension:flavormanage" in
 					<filename>/etc/nova/policy.json</filename> on the
 				compute-api server) . To get a list of available
-				flavors on your system run:
-				<screen><prompt>$</prompt> <userinput>nova flavor-list</userinput>
+				flavors on your system run:</para>
+			<screen><prompt>$</prompt> <userinput>nova flavor-list</userinput>
  <computeroutput>
 +----+-----------+-----------+------+-----------+------+-------+-------------+
 | ID |    Name   | Memory_MB | Disk | Ephemeral | Swap | VCPUs | RXTX_Factor |
@@ -323,10 +315,7 @@ header: Date: Thu, 13 Sep 2012 20:27:36 GMT
 | 4  | m1.large  | 8192      | 80   | N/A       | 0    | 4     |             |
 | 5  | m1.xlarge | 16384     | 160  | N/A       | 0    | 8     |             |
 +----+-----------+-----------+------+-----------+------+-------+-------------+
- </computeroutput>
- </screen>
-			</para>
-
+</computeroutput></screen>
 			<para> The <command>nova flavor-create</command> command
 				allows authorized users to create new flavors.
 				Additional flavor manipulation commands can be shown
@@ -349,13 +338,12 @@ header: Date: Thu, 13 Sep 2012 20:27:36 GMT
 					</listitem>
 					<listitem>
 						<para>Disk: virtual root disk size in
-							gigabytes. This is an ephemeral disk the
-							base <link linkend="ch_image_mgmt"
-								>image</link> is copied into. When
-							booting from a persistent volume it is not used. The "0"
-							size is a special case which uses the
-							native base image size as the size of the
-							ephemeral root volume. </para>
+							gigabytes. This is an ephemeral disk that
+							the base image is copied into. When
+							booting from a persistent volume it is not
+							used. The "0" size is a special case which
+							uses the native base image size as the
+							size of the ephemeral root volume. </para>
 					</listitem>
 					<listitem>
 						<para>Ephemeral: specifies the size of a
@@ -401,23 +389,28 @@ header: Date: Thu, 13 Sep 2012 20:27:36 GMT
 			</para>
 		</simplesect>
 	</section>
-
 	<section xml:id="instance-creation">
 		<?dbhtml stop-chunking?>
 		<title>Creating instances</title>
-		<xi:include href="../common/nova_cli_boot.xml"/>
-		<xi:include href="../common/boot_from_volume.xml"/>
+		<para>For information about launching instances through the
+			nova command-line client, see the <link
+				xlink:href="http://docs.openstack.org/cli/quick-start/content/"
+					><citetitle>OpenStack Clients
+				Guide</citetitle></link>.</para>
+		<!--moved the following to the OpenStack Clients Guide -->
+		<!-- once OpenStack End User Guide is signed off, move to there -->
+		<!--<xi:include href="../openstack-user/src/section_cli_openrc.xml"/>
+		<xi:include href="../common/nova_cli_boot.xml"/> -->
 	</section>
-
 	<section xml:id="instance-scheduling-constraints">
-		<title>Controlling where instances run</title>
-		<para>The <xref linkend="ch_scheduling"/> provides detailed information
-			on controlling where your instances run, including
-			ensuring a set of instances run on <link
-				linkend="differenthostfilter">different</link> compute
-			nodes for service resiliency or on the <link
-				linkend="samehostfilter">same</link> node for high
-			performance inter-instance communications</para>
+		<title>Control where instances run</title>
+		<para>The <!--<xref linkend="ch_scheduling"/>-->
+			<citetitle>OpenStack Configuration Reference</citetitle>
+			provides detailed information on controlling where your
+			instances run, including ensuring a set of instances run
+			on different compute nodes for service resiliency or on
+			the same node for high performance inter-instance
+			communications</para>
 		<para> Additionally admin users can specify and exact compute
 			node to run on by specifying <literal>--availability-zone
 				&lt;availability-zone&gt;:&lt;compute-host&gt;</literal>
@@ -426,63 +419,71 @@ header: Date: Thu, 13 Sep 2012 20:27:36 GMT
 			the default <literal>nova</literal> availability zone:
 			<screen><prompt>#</prompt> <userinput>nova boot --image aee1d242-730f-431f-88c1-87630c0f07ba --flavor 1 --availability-zone nova:nova-1 testhost</userinput></screen></para>
 	</section>
-
 	<section xml:id="instance-data">
 		<?dbhtml stop-chunking?>
 		<title>Instance specific data</title>
 		<para>For each instance, you can specify certain data
 			including authorized_keys key injection, user-data,
 			metadata service, and file injection.</para>
-		<xi:include href="../common/nova_cli_sshkeys.xml"/>
+		<para>For information, see the <link
+				xlink:href="http://docs.openstack.org/cli/quick-start/content/"
+					><citetitle>OpenStack Clients
+				Guide</citetitle></link>.</para>
+		<!--<xi:include href="../common/nova_cli_sshkeys.xml"/>
 		<xi:include href="../common/nova_cli_metadata.xml"/>
 		<xi:include href="../common/nova_cli_userdata.xml"/>
 		<xi:include href="../common/nova_cli_fileinjection.xml"/>
-	</section>
-
 	<xi:include href="../common/user-data.xml" />
-	<xi:include href="../common/config-drive.xml"/>
-
+	<xi:include href="../common/config-drive.xml"/>-->
+	</section>
 	<section xml:id="instance-networking">
 		<?dbhtml stop-chunking?>
 		<title>Managing instance networking</title>
-		<xi:include href="../common/nova_cli_floatingip.xml"/>
-		<xi:include href="../common/nova_cli_secgroups.xml"/>
+		<para>For information, see <link
+				xlink:href="http://docs.openstack.org/cli/quick-start/content/"
+					><citetitle>OpenStack Clients
+				Guide</citetitle></link>.</para>
+		<!--<xi:include href="../common/nova_cli_floatingip.xml"/>
+		<xi:include href="../common/nova_cli_secgroups.xml"/> -->
 	</section>
-
 	<!-- maybe this should not be shared with nova-cli so we can talk about cinder? -->
 	<xi:include href="../common/nova_cli_volumes.xml"/>
-
 	<section xml:id="instance-access">
 		<?dbhtml stop-chunking?>
-		<title>Accessing running instances</title>
+		<title>Access running instances</title>
 		<para>The most common access method for running instances is
 			probably ssh, but this requires you have setup your
-			instance with <link linkend="inserting_sshkeys">ssh
-				keys</link> and you have arranged for it to be running
-			ssh with a <link linkend="floating_ip_addresses">public
-				ip</link> and opened the ssh port in your <link
-				linkend="nova_cli_security_groups">security
-				group</link> configuration. If you haven't done this
-			or you are trying to debug a problem image OpenStack can
-			be configured to provide a VNC console, be aware that VNC
-			is an unencrypted protocol so you should be cautious what
-			you type across that link. </para><!--<para>See the <link
+			instance with ssh keys and you have arranged for it to be
+			running ssh with a public ip and opened the ssh port in
+			your security group configuration. If you haven't done
+			this or you are trying to debug a problem image OpenStack
+			can be configured to provide a VNC console, be aware that
+			VNC is an unencrypted protocol so you should be cautious
+			what you type across that link. See the <link
+				xlink:href="http://docs.openstack.org/cli/quick-start/content/"
+					><citetitle>OpenStack Clients
+				Guide</citetitle></link>.</para>
+		<!--<para>See the <link
 				linkend="getting-started-with-vnc-proxy">Getting
 				Started With VNC Proxy</link> section for details on
 			how to configure and connect to this service.</para> -->
 	</section>
-
-	<xi:include href="../common/nova_cli_startstop.xml"/>
+	<section xml:id="manage_instances">
+		<title>Manage running instances</title>
+		<para>For information about how to start and stop, resize,
+			evacuate, and delete instances, see the <link
+				xlink:href="http://docs.openstack.org/cli/quick-start/content/"
+					><citetitle>OpenStack Clients
+				Guide</citetitle></link>.</para>
+	</section>
+	<!--<xi:include href="../common/nova_cli_startstop.xml"/>
 	<xi:include href="../common/nova_cli_resizerebuild.xml"/>
-	<xi:include href="../common/nova_cli_evacuate.xml"/>
-
+	<xi:include href="../common/nova_cli_evacuate.xml"/>-->
 	<!-- future work
     <section xml:id="instance-migration">
       <?dbhtml stop-chunking?>
       <title>Migrating running instances</title>
       <para>live, stop &amp; copy</para>
     </section>
--->
-	<xi:include href="../common/nova_cli_terminate.xml"/>
-
+	<xi:include href="../common/nova_cli_terminate.xml"/>-->
 </chapter>

@@ -6,57 +6,60 @@
     xmlns:html="http://www.w3.org/1999/xhtml" version="5.0"
     xml:id="neutron_client">
     <?dbhtml stop-chunking?>
-    <title>neutron Client</title>
-    <para>This chapter describes how to use the neutron client.</para>
-    <para>To install the client, see <xref linkend="install_clients"/>.</para>
-    <section xml:id="neutron_overview">
-        <title>Overview</title> 
-        <section xml:id="neutron_overview_command">
-            <title>Argument parts of API 2.0 command</title>
-            <para>In general, neutron client command arguments divide
-                into three parts:</para>
-            <section xml:id="neutron_overview_command_known">
-                <title>Known options</title>
-                <para>These options are listed in the command's help usage text.</para>
-            </section>
-            <section xml:id="neutron_overview_command_pos">
-                <title>Positional arguments</title>
-                <para>Positional arguments are mandatory information
-                    for an API resource. They must be given in the
-                    order. </para>
-            </section>
-            <section xml:id="neutron_overview_command_unknown">
-                <title>Unknown options</title>
-                <para>Unknown options are complementary to known options.
-                    To define an unknown option, the format is
-                    <literal>--optionname [type=int|bool|dict...] [list=true]
-                    [optionvalue]*</literal>. There can be multiple option
-                    values for a certain optionname. When there is no
-                    optionvalue given, the option is regarded as a
-                    <literal>bool</literal> one and value is <literal>true</literal>. The type is python
-                    built-in type, such as <literal>int</literal>, <literal>bool</literal>,
-                    <literal>float</literal> and <literal>dict</literal>,
-                    defaulted to string if not given.
-                    Unknown options can be used to provide values
-                    for creating, updating a resource and to provide filters
-                    to list resources. It is also useful
-                    to implement API extension when the known options are not
-                    included in the command.
-                    pseudo argument <literal>‘--’</literal> can be used if the options after it need
-                    take advantage of unknown options parser.</para>
-            </section>
-        </section>
-        <section xml:id="neutron_overview_cliff">
-            <title>Features from cliff</title>
-            <section xml:id="neutron_overview_cliff_interactive">
-                <title>Interactive mode</title>
-                <para>If there is no command specified, the neutron
-                    client will enter into interactive mode:</para>
-                <screen>
-<prompt>$</prompt><userinput>neutron --os-username admin --os-password password --os-tenant-name admin --os-auth-url http://localhost:5000/v2.0</userinput>
-<prompt>(neutron)</prompt> <userinput>help</userinput>
-
-Shell commands (type help &lt;topic&gt;):
+    <title>neutron command-line client</title>
+    <para>Learn how to use the neutron commands.</para>
+    <section xml:id="neutron_overview_command">
+        <title>Command arguments</title>
+        <para>The neutron client command arguments and options are: </para>
+        <itemizedlist>
+            <listitem>
+                <para><emphasis role="bold">Known
+                    arguments</emphasis>. Listed in the help usage
+                    text for the command.</para>
+            </listitem>
+            
+            <listitem xml:id="neutron_overview_command_pos">
+                <para><emphasis role="bold">Positional
+                    arguments</emphasis>. Mandatory arguments that
+                    must be specified in a specific order. </para>
+            </listitem>
+            <listitem xml:id="neutron_overview_command_unknown">
+                <para><emphasis role="bold">Unknown
+                    options</emphasis>. Complement the known
+                    arguments. </para>
+                <para>To define an unknown option, use the
+                    format:</para>
+                <screen><userinput>--optionname [type=int|bool|dict...][list=true] [optionvalue]*</userinput></screen>
+                <para>You can specify multiple option values for an
+                    option name. When no option value is specified,
+                    the option defaults to <literal>bool</literal>
+                    with a value of <literal>true</literal>. </para>
+                <para>The type is python built-in type, such as
+                    <literal>int</literal>,
+                    <literal>bool</literal>,
+                    <literal>float</literal>,
+                    <literal>dict</literal>, and
+                    <literal>string</literal>, which is the
+                    default. You can use unknown options to provide
+                    values for creating, updating a resource and to
+                    provide filters to list resources. It is also
+                    useful to implement API extension when the known
+                    options are not included in the command. You can
+                    use the pseudo argument <literal>--</literal> if
+                    the options that follow require the use of an
+                    unknown options parser.</para>
+            </listitem>
+        </itemizedlist>
+    </section>
+    <section xml:id="neutron_overview_cliff">
+        <title>Features from cliff</title>
+        <section xml:id="neutron_overview_cliff_interactive">
+            <title>Interactive mode</title>
+            <para>If no command is specified, the neutron client goes
+                into interactive mode:</para>
+            <screen><prompt>$</prompt> <userinput>neutron --os-username admin --os-password password --os-tenant-name admin --os-auth-url http://localhost:5000/v2.0</userinput></screen>
+            <screen><userinput>(neutron) help</userinput></screen>
+            <screen><computeroutput>Shell commands (type help &lt;topic&gt;):
 ===================================
 cmdenvironment  edit  hi       l   list  pause  r    save  shell      show
 ed              help  history  li  load  py     run  set   shortcuts
@@ -112,294 +115,124 @@ lb-vip-show                    security-group-rule-delete
 lb-vip-update                  security-group-rule-list  
 net-create                     security-group-rule-show  
 net-delete                     security-group-show
-
-<prompt>(neutron)</prompt> <userinput>net-list</userinput>
-+--------------------------------------+----------------+--------------------------------------+
+            </computeroutput></screen>
+<screen><prompt>(neutron)</prompt> <userinput>net-list</userinput></screen>
+            <screen><computeroutput>+--------------------------------------+----------------+--------------------------------------+
 | id                                   | name           | subnets                              |
 +--------------------------------------+----------------+--------------------------------------+
 | 11fc08b7-c3b2-4b0c-bd04-66e279d9c470 | public_net1    | 13cc61f6-b33b-495a-a49f-83bdc9e439ab |
 | 22f53ed1-3f3d-49c7-9162-7ba94d9c0a7e | private_mynet1 | b5a9b952-dd4f-445a-89c5-f15d0707b8bd |
 | 2a405f54-aea0-47d7-8a43-4d5129e22b35 | test1          |                                      |
 | d322e1ae-e068-4249-b9b3-7ed8b820bfa2 | mynetwork      |                                      |
-+--------------------------------------+----------------+--------------------------------------+
-               </screen>
-            </section>
-            <section xml:id="neutron_overview_cliff_oFormat">
-                <title>Output format</title>
-                <para>We can use <literal>-h</literal> after each command to show the
-                    usage of each command:</para>
-                <screen>
-<prompt>(neutron)</prompt> <userinput>net-list -h</userinput>
-usage: neutron net-list [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
-                        [--quote {all,minimal,none,nonnumeric}]
-                        [--request-format {json,xml}] [-D] [-F FIELD]
-                        [-P SIZE] [--sort-key FIELD] [--sort-dir {asc,desc}]
-
-List networks that belong to a given tenant.
-
-optional arguments:
-  -h, --help            show this help message and exit
-  --request-format {json,xml}
-                        the xml or json request format
-  -D, --show-details    show detailed info
-  -F FIELD, --field FIELD
-                        specify the field(s) to be returned by server, can be
-                        repeated
-  -P SIZE, --page-size SIZE
-                        specify retrieve unit of each request, then split one
-                        request to several requests
-  --sort-key FIELD      sort list by specified fields (This option can be
-                        repeated), The number of sort_dir and sort_key should
-                        match each other, more sort_dir specified will be
-                        omitted, less will be filled with asc as default
-                        direction
-  --sort-dir {asc,desc}
-                        sort list in specified directions (This option can be
-                        repeated)
-
-output formatters:
-  output formatter options
-
-  -f {csv,html,json,table,yaml}, --format {csv,html,json,table,yaml}
-                        the output format, defaults to table
-  -c COLUMN, --column COLUMN
-                        specify the column(s) to include, can be repeated
-
-CSV Formatter:
-  --quote {all,minimal,none,nonnumeric}
-                        when to include quotes, defaults to nonnumeric
-               </screen>
-                <para>We can see the output formatters cliff provides
-                    to each command. By default, the output format is
-                    <literal>table</literal>. Now we choose <literal>csv</literal> output to run the command
-                    <literal>net-list</literal>:</para>
-                <screen>
-<prompt>(neutron)</prompt> <userinput>net-list -f csv</userinput>
-"id","name","subnets"
++--------------------------------------+----------------+--------------------------------------+</computeroutput>         </screen>
+        </section>
+        <section xml:id="neutron_overview_cliff_oFormat">
+            <title>Output format</title>
+            <para>We can use <literal>-h</literal> after each command
+                to show the usage of each command:</para>
+            <screen><prompt>(neutron)</prompt> <userinput>net-list -h</userinput></screen>
+            <screen>usage: neutron net-list [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
+                [--quote {all,minimal,none,nonnumeric}]
+                [--request-format {json,xml}] [-D] [-F FIELD]
+                [-P SIZE] [--sort-key FIELD] [--sort-dir {asc,desc}]
+                
+                List networks that belong to a given tenant.
+                
+                optional arguments:
+                -h, --help            show this help message and exit
+                --request-format {json,xml}
+                the xml or json request format
+                -D, --show-details    show detailed info
+                -F FIELD, --field FIELD
+                specify the field(s) to be returned by server, can be
+                repeated
+                -P SIZE, --page-size SIZE
+                specify retrieve unit of each request, then split one
+                request to several requests
+                --sort-key FIELD      sort list by specified fields (This option can be
+                repeated), The number of sort_dir and sort_key should
+                match each other, more sort_dir specified will be
+                omitted, less will be filled with asc as default
+                direction
+                --sort-dir {asc,desc}
+                sort list in specified directions (This option can be
+                repeated)
+                
+                output formatters:
+                output formatter options
+                
+                -f {csv,html,json,table,yaml}, --format {csv,html,json,table,yaml}
+                the output format, defaults to table
+                -c COLUMN, --column COLUMN
+                specify the column(s) to include, can be repeated
+                
+                CSV Formatter:
+                --quote {all,minimal,none,nonnumeric}
+                when to include quotes, defaults to nonnumeric
+            </screen>
+            <para>We can see the output formatters cliff provides to
+                each command. By default, the output format is
+                <literal>table</literal>. Now we choose
+                <literal>csv</literal> output to run the command
+                <literal>net-list</literal>:</para>
+            <screen><prompt>(neutron)</prompt> <userinput>net-list -f csv</userinput></screen>
+            <screen>"id","name","subnets"
 "11fc08b7-c3b2-4b0c-bd04-66e279d9c470","public_net1","13cc61f6-b33b-495a-a49f-83bdc9e439ab"
 "22f53ed1-3f3d-49c7-9162-7ba94d9c0a7e","private_mynet1","b5a9b952-dd4f-445a-89c5-f15d0707b8bd"
 "2a405f54-aea0-47d7-8a43-4d5129e22b35","test1",""
-"d322e1ae-e068-4249-b9b3-7ed8b820bfa2","mynetwork",""
-               </screen>
-            </section>
-            <section xml:id="neutron_overview_cliff_column">
-                <title>Column selection</title>
-                <para>We can see <literal>-c COLUMN</literal> in previous usage output.
-                    It can be used to limit the output fields:</para>
-                <screen>
-<prompt>(neutron)</prompt> <userinput>net-list -c id -c name</userinput>
-+--------------------------------------+----------------+
+"d322e1ae-e068-4249-b9b3-7ed8b820bfa2","mynetwork",""            </screen>
+        </section>
+        <section xml:id="neutron_overview_cliff_column">
+            <title>Column selection</title>
+            <para>We can see <literal>-c COLUMN</literal> in previous
+                usage output. It can be used to limit the output
+                fields:</para>
+            <screen><prompt>(neutron)</prompt> <userinput>net-list -c id -c name</userinput></screen>
+            <screen>+--------------------------------------+----------------+
 | id                                   | name           |
 +--------------------------------------+----------------+
 | 11fc08b7-c3b2-4b0c-bd04-66e279d9c470 | public_net1    |
 | 22f53ed1-3f3d-49c7-9162-7ba94d9c0a7e | private_mynet1 |
 | 2a405f54-aea0-47d7-8a43-4d5129e22b35 | test1          |
 | d322e1ae-e068-4249-b9b3-7ed8b820bfa2 | mynetwork      |
-+--------------------------------------+----------------+
-                </screen>
-            </section>
-        </section>
-        <section xml:id="neutron_overview_API">
-            <title>Features from API</title>
-            <section xml:id="neutron_overview_API_fields">
-                <title>Fields selection</title>
-                <para>If there are <literal>‘fields’</literal> in request URL, V2.0 API
-                    will extract the list of fields to return. A
-                    sample of such URLs is
-                    <literal>http://localhost:9696/v2.0/networks.json?fields=id&amp;fields=name</literal></para>
-                <para> Neutron client supports this feature by <literal>-F</literal>
-                    option in known options part and <literal>--fields</literal> in
-                    unknown options part. For example, <literal>neutron -F id
-                    net-list -- --fields name</literal>. Only <literal>xx-list</literal> and
-                    <literal>xx-show</literal> commands support this feature.</para>
-            </section>
-            <section xml:id="neutron_overview_API_filtering">
-                <title>Value filtering</title>
-                <para>Any other fields except the <literal>‘fields’</literal> are used to filter
-                    resources. A sample of such URLs is
-                    <literal>http://localhost:9696/v2.0/networks.json?name=test1&amp;name=test2</literal>.
-                    By the current neutron server's sample DB plugin,
-                    the filtering has the same meaning as a SQL
-                    clause: <literal>name in [‘test1’, ‘test2’]</literal>. Neutron client
-                    supports this feature by any key options in
-                    unknown option part. For example <literal>neutron net-list
-                    -- --name test1 test2</literal>. Only <literal>xx-list</literal> commands support this feature. </para>
-            </section>
++--------------------------------------+----------------+              </screen>
         </section>
     </section>
-
-    <section xml:id="neutron_client_sample_commands">
-        <title>Sample neutron command</title>
-        <para>All commands are run with following environment varialbes set:</para>
-        <screen>export OS_USERNAME=admin
-export OS_PASSWORD=password
-export OS_TENANT_NAME=admin
-export OS_AUTH_URL=http://localhost:5000/v2.0
-</screen>
-        <para><itemizedlist>
-              <listitem>
-                   <para>List the extensions of the system:</para>
-                   <screen>
-$ neutron ext-list -c alias -c name
-+-----------------+--------------------------+
-| alias           | name                     |
-+-----------------+--------------------------+
-| agent_scheduler | Agent Schedulers         |
-| binding         | Port Binding             |
-| quotas          | Quota management support |
-| agent           | agent                    |
-| provider        | Provider Network         |
-| router          | Neutron L3 Router        |
-| lbaas           | LoadBalancing service    |
-| extraroute      | Neutron Extra Route      |
-+-----------------+--------------------------+
-                   </screen>
-               </listitem>
-              <listitem>
-                   <para>Create a network:</para>
-                   <screen>
-$ neutron net-create net1
-Created a new network:
-+---------------------------+--------------------------------------+
-| Field                     | Value                                |
-+---------------------------+--------------------------------------+
-| admin_state_up            | True                                 |
-| id                        | 2d627131-c841-4e3a-ace6-f2dd75773b6d |
-| name                      | net1                                 |
-| provider:network_type     | vlan                                 |
-| provider:physical_network | physnet1                             |
-| provider:segmentation_id  | 1001                                 |
-| router:external           | False                                |
-| shared                    | False                                |
-| status                    | ACTIVE                               |
-| subnets                   |                                      |
-| tenant_id                 | 3671f46ec35e4bbca6ef92ab7975e463     |
-+---------------------------+--------------------------------------+
-                   </screen>
-                   <para><emphasis role='bold'>Note:</emphasis>Some fields of the created network
-                   are invisible to non-admin users.</para>
-               </listitem>
-              <listitem>
-                   <para>Create a network with specified provider network type:</para>
-                   <screen>
-$ neutron net-create net2 --provider:network-type local
-Created a new network:
-+---------------------------+--------------------------------------+
-| Field                     | Value                                |
-+---------------------------+--------------------------------------+
-| admin_state_up            | True                                 |
-| id                        | 524e26ea-fad4-4bb0-b504-1ad0dc770e7a |
-| name                      | net2                                 |
-| provider:network_type     | local                                |
-| provider:physical_network |                                      |
-| provider:segmentation_id  |                                      |
-| router:external           | False                                |
-| shared                    | False                                |
-| status                    | ACTIVE                               |
-| subnets                   |                                      |
-| tenant_id                 | 3671f46ec35e4bbca6ef92ab7975e463     |
-+---------------------------+--------------------------------------+
-                   </screen>
-                   <para>Just as shown above, the unknown option <literal>--provider:network-type</literal>
-                   is used to create a <literal>local</literal> provider network.</para>
-               </listitem>
-              <listitem>
-                   <para>Create a subnet:</para>
-                   <screen>
-$ neutron subnet-create net1 192.168.2.0/24 --name subnet1
-Created a new subnet:
-+------------------+--------------------------------------------------+
-| Field            | Value                                            |
-+------------------+--------------------------------------------------+
-| allocation_pools | {"start": "192.168.2.2", "end": "192.168.2.254"} |
-| cidr             | 192.168.2.0/24                                   |
-| dns_nameservers  |                                                  |
-| enable_dhcp      | True                                             |
-| gateway_ip       | 192.168.2.1                                      |
-| host_routes      |                                                  |
-| id               | 15a09f6c-87a5-4d14-b2cf-03d97cd4b456             |
-| ip_version       | 4                                                |
-| name             | subnet1                                          |
-| network_id       | 2d627131-c841-4e3a-ace6-f2dd75773b6d             |
-| tenant_id        | 3671f46ec35e4bbca6ef92ab7975e463                 |
-+------------------+--------------------------------------------------+
-                   </screen>
-                   <para>In the above command line, <literal>net1</literal> is the network name,
-                   <literal>192.168.2.0/24</literal> is the subnet's CIDR. They are positional arguments.
-                   <literal>--name subnet1</literal> is an unknown option, which specifies the subnet's name.</para>
-               </listitem>
-              <listitem>
-                   <para>Create a port with specified IP address:</para>
-                   <screen>
-$ neutron port-create net1 --fixed-ip ip_address=192.168.2.40
-Created a new port:
-+----------------------+-------------------------------------------------------------------------------------+
-| Field                | Value                                                                               |
-+----------------------+-------------------------------------------------------------------------------------+
-| admin_state_up       | True                                                                                |
-| binding:capabilities | {"port_filter": false}                                                              |
-| binding:vif_type     | ovs                                                                                 |
-| device_id            |                                                                                     |
-| device_owner         |                                                                                     |
-| fixed_ips            | {"subnet_id": "15a09f6c-87a5-4d14-b2cf-03d97cd4b456", "ip_address": "192.168.2.40"} |
-| id                   | f7a08fe4-e79e-4b67-bbb8-a5002455a493                                                |
-| mac_address          | fa:16:3e:97:e0:fc                                                                   |
-| name                 |                                                                                     |
-| network_id           | 2d627131-c841-4e3a-ace6-f2dd75773b6d                                                |
-| status               | DOWN                                                                                |
-| tenant_id            | 3671f46ec35e4bbca6ef92ab7975e463                                                    |
-+----------------------+-------------------------------------------------------------------------------------+
-                   </screen>
-                   <para>In the above command line, <literal>net1</literal> is the network name,
-                   which is a positional argument.
-                   <literal>--fixed-ip ip_address=192.168.2.40</literal> is an option,
-                   which specifies the port's fixed IP address we wanted.</para>
-               </listitem>
-              <listitem>
-                   <para>Create a port without specified IP address:</para>
-                   <screen>
-$ neutron port-create net1
-Created a new port:
-+----------------------+------------------------------------------------------------------------------------+
-| Field                | Value                                                                              |
-+----------------------+------------------------------------------------------------------------------------+
-| admin_state_up       | True                                                                               |
-| binding:capabilities | {"port_filter": false}                                                             |
-| binding:vif_type     | ovs                                                                                |
-| device_id            |                                                                                    |
-| device_owner         |                                                                                    |
-| fixed_ips            | {"subnet_id": "15a09f6c-87a5-4d14-b2cf-03d97cd4b456", "ip_address": "192.168.2.2"} |
-| id                   | baf13412-2641-4183-9533-de8f5b91444c                                               |
-| mac_address          | fa:16:3e:f6:ec:c7                                                                  |
-| name                 |                                                                                    |
-| network_id           | 2d627131-c841-4e3a-ace6-f2dd75773b6d                                               |
-| status               | DOWN                                                                               |
-| tenant_id            | 3671f46ec35e4bbca6ef92ab7975e463                                                   |
-+----------------------+------------------------------------------------------------------------------------+
-                   </screen>
-                   <para>We can see that the system will allocate one IP address
-                   if we don't specify the IP address in command line.</para>
-               </listitem>
-              <listitem>
-                   <para>Query ports with speficied fixed IP addresses:</para>
-                   <screen>
-$ neutron port-list --fixed-ips ip_address=192.168.2.2 ip_address=192.168.2.40
-+--------------------------------------+------+-------------------+-------------------------------------------------------------------------------------+
-| id                                   | name | mac_address       | fixed_ips                                                                           |
-+--------------------------------------+------+-------------------+-------------------------------------------------------------------------------------+
-| baf13412-2641-4183-9533-de8f5b91444c |      | fa:16:3e:f6:ec:c7 | {"subnet_id": "15a09f6c-87a5-4d14-b2cf-03d97cd4b456", "ip_address": "192.168.2.2"}  |
-| f7a08fe4-e79e-4b67-bbb8-a5002455a493 |      | fa:16:3e:97:e0:fc | {"subnet_id": "15a09f6c-87a5-4d14-b2cf-03d97cd4b456", "ip_address": "192.168.2.40"} |
-+--------------------------------------+------+-------------------+-------------------------------------------------------------------------------------+
-                   </screen>
-                   <para><literal>--fixed-ips ip_address=192.168.2.2 ip_address=192.168.2.40</literal>
-                   is one unknown option.</para>
-                   <para><emphasis role='bold'>How to find unknown options?</emphasis>
-                   The unknown options can be easily found by
-                   watching the output of <literal>create_xxx</literal> or <literal>show_xxx</literal>
-                   command. For example, in the port creation command, we see the fixed_ips fields, which
-                   can be used as an unknown option.</para>
-               </listitem>
-                </itemizedlist></para>
-                </section>
-    <xi:include href="neutron_cli_commands.xml"/>
+    <section xml:id="neutron_overview_API">
+        <title>API features</title>
+        <section xml:id="neutron_overview_API_fields">
+            <title>Fields selection</title>
+            <para>If there are <literal>‘fields’</literal> in request
+                URL, V2.0 API will extract the list of fields to
+                return. A sample of such URLs is
+                <literal>http://localhost:9696/v2.0/networks.json?fields=id&amp;fields=name</literal></para>
+            <para> Neutron client supports this feature by
+                <literal>-F</literal> option in known options part
+                and <literal>--fields</literal> in unknown options
+                part. For example, <literal>neutron -F id net-list --
+                    --fields name</literal>. Only
+                <literal>xx-list</literal> and
+                <literal>xx-show</literal> commands support this
+                feature.</para>
+        </section>
+        <section xml:id="neutron_overview_API_filtering">
+            <title>Value filtering</title>
+            <para>Any other fields except the
+                <literal>‘fields’</literal> are used to filter
+                resources. A sample of such URLs is
+                <literal>http://localhost:9696/v2.0/networks.json?name=test1&amp;name=test2</literal>.
+                By the current neutron server's sample DB plugin, the
+                filtering has the same meaning as a SQL clause:
+                <literal>name in [‘test1’, ‘test2’]</literal>.
+                Neutron client supports this feature by any key
+                options in unknown option part. For example
+                <literal>neutron net-list -- --name test1
+                    test2</literal>. Only <literal>xx-list</literal>
+                commands support this feature. </para>
+        </section>
+    </section>
+    <xi:include
+        href="../../openstack-user/src/section_cli_manage_networks.xml"/>
+    <xi:include
+        href="../../openstack-user/src/neutron_cli_commands.xml"/>
 </chapter>
