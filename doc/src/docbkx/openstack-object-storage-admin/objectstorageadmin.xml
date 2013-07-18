@@ -2195,8 +2195,38 @@ $ swift-dispersion-report -j
                 </itemizedlist>
             </para>
         </section>
+        <section xml:id="object-storage-account-quotas">
+            <title>Account Quotas</title>
+            <para>The account_quotas middleware aims to block write
+                requests (PUT, POST) if a given account quota (in bytes)
+                is exceeded while DELETE requests are still
+                allowed.</para>
+            <para>The x-account-meta-quota-bytes metadata entry must
+                be set to store and enable the quota. Write requests
+                to this metadata entry are only permitted for resellers.
+                There isn't any account quota limitation on a reseller
+                account even if x-account-meta-quota-bytes is set.</para>
+            <para>Any object PUT operations that exceed the quota
+                return a 413 response (request entity too large) with
+                a descriptive body.</para>
+            <para>The following command uses an admin account that own
+                the Reseller role to set a quota on the test account:
+                <programlisting>swift -A http://127.0.0.1:8080/auth/v1.0 -U admin:admin -K admin --os-storage-url=http://127.0.0.1:8080/v1/AUTH_test post -m quota-bytes:10000</programlisting>
+                Here is the stat listing of an account where quota has been set:
+                <programlisting>swift -A http://127.0.0.1:8080/auth/v1.0 -U test:tester -K testing stat
+                Account: AUTH_test
+                Containers: 0
+                Objects: 0
+                Bytes: 0
+                Meta Quota-Bytes: 10000
+                X-Timestamp: 1374075958.37454
+                X-Trans-Id: tx602634cf478546a39b1be-0051e6bc7a
+                </programlisting>
+                The command below removes the account quota:
+                <programlisting>swift -A http://127.0.0.1:8080/auth/v1.0 -U admin:admin -K admin --os-storage-url=http://127.0.0.1:8080/v1/AUTH_test post -m quota-bytes:
+            </programlisting></para>
+        </section>
     </section>
-
 
     <section xml:id="object-storage-bulk-delete">
         <title>Bulk Delete</title>
