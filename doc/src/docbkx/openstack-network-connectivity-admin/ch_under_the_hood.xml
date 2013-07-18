@@ -8,11 +8,12 @@
             Networking abstractions.</para>
         <simplesect>
             <title>Configuration</title>
-            <para>This example uses VLAN isolation on the switches to isolate tenant networks. This configuration labels the physical
-                network associated with the public network as <literal>physnet1</literal>, and the
-                physical network associated with the data network as <literal>physnet2</literal>,
-                which leads to the following configuration options in
-                    <filename>ovs_quantum_plugin.ini</filename>:<programlisting>[ovs]
+            <para>This example uses VLAN isolation on the switches to isolate tenant networks. This
+                configuration labels the physical network associated with the public network as
+                    <literal>physnet1</literal>, and the physical network associated with the data
+                network as <literal>physnet2</literal>, which leads to the following configuration
+                options in
+                <filename>ovs_neutron_plugin.ini</filename>:<programlisting>[ovs]
 tenant_network_type = vlan
 network_vlan_ranges = physnet2:100:110
 integration_bridge = br-int
@@ -35,32 +36,32 @@ bridge_mappings = physnet2:br-eth1</programlisting></para>
             <para>Under the <literal>service</literal> tenant, create the shared router, define the
                 public network, and set it as the default gateway of the
                 router<screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list | awk '/service/ {print $2}')</userinput>
-<prompt>$</prompt> <userinput>quantum router-create router01</userinput>
-<prompt>$</prompt> <userinput>quantum net-create --tenant-id $tenant public01 \
+<prompt>$</prompt> <userinput>neutron router-create router01</userinput>
+<prompt>$</prompt> <userinput>neutron net-create --tenant-id $tenant public01 \
           --provider:network_type flat \
           --provider:physical_network physnet1 \
           --router:external=True</userinput>
-<prompt>$</prompt> <userinput>quantum subnet-create --tenant-id $tenant --name public01_subnet01 \
+<prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $tenant --name public01_subnet01 \
           --gateway 10.64.201.254 public01 10.64.201.0/24 --enable_dhcp False</userinput>
-<prompt>$</prompt> <userinput>quantum router-gateway-set router01 public01</userinput></screen></para>
+<prompt>$</prompt> <userinput>neutron router-gateway-set router01 public01</userinput></screen></para>
             <para>Under the <literal>demo</literal> user tenant, create the private network
                     <literal>net01</literal> and corresponding subnet, and connect it to the
                     <literal>router01</literal> router. Configure it to use VLAN ID 101 on the
                 physical
                 switch.<screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list|awk '/demo/ {print $2}'</userinput>
-<prompt>$</prompt> <userinput>quantum net-create --tenant-id $tenant net01 \
+<prompt>$</prompt> <userinput>neutron net-create --tenant-id $tenant net01 \
           --provider:network_type vlan \
           --provider:physical_network physnet2 \
           --provider:segmentation_id 101</userinput>
-<prompt>$</prompt> <userinput>quantum subnet-create --tenant-id $tenant --name net01_subnet01 net01 192.168.101.0/24</userinput>
-<prompt>$</prompt> <userinput>quantum router-interface-add router01 net01_subnet01</userinput></screen></para>
+<prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $tenant --name net01_subnet01 net01 192.168.101.0/24</userinput>
+<prompt>$</prompt> <userinput>neutron router-interface-add router01 net01_subnet01</userinput></screen></para>
             <para>Similarly, for <literal>net02</literal>, using VLAN ID 102 on the physical
-                switch:<screen><prompt>$</prompt> <userinput>quantum net-create --tenant-id $tenant net02 \
+                switch:<screen><prompt>$</prompt> <userinput>neutron net-create --tenant-id $tenant net02 \
                 --provider:network_type vlan \
                 --provider:physical_network physnet2 \
                 --provider:segmentation_id 102</userinput>
-            <prompt>$</prompt> <userinput>quantum subnet-create --tenant-id $tenant --name net02_subnet01 net02 192.168.102.0/24</userinput>
-            <prompt>$</prompt> <userinput>quantum router-interface-add router01 net02_subnet01</userinput></screen></para>
+            <prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $tenant --name net02_subnet01 net02 192.168.102.0/24</userinput>
+            <prompt>$</prompt> <userinput>neutron router-interface-add router01 net02_subnet01</userinput></screen></para>
 
         </simplesect>
         <simplesect>
@@ -150,18 +151,17 @@ bridge_mappings = physnet2:br-eth1</programlisting></para>
         </simplesect>
         <simplesect>
             <title>Scenario 1: Network host config</title>
-            <para>Recall that the network host runs the quantum-openvswitch-plugin-agent, the
-                quantum-dhcp-agent, quantum-l3-agent, and quantum-metadata-agent services.</para>
+            <para>Recall that the network host runs the neutron-openvswitch-plugin-agent, the
+                neutron-dhcp-agent, neutron-l3-agent, and neutron-metadata-agent services.</para>
             <para>On the network host, assume that eth0 is connected to the external network, and
                 eth1 is connected it to the data network, which leads to the following configuration
                 options in
-                <filename>ovs_quantum_plugin.ini</filename>:<programlisting>[ovs]
+                <filename>ovs_neutron_plugin.ini</filename>:<programlisting>[ovs]
 tenant_network_type = vlan
 network_vlan_ranges = physnet2:101:110
 integration_bridge = br-int
 bridge_mappings = physnet1:br-ex,physnet2:br-eth1</programlisting>
-                The
-                following figure shows the network devices on the network host:</para>
+                The following figure shows the network devices on the network host:</para>
             <mediaobject>
                 <imageobject>
                     <imagedata fileref="figures/under-the-hood-scenario-1-ovs-network.png" contentwidth="6in"/>
@@ -170,7 +170,7 @@ bridge_mappings = physnet1:br-ex,physnet2:br-eth1</programlisting>
             <para>As on the compute host, there is an Open vSwitch integration bridge
                     (<literal>br-int</literal>) and an Open vSwitch bridge connected to the data
                 network (<literal>br-eth1</literal>), and the two are connected by a veth pair, and
-                the quantum-openvswitch-plugin-agent configures the ports on both switches to do
+                the neutron-openvswitch-plugin-agent configures the ports on both switches to do
                 VLAN translation.</para>
             <para>There is also an additional Open vSwitch bridge, <literal>br-ex</literal>, which
                 connects to the physical interface that is connected to the external network. In
@@ -288,36 +288,36 @@ bridge_mappings = physnet1:br-ex,physnet2:br-eth1</programlisting>
             </mediaobject>
             <para>Under the <literal>service</literal> tenant, define the public
                 network:<screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list | awk '/service/ {print $2}')</userinput>
-<prompt>$</prompt> <userinput>quantum net-create --tenant-id $tenant public01 \
+<prompt>$</prompt> <userinput>neutron net-create --tenant-id $tenant public01 \
 	--provider:network_type flat \
 	--provider:physical_network physnet1 \
 	--router:external=True</userinput>
-<prompt>$</prompt> <userinput>quantum subnet-create --tenant-id $tenant --name public01_subnet01 \
+<prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $tenant --name public01_subnet01 \
 	--gateway 10.64.201.254 public01 10.64.201.0/24 --enable_dhcp False</userinput></screen></para>
             <para>Under the <literal>tenantA</literal> user tenant, create the tenant router and set
                 its gateway for the public
                 network.<screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list|awk '/tenantA/ {print $2}')</userinput>
-<prompt>$</prompt> <userinput>quantum router-create --tenant-id $tenant router01</userinput>
-<prompt>$</prompt> <userinput>quantum router-gateway-set router01 public01</userinput></screen>
+<prompt>$</prompt> <userinput>neutron router-create --tenant-id $tenant router01</userinput>
+<prompt>$</prompt> <userinput>neutron router-gateway-set router01 public01</userinput></screen>
                 Then, define private network <literal>net01</literal> using VLAN ID 102 on the
                 physical switch, along with its subnet, and connect it to the router.
-                <screen><prompt>$</prompt> <userinput>quantum net-create --tenant-id $tenant net01 \
+                <screen><prompt>$</prompt> <userinput>neutron net-create --tenant-id $tenant net01 \
 	--provider:network_type vlan \
 	--provider:physical_network physnet2 \
 	--provider:segmentation_id 101</userinput>
-<prompt>$</prompt> <userinput>quantum subnet-create --tenant-id $tenant --name net01_subnet01 net01 192.168.101.0/24</userinput>
-<prompt>$</prompt> <userinput>quantum router-interface-add router01 net01_subnet01</userinput></screen></para>
+<prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $tenant --name net01_subnet01 net01 192.168.101.0/24</userinput>
+<prompt>$</prompt> <userinput>neutron router-interface-add router01 net01_subnet01</userinput></screen></para>
             <para>Similarly, for <literal>tenantB</literal>, create a router and another network,
                 using VLAN ID 102 on the physical
                 switch:<screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list|awk '/tenantB/ {print $2}')</userinput>
-<prompt>$</prompt> <userinput>quantum router-create --tenant-id $tenant router02</userinput>
-<prompt>$</prompt> <userinput>quantum router-gateway-set router02 public01</userinput>
-<prompt>$</prompt> <userinput>quantum net-create --tenant-id $tenant net02 \
+<prompt>$</prompt> <userinput>neutron router-create --tenant-id $tenant router02</userinput>
+<prompt>$</prompt> <userinput>neutron router-gateway-set router02 public01</userinput>
+<prompt>$</prompt> <userinput>neutron net-create --tenant-id $tenant net02 \
 	--provider:network_type vlan \
 	--provider:physical_network physnet2 \
 	--provider:segmentation_id 102</userinput>
-<prompt>$</prompt> <userinput>quantum subnet-create --tenant-id $tenant --name net02_subnet01 net01 192.168.101.0/24</userinput>
-<prompt>$</prompt> <userinput>quantum router-interface-add router02 net02_subnet01</userinput></screen></para>
+<prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $tenant --name net02_subnet01 net01 192.168.101.0/24</userinput>
+<prompt>$</prompt> <userinput>neutron router-interface-add router02 net02_subnet01</userinput></screen></para>
 
         </simplesect>
         <simplesect>
@@ -396,32 +396,32 @@ physical_interface_mappings: physnet2:eth1</programlisting></para>
             <para>Under the <literal>service</literal> tenant, create the shared router, define the
                 public network, and set it as the default gateway of the
                 router<screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list | awk '/service/ {print $2}')</userinput>
-<prompt>$</prompt> <userinput>quantum router-create router01</userinput>
-<prompt>$</prompt> <userinput>quantum net-create --tenant-id $tenant public01 \
+<prompt>$</prompt> <userinput>neutron router-create router01</userinput>
+<prompt>$</prompt> <userinput>neutron net-create --tenant-id $tenant public01 \
           --provider:network_type flat \
           --provider:physical_network physnet1 \
           --router:external=True</userinput>
-<prompt>$</prompt> <userinput>quantum subnet-create --tenant-id $tenant --name public01_subnet01 \
+<prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $tenant --name public01_subnet01 \
           --gateway 10.64.201.254 public01 10.64.201.0/24 --enable_dhcp False</userinput>
-<prompt>$</prompt> <userinput>quantum router-gateway-set router01 public01</userinput></screen></para>
+<prompt>$</prompt> <userinput>neutron router-gateway-set router01 public01</userinput></screen></para>
             <para>Under the <literal>demo</literal> user tenant, create the private network
-                <literal>net01</literal> and corresponding subnet, and connect it to the
-                <literal>router01</literal> router. Configure it to use VLAN ID 101 on the
+                    <literal>net01</literal> and corresponding subnet, and connect it to the
+                    <literal>router01</literal> router. Configure it to use VLAN ID 101 on the
                 physical
                 switch.<screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list|awk '/demo/ {print $2}'</userinput>
-<prompt>$</prompt> <userinput>quantum net-create --tenant-id $tenant net01 \
+<prompt>$</prompt> <userinput>neutron net-create --tenant-id $tenant net01 \
           --provider:network_type vlan \
           --provider:physical_network physnet2 \
           --provider:segmentation_id 101</userinput>
-<prompt>$</prompt> <userinput>quantum subnet-create --tenant-id $tenant --name net01_subnet01 net01 192.168.101.0/24</userinput>
-<prompt>$</prompt> <userinput>quantum router-interface-add router01 net01_subnet01</userinput></screen></para>
+<prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $tenant --name net01_subnet01 net01 192.168.101.0/24</userinput>
+<prompt>$</prompt> <userinput>neutron router-interface-add router01 net01_subnet01</userinput></screen></para>
             <para>Similarly, for <literal>net02</literal>, using VLAN ID 102 on the physical
-                switch:<screen><prompt>$</prompt> <userinput>quantum net-create --tenant-id $tenant net02 \
+                switch:<screen><prompt>$</prompt> <userinput>neutron net-create --tenant-id $tenant net02 \
                 --provider:network_type vlan \
                 --provider:physical_network physnet2 \
                 --provider:segmentation_id 102</userinput>
-            <prompt>$</prompt> <userinput>quantum subnet-create --tenant-id $tenant --name net02_subnet01 net02 192.168.102.0/24</userinput>
-            <prompt>$</prompt> <userinput>quantum router-interface-add router01 net02_subnet01</userinput></screen></para>
+            <prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $tenant --name net02_subnet01 net02 192.168.102.0/24</userinput>
+            <prompt>$</prompt> <userinput>neutron router-interface-add router01 net02_subnet01</userinput></screen></para>
 
         </simplesect>
         <simplesect>
@@ -492,36 +492,36 @@ physical_interface_mappings: physnet2:eth1</programlisting></para>
             </mediaobject>
             <para>Under the <literal>service</literal> tenant, define the public
                 network:<screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list | awk '/service/ {print $2}')</userinput>
-<prompt>$</prompt> <userinput>quantum net-create --tenant-id $tenant public01 \
+<prompt>$</prompt> <userinput>neutron net-create --tenant-id $tenant public01 \
 	--provider:network_type flat \
 	--provider:physical_network physnet1 \
 	--router:external=True</userinput>
-<prompt>$</prompt> <userinput>quantum subnet-create --tenant-id $tenant --name public01_subnet01 \
+<prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $tenant --name public01_subnet01 \
 	--gateway 10.64.201.254 public01 10.64.201.0/24 --enable_dhcp False</userinput></screen></para>
             <para>Under the <literal>tenantA</literal> user tenant, create the tenant router and set
                 its gateway for the public
                 network.<screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list|awk '/tenantA/ {print $2}')</userinput>
-<prompt>$</prompt> <userinput>quantum router-create --tenant-id $tenant router01</userinput>
-<prompt>$</prompt> <userinput>quantum router-gateway-set router01 public01</userinput></screen>
+<prompt>$</prompt> <userinput>neutron router-create --tenant-id $tenant router01</userinput>
+<prompt>$</prompt> <userinput>neutron router-gateway-set router01 public01</userinput></screen>
                 Then, define private network <literal>net01</literal> using VLAN ID 102 on the
                 physical switch, along with its subnet, and connect it to the router.
-                <screen><prompt>$</prompt> <userinput>quantum net-create --tenant-id $tenant net01 \
+                <screen><prompt>$</prompt> <userinput>neutron net-create --tenant-id $tenant net01 \
 	--provider:network_type vlan \
 	--provider:physical_network physnet2 \
 	--provider:segmentation_id 101</userinput>
-<prompt>$</prompt> <userinput>quantum subnet-create --tenant-id $tenant --name net01_subnet01 net01 192.168.101.0/24</userinput>
-<prompt>$</prompt> <userinput>quantum router-interface-add router01 net01_subnet01</userinput></screen></para>
+<prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $tenant --name net01_subnet01 net01 192.168.101.0/24</userinput>
+<prompt>$</prompt> <userinput>neutron router-interface-add router01 net01_subnet01</userinput></screen></para>
             <para>Similarly, for <literal>tenantB</literal>, create a router and another network,
                 using VLAN ID 102 on the physical
                 switch:<screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list|awk '/tenantB/ {print $2}')</userinput>
-<prompt>$</prompt> <userinput>quantum router-create --tenant-id $tenant router02</userinput>
-<prompt>$</prompt> <userinput>quantum router-gateway-set router02 public01</userinput>
-<prompt>$</prompt> <userinput>quantum net-create --tenant-id $tenant net02 \
+<prompt>$</prompt> <userinput>neutron router-create --tenant-id $tenant router02</userinput>
+<prompt>$</prompt> <userinput>neutron router-gateway-set router02 public01</userinput>
+<prompt>$</prompt> <userinput>neutron net-create --tenant-id $tenant net02 \
 	--provider:network_type vlan \
 	--provider:physical_network physnet2 \
 	--provider:segmentation_id 102</userinput>
-<prompt>$</prompt> <userinput>quantum subnet-create --tenant-id $tenant --name net02_subnet01 net01 192.168.101.0/24</userinput>
-<prompt>$</prompt> <userinput>quantum router-interface-add router02 net02_subnet01</userinput></screen></para>
+<prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $tenant --name net02_subnet01 net01 192.168.101.0/24</userinput>
+<prompt>$</prompt> <userinput>neutron router-interface-add router02 net02_subnet01</userinput></screen></para>
 
         </simplesect>
         <simplesect>

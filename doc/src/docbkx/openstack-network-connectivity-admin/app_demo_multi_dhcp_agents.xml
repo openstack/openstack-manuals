@@ -38,9 +38,8 @@ format="PNG" />
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="app_demo_multi_dhcp_agents">
     <title>Scalable and Highly Available DHCP Agents</title>
     <para>This section describes how to use the agent management (alias agent) and scheduler (alias agent_scheduler) extensions for DHCP agents scalability and HA</para>
-         <note><para>Use the ext-list quantum client command to check if
-            these extensions are enabled:
-            <screen><computeroutput>$ quantum ext-list -c name -c alias
+         <note><para>Use the ext-list neutron client command to check if these extensions are enabled:
+            <screen><computeroutput>$ neutron ext-list -c name -c alias
 +-----------------+--------------------------+
 | alias           | name                     |
 +-----------------+--------------------------+
@@ -49,9 +48,9 @@ format="PNG" />
 | quotas          | Quota management support |
 | agent           | agent                    |
 | provider        | Provider Network         |
-| router          | Quantum L3 Router        |
+| router          | Neutron L3 Router        |
 | lbaas           | LoadBalancing service    |
-| extraroute      | Quantum Extra Route      |
+| extraroute      | Neutron Extra Route      |
 +-----------------+--------------------------+
          </computeroutput></screen></para></note>
    <informalfigure>
@@ -72,19 +71,15 @@ format="PNG" />
             <tbody>
                 <tr>
                     <td>OpenStack Controller host - controlnode</td>
-                    <td>Runs the Quantum service, Keystone and all of
-                        the Nova services that are required to deploy
-                        VMs. The node must have at least one
-                        network interface, this should be connected to
-                        the "Management Network". <emphasis
-                            role="bold">Note</emphasis> nova-network
-                        should not be running since it is
-                        replaced by Quantum.</td>
+                    <td>Runs the Neutron service, Keystone and all of the Nova services that are
+                        required to deploy VMs. The node must have at least one network interface,
+                        this should be connected to the "Management Network". <emphasis role="bold"
+                            >Note</emphasis> nova-network should not be running since it is replaced
+                        by Neutron.</td>
                 </tr>
                 <tr>
                     <td>HostA</td>
-                    <td>Runs Nova compute, the Quantum L2 agent and
-                        DCHP agent</td>
+                    <td>Runs Nova compute, the Neutron L2 agent and DCHP agent</td>
                 </tr>
                 <tr>
                     <td>HostB</td>
@@ -97,13 +92,13 @@ format="PNG" />
         <para>
             <itemizedlist>
                 <listitem>
-                    <para><emphasis role="bold">controlnode - Quantum Server</emphasis></para><orderedlist>
+                    <para><emphasis role="bold">controlnode - Neutron Server</emphasis></para><orderedlist>
                             <listitem>
-                                <para>Quantum configuration
-                                   file <emphasis role="bold">/etc/quantum/quantum.conf</emphasis>:</para>
+                                <para>Neutron configuration file <emphasis role="bold"
+                                    >/etc/neutron/neutron.conf</emphasis>:</para>
                                 <screen><computeroutput>
 [DEFAULT]
-core_plugin = quantum.plugins.linuxbridge.lb_quantum_plugin.LinuxBridgePluginV2
+core_plugin = neutron.plugins.linuxbridge.lb_neutron_plugin.LinuxBridgePluginV2
 rabbit_host = controlnode
 allow_overlapping_ips = True
 host = controlnode
@@ -111,14 +106,14 @@ agent_down_time = 5
 </computeroutput></screen>
                             </listitem>
                             <listitem>
-                                <para>Update the plugin configuration
-                                   file <emphasis role="bold">/etc/quantum/plugins/linuxbridge/linuxbridge_conf.ini</emphasis>:</para>
+                                <para>Update the plugin configuration file <emphasis role="bold"
+                                    >/etc/neutron/plugins/linuxbridge/linuxbridge_conf.ini</emphasis>:</para>
                                 <screen><computeroutput>
 [vlans]
 tenant_network_type = vlan
 network_vlan_ranges = physnet1:1000:2999
 [database]
-sql_connection = mysql://root:root@127.0.0.1:3306/quantum_linux_bridge
+sql_connection = mysql://root:root@127.0.0.1:3306/neutron_linux_bridge
 reconnect_interval = 2
 [linux_bridge]
 physical_interface_mappings = physnet1:eth0
@@ -129,8 +124,8 @@ physical_interface_mappings = physnet1:eth0
                 <listitem>
                     <para><emphasis role="bold">HostA and HostB - L2 Agent</emphasis></para><orderedlist>
                             <listitem>
-                                <para>Quantum configuration
-                                   file <emphasis role="bold">/etc/quantum/quantum.conf</emphasis>:</para>
+                                <para>Neutron configuration file <emphasis role="bold"
+                                    >/etc/neutron/neutron.conf</emphasis>:</para>
                                 <screen><computeroutput>
 [DEFAULT]
 rabbit_host = controlnode
@@ -140,14 +135,14 @@ host = HostA
 </computeroutput></screen>
                             </listitem>
                             <listitem>
-                                <para>Update the plugin configuration
-                                   file <emphasis role="bold">/etc/quantum/plugins/linuxbridge/linuxbridge_conf.ini</emphasis>:</para>
+                                <para>Update the plugin configuration file <emphasis role="bold"
+                                    >/etc/neutron/plugins/linuxbridge/linuxbridge_conf.ini</emphasis>:</para>
                                 <screen><computeroutput>
 [vlans]
 tenant_network_type = vlan
 network_vlan_ranges = physnet1:1000:2999
 [database]
-sql_connection = mysql://root:root@127.0.0.1:3306/quantum_linux_bridge
+sql_connection = mysql://root:root@127.0.0.1:3306/neutron_linux_bridge
 reconnect_interval = 2
 [linux_bridge]
 physical_interface_mappings = physnet1:eth0</computeroutput></screen>
@@ -157,14 +152,14 @@ physical_interface_mappings = physnet1:eth0</computeroutput></screen>
                                    file <emphasis role="bold"
                                    >/etc/nova/nova.conf</emphasis>:</para>
                                 <screen><computeroutput>[DEFAULT]
-network_api_class=nova.network.quantumv2.api.API
+network_api_class=nova.network.neutronv2.api.API
 
-quantum_admin_username=quantum
-quantum_admin_password=servicepassword
-quantum_admin_auth_url=http://controlnode:35357/v2.0/
-quantum_auth_strategy=keystone
-quantum_admin_tenant_name=servicetenant
-quantum_url=http://100.1.1.10:9696/
+neutron_admin_username=neutron
+neutron_admin_password=servicepassword
+neutron_admin_auth_url=http://controlnode:35357/v2.0/
+neutron_auth_strategy=keystone
+neutron_admin_tenant_name=servicetenant
+neutron_url=http://100.1.1.10:9696/
 firewall_driver=nova.virt.firewall.NoopFirewallDriver
 </computeroutput></screen>
                             </listitem>
@@ -173,12 +168,11 @@ firewall_driver=nova.virt.firewall.NoopFirewallDriver
                 <listitem>
                     <para><emphasis role="bold">HostA and HostB - DHCP Agent</emphasis></para><orderedlist>
                             <listitem>
-                                <para>Update the DHCP configuration
-                                   file <emphasis role="bold"
-                                   >/etc/quantum/dhcp_agent.ini</emphasis>:</para>
+                                <para>Update the DHCP configuration file <emphasis role="bold"
+                                    >/etc/neutron/dhcp_agent.ini</emphasis>:</para>
                                 <screen><computeroutput>
 [DEFAULT]
-interface_driver = quantum.agent.linux.interface.BridgeInterfaceDriver
+interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver
 </computeroutput></screen>
                             </listitem>
 
@@ -202,7 +196,8 @@ export OS_AUTH_URL=http://controlnode:5000/v2.0/</computeroutput></screen>
             <itemizedlist>
                    <listitem>
                        <para><emphasis role="bold">Settings</emphasis></para>
-                       <para>We need some VMs and a quantum network to experiment. Here they are:</para>
+                       <para>We need some VMs and a neutron network to experiment. Here they
+                        are:</para>
                                 <screen><computeroutput>$ nova list
 +--------------------------------------+-----------+--------+---------------+
 | ID                                   | Name      | Status | Networks      |
@@ -211,7 +206,7 @@ export OS_AUTH_URL=http://controlnode:5000/v2.0/</computeroutput></screen>
 | 2d604e05-9a6c-4ddb-9082-8a1fbdcc797d | myserver2 | ACTIVE | net1=10.0.1.4 |
 | c7c0481c-3db8-4d7a-a948-60ce8211d585 | myserver3 | ACTIVE | net1=10.0.1.5 |
 +--------------------------------------+-----------+--------+---------------+
-$ quantum net-list
+$ neutron net-list
 +--------------------------------------+------+--------------------------------------+
 | id                                   | name | subnets                              |
 +--------------------------------------+------+--------------------------------------+
@@ -220,13 +215,14 @@ $ quantum net-list
                             </listitem>
 
                 <listitem>
-                    <para><emphasis role="bold">Manage agents in quantum deployment</emphasis></para>
-                    <para>Every agent which supports these extensions will register itself with the quantum server when
-                    it starts up.</para>
+                    <para><emphasis role="bold">Manage agents in neutron
+                        deployment</emphasis></para>
+                    <para>Every agent which supports these extensions will register itself with the
+                        neutron server when it starts up.</para>
                     <orderedlist>
                             <listitem>
                                 <para>List all agents:</para>
-                                <screen><computeroutput>$ quantum agent-list
+                                <screen><computeroutput>$ neutron agent-list
 +--------------------------------------+--------------------+-------+-------+----------------+
 | id                                   | agent_type         | host  | alive | admin_state_up |
 +--------------------------------------+--------------------+-------+-------+----------------+
@@ -236,11 +232,13 @@ $ quantum net-list
 | f28aa126-6edb-4ea5-a81e-8850876bc0a8 | DHCP agent         | HostB | :-)   | True           |
 +--------------------------------------+--------------------+-------+-------+----------------+
 </computeroutput></screen>
-                           <para>Just as shown, we have four agents now, and they have reported their state.
-                           The <literal>'alive'</literal> will be <literal>':-)'</literal> if the agent reported its state
-                           within the period defined by the option <literal>'agent_down_time'</literal> in quantum server's quantum.conf.
-                           Otherwise the <literal>'alive'</literal> is <literal>'xxx'</literal>.
-                           </para>
+                           <para>Just as shown, we have four agents now, and they have reported
+                                their state. The <literal>'alive'</literal> will be
+                                    <literal>':-)'</literal> if the agent reported its state within
+                                the period defined by the option
+                                    <literal>'agent_down_time'</literal> in neutron server's
+                                neutron.conf. Otherwise the <literal>'alive'</literal> is
+                                    <literal>'xxx'</literal>. </para>
                             </listitem>
                             <listitem>
                                 <para>List the DHCP agents hosting a given network</para>
@@ -254,7 +252,7 @@ $ quantum net-list
                                 more than one network. Let's first go
                                 with command that lists DHCP agents
                                 hosting a given network.</para>
-                                <screen><computeroutput>$ quantum dhcp-agent-list-hosting-net net1
+                                <screen><computeroutput>$ neutron dhcp-agent-list-hosting-net net1
 +--------------------------------------+-------+----------------+-------+
 | id                                   | host  | admin_state_up | alive |
 +--------------------------------------+-------+----------------+-------+
@@ -266,7 +264,7 @@ $ quantum net-list
                                 <para>List the networks hosted by a
                                 given DHCP agent.</para>
                                 <para>This command is to show which networks a given dhcp agent is managing.</para>
-                                <screen><computeroutput>$ quantum net-list-on-dhcp-agent a0c1c21c-d4f4-4577-9ec7-908f2d48622d
+                                <screen><computeroutput>$ neutron net-list-on-dhcp-agent a0c1c21c-d4f4-4577-9ec7-908f2d48622d
 +--------------------------------------+------+---------------------------------------------------+
 | id                                   | name | subnets                                           |
 +--------------------------------------+------+---------------------------------------------------+
@@ -283,18 +281,18 @@ $ quantum net-list
                                 information of an agent, we can use
                                 'agent-show'.</para>
                                 <screen><computeroutput>
-$ quantum agent-show  a0c1c21c-d4f4-4577-9ec7-908f2d48622d
+$ neutron agent-show  a0c1c21c-d4f4-4577-9ec7-908f2d48622d
 +---------------------+----------------------------------------------------------+
 | Field               | Value                                                    |
 +---------------------+----------------------------------------------------------+
 | admin_state_up      | True                                                     |
 | agent_type          | DHCP agent                                               |
 | alive               | False                                                    |
-| binary              | quantum-dhcp-agent                                       |
+| binary              | neutron-dhcp-agent                                       |
 | configurations      | {                                                        |
 |                     |      "subnets": 1,                                       |
 |                     |      "use_namespaces": true,                             |
-|                     |      "dhcp_driver": "quantum.agent.linux.dhcp.Dnsmasq",  |
+|                     |      "dhcp_driver": "neutron.agent.linux.dhcp.Dnsmasq",  |
 |                     |      "networks": 1,                                      |
 |                     |      "dhcp_lease_time": 120,                             |
 |                     |      "ports": 3                                          |
@@ -308,25 +306,20 @@ $ quantum agent-show  a0c1c21c-d4f4-4577-9ec7-908f2d48622d
 | topic               | dhcp_agent                                               |
 +---------------------+----------------------------------------------------------+
                                 </computeroutput></screen>
-                                <para>In the above output,
-                                <literal>'heartbeat_timestamp'</literal> is the time on
-                                quantum server. So we don't need
-                                all agents synced to quantum
-                                server's time for this extension to
-                                run well. <literal>'configurations'</literal> is about
-                                the agent's static configuration
-                                or run time data. We can see that this
-                                agent is a DHCP agent, and it is
-                                hosting one network, one subnet and 3
-                                ports.</para>
+                                <para>In the above output, <literal>'heartbeat_timestamp'</literal>
+                                is the time on neutron server. So we don't need all agents synced to
+                                neutron server's time for this extension to run well.
+                                    <literal>'configurations'</literal> is about the agent's static
+                                configuration or run time data. We can see that this agent is a DHCP
+                                agent, and it is hosting one network, one subnet and 3 ports.</para>
                                 <para>Different type of agents has different detail. Below is information for
                                 a <literal>'Linux bridge agent'</literal></para>
-                                <screen><computeroutput>$ quantum agent-show ed96b856-ae0f-4d75-bb28-40a47ffd7695
+                                <screen><computeroutput>$ neutron agent-show ed96b856-ae0f-4d75-bb28-40a47ffd7695
 +---------------------+--------------------------------------+
 | Field               | Value                                |
 +---------------------+--------------------------------------+
 | admin_state_up      | True                                 |
-| binary              | quantum-linuxbridge-agent            |
+| binary              | neutron-linuxbridge-agent            |
 | configurations      | {                                    |
 |                     |      "physnet1": "eth0",             |
 |                     |      "devices": "4"                  |
@@ -361,10 +354,10 @@ $ quantum agent-show  a0c1c21c-d4f4-4577-9ec7-908f2d48622d
                                 (We can design more sophisticated
                                 scheduling algorithm just like we do
                                 in nova-schedule later.)</para>
-                                <screen><computeroutput>$ quantum net-create net2
-$ quantum subnet-create net2 9.0.1.0/24 --name subnet2
-$ quantum port-create net2
-$ quantum dhcp-agent-list-hosting-net net2
+                                <screen><computeroutput>$ neutron net-create net2
+$ neutron subnet-create net2 9.0.1.0/24 --name subnet2
+$ neutron port-create net2
+$ neutron dhcp-agent-list-hosting-net net2
 +--------------------------------------+-------+----------------+-------+
 | id                                   | host  | admin_state_up | alive |
 +--------------------------------------+-------+----------------+-------+
@@ -382,9 +375,9 @@ $ quantum dhcp-agent-list-hosting-net net2
                                 <para>Assign a network to a given DHCP
                                 agent.</para>
                                 <para>We have two DHCP agents, and we want another DHCP agent to host the network too.</para>
-                                <screen><computeroutput>$ quantum dhcp-agent-network-add f28aa126-6edb-4ea5-a81e-8850876bc0a8 net2
+                                <screen><computeroutput>$ neutron dhcp-agent-network-add f28aa126-6edb-4ea5-a81e-8850876bc0a8 net2
 Added network net2 to dhcp agent
-$ quantum dhcp-agent-list-hosting-net net2
+$ neutron dhcp-agent-list-hosting-net net2
 +--------------------------------------+-------+----------------+-------+
 | id                                   | host  | admin_state_up | alive |
 +--------------------------------------+-------+----------------+-------+
@@ -401,9 +394,9 @@ $ quantum dhcp-agent-list-hosting-net net2
                                 command for the previous one.
                                 Let's remove <literal>'net2'</literal> from HostA's DHCP
                                 agent.</para>
-                                <screen><computeroutput>$ quantum dhcp-agent-network-remove a0c1c21c-d4f4-4577-9ec7-908f2d48622d net2
+                                <screen><computeroutput>$ neutron dhcp-agent-network-remove a0c1c21c-d4f4-4577-9ec7-908f2d48622d net2
 Removed network net2 to dhcp agent
-$ quantum dhcp-agent-list-hosting-net net2
+$ neutron dhcp-agent-list-hosting-net net2
 +--------------------------------------+-------+----------------+-------+
 | id                                   | host  | admin_state_up | alive |
 +--------------------------------------+-------+----------------+-------+
@@ -422,7 +415,7 @@ $ quantum dhcp-agent-list-hosting-net net2
                     <orderedlist>
                             <listitem>
                                 <para>Boot a VM on net2.</para>
-                                <screen><computeroutput>$ quantum net-list
+                                <screen><computeroutput>$ neutron net-list
 +--------------------------------------+------+--------------------------------------------------+
 | id                                   | name | subnets                                          |
 +--------------------------------------+------+--------------------------------------------------+
@@ -445,7 +438,7 @@ $ nova list
                                 <para>Make sure both DHCP agents
                                 hosting 'net2'.</para>
                                 <para>We can use commands shown before to assign the network to agents.</para>
-                                <screen><computeroutput>$ quantum dhcp-agent-list-hosting-net net2
+                                <screen><computeroutput>$ neutron dhcp-agent-list-hosting-net net2
 +--------------------------------------+-------+----------------+-------+
 | id                                   | host  | admin_state_up | alive |
 +--------------------------------------+-------+----------------+-------+
@@ -458,8 +451,9 @@ $ nova list
                                 <para>Testing the HA.</para>
                                 <para>Step 1. Login to the <literal>'myserver4'</literal>
                                 VM, and run <literal>'udhcpc'</literal>, <literal>'dhclient'</literal> or other DHCP client.</para>
-                                <para>Step 2. Stop the DHCP agent on HostA (Beside stopping the quantum-dhcp-agent binary,
-                                we must make sure dnsmasq processes are gone too.)</para>
+                                <para>Step 2. Stop the DHCP agent on HostA (Beside stopping the
+                                neutron-dhcp-agent binary, we must make sure dnsmasq processes are
+                                gone too.)</para>
                                 <para>Step 3. Run a DHCP client in VM. We can see it can get the wanted IP.</para>
                                 <para>Step 4. Stop the DHCP agent on HostB too.</para>
                                 <para>Step 5. Run <literal>'udhcpc'</literal> in VM. We can see it cannot get the wanted IP.</para>
@@ -481,8 +475,8 @@ $ nova list
                         We should remove the resources on
                         the agent before we delete the agent
                         itself. </para><para>To run the commands below, we need first stop the DHCP agent on HostA.</para>
-                                <screen><computeroutput>$ quantum agent-update --admin-state-up False a0c1c21c-d4f4-4577-9ec7-908f2d48622d
-$ quantum agent-list
+                                <screen><computeroutput>$ neutron agent-update --admin-state-up False a0c1c21c-d4f4-4577-9ec7-908f2d48622d
+$ neutron agent-list
 +--------------------------------------+--------------------+-------+-------+----------------+
 | id                                   | agent_type         | host  | alive | admin_state_up |
 +--------------------------------------+--------------------+-------+-------+----------------+
@@ -491,9 +485,9 @@ $ quantum agent-list
 | ed96b856-ae0f-4d75-bb28-40a47ffd7695 | Linux bridge agent | HostB | :-)   | True           |
 | f28aa126-6edb-4ea5-a81e-8850876bc0a8 | DHCP agent         | HostB | :-)   | True           |
 +--------------------------------------+--------------------+-------+-------+----------------+
-$ quantum agent-delete a0c1c21c-d4f4-4577-9ec7-908f2d48622d
+$ neutron agent-delete a0c1c21c-d4f4-4577-9ec7-908f2d48622d
 Deleted agent: a0c1c21c-d4f4-4577-9ec7-908f2d48622d
-$ quantum agent-list
+$ neutron agent-list
 +--------------------------------------+--------------------+-------+-------+----------------+
 | id                                   | agent_type         | host  | alive | admin_state_up |
 +--------------------------------------+--------------------+-------+-------+----------------+

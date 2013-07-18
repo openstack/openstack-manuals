@@ -8,8 +8,8 @@
     <title>OpenStack Grizzly deployment guide for Ubuntu Precise,
         Single node installation. </title>
     <para>ASSUMPTION: Currently guide uses Nova-Network will be
-        updated for Quantum soon, although we have created database
-        and endpoint for the Quantum service.</para>
+        updated for Neutron soon, although we have created database
+        and endpoint for the Neutron service.</para>
     <section xml:id="osfolubuntu-prerquisite">
     <title>Prerequisites</title>
     <para>One server with two NICs</para>
@@ -153,7 +153,7 @@ restrict ::1
 <prompt>$</prompt> <userinput>mysql -u root -proot -e "create database glance;"</userinput>
 <prompt>$</prompt> <userinput>mysql -u root -proot -e "create database cinder;"</userinput>
 <prompt>$</prompt> <userinput>mysql -u root -proot -e "create database keystone;"</userinput>
-<prompt>$</prompt> <userinput>mysql -u root -proot -e "create database ovs_quantum;"</userinput> </screen>Add
+<prompt>$</prompt> <userinput>mysql -u root -proot -e "create database ovs_neutron;"</userinput> </screen>Add
             mysql permissions for the created
             databases.<screen> <userinput>mysql > grant all privileges on nova.* to nova@"localhost" identified by "openstack";</userinput>
  <userinput>mysql > grant all privileges on nova.* to nova@"%" identified by "openstack";</userinput>
@@ -163,8 +163,8 @@ restrict ::1
  <userinput>mysql > grant all privileges on cinder.* to cinder@"%" identified by "openstack";</userinput>
  <userinput>mysql > grant all privileges on keystone.* to keystone@"localhost" identified by "openstack";</userinput>
  <userinput>mysql > grant all privileges on keystone.* to keystone@"%" identified by "openstack";</userinput>
- <userinput>mysql > grant all privileges on ovs_quantum.* to ovs_quantum@"localhost" identified by "openstack";</userinput>
- <userinput>mysql > grant all privileges on ovs_quantum.* to ovs_quantum@"%" identified by "openstack";</userinput></screen></para>
+ <userinput>mysql > grant all privileges on ovs_neutron.* to ovs_neutron@"localhost" identified by "openstack";</userinput>
+ <userinput>mysql > grant all privileges on ovs_neutron.* to ovs_neutron@"%" identified by "openstack";</userinput></screen></para>
 
 
     </section>
@@ -195,7 +195,7 @@ export SERVICE_ENDPOINT=http://10.211.55.20:35357/v2.0/</programlisting>Source
 <prompt>$</prompt> <userinput>keystone user-create --name glance --pass openstack   --email glance@foobar.com</userinput>
 <prompt>$</prompt> <userinput>keystone user-create --name swift --pass openstack   --email swift@foobar.com</userinput>
 <prompt>$</prompt> <userinput>keystone user-create --name cinder --pass openstack   --email cinder@foobar.com</userinput>
-<prompt>$</prompt> <userinput>keystone user-create --name quantum --pass openstack   --email quantum@foobar.com</userinput></screen>Create
+<prompt>$</prompt> <userinput>keystone user-create --name neutron --pass openstack   --email neutron@foobar.com</userinput></screen>Create
             roles.<screen><prompt>$</prompt> <userinput>keystone role-create --name admin</userinput>
 <prompt>$</prompt> <userinput>keystone role-create --name Member</userinput></screen></para>
 		<para>Create
@@ -209,7 +209,7 @@ export SERVICE_ENDPOINT=http://10.211.55.20:35357/v2.0/</programlisting>Source
 <prompt>$</prompt> <userinput>keystone service-create --name keystone --type identity --description "OpenStack Identity Service"</userinput>
 <prompt>$</prompt> <userinput>keystone service-create --name ec2 --type ec2 --description "EC2 Service"</userinput>
 <prompt>$</prompt> <userinput>keystone service-create --name cinder --type volume --description "Cinder Service"</userinput>
-<prompt>$</prompt> <userinput>keystone service-create --name quantum --type network --description "OpenStack Networking service"</userinput></screen>Create
+<prompt>$</prompt> <userinput>keystone service-create --name neutron --type network --description "OpenStack Networking service"</userinput></screen>Create
             endpoints.<programlisting># For Nova-api</programlisting></para>
         <para>
             <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service_id bbbd1945908f4fae90530e8721df650d --publicurl "http://172.16.30.20:8774/v2/%(tenant_id)s" --adminurl "http://10.211.55.20:8774/v2/%(tenant_id)s" --internalurl "http://10.211.55.20:8774/v2/%(tenant_id)s"
@@ -236,7 +236,7 @@ export SERVICE_ENDPOINT=http://10.211.55.20:35357/v2.0/</programlisting>Source
             <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service_id 65a888cf384d4c68b595196661cee87d --publicurl "http://172.16.30.20:8776/v1/%(tenant_id)s" --adminurl "http://10.211.55.20:8776/v1/%(tenant_id)s" --internalurl "http://10.211.55.20:8776/v1/%(tenant_id)s"
 </userinput></screen>
         </para>
-        <programlisting>#For Quantum</programlisting>
+        <programlisting>#For Neutron</programlisting>
         <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service-id 59877a8f97f04a2aad1e8164e14d7450 --publicurl "http://172.16.30.20:9696" --adminurl "http://10.211.55.20:9696" --internalurl "http://10.211.55.20:9696"</userinput></screen>
         <para>Retrieve all the
             ids.<screen><prompt>$</prompt> <userinput>keystone tenant-list</userinput></screen></para>
@@ -252,7 +252,7 @@ export SERVICE_ENDPOINT=http://10.211.55.20:35357/v2.0/</programlisting>Source
 |                id                |   name  | enabled |       email        |
 +----------------------------------+---------+---------+--------------------+
 | 1d64219fcdeb41c3a163a761c61ef280 |   nova  |   True  |  nova@foobar.com   |
-| 223c1711de5446f9b99c71803fc488db | quantum |   True  | quantum@foobar.com |
+| 223c1711de5446f9b99c71803fc488db | neutron |   True  | neutron@foobar.com |
 | 45e9461fa61e48f99de1adcd0b38eae7 |  admin  |   True  |  admin@foobar.com  |
 | af4a1747e71d48c7834c408678f27316 |  cinder |   True  | cinder@foobar.com  |
 | ceade796dee047b8b3488661a29f23cd |  glance |   True  | glance@foobar.com  |
@@ -276,7 +276,7 @@ export SERVICE_ENDPOINT=http://10.211.55.20:35357/v2.0/</programlisting>Source
 | 53a8ae206b3645368daa9db4fe149ee5 |  volume  |    volume    |   OpenStack Volume Service   |
 | 58e531e33059482f940de8ba9e97e5d1 |   ec2    |     ec2      |         EC2 Service          |
 | 65a888cf384d4c68b595196661cee87d |  cinder  |    volume    |        Cinder Service        |
-| 72c2cd62020f4c349e64a383b05daf8b | quantum  |   network    | OpenStack Networking service |
+| 72c2cd62020f4c349e64a383b05daf8b | neutron  |   network    | OpenStack Networking service |
 | bbbd1945908f4fae90530e8721df650d |   nova   |   compute    |  OpenStack Compute Service   |
 +----------------------------------+----------+--------------+------------------------------+</programlisting>
         <para>Adding roles.</para>
@@ -297,7 +297,7 @@ export SERVICE_ENDPOINT=http://10.211.55.20:35357/v2.0/</programlisting>Source
         <programlisting> # User cinder &lt;> role admin &lt;> tenant service</programlisting>
         <screen><prompt>$</prompt> <userinput>keystone user-role-add --user_id af4a1747e71d48c7834c408678f27316 --role_id e45af7cf33be4dac8070aa8310144ce3 --tenant_id 2a76a11b872e4ca18adb3162924735af
 </userinput></screen>
-        <programlisting># User quantum &lt;> role admin &lt;> tenant service </programlisting>
+        <programlisting># User neutron &lt;> role admin &lt;> tenant service </programlisting>
         <screen><prompt>$</prompt> <userinput>keystone user-role-add --user_id 223c1711de5446f9b99c71803fc488db --role_id e45af7cf33be4dac8070aa8310144ce3 --tenant_id 2a76a11b872e4ca18adb3162924735af
 </userinput></screen>
         <programlisting> # User swift &lt;> role Member &lt;> tenant service</programlisting>
@@ -442,10 +442,10 @@ nova-cert        ubuntu-precise      nova             enabled   :-)    2012-09-1
         <title>Installing and configuring Dashboard</title>
         <para>Install the
             packages.<screen><prompt>$</prompt> <userinput>sudo apt-get install openstack-dashboard memcached</userinput></screen>Disable
-            the quantum endpoint, as of now in our setup we are not
-            using Quantum to do so Edit
+            the neutron endpoint, as of now in our setup we are not
+            using Neutron to do so Edit
             /etc/openstack-dashboard/local_settings.py - under
-            TEMPLATE_DEBUG.<programlisting>QUANTUM_ENABLED = False</programlisting></para>
+            TEMPLATE_DEBUG.<programlisting>NEUTRON_ENABLED = False</programlisting></para>
         <note>
             <para>In order to change the timezone you can use either
                 dashboard or inside
