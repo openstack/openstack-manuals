@@ -199,12 +199,16 @@
 # FIBRE CHANNEL(uncomment the next line to enable the FC driver)
   # volume_driver=cinder.volume.drivers.san.hp.hp_3par_fc.HP3PARFCDriver
 
-# iSCSI (uncomment the next line to enable the iSCSI driver and the iscsi_ip_address)
-  # volume_driver=cinder.volume.drivers.san.hp.hp_3par_iscsi.HP3PARISCSIDriver
+# iSCSI (uncomment the next line to enable the iSCSI driver and  
+# hp3par_iscsi_ips or iscsi_ip_address)
+  #volume_driver=cinder.volume.drivers.san.hp.hp_3par_iscsi.HP3PARISCSIDriver
 
-# The port that the iSCSI daemon is listening on
-  #iscsi_ip_address="10.10.220.253"
-                       <emphasis role="bold">## OPTIONAL SETTING</emphasis>
+# iSCSI multiple port configuration
+  # hp3par_iscsi_ips=10.10.220.253:3261,10.10.222.234
+
+# Still available for single port iSCSI configuration
+  #iscsi_ip_address=10.10.220.253
+                        <emphasis role="bold">## OPTIONAL SETTINGS</emphasis>
 # Enable HTTP debugging to 3PAR
   hp3par_debug=False
 
@@ -222,6 +226,16 @@
                             enable multiple backend support. See the Cinder multiple backend support
                             instructions to enable this feature.</para>
                     </note>
+                    <note>
+                        <para>One or more iSCSI addresses may be configured using hp3par_iscsi_ips.
+			When multiple addresses are configured, the driver will select the iSCSI
+			port with the fewest active volumes at attach time. The IP address may include
+			an IP port by using a colon ‘:’ to separate the address from port. If no IP
+			port is defined, the default port 3260 will be used. IP addresses should be
+			separated using a comma ’,’. iscsi_ip_address/iscsi_port may still be used, as an
+			alternative to hp3par_iscsi_ips for single port iSCSI configuration.</para>
+                    </note>
+
                 </listitem>
                 <listitem>
                     <para>Save the changes to the <filename>cinder.conf</filename> file and restart
