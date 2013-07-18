@@ -61,13 +61,13 @@
                             <para>Edit <emphasis role="bold">/etc/network/interfaces</emphasis>:
                                 <programlisting># Internal Network
 auto eth0
-    iface eth0 inet static
+iface eth0 inet static
     address 10.10.10.10
     netmask 255.255.255.0
 
 # External Network
-    auto eth1
-    iface eth1 inet static
+auto eth1
+iface eth1 inet static
     address 10.0.0.10
     netmask 255.255.255.0
     gateway 10.0.0.1
@@ -81,6 +81,8 @@ auto eth0
 net.ipv4.conf.default.rp_filter = 0</programlisting>
                                 Then, restart the network service:
                                 <screen><prompt>#</prompt> <userinput>service networking restart</userinput></screen>
+                                And apply the sysctl settings:
+                                <screen><prompt>#</prompt> <userinput>sysctl -e -p /etc/sysctl.conf</userinput></screen>
                             </para>
                         </listitem>
                     </itemizedlist>
