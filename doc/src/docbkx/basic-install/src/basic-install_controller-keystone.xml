@@ -28,7 +28,7 @@ connection = mysql://keystone:password@localhost/keystone</programlisting></para
 <prompt>#</prompt> <userinput>chown -R keystone:keystone /etc/keystone/*</userinput></screen></para>
             </listitem>
             <listitem>
-                <para>Restart Keystone and create the tables in the database:
+                <para>Restart OpenStack Identity and create the tables in the database:
                     <screen os="ubuntu"><prompt>#</prompt> <userinput>service keystone restart</userinput>
 <prompt>#</prompt> <userinput>keystone-manage db_sync</userinput>
                     </screen>
@@ -36,7 +36,7 @@ connection = mysql://keystone:password@localhost/keystone</programlisting></para
 <prompt>#</prompt> <userinput>openstack-db --init --service keystone </userinput></screen>
                     <note>
                         <para>Check the <literal>/var/log/keystone/keystone.log</literal> file for errors that would
-                            prevent the Identity Service from successfully starting.</para>
+                            prevent the OpenStack Identity service from successfully starting.</para>
                     </note>                    
                 </para>
             </listitem>
@@ -70,7 +70,7 @@ export SERVICE_TOKEN=password</programlisting></para>
                 </itemizedlist>
             </listitem>
             <listitem>
-                <para>The following bash script populates Keystone with some initial data:
+                <para>The following bash script populates OpenStack Identity with some initial data:
                     <itemizedlist>
                         <listitem><para>Projects: admin and services</para></listitem>
                         <listitem><para>Roles: admin, Member</para></listitem>
@@ -153,7 +153,7 @@ keystone endpoint-create --region $KEYSTONE_REGION --service-id $NETWORK_SERVICE
         </orderedlist>
         <note>
             <para>
-                If you make a mistake during this guide, you can reset the Keystone database by performing the following steps:
+                If you make a mistake during this guide, you can reset the OpenStack Identity database by performing the following steps:
                 <screen><prompt>#</prompt> <userinput>mysql -u root -p -e "drop database keystone"</userinput>
 <prompt>#</prompt> <userinput>mysql -u root -p -e "create database keystone"</userinput>
 <prompt>#</prompt> <userinput>mysql -u root -p -e "grant all privileges on keystone.* TO 'keystone'@'localhost' identified by 'password'"</userinput>

@@ -3,12 +3,12 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="basic-install_controller-nova">
-    <title>OpenStack Compute (Cloud Controller services)</title>
-    <para>The OpenStack Compute Service provides the cloud environment with the ability to manage the scheduling,
+    <title>OpenStack Compute Service (Cloud Controller services)</title>
+    <para>The OpenStack Compute service provides the cloud environment with the ability to manage the scheduling,
         creation and deletion of virtual machines (instances).
                 <orderedlist>
                     <listitem>
-                        <para>Install the Nova packages:
+                        <para>Install the OpenStack Compute packages:
                             <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install nova-api nova-cert nova-common nova-conductor \
     nova-scheduler python-nova python-novaclient nova-consoleauth novnc \
     nova-novncproxy</userinput></screen>
@@ -18,7 +18,7 @@
                         </para>
                     </listitem>
                     <listitem>
-                        <para>Configure Nova:</para>
+                        <para>Configure OpenStack Compute:</para>
                         <itemizedlist>
                             <listitem>
                                 <para>Edit <filename>/etc/nova/api-paste.ini</filename>:
@@ -39,7 +39,7 @@ auth_version = v2.0</programlisting>
                             </listitem>
                             <listitem>
                                 <para>Add the following to the <emphasis role="bold">/etc/nova/nova.conf</emphasis> file. This file is
-                                    the main configuration file of Nova. There is a large amount of configuration options
+                                    the main configuration file of OpenStack Compute. There is a large amount of configuration options
                                     that can go in this file. This guide illustrates the minimum needed for a simple environment.
                                     Note that the nova.conf file supplied by your distribution has some options already set. Leave
                                     them as-is.
@@ -127,11 +127,11 @@ vncserver_listen=0.0.0.0
                                 </para>
                             </listitem>
                             <listitem>
-                                <para>Create Nova tables into the database:
+                                <para>Create the OpenStack Compute tables in the database:
                                     <screen><prompt>#</prompt> <userinput>nova-manage db sync</userinput></screen></para>
                             </listitem>                    
                             <listitem>
-                                <para>Restart Nova services:
+                                <para>Restart OpenStack Compute services:
                                     <screen os="ubuntu"><prompt>#</prompt> <userinput>service nova-api restart</userinput>
 <prompt>#</prompt> <userinput>service nova-cert restart</userinput>
 <prompt>#</prompt> <userinput>service nova-consoleauth restart</userinput>

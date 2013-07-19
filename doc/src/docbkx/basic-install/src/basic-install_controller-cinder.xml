@@ -4,8 +4,8 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="basic-install_controller-cinder">
     <title>OpenStack Block Storage</title>
-    <para>While Cinder contains many different storage drivers, the
-        most common and basic configuration uses LVM and iSCSI. This
+    <para>While OpenStack Block Storage contains many different storage drivers, the
+        most basic configuration uses LVM and iSCSI. This
         guide illustrates how to use one disk
             (<literal>/dev/sdb</literal>) in an LVM Volume Group
         called <literal>cinder-volumes</literal>. When a user requests
@@ -13,8 +13,9 @@
         Volume Group and then mounted on the user's instance by way of
         iSCSI. <orderedlist>
             <listitem>
-                <para>Install the Cinder packages: <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install cinder-api cinder-scheduler cinder-volume iscsitarget \
-    open-iscsi iscsitarget-dkms python-cinderclient linux-headers-`uname -r`</userinput></screen>
+                <para>Install the OpenStack Block Storage packages:
+                    <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install cinder-api cinder-scheduler cinder-volume iscsitarget \
+        open-iscsi iscsitarget-dkms python-cinderclient linux-headers-`uname -r`</userinput></screen>
                     <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-cinder openstack-cinder-doc \
         iscsi-initiator-utils scsi-target-utils</userinput></screen>
                 </para>
@@ -29,7 +30,7 @@
 <prompt>#</prompt> <userinput>chkconfig iscsi on</userinput></screen></para>
             </listitem>
             <listitem>
-                <para>Configure Cinder:</para>
+                <para>Configure OpenStack Block Storage:</para>
                 <itemizedlist>
                     <listitem>
                         <para>Edit <filename>/etc/cinder/cinder.conf</filename>:
@@ -82,7 +83,7 @@ paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
                         </para>
                     </listitem>
                     <listitem>
-                        <para>Create Cinder tables into the database:
+                        <para>Create the OpenStack Block Storage tables in the database:
                             <screen><prompt>#</prompt> <userinput>cinder-manage db sync</userinput></screen>
                         </para>
                     </listitem>
