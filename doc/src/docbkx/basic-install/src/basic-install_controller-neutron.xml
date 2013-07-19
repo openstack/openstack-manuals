@@ -2,7 +2,7 @@
 <section xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
-    xml:id="basic-install_controller-quantum">
+    xml:id="basic-install_controller-neutron">
     <title>OpenStack Networking Service (Cloud Controller)</title>
     <para>The OpenStack Networking service provides a comprehensive and extendible networking service to the cloud. Some features include,
         but are not limited to, the ability for instances to reach an external network outside of the cloud as well as the ability
@@ -10,49 +10,49 @@
             <orderedlist>
                 <listitem>
                     <para>Install the OpenStack Networking server:
-                        <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install quantum-server</userinput></screen>
-                        <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-quantum openstack-quantum-openvswitch</userinput></screen>
+                        <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install neutron-server</userinput></screen>
+                        <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-neutron openstack-neutron-openvswitch</userinput></screen>
                     </para>
                 </listitem>
                 <listitem>
                     <para>Configure the OpenStack Networking service:</para>
                     <itemizedlist>
                         <listitem>
-                            <para>Edit <emphasis role="bold">/etc/quantum/quantum.conf</emphasis>:
+                            <para>Edit <emphasis role="bold">/etc/neutron/neutron.conf</emphasis>:
                                 <programlisting os="ubuntu">[DEFAULT]
 verbose = True
 rabbit_password = password
 [keystone_authtoken]
 admin_tenant_name = service
-admin_user = quantum 
+admin_user = neutron
 admin_password = password</programlisting>
                                 <programlisting os="centos;rhel;fedora">[DEFAULT]
 core_plugin = \
-    quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPluginV2
+    neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2
 auth_strategy = keystone
 fake_rabbit = False
-rpc_backend=quantum.openstack.common.rpc.impl_qpid
+rpc_backend=neutron.openstack.common.rpc.impl_qpid
 qpid_username = guest
 qpid_password = guest</programlisting>
                             </para>
                         </listitem>
                         <listitem>
-                            <para>Edit <emphasis role="bold">/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</emphasis>:
+                            <para>Edit <emphasis role="bold">/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</emphasis>:
                                 <programlisting>[database]
-sql_connection = mysql://quantum:password@localhost/quantum
+sql_connection = mysql://neutron:password@localhost/neutron
 [ovs]
 tenant_network_type = gre 
 tunnel_id_ranges = 1:1000
 enable_tunneling = True
 local_ip = 10.10.10.10
 [securitygroup]
-firewall_driver = quantum.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver</programlisting>
+firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver</programlisting>
                                  <programlisting os="centos;rhel;fedora">[database]
-sql_connection = mysql://quantum:password@localhost/quantum
+sql_connection = mysql://neutron:password@localhost/neutron
 [ovs]
 enable_tunneling = False
 [securitygroup]
-firewall_driver = quantum.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver</programlisting></para>
+firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver</programlisting></para>
                             <note>
                                 <para os="ubuntu">It's more handy to choose
                                <emphasis role="bold">tunnel mode</emphasis> since you don't
@@ -62,14 +62,14 @@ firewall_driver = quantum.agent.linux.iptables_firewall.OVSHybridIptablesFirewal
                             </note>
                         </listitem>
                         <listitem os="centos;rhel;fedora">                      
-                            <para>Edit <emphasis role="bold">/etc/quantum/api-paste.ini</emphasis>:
+                            <para>Edit <emphasis role="bold">/etc/neutron/api-paste.ini</emphasis>:
                                 <programlisting>[filter:authtoken]
 paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
 auth_host = 127.0.0.1
 auth_port = 35357
 auth_protocol = http
 admin_tenant_name = service
-admin_user = quantum
+admin_user = neutron
 admin_password = password
 </programlisting></para>
                         </listitem>
@@ -77,7 +77,7 @@ admin_password = password
                 </listitem>
                 <listitem>
                     <para>Enable the OVS plugin:
-                        <screen><prompt>#</prompt> <userinput>ln -s /etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini /etc/quantum/plugin.ini</userinput></screen>
+                        <screen><prompt>#</prompt> <userinput>ln -s /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini /etc/neutron/plugin.ini</userinput></screen>
                     </para>
                 </listitem>
                 <listitem os="centos;rhel;fedora">
@@ -88,9 +88,9 @@ admin_password = password
                 </listitem>
                 <listitem>
                     <para>Start the services:
-                        <screen os="ubuntu"><prompt>#</prompt> <userinput>service quantum-server restart</userinput></screen>
-                        <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>service quantum-server restart</userinput>
-<prompt>#</prompt> <userinput>chkconfig quantum-server on</userinput></screen></para>
+                        <screen os="ubuntu"><prompt>#</prompt> <userinput>service neutron-server restart</userinput></screen>
+                        <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>service neutron-server restart</userinput>
+<prompt>#</prompt> <userinput>chkconfig neutron-server on</userinput></screen></para>
                 </listitem>
             </orderedlist>
         </para>

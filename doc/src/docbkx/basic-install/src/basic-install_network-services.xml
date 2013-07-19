@@ -10,9 +10,9 @@
         <orderedlist>
             <listitem>
                 <para>Install the packages:
-                    <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install quantum-plugin-openvswitch-agent \
-quantum-dhcp-agent quantum-l3-agent</userinput></screen>
-                    <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-quantum openstack-quantum-openvswitch\
+                    <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install neutron-plugin-openvswitch-agent \
+neutron-dhcp-agent neutron-l3-agent</userinput></screen>
+                    <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-neutron openstack-neutron-openvswitch\
 openvswitch-switch</userinput></screen></para>
                 <para os="centos;rhel;fedora">The Open vSwitch kernel module in Fedora
                         has been compiled without tunnel support. If
@@ -111,12 +111,12 @@ iptables -A POSTROUTING -s 10.10.10.0/24 -t nat -j MASQUERADE</userinput></scree
         </orderedlist>
     </para>
     </section>
-    <section xml:id="network-quantum">
+    <section xml:id="network-neutron">
         <title>OpenStack Networking</title>
             <para>Configure the OpenStack Networking services:</para>
             <itemizedlist>
                 <listitem>
-                    <para>Edit <emphasis role="bold">/etc/quantum/quantum.conf</emphasis>:
+                    <para>Edit <emphasis role="bold">/etc/neutron/neutron.conf</emphasis>:
                         <programlisting os="ubuntu">[DEFAULT]
 verbose = True
 rabbit_password = password
@@ -124,7 +124,7 @@ rabbit_host = 10.10.10.10
 [keystone_authtoken]
 auth_host = 10.10.10.10
 admin_tenant_name = service
-admin_user = quantum 
+admin_user = neutron
 admin_password = password</programlisting>
                         <programlisting os="centos;rhel;fedora">[DEFAULT]
 verbose = True
@@ -135,20 +135,20 @@ qpid_password = quest
 [keystone_authtoken]
 auth_host = 10.10.10.10
 admin_tenant_name = service
-admin_user = quantum 
+admin_user = neutron
 admin_password = password</programlisting></para>
                 </listitem>
                 <listitem>
-                    <para>Edit <emphasis role="bold">/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</emphasis>:
+                    <para>Edit <emphasis role="bold">/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</emphasis>:
                         <programlisting>[database]
-sql_connection = mysql://quantum:password@10.10.10.10/quantum
+sql_connection = mysql://neutron:password@10.10.10.10/neutron
 [ovs]
 tenant_network_type = gre 
 tunnel_id_ranges = 1:1000
 enable_tunneling = True
 local_ip = 10.10.10.9
 [securitygroup]
-firewall_driver = quantum.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver</programlisting>
+firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver</programlisting>
                     <note xmlns:db="http://docbook.org/ns/docbook">
                         <para>It's more handy to choose <emphasis role="bold">tunnel mode</emphasis>
                             since you don't have to configure your
@@ -156,18 +156,18 @@ firewall_driver = quantum.agent.linux.iptables_firewall.OVSHybridIptablesFirewal
                     </note></para>
                 </listitem>
                 <listitem>
-                    <para>Edit <emphasis role="bold">/etc/quantum/dhcp_agent.ini</emphasis>:
+                    <para>Edit <emphasis role="bold">/etc/neutron/dhcp_agent.ini</emphasis>:
                         <programlisting>[DEFAULT]
 enable_isolated_metadata = True
 enable_metadata_network = True</programlisting></para>
                 </listitem>
                 <listitem>
-                    <para>Edit <emphasis role="bold">/etc/quantum/metadata_agent.ini</emphasis>:
+                    <para>Edit <emphasis role="bold">/etc/neutron/metadata_agent.ini</emphasis>:
                     <programlisting>[DEFAULT]
 auth_url = http://10.10.10.10:35357/v2.0
 auth_region = RegionOne               
 admin_tenant_name = service           
-admin_user = quantum                  
+admin_user = neutron
 admin_password = password
 nova_metadata_ip = 10.10.10.10
 metadata_proxy_shared_secret = password
@@ -176,23 +176,23 @@ metadata_proxy_shared_secret = password
             </itemizedlist>
 
             <para>Start the services:
-                <screen os="ubuntu"><prompt>#</prompt> <userinput>service quantum-plugin-openvswitch-agent start</userinput>
-<prompt>#</prompt> <userinput>service quantum-dhcp-agent restart</userinput>
-<prompt>#</prompt> <userinput>service quantum-metadata-agent restart</userinput>
-<prompt>#</prompt> <userinput>service quantum-l3-agent restart</userinput></screen>
-                <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>service quantum-server restart</userinput>
-<prompt>#</prompt> <userinput>service quantum-openvswitch-agent restart</userinput>
-<prompt>#</prompt> <userinput>service quantum-dhcp-agent restart</userinput>
-<prompt>#</prompt> <userinput>service quantum-l3-agent restart</userinput>
-<prompt>#</prompt> <userinput>chkconfig quantum-server on</userinput>
-<prompt>#</prompt> <userinput>chkconfig quantum-openvswitch-agent on</userinput>
-<prompt>#</prompt> <userinput>chkconfig quantum-dhcp-agent on</userinput>
-<prompt>#</prompt> <userinput>chkconfig quantum-l3-agent on</userinput></screen>
+                <screen os="ubuntu"><prompt>#</prompt> <userinput>service neutron-plugin-openvswitch-agent start</userinput>
+<prompt>#</prompt> <userinput>service neutron-dhcp-agent restart</userinput>
+<prompt>#</prompt> <userinput>service neutron-metadata-agent restart</userinput>
+<prompt>#</prompt> <userinput>service neutron-l3-agent restart</userinput></screen>
+                <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>service neutron-server restart</userinput>
+<prompt>#</prompt> <userinput>service neutron-openvswitch-agent restart</userinput>
+<prompt>#</prompt> <userinput>service neutron-dhcp-agent restart</userinput>
+<prompt>#</prompt> <userinput>service neutron-l3-agent restart</userinput>
+<prompt>#</prompt> <userinput>chkconfig neutron-server on</userinput>
+<prompt>#</prompt> <userinput>chkconfig neutron-openvswitch-agent on</userinput>
+<prompt>#</prompt> <userinput>chkconfig neutron-dhcp-agent on</userinput>
+<prompt>#</prompt> <userinput>chkconfig neutron-l3-agent on</userinput></screen>
             
             </para>
     <note>
         <para>
-            Check the <literal>/var/log/quantum/*.log</literal> files for errors that would prevent
+            Check the <literal>/var/log/neutron/*.log</literal> files for errors that would prevent
             the Networking Service from successfully starting.
         </para>
     </note>    
