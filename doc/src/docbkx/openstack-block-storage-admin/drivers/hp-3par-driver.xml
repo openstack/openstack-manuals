@@ -63,10 +63,10 @@
                     <para>Create cloned volumes.</para>
                 </listitem>
                 <listitem>
-                    <para>Copy images to volumes (HP 3PAR iSCSI driver only).</para>
+                    <para>Copy images to volumes.</para>
                 </listitem>
                 <listitem>
-                    <para>Copy volumes to images (HP 3PAR iSCSI driver only).</para>
+                    <para>Copy volumes to images.</para>
                 </listitem>
             </itemizedlist>
         </para>
@@ -88,12 +88,45 @@
                 <listitem>
                     <para><literal>hp3par:persona</literal></para>
                 </listitem>
+                <listitem>
+                    <para><literal>hp3par:vvs</literal></para>
+                </listitem>
+                <listitem>
+                    <para><literal>qos:maxBWS</literal></para>
+                </listitem>
+                <listitem>
+                    <para><literal>qos:maxIOPS</literal></para>
+                </listitem>
             </itemizedlist>
         </para>
-        <para>The key values are case sensitive and scoped with <literal>hp3par:</literal> in order
-            to work with the default filter scheduler. Run <command>cinder help type-key</command>
-            for information about setting the key value pairings and associating them with a volume
-            type.</para>
+        <para>To work with the default filter scheduler, the key values are case sensitive
+            and scoped with <literal>hp3par:</literal> or <literal>qos:</literal>. For 
+            information about how to set the key-value pairs and associate them with a
+            volume type, run the following command: <screen><prompt>$</prompt><userinput>
+            cinder help type-key</userinput></screen>
+        </para>
+        <para>The following keys require that the HP 3PAR StoreServ storage array has a
+            Priority Optimization license installed.
+        </para>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para><literal>hp3par:vvs</literal> - The virtual volume set name that has been
+                        predefined by the Administrator with Quality of Service (QoS) rules associated
+                        to it. If you specify <literal>hp3par:vvs</literal>, the
+                        <literal>qos:maxIOPS</literal> and <literal>qos:maxBWS</literal> settings are
+                        ignored.</para>
+                </listitem>
+                <listitem>
+                    <para><literal>qos:maxBWS</literal> - The QoS I/O issue count rate limit in MBs.
+                        If not set, the I/O issue bandwidth rate has no limit.</para>
+                </listitem>
+                <listitem>
+                    <para><literal>qos:maxIOPS</literal> - The QoS I/O issue count rate limit. If not
+                        set, the I/O issue count rate has no limit.</para>
+                </listitem>
+            </itemizedlist>
+        </para>
         <para>If volume types are not used or a particular key is not set for a volume type, the
             following defaults are used.</para>
         <para>
