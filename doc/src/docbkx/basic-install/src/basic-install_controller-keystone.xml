@@ -74,7 +74,7 @@ export SERVICE_TOKEN=password</programlisting></para>
                     <itemizedlist>
                         <listitem><para>Projects: admin and services</para></listitem>
                         <listitem><para>Roles: admin, Member</para></listitem>
-                        <listitem><para>Users: admin, demo, nova, glance, quantum, and cinder</para></listitem>
+                        <listitem><para>Users: admin, demo, nova, glance, neutron, and cinder</para></listitem>
                         <listitem><para>Services: compute, volume, image, identity, ec2, and network</para></listitem>
                     </itemizedlist>
                     <programlisting>#!/bin/bash
@@ -117,7 +117,7 @@ ADMIN_USER=$(keystone user-create --name=admin --pass="$ADMIN_PASSWORD" --email=
 DEMO_USER=$(keystone user-create --name=demo --pass="$DEMO_PASSWORD" --email=demo@domain.com --tenant-id=$DEMO_TENANT | grep " id " | get_field 2)
 NOVA_USER=$(keystone user-create --name=nova --pass="$SERVICE_PASSWORD" --tenant-id $SERVICE_TENANT --email=nova@domain.com | grep " id " | get_field 2)
 GLANCE_USER=$(keystone user-create --name=glance --pass="$SERVICE_PASSWORD" --tenant-id $SERVICE_TENANT --email=glance@domain.com | grep " id " | get_field 2)
-QUANTUM_USER=$(keystone user-create --name=quantum --pass="$SERVICE_PASSWORD" --tenant-id $SERVICE_TENANT --email=quantum@domain.com | grep " id " | get_field 2)
+NEUTRON_USER=$(keystone user-create --name=neutron --pass="$SERVICE_PASSWORD" --tenant-id $SERVICE_TENANT --email=neutron@domain.com | grep " id " | get_field 2)
 CINDER_USER=$(keystone user-create --name=cinder --pass="$SERVICE_PASSWORD" --tenant-id $SERVICE_TENANT --email=cinder@domain.com | grep " id " | get_field 2)
 
 # Roles
@@ -128,7 +128,7 @@ MEMBER_ROLE=$(keystone role-create --name=Member | grep " id " | get_field 2)
 keystone user-role-add --user-id $ADMIN_USER --role-id $ADMIN_ROLE --tenant-id $ADMIN_TENANT
 keystone user-role-add --tenant-id $SERVICE_TENANT --user-id $NOVA_USER --role-id $ADMIN_ROLE
 keystone user-role-add --tenant-id $SERVICE_TENANT --user-id $GLANCE_USER --role-id $ADMIN_ROLE
-keystone user-role-add --tenant-id $SERVICE_TENANT --user-id $QUANTUM_USER --role-id $ADMIN_ROLE
+keystone user-role-add --tenant-id $SERVICE_TENANT --user-id $NEUTRON_USER --role-id $ADMIN_ROLE
 keystone user-role-add --tenant-id $SERVICE_TENANT --user-id $CINDER_USER --role-id $ADMIN_ROLE
 keystone user-role-add --tenant-id $DEMO_TENANT --user-id $DEMO_USER --role-id $MEMBER_ROLE
 
@@ -138,7 +138,7 @@ VOLUME_SERVICE=$(keystone service-create --name cinder --type volume --descripti
 IMAGE_SERVICE=$(keystone service-create --name glance --type image --description 'OpenStack Image Service' | grep " id " | get_field 2)
 IDENTITY_SERVICE=$(keystone service-create --name keystone --type identity --description 'OpenStack Identity' | grep " id " | get_field 2)
 EC2_SERVICE=$(keystone service-create --name ec2 --type ec2 --description 'OpenStack EC2 service' | grep " id " | get_field 2)
-NETWORK_SERVICE=$(keystone service-create --name quantum --type network --description 'OpenStack Networking service' | grep " id " | get_field 2)
+NETWORK_SERVICE=$(keystone service-create --name neutron --type network --description 'OpenStack Networking service' | grep " id " | get_field 2)
 
 # Create endpoints
 keystone endpoint-create --region $KEYSTONE_REGION --service-id $COMPUTE_SERVICE --publicurl 'http://'"$KEYSTONE_HOST"':8774/v2/$(tenant_id)s' --adminurl 'http://'"$KEYSTONE_HOST"':8774/v2/$(tenant_id)s' --internalurl 'http://'"$KEYSTONE_HOST"':8774/v2/$(tenant_id)s'

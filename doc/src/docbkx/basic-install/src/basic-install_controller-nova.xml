@@ -50,25 +50,25 @@ rabbit_password=password
 auth_strategy=keystone
 
 # Networking
-network_api_class=nova.network.quantumv2.api.API
-quantum_url=http://10.10.10.10:9696
-quantum_auth_strategy=keystone
-quantum_admin_tenant_name=service
-quantum_admin_username=quantum
-quantum_admin_password=password
-quantum_admin_auth_url=http://10.10.10.10:35357/v2.0
+network_api_class=nova.network.neutronv2.api.API
+neutron_url=http://10.10.10.10:9696
+neutron_auth_strategy=keystone
+neutron_admin_tenant_name=service
+neutron_admin_username=neutron
+neutron_admin_password=password
+neutron_admin_auth_url=http://10.10.10.10:35357/v2.0
 libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver
 linuxnet_interface_driver=nova.network.linux_net.LinuxOVSInterfaceDriver  
 
 # Security Groups                                    
 firewall_driver=nova.virt.firewall.NoopFirewallDriver
-security_group_api=quantum                           
-                                                     
-# Metadata                                           
-quantum_metadata_proxy_shared_secret=password          
-service_quantum_metadata_proxy=true                  
-metadata_listen = 10.10.10.10        
-metadata_listen_port = 8775                          
+security_group_api=neutron
+
+# Metadata
+neutron_metadata_proxy_shared_secret=password
+service_neutron_metadata_proxy=true
+metadata_listen = 10.10.10.10
+metadata_listen_port = 8775
 
 # Cinder
 volume_api_class=nova.volume.cinder.API
@@ -91,23 +91,23 @@ qpid_password=guest
 rpc_backend = nova.openstack.common.rpc.impl_qpid
 
 # Networking
-network_api_class=nova.network.quantumv2.api.API
-quantum_url=http://10.10.10.10:9696
-quantum_auth_strategy=keystone
-quantum_admin_tenant_name=service
-quantum_admin_username=quantum
-quantum_admin_password=password
-quantum_admin_auth_url=http://10.10.10.10:35357/v2.0
+network_api_class=nova.network.neutronv2.api.API
+neutron_url=http://10.10.10.10:9696
+neutron_auth_strategy=keystone
+neutron_admin_tenant_name=service
+neutron_admin_username=neutron
+neutron_admin_password=password
+neutron_admin_auth_url=http://10.10.10.10:35357/v2.0
 libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver
 linuxnet_interface_driver=nova.network.linux_net.LinuxOVSInterfaceDriver  
 
 # Security Groups                                    
 firewall_driver=nova.virt.firewall.NoopFirewallDriver
-security_group_api=quantum                           
-                                                     
+security_group_api=neutron
+
 # Metadata                                           
-quantum_metadata_proxy_shared_secret=password          
-service_quantum_metadata_proxy=true                  
+neutron_metadata_proxy_shared_secret=password
+service_neutron_metadata_proxy=true
 metadata_listen = 10.10.10.10        
 metadata_listen_port = 8775                          
 

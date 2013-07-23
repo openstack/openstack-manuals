@@ -2,7 +2,7 @@
 <section xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
-    xml:id="basic-install_compute-quantum">
+    xml:id="basic-install_compute-neutron">
     <title>OpenStack Networking (Compute Node)</title>
         <section xml:id="compute-ovs">
             <title>Open vSwitch</title>
@@ -31,54 +31,54 @@
                 </orderedlist>
             </para>
         </section>
-        <section xml:id="compute-quantum">
+        <section xml:id="compute-neutron">
             <title>OpenStack Networking</title>
             <para>
                 <orderedlist>
                     <listitem>
                         <para>Install the packages:
-                            <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install quantum-plugin-openvswitch-agent</userinput></screen>
-                            <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-quantum-openvswitch</userinput></screen>
+                            <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install neutron-plugin-openvswitch-agent</userinput></screen>
+                            <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-neutron-openvswitch</userinput></screen>
                         </para>
                     </listitem>
                     <listitem>
-                        <para>Edit <emphasis role="bold">/etc/quantum/quantum.conf</emphasis>:
+                        <para>Edit <emphasis role="bold">/etc/neutron/neutron.conf</emphasis>:
                             <programlisting os="ubuntu">[DEFAULT]
 rabbit_host = 10.10.10.10
 rabbit_password = password
 verbose = True</programlisting>
                             <programlisting os="centos;rhel;fedora">verbose = True
-rpc_backend=quantum.openstack.common.rpc.impl_qpid</programlisting>
+rpc_backend=neutron.openstack.common.rpc.impl_qpid</programlisting>
                         </para>
                     </listitem>
                     <listitem>
-                        <para>Edit <emphasis role="bold">/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini</emphasis>:
+                        <para>Edit <emphasis role="bold">/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</emphasis>:
                             <programlisting>[database]
-sql_connection = mysql://quantum:password@10.10.10.1/quantum
+sql_connection = mysql://neutron:password@10.10.10.1/neutron
 [ovs]
 tenant_network_type = gre
 tunnel_id_ranges = 1:1000
 local_ip = 10.10.10.11
 enable_tunneling = True
 [securitygroup]
-firewall_driver = quantum.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
+firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
                             </programlisting>
-                            <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>ln -s /etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini /etc/quantum/plugin.ini</userinput></screen>
+                            <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>ln -s /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini /etc/neutron/plugin.ini</userinput></screen>
                         </para>
                     </listitem>
                     <listitem>
                         <para>Start the Agent:
-                            <screen os="ubuntu"><prompt>#</prompt> <userinput>service quantum-plugin-openvswitch-agent restart</userinput></screen>
-                            <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>service quantum-openvswitch-agent restart</userinput>
-<prompt>#</prompt> <userinput>chkconfig quantum-openvswitch-agent on</userinput></screen>
+                            <screen os="ubuntu"><prompt>#</prompt> <userinput>service neutron-plugin-openvswitch-agent restart</userinput></screen>
+                            <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>service neutron-openvswitch-agent restart</userinput>
+<prompt>#</prompt> <userinput>chkconfig neutron-openvswitch-agent on</userinput></screen>
                         </para>
                     </listitem>
                     <listitem os="centos;rhel;fedora">
                         <para>Ensure the cleanup utility is started on future boots:</para>
-                        <screen><prompt>#</prompt> <userinput>chkconfig quantum-ovs-cleanup on</userinput></screen>
+                        <screen><prompt>#</prompt> <userinput>chkconfig neutron-ovs-cleanup on</userinput></screen>
                     </listitem>
                 </orderedlist>
-                <note><para>Check the <literal>/var/log/quantum/openvswitch-agent.log</literal> file for errors that would
+                <note><para>Check the <literal>/var/log/neutron/openvswitch-agent.log</literal> file for errors that would
                     prevent the Networking service from successfully starting.</para></note>
                 
             </para>
