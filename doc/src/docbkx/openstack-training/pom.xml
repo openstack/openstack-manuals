@@ -1,33 +1,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    
     <modelVersion>4.0.0</modelVersion>
-    
-    <groupId>org.openstack.docs</groupId>
-    <artifactId>openstack-guide</artifactId>
+    <groupId>org.openstack.apidocs</groupId>
+    <artifactId>openstack-training-guides</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>OpenStack Training Manuals</name>
-    
+    <name>OpenStack Training Guides</name>
     <properties>
         <!-- This is set by Jenkins according to the branch. -->
         <release.path.name>local</release.path.name>
         <comments.enabled>1</comments.enabled>
     </properties>
-    <!-- ################################################ -->
-    <!-- USE "mvn clean generate-sources" to run this POM -->
-    <!-- ################################################ -->
-    
     <build>
-       <resources>
-            <resource>
-                <directory>target/docbkx/pdf</directory>
-                <excludes>
-                    <exclude>**/*.fo</exclude>
-                </excludes>
-            </resource>
-        </resources>
         <plugins>
             <plugin>
                 <groupId>com.rackspace.cloud.api</groupId>
@@ -35,73 +20,54 @@
                 <version>1.8.0</version>
                 <executions>
                     <execution>
-                        <id>generate-webhelp</id>
+                        <id>training-guide</id>
                         <goals>
                             <goal>generate-webhelp</goal>
                         </goals>
                         <phase>generate-sources</phase>
                         <configuration>
-                            <!-- These parameters only apply to webhelp -->
+                            <includes>st-training-guides.xml</includes>
+			    <sourceDirectory>.</sourceDirectory>
+                 
+			    <canonicalUrlBase>http://docs.openstack.org/${release.path.name}/openstack-training/</canonicalUrlBase>
+                            <targetDirectory>${basedir}/target/docbkx/webhelp/${release.path.name}/openstack-training</targetDirectory>
+                            <webhelpDirname>/</webhelpDirname>
+                            <pdfFilenameBase>training-guides-${release.path.name}</pdfFilenameBase>
                             <enableDisqus>${comments.enabled}</enableDisqus>
-                            <disqusShortname>openstackdocs</disqusShortname>
                             <enableGoogleAnalytics>1</enableGoogleAnalytics>
                             <googleAnalyticsId>UA-17511903-1</googleAnalyticsId>
-                            <generateToc>
-                                appendix  toc,title
-                                article/appendix  nop
-                                article   toc,title
-                                book      toc,title,figure,table,example,equation
-                                chapter   toc
-                                section   toc
-                                part      toc
-                                preface   toc
-                                qandadiv  toc
-                                qandaset  toc
-                                reference toc,title
-                                set       toc,title
-                            </generateToc>
-                            <!-- The following elements sets the autonumbering of sections in output for chapter numbers but no numbered sections-->
+                            <chapterAutolabel>1</chapterAutolabel>
+                            <appendixAutolabel>1</appendixAutolabel>
                             <sectionAutolabel>0</sectionAutolabel>
                             <tocSectionDepth>1</tocSectionDepth>
-                            <sectionLabelIncludesComponentLabel>0</sectionLabelIncludesComponentLabel>
-                            <targetDirectory>target/docbkx/webhelp/${release.path.name}/</targetDirectory>
-                            <webhelpDirname>openstack-training</webhelpDirname>
-                            <pdfFilenameBase>training-manuals-${release.path.name}</pdfFilenameBase>
-                        </configuration>
+                            <formalProcedures>0</formalProcedures>
+                            <generateToc>
+                                appendix toc,title
+                                article/appendix nop
+                                article toc,title
+                                book toc,title,figure,table,equation
+                                chapter toc
+                                part toc,title
+                                acknowledgements toc,title
+                                preface toc
+                                qandadiv toc
+                                qandaset toc
+                                reference toc,title
+                                section toc
+                                set toc,title
+                            </generateToc>
+                            <pageWidth>9.68in</pageWidth>
+                            <pageHeight>7.44in</pageHeight>
+                            <doubleSided>1</doubleSided>
+                            <omitCover>1</omitCover>
+                        </configuration>			
                     </execution>
-                    <execution>
-                        <id>cleanup</id>
-                        <goals>
-                            <goal>generate-webhelp</goal>
-                        </goals>
-                        <phase>generate-sources</phase>
-			<configuration>
-			  <includes>dummy.xml</includes>
-			  <postProcess>
-			    <delete includeemptydirs="true">
-			      <fileset dir="${basedir}/target/docbkx/webhelp/${release.path.name}" >
-				<include name="**/*"/>
-				<exclude name="openstack-training/**"/>
-			      </fileset>
-			    </delete>
-			  </postProcess>
-			</configuration>
-		    </execution>
                 </executions>
                 <configuration>
-                    <!-- These parameters apply to pdf and webhelp -->
-                    <xincludeSupported>true</xincludeSupported>
-                    <sourceDirectory>.</sourceDirectory>
-                    <includes>
-                        st-training-manuals.xml
-                    </includes>       
-                    <canonicalUrlBase>http://docs.openstack.org/${release.path.name}/openstack-training/content/</canonicalUrlBase>
-                    <profileSecurity>reviewer</profileSecurity>
                     <branding>openstack</branding>
-
+		    <showXslMessages>true</showXslMessages>
                 </configuration>
             </plugin>
-            
         </plugins>
     </build>
     <profiles>
@@ -126,5 +92,4 @@
             </pluginRepositories>
         </profile>
     </profiles>
-
 </project>
