@@ -39,26 +39,27 @@
     <procedure>
         <title>To install the dashboard:</title>
         <step>
-            <para>Install the dashboard on the node that can contact
-                the Identity Service as root:</para>
+            <para>Install the dashboard on the node that can contact the
+                Identity Service as root:</para>
             <programlisting language="bash" linenumbering="unnumbered" os="ubuntu"><prompt>#</prompt> <userinput>apt-get install -y memcached libapache2-mod-wsgi openstack-dashboard</userinput></programlisting>
             <programlisting language="bash" linenumbering="unnumbered" os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install -y memcached python-memcached mod_wsgi openstack-dashboard</userinput></programlisting>
         </step>
         <step>
-            <para>Modify the value of <literal>CACHES['default']['LOCATION']</literal>
-                in <filename os="ubuntu"
+            <para>Modify the value of
+                    <literal>CACHES['default']['LOCATION']</literal> in
+                    <filename os="ubuntu"
                     >/etc/openstack-dashboard/local_settings.py</filename><filename
                     os="centos;fedora;rhel"
-                    >/etc/openstack-dashboard/local_settings</filename>
-                to match the ones set in <filename os="ubuntu"
+                    >/etc/openstack-dashboard/local_settings</filename> to match
+                the ones set in <filename os="ubuntu"
                     >/etc/memcached.conf</filename><filename
                     os="centos;fedora;rhel"
                     >/etc/sysconfig/memcached.conf</filename>.</para>
             <para>Open <filename os="ubuntu"
                     >/etc/openstack-dashboard/local_settings.py</filename><filename
                     os="centos;fedora;rhel"
-                    >/etc/openstack-dashboard/local_settings</filename>
-                and look for this line:</para>
+                    >/etc/openstack-dashboard/local_settings</filename> and look
+                for this line:</para>
             <programlisting language="bash" linenumbering="unnumbered">CACHES = {
 	'default': {
 		'BACKEND' : 'django.core.cache.backends.memcached.MemcachedCache',
@@ -71,32 +72,30 @@
                 <title>Notes</title>
                 <itemizedlist>
                     <listitem>
-                        <para>The address and port must match the ones
-                            set in <filename os="ubuntu"
+                        <para>The address and port must match the ones set in
+                                <filename os="ubuntu"
                                 >/etc/memcached.conf</filename><filename
                                 os="centos;fedora;rhel"
                                 >/etc/sysconfig/memcached</filename>.</para>
-                        <para>If you change the memcached settings,
-                            you must restart the Apache web server for
-                            the changes to take effect.</para>
+                        <para>If you change the memcached settings, you must
+                            restart the Apache web server for the changes to
+                            take effect.</para>
                     </listitem>
                     <listitem>
-                        <para>You can use options other than memcached
-                            option for session storage. Set the
-                            session back-end through the
-                                <parameter>SESSION_ENGINE</parameter>
+                        <para>You can use options other than memcached option
+                            for session storage. Set the session back-end
+                            through the <parameter>SESSION_ENGINE</parameter>
                             option.</para>
                     </listitem>
                     <listitem>
-                        <para>To change the timezone, use the
-                            dashboard or edit the <filename
-                                os="centos;fedora;rhel"
+                        <para>To change the timezone, use the dashboard or edit
+                            the <filename os="centos;fedora;rhel"
                                 >/etc/openstack-dashboard/local_settings</filename><filename
                                 os="ubuntu"
                                 >/etc/openstack-dashboard/local_settings.py</filename>
                             file. </para>
-                        <para>Change the following parameter:
-                                <code>TIME_ZONE = "UTC"</code>
+                        <para>Change the following parameter: <code>TIME_ZONE =
+                                "UTC"</code>
                         </para>
                     </listitem>
 
@@ -104,15 +103,13 @@
             </note>
         </step>
         <step>
-            <para>Make sure that the web browser on your local machine
-                supports HTML5. </para>
+            <para>Make sure that the web browser on your local machine supports
+                HTML5. </para>
             <para>Enable cookies and JavaScript. </para>
             <note>
-                <para>To use the VNC client with the dashboard, the
-                    browser must support HTML5 Canvas and HTML5
-                    WebSockets. </para>
-                <para>For details about browsers that support noVNC,
-                    see <link
+                <para>To use the VNC client with the dashboard, the browser must
+                    support HTML5 Canvas and HTML5 WebSockets. </para>
+                <para>For details about browsers that support noVNC, see <link
                         xlink:href="https://github.com/kanaka/noVNC/blob/master/README.md"
                         >https://github.com/kanaka/noVNC/blob/master/README.md</link>,
                     and <link
@@ -120,6 +117,142 @@
                         >https://github.com/kanaka/noVNC/wiki/Browser-support</link>,
                     respectively. </para>
             </note>
+        </step>
+        <step>
+            <para>You can configure the dashboard for a simple HTTP deployment
+                or a secured HTTPS deployment. While the standard installation
+                uses a non-encrypted HTTP channel, you can enable SSL support
+                for the dashboard. </para>
+            <para>To configure the dashboard for HTTP, proceed to <xref
+                    linkend="dashboard-config-http"/>.</para>
+            <para>To configure the dashboard for HTTPS, proceed to <xref
+                    linkend="dashboard-config-https"/>.</para>
+        </step>
+    </procedure>
+    <procedure xml:id="dashboard-config-http">
+        <title>To configure the dashboard for HTTP</title>
+        <step>
+            <para>Specify the host for your OpenStack Identity Service endpoint
+                in the
+                    <filename>/etc/openstack-dashboard/local_settings.py</filename>
+                file with the <literal>OPENSTACK_HOST</literal> setting. </para>
+            <para>The following example shows this setting: </para>
+            <programlisting language="python"><?db-font-size 65%?><xi:include parse="text" href="samples/local_settings.py"/></programlisting>
+            <para>The <literal>HORIZON_CONFIG</literal> dictionary contains all
+                the settings for the dashboard. Whether or not a service is in
+                the dashboard depends on the Service Catalog configuration in
+                the Identity Service. For the full listing, see <link
+                    xlink:href="http://docs.openstack.org/developer/horizon/topics/settings.html"
+                    >Horizon Settings and Configuration</link>.</para>
+        </step>
+        <step>
+            <para>Point your browser to the public IP address for your instance.
+                For example:</para>
+            <para><code>http://192.168.206.130</code></para>
+        </step>
+        <step>
+            <para>After you connect to the dashboard through the URL, a login
+                page appears. </para>
+            <para>Enter the credentials for any user that you created with the
+                OpenStack Identity Service. </para>
+            <para>For example, enter <literal>admin</literal> for the user name
+                and <literal>secrete</literal> for the password.</para>
+        </step>
+    </procedure>
+    <procedure xml:id="dashboard-config-https">
+        <title>To configure the dashboard for HTTPS</title>
+        <para>The following example uses the domain,
+                <literal>http://openstack.example.com</literal>. Use a domain
+            that fits your current set up.</para>
+        <step>
+            <para>In<filename>/etc/openstack-dashboard/local_settings.py</filename>,
+                update the following
+                parameter:<programlisting>USE_SSL = True</programlisting></para>
+        </step>
+        <step>
+            <para>Edit <filename>/etc/apache2/ports.conf</filename> and add the
+                following line:</para>
+            <programlisting>NameVirtualHost *:443</programlisting>
+        </step>
+        <step>
+            <para>Edit
+                    <filename>/etc/apache2/conf.d/openstack-dashboard.conf</filename>.
+                Change the contents of the file to match the <xref
+                    linkend="conf_after"/>. </para>
+            <example xml:id="conf_before">
+                <title>openstack-dashboard.conf - before editing</title>
+                <programlisting><?db-font-size 65%?>WSGIScriptAlias / /usr/share/openstack-dashboard/openstack_dashboard/wsgi/django.wsgi
+WSGIDaemonProcess horizon user=www-data group=www-data processes=3 threads=10
+Alias /static /usr/share/openstack-dashboard/openstack_dashboard/static/
+&lt;Directory /usr/share/openstack-dashboard/openstack_dashboard/wsgi&gt;
+Order allow,deny
+Allow from all
+&lt;/Directory&gt;</programlisting>
+            </example>
+            <example xml:id="conf_after">
+                <title>openstack-dashboard.conf - after editing</title>
+                <programlisting><?db-font-size 65%?>&lt;VirtualHost *:80&gt;
+ServerName openstack.example.com
+RedirectPermanent / https://openstack.example.com
+&lt;/VirtualHost&gt;
+&lt;VirtualHost *:443&gt;
+ServerName openstack.example.com
+
+SSLEngine On
+SSLCertificateFile /etc/apache2/SSL/openstack.example.com.crt
+SSLCACertificateFile /etc/apache2/SSL/openstack.example.com.crt
+SSLCertificateKeyFile /etc/apache2/SSL/openstack.example.com.key
+SetEnvIf User-Agent &quot;.*MSIE.*&quot; nokeepalive ssl-unclean-shutdown
+
+WSGIScriptAlias / /usr/share/openstack-dashboard/openstack_dashboard/wsgi/django.wsgi
+WSGIDaemonProcess horizon user=www-data group=www-data processes=3 threads=10
+Alias /static /usr/share/openstack-dashboard/openstack_dashboard/static/
+&lt;Directory /usr/share/openstack-dashboard/openstack_dashboard/wsgi&gt;
+Order allow,deny
+Allow from all
+&lt;/Directory&gt;
+&lt;/VirtualHost&gt;</programlisting>
+            </example>
+            <para>In this configuration, Apache listens on the port 443 and
+                redirects all the hits to the HTTPS protocol for all the
+                non-secured requests. In the secured section, the private key,
+                public key, and certificate to use are defined.</para>
+        </step>
+        <step>
+            <para>Restart Apache and memcached:</para>
+            <screen><prompt>#</prompt> <userinput>service apache2 restart</userinput>
+<prompt>#</prompt> <userinput>service memcached restart</userinput></screen>
+            <para>If you call the HTTP version of the dashboard through your
+                browser, you are redirected to the HTTPS page.</para>
+        </step>
+        <step>
+            <para>Point your browser to the public IP address for your instance.
+                For example:</para>
+            <para><code>https://192.168.206.130</code></para>
+        </step>
+        <step>
+            <para>After you connect to the dashboard through the URL, a login
+                page appears. </para>
+            <para>Enter the credentials for any user that you created with the
+                OpenStack Identity Service. </para>
+            <para>For example, enter <literal>admin</literal> for the user name
+                and <literal>secrete</literal> for the password.</para>
+        </step>
+    </procedure>
+    <procedure xml:id="adjust-vnc-window">
+        <title>To adjust the dimensions of the VNC window in the
+            Dashboard</title>
+        <para>The size of the window image used for VNC is hard-coded in a
+            Django HTML template. To alter the hard-coded values, edit the
+                <filename>_detail_vnc.html</filename> template file. </para>
+        <step>
+            <para>Edit
+                /usr/share/pyshared/horizon/dashboards/nova/instances/templates/instances/_detail_vnc.html.</para>
+        </step>
+        <step>
+            <para>Modify the <literal>width</literal> and
+                    <literal>height</literal> parameters, as follows: </para>
+            <programlisting language="html">&lt;iframe src="{{ vnc_url }}" width="720" height="430"&gt;&lt;/iframe&gt;</programlisting>
         </step>
     </procedure>
 </section>

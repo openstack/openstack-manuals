@@ -41,29 +41,33 @@ connection = mysql://keystone:password@localhost/keystone</programlisting></para
                 </para>
             </listitem>
             <listitem>
-                <para>Create an <literal>openrc</literal> File</para>
+                <para>Create an <literal>openrc</literal> file:</para>
                 <para>
                     <itemizedlist>
                         <listitem>
-                            <para>Create a file called <emphasis role="bold">~/openrc</emphasis>. This
-                                file contains the OpenStack admin credentials that will be used when interacting with the OpenStack 
-                                environment on the command line.
+                            <para>Create a file called <emphasis role="bold">~/openrc</emphasis>. This file contains the OpenStack admin
+                                credentials that are used when interacting with the OpenStack environment on the command line.
                                 <programlisting>export OS_TENANT_NAME=admin
 export OS_USERNAME=admin
 export OS_PASSWORD=password
 export OS_AUTH_URL="http://localhost:5000/v2.0/"
-export SERVICE_ENDPOINT="http://localhost:35357/v2.0"
-export SERVICE_TOKEN=password</programlisting></para>
+export OS_SERVICE_ENDPOINT="http://localhost:35357/v2.0"
+export OS_SERVICE_TOKEN=password</programlisting></para>
                         </listitem>
                     </itemizedlist>
                 </para>
+                <note>
+                    <para>Best practice for bootstrapping the first administrative user is to use the OS_SERVICE_ENDPOINT and
+                        OS_SERVICE_TOKEN together as environment variables, then set up a separate RC file just for Identity administration
+                        that uses port 35357 for the OS_AUTH_URL. This example is meant to provide a quick setup, not an audit-able
+                        environment.</para>
+                </note>
                 <itemizedlist>
                     <listitem>
-                        <para>Source the credentials into your environment:
-                            <screen><userinput>source ~/openrc</userinput></screen></para></listitem>
+                        <para>Source the credentials into your environment: <screen><userinput>source ~/openrc</userinput></screen></para>
+                    </listitem>
                     <listitem>
-                        <para>
-                            Configure the Bash shell to load these credentials upon each login:
+                        <para> Configure the Bash shell to load these credentials upon each login:
                             <screen><userinput>echo "source ~/openrc" >> ~/.bashrc</userinput></screen>
                         </para>
                     </listitem>
@@ -147,7 +151,7 @@ keystone endpoint-create --region $KEYSTONE_REGION --service-id $IMAGE_SERVICE -
 keystone endpoint-create --region $KEYSTONE_REGION --service-id $IDENTITY_SERVICE --publicurl 'http://'"$KEYSTONE_HOST"':5000/v2.0' --adminurl 'http://'"$KEYSTONE_HOST"':35357/v2.0' --internalurl 'http://'"$KEYSTONE_HOST"':5000/v2.0'
 keystone endpoint-create --region $KEYSTONE_REGION --service-id $EC2_SERVICE --publicurl 'http://'"$KEYSTONE_HOST"':8773/services/Cloud' --adminurl 'http://'"$KEYSTONE_HOST"':8773/services/Admin' --internalurl 'http://'"$KEYSTONE_HOST"':8773/services/Cloud'
 keystone endpoint-create --region $KEYSTONE_REGION --service-id $NETWORK_SERVICE --publicurl 'http://'"$KEYSTONE_HOST"':9696/' --adminurl 'http://'"$KEYSTONE_HOST"':9696/' --internalurl 'http://'"$KEYSTONE_HOST"':9696/'
-                    </programlisting>                    
+                    </programlisting>
                 </para>
             </listitem>
         </orderedlist>

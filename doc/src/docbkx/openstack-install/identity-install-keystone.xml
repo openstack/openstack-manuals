@@ -7,7 +7,7 @@
   <para>Install the Identity service on any server that is accessible
     to the other servers you intend to use for OpenStack services, as
     root:</para>
-  <screen os="ubuntu;deb"><prompt>#</prompt> <userinput>apt-get install keystone</userinput></screen>
+  <screen os="ubuntu;deb"><prompt>#</prompt> <userinput>apt-get install keystone python-keystone python-keystoneclient</userinput></screen>
   <screen os="rhel;centos;fedora"><prompt>$</prompt> <userinput>yum install openstack-utils openstack-keystone python-keystoneclient</userinput> </screen>
   <para>After installing, you need to delete the sqlite database it
     creates, then change the configuration to point to a MySQL
@@ -99,8 +99,13 @@
   </para>
   <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>keystone-manage pki_setup</userinput>
 <prompt>#</prompt> <userinput>chown -R keystone:keystone /etc/keystone/*</userinput></screen>
-  <para> Next, restart the keystone service so that it picks up the new database
-    configuration.</para>
+  <para os="ubuntu">
+    <note>
+      <para>In Ubuntu, <filename>keystone.conf</filename> is shipped as
+        root:root 644, but /etc/keystone has permissions for keystone:keystone
+        700 so the files under it are protected from unauthorized users.</para>
+    </note>Next, restart the keystone service so that it picks up the new
+    database configuration.</para>
   <screen os="ubuntu"><prompt>#</prompt> <userinput>sudo service keystone restart</userinput></screen>
   <screen os="rhel;fedora;centos"><prompt>$</prompt> <userinput>sudo service openstack-keystone start &amp;&amp; sudo chkconfig openstack-keystone on</userinput></screen>
   <para>Lastly, initialize the new keystone database, as root:</para>
@@ -133,20 +138,27 @@
         service. With the <command>keystone</command> command-line,
         you can specify the token and the endpoint as arguments, as
         follows:<screen><prompt>$</prompt> <userinput>keystone --token 012345SECRET99TOKEN012345 --endpoint http://192.168.206.130:35357/v2.0 <replaceable>&lt;command parameters></replaceable></userinput></screen></para>
-      <para>You can also specify the token and endpoint as environment variables, so they do not
-        need to be explicitly specified each time. If you are using the bash shell, the following
-        commands will set these variables in your current session so you don't have to pass them to
-        the client each
-        time.<screen><prompt>$</prompt> <userinput>export OS_SERVICE_TOKEN=012345SECRET99TOKEN012345</userinput>
+      <para>You can also specify the token and endpoint as environment
+        variables, so they do not need to be explicitly specified each time. If
+        you are using the bash shell, the following commands will set these
+        variables in your current session so you don't have to pass them to the
+        client each time. Best practice for bootstrapping the first
+        administrative user is to use the OS_SERVICE_ENDPOINT and
+        OS_SERVICE_TOKEN together as environment
+        variables.<screen><prompt>$</prompt> <userinput>export OS_SERVICE_TOKEN=012345SECRET99TOKEN012345</userinput>
 <prompt>$</prompt> <userinput>export OS_SERVICE_ENDPOINT=http://192.168.206.130:35357/v2.0</userinput></screen></para>
       <para>In the remaining examples, we will assume you have set the above environment
         variables.</para>
-      <para>Because it is more secure to use a username and passsord to authenticate rather than the
+      <para>Because it is more secure to use a username and password to authenticate rather than the
         service token, when you use the token the <command>keystone</command> client may output the
         following warning, depending on the version of python-keystoneclient you are
         running:<screen><computeroutput>WARNING: Bypassing authentication using a token &amp; endpoint (authentication credentials are being ignored).</computeroutput></screen></para>
       <para>First, create a default tenant, we'll name it
-          <literal>demo</literal> in this example.</para>
+          <literal>demo</literal> in this example. There is an --enabled
+        parameter available for tenant-create and user-create that defaults to
+        true. Refer to the help in <literal>keystone help user-create</literal>
+        and <literal>keystone help user-update</literal> for more
+        details.</para>
       <screen><prompt>$</prompt> <userinput>keystone tenant-create --name demo --description "Default Tenant"</userinput>
 <computeroutput>      +-------------+----------------------------------+
       |   Property  |              Value               |
