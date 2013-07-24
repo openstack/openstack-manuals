@@ -75,14 +75,14 @@
       <title>Networking Services Limitations</title>
       <para>There a few current known limitations of OpenStack Networking:</para>
       <itemizedlist><listitem>
-          <para> <emphasis role="bold">Overlapping IP addresses</emphasis>Linux network namespaces are required on nodes running quantum-l3-agent or quantum-dhcp-agent if overlapping IP's are in use. In order to support overlapping IP addresses, the OpenStack Networking DHCP and L3 agents use Linux network namespaces by default. If the host does not support namespaces then the <literal>quantum-l3-agent</literal> and <literal>quantum-dhcp-agent</literal> should be run on different hosts.</para>
+          <para> <emphasis role="bold">Overlapping IP addresses</emphasis>Linux network namespaces are required on nodes running neutron-l3-agent or neutron-dhcp-agent if overlapping IP's are in use. In order to support overlapping IP addresses, the OpenStack Networking DHCP and L3 agents use Linux network namespaces by default. If the host does not support namespaces then the <literal>neutron-l3-agent</literal> and <literal>neutron-dhcp-agent</literal> should be run on different hosts.</para>
           <para>A further limitation of the L3 Agent is the support a single logical router without namespaces.</para>
         </listitem>
 <listitem>
           <para> <emphasis role="bold">Multi-Host DHCP-agent</emphasis>OpenStack Networking now supports running multiple l3-agent and dhcp-agents with load being split across those agents, but the tight coupling of that scheduling with the location of the VM is not supported in Grizzly. The Havana release is expected to include an exact replacement for the --multi_host flag in nova-network.</para>
         </listitem>
 <listitem>
-          <para> <emphasis role="bold">No IPv6 Support for L3 agents</emphasis>The quantum-l3-agent, used by many plugins to implement L3 forwarding, supports only IPv4 forwarding.</para>
+          <para> <emphasis role="bold">No IPv6 Support for L3 agents</emphasis>The neutron-l3-agent, used by many plugins to implement L3 forwarding, supports only IPv4 forwarding.</para>
         </listitem>
 </itemizedlist>
     </section>

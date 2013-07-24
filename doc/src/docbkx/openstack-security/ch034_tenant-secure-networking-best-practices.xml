@@ -14,12 +14,12 @@
     </section>
     <section xml:id="ch034_tenant-secure-networking-best-practices-idp51440">
       <title>Security Groups</title>
-      <para>The OpenStack Networking Service provides security group functionality using a mechanism that is more flexible and powerful than the security group capabilities built into OpenStack Compute. Thus, when using OpenStack Networking, <emphasis>nova.conf</emphasis> should always disable built-in security groups and proxy all security group calls to the OpenStack Networking API. Failure to do so will result in conflicting security policies being simultaneously applied by both services. To proxy security groups to Quantum, use the following configuration values:</para>
+      <para>The OpenStack Networking Service provides security group functionality using a mechanism that is more flexible and powerful than the security group capabilities built into OpenStack Compute. Thus, when using OpenStack Networking, <emphasis>nova.conf</emphasis> should always disable built-in security groups and proxy all security group calls to the OpenStack Networking API. Failure to do so will result in conflicting security policies being simultaneously applied by both services. To proxy security groups to OpenStack Networking, use the following configuration values:</para>
       <itemizedlist><listitem>
           <para> firewall_driver : must be set to 'nova.virt.firewall.NoopFirewallDriver' so that nova-compute does not perform iptables-based filtering itself.</para>
         </listitem>
 <listitem>
-          <para> security_group_api : must be set to 'quantum' so that all security group requests are proxied to the OpenStack Network Service.</para>
+          <para> security_group_api : must be set to 'neutron' so that all security group requests are proxied to the OpenStack Network Service.</para>
         </listitem>
 </itemizedlist>
       <para>Security groups and security group rules allow administrators and tenants the ability to specify the type of traffic and direction (ingress/egress) that is allowed to pass through a virtual interface port. A security group is a container for security group rules. When a virtual interface port is created in OpenStack Networking it is associated with a security group. If a security group is not specified, the port will be associated with a 'default' security group. By default this group will drop all ingress traffic and allow all egress. Rules can be added to this group in order to change the behaviour.</para>
@@ -29,7 +29,7 @@
       <title>Quotas</title>
       <para>Quotas provide the ability to limit the number of network resources available to tenants. You can enforce default quotas for all tenants.</para>
       <screen> 
-/etc/quantum/quantum.conf
+/etc/neutron/neutron.conf
 [QUOTAS]
 # resource name(s) that are supported in quota features
 quota_items = network,subnet,port
@@ -53,9 +53,9 @@ quota_security_group = 10
 quota_security_group_rule = 100
 
 # default driver to use for quota checks
-quota_driver = quantum.quota.ConfDriver</screen>
-      <para>OpenStack Networking also supports per-tenant quotas limit via a quota extension API. To enable per-tenant quotas, you need to set <literal>quota_driver</literal> in <literal>quantum.conf</literal>.</para>
+quota_driver = neutron.quota.ConfDriver</screen>
+      <para>OpenStack Networking also supports per-tenant quotas limit via a quota extension API. To enable per-tenant quotas, you need to set <literal>quota_driver</literal> in <literal>neutron.conf</literal>.</para>
       <screen> 
-quota_driver = quantum.db.quota_db.DbQuotaDriver</screen>
+quota_driver = neutron.db.quota_db.DbQuotaDriver</screen>
     </section>
   </chapter>

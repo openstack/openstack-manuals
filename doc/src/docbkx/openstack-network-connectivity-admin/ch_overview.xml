@@ -6,7 +6,7 @@
     <title>Overview</title>
     <para> This chapter describes the high-level concepts and
         components of an OpenStack Networking deployment. </para>
-    <section xml:id="WhatIsQuantum">
+    <section xml:id="WhatIsNeutron">
         <title>What is OpenStack Networking?</title>
         <para>The OpenStack Networking project was created to provide a rich
             API for defining network connectivity and
@@ -344,7 +344,7 @@
                 involves deploying several processes on a variety of
                 hosts. </para>
             <para>The main process of the OpenStack Networking server is
-                    <literal>quantum-server</literal>, which is a
+                    <literal>neutron-server</literal>, which is a
                 Python daemon that exposes the OpenStack Networking API and passes
                 user requests to the configured OpenStack Networking plugin for
                 additional processing. Typically, the plugin requires
@@ -358,7 +358,7 @@
                 might be required, depending on your deployment: <itemizedlist>
                     <listitem>
                         <para><emphasis role="bold">plugin agent</emphasis>
-                                (<literal>quantum-*-agent</literal>).
+                                (<literal>neutron-*-agent</literal>).
                             Runs on each hypervisor to perform local
                             vswitch configuration. The agent to be run will
                             depend on which plugin you are using, because
@@ -367,7 +367,7 @@
                     </listitem>
                     <listitem>
                         <para><emphasis role="bold">dhcp agent</emphasis>
-                                (<literal>quantum-dhcp-agent</literal>).
+                                (<literal>neutron-dhcp-agent</literal>).
                             Provides DHCP services to tenant networks.
                             This agent is the same for all plugins.
                         </para>
@@ -375,7 +375,7 @@
                     <listitem>
                         <para><emphasis role="bold">l3
                                 agent</emphasis>
-                            <literal>(quantum-l3-agent</literal>).
+                            <literal>(neutron-l3-agent</literal>).
                             Provides L3/NAT forwarding to provide
                             external network access for VMs on tenant
                             networks. This agent is the same for all plugins. 
@@ -419,13 +419,13 @@
                 in simple deployments. However, if you expect VMs to send significant amounts of
                 traffic to or from the Internet, a dedicated network gateway host is recommended
                 to avoid potential CPU contention between packet forwarding performed by
-                the <literal>quantum-l3-agent</literal> and other OpenStack services.</para>
+                the <literal>neutron-l3-agent</literal> and other OpenStack services.</para>
         </section>
         <section xml:id="connectivity">
             <title>Network Connectivity for Physical Hosts</title>
             <mediaobject>
                     <imageobject>
-                        <imagedata scale="60" fileref="figures/Quantum-PhysNet-Diagram.png"/>
+                        <imagedata scale="60" fileref="../common/figures/Neutron-PhysNet-Diagram.png"/>
                     </imageobject>
             </mediaobject>
             <para>A standard OpenStack Networking setup has up to four distinct physical data center networks: </para>
