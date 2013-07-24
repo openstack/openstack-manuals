@@ -508,20 +508,27 @@ neutron floatingip-associate &lt;floatingip-id&gt; &lt;internal VM port-id&gt; <
             change is made restart nova-api and nova-compute in order to pick up this change. After
             this change is made one will be able to use both the OpenStack Compute and OpenStack
             Network security group API at the same time.</para>
-        <note>
-            <para>In order to use the OpenStack Compute security group
-                API with OpenStack Networking the OpenStack Networking
-                plugin must implement the security group api. The
-                following plugins currently implement this: Nicira
-                NVP, Open vSwitch, Linux Bridge, NEC, and Ryu.</para>
-        </note>
-        <note>
-            <para>When using the security group API through OpenStack
-                Compute, security groups are applied to all ports on
-                an instance. The reason for this is that OpenStack
-                Compute security group APIs are instances based and
-                not port based as OpenStack Networking.</para>
-        </note>
+    	<note>
+		<itemizedlist>
+			<listitem><para>To use the OpenStack Compute security group
+                	API with OpenStack Networking, the OpenStack Networking
+                	plugin must implement the security group API. The
+                	following plugins currently implement this: Nicira
+			NVP, Open vSwitch, Linux Bridge, NEC, and Ryu.</para></listitem>
+
+			<listitem><para>You must configure the correct firewall driver in the
+			<literal>securitygroup</literal> section of the plugin/agent configuration file.
+			Some plugins and agents, such as Linux Bridge Agent and Open vSwitch Agent, use
+			the no-operation driver as the default, which results in non-working security
+			groups.</para></listitem>
+
+			<listitem><para>When using the security group API through OpenStack
+                	Compute, security groups are applied to all ports on
+                	an instance. The reason for this is that OpenStack
+                	Compute security group APIs are instances based and
+			not port based as OpenStack Networking.</para></listitem>
+		</itemizedlist>
+	</note>
         <section xml:id="securitygroup_api_abstractions">
             <title>Security Group API Abstractions</title>
             <table rules="all">
