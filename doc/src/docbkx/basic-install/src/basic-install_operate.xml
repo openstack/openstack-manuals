@@ -5,75 +5,88 @@
         <para>You can use OpenStack API or the Dashboard to manage your own IaaS: go to <link
                         xlink:href="http://10.0.0.10/horizon">http://10.0.0.10/horizon</link> with
                 demo / password credentials.</para>
-        <para>In the Dashboard:</para>
-        <orderedlist>
-                <listitem>
+        
+        <procedure><title>To create a keypair with the dashboard</title>
+                <step>
                         <para>Edit the security group "Default" to allow ICMP and SSH.</para>
-                </listitem>
-                <listitem>
-                        <para>Create a personal keypair.</para>
-                </listitem>
-                <listitem>
+                </step>
+                <step>
+                        <para>Create a personal keypair, <filename>default_key</filename>.</para>
+                        <note><para>If you see an Error: Unable to create keypair: Key pair 'default_key' already exists, it may have been created using the command-line method below.</para></note>
+                </step>
+                <step><para>Modify the permissions on the keypair file, <filename>default_key</filename>. </para>
+                <screen><prompt>#</prompt> <userinput>chmod 400 default_key</userinput></screen></step>
+                <step>
                         <para>Go to "Instances" and click "Launch Instance" for spawning a new
                                 VM.</para>
-                </listitem>
-        </orderedlist>
-        <para>Alternatively, you can do this all on the command line at the Cloud Controller: </para>
-        <orderedlist>
-                <listitem>
+                </step>
+        </procedure>
+        <procedure>
+        <title>To create a keypair on the command line at the Cloud Controller</title>
+                <step>
                         <para>Copy the <literal>~/openrc</literal> file as
                                         <literal>~/demorc</literal> and edit the contents to suit
                                 the demo user.</para>
-                </listitem>
-                <listitem>
+                </step>
+                <step>
                         <para>Create an SSH keypair and add it to Nova:
                                 <screen><prompt>#</prompt> <userinput>ssh-keygen -f ~/.ssh/id_rsa -t rsa -N ''</userinput>
 <prompt>#</prompt> <userinput>nova keypair-add --pub_key ~/.ssh/id_rsa.pub default_key</userinput> </screen></para>
-                </listitem>
-                <listitem>
+                        <note><para>If you see an Error: Unable to create keypair: Key pair 'default_key' already exists, it may have been created using the Dashboard method above.</para></note>
+                </step>
+                <step><para>Modify the permissions on the keypair file, <filename>default_key</filename>. </para>
+                        <screen><prompt>#</prompt> <userinput>chmod 400 default_key</userinput></screen></step>
+        
+        </procedure>
+        <procedure><title>To launch an instance</title>
+        <step>
                         <para>Edit the "default" Security Group to allow SSH and ICMP:
                                 <screen><prompt>#</prompt> <userinput>nova secgroup-add-rule default tcp 22 22 0.0.0.0/24</userinput>
 <prompt>#</prompt> <userinput>nova secgroup-add-rule default icmp -1 -1 0.0.0.0/24</userinput></screen></para>
-                </listitem>
-                <listitem>
+                </step>
+                <step>
                         <para>Query the Image Service and note the ID of the image you want to
                                 launch:
                                 <screen><prompt>#</prompt> <userinput>nova image-list</userinput></screen></para>
-                </listitem>
-                <listitem>
+                </step>
+                <step>
                         <para>Launch an instance:
                                 <screen><prompt>#</prompt> <userinput>nova boot --flavor 1 --image &lt;image_id> --key-name default_key my_instance</userinput></screen></para>
-                </listitem>
-                <listitem>
+                </step>
+                <step>
                         <para>Wait a few seconds and check the status of your instance:
                                 <screen><prompt>#</prompt> <userinput>nova show my_instance</userinput></screen></para>
-                </listitem>
-                <listitem>
+                </step>
+                <step>
                         <para>If the status is in Error state, check the
                                         <literal>nova-scheduler</literal> log:
                                 <screen><prompt>#</prompt> <userinput>tail /var/log/nova/nova-scheduler.log</userinput> </screen></para>
-                </listitem>
-                <listitem>
+                </step>
+                <step>
                         <para>If the status is in Available state, check the instance's console for
                                 booting status:
                                 <screen><prompt>#</prompt> <userinput>nova console-log my_instance</userinput></screen></para>
-                </listitem>
-        </orderedlist>
+                </step>
+        </procedure>
+        <procedure><title>To SSH into the launched instance</title>
         <para>After your instance has successfully booted and the console log is showing a log in
                 prompt, you may now SSH into your instance. In order to do this, though, you have to
                 work with the Linux network namespaces on the Network Controller: </para>
-        <orderedlist>
-                <listitem>
+        
+                <step>
                         <para>Print a list of all namespaces:
                                 <screen><prompt>#</prompt> <userinput>ip netns</userinput></screen>The
-                                output should contain two lines: one beginning with
-                                        <literal>qrouter</literal> and the other beginning with
-                                        <literal>qdhcp</literal>
-                        </para>
-                </listitem>
-                <listitem>
-                        <para>Run SSH inside the <literal>qdhcp</literal> namespace:
-                                <screen><prompt>#</prompt> <userinput>ip netns exec qdhcp-c73d082f-d7ed-4b53-ac93-7a6a4c3fa3aa ssh 10.5.5.2</userinput></screen></para>
-                </listitem>
-        </orderedlist>
+                                output should contain two lines: one
+                                beginning with
+                                   <literal>qrouter</literal> and the
+                                other beginning with
+                                   <literal>qdhcp</literal>. </para>
+                </step>
+                <step>
+                        <para>Run SSH inside the
+                                   <literal>qdhcp</literal> namespace. This example shows how to SSH to the ubuntu image uploaded earlier:
+                                <screen><prompt>#</prompt> <userinput>ip netns exec qdhcp-c73d082f-d7ed-4b53-ac93-7a6a4c3fa3aa ssh -i default_key ubuntu@10.5.5.2 </userinput></screen></para>
+                </step>
+                <step><para>Once you have logged in as the ubuntu user with the keypair, you can create additional users and log out and back in with those credentials. If you are using the Cirros image, you can login with Cirros default credentials (username: <literal>cirros</literal>, password <literal>cubswin:)</literal>) and do not need the keypair.</para></step>
+        </procedure>
 </chapter>
