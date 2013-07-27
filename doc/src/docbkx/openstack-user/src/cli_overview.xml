@@ -5,117 +5,105 @@
         <!ENTITY mdash  "&#x2014;">
         <!ENTITY hellip "&#x2026;">
         <!ENTITY plusmn "&#xB1;">
-        
-        <!-- Useful for describing APIs -->
-        <!ENTITY GET    '<command xmlns="http://docbook.org/ns/docbook">GET</command>'>
-        <!ENTITY PUT    '<command xmlns="http://docbook.org/ns/docbook">PUT</command>'>
-        <!ENTITY POST   '<command xmlns="http://docbook.org/ns/docbook">POST</command>'>
-        <!ENTITY DELETE '<command xmlns="http://docbook.org/ns/docbook">DELETE</command>'>
-        
-        <!ENTITY CHECK  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
-                 <imageobject>
-                  <imagedata fileref="figures/Check_mark_23x20_02.svg"
-                             format="SVG" scale="60"/>
-                </imageobject>
-              </inlinemediaobject>'>
-<!ENTITY CLIall 'command-line interface (CLI)'>
-<!ENTITY CLIallp 'command-line interfaces (CLIs)'>
-        <!ENTITY ARROW  '<inlinemediaobject xmlns="http://docbook.org/ns/docbook">
-                 <imageobject>
-                  <imagedata fileref="figures/Arrow_east.svg"
-                             format="SVG" scale="60"/>
-                </imageobject>
-              </inlinemediaobject>'>
 ]>
 <section xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
-    xml:id="client_overview">
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:raxm="http://docs.rackspace.com/api/metadata" version="5.0"
+    xml:id="section_cli_overview">
     <title>Overview</title>
-    <para>The OpenStack command-line clients let you run simple
-        commands to make OpenStack API calls. These open-source Python
-        clients are easy to learn and use. </para>
-    <para>The OpenStack APIs are RESTful APIs that use the HTTP
-        protocol, including methods, URIs, media types, and response
-        codes. Internally, each client command runs cURL commands that
-        embed API requests. </para>
-    <para>To install an OpenStack client, see <xref
-            linkend="install_clients"/>.</para>
-    <para>To request OpenStack services through either the clients or
-        the APIs directly, you must source an
-            <filename>openrc</filename> file to set required
-        environment variables.</para>
+    <para>You can use the OpenStack command-line clients to run simple
+        commands that make API calls and automate tasks by using
+        scripts. Internally, each client command runs cURL commands
+        that embed API requests. The OpenStack APIs are RESTful APIs
+        that use the HTTP protocol, including methods, URIs, media
+        types, and response codes. </para>
+    <para>These open-source Python clients run on Linux or Mac OS X
+        systems and are easy to learn and use. Each OpenStack service
+        has its own command-line client. On some client commands, you
+        can specify a <parameter
+            xmlns:svg="http://www.w3.org/2000/svg"
+            xmlns:m="http://www.w3.org/1998/Math/MathML"
+            xmlns:html="http://www.w3.org/1999/xhtml"
+            xmlns:db="http://docbook.org/ns/docbook">debug</parameter>
+        parameter to show the underlying API request for the command.
+        This is a good way to become familiar with the OpenStack API
+        calls. </para>
+
+    <para>The following command-line clients are available for the
+        respective services' APIs:</para>
+    <variablelist wordsize="10">
+        <varlistentry>
+            <term><emphasis role="bold">cinder</emphasis>
+                (python-cinderclient)</term>
+            <listitem>
+                <para>Client for the Block Storage Service API. Use to
+                    create and manage volumes. </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><emphasis role="bold">glance</emphasis>
+                (python-glanceclient)</term>
+            <listitem>
+                <para>Client for the Image Service API. Use to create
+                    and manage images.</para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><emphasis role="bold">keystone</emphasis>
+                (python-keystoneclient)</term>
+            <listitem>
+                <para>Client for the Identity Service API. Use to
+                    create and manage users, tenants, roles,
+                    endpoints, and credentials.</para>
+
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><emphasis role="bold">nova</emphasis>
+                (python-novaclient)</term>
+            <listitem>
+                <para>Client for the Compute API and its extensions.
+                    Use to create and manage images, instances, and
+                    flavors. </para>
+
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><emphasis role="bold">neutron</emphasis>
+                (python-neutronclient)</term>
+            <listitem>
+                <para>Client for the Networking API. Use to configure
+                    networks for guest servers. This client was
+                    previously known as <emphasis role="bold"
+                        >quantum</emphasis>.</para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><emphasis role="bold">swift</emphasis>
+                (python-swiftclient)</term>
+            <listitem>
+                <para>Client for the Object Storage API. Use to gather
+                    statistics, list items, update metadata, upload,
+                    download and delete files stored by the object
+                    storage service. Provides access to a swift
+                    installation for ad hoc processing.</para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><emphasis role="bold">heat</emphasis>
+                (python-heatclient)</term>
+            <listitem>
+                <para>Client for the Orchestration API. Use to launch
+                    stacks from templates, view details of running
+                    stacks including events and resources, and update
+                    and delete stacks.</para>
+            </listitem>
+        </varlistentry>
+    </variablelist>
     <note>
         <para>An OpenStack common client is in development.</para>
     </note>
-    <para>The following command-line clients are available for the
-        respective services' APIs:</para>
-    <table rules="all" width="100%">
-        <caption>OpenStack clients</caption>
-        <thead>
-            <tr>
-                <th>Client</th>
-                <th>Associated service API</th>
-                <th>Description</th>
-                <th>Client name</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><para>cinder</para></td>
-                <td><para>Block storage service</para></td>
-                <td><para>Create and manage volumes.</para></td>
-                <td><para>python-cinderclient</para></td>
-            </tr>
-            <tr>
-                <td><para>glance</para></td>
-                <td><para>Image service</para></td>
-                <td><para>Create and manage images.</para></td>
-                <td><para>python-glanceclient</para></td>
-            </tr>
-            <tr>
-                <td><para>keystone</para></td>
-                <td><para>Identity service</para></td>
-                <td><para>Create and manage users, tenants, roles,
-                        endpoints, and credentials.</para></td>
-                <td><para>python-keystoneclient</para></td>
-            </tr>
-            <tr>
-                <td><para>nova</para></td>
-                <td><para>Compute, Compute extensions</para></td>
-                <td><para>Create and manage instances and flavors.
-                    </para></td>
-                <td><para>python-novaclient</para></td>
-            </tr>
-            <tr>
-                <td><para>neutron</para></td>
-                <td><para>Networking</para></td>
-                <td><para>Configure networks for guest servers. <note>
-                            <para> The <literal>neutron</literal>
-                                client was previously known as
-                                   <literal>quantum</literal>. </para>
-                        </note></para></td>
-                <td><para>python-neutronclient</para></td>
-            </tr>
-            <tr>
-                <td><para>swift</para></td>
-                <td><para>Object storage</para></td>
-                <td><para>Gather statistics, list items, update
-                        metadata, upload, download and delete files
-                        stored by the object storage service. Provides
-                        access to a swift installation for ad hoc
-                        processing.</para></td>
-                <td><para>python-swiftclient</para></td>
-            </tr>
-            <tr>
-                <td><para>heat</para></td>
-                <td><para>Orchestration</para></td>
-                <td><para>Launch stacks from templates, view details
-                        of running stacks (including events and
-                        resources), update and delete
-                    stacks.</para></td>
-                <td><para>python-heatclient</para></td>
-            </tr>
-        </tbody>
-    </table>
+    <para>To install an OpenStack client, see <xref
+            linkend="install_clients"/>.</para>
 </section>

@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section [ 
+ <!-- Some useful entities borrowed from HTML -->
+<!ENTITY ndash  "&#x2013;">
+<!ENTITY mdash  "&#x2014;">
+<!ENTITY hellip "&#x2026;">  
+]>
 <section xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="dashboard_launch_instances">
-    <title>Launch an instance</title>
+    <title>Launch instances</title>
     <?dbhtml stop-chunking?>
     <para>Instances are virtual machines that run inside the cloud.
         You can launch an instance directly from one of the available
@@ -13,6 +19,10 @@
         projects.</para>
     <xi:include
         href="section_dashboard_launch_instances_from_image.xml"/>
+    <?hard-pagebreak?>
+    <xi:include
+        href="section_dashboard_launch_instances_from_volume.xml"/>
+    <?hard-pagebreak?>
     <section xml:id="ssh-into-instance">
         <title>SSH in to your instance</title>
         <para>To SSH into your instance, you use the downloaded
@@ -22,14 +32,14 @@
                 on TryStack.</para>
         </note>
         <procedure>
-            <title>To SSH in to your instance:</title>
+            <title>To SSH in to your instance</title>
             <step>
                 <para>Copy the IP address for your instance. </para>
             </step>
             <step>
                 <para>Use the SSH command to make a secure connection
-                    to the instance. For
-                    example:<screen><userinput><prompt>$</prompt> ssh -i MyKey.pem ubuntu@10.0.0.2</userinput></screen></para>
+                    to the instance. For example:</para>
+                <screen><userinput><prompt>$</prompt> ssh -i MyKey.pem ubuntu@10.0.0.2</userinput></screen>
             </step>
             <step>
                 <para>A prompt asks, "Are you sure you want to

@@ -17,10 +17,11 @@
                     arguments</emphasis>. Listed in the help usage
                     text for the command.</para>
             </listitem>
-            
+
             <listitem xml:id="neutron_overview_command_pos">
                 <para><emphasis role="bold">Positional
-                    arguments</emphasis>. Mandatory arguments that
+                        arguments</emphasis>. Mandatory arguments that
+
                     must be specified in a specific order. </para>
             </listitem>
             <listitem xml:id="neutron_overview_command_unknown">
@@ -35,11 +36,13 @@
                     the option defaults to <literal>bool</literal>
                     with a value of <literal>true</literal>. </para>
                 <para>The type is python built-in type, such as
-                    <literal>int</literal>,
-                    <literal>bool</literal>,
-                    <literal>float</literal>,
-                    <literal>dict</literal>, and
-                    <literal>string</literal>, which is the
+
+                        <literal>int</literal>,
+                        <literal>bool</literal>,
+                        <literal>float</literal>,
+                        <literal>dict</literal>, and
+                        <literal>string</literal>, which is the
+
                     default. You can use unknown options to provide
                     values for creating, updating a resource and to
                     provide filters to list resources. It is also
@@ -55,11 +58,13 @@
         <title>Features from cliff</title>
         <section xml:id="neutron_overview_cliff_interactive">
             <title>Interactive mode</title>
+
             <para>If no command is specified, the neutron client goes
                 into interactive mode:</para>
             <screen><prompt>$</prompt> <userinput>neutron --os-username admin --os-password password --os-tenant-name admin --os-auth-url http://localhost:5000/v2.0</userinput></screen>
             <screen><userinput>(neutron) help</userinput></screen>
             <screen><computeroutput>Shell commands (type help &lt;topic&gt;):
+
 ===================================
 cmdenvironment  edit  hi       l   list  pause  r    save  shell      show
 ed              help  history  li  load  py     run  set   shortcuts
@@ -124,7 +129,8 @@ net-delete                     security-group-show
 | 22f53ed1-3f3d-49c7-9162-7ba94d9c0a7e | private_mynet1 | b5a9b952-dd4f-445a-89c5-f15d0707b8bd |
 | 2a405f54-aea0-47d7-8a43-4d5129e22b35 | test1          |                                      |
 | d322e1ae-e068-4249-b9b3-7ed8b820bfa2 | mynetwork      |                                      |
-+--------------------------------------+----------------+--------------------------------------+</computeroutput>         </screen>
++--------------------------------------+----------------+--------------------------------------+</computeroutput></screen>
+
         </section>
         <section xml:id="neutron_overview_cliff_oFormat">
             <title>Output format</title>
@@ -132,49 +138,52 @@ net-delete                     security-group-show
                 to show the usage of each command:</para>
             <screen><prompt>(neutron)</prompt> <userinput>net-list -h</userinput></screen>
             <screen>usage: neutron net-list [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
-                [--quote {all,minimal,none,nonnumeric}]
-                [--request-format {json,xml}] [-D] [-F FIELD]
-                [-P SIZE] [--sort-key FIELD] [--sort-dir {asc,desc}]
-                
-                List networks that belong to a given tenant.
-                
-                optional arguments:
-                -h, --help            show this help message and exit
-                --request-format {json,xml}
-                the xml or json request format
-                -D, --show-details    show detailed info
-                -F FIELD, --field FIELD
-                specify the field(s) to be returned by server, can be
-                repeated
-                -P SIZE, --page-size SIZE
-                specify retrieve unit of each request, then split one
-                request to several requests
-                --sort-key FIELD      sort list by specified fields (This option can be
-                repeated), The number of sort_dir and sort_key should
-                match each other, more sort_dir specified will be
-                omitted, less will be filled with asc as default
-                direction
-                --sort-dir {asc,desc}
-                sort list in specified directions (This option can be
-                repeated)
-                
-                output formatters:
-                output formatter options
-                
-                -f {csv,html,json,table,yaml}, --format {csv,html,json,table,yaml}
-                the output format, defaults to table
-                -c COLUMN, --column COLUMN
-                specify the column(s) to include, can be repeated
-                
-                CSV Formatter:
-                --quote {all,minimal,none,nonnumeric}
-                when to include quotes, defaults to nonnumeric
-            </screen>
+
+                        [--quote {all,minimal,none,nonnumeric}]
+                        [--request-format {json,xml}] [-D] [-F FIELD]
+                        [-P SIZE] [--sort-key FIELD] [--sort-dir {asc,desc}]
+
+List networks that belong to a given tenant.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --request-format {json,xml}
+                        the xml or json request format
+  -D, --show-details    show detailed info
+  -F FIELD, --field FIELD
+                        specify the field(s) to be returned by server, can be
+                        repeated
+  -P SIZE, --page-size SIZE
+                        specify retrieve unit of each request, then split one
+                        request to several requests
+  --sort-key FIELD      sort list by specified fields (This option can be
+                        repeated), The number of sort_dir and sort_key should
+                        match each other, more sort_dir specified will be
+                        omitted, less will be filled with asc as default
+                        direction
+  --sort-dir {asc,desc}
+                        sort list in specified directions (This option can be
+                        repeated)
+
+output formatters:
+  output formatter options
+
+  -f {csv,html,json,table,yaml}, --format {csv,html,json,table,yaml}
+                        the output format, defaults to table
+  -c COLUMN, --column COLUMN
+                        specify the column(s) to include, can be repeated
+
+CSV Formatter:
+  --quote {all,minimal,none,nonnumeric}
+                        when to include quotes, defaults to nonnumeric
+               </screen>
             <para>We can see the output formatters cliff provides to
                 each command. By default, the output format is
-                <literal>table</literal>. Now we choose
-                <literal>csv</literal> output to run the command
-                <literal>net-list</literal>:</para>
+
+                    <literal>table</literal>. Now we choose
+                    <literal>csv</literal> output to run the command
+                    <literal>net-list</literal>:</para>
+
             <screen><prompt>(neutron)</prompt> <userinput>net-list -f csv</userinput></screen>
             <screen>"id","name","subnets"
 "11fc08b7-c3b2-4b0c-bd04-66e279d9c470","public_net1","13cc61f6-b33b-495a-a49f-83bdc9e439ab"
@@ -204,15 +213,18 @@ net-delete                     security-group-show
             <title>Fields selection</title>
             <para>If there are <literal>‘fields’</literal> in request
                 URL, V2.0 API will extract the list of fields to
-                return. A sample of such URLs is
-                <literal>http://localhost:9696/v2.0/networks.json?fields=id&amp;fields=name</literal></para>
+
+                return. A sample of such URLs is:
+
+                    <literal>http://localhost:9696/v2.0/networks.json?fields=id&amp;fields=name</literal></para>
             <para> Neutron client supports this feature by
-                <literal>-F</literal> option in known options part
+                    <literal>-F</literal> option in known options part
                 and <literal>--fields</literal> in unknown options
                 part. For example, <literal>neutron -F id net-list --
                     --fields name</literal>. Only
-                <literal>xx-list</literal> and
-                <literal>xx-show</literal> commands support this
+                    <literal>xx-list</literal> and
+                    <literal>xx-show</literal> commands support this
+
                 feature.</para>
         </section>
         <section xml:id="neutron_overview_API_filtering">
@@ -230,9 +242,11 @@ net-delete                     security-group-show
                     test2</literal>. Only <literal>xx-list</literal>
                 commands support this feature. </para>
         </section>
+
     </section>
     <xi:include
         href="../../openstack-user/src/section_cli_manage_networks.xml"/>
     <xi:include
         href="../../openstack-user/src/neutron_cli_commands.xml"/>
 </chapter>
+

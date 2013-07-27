@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section [ 
+ <!-- Some useful entities borrowed from HTML -->
+<!ENTITY ndash  "&#x2013;">
+<!ENTITY mdash  "&#x2014;">
+<!ENTITY hellip "&#x2026;">  
+]>
 <section xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="Launching_Instances_using_Dashboard">
     <title>Set up access and security</title>
-    <?dbhtml stop-chunking?>
     <para>Before you launch a virtual machine, you can add security
         group rules to enable users to ping and SSH to the instances.
         To do so, you either add rules to the default security group
@@ -12,14 +17,14 @@
             linkend="security_groups_add_rule"/>.</para>
     <para>Keypairs are SSH credentials that are injected into images
         when they are launched. For this to work, the image must
-        contain the <literal>cloud-init</literal> package. For information, see <xref
-            linkend="keypair_add"/>.</para>
+        contain the <literal>cloud-init</literal> package. For
+        information, see <xref linkend="keypair_add"/>.</para>
     <section xml:id="security_groups_add_rule">
         <title>Add security group rules</title>
         <para>The following procedure shows you how to add rules to
             the default security group.</para>
         <procedure>
-            <title>To add rules to the default security group:</title>
+            <title>To add rules to the default security group</title>
             <step>
                 <para>Log in to the OpenStack dashboard.</para>
             </step>
@@ -34,18 +39,13 @@
                 <para>The dashboard shows the security groups that are
                     available for this project. </para>
                 <figure>
-                    <title>OpenStack dashboard - Security
+                    <title>OpenStack dashboard &ndash; Security
                         Groups</title>
                     <mediaobject>
-                        <imageobject role="fo">
+                        <imageobject>
                             <imagedata
                                 fileref="../../common/figures/access_security.png"
-                                format="PNG" scale="60"/>
-                        </imageobject>
-                        <imageobject role="html">
-                            <imagedata
-                                fileref="../../common/figures/access_security.png"
-                                format="PNG"/>
+                                format="PNG" contentwidth="4in"/>
                         </imageobject>
                     </mediaobject>
                 </figure>
@@ -56,18 +56,13 @@
                 <para>The <guilabel>Security Group Rules</guilabel>
                     page appears: </para>
                 <figure>
-                    <title>OpenStack dashboard - Security Group
+                    <title>OpenStack dashboard &ndash; Security Group
                         Rules</title>
                     <mediaobject>
-                        <imageobject role="fo">
+                        <imageobject>
                             <imagedata
                                 fileref="../../common/figures/security_group_rules.png"
-                                format="PNG" scale="60"/>
-                        </imageobject>
-                        <imageobject role="html">
-                            <imagedata
-                                fileref="../../common/figures/security_group_rules.png"
-                                format="PNG"/>
+                                format="PNG" contentwidth="4in"/>
                         </imageobject>
                     </mediaobject>
                 </figure>
@@ -77,21 +72,17 @@
                 <para>Click <guibutton>Add Rule</guibutton>. </para>
                 <para>The <guilabel>Add Rule</guilabel> window
                     appears. </para>
-                <figure>
-                    <title>OpenStack dashboard - Add Rule</title>
+              <!--  <figure>
+                    <title>OpenStack dashboard &ndash; Add
+                        Rule</title>
                     <mediaobject>
-                        <imageobject role="fo">
+                        <imageobject>
                             <imagedata
                                 fileref="../../common/figures/add_rule.png"
-                                format="PNG" scale="60"/>
-                        </imageobject>
-                        <imageobject role="html">
-                            <imagedata
-                                fileref="../../common/figures/add_rule.png"
-                                format="PNG"/>
+                                format="PNG" contentwidth="4in"/>
                         </imageobject>
                     </mediaobject>
-                </figure>
+                </figure>-->
                 <substeps>
                     <step>
                         <para>In the <guilabel>IP Protocol</guilabel>
@@ -160,14 +151,13 @@
         </procedure>
     </section>
     <section xml:id="keypair_add">
-        <title>Add keypair</title>
-        <para>Create at
-            least one keypair for each project. If you have generated a
-            keypair with an external tool, you can import it into
-            OpenStack. The keypair can be used for multiple instances that
-            belong to a project.</para>
+        <title>Add keypairs</title>
+        <para>Create at least one keypair for each project. If you
+            have generated a keypair with an external tool, you can
+            import it into OpenStack. The keypair can be used for
+            multiple instances that belong to a project.</para>
         <procedure>
-            <title>To add a keypair:</title>
+            <title>To add a keypair</title>
             <step>
                 <para>Log in to the OpenStack dashboard.</para>
             </step>
@@ -186,26 +176,17 @@
                     for this project. </para>
             </step>
             <step>
-                <title>To add a keypair:</title>
+                <title>To add a keypair</title>
                 <para>Click <guibutton>Create Keypair</guibutton>. </para>
                 <para>The <guilabel>Create Keypair</guilabel> window
                     appears. </para>
-                <figure>
-                    <title>OpenStack dashboard - Create
-                        Keypair</title>
-                    <mediaobject>
-                        <imageobject role="fo">
-                            <imagedata
-                                fileref="../../common/figures/create_keypair.png"
-                                format="PNG" scale="60"/>
-                        </imageobject>
-                        <imageobject role="html">
-                            <imagedata
-                                fileref="../../common/figures/create_keypair.png"
-                                format="PNG"/>
-                        </imageobject>
-                    </mediaobject>
-                </figure>
+               <!-- <figure><title>OpenStack dashboard &ndash; Keypairs</title><mediaobject>
+                    <imageobject>
+                        <imagedata valign="middle" align="center"
+                            fileref="../../common/figures/create_keypair.png"
+                            format="PNG" contentwidth="4in"/>
+                    </imageobject>
+                </mediaobject></figure>-->
                 <substeps>
                     <step>
                         <para>In the <guilabel>Keypair Name</guilabel>
@@ -223,7 +204,7 @@
                 </substeps>
             </step>
             <step>
-                <title>To import a keypair:</title>
+                <title>To import a keypair</title>
                 <para>Click <guibutton>Import Keypair</guibutton>. </para>
                 <para>The <guilabel>Import Keypair</guilabel> window
                     appears.</para>
@@ -260,21 +241,16 @@
         <para>The public key of the keypair is registered in the Nova
             database. </para>
         <para>The dashboard lists the keypair in the <guilabel>Access
-                &amp; Security</guilabel> category, as follows:</para>
-        <figure>
-            <title>OpenStack dashboard - Keypairs</title>
+                &amp; Security</guilabel> category.</para>
+      <!--  <figure>
+            <title>OpenStack dashboard &ndash; Keypairs</title>
             <mediaobject>
-                <imageobject role="fo">
+                <imageobject>
                     <imagedata
                         fileref="../../common/figures/keypairs.png"
-                        format="PNG" scale="60"/>
-                </imageobject>
-                <imageobject role="html">
-                    <imagedata
-                        fileref="../../common/figures/keypairs.png"
-                        format="PNG"/>
+                        format="PNG" contentwidth="4in"/>
                 </imageobject>
             </mediaobject>
-        </figure>
+        </figure> -->
     </section>
 </section>

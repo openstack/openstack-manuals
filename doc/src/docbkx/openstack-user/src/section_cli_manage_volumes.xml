@@ -1,10 +1,181 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" 
-    version="5.0"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="cli_manage_volumes">
     <title>Manage volumes</title>
-    
-<para/>
+    <para>A volume is a detachable block storage device, similar to a
+        USB hard drive. You can attach a volume to only one instance.
+        To create and manage volumes, you use a combination of nova
+        and cinder client commands.</para>
+    <para>This example creates a volume named
+            <literal>my-volume</literal> based on an image.</para>
+    <procedure>
+        <title>To list volumes</title>
+        <step>
+            <para>To determine which image to use for your volume,
+                list images:</para>
+            <screen><prompt>$</prompt> <userinput>nova image-list</userinput></screen>
+            <screen><computeroutput>+--------------------------------------+---------------------------------+--------+--------------------------------------+
+| ID                                   | Name                            | Status | Server                               |
++--------------------------------------+---------------------------------+--------+--------------------------------------+
+| 397e713c-b95b-4186-ad46-6126863ea0a9 | cirros-0.3.1-x86_64-uec         | ACTIVE |                                      |
+| df430cc2-3406-4061-b635-a51c16e488ac | cirros-0.3.1-x86_64-uec-kernel  | ACTIVE |                                      |
+| 3cf852bd-2332-48f4-9ae4-7d926d50945e | cirros-0.3.1-x86_64-uec-ramdisk | ACTIVE |                                      |
+| 7e5142af-1253-4634-bcc6-89482c5f2e8a | myCirrosImage                   | ACTIVE | 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5 |
+| 89bcd424-9d15-4723-95ec-61540e8a1979 | mysnapshot                      | ACTIVE | f51ebd07-c33d-4951-8722-1df6aa8afaa4 |
++--------------------------------------+---------------------------------+--------+--------------------------------------+</computeroutput></screen>
+            <para>Note the ID of the image that you want to
+                use.</para>
+        </step>
+        <step>
+            <para>To determine which availability zone are available
+                in which to create your volume, list the availability
+                zones:</para>
+            <screen><prompt>$</prompt> <userinput>nova availability-zone-list</userinput></screen>
+            <screen><computeroutput>+-----------------------+----------------------------------------+
+| Name                  | Status                                 |
++-----------------------+----------------------------------------+
+| internal              | available                              |
+| |- devstack-grizzly   |                                        |
+| | |- nova-conductor   | enabled :-) 2013-07-25T16:50:44.000000 |
+| | |- nova-consoleauth | enabled :-) 2013-07-25T16:50:44.000000 |
+| | |- nova-scheduler   | enabled :-) 2013-07-25T16:50:44.000000 |
+| | |- nova-cert        | enabled :-) 2013-07-25T16:50:44.000000 |
+| | |- nova-network     | enabled :-) 2013-07-25T16:50:44.000000 |
+| nova                  | available                              |
+| |- devstack-grizzly   |                                        |
+| | |- nova-compute     | enabled :-) 2013-07-25T16:50:39.000000 |
++-----------------------+----------------------------------------+</computeroutput></screen>
+            <para>Note the name of an available availability zone that
+                you want to use.</para>
+        </step>
+        <step>
+            <para>Create a volume with 8 GBs of space in the desired
+                availability zone and based on the desired image, as
+                follows:</para>
+            <screen><prompt>$</prompt> <userinput>cinder create 8 --display-name my-new-volume --image-id 397e713c-b95b-4186-ad46-6126863ea0a9 --availability-zone nova</userinput></screen>
+            <screen><computeroutput>+---------------------+--------------------------------------+
+|       Property      |                Value                 |
++---------------------+--------------------------------------+
+|     attachments     |                  []                  |
+|  availability_zone  |                 nova                 |
+|       bootable      |                false                 |
+|      created_at     |      2013-07-25T17:02:12.472269      |
+| display_description |                 None                 |
+|     display_name    |            my-new-volume             |
+|          id         | 573e024d-5235-49ce-8332-be1576d323f8 |
+|       image_id      | 397e713c-b95b-4186-ad46-6126863ea0a9 |
+|       metadata      |                  {}                  |
+|         size        |                  8                   |
+|     snapshot_id     |                 None                 |
+|     source_volid    |                 None                 |
+|        status       |               creating               |
+|     volume_type     |                 None                 |
++---------------------+--------------------------------------+</computeroutput></screen>
+        </step>
+        <step>
+            <para>To verify that your volume was created successfully,
+                list the available volumes:</para>
+            <screen><prompt>$</prompt> <userinput>cinder list</userinput></screen>
+            <screen><computeroutput>+--------------------------------------+-----------+-----------------+------+-------------+----------+-------------+
+|                  ID                  |   Status  |   Display Name  | Size | Volume Type | Bootable | Attached to |
++--------------------------------------+-----------+-----------------+------+-------------+----------+-------------+
+| 573e024d-5235-49ce-8332-be1576d323f8 | available |  my-new-volume  |  8   |     None    |   true   |             |
+| bd7cf584-45de-44e3-bf7f-f7b50bf235e3 | available | my-bootable-vol |  8   |     None    |   true   |             |
++--------------------------------------+-----------+-----------------+------+-------------+----------+-------------+</computeroutput></screen>
+            <para>If your volume was created successfully, its status
+                is <literal>available</literal>. If its status is
+                    <literal>error</literal>, you might have tried to
+                create a volume outside of your quota. </para>
+        </step>
+        <step>
+            <para>Attach your volume to a server:</para>
+            <screen><prompt>$</prompt> <userinput>nova volume-attach 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5  573e024d-5235-49ce-8332-be1576d323f8 /dev/vdb</userinput></screen>
+            <screen><computeroutput>+----------+--------------------------------------+
+| Property | Value                                |
++----------+--------------------------------------+
+| device   | /dev/vdb                             |
+| serverId | 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5 |
+| id       | 573e024d-5235-49ce-8332-be1576d323f8 |
+| volumeId | 573e024d-5235-49ce-8332-be1576d323f8 |
++----------+--------------------------------------+</computeroutput></screen>
+            <para>Note the ID of your volume.</para>
+        </step>
+        <step>
+            <para>Show information for your volume:</para>
+            <screen><prompt>$</prompt> <userinput>cinder show 573e024d-5235-49ce-8332-be1576d323f8</userinput></screen>
+            <screen><computeroutput><?db-fontsize 75%?>+------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|           Property           |                                                                                                      Value                                                                                                       |
++------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|         attachments          |             [{u'device': u'/dev/vdb', u'server_id': u'84c6e57d-a6b1-44b6-81eb-fcb36afd31b5', u'id': u'573e024d-5235-49ce-8332-be1576d323f8', u'volume_id': u'573e024d-5235-49ce-8332-be1576d323f8'}]             |
+|      availability_zone       |                                                                                                       nova                                                                                                       |
+|           bootable           |                                                                                                       true                                                                                                       |
+|          created_at          |                                                                                            2013-07-25T17:02:12.000000                                                                                            |
+|     display_description      |                                                                                                       None                                                                                                       |
+|         display_name         |                                                                                                  my-new-volume                                                                                                   |
+|              id              |                                                                                       573e024d-5235-49ce-8332-be1576d323f8                                                                                       |
+|           metadata           |                                                                                                        {}                                                                                                        |
+|    os-vol-host-attr:host     |                                                                                                 devstack-grizzly                                                                                                 |
+| os-vol-tenant-attr:tenant_id |                                                                                         66265572db174a7aa66eba661f58eb9e                                                                                         |
+|             size             |                                                                                                        8                                                                                                         |
+|         snapshot_id          |                                                                                                       None                                                                                                       |
+|         source_volid         |                                                                                                       None                                                                                                       |
+|            status            |                                                                                                      in-use                                                                                                      |
+|    volume_image_metadata     | {u'kernel_id': u'df430cc2-3406-4061-b635-a51c16e488ac', u'image_id': u'397e713c-b95b-4186-ad46-6126863ea0a9', u'ramdisk_id': u'3cf852bd-2332-48f4-9ae4-7d926d50945e', u'image_name': u'cirros-0.3.1-x86_64-uec'} |
+|         volume_type          |                                                                                                       None                                                                                                       |
++------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</computeroutput></screen>
+            <para>From the output, you can see that the volume is
+                attached to the server with ID
+                    <literal>84c6e57d-a6b1-44b6-81eb-fcb36afd31b5</literal>,
+                is in the nova availability zone, and is
+                bootable.</para>
+        </step>
+        <step>
+            <para>To delete your volume, you must first detach it from
+                the server.</para>
+            <para>To detach the volume from your server, pass the
+                server ID and volume ID to the command, as
+                follows:</para>
+            <screen><prompt>$</prompt> <userinput>nova volume-detach 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5 573e024d-5235-49ce-8332-be1576d323f8</userinput></screen>
+            <para>The <command>volume-detach</command> command does
+                not return any output.</para>
+        </step>
+        <step>
+            <para>List volumes:</para>
+            <screen><prompt>$</prompt> <userinput>cinder list</userinput></screen>
+            <screen><computeroutput>+--------------------------------------+-----------+-----------------+------+-------------+----------+-------------+
+|                  ID                  |   Status  |   Display Name  | Size | Volume Type | Bootable | Attached to |
++--------------------------------------+-----------+-----------------+------+-------------+----------+-------------+
+| 573e024d-5235-49ce-8332-be1576d323f8 | available |  my-new-volume  |  8   |     None    |   true   |             |
+| bd7cf584-45de-44e3-bf7f-f7b50bf235e3 | available | my-bootable-vol |  8   |     None    |   true   |             |
++--------------------------------------+-----------+-----------------+------+-------------+----------+-------------+</computeroutput></screen>
+            <para>Note that the volume is now available.</para>
+        </step>
+        <step>
+            <para>Now you can delete the volume, as follows:</para>
+            <screen><prompt>$</prompt> <userinput>cinder delete my-new-volume</userinput></screen>
+            <para>The delete command does not return any
+                output.</para>
+        </step>
+        <step>
+            <para>List the volumes again, and note that the status of
+                your volume is <literal>deleting</literal>:</para>
+            <screen><prompt>$</prompt> <userinput>cinder list</userinput></screen>
+            <screen><computeroutput>+--------------------------------------+-----------+-----------------+------+-------------+----------+-------------+
+|                  ID                  |   Status  |   Display Name  | Size | Volume Type | Bootable | Attached to |
++--------------------------------------+-----------+-----------------+------+-------------+----------+-------------+
+| 573e024d-5235-49ce-8332-be1576d323f8 |  deleting |  my-new-volume  |  8   |     None    |   true   |             |
+| bd7cf584-45de-44e3-bf7f-f7b50bf235e3 | available | my-bootable-vol |  8   |     None    |   true   |             |
++--------------------------------------+-----------+-----------------+------+-------------+----------+-------------+</computeroutput></screen>
+            <para>When the volume is fully deleted, it disappears from
+                the list of volumes:</para>
+            <screen><prompt>$</prompt> <userinput>cinder list</userinput></screen>
+            <screen><computeroutput>+--------------------------------------+-----------+-----------------+------+-------------+----------+-------------+
+|                  ID                  |   Status  |   Display Name  | Size | Volume Type | Bootable | Attached to |
++--------------------------------------+-----------+-----------------+------+-------------+----------+-------------+
+| bd7cf584-45de-44e3-bf7f-f7b50bf235e3 | available | my-bootable-vol |  8   |     None    |   true   |             |
++--------------------------------------+-----------+-----------------+------+-------------+----------+-------------+</computeroutput></screen>
+        </step>
+    </procedure>
 </section>
