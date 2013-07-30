@@ -11,9 +11,9 @@
     <!-- This is set by Jenkins according to the branch. -->
     <release.path.name>grizzly</release.path.name>
     <comments.enabled>1</comments.enabled>
-    <operating.system>apt</operating.system>
+ <!--   <operating.system>apt</operating.system> -->
     <!-- This is set by Jenkins to run twice for each similar operating system group -->
-    <profile.os>ubuntu</profile.os>
+   <!-- <profile.os>ubuntu</profile.os> -->
   </properties>
   <!-- ################################################ -->
   <!-- USE "mvn clean generate-sources" to run this POM -->
@@ -33,8 +33,9 @@
             <phase>generate-sources</phase>
             <configuration>
               <!-- These parameters only apply to webhelp -->
-              <enableDisqus>1</enableDisqus>
-              <disqusShortname>os-userguide</disqusShortname>
+              <enableDisqus>${comments.enabled}</enableDisqus>
+              <disqusShortname>openstackdocs</disqusShortname>
+             <!-- <disqusShortname>os-userguide</disqusShortname>-->
               <enableGoogleAnalytics>1</enableGoogleAnalytics>
               <googleAnalyticsId>UA-17511903-1</googleAnalyticsId>     
               <webhelpDirname>user-guide</webhelpDirname>
@@ -91,7 +92,7 @@
           <targetDirectory>target/docbkx/webhelp/</targetDirectory>
           <webhelpDirname>user-guide</webhelpDirname>
           <pdfFilenameBase>user-guide-${release.path.name}</pdfFilenameBase>
-          <profileSecurity>reviewer</profileSecurity>
+          <!--<profileSecurity>reviewer</profileSecurity> -->
           <suppressFooterNavigation>0</suppressFooterNavigation>
           <tocSectionDepth>1</tocSectionDepth>
           <branding>openstack</branding>
