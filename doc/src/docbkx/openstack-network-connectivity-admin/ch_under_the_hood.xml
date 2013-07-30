@@ -57,11 +57,11 @@ bridge_mappings = physnet2:br-eth1</programlisting></para>
 <prompt>$</prompt> <userinput>neutron router-interface-add router01 net01_subnet01</userinput></screen></para>
             <para>Similarly, for <literal>net02</literal>, using VLAN ID 102 on the physical
                 switch:<screen><prompt>$</prompt> <userinput>neutron net-create --tenant-id $tenant net02 \
-                --provider:network_type vlan \
-                --provider:physical_network physnet2 \
-                --provider:segmentation_id 102</userinput>
-            <prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $tenant --name net02_subnet01 net02 192.168.102.0/24</userinput>
-            <prompt>$</prompt> <userinput>neutron router-interface-add router01 net02_subnet01</userinput></screen></para>
+          --provider:network_type vlan \
+          --provider:physical_network physnet2 \
+          --provider:segmentation_id 102</userinput>
+<prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $tenant --name net02_subnet01 net02 192.168.102.0/24</userinput>
+<prompt>$</prompt> <userinput>neutron router-interface-add router01 net02_subnet01</userinput></screen></para>
 
         </simplesect>
         <simplesect>
@@ -289,11 +289,11 @@ bridge_mappings = physnet1:br-ex,physnet2:br-eth1</programlisting>
             <para>Under the <literal>service</literal> tenant, define the public
                 network:<screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list | awk '/service/ {print $2}')</userinput>
 <prompt>$</prompt> <userinput>neutron net-create --tenant-id $tenant public01 \
-	--provider:network_type flat \
-	--provider:physical_network physnet1 \
-	--router:external=True</userinput>
+	  --provider:network_type flat \
+	  --provider:physical_network physnet1 \
+	  --router:external=True</userinput>
 <prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $tenant --name public01_subnet01 \
-	--gateway 10.64.201.254 public01 10.64.201.0/24 --enable_dhcp False</userinput></screen></para>
+	  --gateway 10.64.201.254 public01 10.64.201.0/24 --enable_dhcp False</userinput></screen></para>
             <para>Under the <literal>tenantA</literal> user tenant, create the tenant router and set
                 its gateway for the public
                 network.<screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list|awk '/tenantA/ {print $2}')</userinput>
@@ -302,9 +302,9 @@ bridge_mappings = physnet1:br-ex,physnet2:br-eth1</programlisting>
                 Then, define private network <literal>net01</literal> using VLAN ID 102 on the
                 physical switch, along with its subnet, and connect it to the router.
                 <screen><prompt>$</prompt> <userinput>neutron net-create --tenant-id $tenant net01 \
-	--provider:network_type vlan \
-	--provider:physical_network physnet2 \
-	--provider:segmentation_id 101</userinput>
+	  --provider:network_type vlan \
+	  --provider:physical_network physnet2 \
+	  --provider:segmentation_id 101</userinput>
 <prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $tenant --name net01_subnet01 net01 192.168.101.0/24</userinput>
 <prompt>$</prompt> <userinput>neutron router-interface-add router01 net01_subnet01</userinput></screen></para>
             <para>Similarly, for <literal>tenantB</literal>, create a router and another network,
@@ -313,9 +313,9 @@ bridge_mappings = physnet1:br-ex,physnet2:br-eth1</programlisting>
 <prompt>$</prompt> <userinput>neutron router-create --tenant-id $tenant router02</userinput>
 <prompt>$</prompt> <userinput>neutron router-gateway-set router02 public01</userinput>
 <prompt>$</prompt> <userinput>neutron net-create --tenant-id $tenant net02 \
-	--provider:network_type vlan \
-	--provider:physical_network physnet2 \
-	--provider:segmentation_id 102</userinput>
+	  --provider:network_type vlan \
+	  --provider:physical_network physnet2 \
+	  --provider:segmentation_id 102</userinput>
 <prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $tenant --name net02_subnet01 net01 192.168.101.0/24</userinput>
 <prompt>$</prompt> <userinput>neutron router-interface-add router02 net02_subnet01</userinput></screen></para>
 
@@ -417,11 +417,11 @@ physical_interface_mappings: physnet2:eth1</programlisting></para>
 <prompt>$</prompt> <userinput>neutron router-interface-add router01 net01_subnet01</userinput></screen></para>
             <para>Similarly, for <literal>net02</literal>, using VLAN ID 102 on the physical
                 switch:<screen><prompt>$</prompt> <userinput>neutron net-create --tenant-id $tenant net02 \
-                --provider:network_type vlan \
-                --provider:physical_network physnet2 \
-                --provider:segmentation_id 102</userinput>
-            <prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $tenant --name net02_subnet01 net02 192.168.102.0/24</userinput>
-            <prompt>$</prompt> <userinput>neutron router-interface-add router01 net02_subnet01</userinput></screen></para>
+          --provider:network_type vlan \
+          --provider:physical_network physnet2 \
+          --provider:segmentation_id 102</userinput>
+<prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $tenant --name net02_subnet01 net02 192.168.102.0/24</userinput>
+<prompt>$</prompt> <userinput>neutron router-interface-add router01 net02_subnet01</userinput></screen></para>
 
         </simplesect>
         <simplesect>
@@ -493,11 +493,11 @@ physical_interface_mappings: physnet2:eth1</programlisting></para>
             <para>Under the <literal>service</literal> tenant, define the public
                 network:<screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list | awk '/service/ {print $2}')</userinput>
 <prompt>$</prompt> <userinput>neutron net-create --tenant-id $tenant public01 \
-	--provider:network_type flat \
-	--provider:physical_network physnet1 \
-	--router:external=True</userinput>
+	  --provider:network_type flat \
+	  --provider:physical_network physnet1 \
+	  --router:external=True</userinput>
 <prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $tenant --name public01_subnet01 \
-	--gateway 10.64.201.254 public01 10.64.201.0/24 --enable_dhcp False</userinput></screen></para>
+	  --gateway 10.64.201.254 public01 10.64.201.0/24 --enable_dhcp False</userinput></screen></para>
             <para>Under the <literal>tenantA</literal> user tenant, create the tenant router and set
                 its gateway for the public
                 network.<screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list|awk '/tenantA/ {print $2}')</userinput>
@@ -506,9 +506,9 @@ physical_interface_mappings: physnet2:eth1</programlisting></para>
                 Then, define private network <literal>net01</literal> using VLAN ID 102 on the
                 physical switch, along with its subnet, and connect it to the router.
                 <screen><prompt>$</prompt> <userinput>neutron net-create --tenant-id $tenant net01 \
-	--provider:network_type vlan \
-	--provider:physical_network physnet2 \
-	--provider:segmentation_id 101</userinput>
+	  --provider:network_type vlan \
+	  --provider:physical_network physnet2 \
+	  --provider:segmentation_id 101</userinput>
 <prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $tenant --name net01_subnet01 net01 192.168.101.0/24</userinput>
 <prompt>$</prompt> <userinput>neutron router-interface-add router01 net01_subnet01</userinput></screen></para>
             <para>Similarly, for <literal>tenantB</literal>, create a router and another network,
@@ -517,9 +517,9 @@ physical_interface_mappings: physnet2:eth1</programlisting></para>
 <prompt>$</prompt> <userinput>neutron router-create --tenant-id $tenant router02</userinput>
 <prompt>$</prompt> <userinput>neutron router-gateway-set router02 public01</userinput>
 <prompt>$</prompt> <userinput>neutron net-create --tenant-id $tenant net02 \
-	--provider:network_type vlan \
-	--provider:physical_network physnet2 \
-	--provider:segmentation_id 102</userinput>
+	  --provider:network_type vlan \
+	  --provider:physical_network physnet2 \
+	  --provider:segmentation_id 102</userinput>
 <prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $tenant --name net02_subnet01 net01 192.168.101.0/24</userinput>
 <prompt>$</prompt> <userinput>neutron router-interface-add router02 net02_subnet01</userinput></screen></para>
 
