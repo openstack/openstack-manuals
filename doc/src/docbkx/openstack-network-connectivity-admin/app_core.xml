@@ -237,22 +237,32 @@
                             create/update/delete operations. </td>
                     </tr>
                     <tr>
+                        <td>allow_overlapping_ips=False </td>
+                        <td><para>(BoolOpt) Enables or disables whether overlapping IPs can be
+                                created for subnets with different
+                                tenants. L3 agent and dhcp agent must
+                                enable use_namespaces for subnets with
+                                overlapping IPs to be created.</para>
+
+                        </td>
+                    </tr>
+                    <tr>
                         <td>allow_pagination=False </td>
                         <td><para>(BoolOpt) Enables or disables
-                                pagination. If plugin doesn't support
-                                native pagination, it will enable
-                                emulated pagination. Please note
-                                native pagination depends on native
-                                sorting. If native pagination is
-                                enabled, native emulated sorting will
-                                be enabled automatically.</para>
-                            <note>
-                                <para>If the plugin supports native pagination, the plugin will
+                            pagination. If plugin doesn't support
+                            native pagination, it will enable
+                            emulated pagination. Please note
+                            native pagination depends on native
+                            sorting. If native pagination is
+                            enabled, native emulated sorting will
+                            be enabled automatically.</para>
+                            
+                                <para>Note: If the plugin supports native pagination, the plugin 
                                     returns the maximum limit of items as request. If the plugin
                                     didn't support that, neutron API can emulate the pagination
                                     behavior. The performance of native pagination is better than
                                     emulated pagination. </para>
-                            </note>
+                            
                         </td>
                     </tr>
                     <tr>
@@ -261,12 +271,18 @@
                                 sorting. If plugin doesn't support
                                 native sorting, it will enable
                                 emulated sorting.</para>
-                            <note>
-                                <para>If the plugin supports native sorting, the plugin will returns
+                            
+                                <para>If the plugin supports native sorting, the plugin returns
                                     ordered items as request. If the plugin didn't support that,
                                     neutron API can emulate the sorting behavior. The performance of
                                     native sorting is better than emulated sorting. </para>
-                            </note>
+                            
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>force_gateway_on_subnet = False </td>
+                        <td><para>(BoolOpt) Enables or disables
+                            that a gateway must be configured on a subnet.</para>
                         </td>
                     </tr>
                     <tr>
@@ -615,11 +631,11 @@
                                 above with the IP address of the database used by the main OpenStack
                                 Networking server. (Leave it as is if the database runs on this
                                 host.).</para>
-                            <note>
+                            
                                 <para>Change this line to ensure that
                                    the database values are persistent.
                                    The sqlite is used for testing. </para>
-                            </note></td>
+                            </td>
                     </tr>
                     <tr>
                         <td>sql_max_retries=10 </td>
@@ -775,12 +791,12 @@
                                     above with the IP address of the database used by the main
                                     OpenStack Networking server. (Leave it as is if the database
                                     runs on this host.).</para>
-                                <note>
+                                
                                    <para>This line must be changed to
                                    ensure that the database values are
                                    persistent. The sqlite is used for
                                    testing.</para>
-                                </note></td>
+                                </td>
                         </tr>
                         <tr>
                             <td>sql_max_retries=10 </td>
@@ -925,13 +941,13 @@
                             <td>use_namespaces=True </td>
                             <td><para>(BoolOpt) Allows overlapping
                                    IP.</para>
-                                <note>
+                                
                                    <para>If you run multiple agents
                                    with different IP addresses on the
                                    same host, set this parameter to
                                    <literal>True</literal>. Otherwise,
                                    routing problems occur.</para>
-                                </note></td>
+                                </td>
                         </tr>
                     </tbody>
                 </table></para>
@@ -1012,13 +1028,13 @@
                         </tr>
                         <tr>
                             <td>use_namespaces=True </td>
-                            <td><para>(BoolOpt) Allows overlapping IP. </para><note>
+                            <td><para>(BoolOpt) Allows overlapping IP. </para>
                                    <para>If you run multiple agents
                                    with different IP addresses on the
                                    same host, set this parameter to
                                    <literal>True</literal>. Otherwise,
                                    routing problems occur.</para>
-                                </note></td>
+                                </td>
                         </tr>
 
                         <tr>
