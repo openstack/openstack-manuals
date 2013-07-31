@@ -1011,47 +1011,61 @@ connection = boto.connect_s3(
         Schema for OpenStack would look like this:
       </para>
       <screen>
-dn: cn=openstack,cn=org
+dn: dc=openstack,dc=org
 dc: openstack
 objectClass: dcObject
 objectClass: organizationalUnit
 ou: openstack
 
-dn: ou=Groups,cn=openstack,cn=org
-objectClass: top
+dn: ou=UserGroups,dc=openstack,dc=org
 objectClass: organizationalUnit
-ou: groups
+ou: UserGroups
 
-dn: ou=Users,cn=openstack,cn=org
-objectClass: top
+dn: ou=Users,dc=openstack,dc=org
 objectClass: organizationalUnit
-ou: users
+ou: Users
 
-dn: ou=Roles,cn=openstack,cn=org
-objectClass: top
+dn: ou=Roles,dc=openstack,dc=org
 objectClass: organizationalUnit
-ou: roles
+ou: Roles
+
+dn: ou=Projects,dc=openstack,dc=org
+objectClass: organizationalUnit
+ou: Projects
+
+dn: cn=9fe2ff9ee4384b1894a90878d3e92bab,ou=Roles,dc=openstack,dc=org
+objectClass: organizationalRole
+ou: _member_
+cn: 9fe2ff9ee4384b1894a90878d3e92bab
 </screen>
       <para>
         The corresponding entries in the Keystone configuration file are:
       </para>
       <screen>
+[DEFAULT]
+public_endpoint = http://localhost:%(public_port)s/
+admin_endpoint = http://localhost:%(admin_port)s/
+
+member_role_id = 9fe2ff9ee4384b1894a90878d3e92bab
+member_role_name = _member_
+
 [ldap]
 url = ldap://localhost
 user = dc=Manager,dc=openstack,dc=org
 password = badpassword
 suffix = dc=openstack,dc=org
-use_dumb_member = False
-allow_subtree_delete = False
+use_dumb_member = True
 
-user_tree_dn = ou=Users,dc=openstack,dc=com
-user_objectclass = inetOrgPerson
+user_tree_dn = ou=Users,dc=openstack,dc=org
+user_domain_id_attribute = businessCategory
+user_attribute_ignore = enabled,email,tenants,tenantId
 
-tenant_tree_dn = ou=Groups,dc=openstack,dc=com
-tenant_objectclass = groupOfNames
+tenant_tree_dn = ou=Projects,dc=openstack,dc=org
+tenant_desc_attribute = description
+tenant_domain_id_attribute = businessCategory
+tenant_attribute_ignore = enabled
 
-role_tree_dn = ou=Roles,dc=example,dc=com
-role_objectclass = organizationalRole
+role_tree_dn = ou=Roles,dc=openstack,dc=org
 </screen>
       <para>
         The default object classes and attributes are intentionally
