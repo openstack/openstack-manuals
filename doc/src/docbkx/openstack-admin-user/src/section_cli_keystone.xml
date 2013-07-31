@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section [
+        <!-- Some useful entities borrowed from HTML -->
+        <!ENTITY ndash  "&#x2013;">
+        <!ENTITY mdash  "&#x2014;">
+        <!ENTITY hellip "&#x2026;">  
+        <!-- Useful for describing APIs -->
+        <!ENTITY GET    '<command xmlns="http://docbook.org/ns/docbook">GET</command>'>
+        <!ENTITY PUT    '<command xmlns="http://docbook.org/ns/docbook">PUT</command>'>
+        <!ENTITY POST   '<command xmlns="http://docbook.org/ns/docbook">POST</command>'>
+        <!ENTITY DELETE '<command xmlns="http://docbook.org/ns/docbook">DELETE</command>'>      
+]>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="cli_keystone_summary">
+    <title>keystone</title>
+    <para>Use the following OpenStack keystone client commands to
+        perform API operations: </para>
+    <section xml:id="keystone_endpoints">
+        <title>Endpoints</title>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Get rate limits</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> nova rate-limits</programlisting>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Get absolute
+                        limits</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> nova absolute-limits</programlisting>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </section>
+    <section xml:id="keystone_ec2_credentials">
+        <title>EC2 credentials</title>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">List servers</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> nova list</programlisting>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Create server</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> nova boot &lt;name&gt; --flavor &lt;flavor&gt; --image &lt;image&gt;</programlisting>
+                    <itemizedlist>
+                        <title>Arguments</title>
+                        <listitem>
+                            <para><parameter>name</parameter>. The
+                                name of the server.</para>
+                        </listitem>
+                        <listitem>
+                            <para><option>--flavor</option>
+                                <parameter>flavor</parameter>. The
+                                name or ID of the flavor.</para>
+                        </listitem>
+                        <listitem>
+                            <para><option>--image</option>
+                                <parameter>image</parameter>. The name
+                                or ID of the image.</para>
+                        </listitem>
+                    </itemizedlist>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Get server
+                        details</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> nova show &lt;server&gt;</programlisting>
+                    <para>Where <parameter>server</parameter> is the
+                        server ID or name.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Change administrative
+                        password</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> nova root-password &lt;server&gt;</programlisting>
+                    <para>Where <parameter>server</parameter> is the
+                        server ID or name.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Update server
+                        name</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> nova meta &lt;server&gt; set "My Server Name"="Ubuntu 11.10 server test"</programlisting>
+                    <para>Where <parameter>server</parameter> is the
+                        server ID or name.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Delete server</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> nova delete &lt;server&gt;</programlisting>
+                    <para>Where <parameter>server</parameter> is the
+                        server ID or name.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </section>
+    <?hard-pagebreak?>
+    <section xml:id="keystone_users_and_passwords">
+        <title>Users and passwords</title>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">List flavors</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> nova flavor-list</programlisting>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Get flavor
+                        details</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> nova flavor-show &lt;flavor&gt;</programlisting>
+                    <para>Where <parameter>flavor</parameter> is the
+                        name or ID of the flavor.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </section>
+    <section xml:id="keystone_tenants">
+        <title>Tenants</title>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">List images</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> nova image-list</programlisting>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Get image details</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> nova image-show &lt;image&gt;</programlisting>
+                    <para>Where <parameter>image</parameter> is the
+                        name or ID of the image.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <variablelist wordsize="10%">
+            <varlistentry>
+                <term>
+                    <emphasis role="bold">Delete image</emphasis>
+                </term>
+                <listitem>
+                    <programlisting language="bash" role="gutter: false"><prompt>$</prompt> nova image-delete &lt;image&gt;</programlisting>
+                    <para>Where <parameter>image</parameter> is the
+                        name or ID of the image.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </section>
+</section>

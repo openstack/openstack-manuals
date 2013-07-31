@@ -3,7 +3,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.openstack.docs</groupId>
-  <artifactId>openstack-user-guide</artifactId>
+  <artifactId>openstack-admin-user-guide</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>OpenStack Guides</name>
@@ -12,6 +12,7 @@
     <release.path.name>grizzly</release.path.name>
     <comments.enabled>1</comments.enabled>
   </properties>
+  
   <!-- ################################################ -->
   <!-- USE "mvn clean generate-sources" to run this POM -->
   <!-- ################################################ -->
@@ -21,36 +22,35 @@
         <groupId>com.rackspace.cloud.api</groupId>
         <artifactId>clouddocs-maven-plugin</artifactId>
         <version>1.8.0</version>
-       
         <executions>
           <!-- Configuration for OpenStack End User Guide -->
           <execution>
-            <id>os-enduserguide</id>
+            <id>os-admin-userguide</id>
             <goals>
               <goal>generate-webhelp</goal>
             </goals>
             <phase>generate-sources</phase>
             <configuration>
-              <includes> bk-user-guide.xml</includes>
+              <includes> bk-admin-user-guide.xml</includes>
               <chapterAutolabel>0</chapterAutolabel>
-              <security>external</security>
+              <security>external</security>       
               <generateToc> 
-appendix toc
-article/appendix nop
-article toc,title 
-book toc,title,figure,equation              
-chapter toc 
-section toc 
-part toc,title 
-preface toc
-qandadiv toc 
-qandaset toc 
-reference toc,title 
-set toc,title </generateToc>
+                appendix toc
+                article/appendix nop
+                article toc,title 
+                book toc,title,figure,equation              
+                chapter toc 
+                section toc 
+                part toc,title 
+                preface toc
+                qandadiv toc 
+                qandaset toc 
+                reference toc,title 
+                set toc,title </generateToc>
               <tocSectionDepth>1</tocSectionDepth>
               <targetDirectory>target/docbkx/webhelp/</targetDirectory>
-              <webhelpDirname>user-guide</webhelpDirname>
-              <pdfFilenameBase>user-guide-${release.path.name}</pdfFilenameBase>
+              <webhelpDirname>admin-user-guide</webhelpDirname>
+              <pdfFilenameBase>admin-user-guide-${release.path.name}</pdfFilenameBase>
             </configuration>
           </execution>
         </executions>
