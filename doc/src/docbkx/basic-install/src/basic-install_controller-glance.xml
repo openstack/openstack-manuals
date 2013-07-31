@@ -19,14 +19,18 @@
                             <listitem>
                                 <para>Glance consists of two services: <literal>glance-api</literal> and <literal>glance-registry</literal>.
                                     For a basic setup, they are configured identically, however, be aware that they provide two distinct services.</para>                                
-                                <para>Edit <emphasis role="bold">/etc/glance/glance-api.conf</emphasis> and <emphasis role="bold">/etc/glance/glance-registry.conf</emphasis>:
-                                    <programlisting>[DEFAULT]
+                                <para>Edit <emphasis role="bold"
+                                >/etc/glance/glance-api.conf</emphasis> and <emphasis role="bold"
+                                >/etc/glance/glance-registry.conf</emphasis>:
+                            <programlisting>[DEFAULT]
 sql_connection = mysql://glance:password@localhost/glance
 [keystone_authtoken]
 admin_tenant_name = service
 admin_user = glance
-admin_password = password</programlisting>
-                                </para>
+admin_password = password
+[paste_deploy]
+flavor=keystone</programlisting>
+                        </para>
                             </listitem>
                             <listitem>
                                 <para>Restart both Glance services:
