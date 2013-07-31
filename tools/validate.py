@@ -4,14 +4,18 @@
 Usage:
     validate.py [path]
 
-Validates all xml files against the DocBook 5 RELAX NG schema.
+Validates all xml files against the DocBook 5 RELAX NG schema, and
+attempts to build all books.
 
 Options:
     path     Root directory, defaults to <repo root>/doc/src/doc/docbkx
 
 Ignores pom.xml files and subdirectories named "target".
 
-Requires Python 2.7 or greater (for argparse) and the lxml Python library.
+Requires:
+    - Python 2.7 or greater (for argparse)
+    - lxml Python library
+    - Maven
 
 '''
 from lxml import etree
@@ -23,7 +27,10 @@ import sys
 import urllib2
 
 # These are files that are known to not be in DocBook format
-EXCEPTIONS = ['ha-guide-docinfo.xml']
+FILE_EXCEPTIONS = ['ha-guide-docinfo.xml']
+
+# These are books that we aren't checking yet
+BOOK_EXCEPTIONS = ['openstack-training']
 
 
 def get_schema():
@@ -67,7 +74,7 @@ def error_message(error_log):
     return "\n".join(errs)
 
 
-def main(rootdir):
+def validate_individual_files(rootdir, exceptions):
     schema = get_schema()
 
     any_failures = False
@@ -82,7 +89,8 @@ def main(rootdir):
 
         for f in files:
             # Ignore maven files, which are called pom.xml
-            if f.endswith('.xml') and f != 'pom.xml' and f not in EXCEPTIONS:
+            if f.endswith('.xml') and f != 'pom.xml' \
+                                  and f not in exceptions:
                 try:
                     path = os.path.abspath(os.path.join(root, f))
                     doc = etree.parse(path)
@@ -99,6 +107,25 @@ def main(rootdir):
 
         if any_failures:
             sys.exit(1)
+
+def build_all_books(rootdir, exceptions):
+    """ Build all of the books.
+
+    Looks for all directories with "pom.xml" in them and runs
+    "mvn clean generate-sources" in that directory.
+
+    This will throw an exception if a book fails to build
+    """
+    for root, dirs, files in os.walk(rootdir):
+        book = os.path.basename(root)
+        if ("pom.xml" in files) and (book not in exceptions):
+            print "Building %s" % book
+            os.chdir(root)
+            subprocess.check_call(["mvn", "clean", "generate-sources"])
+
+def main(rootdir):
+    validate_individual_files(rootdir, FILE_EXCEPTIONS)
+    build_all_books(rootdir, BOOK_EXCEPTIONS)
 
 
 def default_root():
