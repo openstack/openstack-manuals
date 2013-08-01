@@ -1,4 +1,4 @@
-[[s-quantum-server]]
+[[s-neutron-server]]
 ==== Highly available Quantum Server
 
 Quantum is the network connectivity service in OpenStack.
@@ -16,7 +16,7 @@ NOTE: Here is the http://docs.openstack.org/trunk/openstack-network/admin/conten
 First of all, you need to download the resource agent to your system :
 ----
 cd /usr/lib/ocf/resource.d/openstack
-wget https://raw.github.com/madkiss/openstack-resource-agents/master/ocf/quantum-server
+wget https://raw.github.com/madkiss/openstack-resource-agents/master/ocf/neutron-server
 chmod a+rx *
 ----
 
@@ -24,14 +24,14 @@ You may now proceed with adding the Pacemaker configuration for
 Quantum Server resource. Connect to the Pacemaker cluster with +crm
 configure+, and add the following cluster resources:
 ----
-include::includes/pacemaker-quantum_server.crm[]
+include::includes/pacemaker-neutron_server.crm[]
 ----
 
-This configuration creates +p_quantum-server+, a resource for manage Quantum Server service
+This configuration creates +p_neutron-server+, a resource for manage Quantum Server service
 
 +crm configure+ supports batch input, so you may copy and paste the
 above into your live pacemaker configuration, and then make changes as
-required. For example, you may enter +edit p_quantum-server+ from the
+required. For example, you may enter +edit p_neutron-server+ from the
 +crm configure+ menu and edit the resource to match your preferred
 virtual IP address.
 
@@ -41,13 +41,13 @@ service, and its dependent resources, on one of your nodes.
 
 ===== Configuring Quantum Server
 
-Edit +/etc/quantum/quantum.conf+ :
+Edit +/etc/neutron/neutron.conf+ :
 ----
 # We bind the service to the VIP :
 bind_host = 192.168.42.103
 
 # We have to use MySQL connection to store datas :
-sql_connection = mysql://quantum:password@192.168.42.101/quantum
+sql_connection = mysql://neutron:password@192.168.42.101/neutron
 
 # We bind Quantum Server to the VIP :
 bind_host = 192.168.42.103
@@ -66,7 +66,7 @@ Quantum server's physical IP address as you normally would.
 
 For example, you should configure Nova for using Highly Available Quantum Server in editing +nova.conf+ file :
 ----
-quantum_url = http://192.168.42.103:9696
+neutron_url = http://192.168.42.103:9696
 ----
 
 You need to create the Quantum Server Endpoint with this IP.
