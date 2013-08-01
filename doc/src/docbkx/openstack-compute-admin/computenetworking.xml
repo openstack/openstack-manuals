@@ -575,7 +575,7 @@ iface br100 inet dhcp
             <para>With Flat DHCP, the host(-s) running nova-network act as the gateway to the
                 virtual nodes. If you're using single-host networking, you can optionally set
                     <literal>network_host</literal> on the <filename>nova.conf</filename> stored on
-                the nova-compute node to tell it which host the nova-network is running on so it can
+                the <systemitem class="service">nova-compute</systemitem> node to tell it which host the nova-network is running on so it can
                 more efficiently communicate with nova-network. In any setup with flat networking,
                 the hosts with nova-network on it are responsible for forwarding traffic from the
                 private network configured with the <literal>fixed_range=</literal> directive in
@@ -799,7 +799,7 @@ firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlis
                         <para>IP forwarding must be enabled</para>
                     </listitem>
                 <listitem>
-                    <para>The hosts running nova-network and nova-compute must have the
+                    <para>The hosts running nova-network and <systemitem class="service">nova-compute</systemitem> must have the
                                 <literal>8021q</literal> kernel module loaded</para>
                 </listitem>
                     <listitem>
@@ -1116,7 +1116,7 @@ firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlis
                 When using VLAN networking with XenAPI and linux bridge,
                 the default networking stack on XenServer prior to version 6.0,
                 you must run the network node on a VM on a XenServer
-                that does not host any nova-compute controlled instances.
+                that does not host any <systemitem class="service">nova-compute</systemitem> controlled instances.
                 </para>
             </section>
             <section xml:id="vlan-known-issues">
@@ -2058,7 +2058,7 @@ iface eth1 inet dhcp                </programlisting></para>
                     </mediaobject>
                 </figure></para>
             <para>In contrast with the earlier diagram, all the hosts
-                in the system are running the nova-compute,
+                in the system are running the <systemitem class="service">nova-compute</systemitem>,
                 nova-network and nova-api services. Each host does
                 DHCP and does NAT for public traffic for the VMs
                 running on that particular host. In this model every

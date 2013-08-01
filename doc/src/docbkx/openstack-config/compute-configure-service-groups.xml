@@ -15,7 +15,7 @@
   onward, Nova queries the ServiceGroup API to get the node
   liveness information.</para>
 
-  <para>When a compute worker (running the nova-compute daemon) starts,
+  <para>When a compute worker (running the <systemitem class="service">nova-compute</systemitem> daemon) starts,
   it calls the join API to join the compute group, so that every
   service that is interested in the information (e.g. the scheduler)
   will be able to query the group membership, or the status of a
@@ -60,7 +60,7 @@
    At a compute worker node, after establishing a ZooKeeper session, 
    it creates an ephemeral znode in the group directory. Ephemeral
    znodes has the same lifespan as the session. If the worker node
-   or the nova-compute daemon crashes, or there is a network 
+   or the <systemitem class="service">nova-compute</systemitem> daemon crashes, or there is a network 
    partition between the worker and the ZooKeeper server quorums,
    then the ephemeral znodes are removed automatically. The driver
    gets the group membership by doing a "ls" in group directory.

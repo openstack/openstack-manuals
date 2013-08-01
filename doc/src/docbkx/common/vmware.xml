@@ -12,26 +12,26 @@ xml:id="vmware">
       virtual machine images.  vSphere versions 4.1 and greater are supported.</para>
     <para>There are two OpenStack Compute drivers that can be used with vSphere:</para>  
     <itemizedlist>
-      <listitem><para>vmwareapi.VMwareVCDriver: a driver that lets nova-compute 
+      <listitem><para>vmwareapi.VMwareVCDriver: a driver that lets <systemitem class="service">nova-compute</systemitem> 
       communicte with a VMware vCenter server managing a cluster of ESX hosts.  With
       this driver and access to shared storage, advanced vSphere features like 
       vMotion, High Availability, and Dynamic Resource Scheduling (DRS) are availabile.
-      With this driver, one nova-compute service is run per vCenter cluster. 
+      With this driver, one <systemitem class="service">nova-compute</systemitem> service is run per vCenter cluster. 
       </para></listitem> 
-      <listitem><para>vmwareapi.VMwareESXDriver: a driver that lets nova-compute
+      <listitem><para>vmwareapi.VMwareESXDriver: a driver that lets <systemitem class="service">nova-compute</systemitem>
       communicate directly to an ESX host, but does not support advanced VMware
-      features.  With this driver, one nova-compute service is run per ESX host.
+      features.  With this driver, one <systemitem class="service">nova-compute</systemitem> service is run per ESX host.
       </para></listitem> 
    </itemizedlist>
   </section>
   <section xml:id="vmware-prereqs">
     <title>Prerequisites</title>
     <para>You will need to install the following software installed on each 
-	nova-compute node:</para>
+	<systemitem class="service">nova-compute</systemitem> node:</para>
     <itemizedlist>
       <listitem>
-	<para>python-suds: This software is needed by the nova-compute service to
-	communicate with vSphere APIs. If not installed, the "nova-compute" service 
+	<para>python-suds: This software is needed by the <systemitem class="service">nova-compute</systemitem> service to
+	communicate with vSphere APIs. If not installed, the "<systemitem class="service">nova-compute</systemitem>" service 
 	shuts down with the message: "Unable to import suds".</para>
     </listitem>
     <listitem>
@@ -61,7 +61,7 @@ vmwareapi_host_password=&lt; vCenter password&gt;
 vmwareapi_cluster_name=&lt; vCenter cluster name&gt;
 vmwareapi_wsdl_loc=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl
 </programlisting>
-<para>Remember that you will have only one nova-compute service per cluster. 
+<para>Remember that you will have only one <systemitem class="service">nova-compute</systemitem> service per cluster. 
 It is recommended that this host run as a VM with high-availability enabled as
 part of that same cluster.</para>
 <para>Also note that many of the nova.conf options mentioned elsewhere in this
@@ -80,7 +80,7 @@ In many cases, these items will be addressed in future releases.</para>
 	</para>
     </listitem>
       <listitem>
-	<para>Because a single nova-compute is used per cluster, the nova-scheduler
+	<para>Because a single <systemitem class="service">nova-compute</systemitem> is used per cluster, the nova-scheduler
          views this as a single host with resources amounting to the aggregate 
 	resources of all ESX hosts managed by the cluster.  This may result in 
 	unexpected behavior depending on your choice of scheduler.
@@ -112,7 +112,7 @@ vmwareapi_host_username=&lt; ESXi host username&gt;
 vmwareapi_host_password=&lt; ESXi host password&gt;
 vmwareapi_wsdl_loc=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl
 </programlisting>
-<para>Remember that you will have one nova-compute service per ESXi host. 
+<para>Remember that you will have one <systemitem class="service">nova-compute</systemitem> service per ESXi host. 
 It is recommended that this host run as a VM on the same ESXi host it is 
 managing.</para> 
 <para>Also note that many of the nova.conf options mentioned elsewhere in this

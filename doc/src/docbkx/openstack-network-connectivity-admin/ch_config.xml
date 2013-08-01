@@ -131,7 +131,7 @@ catalog.$Region.network.name = Network Service</programlisting>
                 OpenStack Compute, nova-* services communicate with
                 OpenStack Networking via the standard API. To do so,
                 it requires the following items in the nova.conf used
-                by each nova-compute and nova-api instance:  </para>
+                by each <systemitem class="service">nova-compute</systemitem> and nova-api instance:  </para>
             <itemizedlist>
                 <listitem>
                     <para>network_api_class: must be modified from default to
@@ -182,7 +182,7 @@ catalog.$Region.network.name = Network Service</programlisting>
                     <para>
                         firewall_driver : must be set to
                         'nova.virt.firewall.NoopFirewallDriver'
-                        so that nova-compute does not perform iptables-based
+                        so that <systemitem class="service">nova-compute</systemitem> does not perform iptables-based
                         filtering itself.
                     </para>
                 </listitem>
@@ -222,14 +222,14 @@ catalog.$Region.network.name = Network Service</programlisting>
         </section>
         <section xml:id="nova_with_neutron_vifplugging">
             <title>Vif-plugging Configuration</title>
-            <para>When nova-compute creates a VM, it must "plug" each
+            <para>When <systemitem class="service">nova-compute</systemitem> creates a VM, it must "plug" each
                 of the VM's vNICs into an OpenStack Networking
                 controlled virtual switch, and inform the virtual
                 switch about the OpenStack Networking port-id
                 associated with each vNIC.  Different OpenStack Networking
                 plugins may require different types of vif-plugging.
                 The type of vif-plugging to be used is specified in
-                the nova.conf for each nova-compute instance.
+                the nova.conf for each <systemitem class="service">nova-compute</systemitem> instance.
              </para>
              <para>
                 The following plugins support the "port bindings" API
@@ -250,7 +250,7 @@ catalog.$Region.network.name = Network Service</programlisting>
                 plugin documentation.
             </para>
             <note><para>It is possible that the vif-plugging configuration
-                required for nova-compute will vary even within a single
+                required for <systemitem class="service">nova-compute</systemitem> will vary even within a single
                 deployment if your deployment includes heterogeneous compute
                 platforms (e.g., some computes hosts are KVM while others are
                 ESX).
@@ -291,7 +291,7 @@ catalog.$Region.network.name = Network Service</programlisting>
             </section>
         </section>
         <section xml:id="nova_with_neutron_example">
-            <title> Example nova.conf (for nova-compute and nova-api)</title>
+            <title> Example nova.conf (for <systemitem class="service">nova-compute</systemitem> and nova-api)</title>
             <para>Example values for the above settings, assuming a
                 cloud controller node running OpenStack Compute and
                 OpenStack Networking with an IP address of 192.168.1.2
