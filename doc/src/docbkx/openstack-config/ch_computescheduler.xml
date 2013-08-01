@@ -9,8 +9,9 @@
         example, the <command>nova-scheduler</command> service
         determines which host a VM should launch on. The term "host"
         in the context of filters means a physical node that has a
-            <systemitem class="service">nova-compute</systemitem> service running on it. The
-        scheduler is configurable through a variety of options.</para>
+            <systemitem class="service">nova-compute</systemitem>
+        service running on it. The scheduler is configurable through a
+        variety of options.</para>
     <para>Compute is configured with the following default scheduler
         options:</para>
     <programlisting>
@@ -43,8 +44,11 @@ compute_fill_first_cost_fn_weight=-1.0
         equivalent to selecting the host with the maximum amount of
         RAM available.</para>
     <para>For information on the volume scheduler, refer to the <link
-            xlink:href="../../../openstack-block-storage/admin/content/">OpenStack Block Storage
-            Admin Manual</link> for information.</para>
+
+            xlink:href="../../../openstack-block-storage/admin/content/"
+            >OpenStack Block Storage Admin Manual</link> for
+        information. </para>
+
     <section xml:id="filter-scheduler">
         <title>Filter Scheduler</title>
         <para>The Filter Scheduler
@@ -122,13 +126,16 @@ scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
 
         <section xml:id="aggregate-multi-tenancy-isolation">
             <title>AggregateMultiTenancyIsolation</title>
-            <para>Isolates tenants to specific<link linkend="host-aggregates"
-                    >host aggregates</link>. If a host is in an aggregate that
-                has the metadata key <literal>filter_tenant_id</literal> it will
-                only create instances from that tenant (or list of tenants). A
-                host can be in different aggregates. If a host does not belong
-                to an aggregate with the metadata key, it can create instances
-                from all tenants.</para>
+
+            <para>Isolates tenants to specific<link
+                    linkend="host-aggregates">host aggregates</link>.
+                If a host is in an aggregate that has the metadata key
+                    <literal>filter_tenant_id</literal> it will only
+                create instances from that tenant (or list of
+                tenants). A host can be in different aggregates. If a
+                host does not belong to an aggregate with the metadata
+                key, it can create instances from all tenants. </para>
+
         </section>
 
         <section xml:id="allhostsfilter">
@@ -146,21 +153,27 @@ scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
 
         <section xml:id="computecapabilitiesfilter">
             <title>ComputeCapabilitiesFilter</title>
-            <para>Matches properties defined in an instance type's extra specs
-                against compute capabilities.</para>
-            <para>If an extra specs key contains a colon ":", anything before
-                the colon is treated as a namespace, and anything after the
-                colon is treated as the key to be matched. If a namespace is
-                present and is not 'capabilities', it is ignored by this
-                filter.</para>
-             <note><para>Disable the ComputeCapabilitiesFilter when using a
-             Bare Metal configuration, due to
-             <link xlink:href="https://bugs.launchpad.net/nova/+bug/1129485">bug 1129485</link></para></note>
+            <para>Matches properties defined in an instance type's
+                extra specs against compute capabilities.</para>
+            <para>If an extra specs key contains a colon ":", anything
+                before the colon is treated as a namespace, and
+                anything after the colon is treated as the key to be
+                matched. If a namespace is present and is not
+                'capabilities', it is ignored by this filter.</para>
+            <note>
+                <para>Disable the ComputeCapabilitiesFilter when using
+                    a Bare Metal configuration, due to <link
+                        xlink:href="https://bugs.launchpad.net/nova/+bug/1129485"
+                        >bug 1129485</link></para>
+            </note>
         </section>
 
         <section xml:id="computefilter">
             <title> ComputeFilter </title>
-            <para>Passes all hosts that are operational and enabled.</para>
+
+            <para> Passes all hosts that are operational and
+                enabled.</para>
+
             <para>In general, this filter should always be enabled.
             </para>
         </section>
@@ -223,30 +236,35 @@ scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
         </section>
         <section xml:id="diskfilter">
             <title>DiskFilter</title>
-            <para>Only schedule instances on hosts if there is sufficient disk
-                space available for root and ephemeral storage.</para>
-            <para>This filter can be configured to allow a fixed amount of disk
-                overcommitment by using the <literal>disk_allocation_ratio
-                </literal> Configuration option in
-                    <filename>nova.conf</filename>. The default setting is:
-                <programlisting>disk_allocation_ratio=1.0</programlisting>
-            </para>
-            <para>Adjusting this value to be greater than 1.0 will allow
-                scheduling instances while over committing disk resources on the
-                node. This may be desirable if you use an image format that is
-                sparse or copy on write such that each virtual instance does not
-                require a 1:1 allocation of virtual disk to physical
+
+            <para> Only schedule instances on hosts if there is
+                sufficient disk space available for root and ephemeral
                 storage.</para>
+            <para>This filter can be configured to allow a fixed
+                amount of disk overcommitment by using the
+                    <literal>disk_allocation_ratio </literal>
+                Configuration option in
+                <filename>nova.conf</filename>. The default setting
+                is:</para>
+
+                <programlisting>disk_allocation_ratio=1.0</programlisting>
+    
+            <para>Adjusting this value to be greater than 1.0 will
+                allow scheduling instances while over committing disk
+                resources on the node. This may be desirable if you
+                use an image format that is sparse or copy on write
+                such that each virtual instance does not require a 1:1
+                allocation of virtual disk to physical storage.</para>
         </section>
         <section xml:id="groupantiaffinityfilter">
             <title>GroupAntiAffinityFilter</title>
-            <para>The GroupAntiAffinityFilter ensures that each instance in a
-                group is on a different host. To take advantage of this filter,
-                the requester must pass a scheduler hint, using
-                    <literal>group</literal> as the key and a list of instance
-                uuids as the value. Using the <command>nova</command>
-                command-line tool, use the <literal>--hint</literal> flag. For
-                example:
+            <para> The GroupAntiAffinityFilter ensures that each
+                instance in a group is on a different host. To take
+                advantage of this filter, the requester must pass a
+                scheduler hint, using <literal>group</literal> as the
+                key and a list of instance uuids as the value. Using
+                the <command>nova</command> command-line tool, use the
+                    <literal>--hint</literal> flag. For example:
                 <screen>
 <prompt>$</prompt> <userinput>nova boot --image cedef40a-ed67-4d10-800e-17455edce175 --flavor 1 --hint group=a0cf03a5-d921-4877-bb5c-86d26cf818e1 --hint group=8c19174f-4220-44f0-824a-cd1eeef10287 server-1</userinput>
 </screen>
@@ -264,29 +282,29 @@ scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
                 these properties using
                 <programlisting>glance image-update img-uuid --property architecture=arm --property hypervisor_type=qemu</programlisting>
             </para>
-            <para>
-                The image properties that
-                the filter checks for are:</para>
+            <para> The image properties that the filter checks for
+                are:</para>
             <itemizedlist>
                 <listitem>
-                    <para><literal>architecture</literal>: Architecture describes the
-                        machine architecture required by the image.
-                        Examples are i686, x86_64, arm, and
-                        ppc64.</para>
+                    <para><literal>architecture</literal>:
+                        Architecture describes the machine
+                        architecture required by the image. Examples
+                        are i686, x86_64, arm, and ppc64.</para>
                 </listitem>
                 <listitem>
-                    <para><literal>hypervisor_type</literal>: Hypervisor type describes
-                        the hypervisor required by the image. Examples
-                        are xen, kvm, qemu, xenapi, and
-                        powervm.</para>
+                    <para><literal>hypervisor_type</literal>:
+                        Hypervisor type describes the hypervisor
+                        required by the image. Examples are xen, kvm,
+                        qemu, xenapi, and powervm.</para>
                 </listitem>
                 <listitem>
-                    <para><literal>vm_mode</literal>: Virtual machine mode describes the
-                        hypervisor application binary interface (ABI)
-                        required by the image. Examples are 'xen' for
-                        Xen 3.0 paravirtual ABI, 'hvm' for native ABI,
-                        'uml' for User Mode Linux paravirtual ABI, exe
-                        for container virt executable ABI.</para>
+                    <para><literal>vm_mode</literal>: Virtual machine
+                        mode describes the hypervisor application
+                        binary interface (ABI) required by the image.
+                        Examples are 'xen' for Xen 3.0 paravirtual
+                        ABI, 'hvm' for native ABI, 'uml' for User Mode
+                        Linux paravirtual ABI, exe for container virt
+                        executable ABI.</para>
                 </listitem>
             </itemizedlist>
         </section>
@@ -593,17 +611,17 @@ compute_fill_first_cost_fn_weight=-1.0
             <title>Multi Scheduler</title>
             <para>The Multi Scheduler
                     <literal>nova.scheduler.multi.MultiScheduler</literal>
-                holds multiple sub-schedulers, one for
-                    <systemitem class="service">nova-compute</systemitem> requests and one
-                for <literal>cinder-volume</literal> requests. It is the
-                default top-level scheduler as specified by the
-                    <literal>scheduler_driver</literal> configuration
+                holds multiple sub-schedulers, one for <systemitem
+                    class="service">nova-compute</systemitem> requests
+                and one for <literal>cinder-volume</literal> requests.
+                It is the default top-level scheduler as specified by
+                the <literal>scheduler_driver</literal> configuration
                 option.</para>
         </section>
     </section>
-    <xi:include href="../common/host_aggregates.xml"/>
+    <xi:include href="../common/section_host_aggregates.xml"/>
     <section xml:id="compute-scheduler-config-ref">
-    <title>Configuration Reference</title>
-    <xi:include href="../common/tables/nova-scheduling.xml"/>
+        <title>Configuration Reference</title>
+        <xi:include href="../common/tables/nova-scheduling.xml"/>
     </section>
 </chapter>

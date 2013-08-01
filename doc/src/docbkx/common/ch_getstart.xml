@@ -363,7 +363,8 @@
         <para>Computing core</para>
         <itemizedlist>
           <listitem>
-            <para>The <systemitem class="service">nova-compute</systemitem> process is primarily a
+            <para>The <systemitem class="service"
+                >nova-compute</systemitem> process is primarily a
               worker daemon that creates and terminates virtual
               machine instances via hypervisor's APIs (XenAPI for
               XenServer/XCP, libvirt for KVM or QEMU, VMwareAPI for
@@ -383,11 +384,14 @@
           <listitem>
             <para>The <code>nova-conductor</code> module, introduced
               in the Grizzly release, works as a “mediator” between
-              <systemitem class="service">nova-compute</systemitem> and the database. It is aimed at
-              eliminating all the direct accesses to the cloud
-              database made by <systemitem class="service">nova-compute</systemitem>. The nova-conductor module
-              scales horizontally but it shouldn’t be deployed on the
-              same node(s) where <systemitem class="service">nova-compute</systemitem> runs. You can <link
+                <systemitem class="service">nova-compute</systemitem>
+              and the database. It is aimed at eliminating all the
+              direct accesses to the cloud database made by
+                <systemitem class="service">nova-compute</systemitem>.
+              The nova-conductor module scales horizontally but it
+              shouldn’t be deployed on the same node(s) where
+                <systemitem class="service">nova-compute</systemitem>
+              runs. You can <link
                 xlink:href="http://russellbryantnet.wordpress.com/2012/11/19/a-new-nova-service-nova-conductor/"
                 >read more about the new service here</link>.</para>
           </listitem>
@@ -396,9 +400,10 @@
         <itemizedlist>
           <listitem>
             <para>The <code>nova-network</code> worker daemon is very
-              similar to <systemitem class="service">nova-compute</systemitem>. It accepts
-              networking tasks from the queue and then performs tasks
-              to manipulate the network (such as setting up bridging
+              similar to <systemitem class="service"
+                >nova-compute</systemitem>. It accepts networking
+              tasks from the queue and then performs tasks to
+              manipulate the network (such as setting up bridging
               interfaces or changing iptables rules). This
               functionality is being migrated to OpenStack Networking,
               a separate OpenStack service.</para>
@@ -509,9 +514,9 @@
         <para>Nova interacts with many other OpenStack services:
           Keystone for authentication, Glance for images and Horizon
           for web interface. The Glance interactions are central. The
-          API process can upload and query Glance while
-            <systemitem class="service">nova-compute</systemitem> will download images for use in
-          launching images.</para>
+          API process can upload and query Glance while <systemitem
+            class="service">nova-compute</systemitem> will download
+          images for use in launching images.</para>
       </section>
       <section xml:id="overview-object-store-arch">
         <title>Object Storage Service</title>
@@ -684,9 +689,8 @@
           </listitem>
           <listitem>
             <para>OpenStack Block Storage deployments also use a
-              messaging queue to route information between the cinder
-              processes as well as a database to store volume
-              state.</para>
+              messaging queue to route information among the cinder
+              processes, and a database to store volume state.</para>
           </listitem>
         </itemizedlist>
         <para>Like Networking, the Block Storage Service mainly
@@ -695,7 +699,7 @@
           Compute instances.</para>
       </section>
     </section>
-    <xi:include href="storage-concepts.xml"/>
+    <xi:include href="section_storage-concepts.xml"/>
   </section>
   <section xml:id="feedback">
     <title>Feedback</title>

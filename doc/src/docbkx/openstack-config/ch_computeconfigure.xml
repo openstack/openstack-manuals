@@ -1,32 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter version="5.0" xml:id="ch_configuring-openstack-compute"
-         xmlns="http://docbook.org/ns/docbook"
-         xmlns:xlink="http://www.w3.org/1999/xlink"
-         xmlns:xi="http://www.w3.org/2001/XInclude"
-         xmlns:ns5="http://www.w3.org/1999/xhtml"
-         xmlns:ns4="http://www.w3.org/2000/svg"
-         xmlns:ns3="http://www.w3.org/1998/Math/MathML"
-         xmlns:ns="http://docbook.org/ns/docbook">
+  xmlns="http://docbook.org/ns/docbook"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:ns5="http://www.w3.org/1999/xhtml"
+  xmlns:ns4="http://www.w3.org/2000/svg"
+  xmlns:ns3="http://www.w3.org/1998/Math/MathML"
+  xmlns:ns="http://docbook.org/ns/docbook">
   <title>Configuring OpenStack Compute</title>
 
-  <para>The OpenStack system has several key projects that are separate
-  installations but can work together depending on your cloud needs: OpenStack
-  Compute, OpenStack Object Storage, and OpenStack Image Store. There are basic configuration
-  decisions to make, and the <link xlink:href="http://docs.openstack.org/trunk/openstack-compute/install/content/">OpenStack Install Guide</link>
-    covers a basic walkthrough.</para>
+  <para>The OpenStack system has several key projects that are
+    separate installations but can work together depending on your
+    cloud needs: OpenStack Compute, OpenStack Object Storage, and
+    OpenStack Image Store. There are basic configuration decisions to
+    make, and the <link
+      xlink:href="http://docs.openstack.org/trunk/openstack-compute/install/content/"
+      >OpenStack Install Guide</link> covers a basic walk
+    through.</para>
 
-    <!--status: right place-->
-    <section xml:id="configuring-openstack-compute-basics">
+  <!--status: right place-->
+  <section xml:id="configuring-openstack-compute-basics">
     <?dbhtml stop-chunking?>
-    <title>Post-Installation Configuration for OpenStack Compute</title>
+    <title>Post-Installation Configuration for OpenStack
+      Compute</title>
 
     <para>Configuring your Compute installation involves many
       configuration files - the <filename>nova.conf</filename> file,
-      the <filename>api-paste.ini</filename> file, and related Image and Identity
-      management configuration files. This section contains the basics
-      for a simple multi-node installation, but Compute can be
-      configured many ways. You can find networking options and
-      hypervisor options described in separate chapters.</para>
+      the <filename>api-paste.ini</filename> file, and related Image
+      and Identity management configuration files. This section
+      contains the basics for a simple multi-node installation, but
+      Compute can be configured many ways. You can find networking
+      options and hypervisor options described in separate
+      chapters.</para>
 
     <!--status: right place-->
     <section xml:id="setting-flags-in-nova-conf-file">
@@ -36,13 +41,17 @@
       <para>The configuration file <filename>nova.conf</filename> is
         installed in <filename>/etc/nova</filename> by default. A
         default set of options are already configured in
-          <filename>nova.conf</filename> when you install manually.</para>
+          <filename>nova.conf</filename> when you install
+        manually.</para>
 
-      <para>Starting with the default file, you must define the following required items in
-          <filename>/etc/nova/nova.conf</filename>. The options are described below. You can place
-        comments in the <filename>nova.conf</filename> file by entering a new line with a
-          <literal>#</literal> sign at the beginning of the line. To see a listing of all possible
-        configuration options, refer to the tables this guide.</para>
+      <para>Starting with the default file, you must define the
+        following required items in
+          <filename>/etc/nova/nova.conf</filename>. The options are
+        described below. You can place comments in the
+          <filename>nova.conf</filename> file by entering a new line
+        with a <literal>#</literal> sign at the beginning of the line.
+        To see a listing of all possible configuration options, refer
+        to the tables this guide.</para>
 
       <para>Here is a simple example <filename>nova.conf</filename>
         file for a small private cloud, with all the cloud controller
@@ -52,15 +61,15 @@
         such as br100, the NETWORK_INTERFACE represents an interface
         to your VLAN setup, and passwords are represented as
         DB_PASSWORD_COMPUTE for your Compute (nova) database password,
-        and RABBIT PASSWORD represents the password to your message queue
-        installation.</para>
+        and RABBIT PASSWORD represents the password to your message
+        queue installation.</para>
 
       <programlisting>
-      <xi:include  parse="text" href="../common/samples/nova.conf"/>
+      <xi:include parse="text" href="../common/samples/nova.conf"/>
       </programlisting>
 
-<para>Create a <literal>nova</literal> group, so you can set permissions on the
-      configuration file:</para>
+      <para>Create a <literal>nova</literal> group, so you can set
+        permissions on the configuration file:</para>
 
       <screen><prompt>$</prompt> <userinput>sudo addgroup nova</userinput></screen>
 
@@ -76,9 +85,10 @@
 <prompt>$</prompt> <userinput>chmod 640 /etc/nova/nova.conf</userinput></screen>
     </section>
 
-    <section xml:id="setting-up-openstack-compute-environment-on-the-compute-node">
+    <section
+      xml:id="setting-up-openstack-compute-environment-on-the-compute-node">
       <title>Setting Up OpenStack Compute Environment on the Compute
-      Node</title>
+        Node</title>
 
       <para>These are the commands you run to ensure the database
         schema is current:</para>
@@ -87,14 +97,17 @@
     </section>
 
     <!--status: TODO - needs to move elsewhere, eg the user guide-->
-    <section xml:id="creating-credentials"><title>Creating Credentials</title>
-      <para>The credentials you will use to launch
-        instances, bundle images, and all the other assorted
-        API functions can be sourced in a single file, such as
-        creating one called <filename>/creds/openrc</filename>.</para>
-    <para>Here's an example <filename>openrc</filename> file you can download from
-        the Dashboard in Settings > Project Settings >
-        Download RC File.</para>
+
+    <section xml:id="creating-credentials">
+      <title>Creating Credentials</title>
+      <para>The credentials you will use to launch instances, bundle
+        images, and all the other assorted API functions can be
+        sourced in a single file, such as creating one called
+          <filename>/creds/openrc</filename>. </para>
+      <para>Here's an example <filename>openrc</filename> file you can
+        download from the Dashboard in Settings > Project Settings >
+        Download RC File. </para>
+
       <para>
         <programlisting language="bash">
 #!/bin/bash
@@ -110,9 +123,9 @@ export OS_AUTH_TENANT=27755fd279ce43f9b17ad2d65d45b75c
 export OS_AUTH_STRATEGY=keystone
 </programlisting>
       </para>
-      <para>You also may want to enable EC2 access for the
-        euca2ools. Here is an example <filename>ec2rc</filename> file for enabling
-        EC2 access with the required credentials.</para>
+      <para>You also may want to enable EC2 access for the euca2ools.
+        Here is an example <filename>ec2rc</filename> file for
+        enabling EC2 access with the required credentials.</para>
       <para>
         <programlisting language="bash">
 export NOVA_KEY_DIR=/root/creds/
@@ -128,9 +141,8 @@ export EUCALYPTUS_CERT=${NOVA_CERT} # euca-bundle-image seems to require this se
 alias ec2-bundle-image="ec2-bundle-image --cert ${EC2_CERT} --privatekey ${EC2_PRIVATE_KEY} --user 42 --ec2cert ${NOVA_CERT}"
 alias ec2-upload-bundle="ec2-upload-bundle -a ${EC2_ACCESS_KEY} -s ${EC2_SECRET_KEY} --url ${S3_URL} --ec2cert ${NOVA_CERT}"</programlisting>
       </para>
-      <para>Lastly, here is an example openrc file that works
-        with nova client and ec2
-        tools.</para>
+      <para>Lastly, here is an example openrc file that works with
+        nova client and ec2 tools.</para>
       <programlisting language="bash">
 export OS_PASSWORD=${ADMIN_PASSWORD:-secrete}
 export OS_AUTH_URL=${OS_AUTH_URL:-http://$SERVICE_HOST:5000/v2.0}
@@ -145,9 +157,10 @@ export EC2_PRIVATE_KEY=${NOVA_KEY_DIR}/pk.pem
 export EC2_CERT=${NOVA_KEY_DIR}/cert.pem
 export NOVA_CERT=${NOVA_KEY_DIR}/cacert.pem
 export EUCALYPTUS_CERT=${NOVA_CERT} # euca-bundle-image seems to require this set</programlisting>
-      <para>Next, add these credentials to your environment
-        prior to running any nova client commands or nova
-        commands.</para>
+
+      <para>Next, add these credentials to your environment prior to
+        running any nova client commands or nova commands. </para>
+
       <screen><prompt>$</prompt> <userinput>cat /root/creds/openrc >> ~/.bashrc
 source ~/.bashrc</userinput></screen>
     </section>
@@ -155,72 +168,87 @@ source ~/.bashrc</userinput></screen>
     <!--status: TODO needs to move elsewhere - user guide-->
     <section xml:id="creating-certifications">
       <title>Creating Certificates</title>
-      <para>You can create certificates contained within pem
-        files using these nova client
-        commands, ensuring you have set up your environment variables for the nova client:
+      <para>You can create certificates contained within pem files
+        using these nova client commands, ensuring you have set up
+        your environment variables for the nova client:
         <screen><prompt>#</prompt> <userinput>nova x509-get-root-cert</userinput>
 <prompt>#</prompt> <userinput>nova x509-create-cert </userinput></screen>
       </para>
-     </section>
+    </section>
 
     <!--status: TODO needs to move elsewhere - user guide-->
     <section xml:id="creating-networks">
       <title>Creating networks</title>
-      <para>You need to populate the database with the network configuration information that
-        Compute obtains from the <filename>nova.conf</filename> file. You can find out more about
-        the <command>nova network-create</command> command with <userinput>nova help network-create</userinput>.
-    </para>
-      <para>Here is an example of what this looks like with real values entered. This example would
-        be appropriate for FlatDHCP mode, for VLAN Manager mode you would also need to specify a
+      <para>You need to populate the database with the network
+        configuration information that Compute obtains from the
+          <filename>nova.conf</filename> file. You can find out more
+        about the <command>nova network-create</command> command with
+          <userinput>nova help network-create</userinput>. </para>
+      <para>Here is an example of what this looks like with real
+        values entered. This example would be appropriate for FlatDHCP
+        mode, for VLAN Manager mode you would also need to specify a
         VLAN.</para>
       <screen><prompt>$</prompt> <userinput>nova network-create novanet --fixed-range-v4 192.168.0.0/24</userinput></screen>
-      <para>For this example, the number of IPs is <literal>/24</literal> since that falls inside
-        the <literal>/16</literal> range that was set in <literal>fixed-range</literal> in
-          <filename>nova.conf</filename>. Currently, there can only be one network, and this set up
-        would use the max IPs available in a <literal>/24</literal>. You can choose values that let
-        you use any valid amount that you would like.</para>
-      <para>OpenStack Compute assumes that the first IP address is your network (like
-          <literal>192.168.0.0</literal>), that the 2nd IP is your gateway
-          (<literal>192.168.0.1</literal>), and that the broadcast is the very last IP in the range
-        you defined (<literal>192.168.0.255</literal>). You can alter the gateway using the
-          <literal>--gateway</literal> flag when invoking <command>nova network-create</command>.
-        You are unlikely to need to modify the network or broadcast addresseses, but if you do, you
-        will need to manually edit the <literal>networks</literal> table in the database.</para>
-     </section>
+
+      <para>For this example, the number of IPs is
+          <literal>/24</literal> since that falls inside the
+          <literal>/16</literal> range that was set in
+          <literal>fixed-range</literal> in
+          <filename>nova.conf</filename>. Currently, there can only be
+        one network, and this set up would use the max IPs available
+        in a <literal>/24</literal>. You can choose values that let
+        you use any valid amount that you would like. </para>
+      <para>OpenStack Compute assumes that the first IP address is
+        your network (like <literal>192.168.0.0</literal>), that the
+        2nd IP is your gateway (<literal>192.168.0.1</literal>), and
+        that the broadcast is the very last IP in the range you
+        defined (<literal>192.168.0.255</literal>). You can alter the
+        gateway using the <literal>--gateway</literal> flag when
+        invoking <command>nova network-create</command>. You are
+        unlikely to need to modify the network or broadcast
+        addressees, but if you do, you will need to manually edit the
+          <literal>networks</literal> table in the database.</para>
+    </section>
+
 
     <!--status: TODO needs to move elsewhere - user guide-->
     <section xml:id="enabling-access-to-vms-on-the-compute-node">
       <title>Enabling Access to VMs on the Compute Node</title>
 
       <para>One of the most commonly missed configuration areas is not
-      allowing the proper access to VMs. Use nova client commands to enable access. Below, you
-      will find the commands to allow <command>ping</command> and
-      <command>ssh</command> to your VMs :</para>
+        allowing the proper access to VMs. Use nova client commands to
+        enable access. Below, you will find the commands to allow
+          <command>ping</command> and <command>ssh</command> to your
+        VMs :</para>
 
       <note>
-        <para>These commands need to be run as root only if the credentials
-        used to interact with <systemitem class="service">nova-api</systemitem> have been put under
-        <filename>/root/.bashrc</filename>. If the EC2 credentials have been
-        put into another user's <filename>.bashrc</filename> file, then, it is
-        necessary to run these commands as the user.</para>
+        <para>These commands need to be run as root only if the
+          credentials used to interact with
+            <command>nova-api</command> have been put under
+            <filename>/root/.bashrc</filename>. If the EC2 credentials
+          have been put into another user's
+            <filename>.bashrc</filename> file, then, it is necessary
+          to run these commands as the user.</para>
       </note>
 
       <screen><prompt>$</prompt> <userinput>nova secgroup-add-rule default  icmp -1 -1 0.0.0.0/0</userinput>
 <prompt>$</prompt> <userinput>nova secgroup-add-rule default  tcp 22 22 0.0.0.0/0</userinput></screen>
 
-      <para>Another common issue is you cannot ping or SSH to your instances
-      after issuing the <command>euca-authorize</command> commands. Something
-      to look at is the amount of <command>dnsmasq</command> processes that
-      are running. If you have a running instance, check to see that TWO
-      <command>dnsmasq</command> processes are running. If not, perform the
-      following:</para>
+      <para>Another common issue is you cannot ping or SSH to your
+        instances after issuing the <command>euca-authorize</command>
+        commands. Something to look at is the amount of
+          <command>dnsmasq</command> processes that are running. If
+        you have a running instance, check to see that TWO
+          <command>dnsmasq</command> processes are running. If not,
+        perform the following:</para>
 
       <screen><prompt>$</prompt> <userinput>sudo killall dnsmasq</userinput>
 <prompt>$</prompt> <userinput>sudo service nova-network restart</userinput></screen>
 
-      <para>If you get the <literal>instance not found</literal> message while
-      performing the restart, that means the service was not previously
-      running. You simply need to start it instead of restarting it: </para>
+      <para>If you get the <literal>instance not found</literal>
+        message while performing the restart, that means the service
+        was not previously running. You simply need to start it
+        instead of restarting it: </para>
 
       <screen><prompt>$</prompt> <userinput>sudo service nova-network start</userinput></screen>
     </section>
@@ -229,17 +257,19 @@ source ~/.bashrc</userinput></screen>
     <section xml:id="configuring-multiple-compute-nodes">
       <title>Configuring Multiple Compute Nodes</title>
 
-      <para>If your goal is to split your VM load across more than one server,
-      you can connect an additional <systemitem class="service">nova-compute</systemitem> node to a
-      cloud controller node. This configuring can be reproduced on multiple
-      compute servers to start building a true multi-node OpenStack Compute
-      cluster.</para>
+      <para>If your goal is to split your VM load across more than one
+        server, you can connect an additional <systemitem
+          class="service">nova-compute</systemitem> node to a cloud
+        controller node. This configuring can be reproduced on
+        multiple compute servers to start building a true multi-node
+        OpenStack Compute cluster.</para>
 
-      <para>To build out and scale the Compute platform, you spread out
-      services amongst many servers. While there are additional ways to
-      accomplish the build-out, this section describes adding compute nodes,
-      and the service we are scaling out is called
-      <systemitem class="service">nova-compute</systemitem>.</para>
+      <para>To build out and scale the Compute platform, you spread
+        out services amongst many servers. While there are additional
+        ways to accomplish the build-out, this section describes
+        adding compute nodes, and the service we are scaling out is
+        called <systemitem class="service"
+        >nova-compute</systemitem>.</para>
 
       <para>For a multi-node install you only make changes to
           <filename>nova.conf</filename> and copy it to additional
@@ -252,7 +282,7 @@ source ~/.bashrc</userinput></screen>
         edit <filename>/etc/network/interfaces</filename> with the
         following template, updated with your IP information.</para>
 
-<programlisting language="bash">
+      <programlisting language="bash">
 # The loopback network interface
 auto lo
     iface lo inet loopback
@@ -277,36 +307,38 @@ iface br100 inet static
 
       <screen><prompt>$</prompt> <userinput>sudo service networking restart</userinput></screen>
 
-      <para>With <filename>nova.conf</filename> updated and networking set,
-      configuration is nearly complete. First, bounce the relevant services to
-      take the latest updates:</para>
+      <para>With <filename>nova.conf</filename> updated and networking
+        set, configuration is nearly complete. First, bounce the
+        relevant services to take the latest updates:</para>
 
       <screen><prompt>$</prompt> <userinput>sudo service libvirtd restart</userinput>
 $ <userinput>sudo service nova-compute restart</userinput></screen>
 
-      <para>To avoid issues with KVM and permissions with Nova, run the
-      following commands to ensure we have VM's that are running
-      optimally:</para>
+      <para>To avoid issues with KVM and permissions with Nova, run
+        the following commands to ensure we have VM's that are running
+        optimally:</para>
 
       <screen><prompt>#</prompt> <userinput>chgrp kvm /dev/kvm</userinput>
 <prompt>#</prompt> <userinput>chmod g+rwx /dev/kvm</userinput></screen>
 
-      <para>If you want to use the 10.04 Ubuntu Enterprise Cloud images that
-      are readily available at
-      http://uec-images.ubuntu.com/releases/10.04/release/, you may run into
-      delays with booting. Any server that does not have
-      <systemitem class="service">nova-api</systemitem> running on it needs this iptables entry so
-      that UEC images can get metadata info. On compute nodes, configure the
-      iptables with this next step:</para>
-
+      <para>If you want to use the 10.04 Ubuntu Enterprise Cloud
+        images that are readily available at
+        http://uec-images.ubuntu.com/releases/10.04/release/, you may
+        run into delays with booting. Any server that does not have
+          <command>nova-api</command> running on it needs this
+        iptables entry so that UEC images can get metadata info. On
+        compute nodes, configure the iptables with this next
+        step:</para>
       <screen><prompt>#</prompt> <userinput>iptables -t nat -A PREROUTING -d 169.254.169.254/32 -p tcp -m tcp --dport 80 -j DNAT --to-destination <replaceable>$NOVA_API_IP</replaceable>:8773</userinput></screen>
 
-      <para>Lastly, confirm that your compute node is talking to your cloud
-      controller. From the cloud controller, run this database query:</para>
+      <para>Lastly, confirm that your compute node is talking to your
+        cloud controller. From the cloud controller, run this database
+        query:</para>
 
       <screen><prompt>$</prompt> <userinput>mysql -u<replaceable>$MYSQL_USER</replaceable> -p<replaceable>$MYSQL_PASS</replaceable> nova -e 'select * from services;'</userinput></screen>
 
-      <para>In return, you should see something similar to this:</para>
+      <para>In return, you should see something similar to
+        this:</para>
 
       <screen><computeroutput>+---------------------+---------------------+------------+---------+----+----------+----------------+-----------+--------------+----------+-------------------+
 | created_at          | updated_at          | deleted_at | deleted | id | host     | binary         | topic     | report_count | disabled | availability_zone |
@@ -319,10 +351,12 @@ $ <userinput>sudo service nova-compute restart</userinput></screen>
 | 2011-01-30 21:27:28 | 2011-02-03 06:54:23 | NULL       |       0 |  8 | osdemo05 | nova-compute   | compute   |        29284 |        0 | nova              |
 +---------------------+---------------------+------------+---------+----+----------+----------------+-----------+--------------+----------+-------------------+</computeroutput>       </screen>
 
-      <para>You can see that <literal>osdemo0{1,2,4,5}</literal> are all
-      running <systemitem class="service">nova-compute</systemitem>. When you start spinning up
-      instances, they will allocate on any node that is running
-      <systemitem class="service">nova-compute</systemitem> from this list.</para>
+      <para>You can see that <literal>osdemo0{1,2,4,5}</literal> are
+        all running <systemitem class="service"
+          >nova-compute</systemitem>. When you start spinning up
+        instances, they will allocate on any node that is running
+          <systemitem class="service">nova-compute</systemitem> from
+        this list.</para>
     </section>
 
     <!--status: TODO needs to move elsewhere - user guide-->
@@ -330,22 +364,23 @@ $ <userinput>sudo service nova-compute restart</userinput></screen>
       <title>Determining the Version of Compute</title>
 
       <para>You can find the version of the installation by using the
-      <command>nova-manage</command> command:</para>
+          <command>nova-manage</command> command:</para>
 
       <screen><prompt>$</prompt> <userinput>nova-manage version list</userinput></screen>
     </section>
 
     <!--status: TODO needs to move elsewhere - operations guide, user guide-->
-      <section xml:id="diagnose-compute">
-        <title>Diagnose your compute nodes</title>
+    <section xml:id="diagnose-compute">
+      <title>Diagnose your compute nodes</title>
 
-        <para>You can obtain extra informations about the running virtual machines: their CPU usage,
-        the memory, the disk IO or network IO, per instance, by running the <command>nova
+      <para>You can obtain extra informations about the running
+        virtual machines: their CPU usage, the memory, the disk IO or
+        network IO, per instance, by running the <command>nova
           diagnostics</command> command with a server ID:</para>
 
-        <screen><prompt>$</prompt> <userinput>nova diagnostics &lt;serverID&gt;</userinput></screen>
-        <para>The output of this command will vary depending on the hypervisor. Example output when
-        the hypervisor is Xen:
+      <screen><prompt>$</prompt> <userinput>nova diagnostics &lt;serverID&gt;</userinput></screen>
+      <para>The output of this command will vary depending on the
+        hypervisor. Example output when the hypervisor is Xen:
         <screen><computeroutput>+----------------+-----------------+
 |    Property    |      Value      |
 +----------------+-----------------+
@@ -359,10 +394,11 @@ $ <userinput>sudo service nova-compute restart</userinput></screen>
 | vif_1_rx       | 104.4955        |
 | vif_1_tx       | 0.0             |
 +----------------+-----------------+</computeroutput></screen>
-        While the command should work with any hypervisor that is controlled through libvirt (e.g.,
-        KVM, QEMU, LXC), it has only been tested with KVM. Example output when the hypervisor is
+        While the command should work with any hypervisor that is
+        controlled through libvirt (e.g., KVM, QEMU, LXC), it has only
+        been tested with KVM. Example output when the hypervisor is
         KVM:</para>
-        <screen><computeroutput>+------------------+------------+
+      <screen><computeroutput>+------------------+------------+
 | Property         | Value      |
 +------------------+------------+
 | cpu0_time        | 2870000000 |
@@ -381,10 +417,10 @@ $ <userinput>sudo service nova-compute restart</userinput></screen>
 | vnet0_tx_errors  | 0          |
 | vnet0_tx_packets | 45         |
 +------------------+------------+</computeroutput></screen>
-      </section>
     </section>
+  </section>
 
-    <!--status: good, right place-->
+  <!--status: good, right place-->
   <section xml:id="general-compute-configuration-overview">
     <title>General Compute Configuration Overview</title>
 
@@ -397,44 +433,49 @@ $ <userinput>sudo service nova-compute restart</userinput></screen>
 
     <para>You can use a particular configuration option file by using
       the <literal>option</literal> (<filename>nova.conf</filename>)
-      parameter when running one of the <literal>nova-*</literal> services.
-      This inserts configuration option definitions from the given configuration
-      file name, which may be useful for debugging or performance
-      tuning. Here are some general purpose configuration
-      options.</para>
+      parameter when running one of the <literal>nova-*</literal>
+      services. This inserts configuration option definitions from the
+      given configuration file name, which may be useful for debugging
+      or performance tuning. Here are some general purpose
+      configuration options.</para>
 
     <para>If you want to maintain the state of all the services, you
-        can use the <literal>state_path</literal> configuration option to indicate a
-        top-level directory for storing data related to the state of
-        Compute including images if you are using the Compute object
-        store.</para>
-  <xi:include href="../common/tables/nova-common.xml"/>
+
+      can use the <literal>state_path</literal> configuration option
+      to indicate a top-level directory for storing data related to
+      the state of Compute including images if you are using the
+      Compute object store. </para>
+    <xi:include href="../common/tables/nova-common.xml"/>
   </section>
-
-    <!--status: good, right place-->
+  <!--status: good, right place-->
   <section xml:id="sample-nova-configuration-files">
-  <title>Example <filename>nova.conf</filename> Configuration Files</title>
-  <para>
-    The following sections describe many of the configuration option settings that can go into the
-    <filename>nova.conf</filename> files. Copies of each <filename>nova.conf</filename> file need
-    to be copied to each compute node. Here are some sample <filename>nova.conf</filename>
-    files that offer examples of specific configurations.
-   </para>
+    <title>Example <filename>nova.conf</filename> Configuration
+      Files</title>
+    <para> The following sections describe many of the configuration
+      option settings that can go into the
+        <filename>nova.conf</filename> files. Copies of each
+        <filename>nova.conf</filename> file need to be copied to each
+      compute node. Here are some sample
+        <filename>nova.conf</filename> files that offer examples of
+      specific configurations. </para>
     <simplesect>
-      <title>KVM, Flat, MySQL, and Glance, OpenStack or EC2 API</title>
-
-      <para>This example <filename>nova.conf</filename> file is from an
-      internal Rackspace test system used for demonstrations.</para>
-<programlisting>
+      <title>KVM, Flat, MySQL, and Glance, OpenStack or EC2
+        API</title>
+      <para>This example <filename>nova.conf</filename> file is from
+        an internal Rackspace test system used for
+        demonstrations.</para>
+      <programlisting>
       <xi:include parse="text" href="../common/samples/nova.conf"/>
 </programlisting>
       <figure xml:id="Nova_conf_KVM_Flat">
-        <title>KVM, Flat, MySQL, and Glance, OpenStack or EC2 API</title>
+        <title>KVM, Flat, MySQL, and Glance, OpenStack or EC2
+          API</title>
 
         <mediaobject>
           <imageobject>
-            <imagedata fileref="../common/figures/SCH_5004_V00_NUAC-Network_mode_KVM_Flat_OpenStack.png"
-                       contentwidth="6in"/>
+            <imagedata
+              fileref="../common/figures/SCH_5004_V00_NUAC-Network_mode_KVM_Flat_OpenStack.png"
+              contentwidth="6in"/>
           </imageobject>
         </mediaobject>
       </figure>
@@ -442,10 +483,10 @@ $ <userinput>sudo service nova-compute restart</userinput></screen>
 
     <simplesect>
       <title>XenServer, Flat networking, MySQL, and Glance, OpenStack
-      API</title>
+        API</title>
 
-      <para>This example <filename>nova.conf</filename> file is from an
-      internal Rackspace test system.</para>
+      <para>This example <filename>nova.conf</filename> file is from
+        an internal Rackspace test system.</para>
 
       <programlisting>
 verbose
@@ -472,12 +513,13 @@ xenapi_remap_vbd_dev=true
             </programlisting>
 
       <figure xml:id="Nova_conf_XEN_Flat">
-        <title>KVM, Flat, MySQL, and Glance, OpenStack or EC2 API</title>
-
+        <title>KVM, Flat, MySQL, and Glance, OpenStack or EC2
+          API</title>
         <mediaobject>
           <imageobject>
-            <imagedata fileref="../common/figures/SCH_5005_V00_NUAC-Network_mode_XEN_Flat_OpenStack.png"
-                       scale="60"/>
+            <imagedata
+              fileref="../common/figures/SCH_5005_V00_NUAC-Network_mode_XEN_Flat_OpenStack.png"
+              scale="60"/>
           </imageobject>
         </mediaobject>
       </figure>
@@ -488,194 +530,164 @@ xenapi_remap_vbd_dev=true
     <para>You can use <filename>nova.conf</filename> configuration
       options to indicate where Compute will log events, the level of
       logging, and customize log formats.</para>
-    <para>To customize log formats for
-      OpenStack Compute, use these configuration option
-      settings.</para>
+    <para>To customize log formats for OpenStack Compute, use these
+      configuration option settings.</para>
     <xi:include href="../common/tables/nova-logging.xml"/>
   </section>
-
   <section xml:id="configuring-hypervisors">
     <title>Configuring Hypervisors</title>
-    <para>
-       Please refer to the <link
-         linkend="ch_hypervisors">Hypervisors</link> chapter for more
-       details.
-    </para>
+    <para>See <xref linkend="ch_hypervisors"/> for details. </para>
   </section>
-
-    <!--status: good, right place-->
+  <!--status: good, right place-->
   <section xml:id="configuring-authentication-authorization">
     <title>Configuring Authentication and Authorization</title>
-
     <para>There are different methods of authentication for the
-      OpenStack Compute project, including no authentication. The preferred
-      system is the OpenStack Identity Service, code-named Keystone.  </para>
+      OpenStack Compute project, including no authentication. The
+      preferred system is the OpenStack Identity Service, code-named
+      Keystone.</para>
     <para>To customize authorization settings for Compute, see these
       configuration settings in <filename>nova.conf</filename>.</para>
-
     <xi:include href="../common/tables/nova-authentication.xml"/>
-    <para>To customize certificate authority settings for Compute, see these configuration settings in <filename>nova.conf</filename>.</para>
+    <para>To customize certificate authority settings for Compute, see
+      these configuration settings in
+      <filename>nova.conf</filename>.</para>
     <xi:include href="../common/tables/nova-ca.xml"/>
-    <para>To customize Compute and the Identity service to use LDAP as a backend, refer to these configuration settings in <filename>nova.conf</filename>.</para>
+    <para>To customize Compute and the Identity service to use LDAP as
+      a backend, refer to these configuration settings in
+        <filename>nova.conf</filename>.</para>
     <xi:include href="../common/tables/nova-ldap.xml"/>
   </section>
-
-<xi:include href="compute-configure-ipv6.xml"/>
-
-<xi:include href="compute-configure-migrations.xml"/>
-
+  <xi:include href="compute-configure-ipv6.xml"/>
+  <xi:include href="compute-configure-migrations.xml"/>
   <section xml:id="configuring-resize">
     <?dbhtml stop-chunking?>
     <title>Configuring Resize</title>
     <para>Resize (or Server resize) is the ability to change the
-    flavor of a server, thus allowing it to upscale or downscale
-    according to user needs. In order for this feature
-    to work properly, some underlying virt layers may need further
-    configuration; this section describes the required configuration
-    steps for each hypervisor layer provided by OpenStack.</para>
+      flavor of a server, thus allowing it to upscale or downscale
+      according to user needs. In order for this feature to work
+      properly, some underlying virt layers may need further
+      configuration; this section describes the required configuration
+      steps for each hypervisor layer provided by OpenStack.</para>
     <section xml:id="xenserver-resize">
-        <title>XenServer</title>
-      <para>To get resize to work with XenServer (and XCP), please refer to the Dom0 Modifications
-        for Resize/Migration Support section in the OpenStack Compute Administration Guide.</para>
-    </section> <!-- End of XenServer/Resize -->
-  </section> <!-- End of configuring resize -->
-
-   <xi:include href="compute-configure-db.xml"/>
-
-  <!-- Oslo rpc mechanism (i.e. Rabbit, Qpid, ZeroMQ) -->
-  <xi:include href="../common/rpc.xml" />
-
-    <!--status: good, right place-->
+      <title>XenServer</title>
+      <para>To get resize to work with XenServer (and XCP), please
+        refer to the Dom0 Modifications for Resize/Migration Support
+        section in the OpenStack Compute Administration Guide.</para>
+    </section>
+    <!-- End of XenServer/Resize -->
+  </section>
+  <!-- End of configuring resize -->
+  <xi:include href="compute-configure-db.xml"/>
+  <!-- Oslo rpc mechanism (such as, Rabbit, Qpid, ZeroMQ) -->
+  <xi:include href="../common/section_rpc.xml"/>
+  <!--status: good, right place-->
   <section xml:id="configuring-compute-API">
-  <title>Configuring the Compute API</title>
-  <simplesect>
-    <title>Configuring Compute API password handling</title>
 
-    <para>The OpenStack Compute API allows the user to specify an admin
-    password when creating (or rebuilding) a server instance.  If no
-    password is specified, a randomly generated password is used. The
-    password is returned in the API response.</para>
-
-    <para>In practice, the handling of the admin password depends on the
-    hypervisor in use, and may require additional configuration of the
-    instance, such as installing an agent to handle the password setting.
-    If the hypervisor and instance configuration do not support the
-    setting of a password at server create time, then the password
-    returned by the create API call will be misleading, since it was
-    ignored.
-    </para>
-
-    <para>To prevent this confusion, the configuration option
+    <title>Configuring the Compute API</title>
+    <simplesect>
+      <title>Configuring Compute API password handling</title>
+      <para> The OpenStack Compute API allows the user to specify an
+        admin password when creating (or rebuilding) a server
+        instance. If no password is specified, a randomly generated
+        password is used. The password is returned in the API
+        response.</para>
+      <para>In practice, the handling of the admin password depends on
+        the hypervisor in use, and may require additional
+        configuration of the instance, such as installing an agent to
+        handle the password setting. If the hypervisor and instance
+        configuration do not support the setting of a password at
+        server create time, then the password returned by the create
+        API call will be misleading, since it was ignored. </para>
+      <para>To prevent this confusion, the configuration option
+>>>>>>> be9c804... clean-up of 'common' dir in openstack-manuals (remove unused files and use common naming convention)
           <literal>enable_instance_password</literal> can be used to
         disable the return of the admin password for installations
         that don't support setting instance passwords.</para>
-
-    <table rules="all">
-      <caption>Description of nova.conf API related configuration
+      <table rules="all">
+        <caption>Description of nova.conf API related configuration
           options</caption>
-
-      <thead>
-        <tr>
-          <td>Configuration option</td>
-
-          <td>Default</td>
-
-          <td>Description</td>
-        </tr>
-      </thead>
-
-      <tbody>
-        <tr>
-          <td><literal>enable_instance_password</literal></td>
-
-          <td><literal>true</literal></td>
-
-          <td>When true, the create and rebuild compute API calls return the server admin password.  When false,
-          the server admin password is not included in API responses.</td>
-        </tr>
-
-      </tbody>
-    </table>
-
-  </simplesect>
-
-  <simplesect>
-    <title>Configuring Compute API Rate Limiting</title>
-
-    <para>OpenStack Compute supports API rate limiting for the OpenStack API.
-    The rate limiting allows an administrator to configure limits on the type
-    and number of API calls that can be made in a specific time
-    interval.</para>
-
-    <para>When API rate limits are exceeded, HTTP requests will return a error
-    with a status code of 413 "Request entity too large", and will also
-    include a 'Retry-After' HTTP header. The response body will include the
-    error details, and the delay before the request should be retried.</para>
-
-    <para>Rate limiting is not available for the EC2 API.</para>
-  </simplesect>
+        <thead>
+          <tr>
+            <td>Configuration option</td>
+            <td>Default</td>
+            <td>Description</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><literal>enable_instance_password</literal></td>
+            <td><literal>true</literal></td>
+            <td>When true, the create and rebuild compute API calls
+              return the server admin password. When false, the server
+              admin password is not included in API responses.</td>
+          </tr>
+        </tbody>
+      </table>
+    </simplesect>
+    <simplesect>
+      <title>Configuring Compute API Rate Limiting</title>
+      <para>OpenStack Compute supports API rate limiting for the
+        OpenStack API. The rate limiting allows an administrator to
+        configure limits on the type and number of API calls that can
+        be made in a specific time interval.</para>
+      <para>When API rate limits are exceeded, HTTP requests will
+        return a error with a status code of 413 "Request entity too
+        large", and will also include a 'Retry-After' HTTP header. The
+        response body will include the error details, and the delay
+        before the request should be retried.</para>
+      <para>Rate limiting is not available for the EC2 API.</para>
+    </simplesect>
     <simplesect>
       <title>Specifying Limits</title>
-
       <para>Limits are specified using five values:</para>
-
       <itemizedlist>
         <listitem>
-          <para>The <emphasis role="bold">HTTP method</emphasis> used in the
-          API call, typically one of GET, PUT, POST, or DELETE.</para>
+          <para>The <emphasis role="bold">HTTP method</emphasis> used
+            in the API call, typically one of GET, PUT, POST, or
+            DELETE.</para>
         </listitem>
-
         <listitem>
-          <para>A <emphasis role="bold">human readable URI</emphasis> that is
-          used as a friendly description of where the limit is applied.</para>
+          <para>A <emphasis role="bold">human readable URI</emphasis>
+            that is used as a friendly description of where the limit
+            is applied.</para>
         </listitem>
-
         <listitem>
-          <para>A <emphasis role="bold">regular expression</emphasis>. The
-          limit will be applied to all URI's that match the regular expression
-          and HTTP Method.</para>
+          <para>A <emphasis role="bold">regular expression</emphasis>.
+            The limit will be applied to all URI's that match the
+            regular expression and HTTP Method.</para>
         </listitem>
-
         <listitem>
-          <para>A <emphasis role="bold">limit value </emphasis> that specifies
-          the maximum count of units before the limit takes effect.</para>
+          <para>A <emphasis role="bold">limit value </emphasis> that
+            specifies the maximum count of units before the limit
+            takes effect.</para>
         </listitem>
-
         <listitem>
-          <para>An <emphasis role="bold">interval</emphasis> that specifies
-          time frame the limit is applied to. The interval can be SECOND,
-          MINUTE, HOUR, or DAY.</para>
+          <para>An <emphasis role="bold">interval</emphasis> that
+            specifies time frame the limit is applied to. The interval
+            can be SECOND, MINUTE, HOUR, or DAY.</para>
         </listitem>
       </itemizedlist>
-
-      <para>Rate limits are applied in order, relative to the HTTP method,
-      going from least to most specific. For example, although the default
-      threshold for POST to */servers is 50 per day, one cannot POST to
-      */servers more than 10 times within a single minute because the rate
-      limits for any POST is 10/min.</para>
+      <para>Rate limits are applied in order, relative to the HTTP
+        method, going from least to most specific. For example,
+        although the default threshold for POST to */servers is 50 per
+        day, one cannot POST to */servers more than 10 times within a
+        single minute because the rate limits for any POST is
+        10/min.</para>
     </simplesect>
-
     <simplesect>
       <title>Default Limits</title>
-
-      <para>OpenStack compute is normally installed with the following limits
-      enabled:</para>
-
+      <para>OpenStack compute is normally installed with the following
+        limits enabled:</para>
       <table rules="all">
         <caption>Default API Rate Limits</caption>
-
         <thead>
           <tr>
             <td>HTTP method</td>
-
             <td>API URI</td>
-
             <td>API regular expression</td>
-
             <td>Limit</td>
           </tr>
         </thead>
-
         <tbody>
           <tr>
             <td>POST</td>
@@ -734,15 +746,14 @@ xenapi_remap_vbd_dev=true
       <title>Configuring and Changing Limits</title>
 
       <para>The actual limits are specified in the file
-      <filename>etc/nova/api-paste.ini</filename>, as part of the WSGI
-      pipeline.</para>
-
-      <para>To enable limits, ensure the '<literal>ratelimit</literal>' filter
-      is included in the API pipeline specification. If the
-      '<literal>ratelimit</literal>' filter is removed from the pipeline,
-      limiting will be disabled. There should also be a definition for the
-      ratelimit filter. The lines will appear as follows:</para>
-
+          <filename>etc/nova/api-paste.ini</filename>, as part of the
+        WSGI pipeline.</para>
+      <para>To enable limits, ensure the
+        '<literal>ratelimit</literal>' filter is included in the API
+        pipeline specification. If the '<literal>ratelimit</literal>'
+        filter is removed from the pipeline, limiting will be
+        disabled. There should also be a definition for the rate limit
+        filter. The lines will appear as follows:</para>
       <programlisting language="bash">
 [pipeline:openstack_compute_api_v2]
 pipeline = faultwrap authtoken keystonecontext ratelimit osapi_compute_app_v2
@@ -755,11 +766,11 @@ paste.filter_factory = nova.api.openstack.compute.limits:RateLimitingMiddleware.
             </programlisting>
 
       <para>To modify the limits, add a '<literal>limits</literal>'
-      specification to the <literal>[filter:ratelimit]</literal> section of
-      the file. The limits are specified in the order HTTP method, friendly
-      URI, regex, limit, and interval. The following example specifies the
-      default rate limiting values:</para>
-
+        specification to the <literal>[filter:ratelimit]</literal>
+        section of the file. The limits are specified in the order
+        HTTP method, friendly URI, regex, limit, and interval. The
+        following example specifies the default rate limiting
+        values:</para>
       <programlisting language="bash">
 [filter:ratelimit]
 paste.filter_factory = nova.api.openstack.compute.limits:RateLimitingMiddleware.factory
@@ -767,12 +778,10 @@ limits =(POST, "*", .*, 10, MINUTE);(POST, "*/servers", ^/servers, 50, DAY);(PUT
             </programlisting>
     </simplesect>
   </section>
-
-    <!--status: good, right place-->
-  <xi:include href="compute-configure-ec2.xml" />
-  <xi:include href="compute-configure-quotas.xml" />
-  <xi:include href="compute-configure-console.xml" />
-  <xi:include href="compute-configure-service-groups.xml" />
-  <xi:include href="../common/fibrechannel.xml" />
-
+  <!--status: good, right place-->
+  <xi:include href="../common/section_compute-configure-ec2.xml"/>
+  <xi:include href="../common/section_compute-configure-quotas.xml"/>
+  <xi:include href="../common/section_compute-configure-console.xml"/>
+  <xi:include href="section_compute-configure-service-groups.xml"/>
+  <xi:include href="../common/section_fibrechannel.xml"/>
 </chapter>

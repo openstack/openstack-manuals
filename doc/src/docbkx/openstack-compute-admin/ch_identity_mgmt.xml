@@ -12,7 +12,7 @@
     a separate logging configuration file, and initializing data into
     keystone using the command line client.
   </para>
-  <xi:include href="../common/keystone-concepts.xml"/>
+  <xi:include href="../common/section_keystone-concepts.xml"/>
   <section xml:id="memcached-and-system-time">
     <title>Memcached and System Time</title>
     <para>
@@ -25,7 +25,7 @@
       memcached must match if key expiry is to behave as expected.
     </para>
   </section>
-  <xi:include href="keystone-ssl-config.xml"/>
+  <xi:include href="../common/section_keystone-ssl-config.xml"/>
   <section xml:id="user-crud">
     <title>User CRUD</title>
     <para>
@@ -56,7 +56,7 @@ pipeline = stats_monitoring url_normalize token_auth admin_token_auth xml_body j
     and their tokens are deleted.
     </para>
   </section>
-  <xi:include href="../common/identity-configure.xml"/>
+  <xi:include href="../common/section_identity-configure.xml"/>
   <section xml:id="keystone-logging">
     <title>Logging</title>
     <para>Logging is configured externally to the rest of Identity,
@@ -149,13 +149,12 @@ pipeline = [...] json_body stats_reporting ec2_extension [...] admin_service
     </para>
     <screen>$ curl -H 'X-Auth-Token: ADMIN' -X DELETE http://localhost:35357/v2.0/OS-STATS/stats</screen>
   </section>
-  <xi:include href="certificates-for-pki.xml"/>
-  <xi:include href="keystone-sample-conf-files.xml"/>
-
+  <xi:include href="../common/section_keystone_certificates-for-pki.xml"/>
+  <xi:include href="../common/section_keystone-sample-conf-files.xml"/>  
   <section xml:id="running-keystone">
-    <title>Running</title>
+    <title>Running the Identity Service</title>
     <para>
-      Running Identity is simply starting the services by using the
+      To run the Identity Service, simply start the services by using the
       command:
     </para>
     <screen>
@@ -171,7 +170,7 @@ keystone-all
     </para>
   </section>
   <section xml:id="initializing-keystone">
-    <title>Initializing Keystone</title>
+    <title>Initializing the Identity Service</title>
     <para>
       <command>keystone-manage</command> is designed to execute commands that cannot be
       administered through the normal REST api. At the moment, the
@@ -1178,7 +1177,7 @@ role_attribute_ignore    =
     </section>
     <section xml:id="reference-for-ldap-config-options">
       <title>Reference for LDAP Configuration Options in keystone.conf</title>
-       <xi:include href="tables/ldap-keystone-conf.xml"/>
+       <xi:include href="../common/tables/ldap-keystone-conf.xml"/>
     </section>
     <section xml:id="auth-token-middleware-with-username-and-password">
       <title>Auth-Token Middleware with Username and Password</title>
@@ -1277,6 +1276,6 @@ cert_required = True </programlisting></para>
 </itemizedlist>
 </para>
 </section>
-  <xi:include href="keystone-external-auth.xml"/>
-  <xi:include href="troubleshooting-identity.xml"/>
+  <xi:include href="../common/section_keystone-external-auth.xml"/>
+  <xi:include href="../common/section_identity_troubleshooting.xml"/>
 </chapter>
