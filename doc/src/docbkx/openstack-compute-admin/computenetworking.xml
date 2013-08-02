@@ -1487,7 +1487,7 @@ ALLOW -1:-1 from 0.0.0.0/0
                             <filename>keys/<replaceable>&lt;project_id&gt;</replaceable></filename>
                     folder. You can use this key to log into the
                     cloudpipe instance for debugging purposes. If you
-                    are running multiple copies of nova-api this key
+                    are running multiple copies of <systemitem class="service">nova-api</systemitem> this key
                     will be on whichever server used the original
                     request. To make debugging easier, you may want to
                     put a common administrative key into the cloudpipe
@@ -1751,7 +1751,7 @@ persist-key             </programlisting>
                 <command>ssh</command> to your VMs: </para>
         <note>
             <para>These commands need to be run as root only if the
-                credentials used to interact with nova-api have been
+                credentials used to interact with <systemitem class="service">nova-api</systemitem> have been
                 put under <filename>/root/.bashrc</filename>. If the
                 EC2 credentials have been put into another user's
                     <filename>.bashrc</filename> file, then, it is
@@ -2059,13 +2059,13 @@ iface eth1 inet dhcp                </programlisting></para>
                 </figure></para>
             <para>In contrast with the earlier diagram, all the hosts
                 in the system are running the <systemitem class="service">nova-compute</systemitem>,
-                nova-network and nova-api services. Each host does
+                nova-network and <systemitem class="service">nova-api</systemitem> services. Each host does
                 DHCP and does NAT for public traffic for the VMs
                 running on that particular host. In this model every
                 compute host requires a connection to the public
                 internet and each host is also assigned an address
                 from the VM network where it listens for DHCP traffic.
-                The nova-api service is needed so that it can act as a
+                The <systemitem class="service">nova-api</systemitem> service is needed so that it can act as a
                 metadata server for the instances.</para>
             <para>To run in HA mode, each compute host must run the
                 following services:<itemizedlist>
@@ -2077,7 +2077,7 @@ iface eth1 inet dhcp                </programlisting></para>
                     </listitem>
                     <listitem>
                         <para><command>nova-api-metadata</command> or
-                                <command>nova-api</command></para>
+                                <systemitem class="service">nova-api</systemitem></para>
                     </listitem>
                 </itemizedlist></para>
             <para>If the compute host is not an API endpoint, use the
@@ -2092,7 +2092,7 @@ send_arp_for_ha=true
                 ensure the arp caches on compute hosts are up to
                 date.</para>
             <para>If a compute host is also an API endpoint, use the
-                    <command>nova-api</command> service. Your
+                    <systemitem class="service">nova-api</systemitem> service. Your
                     <literal>enabled_apis</literal> option will need
                 to contain <literal>metadata</literal>, as well as
                 additional options depending on the API services. For
