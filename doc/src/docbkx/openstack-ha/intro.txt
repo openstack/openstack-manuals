@@ -44,7 +44,7 @@ instances.
 [[stateless-vs-stateful]]
 === Stateless vs. Stateful services
 
-How to prevent a single point of failure depends partially on whether a service is stateless or not. For example, the nova-scheduler service is stateless; you make a request, it provides a response, and no further attention is required; subsequent requests do not depend on the results of the first. All you need to do to make nova-scheduler highly-available is to provide redundant instances and load balance them. OpenStack services that are stateless include nova-api, nova-conductor, glance-api, keystone-api, quantum-api and nova-scheduler.
+How to prevent a single point of failure depends partially on whether a service is stateless or not. For example, the nova-scheduler service is stateless; you make a request, it provides a response, and no further attention is required; subsequent requests do not depend on the results of the first. All you need to do to make nova-scheduler highly-available is to provide redundant instances and load balance them. OpenStack services that are stateless include nova-api, nova-conductor, glance-api, keystone-api, neutron-api and nova-scheduler.
 
 Stateful services, on the other hand, are more difficult to manage; a single action typically involves more than one request, so simply providing additional instances and load balancing will not solve the problem. One user-facing example of a stateful OpenStack service would be Horizon; if the UI reset itself every time the user went to a new page, it wouldn't be very useful. On a more basic level, the OpenStack database and message queue are also stateful, and must be managed accordingly to provide high-availability.
 
