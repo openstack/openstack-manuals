@@ -44,7 +44,7 @@
                     for a given region ($REGION) and IP address of the
                     OpenStack Networking server ($IP), add the
                     following content to your OpenStack Compute
-                    catalog template file (default_catalog.templates). </para>
+                    catalog template file (default_catalog.templates).</para>
                 <screen><computeroutput>catalog.$REGION.network.publicURL = http://$IP:9696
 catalog.$REGION.network.adminURL = http://$IP:9696
 catalog.$REGION.network.internalURL = http://$IP:9696
@@ -84,7 +84,7 @@ catalog.$Region.network.name = Network Service</programlisting>
                 <screen><prompt>$</prompt> <userinput>keystone user-role-add --user_id $NEUTRON_USER --role_id $ADMIN_ROLE --tenant_id service</userinput></screen>
             </step>
         </procedure>
-        <para> See the OpenStack Installation Guides for more details
+        <para>See the OpenStack Installation Guides for more details
             about creating service entries and service users.</para>
     </section>
     <section xml:id="nova_with_neutron">
@@ -118,7 +118,7 @@ catalog.$Region.network.name = Network Service</programlisting>
                 OpenStack Networking. Inadvertently running the
                 nova-network process while using OpenStack Networking
                 can cause problems, as can stale iptables rules pushed
-                down by previously running nova-network. </para>
+                down by previously running nova-network.</para>
         </note>
         <para>
         The next section describes nova.conf settings that are required
@@ -187,8 +187,8 @@ catalog.$Region.network.name = Network Service</programlisting>
                     </para>
                 </listitem>
                 <listitem>
-                    <para> security_group_api : must be set to 'neutron' so that all security group
-                        requests are proxied to the OpenStack Network Service. </para>
+                    <para>security_group_api : must be set to 'neutron' so that all security group
+                        requests are proxied to the OpenStack Network Service.</para>
                 </listitem>
             </itemizedlist>
         </section>
@@ -201,16 +201,16 @@ catalog.$Region.network.name = Network Service</programlisting>
                 setting the following fields in nova.conf: </para>
             <itemizedlist>
                 <listitem>
-                    <para> service_neutron_metadata_proxy: must be set to 'true', otherwise nova-api
-                        will not properly respond to requests from the neutron-metadata-agent. </para>
+                    <para>service_neutron_metadata_proxy: must be set to 'true', otherwise nova-api
+                        will not properly respond to requests from the neutron-metadata-agent.</para>
                 </listitem>
                 <listitem>
-                    <para> neutron_metadata_proxy_shared_secret: a string "password" value that
+                    <para>neutron_metadata_proxy_shared_secret: a string "password" value that
                         should also be configured in the metadata_agent.ini file in order to
                         authenticate requests made for metadata. The default value of the empty
                         string in both files will allow metadata to function, but will be insecure
                         if any non-trusted entities have access to the metadata APIs exposed by
-                        nova-api. </para>
+                        nova-api.</para>
                 </listitem>
             </itemizedlist>
             <note><para>As a precaution, even when using neutron_metadata_proxy_shared_secret, it is recommended that
@@ -218,7 +218,7 @@ catalog.$Region.network.name = Network Service</programlisting>
                     tenants. Instead, run a dedicated set of nova-api instances for metadata
                     available only on your management network. Whether a given nova-api instance
                     exposes metadata APIs is determined by the value of 'enabled_apis' in its
-                    nova.conf. </para></note>
+                    nova.conf.</para></note>
         </section>
         <section xml:id="nova_with_neutron_vifplugging">
             <title>Vif-plugging Configuration</title>
@@ -295,7 +295,7 @@ catalog.$Region.network.name = Network Service</programlisting>
             <para>Example values for the above settings, assuming a
                 cloud controller node running OpenStack Compute and
                 OpenStack Networking with an IP address of 192.168.1.2
-                and vif-plugging using the LibvirtHybridOVSBridgeDriver. </para>
+                and vif-plugging using the LibvirtHybridOVSBridgeDriver.</para>
             <screen><computeroutput>network_api_class=nova.network.neutronv2.api.API
 neutron_url=http://192.168.1.2:9696
 neutron_auth_strategy=keystone

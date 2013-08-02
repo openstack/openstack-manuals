@@ -16,11 +16,11 @@
             <orderedlist>
                 <listitem>
                     <para><command>lvm2</command>, directly
-                        manipulates the volumes. </para>
+                        manipulates the volumes.</para>
                 </listitem>
                 <listitem>
                     <para><command>kpartx</command> discovers the
-                        partition table created inside the instance. </para>
+                        partition table created inside the instance.</para>
                 </listitem>
                 <listitem>
                     <para><command>tar</command> creates a
@@ -44,7 +44,7 @@
                         volume itself. Remember the volumes
                         created through a
                             <command>nova volume-create</command>
-                        exist in an LVM's logical volume. </para>
+                        exist in an LVM's logical volume.</para>
                     <para>Before creating the
                             snapshot, ensure that you have enough
                             space to save it. As a precaution, you
@@ -65,7 +65,7 @@
                         end of the section, we will present a script
                         that you could use to create scheduled
                         backups. The script itself exploits what we
-                        discuss here. </para>
+                        discuss here.</para>
                     <para>First, create the snapshot; this can be
                         achieved while the volume is attached to an
                         instance :</para>
@@ -89,7 +89,7 @@
                         the snapshot volume. As a precaution, the size
                         should be the same as that of the original
                         volume, even if we know the whole space is not
-                        currently used by the snapshot. </para>
+                        currently used by the snapshot.</para>
                     <para>We now have a full snapshot, and it only took few seconds ! </para>
                     <para>Run <command>lvdisplay</command> again to
                         verify the snapshot. You should see now your
@@ -142,14 +142,14 @@
                 <listitem>
                     <para>If we want to exploit that snapshot with the
                             <command>tar</command> program, we first
-                        need to mount our partition on the Block Storage server. </para>
+                        need to mount our partition on the Block Storage server.</para>
                     <para><command>kpartx</command> is a small utility
                         which performs table partition discoveries,
                         and maps it. It can be used to view partitions
                         created inside the instance. Without using the
                         partitions created inside instances, we won' t
                         be able to see its content and create
-                        efficient backups. </para>
+                        efficient backups.</para>
                     <para>
                         <programlisting>
 <prompt>$</prompt> <userinput>kpartx -av /dev/nova-volumes/volume-00000001-snapshot</userinput>
@@ -173,7 +173,7 @@
                         several partitions; for example.
                             <literal>nova--volumes-volume--00000001--snapshot2</literal>,
                             <literal>nova--volumes-volume--00000001--snapshot3</literal>
-                        and so forth. </para>
+                        and so forth.</para>
                     <para>We can now mount our partition : </para>
                     <para>
                         <programlisting>
@@ -190,24 +190,24 @@
                         filesystem) there could be two causes :</para>
                     <para><itemizedlist>
                             <listitem>
-                                <para> You didn't allocate enough
+                                <para>You didn't allocate enough
                                    space for the snapshot </para>
                             </listitem>
                             <listitem>
                                 <para>
                                    <command>kpartx</command> was
                                    unable to discover the partition
-                                   table. </para>
+                                   table.</para>
                             </listitem>
                         </itemizedlist>Allocate more space to the
-                        snapshot and try the process again. </para>
+                        snapshot and try the process again.</para>
                 </listitem>
             </itemizedlist>
             <para>
                 <emphasis role="bold"> 3- Use tar in order to create archives</emphasis>
                 <itemizedlist>
                     <listitem>
-                        <para> Now that the volume has been mounted,
+                        <para>Now that the volume has been mounted,
                             you can create a backup of it : </para>
                         <para>
                             <screen>
@@ -228,7 +228,7 @@
                     <listitem>
                         <para>You should always have the checksum for
                             your backup files. The checksum is a
-                            unique identifier for a file. </para>
+                            unique identifier for a file.</para>
                         <para>When you transfer that same file over
                             the network, you can run another checksum
                             calculation. If the checksums are
@@ -246,7 +246,7 @@
                                 <command>sha1sum</command> should be
                             used carefully, since the required time
                             for the calculation is directly
-                            proportional to the file's size. </para>
+                            proportional to the file's size.</para>
                         <para>For files larger than ~4-6 gigabytes,
                             and depending on your CPU, the process may
                             take a long time.</para>

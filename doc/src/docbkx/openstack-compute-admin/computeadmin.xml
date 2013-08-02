@@ -28,19 +28,19 @@ format="SVG" scale="60"/>
     <para>By understanding how the different installed nodes interact with each other you can
         administer the OpenStack Compute installation. OpenStack Compute offers many ways to install
         using multiple servers but the general idea is that you can have multiple compute nodes that
-        control the virtual servers and a cloud controller node that contains the remaining Nova services. </para>
+        control the virtual servers and a cloud controller node that contains the remaining Nova services.</para>
     <para>The OpenStack Compute cloud works via the interaction of a series of daemon processes
         named nova-* that reside persistently on the host machine or machines. These binaries can
         all run on the same machine or be spread out on multiple boxes in a large deployment. The
         responsibilities of Services, Managers, and Drivers, can be a bit confusing at first. Here
         is an outline the division of responsibilities to make understanding the system a little bit
-        easier. </para>
+        easier.</para>
     <para>Currently, Services are nova-api, nova-objectstore (which can be replaced with Glance, the
         OpenStack Image Service), <systemitem class="service">nova-compute</systemitem>, and nova-network. Managers and Drivers are specified
         by configuration options and loaded using utils.load_object(). Managers are responsible for
         a certain aspect of the system. It is a logical grouping of code relating to a portion of
         the system. In general other components should be using the manager to make changes to the
-        components that it is responsible for. </para>
+        components that it is responsible for.</para>
     <itemizedlist>
         <listitem>
             <para><literal>nova-api</literal>: The nova-api service receives xml requests and sends them to the rest
@@ -79,21 +79,21 @@ format="SVG" scale="60"/>
             <title>API Server</title>
             <para>At the heart of the cloud framework is an API Server. This API Server makes
                 command and control of the hypervisor, storage, and networking programmatically
-                available to users in realization of the definition of cloud computing. </para>
+                available to users in realization of the definition of cloud computing.</para>
             <para>The API endpoints are basic http web services which handle authentication,
                 authorization, and basic command and control functions using various API interfaces
                 under the Amazon, Rackspace, and related models. This enables API compatibility with
                 multiple existing tool sets created for interaction with offerings from other
-                vendors. This broad compatibility prevents vendor lock-in. </para>
+                vendors. This broad compatibility prevents vendor lock-in.</para>
         </simplesect>
         <simplesect>
             <title>Message Queue</title>
-            <para> A messaging queue brokers the interaction between compute nodes (processing), the
+            <para>A messaging queue brokers the interaction between compute nodes (processing), the
                 networking controllers (software which controls network infrastructure), API
                 endpoints, the scheduler (determines which physical hardware to allocate to a
                 virtual resource), and similar components. Communication to and from the cloud
                 controller is by HTTP requests through multiple API endpoints.</para>
-            <para> A typical message passing event begins with the API server receiving a request
+            <para>A typical message passing event begins with the API server receiving a request
                 from a user. The API server authenticates the user and ensures that the user is
                 permitted to issue the subject command. Availability of objects implicated in the
                 request is evaluated and, if available, the request is routed to the queuing engine
@@ -102,7 +102,7 @@ format="SVG" scale="60"/>
                 request, the worker takes assignment of the task and begins its execution. Upon
                 completion, a response is dispatched to the queue which is received by the API
                 server and relayed to the originating user. Database entries are queried, added, or
-                removed as necessary throughout the process. </para>
+                removed as necessary throughout the process.</para>
         </simplesect>
         <simplesect>
             <title>Compute Worker</title>
@@ -152,24 +152,24 @@ format="SVG" scale="60"/>
         <para>Access to the Euca2ools (ec2) API is controlled by an access and secret key. The
             user’s access key needs to be included in the request, and the request must be signed
             with the secret key. Upon receipt of API requests, Compute will verify the signature and
-            execute commands on behalf of the user. </para>
+            execute commands on behalf of the user.</para>
         <para>In order to begin using nova, you will need to create a
             user with the Identity Service.  </para>
     </section>
     <section xml:id="managing-the-cloud">
 
         <title>Managing the Cloud</title><para>There are three main tools that a system administrator will find useful to manage their cloud;
-            the nova client, the nova-manage command, and the Euca2ools commands. </para>
+            the nova client, the nova-manage command, and the Euca2ools commands.</para>
         <para>The nova-manage command may only be run by cloud administrators. Both
             novaclient and euca2ools can be used by all users, though specific commands may be
-            restricted by Role Based Access Control in the Identity Management service. </para>
+            restricted by Role Based Access Control in the Identity Management service.</para>
             <simplesect><title>Using the nova command-line tool</title>
             <para>Installing the python-novaclient gives you a <code>nova</code> shell command that enables
                 Compute API interactions from the command line. You install the client, and then provide
                 your username and password, set as environment variables for convenience, and then you
                 can have the ability to send commands to your cloud on the command-line.</para>
             <para>To install python-novaclient, download the tarball from
-                <link xlink:href="http://pypi.python.org/pypi/python-novaclient/2.6.3#downloads">http://pypi.python.org/pypi/python-novaclient/2.6.3#downloads</link> and then install it in your favorite python environment. </para>
+                <link xlink:href="http://pypi.python.org/pypi/python-novaclient/2.6.3#downloads">http://pypi.python.org/pypi/python-novaclient/2.6.3#downloads</link> and then install it in your favorite python environment.</para>
             <screen>
 <prompt>$</prompt> <userinput>curl -O http://pypi.python.org/packages/source/p/python-novaclient/python-novaclient-2.6.3.tar.gz</userinput>
 <prompt>$</prompt> <userinput>tar -zxvf python-novaclient-2.6.3.tar.gz</userinput>
@@ -203,7 +203,7 @@ usage: nova [--debug] [--os-username OS_USERNAME] [--os-password OS_PASSWORD]
 </screen>
             </para><para>Using the Identity Service, you are supplied with an
                 authentication endpoint, which nova recognizes as the
-                    <literal>OS_AUTH_URL</literal>. </para>
+                    <literal>OS_AUTH_URL</literal>.</para>
             <para>
                 <screen>
 <prompt>$</prompt> <userinput>export OS_AUTH_URL=http://hostname:5000/v2.0</userinput>
@@ -344,7 +344,7 @@ local0.error    @@172.20.1.43:1024</programlisting></para>
         <!--<para>Before starting migrations, review the <link linkend="configuring-migrations"
                 >Configuring Migrations</link> section.</para>-->
         <para>Migration provides a scheme to migrate running instances from one OpenStack Compute
-            server to another OpenStack Compute server. This feature can be used as described below. </para>
+            server to another OpenStack Compute server. This feature can be used as described below.</para>
 
         <itemizedlist>
             <listitem>
@@ -377,7 +377,7 @@ from above.</para>
 ...
 +-------------------------------------+----------------------------------------------------------+
                  ]]></programlisting>
-                 <para> In this example, vm1 is running on HostB.</para>
+                 <para>In this example, vm1 is running on HostB.</para>
             </listitem>
             <listitem>
                 <para>Third, select the server to migrate instances to.</para>
@@ -388,7 +388,7 @@ HostA nova-network enabled  :-) None
 HostB nova-compute enabled  :-) None
 HostC nova-compute enabled  :-) None
                  ]]></programlisting>
-                 <para> In this example, HostC can be picked up because <systemitem class="service">nova-compute</systemitem> is running on it.</para>
+                 <para>In this example, HostC can be picked up because <systemitem class="service">nova-compute</systemitem> is running on it.</para>
             </listitem>
             <listitem>
                 <para>Third, ensure that HostC has enough resource for migration.</para>
@@ -446,7 +446,7 @@ HostC            p2            5     10240     150
     <section xml:id="nova-compute-node-down">
 	<title>Recovering from a failed compute node</title>
 	<para>If you have deployed OpenStack Compute with a shared filesystem,
-	you can quickly recover from a failed compute node. </para>
+	you can quickly recover from a failed compute node.</para>
     <!--<section xml:id="nova-compute-node-down-evacuate-api">
     <title>Using the evacuate API for KVM/libvirt</title> -->
     <!--<para>Refer to <link linkend="nova_cli_evacuate">Evacuate API Reference</link> section for more details.</para>-->    
@@ -500,7 +500,7 @@ is achieved using this database command:</para>
 <programlisting>
 UPDATE instances SET host = 'np-rcc46' WHERE uuid = '3f57699a-e773-4650-a443-b4b37eed5a06';
 </programlisting>
-<para> Next, if using a hypervisor that relies on libvirt (such as KVM)
+<para>Next, if using a hypervisor that relies on libvirt (such as KVM)
 it is a good idea to update the <literal>libvirt.xml</literal> file
 (found in <literal>/var/lib/nova/instances/[instance ID]</literal>).
 The important changes to make are to change the <literal>DHCPSERVER</literal>
@@ -528,8 +528,8 @@ nova services or updating the <literal>vm_state</literal> and
          an automated configuration tool, you could encounter a situation
          where some files on your compute node are using the wrong UID or
          GID. This causes a raft of errors, such as being unable to live
-         migrate, or start virtual machines. </para>
-         <para> The following is a basic procedure run on <systemitem class="service">nova-compute</systemitem> hosts, based on the KVM hypervisor,
+         migrate, or start virtual machines.</para>
+         <para>The following is a basic procedure run on <systemitem class="service">nova-compute</systemitem> hosts, based on the KVM hypervisor,
           that could help to restore the situation:
          <itemizedlist>
          <listitem><para>First,make sure you don't use numbers that are already used for some other user/group.</para></listitem>
@@ -556,15 +556,15 @@ nova services or updating the <literal>vm_state</literal> and
     <section xml:id="nova-disaster-recovery-process">
         <title>Nova Disaster Recovery Process</title>
         <para>Sometimes, things just don't go right. An incident is
-            never planned, by its definition. </para>
+            never planned, by its definition.</para>
         <para>In this section, we will review managing your cloud
             after a disaster, and how to easily backup the persistent
             storage volumes, which is another approach when you face a
             disaster. Even apart from the disaster scenario, backup
-            ARE mandatory. </para>
+            ARE mandatory.</para>
         <para>For reference, you can find a DRP definition here : <link
                 xlink:href="http://en.wikipedia.org/wiki/Disaster_Recovery_Plan"
-                >http://en.wikipedia.org/wiki/Disaster_Recovery_Plan</link>. </para>
+                >http://en.wikipedia.org/wiki/Disaster_Recovery_Plan</link>.</para>
             <simplesect>
                 <title>A- The disaster Recovery Process presentation</title>
            <para>A disaster could happen to several components of your
@@ -572,13 +572,13 @@ nova services or updating the <literal>vm_state</literal> and
                 cut, etc. In this example, we suppose the following
                 setup : <orderedlist>
                     <listitem>
-                        <para> A cloud controller (nova-api, nova-objecstore, nova-network) </para>
+                        <para>A cloud controller (nova-api, nova-objecstore, nova-network) </para>
                     </listitem>
                     <listitem>
-                        <para> A compute node (<systemitem class="service">nova-compute</systemitem>) </para>
+                        <para>A compute node (<systemitem class="service">nova-compute</systemitem>) </para>
                     </listitem>
                     <listitem>
-                        <para> A Storage Area Network used by cinder-volumes (aka SAN) </para>
+                        <para>A Storage Area Network used by cinder-volumes (aka SAN) </para>
                     </listitem>
                 </orderedlist>The example disaster will be the worst
                 one : a power loss. That power loss applies to the
@@ -587,22 +587,22 @@ nova services or updating the <literal>vm_state</literal> and
                     crash</emphasis> : <itemizedlist>
                     <listitem>
                         <para>From the SAN to the cloud controller, we have an active iscsi session
-                            (used for the "cinder-volumes" LVM's VG). </para>
+                            (used for the "cinder-volumes" LVM's VG).</para>
                     </listitem>
                     <listitem>
                         <para>From the cloud controller to the compute node we also have active
-                            iscsi sessions (managed by cinder-volume). </para>
+                            iscsi sessions (managed by cinder-volume).</para>
                     </listitem>
                     <listitem>
                         <para>For every volume an iscsi session is
                             made (so 14 ebs volumes equals 14
-                            sessions). </para>
+                            sessions).</para>
                     </listitem>
                     <listitem>
                         <para>From the cloud controller to the compute
                             node, we also have iptables/ ebtables
                             rules which allows the access from the
-                            cloud controller to the running instance. </para>
+                            cloud controller to the running instance.</para>
                     </listitem>
                     <listitem>
                         <para>And at least, from the cloud controller
@@ -619,7 +619,7 @@ nova services or updating the <literal>vm_state</literal> and
                 <itemizedlist>
                     <listitem>
                         <para>From the SAN to the cloud, the ISCSI
-                            session no longer exists. </para>
+                            session no longer exists.</para>
                     </listitem>
                     <listitem>
                         <para>From the cloud controller to the compute
@@ -630,7 +630,7 @@ nova services or updating the <literal>vm_state</literal> and
                         <para>From the cloud controller to the compute
                             node, the iptables and ebtables are
                             recreated, since, at boot, nova-network
-                            reapply the configurations. </para>
+                            reapply the configurations.</para>
                     </listitem>
                     <listitem>
                         <para>From the cloud controller, instances
@@ -640,7 +640,7 @@ nova services or updating the <literal>vm_state</literal> and
                     <listitem>
                         <para>Into the database, data was not updated
                             at all, since nova could not have guessed
-                            the crash. </para>
+                            the crash.</para>
                     </listitem>
                 </itemizedlist>Before going further, and in order to
                 prevent the admin to make fatal mistakes,<emphasis
@@ -649,7 +649,7 @@ nova services or updating the <literal>vm_state</literal> and
                     >destroy</command>" or "<command role="italic"
                     >terminate</command>" command had been invoked, so
                 the files for the instances remain on the compute
-                node. </para>
+                node.</para>
             <para>The plan is to perform the following tasks, in that
                 exact order. <emphasis role="underline">Any extra step
                     would be dangerous at this stage</emphasis>
@@ -662,19 +662,19 @@ nova services or updating the <literal>vm_state</literal> and
                     </listitem>
                     <listitem>
                         <para>We need to update the database in order to clean the stalled state.
-                            (After that, we won't be able to perform the first step). </para>
+                            (After that, we won't be able to perform the first step).</para>
                     </listitem>
                     <listitem>
                         <para>We need to restart the instances (so go from a "shutdown" to a
-                            "running" state). </para>
+                            "running" state).</para>
                     </listitem>
                     <listitem>
                         <para>After the restart, we can reattach the volumes to their respective
-                            instances. </para>
+                            instances.</para>
                     </listitem>
                     <listitem>
-                        <para> That step, which is not a mandatory one, exists in an SSH into the
-                            instances in order to reboot them. </para>
+                        <para>That step, which is not a mandatory one, exists in an SSH into the
+                            instances in order to reboot them.</para>
                     </listitem>
                 </orderedlist>
             </para>
@@ -709,7 +709,7 @@ nova services or updating the <literal>vm_state</literal> and
 <prompt>mysql></prompt> <userinput>update volumes set instance_id=0;</userinput>
                 </programlisting>Now,
                             when running <command>nova volume-list</command> all volumes should be
-                            available. </para>
+                            available.</para>
                     </listitem>
                     <listitem>
                         <para><emphasis role="bold"> Instances Restart
@@ -723,7 +723,7 @@ nova services or updating the <literal>vm_state</literal> and
                         <para>At that stage, depending on your image,
                             some instances will completely reboot and
                             become reachable, while others will stop
-                            on the "plymouth" stage. </para>
+                            on the "plymouth" stage.</para>
                         <para><emphasis role="bold">DO NOT reboot a
                                 second time</emphasis> the ones which
                             are stopped at that stage (<emphasis
@@ -741,7 +741,7 @@ nova services or updating the <literal>vm_state</literal> and
                                 >help.ubuntu.com</link>) But remember
                             that the idea of that stage is only to ask
                             nova to reboot every instance, so the
-                            stored state is preserved. </para>
+                            stored state is preserved.</para>
                     </listitem>
                     <listitem>
                         <para><emphasis role="bold"> Volume Attachment
@@ -772,7 +772,7 @@ done &lt; $volumes_tmp_file
                                 role="italic">plymouth</emphasis>)
                             will automatically continue their boot,
                             and restart normally, while the ones which
-                            booted will see the volume. </para>
+                            booted will see the volume.</para>
                     </listitem>
                     <listitem>
                         <para><emphasis role="bold"> SSH into
@@ -790,22 +790,22 @@ done &lt; $volumes_tmp_file
                              </screen></para>
                     </listitem>
                 </itemizedlist>Voila! You successfully recovered your
-                cloud after that. </para>
+                cloud after that.</para>
             <para>Here are some suggestions : </para>
             <para><itemizedlist>
                     <listitem>
-                        <para> Use the <literal>parameter
+                        <para>Use the <literal>parameter
                                 errors=remount</literal> in the
                                 <filename>fstab</filename> file, which
                             will prevent data corruption.</para>
-                        <para> The system would lock any write to the disk if it detects an I/O
+                        <para>The system would lock any write to the disk if it detects an I/O
                             error. This configuration option should be added into the cinder-volume
                             server (the one which performs the ISCSI connection to the SAN), but
                             also into the instances' <filename>fstab</filename> file.</para>
                     </listitem>
                     <listitem>
                         <para>Do not add the entry for the SAN's disks to the cinder-volume's
-                                <filename>fstab</filename> file. </para>
+                                <filename>fstab</filename> file.</para>
                         <para>Some systems will  hang on that step,
                             which means you could lose access to your
                             cloud-controller. In order to re-run the
@@ -817,18 +817,18 @@ done &lt; $volumes_tmp_file
  </screen></para>
                     </listitem>
                     <listitem>
-                        <para> For your instances, if you have the
+                        <para>For your instances, if you have the
                             whole <filename>/home/</filename>
                             directory on the disk, instead of emptying
                             the <filename>/home</filename> directory
                             and map the disk on it, leave a user's
                             directory with the user's bash files and
                             the <filename>authorized_keys</filename>
-                            file. </para>
+                            file.</para>
                         <para>This will allow you to connect to the
                             instance, even without the volume
                             attached, if you allow only connections
-                            via public keys. </para>
+                            via public keys.</para>
                     </listitem>
             </itemizedlist>
                 </para>
@@ -846,7 +846,7 @@ done &lt; $volumes_tmp_file
                 session. <emphasis role="underline">Do not dettach the
                     volume via
                     <command>nova volume-detach</command></emphasis>, but
-                instead manually close the iscsi session. </para>
+                instead manually close the iscsi session.</para>
             <para>In the following example, the iscsi session is
                 number 15 for that instance :
                     <screen>

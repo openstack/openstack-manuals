@@ -11,7 +11,7 @@
         <para>VLANs are realized as packets on a specific physical network containing IEEE 802.1Q headers with a specific VLAN ID (VID) field value. VLAN networks sharing the same physical network are isolated from each other at L2, and can even have overlapping IP address spaces. Each distinct physical network supporting VLAN networks is treated as a separate VLAN trunk, with a distinct space of VID values. Valid VID values are 1 through 4094.</para>
         <para>VLAN configuration complexity depends on your OpenStack design requirements. In order to allow OpenStack Networking to efficiently use VLANs, you must allocate a VLAN range (one for each tenant) and turn each compute node physical switch port into a VLAN trunk port.</para>
         <note>
-          <para> NOTE: If you intend for your network to support more than 4094 tenants VLAN is probably not the correct option for you as multiple 'hacks' are required to extend the VLAN tags to more than 4094 tenants.</para>
+          <para>NOTE: If you intend for your network to support more than 4094 tenants VLAN is probably not the correct option for you as multiple 'hacks' are required to extend the VLAN tags to more than 4094 tenants.</para>
         </note>
       </section>
       <section xml:id="ch032_networking-best-practices-idp50512">
@@ -41,16 +41,16 @@
         <title>Quality of Service (QoS)</title>
         <para>The ability to set QoS on the virtual interface ports of tenant instances is a current deficiency for OpenStack Networking. The application of QoS for traffic shaping and rate-limiting at the physical network edge device is insufficient due to the dynamic nature of workloads in an OpenStack deployment and can not be leveraged in the traditional way.  QoS-as-a-Service (QoSaaS) is currently in development for the OpenStack Networking Havana release as an experimental feature. QoSaaS is planning to provide the following services:</para>
         <itemizedlist><listitem>
-            <para> Traffic shaping via DSCP markings</para>
+            <para>Traffic shaping via DSCP markings</para>
           </listitem>
 <listitem>
-            <para> Rate-limiting on a per port/network/tenant basis.</para>
+            <para>Rate-limiting on a per port/network/tenant basis.</para>
           </listitem>
 <listitem>
-            <para> Port mirroring (via open source or third-party plugins)</para>
+            <para>Port mirroring (via open source or third-party plugins)</para>
           </listitem>
 <listitem>
-            <para> Flow analysis (via open source or third-party plugins)</para>
+            <para>Flow analysis (via open source or third-party plugins)</para>
           </listitem>
 </itemizedlist>
         <para>Tenant traffic port mirroring or Network Flow monitoring is currently not an exposed feature in OpenStack Networking. There are third-party plugin extensions that do provide Port Mirroring on a per port/network/tenant basis. If Open vSwitch is used on the networking hypervisor, it is possible to enable sFlow and port mirroring, however it will require some operational effort to implement.</para>
@@ -75,14 +75,14 @@
       <title>Networking Services Limitations</title>
       <para>There a few current known limitations of OpenStack Networking:</para>
       <itemizedlist><listitem>
-          <para> <emphasis role="bold">Overlapping IP addresses</emphasis>Linux network namespaces are required on nodes running neutron-l3-agent or neutron-dhcp-agent if overlapping IP's are in use. In order to support overlapping IP addresses, the OpenStack Networking DHCP and L3 agents use Linux network namespaces by default. If the host does not support namespaces then the <literal>neutron-l3-agent</literal> and <literal>neutron-dhcp-agent</literal> should be run on different hosts.</para>
+          <para><emphasis role="bold">Overlapping IP addresses</emphasis>Linux network namespaces are required on nodes running neutron-l3-agent or neutron-dhcp-agent if overlapping IP's are in use. In order to support overlapping IP addresses, the OpenStack Networking DHCP and L3 agents use Linux network namespaces by default. If the host does not support namespaces then the <literal>neutron-l3-agent</literal> and <literal>neutron-dhcp-agent</literal> should be run on different hosts.</para>
           <para>A further limitation of the L3 Agent is the support a single logical router without namespaces.</para>
         </listitem>
 <listitem>
-          <para> <emphasis role="bold">Multi-Host DHCP-agent</emphasis>OpenStack Networking now supports running multiple l3-agent and dhcp-agents with load being split across those agents, but the tight coupling of that scheduling with the location of the VM is not supported in Grizzly. The Havana release is expected to include an exact replacement for the --multi_host flag in nova-network.</para>
+          <para><emphasis role="bold">Multi-Host DHCP-agent</emphasis>OpenStack Networking now supports running multiple l3-agent and dhcp-agents with load being split across those agents, but the tight coupling of that scheduling with the location of the VM is not supported in Grizzly. The Havana release is expected to include an exact replacement for the --multi_host flag in nova-network.</para>
         </listitem>
 <listitem>
-          <para> <emphasis role="bold">No IPv6 Support for L3 agents</emphasis>The neutron-l3-agent, used by many plugins to implement L3 forwarding, supports only IPv4 forwarding.</para>
+          <para><emphasis role="bold">No IPv6 Support for L3 agents</emphasis>The neutron-l3-agent, used by many plugins to implement L3 forwarding, supports only IPv4 forwarding.</para>
         </listitem>
 </itemizedlist>
     </section>

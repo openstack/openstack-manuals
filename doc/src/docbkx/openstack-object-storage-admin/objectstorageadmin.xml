@@ -6,13 +6,13 @@
     <title>System Administration for OpenStack Object Storage</title>
     <para>By understanding the concepts inherent to the Object Storage
         system you can better monitor and administer your storage
-        solution. </para>
+        solution.</para>
 
     <section xml:id="understanding-how-object-storage-works">
 
         <title>Understanding How Object Storage Works</title>
         <para>This section offers a brief overview of each concept in
-            administering Object Storage. </para>
+            administering Object Storage.</para>
         <simplesect xml:id="the-ring">
             <title>The Ring</title>
 
@@ -22,7 +22,7 @@
                 objects. When other components need to perform any
                 operation on an object, container, or account, they
                 need to interact with the appropriate ring to
-                determine its location in the cluster. </para>
+                determine its location in the cluster.</para>
             <para>The Ring maintains this mapping using zones,
                 devices, partitions, and replicas. Each partition in
                 the ring is replicated, by default, 3 times across the
@@ -60,11 +60,11 @@
                 For each request, it will look up the location of the
                 account, container, or object in the ring (see below)
                 and route the request accordingly. The public API is
-                also exposed through the Proxy Server. </para>
+                also exposed through the Proxy Server.</para>
             <para>A large number of failures are also handled in the
                 Proxy Server. For example, if a server is unavailable
                 for an object PUT, it will ask the ring for a hand-off
-                server and route there instead. </para>
+                server and route there instead.</para>
             <para>When objects are streamed to or from an object
                 server, they are streamed directly through the proxy
                 server to or from the user – the proxy server does not
@@ -120,24 +120,24 @@
 
             <para>Replication is designed to keep the system in a
                 consistent state in the face of temporary error
-                conditions like network outages or drive failures. </para>
+                conditions like network outages or drive failures.</para>
             <para>The replication processes compare local data with
                 each remote copy to ensure they all contain the latest
                 version. Object replication uses a hash list to
                 quickly compare subsections of each partition, and
                 container and account replication use a combination of
-                hashes and shared high water marks. </para>
+                hashes and shared high water marks.</para>
             <para>Replication updates are push based. For object
                 replication, updating is just a matter of rsyncing
                 files to the peer. Account and container replication
                 push missing records over HTTP or rsync whole database
-                files. </para>
+                files.</para>
             <para>The replicator also ensures that data is removed
                 from the system. When an item (object, container, or
                 account) is deleted, a tombstone is set as the latest
                 version of the item. The replicator will see the
                 tombstone and ensure that the item is removed from the
-                entire system. </para>
+                entire system.</para>
         </simplesect>
         <simplesect xml:id="updaters">
             <title>Updaters</title>
@@ -156,7 +156,7 @@
                 container server did not update the object listing,
                 and so the update would be queued for a later update.
                 Container listings, therefore, may not immediately
-                contain the object. </para>
+                contain the object.</para>
             <para>In practice, the consistency window is only as large
                 as the frequency at which the updater runs and may not
                 even be noticed as the proxy server will route listing
@@ -175,7 +175,7 @@
                 will replace the bad file from another replica. If
                 other errors are found they are logged (for example,
                 an object’s listing can’t be found on any container
-                server it should be). </para>
+                server it should be).</para>
         </simplesect>
     </section>
 
@@ -198,7 +198,7 @@
                     <filename><replaceable>&lt;timestamp></replaceable>.data</filename>).
             The object's data is stored in the file, and the object's
             metadata is stored in the extended attributes (xattrs) of
-            the file. </para>
+            the file.</para>
         <para>If a user deletes the object, the
                 <filename>.data</filename> file is deleted and a
                     <filename><replaceable>&lt;timestamp></replaceable>.ts</filename>
@@ -369,7 +369,7 @@
             pushed to all of the servers in the cluster. For more
             information about building rings, running
             swift-ring-builder with no options will display help text
-            with available commands and options. </para>
+            with available commands and options.</para>
 
     </section>
     <section xml:id="considerations-and-tuning">
@@ -537,7 +537,7 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                 that swift waits for processes to die and notably you
                 can pass <command>--run-dir</command> flag with
                     <command>swift-init</command> to set where PIDs
-                will be stored. </para>
+                will be stored.</para>
         </section>
         <section xml:id="logging-considerations">
             <title>Logging Considerations</title>
@@ -1502,7 +1502,7 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
 
         <title>Additional Features</title>
         <para>This section aims to detail a number of additional
-            features in Swift and their configuration. </para>
+            features in Swift and their configuration.</para>
         <section xml:id="swift-healthcheck">
 
             <title>Health Check</title>
@@ -1545,7 +1545,7 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
             <title>Domain Remap</title>
             <para>Domain Remap is middleware that translates container
                 and account parts of a domain to path parameters that
-                the proxy server understands. </para>
+                the proxy server understands.</para>
             <table rules="all">
                 <caption>Configuration options for filter:domain_remap
                     in proxy-server.conf file</caption>
@@ -1601,7 +1601,7 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
             <para>CNAME Lookup is middleware that translates an
                 unknown domain in the host header to something that
                 ends with the configured storage_domain by looking up
-                the given domain's CNAME record in DNS. </para>
+                the given domain's CNAME record in DNS.</para>
             <table rules="all">
                 <caption>Configuration options for filter:cname_lookup
                     in proxy-server.conf file</caption>
@@ -1701,7 +1701,7 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                 uploads to specific locations in Swift. Note that
                 changing the X-Account-Meta-Temp-URL-Key will
                 invalidate any previously generated temporary URLs
-                within 60 seconds (the memcache time for the key). </para>
+                within 60 seconds (the memcache time for the key).</para>
             <para>A script called swift-temp-url distributed with swift source
                 code eases the temporary URL creation:
                 <programlisting>
@@ -1711,7 +1711,7 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
     temp_url_expires=1374497657
                 </programlisting>
                 The path returned by the above command is prefixed with swift
-                storage hostname. </para>
+                storage hostname.</para>
             <table rules="all">
                 <caption>Configuration options for filter:tempurl in
                     proxy-server.conf file</caption>
@@ -1750,7 +1750,7 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
             <title>Name Check Filter</title>
             <para>Name Check is a filter that disallows any paths that
                 contain defined forbidden characters or that exceed a
-                defined length. </para>
+                defined length.</para>
             <table rules="all">
                 <caption>Configuration options for filter:name_check
                     in proxy-server.conf file</caption>
@@ -1848,7 +1848,7 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                     <tr>
                         <td>container_listing_limit</td>
                         <td>10000</td>
-                        <td> the default (and max) number of items
+                        <td>the default (and max) number of items
                             returned for a container listing
                             request</td>
                     </tr>
@@ -2039,7 +2039,7 @@ $ swift-dispersion-report -j
                 as a single object. It is different in that it does
                 not rely on eventually consistent container listings
                 to do so. Instead, a user defined manifest of the
-                object segments is used. </para>
+                object segments is used.</para>
             <section xml:id="slo-uploading-manifest">
                 <title>Uploading the Manifest</title>
                 <para>After the user has uploaded the objects to be
@@ -2079,7 +2079,7 @@ $ swift-dispersion-report -j
                     minimum size) then the user will receive a 4xx
                     error response. If everything does match, the user
                     will receive a 2xx response and the SLO object is
-                    ready for downloading. </para>
+                    ready for downloading.</para>
                 <para>Behind the scenes, on success, a json manifest
                     generated from the user input is sent to object
                     servers with an extra "X-Static-Large-Object:
@@ -2088,11 +2088,11 @@ $ swift-dispersion-report -j
                     appended to the existing Content-Type, where
                     total_size is the sum of all the included
                     segments' size_bytes. This extra parameter will be
-                    hidden from the user. </para>
+                    hidden from the user.</para>
                 <para>Manifest files can reference objects in separate
                     containers, which will improve concurrent upload
                     speed. Objects can be referenced by multiple
-                    manifests. </para>
+                    manifests.</para>
             </section>
             <section xml:id="slo-retrieving">
                 <title>Retrieving a Large Object</title>
@@ -2103,7 +2103,7 @@ $ swift-dispersion-report -j
                     Length no longer match the connection will drop.
                     In this case a 409 Conflict will be logged in the
                     proxy logs and the user will receive incomplete
-                    results. </para>
+                    results.</para>
                 <para>The headers from this GET or HEAD request will
                     return the metadata attached to the manifest
                     object itself with some exceptions: <itemizedlist>
@@ -2125,7 +2125,7 @@ $ swift-dispersion-report -j
                     Will return the actual manifest file itself. This
                     is generated json and does not match the data sent
                     from the original multipart-manifest=put. Use this
-                    call for debugging. </para>
+                    call for debugging.</para>
                 <para>When the manifest object is uploaded you are
                     more or less guaranteed that every segment in the
                     manifest exists and matched the specifications.
@@ -2133,7 +2133,7 @@ $ swift-dispersion-report -j
                     from breaking the SLO download by
                     deleting/replacing a segment referenced in the
                     manifest. It is left to the user use caution in
-                    handling the segments. </para>
+                    handling the segments.</para>
             </section>
             <section xml:id="slo-deleting">
                 <title>Deleting a Large Object</title>
@@ -2144,7 +2144,7 @@ $ swift-dispersion-report -j
                     will delete all the segments referenced in the
                     manifest and then, if successful, the manifest
                     itself. The failure response will be similar to
-                    the bulk delete middleware. </para>
+                    the bulk delete middleware.</para>
             </section>
             <section xml:id="slo-modifying">
                 <title>Modifying a Large Object</title>
@@ -2167,7 +2167,7 @@ $ swift-dispersion-report -j
                     count the bytes-used twice (for both the manifest
                     and the segments it's referring to) in the
                     container and account metadata which can be used
-                    for stats purposes. </para>
+                    for stats purposes.</para>
             </section>
         </section>
         <section xml:id="object-storage-container-quotas">
@@ -2255,7 +2255,7 @@ $ swift-dispersion-report -j
             delete will return an HTTPBadGateway. In both cases the
             response body is a json dictionary specifying in the
             number of files successfully deleted, not found, and a
-            list of the files that failed. </para>
+            list of the files that failed.</para>
     </section>
 
     <section xml:id="configuring-openstack-object-storage-with-s3_api">
@@ -2313,7 +2313,7 @@ $ swift-dispersion-report -j
         <para>To add this middleware to your configuration, add the
             swift3 middleware in front of the auth middleware, and
             before any other middleware that look at swift requests
-            (like rate limiting). </para>
+            (like rate limiting).</para>
 
         <para>Ensure that your proxy-server.conf file contains swift3
             in the pipeline and the [filter:swift3] section, as shown
@@ -2344,7 +2344,7 @@ use = egg:swift#swift3
             old-style calling format, and not the hostname-based
             container format. Here is an example client setup using
             the Python boto library on a locally installed all-in-one
-            Swift installation. </para>
+            Swift installation.</para>
         <programlisting>
 connection = boto.s3.Connection(
     aws_access_key_id='test:tester',
@@ -2379,7 +2379,7 @@ connection = boto.s3.Connection(
                 account. ACLs are set at the container level and
                 support lists for read and write access, which are set
                 with the X-Container-Read and X-Container-Write header
-                respectively. </para>
+                respectively.</para>
             <para>The swift client can be used to set the acls, using
                 the post subcommand with the option '-r' for the read
                 ACL, and '-w' for the write ACL. This example allows
@@ -2387,7 +2387,7 @@ connection = boto.s3.Connection(
                 <programlisting>
         $ swift post -r 'testuser'
         </programlisting>
-                This could instead be a list of users. </para>
+                This could instead be a list of users.</para>
             <para>If you are using the StaticWeb middleware to allow
                 OpenStack Object Storage to serve public web content,
                 you should also be aware of the ACL syntax for
@@ -2405,7 +2405,7 @@ connection = boto.s3.Connection(
             <para>The command line usage for swift, the CLI tool is:
                 <literallayout>swift (command) [options] [args]</literallayout></para>
 
-            <para>Here are the available commands for swift. </para>
+            <para>Here are the available commands for swift.</para>
             <simplesect>
                 <title>stat [container] [object]</title>
                 <para>Displays information for the account, container,
@@ -2440,7 +2440,7 @@ connection = boto.s3.Connection(
                     -read-acl) and -w (or -write-acl) options. The -m
                     or -meta option is allowed on all and used to
                     define the user meta data items to set in the form
-                    Name:Value. This option can be repeated. </para>
+                    Name:Value. This option can be repeated.</para>
                 <para>Example: post -m Color:Blue -m Size:Large</para>
             </simplesect>
             <simplesect>
@@ -2458,7 +2458,7 @@ connection = boto.s3.Connection(
                     [object] …</title>
                 <para>Deletes everything in the account (with —all),
                     or everything in a container, or a list of objects
-                    depending on the args given. </para>
+                    depending on the args given.</para>
                 <para>Example: swift -A
                     https://auth.api.rackspacecloud.com/v1.0 -U user
                     -K key stat</para>
@@ -2590,7 +2590,7 @@ Write ACL:
                 list command on the “logtest” container; then for each
                 item in the list run swift with download -o - then
                 pipe the output into grep to filter the put requests
-                and finally into wc -l to count the lines. </para>
+                and finally into wc -l to count the lines.</para>
             <para>
                 <screen><prompt>$</prompt> <userinput>for f in `swift -A http://swift-auth.com:11000/v1.0 -U test:tester -K testing list logtest` ; \
         do  echo -ne “PUTS - ” ; swift -A http://swift-auth.com:11000/v1.0 -U test:tester -K testing download -o -  logtest $f | grep PUT | wc -l ; \
@@ -2612,7 +2612,7 @@ Write ACL:
                 2010-11-15. Then on each of item(s) returned run swift
                 with the download -o - then pipe the output to grep
                 and wc as in the previous example. The echo command is
-                added to display the object name. </para>
+                added to display the object name.</para>
             <para>
                 <screen><prompt>$</prompt> <userinput>for f in `swift -A http://swift-auth.com:11000/v1.0 -U test:tester -K testing list -p 2010-11-15 logtest` ; \
         do  echo -ne “$f - PUTS - ” ; swift -A http://127.0.0.1:11000/v1.0 -U test:tester -K testing download -o - logtest $f | grep PUT | wc -l ; \
@@ -2623,7 +2623,7 @@ Write ACL:
             <para>The swift utility is simple, scalable, flexible and
                 provides useful solutions all of which are core
                 principles of cloud computing; with the -o output
-                option being just one of its many features. </para>
+                option being just one of its many features.</para>
         </section>
     </section>
 </chapter>

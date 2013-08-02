@@ -21,11 +21,11 @@ scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
 least_cost_functions=nova.scheduler.least_cost.compute_fill_first_cost_fn
 compute_fill_first_cost_fn_weight=-1.0
 </programlisting>
-    <para> Compute is configured by default to use the Multi
+    <para>Compute is configured by default to use the Multi
         Scheduler, which allows the admin to specify different
         scheduling behavior for compute requests versus volume
-        requests. </para>
-    <para> The compute scheduler is configured by default as a Filter
+        requests.</para>
+    <para>The compute scheduler is configured by default as a Filter
         Scheduler, described in detail in the next section. In the
         default configuration, this scheduler will only consider hosts
         that are in the requested availability zone
@@ -33,7 +33,7 @@ compute_fill_first_cost_fn_weight=-1.0
         sufficient RAM available (<literal>RamFilter</literal>), and
         that are actually capable of servicing the request
             (<literal>ComputeFilter</literal>).</para>
-    <para> From the resulting filtered list of eligible hosts, the
+    <para>From the resulting filtered list of eligible hosts, the
         scheduler will assign a cost to each host based on the amount
         of free RAM
             (<literal>nova.scheduler.least_cost.compute_fill_first_cost_fn</literal>),
@@ -41,10 +41,10 @@ compute_fill_first_cost_fn_weight=-1.0
             (<literal>compute_fill_first_cost_fn_weight</literal>),
         and will select the host with the minimum cost. This is
         equivalent to selecting the host with the maximum amount of
-        RAM available. </para>
+        RAM available.</para>
     <para>For information on the volume scheduler, refer to the <link
             xlink:href="../../../openstack-block-storage/admin/content/">OpenStack Block Storage
-            Admin Manual</link> for information. </para>
+            Admin Manual</link> for information.</para>
     <section xml:id="filter-scheduler">
         <title>Filter Scheduler</title>
         <para>The Filter Scheduler
@@ -55,7 +55,7 @@ compute_fill_first_cost_fn_weight=-1.0
             created. This Scheduler can only be used for scheduling
             compute requests, not volume requests, i.e. it can only be
             used with the <literal>compute_scheduler_driver</literal>
-            configuration option. </para>
+            configuration option.</para>
     </section>
     <section xml:id="scheduler-filters">
         <?dbhtml stop-chunking?>
@@ -128,7 +128,7 @@ scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
                 only create instances from that tenant (or list of tenants). A
                 host can be in different aggregates. If a host does not belong
                 to an aggregate with the metadata key, it can create instances
-                from all tenants. </para>
+                from all tenants.</para>
         </section>
 
         <section xml:id="allhostsfilter">
@@ -139,9 +139,9 @@ scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
 
         <section xml:id="availabilityzonefilter">
             <title> AvailabilityZoneFilter </title>
-            <para> Filters hosts by availability zone. This filter
+            <para>Filters hosts by availability zone. This filter
                 must be enabled for the scheduler to respect
-                availability zones in requests. </para>
+                availability zones in requests.</para>
         </section>
 
         <section xml:id="computecapabilitiesfilter">
@@ -160,18 +160,18 @@ scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
 
         <section xml:id="computefilter">
             <title> ComputeFilter </title>
-            <para> Passes all hosts that are operational and enabled.</para>
+            <para>Passes all hosts that are operational and enabled.</para>
             <para>In general, this filter should always be enabled.
             </para>
         </section>
 
         <section xml:id="corefilter">
             <title> CoreFilter </title>
-            <para> Only schedule instances on hosts if there are
+            <para>Only schedule instances on hosts if there are
                 sufficient CPU cores available. If this filter is not
                 set, the scheduler may over provision a host based on
                 cores (i.e., the virtual cores running on an instance
-                may exceed the physical cores). </para>
+                may exceed the physical cores).</para>
             <para>This filter can be configured to allow a fixed
                 amount of vCPU overcommitment by using the
                     <literal>cpu_allocation_ratio </literal>
@@ -183,7 +183,7 @@ scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
       </programlisting>
                 With this setting, if there are 8 vCPUs on a node, the
                 scheduler will allow instances up to 128 vCPU to be
-                run on that node. </para>
+                run on that node.</para>
             <para>To disallow vCPU overcommitment set:</para>
             <programlisting>
          cpu_allocation_ratio=1.0
@@ -223,7 +223,7 @@ scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
         </section>
         <section xml:id="diskfilter">
             <title>DiskFilter</title>
-            <para> Only schedule instances on hosts if there is sufficient disk
+            <para>Only schedule instances on hosts if there is sufficient disk
                 space available for root and ephemeral storage.</para>
             <para>This filter can be configured to allow a fixed amount of disk
                 overcommitment by using the <literal>disk_allocation_ratio
@@ -240,7 +240,7 @@ scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
         </section>
         <section xml:id="groupantiaffinityfilter">
             <title>GroupAntiAffinityFilter</title>
-            <para> The GroupAntiAffinityFilter ensures that each instance in a
+            <para>The GroupAntiAffinityFilter ensures that each instance in a
                 group is on a different host. To take advantage of this filter,
                 the requester must pass a scheduler hint, using
                     <literal>group</literal> as the key and a list of instance
@@ -294,12 +294,12 @@ scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
 
         <section xml:id="isolatedhostsfilter">
             <title> IsolatedHostsFilter </title>
-            <para> Allows the admin to define a special (isolated) set
+            <para>Allows the admin to define a special (isolated) set
                 of images and a special (isolated) set of hosts, such
                 that the isolated images can only run on the isolated
                 hosts, and the isolated hosts can only run isolated
-                images. </para>
-            <para> The admin must specify the isolated set of images
+                images.</para>
+            <para>The admin must specify the isolated set of images
                 and hosts in the <filename>nova.conf</filename> file
                 using the <literal>isolated_hosts</literal> and
                     <literal>isolated_images</literal> configuration
@@ -398,7 +398,7 @@ ram_allocation_ratio=1.5
 </programlisting>
                 With this setting, if there is 1GB of free RAM, the
                 scheduler will allow instances up to size 1.5GB to be
-                run on that instance. </para>
+                run on that instance.</para>
         </section>
 
         <section xml:id="retryfilter">
@@ -509,7 +509,7 @@ ram_allocation_ratio=1.5
                 </mediaobject>
             </figure></para>
 
-        <para> The Filter Scheduler takes the hosts that remain after
+        <para>The Filter Scheduler takes the hosts that remain after
             the filters have been applied and applies one or more cost
             function to each host to get numerical scores for each
             host. Each cost score is multiplied by a weighting
@@ -523,7 +523,7 @@ ram_allocation_ratio=1.5
 least_cost_functions=nova.scheduler.least_cost.compute_fill_first_cost_fn
 compute_fill_first_cost_fn_weight=-1.0
             </programlisting>
-        <para> Multiple cost functions can be specified in the
+        <para>Multiple cost functions can be specified in the
                 <literal>least_cost_functions</literal> configuration
             option, separated by commas. For example:</para>
         <programlisting>
@@ -531,10 +531,10 @@ least_cost_functions=nova.scheduler.least_cost.compute_fill_first_cost_fn,nova.s
 compute_fill_first_cost_fn_weight=-1.0
 noop_cost_fn_weight=1.0
 </programlisting>
-        <para> If there are multiple cost functions, then the weighted
+        <para>If there are multiple cost functions, then the weighted
             cost scores are added together. The scheduler selects the
             host that has the minimum weighted cost.</para>
-        <para> The Compute service comes with three cost functions: </para>
+        <para>The Compute service comes with three cost functions: </para>
         <section xml:id="compute_fill_first_cost_fn">
             <title>nova.scheduler.least_cost.compute_fill_first_cost_fn</title>
             <para>This cost function calculates the amount of free
@@ -560,8 +560,8 @@ compute_fill_first_cost_fn_weight=-1.0
             <title>nova.scheduler.least_cost.retry_host_cost_fn</title>
             <para>This cost function adds additional cost for retrying
                 scheduling a host that was already used for a previous
-                scheduling attempt. </para>
-            <para> The normal method of using this function is to set
+                scheduling attempt.</para>
+            <para>The normal method of using this function is to set
                     <literal>retry_host_cost_fn_weight</literal> to a
                 positive value, so that hosts which consistently
                 encounter build failures will be used less

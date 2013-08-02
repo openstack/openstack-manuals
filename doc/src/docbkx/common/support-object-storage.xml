@@ -6,7 +6,7 @@
         <para>For OpenStack Object Storage, everything is logged in /var/log/syslog (or messages on some distros). Several settings enable further customization of logging, such as log_name, log_facility, and log_level, within the object server configuration files.</para> 
         <section xml:id="handling-drive-failure">
             <title>Handling Drive Failure</title>
-       <para> In the event that a drive has failed, the first step is to make sure the drive is unmounted. This will make it easier for OpenStack Object Storage to work around the failure until it has been resolved. If the drive is going to be replaced immediately, then it is just best to replace the drive, format it, remount it, and let replication fill it up.</para>
+       <para>In the event that a drive has failed, the first step is to make sure the drive is unmounted. This will make it easier for OpenStack Object Storage to work around the failure until it has been resolved. If the drive is going to be replaced immediately, then it is just best to replace the drive, format it, remount it, and let replication fill it up.</para>
        <para>If the drive can’t be replaced immediately, then it is best to leave it unmounted, and remove the drive from the ring. This will allow all the replicas that were on that drive to be replicated elsewhere until the drive is replaced. Once the drive is replaced, it can be re-added to the ring.</para>
        <para>Rackspace has seen hints at drive failures by looking at error messages in /var/log/kern.log -
         do consider checking this in your monitoring</para>
@@ -41,7 +41,7 @@
 
         <section xml:id="recover-ring-builder-file">
 	<title>Emergency Recovery of Ring Builder Files</title>
-	<para> You should always keep a backup of Swift ring builder files. 
+	<para>You should always keep a backup of Swift ring builder files. 
 	However, if an emergency occurs, this procedure may assist in returning
 	your cluster to an operational state.</para>
 	<para>Using existing Swift tools, there is no way to recover a builder
@@ -50,7 +50,7 @@
 	 the one you have lost. The following is what you will need to do.</para>
 	<warning><title>Warning</title>
 	<para>This procedure is a last-resort for emergency circumstances - it 
-	requires knowledge of the swift python code and may not succeed. </para></warning>
+	requires knowledge of the swift python code and may not succeed.</para></warning>
 	<para>First, load the ring and a new ringbuilder object in a Python REPL:</para>
 	<programlisting>
 >>> from swift.common.ring import RingData, RingBuilder

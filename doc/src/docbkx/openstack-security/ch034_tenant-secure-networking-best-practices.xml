@@ -16,10 +16,10 @@
       <title>Security Groups</title>
       <para>The OpenStack Networking Service provides security group functionality using a mechanism that is more flexible and powerful than the security group capabilities built into OpenStack Compute. Thus, when using OpenStack Networking, <emphasis>nova.conf</emphasis> should always disable built-in security groups and proxy all security group calls to the OpenStack Networking API. Failure to do so will result in conflicting security policies being simultaneously applied by both services. To proxy security groups to OpenStack Networking, use the following configuration values:</para>
       <itemizedlist><listitem>
-          <para> firewall_driver : must be set to 'nova.virt.firewall.NoopFirewallDriver' so that <systemitem class="service">nova-compute</systemitem> does not perform iptables-based filtering itself.</para>
+          <para>firewall_driver : must be set to 'nova.virt.firewall.NoopFirewallDriver' so that <systemitem class="service">nova-compute</systemitem> does not perform iptables-based filtering itself.</para>
         </listitem>
 <listitem>
-          <para> security_group_api : must be set to 'neutron' so that all security group requests are proxied to the OpenStack Network Service.</para>
+          <para>security_group_api : must be set to 'neutron' so that all security group requests are proxied to the OpenStack Network Service.</para>
         </listitem>
 </itemizedlist>
       <para>Security groups and security group rules allow administrators and tenants the ability to specify the type of traffic and direction (ingress/egress) that is allowed to pass through a virtual interface port. A security group is a container for security group rules. When a virtual interface port is created in OpenStack Networking it is associated with a security group. If a security group is not specified, the port will be associated with a 'default' security group. By default this group will drop all ingress traffic and allow all egress. Rules can be added to this group in order to change the behaviour.</para>

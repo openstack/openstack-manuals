@@ -26,7 +26,7 @@ bridge_mappings = physnet2:br-eth1</programlisting></para>
                     <literal>net02</literal>), each with one subnet
                     (<literal>net01_subnet01</literal>: 192.168.101.0/24,
                     <literal>net02_subnet01</literal>, 192.168.102.0/24). Both private networks are
-                attached to a router that contains them to the public network (10.64.201.0/24). </para>
+                attached to a router that contains them to the public network (10.64.201.0/24).</para>
 
      <mediaobject>
         <imageobject>
@@ -116,7 +116,7 @@ bridge_mappings = physnet2:br-eth1</programlisting></para>
         </simplesect>
         <simplesect>
             <title>Physical connectivity bridge</title>
-            <para> The <literal>br-eth1</literal> bridge provides connectivity to the physical
+            <para>The <literal>br-eth1</literal> bridge provides connectivity to the physical
                 network interface card, <literal>eth1</literal>. It connects to the integration
                 bridge by a veth pair: <literal>(int-br-eth1, phy-br-eth1)</literal>.</para>
         </simplesect>
@@ -235,14 +235,14 @@ bridge_mappings = physnet1:br-ex,physnet2:br-eth1</programlisting>
                 </emphasis>to prevent collisions between the physical networks on the network host,
                 and the logical networks used by the virtual machines. It also prevents collisions
                 across different logical networks that are not routed to each other, as you will see
-                in the next scenario. </para>
+                in the next scenario.</para>
             <para>A network namespace can be thought of as an isolated environment that has its own
                 networking stack. A network namespace has its own network interfaces, routes, and
                 iptables rules. You can think of like a chroot jail, except for networking instead
                 of a file system. As an aside, LXC (Linux containers) use network namespaces to
                 implement networking virtualization.</para>
             <para>OpenStack Networking creates network namespaces on the network host in order
-                to avoid subnet collisions. </para>
+                to avoid subnet collisions.</para>
             <para>Tn this example, there are three network namespaces, as depicted in the following figure.<itemizedlist>
                     <listitem>
                         <para><literal>qdhcp-<replaceable>aaa</replaceable></literal>: contains the
@@ -258,7 +258,7 @@ bridge_mappings = physnet1:br-ex,physnet2:br-eth1</programlisting>
                                     <literal>qr-<replaceable>ZZZ</replaceable></literal>, and
                                     <literal>qg-<replaceable>VVV</replaceable></literal> interfaces,
                             and the corresponding routes. This namespace implements
-                                <literal>router01</literal> in our example. </para>
+                                <literal>router01</literal> in our example.</para>
                     </listitem>
                     <listitem>
                         <para><literal>qdhcp-<replaceable>ccc</replaceable></literal>: contains the
@@ -386,7 +386,7 @@ physical_interface_mappings: physnet2:eth1</programlisting></para>
                 <literal>net02</literal>), each with one subnet
                 (<literal>net01_subnet01</literal>: 192.168.101.0/24,
                 <literal>net02_subnet01</literal>, 192.168.102.0/24). Both private networks are
-                attached to a router that contains them to the public network (10.64.201.0/24). </para>
+                attached to a router that contains them to the public network (10.64.201.0/24).</para>
 
             <mediaobject>
                 <imageobject>
@@ -466,14 +466,14 @@ physical_interface_mappings: physnet2:eth1</programlisting></para>
         </simplesect>
         <simplesect>
             <title>Scenario 1: Network host config</title>
-            <para>The following figure shows the network devices on the network host. </para>
+            <para>The following figure shows the network devices on the network host.</para>
             <mediaobject>
                 <imageobject>
                     <imagedata fileref="figures/under-the-hood-scenario-1-linuxbridge-network.png" contentwidth="6in"/>
                 </imageobject>
             </mediaobject>
             <para>The following figure shows how the Linux bridge plugin uses network namespaces to
-                provide isolation. </para><note><para>veth pairs form connections between the
+                provide isolation.</para><note><para>veth pairs form connections between the
                 Linux bridges and the network namespaces.</para></note><mediaobject>
                     <imageobject>
                         <imagedata fileref="figures/under-the-hood-scenario-1-linuxbridge-netns.png" contentwidth="6in"/>

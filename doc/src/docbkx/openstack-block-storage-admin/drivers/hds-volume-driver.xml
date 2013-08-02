@@ -51,7 +51,7 @@
     <title>Configuration</title>
     <para>
       HDS driver supports the concept of differentiated services,
-      <footnote xml:id='hds-fn-svc-1'><para> Not to be confused with
+      <footnote xml:id='hds-fn-svc-1'><para>Not to be confused with
       Cinder volume service </para> </footnote> where <link
       linkend="multi_backend">volume type</link> can be associated
       with the fine tuned performance characteristics of HDP -- the
@@ -67,10 +67,10 @@
       Configuration is read from an xml format file. Its sample is shown
       below, for single backend and for multi-backend cases.
     </para>
-    <note><itemizedlist><listitem><para> HUS configuration file is
+    <note><itemizedlist><listitem><para>HUS configuration file is
     read at the start of cinder-volume service. Any configuration
     changes after that will require a service restart.
-    </para></listitem> <listitem><para> It is not recommended to
+    </para></listitem> <listitem><para>It is not recommended to
     manage a HUS array simultaneously from multiple cinder instances
     or servers. <footnote xml:id='hds-one-instance-only'> <para>It is
     okay to run manage multiple HUS arrays using multiple cinder
@@ -259,12 +259,12 @@
       HDS volume driver. Four differentiated service labels are
       predefined: <literal>svc_0</literal>, <literal>svc_1</literal>,
       <literal>svc_2</literal>, <literal>svc_3</literal><footnote
-      xml:id='hds-no-weight'><para> There is no relative precedence
+      xml:id='hds-no-weight'><para>There is no relative precedence
       or weight amongst these four labels.</para></footnote>. Each
       such service label in turn associates with the following
       parameters/tags:
       <orderedlist>
-	<listitem> <para> <literal>volume-types</literal>: A
+	<listitem><para><literal>volume-types</literal>: A
 	create_volume call with a certain <link
 	linkend="multi_backend">volume type</link> shall be matched up
 	with this tag. <literal>default</literal> is special in that
@@ -275,9 +275,9 @@
 	occur in volume creation.
 	</para>
 	</listitem>
-	<listitem> <para> <literal>HDP</literal>, the pool ID
+	<listitem><para><literal>HDP</literal>, the pool ID
 	associated with the service.  </para> </listitem>
-	<listitem> <para>
+	<listitem><para>
 	  An iSCSI port dedicated to the service.
 	</para>	</listitem>
       </orderedlist>
@@ -286,7 +286,7 @@
       <literal>svc_1</literal>, <literal>svc_2</literal>,
       <literal>svc_3</literal>) associated with it. But any mix of
       these four service labels can be used in the same instance
-      <footnote xml:id='hds-stats-all-hdp'> <para> get_volume_stats() shall always provide the
+      <footnote xml:id='hds-stats-all-hdp'> <para>get_volume_stats() shall always provide the
       available capacity based on the combined sum of all the HDPs
       used in these services labels.</para></footnote>.
     </para>
