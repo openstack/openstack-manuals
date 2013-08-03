@@ -93,20 +93,26 @@ to
                 ring:</para>
             <para>
                 <screen>
-<prompt>#</prompt> <userinput>swift-ring-builder account.builder add z&lt;ZONE&gt;-&lt;STORAGE_LOCAL_NET_IP&gt;:6002/&lt;DEVICE&gt; 100</userinput>
-<prompt>#</prompt> <userinput>swift-ring-builder container.builder add z&lt;ZONE&gt;-&lt;STORAGE_LOCAL_NET_IP_1&gt;:6001/&lt;DEVICE&gt; 100</userinput>
-<prompt>#</prompt> <userinput>swift-ring-builder object.builder add z&lt;ZONE&gt;-&lt;STORAGE_LOCAL_NET_IP_1&gt;:6000/&lt;DEVICE&gt; 100</userinput></screen>
+<prompt>#</prompt> <userinput>swift-ring-builder account.builder add z&lt;ZONE&gt;-&lt;STORAGE_LOCAL_NET_IP&gt;:6002[R&lt;STORAGE_REPLICATION_NET_IP&gt;:6005]/&lt;DEVICE&gt; 100</userinput>
+<prompt>#</prompt> <userinput>swift-ring-builder container.builder add z&lt;ZONE&gt;-&lt;STORAGE_LOCAL_NET_IP_1&gt;:6001[R&lt;STORAGE_REPLICATION_NET_IP&gt;:6004]/&lt;DEVICE&gt; 100</userinput>
+<prompt>#</prompt> <userinput>swift-ring-builder object.builder add z&lt;ZONE&gt;-&lt;STORAGE_LOCAL_NET_IP_1&gt;:6000[R&lt;STORAGE_REPLICATION_NET_IP&gt;:6003]/&lt;DEVICE&gt; 100</userinput></screen>
             </para>
+            <note>
+                <para><literal>STORAGE_REPLICATION_NET_IP</literal> is an
+                    optional parameter which must be omitted if you do not
+                    want to use dedicated network for replication</para>
+            </note>
 			<para>For example, if you were setting up a storage node with a
-                partition in Zone 1 on IP 10.0.0.1. The mount point of
+                partition in Zone 1 on IP 10.0.0.1. Storage node has address 10.0.1.1 from
+                replication network. The mount point of
                 this partition is /srv/node/sdb1, and the path in
                     <filename>rsyncd.conf</filename> is /srv/node/,
                 the DEVICE would be sdb1 and the commands would look
                 like:
                 <screen>
-<prompt>#</prompt> <userinput>swift-ring-builder account.builder add z1-10.0.0.1:6002/sdb1 100</userinput>
-<prompt>#</prompt> <userinput>swift-ring-builder container.builder add z1-10.0.0.1:6001/sdb1 100</userinput>
-<prompt>#</prompt> <userinput>swift-ring-builder object.builder add z1-10.0.0.1:6000/sdb1 100</userinput>
+<prompt>#</prompt> <userinput>swift-ring-builder account.builder add z1-10.0.0.1:6002R10.0.1.1:6005/sdb1 100</userinput>
+<prompt>#</prompt> <userinput>swift-ring-builder container.builder add z1-10.0.0.1:6001R10.0.1.1:6005/sdb1 100</userinput>
+<prompt>#</prompt> <userinput>swift-ring-builder object.builder add z1-10.0.0.1:6000R10.0.1.1:6005/sdb1 100</userinput>
 			</screen></para>
             <note>
                 <para>Assuming there are 5 zones with 1 node per zone, ZONE
