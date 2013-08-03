@@ -24,7 +24,7 @@ listen_addresses = &lt;ip address or hostname of management network interface&g
       <title>Database Transport</title>
       <para>In addition to restricting database communications to the management network, we also strongly recommend that the cloud administrator configure their database backend to require SSL. Using SSL for the database client connections  protects the communications from tampering and eavesdropping. As will be discussed in the next section, using SSL also provides the framework for doing database user authentication via X.509 certificates (commonly referred to as PKI). Below is guidance on how SSL is typically configured for the two popular database backends MySQL and PostgreSQL.</para>
       <note>
-        <para> NOTE: When installing the certificate and key files, ensure that the file permissions are restricted, for example <literal>chmod 0600</literal>, and the ownership is restricted to the database daemon user to prevent unauthorized access by other processes and users on the database server.</para>
+        <para>NOTE: When installing the certificate and key files, ensure that the file permissions are restricted, for example <literal>chmod 0600</literal>, and the ownership is restricted to the database daemon user to prevent unauthorized access by other processes and users on the database server.</para>
       </note>
     </section>
     <section xml:id="ch043_database-transport-security-idp47184">
@@ -51,16 +51,16 @@ ssl = true</screen>
 ssl-ciphers = 'cipher:list'</screen>
       <para>The server certificate, key, and certificate authority (CA) files should be placed in the $PGDATA directory in the following files:</para>
       <itemizedlist><listitem>
-          <para> $PGDATA/server.crt - Server certificate</para>
+          <para>$PGDATA/server.crt - Server certificate</para>
         </listitem>
 <listitem>
-          <para> $PGDATA/server.key - Private key corresponding to server.crt</para>
+          <para>$PGDATA/server.key - Private key corresponding to server.crt</para>
         </listitem>
 <listitem>
-          <para> $PGDATA/root.crt - Trusted certificate authorities</para>
+          <para>$PGDATA/root.crt - Trusted certificate authorities</para>
         </listitem>
 <listitem>
-          <para> $PGDATA/root.crl - Certificate revocation list</para>
+          <para>$PGDATA/root.crl - Certificate revocation list</para>
         </listitem>
 </itemizedlist>
     </section>

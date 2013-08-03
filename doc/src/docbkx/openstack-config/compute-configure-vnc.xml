@@ -5,7 +5,7 @@
   xml:id="getting-started-with-vnc-proxy">
   <title>VNC Console Proxy</title>
   <para>The VNC proxy is an OpenStack component that enables compute
-    service users to access their instances through VNC clients. </para>
+    service users to access their instances through VNC clients.</para>
   <para>The VNC console connection works as follows: </para>
   <orderedlist>
     <listitem>
@@ -16,10 +16,10 @@
     </listitem>
     <listitem>
       <para>The user pastes the URL in a browser or as a client
-        parameter. </para>
+        parameter.</para>
     </listitem>
     <listitem>
-      <para>The browser or client connects to the proxy. </para>
+      <para>The browser or client connects to the proxy.</para>
     </listitem>
     <listitem>
       <para>The proxy talks to <literal>nova-consoleauth</literal> to
@@ -31,11 +31,11 @@
           <filename>nova.conf</filename> file option,
           <option>vncserver_proxyclient_address</option>. In this way,
         the VNC proxy works as a bridge between the public network and
-        private host network. </para>
+        private host network.</para>
     </listitem>
     <listitem>
       <para>The proxy initiates the connection to VNC server, and
-        continues to proxy until the session ends. </para>
+        continues to proxy until the session ends.</para>
     </listitem>
   </orderedlist>
   <para>The proxy also tunnels the VNC protocol over WebSockets so
@@ -44,10 +44,10 @@
   <itemizedlist>
     <listitem>
       <para>Bridges between the public network, where the clients
-        live, and the private network, where vncservers live. </para>
+        live, and the private network, where vncservers live.</para>
     </listitem>
     <listitem>
-      <para>Mediates token authentication. </para>
+      <para>Mediates token authentication.</para>
     </listitem>
     <listitem>
       <para>Transparently deals with hypervisor-specific connection
@@ -74,11 +74,11 @@
       service must be running for either proxy to work. Many proxies
       of either type can be run against a single
         <literal>nova-consoleauth</literal> service in a cluster
-      configuration. </para>
+      configuration.</para>
     <para>Do not confuse the <literal>nova-consoleauth</literal>
       shared service with <literal>nova-console</literal>, which is a
       XenAPI-specific service that most recent VNC proxy architectures
-      do not use. </para>
+      do not use.</para>
   </section>
   <section xml:id="typical-deployment">
     <info>
@@ -88,25 +88,25 @@
     <itemizedlist>
       <listitem>
         <para>A <literal>nova-consoleauth</literal> process. Typically
-          runs on the controller host. </para>
+          runs on the controller host.</para>
       </listitem>
       <listitem>
         <para>One or more <literal>nova-novncproxy</literal> services.
           Supports browser-based noVNC clients. For simple
           deployments, this service typically runs on the same machine
           as nova-api because it proxies between the public network
-          and the private compute host network. </para>
+          and the private compute host network.</para>
       </listitem>
       <listitem>
         <para>One or more <literal>nova-xvpvncproxy</literal>
           services. Supports the special Java client discussed here.
           For simple deployments, this service typically runs on the
           same machine as nova-api because it proxies between the
-          public network and the private compute host network. </para>
+          public network and the private compute host network.</para>
       </listitem>
       <listitem>
         <para>One or more compute hosts. These compute hosts must have
-          correctly configured options, as follows. </para>
+          correctly configured options, as follows.</para>
       </listitem>
     </itemizedlist>
    </section>
@@ -125,11 +125,11 @@
         <para>The <literal>vncserver_proxyclient_address</literal>
           defaults to <literal>127.0.0.1</literal>, which is the
           address of the compute host that nova instructs proxies to
-          use when connecting to instance servers. </para>
+          use when connecting to instance servers.</para>
         <para>For all-in-one XenServer domU deployments, set this to
-          169.254.0.1. </para>
+          169.254.0.1.</para>
         <para>For multi-host XenServer domU deployments, set to a dom0
-          management IP on the same network as the proxies. </para>
+          management IP on the same network as the proxies.</para>
         <para>For multi-host libvirt deployments, set to a host
           management IP on the same network as the proxies.</para>
       </note>
@@ -139,7 +139,7 @@
         <title>nova-novncproxy (noVNC)</title>
       </info>
       <para>You must install the noVNC package, which contains the
-          <literal>nova-novncproxy</literal> service. </para>
+          <literal>nova-novncproxy</literal> service.</para>
       <para>As root, run the following command:</para>
       <programlisting language="bash" role="gutter: false"><prompt>#</prompt> <userinput>apt-get install novnc</userinput></programlisting>
       <para>The service starts automatically on installation.</para>
@@ -147,9 +147,9 @@
       <programlisting language="bash" role="gutter: false"><prompt>#</prompt> <userinput>service novnc restart</userinput></programlisting>
       <para>The configuration option parameter should point to your
           <filename>nova.conf</filename> file, which includes the
-        message queue server address and credentials. </para>
+        message queue server address and credentials.</para>
       <para>By default, <literal>nova-novncproxy</literal> binds on
-          <literal>0.0.0.0:6080</literal>. </para>
+          <literal>0.0.0.0:6080</literal>.</para>
       <para>To connect the service to your nova deployment, add the
         following configuration options to your
           <filename>nova.conf</filename> file : </para>
@@ -161,12 +161,12 @@
           <para>Specifies the address on which the VNC service should
             bind. Make sure it is assigned one of the compute node
             interfaces. This address is the one used by your domain
-            file. </para>
+            file.</para>
           <programlisting language="bash" role="gutter: false"> &lt;graphics type="vnc" autoport="yes" keymap="en-us" listen="0.0.0.0"/></programlisting>
 
           <note>
             <para>To use live migration, make sure to use the
-                <replaceable>0.0.0.0</replaceable>address. </para>
+                <replaceable>0.0.0.0</replaceable>address.</para>
           </note>
         </listitem>
         <listitem>
@@ -194,14 +194,14 @@
         <para>A: <literal>nova-xvpvncproxy</literal>, which ships with
           nova, is a proxy that supports a simple Java client.
             <literal>nova-novncproxy</literal> uses noVNC to provide
-          VNC support through a web browser. </para>
+          VNC support through a web browser.</para>
       </listitem>
       <listitem>
         <para><emphasis role="bold">Q: I want VNC support in the
             Dashboard. What services do I need? </emphasis></para>
-        <para> A: You need <literal>nova-novncproxy</literal>,
+        <para>A: You need <literal>nova-novncproxy</literal>,
             <literal>nova-consoleauth</literal>, and correctly
-          configured compute hosts. </para>
+          configured compute hosts.</para>
       </listitem>
       <listitem>
         <para><emphasis role="bold">Q: When I use <command>nova
@@ -242,7 +242,7 @@ vncserver_listen=192.168.1.2</programlisting>
             network. Your PROXYSERVER must be able to reach
               <literal>vncserver_proxyclient_address</literal>,
             because that is the address over which the VNC connection
-            is proxied. </para>
+            is proxied.</para>
         </note>
       </listitem>
       <listitem>
@@ -250,21 +250,21 @@ vncserver_listen=192.168.1.2</programlisting>
           <emphasis role="bold">Q: My noVNC does not work with recent
             versions of web browsers. Why? </emphasis>
         </para>
-        <para> A: Make sure you have <literal>python-numpy</literal>
+        <para>A: Make sure you have <literal>python-numpy</literal>
           installed, which is required to support a newer version of
-          the WebSocket protocol (HyBi-07+). </para>
+          the WebSocket protocol (HyBi-07+).</para>
       </listitem>
       <listitem>
         <para>
           <emphasis role="bold">Q: How do I adjust the dimensions of
             the VNC window image in the OpenStack
             dashboard?</emphasis></para>
-        <para> A: These values are hard-coded in a Django HTML
+        <para>A: These values are hard-coded in a Django HTML
           template. To alter them, edit the
             <filename>_detail_vnc.html</filename> template file. The
           location of this file varies based on Linux distribution. On
           Ubuntu 12.04, the file is at
-            <filename>/usr/share/pyshared/horizon/dashboards/nova/instances/templates/instances/_detail_vnc.html</filename>. </para>
+            <filename>/usr/share/pyshared/horizon/dashboards/nova/instances/templates/instances/_detail_vnc.html</filename>.</para>
         <para>Modify the <literal>width</literal> and
             <literal>height</literal> parameters, as follows: </para>
         <programlisting language="html">&lt;iframe src="{{ vnc_url }}" width="720" height="430"&gt;&lt;/iframe&gt;</programlisting>

@@ -18,7 +18,7 @@
             config contains the plugin specific flags. The plugin that is run on the service is
             loaded via the configuration parameter ‘core_plugin’. In some cases a plugin may have an
             agent that performs the actual networking. Specific configuration details can be seen in
-            the Appendix - Configuration File Options. </para>
+            the Appendix - Configuration File Options.</para>
         <para>Most plugins require a SQL database. After installing and starting the database
             server, set a password for the root account and delete the anonymous accounts: </para>
         <screen><computeroutput>$&gt; mysql -u root
@@ -101,7 +101,7 @@ mysql&gt; grant all on &lt;database-name&gt;.* to '&lt;user-name&gt;'@'%';</comp
                 </tbody>
             </table></para>
         <para>All of the plugin configuration files options can be found in the Appendix -
-            Configuration File Options. </para>
+            Configuration File Options.</para>
     </section>
     <section xml:id="adv_cfg_dhcp_agent">
         <title>DHCP Agent</title>
@@ -143,17 +143,17 @@ mysql&gt; grant all on &lt;database-name&gt;.* to '&lt;user-name&gt;'@'%';</comp
                     </tr>
                 </tbody>
             </table></para>
-        <para> All of the DHCP agent configuration options can be found in the <link
-                linkend="dhcp_agent_ini"> Appendix - Configuration File Options</link>. </para>
+        <para>All of the DHCP agent configuration options can be found in the <link
+                linkend="dhcp_agent_ini"> Appendix - Configuration File Options</link>.</para>
         <section xml:id="adv_cfg_dhcp_agent_namespace">
             <title>Namespace</title>
-            <para> By default the DHCP agent makes use of Linux network namespaces in order to
+            <para>By default the DHCP agent makes use of Linux network namespaces in order to
                 support overlapping IP addresses. Requirements for network namespaces support are
-                described in the <link linkend="ch_limitations">Limitation</link> section. </para>
+                described in the <link linkend="ch_limitations">Limitation</link> section.</para>
             <para>
                 <emphasis role="bold">If the Linux installation does not support network namespace,
                     you must disable using network namespace in the DHCP agent config
-                    file</emphasis> (The default value of use_namespaces is True). </para>
+                    file</emphasis> (The default value of use_namespaces is True).</para>
             <screen><computeroutput>use_namespaces = False</computeroutput></screen>
         </section>
     </section>
@@ -203,7 +203,7 @@ mysql&gt; grant all on &lt;database-name&gt;.* to '&lt;user-name&gt;'@'%';</comp
                 </tbody>
             </table>
         </para>
-        <para> The L3 agent communicates with the OpenStack Networking server via the OpenStack Networking API, so the
+        <para>The L3 agent communicates with the OpenStack Networking server via the OpenStack Networking API, so the
             following configuration is required: <orderedlist>
                 <listitem>
                     <para>OpenStack Identity authentication:</para>
@@ -219,27 +219,27 @@ admin_password $SERVICE_PASSWORD</computeroutput></screen>
                 </listitem>
             </orderedlist>
         </para>
-        <para> All of the L3 agent configuration options can be found in the <link
-                linkend="l3_agent"> Appendix - Configuration File Options</link>. </para>
+        <para>All of the L3 agent configuration options can be found in the <link
+                linkend="l3_agent"> Appendix - Configuration File Options</link>.</para>
         <section xml:id="adv_cfg_l3_agent_namespace">
             <title>Namespace</title>
-            <para> By default the L3 agent makes use of Linux network namespaces in order to support
+            <para>By default the L3 agent makes use of Linux network namespaces in order to support
                 overlapping IP addresses. Requirements for network namespaces support are described
-                in the <link linkend="ch_limitations">Limitation</link> section. </para>
+                in the <link linkend="ch_limitations">Limitation</link> section.</para>
             <para>
                 <emphasis role="bold">If the Linux installation does not support network namespace,
                     you must disable using network namespace in the L3 agent config file</emphasis>
-                (The default value of use_namespaces is True). </para>
+                (The default value of use_namespaces is True).</para>
             <screen><computeroutput>use_namespaces = False</computeroutput></screen>
-            <para> When use_namespaces is set to False, only one router ID can be supported per
+            <para>When use_namespaces is set to False, only one router ID can be supported per
                 node. This must be configured via the configuration variable
-                    <emphasis>router_id</emphasis>. </para>
+                    <emphasis>router_id</emphasis>.</para>
             <screen><computeroutput># If use_namespaces is set to False then the agent can only configure one router.
 # This is done by setting the specific router_id.
 router_id = 1064ad16-36b7-4c2f-86f0-daa2bcbd6b2a</computeroutput></screen>
-            <para> To configure it, you need to run the OpenStack Networking service and create a router, and
+            <para>To configure it, you need to run the OpenStack Networking service and create a router, and
                 then set an ID of the router created to <emphasis>router_id</emphasis> in the L3
-                agent configuration file. </para>
+                agent configuration file.</para>
             <screen><computeroutput>$ neutron router-create myrouter1
 Created a new router:
 +-----------------------+--------------------------------------+
@@ -256,7 +256,7 @@ Created a new router:
         </section>
         <section xml:id="adv_cfg_l3_agent_multi_extnet">
             <title>Multiple Floating IP Pools</title>
-            <para> The L3 API in OpenStack Networking supports
+            <para>The L3 API in OpenStack Networking supports
                 multiple floating IP pools. In OpenStack Networking, a
                 floating IP pool is represented as an external network
                 and a floating IP is allocated from a subnet
@@ -267,24 +267,24 @@ Created a new router:
                     >'gateway_external_network_id'</emphasis> in L3
                 agent configuration file indicates the external
                 network that the L3 agent handles. You can run
-                multiple L3 agent instances on one host. </para>
-            <para> In addition, when you run multiple L3 agents, make sure that <emphasis
+                multiple L3 agent instances on one host.</para>
+            <para>In addition, when you run multiple L3 agents, make sure that <emphasis
                     role="bold">handle_internal_only_routers</emphasis> is set to <emphasis
                     role="bold">True</emphasis> only for one L3 agent in an OpenStack Networking deployment and
                 set to <emphasis role="bold">False</emphasis> for all other L3 agents. Since the
-                default value of this parameter is True, you need to configure it carefully. </para>
-            <para> Before starting L3 agents, you need to create routers and external networks, then
-                update the configuration files with UUID of external networks and start L3 agents. </para>
-            <para> For the first agent, invoke it with the following l3_agent.ini where
-                handle_internal_only_routers is True. </para>
+                default value of this parameter is True, you need to configure it carefully.</para>
+            <para>Before starting L3 agents, you need to create routers and external networks, then
+                update the configuration files with UUID of external networks and start L3 agents.</para>
+            <para>For the first agent, invoke it with the following l3_agent.ini where
+                handle_internal_only_routers is True.</para>
             <screen><computeroutput>handle_internal_only_routers = True
 gateway_external_network_id = 2118b11c-011e-4fa5-a6f1-2ca34d372c35
 external_network_bridge = br-ex</computeroutput></screen>
             <screen><computeroutput>python /opt/stack/neutron/bin/neutron-l3-agent
  --config-file /etc/neutron/neutron.conf
  --config-file=/etc/neutron/l3_agent.ini</computeroutput></screen>
-            <para> For the second (or later) agent, invoke it with the following l3_agent.ini where
-                handle_internal_only_routers is False. </para>
+            <para>For the second (or later) agent, invoke it with the following l3_agent.ini where
+                handle_internal_only_routers is False.</para>
             <screen><computeroutput>handle_internal_only_routers = False
 gateway_external_network_id = e828e54c-850a-4e74-80a8-8b79c6a285d8
 external_network_bridge = br-ex-2</computeroutput></screen>

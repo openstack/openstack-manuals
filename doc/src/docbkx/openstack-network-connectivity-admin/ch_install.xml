@@ -5,7 +5,7 @@
   xml:id="ch_install">
   <title>OpenStack Networking Installation</title>
   <para>Learn how to install and get the OpenStack Networking service
-    up and running. </para>
+    up and running.</para>
   <section xml:id="install_prereqs">
     <title> Initial Prerequisites </title>
     <para>
@@ -15,11 +15,11 @@
             OpenStack Networking, we strongly recommend that you use
             Ubuntu 12.04 or 12.10 or Fedora 17 or 18. These platforms
             have OpenStack Networking packages and receive significant
-            testing. </para>
+            testing.</para>
         </listitem>
         <listitem>
           <para>OpenStack Networking requires at least dnsmasq 2.59,
-            which contains all the necessary options. </para>
+            which contains all the necessary options.</para>
         </listitem>
       </itemizedlist>
     </para>
@@ -89,7 +89,7 @@
           agents to communicate with the main <systemitem
             class="service">neutron-server</systemitem> process. If
           your plugin requires agents, they can use the same RPC
-          mechanism used by other OpenStack components like Nova. </para>
+          mechanism used by other OpenStack components like Nova.</para>
         <para>
           <procedure>
             <title>To use RabbitMQ as the message bus for RPC</title>
@@ -114,7 +114,7 @@
             file should be copied to and used on all hosts running
               <systemitem class="service">neutron-server</systemitem>
             or any <systemitem class="service"
-              >neutron-*-agent</systemitem> binaries. </para>
+              >neutron-*-agent</systemitem> binaries.</para>
         </important>
       </section>
       <section xml:id="openvswitch_plugin">
@@ -123,7 +123,7 @@
           with multiple hosts, you will need to use either tunneling
           or vlans to isolate traffic from multiple networks.
           Tunneling is easier to deploy because it does not require
-          configuring VLANs on network switches. </para>
+          configuring VLANs on network switches.</para>
         <para>The following procedure uses tunneling:</para>
         <!--<para>See 
           <xref linkend="ch_adv_config"/> for more 
@@ -320,7 +320,7 @@
                       API. Substitute
                         <systemitem>ip-address</systemitem> and
                         <systemitem>port-no</systemitem> based on your
-                      Ryu setup. </para>
+                      Ryu setup.</para>
                   </listitem>
                   <listitem>
                     <para>The <literal>ovsdb_interface</literal> is
@@ -334,14 +334,14 @@
                       specified. If you use a non-default port for
                         <systemitem>ovsdb-server</systemitem>, it can
                       be specified by
-                        <systemitem>ovsdb_port</systemitem>. </para>
+                        <systemitem>ovsdb_port</systemitem>.</para>
                   </listitem>
                   <listitem>
                     <para><systemitem>tunnel_interface</systemitem>
                       needs to be set to tell what IP address is used
                       for tunneling (if tunneling isn't used, this
                       value is ignored). The IP address is derived
-                      from the network interface name. </para>
+                      from the network interface name.</para>
                   </listitem>
                 </itemizedlist></para>
               <para>You can use the same configuration file for many
@@ -379,7 +379,7 @@
                 NOS):
                 <screen><computeroutput>servers=&lt;plumgrid_NOS_IP&gt; username=&lt;username&gt; password=&lt;password&gt;</computeroutput></screen>For
                 database configuration, see <xref
-                  linkend="install_neutron_server"/>. </para>
+                  linkend="install_neutron_server"/>.</para>
             </step>
             <step>
               <para>Restart <systemitem class="service"
@@ -404,7 +404,7 @@
         more information about individual service agents).</para>
       <para>A data-forwarding node typically has a network interface
         with an IP address on the “management network” and another
-        interface on the “data network”. </para>
+        interface on the “data network”.</para>
       <para>In this section, you will learn how to install and
         configure a subset of the available plugins, which may include
         the installation of switching software (for example, Open
@@ -467,7 +467,7 @@
         <title>Node Setup: Nicira NVP Plugin</title>
         <para>If you use the Nicira NVP plugin, you must also install
           Open vSwitch on each data-forwarding node. However, you do
-          not need to install an additional agent on each node. </para>
+          not need to install an additional agent on each node.</para>
         <warning>
           <para>It is critical that you are running a version of Open
             vSwitch that is compatible with the current version of the
@@ -486,7 +486,7 @@
                 on the "data network" used for tunneling data traffic.
                 For full details on configuring your forwarding node,
                 please see the <citetitle>NVP Administrator
-                  Guide</citetitle>. </para>
+                  Guide</citetitle>.</para>
             </step>
             <step>
               <para>Use the <citetitle>NVP Administrator
@@ -495,7 +495,7 @@
                 node has no VMs and is only used for services agents
                 like <systemitem>neutron-dhcp-agent</systemitem> or
                   <systemitem>neutron-lbaas-agent</systemitem>, it
-                should still be added to NVP as a Hypervisor. </para>
+                should still be added to NVP as a Hypervisor.</para>
             </step>
             <step>
               <para>After following the <citetitle>NVP Administrator
@@ -503,7 +503,7 @@
                 in the NVP Manager GUI to confirm that the node is
                 properly connected to the NVP Controller Cluster and
                 that the NVP Controller Cluster can see the
-                integration bridge "br-int". </para>
+                integration bridge "br-int".</para>
             </step>
           </procedure>
         </para>
@@ -561,7 +561,7 @@
             <para>You must configure the host running the
                 <systemitem>neutron-dhcp-agent</systemitem> as a "data
               forwarding node" according to your plugin's requirements
-              (see <xref linkend="install_neutron_agent"/>). </para>
+              (see <xref linkend="install_neutron_agent"/>).</para>
           </step>
           <step>
             <para>Install the DHCP agent:</para>
@@ -619,7 +619,7 @@
               <para>Only the proprietary BigSwitch controller
                 implements L3 functionality. When using Floodlight as
                 your OpenFlow controller, L3 functionality is not
-                available. </para>
+                available.</para>
             </note>
           </listitem>
           <listitem>
@@ -645,7 +645,7 @@
             <para>To uplink the node that runs
                 <systemitem>neutron-l3-agent</systemitem> to the
               external network, create a bridge named "br-ex" and
-              attach the NIC for the external network to this bridge. </para>
+              attach the NIC for the external network to this bridge.</para>
             <para>For example, with Open vSwitch and NIC eth1
               connected to the external network, run:</para>
             <screen><prompt>$</prompt><userinput>sudo ovs-vsctl add-br br-ex</userinput>
@@ -672,7 +672,7 @@
                 <command>ip addr list</command> or
                 <command>ifconfig</command> on the node. Similarly,
               you will not be able to directly <command>ping</command>
-              fixed IPs. </para>
+              fixed IPs.</para>
             <para>To do either of these things, you must run the
               command within a particular router's network namespace.
               The namespace will have the name "qrouter-&lt;UUID of
@@ -740,7 +740,7 @@
 <prompt>$</prompt><userinput>sudo service neutron-server start</userinput>
 <prompt>$</prompt><userinput>sudo service neutron-server restart</userinput></screen>
       <para>Log files are in the
-          <systemitem>/var/log/neutron</systemitem> directory. </para>
+          <systemitem>/var/log/neutron</systemitem> directory.</para>
       <para>Configuration files are in the
           <systemitem>/etc/neutron</systemitem> directory.</para>
     </section>
@@ -961,7 +961,7 @@
 <prompt>$</prompt><userinput>sudo service neutron-server start</userinput>
 <prompt>$</prompt><userinput>sudo service neutron-server restart</userinput></screen>
       <para>Log files are in the
-          <systemitem>/var/log/neutron</systemitem> directory. </para>
+          <systemitem>/var/log/neutron</systemitem> directory.</para>
       <para>Configuration files are in the
           <systemitem>/etc/neutron</systemitem> directory.</para>
     </section>

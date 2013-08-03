@@ -14,7 +14,7 @@
     </itemizedlist>
     <note><para>Swift can run with other distros, but for this document we
       will focus on installing on Ubuntu Server, ypmv (your packaging
-      may vary). </para></note>
+      may vary).</para></note>
     <para>
       Basic architecture and terms
     </para>
@@ -59,7 +59,7 @@
         </itemizedlist>
       </listitem>
     </itemizedlist>
-    <note><para> Fewer Storage nodes can be used initially, but a minimum of 5 is recommended for a production cluster.</para></note>
+    <note><para>Fewer Storage nodes can be used initially, but a minimum of 5 is recommended for a production cluster.</para></note>
     <para>
       This document describes each Storage node as a separate zone in
       the ring. It is recommended to have a minimum of 5 zones. A zone
@@ -84,7 +84,7 @@
       daemon on the Storage nodes are configured to listen on their
       STORAGE_LOCAL_NET IP addresses.
     </para>
-    <note><para> Run all commands as the root user</para></note>
+    <note><para>Run all commands as the root user</para></note>
   </section>
   <section xml:id="general-os-configuration-and-partitioning-for-each-node"><info><title>General OS configuration and partitioning for each
     node</title></info>
@@ -147,11 +147,11 @@ export PROXY_LOCAL_NET_IP=10.1.2.4
 </screen>
       </listitem>
     </orderedlist>
-    <note><para> The random string of text in /etc/swift/swift.conf is used as a salt when hashing to determine mappings in the ring.</para></note>
+    <note><para>The random string of text in /etc/swift/swift.conf is used as a salt when hashing to determine mappings in the ring.</para></note>
   </section>
   <section xml:id="configure-the-proxy-node"><info><title>Configure the Proxy node</title></info>
     
-    <note><para> It is assumed that all commands are run as the root user</para></note>
+    <note><para>It is assumed that all commands are run as the root user</para></note>
     <orderedlist>
       <listitem>
         <para>
@@ -171,7 +171,7 @@ openssl req -new -x509 -nodes -out cert.crt -keyout cert.key
 </screen>
       </listitem>
     </orderedlist>
-    <note><para> If you don't create the cert files, Swift silently uses http internally rather than https. This document assumes that you have created these certs, so if you're following along step-by-step, create them.</para></note>
+    <note><para>If you don't create the cert files, Swift silently uses http internally rather than https. This document assumes that you have created these certs, so if you're following along step-by-step, create them.</para></note>
     <orderedlist>
       <listitem>
         <para>
@@ -274,7 +274,7 @@ swift-ring-builder object.builder add z$ZONE-$STORAGE_LOCAL_NET_IP:6000/$DEVICE 
 </screen>
       </listitem>
     </orderedlist>
-    <note><para> Assuming there are 5 zones with 1 node per zone, ZONE should start at 1 and increment by one for each additional node.</para></note>
+    <note><para>Assuming there are 5 zones with 1 node per zone, ZONE should start at 1 and increment by one for each additional node.</para></note>
     <orderedlist>
       <listitem>
         <para>
@@ -297,7 +297,7 @@ swift-ring-builder object.builder rebalance
 </screen>
       </listitem>
     </orderedlist>
-    <note><para> Rebalancing rings can take some time.</para></note>
+    <note><para>Rebalancing rings can take some time.</para></note>
     <orderedlist>
       <listitem>
         <para>
@@ -326,7 +326,7 @@ swift-init proxy start
   </section>
   <section xml:id="configure-the-storage-nodes"><info><title>Configure the Storage nodes</title></info>
     
-    <note><para> Swift should work on any modern filesystem that supports Extended Attributes (XATTRS). We currently recommend XFS as it demonstrated the best overall performance for the swift use case after considerable testing and benchmarking at Rackspace. It is also the only filesystem that has been thoroughly tested. These instructions assume that you are going to devote /dev/sdb1 to an XFS filesystem.</para></note>
+    <note><para>Swift should work on any modern filesystem that supports Extended Attributes (XATTRS). We currently recommend XFS as it demonstrated the best overall performance for the swift use case after considerable testing and benchmarking at Rackspace. It is also the only filesystem that has been thoroughly tested. These instructions assume that you are going to devote /dev/sdb1 to an XFS filesystem.</para></note>
     <orderedlist>
       <listitem>
         <para>
@@ -399,7 +399,7 @@ service rsync start
 </screen>
       </listitem>
     </orderedlist>
-    <note><para> The rsync daemon requires no authentication, so it should be run on a local, private network.</para></note>
+    <note><para>The rsync daemon requires no authentication, so it should be run on a local, private network.</para></note>
     <orderedlist>
       <listitem>
         <para>

@@ -59,13 +59,13 @@ pipeline = stats_monitoring url_normalize token_auth admin_token_auth xml_body j
   <xi:include href="../common/identity-configure.xml"/>
   <section xml:id="keystone-logging">
     <title>Logging</title>
-    <para> Logging is configured externally to the rest of Identity,
+    <para>Logging is configured externally to the rest of Identity,
       the file specifying the logging configuration is in the
         <literal>[DEFAULT]</literal> section of the
         <filename>keystone.conf</filename> file under
         <literal>log_config</literal>. If you wish to route all your
       logging through syslog, set <literal>use_syslog=true</literal>
-      option in the <literal>[DEFAULT]</literal> section. </para>
+      option in the <literal>[DEFAULT]</literal> section.</para>
     <para>
       A sample logging file is available with the project in the
       directory <filename>etc/logging.conf.sample</filename>. Like other
@@ -205,10 +205,10 @@ keystone-manage db_sync
   <section xml:id="adding-users-tenants-and-roles-with-python-keystoneclient">
     <?dbhtml stop-chunking?>
     <title>Adding Users, Tenants, and Roles with python-keystoneclient</title>
-    <para>Only users with admin credentials can administer users, tenants and roles. You can configure the python-keystoneclient with admin credentials through either the authentication token, or the username and password method. </para>
+    <para>Only users with admin credentials can administer users, tenants and roles. You can configure the python-keystoneclient with admin credentials through either the authentication token, or the username and password method.</para>
     <section xml:id="token-auth-method">
       <title>Token Auth Method</title>
-      <para> To use keystone client using token auth, set the following flags:</para>
+      <para>To use keystone client using token auth, set the following flags:</para>
       <itemizedlist>
         <listitem>
           <para>
@@ -220,7 +220,7 @@ keystone-manage db_sync
         <listitem>
           <para>
             <literal>--token SERVICE_TOKEN</literal>. The administrator
-            service token. </para>
+            service token.</para>
         </listitem>
       </itemizedlist>
     </section>
@@ -229,7 +229,7 @@ keystone-manage db_sync
       <itemizedlist>
         <listitem>
           <para>
-            <literal>--username OS_USERNAME</literal>. The administrator username. </para>
+            <literal>--username OS_USERNAME</literal>. The administrator username.</para>
         </listitem>
         <listitem>
           <para>
@@ -238,7 +238,7 @@ keystone-manage db_sync
         </listitem>
         <listitem>
           <para>
-            <literal>--tenant_name OS_TENANT_NAME</literal>. The tenant name. </para>
+            <literal>--tenant_name OS_TENANT_NAME</literal>. The tenant name.</para>
         </listitem>
         <listitem>
           <para>
@@ -261,7 +261,7 @@ keystone-manage db_sync
         </listitem>
         <listitem>
           <para><parameter>--os-identity-api-version</parameter>.
-            Specifies the Identity Service API version. </para>
+            Specifies the Identity Service API version.</para>
         </listitem></itemizedlist>
    <para>For example, the following parameters indicate the use of API
         v3:</para> <screen><parameter>--os-url</parameter> <userinput>"http://15.253.57.115:35357/v3"</userinput> <parameter>--os-identity-api-version</parameter> <userinput>3</userinput></screen>
@@ -305,19 +305,19 @@ keystone --username=admin --password=secrete --tenant_name=admin tenant-create -
         tenant owns virtual machines. In swift, a tenant owns
         containers. Users can be associated with more than one tenant.
         Each tenant and user pairing can have a role associated with
-        it. </para>
+        it.</para>
       <section xml:id="tenant-create">
         <title><literal>tenant-create</literal></title>
-        <para> keyword arguments </para>
+        <para>keyword arguments </para>
         <itemizedlist>
           <listitem>
-            <para> name </para>
+            <para>name </para>
           </listitem>
           <listitem>
-            <para> description (optional, defaults to None) </para>
+            <para>description (optional, defaults to None) </para>
           </listitem>
           <listitem>
-            <para> enabled (optional, defaults to True) </para>
+            <para>enabled (optional, defaults to True) </para>
           </listitem>
         </itemizedlist>
         <para>The following command creates a tenant named
@@ -326,39 +326,39 @@ keystone --username=admin --password=secrete --tenant_name=admin tenant-create -
       </section>
       <section xml:id="tenant-delete">
         <title><literal>tenant-delete</literal></title>
-        <para> arguments </para>
+        <para>arguments </para>
         <itemizedlist>
           <listitem>
-            <para> tenant_id </para>
+            <para>tenant_id </para>
           </listitem>
         </itemizedlist>
-        <para> example: </para>
+        <para>example: </para>
         <screen>
 keystone tenant-delete f2b7b39c860840dfa47d9ee4adffa0b3
 </screen>
       </section>
       <section xml:id="tenant-enable">
         <title><literal>tenant-enable</literal></title>
-        <para> arguments </para>
+        <para>arguments </para>
         <itemizedlist>
           <listitem>
-            <para> tenant_id </para>
+            <para>tenant_id </para>
           </listitem>
         </itemizedlist>
-        <para> example: </para>
+        <para>example: </para>
         <screen>
 keystone tenant-enable f2b7b39c860840dfa47d9ee4adffa0b3
 </screen>
       </section>
       <section xml:id="tenant-disable">
         <title><literal>tenant-disable</literal></title>
-        <para> arguments </para>
+        <para>arguments </para>
         <itemizedlist>
           <listitem>
-            <para> tenant_id </para>
+            <para>tenant_id </para>
           </listitem>
         </itemizedlist>
-        <para> example: </para>
+        <para>example: </para>
         <screen>
 keystone tenant-disable f2b7b39c860840dfa47d9ee4adffa0b3
 </screen>
@@ -368,25 +368,25 @@ keystone tenant-disable f2b7b39c860840dfa47d9ee4adffa0b3
       <title>Users</title>
       <section xml:id="user-create">
         <title><literal>user-create</literal></title>
-        <para> keyword arguments: </para>
+        <para>keyword arguments: </para>
         <itemizedlist>
           <listitem>
-            <para> name </para>
+            <para>name </para>
           </listitem>
           <listitem>
-            <para> pass </para>
+            <para>pass </para>
           </listitem>
           <listitem>
-            <para> email </para>
+            <para>email </para>
           </listitem>
           <listitem>
-            <para> default_tenant (optional, defaults to None) </para>
+            <para>default_tenant (optional, defaults to None) </para>
           </listitem>
           <listitem>
-            <para> enabled (optional, defaults to True) </para>
+            <para>enabled (optional, defaults to True) </para>
           </listitem>
         </itemizedlist>
-        <para> example: </para>
+        <para>example: </para>
         <screen>
 keystone user-create
 --name=admin \
@@ -396,88 +396,88 @@ keystone user-create
       </section>
       <section xml:id="user-delete">
         <title><literal>user-delete</literal></title>
-        <para> keyword arguments: </para>
+        <para>keyword arguments: </para>
         <itemizedlist>
           <listitem>
-            <para> user </para>
+            <para>user </para>
           </listitem>
         </itemizedlist>
-        <para> example: </para>
+        <para>example: </para>
         <screen>
 keystone user-delete f2b7b39c860840dfa47d9ee4adffa0b3
 </screen>
       </section>
       <section xml:id="user-list">
         <title><literal>user-list</literal></title>
-        <para> list users in the system, optionally by a specific tenant
+        <para>list users in the system, optionally by a specific tenant
           (identified by tenant_id) </para>
-        <para> arguments </para>
+        <para>arguments </para>
         <itemizedlist>
           <listitem>
-            <para> tenant_id (optional, defaults to None) </para>
+            <para>tenant_id (optional, defaults to None) </para>
           </listitem>
         </itemizedlist>
-        <para> example: </para>
+        <para>example: </para>
         <screen>
 keystone user-list
 </screen>
       </section>
       <section xml:id="user-update-email">
         <title><literal>user-update --email</literal></title>
-        <para> arguments </para>
+        <para>arguments </para>
         <itemizedlist>
           <listitem>
-            <para> user_id </para>
+            <para>user_id </para>
           </listitem>
           <listitem>
-            <para> email </para>
+            <para>email </para>
           </listitem>
 
         </itemizedlist>
 
-        <para> example: </para>
+        <para>example: </para>
         <screen>
 keystone user-update --email 03c84b51574841ba9a0d8db7882ac645 &quot;someone@somewhere.com&quot;
 </screen>
       </section>
       <section xml:id="user-enable">
         <title><literal>user-enable</literal></title>
-        <para> arguments </para>
+        <para>arguments </para>
         <itemizedlist>
           <listitem>
-            <para> user_id </para>
+            <para>user_id </para>
           </listitem>
         </itemizedlist>
-        <para> example: </para>
+        <para>example: </para>
         <screen>
 keystone user-enable 03c84b51574841ba9a0d8db7882ac645
 </screen>
       </section>
       <section xml:id="user-disable">
         <title><literal>user-disable</literal></title>
-        <para> arguments </para>
+        <para>arguments </para>
         <itemizedlist>
           <listitem>
-            <para> user_id </para>
+            <para>user_id </para>
           </listitem>
         </itemizedlist>
-        <para> example: </para>
+        <para>example: </para>
         <screen>
 keystone user-disable 03c84b51574841ba9a0d8db7882ac645
 </screen>
       </section>
       <section xml:id="user-update-password">
         <title><literal>user-update --password</literal></title>
-        <para> arguments </para>
+        <para>arguments </para>
         <itemizedlist>
           <listitem>
-            <para> user_id </para>
+            <para>user_id </para>
           </listitem>
           <listitem>
-            <para> password </para>
+            <para>password </para>
           </listitem>
         </itemizedlist>
-        <para> example: </para>
+        <para>example: </para>
         <screen>
 keystone user-update --password 03c84b51574841ba9a0d8db7882ac645 foo
 </screen>
@@ -487,65 +487,65 @@ keystone user-update --password 03c84b51574841ba9a0d8db7882ac645 foo
       <title>Roles</title>
       <section xml:id="role-create">
         <title><literal>role-create</literal></title>
-        <para> arguments </para>
+        <para>arguments </para>
         <itemizedlist>
           <listitem>
-            <para> name </para>
+            <para>name </para>
           </listitem>
         </itemizedlist>
-        <para> example: </para>
+        <para>example: </para>
         <screen>
 keystone role-create --name=demo
 </screen>
       </section>
       <section xml:id="role-delete">
         <title><literal>role-delete</literal></title>
-        <para> arguments </para>
+        <para>arguments </para>
         <itemizedlist>
           <listitem>
-            <para> role_id </para>
+            <para>role_id </para>
           </listitem>
         </itemizedlist>
-        <para> example: </para>
+        <para>example: </para>
         <screen>
 keystone role-delete 19d1d3344873464d819c45f521ff9890
 </screen>
       </section>
       <section xml:id="role-list">
         <title><literal>role-list</literal></title>
-        <para> example: </para>
+        <para>example: </para>
         <screen>
 keystone role-list
 </screen>
       </section>
       <section xml:id="role-get">
         <title><literal>role-get</literal></title>
-        <para> arguments </para>
+        <para>arguments </para>
         <itemizedlist>
           <listitem>
-            <para> role_id </para>
+            <para>role_id </para>
           </listitem>
         </itemizedlist>
-        <para> example: </para>
+        <para>example: </para>
         <screen>
 keystone role-get role=19d1d3344873464d819c45f521ff9890
 </screen>
       </section>
       <section xml:id="add-user-role">
         <title><literal>add-user-role</literal></title>
-        <para> arguments </para>
+        <para>arguments </para>
         <itemizedlist>
           <listitem>
-            <para> role_id </para>
+            <para>role_id </para>
           </listitem>
           <listitem>
-            <para> user_id </para>
+            <para>user_id </para>
           </listitem>
           <listitem>
-            <para> tenant_id </para>
+            <para>tenant_id </para>
           </listitem>
         </itemizedlist>
-        <para> example: </para>
+        <para>example: </para>
         <screen>
 keystone add-user-role \
 3a751f78ef4c412b827540b829e2d7dd \
@@ -555,19 +555,19 @@ keystone add-user-role \
       </section>
       <section xml:id="remove-user-role">
         <title><literal>remove-user-role</literal></title>
-        <para> arguments </para>
+        <para>arguments </para>
         <itemizedlist>
           <listitem>
-            <para> role_id </para>
+            <para>role_id </para>
           </listitem>
           <listitem>
-            <para> user_id </para>
+            <para>user_id </para>
           </listitem>
           <listitem>
-            <para> tenant_id </para>
+            <para>tenant_id </para>
           </listitem>
         </itemizedlist>
-        <para> example: </para>
+        <para>example: </para>
         <screen>
 keystone remove-user-role \
 19d1d3344873464d819c45f521ff9890 \
@@ -580,19 +580,19 @@ keystone remove-user-role \
       <title>Services</title>
       <section xml:id="service-create">
         <title><literal>service-create</literal></title>
-        <para> keyword arguments </para>
+        <para>keyword arguments </para>
         <itemizedlist>
           <listitem>
-            <para> name </para>
+            <para>name </para>
           </listitem>
           <listitem>
-            <para> type </para>
+            <para>type </para>
           </listitem>
           <listitem>
-            <para> description </para>
+            <para>description </para>
           </listitem>
         </itemizedlist>
-        <para> example: </para>
+        <para>example: </para>
         <screen>
 keystone service create \
 --name=nova \
@@ -602,39 +602,39 @@ keystone service create \
       </section>
       <section xml:id="service-list">
         <title><literal>service-list</literal></title>
-        <para> arguments </para>
+        <para>arguments </para>
         <itemizedlist>
           <listitem>
-            <para> service_id </para>
+            <para>service_id </para>
           </listitem>
         </itemizedlist>
-        <para> example: </para>
+        <para>example: </para>
         <screen>
 keystone service-list
 </screen>
       </section>
       <section xml:id="service-get">
         <title><literal>service-get</literal></title>
-        <para> arguments </para>
+        <para>arguments </para>
         <itemizedlist>
           <listitem>
-            <para> service_id </para>
+            <para>service_id </para>
           </listitem>
         </itemizedlist>
-        <para> example: </para>
+        <para>example: </para>
         <screen>
 keystone service-get 08741d8ed88242ca88d1f61484a0fe3b
 </screen>
       </section>
       <section xml:id="service-delete">
         <title><literal>service-delete</literal></title>
-        <para> arguments </para>
+        <para>arguments </para>
         <itemizedlist>
           <listitem>
-            <para> service_id </para>
+            <para>service_id </para>
           </listitem>
         </itemizedlist>
-        <para> example: </para>
+        <para>example: </para>
         <screen>
 keystone service-delete 08741d8ed88242ca88d1f61484a0fe3b
 </screen>
@@ -682,11 +682,11 @@ keystone service-delete 08741d8ed88242ca88d1f61484a0fe3b
       <para>To ensure services that you add to the catalog know about
         the users, tenants, and roles, you must create an admin token
         and create service users. These sections walk through those
-        requirements. </para>
+        requirements.</para>
     
     <section xml:id="admin-token">
       <title>Admin Token</title>
-      <para> For a default installation of Keystone, before you can
+      <para>For a default installation of Keystone, before you can
           use the REST API, you need to define an authorization token.
           This is configured in <filename>keystone.conf</filename> file
           under the section <literal>[DEFAULT]</literal>. In the
@@ -697,10 +697,10 @@ keystone service-delete 08741d8ed88242ca88d1f61484a0fe3b
           [DEFAULT] admin_token = ADMIN
         </para>
       </blockquote>
-      <para> This configured token is a &quot;shared secret&quot;
+      <para>This configured token is a &quot;shared secret&quot;
           between keystone and other OpenStack services, and is used
           by the client to communicate with the API to create tenants,
-          users, roles, etc. </para>
+          users, roles, etc.</para>
     </section>
     <section xml:id="setting-up-tenants-users-and-roles">
       <title>Setting up tenants, users, and roles</title>
@@ -790,7 +790,7 @@ keystone user-role-add --tenant_id=[uuid of the service tenant] \
         heavily - and this <emphasis role="strong">must</emphasis> be
         configured for the OpenStack Dashboard to properly function.
       </para>
-      <para> The endpoints for these services are defined in a
+      <para>The endpoints for these services are defined in a
           template, an example of which is in the project as the file
             <literal>etc/default_catalog.templates</literal>. When
           keystone uses a template file backend, then changes made to
@@ -838,7 +838,7 @@ keystone service-create --name=swift \
     </section>
     <section xml:id="configuring-nova-to-use-keystone">
       <title>Configuring Nova to use Keystone</title>
-      <para> When configuring Nova, it is important to create a nova user in the service tenant and
+      <para>When configuring Nova, it is important to create a nova user in the service tenant and
           include the nova user's login information in /etc/nova/nova.conf</para>
     </section>
     <section xml:id="configuring-swift-to-use-keystone">
@@ -1215,7 +1215,7 @@ admin_password = keystone123
 </section>
 <section xml:id="keystone-ssl">
 <title>Configuring Keystone SSL support</title>
-<para> Keystone may be configured to support 2-way SSL out-of-the-box.
+<para>Keystone may be configured to support 2-way SSL out-of-the-box.
       The x509 certificates used by Keystone must be obtained
       externally and configured for use with Keystone as described in
       this section. However, a set of sample certificates is provided
@@ -1245,8 +1245,8 @@ admin_password = keystone123
       </itemizedlist> Note that you may choose whatever names you want
       for these certificates, or combine the public/private keys in
       the same file if you wish. These certificates are just provided
-      as an example. </para>
-<para> To enable SSL with client authentication, modify the
+      as an example.</para>
+<para>To enable SSL with client authentication, modify the
         <literal>etc/keystone.conf</literal> file accordingly under
       the <literal>[ssl]</literal> section. SSL configuration example
       using the included sample certificates:

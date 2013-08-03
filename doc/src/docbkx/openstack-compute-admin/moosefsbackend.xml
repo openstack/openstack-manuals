@@ -5,15 +5,15 @@
     xmlns:xlink="http://www.w3.org/1999/xlink"
     version="5.0">
     <title>Installing MooseFS as shared storage for the instances directory</title>
-    <para> In the sections about Block Storage you see a convenient way to deploy a shared storage using
-        NFS. For better transactions performance, you could deploy MooseFS instead. </para>
+    <para>In the sections about Block Storage you see a convenient way to deploy a shared storage using
+        NFS. For better transactions performance, you could deploy MooseFS instead.</para>
     <para>MooseFS (Moose File System) is a shared file system ; it implements the same rough
-        concepts of shared storage solutions - such as Ceph, Lustre or even GlusterFS. </para>
+        concepts of shared storage solutions - such as Ceph, Lustre or even GlusterFS.</para>
     <para>
         <emphasis role="bold">Main concepts </emphasis>
         <itemizedlist>
             <listitem>
-                <para> A metadata server (MDS), also called master server, which manages the file
+                <para>A metadata server (MDS), also called master server, which manages the file
                     repartition, their access and the namespace.</para>
             </listitem>
             <listitem>
@@ -35,13 +35,13 @@
     <para>
         <itemizedlist>
             <listitem>
-                <para> Two compute nodes running both MooseFS chunkserver and client services. </para>
+                <para>Two compute nodes running both MooseFS chunkserver and client services.</para>
             </listitem>
             <listitem>
-                <para> One MooseFS master server, running the metadata service. </para>
+                <para>One MooseFS master server, running the metadata service.</para>
             </listitem>
             <listitem>
-                <para> One MooseFS slave server, running the metalogger service. </para>
+                <para>One MooseFS slave server, running the metalogger service.</para>
             </listitem>
         </itemizedlist> For that particular walkthrough, we will use the following network schema : </para>
     <para>
@@ -78,10 +78,10 @@
     <section xml:id="installing-moosefs-metadata-metalogger-servers">
         <title> Installing the MooseFS metadata and metalogger servers</title>
         <para>You can run these components anywhere as long as the MooseFS chunkservers can reach
-            the MooseFS master server. </para>
+            the MooseFS master server.</para>
         <para>In our deployment, both MooseFS master and slave run their services inside a virtual
             machine ; you just need to make sure to allocate enough memory to the MooseFS metadata
-            server, all the metadata being stored in RAM when the service runs. </para>
+            server, all the metadata being stored in RAM when the service runs.</para>
         <para>
             <orderedlist>
                 <listitem>
@@ -100,13 +100,13 @@
                 </listitem>
                 <listitem>
                     <para><emphasis role="bold">User and group creation</emphasis></para>
-                    <para> Create the adequate user and group :
+                    <para>Create the adequate user and group :
                         <screen><prompt>$</prompt> <userinput>groupadd mfs &amp;&amp; useradd -g mfs mfs </userinput></screen>
                     </para>
                 </listitem>
                 <listitem>
                     <para><emphasis role="bold">Download the sources</emphasis></para>
-                    <para> Go to the <link xlink:href="http://www.moosefs.org/download.html">MooseFS download page</link>
+                    <para>Go to the <link xlink:href="http://www.moosefs.org/download.html">MooseFS download page</link>
                         and fill the download form in order to obtain your URL for the package.
                     </para>
                     <para/>
@@ -122,7 +122,7 @@
                 </listitem>
                 <listitem>
                     <para><emphasis role="bold">Create configuration files</emphasis></para>
-                    <para> We will keep the default settings, for tuning performance, you can read the <link
+                    <para>We will keep the default settings, for tuning performance, you can read the <link
                         xlink:href="http://www.moosefs.org/moosefs-faq.html">MooseFS official FAQ</link>
                     </para>
                     <para><screen><prompt>$</prompt> <userinput>cd /etc/moosefs</userinput></screen>
@@ -151,7 +151,7 @@
                 </listitem>
                 <listitem>
                     <para><emphasis role="bold">Power up the MooseFS metalogger service</emphasis></para>
-                    <para> 
+                    <para>
                         <screen><prompt>$</prompt> <userinput>/usr/sbin/mfsmetalogger start</userinput></screen>
                     </para>
                 </listitem>
@@ -161,8 +161,8 @@
     </section>
     <section xml:id="installing-moosefs-chunk-client-services">
         <title>Installing the MooseFS chunk and client services</title>
-        <para> In the first part, we will install the last version of FUSE, and proceed to the
-            installation of the MooseFS chunk and client in the second part. </para>
+        <para>In the first part, we will install the last version of FUSE, and proceed to the
+            installation of the MooseFS chunk and client in the second part.</para>
         <para/>
         <para><emphasis role="bold">Installing FUSE</emphasis></para>
         <para>
@@ -175,7 +175,7 @@
                 </listitem>
                 <listitem>
                     <para><emphasis role="bold">Download the sources and configure them</emphasis></para>
-                    <para> For that setup we will retrieve the last version of fuse to make sure every
+                    <para>For that setup we will retrieve the last version of fuse to make sure every
                         function will be available :
                         <screen><prompt>$</prompt> <userinput>wget http://downloads.sourceforge.net/project/fuse/fuse-2.X/2.9.1/fuse-2.9.1.tar.gz &amp;&amp; tar -zxvf fuse-2.9.1.tar.gz &amp;&amp; cd fuse-2.9.1</userinput></screen><screen><prompt>$</prompt> <userinput>./configure &amp;&amp; make &amp;&amp; make install</userinput></screen>
                     </para>
@@ -183,10 +183,10 @@
             </orderedlist>
         </para>
         <para><emphasis role="bold">Installing the MooseFS chunk and client services</emphasis></para>
-        <para> For installing both services, you can follow the same steps that were presented before
+        <para>For installing both services, you can follow the same steps that were presented before
             (Steps 1 to 4) : <orderedlist>
                 <listitem>
-                    <para> Hosts entry configuration</para>
+                    <para>Hosts entry configuration</para>
                 </listitem>
                 <listitem>
                     <para>Required packages</para>
@@ -208,7 +208,7 @@
                 </listitem>
                 <listitem>
                     <para><emphasis role="bold">Create configuration files</emphasis></para>
-                    <para> The chunk servers configuration is relatively easy to setup. You only need to
+                    <para>The chunk servers configuration is relatively easy to setup. You only need to
                         create on every server directories that will be used for storing the datas of your
                         cluster.</para>
                     <para><screen><prompt>$</prompt> <userinput>cd /etc/moosefs</userinput></screen>
@@ -239,7 +239,7 @@
     </section>
     <section xml:id="access-to-cluster-storage">
         <title>Access to your cluster storage</title>
-        <para> You can now access your cluster space from the compute node, (both acting as
+        <para>You can now access your cluster space from the compute node, (both acting as
             chunkservers) : <screen><prompt>$</prompt> <userinput>mfsmount /var/lib/nova/instances -H mfsmaster</userinput></screen>
             <computeroutput> mfsmaster accepted connection with parameters: read-write,restricted_ip ;
                 root mapped to root:root </computeroutput>
@@ -261,7 +261,7 @@ none on /var/lib/ureadahead/debugfs type debugfs (rw,relatime)
             can interact with it the way you would interact with a classical mount, using build-in linux
             commands (cp, rm, etc...).
         </para>
-        <para> The MooseFS client has several tools for managing the objects within the cluster (set
+        <para>The MooseFS client has several tools for managing the objects within the cluster (set
             replication goals, etc..). You can see the list of the available tools by running
             <screen><prompt>$</prompt> <userinput>mfs &lt;TAB&gt; &lt;TAB&gt;</userinput> </screen><programlisting>
 mfsappendchunks   mfschunkserver    mfsfileinfo       mfsgetgoal        mfsmount          mfsrsetgoal       mfssetgoal        mfstools

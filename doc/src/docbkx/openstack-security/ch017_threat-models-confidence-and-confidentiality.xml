@@ -5,16 +5,16 @@
     <para>While it is commonly accepted that data over public networks should be secured using cryptographic measures, such as Secure Sockets Layer or Transport Layer Security (SSL/TLS) protocols, it is insufficient to rely on security domain separation to protect internal traffic. Using a security-in-depth approach, we recommend securing all domains with SSL/TLS, including the management domain services. It is important that should a tenant escape their VM isolation and gain access to the hypervisor or host resources, compromise an API endpoint, or any other service, they must not be able to easily inject or capture messages, commands, or otherwise affect or control management capabilities of the cloud. SSL/TLS provides the mechanisms to ensure authentication, non-repudiation, confidentiality, and integrity of user communications to the OpenStack services and between the OpenStack services themselves.</para>
     <para>Public Key Infrastructure (PKI) is the set of hardware, software, and policies to operate a secure system which provides authentication, non-repudiation, confidentiality, and integrity. The core components of PKI are:</para>
     <itemizedlist><listitem>
-        <para> End Entity - user, process, or system which is the subject of a certificate</para>
+        <para>End Entity - user, process, or system which is the subject of a certificate</para>
       </listitem>
 <listitem>
-        <para> Certification Authority (CA) - defines certificate policies, management, and issuance of certificates</para>
+        <para>Certification Authority (CA) - defines certificate policies, management, and issuance of certificates</para>
       </listitem>
 <listitem>
-        <para> Registration Authority (RA) - an optional system to which a CA delegates certain management functions</para>
+        <para>Registration Authority (RA) - an optional system to which a CA delegates certain management functions</para>
       </listitem>
 <listitem>
-        <para> Repository - Where the end entity certificates and certificate revocation lists are stored and looked up</para>
+        <para>Repository - Where the end entity certificates and certificate revocation lists are stored and looked up</para>
       </listitem>
 </itemizedlist>
     <para>PKI builds the framework on which to provide encryption algorithms, cipher modes, and protocols for securing data and authentication. We strongly recommend securing all services with Public Key Infrastructure (PKI), including the use of SSL/TLS for API endpoints. It is impossible for the encryption or signing of transports or messages alone to solve all these problems. Hosts themselves must be secure and implement policy, namespaces, and other controls to protect their private credentials and keys. However, the challenges of key management and protection do not reduce the necessity of these controls, or lessen their importance.</para>
@@ -32,22 +32,22 @@
       <title>Cryptographic Algorithms, Cipher Modes, and Protocols</title>
       <para>We recommend only using TLS v1.1 or v1.2, but suggest SSLv3 and TLSv1.0 may be used for compatibility. Other SSL/TLS versions, explicitly older versions, should not be used. These older versions include SSLv1 and SSLv2. As this book does not intend to be a thorough reference on cryptography we do not wish to be prescriptive about what specific algorithms or cipher modes you should enable or disable in your OpenStack services. However, there are some authoritative references we would like to recommend for further information:</para>
       <itemizedlist><listitem>
-          <para> National Security Agency, Suite B Cryptography - http://www.nsa.gov/ia/programs/suiteb_cryptography/index.shtml</para>
+          <para>National Security Agency, Suite B Cryptography - http://www.nsa.gov/ia/programs/suiteb_cryptography/index.shtml</para>
         </listitem>
 <listitem>
-          <para> OWASP Guide to Cryptography - https://www.owasp.org/index.php/Guide_to_Cryptography</para>
+          <para>OWASP Guide to Cryptography - https://www.owasp.org/index.php/Guide_to_Cryptography</para>
         </listitem>
 <listitem>
-          <para> OWASP Transport Layer Protection Cheat Sheet - https://www.owasp.org/index.php/Transport_Layer_Protection_Cheat_Sheet</para>
+          <para>OWASP Transport Layer Protection Cheat Sheet - https://www.owasp.org/index.php/Transport_Layer_Protection_Cheat_Sheet</para>
         </listitem>
 <listitem>
-          <para> http://www.ieee-security.org/TC/SP2013/papers/4977a511.pdf</para>
+          <para>http://www.ieee-security.org/TC/SP2013/papers/4977a511.pdf</para>
         </listitem>
 <listitem>
-          <para> http://www.cs.utexas.edu/~shmat/shmat_ccs12.pdf</para>
+          <para>http://www.cs.utexas.edu/~shmat/shmat_ccs12.pdf</para>
         </listitem>
 <listitem>
-          <para> http://www.openssl.org/docs/fips/fipsnotes.html</para>
+          <para>http://www.openssl.org/docs/fips/fipsnotes.html</para>
         </listitem>
 </itemizedlist>
     </section>
@@ -55,25 +55,25 @@
       <title>Summary</title>
       <para>It is important to note given the many components that make up OpenStack and the different deployment and implementation choices, care should be taken to look at each component to ensure the appropriate configuration of SSL certificates, keys, and CAs. The following services will be discussed in later sections of this book where SSL and PKI is available (either natively or possible via SSL proxy):</para>
       <itemizedlist><listitem>
-          <para> Compute API endpoints</para>
+          <para>Compute API endpoints</para>
         </listitem>
 <listitem>
-          <para> Identity API endpoints</para>
+          <para>Identity API endpoints</para>
         </listitem>
 <listitem>
-          <para> Networking API endpoints</para>
+          <para>Networking API endpoints</para>
         </listitem>
 <listitem>
-          <para> Storage API endpoints</para>
+          <para>Storage API endpoints</para>
         </listitem>
 <listitem>
-          <para> Messaging server</para>
+          <para>Messaging server</para>
         </listitem>
 <listitem>
-          <para> Database server</para>
+          <para>Database server</para>
         </listitem>
 <listitem>
-          <para> Dashboard</para>
+          <para>Dashboard</para>
         </listitem>
 </itemizedlist>
       <para>Throughout this book we will use SSL as shorthand to refer to these recommendations for SSL/TLS protocols.</para>

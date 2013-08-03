@@ -104,13 +104,13 @@
         <para>At this point we know that the node has booted with the correct kernel and underlying components. There are many paths for hardening a given operating system deployment. The specifics on these steps are outside of the scope of this book.  We recommend following the guidance from a hardening guide specific to your operating system.  For example, the security technical implementation guides (STIG, http://iase.disa.mil/stigs/) and the NSA guides (http://www.nsa.gov/ia/mitigation_guidance/security_configuration_guides/) are useful starting places.</para>
         <para>The nature of the nodes makes additional hardening possible. We recommend the following additional steps for production nodes:</para>
         <itemizedlist><listitem>
-            <para> Use a read-only file system where possible.  Ensure that writeable file systems do not permit execution.  This can be handled through the mount options provided in <literal> /etc/fstab </literal>.</para>
+            <para>Use a read-only file system where possible.  Ensure that writeable file systems do not permit execution.  This can be handled through the mount options provided in <literal> /etc/fstab </literal>.</para>
           </listitem>
 <listitem>
-            <para> Use a mandatory access control policy to contain the instances, the node services, and any other critical processes and data on the node.  See the discussions on sVirt / SELinux and AppArmor below.</para>
+            <para>Use a mandatory access control policy to contain the instances, the node services, and any other critical processes and data on the node.  See the discussions on sVirt / SELinux and AppArmor below.</para>
           </listitem>
 <listitem>
-            <para> Remove any unnecessary software packages. This should result in a very stripped down installation because a compute node has a relatively small number of dependencies.</para>
+            <para>Remove any unnecessary software packages. This should result in a very stripped down installation because a compute node has a relatively small number of dependencies.</para>
           </listitem>
 </itemizedlist>
         <para>Finally, the node kernel should have a mechanism to validate that the rest of the node starts in a known good state. This provides the necessary link from the boot validation process to validating the entire system. The steps for doing this will be deployment specific. As an example, a kernel module could verify a hash over the blocks comprising the file system before mounting it using dm-verity (https://code.google.com/p/cryptsetup/wiki/DMVerity).</para>
@@ -126,26 +126,26 @@
         <para>False positives occur when the security monitoring tool produces a security alert for a benign event. Due to the nature of security monitoring tools, false positives will most certainly occur from time to time. Typically a cloud administrator can tune security monitoring tools to reduce the false positives, but this may also reduce the overall detection rate at the same time. These classic trade-offs must be understood and accounted for when setting up a security monitoring system in the cloud.</para>
         <para>The selection and configuration of a host-based intrusion detection tool is highly deployment specific. We recommend starting by exploring the following open source projects which implement a variety of host-based intrusion detection and file monitoring features.</para>
         <itemizedlist><listitem>
-            <para> OSSEC (http://www.ossec.net/)</para>
+            <para>OSSEC (http://www.ossec.net/)</para>
           </listitem>
 <listitem>
-            <para> Samhain (http://la-samhna.de/samhain/)</para>
+            <para>Samhain (http://la-samhna.de/samhain/)</para>
           </listitem>
 <listitem>
-            <para> Tripwire (http://sourceforge.net/projects/tripwire/)</para>
+            <para>Tripwire (http://sourceforge.net/projects/tripwire/)</para>
           </listitem>
 <listitem>
-            <para> AIDE (http://aide.sourceforge.net/)</para>
+            <para>AIDE (http://aide.sourceforge.net/)</para>
           </listitem>
 </itemizedlist>
         <para>Network intrusion detection tools complement the host-based tools. OpenStack doesn't have a specific network IDS built-in, but OpenStack's networking component, Neutron, provides a plugin mechanism to enable different technologies via the Neutron API. This plugin architecture will allow tenants to develop API extensions to insert and configure their own advanced networking services like a firewall, an intrusion detection system, or a VPN between the VMs.</para>
         <para>Similar to host-based tools, the selection and configuration of a network-based intrusion detection tool is deployment specific. Snort (http://www.snort.org/) is the leading open source networking intrusion detection tool, and a good starting place to learn more.</para>
         <para>There are a few important security considerations for network and host-based intrusion detection systems.</para>
         <itemizedlist><listitem>
-            <para> It is important to consider the placement of the Network IDS on the cloud (e.g., adding it to the network boundary and/or around sensitive networks). The placement depends on your network environment but make sure to monitor the impact the IDS may have on your services depending on where you choose to add it. Encrypted traffic, such as SSL, cannot generally be inspected for content by a Network IDS. However, the Network IDS may still provide some benefit in identifying anomalous unencrypted traffic on the network.</para>
+            <para>It is important to consider the placement of the Network IDS on the cloud (e.g., adding it to the network boundary and/or around sensitive networks). The placement depends on your network environment but make sure to monitor the impact the IDS may have on your services depending on where you choose to add it. Encrypted traffic, such as SSL, cannot generally be inspected for content by a Network IDS. However, the Network IDS may still provide some benefit in identifying anomalous unencrypted traffic on the network.</para>
           </listitem>
 <listitem>
-            <para> In some deployments it may be required to add host-based IDS on sensitive components on security domain bridges.  A host-based IDS may detect anomalous activity by compromised or unauthorized processes on the component. The IDS should transmit alert and log information on the Management network.</para>
+            <para>In some deployments it may be required to add host-based IDS on sensitive components on security domain bridges.  A host-based IDS may detect anomalous activity by compromised or unauthorized processes on the component. The IDS should transmit alert and log information on the Management network.</para>
           </listitem>
 </itemizedlist>
       </section>

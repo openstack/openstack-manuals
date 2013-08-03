@@ -12,48 +12,48 @@
       <title>Selection Criteria</title>
       <para>As part of your hypervisor selection process, you will need to consider a number of important factors to help increase your security posture. Specifically, we will be looking into the following areas:</para>
       <itemizedlist><listitem>
-          <para> Team Expertise</para>
+          <para>Team Expertise</para>
         </listitem>
 <listitem>
-          <para> Product or Project maturity</para>
+          <para>Product or Project maturity</para>
         </listitem>
 <listitem>
-          <para> Certifications, Attestations</para>
+          <para>Certifications, Attestations</para>
         </listitem>
 <listitem>
-          <para> Additional Security Features</para>
+          <para>Additional Security Features</para>
         </listitem>
 <listitem>
-          <para> Hypervisor vs. Baremetal</para>
+          <para>Hypervisor vs. Baremetal</para>
         </listitem>
 <listitem>
-          <para> Hardware Concerns</para>
+          <para>Hardware Concerns</para>
         </listitem>
 <listitem>
-          <para> Common Criteria</para>
+          <para>Common Criteria</para>
         </listitem>
 </itemizedlist>
       <para>Additionally, the following security-related criteria are highly encouraged to be evaluated when selecting a hypervisor for OpenStack deployments:<itemizedlist><listitem>
-            <para> Has the hypervisor undergone Common Criteria certification? If so, to what levels?</para>
+            <para>Has the hypervisor undergone Common Criteria certification? If so, to what levels?</para>
           </listitem>
 <listitem>
-            <para> Is the underlying cryptography certified by a third-party?</para>
+            <para>Is the underlying cryptography certified by a third-party?</para>
           </listitem>
 </itemizedlist><bridgehead>Team Expertise</bridgehead> Most likely, the most important aspect in hypervisor selection is the expertise of your staff in managing and maintaining a particular hypervisor platform. The more familiar your team is with a given product, its configuration, and its eccentricities, the less likely will there be configuration mistakes. Additionally, having staff expertise spread across an organization on a given hypervisor will increase availability of your systems, allow for developing a segregation of duties, and mitigate problems in the event that a team member is unavailable.</para>
       <section xml:id="ch051_vss-intro-idp252752">
         <title>Product or Project Maturity</title>
         <para>The maturity of a given hypervisor product or project is critical to your security posture as well. Product maturity will have a number of effects once you have deployed your cloud, in the context of this security guide we are interested in the following:</para>
         <itemizedlist><listitem>
-            <para> Availability of expertise</para>
+            <para>Availability of expertise</para>
           </listitem>
 <listitem>
             <para>Active developer and user communities</para>
           </listitem>
 <listitem>
-            <para> Timeliness and Availability of updates</para>
+            <para>Timeliness and Availability of updates</para>
           </listitem>
 <listitem>
-            <para> Incidence response</para>
+            <para>Incidence response</para>
           </listitem>
 </itemizedlist>
         <para>One of the biggest indicators of a hypervisor's maturity is the size and vibrancy of the community that surrounds it. As this concerns security, the quality of the community will affect the availability of expertise should you need additional cloud operators. It is also a sign of how widely deployed the hypervisor is, in turn leading to the battle readiness of any reference architectures and best practices.</para>
@@ -68,18 +68,18 @@
         <para>Common Criteria is an internationally standardized software evaluation process, used by governments and commercial companies to validate software technologies perform as advertised. In the government sector, NSTISSP No. 11 mandates that U.S. Government agencies only procure software which has been Common Criteria certified, a policy which has been in place since July 2002. It should be specifically noted that OpenStack has not undergone Common Criteria certification, however many of the available hypervisors have. </para>
         <para>In addition to validating a technologies capabilities, the Common Criteria process evaluates <emphasis>how</emphasis> technologies are developed.</para>
         <itemizedlist><listitem>
-            <para> How is source code management performed?</para>
+            <para>How is source code management performed?</para>
           </listitem>
 <listitem>
-            <para> How are users granted access to build systems?</para>
+            <para>How are users granted access to build systems?</para>
           </listitem>
 <listitem>
-            <para> Is the technology cryptographically signed before distribution?</para>
+            <para>Is the technology cryptographically signed before distribution?</para>
           </listitem>
 </itemizedlist>
         <para>The KVM hypervisor has been Common Criteria certified through the U.S. Government and commercial distributions, which have been validated to separate the runtime environment of virtual machines from each other, providing foundational technology to enforce instance isolation. In addition to virtual machine isolation, KVM has been Common Criteria certified to</para>
         <blockquote>
-          <para> "<emphasis>provide system-inherent separation mechanisms to the resources of virtual machines. This separation ensures that large software component used for virtualizing and simulating devices executing for each virtual machine cannot interfere with each other. Using the SELinux multi-category mechanism, the virtualization and simulation software instances are isolated. The virtual machine management framework configures SELinux multi-category settings transparently to the administrator</emphasis>"</para>
+          <para>"<emphasis>provide system-inherent separation mechanisms to the resources of virtual machines. This separation ensures that large software component used for virtualizing and simulating devices executing for each virtual machine cannot interfere with each other. Using the SELinux multi-category mechanism, the virtualization and simulation software instances are isolated. The virtual machine management framework configures SELinux multi-category settings transparently to the administrator</emphasis>"</para>
         </blockquote>
         <para>While many hypervisor vendors, such as Red Hat, Microsoft, and VMWare have achieved Common Criteria Certification their underlying certified feature set differs. It is recommended to evaluate vendor claims to ensure they minimally satisfy the following requirements:</para>
         
@@ -89,19 +89,19 @@
             <tbody>
               <tr>
                 <td><para>Identification and Authentication</para></td>
-                <td><para> Identification and authentication using pluggable authentication modules (PAM) based upon user passwords. The quality of the passwords used can be enforced through configuration options.</para></td>
+                <td><para>Identification and authentication using pluggable authentication modules (PAM) based upon user passwords. The quality of the passwords used can be enforced through configuration options.</para></td>
               </tr>
               <tr>
                 <td><para>Audit</para></td>
-                <td><para> The system provides the capability to audit a large number of events including individual system calls as well as events generated by trusted processes. Audit data is collected in regular files in ASCII format. The system provides a program for the purpose of searching the audit records. </para><para>The system administrator can define a rule base to restrict auditing to the events they are interested in. This includes the ability to restrict auditing to specific events, specific users, specific objects or a combination of all of this. </para><para>Audit records can be transferred to a remote audit daemon.</para></td>
+                <td><para>The system provides the capability to audit a large number of events including individual system calls as well as events generated by trusted processes. Audit data is collected in regular files in ASCII format. The system provides a program for the purpose of searching the audit records.</para><para>The system administrator can define a rule base to restrict auditing to the events they are interested in. This includes the ability to restrict auditing to specific events, specific users, specific objects or a combination of all of this. </para><para>Audit records can be transferred to a remote audit daemon.</para></td>
               </tr>
               <tr>
                 <td><para>Discretionary Access Control</para></td>
-                <td><para> Discretionary Access Control (DAC) restricts access to file system objects based on Access Control Lists (ACLs) that include the standard UNIX permissions for user, group and others. Access control mechanisms also protect IPC objects from unauthorized access.</para><para>The system includes the ext4 file system, which supports POSIX ACLs. This allows defining access rights to files within this type of file system down to the granularity of a single user.</para></td>
+                <td><para>Discretionary Access Control (DAC) restricts access to file system objects based on Access Control Lists (ACLs) that include the standard UNIX permissions for user, group and others. Access control mechanisms also protect IPC objects from unauthorized access.</para><para>The system includes the ext4 file system, which supports POSIX ACLs. This allows defining access rights to files within this type of file system down to the granularity of a single user.</para></td>
               </tr>
               <tr>
                 <td><para>Mandatory Access Control</para></td>
-                <td><para> Mandatory Access Control (MAC) restricts access to objects based on labels assigned to subjects and objects. Sensitivity labels are automatically attached to processes and objects. The access control policy enforced using these labels is derived from the BellLaPadula access control model.</para><para>SELinux categories are attached to virtual machines and its resources. The access control policy enforced using these categories grant virtual machines access to resources if the category of the virtual machine is identical to the category of the accessed resource.</para><para>The TOE implements non-hierarchical categories to control access to virtual machines.</para></td>
+                <td><para>Mandatory Access Control (MAC) restricts access to objects based on labels assigned to subjects and objects. Sensitivity labels are automatically attached to processes and objects. The access control policy enforced using these labels is derived from the BellLaPadula access control model.</para><para>SELinux categories are attached to virtual machines and its resources. The access control policy enforced using these categories grant virtual machines access to resources if the category of the virtual machine is identical to the category of the accessed resource.</para><para>The TOE implements non-hierarchical categories to control access to virtual machines.</para></td>
               </tr>
               <tr>
                 <td><para>Role-Based Access Control</para></td>
@@ -117,15 +117,15 @@
               </tr>
               <tr>
                 <td><para>Secure Communication</para></td>
-                <td><para> The system supports the definition of trusted channels using SSH. Password based authentication is supported. Only a restricted number of cipher suites are supported for those protocols in the evaluated configuration.</para></td>
+                <td><para>The system supports the definition of trusted channels using SSH. Password based authentication is supported. Only a restricted number of cipher suites are supported for those protocols in the evaluated configuration.</para></td>
               </tr>
               <tr>
                 <td><para>Storage Encryption</para></td>
-                <td><para> The system supports encrypted block devices to provide storage confidentiality via dm_crypt.</para></td>
+                <td><para>The system supports encrypted block devices to provide storage confidentiality via dm_crypt.</para></td>
               </tr>
               <tr>
                 <td><para>TSF Protection</para></td>
-                <td><para> While in operation, the kernel software and data are protected by the hardware memory protection mechanisms. The memory and process management components of the kernel ensure a user process cannot access kernel storage or storage belonging to other processes.</para><para>Non-kernel TSF software and data are protected by DAC and process isolation  mechanisms. In the evaluated configuration, the reserved user ID root owns the directories and files that define the TSF configuration. In general, files and directories containing internal TSF data (e.g., configuration files, batch job queues) are also protected from reading by DAC permissions.</para><para>The system and the hardware and firmware components are required to be physically protected from unauthorized access. The system kernel mediates all access to the hardware mechanisms themselves, other than program visible CPU instruction functions.</para><para>In addition, mechanisms for protection against stack overflow attacks are provided.</para></td>
+                <td><para>While in operation, the kernel software and data are protected by the hardware memory protection mechanisms. The memory and process management components of the kernel ensure a user process cannot access kernel storage or storage belonging to other processes.</para><para>Non-kernel TSF software and data are protected by DAC and process isolation  mechanisms. In the evaluated configuration, the reserved user ID root owns the directories and files that define the TSF configuration. In general, files and directories containing internal TSF data (e.g., configuration files, batch job queues) are also protected from reading by DAC permissions.</para><para>The system and the hardware and firmware components are required to be physically protected from unauthorized access. The system kernel mediates all access to the hardware mechanisms themselves, other than program visible CPU instruction functions.</para><para>In addition, mechanisms for protection against stack overflow attacks are provided.</para></td>
               </tr>
             </tbody>
           </informaltable>
@@ -144,42 +144,42 @@
             <tbody>
               <tr>
                 <td><para><emphasis role="bold">Algorithm</emphasis></para></td>
-                <td><para> <emphasis role="bold">Key Length</emphasis></para></td>
-                <td><para> <emphasis role="bold">Intended Purpose</emphasis></para></td>
-                <td><para> <emphasis role="bold">Security Function</emphasis></para></td>
-                <td><para> <emphasis role="bold">implementation Standard</emphasis></para></td>
+                <td><para><emphasis role="bold">Key Length</emphasis></para></td>
+                <td><para><emphasis role="bold">Intended Purpose</emphasis></para></td>
+                <td><para><emphasis role="bold">Security Function</emphasis></para></td>
+                <td><para><emphasis role="bold">implementation Standard</emphasis></para></td>
               </tr>
               <tr>
                 <td><para>AES</para></td>
-                <td><para> 128 bits,192 bits,</para><para>256 bits </para></td>
+                <td><para>128 bits,192 bits,</para><para>256 bits </para></td>
                 <td><para>Encryption / Decryption </para></td>
                 <td><para>Protected Data Transfer,Protection for Data at Rest </para></td>
                 <td><para>RFC 4253</para></td>
               </tr>
               <tr>
                 <td><para>TDES</para></td>
-                <td><para> 168 bits</para></td>
+                <td><para>168 bits</para></td>
                 <td><para>Encryption /Decryption </para></td>
                 <td><para>Protected Data Transfer</para></td>
                 <td><para>RFC 4253</para></td>
               </tr>
               <tr>
                 <td><para>RSA</para></td>
-                <td><para> 1024 bits,2048 bits,</para><para>3072 bits </para></td>
+                <td><para>1024 bits,2048 bits,</para><para>3072 bits </para></td>
                 <td><para>Authentication,Key Exchange </para></td>
                 <td><para>identification andAuthentication, ProtectedData Transfer</para></td>
                 <td><para>U.S. NIST FIPS PUB 186-3</para></td>
               </tr>
               <tr>
                 <td><para>DSA</para></td>
-                <td><para> L=1024,N=160 bits </para></td>
+                <td><para>L=1024,N=160 bits </para></td>
                 <td><para>Authentication,Key Exchange </para></td>
-                <td><para> Identification andAuthentication, ProtectedData Transfer </para></td>
+                <td><para>Identification andAuthentication, ProtectedData Transfer </para></td>
                 <td><para>U.S. NIST FIPS PUB 186-3</para></td>
               </tr>
               <tr>
                 <td><para>Serpent</para></td>
-                <td><para> 128, 196, or256 bit </para></td>
+                <td><para>128, 196, or256 bit </para></td>
                 <td><para>Encryption /Decryption </para></td>
                 <td><para>Protection of Data at Rest</para></td>
                 <td><para>http://www.cl.cam.ac.uk/~rj a14/Papers/serpent.pdf</para></td>
@@ -212,7 +212,7 @@
           <title>FIPS 140-2</title>
           <para>In the United States the National Institute of Science and Technology (NIST) certifies cryptographic algorithms through a process known the Cryptographic Module Validation Program. NIST certifies algorithms for conformance against Federal Information Processing Standard 140-2 (FIPS 140-2), which ensures:</para>
           <blockquote>
-            <para> <emphasis>Products validated as conforming to FIPS 140-2 are accepted by the Federal agencies of both countries [United States and Canada] for the protection of sensitive information (United States) or Designated Information (Canada). The goal of the CMVP is to promote the use of validated cryptographic modules and provide Federal agencies with a security metric to use in procuring equipment containing validated cryptographic modules.</emphasis></para>
+            <para><emphasis>Products validated as conforming to FIPS 140-2 are accepted by the Federal agencies of both countries [United States and Canada] for the protection of sensitive information (United States) or Designated Information (Canada). The goal of the CMVP is to promote the use of validated cryptographic modules and provide Federal agencies with a security metric to use in procuring equipment containing validated cryptographic modules.</emphasis></para>
           </blockquote>
           <para>When evaluating base hypervisor technologies, consider if the hypervisor has been certified against FIPS 140-2. Not only is conformance against FIPS 140-2 mandated per U.S. Government policy, formal certification indicates that a given implementation of a cryptographic algorithm has been reviewed for conformance against module specification, cryptographic module ports and interfaces; roles, services, and authentication; finite state model; physical security; operational environment; cryptographic key management; electromagnetic interference/electromagnetic compatibility (EMI/EMC); self-tests; design assurance; and mitigation of other attacks.</para>
         </section>
@@ -242,7 +242,7 @@
                 <td><para>Required for dynamic attestation services</para></td>
               </tr>
               <tr>
-                <td><para> <anchor xml:id="PCI-SIG_I.2FO_virtualization_.28IOV.29"/>PCI-SIG I/O virtualization</para></td>
+                <td><para><anchor xml:id="PCI-SIG_I.2FO_virtualization_.28IOV.29"/>PCI-SIG I/O virtualization</para></td>
                 <td><para>SR-IOV, MR-IOV, ATS</para></td>
                 <td><para>Required to allow secure sharing of PCI Express devices</para></td>
               </tr>
