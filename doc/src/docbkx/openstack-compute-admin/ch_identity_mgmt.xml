@@ -27,12 +27,12 @@
   <section xml:id="memcached-and-system-time">
     <title>Memcached and System Time</title>
     <para>If you use <link xlink:href="http://memcached.org/"
-        >memcached</link> with Keystone &ndash; for example, using the
+        >memcached</link> with the Identity Service &ndash; for example, using the
       memcache token driver or the <literal>auth_token</literal>
       middleware &ndash; ensure that the system time of memcached
       hosts is set to UTC. Memcached uses the host's system time in
-      determining whether a key has expired, whereas Keystone sets key
-      expiry in UTC. The timezone used by Keystone and memcached must
+      determining whether a key has expired, whereas the Identity Service sets key
+      expiry in UTC. The timezone used by the Identity Service and memcached must
       match if key expiry is to behave as expected.</para>
   </section>
   <xi:include href="../common/section_keystone-ssl-config.xml"/>
@@ -60,7 +60,7 @@ pipeline = stats_monitoring url_normalize token_auth admin_token_auth xml_body j
   </section>
   <xi:include href="../common/section_identity-configure.xml"/>
   <section xml:id="keystone-logging">
-    <title>Logging</title>
+    <title>Configure Logging</title>
     <para>You must configure logging outside of your Identity Service
       configuration.</para>
     <para>Configure logging in the <literal>[DEFAULT]</literal>
@@ -75,13 +75,13 @@ pipeline = stats_monitoring url_normalize token_auth admin_token_auth xml_body j
       module, which includes extensive configuration options for
       choosing the output levels and formats.</para>
     <para>See the <filename>etc/keystone.conf</filename> sample
-      configuration files, which are distributed with keystone.</para>
+      configuration files, which are distributed with the Identity Service.</para>
     <para>For services that have a separate <filename>paste-deploy
         ini</filename> file, you can alternatively configure
       auth_token middleware in the
         <literal>[keystone_authtoken]</literal> section in the main
       configuration file, such as <filename>nova.conf</filename>. For
-      example in Nova, you can remove the middleware parameters from
+      example in Compute, you can remove the middleware parameters from
         <filename>api-paste.ini</filename>, as follows:</para>
     <screen><computeroutput>[filter:authtoken]
 paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory</computeroutput></screen>
@@ -107,7 +107,7 @@ paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory</comp
   </section>
   <section xml:id="monitoring">
     <title>Monitoring</title>
-    <para>Keystone provides some basic request/response monitoring
+    <para>The Identity Service provides some basic request/response monitoring
       statistics.</para>
     <para>To enable data collection, define a
         <literal>stats_monitoring</literal> filter and include it at
@@ -150,8 +150,7 @@ pipeline = [...] json_body stats_reporting ec2_extension [...] admin_service</co
   </section>
   <section xml:id="initializing-keystone">
     <title>Initialize the Identity Service</title>
-    <para><command>keystone-manage</command> enables you to run
-      commands that cannot be administered through the normal REST
+    <para>The <command>keystone-manage</command> commands enable you to perform functions that are not available through the normal REST
       API. The following calls are supported:</para>
     <itemizedlist>
       <listitem>
@@ -161,7 +160,7 @@ pipeline = [...] json_body stats_reporting ec2_extension [...] admin_service</co
       <listitem>
         <para>
           <literal>import_nova_auth</literal>: Load auth data from a
-          dump created with keystone-manage.</para>
+          dump created with <command>keystone-manage</command>.</para>
       </listitem>
     </itemizedlist>
     <para>Generally, the following is the first step after a source
@@ -171,24 +170,24 @@ pipeline = [...] json_body stats_reporting ec2_extension [...] admin_service</co
       usage information.</para>
   </section>
   <section xml:id="configuring-services-to-work-with-keystone">
-    <title>Configure services to work with the Identity Service</title>
+    <title>Configure Services to Work with Identity Service</title>
     <para>Once Keystone is installed and running, services need to be
       configured to work with it. To do this, we primarily install and
       configure middleware for the OpenStack service to handle
-      authentication tasks or otherwise interact with Keystone.</para>
+      authentication tasks or otherwise interact with the Identity Service.</para>
     <para>In general:</para>
     <itemizedlist>
       <listitem>
-        <para>Clients making calls to the service will pass in an
+        <para>Clients making calls to the service pass an
           authentication token.</para>
       </listitem>
       <listitem>
-        <para>The Keystone middleware will look for and validate that
+        <para>The Identity Service middleware looks for and validates that
           token, taking the appropriate action.</para>
       </listitem>
       <listitem>
-        <para>It will also retrieve additional information from the
-          token such as user name, id, tenant name, id, roles, etc...
+        <para>It also retrieves additional information from the
+          token such as user name, id, tenant name, id, roles, and so on.
         </para>
       </listitem>
     </itemizedlist>
@@ -200,27 +199,27 @@ pipeline = [...] json_body stats_reporting ec2_extension [...] admin_service</co
       <xi:include href="../common/section_cli_keystone_users_tenants_roles.xml"/>
     </section>
     <section xml:id="setting-up-middleware">
-      <title>Setting Up Middleware</title>
+      <title>Set Up Middleware</title>
       <section xml:id="keystone-auth-token-middleware">
-        <title>Keystone Auth-Token Middleware</title>
-        <para>The Keystone auth_token middleware is a WSGI component
+        <title>Identity Service Auth-Token Middleware</title>
+        <para>The the Identity Service auth_token middleware is a WSGI component
           that can be inserted in the WSGI pipeline to handle
-          authenticating tokens with Keystone.</para>
+          authenticating tokens with the Identity Service.</para>
       </section>
       <section xml:id="configuring-nova-to-use-keystone">
-        <title>Configuring Nova to use Keystone</title>
-        <para>When configuring Nova, it is important to create a nova
+        <title>Configure Compute to Use the Identity Service</title>
+        <para>When configuring Compute, it is important to create a nova
           user in the service tenant and include the nova user's login
           information in /etc/nova/nova.conf</para>
       </section>
       <section xml:id="configuring-swift-to-use-keystone">
-        <title>Configuring Swift to use Keystone</title>
-        <para>Similar to Nova, swift can be configured to use
-          Keystone for authentication rather than its built in
+        <title>Configure Object Storage to Use the Identity Service</title>
+        <para>Similar to Compute, you can configure Object Storage to use the Identity Service
+          for authentication rather than its built in
           'tempauth'.</para>
         <orderedlist numeration="arabic">
           <listitem>
-            <para>Add a service endpoint for Swift to Keystone
+            <para>Add a service endpoint for Object Storage to the Identity Service
             </para>
           </listitem>
           <listitem>
@@ -229,7 +228,7 @@ pipeline = [...] json_body stats_reporting ec2_extension [...] admin_service</co
             </para>
           </listitem>
           <listitem>
-            <para>Reconfigure Swift's proxy server to use Keystone
+            <para>Reconfigure Object Storage's proxy server to use the Identity Service
               instead of TempAuth. Here's an example
               `/etc/swift/proxy-server.conf`:</para>
             <screen><computeroutput>
@@ -273,11 +272,11 @@ use = egg:swift#healthcheck</computeroutput>
 </screen>
           </listitem>
           <listitem>
-            <para>Restart swift services.</para>
+            <para>Restart Object Storage services.</para>
           </listitem>
           <listitem>
-            <para>Verify that the Identity service, Keystone, is
-              providing authentication to Object Storage (Swift).</para>
+            <para>Verify that the Identity Service is
+              providing authentication to Object Storage.</para>
             <screen>
               <prompt>$</prompt> <userinput>swift -V 2 -A http://localhost:5000/v2.0 -U admin:admin -K ADMIN stat</userinput>
             </screen>
@@ -286,18 +285,18 @@ use = egg:swift#healthcheck</computeroutput>
       </section>
       <section
         xml:id="configuring-swift-with-s3-emulation-to-use-keystone">
-        <title>Configuring Swift with S3 emulation to use
-          Keystone</title>
-        <para>Keystone support validating S3 tokens using the same
+        <title>Configure Object Storage with S3 Emulation to Use
+          the Identity Service</title>
+        <para>The Identity Service support validating S3 tokens using the same
           tokens as the generated EC2 tokens. When you have generated
           a pair of EC2 access token and secret you can access your
-          swift cluster directly with the S3 API.</para>
+          Object Storage cluster directly with the S3 API.</para>
         <orderedlist numeration="arabic">
           <listitem>
             <para>Configure the paste file for swift-proxy
               (`/etc/swift/proxy-server.conf`) to use S3token and
               Swift3 middleware. You must have the s3token middleware
-              in the pipeline when using keystone and swift3.</para>
+              in the pipeline when using the Identity Service and swift3.</para>
             <para>Here's an example:</para>
             <screen><computeroutput>
 [DEFAULT]
@@ -346,8 +345,8 @@ admin_token = ADMIN</computeroutput>
 </screen>
           </listitem>
           <listitem>
-            <para>You can then access directly your Swift through the S3
-              API, here's an example with the `boto` library:</para>
+            <para>You can then access directly Object Storage through the S3
+              API. The following example shows how to use the `boto` library:</para>
             <screen><computeroutput>import boto
 import boto.s3.connection
 
@@ -363,13 +362,12 @@ connection = boto.connect_s3(
         </orderedlist>
       </section>
       <section xml:id="configuring-keystone-for-ldap-backend">
-        <title>Configuring Keystone for an LDAP backend</title>
+        <title>Configure the Identity Service for an LDAP Backend</title>
         <para>As an alternative to the SQL Database backing store,
-          Keystone can use a directory server to provide the Identity
-          service. An example Schema for OpenStack would look like
+          the Identity Service can use a directory server to provide the Identity
+          service. An example schema for OpenStack looks like
           this:</para>
-        <screen><computeroutput>
-dn: dc=openstack,dc=org
+        <screen><computeroutput>dn: dc=openstack,dc=org
 dc: openstack
 objectClass: dcObject
 objectClass: organizationalUnit
@@ -396,10 +394,9 @@ objectClass: organizationalRole
 ou: _member_
 cn: 9fe2ff9ee4384b1894a90878d3e92bab</computeroutput>
 </screen>
-        <para>The corresponding entries in the Keystone configuration
+        <para>The corresponding entries in the Identity Service configuration
           file are:</para>
-        <screen><computeroutput>
-[DEFAULT]
+        <screen><computeroutput>[DEFAULT]
 public_endpoint = http://localhost:%(public_port)s/
 admin_endpoint = http://localhost:%(admin_port)s/
 
@@ -436,9 +433,8 @@ role_tree_dn = ou=Roles,dc=openstack,dc=org</computeroutput>
             <emphasis>username</emphasis> field either
             <emphasis>uid</emphasis> or <emphasis>cn</emphasis>. To
           change these two fields, the corresponding entries in the
-          Keystone configuration file are:</para>
-        <screen><computeroutput>
-[ldap]
+          the Identity Service configuration file are:</para>
+        <screen><computeroutput>[ldap]
 user_id_attribute = uidNumber
 user_name_attribute = cn</computeroutput>
 </screen>
@@ -446,8 +442,7 @@ user_name_attribute = cn</computeroutput>
           you can modify depending on your specific deployment. For
           example, the users are managed by another tool and you have
           only read access, in such case the configuration is:</para>
-        <screen><computeroutput>
-[ldap]
+        <screen><computeroutput>[ldap]
 
 user_allow_create = False
 user_allow_update = False
@@ -464,8 +459,7 @@ role_allow_delete = True</computeroutput>
         <para>There are some configuration options for filtering
           users, tenants and roles, if the backend is providing too
           much output, in such case the configuration will look like:</para>
-        <screen><computeroutput>
-[ldap]
+        <screen><computeroutput>[ldap]
 user_filter = (memberof=CN=openstack-users,OU=workgroups,DC=openstack,DC=com)
 tenant_filter =
 role_filter =</computeroutput>
@@ -475,8 +469,7 @@ role_filter =</computeroutput>
           several configuration parameters that can be used to extract
           the value from an integer attribute like in Active
           Directory:</para>
-        <screen><computeroutput>
-[ldap]
+        <screen><computeroutput>[ldap]
 user_enabled_attribute = userAccountControl
 user_enabled_mask      = 2
 user_enabled_default   = 512</computeroutput>
@@ -532,7 +525,7 @@ role_attribute_ignore    =</computeroutput></screen>
         xml:id="auth-token-middleware-with-username-and-password">
         <title>Auth-Token Middleware with Username and
           Password</title>
-        <para>It is also possible to configure Keystone's auth_token
+        <para>It is also possible to configure the Identity Service's auth_token
           middleware using the 'admin_user' and 'admin_password'
           options. When using the 'admin_user' and 'admin_password'
           options the 'admin_token' parameter is optional. If
@@ -551,88 +544,86 @@ auth_token = 012345SECRET99TOKEN012345
 admin_user = admin
 admin_password = keystone123</computeroutput>
 </screen>
-        <para>It should be noted that when using this option an admin
+        <note><para>To use this option, an admin
           tenant/role relationship is required. The admin user is
           granted access to the 'Admin' role on the 'admin' tenant.
-        </para>
+        </para></note>
       </section>
-  </section>
+    </section>
   <section xml:id="keystone-ssl">
-    <title>Configuring Keystone SSL support</title>
-    <para>Keystone may be configured to support 2-way SSL
-      out-of-the-box. The x509 certificates used by Keystone must be
-      obtained externally and configured for use with Keystone as
+    <title>Configure the Identity Service SSL Support</title>
+    <para>the Identity Service might be configured to support 2-way SSL
+      out-of-the-box. The x509 certificates used by the Identity Service must be
+      obtained externally and configured for use with the Identity Service as
       described in this section. However, a set of sample certificates
       is provided in the <literal>examples/ssl</literal> directory
-      with the Keystone distribution for testing. Here is the
-      description of each of them and their purpose: <itemizedlist>
+      with the Identity Service distribution for testing. Here is the
+      description of each of them and their purpose:</para><itemizedlist>
         <listitem>
-          <para><filename>ca.pem</filename> - Certificate Authority
+          <para><filename>ca.pem</filename>. Certificate Authority
             chain to validate against.</para>
         </listitem>
         <listitem>
-          <para><filename>keystone.pem</filename> - Public certificate
-            for Keystone server.</para>
+          <para><filename>keystone.pem</filename>. Public certificate
+            for the Identity Service server.</para>
         </listitem>
         <listitem>
-          <para><filename>middleware.pem</filename> - Public and
-            private certificate for Keystone middleware/client.</para>
+          <para><filename>middleware.pem</filename>. Public and
+            private certificate for the Identity Service middleware/client.</para>
         </listitem>
         <listitem>
-          <para><filename>cakey.pem</filename> - Private key for the
+          <para><filename>cakey.pem</filename>. Private key for the
             CA.</para>
         </listitem>
         <listitem>
-          <para><filename>keystonekey.pem</filename> - Private key for
-            the Keystone server.</para>
+          <para><filename>keystonekey.pem</filename>. Private key for
+            the Identity Service server.</para>
         </listitem>
-      </itemizedlist> Note that you may choose whatever names you want
-      for these certificates, or combine the public/private keys in
+      </itemizedlist>
+<note><para>You can name these certificates whatever you want, or combine the public/private keys in
       the same file if you wish. These certificates are just provided
-      as an example.</para>
+      as an example.</para></note>
     <para>To enable SSL with client authentication, modify the
-        <literal>etc/keystone.conf</literal> file accordingly under
+      <literal>etc/keystone.conf</literal> file accordingly under
       the <literal>[ssl]</literal> section. SSL configuration example
       using the included sample certificates:</para>
-    <programlisting>
-[ssl]
+    <screen><computeroutput>[ssl]
 enable = True
 certfile = &lt;path to keystone.pem&gt;
 keyfile = &lt;path to keystonekey.pem&gt;
 ca_certs = &lt;path to ca.pem&gt;
-cert_required = True
-</programlisting>
+cert_required = True</computeroutput></screen>
     <para>Example:</para>
-    <programlisting>[ssl]
-enable = True
-certfile = /home/agentl/openstack/tests/certs/signing_cert.pem
-keyfile = /home/agentl/openstack/tests/certs/private_key.pem
+    <screen><computeroutput>[ssl]
+      enable = True
+      certfile = /home/agentl/openstack/tests/certs/signing_cert.pem
+      keyfile = /home/agentl/openstack/tests/certs/private_key.pem
 ca_certs = /home/agentl/openstack/tests/certs/cacert.pem
-cert_required = True</programlisting>
+cert_required = True</computeroutput></screen>
     <para>
       <itemizedlist>
         <listitem>
-          <para>enable: True enables SSL. Defaults to False.</para>
+          <para><literal>enable</literal>. True enables SSL. Defaults to False.</para>
         </listitem>
         <listitem>
-          <para>certfile: Path to Keystone public certificate
+          <para><literal>certfile</literal>. Path to the Identity Service public certificate
             file.</para>
         </listitem>
         <listitem>
-          <para>keyfile: Path to Keystone private certificate file. If
+          <para><literal>keyfile</literal>. Path to the Identity Service private certificate file. If
             the private key is included in the certfile, the keyfile
             may be omitted.</para>
         </listitem>
         <listitem>
-          <para>ca_certs: Path to CA trust chain.</para>
+          <para><literal>ca_certs</literal>. Path to CA trust chain.</para>
         </listitem>
         <listitem>
-          <para>cert_required: Requires client certificate. Defaults
+          <para><literal>cert_required</literal>. Requires client certificate. Defaults
             to False.</para>
         </listitem>
       </itemizedlist>
     </para>
   </section>
   <xi:include href="../common/section_keystone-external-auth.xml"/>
-  <xi:include href="../common/section_identity_troubleshooting.xml"/>
+  <xi:include href="../common/section_identity-troubleshooting.xml"/>
 </chapter>
