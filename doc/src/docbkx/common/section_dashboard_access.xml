@@ -13,18 +13,31 @@
     <info>
         <title>Overview</title>
     </info>
-<?dbhtml stop-chunking?>
+    <?dbhtml stop-chunking?>
+    <para>The following requirements must be fulfilled to access the
+        OpenStack dashboard:</para>
+    <itemizedlist>
+        <listitem>
+            <para>The cloud operator has set up an OpenStack
+                cloud.</para>
+        </listitem>
+        <listitem>
+            <para>You have a recent Web browser that supports HTML5.
+                It must have cookies and JavaScript enabled. To use
+                the VNC client for the dashboard, which is based on
+                noVNC, your browser must support HTML5 Canvas and
+                HTML5 WebSockets. For more details and a list of
+                browsers that support noVNC, see <link
+                    xlink:href="https://github.com/kanaka/noVNC/blob/master/README.md"
+                    >https://github.com/kanaka/noVNC/blob/master/README.md</link>,
+                and <link
+                    xlink:href="https://github.com/kanaka/noVNC/wiki/Browser-support"
+                    >https://github.com/kanaka/noVNC/wiki/Browser-support</link>,
+                respectively.</para>
+        </listitem>
+    </itemizedlist>
     <para>Learn how to log in to the dashboard and get a short
         overview of the interface.</para>
-    <!-- <note>
-        <para>To use the VNC client with the dashboard, the browser
-            must support HTML5 Canvas and HTML5 WebSockets.</para>
-        <para>For details about browsers that support noVNC, see <link
-                xlink:href="https://github.com/kanaka/noVNC/blob/master/README.md"
-                >noVNC: HTML5 VNC Client</link>, and <link
-                xlink:href="https://github.com/kanaka/noVNC/wiki/Browser-support"
-                >Browser support</link>, respectively.</para>
-    </note> -->
     <section xml:id="log_in_dashboard">
         <title>Log in to the dashboard</title>
         <procedure>
@@ -49,13 +62,13 @@
             </step>
             <step>
                 <para>Open a Web browser that supports HTML5. Make
-                    sure that JavaScript and cookies are enabled.
-                </para>
+                    sure that JavaScript and cookies are
+                    enabled.</para>
             </step>
             <step>
                 <para>As a URL, enter the host name or IP address that
                     you got from the cloud operator.</para>
-                <literallayout>https://IP_ADDRESS_OR_HOSTNAME/</literallayout>
+                <literallayout>https://<replaceable>IP_ADDRESS_OR_HOSTNAME</replaceable>/</literallayout>
                 <note>
                     <title>Certificate Warning</title>
                     <para>You might get a certificate warning when you
@@ -76,6 +89,204 @@
                         In</guibutton>.</para>
             </step>
         </procedure>
+        <para>After you log in, the following page appears:</para>
+        <figure os="enduser" xml:id="dashboard_main_page_user">
+            <title>OpenStack dashboard &ndash; Overview</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="figures/dashboard-project.png"
+                        format="PNG" contentwidth="6in" width="6in"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <figure os="adminuser" xml:id="dashboard_main_page_admin">
+            <title>OpenStack dashboard &ndash; Overview</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata
+                        fileref="figures/dashboard_admin_overview.png"
+                        format="PNG" contentwidth="6in" width="6in"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para>The top-level row shows the user name that you logged in
+            with. You can also access <guilabel>Settings</guilabel> or
+                <guibutton>Sign Out</guibutton> of the Web
+            interface.</para>
+        <note>
+            <para>The visible tabs and functions in the dashboard
+                depend on the access permissions of the user that is
+                logged in. They are defined by roles.</para>
+        </note>
+        <para os="enduser">If you are logged in as an end user rather
+            than an admin user, the main screen shows only the
+                <guilabel>Project</guilabel> tab.</para>
+        <para os="adminuser">If you are logged in as an administrator,
+            the main screen shows the <guilabel>Project</guilabel> and
+                <guilabel>Admin</guilabel> tabs.</para>
     </section>
-    <xi:include href="section_dashboard_overview.xml"/>
+    <section xml:id="dashboard_project_tab">
+        <title>OpenStack dashboard &ndash; Project tab</title>
+        <para>This tab shows details for the projects, or projects, of
+            which you are a member. <figure os="enduser"
+                xml:id="dashboard_project_user">
+                <title>OpenStack dashboard &ndash; Project tab</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata
+                            fileref="figures/dashboard-project.png"
+                            format="PNG" contentwidth="6in"
+                            width="6in"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <figure os="adminuser" xml:id="dashboard_project_admin">
+                <title>OpenStack dashboard &ndash; Project tab</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata
+                            fileref="figures/dashboard_admin_project_tab.png"
+                            format="PNG" contentwidth="6in"
+                            width="6in"/>
+                    </imageobject>
+                </mediaobject>
+            </figure></para>
+        <para>Select a project from the drop-down list on the
+            left-hand side to access the following categories:</para>
+        <variablelist wordsize="10">
+            <varlistentry>
+                <term><guilabel>Overview</guilabel></term>
+                <listitem>
+                    <para>Shows basic reports on the project.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><guilabel>Instances</guilabel></term>
+                <listitem>
+                    <para>Lists instances and volumes created by users
+                        of the project.</para>
+                    <para>From here, you can stop, pause, or reboot
+                        any instances or connect to them through
+                        virtual network computing (VNC).</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><guilabel>Volumes</guilabel></term>
+                <listitem>
+                    <para>Lists volumes created by users of the
+                        project.</para>
+                    <para>From here, you can create or delete
+                        volumes.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><guilabel>Images &amp;
+                    Snapshots</guilabel></term>
+                <listitem>
+                    <para>Lists images and snapshots created by users
+                        of the project, plus any images that are
+                        publicly available. Includes volume snapshots.
+                        From here, you can create and delete images
+                        and snapshots, and launch instances from
+                        images and snapshots.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><guilabel>Access &amp;
+                    Security</guilabel></term>
+                <listitem>
+                    <para>On the <guilabel>Security Groups</guilabel>
+                        tab, you can list, create, and delete security
+                        groups and edit rules for security
+                        groups.</para>
+                    <para>On the <guilabel>Keypairs</guilabel> tab,
+                        you can list, create, and import keypairs, and
+                        delete keypairs.</para>
+                    <para>On the <guilabel>Floating IPs</guilabel>
+                        tab, you can allocate an IP address to or
+                        release it from a project.</para>
+                    <para>On the <guilabel>API Access</guilabel> tab,
+                        you can list the API endpoints.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </section>
+    <section os="adminuser" xml:id="dashboard_admin_tab">
+        <title>OpenStack dashboard &ndash; Admin tab</title>
+        <para>This tab shows details for the projects, or projects, of
+            which you are a member.</para>
+        <figure xml:id="dashboard_admin_project_tab">
+            <title>OpenStack dashboard &ndash; Admin tab</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata
+                        fileref="figures/dashboard_admin_overview.png"
+                        format="PNG" contentwidth="6in" width="6in"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para>On the <guilabel>Admin</guilabel> tab, you can access
+            the following categories:</para>
+        <variablelist wordsize="10">
+            <varlistentry>
+                <term>Overview</term>
+                <listitem>
+                    <para>Shows basic reports.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>Instances</term>
+                <listitem>
+                    <para>Lists all currently running instances
+                        belonging to various users and projects. Not
+                        all projects are visible to the administrator,
+                        though.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>Services</term>
+                <listitem>
+                    <para>Lists the defined services.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>Flavors</term>
+                <listitem>
+                    <para>Lists the available <quote>sizes</quote> of
+                        the VMs that users can launch.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>Images</term>
+                <listitem>
+                    <para>Shows the custom images that have been
+                        uploaded. Lets you edit image properties or
+                        delete images, if needed.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>Project</term>
+                <listitem>
+                    <para>Lists the available projects. Lets you
+                        create projects and assign users to the
+                        projects.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>Users</term>
+                <listitem>
+                    <para>Gives an overview of all users.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>Quotas</term>
+                <listitem>
+                    <para>Lists the default quota values, which are
+                        hard-coded in OpenStack Nova. Includes
+                        parameters such as the number of CPUs, RAM, or
+                        instances.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </section>
 </section>

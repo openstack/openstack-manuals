@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="adding-users-tenants-and-roles-with-python-keystoneclient">
+    <?dbhtml stop-chunking?>
+    <title>Administer users, tenants, roles, and services</title>
+    <para>You must configure the keystone client with admin
+        credentials before you can create and manage users, tenants,
+        and roles. For information about configuration, see the <link
+            xlink:href="http://docs.openstack.org/grizzly/openstack-compute/admin/content/"
+                ><citetitle>OpenStack Compute Administration
+                Guide</citetitle></link>.</para>
+    <para>You must create at least one tenant, user, and role. You
+        link the user to the tenant, and the role to the user-tenant
+        pairing.</para>
+    <para>To authenticate users against the Identity Service, you must
+        create service users for each of the OpenStack services, such
+        as Compute, Image Service, Networking, and so on.</para>
+    <para>The <literal>auth_token</literal> middleware supports the
+        use of either a shared secret or users for each service.</para>
+    <section xml:id="tenants">
+        <title>Tenants</title>
+        <para>A tenant is a group of zero or more users. In Compute, a
+            tenant owns virtual machines. In the Object Storage
+            Service, a tenant owns containers. You can associated
+            users with more than one tenant. You can associate each
+            tenant and user pairing with a role.</para>
+        <procedure xml:id="tenant-list">
+            <title>To list tenants</title>
+            <step>
+                <para>List all tenants:</para>
+                <screen><prompt>$</prompt> <userinput>keystone tenant-list</userinput></screen>
+                <screen><computeroutput>+----------------------------------+--------------------+---------+
+|                id                |        name        | enabled |
++----------------------------------+--------------------+---------+
+| 66265572db174a7aa66eba661f58eb9e |       admin        |   True  |
+| ba7c172fe7d74a8a888939f1b8cc7f98 |      alt_demo      |   True  |
+| b70d90d65e464582b6b2161cf3603ced |        demo        |   True  |
+| 0675bbff347e4fc5aea94b6adad6000f |     demodiane      |   True  |
+| c60467a6a1e140a08ba401b09a4f9adb | invisible_to_admin |   True  |
+| a1d0e04f92f948ad9afe91ab8ebedfeb |      service       |   True  |
++----------------------------------+--------------------+---------+</computeroutput></screen>
+            </step>
+        </procedure>
+        <procedure xml:id="tenant-create">
+            <title>To create a tenant</title>
+            <step>
+                <para>Create an enabled tenant named demo:</para>
+                <screen><prompt>$</prompt> <userinput>keystone tenant-create --name demo1 --description "demo1 tenant" --enabled true</userinput></screen>
+                <screen><computeroutput>+-------------+----------------------------------+
+|   Property  |              Value               |
++-------------+----------------------------------+
+| description |           demo1 tenant           |
+|   enabled   |               True               |
+|      id     | c165a03f78164d7294a3133b345ee9fa |
+|     name    |              demo1               |
++-------------+----------------------------------+</computeroutput></screen>
+            </step>
+        </procedure>
+        <procedure xml:id="tenant-disable">
+            <title>To disable a tenant</title>
+            <step>
+                <para>To disable a tenant, specify the tenant
+                    ID:</para>
+                <screen><prompt>$</prompt> <userinput>keystone tenant-update c165a03f78164d7294a3133b345ee9fa --enabled false</userinput></screen>
+            </step>
+        </procedure>
+        <procedure xml:id="tenant-get">
+            <title>To get tenant details</title>
+            <step>
+                <para>To get tenant details, specify the tenant
+                    ID:</para>
+                <screen><prompt>$</prompt> <userinput>keystone tenant-get c165a03f78164d7294a3133b345ee9fa</userinput></screen>
+                <screen><computeroutput>+-------------+----------------------------------+
+|   Property  |              Value               |
++-------------+----------------------------------+
+| description |           demo1 tenant           |
+|   enabled   |              False               |
+|      id     | c165a03f78164d7294a3133b345ee9fa |
+|     name    |              demo1               |
++-------------+----------------------------------+</computeroutput></screen>
+            </step>
+        </procedure>
+        <procedure xml:id="tenant-enable">
+            <title>To enable a tenant</title>
+            <step>
+                <para>To enable a tenant, specify the tenant
+                    ID:</para>
+                <screen><prompt>$</prompt> <userinput>keystone tenant-update c165a03f78164d7294a3133b345ee9fa --enabled true</userinput></screen>
+            </step>
+        </procedure>
+
+        <procedure xml:id="tenant-delete">
+            <title>To delete a tenant</title>
+            <step>
+                <para>To delete a tenant, specify the tenant
+                    ID:</para>
+                <screen><prompt>$</prompt> <userinput>keystone tenant-delete f2b7b39c860840dfa47d9ee4adffa0b3</userinput></screen>
+            </step>
+        </procedure>
+    </section>
+    <section xml:id="users">
+        <title>Users</title>
+        <procedure xml:id="user-list">
+            <title>To list users</title>
+            <step>
+                <para>To list all users for all tenants, run the following command:</para>
+                <screen><prompt>$</prompt> <userinput>keystone user-list</userinput></screen>
+                <screen><computeroutput>+----------------------------------+----------+---------+----------------------+
+|                id                |   name   | enabled |        email         |
++----------------------------------+----------+---------+----------------------+
+| 376744b5910b4b4da7d8e6cb483b06a8 |  admin   |   True  |  admin@example.com   |
+| a7e160432ddf4a5c800fbab4ca8313a1 |  admin1  |   True  |  admin1@example.com  |
+| 6705b966b1dd450a91971b5c3bfe93ad | alt_demo |   True  | alt_demo@example.com |
+| e900100b4cd54d53bcecac6c4736c4f3 |  cinder  |   True  |  cinder@example.com  |
+| 867e53193998439992896bc88d9525f0 |   demo   |   True  |   demo@example.com   |
+| 4105efb002cd4464b61580cbd68e5a3c |  glance  |   True  |  glance@example.com  |
+| d4844c6e77924194b44a6151b4357ebd |   nova   |   True  |   nova@example.com   |
++----------------------------------+----------+---------+----------------------+</computeroutput></screen>
+                <para>To list users for a specified tenant, include
+                    the <parameter>--tenant-id</parameter> parameter, as follows:</para>
+<screen><prompt>$</prompt> <userinput>keystone user-list --tenant-id 66265572db174a7aa66eba661f58eb9e</userinput></screen>
+                <screen><computeroutput>+----------------------------------+-------+---------+-------------------+
+|                id                |  name | enabled |       email       |
++----------------------------------+-------+---------+-------------------+
+| 376744b5910b4b4da7d8e6cb483b06a8 | admin |   True  | admin@example.com |
++----------------------------------+-------+---------+-------------------+ </computeroutput></screen>   </step>
+        </procedure>
+        <procedure xml:id="user-create">
+            <title>To create a user</title>
+            <step>
+                <para>To create a user named <literal>admin</literal>
+                    with a specified password and email, run the
+                    following command:</para><screen><prompt>$</prompt> <userinput>keystone user-create --name admin --pass secrete --email admin@example.com</userinput></screen>
+                <para>By default, the user is enabled and associated
+                    with the default tenant.</para>
+                <para>The output does not display the password:</para>
+                <screen><computeroutput>+----------+----------------------------------+
+| Property |              Value               |
++----------+----------------------------------+
+|  email   |        admin@example.com         |
+| enabled  |               True               |
+|    id    | a7e160432ddf4a5c800fbab4ca8313a1 |
+|   name   |              admin               |
+| tenantId |                                  |
++----------+----------------------------------+</computeroutput></screen>
+            </step>
+        </procedure>
+        <procedure xml:id="user-update-email">
+            <title>To update the email address for a user</title>
+            <step>
+<para>Update the email address for a user, as follows:</para>
+                <screen><prompt>$</prompt> <userinput>keystone user-update --email joe_admin@example.com admin</userinput></screen>
+                <screen><computeroutput>User has been updated.</computeroutput></screen>
+            </step>
+                <step><para>To confirm your changes, get details for the admin user:</para>
+                <screen><prompt>$</prompt> <userinput>keystone user-get admin</userinput></screen>
+            <screen><computeroutput>+----------+----------------------------------+
+| Property |              Value               |
++----------+----------------------------------+
+|  email   |      joe_admin@example.com       |
+| enabled  |               True               |
+|    id    | 376744b5910b4b4da7d8e6cb483b06a8 |
+|   name   |              admin               |
+| tenantId |                                  |
++----------+----------------------------------+</computeroutput></screen></step>
+        </procedure>
+        <procedure xml:id="user-disable">
+            <title>To update a user to disable the user</title>
+            <step>
+                <para>Update the user and include the <parameter>--enabled</parameter> parameter:</para>
+                <screen><prompt>$</prompt> <userinput>keystone user-update --enabled false admin</userinput></screen>
+                <screen><userinput>User has been updated.</userinput></screen>
+            </step>
+            <step><para>To confirm your changes, get details for the admin user:</para>
+                <screen><prompt>$</prompt> <userinput>keystone user-get admin</userinput></screen>
+                <screen><computeroutput>User is disabled: 376744b5910b4b4da7d8e6cb483b06a8 (HTTP 401)</computeroutput></screen>
+               </step>
+        </procedure>
+        <procedure xml:id="user-enable">
+            <title>To update a user to enable the user</title>
+            <step>
+                <para>Update the user and include the <parameter>--enabled</parameter> parameter:</para>
+                <screen><prompt>$</prompt> <userinput>keystone user-update --enabled true admin</userinput></screen>
+                <screen><userinput>User has been updated.</userinput></screen>
+            </step>
+            <step><para>To confirm your changes, get details for the admin user:</para>
+                <screen><prompt>$</prompt> <userinput>keystone user-get admin</userinput></screen>
+                <screen><computeroutput>User is disabled: 376744b5910b4b4da7d8e6cb483b06a8 (HTTP 401)</computeroutput></screen>
+            </step>
+        </procedure>
+        <procedure xml:id="user-update-password">
+            <title>To update the password for a user</title>
+            <step>
+                <para>arguments</para>
+                <itemizedlist>
+                    <listitem>
+                        <para>user_id</para>
+                    </listitem>
+                    <listitem>
+                        <para>password</para>
+                    </listitem>
+                </itemizedlist>
+                <para>example:</para>
+                <screen><prompt>$</prompt> <userinput>keystone user-update --password 03c84b51574841ba9a0d8db7882ac645 foo</userinput></screen>
+            </step>
+        </procedure>
+        <procedure xml:id="user-delete">
+            <title>To delete a user</title>
+            <step>
+                <para>keyword arguments:</para>
+                <itemizedlist>
+                    <listitem>
+                        <para>user</para>
+                    </listitem>
+                </itemizedlist>
+                <para>example:</para>
+                <screen><prompt>$</prompt> <userinput>keystone user-delete f2b7b39c860840dfa47d9ee4adffa0b3</userinput></screen>
+            </step>
+        </procedure>
+    </section>
+    <section xml:id="roles">
+        <title>Roles</title>
+        <procedure xml:id="role-create">
+            <title>To create a role</title>
+            <step>
+                <para>arguments</para>
+                <itemizedlist>
+                    <listitem>
+                        <para>name</para>
+                    </listitem>
+                </itemizedlist>
+                <para>example:</para>
+                <screen><prompt>$</prompt> <userinput>keystone role-create --name demo</userinput></screen>
+            </step>
+        </procedure>
+        <procedure xml:id="role-delete">
+            <title>To delete a role</title>
+            <step>
+                <para>arguments</para>
+                <itemizedlist>
+                    <listitem>
+                        <para>role_id</para>
+                    </listitem>
+                </itemizedlist>
+                <para>example:</para>
+                <screen><prompt>$</prompt> <userinput>keystone role-delete 19d1d3344873464d819c45f521ff9890</userinput></screen>
+            </step>
+        </procedure>
+        <procedure xml:id="role-list">
+            <title>To list roles</title>
+            <step>
+                <para>example:</para>
+                <screen><prompt>$</prompt> <userinput>keystone role-list</userinput></screen>
+            </step>
+        </procedure>
+        <procedure xml:id="role-get">
+            <title>To get details for a role</title>
+            <step>
+                <para>arguments</para>
+                <itemizedlist>
+                    <listitem>
+                        <para>role_id</para>
+                    </listitem>
+                </itemizedlist>
+                <para>example:</para>
+                <screen><prompt>$</prompt> <userinput>keystone role-get role=19d1d3344873464d819c45f521ff9890</userinput></screen>
+            </step>
+        </procedure>
+        <procedure xml:id="add-user-role">
+            <title>To add a role to a user</title>
+            <step>
+                <para>arguments</para>
+                <itemizedlist>
+                    <listitem>
+                        <para>role_id</para>
+                    </listitem>
+                    <listitem>
+                        <para>user_id</para>
+                    </listitem>
+                    <listitem>
+                        <para>tenant_id</para>
+                    </listitem>
+                </itemizedlist>
+                <para>example:</para>
+                <screen><prompt>$</prompt> <userinput>keystone add-user-role \
+3a751f78ef4c412b827540b829e2d7dd \
+03c84b51574841ba9a0d8db7882ac645 \
+20601a7f1d94447daa4dff438cb1c209</userinput></screen>
+            </step>
+        </procedure>
+        <procedure xml:id="remove-user-role">
+            <title>To remove a role from a user</title>
+            <step>
+                <para>arguments</para>
+                <itemizedlist>
+                    <listitem>
+                        <para>role_id</para>
+                    </listitem>
+                    <listitem>
+                        <para>user_id</para>
+                    </listitem>
+                    <listitem>
+                        <para>tenant_id</para>
+                    </listitem>
+                </itemizedlist>
+                <para>example:</para>
+                <screen><prompt>$</prompt> <userinput>keystone remove-user-role \
+19d1d3344873464d819c45f521ff9890 \
+08741d8ed88242ca88d1f61484a0fe3b \
+20601a7f1d94447daa4dff438cb1c209</userinput></screen>
+            </step>
+        </procedure>
+    </section>
+    <section xml:id="services">
+        <title>Services</title>
+        <procedure xml:id="service-create">
+            <title>To create a service</title>
+            <step>
+                <para>keyword arguments</para>
+                <itemizedlist>
+                    <listitem>
+                        <para>name</para>
+                    </listitem>
+                    <listitem>
+                        <para>type</para>
+                    </listitem>
+                    <listitem>
+                        <para>description</para>
+                    </listitem>
+                </itemizedlist>
+                <para>example:</para>
+                <screen><prompt>$</prompt> <userinput>keystone service create \
+--name nova \
+--type=compute \
+--description=&quot;Nova Compute Service&quot;</userinput></screen>
+            </step>
+        </procedure>
+        <procedure xml:id="service-list">
+            <title>To list services</title>
+            <step>
+                <para>arguments</para>
+                <itemizedlist>
+                    <listitem>
+                        <para>service_id</para>
+                    </listitem>
+                </itemizedlist>
+                <para>example:</para>
+                <screen><prompt>$</prompt> <userinput>keystone service-list</userinput></screen>
+            </step>
+        </procedure>
+        <procedure xml:id="service-get">
+            <title>To get service details</title>
+            <step>
+                <para>arguments</para>
+                <itemizedlist>
+                    <listitem>
+                        <para>service_id</para>
+                    </listitem>
+                </itemizedlist>
+                <para>example:</para>
+                <screen><prompt>$</prompt> <userinput>keystone service-get 08741d8ed88242ca88d1f61484a0fe3b</userinput></screen>
+            </step>
+        </procedure>
+        <procedure xml:id="service-delete">
+            <title>To delete a service</title>
+            <step>
+                <para>arguments</para>
+                <itemizedlist>
+                    <listitem>
+                        <para>service_id</para>
+                    </listitem>
+                </itemizedlist>
+                <para>example:</para>
+                <screen><prompt>$</prompt> <userinput>keystone service-delete 08741d8ed88242ca88d1f61484a0fe3b</userinput></screen>
+            </step>
+        </procedure>
+  <procedure>
+            <title>To create service users</title>
+           <step><para>To configure the OpenStack services with service users, we
+                    must create a tenant for all the services, and
+                    then users for each of the services. We then
+                    assign those service users an Admin role on the
+                    service tenant. This allows them to validate
+                    tokens - and authenticate and authorize other user
+                    requests.</para>
+            <para>Create a tenant for the services, typically named
+                'service' (however, the name can be whatever you choose):</para>
+            <screen>keystone tenant-create --name=service</screen>
+            <para>This returns a UUID of the tenant - keep that, you'll
+                need it when creating the users and specifying the roles.</para>
+            <para>Create service users for nova, glance, swift, and
+                neutron (or whatever subset is relevant to your deployment):</para>
+            <screen>keystone user-create --name=nova \
+                     --pass=Sekr3tPass \
+                     --tenant_id=[the uuid of the tenant] \
+                     --email=nova@nothing.com</screen>
+            <para>Repeat this for each service you want to enable. Email
+                is a required field in keystone right now, but not used in
+                relation to the service accounts. Each of these commands
+                will also return a UUID of the user. Keep those to assign
+                the Admin role.</para>
+            <para>For adding the Admin role to the service accounts,
+                    you'll must know the UUID of the role you want to
+                    add. If you don't have them handy, you can look it
+                    up quickly with:</para>
+            <screen>keystone role-list</screen>
+            <para>Once you have it, assign the service users to the Admin
+                role. This is all assuming that you've already created the
+                basic roles and settings as described in the configuration
+                section:</para>
+            <screen><prompt>$</prompt> <userinput>keystone user-role-add --tenant_id=[uuid of the service tenant] \
+                       --user=[uuid of the service account] \
+                       --role=[uuid of the Admin role]</userinput></screen></step>
+  </procedure>
+        <procedure xml:id="defining-services">
+            <title>To define services</title>
+            <para>Keystone also acts as a service catalog to let other
+            OpenStack systems know where relevant API endpoints exist for
+            OpenStack Services. The OpenStack Dashboard, in particular,
+            uses this heavily - and this <emphasis role="strong"
+                >must</emphasis> be configured for the OpenStack dashboard
+            to properly function.</para>
+        <para>The endpoints for these services are defined in a
+            template, an example of which is in the project as the file
+            <literal>etc/default_catalog.templates</literal>. When
+            keystone uses a template file backend, then changes made to
+            the endpoints are kept in memory and don't persist if you
+            restart the service or reboot the machine. Use the SQL
+            backend when deploying a system for production.</para>
+        <para>Keystone supports two means of defining the services,
+            one is the catalog template, as described above - in which
+            case everything is detailed in that template.</para>
+        <para>The other is a SQL backend for the catalog service, in
+                which case after keystone is online, you must add the
+                services to the catalog:</para>
+       <step><screen><prompt>$</prompt> <userinput>keystone service-create --name=nova \
+            --type=compute \
+            --description=&quot;Nova Compute Service&quot;
+            keystone service-create --name=ec2 \
+            --type=ec2 \
+            --description=&quot;EC2 Compatibility Layer&quot;
+            keystone service-create --name=glance \
+            --type=image \
+            --description=&quot;Glance Image Service&quot;
+            keystone service-create --name=keystone \
+            --type=identity \
+            --description=&quot;Keystone Identity Service&quot;
+            keystone service-create --name=swift \
+            --type=object-store \
+            --description=&quot;Swift Service&quot;</userinput></screen></step>
+        </procedure>
+    </section>
+</section>
