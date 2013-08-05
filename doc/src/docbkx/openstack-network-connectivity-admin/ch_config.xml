@@ -131,7 +131,7 @@ catalog.$Region.network.name = Network Service</programlisting>
                 OpenStack Compute, nova-* services communicate with
                 OpenStack Networking via the standard API. To do so,
                 it requires the following items in the nova.conf used
-                by each <systemitem class="service">nova-compute</systemitem> and nova-api instance:  </para>
+                by each <systemitem class="service">nova-compute</systemitem> and <systemitem class="service">nova-api</systemitem> instance:  </para>
             <itemizedlist>
                 <listitem>
                     <para>network_api_class: must be modified from default to
@@ -196,12 +196,12 @@ catalog.$Region.network.name = Network Service</programlisting>
         <title>Metadata Configuration</title>
         <para>The OpenStack Compute service allows VMs to query metadata associated with a VM by
                 making a web request to a special 169.254.169.254 address. Neutron supports proxying
-                those requests to nova-api, even when the requests are made from isolated networks,
+                those requests to <systemitem class="service">nova-api</systemitem>, even when the requests are made from isolated networks,
                 or from multiple networks that use overlapping IP addresses. Enabling this requires
                 setting the following fields in nova.conf: </para>
             <itemizedlist>
                 <listitem>
-                    <para>service_neutron_metadata_proxy: must be set to 'true', otherwise nova-api
+                    <para>service_neutron_metadata_proxy: must be set to 'true', otherwise<systemitem class="service">nova-api</systemitem> 
                         will not properly respond to requests from the neutron-metadata-agent.</para>
                 </listitem>
                 <listitem>
@@ -210,13 +210,13 @@ catalog.$Region.network.name = Network Service</programlisting>
                         authenticate requests made for metadata. The default value of the empty
                         string in both files will allow metadata to function, but will be insecure
                         if any non-trusted entities have access to the metadata APIs exposed by
-                        nova-api.</para>
+                        <systemitem class="service">nova-api</systemitem>.</para>
                 </listitem>
             </itemizedlist>
             <note><para>As a precaution, even when using neutron_metadata_proxy_shared_secret, it is recommended that
-                    you do not expose metadata using the same nova-api instances that are used for
-                    tenants. Instead, run a dedicated set of nova-api instances for metadata
-                    available only on your management network. Whether a given nova-api instance
+                    you do not expose metadata using the same <systemitem class="service">nova-api</systemitem> instances that are used for
+                    tenants. Instead, run a dedicated set of <systemitem class="service">nova-api</systemitem> instances for metadata
+                    available only on your management network. Whether a given <systemitem class="service">nova-api</systemitem> instance
                     exposes metadata APIs is determined by the value of 'enabled_apis' in its
                     nova.conf.</para></note>
         </section>
@@ -291,7 +291,7 @@ catalog.$Region.network.name = Network Service</programlisting>
             </section>
         </section>
         <section xml:id="nova_with_neutron_example">
-            <title> Example nova.conf (for <systemitem class="service">nova-compute</systemitem> and nova-api)</title>
+            <title> Example nova.conf (for <systemitem class="service">nova-compute</systemitem> and <systemitem class="service">nova-api</systemitem>)</title>
             <para>Example values for the above settings, assuming a
                 cloud controller node running OpenStack Compute and
                 OpenStack Networking with an IP address of 192.168.1.2
