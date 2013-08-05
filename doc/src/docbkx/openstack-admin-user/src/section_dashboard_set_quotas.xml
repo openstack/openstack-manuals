@@ -13,126 +13,282 @@
     <title>Set quotas</title>
 <?dbhtml stop-chunking?>
     <para>To prevent system capacities from being exhausted without
-        notification, cloud administrators can set up quotas. In
-        OpenStack, quotas are currently defined for each
-        project.</para>
-    <para>Quotas include the following parameters:</para>
-    <variablelist>
-        <title>Quota parameters</title>
-        <varlistentry>
-            <term>ID (Name)</term>
-            <listitem>
-                <para>ID for the quota settings.</para>
-            </listitem>
-        </varlistentry>
-        <varlistentry>
-            <term>Metadata Items</term>
-            <listitem>
-                <para>Number of metadata items per instance.</para>
-            </listitem>
-        </varlistentry>
-        <varlistentry>
-            <term>Injected Files</term>
-            <listitem>
-                <para>Number of injected files.</para>
-            </listitem>
-        </varlistentry>
-        <varlistentry>
-            <term>Injected File Content Bytes</term>
-            <listitem>
-                <para>Number of bytes per injected file.</para>
-            </listitem>
-        </varlistentry>
-        <varlistentry>
-            <term>VCPUs</term>
-            <listitem>
-                <para>Number of virtual CPUs that can be allocated in
-                    total.</para>
-            </listitem>
-        </varlistentry>
-        <varlistentry>
-            <term>Instances</term>
-            <listitem>
-                <para>Total number of instances.</para>
-            </listitem>
-        </varlistentry>
-        <varlistentry>
-            <term>Volumes</term>
-            <listitem>
-                <para>Total number of volumes.</para>
-            </listitem>
-        </varlistentry>
-        <varlistentry>
-            <term>Gigabytes</term>
-            <listitem>
-                <para>Total size of all volumes, measured in
-                    gigabytes.</para>
-            </listitem>
-        </varlistentry>
-        <varlistentry>
-            <term>RAM (in MB)</term>
-            <listitem>
-                <para>Total RAM size of all instances, measured in
-                    megabytes.</para>
-            </listitem>
-        </varlistentry>
-        <varlistentry>
-            <term>Floating IPs</term>
-            <listitem>
-                <para>Total number of floating IP addresses.</para>
-            </listitem>
-        </varlistentry>
-        <varlistentry>
-            <term>Security Group Rules</term>
-            <listitem>
-                <para>Number of security rules per security group.
-                </para>
-            </listitem>
-        </varlistentry>
-        <varlistentry>
-            <term>Security Groups</term>
-            <listitem>
-                <para>Number of security groups.</para>
-            </listitem>
-        </varlistentry>
-    </variablelist>
-    
-   <note> <para>The <guilabel>Quota</guilabel> category shows you the global
-            default quota values that are hard-coded in OpenStack
-            Nova. However, you cannot set quota values in the
-                <guilabel>Quota</guilabel> category.</para></note>
-
-    <section xml:id="dashboard_set_quotas_procedure">
-    <title>Set quotas for a project</title>
-    <procedure><title>To set quotas for a project</title>
-        <step>
-            <para>On the <guilabel>Admin</guilabel> tab, select the
-                        <guilabel>Projects</guilabel> category.</para>
-            </step>
-            <step>
-                <para>Select the project for which to set or change
-                    quota values.</para>
-            </step>
-            <step>
-                <para>From the <guilabel>Actions</guilabel> drop-down
-                    list, select <guibutton>Modify Quota</guibutton>.</para>
-                <para>A window shows the default quota values for each
-                    project, which are hard-coded in OpenStack Nova.</para>
-            </step>
-            <step>
-                <para>Change the values for the quota parameters as
-                    desired.</para>
-               <!-- <mediaobject>
-                    <imageobject>
-                        <imagedata
-                            fileref="https://www.suse.com/documentation/suse_cloud10/book_cloud_admin/graphics/cloud_dash_projects_quota.png"
-                        />
-                    </imageobject>
-                </mediaobject> -->
-            </step>
-            <step>
-                <para>Confirm your changes.</para>
-            </step>
-        </procedure>
+      notification, you can set up quotas. Quotas are operational limits.
+      For example, the number of gigabytes allowed per tenant can be
+      controlled so that cloud resources are optimized.
+      Quotas are currently enforced at the tenant (or project) level,
+      rather than by user.
+    </para>
+    <para> Typically, default values are changed because a tenant requires
+      more than 10 volumes, or more than 1TB on a Compute node.
+    </para>
+    <para>
+    <table frame="all">
+      <title>Compute Quota Descriptions (listed in order of appearance)</title>
+      <tgroup align="left" cols="3" colsep="1" rowsep="1">
+        <colspec colname="c1" colwidth="20%"/>
+        <colspec colname="c2" colwidth="60%"/>
+        <colspec colname="c3" colwidth="20%"/>
+        <thead>
+          <row>
+            <entry>
+              Quota
+            </entry>
+            <entry>
+              Description
+            </entry>
+            <entry>
+              Service
+            </entry>
+          </row>
+        </thead>
+        <tbody>
+          <row>
+            <entry>
+              <para>
+                Metadata Items
+              </para>
+            </entry>
+            <entry>
+              <para>
+                Number of metadata items allowed per instance.
+              </para>
+            </entry>
+            <entry>
+              <para>
+                <systemitem>Compute</systemitem>
+              </para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                VCPUs
+              </para>
+            </entry>
+            <entry>
+              <para>
+                Number of instance cores allowed per tenant.
+              </para>
+            </entry>
+            <entry>
+              <para>
+                <systemitem>Compute</systemitem>
+              </para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                Instances
+              </para>
+            </entry>
+            <entry>
+              <para>
+                Number of instances allowed per tenant.
+              </para>
+            </entry>
+            <entry>
+              <para>
+                <systemitem>Compute</systemitem>
+              </para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                Injected Files
+              </para>
+            </entry>
+            <entry>
+              <para>
+                Number of injected files allowed per tenant.
+              </para>
+            </entry>
+            <entry>
+              <para>
+                <systemitem>Compute</systemitem>
+              </para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                Injected File Content Bytes
+              </para>
+            </entry>
+            <entry>
+              <para>
+                Number of content bytes allowed per injected file.
+              </para>
+            </entry>
+            <entry>
+              <para>
+                <systemitem>Compute</systemitem>
+              </para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                Volumes
+              </para>
+            </entry>
+            <entry>
+              <para>
+                Number of volumes allowed per tenant.
+              </para>
+            </entry>
+            <entry>
+              <para>
+                <systemitem>Block Storage</systemitem>
+              </para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                Gigabytes
+              </para>
+            </entry>
+            <entry>
+              <para>
+                Number of volume gigabtyes allowed per tenant.
+              </para>
+            </entry>
+            <entry>
+              <para>
+                <systemitem>Block Storage</systemitem>
+              </para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                RAM (MB)
+              </para>
+            </entry>
+            <entry>
+              <para>
+                Megabytes of ram allowed per instance.
+              </para>
+            </entry>
+            <entry>
+              <para>
+                <systemitem>Compute</systemitem>
+              </para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                Floating IPs
+              </para>
+            </entry>
+            <entry>
+              <para>
+                Number of floating IP addresses allowed per tenant.
+              </para>
+            </entry>
+            <entry>
+              <para>
+                <systemitem>Compute</systemitem>
+              </para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                Fixed IPs
+              </para>
+            </entry>
+            <entry>
+              <para>
+                Number of fixed IP addresses allowed per tenant. This number
+                must be equal to or greater than the number of allowed
+                instances.
+              </para>
+            </entry>
+            <entry>
+              <para>
+                <systemitem>Compute</systemitem>
+              </para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                Security Groups
+              </para>
+            </entry>
+            <entry>
+              <para>
+                Number of security groups allowed per tenant.
+              </para>
+            </entry>
+            <entry>
+              <para>
+                <systemitem>Compute</systemitem>
+              </para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                Security Group Rules
+              </para>
+            </entry>
+            <entry>
+              <para>
+                Number of rules per security group.
+              </para>
+            </entry>
+            <entry>
+              <para>
+                <systemitem>Compute</systemitem>
+              </para>
+            </entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+  </para>
+  <section xml:id="dashboard_set_quotas_procedure">
+    <title>View and update quotas for a tenant (project)</title>
+    <para>
+      As an administrative user in the dashboard, you can view but not edit
+      the default quotas for a new tenant. However, quotas can be updated
+      for individual tenants after the tenant has been created.
+    </para>
+ <procedure>
+ <title>To view default quotas:</title>
+   <step><para>Click the <guilabel>Admin</guilabel> tab in the navigation sidebar,
+    then click the <guilabel>System Info</guilabel> category.
+    </para></step>
+   <step><para>Click the <guilabel>Default Quotas</guilabel> tab in the
+    main window.</para></step> 
+ </procedure>
+  <procedure>
+      <title>To update quotas for an individual tenant (project) in the dashboard:</title>
+      <step><para>Click the <guilabel>Admin</guilabel> tab in the navigation
+      sidebar, then click the <guilabel>Projects</guilabel> category.
+        </para></step>
+      <step><para>Select the tenant for which to set or change quota
+        values.
+        </para></step>
+      <step><para>Click the tenant's <guibutton>More</guibutton> button,
+        and then select <guilabel>Modify Quotas</guilabel>. The
+        <guilabel>Edit Project</guilabel> window is displayed.
+        </para></step>
+      <step><para>Edit quota values on the <guilabel>Quota</guilabel> tab,
+        and click the <guibutton>Save</guibutton> button.
+        </para></step>
+      </procedure>
+      <note><para>
+      Not all possible project quotas are displayed in the dashboard. To obtain
+      and update the complete list for a service, use its command-line tools
+      (see <xref linkend="cli_set_quotas"/>).
+    </para>
+  </note>
     </section>
 </section>
