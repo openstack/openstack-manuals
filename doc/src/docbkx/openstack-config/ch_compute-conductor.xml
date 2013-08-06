@@ -5,23 +5,23 @@
     xml:id="ch_conductor">
     <title>Conductor</title>
 <para>
-The nova-conductor service is key to allowing OpenStack to function
+The <systemitem class="service">nova-conductor</systemitem> service is key to allowing OpenStack to function
 without compute nodes accessing the database. Conceptually, it
 implements a new layer on top of <systemitem class="service">nova-compute</systemitem>. It should not be
 deployed on compute nodes, or else the security benefits of removing
 database access from <systemitem class="service">nova-compute</systemitem> will be negated. Just like other
-nova services such as <systemitem class="service">nova-api</systemitem> or <systemitem class="service">nova-scheduler</systemitem>, it can be scaled
-horizontally. You can run multiple instances of nova-conductor on
+nova services such as <systemitem class="service">nova-api</systemitem> or nova-scheduler, it can be scaled
+horizontally. You can run multiple instances of <systemitem class="service">nova-conductor</systemitem> on
 different machines as needed for scaling purposes.</para>
 <para>
-In the Grizzly release, the methods exposed by nova-conductor will
+In the Grizzly release, the methods exposed by <systemitem class="service">nova-conductor</systemitem> will
 be relatively simple methods used by <systemitem class="service">nova-compute</systemitem> to offload its
  database operations.
 Places where <systemitem class="service">nova-compute</systemitem> previously did database access will now be
- talking to nova-conductor. However, we have plans in the medium to
+ talking to <systemitem class="service">nova-conductor</systemitem>. However, we have plans in the medium to
 long term to move more and more of what is currently in <systemitem class="service">nova-compute</systemitem>
-up to the nova-conductor layer. The compute service will start to
-look like a less intelligent slave service to nova-conductor. The
+up to the <systemitem class="service">nova-conductor</systemitem> layer. The compute service will start to
+look like a less intelligent slave service to <systemitem class="service">nova-conductor</systemitem>. The
 conductor service will implement long running complex operations,
 ensuring forward progress and graceful error handling.
 This will be especially beneficial for operations that cross multiple

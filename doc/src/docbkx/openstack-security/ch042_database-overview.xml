@@ -19,7 +19,7 @@
       </section>
       <section xml:id="ch042_database-overview-idp53264">
         <title>Nova Conductor</title>
-        <para>The compute nodes are the least trusted of the services in OpenStack because they host tenant instances. The nova-conductor service has been introduced to serve as a database proxy, acting as an intermediary between the compute nodes and the database. We discuss its ramifications later in this chapter.</para>
+        <para>The compute nodes are the least trusted of the services in OpenStack because they host tenant instances. The <systemitem class="service">nova-conductor</systemitem> service has been introduced to serve as a database proxy, acting as an intermediary between the compute nodes and the database. We discuss its ramifications later in this chapter.</para>
         <para>We strongly recommend:</para>
         <itemizedlist><listitem>
             <para>All database communications be isolated to a management network</para>
@@ -94,7 +94,7 @@ charset=utf8&amp;ssl_ca=/etc/mysql/cacert.pem&amp;ssl_cert=/etc/mysql/server-cer
     </section>
     <section xml:id="ch042_database-overview-idp100688">
       <title>Nova Conductor</title>
-      <para>OpenStack Compute offers a sub-service called nova-conductor which proxies database connections, with the primary purpose of having the nova compute nodes interfacing with nova-conductor to meet data persistence needs as opposed to directly communicating with the database.</para>
+      <para>OpenStack Compute offers a sub-service called <systemitem class="service">nova-conductor</systemitem> which proxies database connections, with the primary purpose of having the nova compute nodes interfacing with <systemitem class="service">nova-conductor</systemitem> to meet data persistence needs as opposed to directly communicating with the database.</para>
       <para>Nova-conductor receives requests over RPC and performs actions on behalf of the calling service without granting granular access to the database, its tables, or data within. Nova-conductor essentially abstracts direct database access away from Nova compute nodes.</para>
       <para>This abstraction offers the advantage of restricting services to executing methods with parameters, similar to stored procedures, preventing a large number of systems from directly accessing or modifying database data. This is accomplished without having these procedures stored or executed within the context or scope of the database itself, a frequent criticism of typical stored procedures.</para>
       <para><inlinemediaobject><imageobject role="html">
@@ -104,11 +104,11 @@ charset=utf8&amp;ssl_ca=/etc/mysql/cacert.pem&amp;ssl_cert=/etc/mysql/server-cer
             <imagedata contentdepth="100%" fileref="static/novaconductor.png" format="PNG" scalefit="1" width="100%"/>
           </imageobject>
 </inlinemediaobject></para>
-      <para>Unfortunately, this solution complicates the task of more fine-grained access control and the ability to audit data access. Because the nova-conductor service receives requests over RPC, it highlights the importance of improving the security of messaging. Any node with access to the message queue may execute these methods provided by the nova-conductor and effectively modifying the database.</para>
-      <para>Finally, it should be noted that as of the Grizzly release, gaps exist where nova-conductor is not used throughout OpenStack Compute. Depending on one's configuration, the use of nova-conductor may not allow deployers to avoid the necessity of providing database GRANTs to individual compute host systems.</para>
-      <para>Note, as nova-conductor only applies to OpenStack Compute, direct database access from compute hosts may still be necessary for the operation of other OpenStack components such as Metering (Ceilometer), Networking, and Block Storage.</para>
-      <para>Implementors should weigh the benefits and risks of both configurations before enabling or disabling the nova-conductor service. We are not yet prepared to recommend the use of nova-conductor in the Grizzly release. However, we do believe that this recommendation will change as additional features are added into OpenStack.</para>
-      <para>To disable the nova-conductor, place the following into your nova.conf file:</para>
+      <para>Unfortunately, this solution complicates the task of more fine-grained access control and the ability to audit data access. Because the <systemitem class="service">nova-conductor</systemitem> service receives requests over RPC, it highlights the importance of improving the security of messaging. Any node with access to the message queue may execute these methods provided by the <systemitem class="service">nova-conductor</systemitem> and effectively modifying the database.</para>
+      <para>Finally, it should be noted that as of the Grizzly release, gaps exist where <systemitem class="service">nova-conductor</systemitem> is not used throughout OpenStack Compute. Depending on one's configuration, the use of <systemitem class="service">nova-conductor</systemitem> may not allow deployers to avoid the necessity of providing database GRANTs to individual compute host systems.</para>
+      <para>Note, as <systemitem class="service">nova-conductor</systemitem> only applies to OpenStack Compute, direct database access from compute hosts may still be necessary for the operation of other OpenStack components such as Metering (Ceilometer), Networking, and Block Storage.</para>
+      <para>Implementors should weigh the benefits and risks of both configurations before enabling or disabling the <systemitem class="service">nova-conductor</systemitem> service. We are not yet prepared to recommend the use of <systemitem class="service">nova-conductor</systemitem> in the Grizzly release. However, we do believe that this recommendation will change as additional features are added into OpenStack.</para>
+      <para>To disable the <systemitem class="service">nova-conductor</systemitem>, place the following into your nova.conf file:</para>
       <screen> 
 [conductor]
 use_local = true</screen>
