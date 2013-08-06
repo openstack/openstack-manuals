@@ -299,4 +299,63 @@ done
             image for an older Linux distribution that has a pre 3.0 kernel, you will need to ensure
             that the image boots a kernel that has been compiled with Xen support.</para>
     </section>
+    <section xml:id="image-cache-management">
+        <title>Managing the image cache</title>
+        <para>Use options in <filename>nova.conf</filename> to control whether, and for how long,
+            unused base images are stored in <filename>/var/lib/nova/instances/_base/</filename>. If
+            you have configured live migration of instances, all your compute nodes share one common
+                <filename>/var/lib/nova/instances/</filename> directory.</para>
+        <para>For information about libvirt images in OpenStack, refer to <link xlink:href="http://www.pixelbeat.org/docs/openstack_libvirt_images/">The life of an OpenStack libvirt image from Pádraig Brady</link>.</para>
+        <table rules="all">
+            <caption>Image cache management configuration options</caption>
+            <col width="50%"/>
+            <col width="50%"/>
+            <thead>
+                <tr>
+                    <td>Configuration option=Default value</td>
+                    <td>(Type) Description</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>preallocate_images=none</td>
+                    <td>(StrOpt) VM image preallocation mode: "none" =&gt; no storage provisioning
+                        is done up front, "space" =&gt; storage is fully allocated at instance
+                        start. If this is set to 'space', the $instance_dir/ images will be  <link
+                            xlink:href="http://www.kernel.org/doc/man-pages/online/pages/man2/fallocate.2.html"
+                            >fallocate</link>d to immediately determine if enough space is
+                        available, and to possibly improve VM I/O performance due to ongoing
+                        allocation avoidance, and better locality of block allocations.</td>
+                </tr>
+                <tr>
+                    <td>remove_unused_base_images=True</td>
+                    <td>(BoolOpt) Should unused base images be removed? When set to True, the
+                        interval at which base images are removed are set with the following two
+                        settings. If set to False base images are never removed by Compute.</td>
+                </tr>
+                <tr>
+                    <td>remove_unused_original_minimum_age_seconds=86400</td>
+                    <td>(IntOpt) Unused unresized base images younger than this will not be removed. Default is 86400 seconds, or 24 hours.</td>
+                </tr>
+                <tr>
+                    <td>remove_unused_resized_minimum_age_seconds=3600</td>
+                    <td>(IntOpt) Unused resized base images younger than this will not be removed. Default is 3600 seconds, or one hour.</td>
+                </tr>
+            </tbody>
+        </table>
+        <para>To see how the settings affect the deletion of a running instance, check the directory where the images are stored:</para>
+        <screen><prompt>$</prompt> <userinput>sudo ls -lash /var/lib/nova/instances/_base/</userinput></screen>
+        <para>Then look for the identifier in
+            <filename>/var/log/compute/compute.log</filename>:</para>
+        <screen><computeroutput>2012-02-18 04:24:17 41389 WARNING nova.virt.libvirt.imagecache [-] Unknown base file: /var/lib/nova/instances/_base/06a057b9c7b0b27e3b496f53d1e88810
+a0d1d5d3_20
+2012-02-18 04:24:17 41389 INFO nova.virt.libvirt.imagecache [-] Removable base files: /var/lib/nova/instances/_base/06a057b9c7b0b27e3b496f53d1e88810
+a0d1d5d3 /var/lib/nova/instances/_base/06a057b9c7b0b27e3b496f53d1e88810a0d1d5d3_20
+2012-02-18 04:24:17 41389 INFO nova.virt.libvirt.imagecache [-] Removing base file: /var/lib/nova/instances/_base/06a057b9c7b0b27e3b496f53d1e88810a0d1d5d3</computeroutput></screen>
+        <para>Since 86400 seconds (24 hours) is the default time for
+                <literal>remove_unused_original_minimum_age_seconds</literal>, you can either wait
+            for that time interval to see the base image removed, or set the value to a shorter time
+            period in <filename>nova.conf</filename>. Restart all nova services after changing a
+            setting in <filename>nova.conf</filename>.</para>
+    </section>
 </chapter>
