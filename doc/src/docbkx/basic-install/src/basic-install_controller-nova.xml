@@ -22,8 +22,8 @@
                         <itemizedlist>
                             <listitem>
                                 <para>Edit <filename>/etc/nova/api-paste.ini</filename>:
-                                    <programlisting os="ubuntu">admin_tenant_name = service 
-admin_user = nova 
+                                    <programlisting os="ubuntu">admin_tenant_name = service
+admin_user = nova
 admin_password = password</programlisting>
                                     <programlisting os='centos;rhel;fedora'>[filter:authtoken]
 paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
@@ -59,9 +59,9 @@ neutron_admin_username=neutron
 neutron_admin_password=password
 neutron_admin_auth_url=http://10.10.10.10:35357/v2.0
 libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver
-linuxnet_interface_driver=nova.network.linux_net.LinuxOVSInterfaceDriver  
+linuxnet_interface_driver=nova.network.linux_net.LinuxOVSInterfaceDriver
 
-# Security Groups                                    
+# Security Groups
 firewall_driver=nova.virt.firewall.NoopFirewallDriver
 security_group_api=neutron
 
@@ -79,10 +79,10 @@ glance_api_servers=10.10.10.10:9292
 image_service=nova.image.glance.GlanceImageService
 
 # novnc
-novnc_enable=true             
-novncproxy_port=6080          
+novnc_enable=true
+novncproxy_port=6080
 novncproxy_host=10.0.0.10
-vncserver_listen=0.0.0.0      
+vncserver_listen=0.0.0.0
 </programlisting>
 <programlisting os='centos;rhel;fedora'>
 # General
@@ -100,17 +100,17 @@ neutron_admin_username=neutron
 neutron_admin_password=password
 neutron_admin_auth_url=http://10.10.10.10:35357/v2.0
 libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver
-linuxnet_interface_driver=nova.network.linux_net.LinuxOVSInterfaceDriver  
+linuxnet_interface_driver=nova.network.linux_net.LinuxOVSInterfaceDriver
 
-# Security Groups                                    
+# Security Groups
 firewall_driver=nova.virt.firewall.NoopFirewallDriver
 security_group_api=neutron
 
-# Metadata                                           
+# Metadata
 neutron_metadata_proxy_shared_secret=password
 service_neutron_metadata_proxy=true
-metadata_listen = 10.10.10.10        
-metadata_listen_port = 8775                          
+metadata_listen = 10.10.10.10
+metadata_listen_port = 8775
 
 # Cinder
 volume_api_class=nova.volume.cinder.API
@@ -120,17 +120,17 @@ glance_api_servers=10.10.10.10:9292
 image_service=nova.image.glance.GlanceImageService
 
 # novnc
-novnc_enable=true             
-novncproxy_port=6080          
+novnc_enable=true
+novncproxy_port=6080
 novncproxy_host=10.0.0.10
-vncserver_listen=0.0.0.0      
+vncserver_listen=0.0.0.0
 </programlisting>
                                 </para>
                             </listitem>
                             <listitem>
                                 <para>Create the OpenStack Compute tables in the database:
                                     <screen><prompt>#</prompt> <userinput>nova-manage db sync</userinput></screen></para>
-                            </listitem>                    
+                            </listitem>
                             <listitem>
                                 <para>Restart OpenStack Compute services:
                                     <screen os="ubuntu"><prompt>#</prompt> <userinput>service nova-api restart</userinput>

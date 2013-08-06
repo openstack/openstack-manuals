@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section 
+<section
     xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" 
+    xmlns:xlink="http://www.w3.org/1999/xlink"
     version="5.0"
     xml:id="installing-moosefs-as-backend">
     <title>Installing MooseFS as shared storage for the instances directory</title>
@@ -120,7 +120,7 @@
                         mfschunkserver and mfsmount components :
                         <screen><prompt>$</prompt> <userinput>./configure --prefix=/usr --sysconfdir=/etc/moosefs --localstatedir=/var/lib --with-default-user=mfs --with-default-group=mfs --disable-mfschunkserver --disable-mfsmount</userinput></screen><screen><prompt>$</prompt> <userinput>make &amp;&amp; make install</userinput></screen>
                     </para>
-                </listitem>        
+                </listitem>
                 <listitem>
                     <para><emphasis role="bold">Create configuration files</emphasis></para>
                     <para>We will keep the default settings, for tuning performance, you can read the <link
@@ -266,14 +266,14 @@ none on /var/lib/ureadahead/debugfs type debugfs (rw,relatime)
             replication goals, etc..). You can see the list of the available tools by running
             <screen><prompt>$</prompt> <userinput>mfs &lt;TAB&gt; &lt;TAB&gt;</userinput> </screen><programlisting>
 mfsappendchunks   mfschunkserver    mfsfileinfo       mfsgetgoal        mfsmount          mfsrsetgoal       mfssetgoal        mfstools
-mfscgiserv        mfsdeleattr       mfsfilerepair     mfsgettrashtime   mfsrgetgoal       mfsrsettrashtime  mfssettrashtime   
-mfscheckfile      mfsdirinfo        mfsgeteattr       mfsmakesnapshot   mfsrgettrashtime  mfsseteattr       mfssnapshot           
+mfscgiserv        mfsdeleattr       mfsfilerepair     mfsgettrashtime   mfsrgetgoal       mfsrsettrashtime  mfssettrashtime
+mfscheckfile      mfsdirinfo        mfsgeteattr       mfsmakesnapshot   mfsrgettrashtime  mfsseteattr       mfssnapshot
         </programlisting>You
             can read the manual for every command. You can also see the <link xlink:href="http://linux.die.net/man/1/mfsrgetgoal">online help</link>
         </para>
         <para><emphasis role="bold">Add an entry into the fstab file</emphasis></para>
         <para>
-            In order to make sure to have the storage mounted, you can add an entry into the <filename>/etc/fstab</filename> on both compute nodes : 
+            In order to make sure to have the storage mounted, you can add an entry into the <filename>/etc/fstab</filename> on both compute nodes :
             <programlisting>
 mfsmount 	/var/lib/nova/instances fuse mfsmaster=mfsmaster,_netdev 	0 	0
         </programlisting>

@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" 
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="ch_openstack-object-storage-tutorials">
-    
-    <title>OpenStack Object Storage Tutorials</title> 
+
+    <title>OpenStack Object Storage Tutorials</title>
     <para>We want people to use OpenStack for practical problem solving, and the increasing size and
         density of web content makes for a great use-case for object storage. These tutorials show
         you how to use your OpenStack Object Storage installation for practical purposes, and it
         assumes Object Storage is already installed.</para>
     <section xml:id="storing-large-photos-or-videos-on-the-cloud">
-        
+
         <title>Storing Large Photos or Videos on the Cloud</title>
-        
+
         <para>In this OpenStack tutorial, we’ll walk through using an Object Storage installation to
             back up all your photos or videos. As the sensors on consumer-grade and pro-sumer grade
             cameras generate more and more megapixels, we all need a place to back our files to and
             know they are safe.</para>
-        
+
         <para>We'll go through this tutorial in parts:</para>
         <itemizedlist>
             <listitem>
                 <para>Setting up secure access to Object Storage.</para></listitem>
-            <listitem><para>Configuring Cyberduck for connecting to OpenStack Object Storage.</para></listitem>            
+            <listitem><para>Configuring Cyberduck for connecting to OpenStack Object Storage.</para></listitem>
             <listitem><para>Copying files to the cloud.</para></listitem>
         </itemizedlist>
         <section xml:id="part-i-setting-up-secure-access">
@@ -41,17 +41,17 @@
             <para>You also should configure your iptables to enable https traffic. Here's an example
                 setup that works.</para>
             <programlisting>Chain INPUT (policy ACCEPT 0 packets, 0 bytes)
- pkts bytes target     prot opt in     out     source               destination         
-76774 1543M ACCEPT     all  --  lo     any     localhost            anywhere            
- 416K  537M ACCEPT     all  --  any    any     anywhere             anywhere            state RELATED,ESTABLISHED 
-  106  6682 ACCEPT     tcp  --  any    any     anywhere             anywhere            tcp dpt:https 
-   13   760 ACCEPT     tcp  --  any    any     anywhere             anywhere            tcp dpt:ssh 
-    3   124 ACCEPT     icmp --  any    any     anywhere             anywhere            icmp echo-request 
-  782 38880 DROP       all  --  any    any     anywhere             anywhere            
+ pkts bytes target     prot opt in     out     source               destination
+76774 1543M ACCEPT     all  --  lo     any     localhost            anywhere
+ 416K  537M ACCEPT     all  --  any    any     anywhere             anywhere            state RELATED,ESTABLISHED
+  106  6682 ACCEPT     tcp  --  any    any     anywhere             anywhere            tcp dpt:https
+   13   760 ACCEPT     tcp  --  any    any     anywhere             anywhere            tcp dpt:ssh
+    3   124 ACCEPT     icmp --  any    any     anywhere             anywhere            icmp echo-request
+  782 38880 DROP       all  --  any    any     anywhere             anywhere
 
 Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
- pkts bytes target     prot opt in     out     source               destination         
-    0     0 DROP       all  --  any    any     anywhere             anywhere            
+ pkts bytes target     prot opt in     out     source               destination
+    0     0 DROP       all  --  any    any     anywhere             anywhere
 
 Chain OUTPUT (policy ACCEPT 397K packets, 1561M bytes)
  pkts bytes target     prot opt in     out     source               destination               </programlisting>
@@ -59,10 +59,10 @@ Chain OUTPUT (policy ACCEPT 397K packets, 1561M bytes)
                 settings, ask your service provider to set up secure access for you.</para><para>Then, edit your <filename>proxy-server.conf</filename> file to
                 include the following in the [DEFAULT] sections.</para>
             <programlisting>
-[DEFAULT]                           
+[DEFAULT]
 bind_port = 443
 cert_file = /etc/swift/cert.crt
-key_file = /etc/swift/cert.key 
+key_file = /etc/swift/cert.key
             </programlisting>
             <para>Also, make sure you use https: for all references to the URL for the server in the
                 .conf files as needed.</para>
@@ -71,13 +71,13 @@ key_file = /etc/swift/cert.key
             <para>
                 <screen><prompt>$</prompt> <userinput>swift -A https://yourswiftinstall.com:11000/v1.0 -U test:tester -K testing stat</userinput></screen>
             </para>
-          
+
                 <para>Okay, you've created the access that Cyberduck expects for your Object Storage
                     installation. Let's start configuring the Cyberduck side of things.</para>
-            
+
         </section>
         <section xml:id="part-ii-configuring-cyberduck">
-            
+
             <title>Part II: Configuring Cyberduck</title>
             <note>
                 <para>
@@ -105,7 +105,7 @@ key_file = /etc/swift/cert.key
                 <programlisting>&lt;setting name="cf.authentication.context" value="/auth/v1.0" /&gt;</programlisting>
             </para>
             <para>
-              To connect to Swift start Cyberduck and click the 
+              To connect to Swift start Cyberduck and click the
               <emphasis>Open Connection</emphasis> toolbar button or choose
               <emphasis>File > Open Connection</emphasis>. Select
               <emphasis>Swift (OpenStack Object Storage)</emphasis> in the

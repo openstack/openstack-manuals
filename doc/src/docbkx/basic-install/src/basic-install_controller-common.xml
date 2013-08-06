@@ -9,9 +9,9 @@
         <orderedlist>
             <listitem>
                 <para>Install <phrase os="rhel;centos;fedora">Fedora 18</phrase>
-                    <phrase os="ubuntu">Ubuntu 12.04 or 13.04</phrase>. 
-                    The exact installation procedure is outside the scope of 
-                    this document, but please note the following 
+                    <phrase os="ubuntu">Ubuntu 12.04 or 13.04</phrase>.
+                    The exact installation procedure is outside the scope of
+                    this document, but please note the following
                     configurations:
                     <itemizedlist>
                         <listitem>
@@ -26,7 +26,7 @@
                         </listitem>
                         <listitem>
                             <para>
-                                Packages: <emphasis role="bold">OpenSSH-Server</emphasis>, 
+                                Packages: <emphasis role="bold">OpenSSH-Server</emphasis>,
                                 <emphasis role="bold">wget</emphasis>
                             </para>
                         </listitem>
@@ -37,8 +37,8 @@
                 </para>
             </listitem>
             <listitem>
-                <para os="ubuntu">Since the default OpenStack release in 
-                    Ubuntu 12.04 LTS is older, we are going to use the Ubuntu 
+                <para os="ubuntu">Since the default OpenStack release in
+                    Ubuntu 12.04 LTS is older, we are going to use the Ubuntu
                     Cloud Archive for Grizzly:
                         <screen><prompt>#</prompt> <userinput>apt-get install ubuntu-cloud-keyring</userinput></screen>
                     Edit <emphasis role="bold">/etc/apt/sources.list.d/cloud-archive.list</emphasis>:
@@ -72,7 +72,7 @@ iface eth1 inet static
     netmask 255.255.255.0
     gateway 10.0.0.1
     dns-nameservers 8.8.8.8</programlisting>
-                                
+
                             </para>
                         </listitem>
                         <listitem os="ubuntu">
@@ -114,7 +114,7 @@ NETMASK=255.255.255.0
 DEFROUTE=yes
 ONBOOT=yes
 </programlisting>
-                                
+
                             </para>
                         </listitem>
                         <listitem>
@@ -130,7 +130,7 @@ DNS=8.8.8.8
 DEFROUTE=yes
 ONBOOT=yes
 </programlisting>
-                                
+
                             </para>
                         </listitem>
                         <listitem>
@@ -144,14 +144,14 @@ ONBOOT=yes
                     <itemizedlist>
                         <listitem>
                             <para>Edit the <emphasis role="bold">/etc/hosts</emphasis> file and add
-                                <emphasis role="bold">cloud</emphasis>, 
-                                <emphasis role="bold">network</emphasis>, and 
+                                <emphasis role="bold">cloud</emphasis>,
+                                <emphasis role="bold">network</emphasis>, and
                                 <emphasis role="bold">c01</emphasis> hostnames with correct IP.
                                 <programlisting>127.0.0.1       localhost
 10.10.10.10     cloud
 10.10.10.9      network
 10.10.10.11     c01</programlisting>
-                                    
+
                                 <note>
                                     <para>
                                         While manually specifying host entries is acceptable for a simple or testing environment, it is highly recommended to
@@ -246,7 +246,7 @@ EOF</userinput></screen></para>
                     <phrase os="ubuntu">RabbitMQ</phrase> Messaging Service</title>
                 <para>The OpenStack components also communicate through a queuing service. For example, the Cloud Controller
                     places a request to launch an instance on the queue. The Compute Node then picks this request up
-                    and launches the instance. OpenStack can work with several different queuing services. 
+                    and launches the instance. OpenStack can work with several different queuing services.
                 <orderedlist>
                     <listitem>
                     <para>Install the packages:
@@ -265,7 +265,7 @@ EOF</userinput></screen></para>
                             </note>
                         </para>
                         <para os="rhel;fedora;centos">Enable authentication:
-                            <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>echo auth=1 >> /etc/qpidd.conf</userinput></screen>                        
+                            <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>echo auth=1 >> /etc/qpidd.conf</userinput></screen>
                         </para>
                     </listitem>
                     <listitem os="rhel;fedora;centos">

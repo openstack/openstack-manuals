@@ -13,7 +13,7 @@
         root:<screen><prompt>#</prompt> <userinput>ip link set eth0 promisc on</userinput></screen></para>
     <para os="ubuntu">Set up your /etc/network/interfaces file with these settings: </para>
     <itemizedlist os="ubuntu"><listitem><para>eth0: public IP, gateway</para></listitem>
-        <listitem><para>br100: no ports, stp off, fd 0, first address from fixed_range set in nova.conf files.</para></listitem></itemizedlist> 
+        <listitem><para>br100: no ports, stp off, fd 0, first address from fixed_range set in nova.conf files.</para></listitem></itemizedlist>
     <para os="ubuntu">Here's an Ubuntu/Debian example:</para>
     <para os="ubuntu"><programlisting># The loopback network interface
 auto lo
@@ -22,16 +22,16 @@ iface lo inet loopback
 # The primary network interface
 auto eth0
 iface eth0 inet dhcp
-                    
-# Bridge network interface for VM networks 
-auto br100 
-iface br100 inet static 
-address 192.168.100.1 
-netmask 255.255.255.0 
+
+# Bridge network interface for VM networks
+auto br100
+iface br100 inet static
+address 192.168.100.1
+netmask 255.255.255.0
 bridge_stp off
 bridge_fd 0</programlisting></para>
     <para os="centos;fedora;rhel">Here's an example network setup for RHEL, Fedora, or CentOS. Create
-        
+
         <filename>/etc/sysconfig/network-scripts/ifcfg-br100</filename>:</para>
     <programlisting os="centos;fedora;rhel">
 DEVICE=br100
@@ -40,7 +40,7 @@ ONBOOT=yes
 DELAY=0
 BOOTPROTO=static
 IPADDR=192.168.100.1
-NETMASK=255.255.255.0   
+NETMASK=255.255.255.0
     </programlisting>
     <para>Also install bridge-utils:</para>
     <screen os="ubuntu"><prompt>$</prompt> <userinput>sudo apt-get install bridge-utils</userinput></screen>
@@ -70,5 +70,5 @@ NETMASK=255.255.255.0
         <para os="rhel;centos;fedora">If you intend to use guest images that don't have a single partition, then allow libguestfs to inspect the image so that files can be injected, by setting:
         </para>
         <screen><prompt>$></prompt> <userinput>sudo openstack-config --set /etc/nova/nova.conf DEFAULT libvirt_inject_partition -1</userinput></screen>
-        
+
     </section></section>

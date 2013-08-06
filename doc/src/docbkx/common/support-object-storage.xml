@@ -3,7 +3,7 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="troubleshooting-openstack-object-storage">
 <title>Troubleshooting OpenStack Object Storage</title>
-        <para>For OpenStack Object Storage, everything is logged in /var/log/syslog (or messages on some distros). Several settings enable further customization of logging, such as log_name, log_facility, and log_level, within the object server configuration files.</para> 
+        <para>For OpenStack Object Storage, everything is logged in /var/log/syslog (or messages on some distros). Several settings enable further customization of logging, such as log_name, log_facility, and log_level, within the object server configuration files.</para>
         <section xml:id="handling-drive-failure">
             <title>Handling Drive Failure</title>
        <para>In the event that a drive has failed, the first step is to make sure the drive is unmounted. This will make it easier for OpenStack Object Storage to work around the failure until it has been resolved. If the drive is going to be replaced immediately, then it is just best to replace the drive, format it, remount it, and let replication fill it up.</para>
@@ -13,20 +13,20 @@
         </section>
 
         <section xml:id="handling-server-failure">
-    
+
     <title>Handling Server Failure</title>
 
             <para>If a server is having hardware issues, it is a good idea to make sure the OpenStack Object Storage services are not running. This will allow OpenStack Object Storage to work around the failure while you troubleshoot.</para>
-            
+
             <para>If the server just needs a reboot, or a small amount of work that should only last a couple of hours, then it is probably best to let OpenStack Object Storage work around the failure and get the machine fixed and back online. When the machine comes back online, replication will make sure that anything that is missing during the downtime will get updated.</para>
-            
+
             <para>If the server has more serious issues, then it is probably best to remove all of the server’s devices from the ring. Once the server has been repaired and is back online, the server’s devices can be added back into the ring. It is important that the devices are reformatted before putting them back into the ring as it is likely to be responsible for a different set of partitions than before.</para>
-</section>   
-        <section xml:id="detecting-failed-drives">      
+</section>
+        <section xml:id="detecting-failed-drives">
 <title>Detecting Failed Drives</title>
-            
+
             <para>It has been our experience that when a drive is about to fail, error messages will spew into /var/log/kern.log. There is a script called swift-drive-audit that can be run via cron to watch for bad drives. If errors are detected, it will unmount the bad drive, so that OpenStack Object Storage can work around it. The script takes a configuration file with the following settings:
-           </para> 
+           </para>
             <programlisting>
             [drive-audit]
             Option 	Default 	Description
@@ -41,7 +41,7 @@
 
         <section xml:id="recover-ring-builder-file">
 	<title>Emergency Recovery of Ring Builder Files</title>
-	<para>You should always keep a backup of Swift ring builder files. 
+	<para>You should always keep a backup of Swift ring builder files.
 	However, if an emergency occurs, this procedure may assist in returning
 	your cluster to an operational state.</para>
 	<para>Using existing Swift tools, there is no way to recover a builder
@@ -49,7 +49,7 @@
 	 it is possible to construct a builder file that is pretty close to
 	 the one you have lost. The following is what you will need to do.</para>
 	<warning><title>Warning</title>
-	<para>This procedure is a last-resort for emergency circumstances - it 
+	<para>This procedure is a last-resort for emergency circumstances - it
 	requires knowledge of the swift python code and may not succeed.</para></warning>
 	<para>First, load the ring and a new ringbuilder object in a Python REPL:</para>
 	<programlisting>
@@ -74,7 +74,7 @@
             for dev_id in p2d:
                 builder.devs[dev_id]['parts'] += 1
 	</programlisting>
-	<para>This is the extent of the recoverable fields. For 
+	<para>This is the extent of the recoverable fields. For
 	<literal>min_part_hours</literal>  you'll either have to remember
 	 what the value you used was, or just make up a new one.</para>
 	<programlisting>
@@ -95,11 +95,11 @@
 	Next, run <literal>swift-ring-builder account.builder write_ring</literal>
 	 and compare the new account.ring.gz to the account.ring.gz that you started
 	 from. They probably won't be byte-for-byte identical, but if you load them
-	 up in a REPL and their <literal>_replica2part2dev_id</literal> and 
+	 up in a REPL and their <literal>_replica2part2dev_id</literal> and
 	<literal>devs</literal> attributes are the same (or nearly so), then you're
 	 in good shape.</para>
-	<para>Next, repeat the procedure for <literal>container.ring.gz</literal> 
+	<para>Next, repeat the procedure for <literal>container.ring.gz</literal>
 	and <literal>object.ring.gz</literal>, and you might get usable builder
 	files.</para>
-	</section> 
+	</section>
 </chapter>

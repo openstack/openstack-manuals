@@ -6,23 +6,23 @@
     <title>NFS Driver</title>
     <para>NFS, the Network Filesystem, is a remote file system protocol dating back to
         the 80's. An NFS server <emphasis>exports</emphasis> one or more of its own file systems
-        (known as <emphasis>shares</emphasis>). An NFS client can then mount these exported 
-        shares onto its own file system. Normal file actions can then be performed on this 
+        (known as <emphasis>shares</emphasis>). An NFS client can then mount these exported
+        shares onto its own file system. Normal file actions can then be performed on this
         mounted remote file system as if the file system was local.</para>
     <simplesect xml:id="nfs-driver-background">
         <title>How the NFS Driver Works</title>
         <para>The NFS driver, and other drivers based off of it, work quite a bit differently
             than a traditional block storage driver.</para>
         <para>
-            The NFS driver doesn't actually allow an instance to have access to a storage 
-            device at the block-level. Instead, files are created on an NFS share and then 
-            mapped to instances, emulated as a block device. This works very similarly to how 
+            The NFS driver doesn't actually allow an instance to have access to a storage
+            device at the block-level. Instead, files are created on an NFS share and then
+            mapped to instances, emulated as a block device. This works very similarly to how
             QEMU stores instances under <literal>/var/lib/nova/instances</literal>.
         </para>
     </simplesect>
     <simplesect xml:id="nfs-driver-options">
         <title>Enabling the NFS Driver and Related Options</title>
-        <para>To use Cinder with the NFS driver, first set the <literal>volume_driver</literal> 
+        <para>To use Cinder with the NFS driver, first set the <literal>volume_driver</literal>
             in <literal>cinder.conf</literal>:</para>
         <programlisting>
 volume_driver=cinder.volume.drivers.nfs.NfsDriver
@@ -54,12 +54,12 @@ volume_driver=cinder.volume.drivers.nfs.NfsDriver
                     <td><para>Optional</para></td>
                     <td><para><literal>$state_path/mnt</literal></para></td>
                     <td><para>(StrOpt) Base dir where nfs shares are expected to be mounted.</para></td>
-                </tr>              
+                </tr>
                 <tr>
                     <td><para><literal>nfs_sparsed_volumes</literal></para></td>
                     <td><para>Optional</para></td>
                     <td><para>True</para></td>
-                    <td><para>(BoolOpt) Create volumes as sparsed files which take no space. If set 
+                    <td><para>(BoolOpt) Create volumes as sparsed files which take no space. If set
                         to False, volume is created as regular file. In such case
                         volume creation takes a lot of time.
                     </para></td>
@@ -68,7 +68,7 @@ volume_driver=cinder.volume.drivers.nfs.NfsDriver
                     <td><para><literal>nfs_mount_options</literal></para></td>
                     <td><para>Optional</para></td>
                     <td><para>None</para></td>
-                    <td><para>(StrOpt) Mount options passed to the nfs client. See section 
+                    <td><para>(StrOpt) Mount options passed to the nfs client. See section
                         of the nfs man page for details.</para></td>
                 </tr>
                 <tr>
@@ -82,16 +82,16 @@ volume_driver=cinder.volume.drivers.nfs.NfsDriver
                     <td><para><literal>nfs_oversub_ratio</literal></para></td>
                     <td><para>Optional</para></td>
                     <td><para><literal>1.0</literal></para></td>
-                    <td><para>(FloatOpt) This will compare the allocated to available space on the volume destination. 
+                    <td><para>(FloatOpt) This will compare the allocated to available space on the volume destination.
                         If the ratio exceeds this number, the destination will no longer be valid.
                     </para></td>
-                </tr>                 
+                </tr>
             </tbody>
         </table>
     </simplesect>
     <simplesect xml:id="nfs-driver-howto">
         <title>How to Use the NFS Driver</title>
-        <para>First, you need access to one or more NFS servers. Creating an NFS server is outside 
+        <para>First, you need access to one or more NFS servers. Creating an NFS server is outside
         the scope of this document. For example purposes, access to the following NFS servers and
         mountpoints will be assumed:</para>
         <para>
@@ -110,7 +110,7 @@ volume_driver=cinder.volume.drivers.nfs.NfsDriver
         <para>Three different NFS servers are used in this example to highlight that you can
         utilize more than one NFS server with this driver. Multiple servers are not required.
         One will probably be enough in most cases.</para>
-        <para>Add your list of NFS servers to the file you specified with the 
+        <para>Add your list of NFS servers to the file you specified with the
             <literal>nfs_shares_config</literal> option. For example, if the value of this option
             was set to <literal>/etc/cinder/shares.txt</literal>, then:</para>
         <programlisting>
@@ -122,7 +122,7 @@ volume_driver=cinder.volume.drivers.nfs.NfsDriver
         <para>Comments are allowed in this file. They begin with a <literal>#</literal>.</para>
         <para>The next step is to configure the <literal>nfs_mount_point_base</literal>
             option. This is a directory where <literal>cinder-volume</literal> will mount all
-            NFS shares stored in <literal>shares.txt</literal>. For this example, 
+            NFS shares stored in <literal>shares.txt</literal>. For this example,
             <literal>/var/lib/cinder/nfs</literal> will be used. You can, of course, use the
             default value of <literal>$state_path/mnt</literal>.</para>
         <para>Once these options are set, start the <literal>cinder-volume</literal>

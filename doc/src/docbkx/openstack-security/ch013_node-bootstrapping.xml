@@ -25,11 +25,11 @@
         <para>In general, there are two different strategies for verifying the boot process. Traditional <emphasis>secure boot</emphasis> will validate the code run at each step in the process, and stop the boot if code is incorrect. <emphasis>Boot attestation</emphasis> will record which code is run at each step, and provide this information to another machine as proof that the boot process completed as expected. In both cases, the first step is to measure each piece of code before it is run. In this context, a measurement is effectively a SHA-1 hash of the code, taken before it is executed.  The hash is stored in a platform configuration register (PCR) in the TPM.</para>
         <para>Note: SHA-1 is used here because this is what the TPM chips support.</para>
         <para>Each TPM has at least 24 PCRs. The TCG Generic Server Specification, v1.0, March 2005, defines the PCR assignments for boot-time integrity measurements. The table below shows a typical PCR configuration. The context indicates if the values are determined based on the node hardware (firmware) or the software provisioned onto the node. Some values are influenced by firmware versions, disk sizes, and other low-level information. Therefore, it is important to have good practices in place around configuration management to ensure that each system deployed is configured exactly as desired.</para>
-        
+
           <informaltable rules="all" width="80%"><colgroup><col/><col/><col/></colgroup>
-            
-            
-            
+
+
+
             <tbody>
               <tr>
                 <td><para><emphasis role="bold">Register</emphasis></para></td>
@@ -93,7 +93,7 @@
               </tr>
             </tbody>
           </informaltable>
-        
+
         <para>At the time of this writing, very few clouds are using secure boot technologies in a production environment. As a result, these technologies are still somewhat immature. We recommend planning carefully in terms of hardware selection (e.g., ensure that you have a TPM and TXT support). Then verify how the node hardware vendor populates the PCR values (e.g., which values will be available for validation). Typically the PCR values listed under the software context in the table above are the ones that a cloud architect has direct control over. But even these may change as the software in the cloud is upgraded.  Configuration management should be linked into the PCR policy engine to ensure that the validation is always up to date.</para>
         <para>Each manufacturer must provide the BIOS and firmware code for their servers. Different servers, hypervisors, and operating systems will choose to populate different PCRs.  In most real world deployments, it will be impossible to validate every PCR against a known good quantity ("golden measurement"). Experience has shown that, even within a single vendor's product line, the measurement process for a given PCR may not be consistent. We recommend establishing a baseline for each server and monitoring the PCR values for unexpected changes. Third-party software may be available to assist in the TPM provisioning and monitoring process, depending upon your chosen hypervisor solution.</para>
         <para>The initial program loader (IPL) code will most likely be the PXE firmware, assuming the node deployment strategy outlined above. Therefore, the secure boot or boot attestation process can measure all of the early stage boot code (e.g., bios, firmware, etc), the PXE firmware, and the node kernel. Ensuring that each node has the correct versions of these pieces installed provides a solid foundation on which to build the rest of the node software stack.</para>

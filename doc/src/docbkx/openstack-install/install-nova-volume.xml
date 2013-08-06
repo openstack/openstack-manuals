@@ -1,16 +1,16 @@
 <section xml:id="install-nova-volume"
     xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" 
+    xmlns:xlink="http://www.w3.org/1999/xlink"
     version="5.0">
     <title>Install nova-volume on the cloud controller</title>
-    <para>While nova-volume does not directly use the network, you must have networking set up for Compute prior to configuring the volumes.</para> 
+    <para>While nova-volume does not directly use the network, you must have networking set up for Compute prior to configuring the volumes.</para>
     <para>On Ubuntu, install nova-volume and lvm2.</para>
     <screen os="ubuntu">
 <prompt>$</prompt> <userinput>apt-get install lvm2 nova-volume</userinput>
     </screen>
     <para os="centos;rhel;fedora">
-On RHEL and derivatives, the nova-volume service should already be installed. 
+On RHEL and derivatives, the nova-volume service should already be installed.
             </para>
     <para>
         <itemizedlist>
@@ -18,7 +18,7 @@ On RHEL and derivatives, the nova-volume service should already be installed.
                 <para>
                     <emphasis role="bold">Configure Volumes for use with
                         nova-volume</emphasis></para>
-                <para>The openstack-nova-volume service requires an LVM Volume Group called nova-volumes to exist. 
+                <para>The openstack-nova-volume service requires an LVM Volume Group called nova-volumes to exist.
                     If you do not already have LVM volumes on hand, but have free drive
                     space, you will need to create a LVM volume before proceeding. Here is a
                     short run down of how you would create a LVM from free drive space on
@@ -89,12 +89,12 @@ On RHEL and derivatives, the nova-volume service should already be installed.
 <prompt>$</prompt> <userinput>fdisk -l</userinput>
                                          </screen>
                             <para>You should see your new partition in this listing.</para>
-                            
+
                             <para>Here is how you can set up partitioning during the OS
                                 install to prepare for this nova-volume
                                 configuration:</para>
                             <screen>
-<prompt>root@osdemo03:~#</prompt> <userinput>fdisk -l</userinput> 
+<prompt>root@osdemo03:~#</prompt> <userinput>fdisk -l</userinput>
                                     </screen>
                             <para>
                                 <programlisting>
@@ -119,7 +119,7 @@ Device Boot Start End Blocks Id System
                                     will not work as expected</emphasis>:</para>
                             <screen>
 <prompt>$</prompt> <userinput>pvcreate /dev/sda5</userinput>
-<prompt>$</prompt> <userinput>vgcreate nova-volumes /dev/sda5</userinput> 
+<prompt>$</prompt> <userinput>vgcreate nova-volumes /dev/sda5</userinput>
                                     </screen>
                         </listitem>
                     </orderedlist></para>

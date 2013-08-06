@@ -34,7 +34,7 @@
                 abstractions to describe networking resources. In more
                 detail: <itemizedlist>
                     <listitem>
-                        <para><emphasis role="bold">Network</emphasis>. 
+                        <para><emphasis role="bold">Network</emphasis>.
                             An isolated L2
                             segment, analogous to VLAN in the physical
                             networking world.</para>
@@ -64,12 +64,12 @@
                 to choose their own IP addressing scheme (even if
                 those IP addresses overlap with those used by other
                 tenants). The OpenStack Networking service:
-		<itemizedlist>               
+		<itemizedlist>
                 <listitem>
                 	<para>Enables advanced cloud networking
                 	use cases, such as building multi-tiered web
                 	applications and allowing applications to be migrated
-                	to the cloud without changing IP addresses. 
+                	to the cloud without changing IP addresses.
                 	</para>
                 </listitem>
                 <listitem>
@@ -86,7 +86,7 @@
                 	and over time become part of the core OpenStack Networking API.
                 </para>
                 </listitem>
-                </itemizedlist> 
+                </itemizedlist>
             </para>
         </section>
       <!-- <?hard-pagebreak?>  -->
@@ -129,7 +129,7 @@
                                 xlink:href="http://wiki.openstack.org/cisco-neutron"
                                 >http://wiki.openstack.org/cisco-neutron</link>
                         </para>
-                    </listitem>                    
+                    </listitem>
                     <listitem>
                         <para><emphasis role="bold">Cloudbase Hyper-V Plugin</emphasis>.
                         <link xlink:href="http://www.cloudbase.it/quantum-hyper-v-plugin/"
@@ -137,7 +137,7 @@
                         </para>
                     </listitem>
                     <listitem>
-                        <para><emphasis role="bold">Linux Bridge Plugin</emphasis>.  
+                        <para><emphasis role="bold">Linux Bridge Plugin</emphasis>.
                         	Documentation included in this guide and at
                                 <link
                                 xlink:href="http://wiki.openstack.org/Quantum-Linux-Bridge-Plugin"
@@ -158,9 +158,9 @@
                                >http://wiki.openstack.org/Quantum-NEC-OpenFlow-Plugin</link>
                         </para>
                     </listitem>
-                    
+
                     <listitem>
-                        <para><emphasis role="bold">Nicira NVP Plugin</emphasis>.  
+                        <para><emphasis role="bold">Nicira NVP Plugin</emphasis>.
                         	Documentation include in this guide,
                                <link
                                 xlink:href="http://www.vmware.com/products/datacenter-virtualization/nicira.html">
@@ -171,12 +171,12 @@
                         </para>
                     </listitem>
                     <listitem>
-                        <para><emphasis role="bold">Open vSwitch Plugin</emphasis>.  
+                        <para><emphasis role="bold">Open vSwitch Plugin</emphasis>.
                         	Documentation included in this guide.
                         </para>
                     </listitem>
-                                      
-                    
+
+
                     <listitem>
                         <para><emphasis role="bold">PLUMgrid</emphasis>.
                                <link
@@ -194,11 +194,11 @@
                  </itemizedlist>
             </para>
             <para>Plugins can have different properties for hardware requirements, features, performance,
-                scale, or operator tools. Because OpenStack Networking supports a large number of plugins, 
+                scale, or operator tools. Because OpenStack Networking supports a large number of plugins,
                 the cloud administrator is able to weigh different options and decide which networking
                 technology is right for the deployment.
             </para>
-         <?hard-pagebreak?>              
+         <?hard-pagebreak?>
             <para>Not all OpenStack networking plugins are compatible with all possible OpenStack compute drivers:</para>
 
             <table rules="all">
@@ -258,7 +258,7 @@
                         <td></td>
                         <td></td>
                     </tr>
-                   
+
                     <tr>
                         <td>Linux Bridge</td>
                         <td>Yes</td>
@@ -335,7 +335,7 @@
                 other and with other OpenStack services.</para>
         <section xml:id="arch_overview">
             <title>Overview</title>
-            
+
             <para>OpenStack Networking is a standalone service, just
                 like other OpenStack services such as OpenStack
                 Compute, OpenStack Image service, OpenStack Identity
@@ -378,12 +378,12 @@
                             <literal>(neutron-l3-agent</literal>).
                             Provides L3/NAT forwarding to provide
                             external network access for VMs on tenant
-                            networks. This agent is the same for all plugins. 
+                            networks. This agent is the same for all plugins.
                         </para>
                     </listitem>
                 </itemizedlist>
                 </para>
-            <para>The above agents interact with the main Neutron process through RPC (for example, 
+            <para>The above agents interact with the main Neutron process through RPC (for example,
                    rabbitmq or qpid) or through the standard OpenStack Networking API. Further:
                 <itemizedlist>
                     <listitem>
@@ -393,7 +393,7 @@
                     </listitem>
                     <listitem>
                         <para>OpenStack Compute (nova) interacts with OpenStack Networking through calls
-                to its standard API.  As part of creating a VM, the 
+                to its standard API.  As part of creating a VM, the
                 <systemitem class="service">nova-compute</systemitem> service communicates with the OpenStack Networking API to plug
                 each virtual NIC on the VM into a particular network. 
                              </para>
@@ -468,7 +468,7 @@
             </itemizedlist>
         </section>
     </section>
-    <?hard-pagebreak?>   
+    <?hard-pagebreak?>
     <section xml:id="use_cases">
         <title>OpenStack Networking Deployment Use Cases</title>
         <para>
@@ -484,8 +484,8 @@
               This use case essentially maps to the FlatManager
               and FlatDHCPManager models provided by OpenStack Compute. Floating IPs are not
               supported.</para>
-         <para>This network type is often created by the OpenStack administrator 
-              to map directly to an existing physical network in the data center (called a 
+         <para>This network type is often created by the OpenStack administrator
+              to map directly to an existing physical network in the data center (called a
               "provider network").  This allows the provider to use a physical
               router on that data center network as the gateway for VMs to reach
               the outside world.  For each subnet on an external network, the gateway
@@ -500,7 +500,7 @@
               <!--Image source link: https://docs.google.com/a/nicira.com/drawings/d/1Jb6iSoBo4G7fv7i2EMpYTMTxesLPmEPKIbI7sVbhhqY/edit -->
               </para>
         </section>
-        <?hard-pagebreak?> 
+        <?hard-pagebreak?>
         <section xml:id="use_cases_multi_flat">
         <title>Use Case: Multiple Flat Network</title>
               <para>
@@ -524,7 +524,7 @@
               This use case is an extension of the above Flat Network use cases.
               In addition to being able to see one or more shared networks via
               the OpenStack Networking API, tenants can also have access to private per-tenant
-              networks (only visible to tenant users).  
+              networks (only visible to tenant users).
 		</para>
 		<para>
               Created VMs can have NICs on any of the shared networks and/or any of the private networks
@@ -547,12 +547,12 @@
         <title>Use Case: Provider Router with Private Networks</title>
               <para>
               This use case provides each tenant with one or more private networks, which
-              connect to the outside world via an OpenStack Networking router.  
+              connect to the outside world via an OpenStack Networking router.
 	      When each tenant gets exactly one network, this architecture maps to the same
               logical topology as the VlanManager in OpenStack Compute (although of course, OpenStack Networking doesn't
               require VLANs).  Using the OpenStack Networking API, the tenant can only see a
               network for each private network assigned to that tenant. The router
-              object in the API is created and owned by the cloud administrator. 
+              object in the API is created and owned by the cloud administrator.
               </para>
               <para>
               This model supports giving VMs public addresses using

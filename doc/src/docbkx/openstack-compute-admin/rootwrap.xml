@@ -2,9 +2,9 @@
 <section xml:id="root-wrap-reference"
     xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" 
+    xmlns:xlink="http://www.w3.org/1999/xlink"
     version="5.0">
-    
+
     <title>Reference Information for Securing with Root
         Wrappers</title>
     <para>The goal of the root wrapper is to allow the nova
@@ -39,14 +39,14 @@
             filters definition files. This chain ensures that the nova
             user itself is not in control of the configuration or
             modules used by the nova-rootwrap executable.</para>
-    </simplesect> 
+    </simplesect>
     <simplesect>
 <title>Details of rootwrap.conf</title>
-        <para>The <filename>rootwrap.conf</filename> file is used to influence how nova-rootwrap works. 
-            Since it's in the trusted security path, it needs to be owned and writeable only by the root user. 
+        <para>The <filename>rootwrap.conf</filename> file is used to influence how nova-rootwrap works.
+            Since it's in the trusted security path, it needs to be owned and writeable only by the root user.
             Its location is specified both in the sudoers entry and in the <filename>nova.conf</filename> configuration file with the rootwrap_config= entry.
         </para>
-<para>It uses an INI file format with the following sections and parameters: </para> 
+<para>It uses an INI file format with the following sections and parameters: </para>
         <table rules= "all" frame= "border" xml:id= "rootwrap-conf-table-filter-path" width= "100%">
             <caption>Description of rootwrap.conf configuration options
                 </caption>
@@ -75,9 +75,9 @@
     <simplesect>
         <title>Details of .filters files</title>
         <para>Filters definition files contain lists of filters that nova-rootwrap will use to allow or deny a specific command. They are generally suffixed by .filters. Since they are in the trusted security path, they need to be owned and writeable only by the root user. Their location is specified in the rootwrap.conf file.
-</para>        
+</para>
         <para>It uses an INI file format with a [Filters] section and several lines, each with a unique parameter name (different for each filter you define): </para>
-        
+
         <table rules= "all" frame= "border" xml:id= "rootwrap-conf-table-filter-name" width= "100%">
             <caption>Description of rootwrap.conf configuration options
             </caption>
@@ -92,7 +92,7 @@
             <tbody><tr>
                 <td><para>
                     [Filters]</para>
-                    <para>filter_name=kpartx: CommandFilter, /sbin/kpartx, root 
+                    <para>filter_name=kpartx: CommandFilter, /sbin/kpartx, root
                     </para></td>
                 <td><para>(ListOpt) Comma-separated list containing first the Filter class to use, followed by that Filter arguments (which vary depending on the Filter class selected). .</para></td>
             </tr>

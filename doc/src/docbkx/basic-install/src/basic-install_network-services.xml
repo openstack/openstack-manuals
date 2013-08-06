@@ -31,7 +31,7 @@ openvswitch-switch</userinput></screen></para>
                 </para>
             </listitem>
             <listitem>
-                <para>Create an internal and external network bridge. The purposes of these bridges are described in the Introduction of this guide.                     
+                <para>Create an internal and external network bridge. The purposes of these bridges are described in the Introduction of this guide.
                     <screen><prompt>#</prompt> <userinput>ovs-vsctl add-br br-ex</userinput>
 <prompt>#</prompt> <userinput>ovs-vsctl add-port br-ex eth1</userinput>
 <prompt>#</prompt> <userinput>ovs-vsctl add-br br-int</userinput>
@@ -44,9 +44,9 @@ openvswitch-switch</userinput></screen></para>
                             <para>Change the <literal>eth1</literal> entry in <emphasis role="bold"
                                         >/etc/network/interfaces</emphasis> to look like:
                                     <programlisting>auto eth1
-iface eth1 inet manual              
+iface eth1 inet manual
     up ip address add 0/0 dev $IFACE
-    up ip link set $IFACE up        
+    up ip link set $IFACE up
     down ip link set $IFACE down</programlisting>
                                 </para>
                         </listitem>
@@ -82,7 +82,7 @@ NETMASK=255.255.255.0
 NM_CONTROLLED=no
 ONBOOT=yes
 </programlisting>
-                                
+
                             </para>
             </listitem>
                         <listitem>
@@ -145,7 +145,7 @@ admin_password = password</programlisting></para>
                         <programlisting>[database]
 sql_connection = mysql://neutron:password@10.10.10.10/neutron
 [ovs]
-tenant_network_type = gre 
+tenant_network_type = gre
 tunnel_id_ranges = 1:1000
 enable_tunneling = True
 local_ip = 10.10.10.9
@@ -167,8 +167,8 @@ enable_metadata_network = True</programlisting></para>
                     <para>Edit <emphasis role="bold">/etc/neutron/metadata_agent.ini</emphasis>:
                     <programlisting>[DEFAULT]
 auth_url = http://10.10.10.10:35357/v2.0
-auth_region = RegionOne               
-admin_tenant_name = service           
+auth_region = RegionOne
+admin_tenant_name = service
 admin_user = neutron
 admin_password = password
 nova_metadata_ip = 10.10.10.10
@@ -190,14 +190,14 @@ metadata_proxy_shared_secret = password
 <prompt>#</prompt> <userinput>chkconfig neutron-openvswitch-agent on</userinput>
 <prompt>#</prompt> <userinput>chkconfig neutron-dhcp-agent on</userinput>
 <prompt>#</prompt> <userinput>chkconfig neutron-l3-agent on</userinput></screen>
-            
+
             </para>
     <note>
         <para>
             Check the <literal>/var/log/neutron/*.log</literal> files for errors that would prevent
             the Networking Service from successfully starting.
         </para>
-    </note>    
-       
+    </note>
+
     </section>
 </section>

@@ -81,28 +81,28 @@ pipeline = stats_monitoring url_normalize token_auth admin_token_auth xml_body j
     </para>
     <para>For services which have separate paste-deploy ini file,
       auth_token middleware can be alternatively configured in
-      [keystone_authtoken] section in the main config file, such as 
+      [keystone_authtoken] section in the main config file, such as
       <filename>nova.conf</filename>. For
       example in Nova, all middleware parameters can be removed from
       api-paste.ini like these:</para>
-    <screen> [filter:authtoken] 
+    <screen> [filter:authtoken]
     paste.filter_factory =
-      keystoneclient.middleware.auth_token:filter_factory 
+      keystoneclient.middleware.auth_token:filter_factory
       </screen>
       <para>and set in
       <filename>nova.conf</filename> like these: </para>
-      <screen>[DEFAULT] 
-      ... 
+      <screen>[DEFAULT]
+      ...
       auth_strategy=keystone
-      
-      [keystone_authtoken] 
-      auth_host = 127.0.0.1 
+
+      [keystone_authtoken]
+      auth_host = 127.0.0.1
       auth_port = 35357
-      auth_protocol = http 
+      auth_protocol = http
       auth_uri = http://127.0.0.1:5000/
-      admin_user = admin 
+      admin_user = admin
       admin_password = SuperSekretPassword
-      admin_tenant_name = service 
+      admin_tenant_name = service
       </screen>
       <para>Note that middleware parameters in
       paste config take priority, they must be removed to use values
@@ -150,8 +150,8 @@ pipeline = [...] json_body stats_reporting ec2_extension [...] admin_service
     <screen>$ curl -H 'X-Auth-Token: ADMIN' -X DELETE http://localhost:35357/v2.0/OS-STATS/stats</screen>
   </section>
   <xi:include href="certificates-for-pki.xml"/>
-  <xi:include href="keystone-sample-conf-files.xml"/>  
-  
+  <xi:include href="keystone-sample-conf-files.xml"/>
+
   <section xml:id="running-keystone">
     <title>Running</title>
     <para>
@@ -674,7 +674,7 @@ keystone service-delete 08741d8ed88242ca88d1f61484a0fe3b
   </itemizedlist>
   <para>
     The middleware will pass those data down to the service as headers.
-   
+
   </para>
   <section xml:id="setting-up-credentials">
     <?dbhtml stop-chunking?>
@@ -683,7 +683,7 @@ keystone service-delete 08741d8ed88242ca88d1f61484a0fe3b
         the users, tenants, and roles, you must create an admin token
         and create service users. These sections walk through those
         requirements.</para>
-    
+
     <section xml:id="admin-token">
       <title>Admin Token</title>
       <para>For a default installation of Keystone, before you can
@@ -725,7 +725,7 @@ keystone service-delete 08741d8ed88242ca88d1f61484a0fe3b
   <section xml:id="setting-up-services">
     <title>Setting up services</title>
     <?dbhtml stop-chunking?>
-    
+
     <section xml:id="creating-service-users">
       <title>Creating Service Users</title>
       <para>
@@ -833,7 +833,7 @@ keystone service-create --name=swift \
       <para>
         The Keystone auth_token middleware is a WSGI component that can
         be inserted in the WSGI pipeline to handle authenticating tokens
-        with Keystone. 
+        with Keystone.
       </para>
     </section>
     <section xml:id="configuring-nova-to-use-keystone">
@@ -912,11 +912,11 @@ use = egg:swift#healthcheck
           <para>
             Verify that the Identity service, Keystone, is providing authentication to Object Storage (Swift).
           </para>
-          
+
             <screen>
               <prompt>$</prompt> <userinput>swift -V 2 -A http://localhost:5000/v2.0 -U admin:admin -K ADMIN stat</userinput>
             </screen>
-          
+
         </listitem>
       </orderedlist>
     </section>
@@ -1259,11 +1259,11 @@ ca_certs = &lt;path to ca.pem&gt;
 cert_required = True
 </programlisting>
       Example:
-      <programlisting>[ssl]  
+      <programlisting>[ssl]
 enable = True
-certfile = /home/agentl/openstack/tests/certs/signing_cert.pem  
-keyfile = /home/agentl/openstack/tests/certs/private_key.pem  
-ca_certs = /home/agentl/openstack/tests/certs/cacert.pem  
+certfile = /home/agentl/openstack/tests/certs/signing_cert.pem
+keyfile = /home/agentl/openstack/tests/certs/private_key.pem
+ca_certs = /home/agentl/openstack/tests/certs/cacert.pem
 cert_required = True </programlisting></para>
 <para>
 <itemizedlist>

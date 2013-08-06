@@ -21,15 +21,15 @@
   will be able to query the group membership, or the status of a
   particular node. Under the hood, the ServiceGroup client driver
   will automatically update the compute worker status.</para>
- 
+
   <para>Currently there are two drivers implemented: database and
   ZooKeeper. Further drivers are in review or development, such as
   memcache.</para>
- 
+
   <section xml:id="database-servicegroup-driver">
    <title>Database ServiceGroup driver</title>
    <para>The database driver is how Compute has been tracking node
-   liveness since the first release, and it's the default driver. 
+   liveness since the first release, and it's the default driver.
    In a compute worker, it periodically sends a db update command
    to the database, saying "I'm OK" with a timestamp. A pre-defined
    timeout (<literal>service_down_time</literal>) is used to
@@ -57,17 +57,17 @@
    <para>The ZooKeeper ServiceGroup driver works by using ZooKeeper
    ephemeral nodes. ZooKeeper in contrary to databases is a
    distributed system, and its load is divided among several servers.
-   At a compute worker node, after establishing a ZooKeeper session, 
+   At a compute worker node, after establishing a ZooKeeper session,
    it creates an ephemeral znode in the group directory. Ephemeral
    znodes has the same lifespan as the session. If the worker node
-   or the <systemitem class="service">nova-compute</systemitem> daemon crashes, or there is a network 
+   or the <systemitem class="service">nova-compute</systemitem> daemon crashes, or there is a network
    partition between the worker and the ZooKeeper server quorums,
    then the ephemeral znodes are removed automatically. The driver
    gets the group membership by doing a "ls" in group directory.
    </para>
    <para>To use the ZooKeeper driver, of course you need to have
    both ZooKeeper servers and client libraries installed. Setting
-   up ZooKeeper servers is outside the scope of this article. 
+   up ZooKeeper servers is outside the scope of this article.
    For the rest of the article, let's assume you have them installed,
    and their addresses / ports are 192.168.2.1:2181, 192.168.2.2:2181,
    192.168.2.3:2181.

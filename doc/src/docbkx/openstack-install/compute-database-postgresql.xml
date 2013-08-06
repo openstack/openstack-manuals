@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section xml:id="setting-up-sql-database-postgresql"    
+<section xml:id="setting-up-sql-database-postgresql"
     xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
@@ -19,12 +19,12 @@ postgres=# GRANT ALL PRIVILEGES ON DATABASE nova TO novadbadmin;
 postgres=# \q
 postgres> exit</screen></para>
     <para>The database is created and we have a privileged user that controls the database. Now we have to install the packages that will help Nova access the database.</para>
-    
+
     <screen os="ubuntu"><userinput><prompt>$</prompt> sudo apt-get install python-sqlalchemy python-psycopg2</userinput></screen>
     <screen os="rhel;centos;fedora"><userinput><prompt>$</prompt> sudo yum install python-sqlalchemy python-psycopg2</userinput></screen>
-    
+
     <para>Configure the <filename>/etc/nova/nova.conf</filename> file, to ensure it knows to use the PostgreSQL database:</para>
-    
+
     <literallayout class="monospaced">sql_connection = postgres://novadbadmin:[<replaceable>[YOUR_NOVADB_PASSWORD]</replaceable>]@127.0.0.1/nova</literallayout>
     <para>The command to populate the database is described later in the
         documentation, in the section entitled <link

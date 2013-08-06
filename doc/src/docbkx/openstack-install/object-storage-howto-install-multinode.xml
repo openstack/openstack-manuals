@@ -2,9 +2,9 @@
 <!-- Converted by db4-upgrade version 1.0 -->
 <section xmlns="http://docbook.org/ns/docbook" version="5.0-extension RaxBook-1.0" xml:id="instructions-for-a-multiple-server-swift-installation-ubuntu"><info><title>Instructions for a Multiple Server Swift Installation
   (Ubuntu)</title></info>
-  
+
   <section xml:id="prerequisites"><info><title>Prerequisites</title></info>
-    
+
     <itemizedlist>
       <listitem>
         <para>
@@ -75,7 +75,7 @@
     </para>
   </section>
   <section xml:id="network-setup-notes"><info><title>Network Setup Notes</title></info>
-    
+
     <para>
       This document refers to two networks. An external network for
       connecting to the Proxy server, and a storage network that is not
@@ -88,7 +88,7 @@
   </section>
   <section xml:id="general-os-configuration-and-partitioning-for-each-node"><info><title>General OS configuration and partitioning for each
     node</title></info>
-    
+
     <orderedlist>
       <listitem>
         <para>
@@ -133,7 +133,7 @@ EOF
           must be the same on every node in the cluster!:
         </para>
         <screen>
-scp firstnode.example.com:/etc/swift/swift.conf /etc/swift/  
+scp firstnode.example.com:/etc/swift/swift.conf /etc/swift/
 </screen>
       </listitem>
       <listitem>
@@ -150,7 +150,7 @@ export PROXY_LOCAL_NET_IP=10.1.2.4
     <note><para>The random string of text in /etc/swift/swift.conf is used as a salt when hashing to determine mappings in the ring.</para></note>
   </section>
   <section xml:id="configure-the-proxy-node"><info><title>Configure the Proxy node</title></info>
-    
+
     <note><para>It is assumed that all commands are run as the root user</para></note>
     <orderedlist>
       <listitem>
@@ -227,7 +227,7 @@ EOF
       </listitem>
     </orderedlist>
       <note><title>Note</title><para>
-If you run multiple memcache servers, put the multiple IP:port listings    
+If you run multiple memcache servers, put the multiple IP:port listings
 in the [filter:cache] section of the <filename>proxy-server.conf</filename> file like:
 `10.1.2.3:11211,10.1.2.4:11211`. Only the proxy server uses memcache.
     </para></note>
@@ -325,7 +325,7 @@ swift-init proxy start
     </orderedlist>
   </section>
   <section xml:id="configure-the-storage-nodes"><info><title>Configure the Storage nodes</title></info>
-    
+
     <note><para>Swift should work on any modern filesystem that supports Extended Attributes (XATTRS). We currently recommend XFS as it demonstrated the best overall performance for the swift use case after considerable testing and benchmarking at Rackspace. It is also the only filesystem that has been thoroughly tested. These instructions assume that you are going to devote /dev/sdb1 to an XFS filesystem.</para></note>
     <orderedlist>
       <listitem>
@@ -511,7 +511,7 @@ swift-init account-auditor start
     </orderedlist>
   </section>
   <section xml:id="create-swift-admin-account-and-test"><info><title>Create Swift admin account and test</title></info>
-    
+
     <para>
       You run these commands from the Proxy node.
     </para>
@@ -599,7 +599,7 @@ swift -A https://$PROXY_LOCAL_NET_IP:8080/auth/v1.0 -U system:root -K testpass d
     </orderedlist>
   </section>
   <section xml:id="adding-a-proxy-server"><info><title>Adding a Proxy Server</title></info>
-    
+
     <para>
       For reliability's sake you may want to have more than one proxy
       server. You can set up the additional proxy node in the same
@@ -661,7 +661,7 @@ user_system_root = testpass .admin http[s]://&lt;LOAD_BALANCER_HOSTNAME&gt;:&lt;
     </orderedlist>
   </section>
   <section xml:id="troubleshooting-notes"><info><title>Troubleshooting Notes</title></info>
-    
+
     <para>
       If you see problems, look in var/log/syslog (or messages on some
       distros).
