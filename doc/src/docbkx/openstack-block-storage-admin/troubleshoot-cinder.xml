@@ -7,8 +7,8 @@
         during setup and configuration of Cinder. The focus here is on failed creation of volumes.
         The most important thing to know is where to look in case of a failure. There are two log
         files that are especially helpful in the case of a volume creation failure. The first is the
-        <literal>cinder-api</literal> log, and the second is the <systemitem class="service">cinder-volume</systemitem> log.</para>
-    <para>The <literal>cinder-api</literal> log is useful in determining if you have
+        <systemitem class="service">cinder-api</systemitem> log, and the second is the <systemitem class="service">cinder-volume</systemitem> log.</para>
+    <para>The <systemitem class="service">cinder-api</systemitem> log is useful in determining if you have
         endpoint or connectivity issues. If you send a request to
         create a volume and it fails, it's a good idea to look here
         first and see if the request even made it to the Cinder
@@ -17,7 +17,7 @@
         log and look for errors or trace-backs there.</para>
     <para>There are some common issues to look out for. The following describes
 	    some common issues hit during configuration and some suggested solutions.</para>
-    <para><emphasis role="bold"><emphasis role="underline">Create commands are in cinder-api log
+    <para><emphasis role="bold"><emphasis role="underline">Create commands are in <systemitem class="service">cinder-api</systemitem> log
                 with no error</emphasis></emphasis></para>
     <para>
         <itemizedlist>
@@ -55,7 +55,7 @@ sudo sh -c "echo 'include /var/lib/cinder/volumes/*' >> /etc/tgt/conf.d/cinder.c
             </listitem>
         </itemizedlist>
     </para>
-    <para><emphasis role="bold"><emphasis role="underline">No sign of attach call in the <literal>cinder-api</literal>
+    <para><emphasis role="bold"><emphasis role="underline">No sign of attach call in the <systemitem class="service">cinder-api</systemitem>
                 log</emphasis></emphasis></para>
     <para>This is most likely going to be a minor adjustment to your
             <filename>nova.conf </filename>file. Make sure that your
