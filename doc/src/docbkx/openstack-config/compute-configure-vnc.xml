@@ -91,7 +91,7 @@
           runs on the controller host.</para>
       </listitem>
       <listitem>
-        <para>One or more <literal>nova-novncproxy</literal> services.
+        <para>One or more <systemitem class="service">nova-novncproxy</systemitem> services.
           Supports browser-based noVNC clients. For simple
           deployments, this service typically runs on the same machine
           as <systemitem class="service">nova-api</systemitem> because it proxies between the public network
@@ -139,7 +139,7 @@
         <title>nova-novncproxy (noVNC)</title>
       </info>
       <para>You must install the noVNC package, which contains the
-          <literal>nova-novncproxy</literal> service.</para>
+          <systemitem class="service">nova-novncproxy</systemitem> service.</para>
       <para>As root, run the following command:</para>
       <programlisting language="bash" role="gutter: false"><prompt>#</prompt> <userinput>apt-get install novnc</userinput></programlisting>
       <para>The service starts automatically on installation.</para>
@@ -148,7 +148,7 @@
       <para>The configuration option parameter should point to your
           <filename>nova.conf</filename> file, which includes the
         message queue server address and credentials.</para>
-      <para>By default, <literal>nova-novncproxy</literal> binds on
+      <para>By default, <systemitem class="service">nova-novncproxy</systemitem> binds on
           <literal>0.0.0.0:6080</literal>.</para>
       <para>To connect the service to your nova deployment, add the
         following configuration options to your
@@ -189,17 +189,17 @@
       <listitem>
         <para><emphasis role="bold">Q: What is the difference between
               <literal>nova-xvpvncproxy</literal> and
-              <literal>nova-novncproxy</literal>?</emphasis>
+              <systemitem class="service">nova-novncproxy</systemitem>?</emphasis>
         </para>
         <para>A: <literal>nova-xvpvncproxy</literal>, which ships with
           nova, is a proxy that supports a simple Java client.
-            <literal>nova-novncproxy</literal> uses noVNC to provide
+            <systemitem class="service">nova-novncproxy</systemitem> uses noVNC to provide
           VNC support through a web browser.</para>
       </listitem>
       <listitem>
         <para><emphasis role="bold">Q: I want VNC support in the
             Dashboard. What services do I need? </emphasis></para>
-        <para>A: You need <literal>nova-novncproxy</literal>,
+        <para>A: You need <systemitem class="service">nova-novncproxy</systemitem>,
             <literal>nova-consoleauth</literal>, and correctly
           configured compute hosts.</para>
       </listitem>
@@ -209,7 +209,7 @@
             Dashboard, it hangs. Why? </emphasis></para>
         <para>A: Make sure you are running
             <literal>nova-consoleauth</literal> (in addition to
-            <literal>nova-novncproxy</literal>). The proxies rely on
+            <systemitem class="service">nova-novncproxy</systemitem>). The proxies rely on
             <literal>nova-consoleauth</literal> to validate tokens,
           and waits for a reply from them until a timeout is reached.
         </para>
