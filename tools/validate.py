@@ -22,6 +22,7 @@ from lxml import etree
 
 import argparse
 import os
+import re
 import subprocess
 import sys
 import urllib2
@@ -59,7 +60,44 @@ def verify_section_tags_have_xmid(doc):
     for node in doc.xpath('//docbook:section', namespaces=ns):
         if "{http://www.w3.org/XML/1998/namespace}id" not in node.attrib:
             raise ValueError("section missing xml:id attribute, line %d" %
-                             node.sourceline)
+                            node.sourceline)
+
+
+def verify_nice_usage_of_whitespaces(docfile):
+    """Check that no unnecessary whitespaces are used"""
+    checks = [
+        re.compile(".*\s+\n$"),
+    ]
+
+    elements = [
+        'listitem',
+        'para',
+        'td',
+        'th',
+        'command',
+        'literal',
+        'title',
+        'caption',
+        'filename',
+        'userinput',
+        'programlisting'
+    ]
+
+    for element in elements:
+        checks.append(re.compile(".*<%s>\s+[\w\-().:!?{}\[\]]+.*\n" % element)),
+        checks.append(re.compile(".*[\w\-().:!?{}\[\]]+\s+<\/%s>.*\n" % element))
+
+    lc = 0
+    affected_lines = []
+    for line in open(docfile, 'r'):
+        lc = lc + 1
+        for check in checks:
+            if check.match(line) and lc not in affected_lines:
+                affected_lines.append(str(lc))
+
+    if len(affected_lines) > 0:
+        raise ValueError("trailing or unnecessary whitespaces "
+            "in following lines: %s" % ", ".join(affected_lines))
 
 
 def error_message(error_log):
@@ -98,6 +136,7 @@ def validate_individual_files(rootdir, exceptions):
                         any_failures = True
                         print error_message(schema.error_log)
                     verify_section_tags_have_xmid(doc)
+                    verify_nice_usage_of_whitespaces(os.path.join(root, f))
                 except etree.XMLSyntaxError as e:
                     any_failures = True
                     print "%s: %s" % (path, e)

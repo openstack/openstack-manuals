@@ -6,7 +6,7 @@
     xml:id="ap_installinggrizzlyubuntuprecise"
     os="ubuntu">
     <title>OpenStack Grizzly deployment guide for Ubuntu Precise,
-        Single node installation. </title>
+        Single node installation.</title>
     <para>ASSUMPTION: Currently guide uses Nova-Network will be
         updated for Neutron soon, although we have created database
         and endpoint for the Neutron service.</para>
@@ -52,18 +52,18 @@ iface eth1 inet static
             (as root):</para>
         <screen>
     <prompt>#</prompt> <userinput>echo deb http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/grizzly main >> /etc/apt/sources.list.d/grizzly.list</userinput>
-    <prompt>#</prompt> <userinput>apt-get install ubuntu-cloud-keyring </userinput>
+    <prompt>#</prompt> <userinput>apt-get install ubuntu-cloud-keyring</userinput>
     <prompt>#</prompt> <userinput>apt-get update</userinput>
     <prompt>#</prompt> <userinput>apt-get upgrade</userinput>
         </screen>
 
         <para>Install the required packages.</para>
         <screen>
-    <prompt>$</prompt> <userinput> sudo apt-get install vlan bridge-utils ntp mysql-server python-mysqldb</userinput>
+    <prompt>$</prompt> <userinput>sudo apt-get install vlan bridge-utils ntp mysql-server python-mysqldb</userinput>
         </screen>
         <para>Enable the ip_forwarding.</para>
         <screen>
-     <prompt>$</prompt> <userinput> sudo vim /etc/sysctl.conf</userinput>
+     <prompt>$</prompt> <userinput>sudo vim /etc/sysctl.conf</userinput>
 
 # Uncomment the next line to enable packet forwarding for IPv4
 net.ipv4.ip_forward=1
@@ -297,7 +297,7 @@ export SERVICE_ENDPOINT=http://10.211.55.20:35357/v2.0/</programlisting>Source
         <programlisting> # User cinder &lt;> role admin &lt;> tenant service</programlisting>
         <screen><prompt>$</prompt> <userinput>keystone user-role-add --user_id af4a1747e71d48c7834c408678f27316 --role_id e45af7cf33be4dac8070aa8310144ce3 --tenant_id 2a76a11b872e4ca18adb3162924735af
 </userinput></screen>
-        <programlisting># User neutron &lt;> role admin &lt;> tenant service </programlisting>
+        <programlisting># User neutron &lt;> role admin &lt;> tenant service</programlisting>
         <screen><prompt>$</prompt> <userinput>keystone user-role-add --user_id 223c1711de5446f9b99c71803fc488db --role_id e45af7cf33be4dac8070aa8310144ce3 --tenant_id 2a76a11b872e4ca18adb3162924735af
 </userinput></screen>
         <programlisting> # User swift &lt;> role Member &lt;> tenant service</programlisting>
@@ -354,7 +354,7 @@ flavor = keystone</programlisting></para>
         <title>Installing and configuring Compute</title>
 
         <para>Install the
-            packages.<screen><prompt>$</prompt> <userinput>sudo apt-get install nova-api nova-cert nova-compute nova-compute-qemu nova-doc nova-network nova-objectstore nova-scheduler nova-volume rabbitmq-server novnc nova-consoleauth  </userinput></screen>Update
+            packages.<screen><prompt>$</prompt> <userinput>sudo apt-get install nova-api nova-cert nova-compute nova-compute-qemu nova-doc nova-network nova-objectstore nova-scheduler nova-volume rabbitmq-server novnc nova-consoleauth</userinput></screen>Update
             /etc/nova/nova.conf.<programlisting>[DEFAULT]
 logdir=/var/log/nova
 state_path=/var/lib/nova
@@ -425,11 +425,11 @@ signing_dirname = /tmp/keystone-signing-nova</programlisting>Populate
             the private
             network.<screen><prompt>$</prompt> <userinput>nova network-create private --fixed-range-v4=192.168.4.32/27 --bridge=br100 --bridge-interface=eth1</userinput></screen>
             Restart everything.</para>
-        <screen><prompt>$</prompt> <userinput>cd /etc/init.d/; for i in $( ls nova-* ); do sudo service $i restart; done </userinput>
+        <screen><prompt>$</prompt> <userinput>cd /etc/init.d/; for i in $( ls nova-* ); do sudo service $i restart; done</userinput>
 <prompt>$</prompt> <userinput>service open-iscsi restart</userinput>
 <prompt>$</prompt> <userinput>service nova-novncproxy restart</userinput></screen>
         <para>Check the smiling
-            services.<screen><prompt>$</prompt> <userinput> sudo nova-manage service list</userinput></screen></para>
+            services.<screen><prompt>$</prompt> <userinput>sudo nova-manage service list</userinput></screen></para>
         <programlisting>Binary           Host                Zone             Status    State  Updated_At
 nova-consoleauth ubuntu-precise      nova             enabled   :-)    2012-09-10 15:46:31
 nova-scheduler   ubuntu-precise      nova             enabled   :-)    2012-09-10 15:46:31

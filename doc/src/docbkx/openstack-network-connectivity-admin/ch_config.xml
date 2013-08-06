@@ -4,7 +4,7 @@
     <title>Required Configuration for OpenStack Identity &amp; Compute</title>
 
     <para>To work with OpenStack Networking, you must configure and set up the OpenStack Identity
-    Service and the OpenStack Compute Service. </para>
+    Service and the OpenStack Compute Service.</para>
     <section xml:id="keystone">
         <title>OpenStack Identity</title>
         <procedure>
@@ -47,7 +47,7 @@ echo `"$@" | awk '/ id / { print $4 }'`
                 <itemizedlist>
                   <listitem><para>If you are using the <emphasis>SQL driver</emphasis>, run the following using these
                 parameters: given region ($REGION), IP address of the OpenStack Networking server
-                ($IP), and service ID ($NEUTRON_SERVICE_ID, obtained in the above step). </para>
+                ($IP), and service ID ($NEUTRON_SERVICE_ID, obtained in the above step).</para>
                   <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region $REGION --service-id $NEUTRON_SERVICE_ID --publicurl 'http://$IP:9696/' --adminurl 'http://$IP:9696/' --internalurl 'http://$IP:9696/'</userinput></screen>
                   <para>For example:</para>
                   <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service-id $NEUTRON_SERVICE_ID \
@@ -62,7 +62,7 @@ echo `"$@" | awk '/ id / { print $4 }'`
                   <programlisting>catalog.$REGION.network.publicURL = http://$IP:9696
 catalog.$REGION.network.adminURL = http://$IP:9696
 catalog.$REGION.network.internalURL = http://$IP:9696
-catalog.$REGION.network.name = Network Service </programlisting>
+catalog.$REGION.network.name = Network Service</programlisting>
                   <para>For example:</para>
                   <programlisting>catalog.$Region.network.publicURL = http://10.211.55.17:9696
 catalog.$Region.network.adminURL = http://10.211.55.17:9696
@@ -106,7 +106,7 @@ catalog.$Region.network.internalURL = http://10.211.55.17:9696
                 </substeps>
               </step>
             </procedure>
-          <para> See the OpenStack Installation Guides for more details
+          <para>See the OpenStack Installation Guides for more details
             about creating service entries and service users.
           </para>
     </section>
@@ -147,7 +147,7 @@ catalog.$Region.network.internalURL = http://10.211.55.17:9696
               <systemitem class="service">nova-network</systemitem>
               process while using OpenStack Networking
               can cause problems, as can stale iptables rules pushed
-              down by previously running 
+              down by previously running
               <systemitem class="service">nova-network</systemitem>.
             </para>
         </note>
@@ -258,7 +258,7 @@ catalog.$Region.network.internalURL = http://10.211.55.17:9696
               <entry><para><literal>firewall_driver</literal></para></entry>
               <entry><para>Update to <literal>nova.virt.firewall.NoopFirewallDriver</literal>, so
                   that <systemitem class="service">nova-compute</systemitem> does not perform
-                  iptables-based filtering itself. </para></entry>
+                  iptables-based filtering itself.</para></entry>
             </row>
               <row>
                 <entry><para><literal>security_group_api</literal></para></entry>
@@ -319,16 +319,16 @@ catalog.$Region.network.internalURL = http://10.211.55.17:9696
               </tbody>
               </tgroup>
             </table>
-            <note><para>As a precaution, even when using 
+            <note><para>As a precaution, even when using
               <literal>neutron_metadata_proxy_shared_secret</literal>, it is
               recommended that you do not expose metadata using the same
               <systemitem class="service">nova-api</systemitem> instances that
               are used for tenants. Instead, you should run a dedicated set of
               <systemitem class="service">nova-api</systemitem> instances for
               metadata that are available only on your management network.
-              Whether a given 
+              Whether a given
               <systemitem class="service">nova-api</systemitem> instance exposes
-              metadata APIs is determined by the value of <literal>enabled_apis</literal> 
+              metadata APIs is determined by the value of <literal>enabled_apis</literal>
               in its <filename>nova.conf</filename>.
             </para></note>
         </section>

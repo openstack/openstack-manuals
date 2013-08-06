@@ -33,19 +33,19 @@
       hosts is set to UTC. Memcached uses the host's system time in
       determining whether a key has expired, whereas Keystone sets key
       expiry in UTC. The timezone used by Keystone and memcached must
-      match if key expiry is to behave as expected. </para>
+      match if key expiry is to behave as expected.</para>
   </section>
   <xi:include href="../common/section_keystone-ssl-config.xml"/>
   <section xml:id="user-crud">
     <title>User CRUD</title>
-    <para> Keystone provides a user CRUD filter that can be added to
+    <para>Keystone provides a user CRUD filter that can be added to
       the public_api pipeline. This user crud filter allows users to
       use a HTTP PATCH to change their own password. To enable this
       extension you should define a
         <literal>user_crud_extension</literal> filter, insert it after
       the <literal>*_body</literal> middleware and before the
         <literal>public_service</literal> app in the public_api WSGI
-      pipeline in <filename>keystone-paste.ini</filename> e.g.: </para>
+      pipeline in <filename>keystone-paste.ini</filename> e.g.:</para>
     <screen><computeroutput>[filter:user_crud_extension]
 paste.filter_factory = keystone.contrib.user_crud:CrudExtension.factory
 
@@ -56,26 +56,26 @@ pipeline = stats_monitoring url_normalize token_auth admin_token_auth xml_body j
     <screen><prompt>$</prompt> <userinput>&gt; curl -X PATCH http://localhost:5000/v2.0/OS-KSCRUD/users/&lt;userid&gt; -H &quot;Content-type: application/json&quot;  \
       -H &quot;X_Auth_Token: &lt;authtokenid&gt;&quot; -d '{&quot;user&quot;: {&quot;password&quot;: &quot;ABCD&quot;, &quot;original_password&quot;: &quot;DCBA&quot;}}'</userinput></screen>
     <para>If the backend is kvs or sql, all users' passwords are
-      changed and their tokens are deleted. </para>
+      changed and their tokens are deleted.</para>
   </section>
   <xi:include href="../common/section_identity-configure.xml"/>
   <section xml:id="keystone-logging">
     <title>Logging</title>
     <para>You must configure logging outside of your Identity Service
-      configuration. </para>
+      configuration.</para>
     <para>Configure logging in the <literal>[DEFAULT]</literal>
       section of the <filename>keystone.conf</filename> file under
-        <literal>log_config</literal>. </para>
+        <literal>log_config</literal>.</para>
     <para>To route all logging through syslog, set the
         <literal>use_syslog=true</literal> option in the
-        <literal>[DEFAULT]</literal> section. </para>
+        <literal>[DEFAULT]</literal> section.</para>
     <para>A sample logging file is available with the project in the
       directory <filename>etc/logging.conf.sample</filename>. Like
       other OpenStack projects, Identity uses the `python logging
       module, which includes extensive configuration options for
-      choosing the output levels and formats. </para>
+      choosing the output levels and formats.</para>
     <para>See the <filename>etc/keystone.conf</filename> sample
-      configuration files, which are distributed with keystone. </para>
+      configuration files, which are distributed with keystone.</para>
     <para>For services that have a separate <filename>paste-deploy
         ini</filename> file, you can alternatively configure
       auth_token middleware in the
@@ -86,7 +86,7 @@ pipeline = stats_monitoring url_normalize token_auth admin_token_auth xml_body j
     <screen><computeroutput>[filter:authtoken]
 paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory</computeroutput></screen>
     <para>Set values in the <filename>nova.conf</filename> file, as
-      follows: </para>
+      follows:</para>
     <screen><computeroutput>[DEFAULT]
       ...
       auth_strategy=keystone
@@ -110,11 +110,11 @@ paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory</comp
   <section xml:id="monitoring">
     <title>Monitoring</title>
     <para>Keystone provides some basic request/response monitoring
-      statistics. </para>
+      statistics.</para>
     <para>To enable data collection, define a
         <literal>stats_monitoring</literal> filter and include it at
       the beginning of any desired WSGI pipelines in
-        <filename>keystone-paste.ini</filename>, as follows: </para>
+        <filename>keystone-paste.ini</filename>, as follows:</para>
     <screen><computeroutput>[filter:stats_monitoring]
 paste.filter_factory = keystone.contrib.stats:StatsMiddleware.factory
 
@@ -124,13 +124,13 @@ pipeline = stats_monitoring [...] public_service</computeroutput></screen>
         <literal>stats_reporting</literal> filter and include it near
       the end of your <literal>admin_api</literal> WSGI pipeline after
         <literal>*_body</literal> middleware and before
-        <literal>*_extension</literal> filters, as follows: </para>
+        <literal>*_extension</literal> filters, as follows:</para>
     <screen><computeroutput>[filter:stats_reporting]
 paste.filter_factory = keystone.contrib.stats:StatsExtension.factory
 
 [pipeline:admin_api]
 pipeline = [...] json_body stats_reporting ec2_extension [...] admin_service</computeroutput></screen>
-    <para>Query the admin API for statistics, as follows: </para>
+    <para>Query the admin API for statistics, as follows:</para>
     <screen><prompt>$</prompt> <userinput>curl -H 'X-Auth-Token: ADMIN' http://localhost:35357/v2.0/OS-STATS/stats</userinput></screen>
     <para>Reset collected data, as follows:</para>
     <screen><prompt>$</prompt> <userinput>curl -H 'X-Auth-Token: ADMIN' -X DELETE http://localhost:35357/v2.0/OS-STATS/stats</userinput></screen>
@@ -139,7 +139,7 @@ pipeline = [...] json_body stats_reporting ec2_extension [...] admin_service</co
   <xi:include href="../common/section_keystone-sample-conf-files.xml"/>
   <section xml:id="running-keystone">
     <title>Running the Identity Service</title>
-    <para> To start Identity Service, run the following command: </para>
+    <para>To start Identity Service, run the following command:</para>
     <screen><prompt>$</prompt> <userinput>keystone-all</userinput></screen>
     <para>This command starts two wsgi.Server instances, configured by
       the <filename>keystone.conf</filename> and
@@ -147,30 +147,30 @@ pipeline = [...] json_body stats_reporting ec2_extension [...] admin_service</co
       One of these wsgi 'servers' is <literal>admin</literal> (the
       administration API) and the other is <literal>main</literal>
       (the primary/public API interface). Both of these run in a
-      single process. </para>
+      single process.</para>
   </section>
   <section xml:id="initializing-keystone">
     <title>Initializing the Identity Service</title>
     <para>
       <command>keystone-manage</command> is designed to execute
       commands that cannot be administered through the normal REST
-      api. At the moment, the following calls are supported: </para>
+      api. At the moment, the following calls are supported:</para>
     <itemizedlist>
       <listitem>
         <para>
-          <literal>db_sync</literal>: Sync the database. </para>
+          <literal>db_sync</literal>: Sync the database.</para>
       </listitem>
       <listitem>
         <para>
           <literal>import_nova_auth</literal>: Load auth data from a
-          dump created with keystone-manage. </para>
+          dump created with keystone-manage.</para>
       </listitem>
     </itemizedlist>
-    <para> Generally, the following is the first step after a source
-      installation: </para>
+    <para>Generally, the following is the first step after a source
+      installation:</para>
     <screen><prompt>$</prompt> <userinput>keystone-manage db_sync</userinput></screen>
-    <para> Invoking keystone-manage by itself will give you additional
-      usage information. </para>
+    <para>Invoking keystone-manage by itself will give you additional
+      usage information.</para>
   </section>
   <section
     xml:id="adding-users-tenants-and-roles-with-python-keystoneclient">
@@ -192,7 +192,7 @@ pipeline = [...] json_body stats_reporting ec2_extension [...] admin_service</co
             keystone endpoint to communicate with. The default
             endpoint is <link
               xlink:href="http://localhost:35357/v2.0'"
-              >http://localhost:35357/v2.0'</link>. </para>
+              >http://localhost:35357/v2.0'</link>.</para>
         </listitem>
         <listitem>
           <para>
@@ -224,14 +224,14 @@ pipeline = [...] json_body stats_reporting ec2_extension [...] admin_service</co
             <literal>--auth_url OS_AUTH_URL</literal>. The URL of the
             keystone auth server, for example <link
               xlink:href="http://localhost:5000/v2.0'"
-              >http://localhost:5000/v2.0'</link>. </para>
+              >http://localhost:5000/v2.0'</link>.</para>
         </listitem>
       </itemizedlist>
     </section>
     <section xml:id="use-v3-instead-of-default-v2">
       <title>Using API v3 instead of API v2.0</title>
       <para>Use the following keystone parameters, in combination, to
-        specify the version of the API to use: </para>
+        specify the version of the API to use:</para>
       <itemizedlist>
         <listitem>
           <para><parameter>--os-endpoint</parameter>. The
@@ -262,7 +262,7 @@ pipeline = [...] json_body stats_reporting ec2_extension [...] admin_service</co
         <literal>argument</literal>, followed by flag-like keyword
         arguments to provide additional (often optional) information.
         For example, the command <literal>user-list</literal> and
-          <literal>tenant-create</literal> can be invoked as follows: </para>
+          <literal>tenant-create</literal> can be invoked as follows:</para>
       <screen># Using token auth env variables
 export SERVICE_ENDPOINT=http://127.0.0.1:5000/v2.0/
 export SERVICE_TOKEN=secrete_token
@@ -322,7 +322,7 @@ keystone --username=admin --password=secrete --tenant_name=admin tenant-create -
       </section>
       <section xml:id="tenant-get">
         <title><literal>tenant-get</literal></title>
-        <para>arguments </para>
+        <para>arguments</para>
         <itemizedlist>
           <listitem>
             <para>tenant_id</para>
@@ -339,10 +339,10 @@ keystone --username=admin --password=secrete --tenant_name=admin tenant-create -
       </section>
       <section xml:id="tenant-update">
         <title><literal>tenant-update</literal></title>
-        <para>arguments </para>
+        <para>arguments</para>
         <itemizedlist>
           <listitem>
-            <para>name </para>
+            <para>name</para>
           </listitem>
           <listitem>
             <para>description</para>
@@ -372,14 +372,14 @@ keystone --username=admin --password=secrete --tenant_name=admin tenant-create -
             <para>email</para>
           </listitem>
           <listitem>
-            <para>tenant-id </para>
+            <para>tenant-id</para>
           </listitem>
           <listitem>
             <para>enabled (optional, defaults to True)</para>
           </listitem>
         </itemizedlist>
-        <para>Here is an example: </para>
-        <screen><prompt>$</prompt><userinput> keystone user-create --tenant-id=f2b7b39c860840dfa47d9ee4adffa0b3 \
+        <para>Here is an example:</para>
+        <screen><prompt>$</prompt><userinput>keystone user-create --tenant-id=f2b7b39c860840dfa47d9ee4adffa0b3 \
 --name=admin --pass=secrete --email=admin@example.com</userinput></screen>
       </section>
       <section xml:id="user-delete">
@@ -390,26 +390,26 @@ keystone --username=admin --password=secrete --tenant_name=admin tenant-create -
             <para>user</para>
           </listitem>
         </itemizedlist>
-        <para>Here is an example: </para>
-        <screen><prompt>$</prompt><userinput> keystone user-delete 354b53eeb10b445584ac5bf39a768740</userinput></screen>
+        <para>Here is an example:</para>
+        <screen><prompt>$</prompt><userinput>keystone user-delete 354b53eeb10b445584ac5bf39a768740</userinput></screen>
       </section>
       <section xml:id="user-list">
         <title><literal>user-list</literal></title>
         <para>list users in the system, optionally by a specific
-          tenant (identified by tenant_id) </para>
-        <para>arguments </para>
+          tenant (identified by tenant_id)</para>
+        <para>arguments</para>
         <itemizedlist>
           <listitem>
             <para>tenant_id (optional, lists all users if not
-              specified) </para>
+              specified)</para>
           </listitem>
         </itemizedlist>
-        <para>example: </para>
+        <para>example:</para>
         <screen><prompt>$</prompt> <userinput>keystone user-list</userinput></screen>
       </section>
       <section xml:id="user-update">
         <title><literal>user-update</literal></title>
-        <para>arguments </para>
+        <para>arguments</para>
         <itemizedlist>
           <listitem>
             <para>name</para>
@@ -418,7 +418,7 @@ keystone --username=admin --password=secrete --tenant_name=admin tenant-create -
             <para>email</para>
           </listitem>
           <listitem>
-            <para>enable </para>
+            <para>enable</para>
           </listitem>
         </itemizedlist>
         <para>The following command upateds the user with new
@@ -427,24 +427,24 @@ keystone --username=admin --password=secrete --tenant_name=admin tenant-create -
       </section>
       <section xml:id="user-get">
         <title><literal>user-get</literal></title>
-        <para>arguments </para>
+        <para>arguments</para>
         <itemizedlist>
           <listitem>
             <para>user_id</para>
           </listitem>
         </itemizedlist>
-        <para>example: </para>
+        <para>example:</para>
         <screen><prompt>$</prompt> <userinput>keystone user-get 354b53eeb10b445584ac5bf39a768740</userinput></screen>
       </section>
       <section xml:id="user-password-update">
         <title><literal>user-password-update</literal></title>
-        <para>arguments </para>
+        <para>arguments</para>
         <itemizedlist>
           <listitem>
-            <para>pass </para>
+            <para>pass</para>
           </listitem>
         </itemizedlist>
-        <para>example: </para>
+        <para>example:</para>
         <screen><prompt>$</prompt> <userinput>keystone user-password-update --pass  foo  03c84b51574841ba9a0d8db7882ac645</userinput></screen>
       </section>
     </section>
@@ -471,12 +471,12 @@ keystone role-create --name=demo
             <para>role_id</para>
           </listitem>
         </itemizedlist>
-        <para>example: </para>
-        <screen><prompt>$</prompt> <userinput> keystone role-delete 19d1d3344873464d819c45f521ff9890</userinput></screen>
+        <para>example:</para>
+        <screen><prompt>$</prompt> <userinput>keystone role-delete 19d1d3344873464d819c45f521ff9890</userinput></screen>
       </section>
       <section xml:id="role-list">
         <title><literal>role-list</literal></title>
-        <para>example: </para>
+        <para>example:</para>
         <screen><prompt>$</prompt> <userinput>keystone role-list</userinput></screen>
       </section>
       <section xml:id="role-get">
@@ -487,57 +487,57 @@ keystone role-create --name=demo
             <para>role_id</para>
           </listitem>
         </itemizedlist>
-        <para>example: </para>
+        <para>example:</para>
         <screen><prompt>$</prompt> <userinput>keystone role-get 19d1d3344873464d819c45f521ff9890</userinput></screen>
       </section>
       <section xml:id="user-role-add">
         <title><literal>user-role-add</literal></title>
-        <para>arguments </para>
+        <para>arguments</para>
         <itemizedlist>
           <listitem>
-            <para>role or role_id </para>
+            <para>role or role_id</para>
           </listitem>
           <listitem>
-            <para>user or user_id </para>
+            <para>user or user_id</para>
           </listitem>
           <listitem>
-            <para>tenant or tenant_id </para>
+            <para>tenant or tenant_id</para>
           </listitem>
         </itemizedlist>
-        <para>example: </para>
+        <para>example:</para>
         <screen><prompt>$</prompt> <userinput>keystone user-role-add --user 3a751f78ef4c412b827540b829e2d7dd \
 --role 03c84b51574841ba9a0d8db7882ac645 --tenant 20601a7f1d94447daa4dff438cb1c209</userinput></screen>
       </section>
       <section xml:id="user-role-remove">
         <title><literal>user-role-remove</literal></title>
-        <para>arguments </para>
+        <para>arguments</para>
         <itemizedlist>
           <listitem>
-            <para>role or role_id </para>
+            <para>role or role_id</para>
           </listitem>
           <listitem>
-            <para>user or user_id </para>
+            <para>user or user_id</para>
           </listitem>
           <listitem>
-            <para>tenant or tenant_id </para>
+            <para>tenant or tenant_id</para>
           </listitem>
         </itemizedlist>
-        <para>example: </para>
+        <para>example:</para>
         <screen><prompt>$</prompt> <userinput>keystone user-role-remove --user 3a751f78ef4c412b827540b829e2d7dd \
 --role 03c84b51574841ba9a0d8db7882ac645 --tenant 20601a7f1d94447daa4dff438cb1c209</userinput></screen>
       </section>
       <section xml:id="user-role-list">
         <title><literal>user-role-list</literal></title>
-        <para>arguments </para>
+        <para>arguments</para>
         <itemizedlist>
           <listitem>
             <para>user_id or user</para>
           </listitem>
           <listitem>
-            <para>tenant or tenant_id </para>
+            <para>tenant or tenant_id</para>
           </listitem>
         </itemizedlist>
-        <para>example: </para>
+        <para>example:</para>
         <screen><prompt>$</prompt> <userinput>keystone user-role-list --user 3a751f78ef4c412b827540b829e2d7dd</userinput></screen>
       </section>
     </section>
@@ -557,7 +557,7 @@ keystone role-create --name=demo
             <para>description</para>
           </listitem>
         </itemizedlist>
-        <para>example: </para>
+        <para>example:</para>
         <screen><prompt>$</prompt> <userinput>keystone service create \
 --name=nova \
 --type=compute \
@@ -571,7 +571,7 @@ keystone role-create --name=demo
             <para>service_id</para>
           </listitem>
         </itemizedlist>
-        <para>example: </para>
+        <para>example:</para>
         <screen><prompt>$</prompt> <userinput>keystone service-list</userinput></screen>
       </section>
       <section xml:id="service-get">
@@ -582,7 +582,7 @@ keystone role-create --name=demo
             <para>service_id</para>
           </listitem>
         </itemizedlist>
-        <para>example: </para>
+        <para>example:</para>
         <screen><prompt>$</prompt> <userinput>keystone service-get 08741d8ed88242ca88d1f61484a0fe3b</userinput></screen>
       </section>
       <section xml:id="service-delete">
@@ -593,35 +593,35 @@ keystone role-create --name=demo
             <para>service_id</para>
           </listitem>
         </itemizedlist>
-        <para>example: </para>
+        <para>example:</para>
         <screen><prompt>$</prompt> <userinput>keystone service-delete 08741d8ed88242ca88d1f61484a0fe3b</userinput></screen>
       </section>
     </section>
   </section>
   <section xml:id="configuring-services-to-work-with-keystone">
     <title>Configuring Services to work with Keystone</title>
-    <para> Once Keystone is installed and running, services need to be
+    <para>Once Keystone is installed and running, services need to be
       configured to work with it. To do this, we primarily install and
       configure middleware for the OpenStack service to handle
-      authentication tasks or otherwise interact with Keystone. </para>
-    <para> In general: </para>
+      authentication tasks or otherwise interact with Keystone.</para>
+    <para>In general:</para>
     <itemizedlist>
       <listitem>
-        <para> Clients making calls to the service will pass in an
-          authentication token. </para>
+        <para>Clients making calls to the service will pass in an
+          authentication token.</para>
       </listitem>
       <listitem>
-        <para> The Keystone middleware will look for and validate that
-          token, taking the appropriate action. </para>
+        <para>The Keystone middleware will look for and validate that
+          token, taking the appropriate action.</para>
       </listitem>
       <listitem>
-        <para> It will also retrieve additional information from the
+        <para>It will also retrieve additional information from the
           token such as user name, id, tenant name, id, roles, etc...
         </para>
       </listitem>
     </itemizedlist>
-    <para> The middleware will pass those data down to the service as
-      headers. </para>
+    <para>The middleware will pass those data down to the service as
+      headers.</para>
     <section xml:id="setting-up-credentials">
       <?dbhtml stop-chunking?>
       <title>Setting up credentials</title>
@@ -639,7 +639,7 @@ keystone role-create --name=demo
         <para>In the sample file provided with the keystone project,
           the line defining this token is:</para>
         <blockquote>
-          <para> [DEFAULT] admin_token = ADMIN </para>
+          <para>[DEFAULT] admin_token = ADMIN</para>
         </blockquote>
         <para>This configured token is a &quot;shared secret&quot;
           between keystone and other OpenStack services, and is used
@@ -651,17 +651,17 @@ keystone role-create --name=demo
         <para>You must minimally define a tenant, user, and role to
           link the tenant and user as the most basic set of details to
           get other services authenticating and authorizing with
-          keystone. </para>
-        <para> You will also want to create service users for Compute
+          keystone.</para>
+        <para>You will also want to create service users for Compute
           (nova), Image (glance), Object Storage (swift), etc. to be
           able to use to authenticate users against the Identity
           service (keystone). The <literal>auth_token</literal>
           middleware supports using either the shared secret described
-          above as `admin_token` or users for each service. </para>
-        <para> See the <link
+          above as `admin_token` or users for each service.</para>
+        <para>See the <link
             linkend="adding-users-tenants-and-roles-with-python-keystoneclient"
             >configuration section</link> for a walk through on how to
-          create tenants, users, and roles. </para>
+          create tenants, users, and roles.</para>
       </section>
     </section>
     <section xml:id="setting-up-services">
@@ -675,43 +675,43 @@ keystone role-create --name=demo
           for each of the services. We then assign those service users
           an Admin role on the service tenant. This allows them to
           validate tokens - and authenticate and authorize other user
-          requests. </para>
-        <para> Create a tenant for the services, typically named
-          'service' (however, the name can be whatever you choose): </para>
+          requests.</para>
+        <para>Create a tenant for the services, typically named
+          'service' (however, the name can be whatever you choose):</para>
         <screen><prompt>$</prompt> <userinput>keystone tenant-create --name=service</userinput></screen>
-        <para> This returns a UUID of the tenant - keep that, you'll
-          need it when creating the users and specifying the roles. </para>
-        <para> Create service users for nova, glance, swift, and
-          neutron (or whatever subset is relevant to your deployment): </para>
+        <para>This returns a UUID of the tenant - keep that, you'll
+          need it when creating the users and specifying the roles.</para>
+        <para>Create service users for nova, glance, swift, and
+          neutron (or whatever subset is relevant to your deployment):</para>
         <screen><prompt>$</prompt> <userinput>keystone user-create --name=nova \
                      --pass=Sekr3tPass \
                      --tenant_id=[the uuid of the tenant] \
                      --email=nova@nothing.com</userinput></screen>
-        <para> Repeat this for each service you want to enable. Email
+        <para>Repeat this for each service you want to enable. Email
           is a required field in keystone right now, but not used in
           relation to the service accounts. Each of these commands
           will also return a UUID of the user. Keep those to assign
-          the Admin role. </para>
+          the Admin role.</para>
         <para>For adding the Admin role to the service accounts, you
           need the UUID of the role you want to add. If you don't have
-          them handy, you can look it up quickly with: </para>
+          them handy, you can look it up quickly with:</para>
         <screen><prompt>$</prompt> <userinput>keystone role-list</userinput></screen>
-        <para> Once you have it, assign the service users to the Admin
+        <para>Once you have it, assign the service users to the Admin
           role. This is all assuming that you've already created the
           basic roles and settings as described in the configuration
-          section: </para>
+          section:</para>
         <screen><prompt>$</prompt> <userinput>keystone user-role-add --tenant_id=[uuid of the service tenant] \
                        --user=[uuid of the service account] \
                        --role=[uuid of the Admin role]</userinput></screen>
       </section>
       <section xml:id="defining-services">
         <title>Defining Services</title>
-        <para> Keystone also acts as a service catalog to let other
+        <para>Keystone also acts as a service catalog to let other
           OpenStack systems know where relevant API endpoints exist
           for OpenStack Services. The OpenStack Dashboard, in
           particular, uses this heavily - and this <emphasis
             role="strong">must</emphasis> be configured for the
-          OpenStack Dashboard to properly function. </para>
+          OpenStack Dashboard to properly function.</para>
         <para>The endpoints for these services are defined in a
           template, an example of which is in the project as the file
             <literal>etc/default_catalog.templates</literal>. When
@@ -719,12 +719,12 @@ keystone role-create --name=demo
           the endpoints are kept in memory and don't persist if you
           restart the service or reboot the machine. Use the SQL
           backend when deploying a system for production.</para>
-        <para> Keystone supports two means of defining the services,
+        <para>Keystone supports two means of defining the services,
           one is the catalog template, as described above - in which
-          case everything is detailed in that template. </para>
+          case everything is detailed in that template.</para>
         <para>The other is a SQL backend for the catalog service, in
           which case after keystone is online, you must add the
-          services to the catalog: </para>
+          services to the catalog:</para>
         <screen><prompt>$</prompt> <userinput>keystone service-create --name=nova \
                                --type=compute \
                                --description=&quot;Nova Compute Service&quot;
@@ -746,9 +746,9 @@ keystone service-create --name=swift \
       <title>Setting Up Middleware</title>
       <section xml:id="keystone-auth-token-middleware">
         <title>Keystone Auth-Token Middleware</title>
-        <para> The Keystone auth_token middleware is a WSGI component
+        <para>The Keystone auth_token middleware is a WSGI component
           that can be inserted in the WSGI pipeline to handle
-          authenticating tokens with Keystone. </para>
+          authenticating tokens with Keystone.</para>
       </section>
       <section xml:id="configuring-nova-to-use-keystone">
         <title>Configuring Nova to use Keystone</title>
@@ -758,23 +758,23 @@ keystone service-create --name=swift \
       </section>
       <section xml:id="configuring-swift-to-use-keystone">
         <title>Configuring Swift to use Keystone</title>
-        <para> Similar to Nova, swift can be configured to use
+        <para>Similar to Nova, swift can be configured to use
           Keystone for authentication rather than its built in
-          'tempauth'. </para>
+          'tempauth'.</para>
         <orderedlist numeration="arabic">
           <listitem>
-            <para> Add a service endpoint for Swift to Keystone
+            <para>Add a service endpoint for Swift to Keystone
             </para>
           </listitem>
           <listitem>
-            <para> Configure the paste file for swift-proxy,
+            <para>Configure the paste file for swift-proxy,
                 <filename>/etc/swift/proxy-server.conf</filename>.
             </para>
           </listitem>
           <listitem>
-            <para> Reconfigure Swift's proxy server to use Keystone
+            <para>Reconfigure Swift's proxy server to use Keystone
               instead of TempAuth. Here's an example
-              `/etc/swift/proxy-server.conf`: </para>
+              `/etc/swift/proxy-server.conf`:</para>
             <screen><computeroutput>
 [DEFAULT]
 bind_port = 8888
@@ -816,11 +816,11 @@ use = egg:swift#healthcheck</computeroutput>
 </screen>
           </listitem>
           <listitem>
-            <para> Restart swift services. </para>
+            <para>Restart swift services.</para>
           </listitem>
           <listitem>
-            <para> Verify that the Identity service, Keystone, is
-              providing authentication to Object Storage (Swift). </para>
+            <para>Verify that the Identity service, Keystone, is
+              providing authentication to Object Storage (Swift).</para>
             <screen>
               <prompt>$</prompt> <userinput>swift -V 2 -A http://localhost:5000/v2.0 -U admin:admin -K ADMIN stat</userinput>
             </screen>
@@ -831,17 +831,17 @@ use = egg:swift#healthcheck</computeroutput>
         xml:id="configuring-swift-with-s3-emulation-to-use-keystone">
         <title>Configuring Swift with S3 emulation to use
           Keystone</title>
-        <para> Keystone support validating S3 tokens using the same
+        <para>Keystone support validating S3 tokens using the same
           tokens as the generated EC2 tokens. When you have generated
           a pair of EC2 access token and secret you can access your
-          swift cluster directly with the S3 API. </para>
+          swift cluster directly with the S3 API.</para>
         <orderedlist numeration="arabic">
           <listitem>
-            <para> Configure the paste file for swift-proxy
+            <para>Configure the paste file for swift-proxy
               (`/etc/swift/proxy-server.conf`) to use S3token and
               Swift3 middleware. You must have the s3token middleware
-              in the pipeline when using keystone and swift3. </para>
-            <para> Here's an example: </para>
+              in the pipeline when using keystone and swift3.</para>
+            <para>Here's an example:</para>
             <screen><computeroutput>
 [DEFAULT]
 bind_port = 8080
@@ -888,8 +888,8 @@ admin_token = ADMIN</computeroutput>
 </screen>
           </listitem>
           <listitem>
-            <para> You can then access directly your Swift via the S3
-              API, here's an example with the `boto` library: </para>
+            <para>You can then access directly your Swift via the S3
+              API, here's an example with the `boto` library:</para>
             <screen><computeroutput>
 import boto
 import boto.s3.connection
@@ -907,10 +907,10 @@ connection = boto.connect_s3(
       </section>
       <section xml:id="configuring-keystone-for-ldap-backend">
         <title>Configuring Keystone for an LDAP backend</title>
-        <para> As an alternative to the SQL Database backing store,
+        <para>As an alternative to the SQL Database backing store,
           Keystone can use a directory server to provide the Identity
           service. An example Schema for OpenStack would look like
-          this: </para>
+          this:</para>
         <screen><computeroutput>
 dn: dc=openstack,dc=org
 dc: openstack
@@ -939,8 +939,8 @@ objectClass: organizationalRole
 ou: _member_
 cn: 9fe2ff9ee4384b1894a90878d3e92bab</computeroutput>
 </screen>
-        <para> The corresponding entries in the Keystone configuration
-          file are: </para>
+        <para>The corresponding entries in the Keystone configuration
+          file are:</para>
         <screen><computeroutput>
 [DEFAULT]
 public_endpoint = http://localhost:%(public_port)s/
@@ -967,7 +967,7 @@ tenant_attribute_ignore = enabled
 
 role_tree_dn = ou=Roles,dc=openstack,dc=org</computeroutput>
 </screen>
-        <para> The default object classes and attributes are
+        <para>The default object classes and attributes are
           intentionally simplistic. They reflect the common standard
           objects according to the LDAP RFCs. However, in a live
           deployment, the correct attributes can be overridden to
@@ -979,16 +979,16 @@ role_tree_dn = ou=Roles,dc=openstack,dc=org</computeroutput>
             <emphasis>username</emphasis> field either
             <emphasis>uid</emphasis> or <emphasis>cn</emphasis>. To
           change these two fields, the corresponding entries in the
-          Keystone configuration file are: </para>
+          Keystone configuration file are:</para>
         <screen><computeroutput>
 [ldap]
 user_id_attribute = uidNumber
 user_name_attribute = cn</computeroutput>
 </screen>
-        <para> There is a set of allowed actions per object type that
+        <para>There is a set of allowed actions per object type that
           you can modify depending on your specific deployment. For
           example, the users are managed by another tool and you have
-          only read access, in such case the configuration is: </para>
+          only read access, in such case the configuration is:</para>
         <screen><computeroutput>
 [ldap]
 user_allow_create = False
@@ -1003,34 +1003,34 @@ role_allow_create = True
 role_allow_update = True
 role_allow_delete = True</computeroutput>
 </screen>
-        <para> There are some configuration options for filtering
+        <para>There are some configuration options for filtering
           users, tenants and roles, if the backend is providing too
-          much output, in such case the configuration will look like: </para>
+          much output, in such case the configuration will look like:</para>
         <screen><computeroutput>
 [ldap]
 user_filter = (memberof=CN=openstack-users,OU=workgroups,DC=openstack,DC=com)
 tenant_filter =
 role_filter =</computeroutput>
 </screen>
-        <para> In case that the directory server does not have an
+        <para>In case that the directory server does not have an
           attribute enabled of type boolean for the user, there are
           several configuration parameters that can be used to extract
           the value from an integer attribute like in Active
-          Directory: </para>
+          Directory:</para>
         <screen><computeroutput>
 [ldap]
 user_enabled_attribute = userAccountControl
 user_enabled_mask      = 2
 user_enabled_default   = 512</computeroutput>
 </screen>
-        <para> In this case the attribute is an integer and the
+        <para>In this case the attribute is an integer and the
           enabled attribute is listed in bit 1, so the if the mask
           configured <emphasis>user_enabled_mask</emphasis> is
           different from 0, it gets the value from the field
             <emphasis>user_enabled_attribute</emphasis> and it makes
           an ADD operation with the value indicated on
             <emphasis>user_enabled_mask</emphasis> and if the value
-          matches the mask then the account is disabled. </para>
+          matches the mask then the account is disabled.</para>
         <para>It also saves the value without mask to the user
           identity in the attribute
             <emphasis>enabled_nomask</emphasis>. This is needed in
@@ -1039,10 +1039,10 @@ user_enabled_default   = 512</computeroutput>
           than the status like password expiration. Last setting
             <emphasis>user_enabled_mask</emphasis> is needed in order
           to create a default value on the integer attribute (512 =
-          NORMAL ACCOUNT on AD) </para>
+          NORMAL ACCOUNT on AD)</para>
         <para>In case of Active Directory the classes and attributes
           could not match the specified classes in the LDAP module so
-          you can configure them, as follows: </para>
+          you can configure them, as follows:</para>
         <screen><computeroutput>[ldap]
 user_objectclass         = person
 user_id_attribute        = cn
@@ -1074,14 +1074,14 @@ role_attribute_ignore    =</computeroutput></screen>
         xml:id="auth-token-middleware-with-username-and-password">
         <title>Auth-Token Middleware with Username and
           Password</title>
-        <para> It is also possible to configure Keystone's auth_token
+        <para>It is also possible to configure Keystone's auth_token
           middleware using the 'admin_user' and 'admin_password'
           options. When using the 'admin_user' and 'admin_password'
           options the 'admin_token' parameter is optional. If
           'admin_token' is specified it will by used only if the
-          specified token is still valid. </para>
-        <para> Here is an example paste config filter that makes use
-          of the 'admin_user' and 'admin_password' parameters: </para>
+          specified token is still valid.</para>
+        <para>Here is an example paste config filter that makes use
+          of the 'admin_user' and 'admin_password' parameters:</para>
         <screen><computeroutput>
 [filter:authtoken]
 paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
@@ -1093,7 +1093,7 @@ auth_token = 012345SECRET99TOKEN012345
 admin_user = admin
 admin_password = keystone123</computeroutput>
 </screen>
-        <para> It should be noted that when using this option an admin
+        <para>It should be noted that when using this option an admin
           tenant/role relationship is required. The admin user is
           granted access to the 'Admin' role on the 'admin' tenant.
         </para>
@@ -1132,7 +1132,7 @@ admin_password = keystone123</computeroutput>
       </itemizedlist> Note that you may choose whatever names you want
       for these certificates, or combine the public/private keys in
       the same file if you wish. These certificates are just provided
-      as an example. </para>
+      as an example.</para>
     <para>To enable SSL with client authentication, modify the
         <literal>etc/keystone.conf</literal> file accordingly under
       the <literal>[ssl]</literal> section. SSL configuration example
@@ -1146,12 +1146,12 @@ ca_certs = &lt;path to ca.pem&gt;
 cert_required = True
 </programlisting>
     <para>Example:</para>
-    <programlisting>[ssl]  
+    <programlisting>[ssl]
 enable = True
-certfile = /home/agentl/openstack/tests/certs/signing_cert.pem  
-keyfile = /home/agentl/openstack/tests/certs/private_key.pem  
-ca_certs = /home/agentl/openstack/tests/certs/cacert.pem  
-cert_required = True </programlisting>
+certfile = /home/agentl/openstack/tests/certs/signing_cert.pem
+keyfile = /home/agentl/openstack/tests/certs/private_key.pem
+ca_certs = /home/agentl/openstack/tests/certs/cacert.pem
+cert_required = True</programlisting>
     <para>
       <itemizedlist>
         <listitem>

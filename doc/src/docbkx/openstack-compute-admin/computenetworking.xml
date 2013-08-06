@@ -48,7 +48,7 @@
                 physical nodes. OpenStack will not configure any
                 physical network interfaces. OpenStack will
                 automatically create all network bridges (i.e., br100)
-                and VM virtual interfaces. </para>
+                and VM virtual interfaces.</para>
             <para>All machines must have a <emphasis role="italic"
                     >public</emphasis> and <emphasis role="italic"
                     >internal</emphasis> network interface (controlled
@@ -56,7 +56,7 @@
                 for the public interface, and
                     <literal>flat_interface</literal> and
                     <literal>vlan_interface</literal> for the internal
-                interface with flat / VLAN managers). </para>
+                interface with flat / VLAN managers).</para>
             <para>The internal network interface is used for
                 communication with VMs, it shouldn't have an IP
                 address attached to it before OpenStack installation
@@ -79,7 +79,7 @@
             tied to any particular network manager; all network
             managers use the same driver. The driver usually
             initializes (creates bridges etc.) only when the first VM
-            lands on this host node. </para>
+            lands on this host node.</para>
         <para>All network managers operate in either <emphasis
                 role="italic">single-host</emphasis> or <emphasis
                 role="italic">multi-host</emphasis> mode. This choice
@@ -103,7 +103,7 @@
             IPs are addresses that can be dynamically associated with
             an instance. A floating IP address can be disassociated
             and associated with another instance at any time. A user
-            can reserve a floating IP for their project. </para>
+            can reserve a floating IP for their project.</para>
         <para>In <emphasis role="bold">Flat Mode</emphasis>, a network
             administrator specifies a subnet. The IP addresses for VM
             instances are grabbed from the subnet, and then injected
@@ -114,7 +114,7 @@
             configurable) on the systems running the
                 <literal>nova-network</literal> service. All instances
             of the system are attached to the same bridge, configured
-            manually by the network administrator. </para>
+            manually by the network administrator.</para>
         <para>
             <note>
                 <para>The configuration injection currently only works
@@ -128,7 +128,7 @@
             addresses to VM instances from the specified subnet in
             addition to manually configuring the networking bridge. IP
             addresses for VM instances are grabbed from a subnet
-            specified by the network administrator. </para>
+            specified by the network administrator.</para>
         <para>Like Flat Mode, all instances are attached to a single
             bridge on the compute node. In addition a DHCP server is
             running to configure instances (depending on
@@ -199,7 +199,7 @@
             provides a private network segment for each project's
             instances that can be accessed through a dedicated VPN
             connection from the Internet. In this mode, each project
-            gets its own VLAN, Linux networking bridge, and subnet. </para>
+            gets its own VLAN, Linux networking bridge, and subnet.</para>
 
         <para>The subnets are specified by the network administrator,
             and are assigned dynamically to a project when required. A
@@ -266,7 +266,7 @@
                 service at <literal>http://169.254.169.254</literal>.
                 The metadata service supports two sets of APIs: an
                 OpenStack metadata API and an EC2-compatible API. Each
-                of the APIs is versioned by date. </para>
+                of the APIs is versioned by date.</para>
             <para>To retrieve a list of supported versions for the
                 OpenStack metadata API, make a GET request to
                 <programlisting>http://169.254.169.254/openstack</programlisting>For
@@ -482,7 +482,7 @@ echo 'Extra user data here'</computeroutput></screen>
         </orderedlist>
         <para>By default, Compute uses the VLAN Network Mode. You
             choose the networking mode for your virtual instances in
-            the nova.conf file. Here are the three possible options: </para>
+            the nova.conf file. Here are the three possible options:</para>
         <itemizedlist>
             <listitem>
                 <para><literal>--network_manager=nova.network.manager.FlatManager</literal></para>
@@ -576,12 +576,11 @@ network_manager=nova.network.manager.FlatManager
                     talking to any other nodes that are hosting VMs.
                     With either of the Flat Networking options, the
                     default gateway for the virtual machines is set to
-
-                    the host which is running nova-network. </para>
+                    the host which is running nova-network.</para>
                 <para>Set the compute node's external IP address to be
                     on the bridge and add eth0 to that bridge. To do
                     this, edit your network interfaces configuration
-                    to look like the following example: </para>
+                    to look like the following example:</para>
                 <para>
                     <programlisting>
 
@@ -657,7 +656,7 @@ iface br100 inet dhcp
                         <literal>flat_network_bridge</literal>
                     setting. Otherwise, flat networking works in a
                     very similar way with both the libvirt driver and
-                    the XenAPI driver. </para>
+                    the XenAPI driver.</para>
             </section>
         </section>
 
@@ -742,7 +741,7 @@ iface br100 inet dhcp
                     would be 2^20 or 1,048,576 IP addresses. That
                     said, it will take a very long time for you to
                     create your initial network, as an entry for each
-                    IP will be created in the database. </para>
+                    IP will be created in the database.</para>
                 <para>If you have an unused interface on your hosts
                     (eg eth2) that has connectivity with no IP
                     address, you can simply tell FlatDHCP to bridge
@@ -753,7 +752,7 @@ iface br100 inet dhcp
                     automatically add the gateway ip to this bridge.
                     If this is the case for you, edit your
                         <filename>nova.conf</filename> file to contain
-                    the following lines: </para>
+                    the following lines:</para>
                 <para>
                     <programlisting>
 dhcpbridge_flagfile=/etc/nova/nova.conf
@@ -767,7 +766,7 @@ public_interface=eth0
                 </programlisting>
                     You can also add the unused interface to br100
 
-                    manually and not set flat_interface. </para>
+                    manually and not set flat_interface.</para>
                 <para>Integrate your network interfaces to match this
                     configuration.</para>
             </section>
@@ -815,7 +814,7 @@ firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlis
                         <literal>public_interface</literal> refer to
                     the network interface on the VM running the
                     OpenStack services, not the network interface on
-                    the Hypervisor. </para>
+                    the Hypervisor.</para>
                 <para>Secondly <literal>flat_network_bridge</literal>
                     refers to the name of XenAPI network that you wish
                     to have your instance traffic on, i.e. the network
@@ -825,7 +824,7 @@ firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlis
                     such as <literal>vmbr</literal>. Specifying the
                     name-label is very useful in cases where your
                     networks are not uniform across your XenServer
-                    hosts. </para>
+                    hosts.</para>
                 <para>When you have a limited number of network cards
                     on your server, it is possible to use networks
                     isolated using VLANs for the public and network
@@ -835,7 +834,7 @@ firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlis
                     and 103 on <literal>eth0</literal>, respectively,
                     you could use these for eth1 and eth3 on your VM,
                     and pass the appropriate one to
-                        <literal>flat_network_bridge</literal>. </para>
+                        <literal>flat_network_bridge</literal>.</para>
                 <para>When using XenServer, it is best to use the
                     firewall driver written specifically for
                     XenServer. This pushes the firewall rules down to
@@ -922,7 +921,7 @@ firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlis
                         >subnet </emphasis>(e.g.,
                         <literal>172.16.20.0/24</literal>) that are on
                     the same VLAN (layer 2 <emphasis role="italic"
-                        >network</emphasis>). </para>
+                        >network</emphasis>).</para>
 
             </note>
             <para>Running in VLAN mode is more complex than the other
@@ -960,12 +959,12 @@ firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlis
             <para>The
                     <literal>network_manager=nova.network.manager.VlanManager</literal>
                 option specifies VLAN mode, which happens to be the
-                default networking mode. </para>
+                default networking mode.</para>
             <para>The bridges that are created by the network manager
                 will be attached to the interface specified by
                     <literal>vlan_interface</literal>, the example
                 above uses the <literal>eth0</literal> interface,
-                which is the default. </para>
+                which is the default.</para>
 
             <para>The <literal>fixed_range</literal> option deprecated
                 in Grizzly and should be set to
@@ -1053,7 +1052,7 @@ Optional arguments:
                         IPv4 subnet for fixed IPS (ex: 10.20.0.0/16)
   --project-id &lt;project id>
                         Project id
-  --priority &lt;number>   Network interface priority                   </programlisting>
+  --priority &lt;number>   Network interface priority</programlisting>
             <para>In particular, flags to the <command>nova
                     network-create</command> command can be used to
                 override settings from <filename>nova.conf</filename>:<variablelist>
@@ -1117,7 +1116,7 @@ Options:
                 named cloudpipe) needs to be created as described in
                 the section titled <link
                     linkend="cloudpipe-per-project-vpns">Cloudpipe —
-                    Per Project VPNs</link>. </para>
+                    Per Project VPNs</link>.</para>
 
             <section xml:id="libvirt-vlan-networking">
                 <title>Libvirt VLAN networking</title>
@@ -1126,7 +1125,7 @@ Options:
                     load the <literal>8021q</literal> kernel module,
                     as
                     root:<screen><prompt>#</prompt> <userinput>apt-get install vlan</userinput>
-<prompt>#</prompt> <userinput>modprobe 8021q </userinput></screen></para>
+<prompt>#</prompt> <userinput>modprobe 8021q</userinput></screen></para>
                 <para>To have this kernel module loaded on boot, add
                     the following line to
                         <filename>/etc/modules</filename>:<programlisting>8021q</programlisting></para>
@@ -1138,7 +1137,7 @@ Options:
                 <programlisting>network_manager=nova.network.manager.VlanManager
 vlan_interface=eth0
 fixed_range=172.16.0.0/12
-network_size=256                </programlisting>
+network_size=256</programlisting>
                 <para>In certain cases, the network manager may not
                     properly tear down bridges and VLANs when it is
                     stopped. If you attempt to restart the network
@@ -1163,7 +1162,7 @@ network_size=256                </programlisting>
                 <title>XenAPI VLAN networking</title>
                 <para>VLAN networking works quite differently with the
                     XenAPI driver, compared to the libvirt driver. The
-                    following figure shows how your setup might look: </para>
+                    following figure shows how your setup might look:</para>
                 <figure xml:id="xenapi-vlan-diagram">
                     <title>VLAN network, multiple interfaces, multiple
                         servers, network HA with XenAPI driver</title>
@@ -1473,7 +1472,7 @@ mute 20</programlisting>
                            :</para>
 
                         <para>
-                            <filename> /etc/openvpn/up.sh </filename>
+                            <filename>/etc/openvpn/up.sh</filename>
                             <programlisting>#!/bin/sh
 # Openvpn startup script.
 
@@ -1481,7 +1480,7 @@ BR=$1
 DEV=$2
 MTU=$3
 /sbin/ifconfig $DEV mtu $MTU promisc up
-/sbin/brctl addif $BR $DEV                      </programlisting>
+/sbin/brctl addif $BR $DEV</programlisting>
                             <filename>/etc/openvpn/down.sh</filename>
                             <programlisting>#!/bin/sh
 # Openvpn shutdown script
@@ -1489,7 +1488,7 @@ BR=$1
 DEV=$2
 
 /usr/sbin/brctl delif $BR $DEV
-/sbin/ifconfig $DEV down                  </programlisting>
+/sbin/ifconfig $DEV down</programlisting>
                         </para>
                         <para>Make these two scripts executables by
                             running the following command:
@@ -1520,7 +1519,7 @@ iface eth0 inet manual
 
 auto br0
 iface br0 inet dhcp
-bridge_ports eth0                     </programlisting>
+bridge_ports eth0</programlisting>
                     </listitem>
                     <listitem>
                         <para>Edit the rc.local file</para>
@@ -1570,7 +1569,7 @@ else
 fi
 
 
-exit 0 </programlisting>
+exit 0</programlisting>
                             The called script
                                 (<filename>autorun.sh</filename>) is a
                             script which mainly parses the network
@@ -1773,7 +1772,7 @@ ALLOW -1:-1 from 0.0.0.0/0
                     will present both ways of using cloudpipe, the
                     first using a configuration file for clients
                     without interfaces, and for clients using an
-                    interface. </para>
+                    interface.</para>
                 <para><emphasis role="bold">Connect to your cloudpipe
                         instance without an interface
                     (CLI)</emphasis></para>
@@ -1794,7 +1793,7 @@ ALLOW -1:-1 from 0.0.0.0/0
                             found under
                                 <filename>nova/cloudpipe/client.ovpn.template</filename>
                             contains the necessary instructions for
-                            establishing a connection: </para>
+                            establishing a connection:</para>
 
                         <programlisting># NOVA user connection
 # Edit the following lines to point to your cert files:
@@ -1822,7 +1821,7 @@ verb 2
 keepalive 10 120
 ping-timer-rem
 persist-tun
-persist-key             </programlisting>
+persist-key</programlisting>
 
                         <para>Update the file accordingly. In order
                             to get the public IP and port of your
@@ -1989,7 +1988,7 @@ persist-key             </programlisting>
 
                         </listitem>
                     </orderedlist>You can now save the configuration
-                    and establish the connection! </para>
+                    and establish the connection!</para>
                 <para/>
             </section>
             <section xml:id="cloudpipe-misc">
@@ -2005,10 +2004,10 @@ persist-key             </programlisting>
                             Into
                                 <filename>/var/log/nova/nova-network.log</filename>,
                             the following line should appear:
-                            <programlisting>Running periodic task VlanManager._disassociate_stale_fixed_ips from (pid=21578) periodic_tasks /usr/lib/python2.7/dist-packages/nova/manager.py:152   </programlisting>
+                            <programlisting>Running periodic task VlanManager._disassociate_stale_fixed_ips from (pid=21578) periodic_tasks /usr/lib/python2.7/dist-packages/nova/manager.py:152</programlisting>
                             Once the job has been run,
                                 <prompt>$</prompt>
-                            <userinput> nova
+                            <userinput>nova
                                 cloudpipe-list</userinput>should not
                             return anything ; but if the cloudpipe
                             instance is respawned too quickly; the
@@ -2042,9 +2041,9 @@ persist-key             </programlisting>
                                 files</emphasis></para>
                         <para>Nova stores cloudpipe keys into
 
-                                <filename>/var/lib/nova/keys</filename>. </para>
+                                <filename>/var/lib/nova/keys</filename>.</para>
                         <para>Certificates are stored into
-                                <filename>/var/lib/nova/CA</filename>. </para>
+                                <filename>/var/lib/nova/CA</filename>.</para>
 
                         <para>Credentials are stored into
                                 <filename>/var/lib/nova/CA/projects/</filename>
@@ -2072,7 +2071,7 @@ persist-key             </programlisting>
                 <command>euca-authorize</command> or <command>nova
                 secgroup-add-rule</command> command. Below, you will
             find the commands to allow <command>ping</command> and
-                <command>ssh</command> to your VMs: </para>
+                <command>ssh</command> to your VMs:</para>
         <note>
             <para>These commands need to be run as root only if the
                 credentials used to interact with <systemitem class="service">nova-api</systemitem> have been
@@ -2163,7 +2162,7 @@ public_interface=vlan100
             <para>you can check if the forwarding is enabled by
                 running the following command: <screen><prompt>$</prompt> <userinput>cat /proc/sys/net/ipv4/ip_forward</userinput></screen>
                 <screen><computeroutput>0</computeroutput></screen></para>
-            <para>Or using sysctl<screen><prompt>$</prompt> <userinput> sysctl net.ipv4.ip_forward</userinput></screen>
+            <para>Or using sysctl<screen><prompt>$</prompt> <userinput>sysctl net.ipv4.ip_forward</userinput></screen>
                 <screen><computeroutput>net.ipv4.ip_forward = 0</computeroutput></screen>
             </para>
             <para>In this example, the IP forwarding is disabled. You
@@ -2253,7 +2252,7 @@ auto_assign_floating_ip=True
             it.</para>
         <para>To determine the project ID you must have admin rights.
             You can disassociate the project from the network with a
-            scrub command and the project ID as the final parameter: </para>
+            scrub command and the project ID as the final parameter:</para>
         <screen>
 <prompt>$</prompt> <userinput>nova-manage project scrub --project=<replaceable>&lt;id></replaceable></userinput>
         </screen>
@@ -2332,7 +2331,7 @@ auto_assign_floating_ip=True
                         reachable through its second IP. Here is an
                         example of how to setup the interfaces within
                         the instance (this is the configuration that
-                        needs to be applied inside the image): </para>
+                        needs to be applied inside the image):</para>
                     <para><filename>/etc/network/interfaces</filename>
                         <programlisting># The loopback network interface
 auto lo
@@ -2342,7 +2341,7 @@ auto eth0
 iface eth0 inet dhcp
 
 auto eth1
-iface eth1 inet dhcp                </programlisting></para>
+iface eth1 inet dhcp</programlisting></para>
                 </note></para>
             <note>
                 <para>If the Virtual Network Service Neutron is
@@ -2438,7 +2437,7 @@ is needed so that it can act as a
                     <filename>nova.conf</filename> file should
                 contain:</para>
             <programlisting>multi_host=True
-send_arp_for_ha=true         </programlisting>
+send_arp_for_ha=true</programlisting>
             <para>The <literal>send_arp_for_ha</literal> option
                 facilitates sending of gratuitous arp messages to
                 ensure the arp caches on compute hosts are up to
@@ -2466,14 +2465,14 @@ enabled_apis=ec2,osapi_compute,osapi_volume,metadata</programlisting></para>
                 includes <literal>metadata</literal> in the list of
                 enabled APIs. Other options become available when you
                 configure <literal>multi_host</literal> nova
-                networking. </para>
+                networking.</para>
             <!--<para>See <link linkend="list-of-compute-config-options">Configuration: nova.conf</link>.</para>-->
             <note>
                 <para>You must specify the
                         <literal>multi_host</literal> option on the
                     command line when creating fixed networks. For
                     example:
-                    <screen><prompt>#</prompt> <userinput> nova network-create test --fixed-range-v4=192.168.0.0/24 --multi-host=T</userinput>            </screen></para>
+                    <screen><prompt>#</prompt> <userinput>nova network-create test --fixed-range-v4=192.168.0.0/24 --multi-host=T</userinput>            </screen></para>
             </note>
         </simplesect>
 
@@ -2660,7 +2659,7 @@ valid_lft forever preferred_lft forever
 
             <para>Note that you cannot SSH to an instance with a
                 public IP from within the same server as the routing
-                configuration won't allow it. </para>
+                configuration won't allow it.</para>
             <para>You can use <command>tcpdump</command> to identify
                 if packets are being routed to the inbound interface
                 on the compute host. If the packets are reaching the

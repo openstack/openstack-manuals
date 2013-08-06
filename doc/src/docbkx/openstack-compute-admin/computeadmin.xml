@@ -232,7 +232,7 @@ usage: nova [--debug] [--os-username OS_USERNAME] [--os-password OS_PASSWORD]
                 environment variables, you can fly through these
                 commands on the command line. You can add
                     <literal>--os-username</literal> on the nova
-                command, or set them as environment variables: </para>
+                command, or set them as environment variables:</para>
             <para>
                 <screen>
 <prompt>$</prompt> <userinput>export OS_USERNAME=joecool</userinput>
@@ -259,13 +259,13 @@ usage: nova [--debug] [--os-username OS_USERNAME] [--os-password OS_PASSWORD]
                 manipulation.</para>
             <para>The man page for nova-manage has a good explanation
                 for each of its functions, and is recommended reading
-                for those starting out. Access it by running: </para>
+                for those starting out. Access it by running:</para>
             <screen>
             <prompt>$</prompt> <userinput>man nova-manage</userinput>
             </screen>
 
             <para>For administrators, the standard pattern for
-                executing a nova-manage command is: </para>
+                executing a nova-manage command is:</para>
             <screen>
 <prompt>$</prompt> <userinput>nova-manage category command <replaceable>[args]</replaceable></userinput>
             </screen>
@@ -361,7 +361,7 @@ qualname = nova</programlisting></para>
             <programlisting>verbose = False
 debug = False
 use_syslog = True
-syslog_log_facility = LOG_LOCAL0 </programlisting>
+syslog_log_facility = LOG_LOCAL0</programlisting>
             <para>In addition to enabling syslog, these settings also
                 turn off more verbose output and debugging output from
                 the log.<note>
@@ -724,25 +724,25 @@ UPDATE instances SET host = 'np-rcc46' WHERE uuid = '3f57699a-e773-4650-a443-b4b
             <para>A disaster could happen to several components of
                 your architecture : a disk crash, a network loss, a
                 power cut, etc. In this example, we suppose the
-                following setup : <orderedlist>
+                following setup:<orderedlist>
                     <listitem>
                         <para>A cloud controller (nova-api,
-                            nova-objecstore, nova-network) </para>
+                            nova-objecstore, nova-network)</para>
 </listitem>
                     <listitem>
                         <para>A compute node (<systemitem
                                 class="service"
-                                >nova-compute</systemitem>) </para>
+                                >nova-compute</systemitem>)</para>
                     </listitem>
                     <listitem>
                         <para>A Storage Area Network used by
-                            cinder-volumes (aka SAN) </para>
+                            cinder-volumes (aka SAN)</para>
                     </listitem>
                 </orderedlist>The example disaster will be the worst
                 one : a power loss. That power loss applies to the
                 three components. <emphasis role="italic">Let's see
                     what runs and how it runs before the
-                    crash</emphasis>: <itemizedlist>
+                    crash</emphasis>:<itemizedlist>
                     <listitem>
                         <para>From the SAN to the cloud controller, we have an
                             active iscsi session (used for the "cinder-volumes"
@@ -770,11 +770,11 @@ UPDATE instances SET host = 'np-rcc46' WHERE uuid = '3f57699a-e773-4650-a443-b4b
                             compute node ; saved into database, the current
                             state of the instances (in that case "running" ),
                             and their volumes attachment (mountpoint, volume id,
-                            volume status, etc..) </para>
+                            volume status, etc..)</para>
                     </listitem>
                 </itemizedlist> Now, after the power loss occurs and
                 all hardware components restart, the situation is as
-                follows: </para>
+                follows:</para>
             <para>
                 <itemizedlist>
                     <listitem>
@@ -795,7 +795,7 @@ UPDATE instances SET host = 'np-rcc46' WHERE uuid = '3f57699a-e773-4650-a443-b4b
                     <listitem>
                         <para>From the cloud controller, instances
                             turn into a shutdown state (because they
-                            are no longer running) </para>
+                            are no longer running)</para>
                     </listitem>
                     <listitem>
                         <para>Into the database, data was not updated
@@ -857,7 +857,7 @@ UPDATE instances SET host = 'np-rcc46' WHERE uuid = '3f57699a-e773-4650-a443-b4b
                         </para>
                         <para>We need to get the current relation from
                             a volume to its instance, since we will
-                            recreate the attachment : </para>
+                            recreate the attachment:</para>
                         <para>This relation could be figured by
                             running <command>nova
                                 volume-list</command> (note that nova
@@ -965,7 +965,7 @@ done &lt; $volumes_tmp_file
                     </listitem>
                 </itemizedlist>Voila! You successfully recovered your
                 cloud after that.</para>
-            <para>Here are some suggestions : </para>
+            <para>Here are some suggestions:</para>
             <para><itemizedlist>
                     <listitem>
                         <para>Use the <literal>parameter
@@ -1012,7 +1012,7 @@ done &lt; $volumes_tmp_file
             <para>You can download from <link
                     xlink:href="https://github.com/Razique/BashStuff/blob/master/SYSTEMS/OpenStack/SCR_5006_V00_NUAC-OPENSTACK-DRP-OpenStack.sh"
                     >here</link> a bash script which performs these
-                five steps : </para>
+                five steps:</para>
             <para>The "test mode" allows you to perform that whole
                 sequence for only one instance.</para>
             <para>To reproduce the power loss, connect to the compute

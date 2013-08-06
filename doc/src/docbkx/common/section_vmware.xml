@@ -16,13 +16,13 @@
           of ESX hosts. With this driver and access to shared storage, advanced vSphere features
           like vMotion, High Availability, and Dynamic Resource Scheduling (DRS) are available. With
           this driver, one <systemitem class="service">nova-compute</systemitem> service is run per
-          vCenter cluster. </para>
+          vCenter cluster.</para>
       </listitem>
       <listitem>
         <para>vmwareapi.VMwareESXDriver: a driver that lets <systemitem class="service"
             >nova-compute</systemitem> communicate directly to an ESX host, but does not support
           advanced VMware features. With this driver, one <systemitem class="service"
-            >nova-compute</systemitem> service is run per ESX host. </para>
+            >nova-compute</systemitem> service is run per ESX host.</para>
       </listitem>
     </itemizedlist>
   </section>
@@ -59,7 +59,7 @@
     <section xml:id="VMWareVCDriver_configuration_options">
       <title>VMWareVCDriver configuration options</title>
       <para>When using the VMwareVCDriver (i.e., vCenter) with OpenStack Compute, nova.conf must
-        include the following VMWare-specific config options: </para>
+        include the following VMWare-specific config options:</para>
 
       <programlisting>compute_driver=vmwareapi.VMwareVCDriver
 vmwareapi_host_ip=&lt;vCenter host IP&gt;
@@ -82,18 +82,18 @@ vmwareapi_wsdl_loc=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl
       <itemizedlist>
         <listitem>
           <para>Each cluster can only be configured with a single Datastore. If multiple Datastores
-            are configured, the first one returned via the vSphere API will be used. </para>
+            are configured, the first one returned via the vSphere API will be used.</para>
         </listitem>
         <listitem>
           <para>Because a single <systemitem class="service">nova-compute</systemitem> is used per
             cluster, the nova-scheduler views this as a single host with resources amounting to the
             aggregate resources of all ESX hosts managed by the cluster. This may result in
-            unexpected behavior depending on your choice of scheduler. </para>
+            unexpected behavior depending on your choice of scheduler.</para>
         </listitem>
         <listitem>
           <para>Security Groups are not supported if Nova-Network is used. Security Groups are only
             supported if the VMware driver is used in conjunction with the the OpenStack Networking
-            Service running the Nicira NVP plugin. </para>
+            Service running the Nicira NVP plugin.</para>
         </listitem>
       </itemizedlist>
     </section>
@@ -105,7 +105,7 @@ vmwareapi_wsdl_loc=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl
     <section xml:id="VMWareESXDriver_configuration_options">
       <title>VMWareESXDriver configuration options</title>
       <para>When using the VMwareESXDriver (i.e., no vCenter) with OpenStack Compute, configure
-        nova.conf with the following VMWare-specific config options: </para>
+        nova.conf with the following VMWare-specific config options:</para>
 
       <programlisting>compute_driver=vmwareapi.VMwareESXDriver
 vmwareapi_host_ip=&lt;ESXi host IP&gt;
@@ -131,7 +131,7 @@ vmwareapi_wsdl_loc=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl
     <title>Images with VMware vSphere</title>
     <para>When using either VMware driver, images should be uploaded to the OpenStack Image Service
       in the VMDK format. Both thick and thin images are currently supported and all images must be
-      flat (i.e. contained within 1 file). For example </para>
+      flat (i.e. contained within 1 file). For example</para>
     <para>To load a thick image with a SCSI adaptor:</para>
     <screen>glance image-create name="ubuntu-thick-scsi" disk_format=vmdk container_format=bare \
 is_public=true --property vmware_adaptertype="lsiLogic" \

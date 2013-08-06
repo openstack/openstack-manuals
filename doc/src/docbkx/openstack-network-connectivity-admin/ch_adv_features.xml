@@ -414,14 +414,14 @@
         </section>
         <section xml:id="l3_workflow">
             <title>Common L3 Workflow</title>
-            <para>Create external networks (admin-only) </para>
+            <para>Create external networks (admin-only)</para>
             <screen><computeroutput>neutron net-create public --router:external=True
 neutron subnet-create public 172.16.1.0/24 </computeroutput></screen>
-            <para>Viewing external networks: </para>
+            <para>Viewing external networks:</para>
             <screen><computeroutput>neutron net-list -- --router:external=True</computeroutput></screen>
             <para>Creating routers</para>
             <para>Internal-only router to connect multiple L2 networks
-                privately.  </para>
+                privately.</para>
             <screen><computeroutput>neutron net-create net1
 neutron subnet-create net1 10.0.0.0/24
 neutron net-create net2
@@ -450,9 +450,9 @@ neutron router-interface-add router1 &lt;subnet2-uuid&gt;</computeroutput></scre
                 <screen><computeroutput>neutron router-show &lt;router_id&gt;</computeroutput></screen></para>
             <para>Show all internal interfaces for a router:
                 <screen><computeroutput>neutron port-list -- --device_id=&lt;router_id&gt;</computeroutput></screen></para>
-            <para>Associating / Disassociating Floating IPs: </para>
+            <para>Associating / Disassociating Floating IPs:</para>
             <para>First, identify the port-id representing the VM NIC
-                that the floating IP should map to: </para>
+                that the floating IP should map to:</para>
             <screen><computeroutput>neutron port-list -c id -c fixed_ips -- --device_id=ZZZ</computeroutput></screen>
             <para>This port must be on an OpenStack Networking subnet
                 that is attached to a router uplinked to the external
@@ -470,20 +470,20 @@ neutron floatingip-associate &lt;floatingip-id&gt; &lt;internal VM port-id&gt; <
             <para>create floating IP and associate in a single
                 step</para>
             <screen><computeroutput>neutron floatingip-create --port_id &lt;internal VM port-id&gt; &lt;ext-net-id&gt; </computeroutput></screen>
-            <para>Viewing Floating IP State: </para>
+            <para>Viewing Floating IP State:</para>
             <screen><computeroutput>neutron floatingip-list</computeroutput></screen>
-            <para>Find floating IP for a particular VM port: </para>
+            <para>Find floating IP for a particular VM port:</para>
             <screen><computeroutput>neutron floatingip-list -- --port_id=ZZZ</computeroutput></screen>
             <para>Disassociate a Floating IP:</para>
             <screen><computeroutput>neutron floatingip-disassociate &lt;floatingip-id&gt;</computeroutput></screen>
             <para>L3 Tear Down</para>
             <para>Delete the Floating IP:</para>
             <screen><computeroutput>neutron floatingip-delete &lt;floatingip-id&gt; </computeroutput></screen>
-            <para>Then clear the gateway: </para>
+            <para>Then clear the gateway:</para>
             <screen><computeroutput>neutron router-gateway-clear router1</computeroutput></screen>
-            <para>Then remove the interfaces from the router: </para>
+            <para>Then remove the interfaces from the router:</para>
             <screen><computeroutput>neutron router-interface-delete router1 &lt;subnet-id&gt; </computeroutput></screen>
-            <para>Finally, delete the router: </para>
+            <para>Finally, delete the router:</para>
             <screen><computeroutput>neutron router-delete router1</computeroutput></screen>
         </section>
     </section>
@@ -669,13 +669,13 @@ neutron floatingip-associate &lt;floatingip-id&gt; &lt;internal VM port-id&gt; <
             <para>Create a security group for our web servers:</para>
             <screen><computeroutput>
 neutron security-group-create webservers --description "security group for webservers"</computeroutput></screen>
-            <para>Viewing security groups: </para>
+            <para>Viewing security groups:</para>
             <screen><computeroutput>neutron security-group-list</computeroutput></screen>
             <para>Creating security group rule to allow port 80
                 ingress:</para>
             <screen><computeroutput>
 neutron security-group-rule-create --direction ingress --protocol tcp --port_range_min 80 --port_range_max 80 &lt;security_group_uuid&gt;</computeroutput></screen>
-            <para>List security group rules: </para>
+            <para>List security group rules:</para>
             <screen><computeroutput>neutron security-group-rule-list </computeroutput></screen>
             <para>Delete a security group rule:</para>
             <screen><computeroutput>neutron security-group-rule-delete &lt;security_group_rule_uuid&gt;</computeroutput></screen>
@@ -834,15 +834,15 @@ neutron lb-vip-create --name myvip --protocol-port 80 --protocol HTTP --subnet-i
                 </section>
                 <section xml:id="nicira_nvp_qos_walk_through">
                     <title>Nicira NVP QoS Walk Through</title>
-                    <para>Create QoS Queue (admin-only) </para>
+                    <para>Create QoS Queue (admin-only)</para>
                     <screen><computeroutput>neutron queue-create--min 10 --max 1000 myqueue</computeroutput></screen>
                     <para>Associate queue with a network</para>
                     <screen><computeroutput>neutron net-create network --queue_id=&lt;queue_id&gt;</computeroutput></screen>
                     <para>Create default system queue</para>
                     <screen><computeroutput>neutron queue-create --default True --min 10 --max 2000 default</computeroutput></screen>
-                    <para>List QoS Queues: </para>
+                    <para>List QoS Queues:</para>
                     <screen><computeroutput>neutron queue-list</computeroutput></screen>
-                    <para>Delete QoS Queue: </para>
+                    <para>Delete QoS Queue:</para>
                     <screen><computeroutput>neutron queue-delete &lt;queue_id or name&gt;'</computeroutput></screen>
                 </section>
             </section>

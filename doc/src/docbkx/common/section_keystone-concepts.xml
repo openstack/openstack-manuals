@@ -5,7 +5,7 @@
     xml:id="keystone-concepts">
     <?dbhtml stop-chunking?>
     <title>Identity Service Concepts</title>
-    <para>The Identity service performs the following functions: </para>
+    <para>The Identity service performs the following functions:</para>
     <itemizedlist spacing="compact">
         <listitem>
             <para>User management. Tracks users and their permissions.</para>
@@ -16,7 +16,7 @@
         </listitem>
     </itemizedlist>
     <para>To understand the Identity Service, you must understand the
-        following concepts: </para>
+        following concepts:</para>
     <variablelist>
         <varlistentry>
             <term>User</term>
@@ -36,7 +36,7 @@
             <listitem>
                 <para>Data that is known only by a user that proves
                     who they are.  In the Identity Service, examples
-                    are: </para>
+                    are:</para>
                 <itemizedlist>
                     <listitem>
                         <para>Username and password</para>
@@ -156,7 +156,7 @@
             </itemizedlist></para>
         <para>A <emphasis>user</emphasis> represents a human user, and
             has associated information such as username, password and
-            email. This example creates a user named "alice": </para>
+            email. This example creates a user named "alice":</para>
         <screen><prompt>$</prompt> <userinput>keystone user-create --name=alice --pass=mypassword123 --email=alice@example.com</userinput></screen>
         <para>A <emphasis>tenant</emphasis> can be a project, group,
             or organization. Whenever you make requests to OpenStack
@@ -164,7 +164,7 @@
             query the Compute service for a list of running instances,
             you will receive a list of all of the running instances in
             the tenant you specified in your query. This example
-            creates a tenant named "acme": </para>
+            creates a tenant named "acme":</para>
         <screen><prompt>$</prompt> <userinput>keystone tenant-create --name=acme</userinput></screen>
         <note>
             <para>Because the term <emphasis>project</emphasis> was
@@ -177,7 +177,7 @@
         </note>
         <para>A <emphasis>role</emphasis> captures what operations a
             user is permitted to perform in a given tenant. This
-            example creates a role named "compute-user": </para>
+            example creates a role named "compute-user":</para>
         <screen><prompt>$</prompt> <userinput>keystone role-create --name=compute-user</userinput></screen>
         <note>
             <para>It is up to individual services such as the Compute
@@ -188,7 +188,7 @@
         <para>The Identity service associates a user with a tenant and
             a role. To continue with our previous examples, we may
             wish to assign the "alice" user the "compute-user" role in
-            the "acme" tenant: </para>
+            the "acme" tenant:</para>
         <screen><prompt>$</prompt> <userinput>keystone user-list</userinput></screen>
         <screen><computeroutput>+--------+---------+-------------------+--------+
 |   id   | enabled |       email       |  name  |
@@ -240,7 +240,7 @@
         <para>If we wished to restrict creation of volumes to users
             who had the <literal>compute-user</literal> role in a
             particular tenant, we would add
-                <literal>"role:compute-user"</literal>, like so: </para>
+                <literal>"role:compute-user"</literal>, like so:</para>
         <programlisting language="json">"volume:create": ["role:compute-user"],</programlisting>
         <para>
             If we wished to restrict all Compute service requests to require
@@ -348,12 +348,12 @@
     "network:create_private_dns_domain": ["role":"compute-user"],
     "network:create_public_dns_domain": ["role":"compute-user"],
     "network:delete_dns_domain": ["role":"compute-user"]
-}      </programlisting>
+}</programlisting>
     </section>
     <section xml:id="keystone-service-mgmt">
         <title>Service management</title>
         <para>The Identity Service provides the following service
-            management functions: </para>
+            management functions:</para>
         <itemizedlist>
             <listitem>
                 <para>Services</para>
