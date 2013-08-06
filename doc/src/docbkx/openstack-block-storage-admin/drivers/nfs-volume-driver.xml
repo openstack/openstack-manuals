@@ -121,11 +121,11 @@ volume_driver=cinder.volume.drivers.nfs.NfsDriver
         </programlisting>
         <para>Comments are allowed in this file. They begin with a <literal>#</literal>.</para>
         <para>The next step is to configure the <literal>nfs_mount_point_base</literal>
-            option. This is a directory where <literal>cinder-volume</literal> will mount all
-            NFS shares stored in <literal>shares.txt</literal>. For this example,
+            option. This is a directory where <systemitem class="service">cinder-volume</systemitem> will mount all
+            NFS shares stored in <literal>shares.txt</literal>. For this example, 
             <literal>/var/lib/cinder/nfs</literal> will be used. You can, of course, use the
             default value of <literal>$state_path/mnt</literal>.</para>
-        <para>Once these options are set, start the <literal>cinder-volume</literal>
+        <para>Once these options are set, start the <systemitem class="service">cinder-volume</systemitem>
             service. <literal>/var/lib/cinder/nfs</literal> should now contain a directory
             for each NFS share specified in <literal>shares.txt</literal>. The name of each
             directory will be a hashed name:</para>
@@ -148,12 +148,12 @@ volume_driver=cinder.volume.drivers.nfs.NfsDriver
         <title>NFS Driver Notes</title>
         <para>
             <itemizedlist>
-                <listitem><para><literal>cinder-volume</literal> manages the mounting of
+                <listitem><para><systemitem class="service">cinder-volume</systemitem> manages the mounting of
                 the NFS shares as well as volume creation on the shares. Keep this in mind
                 when planning your OpenStack architecture. If you have one master NFS server,
-                it might make sense to only have one <literal>cinder-volume</literal> service
+                it might make sense to only have one <systemitem class="service">cinder-volume</systemitem> service
                 to handle all requests to that NFS server. However, if that single server
-                is unable to handle all requests, more than one <literal>cinder-volume</literal>
+                is unable to handle all requests, more than one <systemitem class="service">cinder-volume</systemitem>
                 service will be needed as well as potentially more than one NFS server.</para>
                 </listitem>
                 <listitem><para>Since data is stored in a file and not actually on a block storage
