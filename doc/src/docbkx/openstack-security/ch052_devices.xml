@@ -46,12 +46,12 @@ glance image-update \
     --property hw_cdrom_bus=ide \
     --property hw_vif_model=e1000 \
     f16-x86_64-openstack-sda</screen>
-        <para>A cloud architect should decide what devices to make available to cloud users. Anything that is not needed should be removed from QEMU. This step requires recompiling QEMU after modifying the options passed to the QEMU configure script. For a complete list of up-to-date options simply run <literal> ./configure --help </literal> from within the QEMU source directory. Decide what is needed for your deployment, and disable the remaining options.</para>
+        <para>A cloud architect should decide what devices to make available to cloud users. Anything that is not needed should be removed from QEMU. This step requires recompiling QEMU after modifying the options passed to the QEMU configure script. For a complete list of up-to-date options simply run <literal>./configure --help</literal> from within the QEMU source directory. Decide what is needed for your deployment, and disable the remaining options.</para>
       </section>
       <section xml:id="ch052_devices-idp494336">
         <title>Compiler Hardening</title>
         <para>The next step is to harden QEMU using compiler hardening options. Modern compilers provide a variety of compile time options to improve the security of the resulting binaries. These features, which we will describe in more detail below, include relocation read-only (RELRO), stack canaries, never execute (NX), position independent executable (PIE), and address space layout randomization (ASLR).</para>
-        <para>Many modern linux distributions already build QEMU with compiler hardening enabled, so you may want to verify your existing executable before proceeding with the information below. One tool that can assist you with this verification is called <literal> checksec.sh </literal> (http://www.trapkit.de/tools/checksec.html).</para>
+        <para>Many modern linux distributions already build QEMU with compiler hardening enabled, so you may want to verify your existing executable before proceeding with the information below. One tool that can assist you with this verification is called <literal>checksec.sh</literal> (http://www.trapkit.de/tools/checksec.html).</para>
         <itemizedlist><listitem>
             <para><emphasis>RELocation Read-Only (RELRO)</emphasis> : Hardens the data sections of an executable. Both full and partial RELRO modes are supported by gcc. For QEMU full RELRO is your best choice. This will make the global offset table read-only and place various internal data sections before the program data section in the resulting executable.</para>
           </listitem>

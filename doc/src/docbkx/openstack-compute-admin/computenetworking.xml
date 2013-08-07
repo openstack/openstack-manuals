@@ -607,7 +607,7 @@ iface br100 inet dhcp
 
                 <para><figure>
                         <title>Flat network, all-in-one server
-                            installation </title>
+                            installation</title>
                         <mediaobject>
                             <imageobject>
                                 <imagedata scale="80"
@@ -1196,21 +1196,22 @@ firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlis
                     services. As with before
                         <literal>public_interface</literal> refers to
                     the network interfce on the VM running the
-                    OpenStack services. </para>
+                    OpenStack services.</para>
                 <para>With VLAN networking and the XenAPI driver, the
-                    following things happen when you start a VM: <itemizedlist>
+                    following things happen when you start a VM:
+                    <itemizedlist>
                         <listitem>
-                            <para> First the XenServer network is
+                            <para>First the XenServer network is
                                 attached to the appropriate physical
                                 interface (PIF) and VLAN unless the
-                                network already exists. </para>
+                                network already exists.</para>
                         </listitem>
                         <listitem>
-                            <para> When the VM is created, its VIF is
-                                attached to the above network. </para>
+                            <para>When the VM is created, its VIF is
+                                attached to the above network.</para>
                         </listitem>
                         <listitem>
-                            <para> The 'Openstack domU', i.e. where
+                            <para>The 'Openstack domU', i.e. where
                                 nova-network is running, acts as a
                                 gateway and DHCP for this instance.
                                 The DomU does this for multiple VLAN
@@ -1218,15 +1219,16 @@ firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlis
                                 a VLAN trunk. For this reason it must
                                 have an interface on the parent bridge
                                 of the VLAN bridge where VM instances
-                                are plugged. </para>
+                                are plugged.</para>
                         </listitem>
                     </itemizedlist>
                 </para>
                 <para>To help understand VLAN networking with the
                     XenAPI further, here are some important things to
-                    note: <itemizedlist>
+                    note:
+                    <itemizedlist>
                         <listitem>
-                            <para> A physical interface (PIF)
+                            <para>A physical interface (PIF)
                                 identified either by (A) the
                                 vlan_interface flag or (B) the
                                 bridge_interface column in the
@@ -1234,16 +1236,16 @@ firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlis
                                 creating a XenServer VLAN network. The
                                 VLAN tag is found in the vlan column,
                                 still in the networks table, and by
-                                default the first tag is 100. </para>
+                                default the first tag is 100.</para>
                         </listitem>
                         <listitem>
-                            <para> VIF for VM instances within this
+                            <para>VIF for VM instances within this
                                 network will be plugged in this VLAN
                                 network. You won't see the bridge
-                                until a VIF is plugged in it. </para>
+                                until a VIF is plugged in it.</para>
                         </listitem>
                         <listitem>
-                            <para> The 'Openstack domU', i.e. the VM
+                            <para>The 'Openstack domU', i.e. the VM
                                 running the nova network node, instead
                                 will not be plugged into this network;
                                 since it acts as a gateway for
@@ -1255,10 +1257,10 @@ firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlis
                                 example, if
                                    <literal>vlan_interface</literal>
                                 is eth0 it must be plugged in xenbr1,
-                                eth1 --> xenbr1, etc. </para>
+                                eth1 --> xenbr1, etc.</para>
                         </listitem>
                         <listitem>
-                            <para> Within the Openstack domU, 'ip
+                            <para>Within the Openstack domU, 'ip
                                 link' is then used to configure VLAN
                                 interfaces on the 'trunk' port. Each
                                 of this vlan interfaces is associated
@@ -1268,7 +1270,7 @@ firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlis
                                 constantly updated by nova-network,
                                 thus ensuring VMs get the IP address
                                 specified by the layer3 network driver
-                                (nova IPAM or Melange). </para>
+                                (nova IPAM or Melange).</para>
                         </listitem>
                     </itemizedlist>
                 </para>
@@ -1277,7 +1279,7 @@ firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlis
                     the appropriate dnsmasq instance, and should be
                     able to communicate without any problem with other
                     VMs on the same network and with the their
-                    gateway. </para>
+                    gateway.</para>
                 <para>The above point (3) probably needs some more
                     explanations. With Open vSwitch, we don't really
                     have distinct bridges for different VLANs; even if
@@ -1286,7 +1288,7 @@ firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlis
                     instance, which runs a distinct 'fake-bridge' for
                     each VLAN. The 'real' bridge is the 'parent' of
                     the fake one. You can easily navigate fake and
-                    real bridges with ovs-vsctl. </para>
+                    real bridges with ovs-vsctl.</para>
                 <para>As you can see I am referring to Openvswitch
                     only. This is for a specific reason: the
                     fake-parent mechanism automatically imply that
@@ -1304,7 +1306,7 @@ firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlis
                     node on a VM on a XenServer that does not host any
                         <systemitem class="service"
                         >nova-compute</systemitem> controlled
-                    instances. </para>
+                    instances.</para>
             </section>
             <section xml:id="vlan-known-issues">
                 <title>Known issue with failed DHCP leases in VLAN
@@ -1348,7 +1350,7 @@ firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlis
                         xlink:href="http://thekelleys.org.uk/gitweb/?p=dnsmasq.git;a=commitdiff;h=9380ba70d67db6b69f817d8e318de5ba1e990b12"
 
                         >has integrated a fix</link> for the issue in
-                    dnsmaq version 2.61. </para>
+                    dnsmaq version 2.61.</para>
                 <para>If upgrading dnsmasq is out of the question, a
                     possible workaround is to minimize lease renewals
                     with something like the following combination of
@@ -1365,10 +1367,9 @@ fixed_ip_disassociate_timeout=1209600</programlisting></para>
         <section xml:id="cloudpipe-per-project-vpns">
             <title>Cloudpipe — Per Project Vpns</title>
 
-
-            <para> Cloudpipe is a method for connecting end users to
-                their project instances in VLAN networking mode. </para>
-            <para> The support code for cloudpipe implements admin
+            <para>Cloudpipe is a method for connecting end users to
+                their project instances in VLAN networking mode.</para>
+            <para>The support code for cloudpipe implements admin
                 commands (through an extension) to automatically
                 create a VM for a project that allows users to VPN
                 into the private network of their project. Access to
@@ -1376,16 +1377,14 @@ fixed_ip_disassociate_timeout=1209600</programlisting></para>
                 network host for the project. This allows users to
                 have free access to the virtual machines in their
                 project without exposing those machines to the public
-                internet. </para>
-            <para> The cloudpipe image is basically just a Linux
-
+                internet.</para>
+            <para>The cloudpipe image is basically just a Linux
                 instance with openvpn installed. It needs a simple
                 script to grab user data from the metadata server, b64
                 decode it into a zip file, and run the autorun.sh
                 script from inside the zip. The autorun script will
                 configure and run openvpn to run using the data from
-
-                nova. </para>
+                nova.</para>
             <para>It is also useful to have a cron script that will
                 periodically re download the metadata and copy the new
                 Certificate Revocation List (CRL). This list is
@@ -1410,17 +1409,17 @@ fixed_ip_disassociate_timeout=1209600</programlisting></para>
                     <listitem>
                         <para>Installing the required packages</para>
 
-                        <para> We start by installing the required
+                        <para>We start by installing the required
                             packages on our instance:
                             <screen><prompt>#</prompt> <userinput>apt-get update &amp;&amp; apt-get upgrade &amp;&amp; apt-get install openvpn bridge-utils unzip -y</userinput></screen></para>
                     </listitem>
                     <listitem>
-                        <para> Creating the server configuration
+                        <para>Creating the server configuration
                             template</para>
-                        <para> Create a configuration for Openvpn, and
+                        <para>Create a configuration for Openvpn, and
                             save it under
                                 <filename>/etc/openvpn/server.conf</filename>
-                           : </para>
+                           :</para>
 
                         <para>
                             <programlisting>port 1194
@@ -1463,7 +1462,7 @@ mute 20</programlisting>
                     <listitem>
                         <para>Create the network scripts</para>
 
-                        <para> The next step is to create both scripts
+                        <para>The next step is to create both scripts
                             that will be used when the network
                             components will start up and shut down.
                             The scripts will be respectively saved
@@ -1500,7 +1499,7 @@ DEV=$2
 
                         <para>Edit the network interface configuration
                             file</para>
-                        <para> Update the
+                        <para>Update the
                                 <filename>/etc/network/interfaces</filename>
                             accordingly (We tear down the main
                             interface and enable the bridged
@@ -1526,7 +1525,7 @@ bridge_ports eth0                     </programlisting>
                     <listitem>
                         <para>Edit the rc.local file</para>
 
-                        <para> The next step consists in updating the
+                        <para>The next step consists in updating the
                                 <filename>/etc/rc.local</filename>
                             file. We will ask our image to retrieve
                             the payload, decrypt it, and use both key
@@ -1586,11 +1585,11 @@ exit 0 </programlisting>
             <section xml:id="cloudpipe-upload-image">
                 <title>Upload your instance to Glance</title>
 
-                <para> We will make use of the <systemitem
+                <para>We will make use of the <systemitem
                         class="service">nova</systemitem> snapshot
                     feature in order to create an image from our
                     running instance. We start by retrieving the
-                    instance ID: </para>
+                    instance ID:</para>
 
                 <para>
                     <screen><prompt>$</prompt> <userinput>nova list</userinput></screen>
@@ -1603,7 +1602,7 @@ exit 0 </programlisting>
 +--------------------------------------+------------+--------+---------------------+
                 </programlisting>
 
-                <para> We create an image with, using the instance ID
+                <para>We create an image with, using the instance ID
                    :
 
                     <screen><prompt>$</prompt> <userinput>nova image-create 739079a-b-0f8e-404a-ae6e-a91f4fe99c94</userinput></screen>
@@ -1641,7 +1640,7 @@ cnt_vpn_clients=5
             <section xml:id="cloudpipe-start-instance">
                 <title>Power-up your instance</title>
 
-                <para> Use the <systemitem class="service">nova
+                <para>Use the <systemitem class="service">nova
                         cloudpipe</systemitem> feature the following
                     way:
 
@@ -1722,9 +1721,8 @@ ALLOW -1:-1 from 0.0.0.0/0
                     nova-manage, a new Certificate Revocation List
                     (crl) is generated. As long as cloudpipe has an
                     updated crl, it will block revoked users from
-                    connecting to the vpn. </para>
-                <para> The user data for cloudpipe isn't currently
-
+                    connecting to the vpn.</para>
+                <para>The user data for cloudpipe isn't currently
                     updated when certs are revoked, so it is necessary
                     to restart the cloudpipe instance if a user's
                     credentials are revoked.</para>
@@ -1766,9 +1764,9 @@ ALLOW -1:-1 from 0.0.0.0/0
             </section>
             <section xml:id="cloudpipe-remote-acceess">
 
-                <title> Remote access to your cloudpipe instance from
+                <title>Remote access to your cloudpipe instance from
                     an OpenVPN client</title>
-                <para> Now your cloudpipe instance is running, you can
+                <para>Now your cloudpipe instance is running, you can
                     use your favorite OpenVPN client in order to
                     access your instances within their private network
                     cloudpipe is connected to. In these sections we
@@ -1782,7 +1780,7 @@ ALLOW -1:-1 from 0.0.0.0/0
                 <orderedlist>
                     <listitem>
                         <para>Generate your certificates</para>
-                        <para> Start by generating a private key and a
+                        <para>Start by generating a private key and a
                             certificate for your project:
 
                             <screen><prompt>$</prompt> <userinput>nova x509-create-cert</userinput></screen>
@@ -1792,7 +1790,7 @@ ALLOW -1:-1 from 0.0.0.0/0
 
                         <para>Create the openvpn configuration
                             file</para>
-                        <para> The following template, which can be
+                        <para>The following template, which can be
                             found under
                                 <filename>nova/cloudpipe/client.ovpn.template</filename>
                             contains the necessary instructions for
@@ -1826,7 +1824,7 @@ ping-timer-rem
 persist-tun
 persist-key             </programlisting>
 
-                        <para> Update the file accordingly. In order
+                        <para>Update the file accordingly. In order
                             to get the public IP and port of your
                             cloudpipe instance, you can run the
                             following command:
@@ -1840,8 +1838,8 @@ persist-key             </programlisting>
                         </para>
                     </listitem>
                     <listitem>
-                        <para> Start your OpenVPN client </para>
-                        <para> Depending on the client you are using,
+                        <para>Start your OpenVPN client</para>
+                        <para>Depending on the client you are using,
                             make sure to save the configuration file
                             under the directory it should be, so the
                             certificate file and the private key.
@@ -1855,13 +1853,13 @@ persist-key             </programlisting>
                         instance using an interface</emphasis><orderedlist>
                         <listitem>
 
-                            <para> Download an OpenVPN client </para>
-                            <para> In order to connect to the
+                            <para>Download an OpenVPN client</para>
+                            <para>In order to connect to the
                                 project's network, you will need an
                                 OpenVPN client for your computer. Here
                                 are several clients <itemizedlist>
                                    <listitem>
-                                   <para> For Ubuntu: </para>
+                                   <para>For Ubuntu:</para>
                                    <para><link
                                    xlink:href="apt://openvpn"
                                    >OpenVPN</link>
@@ -1879,7 +1877,7 @@ persist-key             </programlisting>
                                    >gopenvpn</link></para>
                                    </listitem>
                                    <listitem>
-                                   <para> For Mac OsX: </para>
+                                   <para>For Mac OsX:</para>
                                    <para>
                                    <link
                                    xlink:href="http://openvpn.net/"
@@ -1897,7 +1895,7 @@ persist-key             </programlisting>
                                    </para>
                                    </listitem>
                                    <listitem>
-                                   <para> For Windows: </para>
+                                   <para>For Windows:</para>
                                    <para>
                                    <link
                                    xlink:href="http://openvpn.net/"
@@ -1907,8 +1905,8 @@ persist-key             </programlisting>
                                 </itemizedlist></para>
                         </listitem>
                         <listitem>
-                            <para> Configure your client </para>
-                            <para> In this example we will use
+                            <para>Configure your client</para>
+                            <para>In this example we will use
                                 Viscosity, but the same settings apply
                                 to any client. Start by filling the
                                 public ip and the public port of the
@@ -1947,9 +1945,9 @@ persist-key             </programlisting>
                             </mediaobject>
                             <itemizedlist>
                                 <listitem>
-                                   <para> Certificate: The generated
+                                   <para>Certificate: The generated
                                    certificate</para>
-                                   <para>Key: The private key </para>
+                                   <para>Key: The private key</para>
                                 </listitem>
                             </itemizedlist>
                             <mediaobject>
@@ -2002,7 +2000,7 @@ persist-key             </programlisting>
                     <listitem>
                         <para><emphasis role="bold">Troubleshoot your
                                 cloudpipe instance</emphasis></para>
-                        <para> A periodic task disassociates the fixed
+                        <para>A periodic task disassociates the fixed
                             ip address for the cloudpipe instance.
                             Into
                                 <filename>/var/log/nova/nova-network.log</filename>,
@@ -2057,7 +2055,7 @@ persist-key             </programlisting>
                         <para><emphasis role="bold">Automate the
                                 cloudpipe image
                                 installation</emphasis></para>
-                        <para> You can automate the image creation by
+                        <para>You can automate the image creation by
                             download that script and running it from
                             inside the instance: <link
                                 xlink:href="https://github.com/leseb/cloudpipe-image-auto-creation/blob/master/cloudpipeconf.sh"
@@ -2162,7 +2160,7 @@ public_interface=vlan100
                         running the nova-network service.</para>
                 </note>
             </para>
-            <para> you can check if the forwarding is enabled by
+            <para>you can check if the forwarding is enabled by
                 running the following command: <screen><prompt>$</prompt> <userinput>cat /proc/sys/net/ipv4/ip_forward</userinput></screen>
                 <screen><computeroutput>0</computeroutput></screen></para>
             <para>Or using sysctl<screen><prompt>$</prompt> <userinput> sysctl net.ipv4.ip_forward</userinput></screen>
@@ -2317,7 +2315,7 @@ auto_assign_floating_ip=True
         <section xml:id="using-multiple-nics-usage">
             <title>Using the multinic feature</title>
 
-            <para> In order to use the multinic feature, first create
+            <para>In order to use the multinic feature, first create
                 two networks, and attach them to your project:
                 <screen><prompt>$</prompt> <userinput>nova network-create first-net --fixed-range-v4=20.20.0.0/24 --project-id=$your-project</userinput>
 <prompt>$</prompt> <userinput>nova network-create second-net --fixed-range-v4=20.20.10.0/24 --project-id=$your-project</userinput>              </screen>
@@ -2419,7 +2417,7 @@ iface eth1 inet dhcp                </programlisting></para>
                 compute host requires a connection to the public
                 internet and each host is also assigned an address
                 from the VM network where it listens for DHCP traffic.
-                The <systemitem class="service">nova-api</systemitem> service 
+                The <systemitem class="service">nova-api</systemitem> service
 is needed so that it can act as a
                 metadata server for the instances.</para>
             <para>To run in HA mode, each compute host must run the
