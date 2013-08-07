@@ -50,15 +50,37 @@
     <section xml:id="emc-prep">
         <title>Preparation</title>
         <itemizedlist>
-            <listitem><para>Install python-pywbem package.  For example:</para>
+            <listitem><para>Install python-pywbem package. For example:</para>
                 <screen os="ubuntu"><prompt>$</prompt> <userinput>sudo apt-get install python-pywbem</userinput></screen></listitem>
-            <listitem><para>Setup SMI-S.  Download SMI-S from PowerLink and
+            <listitem><para>Setup SMI-S. Download SMI-S from PowerLink and
                 install it following the instructions of SMI-S release notes.
-                Add your VNX/VMAX/VMAXe arrays to SMI-S following the SMI-S
+                Add your VNX/VMAX arrays to SMI-S following the SMI-S
                 release notes.</para></listitem>
             <listitem><para>Register with VNX.</para></listitem>
             <listitem><para>Create Masking View on VMAX.</para></listitem>
         </itemizedlist>
+    </section>
+    <section xml:id="setup-smi-s">
+        <title>Setup SMI-S</title>
+        <para>SMI-S can be installed on a non-OpenStack host.
+            Supported platforms include different flavors of Windows,
+            Red Hat, and SuSE Linux. It can be either a physical server
+            or a VM hosted by an ESX server. Refer to the EMC SMI-S
+            Provider release notes for supported platforms and installation
+            instructions.</para>
+        <para>Note that storage arrays have to be discovered on the
+            SMI-S server before using the Cinder Driver. Follow instructions
+            in the SMI-S release notes to discover the arrays.</para>
+        <para>SMI-S is usually installed at <filename>/opt/emc/ECIM/ECOM/bin
+	    </filename> on Linux and <filename>C:\Program Files\EMC\ECIM\
+	    ECOM\bin</filename> on Windows. After installing and configuring
+	    SMI-S, go to that directory and type <command>TestSmiProvider.exe
+	    </command>.</para>
+        <para>Use <command>addsys</command> in <command>TestSmiProvider.exe
+	    </command> to add an array. Use <command>dv</command> and examine
+	    the output after the array is added. Make sure that the arrays
+	    are recognized by the SMI-S server before using the EMC Cinder
+	    Driver.</para>
     </section>
     <section xml:id="register-emc">
         <title>Register with VNX</title>
@@ -96,7 +118,7 @@
                 <literal>iqn.1993-08.org.debian:01:1a2b3c4d5f6g</literal>
             with SP Port <literal>A-8v0</literal> appears.</para>
         <para>Click the "Register" button, select "CLARiiON/VNX" and enter the host name <literal>myhost1</literal>
-            and IP address <literal>myhost1</literal>.  Click Register. Now host <literal>1.1.1.1</literal> will appear
+            and IP address <literal>myhost1</literal>. Click Register. Now host <literal>1.1.1.1</literal> will appear
             under Hosts->Host List as well.</para>
         <para>Log out of VNX on the Compute node:</para>
         <screen>
