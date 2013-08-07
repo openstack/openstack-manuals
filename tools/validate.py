@@ -105,8 +105,8 @@ def validate_individual_files(rootdir, exceptions):
                     any_failures = True
                     print "%s: %s" % (path, e)
 
-        if any_failures:
-            sys.exit(1)
+    if any_failures:
+        sys.exit(1)
 
 def build_all_books(rootdir, exceptions):
     """ Build all of the books.
