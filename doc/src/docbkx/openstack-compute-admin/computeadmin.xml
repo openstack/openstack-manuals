@@ -744,35 +744,33 @@ UPDATE instances SET host = 'np-rcc46' WHERE uuid = '3f57699a-e773-4650-a443-b4b
                     what runs and how it runs before the
                     crash</emphasis>: <itemizedlist>
                     <listitem>
-                        <para>From the SAN to the cloud controller, we
-                            have an active iscsi session (used for the
-                            "cinder-volumes" LVM's VG).</para>
+                        <para>From the SAN to the cloud controller, we have an
+                            active iscsi session (used for the "cinder-volumes"
+                            LVM's VG).</para>
                     </listitem>
                     <listitem>
-                        <para>From the cloud controller to the compute
-                            node we also have active iscsi sessions
-                            (managed by cinder-volume).</para>
+                        <para>From the cloud controller to the compute node we
+                            also have active iscsi sessions (managed by
+                                <systemitem class="service"
+                                >cinder-volume</systemitem>).</para>
+                    </listitem>
+                    <listitem>
+                        <para>For every volume an iscsi session is made (so 14
+                            ebs volumes equals 14 sessions).</para>
+                    </listitem>
+                    <listitem>
+                        <para>From the cloud controller to the compute node, we
+                            also have iptables/ ebtables rules which allows the
+                            access from the cloud controller to the running
+                            instance.</para>
 
                     </listitem>
                     <listitem>
-                        <para>For every volume an iscsi session is
-                            made (so 14 ebs volumes equals 14
-                            sessions).</para>
-                    </listitem>
-                    <listitem>
-                        <para>From the cloud controller to the compute
-                            node, we also have iptables/ ebtables
-                            rules which allows the access from the
-                            cloud controller to the running instance.</para>
-
-                    </listitem>
-                    <listitem>
-                        <para>And at least, from the cloud controller
-                            to the compute node ; saved into database,
-                            the current state of the instances (in
-                            that case "running" ), and their volumes
-                            attachment (mountpoint, volume id, volume
-                            status, etc..) </para>
+                        <para>And at least, from the cloud controller to the
+                            compute node ; saved into database, the current
+                            state of the instances (in that case "running" ),
+                            and their volumes attachment (mountpoint, volume id,
+                            volume status, etc..) </para>
                     </listitem>
                 </itemizedlist> Now, after the power loss occurs and
                 all hardware components restart, the situation is as
@@ -974,19 +972,13 @@ done &lt; $volumes_tmp_file
                                 errors=remount</literal> in the
                                 <filename>fstab</filename> file, which
                             will prevent data corruption.</para>
-
-                        <para>The system would lock any write to the
-                            disk if it detects an I/O error. This
-                            configuration option should be added into
-                            the cinder-volume server (the one which
-                            performs the ISCSI connection to the SAN),
-                            but also into the instances'
-                                <filename>fstab</filename>
-                            file.</para>
+                        <para>The system would lock any write to the disk if it detects an I/O
+                            error. This configuration option should be added into the <systemitem class="service">cinder-volume</systemitem>
+                            server (the one which performs the ISCSI connection to the SAN), but
+                            also into the instances' <filename>fstab</filename> file.</para>
                     </listitem>
                     <listitem>
-                        <para>Do not add the entry for the SAN's disks
-                            to the cinder-volume's
+                        <para>Do not add the entry for the SAN's disks to the <systemitem class="service">cinder-volume</systemitem>'s
                                 <filename>fstab</filename> file.</para>
                         <para>Some systems will hang on that step,
                             which means you could lose access to your
