@@ -22,7 +22,7 @@
       <para>The browser or client connects to the proxy.</para>
     </listitem>
     <listitem>
-      <para>The proxy talks to <literal>nova-consoleauth</literal> to
+      <para>The proxy talks to <systemitem class="service">nova-consoleauth</systemitem> to
         authorize the user's token, and maps the token to the
           <emphasis>private</emphasis> host and port of an instance's
         VNC server.</para>
@@ -70,12 +70,12 @@
       <title>About nova-consoleauth</title>
     </info>
     <para>Both client proxies leverage a shared service to manage
-      token auth called <literal>nova-consoleauth</literal>. This
+      token auth called <systemitem class="service">nova-consoleauth</systemitem>. This
       service must be running for either proxy to work. Many proxies
       of either type can be run against a single
-        <literal>nova-consoleauth</literal> service in a cluster
+        <systemitem class="service">nova-consoleauth</systemitem> service in a cluster
       configuration.</para>
-    <para>Do not confuse the <literal>nova-consoleauth</literal>
+    <para>Do not confuse the <systemitem class="service">nova-consoleauth</systemitem>
       shared service with <literal>nova-console</literal>, which is a
       XenAPI-specific service that most recent VNC proxy architectures
       do not use.</para>
@@ -87,7 +87,7 @@
     <para>A typical deployment consists of the following components:</para>
     <itemizedlist>
       <listitem>
-        <para>A <literal>nova-consoleauth</literal> process. Typically
+        <para>A <systemitem class="service">nova-consoleauth</systemitem> process. Typically
           runs on the controller host.</para>
       </listitem>
       <listitem>
@@ -200,7 +200,7 @@
         <para><emphasis role="bold">Q: I want VNC support in the
             Dashboard. What services do I need? </emphasis></para>
         <para>A: You need <systemitem class="service">nova-novncproxy</systemitem>,
-            <literal>nova-consoleauth</literal>, and correctly
+            <systemitem class="service">nova-consoleauth</systemitem>, and correctly
           configured compute hosts.</para>
       </listitem>
       <listitem>
@@ -208,9 +208,9 @@
               get-vnc-console</command> or click on the VNC tab of the
             Dashboard, it hangs. Why? </emphasis></para>
         <para>A: Make sure you are running
-            <literal>nova-consoleauth</literal> (in addition to
+            <systemitem class="service">nova-consoleauth</systemitem> (in addition to
             <systemitem class="service">nova-novncproxy</systemitem>). The proxies rely on
-            <literal>nova-consoleauth</literal> to validate tokens,
+            <systemitem class="service">nova-consoleauth</systemitem> to validate tokens,
           and waits for a reply from them until a timeout is reached.
         </para>
       </listitem>
