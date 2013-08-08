@@ -5,130 +5,483 @@
   xml:id="ch_getting-started-with-openstack">
   <title>Getting Started with OpenStack</title>
   <?dbhtml stop-chunking?>
-  <para>OpenStack is a collection of open source technologies that
-    provide elastic cloud computing software for both public and
-    private clouds, large and small. Corporations, service providers,
-    VARS, SMBs, researchers, and global data centers can all use
-    OpenStack to deploy private or public clouds. At the heart of our
-    mission is a pair of basic requirements: Clouds must be simple to
-    implement and massively scalable.</para>
-  <para>If you are new to OpenStack, you undoubtedly have questions
-    about installation, deployment, and usage. It can seem
-    overwhelming at first. But do not fear: This guide along with
-    other OpenStack guides help you ramp up.</para>
-  <section xml:id="why-cloud">
-    <title>Why Cloud?</title>
-    <para>In data centers, projects might need a large amount of
-      computing capacity to complete a computation but no longer need
-      that power after completing the computation. Cloud computing
-      provides a service that is available on demand with the
-      flexibility to spin resources up or down through automation or
-      with little intervention.</para>
-    <para><emphasis role="italic">Cloud computing</emphasis> is often
-      depicted as a cloud-like shape with a service layer that goes
-      from user to provider. The cloud contains the services that
-      harness computing power to get work done. Much like the
-      electrical power we receive each day, cloud computing gives
-      subscribers or users access to a shared collection of computing
-      resources: networks for transfer, servers for storage, and
-      applications or services for performing tasks.</para>
-    <para>A cloud provides:</para>
-    <itemizedlist spacing="compact" role="compact">
-      <listitem>
-        <para>On-demand self-service. Users can provision servers and
-          networks with little human intervention.</para>
-      </listitem>
-      <listitem>
-        <para>Network access. Any computing capabilities are available
-          over the network. Many different devices are allowed access
-          through standardized mechanisms.</para>
-      </listitem>
-      <listitem>
-        <para>Resource pooling. Multiple users can access clouds that
-          serve other consumers according to demand.</para>
-      </listitem>
-      <listitem>
-        <para>Elasticity. Provisioning is rapid and scales out or in
-          based on need.</para>
-      </listitem>
-      <listitem>
-        <para>Metered or measured service. Just like utilities that
-          are paid for by the hour, clouds should optimize resource
-          use and control it for the level of service or type of
-          servers such as storage or processing.</para>
-      </listitem>
-    </itemizedlist>
-    <para>Cloud computing offers the following service models,
-      depending on the capabilities a consumer might require:</para>
-    <itemizedlist>
-      <listitem>
-        <para>Software as a Service (SaaS). Provides the consumer the
-          ability to use the software in a cloud environment, such as
-          web-based email for example.</para>
-      </listitem>
-      <listitem>
-        <para>Platform as a Service (PaaS). Provides the consumer the
-          ability to deploy applications through a programming
-          language or tools supported by the cloud platform provider.
-          An example of platform as a service is an Eclipse/Java
-          programming platform provided with no downloads
-          required.</para>
-      </listitem>
-      <listitem>
-        <para>Infrastructure as a Service (IaaS). Provides
-          infrastructure such as computer instances, network
-          connections, and storage so that people can run any software
-          or operating system.</para>
-      </listitem>
-    </itemizedlist>
-    <para>What's the difference between private and public clouds?
-      What is a hybrid cloud? A private cloud operates for a single
-      organization and can be managed on- or off-premise. A public
-      cloud is available to the general public or a large industry
-      group and is likely owned by a cloud services company. The
-      National Institute of Standards and Technology (NIST) also
-      defines community cloud as shared by several organizations
-      supporting a specific community with shared concerns. A hybrid
-      cloud is a cloud deployment model and can be composed of both
-      public and private clouds, or may involve both virtual and
-      physical servers.</para>
-    <para>What do people do with cloud computing? Cloud computing can
-      help with large-scale computing needs or can lead consolidation
-      efforts by virtualizing servers to make more use of existing
-      hardware and potentially release old hardware from service.
-      People also use cloud computing for collaboration because of its
-      high availability through networked computers. Productivity
-      suites for word processing, number crunching, and email
-      communications, and more are also available through cloud
-      computing. Cloud computing also avails additional storage to the
-      cloud user, avoiding the need for additional hard drives on each
-      user's desktop and enabling access to huge data storage capacity
-      online in the cloud.</para>
-    <para>For more information about cloud computing and its models of
-      service and deployment, see <link
-        xlink:href="http://www.nist.gov/itl/cloud/">
-        http://www.nist.gov/itl/cloud/</link>, published by the US
-      National Institute of Standards and Technology.</para>
+  <para>OpenStack is a project produced by developers and cloud
+    computing technologists from around the world. The project, which
+    represents an open source cloud computing platform for all types
+    of clouds, aims to be simple to implement, massively scalable, and
+    feature rich. </para>
+  <para>The technology consists of a series of interrelated services
+    delivering various components for an Infrastructure as a Service
+    (IaaS) solution. Each service offers an application programming
+    interface (API) that facilitates this integration.</para>
+  <section xml:id="openstack-services">
+    <title>OpenStack services</title>
+    <para>Any OpenStack service can use the API for another service.
+      For the most part, these APIs are the same APIs that are
+      available to cloud end users. As of the Havana release,
+      OpenStack offers the following services: Compute, object store,
+      identity, networking, block storage,image, metering, and REST
+      API.</para>
+    <section xml:id="compute-service">
+      <title>Compute</title>
+      <para>The most complicated and distributed component of
+        OpenStack, Compute uses many processes to fulfill end user
+        requests to launch virtual machines. The main modules are
+        implemented in Python. </para>
+      <para>The following functional areas use the following
+        components:</para>
+
+      <itemizedlist>
+        <title>API</title>
+        <listitem>
+          <para><systemitem class="service">nova-api</systemitem>
+            service. Accepts and responds to end user compute API
+            calls. It supports the OpenStack Compute API, the Amazon
+            EC2 API, and a special Admin API for privileged users to
+            perform administrative actions. It also initiates most
+            orchestration activities, such as running an instance, and
+            enforces some policies.</para>
+        </listitem>
+        <listitem>
+          <para><systemitem class="service"
+              >nova-api-metadata</systemitem> service. Accepts
+            metadata requests from instances. For details, see <link
+              xlink:href="http://docs.openstack.org/trunk/openstack-compute/admin/content/metadata-service.html"
+              >Metadata service</link>. The <systemitem
+              class="service">nova-api-metadata</systemitem> service
+            is generally only used when you run in multi-host mode
+            with <systemitem class="service">nova-network</systemitem>
+            installations.</para>
+        </listitem>
+      </itemizedlist>
+
+      <itemizedlist>
+        <title>Compute core</title>
+        <listitem>
+          <para><systemitem class="service">nova-compute</systemitem>
+            process. Primarily a worker daemon that creates and
+            terminates virtual machine instances through hypervisor's
+            APIs (XenAPI for XenServer/XCP, libvirt for KVM or QEMU,
+            VMwareAPI for VMware, and so on). The process by which it
+            does so is fairly complex but the basics are simple:
+            accept actions from the queue and then perform a series of
+            system commands (like launching a KVM instance) to carry
+            them out while updating state in the database.</para>
+        </listitem>
+        <listitem>
+          <para><systemitem class="service"
+              >nova-scheduler</systemitem> process. Conceptually the
+            simplest piece of code in OpenStack Nova. This code takes
+            a virtual machine instance request from the queue and
+            determines where it should run. Specifically, it
+            determines on which compute server host it should
+            run.</para>
+        </listitem>
+        <listitem>
+          <para><systemitem class="service"
+              >nova-conductor</systemitem> module. Introduced in the
+            Grizzly release, mediates interactions between <systemitem
+              class="service">nova-compute</systemitem> and the
+            database. It aims to eliminate direct accesses to the
+            cloud database made by <systemitem class="service"
+              >nova-compute</systemitem>. The <systemitem
+              class="service">nova-conductor</systemitem> module
+            scales horizontally but do not deploy it on any nodes
+            where <systemitem class="service"
+              >nova-compute</systemitem> runs. For more information,
+            see <link
+              xlink:href="http://russellbryantnet.wordpress.com/2012/11/19/a-new-nova-service-nova-conductor/"
+              >A new Nova service: nova-conductor</link>.</para>
+        </listitem>
+      </itemizedlist>
+
+      <itemizedlist>
+        <title>Networking for VMs</title>
+        <listitem>
+          <para><systemitem class="service">nova-network</systemitem>
+            worker daemon. Similar to <systemitem class="service"
+              >nova-compute</systemitem>, it accepts networking tasks
+            from the queue and performs tasks to manipulate the
+            network, such as setting up bridging interfaces or
+            changing iptables rules. This functionality is being
+            migrated to OpenStack Networking, which is a separate
+            OpenStack service.</para>
+        </listitem>
+        <listitem>
+          <para><systemitem class="service"
+              >nova-dhcpbridge</systemitem> script. Tracks IP address
+            leases and records them in the database by using the
+            dnsmasq dhcp-script facility. This functionality is also
+            being migrated to OpenStack Networking. A different script
+            is provided when you use OpenStack Networking, code-named
+            Neutron.</para>
+        </listitem>
+      </itemizedlist>
+
+      <itemizedlist>
+        <title>Console interface</title>
+        <listitem>
+          <para><systemitem class="service"
+              >nova-consoleauth</systemitem> daemon. Authorizes tokens
+            for users that console proxies provide. See <systemitem
+              class="service">nova-novncproxy</systemitem> and
+              <systemitem class="service"
+              >nova-xvpnvcproxy</systemitem>. This service must be
+            running for console proxies to work. Many proxies of
+            either type can be run against a single <systemitem
+              class="service">nova-consoleauth</systemitem> service in
+            a cluster configuration. For information, see <link
+              xlink:href="http://docs.openstack.org/trunk/openstack-compute/admin/content/about-nova-consoleauth.html"
+              >About nova-consoleauth</link>.</para>
+        </listitem>
+        <listitem>
+          <para><systemitem class="service"
+              >nova-novncproxy</systemitem> daemon. Provides a proxy
+            for accessing running instances through a VNC connection.
+            It supports browser-based novnc clients.</para>
+        </listitem>
+        <listitem>
+          <para><systemitem class="service">nova-console</systemitem>
+            daemon. Deprecated for use with Grizzly. Instead, the
+              <systemitem class="service"
+              >nova-xvpnvncproxy</systemitem> is used.</para>
+        </listitem>
+        <listitem>
+          <para><systemitem class="service"
+              >nova-xvpnvncproxy</systemitem> daemon. A proxy for
+            accessing running instances through a VNC connection. It
+            supports a Java client specifically designed for
+            OpenStack.</para>
+        </listitem>
+        <listitem>
+          <para><systemitem class="service">nova-cert</systemitem>
+            daemon. Manages x509 certificates.</para>
+        </listitem>
+      </itemizedlist>
+
+      <itemizedlist>
+        <title>Image Management (EC2 scenario)</title>
+        <listitem>
+          <para><systemitem class="service"
+              >nova-objectstore</systemitem> daemon. Provides an S3
+            interface for registering images with the Image Service.
+            Mainly used for installations that must support euca2ools.
+            The euca2ools tools talk to <systemitem class="service"
+              >nova-objectstore</systemitem> in “S3 language” and
+              <systemitem class="service"
+              >nova-objectstore</systemitem> translates S3 requests
+            into Image Service requests. </para>
+        </listitem>
+        <listitem>
+          <para>euca2ools client. Though not an OpenStack module,
+            OpenStack can support it. It’s a set of command line
+            interpreter commands for managing cloud resources.
+            Provided that <systemitem class="service"
+              >nova-api</systemitem> is configured to support EC2
+            interface, you can use euca2ools to issue cloud management
+            commands. For more information, see the <link
+              xlink:href="http://www.eucalyptus.com/eucalyptus-cloud/documentation/2.0"
+              >Eucalyptus 2.0 Documentation</link>. </para>
+        </listitem>
+      </itemizedlist>
+
+      <itemizedlist>
+        <title>Command Line Interpreter/Interfaces</title>
+        <listitem>
+          <para>nova client. Submits commands as a tenant
+            administrator or as a cloud user.</para>
+        </listitem>
+        <listitem>
+          <para>nova-manage client. Submits commands as a cloud
+            administrator.</para>
+        </listitem>
+      </itemizedlist>
+
+      <itemizedlist>
+        <title>Other components</title>
+        <listitem>
+          <para>The queue. Provides a central hub for passing messages
+            between daemons. Usually implemented with <link
+              xlink:href="http://www.rabbitmq.com/">RabbitMQ</link>,
+            but could be any AMPQ message queue, such as <link
+              xlink:href="http://qpid.apache.org/">Apache Qpid</link>)
+            or <link xlink:href="http://www.zeromq.org/">Zero
+              MQ</link>.</para>
+        </listitem>
+        <listitem>
+          <para>SQL database. Stores most of the build-time and
+            run-time state for a cloud infrastructure. Includes the
+            instance types that are available for use, instances in
+            use, available networks, and projects. Theoretically,
+            OpenStack Nova can support any database that SQL-Alchemy
+            supports. However, the following databases are widely
+            used: <itemizedlist>
+              <listitem>
+                <para>sqlite3 databases. Appropriate for test and
+                  development work.</para>
+              </listitem>
+              <listitem>
+                <para>MySQL.</para>
+              </listitem>
+              <listitem>
+                <para>PostgreSQL.</para>
+              </listitem>
+            </itemizedlist></para>
+        </listitem>
+      </itemizedlist>
+      <para>Nova interacts with many other OpenStack services:
+        Identity Service for authentication, Image Service for images,
+        and the OpenStack dashboard for a web interface. The Image
+        Service interactions are central. The API process can upload
+        and query the Image Service, while <systemitem class="service"
+          >nova-compute</systemitem> downloads images to use to launch
+        instances.</para>
+    </section>
+    <section xml:id="object-storage-service">
+      <title>Object Storage </title>
+      <para>Provides a distributed architecture to prevent a single
+        point of failure and to scale horizontally. </para>
+      <para>Includes the following components:</para>
+      <itemizedlist>
+        <listitem>
+          <para><systemitem class="service"
+              >swift-proxy-server</systemitem>. This proxy server
+            accepts incoming requests through the OpenStack Object API
+            or raw HTTP. It accepts files to upload, modifications to
+            metadata or container creation. It also serves file or
+            container listings to web browsers. To improve
+            performance, the proxy server can use an optional cache
+            usually deployed with memcache.</para>
+        </listitem>
+        <listitem>
+          <para>Account servers. Manage accounts defined with the
+            object storage service.</para>
+        </listitem>
+        <listitem>
+          <para>Container servers. Manage a mapping of containers, or
+            folders, within the object store service.</para>
+        </listitem>
+        <listitem>
+          <para>Object servers. Manage actual objects, such as files,
+            on the storage nodes.</para>
+        </listitem>
+        <listitem>
+          <para>A number of periodic processes. Perform housekeeping
+            tasks on the large data store. The replication services
+            ensure consistency and availability through the cluster.
+            Other periodic processes include auditors, updaters, and
+            reapers.</para>
+        </listitem>
+      </itemizedlist>
+      <para>Configurable WSGI middleware, which is usually the
+        Identity Service, handles authentication.</para>
+      <xi:include href="section_storage-concepts.xml"/>
+    </section>
+    <section xml:id="identity-service">
+      <title>Identity Service</title>
+      <para>Provides a single point of integration for OpenStack
+        policy, catalog, token, and authentication.</para>
+      <itemizedlist>
+        <listitem>
+          <para><systemitem class="service">keystone</systemitem>
+            client. Handles API requests as well as providing
+            configurable catalog, policy, token and identity
+            services.</para>
+        </listitem>
+        <listitem>
+          <para>Identity Service functions. Each has a pluggable
+            backend that allows different ways to use the particular
+            service. Most support standard backends like LDAP or SQL,
+            as well as Key Value Stores (KVS).</para>
+        </listitem>
+      </itemizedlist>
+      <para>Most people customize the Identity Service for their
+        current authentication services.</para>
+    </section>
+    <section xml:id="networking-service">
+      <title>Networking</title>
+      <para>Provides network-connectivity-as-a-service between
+        interface devices that are managed by other OpenStack
+        services, usually Compute. Enables users to create their own
+        networks and attach interfaces to them. Like many OpenStack
+        services, OpenStack Networking is highly configurable due to
+        its plug-in architecture. These plug-ins accommodate different
+        networking equipment and software. As such, the architecture
+        and deployment varies dramatically. Includes the following
+        components:</para>
+      <itemizedlist>
+        <listitem>
+          <para><systemitem class="service"
+              >neutron-server</systemitem>. Accepts API requests and
+            then routes them to the appropriate OpenStack Networking
+            plugin for action.</para>
+        </listitem>
+        <listitem>
+          <para>OpenStack Networking plugins and agents. Plugs and
+            unplugs ports, creates networks or subnets and IP
+            addressing. These plugins and agents differ depending on
+            the vendor and technologies used in the particular cloud.
+            OpenStack Networking ships with plugins and agents for
+            Cisco virtual and physical switches, Nicira NVP product,
+            NEC OpenFlow products, Open vSwitch, Linux bridging, and
+            the Ryu Network Operating System.</para>
+          <para>The common agents are L3 (layer 3), DHCP (dynamic host
+            IP addressing) and the specific plug-in agent.</para>
+        </listitem>
+        <listitem>
+          <para>Messaging queue. Most OpenStack Networking
+            installations make use of a messaging queue to route
+            information between the neutron-server and various agents
+            as well as a database to store networking state for
+            particular plugins.</para>
+        </listitem>
+      </itemizedlist>
+      <para>OpenStack Networking interacts mainly with OpenStack
+        Compute, where it provides networks and connectivity for its
+        instances.</para>
+    </section>
+    <section xml:id="block-storage-service">
+      <title>Block Storage </title>
+      <para>Enables management of volumes, volume types, which are
+        similar to compute flavors, and volume snapshots. Includes the
+        following components:</para>
+      <itemizedlist>
+        <listitem>
+          <para><systemitem class="service">cinder-api</systemitem>.
+            Accepts API requests and routes them to <systemitem
+              class="service">cinder-volume</systemitem> for
+            action.</para>
+        </listitem>
+        <listitem>
+          <para><systemitem class="service"
+            >cinder-volume</systemitem>. Acts upon the requests by
+            reading or writing to the Cinder database to maintain
+            state, interacting with other processes (like <systemitem
+              class="service">cinder-scheduler</systemitem>) through a
+            message queue and directly upon block storage providing
+            hardware or software. It can interact with a variety of
+            storage providers through a driver architecture.
+            Currently, there are drivers for IBM, SolidFire, NetApp,
+            Nexenta, Zadara, GlusterFS, linux iSCSI and other storage
+            providers.</para>
+        </listitem>
+        <listitem>
+          <para><systemitem class="service"
+              >cinder-scheduler</systemitem> daemon. Like the
+              <systemitem class="service">nova-scheduler</systemitem>,
+            picks the optimal block storage provider node on which to
+            create the volume.</para>
+        </listitem>
+        <listitem>
+          <para>Messaging queue. OpenStack Block Storage deployments
+            also use a messaging queue to route information between
+            the cinder processes as well as a database to store volume
+            state.</para>
+        </listitem>
+      </itemizedlist>
+      <para>Like Networking, the Block Storage Service mainly
+        interacts with Compute. For example, the Block Storage Service
+        interacts with Compute to provide volumes for Compute
+        instances.</para>
+    </section>
+    <section xml:id="image-service">
+      <title>Image Service</title>
+      <para>Includes the following components: </para>
+      <itemizedlist>
+        <listitem>
+          <para><systemitem class="service">glance-api</systemitem>.
+            Accepts Image API calls for image discovery, image
+            retrieval and image storage.</para>
+        </listitem>
+        <listitem>
+          <para><systemitem class="service"
+              >glance-registry</systemitem>. Stores, processes, and
+            retrieves metadata about images (size, type, and so
+            on).</para>
+        </listitem>
+        <listitem>
+          <para>Database. Stores image metadata. Like Nova, you can
+            choose your database depending on your preference (but
+            most people use MySQL or SQlite).</para>
+        </listitem>
+        <listitem>
+          <para>Storage repository for image files. In the previous
+            diagram, Swift is the image repository but you can
+            configure a different repository. The Image Service
+            supports normal filesystems, RADOS block devices, Amazon
+            S3, and HTTP. Be aware that some of these choices are
+            limited to read-only usage.</para>
+        </listitem>
+      </itemizedlist>
+      <para>A number of periodic processes run on the Image Service to
+        support caching. Replication services ensures consistency and
+        availability through the cluster. Other periodic processes
+        include auditors, updaters, and reapers.</para>
+      <para>As shown in <xref linkend="concept_arch"/>, the Image
+        Service is central to the overall IaaS picture. It accepts API
+        requests for images or image metadata from end users or Nova
+        components and can store its disk files in the Object Storage
+        Service.</para>
+    </section>
+    <section xml:id="metering">
+      <title>Metering</title>
+      <para>To be written</para>
+    </section>
+    <section xml:id="rest-api">
+      <title>REST API</title>
+      <para>To be written</para>
+    </section>
+    <section xml:id="dashboard">
+      <title>Dashboard</title>
+      <para>A modular <link
+          xlink:href="https://www.djangoproject.com/">Django web
+          application</link> that provides an end user and
+        administrator interface to OpenStack services.</para>
+      <informalfigure>
+        <mediaobject>
+          <imageobject>
+            <imagedata contentwidth="4in"
+              fileref="figures/horizon-screenshot.jpg"/>
+          </imageobject>
+        </mediaobject>
+      </informalfigure>
+      <para>The architecture is fairly simple:</para>
+      <itemizedlist>
+        <listitem>
+          <para>Horizon. Usually deployed through <link
+              xlink:href="http://code.google.com/p/modwsgi/"
+              >mod_wsgi</link> in Apache. The code itself is separated
+            into a reusable python module with most of the logic
+            (interactions with various OpenStack APIs) and
+            presentation (to make it easily customizable for different
+            sites).</para>
+        </listitem>
+        <listitem>
+          <para>A database. Configurable as to which one. Relies
+            mostly on the other services for data. Consequently,
+            stores very little data of its own.</para>
+        </listitem>
+      </itemizedlist>
+      <para>From a network architecture point of view, this service
+        must be accessible to customers and to the public API for each
+        OpenStack service. To use the administrator functionality for
+        other services, it must also connect to Admin API endpoints,
+        which should not be accessible by customers.</para>
+    </section>
   </section>
-  <section xml:id="what-is-openstack">
-    <title>What Is OpenStack?</title>
-    <para>The OpenStack project delivers a massively scalable cloud
-      operating system. Each of the constituent services work together
-      to provide a complete Infrastructure as a Service (IaaS). Each
-      service offers an application programming interface (API) that
-      facilitates this integration.</para>
-    <para>Any service can use the API for another service. Also, an
-      implementer can switch out any service as long as they maintain
-      the API. These APIs are, for the most part, the same APIs that
-      are available to end users of the cloud.</para>
+  <section xml:id="openstack-architecture">
+    <title>OpenStack architecture</title>
+    <para>The OpenStack conceptual and logical architecture for the
+      Havana release is as follows.</para>
     <section xml:id="conceptual-architecture">
-      <title>Conceptual Architecture</title>
+      <title>Conceptual architecture</title>
       <para>The following figure shows a stylized and simplified view
-        of the OpenStack architecture from the operator's point of
-        view. It assumes that the implementer uses all services
-        together in a common configuration. This figure does not show
-        how consumers of the cloud might actually use it. For example,
-        many users access object storage heavily and directly.</para>
+        of the OpenStack architecture from the point of view of the
+        cloud operator. It assumes that the implementer uses all
+        services together in a common configuration. This figure does
+        not show how consumers of the cloud might actually use it. For
+        example, many users access object storage heavily and
+        directly.</para>
       <para>Conceptually, picture the relationships between the
         OpenStack services as follows:</para>
       <informalfigure xml:id="concept_arch">
@@ -194,7 +547,8 @@
             <td><link
                 xlink:href="http://www.openstack.org/software/openstack-networking/"
                 >Networking</link></td>
-            <td><link xlink:href="http://docs.openstack.org/developer/neutron/"
+            <td><link
+                xlink:href="http://docs.openstack.org/developer/neutron/"
                 >Neutron</link></td>
             <td>Enables network connectivity as a service between
               interface devices managed by other OpenStack services,
@@ -253,8 +607,8 @@
         following types:</para>
       <itemizedlist>
         <listitem>
-          <para>daemon. Runs as a daemon and, on Linux platforms and
-            is usually installed as a service.</para>
+          <para>daemon. Runs as a daemon. On Linux platforms, is
+            usually installed as a service.</para>
         </listitem>
         <listitem>
           <para>script. Run by an external module when an event
@@ -267,9 +621,8 @@
             service.</para>
         </listitem>
         <listitem>
-          <para>command-line interface (CLI). A way to submit API
-            calls to OpenStack services through easy-to-use commands.
-          </para>
+          <para>command-line interface (CLI). Submits API calls to
+            OpenStack services through easy-to-use commands. </para>
         </listitem>
       </itemizedlist>
       <para>As with any service-oriented architecture, diagrams
@@ -293,413 +646,7 @@
         individual services interact with each other through public
         APIs, except where privileged administrator commands are
         necessary.</para>
-      <para>The following sections describe the architecture of each
-        service.</para>
-      <section xml:id="overview-dashboard-arch">
-        <title>Dashboard</title>
-        <para>The dashboard is a modular <link
-            xlink:href="https://www.djangoproject.com/">Django web
-            application</link> that provides an end user and
-          administrator interface to OpenStack services.</para>
-        <informalfigure>
-          <mediaobject>
-            <imageobject>
-              <imagedata contentwidth="4in"
-                fileref="figures/horizon-screenshot.jpg"/>
-            </imageobject>
-          </mediaobject>
-        </informalfigure>
-        <para>The architecture is fairly simple:</para>
-        <itemizedlist>
-          <listitem>
-            <para>Horizon is usually deployed through <link
-                xlink:href="http://code.google.com/p/modwsgi/"
-                >mod_wsgi</link> in Apache. The code itself is
-              separated into a reusable python module with most of the
-              logic (interactions with various OpenStack APIs) and
-              presentation (to make it easily customizable for
-              different sites).</para>
-          </listitem>
-          <listitem>
-            <para>A database (configurable as to which one). As it
-              relies mostly on the other services for data, it stores
-              very little data of its own.</para>
-          </listitem>
-        </itemizedlist>
-        <para>From a network architecture point of view, this service
-          must be accessible to customers and to the public API for
-          each OpenStack service. To use the administrator
-          functionality for other services, it must also connect to
-          Admin API endpoints, which should not be accessible by
-          customers.</para>
-      </section>
-      <section xml:id="overview-compute-arch">
-        <title>Compute</title>
-        <para>The most complicated and distributed component of
-          OpenStack, Compute uses many processes to fulfill end user
-          request to launch virtual machines. The main modules are
-          implemented in Python. The following lists are organized by
-          functional areas:</para>
-        <para>API</para>
-        <itemizedlist>
-          <listitem>
-            <para><systemitem class="service">nova-api</systemitem> accepts and responds to end
-              user compute API calls. It supports OpenStack Compute
-              API, Amazon's EC2 API and a special Admin API (for
-              privileged users to perform administrative actions). It
-              also initiates most of the orchestration activities
-              (such as running an instance) as well as enforces some
-              policy.</para>
-          </listitem>
-          <listitem>
-            <para><code>nova-api-metadata</code> accepts metadata
-              requests from instances (<link
-                xlink:href="http://docs.openstack.org/trunk/openstack-compute/admin/content/metadata-service.html"
-                >more details</link>). The nova-api-metadata service
-              is generally only used when running in multi-host mode
-              with nova-network installations.</para>
-          </listitem>
-        </itemizedlist>
-        <para>Computing core</para>
-        <itemizedlist>
-          <listitem>
-            <para>The <systemitem class="service"
-                >nova-compute</systemitem> process is primarily a
-              worker daemon that creates and terminates virtual
-              machine instances via hypervisor's APIs (XenAPI for
-              XenServer/XCP, libvirt for KVM or QEMU, VMwareAPI for
-              VMware, etc.). The process by which it does so is fairly
-              complex but the basics are simple: accept actions from
-              the queue and then perform a series of system commands
-              (like launching a KVM instance) to carry them out while
-              updating state in the database.</para>
-          </listitem>
-          <listitem>
-            <para>The <code>nova-schedule</code> process is
-              conceptually the simplest piece of code in OpenStack
-              Nova: take a virtual machine instance request from the
-              queue and determines where it should run (specifically,
-              which compute server host it should run on).</para>
-          </listitem>
-          <listitem>
-            <para>The <code>nova-conductor</code> module, introduced
-              in the Grizzly release, works as a “mediator” between
-                <systemitem class="service">nova-compute</systemitem>
-              and the database. It is aimed at eliminating all the
-              direct accesses to the cloud database made by
-                <systemitem class="service">nova-compute</systemitem>.
-              The nova-conductor module scales horizontally but it
-              shouldn’t be deployed on the same node(s) where
-                <systemitem class="service">nova-compute</systemitem>
-              runs. You can <link
-                xlink:href="http://russellbryantnet.wordpress.com/2012/11/19/a-new-nova-service-nova-conductor/"
-                >read more about the new service here</link>.</para>
-          </listitem>
-        </itemizedlist>
-        <para>Networking for VMs</para>
-        <itemizedlist>
-          <listitem>
-            <para>The <code>nova-network</code> worker daemon is very
-              similar to <systemitem class="service"
-                >nova-compute</systemitem>. It accepts networking
-              tasks from the queue and then performs tasks to
-              manipulate the network (such as setting up bridging
-              interfaces or changing iptables rules). This
-              functionality is being migrated to OpenStack Networking,
-              a separate OpenStack service.</para>
-          </listitem>
-          <listitem>
-            <para><code>nova-dhcpbridge</code> (script) This script
-              tracks IP address leases and records them in the
-              database using dnsmasq's dhcp-script facility. This
-              functionality is also migrated to OpenStack Networking;
-              a different script is provided when using OpenStack
-              Networking (code-named Neutron).</para>
-          </listitem>
-        </itemizedlist>
-        <para>Console Interface</para>
-        <itemizedlist>
-          <listitem>
-            <para>The <code>nova-consoleauth</code> daemon authorizes
-              user’s tokens that console proxies provide (see
-              <systemitem class="service">nova-novncproxy</systemitem> and nova-xvpnvcproxy). This service must
-              be running in order for console proxies to work. Many
-              proxies of either type can be run against a single
-              nova-consoleauth service in a cluster configuration.
-                <link
-                xlink:href="http://docs.openstack.org/trunk/openstack-compute/admin/content/about-nova-consoleauth.html"
-                >Read more details</link>.</para>
-          </listitem>
-          <listitem>
-            <para>The <systemitem class="service">nova-novncproxy</systemitem> (daemon) provides a
-              proxy for accessing running instances through a VNC
-              connection. It supports browser-based novnc
-              clients.</para>
-          </listitem>
-          <listitem>
-            <para>The deprecated <code>nova-console</code> daemon is
-              no longer used with Grizzly, and the nova-xvpnvncproxy
-              is used instead.</para>
-          </listitem>
-          <listitem>
-            <para>The <code>nova-xvpnvncproxy</code> daemon is a proxy
-              for accessing running instances through a VNC
-              connection. It supports a Java client specifically
-              designed for OpenStack.</para>
-          </listitem>
-          <listitem>
-            <para>The <systemitem class="service">nova-cert</systemitem> daemon manages x509
-              certificates.</para>
-          </listitem>
-        </itemizedlist>
-        <para>Image Management (EC2 scenario)</para>
-        <itemizedlist>
-          <listitem>
-            <para>The <systemitem class="service">nova-objectstore</systemitem> daemon provides an
-              S3 interface for registering images onto the image
-              management service (see glance) It is mainly used for
-              installations that need to support euca2ools. The
-              euca2ools tools talk to nova-objectore in “S3 language”
-              and <systemitem class="service">nova-objectstore</systemitem> translates S3 requests into glance
-              requests.</para>
-          </listitem>
-          <listitem>
-            <para>The <code>euca2ools</code> client is not an
-              OpenStack module but it can be supported by OpenStack.
-              It’s a set of command line interpreter commands for
-              managing cloud resources. Provided that <systemitem class="service">nova-api</systemitem> is
-              configured to support EC2 interface, euca2ools can be
-              used to issue cloud management commands. For more
-              information on euca2ools, see <link
-                xlink:href="http://www.eucalyptus.com/eucalyptus-cloud/documentation/2.0"
-                >http://www.eucalyptus.com/eucalyptus-cloud/documentation/2.0</link>.
-            </para>
-          </listitem>
-        </itemizedlist>
-        <para>Command Line Interpreter/Interfaces</para>
-        <itemizedlist>
-          <listitem>
-            <para>The <code>nova</code> client enables you to submit
-              either tenant administrator’s commands or cloud user’s
-              commands.</para>
-          </listitem>
-          <listitem>
-            <para>The <code>nova-manage</code> client submits cloud
-              administrator commands.</para>
-          </listitem>
-        </itemizedlist>
-        <itemizedlist>
-          <listitem>
-            <para>The queue provides a central hub for passing
-              messages between daemons. This is usually implemented
-              with <link xlink:href="http://www.rabbitmq.com/"
-                >RabbitMQ</link> today, but could be any AMPQ message
-              queue (such as <link
-                xlink:href="http://qpid.apache.org/">Apache
-                Qpid</link>), or <link
-                xlink:href="http://www.zeromq.org/">Zero
-              MQ</link>.</para>
-          </listitem>
-          <listitem>
-            <para>The SQL database stores most of the build-time and
-              run-time state for a cloud infrastructure. This includes
-              the instance types that are available for use, instances
-              in use, networks available and projects. Theoretically,
-              OpenStack Nova can support any database supported by
-              SQL-Alchemy but the only databases currently being
-              widely used are sqlite3 (only appropriate for test and
-              development work), MySQL and PostgreSQL.</para>
-          </listitem>
-        </itemizedlist>
-        <para>Nova interacts with many other OpenStack services:
-          Keystone for authentication, Glance for images and Horizon
-          for web interface. The Glance interactions are central. The
-          API process can upload and query Glance while <systemitem
-            class="service">nova-compute</systemitem> will download
-          images for use in launching images.</para>
-      </section>
-      <section xml:id="overview-object-store-arch">
-        <title>Object Storage Service</title>
-        <para>The swift architecture is very distributed to prevent
-          any single point of failure as well as to scale
-          horizontally. It includes the following components:</para>
-        <itemizedlist>
-          <listitem>
-            <para>Proxy server (<code>swift-proxy-server</code>)
-              accepts incoming requests via the OpenStack Object API
-              or just raw HTTP. It accepts files to upload,
-              modifications to metadata or container creation. In
-              addition, it will also serve files or container listing
-              to web browsers. The proxy server may utilize an
-              optional cache (usually deployed with memcache) to
-              improve performance.</para>
-          </listitem>
-          <listitem>
-            <para>Account servers manage accounts defined with the
-              object storage service.</para>
-          </listitem>
-          <listitem>
-            <para>Container servers manage a mapping of containers
-              (i.e folders) within the object store service.</para>
-          </listitem>
-          <listitem>
-            <para>Object servers manage actual objects (i.e. files) on
-              the storage nodes.</para>
-          </listitem>
-          <listitem>
-            <para>A number of periodic processes run to perform
-              housekeeping tasks on the large data store. The
-              replication services ensure consistency and availability
-              through the cluster. Other periodic processes include
-              auditors, updaters, and reapers.</para>
-          </listitem>
-        </itemizedlist>
-        <para>Authentication is handled through configurable WSGI
-          middleware, usually be Keystone.</para>
-      </section>
-      <section xml:id="overview-image-store-arch">
-        <title>Image Service</title>
-        <para>The Image Service contains the following components: </para>
-        <itemizedlist>
-          <listitem>
-            <para><code>glance-api</code> accepts Image API calls for
-              image discovery, image retrieval and image
-              storage.</para>
-          </listitem>
-          <listitem>
-            <para><code>glance-registry</code> stores, processes and
-              retrieves metadata about images (size, type,
-              etc.).</para>
-          </listitem>
-          <listitem>
-            <para>A database to store the image metadata. Like Nova,
-              you can choose your database depending on your
-              preference (but most people use MySQL or SQlite).</para>
-          </listitem>
-          <listitem>
-            <para>A storage repository for the actual image files. In
-              the diagram above, Swift is shown as the image
-              repository, but this is configurable. In addition to
-              Swift, Glance supports normal filesystems, RADOS block
-              devices, Amazon S3 and HTTP. Be aware that some of these
-              choices are limited to read-only usage.</para>
-          </listitem>
-        </itemizedlist>
-        <para>A number of periodic processes run on the Image Service
-          to support caching. Replication services ensures consistency
-          and availability through the cluster. Other periodic
-          processes include auditors, updaters, and reapers.</para>
-        <para>As shown in <xref linkend="concept_arch"/>, the Image
-          Service is central to the overall IaaS picture. It accepts
-          API requests for images or image metadata from end users or
-          Nova components and can store its disk files in the Object
-          Storage Service.</para>
-      </section>
-      <section xml:id="overview-identity-arch">
-        <title>Identity</title>
-        <para>Keystone provides a single point of integration for
-          OpenStack policy, catalog, token and authentication.</para>
-        <itemizedlist>
-          <listitem>
-            <para><code>keystone</code> handles API requests as well
-              as providing configurable catalog, policy, token and
-              identity services.</para>
-          </listitem>
-          <listitem>
-            <para>Each Keystone function has a pluggable backend which
-              allows different ways to use the particular service.
-              Most support standard backends like LDAP or SQL, as well
-              as Key Value Stores (KVS).</para>
-          </listitem>
-        </itemizedlist>
-        <para>Most people will use this as a point of customization
-          for their current authentication services.</para>
-      </section>
-      <section xml:id="overview-network-arch">
-        <title>Networking</title>
-        <para>OpenStack Networking provides "network connectivity as a
-          service" between interface devices managed by other
-          OpenStack services (most likely Compute). The service works
-          by allowing users to create their own networks and then
-          attach interfaces to them. Like many of the OpenStack
-          services, OpenStack Networking is highly configurable due to
-          its plug-in architecture. These plug-ins accommodate
-          different networking equipment and software. As such, the
-          architecture and deployment can vary dramatically. In the
-          above architecture, a simple Linux networking plug-in is
-          shown.</para>
-        <itemizedlist>
-          <listitem>
-            <para><code>neutron-server</code> accepts API requests and
-              then routes them to the appropriate OpenStack Networking
-              plugin for action.</para>
-          </listitem>
-          <listitem>
-            <para>OpenStack Networking plugins and agents perform the
-              actual actions such as plugging and unplugging ports,
-              creating networks or subnets and IP addressing. These
-              plugins and agents differ depending on the vendor and
-              technologies used in the particular cloud. OpenStack
-              Networking ships with plugins and agents for: Cisco
-              virtual and physical switches, Nicira NVP product, NEC
-              OpenFlow products, Open vSwitch, Linux bridging and the
-              Ryu Network Operating System.</para>
-            <para>The common agents are L3 (layer 3), DHCP (dynamic
-              host IP addressing) and the specific plug-in
-              agent.</para>
-          </listitem>
-          <listitem>
-            <para>Most OpenStack Networking installations also make
-              use of a messaging queue to route information between
-              the neutron-server and various agents as well as a
-              database to store networking state for particular
-              plugins.</para>
-          </listitem>
-        </itemizedlist>
-        <para>OpenStack Networking interacts mainly with OpenStack
-          Compute, where it provides networks and connectivity for its
-          instances.</para>
-      </section>
-      <section xml:id="overview-block-storage-arch">
-        <title>Block Storage Service API</title>
-        <para>Enables management of volumes, volume types, which are
-          similar to compute flavors, and volume snapshots.</para>
-        <itemizedlist>
-          <listitem>
-            <para><code>cinder-api</code> accepts API requests and
-              routes them to <systemitem class="service">cinder-volume</systemitem> for action.</para>
-          </listitem>
-          <listitem>
-            <para><systemitem class="service">cinder-volume</systemitem> acts upon the requests by
-              reading or writing to the Cinder database to maintain
-              state, interacting with other processes (like
-                <code>cinder-scheduler</code>) through a message queue
-              and directly upon block storage providing hardware or
-              software. It can interact with a variety of storage
-              providers through a driver architecture. Currently,
-              there are drivers for IBM, SolidFire, NetApp, Nexenta,
-              Zadara, GlusterFS, linux iSCSI and other storage
-              providers.</para>
-          </listitem>
-          <listitem>
-            <para>Much like <code>nova-scheduler</code>, the
-                <code>cinder-scheduler</code> daemon picks the optimal
-              block storage provider node to create the volume
-              on.</para>
-          </listitem>
-          <listitem>
-            <para>OpenStack Block Storage deployments also use a
-              messaging queue to route information among the cinder
-              processes, and a database to store volume state.</para>
-          </listitem>
-        </itemizedlist>
-        <para>Like Networking, the Block Storage Service mainly
-          interacts with Compute. For example, the Block Storage
-          Service interacts with Compute to provide volumes for
-          Compute instances.</para>
-      </section>
     </section>
-    <xi:include href="section_storage-concepts.xml"/>
   </section>
   <section xml:id="feedback">
     <title>Feedback</title>
