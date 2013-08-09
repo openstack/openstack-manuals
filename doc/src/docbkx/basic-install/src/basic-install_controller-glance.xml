@@ -18,7 +18,9 @@
         <step>
             <para>Install the OpenStack Image packages, as follows:
                 <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install glance</userinput></screen>
-                <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-glance</userinput></screen></para>
+                <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-glance</userinput></screen>
+                <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install openstack-glance python-glanceclient</userinput></screen>
+	    </para>
         </step>
         <step>
             <para>Configure the OpenStack Image Service, as
@@ -47,6 +49,8 @@ flavor=keystone</programlisting></para>
                 </step>
                 <step>
                     <para>Restart both services, as follows: <screen os="ubuntu"><prompt>#</prompt> <userinput>service glance-api restart &amp;&amp; service glance-registry restart</userinput></screen><screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>service openstack-glance-api restart &amp;&amp; service openstack-glance-registry restart</userinput></screen>
+                    <screen os="opensuse"><prompt>#</prompt><userinput>systemctl restart openstack-glance-api &amp;&amp; systemctl restart openstack-glance-registry</userinput></screen>
+
                         <note>
                             <para>Check the
                                    <literal>/var/log/glance/*.log</literal>
@@ -55,6 +59,11 @@ flavor=keystone</programlisting></para>
                         </note>
                     </para>
                 </step>
+		<step os="opensuse">
+		  <para>Enable both Glance services:
+                  <screen><prompt>#</prompt> <userinput>systemctl enable openstack-glance-api openstack-glance-registry</userinput></screen>
+		  </para>
+		</step>
                 <step>
                     <para>Create the OpenStack Image tables in the
                         database, as follows:

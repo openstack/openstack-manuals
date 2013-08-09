@@ -20,6 +20,30 @@ DATABASES = {
     }
 }
 EOF</userinput></screen>
+        <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install openstack-dashboard memcached python-python-memcached
+
+ ( cat | sudo tee -a /usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py ) &lt;&lt;EOF
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'horizon',
+        'USER': 'horizon',
+        'PASSWORD': 'password',
+        'HOST': '$MY_IP',
+        'PORT': '',
+    }
+}
+EOF</userinput></screen>
+        <note os="opensuse">
+        <para>Setup apache configuration:
+<screen><prompt>#</prompt> <userinput>cp /etc/apache2/conf.d/openstack-dashboard.conf.sample /etc/apache2/conf.d/openstack-dashboard.conf</userinput>
+<prompt>#</prompt> <userinput>a2enmod rewrite;a2enmod ssl;a2enmod wsgi</userinput></screen>
+	</para>
+        <para>Start the service:
+                        <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl restart apache2.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable apache2.service</userinput></screen>
+	</para>
+	</note>
         <note os="ubuntu">
             <para>Optional, but recommended: remove the
                     <literal>openstack-dashboard-ubuntu-theme</literal>
@@ -35,8 +59,9 @@ EOF</userinput></screen>
             >password</emphasis>. <note>
             <para>Check the
                     <literal os="ubuntu">/var/log/apache2/error.log</literal>
-                    <literal os="centos;rhel;fedora">/var/log/httpd/error_log</literal> file
-                for errors that wold prevent either the Apache service
+                    <literal os="centos;rhel;fedora">/var/log/httpd/error_log</literal>
+		    <literal os="opensuse">/var/log/apache2/error.log</literal>
+                file for errors that wold prevent either the Apache service
                 or the Dashboard service from successfully
                 starting.</para>
         </note>

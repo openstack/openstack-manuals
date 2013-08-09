@@ -9,7 +9,9 @@
         <orderedlist>
             <listitem>
                 <para>Install <phrase os="rhel;centos;fedora">Fedora 18</phrase>
-                    <phrase os="ubuntu">Ubuntu 12.04</phrase>. The exact installation procedure is outside the scope of this document, but please note the following configurations:<itemizedlist>
+                    <phrase os="ubuntu">Ubuntu 12.04</phrase> <phrase
+		    os="opensuse">openSUSE 12.3</phrase>.
+		    The exact installation procedure is outside the scope of this document, but please note the following configurations:<itemizedlist>
                         <listitem>
                             <para>Time zone: <emphasis role="bold">UTC</emphasis></para>
                         </listitem>
@@ -36,6 +38,10 @@
                     <screen><prompt>#</prompt> <userinput>wget http://rdo.fedorapeople.org/openstack/openstack-grizzly/fedora-openstack-grizzly.repo</userinput></screen>
                     <screen><prompt>#</prompt> <userinput>mv fedora-openstack-grizzly.repo /etc/yum.repos.d/</userinput></screen>
                 </para>
+		<para os="opensuse">Use the Open Build Service
+		repositories for Grizzly:
+                    <screen><prompt>#</prompt> <userinput>zypper ar -f obs://Cloud:OpenStack:Grizzly/openSUSE_12.3 Grizzly</userinput></screen>
+		</para>
             </listitem>
             <listitem>
                 <para>Configure the network:</para>
@@ -134,6 +140,56 @@ ONBOOT=yes</programlisting>
                         </listitem>
                     </itemizedlist>
                 </para>
+                <para os="opensuse">
+		  Start the YaST network module to setup
+		  the two network:
+		  <screen><prompt>#</prompt> <userinput>yast2 network</userinput></screen>
+		  <itemizedlist>
+		    <listitem>
+		      <para>
+			Setup the first ethernet card <emphasis role="bold">eth0</emphasis> for the internal network with parameters:
+			<programlisting>
+  Statically assigned IP Address
+  IP Address: 10.10.10.9
+  Subnet Mask: 255.255.255.0
+				    </programlisting>
+				  </para>
+				</listitem>
+				<listitem>
+				  <para>
+				    Setup the second ethernet card <emphasis role="bold">eth1</emphasis> for the external network with parameters:
+				    <programlisting>
+  Statically assigned IP Address
+  IP Address: 10.0.0.9
+  Subnet Mask: 255.255.255.0
+				    </programlisting>
+				  </para>
+				</listitem>
+				<listitem>
+				  <para>
+			      Then setup <emphasis role="bold">Routing</emphasis> with parameters:
+			      <programlisting>
+Default IPv4 Gateway: 10.0.0.1
+Device: eth1
+				    </programlisting>
+				  </para>
+				</listitem>
+				<listitem>
+				  <para>
+				    Setup <emphasis role="bold">Hostname/DNS</emphasis> with parameters:
+				    <programlisting>
+  Hostname: network
+  Name Server 1: 8.8.8.8
+				    </programlisting>
+				  </para>
+				</listitem>
+				<listitem>
+				  <para>
+				    Save the configuration and leave YaST.
+				  </para>
+				</listitem>
+			      </itemizedlist>
+		</para>
                 <para>
                     <itemizedlist>
                         <listitem>
@@ -157,6 +213,7 @@ ONBOOT=yes</programlisting>
                                 <para>
                                     <screen os="ubuntu;deb"><prompt>#</prompt> <userinput>apt-get install ntp</userinput></screen>
                                     <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install ntp</userinput></screen>
+                                    <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install ntp</userinput></screen>
                                 </para>
                         </listitem>
                     </itemizedlist></para>

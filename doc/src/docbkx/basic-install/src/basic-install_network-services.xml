@@ -13,7 +13,10 @@
                     <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install neutron-plugin-openvswitch-agent \
 neutron-dhcp-agent neutron-l3-agent</userinput></screen>
                     <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-neutron openstack-neutron-openvswitch\
-openvswitch-switch</userinput></screen></para>
+openvswitch-switch</userinput></screen>
+                    <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install openstack-neutron openstack-neutron-openvswitch-agent \
+openvswitch-switch</userinput></screen>
+		</para>
                 <para os="centos;rhel;fedora">The Open vSwitch kernel module in Fedora
                         has been compiled without tunnel support. If
                         gre tunnels and network namespaces are
@@ -28,6 +31,8 @@ openvswitch-switch</userinput></screen></para>
                     <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openvswitch-switch on</userinput></screen>
                     <screen os="ubuntu"><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput></screen>
+                    <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl start openvswitch-switch.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openvswitch-switch.service</userinput></screen>
                 </para>
             </listitem>
             <listitem>
@@ -80,8 +85,13 @@ NETMASK=255.255.255.0
 NM_CONTROLLED=no
 ONBOOT=yes</programlisting>
 
+			    </para>
+			</listitem>
+                        <listitem os="opensuse">
+                            <para>
+                                TBD
                             </para>
-            </listitem>
+			</listitem>
                         <listitem>
                             <para>Remove the IP address from <literal>eth1</literal> add it to
                                         <literal>br-ex</literal>:
@@ -135,7 +145,18 @@ qpid_password = quest
 auth_host = 10.10.10.10
 admin_tenant_name = service
 admin_user = neutron
-admin_password = password</programlisting></para>
+admin_password = password</programlisting>
+                        <programlisting os="opensuse">[DEFAULT]
+verbose = True
+rabbit_password = password
+rabbit_host = 10.10.10.10
+[keystone_authtoken]
+auth_host = 10.10.10.10
+admin_tenant_name = service
+admin_user = neutron
+admin_password = password</programlisting>
+
+		    </para>
                 </listitem>
                 <listitem>
                     <para>Edit <emphasis role="bold">/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</emphasis>:
@@ -186,6 +207,14 @@ metadata_proxy_shared_secret = password</programlisting></para>
 <prompt>#</prompt> <userinput>chkconfig neutron-openvswitch-agent on</userinput>
 <prompt>#</prompt> <userinput>chkconfig neutron-dhcp-agent on</userinput>
 <prompt>#</prompt> <userinput>chkconfig neutron-l3-agent on</userinput></screen>
+                <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl restart neutron-server</userinput>
+<prompt>#</prompt> <userinput>systemctl restart neutron-openvswitch-agent</userinput>
+<prompt>#</prompt> <userinput>systemctl restart neutron-dhcp-agent</userinput>
+<prompt>#</prompt> <userinput>systemctl restart neutron-l3-agent</userinput>
+<prompt>#</prompt> <userinput>systemctl enable neutron-server</userinput>
+<prompt>#</prompt> <userinput>systemctl enable neutron-openvswitch-agent</userinput>
+<prompt>#</prompt> <userinput>systemctl enable neutron-dhcp-agent</userinput>
+<prompt>#</prompt> <userinput>systemctl enable neutron-l3-agent</userinput></screen>
 
             </para>
     <note>

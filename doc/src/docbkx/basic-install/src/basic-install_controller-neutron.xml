@@ -12,6 +12,7 @@
                     <para>Install the OpenStack Networking server:
                         <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install neutron-server</userinput></screen>
                         <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-neutron openstack-neutron-openvswitch</userinput></screen>
+                        <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install openstack-neutron</userinput></screen>
                     </para>
                 </listitem>
                 <listitem>
@@ -34,6 +35,15 @@ fake_rabbit = False
 rpc_backend=neutron.openstack.common.rpc.impl_qpid
 qpid_username = guest
 qpid_password = guest</programlisting>
+                                <programlisting os="opensuse">[DEFAULT]
+verbose = True
+rabbit_password = password
+core_plugin = \
+    neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2
+[keystone_authtoken]
+admin_tenant_name = service
+admin_user = neuron
+admin_password = password</programlisting>
                             </para>
                         </listitem>
                         <listitem>
@@ -54,7 +64,7 @@ enable_tunneling = False
 [securitygroup]
 firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver</programlisting></para>
                             <note>
-                                <para os="ubuntu">It's more handy to choose
+                                <para os="ubuntu;opensuse">It's more handy to choose
                                <emphasis role="bold">tunnel mode</emphasis> since you don't
                                have to configure your physical
                                switches for VLANs.</para>
@@ -89,7 +99,10 @@ admin_password = password</programlisting></para>
                     <para>Start the services:
                         <screen os="ubuntu"><prompt>#</prompt> <userinput>service neutron-server restart</userinput></screen>
                         <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>service neutron-server restart</userinput>
-<prompt>#</prompt> <userinput>chkconfig neutron-server on</userinput></screen></para>
+<prompt>#</prompt> <userinput>chkconfig neutron-server on</userinput></screen>
+                        <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl restart openstack-neutron.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-neutron.service</userinput></screen>
+		    </para>
                 </listitem>
             </orderedlist>
         </para>

@@ -15,6 +15,9 @@
                             <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-nova-api openstack-nova-scheduler openstack-nova-cert \
         openstack-nova-console openstack-nova-doc genisoimage openstack-dashboard \
         openstack-nova-novncproxy openstack-nova-conductor novnc</userinput></screen>
+                            <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install openstack-nova-api openstack-nova-scheduler openstack-nova-cert \
+        openstack-nova-conductor openstack-nova-console openstack-nova-consoleauth openstack-nova-doc \
+        openstack-nova-novncproxy</userinput></screen>
                         </para>
                     </listitem>
                     <listitem>
@@ -35,6 +38,9 @@ admin_user  = nova
 admin_password = password
 # Workaround for https://bugs.launchpad.net/nova/+bug/1154809
 auth_version = v2.0</programlisting>
+                                    <programlisting os="opensuse">admin_tenant_name = service
+admin_user = nova
+admin_password = password</programlisting>
 </para>
                             </listitem>
                             <listitem>
@@ -122,6 +128,46 @@ novnc_enable=true
 novncproxy_port=6080
 novncproxy_host=10.0.0.10
 vncserver_listen=0.0.0.0</programlisting>
+                                    <programlisting os="opensuse">[DEFAULT]
+
+sql_connection=mysql://nova:password@localhost/nova
+rabbit_password=password
+auth_strategy=keystone
+
+# Networking
+network_api_class=nova.network.neutronv2.api.API
+neutron_url=http://10.10.10.10:9696
+neutron_auth_strategy=keystone
+neutron_admin_tenant_name=service
+neutron_admin_username=neutron
+neutron_admin_password=password
+neutron_admin_auth_url=http://10.10.10.10:35357/v2.0
+libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver
+linuxnet_interface_driver=nova.network.linux_net.LinuxOVSInterfaceDriver
+
+# Security Groups
+firewall_driver=nova.virt.firewall.NoopFirewallDriver
+security_group_api=neutron
+
+# Metadata
+neutron_metadata_proxy_shared_secret=password
+service_neutron_metadata_proxy=true
+metadata_listen = 10.10.10.10
+metadata_listen_port = 8775
+
+# Cinder
+volume_api_class=nova.volume.cinder.API
+
+# Glance
+glance_api_servers=10.10.10.10:9292
+image_service=nova.image.glance.GlanceImageService
+
+# novnc
+novnc_enable=true
+novncproxy_port=6080
+novncproxy_host=10.0.0.10
+vncserver_listen=0.0.0.0
+				    </programlisting>
                                 </para>
                             </listitem>
                             <listitem>
@@ -148,6 +194,18 @@ vncserver_listen=0.0.0.0</programlisting>
 <prompt>#</prompt> <userinput>chkconfig openstack-nova-scheduler on</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-nova-conductor on</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-nova-novncproxy on</userinput></screen>
+                                    <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl restart openstack-nova-api.service</userinput>
+<prompt>#</prompt> <userinput>systemctl restart openstack-nova-cert.service</userinput>
+<prompt>#</prompt> <userinput>systemctl restart openstack-nova-consoleauth.service</userinput>
+<prompt>#</prompt> <userinput>systemctl restart openstack-nova-scheduler.service</userinput>
+<prompt>#</prompt> <userinput>systemctl restart openstack-nova-conductor.service</userinput>
+<prompt>#</prompt> <userinput>systemctl restart openstack-nova-novncproxy.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-nova-api.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-nova-cert.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-nova-consoleauth.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-nova-scheduler.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-nova-conductor.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-nova-novncproxy.service</userinput></screen>
                                     <note>
                                         <para>Check the <literal>/var/log/nova/nova-*</literal> files for any errors
                                             that would prevent the Compute Service from successfully starting.</para>
