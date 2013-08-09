@@ -105,7 +105,7 @@
       <section xml:id="ch046_data-residency-idp75184">
         <title>Instance memory scrubbing</title>
         <para>Specific to various hypervisors is the treatment of instance memory. This behavior is not defined in OpenStack Compute, although it is generally expected of hypervisors that they will make a best effort to scrub memory either upon deletion of an instance, upon creation of an instance, or both.</para>
-        <para>Xen explicitly assigns dedicated memory regions to instances and scrubs data upon the destruction of instances (or domains in Xen parlance). KVM depends more greatly on Linux page management; A complex set of rules related to KVM paging is defined in KVM documentation: http://www.linux-kvm.org/page/Memory</para>
+        <para>Xen explicitly assigns dedicated memory regions to instances and scrubs data upon the destruction of instances (or domains in Xen parlance). KVM depends more greatly on Linux page management; A complex set of rules related to KVM paging is defined in the <link xlink:href="http://www.linux-kvm.org/page/Memory">KVM documentation</link>.</para>
         <para>It is important to note that use of the Xen memory balloon feature is likely to result in information disclosure. We strongly recommended to avoid use of this feature.</para>
         <para>For these and other hypervisors, we recommend referring to hypervisor-specific documentation.</para>
       </section>
@@ -124,7 +124,7 @@
       </section>
       <section xml:id="ch046_data-residency-idp85040">
         <title>Bare metal server sanitization</title>
-        <para>A bare metal server driver for Nova was under development and has since moved into a separate project called Ironic (https://wiki.openstack.org/wiki/Ironic).  At the time of this writing, Ironic does not appear to address sanitization of tenant data resident the physical hardware.</para>
+        <para>A bare metal server driver for Nova was under development and has since moved into a separate project called <link xlink:href="https://wiki.openstack.org/wiki/Ironic">Ironic</link>. At the time of this writing, Ironic does not appear to address sanitization of tenant data resident the physical hardware.</para>
         <para>Additionally, it is possible for tenants of a bare metal system to modify system firmware. TPM technology, described in ##link:Management/Node Bootstrapping##, provides a solution for detecting unauthorized firmware changes.</para>
       </section>
     </section>

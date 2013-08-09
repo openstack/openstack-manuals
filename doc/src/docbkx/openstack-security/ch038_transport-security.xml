@@ -24,10 +24,10 @@
         <para>Note, the 'tcp_listeners' option is set to '[]' to prevent it from listening an on non-SSL port. 'ssl_listeners' option should be restricted to only listen on the management network for the services.</para>
         <para>For more information on RabbitMQ SSL configuration see:</para>
         <itemizedlist><listitem>
-            <para>RabbitMQ Configuration - http://www.rabbitmq.com/configure.html</para>
+            <para><link xlink:href="http://www.rabbitmq.com/configure.html">RabbitMQ Configuration</link></para>
           </listitem>
 <listitem>
-            <para>RabbitMQ SSL - http://www.rabbitmq.com/ssl.html</para>
+            <para><link xlink:href="http://www.rabbitmq.com/ssl.html">RabbitMQ SSL</link></para>
           </listitem>
 </itemizedlist>
       </section>
@@ -35,7 +35,7 @@
         <title>Qpid Server SSL Configuration</title>
         <para>The Apache Foundation has a messaging security guide for Qpid. See:</para>
         <itemizedlist><listitem>
-            <para>Apache Qpid SSL - http://qpid.apache.org/books/0.22/AMQP-Messaging-Broker-CPP-Book/html/chap-Messaging_User_Guide-Security.html#sect-Messaging_User_Guide-Security-Encryption_using_SSL</para>
+            <para><link xlink:href="http://qpid.apache.org/books/0.22/AMQP-Messaging-Broker-CPP-Book/html/chap-Messaging_User_Guide-Security.html#sect-Messaging_User_Guide-Security-Encryption_using_SSL">Apache Qpid SSL</link></para>
           </listitem>
 </itemizedlist>
       </section>
@@ -57,22 +57,22 @@ rabbitmqctl add_user compute01 password
 rabbitmqctl set_permissions compute01 ".*"".*"".*"</screen>
         <para>For additional configuration information see:</para>
         <itemizedlist><listitem>
-            <para>RabbitMQ Access Control - http://www.rabbitmq.com/access-control.html</para>
+            <para><link xlink:href="http://www.rabbitmq.com/access-control.html">RabbitMQ Access Control</link></para>
           </listitem>
 <listitem>
-            <para>RabbitMQ Authentication - http://www.rabbitmq.com/authentication.html</para>
+            <para><link xlink:href="http://www.rabbitmq.com/authentication.html">RabbitMQ Authentication</link></para>
           </listitem>
 <listitem>
-            <para>RabbitMQ Plugins - http://www.rabbitmq.com/plugins.html</para>
+            <para><link xlink:href="http://www.rabbitmq.com/plugins.html">RabbitMQ Plugins</link></para>
           </listitem>
 <listitem>
-            <para>RabbitMQ SASL External Auth - http://hg.rabbitmq.com/rabbitmq-auth-mechanism-ssl/file/rabbitmq_v3_1_3/README</para>
+            <para><link xlink:href="http://hg.rabbitmq.com/rabbitmq-auth-mechanism-ssl/file/rabbitmq_v3_1_3/README">RabbitMQ SASL External Auth</link></para>
           </listitem>
 </itemizedlist>
       </section>
       <section xml:id="ch038_transport-security-idp59648">
         <title>OpenStack Service Configuration - RabbitMQ</title>
-        <screen> 
+        <screen>
 [DEFAULT]
 rpc_backend=nova.openstack.common.rpc.impl_kombu
 rabbit_use_ssl=True
@@ -83,22 +83,22 @@ rabbit_password=password
 kombu_ssl_keyfile=/etc/ssl/node-key.pem
 kombu_ssl_certfile=/etc/ssl/node-cert.pem
 kombu_ssl_ca_certs=/etc/ssl/cacert.pem</screen>
-        <para>NOTE: A bug exists in the current version of OpenStack Grizzly where if 'kombu_ssl_version' is currently specified in the configuration file for any of the OpenStack services it will cause the following python traceback error: 'TypeError: an integer is required'. The current workaround is to remove 'kombu_ssl_version' from the configuration file. Refer to the following bug report for status: https://bugs.launchpad.net/oslo/+bug/1195431</para>
+        <para>NOTE: A bug exists in the current version of OpenStack Grizzly where if 'kombu_ssl_version' is currently specified in the configuration file for any of the OpenStack services it will cause the following python traceback error: 'TypeError: an integer is required'. The current workaround is to remove 'kombu_ssl_version' from the configuration file. Refer to <link xlink:href="https://bugs.launchpad.net/oslo/+bug/1195431">bug report 1195431</link> for current status.</para>
       </section>
       <section xml:id="ch038_transport-security-idp62112">
         <title>Authentication Configuration Example - Qpid</title>
         <para>For configuration information see:</para>
         <itemizedlist><listitem>
-            <para>Apache Qpid Authentication - http://qpid.apache.org/books/0.22/AMQP-Messaging-Broker-CPP-Book/html/chap-Messaging_User_Guide-Security.html#sect-Messaging_User_Guide-Security-User_Authentication</para>
+            <para><link xlink:href="http://qpid.apache.org/books/0.22/AMQP-Messaging-Broker-CPP-Book/html/chap-Messaging_User_Guide-Security.html#sect-Messaging_User_Guide-Security-User_Authentication">Apache Qpid Authentication</link></para>
           </listitem>
 <listitem>
-            <para>Apache Qpid Authorization - http://qpid.apache.org/books/0.22/AMQP-Messaging-Broker-CPP-Book/html/chap-Messaging_User_Guide-Security.html#sect-Messaging_User_Guide-Security-Authorization</para>
+            <para><link xlink:href="http://qpid.apache.org/books/0.22/AMQP-Messaging-Broker-CPP-Book/html/chap-Messaging_User_Guide-Security.html#sect-Messaging_User_Guide-Security-Authorization">Apache Qpid Authorization</link></para>
           </listitem>
 </itemizedlist>
       </section>
       <section xml:id="ch038_transport-security-idp65584">
         <title>OpenStack Service Configuration - Qpid</title>
-        <screen> 
+        <screen>
 [DEFAULT]
 rpc_backend=nova.openstack.common.rpc.impl_qpid
 qpid_protocol=ssl
@@ -107,7 +107,7 @@ qpid_port=5671qpid_username=compute01
 
 qpid_password=password</screen>
         <para>Optionally, if using SASL with Qpid specify the SASL mechanisms in use by adding:</para>
-        <screen> 
+        <screen>
 qpid_sasl_mechanisms=&lt;space separated list of SASL mechanisms to use for auth&gt;</screen>
       </section>
     </section>
