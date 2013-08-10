@@ -138,6 +138,20 @@
                 version of the item. The replicator will see the
                 tombstone and ensure that the item is removed from the
                 entire system.</para>
+            <para>To separate the cluster-internal replication traffic
+                from client traffic, separate replication servers can
+                be used. These replication servers are based on the
+                standard storage servers, but they listen on the
+                replication IP and only respond to REPLICATE requests.
+                Storage servers can serve REPLICATE requests, so an
+                operator can transition to using a separate replication
+                network with no cluster downtime.</para>
+            <para>Replication IP and port information is stored in the
+                ring on a per-node basis. These parameters will be used
+                if they are present, but they are not required. If this
+                information does not exist or is empty for a particular
+                node, the node's standard IP and port will be used for
+                replication.</para>
         </simplesect>
         <simplesect xml:id="updaters">
             <title>Updaters</title>
@@ -681,6 +695,23 @@ net.ipv4.netfilter.ip_conntrack_max = 262144
                                    <td>The TCP port the listening
                                    server process uses that serves
                                    requests for the device.</td>
+                                </tr>
+                                <tr>
+                                   <td>replication_ip</td>
+                                   <td>string</td>
+                                   <td>The IP address of the server
+                                   containing the device in the
+                                   replication network.</td>
+
+                                </tr>
+                                <tr>
+                                   <td>replication_port</td>
+                                   <td>int</td>
+                                   <td>The TCP port the listening
+                                   replication server process uses
+                                   that serves replication requests
+                                   for the device.</td>
+
                                 </tr>
                                 <tr>
                                    <td>device</td>
