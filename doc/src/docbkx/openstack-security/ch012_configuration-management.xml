@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://docbook.org/ns/docbook" xmlns:db="http://docbook.org/ns/docbook" version="5.0" xml:id="ch012_configuration-management"><?dbhtml stop-chunking?>
     <title>Continuous Systems Management</title>
-    <para>A cloud will always have bugs. Some of these will be security problems. For this reason, it is critically important to be prepared to apply security updates and general software updates. This involves smart use of configuration management tools, which are discussed below. This also involves knowing when to an upgrade is necessary.</para>
+    <para>A cloud will always have bugs. Some of these will be security problems. For this reason, it is critically important to be prepared to apply security updates and general software updates. This involves smart use of configuration management tools, which are discussed below. This also involves knowing when an upgrade is necessary.</para>
     <section xml:id="ch012_configuration-management-idp44720">
       <title>Vulnerability Management</title>
-      <para>There is a OpenStack Announce mailing list (http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack-announce) that you should subscribe to for announcements regarding security relevant changes. The security notifications are also posted through the downstream packages (e.g., through Linux distributions) that you may be subscribed to as part of the package updates.</para>
+      <para>There is an OpenStack Announce mailing list (http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack-announce) that you should subscribe to for announcements regarding security relevant changes. The security notifications are also posted through the downstream packages (e.g., through Linux distributions) that you may be subscribed to as part of the package updates.</para>
       <para>The OpenStack components are only a small fraction of the software in a cloud. It is important to keep up to date with all of these other components, too. While the specific data sources will be deployment specific, the key idea is to ensure that a cloud administrator subscribes to the necessary mailing lists for receiving notification of any related security updates. Often this is as simple as tracking an upstream Linux distribution.</para>
       <para>NOTE: OpenStack releases security information through two channels. OpenStack Security Advisories (OSSA) are created by the OpenStack Vulnerability Management Team (VMT). They pertain to security holes in core OpenStack services. More information on the VMT can be found here: https://wiki.openstack.org/wiki/Vulnerability_Management</para>
-      <para>OpenStack Security Notes (OSSN) were created by the OpenStack Security Group (OSSG) to support the work of the VMT. OSSN address issues in supporting software and common deployment configurations. They're referenced throughout this guide. Security Notes are archived here: https://launchpad.net/ossn/</para>
+      <para>OpenStack Security Notes (OSSN) were created by the OpenStack Security Group (OSSG) to support the work of the VMT. OSSN address issues in supporting software and common deployment configurations. They're referenced throughout this guide. Security Notes are archived at: https://launchpad.net/ossn/</para>
       <section xml:id="ch012_configuration-management-idp48592">
         <title>Triage</title>
-        <para>After receiving notification about a security update, the next step is to determine how critical this update is to a given cloud deployment. In this case, it is useful to have a pre-defined policy indicating. Existing vulnerability rating systems such as the common vulnerability scoring system (CVSS) v2 do not properly account for cloud deployments. The table below provides an example scoring matrix.</para>
+        <para>After receiving notification about a security update, the next step is to determine how critical this update is to a given cloud deployment. In this case, it is useful to have a pre-defined policy. Existing vulnerability rating systems such as the common vulnerability scoring system (CVSS) v2 do not properly account for cloud deployments. The table below provides an example scoring matrix.</para>
 
           <informaltable rules="all" width="80%"><colgroup><col/><col/><col/><col/><col/></colgroup>
 
@@ -84,7 +84,7 @@
       <para>A production quality cloud should always use tools to automate configuration and deployment. This eliminates human error, and allows the cloud to scale much more rapidly. Automation also helps with continuous integration and testing.</para>
       <para>When building an OpenStack cloud it is strongly recommended to approach your design and implementation with a configuration management tool or framework in mind. Configuration management allows you to avoid the many pitfalls inherent in building, managing, and maintaining an infrastructure as complex as OpenStack. By producing the manifests, cookbooks, or templates required for a configuration management utility, you are able to satisfy a number of documentation and regulatory reporting requirements. Further, configuration management can also function as part of your BCP and DR plans wherein you can rebuild a node or service back to a known state in a DR event or given a compromise.</para>
       <para>Additionally, when combined with a version control system such as Git or SVN, you can track changes to your environment over time and remediate unauthorized changes that may occur. For example, a nova.conf or other configuration file falls out of compliance with your standard, your configuration management tool will be able to revert or replace the file and bring your configuration back into a known state. Finally a configuration management tool can also be used to deploy updates; simplifying the security patch process. These tools have a broad range of capabilities that are useful in this space. The key point for securing your cloud is to choose a tool for configuration management and use it.</para>
-      <para>There are many configuration management solutions, at the time of this writing there are two in the marketplace that are robust in their support of OpenStack environments: Chef and Puppet. A non-exhaustive listing of tools in this space is provided below:</para>
+      <para>There are many configuration management solutions; at the time of this writing there are two in the marketplace that are robust in their support of OpenStack environments: Chef and Puppet. A non-exhaustive listing of tools in this space is provided below:</para>
       <itemizedlist><listitem>
           <para>Chef</para>
         </listitem>
@@ -105,7 +105,7 @@
     </section>
     <section xml:id="ch012_configuration-management-idp10160">
       <title>Secure Backup and Recovery</title>
-      <para>It is important to include Backup procedures and policies in overall System Security Plan. For a good overview of OpenStack's Backup and Recovery capabilities and procedures, please refer to the OpenStack Operations Guide.</para>
+      <para>It is important to include Backup procedures and policies in the overall System Security Plan. For a good overview of OpenStack's Backup and Recovery capabilities and procedures, please refer to the OpenStack Operations Guide.</para>
       <section xml:id="ch012_configuration-management-idp123104">
         <title>Security Considerations</title>
         <itemizedlist><listitem>
