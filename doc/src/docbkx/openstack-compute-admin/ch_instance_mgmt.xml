@@ -316,78 +316,9 @@ header: Date: Thu, 13 Sep 2012 20:27:36 GMT
 | 5  | m1.xlarge | 16384     | 160  | N/A       | 0    | 8     |             |
 +----+-----------+-----------+------+-----------+------+-------+-------------+
 </computeroutput></screen>
-			<para>The <command>nova flavor-create</command> command
-				allows authorized users to create new flavors.
-				Additional flavor manipulation commands can be shown
-				with the command <command>nova help | grep flavor</command></para>
-
-			<para>Flavors define a number of elements <itemizedlist>
-					<listitem>
-						<para><literal>ID</literal>: a unique numeric id</para>
-					</listitem>
-					<listitem>
-						<para><literal>Name</literal>: a descriptive name.
-								<replaceable>xx</replaceable>.<replaceable>size_name</replaceable>
-							is conventional not required, though some
-							third party tools may rely on it.</para>
-					</listitem>
-					<listitem>
-						<para><literal>Memory_MB</literal>: virtual machine memory in
-							megabytes</para>
-					</listitem>
-					<listitem>
-						<para><literal>Disk</literal>: virtual root disk size in
-							gigabytes. This is an ephemeral disk that
-							the base image is copied into. When
-							booting from a persistent volume it is not
-							used. The "0" size is a special case which
-							uses the native base image size as the
-							size of the ephemeral root volume.</para>
-					</listitem>
-					<listitem>
-						<para><literal>Ephemeral</literal>: specifies the size of a
-							secondary ephemeral data disk. This is an
-							empty, unformatted disk and exists only
-							for the life of the instance.</para>
-					</listitem>
-					<listitem>
-						<para><literal>Swap</literal>: optional swap space allocation for
-							the instance</para>
-					</listitem>
-					<listitem>
-						<para><literal>VCPUs</literal>: number of virtual CPUs presented
-							to the instance</para>
-					</listitem>
-					<listitem>
-						<para><literal>RXTX_Factor</literal>: optional property allows
-							created servers to have a different
-							bandwidth cap than that defined in the
-							network they are attached to. This factor
-							is multiplied by the rxtx_base property of
-							the network. Default value is 1.0 (that
-							is, the same as attached network).</para>
-					</listitem>
-					<listitem>
-						<para><literal>Is_Public</literal>: Boolean value, whether flavor
-							is available to all users or private to
-							the tenant it was created in. Defaults to
-							True.</para>
-					</listitem>
-					<listitem>
-						<para><literal>extra_specs</literal>: additional optional
-							restrictions on which compute nodes the
-							flavor can run on. This is implemented as
-							key/value pairs that must match against
-							the corresponding key/value pairs on
-							compute nodes. Can be used to implement
-							things like special resources (e.g.,
-							flavors that can only run on compute nodes
-							with GPU hardware).</para>
-					</listitem>
-				</itemizedlist>
-			</para>
-		</simplesect>
-	</section>
+    </simplesect>
+    </section>
+	<xi:include href="../common/section_customize_flavors.xml"></xi:include>
 	<section xml:id="instance-creation">
 		<?dbhtml stop-chunking?>
 		<title>Creating instances</title>
