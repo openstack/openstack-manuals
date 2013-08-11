@@ -102,10 +102,12 @@ ONBOOT=yes
             <listitem>
                             <para>Finally, enable a simple NAT service so that the Compute Node(s)
                         can access the Internet through the Cloud Controller:
-                        <screen><userinput>echo 1 > /proc/sys/net/ipv4/conf/all/forwarding
-iptables -A FORWARD -i eth0 -o br-ex -s 10.10.10.0/24 -m conntrack --ctstate NEW -j ACCEPT
-iptables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-iptables -A POSTROUTING -s 10.10.10.0/24 -t nat -j MASQUERADE</userinput></screen></para>
+                        <screen><prompt>#</prompt> <userinput>iptables -A FORWARD -i eth0 -o br-ex -s 10.10.10.0/24 -m conntrack --ctstate NEW -j ACCEPT</userinput>
+<prompt>#</prompt> <userinput>iptables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT</userinput>
+<prompt>#</prompt> <userinput>iptables -A POSTROUTING -s 10.10.10.0/24 -t nat -j MASQUERADE</userinput></screen></para>
+                        <note><para>These rules will be lost on reboot. Make
+                        sure to save and restore them using your distribution
+                        tools.</para></note>
             </listitem>
         </orderedlist>
     </para>

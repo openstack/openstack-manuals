@@ -70,7 +70,7 @@ iface eth1 inet static
     address 10.0.0.9
     netmask 255.255.255.0
     gateway 10.0.0.1
-    dns-nameservers 8.8.8.8</programlisting>                                
+    dns-nameservers 8.8.8.8</programlisting>
                             </para>
                         </listitem>
                     </itemizedlist>
@@ -78,15 +78,19 @@ iface eth1 inet static
                 <para  os="ubuntu;debian">
                     <itemizedlist>
                         <listitem>
-                            <para>Edit <emphasis role="bold">/etc/sysctl.conf</emphasis>:
-                                <programlisting>net.ipv4.conf.all.rp_filter = 0
+                            <para>Edit <filename>/etc/sysctl.conf</filename>:
+                                <programlisting>net.ipv4.ip_forward = 1
+net.ipv4.conf.all.forwarding = 1
+net.ipv4.conf.all.rp_filter = 0
 net.ipv4.conf.default.rp_filter = 0</programlisting>
                                 Then, restart the network service:
-                                <screen><userinput>service networking restart</userinput></screen>                            
+                                <screen><prompt>#</prompt> <userinput>service networking restart</userinput></screen>
+                                And apply the sysctl settings:
+                                <screen><prompt>#</prompt> <userinput>sysctl -e -p /etc/sysctl.conf</userinput></screen>
                             </para>
                         </listitem>
                     </itemizedlist>
-                </para>                
+                </para>
                 <para os="rhel;centos;fedora">
                     <itemizedlist>
                         <listitem>
@@ -107,7 +111,7 @@ GATEWAY=192.168.0.254
 DNS1=8.8.8.8
 DEFROUTE=yes
 ONBOOT=yes
-    </programlisting>                                                           
+    </programlisting>
                             </para>
                         </listitem>
                         <listitem>
@@ -134,28 +138,28 @@ NETMASK=255.255.255.0
 DEFROUTE=yes
 ONBOOT=yes
 </programlisting>
-                                
+
                             </para>
                         </listitem>
                         <listitem>
                             <para>
                                 Reboot.
-                            </para>                            
+                            </para>
                         </listitem>
                     </itemizedlist>
                 </para>
                 <para>
                     <itemizedlist>
                         <listitem>
-                            <para>Edit the <emphasis role="bold">/etc/hosts</emphasis> file and add
-                                    <emphasis role="bold">controller</emphasis>, 
-                                    <emphasis role="bold">networknode</emphasis> and 
-                                    <emphasis role="bold">compute1</emphasis> hostnames with correct IP.
+                            <para>Edit the <filename>/etc/hosts</filename> file and add
+                                    <emphasis role="bold">cloud</emphasis>,
+                                    <emphasis role="bold">network</emphasis> and
+                                    <emphasis role="bold">c01</emphasis> hostnames with correct IP.
                                 <programlisting>127.0.0.1       localhost
 10.10.10.10     cloud
 10.10.10.9      network
 10.10.10.11     c01</programlisting>
-                                
+
                             </para>
                         </listitem>
                     </itemizedlist>
@@ -164,7 +168,7 @@ ONBOOT=yes
             <listitem>
                 <para>Install NTP:<itemizedlist>
                         <listitem>
-                                <para> 
+                                <para>
                                     <screen os="ubuntu;deb"><prompt>#</prompt> <userinput>apt-get install -y ntp</userinput></screen>
                                     <screen os="rhel;fedora;centos"><prompt>#</prompt><userinput>yum install -y ntp</userinput></screen>
                                 </para>

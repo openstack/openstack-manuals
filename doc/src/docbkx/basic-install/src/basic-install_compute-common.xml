@@ -59,7 +59,7 @@ deb http://archive.gplhost.com/debian grizzly-backports main</programlisting>
                             <para>Edit <emphasis role="bold">/etc/network/interfaces</emphasis>:</para>
                     <programlisting># Internal Network
 auto eth0
-    iface eth0 inet static
+iface eth0 inet static
     address 10.10.10.11
     netmask 255.255.255.0
     gateway 10.10.10.9
@@ -70,11 +70,13 @@ auto eth0
                 </para>
                     <itemizedlist os="ubuntu;debian">
                         <listitem>
-                            <para>Edit <emphasis role="bold">/etc/sysctl.conf</emphasis>:
+                            <para>Edit <filename>/etc/sysctl.conf</filename>:
                             <programlisting>net.ipv4.conf.all.rp_filter = 0
 net.ipv4.conf.default.rp_filter = 0</programlisting>
                                 Then, restart the network service:
-                                <screen><userinput>service networking restart</userinput></screen>
+                                <screen><prompt>#</prompt> <userinput>service networking restart</userinput></screen>
+                                And apply the sysctl settings:
+                                <screen><prompt>#</prompt> <userinput>sysctl -e -p /etc/sysctl.conf</userinput></screen>
                             </para>
                         </listitem>
                     </itemizedlist>
