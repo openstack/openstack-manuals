@@ -2,16 +2,13 @@
 <chapter xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://docbook.org/ns/docbook" xmlns:db="http://docbook.org/ns/docbook" version="5.0" xml:id="ch025_web-dashboard"><?dbhtml stop-chunking?>
     <title>Dashboard</title>
     <para>Horizon is the OpenStack dashboard, providing access to a majority of the capabilities available in Openstack. These include provisioning users, defining instance flavors, uploading VM images, managing networks, setting up security groups, starting instances, and accessing the instances via a console.</para>
-    <para>Horizon is based on the Django web framework, therefore secure deployment practices for Django apply directly to Horizon. This guide provides a popular set of Django security recommendations, further information can be found by reading the Django deployment and security documentation:</para>
-    <para>https://docs.djangoproject.com/en/1.5/#security</para>
-    <para>Horizon ships with reasonable default security settings, and has good deployment and configuration documentation:</para>
-    <para>http://docs.openstack.org/developer/horizon/topics/deployment.html</para>
+    <para>Horizon is based on the Django web framework, therefore secure deployment practices for Django apply directly to Horizon. This guide provides a popular set of Django security recommendations, further information can be found by reading the <link xlink:href="https://docs.djangoproject.com/en/1.5/#security">Django deployment and security documentation</link>.</para>
+    <para>Horizon ships with reasonable default security settings, and has good <link xlink:href="http://docs.openstack.org/developer/horizon/topics/deployment.html">deployment and configuration documentation</link>.</para>
     <section xml:id="ch025_web-dashboard-idp237648">
       <title>Basic Web Server Configuration</title>
       <para>Horizon should be deployed as a Web Services Gateway Interface (WSGI) application behind an HTTPS proxy such as Apache or nginx. If Apache is not already in use, we recommend nginx since it is lighter weight and easier to configure correctly.</para>
-      <para>When using nginx, we recommend gunicorn as the wsgi host with an appropriate number of synchronous workers. We strongly advise against deployments using fastcgi, scgi, or uWSGI. We strongly advise against the use of synthetic performance benchmarks when choosing a wsgi server.</para>
-      <para>http://docs.gunicorn.org/en/latest/deploy.html</para>
-      <para>When using Apache, we recommend mod_wsgi to host Horizon.https://docs.djangoproject.com/en/1.5/howto/deployment/wsgi/modwsgi/</para>
+      <para>When using nginx, we recommend <link xlink:href="http://docs.gunicorn.org/en/latest/deploy.html">gunicorn</link> as the wsgi host with an appropriate number of synchronous workers. We strongly advise against deployments using fastcgi, scgi, or uWSGI. We strongly advise against the use of synthetic performance benchmarks when choosing a wsgi server.</para>
+      <para>When using Apache, we recommend <link xlink:href="https://docs.djangoproject.com/en/1.5/howto/deployment/wsgi/modwsgi/">mod_wsgi</link> to host Horizon.</para>
     </section>
     <section xml:id="ch025_web-dashboard-idp240704">
       <title>HTTPS</title>
@@ -21,8 +18,7 @@
     <section xml:id="ch025_web-dashboard-idp242624">
       <title>HTTP Strict Transport Security (HSTS)</title>
       <para>It is highly recommended to use HTTP Strict Transport Security (HSTS).</para>
-      <para>NOTE: If you are using an HTTPS proxy in front of your web server, rather than using an HTTP server with HTTPS functionality, follow the Django documentation on modifying the SECURE_PROXY_SSL_HEADER variable.</para>
-      <para>https://docs.djangoproject.com/en/1.5/ref/settings/#secure-proxy-ssl-header</para>
+      <para>NOTE: If you are using an HTTPS proxy in front of your web server, rather than using an HTTP server with HTTPS functionality, follow the <link xlink:href="https://docs.djangoproject.com/en/1.5/ref/settings/#secure-proxy-ssl-header">Django documentation on modifying the SECURE_PROXY_SSL_HEADER variable</link>.</para>
       <para>See the chapter on PKI/SSL Everywhere for more specific recommendations and server configurations for HTTPS configurations, including the configuration of HSTS.</para>
     </section>
     <section xml:id="ch025_web-dashboard-idp245456">
@@ -32,15 +28,15 @@
     <section xml:id="ch025_web-dashboard-idp246880">
       <title>Domain Names</title>
       <para>Many organizations typically deploy web applications at subdomains of an overarching organization domain. It is natural for users to expect a domain of the form openstack.example.org. In this context, there are often many other applications deployed in the same second-level namespace, often serving user-controlled content. This name structure is convenient and simplifies nameserver maintenance.</para>
-      <para>We strongly recommend deploying horizon to a <emphasis>second-level domain</emphasis> (e.g. https://example.com) and advise against deploying horizon on a<emphasis> shared subdomain</emphasis> of any level (e.g. https://openstack.example.org, https://horizon.openstack.example.org). We also advise against deploying to bare internal domains (e.g. https://horizon/).</para>
+      <para>We strongly recommend deploying horizon to a <emphasis>second-level domain</emphasis>, for example <uri>https://example.com</uri>, and advise against deploying horizon on a<emphasis> shared subdomain</emphasis> of any level, for example <uri>https://openstack.example.org</uri> or <uri>https://horizon.openstack.example.org</uri>. We also advise against deploying to bare internal domains like <uri>https://horizon/</uri>.</para>
       <para>This recommendation is based on the limitations browser same-origin-policy. The recommendations in this guide cannot effectively protect users against known attacks if Horizon is deployed on a domain which also hosts user-generated content (e.g. scripts, images, uploads of any kind) even if the user-generated content is on a different subdomain. This approach is used by most major web presences (e.g. googleusercontent.com, fbcdn.com, github.io, twimg.com) to ensure that user generated content stays separate from cookies and security tokens.</para>
       <para>Additionally, if you decline to follow this recommendation above about second-level domains, it is vital that you avoid the cookie backed session store and employ HTTP Strict Transport Security (HSTS). When deployed on a subdomain, Horizon's security is only as strong as the weakest application deployed on the same second-level domain.</para>
     </section>
     <section xml:id="ch025_web-dashboard-idp251760">
       <title>Static Media</title>
       <para>Horizon's static media should be deployed to a subdomain of the Horizon domain and served by the web server. The use of an external content delivery network (CDN) is also acceptable. This subdomain should not set cookies or serve user-provided content. The media should also be served with HTTPS.</para>
-      <para>Django media settings are documented here:https://docs.djangoproject.com/en/1.5/ref/settings/#static-root</para>
-      <para>Horizon's default configuration uses django_compressor (http://django-compressor.readthedocs.org/) to compress and minify css and JavaScript content before serving it. This process should be statically done before deploying Horizon, rather than using the default in-request dynamic compression and copying the resulting files along with deployed code or to the CDN server. Compression should be done in a non-production build environment. If this is not practical, we recommend disabling resource minification entirely. Online compression dependencies (less, nodejs) should not be installed on production machines.</para>
+      <para>Django media settings are documented at <link xlink:href="https://docs.djangoproject.com/en/1.5/ref/settings/#static-root">https://docs.djangoproject.com/en/1.5/ref/settings/#static-root</link>.</para>
+      <para>Horizon's default configuration uses <link xlink:href="http://django-compressor.readthedocs.org/">django_compressor</link> to compress and minify css and JavaScript content before serving it. This process should be statically done before deploying Horizon, rather than using the default in-request dynamic compression and copying the resulting files along with deployed code or to the CDN server. Compression should be done in a non-production build environment. If this is not practical, we recommend disabling resource minification entirely. Online compression dependencies (less, nodejs) should not be installed on production machines.</para>
     </section>
     <section xml:id="ch025_web-dashboard-idp255696">
       <title>Secret Key</title>
@@ -50,12 +46,12 @@
       <title>Session Backend</title>
       <para>Horizon's default session backend (<emphasis>django.contrib.sessions.backends.signed_cookies</emphasis>) stores user data in <emphasis>signed</emphasis> but <emphasis>unencrypted </emphasis>cookies stored in the browser. This approach allows the most simple session backend scaling since each Horizon instance is stateless, but it comes at the cost of <emphasis>storing sensitive access tokens in the client browser</emphasis> and transmitting them with every request. This backend ensures that session data has not been tampered with, but the data itself is not encrypted other than the encryption provided by HTTPS.</para>
       <para>If your architecture allows it, we recommend using <emphasis>django.contrib.sessions.backends.cache</emphasis> as your session backend with memcache as the cache. Memcache must not be exposed publicly, and should communicate over a secured private channel. If you choose to use the signed cookies backend, refer to the Django documentation understand the security tradeoffs.</para>
-      <para>For further details, consult the Django session backend documentation:https://docs.djangoproject.com/en/1.5/topics/http/sessions/#configuring-the-session-engine</para>
+      <para>For further details, consult the <link xlink:href="https://docs.djangoproject.com/en/1.5/topics/http/sessions/#configuring-the-session-engine">Django session backend documentation</link>.</para>
     </section>
     <section xml:id="ch025_web-dashboard-idp262288">
       <title>Allowed Hosts</title>
       <para>Configure the ALLOWED_HOSTS setting with the domain or domains where Horizon is available. Failure to configure this setting (especially if not following the recommendation above regarding second level domains) opens Horizon to a number of serious attacks. Wildcard domains should be avoided.</para>
-      <para>For further details, see the Django documentation on settings:https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts</para>
+      <para>For further details, see the <link xlink:href="https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts">Django documentation on settings</link>.</para>
     </section>
     <section xml:id="ch025_web-dashboard-idp264272">
       <title>Cookies</title>
@@ -73,7 +69,7 @@ SESSION_COOKIE_SECURE = True</screen>
     </section>
     <section xml:id="ch025_web-dashboard-idp268448">
       <title>Cross Site Request Forgery (CSRF)</title>
-      <para>Django has a dedicated middleware for cross-site request forgery (CSRF):https://docs.djangoproject.com/en/1.5/ref/contrib/csrf/#how-it-works</para>
+      <para>Django has a dedicated middleware for <link xlink:href="https://docs.djangoproject.com/en/1.5/ref/contrib/csrf/#how-it-works">cross-site request forgery</link> (CSRF).</para>
       <para>Horizon is designed to discourage developers from introducing cross-site scripting vulnerabilities with custom dashboards. However, it is important to audit custom dashboards, especially ones that are javascript-heavy for inappropriate use of the @csrf_exempt decorator. Dashboards which do not follow these recommended security settings should be carefully evaluated before restrictions are relaxed.</para>
     </section>
     <section xml:id="ch025_web-dashboard-idp270608">
@@ -84,14 +80,13 @@ SESSION_COOKIE_SECURE = True</screen>
     <section xml:id="ch025_web-dashboard-idp272832">
       <title>Cross Origin Resource Sharing (CORS)</title>
       <para>Configure your web server to send a restrictive CORS header with each response, allowing only the Horizon domain and protocol:</para>
-      <screen> 
+      <screen>
 Access-Control-Allow-Origin: https://example.com/</screen>
       <para>Never allow the wildcard origin.</para>
     </section>
     <section xml:id="ch025_web-dashboard-idp275056">
       <title>Horizon Image Upload</title>
-      <para>We recommend that implementers disable HORIZON_IMAGES_ALLOW_UPLOAD unless they have implemented a plan to prevent resource exhaustion and denial of service.</para>
-      <para>http://docs.openstack.org/developer/horizon/topics/deployment.html#file-uploads</para>
+      <para>We recommend that implementers <link xlink:href="http://docs.openstack.org/developer/horizon/topics/deployment.html#file-uploads">disable HORIZON_IMAGES_ALLOW_UPLOAD</link> unless they have implemented a plan to prevent resource exhaustion and denial of service.</para>
     </section>
     <section xml:id="ch025_web-dashboard-idp276864">
       <title>Upgrading</title>
