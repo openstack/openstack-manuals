@@ -27,15 +27,13 @@
 
             <para>It has been our experience that when a drive is about to fail, error messages will spew into /var/log/kern.log. There is a script called swift-drive-audit that can be run via cron to watch for bad drives. If errors are detected, it will unmount the bad drive, so that OpenStack Object Storage can work around it. The script takes a configuration file with the following settings:
            </para>
-            <programlisting>
-            [drive-audit]
+            <programlisting language="bash">            [drive-audit]
             Option 	Default 	Description
             log_facility 	LOG_LOCAL0 	Syslog log facility
             log_level 	INFO 	Log level
             device_dir 	/srv/node 	Directory devices are mounted under
             minutes 	60 	Number of minutes to look back in /var/log/kern.log
-            error_limit 	1 	Number of errors to find before a device is unmounted
-            </programlisting>
+            error_limit 	1 	Number of errors to find before a device is unmounted</programlisting>
             <para>This script has only been tested on Ubuntu 10.04, so if you are using a different distro or OS, some care should be taken before using in production.
         </para></section>
 
@@ -52,13 +50,10 @@
 	<para>This procedure is a last-resort for emergency circumstances - it
 	requires knowledge of the swift python code and may not succeed.</para></warning>
 	<para>First, load the ring and a new ringbuilder object in a Python REPL:</para>
-	<programlisting>
->>> from swift.common.ring import RingData, RingBuilder
->>> ring = RingData.load('/path/to/account.ring.gz')
-	</programlisting>
+	<programlisting>>>> from swift.common.ring import RingData, RingBuilder
+>>> ring = RingData.load('/path/to/account.ring.gz')</programlisting>
 	<para>Now, start copying the data we have in the ring into the builder.</para>
-	<programlisting>
->>> import math
+	<programlisting language="bash">>>> import math
 >>> partitions = len(ring._replica2part2dev_id[0])
 >>> replicas = len(ring._replica2part2dev_id)
 
@@ -72,24 +67,17 @@
             d['parts'] = 0
 >>> for p2d in builder._replica2part2dev:
             for dev_id in p2d:
-                builder.devs[dev_id]['parts'] += 1
-	</programlisting>
+                builder.devs[dev_id]['parts'] += 1</programlisting>
 	<para>This is the extent of the recoverable fields. For
 	<literal>min_part_hours</literal>  you'll either have to remember
 	 what the value you used was, or just make up a new one.</para>
-	<programlisting>
->>> builder.change_min_part_hours(24) # or whatever you want it to be
-	</programlisting>
+	<programlisting>>>> builder.change_min_part_hours(24) # or whatever you want it to be</programlisting>
 	<para>Try some validation: if this doesn't raise an exception, you may
 	 feel some hope. Not too much, though.</para>
-	<programlisting>
->>> builder.validate()
-	</programlisting>
+	<programlisting>>>> builder.validate()</programlisting>
 	<para>Save the builder.</para>
-	<programlisting>
->>> import pickle
->>> pickle.dump(builder.to_dict(), open('account.builder', 'wb'), protocol=2)
-	</programlisting>
+	<programlisting>>>> import pickle
+>>> pickle.dump(builder.to_dict(), open('account.builder', 'wb'), protocol=2)</programlisting>
 	<para>You should now have a file called 'account.builder' in the current
 	 working directory.
 	Next, run <literal>swift-ring-builder account.builder write_ring</literal>
