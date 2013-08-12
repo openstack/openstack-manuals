@@ -12,65 +12,81 @@
         existing flavor by deleting an existing flavor and creating a
         new one with the same name.</para>
     <para>Flavors define a number of elements:</para>
-    <itemizedlist>
-        <listitem>
-            <para><literal>ID</literal>: a unique numeric id</para>
-        </listitem>
-        <listitem>
-            <para><literal>Name</literal>: a descriptive name.
-                    <replaceable>xx</replaceable>.<replaceable>size_name</replaceable>
-                is typically not required, though some third party
-                tools may rely on it.</para>
-        </listitem>
-        <listitem>
-            <para><literal>Memory_MB</literal>: virtual machine memory
-                in megabytes</para>
-        </listitem>
-        <listitem>
-            <para><literal>Disk</literal>: virtual root disk size in
-                gigabytes. This is an ephemeral disk that the base
-                image is copied into. When booting from a persistent
-                volume it is not used. The "0" size is a special case
-                which uses the native base image size as the size of
-                the ephemeral root volume.</para>
-        </listitem>
-        <listitem>
-            <para><literal>Ephemeral</literal>: specifies the size of
-                a secondary ephemeral data disk. This is an empty,
-                unformatted disk and exists only for the life of the
-                instance.</para>
-        </listitem>
-        <listitem>
-            <para><literal>Swap</literal>: optional swap space
-                allocation for the instance</para>
-        </listitem>
-        <listitem>
-            <para><literal>VCPUs</literal>: number of virtual CPUs
-                presented to the instance</para>
-        </listitem>
-        <listitem>
-            <para><literal>RXTX_Factor</literal>: optional property
-                allows created servers to have a different bandwidth
-                cap than that defined in the network they are attached
-                to. This factor is multiplied by the rxtx_base
-                property of the network. Default value is 1.0 (that
-                is, the same as attached network).</para>
-        </listitem>
-        <listitem>
-            <para><literal>Is_Public</literal>: Boolean value, whether
-                flavor is available to all users or private to the
-                tenant it was created in. Defaults to True.</para>
-        </listitem>
-        <listitem>
-            <para><literal>extra_specs</literal>: additional optional
-                restrictions on which compute nodes the flavor can run
-                on. This is implemented as key/value pairs that must
-                match against the corresponding key/value pairs on
-                compute nodes. Can be used to implement things like
-                special resources (e.g., flavors that can only run on
-                compute nodes with GPU hardware).</para>
-        </listitem>
-    </itemizedlist>
+    <table rules="all">
+      <caption>Identity Service configuration file sections</caption>
+      <col width="15%"/>
+      <col width="85%"/>
+      <thead>
+        <tr>
+          <td>Element</td>
+          <td>Description</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><literal>Name</literal></td>
+          <td>A descriptive name.
+          <replaceable>xx</replaceable>.<replaceable>size_name</replaceable>
+          is typically not required, though some third party tools may
+          rely on it.</td>
+        </tr>
+        <tr>
+          <td><literal>Memory_MB</literal></td>
+          <td>Virtual machine memory in megabytes.</td>
+        </tr>
+        <tr>
+          <td><literal>Disk</literal></td>
+          <td>Virtual root disk size in
+          gigabytes. This is an ephemeral disk that the base
+          image is copied into. When booting from a persistent
+          volume it is not used. The "0" size is a special case
+          which uses the native base image size as the size of
+          the ephemeral root volume.</td>
+        </tr>
+        <tr>
+          <td><literal>Ephemeral</literal></td>
+          <td>Specifies the size of
+          a secondary ephemeral data disk. This is an empty,
+          unformatted disk and exists only for the life of the
+          instance.</td>
+        </tr>
+        <tr>
+          <td><literal>Swap</literal></td>
+          <td>Optional swap space
+          allocation for the instance.</td>
+        </tr>
+        <tr>
+          <td><literal>VCPUs</literal></td>
+          <td>Number of virtual CPUs
+          presented to the instance.</td>
+        </tr>
+        <tr>
+          <td><literal>RXTX_Factor</literal></td>
+          <td>Optional property
+          allows created servers to have a different bandwidth
+          cap than that defined in the network they are attached
+          to. This factor is multiplied by the rxtx_base
+          property of the network. Default value is 1.0 (that
+          is, the same as attached network).</td>
+        </tr>
+        <tr>
+          <td><literal>Is_Public</literal></td>
+          <td>Boolean value, whether
+          flavor is available to all users or private to the
+          tenant it was created in. Defaults to True.</td>
+        </tr>
+        <tr>
+          <td><literal>extra_specs</literal></td>
+          <td>additional optional
+          restrictions on which compute nodes the flavor can run
+          on. This is implemented as key/value pairs that must
+          match against the corresponding key/value pairs on
+          compute nodes. Can be used to implement things like
+          special resources (e.g., flavors that can only run on
+          compute nodes with GPU hardware).</td>
+        </tr>
+      </tbody>
+    </table>
     <para>Flavor customization can be limited by the hypervisor in
         use, for example the libvirt driver enables quotas on CPUs
         available to a VM, disk tuning, bandwidth I/O, and instance
@@ -103,10 +119,8 @@
         than 0. A quota with value 0 means no value. You can use this
         feature to ensure that all vcpus run at the same speed. An
         example:</para>
-    <screen>
-    <prompt>#</prompt> <userinput>nova flavor-key m1.low_cpu set cpu_quota=10000</userinput></screen>
-    <screen>
-    <prompt>#</prompt> <userinput>nova flavor-key m1.low_cpu set cpu_period=20000</userinput></screen>
+    <screen><prompt>#</prompt> <userinput>nova flavor-key m1.low_cpu set cpu_quota=10000</userinput></screen>
+    <screen><prompt>#</prompt> <userinput>nova flavor-key m1.low_cpu set cpu_period=20000</userinput></screen>
     <para>In that example, the instance of m1.low_cpu can only consume
         a maximum of 50% CPU of a physical CPU computing
         capability.</para>
@@ -174,7 +188,6 @@
         to the network.</para>
     <para>Here are some examples for configuring a bandwidth limit for
         instance network traffic:</para>
-    <screen><prompt>#</prompt> <userinput>nova-manage flavor set_key --name m1.small --key quota:inbound_average --value 10240</userinput>
-			</screen>
-    <screen><prompt>#</prompt><userinput>nova-manage flavor set_key --name m1.small --key quota:outbound_average --value 10240</userinput></screen>
+    <screen><prompt>#</prompt> <userinput>nova-manage flavor set_key --name m1.small --key quota:inbound_average --value 10240</userinput></screen>
+    <screen><prompt>#</prompt> <userinput>nova-manage flavor set_key --name m1.small --key quota:outbound_average --value 10240</userinput></screen>
 </section>
