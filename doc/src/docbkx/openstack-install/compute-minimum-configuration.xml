@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section xml:id="compute-minimum-configuration-settings" xmlns="http://docbook.org/ns/docbook"
-    xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink"
-    version="5.0">
+<section xml:id="compute-minimum-configuration-settings"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
     <title>Configuring OpenStack Compute</title>
-    <para>This section describes the relevant <filename>nova.conf</filename> settings for getting a
-        minimal install running. Refer to the OpenStack Compute Administration Manual for guidance
-        on more configuration options.</para>
-    <para>In general, you can use the same <filename>nova.conf</filename> file across the controller
-        and compute nodes. However, the following configuration options need to be changed on each
-        compute host: <itemizedlist>
+    <para>This section describes the relevant
+            <filename>nova.conf</filename> settings for getting a
+        minimal install running. Refer to the OpenStack Compute
+        Administration Manual for guidance on more configuration
+        options.</para>
+    <para>In general, you can use the same
+            <filename>nova.conf</filename> file across the controller
+        and compute nodes. However, the following configuration
+        options need to be changed on each compute host: <itemizedlist>
             <listitem>
                 <para><literal>my_ip</literal></para>
             </listitem>
@@ -18,17 +22,21 @@
             <listitem>
                 <para><literal>vncserver_proxyclient_address</literal></para>
             </listitem>
-        </itemizedlist>For the above configuration options, you must use the IP address of the
-        specific compute host, not the cloud controller.</para>
-    <para>The packages automatically do these steps for a user named nova, but if you are installing
-        as another user you should ensure that the <filename>nova.conf</filename> file should have
-        its owner set to <literal>root:nova</literal>, and mode set to <literal>0640</literal>,
-        since the file contains your MySQL server’s username and password.</para>
+        </itemizedlist>For the above configuration options, you must
+        use the IP address of the specific compute host, not the cloud
+        controller.</para>
+    <para>The packages automatically do these steps for a user named
+        nova, but if you are installing as another user you should
+        ensure that the <filename>nova.conf</filename> file should
+        have its owner set to <literal>root:nova</literal>, and mode
+        set to <literal>0640</literal>, since the file contains your
+        MySQL server’s username and password.</para>
     <note>
-        <para>If you are installing as another user, you should set permissions correctly. This
-            packaged install ensures that the nova user belongs to the nova group and that the .conf
-            file permissions are set, but here are the manual commands, which should be run as
-            root:</para>
+        <para>If you are installing as another user, you should set
+            permissions correctly. This packaged install ensures that
+            the nova user belongs to the nova group and that the .conf
+            file permissions are set, but here are the manual
+            commands, which should be run as root:</para>
         <screen>
 <prompt>#</prompt> <userinput>groupadd nova</userinput>
 <prompt>#</prompt> <userinput>usermod -g nova nova</userinput>
@@ -36,28 +44,38 @@
 <prompt>#</prompt> <userinput>chmod 640 /etc/nova/nova.conf</userinput>
 </screen>
     </note>
-    <para>The hypervisor is set by editing <filename>/etc/nova/nova.conf</filename>. The hypervisor
-        defaults to <literal>kvm</literal>, but if you are working within a VM already, switch to
-            <literal>qemu</literal> on the <literal>libvirt_type=</literal> line. To use Xen, refer
-        to the overview in this book for where to install nova components.</para>
+    <para>The hypervisor is set by editing
+            <filename>/etc/nova/nova.conf</filename>. The hypervisor
+        defaults to <literal>kvm</literal>, but if you are working
+        within a VM already, switch to <literal>qemu</literal> on the
+            <literal>libvirt_type=</literal> line. To use Xen, refer
+        to the overview in this book for where to install nova
+        components.</para>
     <note>
-        <para>You can also configure the <systemitem class="service">nova-compute</systemitem> service (and, for example configure a
-            hypervisor-per-compute-node) with a separate <filename>nova-compute.conf</filename> file
-            and then referring to <filename>nova-compute.conf</filename> in the
+        <para>You can also configure the <systemitem class="service"
+                >nova-compute</systemitem> service (and, for example
+            configure a hypervisor-per-compute-node) with a separate
+                <filename>nova-compute.conf</filename> file and then
+            referring to <filename>nova-compute.conf</filename> in the
                 <filename>nova.conf</filename> file.</para>
     </note>
-    <para>Ensure the database connection defines your backend data store by adding a
-            <literal>sql_connection</literal> line to <filename>nova.conf</filename>:
+    <para>Ensure the database connection defines your backend data
+        store by adding a <literal>sql_connection</literal> line to
+            <filename>nova.conf</filename>:
                 <literal>sql_connection=mysql://<replaceable>[user]</replaceable>:<replaceable>[pass]</replaceable>@<replaceable>[primary
-                IP]</replaceable>/<replaceable>[db name]</replaceable></literal>, such as
+                IP]</replaceable>/<replaceable>[db
+            name]</replaceable></literal>, such as
             <literal>sql_connection=mysql://nova:yourpassword@192.168.206.130/nova</literal>.</para>
-    <para>Add these settings to <filename>/etc/nova/nova.conf</filename> for the network
-        configuration assumptions made for this installation scenario. You can place comments in the
-            <filename>nova.conf</filename> file by entering a new line with a <literal>#</literal>
-        sign at the beginning of the line. To see a listing of all possible configuration option
-        settings, see <link
+    <para>Add these settings to
+            <filename>/etc/nova/nova.conf</filename> for the network
+        configuration assumptions made for this installation scenario.
+        You can place comments in the <filename>nova.conf</filename>
+        file by entering a new line with a <literal>#</literal> sign
+        at the beginning of the line. To see a listing of all possible
+        configuration option settings, see <link
             xlink:href="http://docs.openstack.org/trunk/openstack-compute/admin/content/compute-options-reference.html"
-            >the reference in the OpenStack Compute Administration Manual</link>.</para>
+            >the reference in the OpenStack Compute Administration
+            Manual</link>.</para>
     <programlisting>
 auth_strategy=keystone
 network_manager=nova.network.manager.FlatDHCPManager
@@ -65,7 +83,8 @@ fixed_range=192.168.100.0/24
 public_interface=eth0
 flat_interface=eth0
 flat_network_bridge=br100</programlisting>
-    <para>Here is an example <filename>nova.conf</filename> with commented sections:</para>
+    <para>Here is an example <filename>nova.conf</filename> with
+        commented sections:</para>
     <para>
         <programlisting os="ubuntu"><xi:include parse="text" href="../common/samples/nova.conf"/>
         </programlisting>
@@ -74,15 +93,23 @@ flat_network_bridge=br100</programlisting>
     </para>
     <para>
         <note>
-            <para>The <literal>my_ip</literal> configuration option will be different for each host,
-                edit it accordingly.</para>
+            <para>The <literal>my_ip</literal> configuration option
+                will be different for each host, edit it
+                accordingly.</para>
         </note>
     </para>
-    <para>The controller node will run the <systemitem class="service">nova-api</systemitem>, <systemitem class="service">nova-scheduler</systemitem>, <systemitem class="service">nova-cert</systemitem>, <systemitem class="service">nova-consoleauth</systemitem>,
-        nova-conductor and optionally nova-network services. The compute node will run the
-        <systemitem class="service">nova-compute</systemitem> and nova-network services. Stop the nova- services prior to running db sync, by
-        running stop commands as root. Otherwise your logs show errors because the database has not
-        yet been populated. On the controller node run:</para>
+    <para>The controller node will run the <systemitem class="service"
+            >nova-api</systemitem>, <systemitem class="service"
+            >nova-scheduler</systemitem>, <systemitem class="service"
+            >nova-cert</systemitem>, <systemitem class="service"
+            >nova-consoleauth</systemitem>, <systemitem
+            class="service">nova-conductor</systemitem> and optionally
+        nova-network services. The compute node will run the
+            <systemitem class="service">nova-compute</systemitem> and
+        nova-network services. Stop the nova- services prior to
+        running db sync, by running stop commands as root. Otherwise
+        your logs show errors because the database has not yet been
+        populated. On the controller node run:</para>
     <screen os="ubuntu">
 <prompt>#</prompt> <userinput>stop nova-api</userinput>
 <prompt>#</prompt> <userinput>stop nova-conductor</userinput>
