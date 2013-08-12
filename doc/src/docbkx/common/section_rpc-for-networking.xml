@@ -2,7 +2,7 @@
 <section xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
-    xml:id="configuring-rpc">
+    xml:id="networking-configuring-rpc">
     <?dbhtml stop-chunking?>
     <title>Configuring the Oslo RPC Messaging System</title>
 
@@ -12,9 +12,9 @@
     OpenStack Oslo RPC supports three implementations of AMQP:
     <application>RabbitMQ</application>,
     <application>Qpid</application>, and
-    <application>ZeroMQ</application>.</para>
+    <application>ZeroMQ</application></para>
 
-    <section xml:id="configuration-rabbitmq">
+    <section xml:id="networking-configuration-rabbitmq">
       <title>Configuration for RabbitMQ</title>
 
       <para>OpenStack Oslo RPC uses <application>RabbitMQ</application> by
@@ -23,11 +23,11 @@
       <literal>rpc_backend</literal> option is not required as long as
       <application>RabbitMQ</application> is the default messaging system.
       However, if it is included the configuration, it must be set to
-      <literal>nova.openstack.common.rpc.impl_kombu</literal>.</para>
+      <literal>neutron.openstack.common.rpc.impl_kombu</literal>.</para>
 
 
       <programlisting language="bash">
-rpc_backend=nova.openstack.common.rpc.impl_kombu
+rpc_backend=neutron.openstack.common.rpc.impl_kombu
       </programlisting>
 
       <para>The following tables describe the rest of the options that
@@ -37,16 +37,15 @@ rpc_backend=nova.openstack.common.rpc.impl_kombu
         tune RabbitMQ's retries and the size of the RPC thread pool.
         If you want to monitor notifications through RabbitMQ, you
         must set the <literal>notification_driver</literal> option in
-        <filename>nova.conf</filename> to
-        <literal>nova.notifier.rabbit_notifier</literal>. The default
-        for sending usage data is 60 seconds plus a randomized 0-60 seconds.
+        <filename>neutron.conf</filename> to
+        <literal>neutron.notifier.rabbit_notifier</literal>.
       </para>
 
-        <xi:include href="tables/nova-rabbitmq.xml"/>
-        <xi:include href="tables/nova-kombu.xml"/>
+        <xi:include href="tables/neutron-rabbitmq.xml"/>
+        <xi:include href="tables/neutron-kombu.xml"/>
     </section>
 
-    <section xml:id="configuration-qpid">
+    <section xml:id="networking-configuration-qpid">
       <title>Configuration for Qpid</title>
 
       <para>This section discusses the configuration options that are relevant
@@ -54,15 +53,15 @@ rpc_backend=nova.openstack.common.rpc.impl_kombu
       OpenStack Oslo RPC. <application>Qpid</application> is not the default
       messaging system, so it must be enabled by setting the
       <literal>rpc_backend</literal> option in
-      <filename>nova.conf</filename>.</para>
+      <filename>neutron.conf</filename>.</para>
 
       <programlisting language="bash">
-rpc_backend=nova.openstack.common.rpc.impl_qpid
+rpc_backend=neutron.openstack.common.rpc.impl_qpid
       </programlisting>
 
       <para>This next critical option points the compute nodes to the
       <application>Qpid</application> broker (server). Set
-      <literal>qpid_hostname</literal> in <filename>nova.conf</filename> to
+      <literal>qpid_hostname</literal> in <filename>neutron.conf</filename> to
       be the hostname where the broker is running.</para>
 
       <note>
@@ -102,30 +101,29 @@ qpid_protocol=ssl
       messaging driver for OpenStack Oslo RPC. It is not common that these
       options are used.</para>
 
-     <xi:include href="tables/nova-qpid.xml"/>
+     <xi:include href="tables/neutron-qpid.xml"/>
 
     </section>
-    <section xml:id="configuration-zeromq">
-     <title>Configuration Options for ZeroMQ</title>
+    <section xml:id="networking-configuration-zeromq">
+     <title>Configuration for ZeroMQ</title>
       <para>This section discusses the configuration options that are relevant
       if <application>ZeroMQ</application> is used as the messaging system for
       OpenStack Oslo RPC. <application>ZeroMQ</application> is not the default
       messaging system, so it must be enabled by setting the
       <literal>rpc_backend</literal> option in
-      <filename>nova.conf</filename>.</para>
-
-
-     <xi:include href="tables/nova-zeromq.xml"/>
+      <filename>neutron.conf</filename>.</para>
+     <xi:include href="tables/neutron-zeromq.xml"/>
     </section>
-
-    <section xml:id="common-messaging-configuration">
+    <section xml:id="networking-common-messaging-configuration">
       <title>Common Configuration for Messaging</title>
 
-      <para>This section lists options that are common between both the
-      <application>RabbitMQ</application> and <application>Qpid</application>
+      <para>This section lists options that are common between the
+      <application>RabbitMQ</application>, <application>Qpid</application>
+      and <application>ZeroMq</application>
       messaging drivers.</para>
 
-     <xi:include href="tables/nova-rpc.xml"/>
+     <xi:include href="tables/neutron-rpc.xml"/>
+     <xi:include href="tables/neutron-notifier.xml"/>
     </section>
 </section>
 
