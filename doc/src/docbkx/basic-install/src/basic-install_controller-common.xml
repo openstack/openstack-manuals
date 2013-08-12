@@ -9,6 +9,7 @@
         <orderedlist>
             <listitem>
                 <para>Install <phrase os="rhel;centos;fedora">Fedora 18</phrase>
+                    <phrase os="opensuse">openSUSE 12.3</phrase>
                     <phrase os="ubuntu">Ubuntu 12.04 or 13.04</phrase>.
                     The exact installation procedure is outside the scope of
                     this document, but please note the following
@@ -51,6 +52,10 @@
 <prompt>#</prompt> <userinput>mv fedora-openstack-grizzly.repo /etc/yum.repos.d/</userinput></screen>
                 </para>
                 <note  os="rhel;centos;fedora"><para>For CentOS, use http://repos.fedorapeople.org/repos/openstack/openstack-grizzly/epel-openstack-grizzly.repo.</para></note>
+                <para os="opensuse">Use the Open Build Service
+		repositories for Grizzly:
+                    <screen><prompt>#</prompt> <userinput>zypper ar -f obs://Cloud:OpenStack:Grizzly/openSUSE_12.3 Grizzly</userinput></screen>
+                </para>
             </listitem>
             <listitem>
                 <para>Configure the network:</para>
@@ -133,6 +138,56 @@ ONBOOT=yes</programlisting>
                         </listitem>
                     </itemizedlist>
                 </para>
+                <para os="opensuse">
+			      Start the YaST network module to setup
+			      the two network:
+			      <screen><prompt>#</prompt> <userinput>yast2 network</userinput></screen>
+			      <itemizedlist>
+				<listitem>
+				  <para>
+				    Setup the first ethernet card <emphasis role="bold">eth0</emphasis> for the internal network with parameters:
+				    <programlisting>
+  Statically assigned IP Address
+  IP Address: 10.10.10.10
+  Subnet Mask: 255.255.255.0
+				    </programlisting>
+				  </para>
+				</listitem>
+				<listitem>
+				  <para>
+				    Setup the second ethernet card <emphasis role="bold">eth1</emphasis> for the external network with parameters:
+				    <programlisting>
+  Statically assigned IP Address
+  IP Address: 10.0.0.10
+  Subnet Mask: 255.255.255.0
+				    </programlisting>
+				  </para>
+				</listitem>
+				<listitem>
+				  <para>
+			      Then setup <emphasis role="bold">Routing</emphasis> with parameters:
+			      <programlisting>
+Default IPv4 Gateway: 10.0.0.1
+Device: eth1
+				    </programlisting>
+				  </para>
+				</listitem>
+				<listitem>
+				  <para>
+				    Setup <emphasis role="bold">Hostname/DNS</emphasis> with parameters:
+				    <programlisting>
+  Hostname: cloud
+  Name Server 1: 8.8.8.8
+				    </programlisting>
+				  </para>
+				</listitem>
+				<listitem>
+				  <para>
+				    Save the configuration and leave YaST.
+				  </para>
+				</listitem>
+			      </itemizedlist>
+			    </para>
                 <para>
                     <itemizedlist>
                         <listitem>
@@ -164,6 +219,7 @@ ONBOOT=yes</programlisting>
                             <para>
                                 <screen os="ubuntu;deb"><prompt>#</prompt> <userinput>apt-get install ntp</userinput></screen>
                                 <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install ntp</userinput></screen>
+                                <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install ntp</userinput></screen>
                             </para>
                         </listitem>
                     </itemizedlist>
@@ -181,6 +237,7 @@ ONBOOT=yes</programlisting>
                 <listitem>
                     <para>Install the packages: <screen os="ubuntu;deb"><prompt>#</prompt> <userinput>apt-get install python-mysqldb mysql-server</userinput></screen>
                         <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install mysql mysql-server MySQL-python</userinput></screen>
+                        <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install mysql-community-server-client mysql-community-server python-mysql</userinput></screen>
                         <note os="ubuntu;deb">        <para><literal>apt-get</literal>
                                 prompts you to set the MySQL root
                                 password.</para>
@@ -195,12 +252,15 @@ ONBOOT=yes</programlisting>
                         requests for the OpenStack Compute service are
                         proxied through the
                             <systemitem class="service">nova-conductor</systemitem> service. <screen os="ubuntu"><prompt>#</prompt> <userinput>sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/my.cnf</userinput></screen>
-                        <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>sed -i 's/127.0.0.1/0.0.0.0/g' /etc/my.cnf</userinput></screen></para>
+                        <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>sed -i 's/127.0.0.1/0.0.0.0/g' /etc/my.cnf</userinput></screen>
+                        <screen os="opensuse"><prompt>#</prompt> <userinput>sed -i 's/127.0.0.1/0.0.0.0/g' /etc/my.cnf</userinput></screen></para>
                 </listitem>
                 <listitem>
                     <para>Restart the service: <screen os="ubuntu;deb"><prompt>#</prompt> <userinput>service mysql restart</userinput></screen>
-                        <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>systemctl start mysqld.service</userinput></screen>
-                        <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>chkconfig mysqld on</userinput></screen></para>
+                        <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>systemctl start mysqld</userinput></screen>
+                        <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>chkconfig mysqld on</userinput></screen>
+                        <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl start mysql</userinput></screen>
+                        <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable mysql</userinput></screen></para>
                 </listitem>
                 <listitem>
                     <para>The various databases that the OpenStack
@@ -235,7 +295,8 @@ EOF</userinput></screen></para>
             </section>
             <section xml:id="controller-rabbitmq">
                 <title> <phrase os="rhel;centos;fedora">Qpid</phrase>
-                    <phrase os="ubuntu">RabbitMQ</phrase> Messaging Service</title>
+                    <phrase os="ubuntu">RabbitMQ</phrase>
+		    <phrase os="opensuse">RabbitMQ</phrase> Messaging Service</title>
                 <para>The OpenStack components also communicate through a queuing service. For example, the Cloud Controller
                     places a request to launch an instance on the queue. The Compute Node then picks this request up
                     and launches the instance. OpenStack can work with several different queuing services.
@@ -244,11 +305,12 @@ EOF</userinput></screen></para>
                     <para>Install the packages:
                         <screen os="ubuntu;deb"><prompt>#</prompt> <userinput>apt-get install rabbitmq-server</userinput></screen>
                         <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install qpid-cpp-server</userinput></screen>
+                        <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install rabbitmq-server</userinput></screen>
                     </para>
                     </listitem>
                     <listitem>
-                        <para os="ubuntu;deb">Change the default password:
-                            <screen os="ubuntu;deb"><prompt>#</prompt> <userinput>rabbitmqctl change_password guest password</userinput></screen>
+                        <para os="ubuntu;deb;opensuse">Change the default password:
+                            <screen os="ubuntu;deb;opensuse"><prompt>#</prompt> <userinput>rabbitmqctl change_password guest password</userinput></screen>
                             <note>
                                 <para>In addition to choosing another password in a production environment, you should also
                                     disable the guest account and use a proper RabbitMQ account. Please see the RabbitMQ
@@ -265,6 +327,14 @@ EOF</userinput></screen></para>
                     </listitem>
                     <listitem  os="rhel;fedora;centos"><para>Start the messaging service:</para>
                         <screen><prompt>#</prompt> <userinput>service qpidd start</userinput></screen>
+                    </listitem>
+                    <listitem os="opensuse">
+                        <para>Enable the messaging service:</para>
+                        <screen><prompt>#</prompt> <userinput>systemctl enable rabbitmq-server</userinput></screen>
+                    </listitem>
+                    <listitem  os="opensuse">
+                        <para>Start the messaging service:</para>
+                        <screen><prompt>#</prompt> <userinput>systemctl start rabbitmq-server</userinput></screen>
                     </listitem>
                 </orderedlist>
             </para>

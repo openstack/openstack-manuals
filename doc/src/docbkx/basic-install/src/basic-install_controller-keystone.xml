@@ -10,7 +10,9 @@
             <listitem>
                 <para>Install the packages:
                     <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install keystone python-keystone python-keystoneclient</userinput></screen>
-                    <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-keystone python-keystone python-keystoneclient</userinput></screen></para>
+                    <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-keystone python-keystone python-keystoneclient</userinput></screen>
+		    <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install openstack-keystone python-keystoneclient</userinput></screen>
+		</para>
             </listitem>
             <listitem>
                 <para>Edit <emphasis role="bold">/etc/keystone/keystone.conf</emphasis>:
@@ -27,6 +29,17 @@ connection = mysql://keystone:password@localhost/keystone</programlisting></para
                     <screen><prompt>#</prompt> <userinput>keystone-manage pki_setup</userinput>
 <prompt>#</prompt> <userinput>chown -R keystone:keystone /etc/keystone/*</userinput></screen></para>
             </listitem>
+	    <listitem os="opensuse">
+	      <para>Setup keystone default catalog:
+<screen><prompt>#</prompt> <userinput>KEYSTONE_CATALOG=/etc/keystone/default_catalog.templates</userinput>
+<prompt>#</prompt> <userinput>sed -e "s,%SERVICE_HOST%,10.10.10.10,g" -e "s/%S3_SERVICE_PORT%/8080/" $KEYSTONE_CATALOG.sample > $KEYSTONE_CATALOG</userinput></screen>
+	      </para>
+	    </listitem>
+            <listitem os="opensuse">
+                <para>Create the ssl keys:
+                    <screen><prompt>#</prompt> <userinput>keystone-manage pki_setup</userinput>
+<prompt>#</prompt> <userinput>chown -R openstack-keystone:openstack-keystone /etc/keystone/*</userinput></screen></para>
+            </listitem>
             <listitem>
                 <para>Restart OpenStack Identity and create the tables in the database:
                     <screen os="ubuntu"><prompt>#</prompt> <userinput>service keystone restart</userinput>
@@ -34,12 +47,19 @@ connection = mysql://keystone:password@localhost/keystone</programlisting></para
                     </screen>
                     <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>service openstack-keystone restart</userinput>
 <prompt>#</prompt> <userinput>openstack-db --init --service keystone</userinput></screen>
+                    <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl restart openstack-keystone</userinput>
+<prompt>#</prompt> <userinput>keystone-manage db_sync</userinput></screen>
                     <note>
                         <para>Check the <literal>/var/log/keystone/keystone.log</literal> file for errors that would
                             prevent the OpenStack Identity service from successfully starting.</para>
                     </note>
                 </para>
             </listitem>
+	    <listitem os="opensuse">
+	      <para>Enable the identity service:
+	      <screen><prompt>#</prompt> <userinput>systemctl enable openstack-keystone.service</userinput></screen>
+	      </para>
+	    </listitem>
             <listitem>
                 <para>Create an <literal>openrc</literal> file:</para>
                 <para>
