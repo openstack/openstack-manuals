@@ -3,7 +3,7 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="cli_launch_instances">
-    <title>Launch instances</title>
+    <title wordsize="20">Launch instances</title>
     <para>Instances are virtual machines that run inside the
         cloud.</para>
     <para>Before you can launch an instance, you must gather
@@ -15,7 +15,8 @@
         provides a pool of images that are accessible to members of
         different projects.</para>
     <section xml:id="gather_parms">
-        <title>Gather parameters to launch an instance</title>
+        <title wordsize="20">Gather parameters to launch an
+            instance</title>
         <para>To launch an instance, you must specify the following
             parameters:</para>
         <itemizedlist xml:id="instance_parameters" spacing="compact">
@@ -103,16 +104,15 @@
                 xlink:href="launch_from_image">image</link> or a <link
                 xlink:href="boot_from_volume">volume</link>.</para>
         <procedure>
-            <title>To gather the parameters you need to launch an
+            <title wordsize="20">To gather the parameters to launch an
                 instance</title>
             <step>
-                <para>On a shell, source the OpenStack RC file.
-                    See <xref
-                linkend="cli_openrc"/>.</para>
+                <para>On a shell, source the OpenStack RC file. See
+                        <xref linkend="cli_openrc"/>.</para>
             </step>
             <step>
                 <para>List the available flavors:</para>
-                <screen><prompt>$</prompt> nova flavor-list</screen>
+                <screen><prompt>$</prompt> <userinput>nova flavor-list</userinput></screen>
                 <screen><computeroutput>+----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
 | ID | Name      | Memory_MB | Disk | Ephemeral | Swap | VCPUs | RXTX_Factor | Is_Public |
 +----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
@@ -187,14 +187,15 @@
     </section>
     <?hard page-break?>
     <section xml:id="launch_from_image">
-        <title>Launch an instance from an image</title>
+        <title wordsize="20">Launch an instance from an image</title>
         <para>Use this procedure to launch an instance from an
             image.</para>
         <procedure>
-            <title>To launch an instance from an image</title>
+            <title wordsize="20">To launch an instance from an
+                image</title>
             <step>
                 <para>Now you have all parameters required to launch
-                    an instance, run the following command. Specify
+                    an instance, run the following command and specify
                     the server name, flavor ID, and image ID.
                     Optionally, you can provide a key name for access
                     control and security group for security. You can
@@ -206,8 +207,8 @@
                     system and pass it at instance launch by using the
                     flag <literal>--user-data
                         &lt;user-data-file&gt;</literal>.</para>
-                <screen><prompt>$</prompt> <userinput>nova boot --flavor FLAVOR_ID --image IMAGE_ID --key_name KEY_NAME --user-data mydata.file \
-        --security_group NAME_OF_SEC_GROUP NAME_FOR_INSTANCE --meta KEY=VALUE --meta KEY=VALUE</userinput></screen>
+                <screen><prompt>$</prompt> <userinput>nova boot --flavor <replaceable>FLAVOR_ID</replaceable> --image <replaceable>IMAGE_ID</replaceable> --key_name <replaceable>KEY_NAME</replaceable> --user-data mydata.file \
+        --security_group <replaceable>SEC_GROUP NAME_FOR_INSTANCE</replaceable> --meta <replaceable>KEY=VALUE</replaceable> --meta <replaceable>KEY=VALUE</replaceable></userinput></screen>
                 <para>The command returns a list of server properties,
                     depending on which parameters you provide.</para>
                 <para>A status of <literal>BUILD</literal> indicates

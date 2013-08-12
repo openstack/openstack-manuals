@@ -5,122 +5,95 @@
     xmlns:xlink="http://www.w3.org/1999/xlink"
     version="5.0"
     xml:id="keystone-ssl-config">
-        <title>SSL and Keystone Configuration</title>
-        <para>Keystone may be configured to support 2-way SSL
-        out-of-the-box. The x509 certificates used by Keystone must be
-        obtained externally and configured for use with Keystone as
-        described in this section. However, a set of sample
-        certificates is provided in the examples/pki/certs and
-        examples/pki/private directories with the Keystone
-        distribution for testing. Here is the description of each of
-        them and their purpose:</para>
-        <section xml:id="types-of-certificates">
-            <title>Types of certificates</title>
-            <variablelist>
+        <title>Configure the Identity Service with SSL</title>
+        <para>You can configure the Identity Service to support 2-way
+        SSL.</para>
+    <para>You must obtain the x509 certificates externally and
+        configure them.</para>
+    <para>The Identity Service provides a set of sample certificates
+        in the <filename class="directory"
+            >examples/pki/certs</filename> and <filename
+            class="directory">examples/pki/private</filename>
+        directories:</para>
+            <variablelist><title>Certificate types</title>
                 <varlistentry>
-                    <term>
-                        cacert.pem
+                    <term>cacert.pem
                     </term>
                     <listitem>
-                        <para>
-                            Certificate Authority chain to validate against.
-                        </para>
+                        <para>Certificate Authority chain to validate against.</para>
                     </listitem>
                 </varlistentry>
                 <varlistentry>
-                    <term>
-                        ssl_cert.pem
+                    <term>ssl_cert.pem
                     </term>
                     <listitem>
-                        <para>
-                            Public certificate for Keystone server.
-                        </para>
+                        <para>Public certificate for Identity Service
+                        server.</para>
                     </listitem>
                 </varlistentry>
                 <varlistentry>
-                    <term>
-                        middleware.pem
+                    <term>middleware.pem
                     </term>
                     <listitem>
-                        <para>
-                            Public and private certificate for Keystone
-                            middleware/client.
-                        </para>
+                        <para>Public and private certificate for
+                        Identity Service middleware/client.</para>
                     </listitem>
                 </varlistentry>
                 <varlistentry>
-                    <term>
-                        cakey.pem
+                    <term>cakey.pem
                     </term>
                     <listitem>
-                        <para>
-                            Private key for the CA.
-                        </para>
+                        <para>Private key for the CA.</para>
                     </listitem>
                 </varlistentry>
                 <varlistentry>
-                    <term>
-                        ssl_key.pem
+                    <term>ssl_key.pem
                     </term>
                     <listitem>
-                        <para>
-                            Private key for the Keystone server.
-                        </para>
+                        <para>Private key for the Identity Service
+                        server.</para>
                     </listitem>
                 </varlistentry>
             </variablelist>
-            <para>
-                Note that you may choose whatever names you want for these
-                certificates, or combine the public/private keys in the same
-                file if you wish. These certificates are just provided as an
-                example.
-            </para>
-        </section>
-        <section xml:id="ssl-configuration">
-            <title>SSL Configuration</title>
-            <para>
-                To enable SSL with client authentication, modify the
-                etc/keystone.conf file accordingly under the [ssl] section. SSL
-                configuration example using the included sample certificates:
-            </para>
-            <screen>
-[ssl]
+           <note><para>You can choose names for
+        these certificates. You can also combine the public/private keys in the
+        same file, if you wish. These certificates are provided as
+        an example.</para></note>
+    <section xml:id="ssl-configuration">
+        <title>SSL configuration</title>
+        <para>To enable SSL with client authentication, modify the
+                <literal>[ssl]</literal> section in the
+                <filename>etc/keystone.conf</filename> file. The
+            following SSL configuration example uses the included
+            sample certificates:</para>
+            <screen><computeroutput>[ssl]
 enable = True
 certfile = &lt;path to keystone.pem&gt;
 keyfile = &lt;path to keystonekey.pem&gt;
 ca_certs = &lt;path to ca.pem&gt;
-cert_required = True
-</screen>
-            <itemizedlist>
+cert_required = True</computeroutput></screen>
+        <itemizedlist><title>Options</title>
+            <listitem>
+                <para><literal>enable</literal>. True enables SSL.
+                    Default is False.</para>
+                </listitem>
                 <listitem>
-                    <para>
-                        <literal>enable</literal>: True enables SSL. Defaults to
-                        False.
+                    <para><literal>certfile</literal>. Path to the Identity
+                    Service public certificate file.</para>
+                </listitem>
+                <listitem>
+                    <para><literal>keyfile</literal>. Path to the
+                    Identity Service private certificate file. If you
+                    include the private key in the certfile, you can
+                    omit the keyfile.</para>
+                </listitem>
+                <listitem>
+                    <para><literal>ca_certs</literal>. Path to the CA trust chain.
                     </para>
                 </listitem>
                 <listitem>
-                    <para>
-                        <literal>certfile</literal>: Path to Keystone public
-                        certificate file.
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>
-                        <literal>keyfile</literal>: Path to Keystone private
-                        certificate file. If the private key is included in the
-                        certfile, the keyfile maybe omitted.
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>
-                        <literal>ca_certs</literal>: Path to CA trust chain.
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>
-                        <literal>cert_required</literal>: Requires client
-                        certificate. Defaults to False.
-                    </para>
+                    <para><literal>cert_required</literal>. Requires
+                    client certificate. Default is False.</para>
                 </listitem>
             </itemizedlist>
         </section>

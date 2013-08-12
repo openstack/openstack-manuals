@@ -21,7 +21,6 @@
         <groupId>com.rackspace.cloud.api</groupId>
         <artifactId>clouddocs-maven-plugin</artifactId>
         <version>1.8.0</version>
-
         <executions>
           <!-- Configuration for OpenStack End User Guide -->
           <execution>
@@ -32,8 +31,6 @@
             <phase>generate-sources</phase>
             <configuration>
               <includes> bk-user-guide.xml</includes>
-              <chapterAutolabel>0</chapterAutolabel>
-              <security>external</security>
               <generateToc>
 appendix toc
 article/appendix nop
@@ -47,6 +44,9 @@ qandadiv toc
 qandaset toc
 reference toc,title
 set toc,title </generateToc>
+              <profileOs>enduser</profileOs>
+              <chapterAutolabel>0</chapterAutolabel>
+              <security>external</security>
               <tocSectionDepth>1</tocSectionDepth>
               <targetDirectory>target/docbkx/webhelp/</targetDirectory>
               <webhelpDirname>user-guide</webhelpDirname>
@@ -55,6 +55,7 @@ set toc,title </generateToc>
           </execution>
         </executions>
         <configuration>
+          <profileOs>enduser</profileOs>
           <highlightSource>false</highlightSource>
           <xincludeSupported>true</xincludeSupported>
           <showXslMessages>true</showXslMessages>

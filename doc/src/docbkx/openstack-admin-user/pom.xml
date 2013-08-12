@@ -12,7 +12,6 @@
     <release.path.name>grizzly</release.path.name>
     <comments.enabled>1</comments.enabled>
   </properties>
-
   <!-- ################################################ -->
   <!-- USE "mvn clean generate-sources" to run this POM -->
   <!-- ################################################ -->
@@ -31,9 +30,7 @@
             </goals>
             <phase>generate-sources</phase>
             <configuration>
-              <includes> bk-admin-user-guide.xml</includes>
-              <chapterAutolabel>0</chapterAutolabel>
-              <security>external</security>
+              <includes> bk-admin-user-guide.xml</includes>    
               <generateToc>
                 appendix toc
                 article/appendix nop
@@ -47,6 +44,9 @@
                 qandaset toc
                 reference toc,title
                 set toc,title </generateToc>
+              <profileOs>adminuser</profileOs>
+              <chapterAutolabel>0</chapterAutolabel>
+              <security>external</security>
               <tocSectionDepth>1</tocSectionDepth>
               <targetDirectory>target/docbkx/webhelp/</targetDirectory>
               <webhelpDirname>admin-user-guide</webhelpDirname>
@@ -55,6 +55,7 @@
           </execution>
         </executions>
         <configuration>
+          <profileOs>adminuser</profileOs>
           <highlightSource>false</highlightSource>
           <xincludeSupported>true</xincludeSupported>
           <showXslMessages>true</showXslMessages>

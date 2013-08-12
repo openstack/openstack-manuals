@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="setting-up-middleware">
+    <title>Set up middleware for the Identity Service</title>
+<?dbhtml stop-chunking?>
+    <section xml:id="keystone-auth-token-middleware">
+        <title>Keystone Auth-Token Middleware</title>
+        <para>The Keystone auth_token middleware is a WSGI component
+            that can be inserted in the WSGI pipeline to handle
+            authenticating tokens with Keystone.</para>
+    </section>
+    <section xml:id="configuring-nova-to-use-keystone">
+        <title>Configuring Nova to use Keystone</title>
+        <para>When configuring Nova, it is important to create a nova
+            user in the service tenant and include the nova user's login
+            information in /etc/nova/nova.conf</para>
+    </section>
+    <section xml:id="configuring-swift-to-use-keystone">
+        <title>Configuring Swift to use Keystone</title>
+        <para>Similar to Nova, swift can be configured to use Keystone
+            for authentication rather than its built in 'tempauth'.</para>
+        <orderedlist numeration="arabic">
+            <listitem>
+                <para>Add a service endpoint for Swift to Keystone</para>
+            </listitem>
+            <listitem>
+                <para>Configure the paste file for swift-proxy,
+                    <filename>/etc/swift/proxy-server.conf</filename>.
+                </para>
+            </listitem>
+            <listitem>
+                <para>Reconfigure Swift's proxy server to use Keystone
+                    instead of TempAuth. Here's an example
+                    `/etc/swift/proxy-server.conf`:</para>
+                <screen>
+[DEFAULT]
+bind_port = 8888
+user = &lt;user&gt;
+
+[pipeline:main]
+pipeline = catch_errors healthcheck cache authtoken keystone proxy-server
+
+[app:proxy-server]
+use = egg:swift#proxy
+account_autocreate = true
+
+[filter:keystone]
+paste.filter_factory = keystoneclient.middleware.swift_auth:filter_factory
+operator_roles = admin, swiftoperator
+
+[filter:authtoken]
+paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
+# Delaying the auth decision is required to support token-less
+# usage for anonymous referrers ('.r:*').
+delay_auth_decision = true
+service_port = 5000
+service_host = 127.0.0.1
+auth_port = 35357
+auth_host = 127.0.0.1
+auth_token = ADMIN
+admin_token = ADMIN
+cache = swift.cache
+
+[filter:cache]
+use = egg:swift#memcache
+set log_name = cache
+
+[filter:catch_errors]
+use = egg:swift#catch_errors
+
+[filter:healthcheck]
+use = egg:swift#healthcheck
+</screen></listitem>
+            <listitem>
+                <para>Restart swift services.</para>
+            </listitem>
+            <listitem>
+                <para>Verify that the Identity service, Keystone, is
+                    providing authentication to Object Storage (Swift).</para>
+                <screen>
+              <prompt>$</prompt> <userinput>swift -V 2 -A http://localhost:5000/v2.0 -U admin:admin -K ADMIN stat</userinput>
+            </screen>
+            </listitem>
+        </orderedlist>
+    </section>
+</section>

@@ -1,10 +1,301 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-    version="5.0"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="dashboard_manage_projects_users">
-    <title>Manage projects and users</title>
+    <title>Projects and users</title>
+    <?dbhtml stop-chunking?>
+    <para>In an OpenStack cloud, you can manage projects and users
+        independently from each other.</para>
+    <para>Projects represent different organizational units in the
+        cloud to which you can assign users.</para>
+    <para>Cloud admin users perform both project and user management
+        tasks.</para>
+    <para>During the basic system set up, the cloud operator must
+        define at least one project, user, and role. The operator
+        links the role to the user and the user to the project. Roles
+        define which actions users can perform.</para>
+    <para>As an admin user, you can create additional projects and
+        users as needed.</para>
+    <para>Learn how to add, update, and delete projects and users,
+        assign users to one or more projects, and change or remove the
+        assignment. To enable or temporarily disable a project or
+        user, update that project or user.</para>
+    <section xml:id="dashboard_projects">
+        <title>Create and manage projects</title>
+        <para>You can create, temporarily disable, enable, and delete
+            projects.</para>
+        <procedure xml:id="dashboard_create_project"
+            xlink:href="#dashboard_create_project"
+            xlink:title="create a project">
+            <title>To create a project</title>
+            <step xmlns:raxm="http://docs.rackspace.com/api/metadata">
+                <para>Log in to the OpenStack dashboard.</para>
+            </step>
+            <step>
+                <para>In the <guilabel>CURRENT PROJECT</guilabel>
+                    drop-down list on the <guilabel>Project</guilabel>
+                    tab, select the <literal>admin</literal>
+                    project.</para>
+            </step>
+            <step>
+                <para>On the <guilabel>Admin</guilabel> tab, click the
+                        <guilabel>Projects</guilabel> category.</para>
+            </step>
+            <step>
+                <para>Click <guibutton>Create
+                    Project</guibutton>.</para>
+            </step>
+            <step>
+                <para>In the <guilabel>Create Project</guilabel>
+                    window, enter a name and description for the
+                    project. By default, the project is enabled. See
+                        <xref linkend="disable_project"/>. Click
+                        <guibutton>Create Project</guibutton>.</para>
+                <para>The dashboard assigns an ID and shows the
+                    project in the <guilabel>Projects</guilabel>
+                    category.</para>
+            </step>
+        </procedure>
+        <procedure>
+            <title>To update a project</title>
+            <para>You can update a project to change its name or
+                description, and to enable or temporarily disable
+                it.</para>
+            <para>Disabling a project has the following consequences:</para>
+            <itemizedlist xml:id="disable_project">
+                <title>Consequences of disabling a project</title>
+                <listitem>
+                    <para>In the dashboard, the project can no longer
+                        be accessed from the <guilabel>CURRENT
+                            PROJECT</guilabel> drop-down list on the
+                            <guilabel>Project</guilabel> tab.</para>
+                </listitem>
+                <listitem>
+                    <para>Users that are only members of the disabled
+                        project can no longer log in.</para>
+                </listitem>
+                <listitem>
+                    <para>It is impossible to launch new instances for
+                        a disabled project. Instances already running
+                        are not automatically terminated though—you
+                        must stop them manually.</para>
+                </listitem>
+                <listitem>
+                    <para>All data for a disabled project is kept so
+                        that you can enable the project again at any
+                        time.</para>
+                </listitem>
+            </itemizedlist>
+            <step>
+                <para>Select the project that you want to update.
+                </para>
+            </step>
+            <step>
+                <para>From the <guilabel>More</guilabel> drop-down
+                    list, click <guilabel>Edit
+                    Project</guilabel>.</para>
+            </step>
+            <step>
+                <para>Optionally, change the following attributes for
+                    the project: <itemizedlist>
+                        <listitem>
+                            <para>Name.</para>
+                        </listitem>
+                        <listitem>
+                            <para>Description.</para>
+                        </listitem>
+                        <listitem>
+                            <para>To disable the project, clear the
+                                   <guilabel>Enabled</guilabel> check
+                                box.</para>
+                            <para>To enable the project, select the
+                                   <guilabel>Enabled</guilabel> check
+                                box.</para>
+                        </listitem>
+                    </itemizedlist></para>
+            </step>
+            <step>
+                <para>Click <guibutton>Save</guibutton>.</para>
+            </step>
+        </procedure>
+        <procedure>
+            <title>To delete one or more projects</title>
+            <step>
+                <para>Select the projects that you want to delete.
+                </para>
+            </step>
+            <step>
+                <para>Click <guibutton>Delete Projects</guibutton> and
+                    confirm your choice in the pop-up that
+                    appears.</para>
+                <note>
+                    <para>You cannot undo the delete action.</para>
+                </note>
+            </step>
+        </procedure>
+    </section>
+    <section xml:id="dashboard_users">
+        <title>Create and manage user accounts</title>
+        <para>Users are members of one or multiple projects.</para>
+        <para>You can add, update, and delete users. To enable or
+            temporarily disable a user, update that user.</para>
+        <para>When you create a user account, you must assign the
+            account to a primary project. Optionally, you can assign
+            the account to additional projects.</para>
+        <para>When you disable a user account, the user can no longer
+            log in, but the data is kept so that you can enable the
+            account again at any time.</para>
+        <para>Before you can delete a user account, you must remove
+            the user account from its primary project.</para>
+        <procedure>
+            <title>To create a user account</title>
+            <step xmlns:raxm="http://docs.rackspace.com/api/metadata">
+                <para>Log in to the OpenStack dashboard.</para>
+            </step>
+            <step>
+                <para>In the <guilabel>CURRENT PROJECT</guilabel>
+                    drop-down list on the <guilabel>Project</guilabel>
+                    tab, select the <literal>admin</literal>
+                    project.</para>
+            </step>
+            <step>
+                <para>Click the <guilabel>Users</guilabel>
+                    category.</para>
+            </step>
+            <step>
+                <para>On the <guilabel>Admin</guilabel> tab, select
+                    the <guilabel>Users</guilabel> category.</para>
+            </step>
 
-<para/>
+            <step>
+                <para>Click <guibutton>Create User</guibutton>.</para>
+            </step>
+            <step>
+                <para>In the <guilabel>Create User</guilabel> window,
+                    enter a user name, email, and preliminary password
+                    for the user.</para>
+                <para>Select a project from the <guilabel>Primary
+                        Project</guilabel> drop-down list.</para>
+                <para>Choose a role for the user from the
+                        <guilabel>Role</guilabel> drop-down list.
+                    Default is <literal>Member</literal>.</para>
+            </step>
+            <step>
+                <para>Click <guibutton>Create User</guibutton> to
+                    confirm your changes.</para>
+                <para>The dashboard assigns an ID and shows the user
+                    account in the <guilabel>Users</guilabel>
+                    category.</para>
+            </step>
+        </procedure>
+        <procedure>
+            <title>To temporarily deactivate a user account</title>
+            <step>
+                <para>Select the user, and from the Actions drop-down
+                    list, select Disable.</para>
+            </step>
+        </procedure>
+        <procedure>
+            <title>To delete one or more users accounts</title>
+            <step>
+                <para>Activate the check boxes in front of the user
+                    accounts that you want to delete.</para>
+            </step>
+            <step>
+                <para>Click Delete Users and confirm your choice in
+                    the pop-up that appears.</para>
+                <para>A message on the Web page shows if the action
+                    has been successful.</para>
+                <para><emphasis role="italic">NOTE: Remove User from
+                        Primary Project</emphasis></para>
+                <para>If a user account cannot be deleted, it is
+                    because it is still assigned to its primary
+                    project.</para>
+            </step>
+        </procedure>
+        <procedure>
+            <title>To delete a user from a project</title>
+            <step>
+                <para>Edit the user data to view which Primary Project
+                    he is assigned to.</para>
+            </step>
+            <step>
+                <para>Remove the user from his primary project as
+                    described in <link
+                        xlink:href="https://www.suse.com/documentation/suse_cloud10/book_cloud_admin/data/sec_adm_dash_projects_users.html#pro_adm_dash_user_assign"
+                        >Modifying User Assignments for a
+                        Project</link>, <link
+                        xlink:href="https://www.suse.com/documentation/suse_cloud10/book_cloud_admin/data/sec_adm_dash_projects_users.html#step_adm_dash_user_remove_start"
+                    /> to <link
+                        xlink:href="https://www.suse.com/documentation/suse_cloud10/book_cloud_admin/data/sec_adm_dash_projects_users.html#step_adm_dash_user_remove_end"
+                    />.</para>
+            </step>
+        </procedure>
+        <section xml:id="dashboard_user_assignments">
+            <title>Modify user assignments for a project</title>
+            <para>When creating new users, you must assign them to a
+                primary project as described in <link
+                    xlink:href="https://www.suse.com/documentation/suse_cloud10/book_cloud_admin/data/sec_adm_dash_projects_users.html#pro_adm_dash_user_create"
+                    >Creating Or Deleting Users Accounts</link>. To
+                assign users to additional projects or to modify and
+                remove assignments, proceed as follows:</para>
+            <procedure>
+                <title>To modify user assignments for a
+                    project</title>
+                <step>
+                    <para>On the Admin tab, select the Projects
+                        category.</para>
+                </step>
+                <step>
+                    <para>Select the project for which to modify user
+                        assignments.</para>
+                </step>
+                <step>
+                    <para>From the Actions drop-down list for the
+                        project, select Modify Users.</para>
+                    <para>The Dashboard shows two lists of users:
+                        Users For Project shows the users assigned to
+                        the current project, Add New Users shows other
+                        existing users, which can be assigned to the
+                        current project.</para>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata
+                                fileref="https://www.suse.com/documentation/suse_cloud10/book_cloud_admin/graphics/cloud_dash_users_list.png"
+                            />
+                        </imageobject>
+                    </mediaobject>
+                </step>
+                <step>
+                    <para>To remove users from the current project,
+                        select one or multiple users and click Remove
+                        User or Remove Users.</para>
+                </step>
+            </procedure>
+            <procedure>
+                <title>To assign a user to the current project</title>
+                <step>
+                    <para>Select the user and click Add To
+                        Project.</para>
+                </step>
+                <step>
+                    <para>In the window that appears, set the user's
+                        role with which to add him to the project and
+                        click Add. Roles define the actions that the
+                        user is allowed to perform. Roles are
+                        configured by the cloud operator in OpenStack
+                        Identity (Keystone). Actions are defined per
+                        OpenStack service in the respective
+                        /etc/[SERVICE_CODENAME]/policy.json file, for
+                        example in /etc/nova/policy.json for the
+                        Compute (Nova) service. For details, see
+                            <link
+                            xlink:href="http://docs.openstack.org/essex/openstack-compute/install/content/keystone-concepts.html"
+                            >http://docs.openstack.org/essex/openstack-compute/install/content/keystone-concepts.html</link>.
+                    </para>
+                </step>
+            </procedure>
+        </section>
+    </section>
 </section>

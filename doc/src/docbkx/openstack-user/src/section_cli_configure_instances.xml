@@ -76,13 +76,13 @@
     <section xml:id="create_import_keys">
         <title>Add or import keypairs</title>
         <procedure>
-            <title>To add or import keys</title>
+            <title>To add a key</title>
             <para>You can generate a keypair or upload an existing
                 public key.</para>
             <step>
                 <para>To generate a keypair, run the following
                     command:</para>
-                <screen><prompt>$</prompt> <userinput>nova keypair-add KEY_NAME > MY_KEY.pem</userinput></screen>
+                <screen><prompt>$</prompt> <userinput>nova keypair-add <replaceable>KEY_NAME</replaceable> > <replaceable>MY_KEY</replaceable>.pem</userinput></screen>
                 <para>The command generates a keypair named
                         <replaceable>KEY_NAME</replaceable>, writes
                     the private key to the
@@ -94,19 +94,19 @@
                 <para>To set the permissions of the
                             <filename><replaceable>MY_KEY</replaceable>.pem</filename>
                     file, run the following command:</para>
-                <screen><prompt>$</prompt> <userinput>chmod 600 MY_KEY.pem</userinput></screen>
+                <screen><prompt>$</prompt> <userinput>chmod 600 <replaceable>MY_KEY</replaceable>.pem</userinput></screen>
                 <para>The command changes the permissions of the
                             <filename><replaceable>MY_KEY</replaceable>.pem</filename>
                     file so that only you can read and write to
                     it.</para>
-            </step>
-            <step>
+            </step></procedure>
+          <procedure><title>To import a key</title>  <step>
                 <para>If you have already generated a keypair with the
                     public key located at
                         <filename>~/.ssh/id_rsa.pub</filename>, run
                     the following command to upload the public
                     key:</para>
-                <screen><prompt>$</prompt> <userinput>nova keypair-add --pub_key ~/.ssh/id_rsa.pub KEY_NAME</userinput></screen>
+                <screen><prompt>$</prompt> <userinput>nova keypair-add --pub_key ~/.ssh/id_rsa.pub <replaceable>KEY_NAME</replaceable></userinput></screen>
                 <para>The command registers the public key at the Nova
                     database and names the keypair
                             <literal><replaceable>KEY_NAME</replaceable></literal>.</para>
@@ -117,36 +117,30 @@
                 <screen><prompt>$</prompt> <userinput>nova keypair-list</userinput></screen>
             </step>
         </procedure>
-
-
-
     </section>
     <section xml:id="configure_security_groups_rules">
         <title>Configure security groups and rules</title>
         <procedure>
-            <title>To list security groups</title>
+            <title>To configure security groups</title>
             <step>
-                <para>To list all security groups for the current
-                    project, including descriptions, enter the
-                    following command:</para>
+                <title>To list all security groups</title>
+                <para>To list security groups for the current project,
+                    including descriptions, enter the following
+                    command:</para>
                 <screen><prompt>$</prompt> <userinput>nova secgroup-list</userinput></screen>
             </step>
-        </procedure>
-        <procedure>
-            <title>To create a security group</title>
             <step>
+                <title>To create a security group</title>
                 <para>To create a security group with a specified name
                     and description, enter the following
                     command:</para>
-                <screen><prompt>$</prompt> <userinput>nova secgroup-create SEC_GROUP_NAME GROUP_DESCRIPTION</userinput></screen>
+                <screen><prompt>$</prompt> <userinput>nova secgroup-create <replaceable>SEC_GROUP_NAME</replaceable> <replaceable>GROUP_DESCRIPTION</replaceable></userinput></screen>
             </step>
-        </procedure>
-        <procedure>
-            <title>To delete a security group</title>
             <step>
+                <title>To delete a security group</title>
                 <para>To delete a specified group, enter the following
                     command:</para>
-                <screen><prompt>$</prompt> <userinput>nova secgroup-delete SEC_GROUP_NAME</userinput></screen>
+                <screen><prompt>$</prompt> <userinput>nova secgroup-delete <replaceable>SEC_GROUP_NAME</replaceable> </userinput></screen>
                 <note>
                     <para>You cannot delete the default security group
                         for a project. Also, you cannot delete a
@@ -164,89 +158,94 @@
                     details, see <xref linkend="cli_openrc"/>.</para>
             </step>
             <step>
-                <para>List the existing rules for a security group:
-                    <screen><prompt>$</prompt> <userinput>nova secgroup-list-rules SEC_GROUP_NAME</userinput></screen></para>
+                <title>To list the rules for a security group</title>
+                <screen><prompt>$</prompt> <userinput>nova secgroup-list-rules <replaceable>SEC_GROUP_NAME</replaceable></userinput></screen>
             </step>
             <step>
-                <para>To allow SSH access to the instances, choose one
-                    of the following sub-steps:</para>
+                <title>To allow SSH access to the instances</title>
+                <para>Choose one of the following sub-steps:</para>
                 <substeps>
                     <step xml:id="sec_group_rule_add">
-                        <title>Add rule for all IP addresses</title>
+                        <title wordsize="20">Add rule for all
+                            IPs</title>
                         <para>Either from all IP addresses (specified
                             as IP subnet in CIDR notation as
                             0.0.0.0/0):</para>
-                        <screen><prompt>$</prompt> <userinput>nova secgroup-add-rule SEC_GROUP_NAME tcp 22 22 0.0.0.0/0</userinput></screen>
+                        <screen><prompt>$</prompt> <userinput>nova secgroup-add-rule <replaceable>SEC_GROUP_NAME</replaceable> tcp 22 22 0.0.0.0/0</userinput></screen>
                     </step>
                     <step xml:id="sec_group_rule_add_alt">
-                        <title>Add rule for other security
+                        <title wordsize="20">Add rule for security
                             groups</title>
                         <para>Alternatively, you can allow only IP
                             addresses from other security groups
                             (source groups) to access the specified
                             port:</para>
                         <screen><prompt>$</prompt> <userinput>nova secgroup-add-group-rule --ip_proto tcp --from_port 22 \
-     --to_port 22 SEC_GROUP_NAME SOURCE_GROUP_NAME</userinput></screen>
+     --to_port 22 <replaceable>SEC_GROUP_NAME</replaceable> <replaceable>SOURCE_GROUP_NAME</replaceable></userinput></screen>
                     </step>
                 </substeps>
             </step>
             <step>
-                <para>To allow pinging the instances, choose from one
-                    of the following sub-steps:</para>
+                <title>To allow pinging the instances</title>
+                <para>Choose one of the following sub-steps:</para>
                 <substeps>
                     <step>
-                        <para>Either from all IP addresses (specified
-                            as IP subnet in CIDR notation as
-                            0.0.0.0/0):</para>
-                        <screen><prompt>$</prompt> <userinput>nova secgroup-add-rule SEC_GROUP_NAME icmp -1 -1 0.0.0.0/0</userinput></screen>
-                        <para>This command allows access to all codes
-                            and all types of ICMP traffic,
-                            respectively.</para>
+                        <title wordsize="20">To allow pinging from
+                            IPs</title>
+                        <para>Specify all IP addresses as IP subnet in
+                            CIDR notation:
+                                <literal>0.0.0.0/0</literal>. This
+                            command allows access to all codes and all
+                            types of ICMP traffic,
+                            respectively:</para>
+                        <screen><prompt>$</prompt> <userinput>nova secgroup-add-rule <replaceable>SEC_GROUP_NAME</replaceable> icmp -1 -1 0.0.0.0/0</userinput></screen>
                     </step>
                     <step>
-                        <para>Alternatively, you can allow only
-                            members of other security groups (source
-                            groups) to ping instances:</para>
+                        <title wordsize="20">To allow pinging from
+                            other security groups</title>
+                        <para>To allow only members of other security
+                            groups (source groups) to ping
+                            instances:</para>
                         <screen><prompt>$</prompt> <userinput>nova secgroup-add-group-rule --ip_proto icmp --from_port -1 \
-     --to_port -1 SEC_GROUP_NAME SOURCE_GROUP_NAME</userinput></screen>
+     --to_port -1 <replaceable>SEC_GROUP_NAME</replaceable> <replaceable>SOURCE_GROUP_NAME</replaceable></userinput></screen>
                     </step>
                 </substeps>
             </step>
             <step>
-                <para>To allow access through UDP port, such as
+                <title>To allow access through UDP port</title>
+                <para>To allow access through a UDP port, such as
                     allowing access to a DNS server that runs on a VM,
                     complete one of the following sub-steps:</para>
                 <substeps>
                     <step>
-                        <para>Either from all IP addresses (specified
-                            as IP subnet in CIDR notation as
-                            0.0.0.0/0):
-                            <screen><prompt>$</prompt> <userinput>nova secgroup-add-rule SEC_GROUP_NAME udp 53 53 0.0.0.0/0</userinput></screen></para>
+                        <title>To allow UDP access from IPs</title>
+                        <para>Specify all IP addresses as IP subnet in
+                            CIDR notation:
+                                <literal>0.0.0.0/0</literal>.<screen><prompt>$</prompt> <userinput>nova secgroup-add-rule SEC_GROUP_NAME udp 53 53 0.0.0.0/0</userinput></screen></para>
                     </step>
                     <step>
-                        <para>Alternatively, you can allow only IP
-                            addresses from other security groups
-                            (source groups) to access the specified
-                            port:
+                        <title>To allow UDP access</title>
+                        <para>To allow only IP addresses from other
+                            security groups (source groups) to access
+                            the specified port:</para>
                             <screen><prompt>$</prompt> <userinput>nova secgroup-add-group-rule --ip_proto udp --from_port 53 \
-      --to_port 53 SEC_GROUP_NAME SOURCE_GROUP_NAME</userinput></screen></para>
+      --to_port 53 <replaceable>SEC_GROUP_NAME</replaceable> <replaceable>SOURCE_GROUP_NAME</replaceable></userinput></screen>
                     </step>
                 </substeps>
             </step>
             <step>
-                <para>To delete security group rules, you must specify
-                    the same arguments that you used to create the
+                <para>To delete a security group rule, specify the
+                    same arguments that you used to create the
                     rule.</para>
                 <para>To delete the security rule that you created in
                         <xref linkend="sec_group_rule_add"/>:</para>
-                <screen><prompt>$</prompt> <userinput>nova secgroup-delete-rule SEC_GROUP_NAME tcp 22 22 0.0.0.0/0</userinput></screen>
+                <screen><prompt>$</prompt> <userinput>nova secgroup-delete-rule <replaceable>SEC_GROUP_NAME</replaceable> tcp 22 22 0.0.0.0/0</userinput></screen>
                 <para>To delete the security rule that you created in
                         <xref linkend="sec_group_rule_add_alt"
                     />:</para>
                 <screen><prompt>$</prompt> <userinput>nova secgroup-delete-group-rule --ip_proto tcp --from_port 22 \
-     --to_port 22 SEC_GROUP_NAME SOURCE_GROUP_NAME</userinput></screen>
+     --to_port 22 <replaceable>SEC_GROUP_NAME</replaceable> <replaceable>SOURCE_GROUP_NAME</replaceable></userinput></screen>
             </step>
         </procedure>
     </section>
-
 </section>
