@@ -9,10 +9,10 @@
         Provider Router with Private Networks."</para>
     <para>We will follow the <link
             xlink:href="http://docs.openstack.org/grizzly/basic-install/content/basic-install_intro.html"
-            >Basic Install</link> document except for the Neutron,
+            ><citetitle>Basic Install Guide</citetitle></link> except for the Neutron,
         Open-vSwitch, and Virtual Networking sections on each of the
         nodes.</para>
-    <para>The <emphasis role="bold">Basic Install</emphasis> document
+    <para>The <citetitle>Basic Install Guide</citetitle> document
         uses gre tunnels. This document describes how to use vlans for
         separation instead.</para>
     <para>The following figure shows the setup:</para>
@@ -97,44 +97,43 @@
                     node</title>
                 <step>
                     <para>Run the following command:</para>
-                    <screen><userinput>apt-get install neutron-server</userinput></screen>
+                    <screen><prompt>#</prompt> <userinput>apt-get install neutron-server</userinput></screen>
                 </step>
                 <step>
                     <para>Configure Neutron services:</para>
                     <itemizedlist>
                         <listitem>
-                            <para>Edit <emphasis role="bold"
-                                   >/etc/neutron/neutron.conf</emphasis>
-                                file and
-                                modify:<screen><userinput>core_plugin = \
-neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2
+                            <para>Edit file <filename>/etc/neutron/neutron.conf</filename>
+                                and modify:
+<programlisting language="bash">core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2
 auth_strategy = keystone
 fake_rabbit = False
-rabbit_password = password</userinput></screen></para>
+rabbit_password = password</programlisting>
+			    </para>
                         </listitem>
                         <listitem>
-                            <para>Edit <emphasis role="bold"
-                                   >/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</emphasis>
-                                file and modify:</para>
-                            <screen><userinput>[database]
+                            <para>Edit file <filename>
+                            /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
+                                and modify:</para>
+                            <programlisting language="bash">[database]
 sql_connection = mysql://neutron:password@localhost:3306/neutron
 [ovs]
 tenant_network_type = vlan
-network_vlan_ranges = physnet1:100:2999</userinput></screen>
+network_vlan_ranges = physnet1:100:2999</programlisting>
                         </listitem>
                         <listitem>
-                            <para>Edit <emphasis role="bold"
-                                   >/etc/neutron/api-paste.ini</emphasis>
-                                file and modify:</para>
-                            <screen><userinput>admin_tenant_name = service
+                            <para>Edit file <filename>
+                            /etc/neutron/api-paste.ini</filename>
+                            and modify:</para>
+                            <programlisting language="bash">admin_tenant_name = service
 admin_user = neutron
-admin_password = password</userinput></screen>
+admin_password = password</programlisting>
                         </listitem>
                     </itemizedlist>
                 </step>
                 <step>
                     <para>Start the services:</para>
-                    <screen><userinput>service neutron-server restart</userinput></screen>
+                    <screen><prompt>#</prompt> <userinput>service neutron-server restart</userinput></screen>
                 </step>
             </procedure>
         </section>
@@ -146,83 +145,84 @@ admin_password = password</userinput></screen>
                     node</title>
                 <step>
                     <para>Install the packages:</para>
-                    <screen><userinput>apt-get install neutron-plugin-openvswitch-agent \
+                    <screen><prompt>#</prompt> <userinput>apt-get install neutron-plugin-openvswitch-agent \
 neutron-dhcp-agent neutron-l3-agent</userinput></screen>
                 </step>
                 <step>
                     <para>Start Open vSwitch:</para>
-                    <screen><userinput>service openvswitch-switch start</userinput></screen>
+                    <screen><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput></screen>
                 </step>
                 <step>
                     <para>Add the integration bridge to the Open
                         vSwitch:</para>
-                    <screen><userinput>sudo ovs-vsctl add-br br-int</userinput></screen>
+                    <screen><prompt>#</prompt> <userinput>ovs-vsctl add-br br-int</userinput></screen>
                 </step>
                 <step>
                     <para>Update the OpenStack Networking
-                        configuration file, <emphasis role="bold"
-                            >/etc/neutron/neutron.conf</emphasis>:</para>
-                    <screen><userinput>rabbit_password = password
-rabbit_host = 192.168.0.1</userinput></screen>
+                        configuration file, <filename>
+                        /etc/neutron/neutron.conf</filename>:</para>
+                    <programlisting language="bash">rabbit_password = password
+rabbit_host = 192.168.0.1</programlisting>
                 </step>
                 <step>
                     <para>Update the plugin configuration file,
-                            <emphasis role="bold"
-                            >/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</emphasis>:</para>
-                    <screen><userinput>[database]
+                            <filename>
+                              /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini
+			    </filename>:</para>
+                    <programlisting language="bash">[database]
 sql_connection = mysql://neutron:password@192.168.0.1:3306/neutron
 [ovs]
 tenant_network_type=vlan
 network_vlan_ranges = physnet1:1:4094
-bridge_mappings = physnet1:br-eth1</userinput></screen>
+bridge_mappings = physnet1:br-eth1</programlisting>
                 </step>
                 <step>
                     <para>Create the network bridge <emphasis
                             role="bold">br-eth1</emphasis> (All VM
                         communication between the nodes occurs through
                         eth1):</para>
-                    <screen><userinput>sudo ovs-vsctl add-br br-eth1
-sudo ovs-vsctl add-port br-eth1 eth1</userinput></screen>
+                    <screen><prompt>$</prompt> <userinput>sudo ovs-vsctl add-br br-eth1
+<prompt>$</prompt> sudo ovs-vsctl add-port br-eth1 eth1</userinput></screen>
                 </step>
                 <step>
                     <para>Create the external network bridge to the
                         Open vSwitch:</para>
-                    <screen><userinput>sudo ovs-vsctl add-br br-ex
-sudo ovs-vsctl add-port br-ex eth2</userinput></screen>
+                    <screen><prompt>$</prompt> <userinput>sudo ovs-vsctl add-br br-ex
+<prompt>$</prompt> sudo ovs-vsctl add-port br-ex eth2</userinput></screen>
                 </step>
                 <step>
-                    <para>Edit the <emphasis role="bold"
-                            >/etc/neutron/l3_agent.ini </emphasis>
-                        file and modify:</para>
-                    <screen><userinput>[DEFAULT]
+                    <para>Edit the file <filename>
+                    /etc/neutron/l3_agent.ini</filename>
+                        and modify:</para>
+                    <programlisting language="bash">[DEFAULT]
 auth_url = http://192.168.0.1:35357/v2.0
 admin_tenant_name = service
 admin_user = neutron
 admin_password = password
 metadata_ip = 192.168.0.1
-use_namespaces = True</userinput></screen>
+use_namespaces = True</programlisting>
                 </step>
                 <step>
-                    <para>Edit the <emphasis role="bold"
-                            >/etc/neutron/api-paste.ini </emphasis>
-                        file and modify:</para>
-                    <screen><userinput>[DEFAULT]
+                    <para>Edit the file <filename>
+                    /etc/neutron/api-paste.ini</filename>
+                    and modify:</para>
+                    <programlisting language="bash">[DEFAULT]
 auth_host = 192.168.0.1
 admin_tenant_name = service
 admin_user = neutron
-admin_password = password</userinput></screen>
+admin_password = password</programlisting>
                 </step>
                 <step>
-                    <para>Edit the <emphasis role="bold"
-                            >/etc/neutron/dhcp_agent.ini </emphasis>
-                        file and modify:</para>
-                    <screen><userinput>use_namespaces = True</userinput></screen>
+                    <para>Edit the file <filename>
+                    /etc/neutron/dhcp_agent.ini</filename>
+                        and modify:</para>
+                    <programlisting language="bash">use_namespaces = True</programlisting>
                 </step>
                 <step>
                     <para>Restart networking services:</para>
-                    <screen><userinput>service neutron-plugin-openvswitch-agent start
-service neutron-dhcp-agent restart
-service neutron-l3-agent restart</userinput></screen>
+                    <screen><prompt>#</prompt> <userinput>service neutron-plugin-openvswitch-agent start
+<prompt>#</prompt> service neutron-dhcp-agent restart
+<prompt>#</prompt> service neutron-l3-agent restart</userinput></screen>
                 </step>
             </procedure>
         </section>
@@ -230,41 +230,39 @@ service neutron-l3-agent restart</userinput></screen>
             <title>Compute Node</title>
 
             <procedure>
-                <title>To install and configure the compute
-                    node</title>
+                <title>To install and configure the compute node</title>
                 <step>
                     <para>Install the
-                        packages:<screen><userinput>apt-get install openvswitch-switch neutron-plugin-openvswitch-agent</userinput></screen></para>
+                        packages:<screen><prompt>#</prompt> <userinput>apt-get install openvswitch-switch neutron-plugin-openvswitch-agent</userinput></screen></para>
                 </step>
                 <step>
                     <para>Start open vSwitch
-                        Service:<screen><userinput>service openvswitch-switch start</userinput></screen></para>
+                        Service:<screen><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput></screen></para>
                 </step>
                 <step>
                     <para>Configure Virtual
-                        Bridging:<screen><userinput>sudo ovs-vsctl add-br br-int</userinput></screen></para>
+                        Bridging:<screen><prompt>#</prompt> <userinput>ovs-vsctl add-br br-int</userinput></screen></para>
                 </step>
                 <step>
                     <para>Update the OpenStack Networking
-                        configuration file, <emphasis role="bold"
-                            >/etc/neutron/neutron.conf</emphasis>:</para>
-                    <screen><userinput>rabbit_password = password
-rabbit_host = 192.168.0.1</userinput></screen>
+                        configuration file, <filename>
+			/etc/neutron/neutron.conf</filename>:</para>
+                    <programlisting language="bash">rabbit_password = password
+rabbit_host = 192.168.0.1</programlisting>
                 </step>
                 <step>
-                    <para>Update the <emphasis role="bold"
-                            >/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</emphasis>
-                        file:</para>
-                    <screen><userinput>[database]
+                    <para>Update the file <filename>
+                    /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>:</para>
+                    <programlisting language="bash">[database]
 sql_connection = mysql://neutron:password@192.168.0.1:3306/neutron
 [ovs]
 tenant_network_type = vlan
 network_vlan_ranges = physnet1:1:4094
-bridge_mappings = physnet1:br-eth1</userinput></screen>
+bridge_mappings = physnet1:br-eth1</programlisting>
                 </step>
                 <step>
                     <para>Start the DHCP agent:</para>
-                    <screen><userinput>service neutron-plugin-openvswitch-agent restart</userinput></screen>
+                    <screen><prompt>#</prompt> <userinput>service neutron-plugin-openvswitch-agent restart</userinput></screen>
                 </step>
             </procedure>
         </section>
@@ -280,22 +278,21 @@ bridge_mappings = physnet1:br-eth1</userinput></screen>
         </note>
         <para><itemizedlist>
                 <listitem>
-                    <para>Create a <emphasis role="bold"
-                            >novarc</emphasis>
-                        file:<screen><userinput>export OS_TENANT_NAME=provider_tenant
+                    <para>Create a <filename>novarc</filename> file:
+                        <programlisting language="bash">export OS_TENANT_NAME=provider_tenant
 export OS_USERNAME=admin
 export OS_PASSWORD=password
 export OS_AUTH_URL="http://192.168.0.1:5000/v2.0/"
 export SERVICE_ENDPOINT="http://192.168.0.1:35357/v2.0"
-export SERVICE_TOKEN=password</userinput></screen></para>
+export SERVICE_TOKEN=password</programlisting></para>
                 </listitem>
             </itemizedlist>
         </para>
         <itemizedlist>
             <listitem>
                 <para>Export the
-                    variables:<screen><userinput>source novarc
-echo "source novarc">>.bashrc</userinput></screen></para>
+                    variables:<screen><prompt>$</prompt> <userinput>source novarc echo "source novarc">>.bashrc</userinput></screen>
+		</para>
             </listitem>
         </itemizedlist>
         <para>The admin user creates a network and subnet on behalf of
@@ -306,7 +303,7 @@ echo "source novarc">>.bashrc</userinput></screen></para>
                 <step>
                     <para>Get the tenant ID (Used as $TENANT_ID
                         later).</para>
-                    <screen><userinput>keystone tenant-list</userinput></screen>
+                    <screen><prompt>$</prompt> <userinput>keystone tenant-list</userinput></screen>
                     <screen><computeroutput>+----------------------------------+--------------------+---------+
 |                id                |        name        | enabled |
 +----------------------------------+--------------------+---------+
@@ -321,7 +318,7 @@ echo "source novarc">>.bashrc</userinput></screen></para>
                             role="bold">net1</emphasis> for tenant_A
                         ($TENANT_ID will be
                         e40fa60181524f9f9ee7aa1038748f08):</para>
-                    <screen><userinput>neutron net-create --tenant-id $TENANT_ID net1</userinput></screen>
+                    <screen><prompt>$</prompt> <userinput>neutron net-create --tenant-id $TENANT_ID net1</userinput></screen>
                     <screen><computeroutput>+---------------------------+--------------------------------------+
 | Field                     | Value                                |
 +---------------------------+--------------------------------------+
@@ -342,7 +339,7 @@ echo "source novarc">>.bashrc</userinput></screen></para>
                     <para>Create a subnet on the network <emphasis
                             role="bold">net1</emphasis> (ID field
                         below is used as $SUBNET_ID later):</para>
-                    <screen><userinput>neutron subnet-create --tenant-id $TENANT_ID net1 10.5.5.0/24</userinput></screen>
+                    <screen><prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $TENANT_ID net1 10.5.5.0/24</userinput></screen>
                     <screen><computeroutput>+------------------+--------------------------------------------+
 | Field            | Value                                      |
 +------------------+--------------------------------------------+
@@ -368,7 +365,7 @@ echo "source novarc">>.bashrc</userinput></screen></para>
                     <para>Create a router named <emphasis role="bold"
                             >router1</emphasis> (ID is used as
                         $ROUTER_ID later):</para>
-                    <screen><userinput>neutron router-create router1</userinput></screen>
+                    <screen><prompt>$</prompt> <userinput>neutron router-create router1</userinput></screen>
                     <screen><computeroutput>+-----------------------+--------------------------------------+
 | Field                 | Value                                |
 +-----------------------+--------------------------------------+
@@ -380,7 +377,7 @@ echo "source novarc">>.bashrc</userinput></screen></para>
 | tenant_id             | 48fb81ab2f6b409bafac8961a594980f     |
 +-----------------------+--------------------------------------+</computeroutput></screen>
                     <note>
-                        <para>The <literal>--tenant-id</literal>
+                        <para>The <parameter>--tenant-id</parameter>
                             parameter is not specified, so this router
                             is assigned to the provider_tenant
                             tenant.</para>
@@ -391,7 +388,7 @@ echo "source novarc">>.bashrc</userinput></screen></para>
                             >router1</emphasis> and attach it to the
                         subnet from <emphasis role="bold"
                             >net1</emphasis>:</para>
-                    <screen><userinput>neutron router-interface-add $ROUTER_ID $SUBNET_ID</userinput></screen>
+                    <screen><prompt>$</prompt> <userinput>neutron router-interface-add $ROUTER_ID $SUBNET_ID</userinput></screen>
                     <screen><computeroutput>Added interface to router 685f64e7-a020-4fdf-a8ad-e41194ae124b</computeroutput></screen>
                     <note>
                         <para>You can repeat this step to add more
@@ -402,7 +399,7 @@ echo "source novarc">>.bashrc</userinput></screen></para>
                 <step>
                     <para>Create the external network named <emphasis
                             role="bold">ext_net</emphasis>:</para>
-                    <screen><userinput>neutron net-create ext_net --router:external=True</userinput></screen>
+                    <screen><prompt>$</prompt> <userinput>neutron net-create ext_net --router:external=True</userinput></screen>
                     <screen><computeroutput>+---------------------------+--------------------------------------+
 | Field                     | Value                                |
 +---------------------------+--------------------------------------+
@@ -425,7 +422,7 @@ echo "source novarc">>.bashrc</userinput></screen></para>
                         <para>The DHCP service is disabled for this
                             subnet.</para>
                     </note>
-                    <screen><userinput>neutron subnet-create ext_net \
+                    <screen><prompt>$</prompt> <userinput>neutron subnet-create ext_net \
 --allocation-pool start=7.7.7.130,end=7.7.7.150 \
 --gateway 7.7.7.1 7.7.7.0/24 -- --enable_dhcp=False</userinput></screen>
                     <screen><computeroutput>+------------------+--------------------------------------------------+
@@ -447,7 +444,7 @@ echo "source novarc">>.bashrc</userinput></screen></para>
                 <step>
                     <para>Set the router's gateway to be the external
                         network:</para>
-                    <screen><userinput>neutron router-gateway-set $ROUTER_ID $EXTERNAL_NETWORK_ID</userinput></screen>
+                    <screen><prompt>$</prompt> <userinput>neutron router-gateway-set $ROUTER_ID $EXTERNAL_NETWORK_ID</userinput></screen>
                     <screen><computeroutput>Set gateway for router 685f64e7-a020-4fdf-a8ad-e41194ae124b</computeroutput></screen>
                 </step>
             </procedure></para>
@@ -460,7 +457,7 @@ echo "source novarc">>.bashrc</userinput></screen></para>
                         a VM after it starts. The ID of the port
                         ($PORT_ID) that was allocated for the VM is
                         required and can be found as follows:</para>
-                    <screen><userinput>nova list</userinput>
+                    <screen><prompt>$</prompt> <userinput>nova list</userinput>
 
 <computeroutput>+--------------------------------------+--------+--------+---------------+
 |                  ID                  |  Name  | Status |    Networks   |
@@ -479,7 +476,7 @@ echo "source novarc">>.bashrc</userinput></screen></para>
                 <step>
                     <para>Allocate a floating IP (Used as
                         $FLOATING_ID):</para>
-                    <screen><userinput>neutron floatingip-create ext_net</userinput><computeroutput>
+                    <screen><prompt>$</prompt> <userinput>neutron floatingip-create ext_net</userinput><computeroutput>
 
 +---------------------+--------------------------------------+
 | Field               | Value                                |
@@ -496,13 +493,13 @@ echo "source novarc">>.bashrc</userinput></screen></para>
                 <step>
                     <para>Associate the floating IP with the VM's
                         port:</para>
-                    <screen><userinput>neutron floatingip-associate $FLOATING_ID $PORT_ID</userinput><computeroutput>
+                    <screen><prompt>$</prompt> <userinput>neutron floatingip-associate $FLOATING_ID $PORT_ID</userinput><computeroutput>
 
 Associated floatingip 40952c83-2541-4d0c-b58e-812c835079a5</computeroutput></screen>
                 </step>
                 <step>
                     <para>Show the floating IP:</para>
-                    <screen><userinput>neutron floatingip-show $FLOATING_ID</userinput><computeroutput>
+                    <screen><prompt>$</prompt> <userinput>neutron floatingip-show $FLOATING_ID</userinput><computeroutput>
 
 +---------------------+--------------------------------------+
 | Field               | Value                                |
@@ -518,7 +515,7 @@ Associated floatingip 40952c83-2541-4d0c-b58e-812c835079a5</computeroutput></scr
                 </step>
                 <step>
                     <para>Test the floating IP:</para>
-                    <screen><userinput>ping 7.7.7.131</userinput>
+                    <screen><prompt>$</prompt> <userinput>ping 7.7.7.131</userinput>
 <computeroutput>
 PING 7.7.7.131 (7.7.7.131) 56(84) bytes of data.
 64 bytes from 7.7.7.131: icmp_req=2 ttl=64 time=0.152 ms
