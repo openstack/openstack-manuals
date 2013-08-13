@@ -28,7 +28,7 @@ import sys
 import urllib2
 
 # These are files that are known to not be in DocBook format
-FILE_EXCEPTIONS = ['ha-guide-docinfo.xml','bk001-ch003-associate-general.xml']
+FILE_EXCEPTIONS = ['ha-guide-docinfo.xml', 'bk001-ch003-associate-general.xml']
 
 # These are books that we aren't checking yet
 BOOK_EXCEPTIONS = []
@@ -82,7 +82,7 @@ def verify_section_tags_have_xmid(doc):
     for node in doc.xpath('//docbook:section', namespaces=ns):
         if "{http://www.w3.org/XML/1998/namespace}id" not in node.attrib:
             raise ValueError("section missing xml:id attribute, line %d" %
-                            node.sourceline)
+                             node.sourceline)
 
 
 def verify_nice_usage_of_whitespaces(docfile):
@@ -118,8 +118,8 @@ def verify_nice_usage_of_whitespaces(docfile):
                 affected_lines.append(str(lc))
 
     if len(affected_lines) > 0:
-        raise ValueError("trailing or unnecessary whitespaces "
-            "in following lines: %s" % ", ".join(affected_lines))
+        print ("trailing or unnecessary whitespaces "
+               "in following lines: %s" % ", ".join(affected_lines))
 
 
 def error_message(error_log):
