@@ -3,6 +3,7 @@
 #
 
 import os
+import string
 import sys
 import pkgutil
 import glob
@@ -207,9 +208,9 @@ def write_flags(filepath, flags, name_only=True, verbose=0):
                 opt.help = "No help text available for this option"
             if not name_only:
                 f.write("|")
-                f.write("||".join([name,
-                                   str(opt.default),
-                                   opt.help.replace("\n", " ")]))
+                f.write("||".join([string.strip(name),
+                                   string.strip(str(opt.default)),
+                                   string.strip(opt.help.replace("\n", " ")])))
                 f.write("\n|-\n")
             else:
                 f.write(name + "\n")
