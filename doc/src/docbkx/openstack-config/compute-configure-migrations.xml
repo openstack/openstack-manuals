@@ -9,16 +9,13 @@
          version="5.0">
    <?dbhtml stop-chunking?>
     <title>Configuring Migrations</title>
-
     <note>
       <para>This feature is for cloud administrators only.
       </para>
     </note>
-
     <para>Migration allows an administrator to move a virtual machine instance from one compute host
       to another. This feature is useful when a compute host requires maintenance. Migration can also
       be useful to redistribute the load when many VM instances are running on a specific physical machine.</para>
-
     <para>There are two types of migration:
       <itemizedlist>
         <listitem>
@@ -34,7 +31,6 @@
         </listitem>
       </itemizedlist>
     </para>
-
     <para>There are three types of <emphasis role="bold">live migration</emphasis>:
       <itemizedlist>
         <listitem>
@@ -48,13 +44,11 @@
         </listitem>
       </itemizedlist>
     </para>
-
     <para>The following sections describe how to configure your hosts and compute nodes
       for migrations using the KVM and XenServer hypervisors.
     </para>
     <section xml:id="configuring-migrations-kvm-libvirt">
     <title>KVM-Libvirt</title>
-
       <para><emphasis role="bold">Prerequisites</emphasis>
         <itemizedlist>
           <listitem>
@@ -90,7 +84,6 @@
             not work correctly.</para>
         </note>
       </para>
-
     <para><emphasis role="bold">Example Nova Installation Environment</emphasis> <itemizedlist>
         <listitem>
             <para>Prepare 3 servers at least; for example, <literal>HostA</literal>, <literal>HostB</literal>
@@ -179,79 +172,53 @@
           <para>Check that "<filename><replaceable>NOVA-INST-DIR</replaceable>/instances/</filename>"
           directory can be seen at HostA</para>
 
-          <screen><prompt>$</prompt> <userinput>ls -ld <filename><replaceable>NOVA-INST-DIR</replaceable>/instances/</filename></userinput></screen>
-
-
-          <programlisting language="bash">
-drwxr-xr-x 2 nova nova 4096 2012-05-19 14:34 nova-install-dir/instances/
-          </programlisting>
+          <screen><prompt>$</prompt> <userinput>ls -ld <filename><replaceable>NOVA-INST-DIR</replaceable>/instances/</filename></userinput>
+          <computeroutput>drwxr-xr-x 2 nova nova 4096 2012-05-19 14:34 nova-install-dir/instances/</computeroutput></screen>
 
           <para>Perform the same check at HostB and HostC - paying special
            attention to the permissions (nova should be able to write)</para>
 
-          <screen><prompt>$</prompt> <userinput>ls -ld <filename><replaceable>NOVA-INST-DIR</replaceable>/instances/</filename></userinput></screen>
-
-          <programlisting language="bash">
-drwxr-xr-x 2 nova nova 4096 2012-05-07 14:34 nova-install-dir/instances/
-          </programlisting>
-          <screen><prompt>$</prompt> <userinput>df -k</userinput></screen>
-
-          <programlisting language="bash">
-Filesystem           1K-blocks      Used Available Use% Mounted on
+          <screen><prompt>$</prompt> <userinput>ls -ld <filename><replaceable>NOVA-INST-DIR</replaceable>/instances/</filename></userinput>
+          <computeroutput>drwxr-xr-x 2 nova nova 4096 2012-05-07 14:34 nova-install-dir/instances/</computeroutput></screen>
+          <screen><prompt>$</prompt> <userinput>df -k</userinput>
+          <computeroutput>Filesystem           1K-blocks      Used Available Use% Mounted on
 /dev/sda1            921514972   4180880 870523828   1% /
 none                  16498340      1228  16497112   1% /dev
 none                  16502856         0  16502856   0% /dev/shm
 none                  16502856       368  16502488   1% /var/run
 none                  16502856         0  16502856   0% /var/lock
 none                  16502856         0  16502856   0% /lib/init/rw
-HostA:        921515008 101921792 772783104  12% /var/lib/nova/instances  ( &lt;--- this line is important.)
-</programlisting>
+HostA:        921515008 101921792 772783104  12% /var/lib/nova/instances  ( &lt;--- this line is important.)</computeroutput></screen>
         </listitem>
 
         <listitem>
           <para>Update the libvirt configurations. Modify
               <filename>/etc/libvirt/libvirtd.conf</filename>:</para>
-
-          <programlisting>
-before : #listen_tls = 0
+          <programlisting language="bash">before : #listen_tls = 0
 after : listen_tls = 0
 
 before : #listen_tcp = 1
 after : listen_tcp = 1
 
-add: auth_tcp = "none"
-                            </programlisting>
+add: auth_tcp = "none"</programlisting>
 
           <para>Modify <filename>/etc/libvirt/qemu.conf</filename></para>
-
-          <programlisting>
-before : #dynamic_ownership = 1
-after :  dynamic_ownership = 0
-                            </programlisting>
+          <programlisting language="bash">before : #dynamic_ownership = 1
+after :  dynamic_ownership = 0</programlisting>
 
           <para>Modify <filename>/etc/init/libvirt-bin.conf</filename></para>
-
-          <programlisting>
-before : exec /usr/sbin/libvirtd -d
-after : exec /usr/sbin/libvirtd -d -l
-                            </programlisting>
+          <programlisting language="bash">before : exec /usr/sbin/libvirtd -d
+after : exec /usr/sbin/libvirtd -d -l</programlisting>
 
           <para>Modify <filename>/etc/default/libvirt-bin</filename></para>
-
-          <programlisting>
-before :libvirtd_opts=" -d"
-after :libvirtd_opts=" -d -l"
-                            </programlisting>
+          <programlisting language="bash">before :libvirtd_opts=" -d"
+after :libvirtd_opts=" -d -l"</programlisting>
           <para>Restart libvirt. After executing the command, ensure
             that libvirt is successfully restarted.</para>
 
           <screen><prompt>$</prompt> <userinput>stop libvirt-bin &amp;&amp; start libvirt-bin</userinput>
-<prompt>$</prompt> <userinput>ps -ef | grep libvirt</userinput></screen>
-
-          <programlisting language="bash">
-
-root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l
-          </programlisting>
+<prompt>$</prompt> <userinput>ps -ef | grep libvirt</userinput>
+          <computeroutput>root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l</computeroutput></screen>
         </listitem>
         <listitem>
         <para>Configure your firewall to allow libvirt to communicate between nodes.</para>
@@ -334,13 +301,13 @@ root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l
         <listitem>
           <para>
           Create a host aggregate
-          <programlisting>$ nova aggregate-create &lt;name-for-pool&gt; &lt;availability-zone&gt;</programlisting>
+          <screen><prompt>$</prompt> <userinput>nova aggregate-create &lt;name-for-pool&gt; &lt;availability-zone&gt;</userinput></screen>
           The command will display a table which contains the id of the newly created aggregate.
           Now add special metadata to the aggregate, to mark it as a hypervisor pool
-          <programlisting>$ nova aggregate-set-metadata &lt;aggregate-id&gt; hypervisor_pool=true
-$ nova aggregate-set-metadata &lt;aggregate-id&gt; operational_state=created</programlisting>
+          <screen><prompt>$</prompt> <userinput>nova aggregate-set-metadata &lt;aggregate-id&gt; hypervisor_pool=true</userinput></screen>
+          <screen><prompt>$</prompt> <userinput>nova aggregate-set-metadata &lt;aggregate-id&gt; operational_state=created</userinput></screen>
           Make the first compute node part of that aggregate
-          <programlisting>$ nova aggregate-add-host &lt;aggregate-id&gt; &lt;name-of-master-compute&gt;</programlisting>
+          <screen><prompt>$</prompt> <userinput>nova aggregate-add-host &lt;aggregate-id&gt; &lt;name-of-master-compute&gt;</userinput></screen>
           At this point, the host is part of a XenServer pool.
           </para>
         </listitem>
@@ -348,7 +315,7 @@ $ nova aggregate-set-metadata &lt;aggregate-id&gt; operational_state=created</pr
         <listitem>
           <para>
           Add additional hosts to the pool:
-          <programlisting>$ nova aggregate-add-host &lt;aggregate-id&gt; &lt;compute-host-name&gt;</programlisting>
+          <screen><prompt>$</prompt> <userinput>nova aggregate-add-host &lt;aggregate-id&gt; &lt;compute-host-name&gt;</userinput></screen>
           <note>
             <para>At this point the added compute node and the host will be shut down, in order to
             join the host to the XenServer pool. The operation will fail, if any server other than the
