@@ -12,11 +12,18 @@
                         <para>Install the OpenStack Compute package:
                             <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install nova-compute-kvm</userinput></screen>
                             <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-nova-compute</userinput></screen>
+                            <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install openstack-nova-compute kvm</userinput></screen>
                             <note os="ubuntu">
-                                <para>If you are doing this in a virtual environment, install the <literal>nova-compute-qemu</literal> package instead.
-                                    <literal>nova-compute-kvm</literal> requires that your server have native HVM support. Most virtual environments
-                                    do not support this but you can still use the <literal>nova-compute-qemu</literal> service which provides software-based
-                                    virtualization.</para>
+                              <para>In a virtual environment, use the <literal>nova-compute-qemu</literal> package, which provides software-based virtualization.
+                              The <literal>nova-compute-kvm</literal> package requires a server with native Hardware Virtual Maschine (HVM) support and most
+                              virtual environments do not provide this support. But if your virtual environment supports nested virtualization,
+                              you can use the <literal>nova-compute-kvm</literal> package.</para>
+                            </note>
+                            <note os="opensuse">
+                              <para>In a virtual environment, use the <literal>qemu</literal> package, which provides software-based virtualization.
+                              The <literal>kvm</literal> package requires a server with native Hardware Virtual Maschine (HVM) support and most
+                              virtual environments do not provide this support. But if your virtual environment supports nested virtualization,
+                              you can use the <literal>kvm</literal> package.</para>
                             </note>
                         </para>
                     </listitem>

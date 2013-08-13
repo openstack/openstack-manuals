@@ -4,12 +4,14 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="basic-install_compute-common">
                 <title>Common services</title>
-          	<section xml:id="compute-os">
+                <section xml:id="compute-os">
         <title>Operating System</title>
         <orderedlist>
             <listitem>
                 <para>Install <phrase os="rhel;centos;fedora">Fedora 18</phrase>
-                    <phrase os="ubuntu">Ubuntu 12.04</phrase>. Just like with the Cloud Controller, the exact steps are outside the
+                    <phrase os="ubuntu">Ubuntu 12.04</phrase>
+                    <phrase os="opensuse">openSUSE 12.3</phrase>.
+                    Just like with the Cloud Controller, the exact steps are outside the
                     scope of this document, but please note the following options:<itemizedlist>
                         <listitem>
                             <para>Time zone: <emphasis role="bold">UTC</emphasis></para>
@@ -35,6 +37,9 @@
                 <para os="rhel;centos;fedora">Use the Fedora repositories for Grizzly:
                     <screen><prompt>#</prompt> <userinput>wget http://repos.fedorapeople.org/repos/openstack/openstack-grizzly/fedora-openstack-grizzly.repo</userinput>
 <prompt>#</prompt> <userinput>yum install http://repos.fedorapeople.org/repos/openstack/openstack-grizzly/rdo-release-grizzly-1.noarch.rpm</userinput></screen>
+                </para>
+                <para os="opensuse">Use the Open Build Service repositories for Grizzly:
+                    <screen><prompt>#</prompt> <userinput>zypper ar -f obs://Cloud:OpenStack:Grizzly/openSUSE_12.3 Grizzly</userinput></screen>
                 </para>
             </listitem>
             <listitem>
@@ -94,6 +99,46 @@ ONBOOT=yes</programlisting>
                             </para>
                         </listitem>
                     </itemizedlist>
+                <para os="opensuse">
+                              To set up the network, start the YaST network module, as follows:
+                              <screen><prompt>#</prompt> <userinput>yast2 network</userinput></screen>
+                              <itemizedlist>
+                                <listitem>
+                                  <para>
+                                    Use the following parameters to set up the ethernet
+                                    card <emphasis role="bold">eth0</emphasis> for the internal network:
+                                    <programlisting>
+  Statically assigned IP Address
+  IP Address: 10.10.10.11
+  Subnet Mask: 255.255.255.0
+                                    </programlisting>
+                                  </para>
+                                </listitem>
+                                <listitem>
+                                  <para>
+                                    Use the following parameters to set up <emphasis role="bold">Routing</emphasis>:
+                              <programlisting>
+  Default IPv4 Gateway: 10.10.10.9
+  Device: eth1
+                                    </programlisting>
+                                  </para>
+                                </listitem>
+                                <listitem>
+                                  <para>
+                                    Use the following parameters to set up <emphasis role="bold">Hostname/DNS</emphasis>:
+                                    <programlisting>
+  Hostname: c01
+  Name Server 1: 8.8.8.8
+                                    </programlisting>
+                                  </para>
+                                </listitem>
+                                <listitem>
+                                  <para>
+                                    Save the configuration and leave YaST.
+                                  </para>
+                                </listitem>
+                              </itemizedlist>
+                            </para>
                     <itemizedlist>
                         <listitem>
                             <para>Edit the <emphasis role="bold">/etc/hosts</emphasis> file and add
@@ -116,6 +161,7 @@ ONBOOT=yes</programlisting>
                                 <para>
                                     <screen os="ubuntu;deb"><prompt>#</prompt> <userinput>apt-get install ntp</userinput></screen>
                                     <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install ntp</userinput></screen>
+                                    <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install ntp</userinput></screen>
                                 </para>
                             </listitem>
                     </itemizedlist></para>

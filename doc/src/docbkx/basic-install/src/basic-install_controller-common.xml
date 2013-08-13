@@ -53,7 +53,7 @@
                 </para>
                 <note  os="rhel;centos;fedora"><para>For CentOS, use http://repos.fedorapeople.org/repos/openstack/openstack-grizzly/epel-openstack-grizzly.repo.</para></note>
                 <para os="opensuse">Use the Open Build Service
-		repositories for Grizzly:
+                repositories for Grizzly:
                     <screen><prompt>#</prompt> <userinput>zypper ar -f obs://Cloud:OpenStack:Grizzly/openSUSE_12.3 Grizzly</userinput></screen>
                 </para>
             </listitem>
@@ -139,55 +139,57 @@ ONBOOT=yes</programlisting>
                     </itemizedlist>
                 </para>
                 <para os="opensuse">
-			      Start the YaST network module to setup
-			      the two network:
-			      <screen><prompt>#</prompt> <userinput>yast2 network</userinput></screen>
-			      <itemizedlist>
-				<listitem>
-				  <para>
-				    Setup the first ethernet card <emphasis role="bold">eth0</emphasis> for the internal network with parameters:
-				    <programlisting>
+                  To set up the two network interfaces, start the YaST
+                  network module, as follows:
+                  <screen><prompt>#</prompt> <userinput>yast2 network</userinput></screen>
+                  <itemizedlist>
+                    <listitem>
+                      <para>
+                        Use the following parameters to set up the first ethernet card
+                        <emphasis role="bold">eth0</emphasis> for the internal network:
+                        <programlisting>
   Statically assigned IP Address
   IP Address: 10.10.10.10
   Subnet Mask: 255.255.255.0
-				    </programlisting>
-				  </para>
-				</listitem>
-				<listitem>
-				  <para>
-				    Setup the second ethernet card <emphasis role="bold">eth1</emphasis> for the external network with parameters:
-				    <programlisting>
+                        </programlisting>
+                      </para>
+                    </listitem>
+                    <listitem>
+                      <para>
+                        Use the following parameters to set up the second ethernet card
+                        <emphasis role="bold">eth1</emphasis> for the external network:
+                        <programlisting>
   Statically assigned IP Address
   IP Address: 10.0.0.10
   Subnet Mask: 255.255.255.0
-				    </programlisting>
-				  </para>
-				</listitem>
-				<listitem>
-				  <para>
-			      Then setup <emphasis role="bold">Routing</emphasis> with parameters:
-			      <programlisting>
-Default IPv4 Gateway: 10.0.0.1
-Device: eth1
-				    </programlisting>
-				  </para>
-				</listitem>
-				<listitem>
-				  <para>
-				    Setup <emphasis role="bold">Hostname/DNS</emphasis> with parameters:
-				    <programlisting>
+                        </programlisting>
+                      </para>
+                    </listitem>
+                    <listitem>
+                      <para>
+                        Use the following parameters to set up <emphasis role="bold">Routing</emphasis>:
+                        <programlisting>
+  Default IPv4 Gateway: 10.0.0.1
+  Device: eth1
+                        </programlisting>
+                      </para>
+                    </listitem>
+                    <listitem>
+                      <para>
+                        Use the following parameters to  set up <emphasis role="bold">Hostname/DNS</emphasis>:
+                        <programlisting>
   Hostname: cloud
   Name Server 1: 8.8.8.8
-				    </programlisting>
-				  </para>
-				</listitem>
-				<listitem>
-				  <para>
-				    Save the configuration and leave YaST.
-				  </para>
-				</listitem>
-			      </itemizedlist>
-			    </para>
+                        </programlisting>
+                      </para>
+                    </listitem>
+                    <listitem>
+                      <para>
+                        Save the configuration and leave YaST.
+                      </para>
+                    </listitem>
+                  </itemizedlist>
+                </para>
                 <para>
                     <itemizedlist>
                         <listitem>
@@ -296,7 +298,7 @@ EOF</userinput></screen></para>
             <section xml:id="controller-rabbitmq">
                 <title> <phrase os="rhel;centos;fedora">Qpid</phrase>
                     <phrase os="ubuntu">RabbitMQ</phrase>
-		    <phrase os="opensuse">RabbitMQ</phrase> Messaging Service</title>
+                    <phrase os="opensuse">RabbitMQ</phrase> Messaging Service</title>
                 <para>The OpenStack components also communicate through a queuing service. For example, the Cloud Controller
                     places a request to launch an instance on the queue. The Compute Node then picks this request up
                     and launches the instance. OpenStack can work with several different queuing services.
@@ -338,5 +340,5 @@ EOF</userinput></screen></para>
                     </listitem>
                 </orderedlist>
             </para>
-	</section>
+        </section>
 </section>
