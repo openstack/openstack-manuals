@@ -151,7 +151,7 @@ def validate_individual_files(rootdir, exceptions):
 
     any_failures = False
     modified_files = get_modified_files()
-    print("\nFollowing modified files were found:")
+    print("\nFollowing files will be validated:")
     for f in modified_files:
         print(">>> %s" % f)
     print("")
@@ -172,8 +172,6 @@ def validate_individual_files(rootdir, exceptions):
                 try:
                     path = os.path.abspath(os.path.join(root, f))
                     if path not in modified_files:
-                        print((">>> %s not modified. "
-                              "Skipping validation." % path))
                         continue
                     doc = etree.parse(path)
                     if validation_failed(schema, doc):
@@ -203,11 +201,6 @@ def build_affected_books(rootdir, book_exceptions, file_exceptions):
     This will throw an exception if a book fails to build
     """
     modified_files = get_modified_files()
-    print("\nFollowing modified files were found:")
-    for f in modified_files:
-        print(">>> %s" % f)
-    print("")
-
     affected_books = []
     books = []
     for root, dirs, files in os.walk(rootdir):
