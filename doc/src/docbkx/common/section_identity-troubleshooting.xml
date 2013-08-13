@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="troubleshooting-identity-service"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Troubleshoot the Identity Service</title>
+    <para>To troubleshoot the Identity Service, review the logs in the
+            <filename>/var/log/keystone.log</filename> file.</para>
+    <note>
+        <para>Use the <filename>/etc/keystone/logging.conf</filename>
+            file to configure the location of log files.</para>
+    </note>
+    <para>The logs show the components that have come in to the WSGI
+        request, and ideally show an error that explains why an
+        authorization request failed. If you do not see the request in
+        the logs, run keystone with <parameter>--debug</parameter>
+        parameter. Pass the <parameter>--debug</parameter> parameter
+        before the command parameters.</para>
+    <section xml:id="debugging-pki-middleware">
+        <title>Debug PKI Middleware</title>
+        <para>If you receive an <literal>Invalid Openstack Identity
+                Credentials</literal> message when you talk to an
+            OpenStack service, it might be caused by the changeover
+            from UUID tokens to PKI tokens in the Grizzly release.
+            Learn how to troubleshoot this error.</para>
+        <para>The PKI-based token validation scheme relies on
+            certificates from the Identity Service that are fetched
+            through HTTP and stored in a local directory. The location
+            for this directory is specified by the
+                <literal>signing_dir</literal> configuration option.
+            In your services configuration file, look for a section
+            like this:</para>
+        <screen><computeroutput>[keystone_authtoken]
+signing_dir = /var/cache/glance/api
+auth_uri = http://127.0.0.1:5000/
+auth_host = 127.0.0.1
+auth_port = 35357
+auth_protocol = http
+admin_tenant_name = service
+admin_user = glance</computeroutput></screen>
+        <para>If your service lacks this stanza, the <link
+                xlink:href="https://github.com/openstack/python-keystoneclient/blob/master/keystoneclient/middleware/auth_token.py#L198"
+                >keystoneclient/middleware/auth_token.py</link> file
+            specifies the defaults. If no value is specified for this
+            directory, it <link
+                xlink:href="https://github.com/openstack/python-keystoneclient/blob/master/keystoneclient/middleware/auth_token.py#L299"
+                >defaults to a secure temporary directory.</link>
+            Initialization code for the service checks that the
+            directory exists and is writable. If it does not exist,
+            the code tries to create it. If this fails, the service
+            fails to start. However, it often succeeds but problems
+            occur later.</para>
+        <para>The first thing to check is that the
+                <literal>signing_dir</literal> does, in fact, exist.
+            If it does, check for the presence of the certificate
+            files inside there:</para>
+        <screen><prompt>$</prompt> <userinput>ls -la /var/cache/glance/api/</userinput></screen>
+        <screen><computeroutput>total 24
+drwx------. 2 ayoung root 4096 Jul 22 10:58 .
+drwxr-xr-x. 4 root root 4096 Nov 7 2012 ..
+-rw-r-----. 1 ayoung ayoung 1424 Jul 22 10:58 cacert.pem
+-rw-r-----. 1 ayoung ayoung 15 Jul 22 10:58 revoked.pem
+-rw-r-----. 1 ayoung ayoung 4518 Jul 22 10:58 signing_cert.pem</computeroutput></screen>
+        <para>This directory contains two certificates and the token
+            revocation list. If these files are not present, your
+            service cannot fetch them from the Identity Service. To
+            troubleshoot, try to talk to the Identity Service to make
+            sure it is serving out the files, as follows:</para>
+        <screen><prompt>$</prompt> <userinput>curl http://localhost:35357/v2.0/certificates/signing</userinput></screen>
+        <para>This command fetches the signing certificate:</para>
+        <programlisting>Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 1 (0x1)
+    Signature Algorithm: sha1WithRSAEncryption
+        Issuer: C=US, ST=Unset, L=Unset, O=Unset, CN=www.example.com
+        Validity
+            Not Before: Jul 22 14:57:31 2013 GMT
+            Not After : Jul 20 14:57:31 2023 GMT
+        Subject: C=US, ST=Unset, O=Unset, CN=www.example.com</programlisting>
+        <para>Note the expiration dates of the certificate:</para>
+        <programlisting>Not Before: Jul 22 14:57:31 2013 GMT
+Not After : Jul 20 14:57:31 2023 GMT</programlisting>
+        <para>The token revocation list is updated once a minute, but
+            the certificates are not. One possible problem is that the
+            certificates are the wrong files or garbage. You can
+            remove these files and run another command against your
+            server: They are fetched on demand.</para>
+        <para>The Identity Service log should show the access of the
+            certificate files. You might have to turn up your logging
+            levels. Set <literal>debug = True</literal> and
+                <literal>verbose = True</literal> in your Identity
+            Service configuration file and restart the Identity
+            Service server.</para>
+        <programlisting>(keystone.common.wsgi): 2013-07-24 12:18:11,461 DEBUG wsgi __call__
+arg_dict: {}
+(access): 2013-07-24 12:18:11,462 INFO core __call__ 127.0.0.1 - - [24/Jul/2013:16:18:11 +0000]
+"GET http://localhost:35357/v2.0/certificates/signing HTTP/1.0" 200 4518</programlisting>
+        <para>If the files do not appear in your directory after this,
+            it is likely one of the following issues:</para>
+        <itemizedlist>
+            <listitem>
+                <para>Your service is configured incorrectly and
+                    cannot talk to the Identity Service. Check the
+                        <literal>auth_port</literal> and
+                        <literal>auth_host</literal> values and make
+                    sure that you can talk to that service through
+                    cURL, as shown previously.</para>
+            </listitem>
+            <listitem>
+                <para>Your signing directory is not writable. Use the
+                        <command>chmod</command> command to change its
+                    permissions so that the service (POSIX) user can
+                    write to it. Verify the change through
+                        <command>su</command> and
+                        <command>touch</command> commands.</para>
+            </listitem>
+            <listitem>
+                <para>The SELinux policy is denying access to the
+                    directory.</para>
+            </listitem>
+        </itemizedlist>
+        <para>SELinux troubles often when you use Fedora/RHEL-based
+            packages and you choose configuration options that do not
+            match the standard policy. Run the <command>setenforce
+                permissive</command> command. If that makes a
+            different, you should relabel the directory. If you are
+            using a sub-directory of the
+                <filename>/var/cache/</filename> directory, run the
+            following command:</para>
+        <screen><prompt>$</prompt> <userinput>sudo restorecon /var/cache/</userinput></screen>
+        <para>If you are not using a <filename>/var/cache</filename>
+            sub-directory, you should. Modify the
+                <literal>signing_dir</literal> configuration option
+            for your service and restart.</para>
+        <para>Set back to <literal>setenforce enforcing</literal> to
+            confirm that your changes solve the problem.</para>
+        <para>If your certificates are fetched on demand, the PKI
+            validation is working properly. Most likely, the token
+            from the Identity Service is not valid for the operation
+            you are attempting to perform, and your user needs a
+            different role for the operation.</para>
+    </section>
+    <section xml:id="debugging-signing-key-file">
+        <title>Debug Signing Key File Errors</title>
+        <para>If an error occurs when the signing key file opens, it
+            is possible that the person who ran the
+                <command>keystone-manage pki_setup</command> command
+            to generate certificates and keys did not use the correct
+            user. When you run the <command>keystone-manage
+                pki_setup</command> command, the Identity Service
+            generates a set of certificates and keys in
+                <filename>/etc/keystone/ssl*</filename>, which is
+            owned by root:root.</para>
+        <para>This can present a problem when you run the Identity
+            Service daemon under the keystone user account (nologin)
+            when you try to run PKI. Unless you run the
+                <command>chown</command> command against the files
+            keystone:keystone or run the <command>keystone-manage
+                pki_setup</command> command with the
+                <parameter>--keystone-user</parameter> and
+                <parameter>--keystone-group</parameter> parameters,
+            you get an error, as follows:</para>
+        <screen><computeroutput>2012-07-31 11:10:53 ERROR [keystone.common.cms] Error opening signing key file
+/etc/keystone/ssl/private/signing_key.pem
+140380567730016:error:0200100D:system library:fopen:Permission
+denied:bss_file.c:398:fopen('/etc/keystone/ssl/private/signing_key.pem','r')
+140380567730016:error:20074002:BIO routines:FILE_CTRL:system lib:bss_file.c:400:
+unable to load signing key file</computeroutput></screen>
+    </section>
+</section>

@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section
-    xmlns="http://docbook.org/ns/docbook"
+<section xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-    version="5.0"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="keystone-troubleshooting">
-        <title>Troubleshooting Identity (Keystone)</title>
-    <para>If you see an error opening the signing key file, it's possible the person who ran <command>keystone-manage pki_setup</command> to generate certificates and keys
-        isn't using the correct user. When you run <command>keystone-manage pki_setup</command>, keystone generates a set of certificates and keys in /etc/keystone/ssl* which is owned by root:root.
-    </para>
-    <para>
-        This is problematic when trying to then run the Keystone daemon under the 'keystone' user account (nologin) when trying to run PKI.
-        Unless you manually chown the files keystone:keystone or run <command>keystone-manage pki_setup</command> with --keystone-user and --keystone-group you'll get an error like this:
-        </para>
-        <screen>2012-07-31 11:10:53 ERROR [keystone.common.cms] Error opening signing key file /etc/keystone/ssl/private/signing_key.pem
-        140380567730016:error:0200100D:system library:fopen:Permission denied:bss_file.c:398:fopen('/etc/keystone/ssl/private/signing_key.pem','r')
-        140380567730016:error:20074002:BIO routines:FILE_CTRL:system lib:bss_file.c:400:
-        unable to load signing key file</screen>
-        </section>
+    <title>Troubleshooting Identity (Keystone)</title>
+    <para>If you see an error opening the signing key file, it's
+        possible that the person who ran <command>keystone-manage
+            pki_setup</command> to generate certificates and keys
+        isn't using the correct user. When you run
+            <command>keystone-manage pki_setup</command>, the Identity Service
+        generates a set of certificates and keys in <filename>/etc/keystone/ssl*</filename>,
+        which is owned by root:root.</para>
+    <para>This creates a problem when you try to run the Identity Service
+        daemon under the 'keystone' user account (nologin) when trying
+        to run PKI. Unless you manually chown the files
+        keystone:keystone or run <command>keystone-manage
+            pki_setup</command> with --keystone-user and
+        --keystone-group, you'll get an error like this:</para>
+    <screen><computeroutput>2012-07-31 11:10:53 ERROR [keystone.common.cms] Error opening signing key file /etc/keystone/ssl/private/signing_key.pem
+140380567730016:error:0200100D:system library:fopen:Permission denied:bss_file.c:398:fopen('/etc/keystone/ssl/private/signing_key.pem','r')
+140380567730016:error:20074002:BIO routines:FILE_CTRL:system lib:bss_file.c:400:
+unable to load signing key file</computeroutput></screen>
+</section>
