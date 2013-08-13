@@ -136,7 +136,7 @@ def error_message(error_log):
 
 def get_modified_files():
     try:
-        args = ["git", "diff", "--name-only", "HEAD", "HEAD~1"]
+        args = ["git", "diff", "--name-only", "--relative", "HEAD", "HEAD~1"]
         modified_files = check_output(args).strip().split()
     except (CalledProcessError, OSError) as e:
         print("git failed: %s" % e)
