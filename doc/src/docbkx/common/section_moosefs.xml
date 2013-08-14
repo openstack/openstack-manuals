@@ -88,9 +88,7 @@
                 <listitem>
                     <para><emphasis role="bold">Hosts entry configuration</emphasis></para>
                     <para>In the <filename>/etc/hosts</filename> add the following entry :
-                        <programlisting>
-10.0.10.16   mfsmaster
-        </programlisting></para>
+                        <programlisting>10.0.10.16   mfsmaster</programlisting></para>
                 </listitem>
                 <listitem>
                     <para><emphasis role="bold">Required packages</emphasis></para>
@@ -132,9 +130,7 @@
                         <screen><prompt>$</prompt> <userinput>cp mfsexports.cfg.dist mfsexports.cfg</userinput></screen>
                         In <filename>/etc/moosefs/mfsexports.cfg</filename> edit the second line in order to
                         restrict the access to our private network:</para>
-                    <programlisting>
-10.0.10.0/24          /       rw,alldirs,maproot=0
-            </programlisting>
+                    <programlisting>10.0.10.0/24          /       rw,alldirs,maproot=0</programlisting>
                     <para>
                         Create the metadata file :
                         <screen><prompt>$</prompt> <userinput>cd /var/lib/mfs &amp;&amp; cp metadata.mfs.empty metadata.mfs</userinput></screen>
@@ -218,16 +214,14 @@
                         <screen><prompt>$</prompt> <userinput>mkdir /mnt/mfschunks{1,2} &amp;&amp; chown -R mfs:mfs /mnt/mfschunks{1,2}</userinput></screen>
                         Edit <filename>/etc/moosefs/mfhdd.cfg</filename> and add the directories you created
                         to make them part of the cluster:</para>
-                    <programlisting>
-# mount points of HDD drives
+                    <programlisting># mount points of HDD drives
 #
 #/mnt/hd1
 #/mnt/hd2
 #etc.
 
 /mnt/mfschunks1
-/mnt/mfschunks2
-            </programlisting>
+/mnt/mfschunks2</programlisting>
                 </listitem>
                 <listitem>
                     <para><emphasis role="bold">Power up the MooseFS mfschunkserver service</emphasis></para>
@@ -244,8 +238,7 @@
             chunkservers) : <screen><prompt>$</prompt> <userinput>mfsmount /var/lib/nova/instances -H mfsmaster</userinput></screen>
             <computeroutput> mfsmaster accepted connection with parameters: read-write,restricted_ip ;
                 root mapped to root:root </computeroutput>
-            <screen><prompt>$</prompt> <userinput>mount</userinput></screen><programlisting>
-/dev/cciss/c0d0p1 on / type ext4 (rw,errors=remount-ro)
+            <screen><prompt>$</prompt> <userinput>mount</userinput></screen><programlisting>/dev/cciss/c0d0p1 on / type ext4 (rw,errors=remount-ro)
 proc on /proc type proc (rw,noexec,nosuid,nodev)
 none on /sys type sysfs (rw,noexec,nosuid,nodev)
 fusectl on /sys/fs/fuse/connections type fusectl (rw)
@@ -257,9 +250,8 @@ none on /dev/shm type tmpfs (rw,nosuid,nodev)
 none on /var/run type tmpfs (rw,nosuid,mode=0755)
 none on /var/lock type tmpfs (rw,noexec,nosuid,nodev)
 none on /var/lib/ureadahead/debugfs type debugfs (rw,relatime)
-<emphasis role="bold">mfsmaster:9421 on /var/lib/nova/instances type fuse.mfs (rw,allow_other,default_permissions)</emphasis>
-        </programlisting>You
-            can interact with it the way you would interact with a classical mount, using build-in linux
+<emphasis role="bold">mfsmaster:9421 on /var/lib/nova/instances type fuse.mfs (rw,allow_other,default_permissions)</emphasis></programlisting>
+            You can interact with it the way you would interact with a classical mount, using build-in linux
             commands (cp, rm, etc...).
         </para>
         <para>The MooseFS client has several tools for managing the objects within the cluster (set
@@ -267,16 +259,13 @@ none on /var/lib/ureadahead/debugfs type debugfs (rw,relatime)
             <screen><prompt>$</prompt> <userinput>mfs &lt;TAB&gt; &lt;TAB&gt;</userinput> </screen><programlisting>
 mfsappendchunks   mfschunkserver    mfsfileinfo       mfsgetgoal        mfsmount          mfsrsetgoal       mfssetgoal        mfstools
 mfscgiserv        mfsdeleattr       mfsfilerepair     mfsgettrashtime   mfsrgetgoal       mfsrsettrashtime  mfssettrashtime
-mfscheckfile      mfsdirinfo        mfsgeteattr       mfsmakesnapshot   mfsrgettrashtime  mfsseteattr       mfssnapshot
-        </programlisting>You
-            can read the manual for every command. You can also see the <link xlink:href="http://linux.die.net/man/1/mfsrgetgoal">online help</link>
+mfscheckfile      mfsdirinfo        mfsgeteattr       mfsmakesnapshot   mfsrgettrashtime  mfsseteattr       mfssnapshot</programlisting>
+            You can read the manual for every command. You can also see the <link xlink:href="http://linux.die.net/man/1/mfsrgetgoal">online help</link>
         </para>
         <para><emphasis role="bold">Add an entry into the fstab file</emphasis></para>
         <para>
             In order to make sure to have the storage mounted, you can add an entry into the <filename>/etc/fstab</filename> on both compute nodes :
-            <programlisting>
-mfsmount 	/var/lib/nova/instances fuse mfsmaster=mfsmaster,_netdev 	0 	0
-        </programlisting>
+            <programlisting>mfsmount 	/var/lib/nova/instances fuse mfsmaster=mfsmaster,_netdev 	0 	0</programlisting>
         </para>
     </section>
 </section>
