@@ -229,7 +229,7 @@ def build_affected_books(rootdir, book_exceptions, file_exceptions):
                             os.path.abspath(href) in modified_files):
                             affected_books.append(root)
                             break
-                if os.path.basename(root) in affected_books:
+                if root in affected_books:
                     break
 
     if affected_books:
