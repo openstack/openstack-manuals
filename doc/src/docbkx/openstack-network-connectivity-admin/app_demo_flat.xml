@@ -33,7 +33,9 @@
                     <td>Controller Node</td>
                     <td>Runs the OpenStack Networking service, OpenStack Identity and all of
                         the OpenStack Compute services that are required to deploy
-                        VMs (<systemitem class="service">nova-api</systemitem>, <systemitem class="service">nova-scheduler</systemitem>, for example). The node must have at least one
+                        VMs (<systemitem class="service">nova-api</systemitem>,
+                        <systemitem class="service">nova-scheduler</systemitem>, for example).
+                        The node must have at least one
                         network interface, which is connected to
                         the "Management Network". The hostname is 'controlnode', which
                         every other node resolve to the controller node's IP.
@@ -124,10 +126,10 @@
                                         Plugins</link> for the exact details.</para>
                             </listitem>
                             <listitem>
-                                <para>Update the OpenStack Networking configuration file, <emphasis
-                                        role="bold">/etc/neutron/neutron.conf</emphasis> setting
+                                <para>Update the OpenStack Networking configuration file, <filename>
+                                /etc/neutron/neutron.conf</filename> setting
                                     plugin choice and Identity Service user as necessary:</para>
-                                <screen><computeroutput>[DEFAULT]
+                                <programlisting>[DEFAULT]
 core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2
 control_exchange = neutron
 rabbit_host = controlnode
@@ -137,17 +139,17 @@ notification_driver = neutron.openstack.common.notifier.rabbit_notifier
 admin_tenant_name=servicetenant
 admin_user=neutron
 admin_password=servicepassword
-</computeroutput></screen>
+</programlisting>
                             </listitem>
                             <listitem>
-                                <para>Update the plugin configuration file, <emphasis role="bold"
-                                        >/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</emphasis>:</para>
-                                <screen><computeroutput>[database]
+                                <para>Update the plugin configuration file, <filename>
+                                /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>:</para>
+                                <programlisting>[database]
 sql_connection = mysql://root:root@controlnode:3306/ovs_neutron?charset=utf8
 [ovs]
 network_vlan_ranges = physnet1
 bridge_mappings = physnet1:br-eth0
-</computeroutput></screen>
+</programlisting>
                             </listitem>
                             <listitem>
                                 <para>Start the OpenStack Networking service</para>
@@ -161,10 +163,9 @@ bridge_mappings = physnet1:br-eth0
                             </listitem>
                             <listitem>
                                 <para>Update the OpenStack Compute configuration
-                                   file, <emphasis role="bold"
-                                   >/etc/nova/nova.conf. Make sure the following is at the end of this file</emphasis>:</para>
-                                <screen><computeroutput>
-network_api_class=nova.network.neutronv2.api.API
+                                   file, <filename>
+                                   /etc/nova/nova.conf</filename>. Make sure the following is at the end of this file:</para>
+                                <programlisting>network_api_class=nova.network.neutronv2.api.API
 
 neutron_admin_username=neutron
 neutron_admin_password=servicepassword
@@ -173,7 +174,8 @@ neutron_auth_strategy=keystone
 neutron_admin_tenant_name=servicetenant
 neutron_url=http://controlnode:9696/
 
-libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver</computeroutput></screen>
+libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver
+                                </programlisting>
                             </listitem>
                             <listitem>
                                 <para>Restart the OpenStack Compute service</para>
@@ -190,25 +192,25 @@ libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver</computero
                             </listitem>
                             <listitem>
                                 <para>Add the integration bridge to the Open vSwitch:</para>
-                                <screen><computeroutput>sudo ovs-vsctl add-br br-int</computeroutput></screen>
+                                <screen><prompt>$</prompt> <userinput>sudo ovs-vsctl add-br br-int</userinput></screen>
                             </listitem>
                             <listitem>
-                                <para>Update the OpenStack Networking configuration file, <emphasis
-                                        role="bold">/etc/neutron/neutron.conf</emphasis>:</para>
-                                <screen><computeroutput>[DEFAULT]
+                                <para>Update the OpenStack Networking configuration file, <filename>
+                                /etc/neutron/neutron.conf</filename>:</para>
+                                <programlisting>[DEFAULT]
 core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2
 control_exchange = neutron
 rabbit_host = controlnode
-notification_driver = neutron.openstack.common.notifier.rabbit_notifier</computeroutput></screen>
+notification_driver = neutron.openstack.common.notifier.rabbit_notifier</programlisting>
                             </listitem>
                             <listitem>
-                                <para>Update the plugin configuration file, <emphasis role="bold"
-                                        >/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</emphasis>:</para>
-                                <screen><computeroutput>[database]
+                                <para>Update the plugin configuration file, <filename>
+                                /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>:</para>
+                                <programlisting>[database]
 sql_connection = mysql://root:root@controlnode:3306/ovs_neutron?charset=utf8
 [ovs]
 network_vlan_ranges = physnet1
-bridge_mappings = physnet1:br-eth0</computeroutput></screen>
+bridge_mappings = physnet1:br-eth0</programlisting>
                             </listitem>
                             <listitem>
                                 <para>Create the network bridge
@@ -216,8 +218,8 @@ bridge_mappings = physnet1:br-eth0</computeroutput></screen>
                                    >br-eth0</emphasis> (All VM
                                    communication between the nodes
                                    will be done via eth0):</para>
-                                <screen><computeroutput>sudo ovs-vsctl add-br br-eth0
-sudo ovs-vsctl add-port br-eth0 eth0</computeroutput></screen>
+                                <screen><prompt>$</prompt> <userinput>sudo ovs-vsctl add-br br-eth0</userinput>
+<prompt>$</prompt> <userinput>sudo ovs-vsctl add-port br-eth0 eth0</userinput></screen>
                             </listitem>
                             <listitem>
                                 <para>Start the OpenStack Networking L2 agent</para>
@@ -230,18 +232,18 @@ sudo ovs-vsctl add-port br-eth0 eth0</computeroutput></screen>
                                 <para>Install the DHCP agent.</para>
                             </listitem>
                             <listitem>
-                                <para>Update the OpenStack Networking configuration file, <emphasis
-                                        role="bold">/etc/neutron/neutron.conf</emphasis>:</para>
-                                <screen><computeroutput>[DEFAULT]
+                                <para>Update the OpenStack Networking configuration file, <filename>
+                                /etc/neutron/neutron.conf</filename>:</para>
+                                <programlisting>[DEFAULT]
 core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2
 control_exchange = neutron
 rabbit_host = controlnode
-notification_driver = neutron.openstack.common.notifier.rabbit_notifier</computeroutput></screen>
+notification_driver = neutron.openstack.common.notifier.rabbit_notifier</programlisting>
                             </listitem>
                             <listitem>
-                                <para>Update the DHCP configuration file <emphasis role="bold"
-                                        >/etc/neutron/dhcp_agent.ini</emphasis>:</para>
-                                <screen><computeroutput>interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</computeroutput></screen>
+                                <para>Update the DHCP configuration file <filename>
+                                /etc/neutron/dhcp_agent.ini</filename>:</para>
+                                <programlisting>interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlisting>
                             </listitem>
                             <listitem>
                                 <para>Start the DHCP agent</para>
@@ -258,17 +260,17 @@ notification_driver = neutron.openstack.common.notifier.rabbit_notifier</compute
             the following environment variables are set. These are
             used by the various clients to access OpenStack Identity.</para>
         <para>
-            <screen><computeroutput>export OS_USERNAME=admin
+            <programlisting language="bash">export OS_USERNAME=admin
 export OS_PASSWORD=adminpassword
 export OS_TENANT_NAME=admin
-export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/</computeroutput></screen>
+export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/</programlisting>
         </para>
         <para>
                    <orderedlist>
                             <listitem>
                                 <para>Get the tenant ID (Used as
                                    $TENANT_ID later):</para>
-                                <screen><computeroutput>keystone tenant-list</computeroutput></screen>
+                                <screen><prompt>$</prompt> <userinput>keystone tenant-list</userinput></screen>
                                 <screen><computeroutput>
 +----------------------------------+---------+---------+
 |                id                |   name  | enabled |
@@ -279,11 +281,11 @@ export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/</computeroutput></screen>
 | 5fcfbc3283a142a5bb6978b549a511ac |   demo  |   True  |
 | b7445f221cda4f4a8ac7db6b218b1339 |  admin  |   True  |
 +----------------------------------+---------+---------+
-                                </computeroutput></screen>
+</computeroutput></screen>
                             </listitem>
                             <listitem>
                                 <para>Get the User information:</para>
-                                <screen><computeroutput>keystone user-list</computeroutput></screen>
+                                <screen><prompt>$</prompt> <userinput>keystone user-list</userinput></screen>
                                 <screen><computeroutput>
 +----------------------------------+-------+---------+-------------------+
 |                id                |  name | enabled |       email       |
@@ -294,13 +296,14 @@ export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/</computeroutput></screen>
 | c11f6b09ed3c45c09c21cbbc23e93066 | UserB |   True  |                   |
 | ca567c4f6c0942bdac0e011e97bddbe3 | UserA |   True  |                   |
 +----------------------------------+-------+---------+-------------------+
-                                </computeroutput></screen>
+</computeroutput></screen>
                             </listitem>
                             <listitem>
                                 <para>Create a internal shared network on the
                                    demo tenant ($TENANT_ID will be
                                    b7445f221cda4f4a8ac7db6b218b1339):</para>
-                                <screen><computeroutput>neutron net-create --tenant-id $TENANT_ID sharednet1 --shared --provider:network_type flat --provider:physical_network physnet1</computeroutput></screen>
+                                <screen><prompt>$</prompt> <userinput>neutron net-create --tenant-id $TENANT_ID sharednet1 --shared --provider:network_type flat \
+  --provider:physical_network physnet1</userinput></screen>
                                 <screen><computeroutput>Created a new network:
 +---------------------------+--------------------------------------+
 | Field                     | Value                                |
@@ -321,7 +324,7 @@ export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/</computeroutput></screen>
                             </listitem>
                             <listitem>
                                 <para>Create a subnet on the network:</para>
-                                <screen><computeroutput>neutron subnet-create --tenant-id $TENANT_ID sharednet1 30.0.0.0/24</computeroutput></screen>
+                                <screen><prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $TENANT_ID sharednet1 30.0.0.0/24</userinput></screen>
                                 <screen><computeroutput>Created a new subnet:
 +------------------+--------------------------------------------+
 | Field            | Value                                      |
@@ -342,8 +345,12 @@ export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/</computeroutput></screen>
                             </listitem>
                             <listitem>
                                 <para>Create a server for tenant A:</para>
-                                <screen><computeroutput>nova --os-tenant-name TenantA --os-username UserA --os-password password --os-auth-url=http://localhost:5000/v2.0 boot --image tty --flavor 1 --nic net-id=04457b44-e22a-4a5c-be54-a53a9b2818e7 TenantA_VM1</computeroutput></screen>
-<screen><computeroutput>nova --os-tenant-name TenantA --os-username UserA --os-password password --os-auth-url=http://localhost:5000/v2.0  list
+                                <screen><prompt>$</prompt> <userinput>nova --os-tenant-name TenantA --os-username UserA --os-password password \
+  --os-auth-url=http://localhost:5000/v2.0 boot --image tty --flavor 1 \
+  --nic net-id=04457b44-e22a-4a5c-be54-a53a9b2818e7 TenantA_VM1</userinput></screen>
+<screen><prompt>$</prompt> <userinput>nova --os-tenant-name TenantA --os-username UserA --os-password password \
+--os-auth-url=http://localhost:5000/v2.0  list</userinput></screen>
+<screen><computeroutput>
 +--------------------------------------+-------------+--------+---------------------+
 | ID                                   | Name        | Status | Networks            |
 +--------------------------------------+-------------+--------+---------------------+
@@ -353,15 +360,16 @@ export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/</computeroutput></screen>
                             </listitem>
                             <listitem>
                                 <para>Ping the server of tenant A:</para>
-                                <screen><computeroutput>
-sudo ip addr flush eth0
-sudo ip addr add 30.0.0.201/24 dev br-eth0
-ping 30.0.0.3
-</computeroutput></screen>
+                                <screen>
+<prompt>$</prompt> <userinput>sudo ip addr flush eth0</userinput>
+<prompt>$</prompt> <userinput>sudo ip addr add 30.0.0.201/24 dev br-eth0</userinput>
+<prompt>$</prompt> <userinput>ping 30.0.0.3</userinput>
+</screen>
                             </listitem>
                             <listitem>
                                 <para>Ping the public network within the server of tenant A:</para>
-                                <screen><computeroutput>ping 192.168.1.1
+                                <screen><prompt>$</prompt> <userinput>ping 192.168.1.1</userinput></screen>
+                                <screen><computeroutput>
 PING 192.168.1.1 (192.168.1.1) 56(84) bytes of data.
 64 bytes from 192.168.1.1: icmp_req=1 ttl=64 time=1.74 ms
 64 bytes from 192.168.1.1: icmp_req=2 ttl=64 time=1.50 ms
