@@ -21,6 +21,7 @@ Requires:
 from lxml import etree
 
 import argparse
+import multiprocessing
 import os
 import re
 import subprocess
@@ -33,6 +34,7 @@ FILE_EXCEPTIONS = ['ha-guide-docinfo.xml','bk001-ch003-associate-general.xml']
 # These are books that we aren't checking yet
 BOOK_EXCEPTIONS = []
 
+RESULTS_OF_BUILDS = []
 
 # NOTE(berendt): check_output as provided in Python 2.7.5 to make script
 #                usable with Python < 2.7
@@ -52,7 +54,7 @@ def check_output(*popenargs, **kwargs):
         cmd = kwargs.get("args")
         if cmd is None:
             cmd = popenargs[0]
-        raise CalledProcessError(retcode, cmd, output=output)
+        raise subprocess.CalledProcessError(retcode, cmd, output=output)
     return output
 
 
@@ -192,6 +194,27 @@ def validate_individual_files(rootdir, exceptions):
         sys.exit(1)
 
 
+def logging_build_book(result):
+    RESULTS_OF_BUILDS.append(result)
+
+
+def build_book(rootdir, book):
+    os.chdir(book)
+    result = True
+    returncode = 0
+    try:
+        output = subprocess.check_output(
+            ["mvn", "clean", "generate-sources"],
+            stderr=subprocess.STDOUT
+        )
+    except subprocess.CalledProcessError as e:
+        output = e.output
+        returncode = e.returncode
+        result = False
+
+    return (os.path.basename(book), result, output, returncode)
+
+
 def build_affected_books(rootdir, book_exceptions, file_exceptions):
     """Build all the books which are affected by modified files.
 
@@ -237,10 +260,23 @@ def build_affected_books(rootdir, book_exceptions, file_exceptions):
     else:
         print("No books are affected by modified files. Building all books.")
 
+    pool = multiprocessing.Pool(processes=multiprocessing.cpu_count())
     for book in books:
-        print("Building %s\n" % os.path.basename(book))
-        os.chdir(book)
-        subprocess.check_call(["mvn", "clean", "generate-sources"])
+        pool.apply_async(build_book, (rootdir, book), callback = logging_build_book)
+    pool.close()
+    pool.join()
+
+    any_failures = False
+    for book, result, output, returncode in RESULTS_OF_BUILDS:
+        if result:
+            print(">>> Build of book %s succeeded." % book)
+        else:
+            any_failures = True
+            print(">>> Build of book %s failed (returncode = %d)." % (book, returncode))
+            print("\n%s" % output)
+
+    if any_failures:
+        sys.exit(1)
 
 
 def main(rootdir):
