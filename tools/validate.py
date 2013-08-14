@@ -148,7 +148,7 @@ def get_modified_files():
     return modified_files
 
 
-def validate_individual_files(rootdir, exceptions):
+def validate_individual_files(rootdir, exceptions, force):
     schema = get_schema()
 
     any_failures = False
@@ -173,7 +173,7 @@ def validate_individual_files(rootdir, exceptions):
                 f not in exceptions):
                 try:
                     path = os.path.abspath(os.path.join(root, f))
-                    if path not in modified_files:
+                    if not force and path not in modified_files:
                         continue
                     doc = etree.parse(path)
                     if validation_failed(schema, doc):
@@ -213,7 +213,7 @@ def build_book(rootdir, book):
     return (os.path.basename(book), result, output, returncode)
 
 
-def build_affected_books(rootdir, book_exceptions, file_exceptions):
+def build_affected_books(rootdir, book_exceptions, file_exceptions, force):
     """Build all the books which are affected by modified files.
 
     Looks for all directories with "pom.xml" and checks if a
@@ -248,7 +248,7 @@ def build_affected_books(rootdir, book_exceptions, file_exceptions):
                 if root in affected_books:
                     break
 
-    if affected_books:
+    if not force and affected_books:
         books = affected_books
     else:
         print("No books are affected by modified files. Building all books.")
@@ -272,9 +272,12 @@ def build_affected_books(rootdir, book_exceptions, file_exceptions):
         sys.exit(1)
 
 
-def main(rootdir):
-    validate_individual_files(rootdir, FILE_EXCEPTIONS)
-    build_affected_books(rootdir, BOOK_EXCEPTIONS, FILE_EXCEPTIONS)
+def main(rootdir, force):
+    if force:
+        print("Validation of all files and build of all books will be forced.")
+
+    validate_individual_files(rootdir, FILE_EXCEPTIONS, force)
+    build_affected_books(rootdir, BOOK_EXCEPTIONS, FILE_EXCEPTIONS, force)
 
 
 def default_root():
@@ -298,5 +301,7 @@ if __name__ == '__main__':
                         help="Root directory that contains DocBook files, "
                         "defaults to `git rev-parse --show-toplevel`/doc/src/"
                         "docbkx")
+    parser.add_argument("--force", help="force the validation of all files "
+                        "and build all books", action="store_true")
     args = parser.parse_args()
-    main(args.path)
+    main(args.path, args.force)
