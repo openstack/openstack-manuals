@@ -143,8 +143,6 @@ def get_modified_files():
     except (CalledProcessError, OSError) as e:
         print("git failed: %s" % e)
         sys.exit(1)
-
-    modified_files = map(lambda x: os.path.abspath(x), modified_files)
     return modified_files
 
 
@@ -157,6 +155,7 @@ def validate_individual_files(rootdir, exceptions):
     for f in modified_files:
         print(">>> %s" % f)
     print("")
+    modified_files = map(lambda x: os.path.abspath(x), modified_files)
 
     for root, dirs, files in os.walk(rootdir):
         # Don't descend into 'target' subdirectories
@@ -224,6 +223,7 @@ def build_affected_books(rootdir, book_exceptions, file_exceptions):
     This will throw an exception if a book fails to build
     """
     modified_files = get_modified_files()
+    modified_files = map(lambda x: os.path.abspath(x), modified_files)
     affected_books = []
     books = []
     for root, dirs, files in os.walk(rootdir):
