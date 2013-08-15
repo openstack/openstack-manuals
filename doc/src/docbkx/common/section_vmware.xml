@@ -37,22 +37,10 @@
           the "<systemitem class="service">nova-compute</systemitem>" service shuts down with the
           message: "Unable to import suds".</para>
       </listitem>
-      <listitem>
-        <para>Tomcat server: This is required to serve up a local version of the vSphere WSDL file
-          (see below).</para>
-      </listitem>
     </itemizedlist>
-    <para>On ubuntu, these packages can be installed by running:</para>
-    <screen>sudo apt-get install python-suds tomcat6 </screen>
-    <para>Next, download the SDK from <link
-        xlink:href="http://www.vmware.com/support/developer/vc-sdk/"
-        >http://www.vmware.com/support/developer/vc-sdk/</link> and copy it into
-        <filename>/var/lib/tomcat6/webapps</filename>. You should ensure that the WSDL is available,
-      in eg <filename> /var/lib/tomcat6/webapps/vmware/SDK/wsdl/vim25/vimService.wsdl</filename>.
-      Below we will point nova.conf to fetch this WSDL file from Tomcat using a URL pointing to
-      localhost.</para>
+    <para>On Ubuntu, these packages can be installed by running:</para>
+    <screen><prompt>$</prompt> <userinput>sudo apt-get install python-suds</userinput></screen>
   </section>
-
   <section xml:id="VMWareVCDriver_details">
     <title>Using the VMwareVCDriver</title>
     <para>This section covers details of using the VMwareVCDriver.</para>
@@ -75,6 +63,67 @@ wsdl_location=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl</progr
         VM with high-availability enabled as part of that same cluster.</para>
       <para>Also note that many of the nova.conf options mentioned elsewhere in this document that
         are relevant to libvirt do not apply to using this driver.</para>
+    </section>
+    <section xml:id="vmware-wsdl-workaround">
+      <title>vSphere 5.0 (and below) additional setup</title>
+      <para>Users of vSphere 5.0 or earlier will need to locally host their WSDL files.
+        These steps are applicable for vCenter 5.0 or ESXi 5.0 and you may
+        accomplish this by either mirroring the WSDL from the vCenter or ESXi
+        server you intend on using, or you may download the SDK directly from VMware.
+        These are both workaround steps used to fix a <link
+         xlink:href="http://kb.vmware.com/selfservice/microsites/search.do?cmd=displayKC&amp;externalId=2010507">known issue</link> with the WSDL that was resolved in later versions.</para>
+      <para>To mirror the WSDL from vCenter (or ESXi), create a local file system directory
+        to hold the WSDL files in. You'll need to set the IP address for your vCenter or
+        ESXi host that you'll be mirroring the files from. Setting the following shell
+        variable will let you cut and paste commands from these instructions.
+        <screen><prompt>$</prompt> <userinput>export VMWAREAPI_IP=&lt;your_vsphere_host_ip&gt;</userinput></screen>
+        <screen><prompt>$</prompt> <userinput>mkdir -p /opt/stack/vmware/wsdl/5.0</userinput></screen>
+        Change into the new directory.
+        <screen><prompt>$</prompt> <userinput>cd /opt/stack/vmware/wsdl/5.0</userinput></screen>
+        Next, we'll mirror all the WSDL files. For that we need a tool that can download the files.
+        <screen><prompt>$</prompt> <userinput>sudo apt-get install wget</userinput></screen>
+        Now that we have a tool to fetch the files for us, we can download them to the local
+        file cache.
+        <programlisting>wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/vimService.wsdl
+        wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/vim.wsdl
+        wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/core-types.xsd
+        wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/query-messagetypes.xsd
+        wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/query-types.xsd
+        wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/vim-messagetypes.xsd
+        wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/reflect-messagetypes.xsd
+        wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/reflect-types.xsd</programlisting>
+        There will be two files that did not fetch properly reflect-types.xsd and
+        reflect-messagetypes.xsd these two files will need to be stubbed out. The
+        following XML listing can be used to replace the missing file content. The
+        XML parser underneath Python can be very particular and if you put a space
+        in the wrong place it can break the parser. Copy the contents below carefully
+        and watch the formatting carefully.
+        <programlisting>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+            &lt;schema
+               targetNamespace="urn:reflect"
+               xmlns="http://www.w3.org/2001/XMLSchema"
+               xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+               elementFormDefault="qualified"&gt;
+            &lt;/schema&gt;
+        </programlisting>
+        Now that the files are locally present, you will need to tell the driver
+        to look for the SOAP service WSDLs in the local file system and not on the
+        remote vSphere server. The following setting should be added to the nova.conf
+        for your nova-compute node.
+        <programlisting>vmwareapi_wsdl_loc=file:///opt/stack/vmware/wsdl/5.0/vimService.wsdl
+        </programlisting>
+        </para>
+      <para>Alternatively, download the version appropriate SDK from <link
+        xlink:href="http://www.vmware.com/support/developer/vc-sdk/"
+        >http://www.vmware.com/support/developer/vc-sdk/</link> and copy it into
+        <filename>/opt/stack/vmware</filename>. You should ensure that the WSDL is available,
+        in eg <filename> /opt/stack/vmware/SDK/wsdl/vim25/vimService.wsdl</filename>.
+        Below we will point nova.conf to fetch this WSDL file from the local file system
+        using a URL.</para>
+        <para>When using the VMwareVCDriver (i.e., vCenter) with OpenStack Compute with vSphere
+        version 5.0 or below, nova.conf must include the following extra config option:</para>
+      <programlisting>vmwareapi_wsdl_loc=file:///opt/stack/vmware/SDK/wsdl/vim25/vimService.wsdl
+      </programlisting>
     </section>
     <section xml:id="VMwareVCDriver_limitations">
       <title>Requirements + Limitations</title>
@@ -137,15 +186,15 @@ wsdl_location=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl</progr
       in the VMDK format. Both thick and thin images are currently supported and all images must be
       flat (i.e. contained within 1 file). For example</para>
     <para>To load a thick image with a SCSI adaptor:</para>
-    <screen>glance image-create name="ubuntu-thick-scsi" disk_format=vmdk container_format=bare \
+    <screen><prompt>$</prompt> <userinput>glance image-create name="ubuntu-thick-scsi" disk_format=vmdk container_format=bare \
 is_public=true --property vmware_adaptertype="lsiLogic" \
 --property vmware_disktype="preallocated" \
---property vmware_ostype="ubuntu64Guest" &lt; ubuntuLTS-flat.vmdk </screen>
+--property vmware_ostype="ubuntu64Guest" &lt; ubuntuLTS-flat.vmdk</userinput></screen>
     <para>To load a thin image with an IDE adaptor:</para>
-    <screen>glance image-create name="unbuntu-thin-ide" disk_format=vmdk container_format=bare \
+    <screen><prompt>$</prompt> <userinput>glance image-create name="unbuntu-thin-ide" disk_format=vmdk container_format=bare \
 is_public=true --property vmware_adaptertype="ide" \
 --property vmware_disktype="thin" \
---property vmware_ostype="ubuntu64Guest" &lt; unbuntuLTS-thin-flat.vmdk </screen>
+--property vmware_ostype="ubuntu64Guest" &lt; unbuntuLTS-thin-flat.vmdk</userinput></screen>
     <para>The complete list of supported vmware disk properties is documented in the Image
       Management section. It's critical that the adaptertype is correct; In fact, the image will not
       boot with the incorrect adaptertype. If you have the meta-data VMDK file the the
