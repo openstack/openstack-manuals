@@ -226,27 +226,32 @@ def build_affected_books(rootdir, book_exceptions, file_exceptions, force):
     modified_files = map(lambda x: os.path.abspath(x), modified_files)
     affected_books = []
     books = []
+    book_root = rootdir
     for root, dirs, files in os.walk(rootdir):
-        if ("pom.xml" in files and
-            os.path.basename(root) not in book_exceptions):
+        if os.path.basename(root) in book_exceptions:
+            break
+        elif "pom.xml" in files:
             books.append(root)
-            os.chdir(root)
-            for f in files:
-                if (f.endswith('.xml') and
-                    f != 'pom.xml' and
-                    f not in file_exceptions):
-                    path = os.path.abspath(os.path.join(root, f))
-                    doc = etree.parse(path)
-                    ns = {"xi": "http://www.w3.org/2001/XInclude"}
-                    for node in doc.xpath('//xi:include', namespaces=ns):
-                        href = node.get('href')
-                        if (href.endswith('.xml') and
-                            f not in file_exceptions and
-                            os.path.abspath(href) in modified_files):
-                            affected_books.append(root)
-                            break
-                if root in affected_books:
-                    break
+            book_root = root
+
+        os.chdir(root)
+
+        for f in files:
+            if (f.endswith('.xml') and
+                f != 'pom.xml' and
+                f not in file_exceptions):
+                path = os.path.abspath(os.path.join(root, f))
+                doc = etree.parse(path)
+                ns = {"xi": "http://www.w3.org/2001/XInclude"}
+                for node in doc.xpath('//xi:include', namespaces=ns):
+                    href = node.get('href')
+                    if (href.endswith('.xml') and
+                        f not in file_exceptions and
+                        os.path.abspath(href) in modified_files):
+                        affected_books.append(book_root)
+                        break
+            if book_root in affected_books:
+                break
 
     if not force and affected_books:
         books = affected_books
