@@ -61,12 +61,15 @@
       <para>When using the VMwareVCDriver (i.e., vCenter) with OpenStack Compute, nova.conf must
         include the following VMWare-specific config options:</para>
 
-      <programlisting>compute_driver=vmwareapi.VMwareVCDriver
-vmwareapi_host_ip=&lt;vCenter host IP&gt;
-vmwareapi_host_username=&lt; vCenter username&gt;
-vmwareapi_host_password=&lt; vCenter password&gt;
-vmwareapi_cluster_name=&lt; vCenter cluster name&gt;
-vmwareapi_wsdl_loc=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl</programlisting>
+      <programlisting>[DEFAULT]
+compute_driver=vmwareapi.VMwareVCDriver
+
+[vmware]
+host_ip=&lt;vCenter host IP&gt;
+host_username=&lt; vCenter username&gt;
+host_password=&lt; vCenter password&gt;
+cluster_name=&lt; vCenter cluster name&gt;
+wsdl_location=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl</programlisting>
       <para>Remember that you will have only one <systemitem class="service"
           >nova-compute</systemitem> service per cluster. It is recommended that this host run as a
         VM with high-availability enabled as part of that same cluster.</para>
@@ -91,7 +94,7 @@ vmwareapi_wsdl_loc=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl</
         </listitem>
         <listitem>
           <para>Security Groups are not supported if Nova-Network is used. Security Groups are only
-            supported if the VMware driver is used in conjunction with the the OpenStack Networking
+            supported if the VMware driver is used in conjunction with the OpenStack Networking
             Service running the Nicira NVP plugin.</para>
         </listitem>
       </itemizedlist>
@@ -106,11 +109,14 @@ vmwareapi_wsdl_loc=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl</
       <para>When using the VMwareESXDriver (i.e., no vCenter) with OpenStack Compute, configure
         nova.conf with the following VMWare-specific config options:</para>
 
-      <programlisting>compute_driver=vmwareapi.VMwareESXDriver
-vmwareapi_host_ip=&lt;ESXi host IP&gt;
-vmwareapi_host_username=&lt; ESXi host username&gt;
-vmwareapi_host_password=&lt; ESXi host password&gt;
-vmwareapi_wsdl_loc=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl</programlisting>
+      <programlisting>[DEFAULT]
+compute_driver=vmwareapi.VMwareESXDriver
+
+[vmware]
+host_ip=&lt;ESXi host IP&gt;
+host_username=&lt; ESXi host username&gt;
+host_password=&lt; ESXi host password&gt;
+wsdl_location=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl</programlisting>
       <para>Remember that you will have one <systemitem class="service">nova-compute</systemitem>
         service per ESXi host. It is recommended that this host run as a VM on the same ESXi host it
         is managing.</para>
@@ -159,7 +165,7 @@ is_public=true --property vmware_adaptertype="ide" \
       </listitem>
       <listitem>
         <para>If using nova-network with the VlanManager, before provisioning VMs, make sure the
-          'vmwareapi_vlan_interface' configuration option is set to match the ESX host interface
+          'vlan_interface' configuration option is set to match the ESX host interface
           that will handle VLAN-tagged VM traffic. OpenStack Compute will automatically create the
           corresponding port groups.</para>
       </listitem>
