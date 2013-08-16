@@ -259,9 +259,12 @@ def build_affected_books(rootdir, book_exceptions, file_exceptions, force):
         print("No books are affected by modified files. Building all books.")
 
     pool = multiprocessing.Pool(processes=multiprocessing.cpu_count())
+    print("Queuing the following books for building:")
     for book in books:
+        print("  %s" % os.path.basename(book))
         pool.apply_async(build_book, (rootdir, book), callback = logging_build_book)
     pool.close()
+    print("Building all books now...")
     pool.join()
 
     any_failures = False
