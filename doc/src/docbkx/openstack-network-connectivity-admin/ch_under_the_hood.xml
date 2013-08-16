@@ -3,10 +3,11 @@
     <para>This chapter describes two networking scenarios and how the Open vSwitch plugin and
         the Linux bridging plugin implement these scenarios.</para>
     <section xml:id="under_the_hood_openvswitch">
+      <?dbhtml stop-chunking?>
         <title>Open vSwitch</title>
         <para>This section describes how the Open vSwitch plugin implements the OpenStack
             Networking abstractions.</para>
-        <simplesect>
+        <section xml:id="under_the_hood_openvswitch_configuration">
             <title>Configuration</title>
             <para>This example uses VLAN isolation on the switches to isolate tenant networks. This
                 configuration labels the physical network associated with the public network as
@@ -19,8 +20,8 @@ network_vlan_ranges = physnet2:100:110
 integration_bridge = br-int
 bridge_mappings = physnet2:br-eth1</programlisting></para>
 
-        </simplesect>
-        <simplesect>
+        </section>
+        <section xml:id="under_the_hood_openvswitch_scenario1">
             <title>Scenario 1: one tenant, two networks, one router</title>
             <para>The first scenario has two private networks (<literal>net01</literal>, and
                     <literal>net02</literal>), each with one subnet
@@ -63,8 +64,8 @@ bridge_mappings = physnet2:br-eth1</programlisting></para>
 <prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $tenant --name net02_subnet01 net02 192.168.102.0/24</userinput>
 <prompt>$</prompt> <userinput>neutron router-interface-add router01 net02_subnet01</userinput></screen></para>
 
-        </simplesect>
-        <simplesect>
+         <section xml:id="under_the_hood_openvswitch_scenario1_compute">
+
             <title>Scenario 1: Compute host config</title>
             <para>The following figure shows how to configure various Linux networking devices on the compute host:
 
@@ -75,17 +76,16 @@ bridge_mappings = physnet2:br-eth1</programlisting></para>
                 </imageobject>
             </mediaobject>
 
-            </simplesect>
         <simplesect>
             <title>Types of network devices</title>
             <note><para>There are four distinct type of virtual networking devices: TAP devices,
                 veth pairs, Linux bridges, and Open vSwitch bridges. For an ethernet frame to travel
-                from <literal>eth0</literal> of virtual machine <literal>vm01</literal>, to the
+                from <literal>eth0</literal> of virtual machine <literal>vm01</literal> to the
                 physical network, it must pass through nine devices inside of the host: TAP
                     <literal>vnet0</literal>, Linux bridge
-                        <literal>qbr<replaceable>XXX</replaceable></literal>, veth pair
-                        <literal>(qvb<replaceable>XXX</replaceable>,
-                        qvo<replaceable>XXX</replaceable>)</literal>, Open vSwitch bridge
+                        <literal>qbr<replaceable>nnn</replaceable></literal>, veth pair
+                        <literal>(qvb<replaceable>nnn</replaceable>,
+                        qvo<replaceable>nnn</replaceable>)</literal>, Open vSwitch bridge
                     <literal>br-int</literal>, veth pair <literal>(int-br-eth1,
                     phy-br-eth1)</literal>, and, finally, the physical network interface card
                     <literal>eth1</literal>.</para></note>
@@ -145,18 +145,20 @@ bridge_mappings = physnet2:br-eth1</programlisting></para>
                 this issue. Instead of connecting <literal>vnet0</literal> to an Open vSwitch
                 bridge, it is connected to a Linux bridge,
                         <literal>qbr<replaceable>XXX</replaceable></literal>. This bridge is
-                connected to the integration bridge, <literal>br-int</literal>, via the
+                connected to the integration bridge, <literal>br-int</literal>, through the
                         <literal>(qvb<replaceable>XXX</replaceable>,
                         qvo<replaceable>XXX</replaceable>)</literal> veth pair.</para>
         </simplesect>
-        <simplesect>
+      </section>
+      <section xml:id="under_the_hood_openvswitch_scenario1_network">
             <title>Scenario 1: Network host config</title>
-            <para>Recall that the network host runs the neutron-openvswitch-plugin-agent, the
+            <para>The network host runs the neutron-openvswitch-plugin-agent, the
                 neutron-dhcp-agent, neutron-l3-agent, and neutron-metadata-agent services.</para>
             <para>On the network host, assume that eth0 is connected to the external network, and
-                eth1 is connected it to the data network, which leads to the following configuration
-                options in
-                <filename>ovs_neutron_plugin.ini</filename>:<programlisting language="bash">[ovs]
+                eth1 is connected to the data network, which leads to the following configuration
+                in the
+                <filename>ovs_neutron_plugin.ini</filename> file:
+<programlisting language="bash">[ovs]
 tenant_network_type = vlan
 network_vlan_ranges = physnet2:101:110
 integration_bridge = br-int
@@ -172,25 +174,24 @@ bridge_mappings = physnet1:br-ex,physnet2:br-eth1</programlisting>
                 network (<literal>br-eth1</literal>), and the two are connected by a veth pair, and
                 the neutron-openvswitch-plugin-agent configures the ports on both switches to do
                 VLAN translation.</para>
-            <para>There is also an additional Open vSwitch bridge, <literal>br-ex</literal>, which
+            <para>An additional Open vSwitch bridge, <literal>br-ex</literal>,
                 connects to the physical interface that is connected to the external network. In
                 this example, that physical interface is <literal>eth0</literal>.</para>
             <note><para>While the integration bridge and the external bridge are connected by
                 a veth pair <literal>(int-br-ex, phy-br-ex)</literal>, this example uses layer 3
                 connectivity to route packets from the internal networks to the public network: no
                 packets traverse that veth pair in this example.</para></note>
-        </simplesect>
         <simplesect><title>Open vSwitch internal ports</title>
             <para>The network host uses Open vSwitch <emphasis role="italic">internal
-                ports</emphasis>. Internal ports are a mechanism that allows you to assign one
+                ports</emphasis>. Internal ports enable you to assign one
                 or more IP addresses to an Open vSwitch bridge. In previous example, the
                     <literal>br-int</literal> bridge has four internal
                         ports: <literal>tap<replaceable>XXX</replaceable></literal>,
                         <literal>qr-<replaceable>YYY</replaceable></literal>,
                         <literal>qr-<replaceable>ZZZ</replaceable></literal>,
                         <literal>tap<replaceable>WWW</replaceable></literal>. Each internal port has
-                a separate IP address associated with it. There is also an internal port,
-                    <literal>qg-VVV</literal>, on the <literal>br-ex</literal> bridge.</para>
+                a separate IP address associated with it. An internal port,
+                    <literal>qg-VVV</literal>, is on the <literal>br-ex</literal> bridge.</para>
             </simplesect>
             <simplesect><title>DHCP agent</title>
                 <para>By default, The OpenStack Networking DHCP agent uses a program called dnsmasq
@@ -276,11 +277,15 @@ bridge_mappings = physnet1:br-ex,physnet2:br-eth1</programlisting>
             </mediaobject>
 
         </simplesect>
-        <simplesect>
+       </section>
+        </section>
+        <section xml:id="under_the_hood_openvswitch_scenario2">
             <title>Scenario 2: two tenants, two networks, two routers</title>
-            <para>The second scenario has two tenants (A, B). Each tenant has a network with
-                one subnet, and each one has a router that connects them to the public
-                Internet.</para>
+
+            <para>In this scenario, tenant A and tenant B each have a
+                network with one subnet and one router that connects the
+                tenants to the public Internet.
+            </para>
             <mediaobject>
                 <imageobject>
                     <imagedata fileref="figures/under-the-hood-scenario-2.png" contentwidth="6in"/>
@@ -289,11 +294,11 @@ bridge_mappings = physnet1:br-ex,physnet2:br-eth1</programlisting>
             <para>Under the <literal>service</literal> tenant, define the public
                 network:<screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list | awk '/service/ {print $2}')</userinput>
 <prompt>$</prompt> <userinput>neutron net-create --tenant-id $tenant public01 \
-	  --provider:network_type flat \
-	  --provider:physical_network physnet1 \
-	  --router:external=True</userinput>
+          --provider:network_type flat \
+          --provider:physical_network physnet1 \
+          --router:external=True</userinput>
 <prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $tenant --name public01_subnet01 \
-	  --gateway 10.64.201.254 public01 10.64.201.0/24 --enable_dhcp False</userinput></screen></para>
+          --gateway 10.64.201.254 public01 10.64.201.0/24 --enable_dhcp False</userinput></screen></para>
             <para>Under the <literal>tenantA</literal> user tenant, create the tenant router and set
                 its gateway for the public
                 network.<screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list|awk '/tenantA/ {print $2}')</userinput>
@@ -302,9 +307,9 @@ bridge_mappings = physnet1:br-ex,physnet2:br-eth1</programlisting>
                 Then, define private network <literal>net01</literal> using VLAN ID 102 on the
                 physical switch, along with its subnet, and connect it to the router.
                 <screen><prompt>$</prompt> <userinput>neutron net-create --tenant-id $tenant net01 \
-	  --provider:network_type vlan \
-	  --provider:physical_network physnet2 \
-	  --provider:segmentation_id 101</userinput>
+          --provider:network_type vlan \
+          --provider:physical_network physnet2 \
+          --provider:segmentation_id 101</userinput>
 <prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $tenant --name net01_subnet01 net01 192.168.101.0/24</userinput>
 <prompt>$</prompt> <userinput>neutron router-interface-add router01 net01_subnet01</userinput></screen></para>
             <para>Similarly, for <literal>tenantB</literal>, create a router and another network,
@@ -313,28 +318,28 @@ bridge_mappings = physnet1:br-ex,physnet2:br-eth1</programlisting>
 <prompt>$</prompt> <userinput>neutron router-create --tenant-id $tenant router02</userinput>
 <prompt>$</prompt> <userinput>neutron router-gateway-set router02 public01</userinput>
 <prompt>$</prompt> <userinput>neutron net-create --tenant-id $tenant net02 \
-	  --provider:network_type vlan \
-	  --provider:physical_network physnet2 \
-	  --provider:segmentation_id 102</userinput>
+          --provider:network_type vlan \
+          --provider:physical_network physnet2 \
+          --provider:segmentation_id 102</userinput>
 <prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $tenant --name net02_subnet01 net01 192.168.101.0/24</userinput>
 <prompt>$</prompt> <userinput>neutron router-interface-add router02 net02_subnet01</userinput></screen></para>
 
-        </simplesect>
-        <simplesect>
+        <section xml:id="under_the_hood_openvswitch_scenario2_compute">
             <title>Scenario 2: Compute host config</title>
-            <para>The following figure shows how the various Linux networking devices would be configured on the
-                compute host under this scenario.
+            <para>The following figure shows how to configure Linux networking devices on the Compute host:
             </para>
             <mediaobject>
                 <imageobject>
                     <imagedata fileref="figures/under-the-hood-scenario-2-ovs-compute.png" contentwidth="6in"/>
                 </imageobject>
             </mediaobject>
-            <note><para>The configuration on the compute host is very similar to the configuration in scenario 1. The
-                only real difference is that scenario 1 had a guest that was connected to two
-                subnets, and in this scenario the subnets belong to different tenants.</para></note>
-        </simplesect>
-        <simplesect>
+            <note><para>The Compute host configuration resembles the
+              configuration in scenario 1. However, in scenario 1, a
+              guest connects to two subnets while in this scenario, the
+              subnets belong to different tenants.
+            </para></note>
+        </section>
+        <section xml:id="under_the_hood_openvswitch_scenario2_network">
             <title>Scenario 2: Network host config</title>
             <para>The following figure shows the network devices on the network host for the second
                 scenario.</para>
@@ -343,9 +348,10 @@ bridge_mappings = physnet1:br-ex,physnet2:br-eth1</programlisting>
                     <imagedata fileref="figures/under-the-hood-scenario-2-ovs-network.png" contentwidth="6in"/>
                 </imageobject>
             </mediaobject>
-            <para>The main difference between the configuration in this scenario and the previous one
-                is the organization of the network namespaces, in order to provide isolation
-                across the two subnets, as shown in the following figure.</para>
+            <para>In this configuration, the network namespaces are
+            organized to isolate the two subnets from each other as
+            shown in the following figure.
+            </para>
             <mediaobject>
                 <imageobject>
                     <imagedata fileref="figures/under-the-hood-scenario-2-ovs-netns.png" contentwidth="6in"/>
@@ -358,15 +364,17 @@ bridge_mappings = physnet1:br-ex,physnet2:br-eth1</programlisting>
                         <literal>qhdcp-<replaceable>dddd</replaceable></literal>), instead of three.
                 Since there is no connectivity between the two networks, and so each router is
                 implemented by a separate namespace.</para>
-        </simplesect>
-
+        </section>
+        </section>
     </section>
     <section xml:id="under_the_hood_linuxbridge">
         <title>Linux bridge</title>
-        <para>This section describes how the Linux bridge plugin implements the OpenStack
-            Networking abstractions. It does not discuss the DHCP or L3 agents in detail in this
-            section, because they are covered in the previous section.</para>
-        <simplesect>
+        <para>This section describes how the Linux bridge plugin
+           implements the OpenStack Networking abstractions. For
+           information about DHCP and L3 agents, see
+           <xref linkend="under_the_hood_openvswitch_scenario1" />.
+        </para>
+        <section  xml:id="under_the_hood_linuxbridge_configuration">
             <title>Configuration</title>
             <para>This example uses VLAN isolation on the switches to isolate tenant networks. This configuration labels the physical
                 network associated with the public network as <literal>physnet1</literal>, and the
@@ -379,8 +387,8 @@ network_vlan_ranges = physnet2:100:110
 [linux_bridge]
 physical_interface_mappings: physnet2:eth1</programlisting></para>
 
-        </simplesect>
-        <simplesect>
+        </section>
+        <section xml:id="under_the_hood_linuxbridge_scenario1">
             <title>Scenario 1: one tenant, two networks, one router</title>
             <para>The first scenario has two private networks (<literal>net01</literal>, and
                 <literal>net02</literal>), each with one subnet
@@ -423,8 +431,7 @@ physical_interface_mappings: physnet2:eth1</programlisting></para>
 <prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $tenant --name net02_subnet01 net02 192.168.102.0/24</userinput>
 <prompt>$</prompt> <userinput>neutron router-interface-add router01 net02_subnet01</userinput></screen></para>
 
-        </simplesect>
-        <simplesect>
+         <section xml:id="under_the_hood_linuxbridge_scenario1_compute">
             <title>Scenario 1: Compute host config</title>
             <para>The following figure shows how to configure the various Linux networking devices on the
                 compute host.
@@ -435,7 +442,6 @@ physical_interface_mappings: physnet2:eth1</programlisting></para>
                 </imageobject>
             </mediaobject>
 
-        </simplesect>
         <simplesect>
             <title>Types of network devices</title>
             <note><para>There are three distinct type of virtual networking devices: TAP devices,
@@ -464,7 +470,8 @@ physical_interface_mappings: physnet2:eth1</programlisting></para>
                 Any ethernet frames that come in from one interface attached to the bridge is
                 transmitted to all of the other devices.</para>
         </simplesect>
-        <simplesect>
+         </section>
+         <section xml:id="under_the_hood_linuxbridge_scenario1_network">
             <title>Scenario 1: Network host config</title>
             <para>The following figure shows the network devices on the network host.</para>
             <mediaobject>
@@ -479,8 +486,9 @@ physical_interface_mappings: physnet2:eth1</programlisting></para>
                         <imagedata fileref="figures/under-the-hood-scenario-1-linuxbridge-netns.png" contentwidth="6in"/>
                     </imageobject>
                 </mediaobject>
-        </simplesect>
-        <simplesect>
+        </section>
+        </section>
+        <section xml:id="under_the_hood_linuxbridge_scenario2">
             <title>Scenario 2: two tenants, two networks, two routers</title>
             <para>The second scenario has two tenants (A, B). Each tenant has a network with
                 one subnet, and each one has a router that connects them to the public
@@ -493,11 +501,11 @@ physical_interface_mappings: physnet2:eth1</programlisting></para>
             <para>Under the <literal>service</literal> tenant, define the public
                 network:<screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list | awk '/service/ {print $2}')</userinput>
 <prompt>$</prompt> <userinput>neutron net-create --tenant-id $tenant public01 \
-	  --provider:network_type flat \
-	  --provider:physical_network physnet1 \
-	  --router:external=True</userinput>
+          --provider:network_type flat \
+          --provider:physical_network physnet1 \
+          --router:external=True</userinput>
 <prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $tenant --name public01_subnet01 \
-	  --gateway 10.64.201.254 public01 10.64.201.0/24 --enable_dhcp False</userinput></screen></para>
+          --gateway 10.64.201.254 public01 10.64.201.0/24 --enable_dhcp False</userinput></screen></para>
             <para>Under the <literal>tenantA</literal> user tenant, create the tenant router and set
                 its gateway for the public
                 network.<screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list|awk '/tenantA/ {print $2}')</userinput>
@@ -506,9 +514,9 @@ physical_interface_mappings: physnet2:eth1</programlisting></para>
                 Then, define private network <literal>net01</literal> using VLAN ID 102 on the
                 physical switch, along with its subnet, and connect it to the router.
                 <screen><prompt>$</prompt> <userinput>neutron net-create --tenant-id $tenant net01 \
-	  --provider:network_type vlan \
-	  --provider:physical_network physnet2 \
-	  --provider:segmentation_id 101</userinput>
+          --provider:network_type vlan \
+          --provider:physical_network physnet2 \
+          --provider:segmentation_id 101</userinput>
 <prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $tenant --name net01_subnet01 net01 192.168.101.0/24</userinput>
 <prompt>$</prompt> <userinput>neutron router-interface-add router01 net01_subnet01</userinput></screen></para>
             <para>Similarly, for <literal>tenantB</literal>, create a router and another network,
@@ -517,14 +525,13 @@ physical_interface_mappings: physnet2:eth1</programlisting></para>
 <prompt>$</prompt> <userinput>neutron router-create --tenant-id $tenant router02</userinput>
 <prompt>$</prompt> <userinput>neutron router-gateway-set router02 public01</userinput>
 <prompt>$</prompt> <userinput>neutron net-create --tenant-id $tenant net02 \
-	  --provider:network_type vlan \
-	  --provider:physical_network physnet2 \
-	  --provider:segmentation_id 102</userinput>
+          --provider:network_type vlan \
+          --provider:physical_network physnet2 \
+          --provider:segmentation_id 102</userinput>
 <prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $tenant --name net02_subnet01 net01 192.168.101.0/24</userinput>
 <prompt>$</prompt> <userinput>neutron router-interface-add router02 net02_subnet01</userinput></screen></para>
 
-        </simplesect>
-        <simplesect>
+        <section xml:id="under_the_hood_linuxbridge_scenario2_compute">
             <title>Scenario 2: Compute host config</title>
             <para>The following figure shows how the various Linux networking devices would be configured on the
                 compute host under this scenario.
@@ -537,8 +544,8 @@ physical_interface_mappings: physnet2:eth1</programlisting></para>
             <note><para>The configuration on the compute host is very similar to the configuration in scenario 1. The
                 only real difference is that scenario 1 had a guest that was connected to two
                 subnets, and in this scenario, the subnets belong to different tenants.</para></note>
-        </simplesect>
-        <simplesect>
+        </section>
+        <section xml:id="under_the_hood_linuxbridge_scenario2_network">
             <title>Scenario 2: Network host config</title>
             <para>The following figure shows the network devices on the network host for the second
                 scenario.</para>
@@ -562,6 +569,7 @@ physical_interface_mappings: physnet2:eth1</programlisting></para>
                 <literal>qhdcp-<replaceable>dddd</replaceable></literal>), instead of three.
                 Since there is no connectivity between the two networks, and so each router is
                 implemented by a separate namespace.</para>
-        </simplesect>
+        </section>
+        </section>
     </section>
 </chapter>
