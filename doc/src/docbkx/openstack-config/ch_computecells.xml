@@ -4,32 +4,33 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="ch_cells">
     <title>Cells</title>
-
+    <?dbhtml stop-chunking?>
     <para><emphasis role="italic">Cells</emphasis> functionality allows you to scale an OpenStack
         Compute cloud in a more distributed fashion without having to use complicated technologies
         like database and message queue clustering. It is intended to support very large
         deployments.</para>
     <para>When this functionality is enabled, the hosts in an OpenStack Compute cloud are
-        partitioned  into groups called cells. Cells are configured as a tree. The top-level cell
+        partitioned into groups called cells. Cells are configured as a tree. The top-level cell
         should have a host that runs a <systemitem class="service">nova-api</systemitem> service,
-        but no <systemitem class="service">nova-compute</systemitem> services. Each child
-        cell should run all of the typical <systemitem class="service">nova-*</systemitem> services
-        in a regular Compute cloud except for <systemitem class="service">nova-api</systemitem>.
-        You can think of a cells as a normal Compute deployment in that each cell has its
-        own database server and message queue broker.</para>
+        but no <systemitem class="service">nova-compute</systemitem> services. Each child cell
+        should run all of the typical <systemitem class="service">nova-*</systemitem> services in a
+        regular Compute cloud except for <systemitem class="service">nova-api</systemitem>. You can
+        think of cells as a normal Compute deployment in that each cell has its own database server
+        and message queue broker.</para>
     <para>The <systemitem class="service">nova-cells</systemitem> service handles communication
-        between cells and selecting a cell for new instances. This service is required for every cell.
-        Communication between cells is pluggable, with the only option currently implemented being
-        communication via RPC.</para>
-    <para>Cells scheduling is separate from host scheduling. nova-cells first picks a cell
-        (currently randomly, future releases will add filtering/weighing functionality and decisions
-        can be based on broadcasts of capacity/capabilities). Once a cell has been selected and the
-        new build request has reached its nova-cells service, it will be sent over to the host
-        scheduler in that cell and the build proceeds as it does without cells.</para>
+        between cells and selects cells for new instances. This service is required for every cell.
+        Communication between cells is pluggable, and currently the only option is communication via
+        RPC.</para>
+    <para>Cells scheduling is separate from host scheduling. <systemitem class="service">nova-cells</systemitem> first picks a
+        cell (now randomly, but future releases will add filtering/weighing functionality, and
+        decisions will then be based on broadcasts of capacity/capabilities). Once a cell is
+        selected and the new build request reaches its <systemitem class="service">nova-cells</systemitem> service, it is sent
+        over to the host scheduler in that cell and the build proceeds as it would have without
+        cells.</para>
         <warning>
             <para>Cell functionality is currently considered experimental.</para>
         </warning>
-    <simplesect>
+    <section xml:id="cell-config-options">
         <title>Cell configuration options</title>
         <para>Cells are disabled by default. All cell-related configuration options go under a
                 <literal>[cells]</literal> section in <filename>nova.conf</filename>. The following
@@ -64,8 +65,8 @@
                     </listitem>
                 </varlistentry>
             </variablelist></para>
-    </simplesect>
-    <simplesect>
+    </section>
+    <section xml:id="config-API-cell">
         <title>Configuring the API (top-level) cell</title>
         <para>The compute API class must be changed in the API cell so that requests can be proxied
             via nova-cells down to the correct cell properly. Add the following to
@@ -77,8 +78,8 @@ compute_api_class=nova.compute.cells_api.ComputeCellsAPI
 [cells]
 enable=True
 name=api</programlisting></para>
-    </simplesect>
-    <simplesect>
+    </section>
+    <section xml:id="config-child-cell">
         <title>Configuring the child cells</title>
         <para>Add the following to <filename>nova.conf</filename> in the child cells, replacing
                 <replaceable>cell1</replaceable> with the name of each
@@ -89,8 +90,8 @@ quota_driver=nova.quota.NoopQuotaDriver
 [cells]
 enable=True
 name=<replaceable>cell1</replaceable></programlisting></para>
-    </simplesect>
-    <simplesect>
+    </section>
+    <section xml:id="config-cell-db">
         <title>Configuring the database in each cell</title>
         <para>Before bringing the services online, the database in each cell needs to be configured
             with information about related cells. In particular, the API cell needs to know about
@@ -137,6 +138,40 @@ rabbit_virtual_host=cell1_vhost</programlisting></para>
         <para>In the child cell, we would run the following, as
             root:<screen><prompt>#</prompt> <userinput>nova-manage cell create --name=api --cell_type=parent --username=api1_user --password=api1_passwd --hostname=10.0.0.10 --port=5672 --virtual_host=api_vhost --woffset=1.0 --wscale=1.0
 </userinput></screen></para>
-<xi:include href="../common/tables/nova-cells.xml"/>
-    </simplesect>
+        <xi:include href="../common/tables/nova-cells.xml"/>
+    </section>
+    <section xml:id="cell-config-optional-json">
+        <title>Optional cell configuration</title>
+        <para>Cells currently keeps all intercell communication data, including usernames and
+            passwords, in the database. This is undesirable and unnecessary since cells data isn't
+            updated very frequently. The  change described in this section allows cells data to be
+            drawn from a JSON file specified via a new <code>[cells]cells_config</code> option. When
+            specified, the database is no longer consulted when reloading cells data.</para>
+        <para>Cells may now optionally be configured through a JSON-formatted file. The file will
+            need the columns present in the Cell model (excluding common database fields and the
+            <code>id</code> column). The queue connection information must be specified through a
+            <code>transport_url</code> field, instead of <code>username</code>, <code>password</code>, and so on. The <code>transport_url</code>
+            has the following form:</para>
+            <programlisting>
+rabbit://&lt;username>:&lt;password>@&lt;hostname>:&lt;port>/&lt;virtual_host>
+            </programlisting>
+        <para>The scheme may be either 'rabbit' (shown above) or 'qpid'. The following sample shows this optional configuration:</para>
+        <programlisting language="json">
+        [{
+                "name": "Cell1",
+                "api_url": "http://example.com:8774",
+                "transport_url": "rabbit://hare:wabbit@rabbit.cell1.example.com/cell1",
+                "weight_offset": 0.0,
+                "weight_scale": 1.0,
+                "is_parent": false
+        }, {
+                "name": "Parent",
+                "api_url": "http://example.com:8774",
+                "transport_url": "rabbit://hare:wabbit@rabbit.parent.example.com/parent",
+                "weight_offset": 0.0,
+                "weight_scale": 1.0,
+                "is_parent": true
+        }]
+        </programlisting>
+    </section>
 </chapter>
