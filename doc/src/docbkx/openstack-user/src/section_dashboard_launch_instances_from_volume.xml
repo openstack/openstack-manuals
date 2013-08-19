@@ -13,46 +13,11 @@
     <?dbhtml stop-chunking?>
     <para>You can launch an instance directly from an image that has
         been copied to a persistent volume.</para>
-    <para>In that case, the instance is booted from the volume, which
-        is provided by nova-volume, through iSCSI.</para>
-    <para>For preparation details, see <xref
-            linkend="create_or_delete_volumes"/>.</para>
-    <para>To boot an instance from the volume, especially note the
-        following steps: <itemizedlist>
-            <listitem>
-                <para>To be able to select from which volume to boot,
-                    launch an instance from an arbitrary image. The
-                    image you select does not boot. It is replaced by
-                    the image on the volume that you choose in the
-                    next steps.</para>
-                <para>In case you want to boot a Xen image from a
-                    volume, note the following requirement: The image
-                    you launch in must be the same type, fully
-                    virtualized or paravirtualized, as the one on the
-                    volume.</para>
-            </listitem>
-            <listitem>
-                <para>Select the volume or volume snapshot to boot
-                    from.</para>
-                <para>Enter a device name. Enter
-                        <literal>vda</literal> for KVM images or
-                        <literal>xvda</literal> for Xen images.</para>
-            </listitem>
-        </itemizedlist></para>
     <procedure>
-        <title>To launch an instance from a volume</title>
-        <para>You can launch an instance directly from one of the
-            images available through the OpenStack Image Service or
-            from an image that you have copied to a persistent volume.
-            When you launch an instance from a volume, the procedure
-            is basically the same as when launching an instance from
-            an image in OpenStack Image Service, except for some
-            additional steps.</para>
+        <!--<title>To launch an instance from a volume</title> -->
         <step>
-            <para>Create a volume as described in <xref
-                    linkend="create_or_delete_volumes"/>.</para>
-            <para>It must be large enough to store an unzipped image.
-            </para>
+            <para>Create a volume that is large enough to store an
+                unzipped image.</para>
         </step>
         <step>
             <para>Create an image.</para>
@@ -66,9 +31,7 @@
             <para>Launch an instance.</para>
         </step>
         <step>
-            <para>Attach the volume to the instance as described in
-                    <xref linkend="attach_volumes_to_instances"/>.
-            </para>
+            <para>Attach the volume to the instance.</para>
         </step>
         <step>
             <para>Assuming that the attached volume is mounted as
@@ -93,31 +56,19 @@
             </itemizedlist>
         </step>
         <step>
-            <para>Only <emphasis role="italic">detached</emphasis>
-                volumes are available for booting. Detach the volume.
-            </para>
+            <para>Because only <emphasis role="italic"
+                    >detached</emphasis> volumes are available for
+                booting, detach the volume.</para>
         </step>
         <step>
-            <para>To launch an instance from the volume, continue with
-                <xref linkend="dashboard_launch_instances_from_image"
+                <para>Now, you can launch an instance from an image
+                that has been copied to the volume. The
+                instance is booted from the volume, which is provided
+                by <systemitem class="service"
+                    >nova-volume</systemitem> through iSCSI. To launch
+                an instance from the volume, see <xref
+                    linkend="dashboard_launch_instances_from_image"
                 />.</para>
-        </step>
-        <step>
-            <para>You can launch an instance directly from one of the
-                images available through the OpenStack Image Service.
-                When you do that, OpenStack creates a local copy of
-                the image on the respective compute node where the
-                instance is started.</para>
-            <note>
-                <title>Launch instances from a volume</title>
-                <para>Alternatively, you can start an instance from an
-                    image that has been copied to a persistent volume.
-                    In that case, the instance is booted from the
-                    volume, which is provided by nova-volume, through
-                    iSCSI.</para>
-                <para>For preparation details, see <xref
-                        linkend="create_or_delete_volumes"/>.</para>
-            </note>
         </step>
     </procedure>
 </section>

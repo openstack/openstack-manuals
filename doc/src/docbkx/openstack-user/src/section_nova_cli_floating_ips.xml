@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="manage_ip_addresses"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Manage IP addresses</title>
+    <section xml:id="floating_ips_overview">
+        <title>Floating IP Addresses Overview</title>
+        <para>Each instance can have a private, or fixed, IP address
+            and a public, or floating, one.</para>
+        <para>Private IP addresses are used for communication between
+            instances, and public ones are used for communication with
+            the outside world.</para>
+        <para>When you launch an instance, it is automatically
+            assigned a private IP address that stays the same until
+            you explicitly terminate the instance. Rebooting an
+            instance has no effect on the private IP address.</para>
+        <para>A pool of floating IPs, configured by the cloud
+            operator, is available in OpenStack Compute.</para>
+        <para>You can allocate a certain number of these to a project:
+            The maximum number of floating IP addresses per project is
+            defined by the quota.</para>
+        <para>You can add a floating IP address from this set to an
+            instance of the project. Floating IP addresses can be
+            dynamically disassociated and associated with other
+            instances of the same project at any time.</para>
+        <para>Before you can assign a floating IP address to an
+            instance, you first must allocate floating IPs to a
+            project. After floating IP addresses have been allocated
+            to the current project, you can assign them to running
+            instances.</para>
+        <para>You can assign a floating IP address to one instance at
+            a time.</para>
+    </section>
+    <section xml:id="floating_ips_proc">
+        <title>List floating IP address information</title>
+        <procedure>
+            <step>
+                <para>To list all floating IP addresses:</para>
+                <screen><prompt>$</prompt> <userinput>nova floating-ip-bulk-list</userinput></screen>
+                <screen><computeroutput>+------------+---------------+---------------+--------+-----------+
+| project_id | address       | instance_uuid | pool   | interface |
++------------+---------------+---------------+--------+-----------+
+| None       | 172.24.4.225  | None          | public | eth0      |
+| None       | 172.24.4.226  | None          | public | eth0      |
+| None       | 172.24.4.227  | None          | public | eth0      |
+| None       | 172.24.4.228  | None          | public | eth0      |
+| None       | 172.24.4.229  | None          | public | eth0      |
+| None       | 172.24.4.230  | None          | public | eth0      |
+| None       | 172.24.4.231  | None          | public | eth0      |
+| None       | 172.24.4.232  | None          | public | eth0      |
+| None       | 172.24.4.233  | None          | public | eth0      |
+| None       | 172.24.4.234  | None          | public | eth0      |
+| None       | 172.24.4.235  | None          | public | eth0      |
+| None       | 172.24.4.236  | None          | public | eth0      |
+| None       | 172.24.4.237  | None          | public | eth0      |
+| None       | 172.24.4.238  | None          | public | eth0      |
+| None       | 192.168.253.1 | None          | test   | eth0      |
+| None       | 192.168.253.2 | None          | test   | eth0      |
+| None       | 192.168.253.3 | None          | test   | eth0      |
+| None       | 192.168.253.4 | None          | test   | eth0      |
+| None       | 192.168.253.5 | None          | test   | eth0      |
+| None       | 192.168.253.6 | None          | test   | eth0      |
++------------+---------------+---------------+--------+-----------+</computeroutput></screen>
+            </step>
+            <step>
+                <para>To list all pools that provide floating IP
+                    addresses:</para>
+                <screen><prompt>$</prompt> <userinput>nova floating-ip-pool-list</userinput></screen>
+                <screen><computeroutput>+--------+
+| name   |
++--------+
+| public |
+| test   |
++--------+</computeroutput></screen>
+            </step>
+        </procedure>
+    </section>
+    <section xml:id="floating_ip_allocate">
+        <title>Assign floating IP addresses to projects and
+            instances</title>
+        <procedure>
+            <title>To allocate a floating IP address to the current
+                project</title>
+            <step>
+                <para>If more than one pool of IP addresses is
+                    available, you can specify the pool from which to
+                    allocate the IP address. In this example, the pool
+                    name is <literal>public</literal>:</para>
+                <screen><prompt>$</prompt> <userinput>floating-ip-create public</userinput></screen>
+                <screen><computeroutput>+--------------+-------------+----------+--------+
+| Ip           | Instance Id | Fixed Ip | Pool   |
++--------------+-------------+----------+--------+
+| 172.24.4.225 | None        | None     | public |
++--------------+-------------+----------+--------+</computeroutput></screen>
+
+            </step>
+            <step>
+                <para>To release a floating IP address from the
+                    current project:</para>
+                <screen><prompt>$</prompt> <userinput>nova floating-ip-delete <replaceable>FLOATING_IP</replaceable></userinput></screen>
+                <para>The IP address is returned to the pool of IP
+                    addresses that are available for all projects. If
+                    an IP address is assigned to a running instance,
+                    it is disassociated from the instance.</para>
+            </step>
+            <step>
+                <para>To associate an IP address with an instance, at
+                    least one floating IP address must be allocated to
+                    the current project.</para>
+                <para>To assign a floating IP address to an
+                    instance:</para>
+                <screen><prompt>$</prompt> <userinput>nova add-floating-ip <replaceable>INSTANCE_NAME_OR_ID</replaceable> <replaceable>FLOATING_IP</replaceable></userinput></screen>
+                <para>After you assign the IP address and configure
+                    security group rules for the instance, the
+                    instance is publicly available at the floating IP
+                    address.</para>
+            </step>
+
+
+            <step>
+                <para>To remove a floating IP address from an
+                    instance, you must specify the same arguments that
+                    you used to assign the IP.</para>
+                <para>To remove a floating IP address from an
+                    instance:</para>
+                <screen><prompt>$</prompt> <userinput>nova remove-floating-ip <replaceable>INSTANCE_NAME_OR_ID</replaceable> <replaceable>FLOATING_IP</replaceable></userinput></screen>
+            </step>
+        </procedure>
+    </section>
+</section>

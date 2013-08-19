@@ -9,14 +9,39 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="dashboard_launch_instances">
-    <title>Launch instances</title>
-    <?dbhtml stop-chunking?>
-    <para>Instances are virtual machines that run inside the cloud.
-        You can launch an instance directly from one of the available
-        OpenStack images or from an image that you have copied to a
-        persistent volume. The OpenStack Image Service provides a pool
-        of images that are accessible to members of different
-        projects.</para>
+    <title>Launch and manage instances</title>
+    <para>Instances are virtual machines that run inside the cloud.</para>
+    <para>You can <link
+            xlink:href="dashboard_launch_instances_from_image">launch
+            an instance from an OpenStack image</link>. The OpenStack
+        Image Service provides a pool of images that are accessible to
+        members of different projects.</para>
+    <para>You can also <link
+            xlink:href="dashboard_launch_instances_from_volume">launch
+            an instance from an image that you have copied to a
+            persistent volume</link>. The instance boots from the
+        volume, which is provided by <systemitem class="service"
+            >nova-volume</systemitem> through iSCSI. When you launch
+        an instance from a volume, especially note the following
+        steps:</para>
+    <itemizedlist>
+        <listitem>
+            <para>To select from which volume to boot, launch an
+                instance from an arbitrary image. The image you select
+                does not boot. It is replaced by the image on the
+                volume that you choose in the next steps.</para>
+            <para>To boot a Xen image from a volume, the image you
+                launch in must be the same type, fully virtualized or
+                paravirtualized, as the one on the volume.</para>
+        </listitem>
+        <listitem>
+            <para>Select the volume or volume snapshot from which to
+                boot. Enter a device name. Enter
+                    <literal>vda</literal> for KVM images or
+                    <literal>xvda</literal> for Xen images.</para>
+        </listitem>
+    </itemizedlist>
+<?hard-pagebreak?>
     <xi:include
         href="section_dashboard_launch_instances_from_image.xml"/>
     <?hard-pagebreak?>
@@ -32,20 +57,96 @@
                 on TryStack.</para>
         </note>
         <procedure>
-            <title>To SSH in to your instance</title>
             <step>
                 <para>Copy the IP address for your instance.</para>
             </step>
             <step>
                 <para>Use the SSH command to make a secure connection
                     to the instance. For example:</para>
-                <screen><userinput><prompt>$</prompt> ssh -i MyKey.pem ubuntu@10.0.0.2</userinput></screen>
+                <screen><prompt>$</prompt> <userinput>ssh -i MyKey.pem ubuntu@10.0.0.2</userinput></screen>
             </step>
             <step>
-                <para>A prompt asks, "Are you sure you want to
-                    continue connection (yes/no)?" Type
-                        <literal>yes</literal> and you have
-                    successfully connected.</para>
+                <para>At the prompt, type
+                    <literal>yes</literal>.</para>
+            </step>
+        </procedure>
+    </section>
+    <section xml:id="track_usage">
+        <title>Track usage for instances</title>
+        <para>You can track usage for instances for each tenant, also known as a project. You
+            can track costs per month by showing metrics like number
+            of VCPUs, disks, RAM, and uptime for all your
+            instances.</para>
+        <procedure>
+            <!--   <title>To track usage</title> -->
+            <step>
+                <para>Log in to the OpenStack dashboard, choose a
+                    project, and click the
+                        <guilabel>Overview</guilabel> category.</para>
+            </step>
+            <step>
+                <para>To query the instance usage for a month, select
+                    a month and click
+                    <guibutton>Submit</guibutton>.</para>
+            </step>
+            <step>
+                <para>To download a summary, click <guibutton>Download
+                        CSV Summary</guibutton>.</para>
+            </step>
+        </procedure>
+    </section>
+    <section xml:id="instance_snapshots">
+        <title>Create instance snapshots</title>
+        <procedure>
+            <step>
+                <para>Log in to the OpenStack dashboard, choose a
+                    project, and click the
+                        <guilabel>Instances</guilabel>
+                    category.</para>
+            </step>
+            <step>
+                <para>Select the instance from which to create a
+                    snapshot. From the <guilabel>Actions</guilabel>
+                    drop-down list, select <guilabel>Create
+                        Snapshot</guilabel>.</para>
+            </step>
+            <step>
+                <para>In the <guilabel>Create Snapshot</guilabel>
+                    window, enter a name for the snapshot. Click
+                        <guibutton>Create Snapshot</guibutton>. The
+                        <guilabel>Images &amp; Snapshots</guilabel>
+                    category shows the instance snapshot.</para>
+            </step>
+            <step>
+                <para>To launch an instance from the snapshot, select
+                    the snapshot and click
+                        <guibutton>Launch</guibutton>. Proceed with
+                        <xref
+                        linkend="dashboard_launch_instances_from_image"
+                    />.</para>
+            </step>
+        </procedure>
+    </section>
+    <section xml:id="control_instance_states">
+        <title>Control the state of an instance</title>
+        <procedure>
+            <!--<title>To control the state of an instance</title> -->
+            <step>
+                <para>Log in to the OpenStack dashboard, choose a
+                    project, and click the
+                        <guilabel>Instances</guilabel>
+                    category.</para>
+            </step>
+            <step>
+                <para>Select an instance.</para>
+            </step>
+            <step>
+                <para>In the <guilabel>More</guilabel> drop-down list
+                    in the <guilabel>Actions</guilabel> column, select
+                    the state.</para>
+                <para>Depending on the current state of the instance,
+                    you can choose to pause, resume, suspend, soft or
+                    hard reboot, or terminate an instance.</para>
             </step>
         </procedure>
     </section>

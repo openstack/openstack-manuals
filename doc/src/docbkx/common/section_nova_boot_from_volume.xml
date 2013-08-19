@@ -4,35 +4,36 @@
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
   xml:id="boot_from_volume">
   <title wordsize="20">Launch an instance from a volume</title>
-  <para>After you <link xlink:href="#create_volume_from_image">create a
-      bootable volume</link>, you <link
+  <para>After you <link xlink:href="#create_volume_from_image">create
+      a bootable volume</link>, you <link
       xlink:href="#launch_image_from_volume">launch an instance from
       the volume</link>.</para>
   <procedure xml:id="create_volume_from_image">
-    <title wordsize="20">To launch an instance from a volume</title>
+    <title>To xx</title>
     <step>
-      <title wordsize="20">To create a bootable volume</title>
-      <para>To create a volume from an image, run the following
-        command:
-        <screen><prompt>#</prompt> <userinput>cinder create --image-id 397e713c-b95b-4186-ad46-6126863ea0a9 --display-name my-bootable-vol 8</userinput>     </screen>
+      <para>To create a bootable volume from an image, run the
+        following command:
+        <screen><prompt>#</prompt> <userinput>cinder create --image-id 397e713c-b95b-4186-ad46-6126863ea0a9 \
+  --display-name my-bootable-vol 8</userinput></screen>
       </para>
       <note>
         <para>You can also use the <command>nova</command>
           <option>volume-create</option> command to complete the same
           action:
-          <screen><prompt>#</prompt> <userinput>nova volume-create --image-id 397e713c-b95b-4186-ad46-6126863ea0a9 --display-name my-bootable-vol 8</userinput>     </screen>
-        </para>
+          <screen><prompt>#</prompt> <userinput>nova volume-create \
+  --image-id 397e713c-b95b-4186-ad46-6126863ea0a9 \
+  --display-name my-bootable-vol 8</userinput></screen></para>
       </note>
-      <para>Optionally, to configure your volume, see the
+      <!-- Commenting out because the OpenStack Config Reference is not available yet -->
+      <!--<para>Optionally, to configure your volume, see the
           <citetitle>Configuring Image Service and Storage for
           Compute</citetitle> chapter in the <citetitle>OpenStack
-          Configuration Reference</citetitle>.</para>
+          Configuration Reference</citetitle>.</para>-->
     </step>
     <step>
-      <title wordsize="20">To list volumes</title>
-      <para>Enter the following command:</para>
-      <screen><userinput><prompt>$</prompt> nova volume-list</userinput></screen>
-      <screen><computeroutput>+--------------------------------------+-----------+-----------------+------+-------------+-------------+
+      <para>To list volumes, run the following command:</para>
+      <screen><prompt>$</prompt> <userinput>nova volume-list</userinput></screen>
+      <screen><?db-font-size 55%?><computeroutput>+--------------------------------------+-----------+-----------------+------+-------------+-------------+
 | ID                                   | Status    | Display Name    | Size | Volume Type | Attached to |
 +--------------------------------------+-----------+-----------------+------+-------------+-------------+
 | bd7cf584-45de-44e3-bf7f-f7b50bf235e3 | available | my-bootable-vol | 8    | None        |             |
@@ -41,56 +42,64 @@
         volume.</para>
     </step>
     <step xml:id="launch_image_from_volume">
-      <title wordsize="20">To launch an instance</title>
-      <para>Enter the <command>nova</command>
+      <para>To launch an instance, run the <command>nova</command>
         <option>boot</option> command with the
           <parameter>--block_device_mapping</parameter> parameter, as
         follows:</para>
-      <screen><prompt>$</prompt> <userinput>nova boot --flavor &lt;flavor> --block_device_mapping &lt;dev_name>=&lt;id>:&lt;type>:&lt;size>:&lt;delete_on_terminate> &lt;name></userinput></screen>
+      <screen><prompt>$</prompt> <userinput>nova boot --flavor <replaceable>FLAVOR</replaceable> --block_device_mapping \
+  <replaceable>DEVNAME</replaceable>=<replaceable>ID</replaceable>:<replaceable>TYPE</replaceable>:<replaceable>SIZE</replaceable>:<replaceable>DELETE_ON_TERMINATE</replaceable> <replaceable>NAME</replaceable></userinput></screen>
       <para>The command arguments are:</para>
-      <variablelist>
-        <varlistentry>
-          <term><parameter>--flavor</parameter>
-            <replaceable>flavor</replaceable></term>
-          <listitem>
-            <para>The flavor ID.</para>
-          </listitem>
-        </varlistentry>
-        <varlistentry>
-          <term><parameter>--block_device_mapping</parameter>
-            <replaceable>dev-
-              name</replaceable>=<replaceable>id</replaceable>:<replaceable>type</replaceable>:<replaceable>size</replaceable>:<replaceable>delete-on-terminate</replaceable></term>
-          <listitem>
-            <itemizedlist>
-              <listitem>
-                <para><replaceable>dev-name</replaceable>. A device
-                  name where the volume is attached in the system at
-                      <filename>/dev/<replaceable>dev_name</replaceable></filename>.
-                  This value is typically
-                  <literal>vda</literal>.</para>
-              </listitem>
-              <listitem>
-                <para><replaceable>id</replaceable>. The ID of the
-                  volume to boot from, as shown in the output of
-                    <command>nova volume-list</command>.</para>
-              </listitem>
-              <listitem>
-                <para><replaceable>type</replaceable>. Either
-                    <literal>snap</literal> or any other value,
-                  including a blank string. <literal>snap</literal>
-                  means that the volume was created from a
-                  snapshot.</para>
-              </listitem>
-              <listitem>
-                <para><replaceable>size</replaceable>. The size of the
-                  volume, in GBs. It is safe to leave this blank and
-                  have the Compute service infer the size.</para>
-              </listitem>
-              <listitem>
-                <para><replaceable>delete-on-terminate</replaceable>.
-                  A boolean that indicates whether the volume should
-                  be deleted when the instance is terminated. You can
-                  specify <itemizedlist>
+      <informaltable>
+        <col width="30%"/>
+        <col width="70%"/>
+        <tbody>
+          <tr>
+            <td>
+              <para><parameter>--flavor</parameter>
+                <replaceable>FLAVOR</replaceable></para>
+            </td>
+            <td>
+              <para>The flavor ID.</para>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <para><parameter>--block_device_mapping</parameter>
+                <replaceable>DEVNAME</replaceable>=<replaceable>ID</replaceable>:<replaceable>type</replaceable>:<replaceable>size</replaceable>:<replaceable>delete-on-terminate</replaceable></para>
+            </td>
+            <td>
+              <itemizedlist>
+                <listitem>
+                  <para><replaceable>DEVNAME</replaceable>. A device
+                    name where the volume is attached in the system at
+                        <filename>/dev/<replaceable>dev_name</replaceable></filename>.
+                    This value is typically
+                    <literal>vda</literal>.</para>
+                </listitem>
+                <listitem>
+                  <para><replaceable>ID</replaceable>. The ID of the
+                    volume to boot from, as shown in the output of
+                      <command>nova volume-list</command>.</para>
+                </listitem>
+                <listitem>
+                  <para><replaceable>type</replaceable>. Either
+                      <literal>snap</literal> or any other value,
+                    including a blank string. <literal>snap</literal>
+                    means that the volume was created from a
+                    snapshot.</para>
+                </listitem>
+                <listitem>
+                  <para><replaceable>size</replaceable>. The size of
+                    the volume, in GBs. It is safe to leave this blank
+                    and have the Compute service infer the
+                    size.</para>
+                </listitem>
+                <listitem>
+                  <para><replaceable>delete-on-terminate</replaceable>.
+                    Boolean. Indicates whether the volume is deleted
+                    when the instance is deleted. You can
+                    specify:</para>
+                  <itemizedlist>
                     <listitem>
                       <para><literal>True</literal> or
                           <literal>1</literal>
@@ -100,31 +109,32 @@
                       <para><literal>False</literal> or
                           <literal>0</literal></para>
                     </listitem>
-                  </itemizedlist></para>
-              </listitem>
-            </itemizedlist>
-          </listitem>
-        </varlistentry>
-        <varlistentry>
-          <term><replaceable>name</replaceable></term>
-          <listitem>
-            <para>The name for the server.</para>
-          </listitem>
-        </varlistentry>
-      </variablelist>
-      <para><note>
-          <para>Because of bug <link
-              xlink:href="https://bugs.launchpad.net/nova/+bug/1163566"
-              >#1163566</link>, you must specify an image when booting
-            from a volume, even though the specified image is not
-            used. Otherwise, the <literal>Attempt to boot from volume
-              - no image supplied</literal> error is returned.</para>
-        </note>For example, you might enter the following command to
-        boot from a volume with ID
-        bd7cf584-45de-44e3-bf7f-f7b50bf235e. The volume is not deleted
-        when the instance is terminated:</para>
+                  </itemizedlist>
+                </listitem>
+              </itemizedlist>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <para><replaceable>NAME</replaceable></para>
+            </td>
+            <td>
+              <para>The name for the server.</para>
+            </td>
+          </tr>
+        </tbody>
+      </informaltable>
+      <note>
+        <para>You must specify an image when booting from a volume,
+          even though the specified image is not used. Otherwise, the
+            <literal>Attempt to boot from volume - no image
+            supplied</literal> error is returned.</para>
+      </note>
+      <para>For example, you might enter the following command to boot
+        from a volume with ID bd7cf584-45de-44e3-bf7f-f7b50bf235e. The
+        volume is not deleted when the instance is terminated:</para>
       <screen><prompt>$</prompt> <userinput>nova boot --flavor 2 --image 397e713c-b95b-4186-ad46-6126863ea0a9 --block_device_mapping vda=bd7cf584-45de-44e3-bf7f-f7b50bf235e3:::0 myInstanceFromVolume</userinput></screen>
-      <screen><computeroutput>+-------------------------------------+-------------------------------------------------+
+      <screen><?db-font-size 65%?><computeroutput>+-------------------------------------+-------------------------------------------------+
 | Property                            | Value                                           |
 +-------------------------------------+-------------------------------------------------+
 | OS-EXT-STS:task_state               | scheduling                                      |
@@ -154,11 +164,10 @@
 | created                             | 2013-07-16T20:14:18Z                            |
 | metadata                            | {}                                              |
 +-------------------------------------+-------------------------------------------------+</computeroutput></screen>
-
       <para>Now when you list volumes, you can see that the volume is
         attached to a server:</para>
       <screen><prompt>$</prompt> <userinput>nova volume-list</userinput></screen>
-      <screen><computeroutput>+--------------------------------------+--------+-----------------+------+-------------+--------------------------------------+
+      <screen><?db-font-size 65%?><computeroutput>+--------------------------------------+--------+-----------------+------+-------------+--------------------------------------+
 | ID                                   | Status | Display Name    | Size | Volume Type | Attached to                          |
 +--------------------------------------+--------+-----------------+------+-------------+--------------------------------------+
 | bd7cf584-45de-44e3-bf7f-f7b50bf235e3 | in-use | my-bootable-vol | 8    | None        | 8a99547e-7385-4ad1-ae50-4ecfaaad5f42 |
@@ -166,7 +175,7 @@
       <para>Additionally, when you list servers, you see the server
         that you booted from a volume:</para>
       <screen><prompt>$</prompt> <userinput>nova list</userinput></screen>
-      <screen><computeroutput>+--------------------------------------+----------------------+--------+------------+-------------+------------------+
+      <screen><?db-font-size 65%?><computeroutput>+--------------------------------------+----------------------+--------+------------+-------------+------------------+
 | ID                                   | Name                 | Status | Task State | Power State | Networks         |
 +--------------------------------------+----------------------+--------+------------+-------------+------------------+
 | b3cdc6c0-85a7-4904-ae85-71918f734048 | myCirrosServer       | ACTIVE | None       | Running     | private=10.0.0.3 |

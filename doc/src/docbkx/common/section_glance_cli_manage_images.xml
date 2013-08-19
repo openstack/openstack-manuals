@@ -5,30 +5,26 @@
     xml:id="cli_manage_images">
     <title>Manage images</title>
     <?dbhtml stop-chunking?>
-    <para>During set up of OpenStack cloud, the cloud operator sets
-        user permissions to manage images.</para>
-    <para>Image upload and management might be restricted to only
-        cloud administrators or cloud operators.</para>
-    <para>After you upload an image, it is considered <emphasis
-            role="italic">golden</emphasis> and you cannot change
-        it.</para>
+    <para>The cloud operator assigns roles to users. Roles determine
+        who can upload and manage images. The operator might restrict
+        image upload and management to only cloud administrators or
+        operators.</para>
     <para>You can upload images through the glance client or the Image
         Service API. You can also use the nova client to list images,
         set and delete image metadata, delete images, and take a
-        snapshot of a running instance to create an image. See <xref
-            linkend="nova_manage_images"/>.</para>
+        snapshot of a running instance to create an image. After you
+        upload an image, you cannot change it.</para>
     <para>For details about image creation, see the <link
             xlink:href="http://docs.openstack.org/trunk/openstack-image/content/"
                 ><citetitle>Virtual Machine Image
             Guide</citetitle></link>.</para>
     <section xml:id="glance-image-list">
-        <title>Manage images with the glance client</title>
+        <title>List or get details for images (glance)</title>
         <procedure>
-            <title>To list or get details for images</title>
             <step>
                 <para>To list the available images:</para>
                 <screen><prompt>$</prompt> <userinput>glance image-list</userinput></screen>
-                <screen><computeroutput>+--------------------------------------+---------------------------------+-------------+------------------+----------+--------+
+                <screen><?db-font-size 45%?><computeroutput>+--------------------------------------+---------------------------------+-------------+------------------+----------+--------+
 | ID                                   | Name                            | Disk Format | Container Format | Size     | Status |
 +--------------------------------------+---------------------------------+-------------+------------------+----------+--------+
 | 397e713c-b95b-4186-ad46-6126863ea0a9 | cirros-0.3.1-x86_64-uec         | ami         | ami              | 25165824 | active |
@@ -36,16 +32,17 @@
 | 3cf852bd-2332-48f4-9ae4-7d926d50945e | cirros-0.3.1-x86_64-uec-ramdisk | ari         | ari              | 3714968  | active |
 | 7e5142af-1253-4634-bcc6-89482c5f2e8a | myCirrosImage                   | ami         | ami              | 14221312 | active |
 +--------------------------------------+---------------------------------+-------------+------------------+----------+--------+</computeroutput></screen>
-                <para>You can use grep to filter the list, as follows:</para>
+                <para>You can use grep to filter the list, as
+                    follows:</para>
                 <screen><prompt>$</prompt> <userinput>glance image-list | grep 'cirros'</userinput></screen>
-                <screen><computeroutput>| 397e713c-b95b-4186-ad46-6126863ea0a9 | cirros-0.3.1-x86_64-uec         | ami         | ami              | 25165824 | active |
+                <screen><?db-font-size 45%?><computeroutput>| 397e713c-b95b-4186-ad46-6126863ea0a9 | cirros-0.3.1-x86_64-uec         | ami         | ami              | 25165824 | active |
 | df430cc2-3406-4061-b635-a51c16e488ac | cirros-0.3.1-x86_64-uec-kernel  | aki         | aki              | 4955792  | active |
 | 3cf852bd-2332-48f4-9ae4-7d926d50945e | cirros-0.3.1-x86_64-uec-ramdisk | ari         | ari              | 3714968  | active |</computeroutput></screen>
             </step>
             <step>
                 <para>To get image details, by name or ID:</para>
                 <screen><prompt>$</prompt> <userinput>glance image-show myCirrosImage</userinput></screen>
-                <screen><computeroutput>+---------------------------------------+--------------------------------------+
+                <screen><?db-font-size 45%?><computeroutput>+---------------------------------------+--------------------------------------+
 | Property                              | Value                                |
 +---------------------------------------+--------------------------------------+
 | Property 'base_image_ref'             | 397e713c-b95b-4186-ad46-6126863ea0a9 |
@@ -85,196 +82,246 @@
 +---------------------------------------+--------------------------------------+</computeroutput></screen>
             </step>
         </procedure>
+    </section>
+    <section xml:id="glance_add_image">
+        <title>Create or update an image (glance)</title>
         <procedure>
-            <title>To add an image</title>
             <step>
-                <para>The following example uploads a CentOS 6.3 image
-                    in qcow2 format and configures it for public
-                    access:</para>
-                <screen><prompt>$</prompt> <userinput>glance image-create --name centos63-image --disk-format=qcow2 --container-format=bare --is-public=True ./centos63.qcow2</userinput></screen>
+                <para>To upload a CentOS 6.3 image in qcow2 format and
+                    configure it for public access:</para>
+                <screen><prompt>$</prompt> <userinput>glance image-create --name centos63-image --disk-format=qcow2 \
+  --container-format=bare --is-public=True ./centos63.qcow2</userinput></screen>
             </step>
-        </procedure>
-        <procedure>
-            <title>To update an image</title>
             <step>
                 <para>To update an image by name or ID:</para>
                 <para><screen><prompt>$</prompt> <userinput>glance image-update <replaceable>IMAGE</replaceable></userinput></screen></para>
                 <para>To modify image properties, use the following
                     optional arguments:</para>
-                <itemizedlist>
-                    <listitem>
-                        <para><parameter>--name
-                                   <replaceable>NAME</replaceable></parameter>.
-                            The name of the image.</para>
-                    </listitem>
-                    <listitem>
-                        <para><parameter>--disk-format
-                                   <replaceable>DISK_FORMAT</replaceable></parameter>.
-                            The disk format of the image. Acceptable
-                            formats are ami, ari, aki, vhd, vmdk, raw,
-                            qcow2, vdi, and iso.</para>
-                    </listitem>
-                    <listitem>
-                        <para><parameter>--container-format
-                                   <replaceable>CONTAINER_FORMAT</replaceable></parameter>.
-                            The container format of the image.
-                            Acceptable formats are ami, ari, aki,
-                            bare, and ovf.</para>
-                    </listitem>
-                    <listitem>
-                        <para><parameter>--owner
-                                   <replaceable>TENANT_ID</replaceable></parameter>.
-                            The tenant who should own the
-                            image.</para>
-                    </listitem>
-                    <listitem>
-                        <para><parameter>--size
-                                   <replaceable>SIZE</replaceable></parameter>.
-                            The size of image data, in bytes.</para>
-                    </listitem>
-                    <listitem>
-                        <para><parameter>--min-disk
-                                   <replaceable>DISK_GB</replaceable></parameter>.
-                            The minimum size of disk needed to boot
-                            image, in gigabytes.</para>
-                    </listitem>
-                    <listitem>
-                        <para><parameter>--min-ram
-                                   <replaceable>DISK_RAM</replaceable></parameter>.
-                            The minimum amount of ram needed to boot
-                            image, in megabytes.</para>
-                    </listitem>
-                    <listitem>
-                        <para><parameter>--location
-                                   <replaceable>IMAGE_URL</replaceable></parameter>.
-                            The URL where the data for this image
-                            resides. For example, if the image data is
-                            stored in swift, you could specify
-                                <literal>swift://account:key@example.com/container/obj</literal>.</para>
-                    </listitem>
-                    <listitem>
-                        <para><parameter>--file
-                                   <replaceable>FILE</replaceable></parameter>.
-                            Local file that contains disk image to be
-                            uploaded during update. Alternatively, you
-                            can pass images to the client through
-                            stdin.</para>
-                    </listitem>
-                    <listitem>
-                        <para><parameter>--checksum
-                                   <replaceable>CHECKSUM</replaceable></parameter>.
-                            Hash of image data to use for
-                            verification.</para>
-                    </listitem>
-                    <listitem>
-                        <para><parameter>--copy-from
-                                   <replaceable>IMAGE_URL</replaceable></parameter>.
-                            Similar to
-                                <parameter>--location</parameter> in
-                            usage, but indicates that the Glance
-                            server should immediately copy the data
-                            and store it in its configured image
-                            store.</para>
-                    </listitem>
-                    <listitem>
-                        <para><parameter>--is-public
-                                [True|False]</parameter>. Makes an
-                            image accessible to the public.</para>
-
-                    </listitem>
-                    <listitem>
-                        <para><parameter>--is-protected
-                                [True|False]</parameter>. Prevents an
-                            image from being deleted.</para>
-                    </listitem>
-                    <listitem>
-                        <para><parameter>--property
-                                   <replaceable>KEY</replaceable>=<replaceable>VALUE</replaceable></parameter>.
-                            Arbitrary property to associate with
-                            image. Can be used multiple times.</para>
-                    </listitem>
-                    <listitem>
-                        <para><parameter>--purge-props</parameter>.
-                            Deletes all image properties that are not
-                            explicitly set in the update request.
-                            Otherwise, those properties not referenced
-                            are preserved.</para>
-                    </listitem>
-                    <listitem>
-                        <para><parameter>--human-readable</parameter>.
-                            Prints image size in a human-friendly
-                            format.</para>
-                    </listitem>
-                </itemizedlist>
+                <informaltable>
+                    <col width="40%"/>
+                    <col width="60%"/>
+                    <tr>
+                        <td><para><parameter>--name
+                                   <replaceable>NAME</replaceable></parameter></para></td>
+                        <td><para>The name of the image.</para>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><para><parameter>--disk-format
+                                   <replaceable>DISK_FORMAT</replaceable></parameter></para></td>
+                        <td><para>The disk format of the image.
+                                Acceptable formats are ami, ari, aki,
+                                vhd, vmdk, raw, qcow2, vdi, and
+                                iso.</para>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><para><parameter>--container-format
+                                   <replaceable>CONTAINER_FORMAT</replaceable></parameter></para></td>
+                        <td><para>The container format of the image.
+                                Acceptable formats are ami, ari, aki,
+                                bare, and ovf.</para>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><para><parameter>--owner
+                                   <replaceable>TENANT_ID</replaceable></parameter></para></td>
+                        <td><para>The tenant who should own the
+                                image.</para>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><para><parameter>--size
+                                   <replaceable>SIZE</replaceable></parameter></para></td>
+                        <td><para>The size of image data, in
+                                bytes.</para>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><para><parameter>--min-disk
+                                   <replaceable>DISK_GB</replaceable></parameter></para></td>
+                        <td><para>The minimum size of disk needed to
+                                boot image, in gigabytes.</para>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><para><parameter>--min-ram
+                                   <replaceable>DISK_RAM</replaceable></parameter></para></td>
+                        <td><para>The minimum amount of ram needed to
+                                boot image, in megabytes.</para>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><para><parameter>--location
+                                   <replaceable>IMAGE_URL</replaceable></parameter></para></td>
+                        <td><para>The URL where the data for this
+                                image resides. For example, if the
+                                image data is stored in swift, you
+                                could specify
+                                   <literal>swift://account:key@example.com/container/obj</literal>.</para>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><para><parameter>--file
+                                   <replaceable>FILE</replaceable></parameter></para></td>
+                        <td><para>Local file that contains disk image
+                                to be uploaded during update.
+                                Alternatively, you can pass images to
+                                the client through stdin.</para>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><para><parameter>--checksum
+                                   <replaceable>CHECKSUM</replaceable></parameter></para></td>
+                        <td><para>Hash of image data to use for
+                                verification.</para>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><para><parameter>--copy-from
+                                   <replaceable>IMAGE_URL</replaceable></parameter></para></td>
+                        <td><para>Similar to
+                                   <parameter>--location</parameter>
+                                in usage, but indicates that the
+                                Glance server should immediately copy
+                                the data and store it in its
+                                configured image store.</para>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><para><parameter>--is-public
+                                   [True|False]</parameter></para></td>
+                        <td><para>Makes an image accessible to the
+                                public.</para>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><para><parameter>--is-protected
+                                   [True|False]</parameter></para></td>
+                        <td><para>Prevents an image from being
+                                deleted.</para>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><para><parameter>--property
+                                   <replaceable>KEY</replaceable>=<replaceable>VALUE</replaceable></parameter></para></td>
+                        <td><para>Arbitrary property to associate with
+                                image. Can be used multiple
+                                times.</para>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><para><parameter>--purge-props</parameter></para></td>
+                        <td><para>Deletes all image properties that
+                                are not explicitly set in the update
+                                request. Otherwise, those properties
+                                not referenced are preserved.</para>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><para><parameter>--human-readable</parameter></para></td>
+                        <td><para>Prints image size in a
+                                human-friendly format.</para>
+                        </td>
+                    </tr>
+                </informaltable>
             </step>
             <step>
                 <para>To annotate an image with a property that
                     describes the required VIF model:</para>
-                <screen><prompt>$</prompt> <userinput>glance image-update --property hw_vif_model=e1000 f16-x86_64-openstack-sda</userinput></screen>
+                <screen><prompt>$</prompt> <userinput>glance image-update \
+  --property hw_vif_model=e1000 f16-x86_64-openstack-sda</userinput></screen>
                 <para>If you specify a VIF model that is not
-                    supported, the instance fails to launch. The
-                    following table shows the valid model values,
-                    which depend on the
-                        <literal>libvirt_type</literal>
-                    setting:</para>
-                <informaltable rules="all">
-                    <thead>
-                        <tr>
-                            <th>libvirt_type setting</th>
-                            <th>Supported model values</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>qemu or kvm</td>
-                            <td>
-                                <para>
-                                   <itemizedlist>
-                                   <listitem>
-                                   <para>virtio</para>
-                                   </listitem>
-                                   <listitem>
-                                   <para>ne2k_pci</para>
-                                   </listitem>
-                                   <listitem>
-                                   <para>pcnet</para>
-                                   </listitem>
-                                   <listitem>
-                                   <para>rtl8139</para>
-                                   </listitem>
-                                   <listitem>
-                                   <para>e1000</para>
-                                   </listitem>
-                                   </itemizedlist>
-                                </para>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>xen</td>
-                            <td>
-                                <itemizedlist>
-                                   <listitem>
-                                   <para>netfront</para>
-                                   </listitem>
-                                   <listitem>
-                                   <para>ne2k_pci</para>
-                                   </listitem>
-                                   <listitem>
-                                   <para>pcnet</para>
-                                   </listitem>
-                                   <listitem>
-                                   <para>rtl8139</para>
-                                   </listitem>
-                                   <listitem>
-                                   <para>e1000</para>
-                                   </listitem>
-                                </itemizedlist>
-                            </td>
-                        </tr>
-                    </tbody>
-                </informaltable>
+                    supported, the instance fails to launch. See <xref
+                        linkend="vif_models"/>.</para>
             </step>
         </procedure>
+        <?hard-pagebreak?>
+        <para>The valid model values depend on the
+                <literal>libvirt_type</literal> setting, as shown in
+            the following table:</para>
+        <table xml:id="vif_models" rules="all" width="50%">
+            <caption>VIF model values</caption>
+            <col width="40%"/>
+            <col width="60%"/>
+            <thead>
+                <tr>
+                    <th>libvirt_type setting</th>
+                    <th>Supported model values</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>qemu or kvm</td>
+                    <td>
+                        <para>
+                            <itemizedlist>
+                                <listitem>
+                                   <para>virtio</para>
+                                </listitem>
+                                <listitem>
+                                   <para>ne2k_pci</para>
+                                </listitem>
+                                <listitem>
+                                   <para>pcnet</para>
+                                </listitem>
+                                <listitem>
+                                   <para>rtl8139</para>
+                                </listitem>
+                                <listitem>
+                                   <para>e1000</para>
+                                </listitem>
+                            </itemizedlist>
+                        </para>
+                    </td>
+                </tr>
+                <tr>
+                    <td>xen</td>
+                    <td>
+                        <itemizedlist>
+                            <listitem>
+                                <para>netfront</para>
+                            </listitem>
+                            <listitem>
+                                <para>ne2k_pci</para>
+                            </listitem>
+                            <listitem>
+                                <para>pcnet</para>
+                            </listitem>
+                            <listitem>
+                                <para>rtl8139</para>
+                            </listitem>
+                            <listitem>
+                                <para>e1000</para>
+                            </listitem>
+                        </itemizedlist>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </section>
-    <xi:include href="section_nova_cli_images.xml"/>
+    <xi:include href="section_nova_cli_manage_images.xml"/>
+    <section xml:id="troubleshoot">
+        <title>Troubleshoot image creation</title>
+        <itemizedlist>
+            <listitem>
+                <para>You cannot create a snapshot from an instance
+                    that has an attached volume. Detach the volume,
+                    create the image, and re-mount the volume.</para>
+            </listitem>
+            <listitem>
+                <para>Make sure the version of qemu you are using is
+                    version 0.14 or greater. Older versions of qemu
+                    result in an "<literal>unknown option
+                    -s</literal>" error message in the
+                        <filename>nova-compute.log</filename>.</para>
+            </listitem>
+            <listitem>
+                <para>Examine the
+                        <filename>/var/log/nova-api.log</filename> and
+                        <filename>/var/log/nova-compute.log</filename>
+                    log files for error messages.</para>
+            </listitem>
+        </itemizedlist>
+    </section>
 </section>

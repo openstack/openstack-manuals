@@ -12,21 +12,13 @@
     <title>Launch an instance from an image</title>
     <?dbhtml stop-chunking?>
     <para>When you launch an instance from an image, OpenStack creates
-        a local copy of the image on the respective compute node where
-        the instance is started.</para>
+        a local copy of the image on the Compute node where the
+        instance starts.</para>
     <procedure>
-        <title>To launch an instance from an image</title>
         <step>
-            <para>Log in to the OpenStack dashboard.</para>
-        </step>
-        <step>
-            <para>If you are a member of multiple projects, select a
-                project from the drop-down list at the top of the
-                    <guilabel>Project</guilabel> tab.</para>
-        </step>
-        <step>
-            <para>Click the <guilabel>Images &amp; Snapshot</guilabel>
-                category.</para>
+            <para>Log in to the OpenStack dashboard, choose a project,
+                and click the <guilabel>Images &amp;
+                    Snapshot</guilabel> category.</para>
             <para>The dashboard shows the images that have been
                 uploaded to OpenStack Image Service and are available
                 for this project.</para>
@@ -37,75 +29,125 @@
         </step>
         <step>
             <para>In the <guilabel>Launch Image</guilabel> window,
-                specify the following:</para>
+                specify the following values:</para>
+            <informaltable rules="all">
+                <col width="30%"/>
+                <col width="70%"/>
+                <thead>
+                    <tr>
+                        <th colspan="2" align="center"
+                                ><guilabel>Details</guilabel> tab</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><para><guilabel>Instance
+                                Source</guilabel></para></td>
+                        <td><para>Image or snapshot.</para></td>
+                    </tr>
+                    <tr>
+                        <td><para><guilabel>Instance
+                                Name</guilabel></para></td>
+                        <td><para>The name to assign to the virtual
+                                machine.</para></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <para><guilabel>Flavor</guilabel></para></td>
+                        <td><para>The size of the virtual machine to
+                                launch.</para></td>
+                    </tr>
+                    <tr>
+                        <td><para><guilabel>Instance
+                                Count</guilabel></para></td>
+                        <td><para>To launch multiple instances, enter
+                                a value greater than 1. Default is 1.
+                            </para></td>
+                    </tr>
+                    <tr>
+                        <th colspan="2" align="center"
+                                ><guilabel>Access &amp;
+                                Security</guilabel> tab</th>
+                    </tr>
+                    <tr>
+                        <td><para><guilabel>Keypair</guilabel></para></td>
+                        <td><para>A keypair.</para>
+                            <para>In case an image uses a static root
+                                password or a static key set (neither
+                                is recommended), you do not need to
+                                provide a keypair to launch the
+                                instance.</para></td>
+                    </tr>
+                    <tr>
+                        <td><para><guilabel>Security
+                                Groups</guilabel></para></td>
+
+                        <td><para>Activate the security groups that
+                                you want to assign to the
+                                instance.</para>
+                            <para>Security groups are a kind of cloud
+                                firewall that define which incoming
+                                network traffic is forwarded to
+                                instances. For details, see <xref
+                                   linkend="security_groups_add_rule"
+                                />.</para>
+                            <para>If you have not created any security
+                                groups, you can assign only the
+                                default security group to the
+                                instance.</para></td>
+                    </tr>
+                    <tr>
+                        <th colspan="2" align="center"
+                                ><guilabel>Volume Options</guilabel>
+                            tab</th>
+                    </tr>
+                    <tr>
+                        <td><para><guilabel>Volume
+                                Options</guilabel></para></td>
+                        <td><para>Not applicable when you launch an
+                                instance from an image.</para><para>To
+                                launch from a volume or volume
+                                snapshot, select the appropriate
+                                option in the <guilabel>Volume
+                                   Options</guilabel> drop-down list.
+                                Then, choose the volume or
+                                snapshot.</para>
+                            <para>For information about how to create
+                                a bootable volume, see <xref
+                                   linkend="dashboard_launch_instances_from_volume"
+                                />.</para></td>
+                    </tr>
+                    <tr>
+                        <th colspan="2" align="center"
+                                ><guilabel>Post-Creation</guilabel>
+                            tab</th>
+                    </tr>
+                    <tr>
+                        <td><para><guilabel>Customization
+                                   Script</guilabel></para></td>
+                        <td><para>A customization script that runs
+                                after your instance
+                            launches.</para></td>
+                    </tr>
+                </tbody>
+            </informaltable>
         </step>
         <step>
-            <substeps>
-                <step>
-                    <para>Enter an instance name to assign to the
-                        virtual machine.</para>
-                </step>
-                <step>
-                    <para>From the <guilabel>Flavor</guilabel>
-                        drop-down list, select the size of the virtual
-                        machine to launch.</para>
-                </step>
-                <step>
-                    <para>Select a keypair.</para>
-                    <para>In case an image uses a static root password
-                        or a static key set (neither is recommended),
-                        you do not need to provide a keypair to launch
-                        the instance.</para>
-                </step>
-                <step>
-                    <para>In <guilabel>Instance Count</guilabel>,
-                        enter the number of virtual machines to launch
-                        from this image.</para>
-                </step>
-                <step>
-                    <para>Activate the security groups that you want
-                        to assign to the instance.</para>
-                    <para>Security groups are a kind of cloud firewall
-                        that define which incoming network traffic
-                        should be forwarded to instances. For details,
-                        see <xref linkend="security_groups_add_rule"/>.</para>
-                    <para>If you have not created any specific
-                        security groups, you can only assign the
-                        instance to the default security group.
-                    </para>
-                </step>
-                <step>
-                    <para>If you want to boot from volume, click the
-                        respective entry to expand its options. Set
-                        the options as described in <xref
-                            linkend="dashboard_launch_instances_from_volume"
-                        />.</para>
-                </step>
-            </substeps>
+            <para>Click <guibutton>Launch</guibutton>. The instance
+                starts on a Compute node in the cloud.</para>
         </step>
         <step>
-            <para>Click <guibutton>Launch Instance</guibutton>. The
-                instance is started on any of the compute nodes in the
-                cloud.</para>
+            <para>The <guilabel>Instances</guilabel> category shows
+                the instance name, its private and public IP
+                addresses, size, status, task, and power state.</para>
+        </step>
+        <step>
+            <para>If you did not provide a keypair, security groups,
+                or rules so far, users can only access the instance
+                from inside the cloud through VNC. Even pinging the
+                instance is not possible. To access the instance
+                through a VNC console, see <xref
+                    linkend="instance_console"/>.</para>
         </step>
     </procedure>
-    <para>After you have launched an instance, switch to the
-            <guilabel>Instances</guilabel> category to view the
-        instance name, its (private or public) IP address, size,
-        status, task, and power state.</para>
-    <figure>
-        <title>OpenStack dashboard &ndash; Instances</title>
-        <mediaobject>
-            <imageobject>
-                <imagedata
-                    fileref="../../common/figures/instances.png"
-                    format="PNG" contentwidth="4in"/>
-            </imageobject>
-        </mediaobject>
-    </figure>
-    <para>If you did not provide a keypair, security groups, or rules
-        so far, by default the instance can only be accessed from
-        inside the cloud through VNC at this point. Even pinging the
-        instance is not possible. To access the instance through a VNC
-        console, see <xref linkend="instance_console"/>.</para>
 </section>

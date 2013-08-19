@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section [
+        <!-- Some useful entities borrowed from HTML -->
+        <!ENTITY ndash  "&#x2013;">
+        <!ENTITY mdash  "&#x2014;">
+        <!ENTITY hellip "&#x2026;">
+        <!-- Useful for describing APIs -->
+        <!ENTITY GET    '<command xmlns="http://docbook.org/ns/docbook">GET</command>'>
+        <!ENTITY PUT    '<command xmlns="http://docbook.org/ns/docbook">PUT</command>'>
+        <!ENTITY POST   '<command xmlns="http://docbook.org/ns/docbook">POST</command>'>
+        <!ENTITY DELETE '<command xmlns="http://docbook.org/ns/docbook">DELETE</command>'>
+]>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="cli_configure_instances">
+    <title>Configure access and security for instances</title>
+    <?dbhtml stop-chunking?>
+    <para>When you launch a virtual machine, you can inject a
+            <emphasis role="italic">keypair</emphasis>, which provides
+        SSH access to your instance. For this to work, the image must
+        contain the <literal>cloud-init</literal> package. Create at
+        least one keypair for each project. If you generate a keypair
+        with an external tool, you can import it into OpenStack. You
+        can use the keypair for multiple instances that belong to that
+        project. In case an image uses a static root password or a
+        static key set &ndash; neither is recommended &ndash; you must
+        not provide a keypair when you launch the instance.</para>
+    <para>A <emphasis role="italic">security group</emphasis> is a
+        named collection of network access rules that you use to limit
+        the types of traffic that have access to instances. When you
+        launch an instance, you can assign one or more security groups
+        to it. If you do not create security groups, new instances are
+        automatically assigned to the default security group, unless
+        you explicitly specify a different security group. The
+        associated <emphasis role="italic">rules</emphasis> in each
+        security group control the traffic to instances in the group.
+        Any incoming traffic that is not matched by a rule is denied
+        access by default. You can add rules to or remove rules from a
+        security group. You can modify rules for the default and any
+        other security group.</para>
+    <para>You must modify the rules for the default security group
+        because users cannot access instances that use the default
+        group from any IP address outside the cloud.</para>
+    <para>You can modify the rules in a security group to allow access
+        to instances through different ports and protocols. For
+        example, you can modify rules to allow access to instances
+        through SSH, to ping them, or to allow UDP traffic &ndash; for
+        example, for a DNS server running on an instance. You specify
+        the following parameters for rules:</para>
+    <itemizedlist>
+        <listitem>
+            <para><emphasis role="bold">Source of traffic</emphasis>.
+                Enable traffic to instances from either IP addresses
+                inside the cloud from other group members or from all
+                IP addresses.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">Protocol</emphasis>. Choose
+                TCP for SSH, ICMP for pings, or UDP.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">Destination port on virtual
+                    machine</emphasis>. Defines a port range. To open
+                a single port only, enter the same value twice. ICMP
+                does not support ports: Enter values to define the
+                codes and types of ICMP traffic to be allowed.</para>
+        </listitem>
+    </itemizedlist>
+    <para>Rules are automatically enforced as soon as you create or
+        modify them.</para>
+    <para>You can also assign a floating IP address to a running
+        instance to make it accessible from outside the cloud. You
+        assign a floating IP address to an instance and attach a block
+        storage device, or volume, for persistent storage. See <xref
+            linkend="manage_ip_addresses"/>.</para>
+    <?hard-pagebreak?>
+    <section xml:id="create_import_keys">
+        <title>Add a keypair</title>
+        <procedure>
+            <para>You can generate a keypair or upload an existing
+                public key.</para>
+            <step>
+                <para>To generate a keypair, run the following
+                    command:</para>
+                <screen><prompt>$</prompt> <userinput>nova keypair-add <replaceable>KEY_NAME</replaceable> > <replaceable>MY_KEY</replaceable>.pem</userinput></screen>
+                <para>The command generates a keypair named
+                        <replaceable>KEY_NAME</replaceable>, writes
+                    the private key to the
+                            <filename><replaceable>MY_KEY</replaceable>.pem</filename>
+                    file, and registers the public key at the Nova
+                    database.</para>
+            </step>
+            <step>
+                <para>To set the permissions of the
+                            <filename><replaceable>MY_KEY</replaceable>.pem</filename>
+                    file, run the following command:</para>
+                <screen><prompt>$</prompt> <userinput>chmod 600 <replaceable>MY_KEY</replaceable>.pem</userinput></screen>
+                <para>The command changes the permissions of the
+                            <filename><replaceable>MY_KEY</replaceable>.pem</filename>
+                    file so that only you can read and write to
+                    it.</para>
+            </step>
+        </procedure>
+    </section>
+    <section xml:id="import_keypair_cli">
+        <title>Import a keypair</title>
+        <procedure>
+            <step>
+                <para>If you have already generated a keypair with the
+                    public key located at
+                        <filename>~/.ssh/id_rsa.pub</filename>, run
+                    the following command to upload the public
+                    key:</para>
+                <screen><prompt>$</prompt> <userinput>nova keypair-add --pub_key ~/.ssh/id_rsa.pub <replaceable>KEY_NAME</replaceable></userinput></screen>
+                <para>The command registers the public key at the Nova
+                    database and names the keypair
+                            <literal><replaceable>KEY_NAME</replaceable></literal>.</para>
+            </step>
+            <step>
+                <para>List keypairs to make sure that the uploaded
+                    keypair appears in the list:</para>
+                <screen><prompt>$</prompt> <userinput>nova keypair-list</userinput></screen>
+            </step>
+        </procedure>
+    </section>
+    <section xml:id="configure_security_groups_rules">
+        <title>Create and manage security groups</title>
+        <procedure>
+            <step>
+                <para>To list security groups for the current project,
+                    including descriptions, enter the following
+                    command:</para>
+                <screen><prompt>$</prompt> <userinput>nova secgroup-list</userinput></screen>
+            </step>
+            <step>
+                <para>To create a security group with a specified name
+                    and description, enter the following
+                    command:</para>
+                <screen><prompt>$</prompt> <userinput>nova secgroup-create <replaceable>SEC_GROUP_NAME</replaceable> <replaceable>GROUP_DESCRIPTION</replaceable></userinput></screen>
+            </step>
+            <step>
+                <para>To delete a specified group, enter the following
+                    command:</para>
+                <screen><prompt>$</prompt> <userinput>nova secgroup-delete <replaceable>SEC_GROUP_NAME</replaceable> </userinput></screen>
+                <note>
+                    <para>You cannot delete the default security group
+                        for a project. Also, you cannot delete a
+                        security group that is assigned to a running
+                        instance.</para>
+                </note>
+            </step>
+        </procedure>
+    </section>
+    <section xml:id="security_grp_rules_cli">
+        <title>Create and manage security group rules</title>
+        <procedure>
+            <para>Modify security group rules with the <command>nova
+                    secgroup-*-rule</command> commands.</para>
+            <step>
+                <para>On a shell, source the OpenStack RC file. For
+                    details, see <xref linkend="cli_openrc"/>.</para>
+            </step>
+            <step>
+                <para>To list the rules for a security group</para>
+                <screen><prompt>$</prompt> <userinput>nova secgroup-list-rules <replaceable>SEC_GROUP_NAME</replaceable></userinput></screen>
+            </step>
+            <step>
+                <para>To allow SSH access to the instances, choose one
+                    of the following sub-steps:</para>
+                <substeps>
+                    <step xml:id="sec_group_rule_add">
+                        <title wordsize="20">Add rule for all
+                            IPs</title>
+                        <para>Either from all IP addresses (specified
+                            as IP subnet in CIDR notation as
+                            0.0.0.0/0):</para>
+                        <screen><prompt>$</prompt> <userinput>nova secgroup-add-rule <replaceable>SEC_GROUP_NAME</replaceable> tcp 22 22 0.0.0.0/0</userinput></screen>
+                    </step>
+                    <step xml:id="sec_group_rule_add_alt">
+                        <title wordsize="20">Add rule for security
+                            groups</title>
+                        <para>Alternatively, you can allow only IP
+                            addresses from other security groups
+                            (source groups) to access the specified
+                            port:</para>
+                        <screen><prompt>$</prompt> <userinput>nova secgroup-add-group-rule --ip_proto tcp --from_port 22 \
+     --to_port 22 <replaceable>SEC_GROUP_NAME</replaceable> <replaceable>SOURCE_GROUP_NAME</replaceable></userinput></screen>
+                    </step>
+                </substeps>
+            </step>
+            <step>
+                <para>To allow pinging the instances, choose one of
+                    the following sub-steps:</para>
+                <substeps>
+                    <step>
+                        <title wordsize="20">To allow pinging from
+                            IPs</title>
+                        <para>Specify all IP addresses as IP subnet in
+                            CIDR notation:
+                                <literal>0.0.0.0/0</literal>. This
+                            command allows access to all codes and all
+                            types of ICMP traffic,
+                            respectively:</para>
+                        <screen><prompt>$</prompt> <userinput>nova secgroup-add-rule <replaceable>SEC_GROUP_NAME</replaceable> icmp -1 -1 0.0.0.0/0</userinput></screen>
+                    </step>
+                    <step>
+                        <title wordsize="20">To allow pinging from
+                            other security groups</title>
+                        <para>To allow only members of other security
+                            groups (source groups) to ping
+                            instances:</para>
+                        <screen><prompt>$</prompt> <userinput>nova secgroup-add-group-rule --ip_proto icmp --from_port -1 \
+     --to_port -1 <replaceable>SEC_GROUP_NAME</replaceable> <replaceable>SOURCE_GROUP_NAME</replaceable></userinput></screen>
+                    </step>
+                </substeps>
+            </step>
+            <step>
+                <para>To allow access through a UDP port, such as
+                    allowing access to a DNS server that runs on a VM,
+                    complete one of the following sub-steps:</para>
+                <substeps>
+                    <step>
+                        <para>To allow UDP access from IPs, specify
+                            all IP addresses as IP subnet in CIDR
+                            notation:
+                            <literal>0.0.0.0/0</literal>.<screen><prompt>$</prompt> <userinput>nova secgroup-add-rule SEC_GROUP_NAME udp 53 53 0.0.0.0/0</userinput></screen></para>
+                    </step>
+                    <step>
+                        <para>To allow only IP addresses from other
+                            security groups (source groups) to access
+                            the specified port:</para>
+                        <screen><prompt>$</prompt> <userinput>nova secgroup-add-group-rule --ip_proto udp --from_port 53 \
+      --to_port 53 <replaceable>SEC_GROUP_NAME</replaceable> <replaceable>SOURCE_GROUP_NAME</replaceable></userinput></screen>
+                    </step>
+                </substeps>
+            </step>
+            <step>
+                <para>To delete a security group rule, specify the
+                    same arguments that you used to create the
+                    rule.</para>
+                <para>To delete the security rule that you created in
+                        <xref linkend="sec_group_rule_add"/>:</para>
+                <screen><prompt>$</prompt> <userinput>nova secgroup-delete-rule <replaceable>SEC_GROUP_NAME</replaceable> tcp 22 22 0.0.0.0/0</userinput></screen>
+                <para>To delete the security rule that you created in
+                        <xref linkend="sec_group_rule_add_alt"
+                    />:</para>
+                <screen><prompt>$</prompt> <userinput>nova secgroup-delete-group-rule --ip_proto tcp --from_port 22 \
+     --to_port 22 <replaceable>SEC_GROUP_NAME</replaceable> <replaceable>SOURCE_GROUP_NAME</replaceable></userinput></screen>
+            </step>
+        </procedure>
+    </section>
+</section>

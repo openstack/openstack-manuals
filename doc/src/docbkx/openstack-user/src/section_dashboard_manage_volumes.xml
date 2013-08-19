@@ -11,88 +11,49 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="dashboard_manage_volumes">
     <title>Manage volumes</title>
-<?dbhtml stop-chunking?>
+    <?dbhtml stop-chunking?>
     <para>Volumes are block storage devices that you can attach to
-        instances. They allow for persistent storage as they can be attached to
-        a running instance, or detached and attached to another
-        instance at any time.</para>
-    <para>In contrast to the instance's root disk, the data of volumes
-        is not destroyed when the instance is deleted.</para>
-    <section xml:id="create_or_delete_volumes">
-        <title>Create or delete a volume</title>
+        instances. They allow for persistent storage. You can attach a
+        volume to a running instance, or detach a volume and attach it
+        to another instance at any time.</para>
+    <section xml:id="dashboard_create_volumes">
+        <title>Create a volume</title>
         <procedure>
-            <title>To create or delete a volume</title>
+            <!-- <title>To create or delete a volume</title> -->
             <step>
-                <para>Log in to the OpenStack dashboard.</para>
+                <para>Log in to the OpenStack dashboard, choose a
+                    project, and, click the
+                        <guibutton>Volumes</guibutton>
+                    category.</para>
             </step>
             <step>
-                <para>If you are a member of multiple projects, select
-                    a <guilabel>Project</guilabel> from the drop-down
-                    list at the top of the tab.</para>
+                <para>Click <guibutton>Create
+                    Volume</guibutton>.</para>
+                <para>In the window that opens, enter a name to assign
+                    to a volume, a description (optional), and define
+                    the size in GBs.</para>
             </step>
             <step>
-                <para>Click the <guibutton>Volumes</guibutton> category.</para>
+                <para>Confirm your changes.</para>
             </step>
             <step>
-                <title>To create a volume</title>
-                <substeps>
-                    <step>
-                        <para>Click <guibutton>Create
-                                Volume</guibutton>.</para>
-                        <para>In the window that opens, enter a name
-                            to assign to a volume, a description
-                            (optional), and define the size in GBs.
-                        </para>
-                    </step>
-                    <step>
-                        <para>Confirm your changes.</para>
-                    </step>
-                    <step>
-                        <para>The dashboard shows the volume in the
-                                <guilabel>Volumes</guilabel> category.</para>
-                    </step>
-                </substeps>
-            </step>
-            <step>
-                <title>To delete one or multiple volumes</title>
-                <substeps>
-                    <step>
-                        <para>Activate the check boxes in front of the
-                            volumes that you want to delete.</para>
-                    </step>
-                    <step>
-                        <para>Click <guibutton>Delete
-                                Volumes</guibutton> and confirm your
-                            choice in the pop-up that appears.</para>
-                    </step>
-                    <step>
-                        <para>A message indicates whether the
-                            action was successful.</para>
-                    </step>
-                </substeps>
+                <para>The dashboard shows the volume in the
+                        <guilabel>Volumes</guilabel> category.</para>
             </step>
         </procedure>
-        <para>After you create one or more volumes, you can attach
-            them to instances.</para>
-        <para>You can attach a volume to one instance at a time.</para>
-        <para>View the status of a volume in the <guilabel>Instances
-                &amp; Volumes</guilabel> category of the dashboard:
-            the volume is either available or In-Use.</para>
     </section>
+
     <section xml:id="attach_volumes_to_instances">
         <title>Attach volumes to instances</title>
-       <procedure>
-            <title>To attach volumes to instances</title>
+        <para>After you create one or more volumes, you can attach
+            them to instances.</para>
+        <procedure>
+            <!--<title>To attach volumes to instances</title>-->
             <step>
-                <para>Log in to OpenStack dashboard.</para>
-            </step>
-            <step>
-                <para>If you are a member of multiple projects, select
-                    a <guilabel>Project</guilabel> from the drop-down
-                    list at the top of the tab.</para>
-            </step>
-            <step>
-                <para>Click the <guibutton>Volumes</guibutton> category.</para>
+                <para>Log in to the OpenStack dashboard, choose a
+                    project, and click the
+                        <guibutton>Volumes</guibutton>
+                    category.</para>
             </step>
             <step>
                 <para>Select the volume to add to an instance and
@@ -113,44 +74,45 @@
                 <para>Click <guibutton>Attach Volume</guibutton> to
                     confirm your changes. The dashboard shows the
                     instance to which the volume has been attached and
-                    the volume's device name.</para>
+                    the volume's device name. You can attach a volume
+                    to one instance at a time.</para>
+            </step>
+            <step>
+                <para>View the status of a volume in the
+                        <guilabel>Instances &amp; Volumes</guilabel>
+                    category of the dashboard. The volume is either
+                    available or In-Use.</para>
             </step>
             <step>
                 <para>Now you can log in to the instance, mount the
                     disk, format it, and use it.</para>
             </step>
-          <!--  <step>
-                <para>If the instance is running the latest SUSE Linux
-                    Enterprise Server SP2 Kernel, it is not necessary
-                    to reboot the virtual machine to make the device
-                    appear. Otherwise load the acpiphp module
-                    manually:</para>
-                <programlisting><prompt>$</prompt> modprobe acpiphp</programlisting>
-
-            </step>-->
+        </procedure>
+    </section>
+    <section xml:id="dashboard_detach_volume">
+        <title>Detach a volume from an instance</title>
+        <procedure>
             <step>
-                <title>To detach a volume from an instance</title>
-
-                <substeps>
-                    <step>
-                        <para>Select the volume and click
-                                <guibutton>Edit
-                                Attachments</guibutton>.</para>
-                    </step>
-                    <step>
-                        <para>Click
-                                <guibutton>Detach Volume</guibutton>
-                            and confirm your changes.</para>
-                    </step>
-                    <step>
-                        <para>A message indicates whether the
-                            action was successful.</para>
-                    </step>
-                </substeps>
+                <para>Log in to the OpenStack dashboard, choose a
+                    project, and click the
+                        <guibutton>Volumes</guibutton>
+                    category.</para>
+            </step>
+            <step>
+                <para>Select the volume and click <guibutton>Edit
+                        Attachments</guibutton>.</para>
+            </step>
+            <step>
+                <para>Click <guibutton>Detach Volume</guibutton> and
+                    confirm your changes.</para>
+            </step>
+            <step>
+                <para>A message indicates whether the action was
+                    successful.</para>
             </step>
         </procedure>
     </section>
- <!--   <section xml:id="create_volume_snapsnots">
+    <!--   <section xml:id="create_volume_snapsnots">
         <title>Create volume snapshots</title>
 
         <procedure>
@@ -188,4 +150,30 @@
             </step>
         </procedure>
     </section>-->
+    <section xml:id="dashboard_delete_volume">
+        <title>Delete volumes</title>
+        <para>When you delete an instance, the data of its attached
+            volumes is not destroyed.</para>
+        <procedure>
+            <step>
+                <para>Log in to the OpenStack dashboard, choose a
+                    project, and click the
+                        <guibutton>Volumes</guibutton>
+                    category.</para>
+            </step>
+            <step>
+                <para>Activate the check boxes in front of the volumes
+                    that you want to delete.</para>
+            </step>
+            <step>
+                <para>Click <guibutton>Delete Volumes</guibutton> and
+                    confirm your choice in the pop-up that
+                    appears.</para>
+            </step>
+            <step>
+                <para>A message indicates whether the action was
+                    successful.</para>
+            </step>
+        </procedure>
+    </section>
 </section>

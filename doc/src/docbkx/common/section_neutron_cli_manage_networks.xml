@@ -8,16 +8,17 @@
     <title>Create and manage networks</title>
     <para>Before you run commands, set the following environment
         variables:</para>
-    <screen><computeroutput>export OS_USERNAME=admin
+    <programlisting language="bash">export OS_USERNAME=admin
 export OS_PASSWORD=password
 export OS_TENANT_NAME=admin
-export OS_AUTH_URL=http://localhost:5000/v2.0</computeroutput></screen>
-    <procedure>
-        <title>To create and manage networks</title>
-        <step>
-            <para>List the extensions of the system:</para>
-            <screen><prompt>$</prompt> <userinput>neutron ext-list -c alias -c name</userinput></screen>
-            <screen><computeroutput>+-----------------+--------------------------+
+export OS_AUTH_URL=http://localhost:5000/v2.0</programlisting>
+    <section xml:id="cli_networks">
+        <title>Create networks</title>
+        <procedure>
+            <step>
+                <para>List the extensions of the system:</para>
+                <screen><prompt>$</prompt> <userinput>neutron ext-list -c alias -c name</userinput></screen>
+                <screen><computeroutput>+-----------------+--------------------------+
 | alias           | name                     |
 +-----------------+--------------------------+
 | agent_scheduler | Agent Schedulers         |
@@ -28,12 +29,12 @@ export OS_AUTH_URL=http://localhost:5000/v2.0</computeroutput></screen>
 | router          | Neutron L3 Router        |
 | lbaas           | LoadBalancing service    |
 | extraroute      | Neutron Extra Route      |
-+-----------------+--------------------------+         </computeroutput></screen>
-        </step>
-        <step>
-            <para>Create a network:</para>
-            <screen><prompt>$</prompt> <userinput>neutron net-create net1</userinput></screen>
-            <screen><computeroutput>Created a new network:
++-----------------+--------------------------+</computeroutput></screen>
+            </step>
+            <step>
+                <para>Create a network:</para>
+                <screen><prompt>$</prompt> <userinput>neutron net-create net1</userinput></screen>
+                <screen><computeroutput>Created a new network:
 +---------------------------+--------------------------------------+
 | Field                     | Value                                |
 +---------------------------+--------------------------------------+
@@ -49,16 +50,16 @@ export OS_AUTH_URL=http://localhost:5000/v2.0</computeroutput></screen>
 | subnets                   |                                      |
 | tenant_id                 | 3671f46ec35e4bbca6ef92ab7975e463     |
 +---------------------------+--------------------------------------+</computeroutput></screen>
-            <note>
-                <para>Some fields of the created network are invisible
-                    to non-admin users.</para>
-            </note>
-        </step>
-        <step>
-            <para>Create a network with specified provider network
-                type:</para>
-            <screen><prompt>$</prompt> <userinput>neutron net-create net2 --provider:network-type local</userinput></screen>
-            <screen><computeroutput>Created a new network:
+                <note>
+                    <para>Some fields of the created network are
+                        invisible to non-admin users.</para>
+                </note>
+            </step>
+            <step>
+                <para>Create a network with specified provider network
+                    type:</para>
+                <screen><prompt>$</prompt> <userinput>neutron net-create net2 --provider:network-type local</userinput></screen>
+                <screen><computeroutput>Created a new network:
 +---------------------------+--------------------------------------+
 | Field                     | Value                                |
 +---------------------------+--------------------------------------+
@@ -73,16 +74,21 @@ export OS_AUTH_URL=http://localhost:5000/v2.0</computeroutput></screen>
 | status                    | ACTIVE                               |
 | subnets                   |                                      |
 | tenant_id                 | 3671f46ec35e4bbca6ef92ab7975e463     |
-+---------------------------+--------------------------------------+                </computeroutput></screen>
-            <para>Just as shown previous, the unknown option
-                    <literal>--provider:network-type</literal> is used
-                to create a <literal>local</literal> provider
-                network.</para>
-        </step>
-        <step>
-            <para>Create a subnet:</para>
-            <screen><prompt>$</prompt> <userinput>neutron subnet-create net1 192.168.2.0/24 --name subnet1</userinput></screen>
-            <screen><computeroutput>Created a new subnet:
++---------------------------+--------------------------------------+</computeroutput></screen>
+                <para>Just as shown previous, the unknown option
+                        <literal>--provider:network-type</literal> is
+                    used to create a <literal>local</literal> provider
+                    network.</para>
+            </step>
+        </procedure>
+    </section>
+    <section xml:id="cli_subnets">
+        <title>Create subnets</title>
+        <procedure>
+            <step>
+                <para>Create a subnet:</para>
+                <screen><prompt>$</prompt> <userinput>neutron subnet-create net1 192.168.2.0/24 --name subnet1</userinput></screen>
+                <screen><computeroutput>Created a new subnet:
 +------------------+--------------------------------------------------+
 | Field            | Value                                            |
 +------------------+--------------------------------------------------+
@@ -98,16 +104,23 @@ export OS_AUTH_URL=http://localhost:5000/v2.0</computeroutput></screen>
 | network_id       | 2d627131-c841-4e3a-ace6-f2dd75773b6d             |
 | tenant_id        | 3671f46ec35e4bbca6ef92ab7975e463                 |
 +------------------+--------------------------------------------------+</computeroutput></screen>
-            <para>In the previous command, <literal>net1</literal> is
-                the network name, <literal>192.168.2.0/24</literal> is
-                the subnet's CIDR. They are positional arguments.
-                    <literal>--name subnet1</literal> is an unknown
-                option, which specifies the subnet's name.</para>
-        </step>
-        <step>
-            <para>Create a port with specified IP address:</para>
-            <screen><prompt>$</prompt> <userinput>neutron port-create net1 --fixed-ip ip_address=192.168.2.40</userinput></screen>
-            <screen><computeroutput>Created a new port:
+                <para>In the previous command, <literal>net1</literal>
+                    is the network name,
+                        <literal>192.168.2.0/24</literal> is the
+                    subnet's CIDR. They are positional arguments.
+                        <literal>--name subnet1</literal> is an
+                    unknown option, which specifies the subnet's
+                    name.</para>
+            </step>
+        </procedure>
+    </section>
+    <section xml:id="cli_ports">
+        <title>Create ports</title>
+        <procedure>
+            <step>
+                <para>Create a port with specified IP address:</para>
+                <screen><prompt>$</prompt> <userinput>neutron port-create net1 --fixed-ip ip_address=192.168.2.40</userinput></screen>
+                <screen><computeroutput>Created a new port:
 +----------------------+-------------------------------------------------------------------------------------+
 | Field                | Value                                                                               |
 +----------------------+-------------------------------------------------------------------------------------+
@@ -124,19 +137,20 @@ export OS_AUTH_URL=http://localhost:5000/v2.0</computeroutput></screen>
 | status               | DOWN                                                                                |
 | tenant_id            | 3671f46ec35e4bbca6ef92ab7975e463                                                    |
 +----------------------+-------------------------------------------------------------------------------------+                 </computeroutput></screen>
-            <para>In the previous command, <literal>net1</literal> is
-                the network name, which is a positional argument.
-                    <literal>--fixed-ip
-                    ip_address=192.168.2.40</literal> is an option,
-                which specifies the port's fixed IP address we
-                wanted.</para>
-        </step>
-        <step>
-            <para>Create a port without specified IP address:</para>
-            <screen><prompt>$</prompt> <userinput>neutron port-create net1</userinput></screen>
-            <screen><computeroutput>Created a new port:
+                <para>In the previous command, <literal>net1</literal>
+                    is the network name, which is a positional
+                    argument. <literal>--fixed-ip
+                        ip_address=192.168.2.40</literal> is an
+                    option, which specifies the port's fixed IP
+                    address we wanted.</para>
+            </step>
+            <step>
+                <para>Create a port without specified IP
+                    address:</para>
+                <screen><prompt>$</prompt> <userinput>neutron port-create net1</userinput></screen>
+                <screen><computeroutput>Created a new port:
 +----------------------+------------------------------------------------------------------------------------+
-| Field                | Value                                                                              |
+| Field| Value                                                                                              |
 +----------------------+------------------------------------------------------------------------------------+
 | admin_state_up       | True                                                                               |
 | binding:capabilities | {"port_filter": false}                                                             |
@@ -150,31 +164,33 @@ export OS_AUTH_URL=http://localhost:5000/v2.0</computeroutput></screen>
 | network_id           | 2d627131-c841-4e3a-ace6-f2dd75773b6d                                               |
 | status               | DOWN                                                                               |
 | tenant_id            | 3671f46ec35e4bbca6ef92ab7975e463                                                   |
-+----------------------+------------------------------------------------------------------------------------+                </computeroutput></screen>
-            <para>We can see that the system will allocate one IP
-                address if we don't specify the IP address in command
-                line.</para>
-        </step>
-        <step>
-            <para>Query ports with specified fixed IP
-                addresses:</para>
-            <screen><prompt>$</prompt> <userinput>neutron port-list --fixed-ips ip_address=192.168.2.2 ip_address=192.168.2.40</userinput></screen>
-            <screen><computeroutput>+--------------------------------------+------+-------------------+-------------------------------------------------------------------------------------+
++----------------------+------------------------------------------------------------------------------------+</computeroutput></screen>
+                <para>We can see that the system will allocate one IP
+                    address if we don't specify the IP address in
+                    command line.</para>
+            </step>
+            <step>
+                <para>Query ports with specified fixed IP
+                    addresses:</para>
+                <screen><prompt>$</prompt> <userinput>neutron port-list --fixed-ips ip_address=192.168.2.2 ip_address=192.168.2.40</userinput></screen>
+                <screen><computeroutput>+--------------------------------------+------+-------------------+-------------------------------------------------------------------------------------+
 | id                                   | name | mac_address       | fixed_ips                                                                           |
 +--------------------------------------+------+-------------------+-------------------------------------------------------------------------------------+
 | baf13412-2641-4183-9533-de8f5b91444c |      | fa:16:3e:f6:ec:c7 | {"subnet_id": "15a09f6c-87a5-4d14-b2cf-03d97cd4b456", "ip_address": "192.168.2.2"}  |
 | f7a08fe4-e79e-4b67-bbb8-a5002455a493 |      | fa:16:3e:97:e0:fc | {"subnet_id": "15a09f6c-87a5-4d14-b2cf-03d97cd4b456", "ip_address": "192.168.2.40"} |
 +--------------------------------------+------+-------------------+-------------------------------------------------------------------------------------+                 </computeroutput></screen>
-            <para><literal>--fixed-ips ip_address=192.168.2.2
-                    ip_address=192.168.2.40</literal> is one unknown
-                option.</para>
-            <para><emphasis role="bold">How to find unknown
-                    options?</emphasis> The unknown options can be
-                easily found by watching the output of
-                    <literal>create_xxx</literal> or
-                    <literal>show_xxx</literal> command. For example,
-                in the port creation command, we see the fixed_ips
-                fields, which can be used as an unknown option.</para>
-        </step>
-    </procedure>
+                <para><literal>--fixed-ips ip_address=192.168.2.2
+                        ip_address=192.168.2.40</literal> is one
+                    unknown option.</para>
+                <para><emphasis role="bold">How to find unknown
+                        options?</emphasis> The unknown options can be
+                    easily found by watching the output of
+                        <literal>create_xxx</literal> or
+                        <literal>show_xxx</literal> command. For
+                    example, in the port creation command, we see the
+                    fixed_ips fields, which can be used as an unknown
+                    option.</para>
+            </step>
+        </procedure>
+    </section>
 </section>

@@ -20,7 +20,7 @@
       <plugin>
         <groupId>com.rackspace.cloud.api</groupId>
         <artifactId>clouddocs-maven-plugin</artifactId>
-        <version>1.9.2</version> 
+        <version>1.9.2</version>
         <executions>
           <!-- Configuration for OpenStack End User Guide -->
           <execution>
@@ -30,6 +30,7 @@
             </goals>
             <phase>generate-sources</phase>
             <configuration>
+<profileOs>enduser</profileOs>
               <includes> bk-user-guide.xml</includes>
               <generateToc>
 appendix toc
@@ -44,10 +45,6 @@ qandadiv toc
 qandaset toc
 reference toc,title
 set toc,title </generateToc>
-              <profileOs>enduser</profileOs>
-              <chapterAutolabel>0</chapterAutolabel>
-              <security>external</security>
-              <tocSectionDepth>1</tocSectionDepth>
               <targetDirectory>target/docbkx/webhelp/</targetDirectory>
               <webhelpDirname>user-guide</webhelpDirname>
               <pdfFilenameBase>user-guide-${release.path.name}</pdfFilenameBase>
@@ -56,6 +53,11 @@ set toc,title </generateToc>
         </executions>
         <configuration>
           <profileOs>enduser</profileOs>
+          <chapterAutolabel>1</chapterAutolabel>
+          <appendixAutolabel>1</appendixAutolabel>
+          <sectionAutolabel>0</sectionAutolabel>
+          <tocSectionDepth>1</tocSectionDepth>
+          <formalProcedures>0</formalProcedures>
           <highlightSource>false</highlightSource>
           <xincludeSupported>true</xincludeSupported>
           <showXslMessages>true</showXslMessages>
@@ -71,10 +73,6 @@ set toc,title </generateToc>
           <googleAnalyticsId>UA-17511903-1</googleAnalyticsId>
           <suppressFooterNavigation>0</suppressFooterNavigation>
           <failOnValidationError>no</failOnValidationError>
-          <formalProcedures>0</formalProcedures>
-          <sectionAutolabel>0</sectionAutolabel>
-          <appendixAutolabel>0</appendixAutolabel>
-          <tocSectionDepth>1</tocSectionDepth>
         </configuration>
       </plugin>
     </plugins>

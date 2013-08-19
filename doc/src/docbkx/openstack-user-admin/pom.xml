@@ -1,0 +1,106 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.openstack.docs</groupId>
+  <artifactId>openstack-admin-user-guide</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+  <name>OpenStack Guides</name>
+  <properties>
+    <!-- This is set by Jenkins according to the branch. -->
+    <release.path.name>grizzly</release.path.name>
+    <comments.enabled>1</comments.enabled>
+  </properties>
+  <!-- ################################################ -->
+  <!-- USE "mvn clean generate-sources" to run this POM -->
+  <!-- ################################################ -->
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>com.rackspace.cloud.api</groupId>
+        <artifactId>clouddocs-maven-plugin</artifactId>
+        <version>1.9.2</version>
+        <executions>
+          <!-- Configuration for OpenStack End User Guide -->
+          <execution>
+            <id>os-adminuserguide</id>
+            <goals>
+              <goal>generate-webhelp</goal>
+            </goals>
+            <phase>generate-sources</phase>
+            <configuration>
+<profileOs>adminuser</profileOs>
+              <includes> bk-admin-user-guide.xml</includes>
+              <generateToc>
+                appendix toc
+                article/appendix nop
+                article toc,title
+                book toc,title,figure,equation
+                chapter toc
+                section toc
+                part toc,title
+                preface toc
+                qandadiv toc
+                qandaset toc
+                reference toc,title
+                set toc,title </generateToc>
+              <targetDirectory>target/docbkx/webhelp/</targetDirectory>
+              <webhelpDirname>admin-user-guide</webhelpDirname>
+              <pdfFilenameBase>admin-user-guide-${release.path.name}</pdfFilenameBase>
+            </configuration>
+          </execution>
+        </executions>
+        <configuration>
+          <profileOs>adminuser</profileOs>
+          <chapterAutolabel>1</chapterAutolabel>
+          <appendixAutolabel>1</appendixAutolabel>
+          <sectionAutolabel>0</sectionAutolabel>
+          <tocSectionDepth>1</tocSectionDepth>
+          <formalProcedures>0</formalProcedures>
+          <highlightSource>false</highlightSource>
+          <xincludeSupported>true</xincludeSupported>
+          <showXslMessages>true</showXslMessages>
+          <sourceDirectory>src</sourceDirectory>
+          <enableDisqus>internet</enableDisqus>
+          <feedbackEmail>diane.fleming@rackspace.com</feedbackEmail>
+          <security>external</security>
+          <branding>openstack</branding>
+          <socialIcons>1</socialIcons>
+          <enableDisqus>${comments.enabled}</enableDisqus>
+          <disqusShortname>openstackdocs</disqusShortname>
+          <enableGoogleAnalytics>1</enableGoogleAnalytics>
+          <googleAnalyticsId>UA-17511903-1</googleAnalyticsId>
+          <suppressFooterNavigation>0</suppressFooterNavigation>
+          <failOnValidationError>no</failOnValidationError>
+          <formalProcedures>0</formalProcedures>
+          <sectionAutolabel>0</sectionAutolabel>
+          <appendixAutolabel>0</appendixAutolabel>
+          <tocSectionDepth>1</tocSectionDepth>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <profiles>
+    <profile>
+      <id>Rackspace Research Repositories</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <repositories>
+        <repository>
+          <id>rackspace-research</id>
+          <name>Rackspace Research Repository</name>
+          <url>http://maven.research.rackspacecloud.com/content/groups/public/</url>
+        </repository>
+      </repositories>
+      <pluginRepositories>
+        <pluginRepository>
+          <id>rackspace-research</id>
+          <name>Rackspace Research Repository</name>
+          <url>http://maven.research.rackspacecloud.com/content/groups/public/</url>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
+  </profiles>
+</project>

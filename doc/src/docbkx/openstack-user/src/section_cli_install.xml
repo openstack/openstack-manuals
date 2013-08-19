@@ -7,7 +7,6 @@
 <!ENTITY plusmn "&#xB1;">
 
 ]>
-
 <section xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
@@ -16,101 +15,83 @@
     <?dbhtml stop-chunking?>
     <para>To install the clients, install the prerequisite software
         and the Python package for each OpenStack client.</para>
-    <note>
-        <para>If you already installed the OpenStack client packages
-            by using the package management tools provided by your
-            distribution, proceed to <xref linkend="cli_openrc"/>.
-        </para>
-    </note>
-    <section xml:id="prereq_software">
-        <title>Install the prerequisite software</title>
-        <procedure>
-            <title>To install prerequisite software</title>
-            <step>
-                <para>The following table describes the prerequisite
-                    software to install:</para>
-                <table rules="all">
-                    <caption>Prerequisite software</caption>
-                    <col width="25%"/>
-                    <col width="75%"/>
-                    <thead>
-                        <tr>
-                            <th>Prerequisite</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td valign="top">
-                                <para>Python 2.6 or later</para>
-                            </td>
-                            <td>
-                                <para>Currently, the clients do not
-                                   support Python 3.</para>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td valign="top">
-                                <para><command>setuptools</command>
-                                   package</para>
-                            </td>
-                            <td>
-                                <para>Installed by default on Mac OS
-                                   X.</para>
-                                <para>Many Linux distributions provide
-                                   packages to make
-                                   <command>setuptools</command> easy
-                                   to install.</para>
-                                <para>Search your package manager for
-                                   <command>setuptools</command> to
-                                   find an installation package. If
-                                   you cannot find one, download the
-                                   <command>setuptools</command>
-                                   package directly from <link
-                                   xlink:href="http://pypi.python.org/pypi/setuptools"
-                                   >http://pypi.python.org/pypi/setuptools</link>.
-                                </para>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td valign="top"><command>pip</command>
-                                package</td>
-                            <td>
-                                <para>To install the clients on a Mac
-                                   OS X or Linux system, use
-                                   <command>pip</command>. It is easy
-                                   to use and ensures that you get the
-                                   latest version of the clients from
-                                   the <link
-                                   xlink:href="http://pypi.python.org/pypi/python-novaclient/"
-                                   >Python Package Index</link>. Also,
-                                   it lets you update or remove the
-                                   packages later on.</para>
-                                <para>Install <command>pip</command>
-                                   through the package manager for
-                                   your system:</para><itemizedlist>
-                                   <listitem>
-                                   <para>Mac OS X
+        <table rules="all">
+            <caption>Prerequisite software</caption>
+            <col width="15%"/>
+            <col width="85%"/>
+            <thead>
+                <tr>
+                    <th>Prerequisite</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td valign="top">
+                        <para>Python 2.6 or later</para>
+                    </td>
+                    <td>
+                        <para>Currently, the clients do not support
+                            Python 3.</para>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top">
+                        <para><command>setuptools</command>
+                            package</para>
+                    </td>
+                    <td>
+                        <para>Installed by default on Mac OS X. Many Linux distributions provide
+                            packages to make
+                                <command>setuptools</command> easy to
+                            install. Search your package manager for
+                                <command>setuptools</command> to find
+                            an installation package. If you cannot
+                            find one, download the
+                                <command>setuptools</command> package
+                            directly from <link
+                                xlink:href="http://pypi.python.org/pypi/setuptools"
+                                >http://pypi.python.org/pypi/setuptools</link>.
+                        </para>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top"><command>pip</command>
+                        package</td>
+                    <td>
+                        <para>To install the clients on a Mac OS X or
+                            Linux system, use <command>pip</command>.
+                            It is easy to use and ensures that you get
+                            the latest version of the clients from the
+                                <link
+                                xlink:href="http://pypi.python.org/pypi/python-novaclient/"
+                                >Python Package Index</link>. Also, it
+                            lets you update or remove the packages
+                            later on.</para>
+                        <para>Install <command>pip</command> through
+                            the package manager for your
+                            system:</para><itemizedlist>
+                            <listitem>
+                                <para>Mac OS X
                                    <screen><prompt>$</prompt> <userinput>sudo easy_install pip</userinput></screen></para>
-                                   </listitem>
-                                   <listitem>
-                                   <para>Ubuntu 12.04</para>
-                                   <para>A packaged version enables
-                                   you to use <command>dpkg</command>
-                                   or <command>aptitude</command> to
+                            </listitem>
+                            <listitem>
+                                <para>Ubuntu 12.04</para>
+                                <para>A packaged version enables you
+                                   to use <command>dpkg</command> or
+                                   <command>aptitude</command> to
                                    install the
                                    python-novaclient.</para>
-                                   <screen><prompt>#</prompt> aptitude install python-novaclient</screen>
-                                   </listitem>
-                                   <listitem>
-                                   <para>Ubuntu
+                                <screen><prompt>#</prompt> aptitude install python-novaclient</screen>
+                            </listitem>
+                            <listitem>
+                                <para>Ubuntu
                                    <screen><prompt>#</prompt> aptitude install python-pip</screen></para>
-                                   </listitem>
-                                   <listitem>
-                                   <para>RHEL, CentOS, or
-                                   Fedora</para>
-                                   <para>A packaged version available
-                                   in <link
+                            </listitem>
+                            <listitem>
+                                <para>RHEL, CentOS, or Fedora</para>
+                                <para>A packaged version available in
+                                   <link
                                    xlink:href="http://openstack.redhat.com/"
                                    >RDO</link> enables you to use
                                    <command>yum</command> to install
@@ -121,17 +102,17 @@
                                    with the lower case name of the
                                    client to install, such as
                                    <literal>nova</literal>. Repeat
-                                   this step for each desired client.</para>
-                                   <para>Alternatively install
+                                   this step for each
+                                   client.</para>
+                                <para>Alternatively install
                                    <command>pip</command> and use it
                                    to manage client installation:
                                    <screen><prompt>#</prompt> yum install python-pip</screen>
-                                   </para>
-                                   </listitem>
-                                   <listitem>
-                                   <para>openSUSE 12.2 and
-                                   earlier</para>
-                                   <para>A <link
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>openSUSE 12.2 and earlier</para>
+                                <para>A <link
                                    xlink:href="https://build.opensuse.org/package/show?package=python-novaclient&amp;project=Cloud:OpenStack:Master"
                                    >packaged version available in the
                                    Open Build Service</link> enables
@@ -141,38 +122,36 @@
                                    <screen><prompt>#</prompt> zypper install python-<replaceable>PROJECT</replaceable></screen>
                                    Replace
                                    <replaceable>PROJECT</replaceable>
-                                   with the lower case name of the
+                                   with the lowercase name of the
                                    client to install, such as
                                    <literal>nova</literal>. Repeat
-                                   this step for each desired client.</para>
-                                   <para>Alternatively install
+                                   this step for each desired
+                                   client.</para>
+                                <para>Alternatively install
                                    <command>pip</command> and use it
                                    to manage client installation:
                                    <screen><prompt>#</prompt> zypper install python-pip </screen></para>
-                                   </listitem>
-                                   <listitem>
-                                   <para>openSUSE 12.3</para>
-                                   <para>A packaged version enables
-                                   you to use <command>rpm</command>
-                                   or <command>zypper</command> to
+                            </listitem>
+                            <listitem>
+                                <para>openSUSE 12.3</para>
+                                <para>A packaged version enables you
+                                   to use <command>rpm</command> or
+                                   <command>zypper</command> to
                                    install the clients:
                                    <screen><prompt>#</prompt> zypper install python-<replaceable>PROJECT</replaceable>client</screen>
                                    Replace
                                    <replaceable>PROJECT</replaceable>
-                                   with the lower case name of the
+                                   with the lowercase name of the
                                    client to install, such as
                                    <literal>nova</literal>. Repeat
                                    this step for each desired client.
-                                   </para>
-                                   </listitem>
-                                </itemizedlist>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </step>
-        </procedure>
-    </section>
+                                </para>
+                            </listitem>
+                        </itemizedlist>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     <section xml:id="cli_clients_install">
         <title>Install the clients</title>
         <para>Use <command>pip</command> to install the OpenStack
@@ -187,14 +166,15 @@
             variables before you can request OpenStack services
             through the clients or the APIs.</para>
         <procedure>
-            <title>To install the clients</title>
+            <!--  <title>To install the clients</title>-->
             <step>
                 <para>You must install each client separately.</para>
                 <para>Run the following command to install or update a
                     client package:</para>
-                <screen><prompt>$</prompt> <userinput>sudo pip install [--update] python-&lt;project&gt;client</userinput></screen>
-                <para>Where &lt;project&gt; is the project name and
-                    has one of the following values:</para>
+                <screen><prompt>$</prompt> <userinput>sudo pip install [--update] python-<replaceable>PROJECT</replaceable>client</userinput></screen>
+                <para>Where <replaceable>PROJECT</replaceable> is the
+                    project name and has one of the following
+                    values:</para>
                 <itemizedlist>
                     <listitem>
                         <para><literal>nova</literal>. Compute API and
