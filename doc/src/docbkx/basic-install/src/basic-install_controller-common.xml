@@ -4,7 +4,7 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="basic-install_controller-common">
                 <title>Common services</title>
-          	<section xml:id="controller-os">
+                <section xml:id="controller-os">
         <title>Operating System</title>
         <orderedlist>
             <listitem>
@@ -61,7 +61,7 @@
                 <para>Configure the network:</para>
                 <para os="ubuntu"><itemizedlist>
                         <listitem>
-                            <para>Edit <emphasis role="bold">/etc/network/interfaces</emphasis>:
+                            <para>Edit <filename>/etc/network/interfaces</filename>:
                                 <programlisting># Internal Network
 auto eth0
 iface eth0 inet static
@@ -78,7 +78,7 @@ iface eth1 inet static
 
                             </para>
                         </listitem>
-                        <listitem os="ubuntu">        <para>Edit <emphasis role="bold">/etc/sysctl.conf</emphasis>:
+                        <listitem os="ubuntu">        <para>Edit <filename>/etc/sysctl.conf</filename>:
                                 <programlisting>net.ipv4.conf.all.rp_filter = 0
 net.ipv4.conf.default.rp_filter = 0</programlisting>
                                 Then, restart the network service:
@@ -105,7 +105,7 @@ net.ipv4.conf.default.rp_filter = 0</programlisting>
                             </para>
                         </listitem>
                         <listitem>
-                            <para>Edit <emphasis role="bold">/etc/sysconfig/network-scripts/ifcfg-eth0</emphasis>:
+                            <para>Edit <filename>/etc/sysconfig/network-scripts/ifcfg-eth0</filename>:
                                 <programlisting># Internal Network
 DEVICE=eth0
 TYPE=Ethernet
@@ -118,7 +118,7 @@ ONBOOT=yes</programlisting>
                             </para>
                         </listitem>
                         <listitem>
-                            <para>Edit <emphasis role="bold">/etc/sysconf/network-scripts/ifcfg-eth1</emphasis>:
+                            <para>Edit <filename>/etc/sysconf/network-scripts/ifcfg-eth1</filename>:
                                 <programlisting># External Network
 DEVICE=eth1
 TYPE=Ethernet
@@ -193,7 +193,7 @@ ONBOOT=yes</programlisting>
                 <para>
                     <itemizedlist>
                         <listitem>
-                            <para>Edit the <emphasis role="bold">/etc/hosts</emphasis> file and add
+                            <para>Edit the <filename>/etc/hosts</filename> file and add
                                 <emphasis role="bold">cloud</emphasis>,
                                 <emphasis role="bold">network</emphasis>, and
                                 <emphasis role="bold">c01</emphasis> hostnames with correct IP.
@@ -268,7 +268,7 @@ ONBOOT=yes</programlisting>
                     <para>The various databases that the OpenStack
                         services require need to be created. Additionally,
                         MySQL accounts to access those databases need
-			to be created:
+                        to be created:
                         <screen><prompt>#</prompt> <userinput>mysql -u root -p &lt;&lt;EOF
 CREATE DATABASE nova;
 GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'localhost' \
