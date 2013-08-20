@@ -12,17 +12,13 @@
                 <para>Install the OpenStack Compute package:
                     <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install nova-compute-kvm</userinput></screen>
                     <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-nova-compute</userinput></screen>
-                    <note os="ubuntu">
-                        <para><literal>nova-compute-kvm</literal>
-                            requires that your CPU supports
-                            hardware-assisted virtualization (HVM)
-                            such as Intel VT-x or AMD-V. If your CPU
-                            does not support this, or if you are
-                            already running in a virtualized
-                            environment, you can instead use the
-                                <literal>nova-compute-qemu</literal>
-                            package. This package provides
-                            software-based virtualization.</para>
+                    <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install openstack-nova-compute kvm</userinput></screen>
+                    <note os="ubuntu;opensuse">
+                      <para>If your CPU does not support hardware-assisted virtualization (HVM) such as
+                      Intel VT-x or AMD-V or you are running in a virtualized environment, use the
+                      <literal os="ubuntu">nova-compute-qemu</literal>
+                      <literal os="opensuse">qemu</literal> package which provides software-based virtualization.
+                      </para>
                     </note>
                 </para>
             </listitem>
@@ -122,13 +118,58 @@ image_service=nova.image.glance.GlanceImageService
 vnc_enabled=true
 vncserver_proxyclient_address=10.10.10.11
 novncproxy_base_url=http://10.0.0.10:6080/vnc_auto.html
-vncserver_listen=0.0.0.0</programlisting></para>
+vncserver_listen=0.0.0.0</programlisting>
+                                    <programlisting os="opensuse" language="bash">[DEFAULT]
+
+# General
+verbose=True
+rabbit_host=10.10.10.10
+rabbit_password=password
+
+auth_strategy=keystone
+ec2_host=10.10.10.10
+ec2_url=http://10.10.10.10:8773/services/Cloud
+
+# Networking
+libvirt_use_virtio_for_bridges=True
+network_api_class=nova.network.neutronv2.api.API
+neutron_url=http://10.10.10.10:9696
+neutron_auth_strategy=keystone
+neutron_admin_tenant_name=service
+neutron_admin_username=neutron
+neutron_admin_password=password
+neutron_admin_auth_url=http://10.10.10.10:35357/v2.0
+
+# Security Groups
+firewall_driver=nova.virt.firewall.NoopFirewallDriver
+security_group_api=neutron
+
+# Compute #
+compute_driver=libvirt.LibvirtDriver
+connection_type=libvirt
+
+# Cinder
+volume_api_class=nova.volume.cinder.API
+
+# Glance
+glance_api_servers=10.10.10.10:9292
+image_service=nova.image.glance.GlanceImageService
+
+# novnc
+vnc_enabled=true
+vncserver_proxyclient_address=10.10.10.11
+novncproxy_base_url=http://10.0.0.10:6080/vnc_auto.html
+vncserver_listen=0.0.0.0</programlisting>
+                                </para>
                             </listitem>
                             <listitem>
                                 <para>Restart OpenStack Compute  services:
                                     <screen os="ubuntu"><prompt>#</prompt> <userinput>service nova-compute restart</userinput></screen>
                                     <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>service openstack-nova-compute restart</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-nova-compute on</userinput></screen>
+                                    <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl restart openstack-nova-compute</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-nova-compute</userinput>
+</screen>
                                 </para>
                             </listitem>
                         </itemizedlist>

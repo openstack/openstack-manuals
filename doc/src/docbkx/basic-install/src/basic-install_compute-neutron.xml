@@ -12,6 +12,7 @@
                         <para>Install the packages:
                             <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install openvswitch-switch</userinput></screen>
                             <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openvswitch-switch</userinput></screen>
+                            <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install openvswitch-switch</userinput></screen>
                         </para>
                     </listitem>
                     <listitem>
@@ -19,6 +20,8 @@
                             <screen os="ubuntu"><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput></screen>
                             <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openvswitch-switch on</userinput></screen>
+                            <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl start openvswitch-switch</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openvswitch-switch</userinput></screen>
                         </para>
                     </listitem>
                     <listitem>
@@ -39,16 +42,21 @@
                         <para>Install the packages:
                             <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install neutron-plugin-openvswitch-agent</userinput></screen>
                             <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-neutron-openvswitch</userinput></screen>
+                            <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install openstack-neutron-openvswitch-agent</userinput></screen>
                         </para>
                     </listitem>
                     <listitem>
                         <para>Edit <emphasis role="bold">/etc/neutron/neutron.conf</emphasis>:
-                            <programlisting os="ubuntu">[DEFAULT]
+                            <programlisting os="ubuntu" language="bash">[DEFAULT]
 rabbit_host = 10.10.10.10
 rabbit_password = password
 verbose = True</programlisting>
                             <programlisting os="centos;rhel;fedora">verbose = True
 rpc_backend=neutron.openstack.common.rpc.impl_qpid</programlisting>
+                            <programlisting os="opensuse" language="bash">[DEFAULT]
+rabbit_host = 10.10.10.10
+rabbit_password = password
+verbose = True</programlisting>
                         </para>
                     </listitem>
                     <listitem>
@@ -63,6 +71,7 @@ enable_tunneling = True
 [securitygroup]
 firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver</programlisting>
                             <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>ln -s /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini /etc/neutron/plugin.ini</userinput></screen>
+                            <screen os="opensuse"><prompt>#</prompt> <userinput>ln -s /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini /etc/neutron/plugin.ini</userinput></screen>
                         </para>
                     </listitem>
                     <listitem>
@@ -70,6 +79,8 @@ firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewal
                             <screen os="ubuntu"><prompt>#</prompt> <userinput>service neutron-plugin-openvswitch-agent restart</userinput></screen>
                             <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>service neutron-openvswitch-agent restart</userinput>
 <prompt>#</prompt> <userinput>chkconfig neutron-openvswitch-agent on</userinput></screen>
+                            <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl restart openstack-neutron-openvswitch-agent</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-neutron-openvswitch-agent</userinput></screen>
                         </para>
                     </listitem>
                     <listitem os="centos;rhel;fedora">
