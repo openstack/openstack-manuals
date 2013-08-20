@@ -14,14 +14,12 @@
         variety of options.</para>
     <para>Compute is configured with the following default scheduler
         options:</para>
-    <programlisting>
-scheduler_driver=nova.scheduler.multi.MultiScheduler
+    <programlisting language="bash">scheduler_driver=nova.scheduler.multi.MultiScheduler
 compute_scheduler_driver=nova.scheduler.filter_scheduler.FilterScheduler
 scheduler_available_filters=nova.scheduler.filters.all_filters
 scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
 least_cost_functions=nova.scheduler.least_cost.compute_fill_first_cost_fn
-compute_fill_first_cost_fn_weight=-1.0
-</programlisting>
+compute_fill_first_cost_fn_weight=-1.0</programlisting>
     <para>Compute is configured by default to use the Multi
         Scheduler, which allows the admin to specify different
         scheduling behavior for compute requests versus volume
@@ -88,28 +86,22 @@ compute_fill_first_cost_fn_weight=-1.0
             that will be used by the scheduler. The default setting
             specifies all of the filter that are included with the
             Compute service:
-            <programlisting>
-scheduler_available_filters=nova.scheduler.filters.all_filters
-    </programlisting>
+            <programlisting>scheduler_available_filters=nova.scheduler.filters.all_filters</programlisting>
             This configuration option can be specified multiple times.
             For example, if you implemented your own custom filter in
             Python called <literal>myfilter.MyFilter</literal> and you
             wanted to use both the built-in filters and your custom
             filter, your <filename>nova.conf</filename> file would
             contain:
-            <programlisting>
-scheduler_available_filters=nova.scheduler.filters.all_filters
-scheduler_available_filters=myfilter.MyFilter
-    </programlisting>
+            <programlisting>scheduler_available_filters=nova.scheduler.filters.all_filters
+scheduler_available_filters=myfilter.MyFilter</programlisting>
         </para>
         <para>The <literal>scheduler_default_filters</literal>
             configuration option in <filename>nova.conf</filename>
             defines the list of filters that will be applied by the
                 <systemitem class="service">nova-scheduler</systemitem> service. As
             mentioned above, the default filters are:
-            <programlisting>
-scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
-     </programlisting>
+            <programlisting>scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter</programlisting>
         </para>
         <para>The available filters are described below.</para>
 
@@ -189,16 +181,12 @@ scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
                 Configuration option in
                 <filename>nova.conf</filename>. The default setting
                 is:
-                <programlisting>
-      cpu_allocation_ratio=16.0
-      </programlisting>
+                <programlisting>cpu_allocation_ratio=16.0</programlisting>
                 With this setting, if there are 8 vCPUs on a node, the
                 scheduler will allow instances up to 128 vCPU to be
                 run on that node.</para>
             <para>To disallow vCPU overcommitment set:</para>
-            <programlisting>
-         cpu_allocation_ratio=1.0
-         </programlisting>
+            <programlisting>cpu_allocation_ratio=1.0</programlisting>
         </section>
 
         <section xml:id="differenthostfilter">
@@ -217,8 +205,7 @@ scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
                 With the API, use the
                     <literal>os:scheduler_hints</literal> key. For
                 example:
-                <programlisting language="json">
-    {
+                <programlisting language="json">    {
     'server': {
         'name': 'server-1',
         'imageRef': 'cedef40a-ed67-4d10-800e-17455edce175',
@@ -228,8 +215,7 @@ scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
         'different_host': ['a0cf03a5-d921-4877-bb5c-86d26cf818e1',
                            '8c19174f-4220-44f0-824a-cd1eeef10287'],
     }
-}
-</programlisting>
+}</programlisting>
             </para>
         </section>
         <section xml:id="diskfilter">
@@ -278,7 +264,7 @@ scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
                 require a host that runs an ARM-based processor and
                 QEMU as the hypervisor. An image can be decorated with
                 these properties using
-                <programlisting>glance image-update img-uuid --property architecture=arm --property hypervisor_type=qemu</programlisting>
+                <screen><prompt>$</prompt> <userinput>glance image-update img-uuid --property architecture=arm --property hypervisor_type=qemu</userinput></screen>
             </para>
             <para>The image properties that the filter checks for
                 are:</para>
@@ -320,10 +306,8 @@ scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
                 using the <literal>isolated_hosts</literal> and
                     <literal>isolated_images</literal> configuration
                 options. For example:
-                <programlisting>
-isolated_hosts=server1,server2
-isolated_images=342b492c-128f-4a42-8d3a-c5088cf27d13,ebd267a6-ca86-4d6c-9a0e-bd132d6b7d09
-            </programlisting>
+                <programlisting>isolated_hosts=server1,server2
+isolated_images=342b492c-128f-4a42-8d3a-c5088cf27d13,ebd267a6-ca86-4d6c-9a0e-bd132d6b7d09</programlisting>
             </para>
         </section>
 
@@ -382,8 +366,7 @@ isolated_images=342b492c-128f-4a42-8d3a-c5088cf27d13,ebd267a6-ca86-4d6c-9a0e-bd1
 1 --hint query='[">=","$free_ram_mb",1024]' server1</userinput></screen>
                 With the API, use the
                     <literal>os:scheduler_hints</literal> key:
-                <programlisting>
-    {
+                <programlisting language="json">    {
     'server': {
         'name': 'server-1',
         'imageRef': 'cedef40a-ed67-4d10-800e-17455edce175',
@@ -392,8 +375,7 @@ isolated_images=342b492c-128f-4a42-8d3a-c5088cf27d13,ebd267a6-ca86-4d6c-9a0e-bd1
     'os:scheduler_hints': {
         'query': '[">=","$free_ram_mb",1024]',
     }
-}
-</programlisting></para>
+}</programlisting></para>
         </section>
 
         <section xml:id="ramfilter">
@@ -409,9 +391,7 @@ isolated_images=342b492c-128f-4a42-8d3a-c5088cf27d13,ebd267a6-ca86-4d6c-9a0e-bd1
                 configuration option in
                 <filename>nova.conf</filename>. The default setting
                 is:
-                <programlisting>
-ram_allocation_ratio=1.5
-</programlisting>
+                <programlisting>ram_allocation_ratio=1.5</programlisting>
                 With this setting, if there is 1GB of free RAM, the
                 scheduler will allow instances up to size 1.5GB to be
                 run on that instance.</para>
@@ -446,8 +426,7 @@ ram_allocation_ratio=1.5
 <prompt>$</prompt> <userinput>nova boot --image cedef40a-ed67-4d10-800e-17455edce175 --flavor 1 --hint same_host=a0cf03a5-d921-4877-bb5c-86d26cf818e1 --hint same_host=8c19174f-4220-44f0-824a-cd1eeef10287 server-1</userinput></screen>
                 With the API, use the
                     <literal>os:scheduler_hints</literal> key:
-                <programlisting>
-    {
+                <programlisting language="json">    {
     'server': {
         'name': 'server-1',
         'imageRef': 'cedef40a-ed67-4d10-800e-17455edce175',
@@ -457,8 +436,7 @@ ram_allocation_ratio=1.5
         'same_host': ['a0cf03a5-d921-4877-bb5c-86d26cf818e1',
                       '8c19174f-4220-44f0-824a-cd1eeef10287'],
     }
-}
-</programlisting>
+}</programlisting>
             </para>
         </section>
 
@@ -493,8 +471,7 @@ ram_allocation_ratio=1.5
 </screen>
             <para>With the API, use the
                     <literal>os:scheduler_hints</literal> key:</para>
-            <programlisting language="json">
-    {
+            <programlisting language="json">    {
     'server': {
         'name': 'server-1',
         'imageRef': 'cedef40a-ed67-4d10-800e-17455edce175',
@@ -504,8 +481,7 @@ ram_allocation_ratio=1.5
         'build_near_host_ip': '192.168.1.1',
         'cidr': '24'
     }
-}
-</programlisting>
+}</programlisting>
         </section>
 
     </section>
@@ -535,18 +511,14 @@ ram_allocation_ratio=1.5
                 <literal>_weight</literal> string appended. Here is an
             example of specifying a cost function and its
             corresponding weight:</para>
-        <programlisting>
-least_cost_functions=nova.scheduler.least_cost.compute_fill_first_cost_fn
-compute_fill_first_cost_fn_weight=-1.0
-            </programlisting>
+        <programlisting>least_cost_functions=nova.scheduler.least_cost.compute_fill_first_cost_fn
+compute_fill_first_cost_fn_weight=-1.0</programlisting>
         <para>Multiple cost functions can be specified in the
                 <literal>least_cost_functions</literal> configuration
             option, separated by commas. For example:</para>
-        <programlisting>
-least_cost_functions=nova.scheduler.least_cost.compute_fill_first_cost_fn,nova.scheduler.least_cost.noop_cost_fn
+        <programlisting>least_cost_functions=nova.scheduler.least_cost.compute_fill_first_cost_fn,nova.scheduler.least_cost.noop_cost_fn
 compute_fill_first_cost_fn_weight=-1.0
-noop_cost_fn_weight=1.0
-</programlisting>
+noop_cost_fn_weight=1.0</programlisting>
         <para>If there are multiple cost functions, then the weighted
             cost scores are added together. The scheduler selects the
             host that has the minimum weighted cost.</para>
@@ -557,17 +529,13 @@ noop_cost_fn_weight=1.0
                 memory (RAM) available on the node. Because the
                 scheduler minimizes cost, if this cost function is
                 used as a weight of +1, by doing:
-                <programlisting>
-compute_fill_first_cost_fn_weight=1.0
-</programlisting>
+                <programlisting>compute_fill_first_cost_fn_weight=1.0</programlisting>
                 then the scheduler will tend to "fill up" hosts,
                 scheduling virtual machine instances to the same host
                 until there is no longer sufficient RAM to service the
                 request, and then moving to the next node</para>
             <para>If the user specifies a weight of -1 by doing:
-                <programlisting>
-compute_fill_first_cost_fn_weight=-1.0
-</programlisting>
+                <programlisting>compute_fill_first_cost_fn_weight=-1.0</programlisting>
                 then the scheduler will favor hosts that have the most
                 amount of available RAM, leading to a "spread-first"
                 behavior.</para>

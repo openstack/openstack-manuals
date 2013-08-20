@@ -64,9 +64,7 @@
         and RABBIT PASSWORD represents the password to your message
         queue installation.</para>
 
-      <programlisting>
-      <xi:include parse="text" href="../common/samples/nova.conf"/>
-      </programlisting>
+      <programlisting><xi:include parse="text" href="../common/samples/nova.conf"/></programlisting>
 
       <para>Create a <literal>nova</literal> group, so you can set
         permissions on the configuration file:</para>
@@ -109,8 +107,7 @@
         Download RC File.</para>
 
       <para>
-        <programlisting language="bash">
-#!/bin/bash
+        <programlisting language="bash">#!/bin/bash
 # *NOTE*: Using the 2.0 *auth api* does not mean that compute api is 2.0.  We
 # will use the 1.1 *compute api*
 export OS_AUTH_URL=http://50.56.12.206:5000/v2.0
@@ -120,15 +117,13 @@ export OS_PASSWORD=$OS_PASSWORD_INPUT
 export OS_AUTH_USER=norm
 export OS_AUTH_KEY=$OS_PASSWORD_INPUT
 export OS_AUTH_TENANT=27755fd279ce43f9b17ad2d65d45b75c
-export OS_AUTH_STRATEGY=keystone
-</programlisting>
+export OS_AUTH_STRATEGY=keystone</programlisting>
       </para>
       <para>You also may want to enable EC2 access for the euca2ools.
         Here is an example <filename>ec2rc</filename> file for
         enabling EC2 access with the required credentials.</para>
       <para>
-        <programlisting language="bash">
-export NOVA_KEY_DIR=/root/creds/
+        <programlisting language="bash">export NOVA_KEY_DIR=/root/creds/
 export EC2_ACCESS_KEY="EC2KEY:USER"
 export EC2_SECRET_KEY="SECRET_KEY"
 export EC2_URL="http://$NOVA-API-IP:8773/services/Cloud"
@@ -143,8 +138,7 @@ alias ec2-upload-bundle="ec2-upload-bundle -a ${EC2_ACCESS_KEY} -s ${EC2_SECRET_
       </para>
       <para>Lastly, here is an example openrc file that works with
         nova client and ec2 tools.</para>
-      <programlisting language="bash">
-export OS_PASSWORD=${ADMIN_PASSWORD:-secrete}
+      <programlisting language="bash">export OS_PASSWORD=${ADMIN_PASSWORD:-secrete}
 export OS_AUTH_URL=${OS_AUTH_URL:-http://$SERVICE_HOST:5000/v2.0}
 export NOVA_VERSION=${NOVA_VERSION:-1.1}
 export OS_REGION_NAME=${OS_REGION_NAME:-RegionOne}
@@ -282,8 +276,7 @@ source ~/.bashrc</userinput></screen>
         edit <filename>/etc/network/interfaces</filename> with the
         following template, updated with your IP information.</para>
 
-      <programlisting language="bash">
-# The loopback network interface
+      <programlisting language="bash"># The loopback network interface
 auto lo
     iface lo inet loopback
 
@@ -300,8 +293,7 @@ iface br100 inet static
     broadcast <replaceable>xxx.xxx.xxx.xxx</replaceable>
     gateway <replaceable>xxx.xxx.xxx.xxx</replaceable>
     # dns-* options are implemented by the resolvconf package, if installed
-    dns-nameservers <replaceable>xxx.xxx.xxx.xxx</replaceable>
-</programlisting>
+    dns-nameservers <replaceable>xxx.xxx.xxx.xxx</replaceable></programlisting>
 
       <para>Restart networking:</para>
 
@@ -464,9 +456,7 @@ $ <userinput>sudo service nova-compute restart</userinput></screen>
       <para>This example <filename>nova.conf</filename> file is from
         an internal Rackspace test system used for
         demonstrations.</para>
-      <programlisting>
-      <xi:include parse="text" href="../common/samples/nova.conf"/>
-</programlisting>
+      <programlisting language="bash"><xi:include parse="text" href="../common/samples/nova.conf"/></programlisting>
       <figure xml:id="Nova_conf_KVM_Flat">
         <title>KVM, Flat, MySQL, and Glance, OpenStack or EC2
           API</title>
@@ -488,8 +478,7 @@ $ <userinput>sudo service nova-compute restart</userinput></screen>
       <para>This example <filename>nova.conf</filename> file is from
         an internal Rackspace test system.</para>
 
-      <programlisting>
-verbose
+      <programlisting language="bash">verbose
 nodaemon
 sql_connection=mysql://root:&lt;password&gt;@127.0.0.1/nova
 network_manager=nova.network.manager.FlatManager
@@ -509,8 +498,7 @@ ipv6_backend=account_identifier
 ca_path=./nova/CA
 
 # Add the following to your conf file if you're running on Ubuntu Maverick
-xenapi_remap_vbd_dev=true
-            </programlisting>
+xenapi_remap_vbd_dev=true</programlisting>
 
       <figure xml:id="Nova_conf_XEN_Flat">
         <title>KVM, Flat, MySQL, and Glance, OpenStack or EC2
@@ -753,16 +741,14 @@ xenapi_remap_vbd_dev=true
         filter is removed from the pipeline, limiting will be
         disabled. There should also be a definition for the rate limit
         filter. The lines will appear as follows:</para>
-      <programlisting language="bash">
-[pipeline:openstack_compute_api_v2]
+      <programlisting language="bash">[pipeline:openstack_compute_api_v2]
 pipeline = faultwrap authtoken keystonecontext ratelimit osapi_compute_app_v2
 
 [pipeline:openstack_volume_api_v1]
 pipeline = faultwrap authtoken keystonecontext ratelimit osapi_volume_app_v1
 
 [filter:ratelimit]
-paste.filter_factory = nova.api.openstack.compute.limits:RateLimitingMiddleware.factory
-            </programlisting>
+paste.filter_factory = nova.api.openstack.compute.limits:RateLimitingMiddleware.factory</programlisting>
 
       <para>To modify the limits, add a '<literal>limits</literal>'
         specification to the <literal>[filter:ratelimit]</literal>
@@ -770,11 +756,9 @@ paste.filter_factory = nova.api.openstack.compute.limits:RateLimitingMiddleware.
         HTTP method, friendly URI, regex, limit, and interval. The
         following example specifies the default rate limiting
         values:</para>
-      <programlisting language="bash">
-[filter:ratelimit]
+      <programlisting language="bash">[filter:ratelimit]
 paste.filter_factory = nova.api.openstack.compute.limits:RateLimitingMiddleware.factory
-limits =(POST, "*", .*, 10, MINUTE);(POST, "*/servers", ^/servers, 50, DAY);(PUT, "*", .*, 10, MINUTE);(GET, "*changes-since*", .*changes-since.*, 3, MINUTE);(DELETE, "*", .*, 100, MINUTE)
-            </programlisting>
+limits =(POST, "*", .*, 10, MINUTE);(POST, "*/servers", ^/servers, 50, DAY);(PUT, "*", .*, 10, MINUTE);(GET, "*changes-since*", .*changes-since.*, 3, MINUTE);(DELETE, "*", .*, 100, MINUTE)</programlisting>
     </simplesect>
   </section>
   <!--status: good, right place-->

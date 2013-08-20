@@ -71,7 +71,7 @@
         <para>The compute API class must be changed in the API cell so that requests can be proxied
             via nova-cells down to the correct cell properly. Add the following to
                 <filename>nova.conf</filename> in the API
-            cell:<programlisting>[DEFAULT]
+            cell:<programlisting language="bash">[DEFAULT]
 compute_api_class=nova.compute.cells_api.ComputeCellsAPI
 ...
 
@@ -83,7 +83,7 @@ name=api</programlisting></para>
         <title>Configuring the child cells</title>
         <para>Add the following to <filename>nova.conf</filename> in the child cells, replacing
                 <replaceable>cell1</replaceable> with the name of each
-            cell:<programlisting>[DEFAULT]
+            cell:<programlisting language="bash">[DEFAULT]
 # Disable quota checking in child cells.  Let API cell do it exclusively.
 quota_driver=nova.quota.NoopQuotaDriver
 
@@ -120,14 +120,14 @@ name=<replaceable>cell1</replaceable></programlisting></para>
         <para>As an example, assume we have an API cell named <literal>api</literal> and a child
             cell named <literal>cell1</literal>. Within the api cell, we have the following RabbitMQ
             server
-            info:<programlisting>rabbit_host=10.0.0.10
+            info:<programlisting language="bash">rabbit_host=10.0.0.10
 rabbit_port=5672
 rabbit_username=api_user
 rabbit_password=api_passwd
 rabbit_virtual_host=api_vhost</programlisting></para>
         <para>And in the child cell named <literal>cell1</literal> we have the following RabbitMQ
             server
-            info:<programlisting>rabbit_host=10.0.1.10
+            info:<programlisting language="bash">rabbit_host=10.0.1.10
 rabbit_port=5673
 rabbit_username=cell1_user
 rabbit_password=cell1_passwd
