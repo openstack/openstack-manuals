@@ -8,10 +8,22 @@
          xmlns:ns="http://docbook.org/ns/docbook">
     <title>Configuring Database Connections</title>
 
-    <para>You can configure OpenStack Compute to use any SQLAlchemy-compatible
-        database. The database name is <literal>nova</literal> and entries to it are mostly written
-        by the <systemitem class="service">nova-scheduler</systemitem> service, although all the services need to be able
-        to update entries in the database. Use these settings to configure the
-        connection string for the nova database.</para>
+    <para>You can configure OpenStack Compute to use any
+        SQLAlchemy-compatible database. The database name is
+        <literal>nova</literal>. If you are using <systemitem
+        class="service">nova-conductor</systemitem>, it will be the
+        only service writing to the database, the other Compute
+        services will access the database through <systemitem
+        class="service">nova-conductor</systemitem>.
+    </para>
+    <para>If <systemitem class="service">nova-conductor</systemitem>
+        is not used, entries to the database are mostly written by the
+        <systemitem class="service">nova-scheduler</systemitem>
+        service, although all the services need to be able to update
+        entries in the database.
+    </para>
+    <para>In either case, use these settings to configure the connection
+        string for the nova database.</para>
+
         <xi:include href="../common/tables/nova-db.xml"/>
   </section>
