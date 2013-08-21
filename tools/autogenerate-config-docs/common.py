@@ -210,7 +210,7 @@ def write_flags(filepath, flags, name_only=True, verbose=0):
                 f.write("|")
                 f.write("||".join([string.strip(name),
                                    string.strip(str(opt.default)),
-                                   string.strip(opt.help.replace("\n", " ")])))
+                                   string.strip(opt.help.replace("\n", " "))]))
                 f.write("\n|-\n")
             else:
                 f.write(name + "\n")
@@ -240,7 +240,7 @@ def write_docbook(directory, flags, groups, package_name, verbose=0):
            <thead>\n\
               <tr>\n\
                   <td>Configuration option=Default value</td>\n\
-                  <td>(Type) Description</td>\n\
+                  <td>Description</td>\n\
               </tr>\n\
           </thead>\n\
           <tbody>')
