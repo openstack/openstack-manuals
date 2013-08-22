@@ -13,12 +13,13 @@
                     <para>
                         <itemizedlist>
                             <listitem>
-                                <para>Create a file called <emphasis role="bold"
-                                        >~/openrc</emphasis>. This file contains
-                                    the OpenStack admin credentials that are
-                                    used when interacting with the OpenStack
-                                    environment on the command line.
-                                    <programlisting>export OS_TENANT_NAME=admin
+                                <para>Create a file called
+                                  <filename>~/openrc</filename>. This
+                                  file contains the OpenStack admin
+                                  credentials that are used when
+                                  interacting with the OpenStack
+                                  environment on the command line.
+                                  <programlisting language="bash">export OS_TENANT_NAME=admin
 export OS_USERNAME=admin
 export OS_PASSWORD=password
 export OS_AUTH_URL="http://10.10.10.10:5000/v2.0/"
@@ -30,18 +31,18 @@ export SERVICE_TOKEN=password</programlisting></para>
                     <itemizedlist>
                         <listitem>
                             <para>Source the credentials into your environment:
-                                <screen><userinput>source ~/openrc</userinput></screen></para></listitem>
+                                <screen><prompt>$</prompt> <userinput>source ~/openrc</userinput></screen></para></listitem>
                         <listitem>
                             <para>
                                 Configure the Bash shell to load these credentials upon each login:
-                                <screen><userinput>echo "source ~/openrc" >> ~/.bashrc</userinput></screen>
+                                <screen><prompt>$</prompt> <userinput>echo "source ~/openrc" >> ~/.bashrc</userinput></screen>
                             </para>
                         </listitem>
                     </itemizedlist>
                 </listitem>
                 <listitem>
                     <para>The following bash script creates an internal network for the "demo" project.
-                        <programlisting>#!/bin/bash
+                        <programlisting language="bash">#!/bin/bash
 TENANT_NAME="demo"
 TENANT_NETWORK_NAME="demo-net"
 TENANT_SUBNET_NAME="${TENANT_NETWORK_NAME}-subnet"
@@ -50,10 +51,18 @@ FIXED_RANGE="10.5.5.0/24"
 NETWORK_GATEWAY="10.5.5.1"
 TENANT_ID=$(keystone tenant-list | grep " $TENANT_NAME " | awk '{print $2}')
 
-TENANT_NET_ID=$(neutron net-create --tenant_id $TENANT_ID $TENANT_NETWORK_NAME --provider:network_type gre  --provider:segmentation_id 1 | grep " id " | awk '{print $4}')
-TENANT_SUBNET_ID=$(neutron subnet-create --tenant_id $TENANT_ID --ip_version 4 --name $TENANT_SUBNET_NAME $TENANT_NET_ID $FIXED_RANGE --gateway $NETWORK_GATEWAY --dns_nameservers list=true 8.8.8.8 | grep " id " | awk '{print $4}')
-ROUTER_ID=$(neutron router-create --tenant_id $TENANT_ID $TENANT_ROUTER_NAME | grep " id " | awk '{print $4}')
-neutron router-interface-add $ROUTER_ID $TENANT_SUBNET_ID</programlisting></para></listitem>
+TENANT_NET_ID=$(neutron net-create --tenant_id $TENANT_ID \
+  $TENANT_NETWORK_NAME --provider:network_type gre \
+  --provider:segmentation_id 1 | grep " id " | awk '{print $4}')
+TENANT_SUBNET_ID=$(neutron subnet-create --tenant_id $TENANT_ID \
+  --ip_version 4 --name $TENANT_SUBNET_NAME $TENANT_NET_ID $FIXED_RANGE \
+  --gateway $NETWORK_GATEWAY --dns_nameservers list=true 8.8.8.8 | \
+  grep " id " | awk '{print $4}')
+ROUTER_ID=$(neutron router-create --tenant_id $TENANT_ID $TENANT_ROUTER_NAME | \
+  grep " id " | awk '{print $4}')
+neutron router-interface-add $ROUTER_ID $TENANT_SUBNET_ID</programlisting>
+                    </para>
+                </listitem>
             </orderedlist>
         </para>
     </section>
@@ -68,17 +77,19 @@ neutron router-interface-add $ROUTER_ID $TENANT_SUBNET_ID</programlisting></para
         <itemizedlist>
             <listitem>
                 <para>Create an external network:
-                    <screen><userinput>neutron net-create public --router:external=True</userinput></screen>
+                    <screen><prompt>$</prompt> <userinput>neutron net-create public --router:external=True</userinput></screen>
                 </para>
             </listitem>
             <listitem>
                 <para>Create a subnet for the external network:
-                    <screen><userinput>neutron subnet-create --ip_version 4 --gateway 10.0.0.1 public 10.0.0.0/24 --allocation-pool start=10.0.0.200,end=10.0.0.250 --disable-dhcp --name public-subnet</userinput></screen>
+                    <screen><prompt>$</prompt> <userinput>neutron subnet-create --ip_version 4 --gateway 10.0.0.1 public 10.0.0.0/24 \
+  --allocation-pool start=10.0.0.200,end=10.0.0.250 --disable-dhcp \
+  --name public-subnet</userinput></screen>
                 </para>
             </listitem>
             <listitem>
                 <para>Set the gateway of the demo router to the public network:
-                    <screen><userinput>neutron router-gateway-set demo-router public</userinput></screen>
+                    <screen><prompt>$</prompt> <userinput>neutron router-gateway-set demo-router public</userinput></screen>
                 </para>
             </listitem>
         </itemizedlist>

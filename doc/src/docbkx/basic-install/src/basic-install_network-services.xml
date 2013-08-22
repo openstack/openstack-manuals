@@ -46,8 +46,8 @@ openvswitch-switch</userinput></screen>
                 <para>Configure the bridges:
                     <itemizedlist>
                         <listitem os="ubuntu">
-                            <para>Change the <literal>eth1</literal> entry in <emphasis role="bold"
-                                        >/etc/network/interfaces</emphasis> to look like:
+                            <para>Change the <literal>eth1</literal> entry in <filename>
+                            /etc/network/interfaces</filename> to look like:
                                     <programlisting>auto eth1
 iface eth1 inet manual
     up ip address add 0/0 dev $IFACE
@@ -56,7 +56,7 @@ iface eth1 inet manual
                                 </para>
                         </listitem>
                         <listitem os="ubuntu">
-                            <para>Add <literal>br-ex</literal> to <emphasis role="bold">/etc/network/interfaces</emphasis>:
+                            <para>Add <literal>br-ex</literal> to <filename>/etc/network/interfaces</filename>:
                                 <programlisting>auto br-ex
 iface br-ex inet static
     address 10.0.0.9
@@ -64,7 +64,7 @@ iface br-ex inet static
     gateway 10.0.0.1</programlisting></para>
                         </listitem>
                         <listitem os="centos;rhel;fedora">
-                            <para>Edit <emphasis role="bold">/etc/sysconf/network-scripts/ifcfg-eth1</emphasis>:
+                            <para>Edit <filename>/etc/sysconf/network-scripts/ifcfg-eth1</filename>:
                                 <programlisting># External
 DEVICE=eth1
 TYPE=Ethernet
@@ -75,7 +75,7 @@ ONBOOT=yes</programlisting>
                             </para>
                         </listitem>
                         <listitem os="centos;rhel;fedora">
-                            <para>Edit <emphasis role="bold">/etc/sysconf/network-scripts/ifcfg-br-ex</emphasis> file:
+                            <para>Edit <filename>/etc/sysconf/network-scripts/ifcfg-br-ex</filename>:
                                 <programlisting>#Public Bridge
 DEVICE=br-ex
 TYPE=Bridge
@@ -120,7 +120,7 @@ ONBOOT=yes</programlisting>
             <para>Configure the OpenStack Networking services:</para>
             <itemizedlist>
                 <listitem>
-                    <para>Edit <emphasis role="bold">/etc/neutron/neutron.conf</emphasis>:
+                    <para>Edit <filename>/etc/neutron/neutron.conf</filename>:
                         <programlisting os="ubuntu">[DEFAULT]
 verbose = True
 rabbit_password = password
@@ -154,7 +154,7 @@ admin_password = password</programlisting>
                     </para>
                 </listitem>
                 <listitem>
-                    <para>Edit <emphasis role="bold">/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</emphasis>:
+                    <para>Edit <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>:
                         <programlisting>[database]
 sql_connection = mysql://neutron:password@10.10.10.10/neutron
 [ovs]
@@ -171,13 +171,13 @@ firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewal
                     </note></para>
                 </listitem>
                 <listitem>
-                    <para>Edit <emphasis role="bold">/etc/neutron/dhcp_agent.ini</emphasis>:
+                    <para>Edit <filename>/etc/neutron/dhcp_agent.ini</filename>:
                         <programlisting>[DEFAULT]
 enable_isolated_metadata = True
 enable_metadata_network = True</programlisting></para>
                 </listitem>
                 <listitem>
-                    <para>Edit <emphasis role="bold">/etc/neutron/metadata_agent.ini</emphasis>:
+                    <para>Edit <filename>/etc/neutron/metadata_agent.ini</filename>:
                     <programlisting>[DEFAULT]
 auth_url = http://10.10.10.10:35357/v2.0
 auth_region = RegionOne
@@ -214,8 +214,9 @@ metadata_proxy_shared_secret = password</programlisting></para>
             </para>
     <note>
         <para>
-            Check the <literal>/var/log/neutron/*.log</literal> files for errors that would prevent
-            the Networking Service from successfully starting.
+            Check the <filename>/var/log/neutron/*.log</filename>
+            files for errors that would prevent the Networking Service
+            from successfully starting.
         </para>
     </note>
 
