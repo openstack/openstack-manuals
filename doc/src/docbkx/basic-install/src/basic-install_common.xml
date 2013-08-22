@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="basic-install_common">
+  <?dbhtml stop-chunking?>
+  <title>Common setup for all machines</title>
+
+  <para>
+    The information in the following sections is the same for all
+    machines and needs to be done at the appropriate time of the setup.
+  </para>
+
+  <section xml:id="basic-install_common_repo">
+    <title>Repository setup</title>
+    <para>
+      Distributions releases and OpenStack releases are independend of
+      each other and thus you need to add some extra steps to access
+      the latest OpenStack release after installation of the machine before
+      installation of any OpenStack packages.
+    </para>
+    <procedure os="ubuntu">
+      <title>To use the Ubuntu Cloud Archive for Grizzly</title>
+      <step>
+        <para>Install the keyring:
+        <screen><prompt>#</prompt> <userinput>apt-get install ubuntu-cloud-keyring</userinput></screen>
+        </para>
+      </step>
+      <step>
+        <para>
+          Edit <filename>/etc/apt/sources.list.d/cloud-archive.list</filename>:
+          <programlisting>deb http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/grizzly main</programlisting>
+        </para>
+      </step>
+      <step>
+        <para>
+          Upgrade the system (and reboot if you need):
+          <screen><prompt>#</prompt> <userinput>apt-get update &amp;&amp; apt-get dist-upgrade</userinput></screen>
+        </para>
+      </step>
+    </procedure>
+
+    <para os="rhel;centos;fedora">Use the Fedora repositories for Grizzly:
+    <screen><prompt>#</prompt> <userinput>wget http://repos.fedorapeople.org/repos/openstack/openstack-grizzly/fedora-openstack-grizzly.repo</userinput>
+<prompt>#</prompt> <userinput>mv fedora-openstack-grizzly.repo /etc/yum.repos.d/</userinput></screen>
+    </para>
+    <note os="rhel;centos;fedora">
+      <para>For CentOS, use
+        <uri>http://repos.fedorapeople.org/repos/openstack/openstack-grizzly/epel-openstack-grizzly.repo</uri>.
+      </para>
+    </note>
+    <para os="opensuse">Use the Open Build Service repositories for Grizzly:
+      <screen><prompt>#</prompt> <userinput>zypper ar -f obs://Cloud:OpenStack:Grizzly/openSUSE_12.3 Grizzly</userinput></screen>
+    </para>
+  </section>
+</section>
