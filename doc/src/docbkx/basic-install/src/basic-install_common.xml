@@ -52,5 +52,27 @@
     <para os="opensuse">Use the Open Build Service repositories for Grizzly:
       <screen><prompt>#</prompt> <userinput>zypper ar -f obs://Cloud:OpenStack:Grizzly/openSUSE_12.3 Grizzly</userinput></screen>
     </para>
+
+    <procedure os="debian">
+      <title>To use the gplhost repository for Debian</title>
+      <para os="debian">Since not all OpenStack packages have been
+        introduced into Debian official repositories, we use for Debian a
+        repository which supports the Grizzly release.
+      </para>
+      <step>
+        <para>Edit <filename>/etc/apt/sources.list.d/grizzly.list</filename>:
+        <programlisting>deb http://archive.gplhost.com/debian grizzly main
+deb http://archive.gplhost.com/debian grizzly-backports main
+apt-get update
+apt-get install gplhost-archive-keyring</programlisting>
+        </para>
+      </step>
+      <step>
+        <para>
+          Upgrade the system (and reboot if you need):
+          <screen><prompt>#</prompt> <userinput>apt-get update &amp;&amp; apt-get upgrade</userinput></screen>
+        </para>
+      </step>
+    </procedure>
   </section>
 </section>
