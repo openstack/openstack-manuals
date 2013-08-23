@@ -6,65 +6,68 @@
     <title>OpenStack Networking (Network Controller)</title>
     <section xml:id="network-ovs">
     <title>Open vSwitch</title>
-    <para>
-        <orderedlist>
-            <listitem>
-                <para>Install the packages:
+        <procedure>
+            <title>To configure Open vSwitch</title><step>
+                <para>Install the packages:</para>
                     <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install neutron-plugin-openvswitch-agent \
 neutron-dhcp-agent neutron-l3-agent</userinput></screen>
                     <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-neutron openstack-neutron-openvswitch\
 openvswitch-switch</userinput></screen>
                     <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install openstack-neutron openstack-neutron-openvswitch-agent \
 openvswitch-switch</userinput></screen>
-                </para>
-                <para os="centos;rhel;fedora">The Open vSwitch kernel module in Fedora
-                        has been compiled without tunnel support. If
-                        gre tunnels and network namespaces are
-                        desired, then this package must be recompiled
-                        from source. Directions can be found on the
-                        Open vSwitch site. If the kernel module is
-                        recompiled then the existing one must be
-                        removed and deleted.</para>
-            </listitem>
-            <listitem>
-                <para>Start Open vSwitch:
+                <para os="centos;rhel;fedora">In Fedora, the Open
+                    vSwitch kernel module is compiled without tunnel
+                    support. If you need gre tunnels and network
+                    namespaces, you must recompile this package from
+                    source. For information, see the Open vSwitch
+                    site. If you recompile the kernel module, you must
+                    remove and delete the existing one.</para>
+            </step>
+            <step>
+                <para>Start Open vSwitch:</para>
                     <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openvswitch-switch on</userinput></screen>
                     <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput></screen>
                     <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl start openvswitch-switch.service</userinput>
 <prompt>#</prompt> <userinput>systemctl enable openvswitch-switch.service</userinput></screen>
-                </para>
-            </listitem>
-            <listitem>
-                <para>Create an internal and external network bridge. The purposes of these bridges are described in the Introduction of this guide.
-                    <screen><prompt>#</prompt> <userinput>ovs-vsctl add-br br-ex</userinput>
+            </step>
+            <step>
+                <para>Create an internal and external network bridge.
+                    </para><note><para>The introduction in this guide describes the
+                    purposes of these bridges.</para></note>
+                <screen><prompt>#</prompt> <userinput>ovs-vsctl add-br br-ex</userinput>
 <prompt>#</prompt> <userinput>ovs-vsctl add-port br-ex eth1</userinput>
-<prompt>#</prompt> <userinput>ovs-vsctl add-br br-int</userinput>
-</screen></para>
-            </listitem>
-            <listitem>
-                <para>Configure the bridges:
-                    <itemizedlist>
-                        <listitem os="ubuntu;debian">
-                            <para>Change the <literal>eth1</literal> entry in <filename>
-                            /etc/network/interfaces</filename> to look like:
+<prompt>#</prompt> <userinput>ovs-vsctl add-br br-int</userinput></screen>
+            </step>
+            <step>
+                <para> To configure the bridges, complete the
+                    following steps:</para>
+                    <substeps>
+                        <step os="ubuntu;debian">
+                            <para>Change the <literal>eth1</literal>
+                            entry in <filename>
+                                /etc/network/interfaces</filename>, as
+                            follows:</para>
                                     <programlisting>auto eth1
 iface eth1 inet manual
     up ip address add 0/0 dev $IFACE
     up ip link set $IFACE up
     down ip link set $IFACE down</programlisting>
-                                </para>
-                        </listitem>
-                        <listitem os="ubuntu;debian">
-                            <para>Add <literal>br-ex</literal> to <filename>/etc/network/interfaces</filename>:
+                        </step>
+                        <step os="ubuntu;debian">
+                            <para>Add <literal>br-ex</literal> to
+                                <filename>/etc/network/interfaces</filename>,
+                            as follows:</para>
                                 <programlisting>auto br-ex
 iface br-ex inet static
     address 10.0.0.9
     netmask 255.255.255.0
-    gateway 10.0.0.1</programlisting></para>
-                        </listitem>
-                        <listitem os="centos;rhel;fedora">
-                            <para>Edit <filename>/etc/sysconf/network-scripts/ifcfg-eth1</filename>:
+    gateway 10.0.0.1</programlisting>
+                        </step>
+                        <step os="centos;rhel;fedora">
+                            <para>Edit
+                                <filename>/etc/sysconf/network-scripts/ifcfg-eth1</filename>,
+                            as follows:</para>
                                 <programlisting># External
 DEVICE=eth1
 TYPE=Ethernet
@@ -72,10 +75,11 @@ BOOTPROTO=none
 NM_CONTROLLED=no
 BRIDGE=br-ex
 ONBOOT=yes</programlisting>
-                            </para>
-                        </listitem>
-                        <listitem os="centos;rhel;fedora">
-                            <para>Edit <filename>/etc/sysconf/network-scripts/ifcfg-br-ex</filename>:
+                        </step>
+                        <step os="centos;rhel;fedora">
+                            <para>Edit
+                                <filename>/etc/sysconf/network-scripts/ifcfg-br-ex</filename>,
+                            as follows:</para>
                                 <programlisting>#Public Bridge
 DEVICE=br-ex
 TYPE=Bridge
@@ -84,44 +88,42 @@ IPADDR=10.10.10.9
 NETMASK=255.255.255.0
 NM_CONTROLLED=no
 ONBOOT=yes</programlisting>
-
-                            </para>
-                        </listitem>
-                        <listitem>
-                            <para>Remove the IP address from <literal>eth1</literal> add it to
-                                        <literal>br-ex</literal>:
+                        </step>
+                        <step>
+                            <para>Remove the IP address from
+                                <literal>eth1</literal> add it to
+                                <literal>br-ex</literal>, as
+                            follows:</para>
                                     <screen><prompt>#</prompt> <userinput>ip addr del 10.0.0.9/24 dev eth1</userinput>
-<prompt>#</prompt> <userinput>ip addr add 10.0.0.9/24 dev br-ex</userinput></screen>
-                                </para>
-                        </listitem>
-                        <listitem os="ubuntu;debian">
-                            <para>Restart networking:
+<prompt>#</prompt> <userinput>ip addr add 10.0.0.9/24 dev br-ex</userinput></screen></step>
+                        <step os="ubuntu;debian">
+                            <para>Restart networking, as
+                            follows:</para>
                                 <screen><prompt>#</prompt> <userinput>service networking restart</userinput></screen>
-                            </para>
-                        </listitem>
-                    </itemizedlist>
-                </para>
-            </listitem>
-            <listitem>
-                            <para>Finally, enable a simple NAT service so that the Compute Node(s)
-                        can access the Internet through the Cloud Controller:
+                        </step>
+                    </substeps>
+            </step>
+            <step>
+                            <para>Enable a simple NAT service so that
+                    Compute nodes can access the Internet through the
+                    Cloud Controller:</para>
                         <screen><prompt>#</prompt> <userinput>iptables -A FORWARD -i eth0 -o br-ex -s 10.10.10.0/24 -m conntrack --ctstate NEW -j ACCEPT</userinput>
 <prompt>#</prompt> <userinput>iptables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT</userinput>
-<prompt>#</prompt> <userinput>iptables -A POSTROUTING -s 10.10.10.0/24 -t nat -j MASQUERADE</userinput></screen></para>
-                        <note><para>These rules will be lost on reboot. Make
-                        sure to save and restore them using your distribution
-                        tools.</para></note>
-            </listitem>
-        </orderedlist>
-    </para>
+<prompt>#</prompt> <userinput>iptables -A POSTROUTING -s 10.10.10.0/24 -t nat -j MASQUERADE</userinput></screen>
+                        <note><para>These rules are lost on reboot. To save or restore the rules, use an appropriate tool from your
+                        distribution to save and restore them.</para></note>
+            </step>
+        </procedure>
     </section>
     <section xml:id="network-neutron">
-        <title>OpenStack Networking</title>
-            <para>Configure the OpenStack Networking services:</para>
-            <itemizedlist>
-                <listitem>
-                    <para>Edit <filename>/etc/neutron/neutron.conf</filename>:
-                        <programlisting os="ubuntu" language="ini">[DEFAULT]
+        <title>OpenStack Networking</title>  
+        <procedure><title>To configure the OpenStack Networking services</title>
+                <step>
+                    <para>Edit
+                        <filename>/etc/neutron/neutron.conf</filename>,
+                    as follows:
+                    <programlisting os="ubuntu" language="ini">[DEFAULT]
+>>>>>>> c655878... Remove latinisms (e.g., etc., i.e.) and remove future tense
 verbose = True
 rabbit_password = password
 rabbit_host = 10.10.10.10
@@ -129,8 +131,7 @@ rabbit_host = 10.10.10.10
 auth_host = 10.10.10.10
 admin_tenant_name = service
 admin_user = neutron
-admin_password = password</programlisting>
-                        <programlisting os="centos;rhel;fedora" language="ini">[DEFAULT]
+admin_password = password</programlisting><programlisting os="centos;rhel;fedora" language="ini">[DEFAULT]
 verbose = True
 rpc_backend = cinder.openstack.common.rpc.impl_qpid
 sql_connection = mysql://cinder:password@localhost/cinder
@@ -140,8 +141,7 @@ qpid_password = quest
 auth_host = 10.10.10.10
 admin_tenant_name = service
 admin_user = neutron
-admin_password = password</programlisting>
-                        <programlisting os="opensuse" language="ini">[DEFAULT]
+admin_password = password</programlisting><programlisting os="opensuse" language="ini">[DEFAULT]
 verbose = True
 rabbit_password = password
 rabbit_host = 10.10.10.10
@@ -149,13 +149,12 @@ rabbit_host = 10.10.10.10
 auth_host = 10.10.10.10
 admin_tenant_name = service
 admin_user = neutron
-admin_password = password</programlisting>
-
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>Edit <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>:
-                        <programlisting language="ini">[database]
+admin_password = password </programlisting></para>
+                </step>
+                <step>
+                    <para>Edit
+                        <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>,
+                    as follows: <programlisting language="ini">[database]
 sql_connection = mysql://neutron:password@10.10.10.10/neutron
 [ovs]
 tenant_network_type = gre
@@ -165,20 +164,26 @@ local_ip = 10.10.10.9
 [securitygroup]
 firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver</programlisting>
                     <note xmlns:db="http://docbook.org/ns/docbook">
-                        <para>It's more handy to choose <emphasis role="bold">tunnel mode</emphasis>
-                            since you don't have to configure your
-                            physical switches for VLANs.</para>
+                        <para>Choose <emphasis role="bold">tunnel
+                                mode</emphasis> because you do not
+                            have to configure your physical switches
+                            for VLANs.</para>
                     </note></para>
-                </listitem>
-                <listitem>
-                    <para>Edit <filename>/etc/neutron/dhcp_agent.ini</filename>:
-                        <programlisting language="ini">[DEFAULT]
+                </step>
+                <step>
+                    <para>Edit
+                        <filename>/etc/neutron/dhcp_agent.ini</filename>,
+                    as follows:
+                    <programlisting language="ini">[DEFAULT]
 enable_isolated_metadata = True
 enable_metadata_network = True</programlisting></para>
-                </listitem>
-                <listitem>
-                    <para>Edit <filename>/etc/neutron/metadata_agent.ini</filename>:
+                </step>
+                <step>
+                    <para>Edit
+                        <filename>/etc/neutron/metadata_agent.ini</filename>,
+                    as follows:
                     <programlisting language="ini">[DEFAULT]
+>>>>>>> c655878... Remove latinisms (e.g., etc., i.e.) and remove future tense
 auth_url = http://10.10.10.10:35357/v2.0
 auth_region = RegionOne
 admin_tenant_name = service
@@ -186,10 +191,9 @@ admin_user = neutron
 admin_password = password
 nova_metadata_ip = 10.10.10.10
 metadata_proxy_shared_secret = password</programlisting></para>
-                </listitem>
-            </itemizedlist>
-
-            <para>Start the services:
+                </step>
+       
+            <step><para>Start the services, as follows:</para>
                 <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service neutron-plugin-openvswitch-agent start</userinput>
 <prompt>#</prompt> <userinput>service neutron-dhcp-agent restart</userinput>
 <prompt>#</prompt> <userinput>service neutron-metadata-agent restart</userinput>
@@ -210,15 +214,12 @@ metadata_proxy_shared_secret = password</programlisting></para>
 <prompt>#</prompt> <userinput>systemctl enable neutron-openvswitch-agent</userinput>
 <prompt>#</prompt> <userinput>systemctl enable neutron-dhcp-agent</userinput>
 <prompt>#</prompt> <userinput>systemctl enable neutron-l3-agent</userinput></screen>
-
-            </para>
     <note>
-        <para>
-            Check the <filename>/var/log/neutron/*.log</filename>
-            files for errors that would prevent the Networking Service
-            from successfully starting.
-        </para>
-    </note>
-
+        <para>To debug errors that prevent the Networking Service from
+                        starting, review the
+                            <filename>/var/log/neutron/*.log</filename>
+                        files.</para>
+    </note></step>
+        </procedure>
     </section>
 </section>
