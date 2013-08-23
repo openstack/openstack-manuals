@@ -198,7 +198,9 @@ scheduler_available_filters=myfilter.MyFilter</computeroutput></screen>
                 Using the <command>nova</command> command-line tool,
                 use the <literal>--hint</literal> flag. For
                 example:</para>
-            <screen><prompt>$</prompt> <userinput>nova boot --image cedef40a-ed67-4d10-800e-17455edce175 --flavor 1 --hint different_host=a0cf03a5-d921-4877-bb5c-86d26cf818e1 --hint different_host=8c19174f-4220-44f0-824a-cd1eeef10287 server-1</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>nova boot --image cedef40a-ed67-4d10-800e-17455edce175 --flavor 1 \
+  --hint different_host=a0cf03a5-d921-4877-bb5c-86d26cf818e1 \
+  --hint different_host=8c19174f-4220-44f0-824a-cd1eeef10287 server-1</userinput></screen>
             <para>With the API, use the
                     <literal>os:scheduler_hints</literal> key. For
                 example:</para>
@@ -368,8 +370,8 @@ isolated_images=342b492c-128f-4a42-8d3a-c5088cf27d13,ebd267a6-ca86-4d6c-9a0e-bd1
                 </itemizedlist>Using the <command>nova</command>
                 command-line tool, use the <literal>--hint</literal>
                 flag:</para>
-            <screen><userinput>$</userinput> <userinput>nova boot --image 827d564a-e636-4fc4-a376-d36f7ebe1747 --flavor
-1 --hint query='[">=","$free_ram_mb",1024]' server1</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>nova boot --image 827d564a-e636-4fc4-a376-d36f7ebe1747 \
+  --flavor 1 --hint query='[">=","$free_ram_mb",1024]' server1</userinput></screen>
             <para>With the API, use the
                     <literal>os:scheduler_hints</literal> key:</para>
             <programlisting language="json">
@@ -427,7 +429,9 @@ isolated_images=342b492c-128f-4a42-8d3a-c5088cf27d13,ebd267a6-ca86-4d6c-9a0e-bd1
                     <literal>DifferentHostFilter</literal>. Using the
                     <command>nova</command> command-line tool, use the
                     <literal>--hint</literal> flag:</para>
-            <screen><prompt>$</prompt> <userinput>nova boot --image cedef40a-ed67-4d10-800e-17455edce175 --flavor 1 --hint same_host=a0cf03a5-d921-4877-bb5c-86d26cf818e1 --hint same_host=8c19174f-4220-44f0-824a-cd1eeef10287 server-1</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>nova boot --image cedef40a-ed67-4d10-800e-17455edce175 --flavor 1 \
+  --hint same_host=a0cf03a5-d921-4877-bb5c-86d26cf818e1 \
+  --hint same_host=8c19174f-4220-44f0-824a-cd1eeef10287 server-1</userinput></screen>
             <para>With the API, use the
                     <literal>os:scheduler_hints</literal> key:</para>
             <programlisting language="json">
@@ -472,7 +476,8 @@ isolated_images=342b492c-128f-4a42-8d3a-c5088cf27d13,ebd267a6-ca86-4d6c-9a0e-bd1
                 use the <literal>--hint</literal> flag. For example,
                 to specify the IP subnet
                     <literal>192.168.1.1/24</literal></para>
-            <screen><prompt>$</prompt> <userinput>nova boot --image cedef40a-ed67-4d10-800e-17455edce175 --flavor 1 --hint build_near_host_ip=192.168.1.1 --hint cidr=/24 server-1</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>nova boot --image cedef40a-ed67-4d10-800e-17455edce175 --flavor 1 \
+  --hint build_near_host_ip=192.168.1.1 --hint cidr=/24 server-1</userinput></screen>
             <para>With the API, use the
                     <literal>os:scheduler_hints</literal> key:</para>
             <programlisting language="json">{
