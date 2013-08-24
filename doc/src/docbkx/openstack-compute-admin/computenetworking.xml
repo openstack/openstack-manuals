@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter [
+        <!-- Some useful entities borrowed from HTML -->
+        <!ENTITY ndash  "&#x2013;">
+        <!ENTITY mdash  "&#x2014;">
+        <!ENTITY hellip "&#x2026;">
+        <!-- Useful for describing APIs -->
+        <!ENTITY GET    '<command xmlns="http://docbook.org/ns/docbook">GET</command>'>
+        <!ENTITY PUT    '<command xmlns="http://docbook.org/ns/docbook">PUT</command>'>
+        <!ENTITY POST   '<command xmlns="http://docbook.org/ns/docbook">POST</command>'>
+        <!ENTITY DELETE '<command xmlns="http://docbook.org/ns/docbook">DELETE</command>'>
+]>
 <chapter xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
@@ -38,16 +49,16 @@
                 </listitem>
             </itemizedlist></para>
         <para>The three kinds of networks can co-exist in a cloud
-            system. However, since you can't yet select the type of
+            system. However, because you can't yet select the type of
             network for a given project, you cannot configure more
             than one type of network in a given Compute
             installation.</para>
         <note>
             <para>All networking options require network
                 connectivity to be already set up between OpenStack
-                physical nodes. OpenStack will not configure any
-                physical network interfaces. OpenStack will
-                automatically create all network bridges (i.e., br100)
+                physical nodes. OpenStack does not configure any
+                physical network interfaces. OpenStack
+                automatically creates all network bridges (for example, br100)
                 and VM virtual interfaces.</para>
             <para>All machines must have a <emphasis role="italic"
                     >public</emphasis> and <emphasis role="italic"
@@ -64,21 +75,20 @@
                 endpoints are VMs and dnsmasq). Also, the internal
                 network interface must be put in <emphasis
                     role="italic">promiscuous mode</emphasis>, because
-                it will have to receive packets whose target MAC
+                it must receive packets whose target MAC
                 address is of the guest VM, not of the host.</para>
         </note>
         <para>All the network managers configure the network using
-                <emphasis role="italic">network drivers</emphasis>,
-            e.g. the linux L3 driver (<literal>l3.py</literal> and
-                <literal>linux_net.py</literal>) which makes use of
+                <emphasis role="italic">network drivers</emphasis>. For example, the linux L3 driver (<literal>l3.py</literal> and
+                <literal>linux_net.py</literal>), which makes use of
                 <literal>iptables</literal>, <literal>route</literal>
-            and other network management facilities, and also of
+            and other network management facilities, and
             libvirt's <link
                 xlink:href="http://libvirt.org/formatnwfilter.html"
                 >network filtering facilities</link>. The driver isn't
             tied to any particular network manager; all network
             managers use the same driver. The driver usually
-            initializes (creates bridges etc.) only when the first VM
+            initializes (creates bridges and so on) only when the first VM
             lands on this host node.</para>
         <para>All network managers operate in either <emphasis
                 role="italic">single-host</emphasis> or <emphasis
@@ -137,12 +147,11 @@
             Compute does a bit more configuration in that it attempts
             to bridge into an ethernet device
                 (<literal>flat_interface</literal>, eth0 by default).
-            It will also run and configure dnsmasq as a DHCP server
+            It also runs and configures dnsmasq as a DHCP server
             listening on this bridge, usually on IP address 10.0.0.1
             (see <link linkend="dnsmasq">DHCP server: dnsmasq</link>).
-            For every instance, nova will allocate a fixed IP address
-            and configure dnsmasq with the MAC/IP pair for the VM,
-            i.e. dnsmasq doesn't take part in the IP address
+            For every instance, nova allocates a fixed IP address
+            and configure dnsmasq with the MAC/IP pair for the VM. For example, dnsmasq doesn't take part in the IP address
             allocation process, it only hands out IPs according to the
             mapping done by nova. Instances receive their fixed IPs by
             doing a dhcpdiscover. These IPs are <emphasis
@@ -164,7 +173,7 @@
             must set the <literal>flat_network_bridge</literal> option
             or create networks with the bridge parameter in order to
             avoid raising an error. Compute nodes have
-            iptables/ebtables entries created per project and instance
+            iptables/ebtables entries created for each project and instance
             to protect against IP/MAC address spoofing and ARP
             poisoning. <note>
                 <para>To use the new dynamic
@@ -172,16 +181,14 @@
                     Grizzly, set <literal>fixed_range=''</literal> in
                     your <filename>nova.conf</filename>. For backwards
                     compatibility, Grizzly supports the
-                        <literal>fixed_range</literal> option and if
-                    set will perform the default logic from Folsom and
+                        <literal>fixed_range</literal> option, which performs the default logic from Folsom and
                     earlier releases.</para>
             </note></para>
         <note>
             <para>In single-host Flat DHCP mode you <emphasis
                     role="italic">will</emphasis> be able to ping VMs
                 through their fixed IP from the nova-network node, but
-                you <emphasis role="italic">will not</emphasis> be
-                able to ping them from the compute nodes. This is
+                you <emphasis role="italic">cannot</emphasis> ping them from the compute nodes. This is
                 expected behavior.</para>
         </note>
 
@@ -259,7 +266,6 @@
         <title>Metadata service</title>
         <simplesect>
             <title>Introduction</title>
-
             <para>The Compute service uses a special metadata service
                 to enable virtual machine instances to retrieve
                 instance-specific data. Instances access the metadata
@@ -270,18 +276,15 @@
             <para>To retrieve a list of supported versions for the
                 OpenStack metadata API, make a GET request to
                 <programlisting>http://169.254.169.254/openstack</programlisting>For
-
                 example:</para>
-            <para><screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/openstack</userinput>
-<computeroutput>2012-08-10
+            <para><screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/openstack</userinput></screen><screen><computeroutput>2012-08-10
 latest</computeroutput></screen>
                 To retrieve a list of supported versions for the
                 EC2-compatible metadata API, make a GET request to
                 <programlisting>http://169.254.169.254</programlisting></para>
             <para>For example:</para>
-            <para>
-                <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254</userinput>
-<computeroutput>1.0
+<screen><prompt>$</prompt> <userinput>curl http://169.254.169.254</userinput></screen>
+            <screen><computeroutput>1.0
 2007-01-19
 2007-03-01
 2007-08-29
@@ -291,7 +294,6 @@ latest</computeroutput></screen>
 2008-09-01
 2009-04-04
 latest</computeroutput></screen>
-            </para>
             <para>If you write a consumer for one of these APIs,
                 always attempt to access the most recent API version
                 supported by your consumer first, then fall back to an
@@ -302,14 +304,14 @@ latest</computeroutput></screen>
             <title>OpenStack metadata API</title>
             <para>Metadata from the OpenStack API is distributed in
                 JSON format. To retrieve the metadata, make a GET
-                request to
+                request to:</para>
                 <programlisting>http://169.254.169.254/openstack/2012-08-10/meta_data.json</programlisting>
-                For
-                example:<screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/openstack/2012-08-10/meta_data.json</userinput>
-{"uuid": "d8e02d56-2648-49a3-bf97-6be8f1204f38", "availability_zone": "nova", "hostname": "test.novalocal", "launch_index": 0, "meta": {"priority": "low", "role": "webserver"}, "public_keys": {"mykey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQDYVEprvtYJXVOBN0XNKVVRNCRX6BlnNbI+USLGais1sUWPwtSg7z9K9vhbYAPUZcq8c/s5S9dg5vTHbsiyPCIDOKyeHba4MUJq8Oh5b2i71/3BISpyxTBH/uZDHdslW2a+SrPDCeuMMoss9NFhBdKtDkdG9zyi0ibmCP6yMdEX8Q== Generated by Nova\n"}, "name": "test"}</screen>Here
+                <para>For
+                example:</para><screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/openstack/2012-08-10/meta_data.json</userinput></screen>
+            <screen><computeroutput>{"uuid": "d8e02d56-2648-49a3-bf97-6be8f1204f38", "availability_zone": "nova", "hostname": "test.novalocal", "launch_index": 0, "meta": {"priority": "low", "role": "webserver"}, "public_keys": {"mykey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQDYVEprvtYJXVOBN0XNKVVRNCRX6BlnNbI+USLGais1sUWPwtSg7z9K9vhbYAPUZcq8c/s5S9dg5vTHbsiyPCIDOKyeHba4MUJq8Oh5b2i71/3BISpyxTBH/uZDHdslW2a+SrPDCeuMMoss9NFhBdKtDkdG9zyi0ibmCP6yMdEX8Q== Generated by Nova\n"}, "name": "test"}</computeroutput></screen>
+<para>Here
                 is the same content after having run through a JSON
                 pretty-printer:</para>
-            <para>
                 <programlisting>{
     "availability_zone": "nova",
     "hostname": "test.novalocal",
@@ -323,9 +325,7 @@ latest</computeroutput></screen>
         "mykey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQDYVEprvtYJXVOBN0XNKVVRNCRX6BlnNbI+USLGais1sUWPwtSg7z9K9vhbYAPUZcq8c/s5S9dg5vTHbsiyPCIDOKyeHba4MUJq8Oh5b2i71/3BISpyxTBH/uZDHdslW2a+SrPDCeuMMoss9NFhBdKtDkdG9zyi0ibmCP6yMdEX8Q== Generated by Nova\n"
     },
     "uuid": "d8e02d56-2648-49a3-bf97-6be8f1204f38"
-}
-</programlisting>
-            </para>
+}</programlisting>
             <para>Instances also retrieve user data (passed as the
                     <literal>user_data</literal> parameter in the API
                 call or by the <literal>--user_data</literal> flag in
@@ -334,8 +334,8 @@ latest</computeroutput></screen>
                 to:<programlisting>http://169.254.169.254/openstack/2012-08-10/user_data</programlisting>For
                 example:</para>
             <para>
-                <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/openstack/2012-08-10/user_data</userinput>
-<computeroutput>#!/bin/bash
+                <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/openstack/2012-08-10/user_data</userinput></screen>
+                <screen><computeroutput>#!/bin/bash
 echo 'Extra user data here'</computeroutput></screen>
             </para>
         </simplesect>
@@ -345,16 +345,16 @@ echo 'Extra user data here'</computeroutput></screen>
                 with version 2009-04-04 of the <link
                     xlink:href="http://docs.amazonwebservices.com/AWSEC2/2009-04-04/UserGuide/AESDG-chapter-instancedata.html"
                     >Amazon EC2 metadata service</link>; virtual
-                machine images that are designed for EC2 will work
+                machine images that are designed for EC2 work
                 properly with OpenStack.</para>
             <para>The EC2 API exposes a separate URL for each
-                metadata. A listing of these elements can be retrieved
+                metadata. You can retrieve a listing of these elements
                 by making a GET query
-                to:<programlisting>http://169.254.169.254/2009-04-04/meta-data/</programlisting></para>
+                to:</para><programlisting>http://169.254.169.254/2009-04-04/meta-data/</programlisting>
             <para>For example:</para>
-            <para>
-                <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/2009-04-04/meta-data/</userinput>
-<computeroutput>ami-id
+       
+                <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/2009-04-04/meta-data/</userinput></screen>
+            <screen><computeroutput>ami-id
 ami-launch-index
 ami-manifest-path
 block-device-mapping/
@@ -371,33 +371,27 @@ public-ipv4
 public-keys/
 ramdisk-id
 reservation-id
-security-groups</computeroutput>
-<prompt>$</prompt> <userinput>curl http://169.254.169.254/2009-04-04/meta-data/block-device-mapping/</userinput>
-<computeroutput>ami</computeroutput>
-<prompt>$</prompt> <userinput>curl http://169.254.169.254/2009-04-04/meta-data/placement/</userinput>
-<computeroutput>availability-zone</computeroutput>
-<prompt>$</prompt> <userinput>curl http://169.254.169.254/2009-04-04/meta-data/public-keys/</userinput>
-<computeroutput>0=mykey</computeroutput></screen>
-            </para>
+security-groups</computeroutput></screen>
+            <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/2009-04-04/meta-data/block-device-mapping/</userinput></screen>
+            <screen><computeroutput>ami</computeroutput></screen>
+            <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/2009-04-04/meta-data/placement/</userinput></screen>
+            <screen><computeroutput>availability-zone</computeroutput></screen>
+            <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/2009-04-04/meta-data/public-keys/</userinput></screen>
+            <screen><computeroutput>0=mykey</computeroutput></screen>
             <para>Instances can retrieve the public SSH key
                 (identified by keypair name when a user requests a new
                 instance) by making a GET request
-                to:<programlisting>http://169.254.169.254/2009-04-04/meta-data/public-keys/0/openssh-key</programlisting></para>
+                to:</para><programlisting>http://169.254.169.254/2009-04-04/meta-data/public-keys/0/openssh-key</programlisting>
             <para>For example:</para>
-            <para>
-                <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/2009-04-04/meta-data/public-keys/0/openssh-key</userinput>
-<computeroutput>ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQDYVEprvtYJXVOBN0XNKVVRNCRX6BlnNbI+USLGais1sUWPwtSg7z9K9vhbYAPUZcq8c/s5S9dg5vTHbsiyPCIDOKyeHba4MUJq8Oh5b2i71/3BISpyxTBH/uZDHdslW2a+SrPDCeuMMoss9NFhBdKtDkdG9zyi0ibmCP6yMdEX8Q== Generated by Nova
-</computeroutput></screen>
-            </para>
+                <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/2009-04-04/meta-data/public-keys/0/openssh-key</userinput></screen>
+            <screen><computeroutput>ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQDYVEprvtYJXVOBN0XNKVVRNCRX6BlnNbI+USLGais1sUWPwtSg7z9K9vhbYAPUZcq8c/s5S9dg5vTHbsiyPCIDOKyeHba4MUJq8Oh5b2i71/3BISpyxTBH/uZDHdslW2a+SrPDCeuMMoss9NFhBdKtDkdG9zyi0ibmCP6yMdEX8Q== Generated by Nova</computeroutput></screen>
             <para>Instances can retrieve user data by making a GET
                 request
-                to:<programlisting>http://169.254.169.254/2009-04-04/user-data</programlisting>
-                For example:</para>
-            <para>
-                <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/2009-04-04/user-data</userinput>
-<computeroutput>#!/bin/bash
+                to:</para><programlisting>http://169.254.169.254/2009-04-04/user-data</programlisting>
+                <para>For example:</para>
+                <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/2009-04-04/user-data</userinput></screen>
+            <screen><computeroutput>#!/bin/bash
 echo 'Extra user data here'</computeroutput></screen>
-            </para>
         </simplesect>
         <simplesect>
             <title>Running the metadata service</title>
@@ -422,7 +416,7 @@ echo 'Extra user data here'</computeroutput></screen>
                 so you should not need to modify it.</para>
             <para>To allow instances to reach the metadata service,
                 the <systemitem class="service"
-                    >nova-network</systemitem> service will configure
+                    >nova-network</systemitem> service configures
                 iptables to NAT port <literal>80</literal> of the
                     <literal>169.254.169.254</literal> address to the
                 IP address specified in
@@ -461,25 +455,24 @@ echo 'Extra user data here'</computeroutput></screen>
     <section xml:id="configuring-networking-on-the-compute-node">
         <title>Configuring Networking on the Compute Node</title>
         <para>To configure the Compute node's networking for the VM
-            images, the overall steps are:</para>
-
-        <orderedlist>
-            <listitem>
+            images:</para>
+        <procedure>
+            <step>
                 <para>Set the <literal>network_manager</literal>
                     option in nova.conf.</para>
-            </listitem>
-            <listitem>
+            </step>
+            <step>
                 <para>Use the <code>nova network-create label
                         --fixed-range-v4 CIDR [--vlan
                             <replaceable>vlan_id</replaceable>]</code>
                     command to create the subnet that the VMs reside
                     on, specifying a VLAN if running in VLAN Network
                     Mode.</para>
-            </listitem>
-            <listitem>
+            </step>
+            <step>
                 <para>Integrate the bridge with your network.</para>
-            </listitem>
-        </orderedlist>
+            </step>
+        </procedure>
         <para>By default, Compute uses the VLAN Network Mode. You
             choose the networking mode for your virtual instances in
             the nova.conf file. Here are the three possible options:</para>
@@ -503,9 +496,8 @@ echo 'Extra user data here'</computeroutput></screen>
         </itemizedlist>
         <para>Use the following command to create a subnet (named
                 <emphasis>private</emphasis> in this example) that
-            your VMs will run on:
-            <literallayout class="monospaced"><literal>nova network-create private --fixed-range-v4 192.168.0.0/24</literal></literallayout>
-        </para>
+            your VMs run on:</para>
+            <screen><prompt>$</prompt> <userinput>nova network-create private --fixed-range-v4 192.168.0.0/24</userinput></screen>
         <para>When using the XenAPI compute driver, the OpenStack
             services run in a virtual machine. This means networking
             is significantly different when compared to the networking
@@ -518,7 +510,6 @@ echo 'Extra user data here'</computeroutput></screen>
             document that describes
             <link linkend="introduction-to-xen">XenAPI and OpenStack</link>.</phrase>-->
         </para>
-
         <section xml:id="configuring-flat-networking">
             <title>Configuring Flat Networking</title>
             <para>FlatNetworking uses ethernet adapters configured as
@@ -537,18 +528,13 @@ echo 'Extra user data here'</computeroutput></screen>
             <para>To configure flat networking, ensure that your
                     <filename>nova.conf</filename> file contains the
                 following line:</para>
-            <para>
-                <programlisting>
-network_manager=nova.network.manager.FlatManager
-                </programlisting>
-            </para>
+                <programlisting>network_manager=nova.network.manager.FlatManager</programlisting>
             <note>
                 <para>When configuring Flat Networking, failing to
                     enable <literal>flat_injected</literal> can
                     prevent guest VMs from receiving their IP
                     information at boot time.</para>
             </note>
-
             <section xml:id="libvirt-flat-networking">
                 <title>Libvirt Flat Networking</title>
                 <para>Compute defaults to a bridge device named
@@ -581,10 +567,7 @@ network_manager=nova.network.manager.FlatManager
                     on the bridge and add eth0 to that bridge. To do
                     this, edit your network interfaces configuration
                     to look like the following example:</para>
-                <para>
-                    <programlisting>
-
-# The loopback network interface
+                    <programlisting># The loopback network interface
 auto lo
 iface lo inet loopback
 
@@ -597,13 +580,11 @@ iface br100 inet dhcp
     bridge_maxwait   0
     bridge_fd            0
  </programlisting>
-                </para>
                 <para>Next, restart networking to apply the changes:
                         <code>sudo /etc/init.d/networking
                         restart</code></para>
                 <para>For an all-in-one development setup, this
                     diagram represents the network setup.</para>
-
                 <para><figure>
                         <title>Flat network, all-in-one server
                             installation</title>
@@ -646,7 +627,6 @@ iface br100 inet dhcp
                     </mediaobject>
                 </figure>
             </section>
-
             <section xml:id="xenapi-flat-networking">
                 <title xml:id="xenapi-flat-networking.title">XenAPI
                     Flat Networking</title>
@@ -659,7 +639,6 @@ iface br100 inet dhcp
                     the XenAPI driver.</para>
             </section>
         </section>
-
         <section xml:id="configuring-flat-dhcp-networking">
             <title>Configuring Flat DHCP Networking</title>
             <para>With Flat DHCP, the host(-s) running nova-network
@@ -678,13 +657,13 @@ iface br100 inet dhcp
                     <filename>nova.conf</filename> and the
                     <literal>flat_network_bridge</literal> flag which
                 you must also set to the name of the bridge (as there
-                is no default). The nova-network service will track
+                is no default). The nova-network service tracks
                 leases and releases in the database, using dnsmasq's
                     <emphasis role="italic">dhcp-script</emphasis>
                 facility (the script <emphasis role="italic"
                     >bin/nova-dhcpbridge</emphasis> is supplied) so it
                 knows if a VM instance has stopped properly
-                configuring through DHCP (e.g. when a DHCP lease
+                configuring through DHCP (such as when a DHCP lease
                 expires, the fixed IP is released from the nova
                 database). Lastly, it sets up iptables rules to allow
                 the VMs to communicate with the outside world and
@@ -712,12 +691,9 @@ iface br100 inet dhcp
                 This bridge works just fine on a single host, but when
                 there are multiple hosts, traffic needs a way to get
                 out of the bridge onto a physical interface.</para>
-
-
             <section xml:id="libvirt-flat-dhcp-networking">
                 <title>Libvirt Flat DHCP Networking</title>
-                <para>When using the libvirt driver, the setup will
-                    look like the figure below:</para>
+                <para>When using the libvirt driver, the set up resembles the following figure:</para>
                 <figure>
                     <title>Flat DHCP network, multiple interfaces,
                         multiple servers with libvirt driver</title>
@@ -730,8 +706,8 @@ iface br100 inet dhcp
                 </figure>
                 <para>Be careful when setting up
                         <literal>--flat_interface</literal>. If you
-                    specify an interface that already has an IP it
-                    will break and if this is the interface you are
+                    specify an interface that already has an IP, it
+                    breaks and if this is the interface you are
                     connecting through with SSH, you cannot fix it
                     unless you have ipmi/console access. In FlatDHCP
                     mode, the setting for
@@ -739,33 +715,28 @@ iface br100 inet dhcp
                     number of IPs in the entire fixed range. If you
                     are doing a /12 in CIDR notation, then this number
                     would be 2^20 or 1,048,576 IP addresses. That
-                    said, it will take a very long time for you to
+                    said, it takes a very long time for you to
                     create your initial network, as an entry for each
-                    IP will be created in the database.</para>
+                    IP is created in the database.</para>
                 <para>If you have an unused interface on your hosts
                     (eg eth2) that has connectivity with no IP
                     address, you can simply tell FlatDHCP to bridge
                     into the interface by specifying
-
                             <literal>flat_interface=<replaceable>&lt;interface></replaceable></literal>
-                    in your configuration file. The network host will
-                    automatically add the gateway ip to this bridge.
+                    in your configuration file. The network host 
+                    automatically adds the gateway ip to this bridge.
                     If this is the case for you, edit your
                         <filename>nova.conf</filename> file to contain
                     the following lines:</para>
-                <para>
-                    <programlisting>
-dhcpbridge_flagfile=/etc/nova/nova.conf
+                <para><programlisting>dhcpbridge_flagfile=/etc/nova/nova.conf
 dhcpbridge=/usr/bin/nova-dhcpbridge
 network_manager=nova.network.manager.FlatDHCPManager
 fixed_range=''
 flat_network_bridge=br100
 flat_interface=eth2
 flat_injected=False
-public_interface=eth0
-                </programlisting>
-                    You can also add the unused interface to br100
-
+public_interface=eth0</programlisting>You
+                    can also add the unused interface to br100
                     manually and not set flat_interface.</para>
                 <para>Integrate your network interfaces to match this
                     configuration.</para>
@@ -794,7 +765,6 @@ public_interface=eth0
                 <para>Here is an extract from a
                         <filename>nova.conf</filename> file in a
                     system running the above setup:</para>
-                <para>
                     <programlisting>network_manager=nova.network.manager.FlatDHCPManager
 
 xenapi_vif_driver=nova.virt.xenapi.vif.(XenAPIBridgeDriver or XenAPIOpenVswitchDriver)
@@ -807,9 +777,8 @@ fixed_range=''
 force_dhcp_release=True
 send_arp_for_ha=True
 flat_injected=False
-firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlisting>
-                </para>
-                <para>You should notice that
+firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlisting>              
+                <para>Notice that
                         <literal>flat_interface</literal> and
                         <literal>public_interface</literal> refer to
                     the network interface on the VM running the
@@ -817,8 +786,8 @@ firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlis
                     the Hypervisor.</para>
                 <para>Secondly <literal>flat_network_bridge</literal>
                     refers to the name of XenAPI network that you wish
-                    to have your instance traffic on, i.e. the network
-                    on which the VMs will be attached. You can either
+                    to have your instance traffic on. For example, the network
+                    on which the VMs are attached. You can either
                     specify the bridge name, such an
                         <literal>xenbr2</literal>, or the name label,
                     such as <literal>vmbr</literal>. Specifying the
@@ -843,7 +812,6 @@ firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlis
                 </para>
             </section>
         </section>
-
         <section
             xml:id="outbound-traffic-flow-with-any-flat-networking">
             <title>Outbound Traffic Flow with Any Flat
@@ -854,7 +822,7 @@ firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlis
                 determined by Compute with the
                     <literal>fixed_range=''</literal> directive in
                     <filename>nova.conf</filename>. This host needs to
-                have a bridge interface (e.g.,
+                have a bridge interface (for example,
                     <literal>br100</literal>) configured and talking
                 to any other nodes that are hosting VMs. With either
                 of the Flat Networking options, the default gateway
@@ -911,18 +879,16 @@ firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlis
                 can also be useful to provide an additional layer of
                 isolation in a multi-tenant environment.</para>
             <note>
-
                 <para>The terms <emphasis role="italic"
                         >network</emphasis> and <emphasis
                         role="italic">subnet</emphasis> are often used
                     interchangeably in discussions of VLAN mode. In
                     all cases, we are referring to a range of IP
                     addresses specified by a <emphasis role="italic"
-                        >subnet </emphasis>(e.g.,
+                        >subnet</emphasis> (for example,
                         <literal>172.16.20.0/24</literal>) that are on
                     the same VLAN (layer 2 <emphasis role="italic"
                         >network</emphasis>).</para>
-
             </note>
             <para>Running in VLAN mode is more complex than the other
                 network modes. In particular:<itemizedlist>
@@ -947,31 +913,29 @@ firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlis
                             setup</para>
                     </listitem>
                     <listitem>
-                        <para>You will need information about your
+                        <para>You need information about your
                             networking setup from your network
                             administrator to configure Compute
-                            properly (e.g., netmask, broadcast,
-                            gateway, ethernet device, VLAN IDs)</para>
+                            properly. (For example, netmask,
+                            broadcast, gateway, ethernet device, VLAN
+                            IDs).</para>
                     </listitem>
-                </itemizedlist>
-            </para>
-
+                </itemizedlist></para>
             <para>The
                     <literal>network_manager=nova.network.manager.VlanManager</literal>
                 option specifies VLAN mode, which happens to be the
                 default networking mode.</para>
             <para>The bridges that are created by the network manager
-                will be attached to the interface specified by
+                is attached to the interface specified by
                     <literal>vlan_interface</literal>, the example
                 above uses the <literal>eth0</literal> interface,
                 which is the default.</para>
-
             <para>The <literal>fixed_range</literal> option deprecated
                 in Grizzly and should be set to
                     <literal>fixed_range=''</literal> so that Nova
                 determines a CIDR block which describes the IP address
-                space for all of the instances: this space will be
-                divided up into subnets. This range is typically a
+                space for all of the instances: this space is
+                divided into subnets. This range is typically a
                     <link
                     xlink:href="https://en.wikipedia.org/wiki/Private_network"
                     >private network</link>. The example above uses
@@ -996,10 +960,10 @@ firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlis
                 a VLAN tag of <literal>169</literal> (the VLAN tag
                 does not need to match the third byte of the address,
                 though it is a useful convention to remember the
-                association). This will create a bridge interface
+                association). This creates a bridge interface
                 device called <literal>br169</literal> on the host
-                running the nova-network service. This device will
-                appear in the output of an <command>ifconfig</command>
+                running the nova-network service. This device 
+                appears in the output of an <command>ifconfig</command>
                 command.</para>
             <para>Each network is associated with one tenant. As in
                 the example above, you may (optionally) specify this
@@ -1074,8 +1038,7 @@ Optional arguments:
                     <command>nova-manage</command> command. Use the
                     <command>nova-manage network modify</command>
                 command, as
-                root:<screen><prompt>#</prompt> <userinput>nova-manage network modify --help</userinput>
-<computeroutput>Usage: nova-manage network modify &lt;args> [options]
+                root:<screen><prompt>#</prompt> <userinput>nova-manage network modify --help</userinput></screen><screen><computeroutput>Usage: nova-manage network modify &lt;args> [options]
 
 Options:
   -h, --help            show this help message and exit
@@ -1093,8 +1056,7 @@ Options:
                     <command>nova-manage</command> command. To delete
                 a network, use <command>nova-manage network
                     delete</command>, as
-                root:<screen><prompt>#</prompt> <userinput>nova-manage network delete --help</userinput><computeroutput>
-Usage: nova-manage network delete &lt;args> [options]
+                root:<screen><prompt>#</prompt> <userinput>nova-manage network delete --help</userinput></screen><screen><computeroutput>Usage: nova-manage network delete &lt;args> [options]
 
 Options:
   -h, --help            show this help message and exit
@@ -1105,7 +1067,7 @@ Options:
                 a project using the <command>nova
                     network-disassociate</command> command before it
                 can be deleted.</para>
-            <para>Creating a network will automatically cause the
+            <para>Creating a network automatically causes the
                 Compute database to populate with a list of available
                 fixed IP addresses. You can view the list of fixed IP
                 addresses and their associations with active virtual
@@ -1116,7 +1078,7 @@ Options:
                 named cloudpipe) needs to be created as described in
                 the section titled <link
                     linkend="cloudpipe-per-project-vpns">Cloudpipe —
-                    Per Project VPNs</link>.</para>
+                    Project VPNs</link>.</para>
 
             <section xml:id="libvirt-vlan-networking">
                 <title>Libvirt VLAN networking</title>
@@ -1143,8 +1105,7 @@ network_size=256</programlisting>
                     stopped. If you attempt to restart the network
                     manager and it does not start, check the logs for
                     errors indicating that a bridge device already
-                    exists. If this is the case, you will likely need
-                    to tear down the bridge and VLAN devices manually.
+                    exists. If this is the case, you must tear down the bridge and VLAN devices manually.
                     It is also advisable to kill any remaining dnsmasq
                     processes. These commands would stop the service,
                     manually tear down the bridge and VLAN from the
@@ -1197,8 +1158,7 @@ firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlis
                     the network interfce on the VM running the
                     OpenStack services.</para>
                 <para>With VLAN networking and the XenAPI driver, the
-                    following things happen when you start a VM:
-                    <itemizedlist>
+                    following things happen when you start a VM: <itemizedlist>
                         <listitem>
                             <para>First the XenServer network is
                                 attached to the appropriate physical
@@ -1210,28 +1170,26 @@ firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlis
                                 attached to the above network.</para>
                         </listitem>
                         <listitem>
-                            <para>The 'OpenStack domU', i.e. where
-                                nova-network is running, acts as a
-                                gateway and DHCP for this instance.
-                                The DomU does this for multiple VLAN
-                                networks, so it has to be attached on
-                                a VLAN trunk. For this reason it must
-                                have an interface on the parent bridge
-                                of the VLAN bridge where VM instances
-                                are plugged.</para>
+                            <para>The 'OpenStack domU,'&mdash;for
+                                example, where nova-network is
+                                running&mdash;acts as a gateway and
+                                DHCP for this instance. The DomU does
+                                this for multiple VLAN networks, so it
+                                has to be attached on a VLAN trunk.
+                                For this reason it must have an
+                                interface on the parent bridge of the
+                                VLAN bridge where VM instances are
+                                plugged.</para>
                         </listitem>
-                    </itemizedlist>
-                </para>
-                <para>To help understand VLAN networking with the
-                    XenAPI further, here are some important things to
-                    note:
-                    <itemizedlist>
+                    </itemizedlist></para>
+                <para>To understand VLAN networking with the XenAPI
+                    further, here are some important things to note: <itemizedlist>
                         <listitem>
                             <para>A physical interface (PIF)
                                 identified either by (A) the
                                 vlan_interface flag or (B) the
                                 bridge_interface column in the
-                                networks db table will be used for
+                                networks db table are used for
                                 creating a XenServer VLAN network. The
                                 VLAN tag is found in the vlan column,
                                 still in the networks table, and by
@@ -1239,40 +1197,39 @@ firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlis
                         </listitem>
                         <listitem>
                             <para>VIF for VM instances within this
-                                network will be plugged in this VLAN
+                                network are plugged in this VLAN
                                 network. You won't see the bridge
                                 until a VIF is plugged in it.</para>
                         </listitem>
                         <listitem>
-                            <para>The 'OpenStack domU', i.e. the VM
-                                running the nova network node, instead
-                                will not be plugged into this network;
-                                since it acts as a gateway for
-                                multiple VLAN networks, it has to be
-                                attached on a VLAN trunk. For this
-                                reason it must have an interface on
-                                the parent bridge of the VLAN bridge
-                                where VM instances are plugged. For
-                                example, if
+                            <para>The 'OpenStack domU,'&mdash;for
+                                example, the VM running the nova
+                                network node&mdash;instead is not
+                                plugged into this network; because it
+                                acts as a gateway for multiple VLAN
+                                networks, it has to be attached on a
+                                VLAN trunk. For this reason it must
+                                have an interface on the parent bridge
+                                of the VLAN bridge where VM instances
+                                are plugged. For example, if
                                    <literal>vlan_interface</literal>
                                 is eth0 it must be plugged in xenbr1,
-                                eth1 --> xenbr1, etc.</para>
+                                eth1 --> xenbr1, and so on</para>
                         </listitem>
                         <listitem>
-                            <para>Within the OpenStack domU, 'ip
-                                link' is then used to configure VLAN
+                            <para>Within the OpenStack domU, 'ip link'
+                                is then used to configure VLAN
                                 interfaces on the 'trunk' port. Each
                                 of this vlan interfaces is associated
-                                with a dnsmasq instance, which will
-                                distribute IP addresses to instances.
+                                with a dnsmasq instance, which
+                                distributes IP addresses to instances.
                                 The lease file for dnsmasq is
                                 constantly updated by nova-network,
                                 thus ensuring VMs get the IP address
                                 specified by the layer3 network driver
                                 (nova IPAM or Melange).</para>
                         </listitem>
-                    </itemizedlist>
-                </para>
+                    </itemizedlist></para>
                 <para>With this configuration, VM instances should be
                     able to get the IP address assigned to them from
                     the appropriate dnsmasq instance, and should be
@@ -1296,7 +1253,7 @@ firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlis
                     packet forwarded on a VLAN interfaces does not get
                     back in the xenbrX bridge for ethX. For this
                     reason, with XenAPI, you must use Open vSwitch
-                    when running VLAN networking with network HA (i.e.
+                    when running VLAN networking with network HA (for example,
                     multi host) enabled. On XenServer 6.0 and later,
                     Open vSwitch is the default network stack. When
                     using VLAN networking with XenAPI and linux
@@ -1327,11 +1284,11 @@ firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlis
                     respond to broadcast packets, but unicast packets
                     can only be answered by one of the copies.</para>
                 <para>As a consequence, guests from only one project
-                    will get responses to their unicast DHCP renew
+                    get responses to their unicast DHCP renew
                     requests. Unicast projects from guests in other
                     projects get ignored. What happens next is
                     different depending on the guest OS. Linux
-                    generally will send a broadcast packet out after
+                    generally sends a broadcast packet out after
                     the unicast fails, and so the only effect is a
                     small (tens of ms) hiccup while the interface is
                     reconfigured. It can be much worse than that,
@@ -1342,7 +1299,7 @@ firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlis
                     OpenStack who rolled their own fix. In short, on
                     Linux, if you set the
                         <literal>SO_BINDTODEVICE</literal> socket
-                    option, it will allow different daemons to share
+                    option, it enables different daemons to share
                     the port and respond to unicast packets, as long
                     as they listen on different interfaces. Simon
                     Kelley, the maintainer of dnsmasq, <link
@@ -1364,7 +1321,7 @@ fixed_ip_disassociate_timeout=1209600</programlisting></para>
             </section>
         </section>
         <section xml:id="cloudpipe-per-project-vpns">
-            <title>Cloudpipe — Per Project Vpns</title>
+            <title>Cloudpipe — Project Vpns</title>
 
             <para>Cloudpipe is a method for connecting end users to
                 their project instances in VLAN networking mode.</para>
@@ -1381,24 +1338,24 @@ fixed_ip_disassociate_timeout=1209600</programlisting></para>
                 instance with openvpn installed. It needs a simple
                 script to grab user data from the metadata server, b64
                 decode it into a zip file, and run the autorun.sh
-                script from inside the zip. The autorun script will
-                configure and run openvpn to run using the data from
+                script from inside the zip. The autorun script 
+                configures and runs openvpn to run by using the data from
                 nova.</para>
-            <para>It is also useful to have a cron script that will
-                periodically re download the metadata and copy the new
+            <para>It is also useful to have a cron script that
+                periodically downloads the metadata and copies the new
                 Certificate Revocation List (CRL). This list is
-                contained within the payload file and will keeps
-                revoked users from connecting and will disconnect any
+                contained within the payload file and keeps
+                revoked users from connecting and disconnects any
                 users that are connected with revoked certificates
                 when their connection is renegotiated (every hour).
                 (More infos about revocation can be found in the
                 following section: "Certificates and
                 Revocation").</para>
             <para>In this how-to, we are going to create our
-                cloud-pipe image from a running Ubuntu instance which
-                will serve as a template. When all the components will
-                be installed and configured, we will create an image
-                from that instance that will be uploaded to the Glance
+                cloud-pipe image from a running Ubuntu instance, which
+                serves as a template. When all the components
+                are installed and configured, we create an image
+                from that instance that is uploaded to the Glance
                 repositories.</para>
 
             <section xml:id="cloudpipe-create-image">
@@ -1406,19 +1363,17 @@ fixed_ip_disassociate_timeout=1209600</programlisting></para>
                 <title>Creating a Cloudpipe Image Template</title>
                 <orderedlist>
                     <listitem>
-                        <para>Installing the required packages</para>
+                        <para>Install the required packages on your
+                            instance:</para>
 
-                        <para>We start by installing the required
-                            packages on our instance:
-                            <screen><prompt>#</prompt> <userinput>apt-get update &amp;&amp; apt-get upgrade &amp;&amp; apt-get install openvpn bridge-utils unzip</userinput></screen></para>
+                        <para>
+                            <screen><prompt>#</prompt> <userinput>apt-get update &amp;&amp; apt-get upgrade &amp;&amp; apt-get install openvpn bridge-utils unzip</userinput></screen>
+                        </para>
                     </listitem>
                     <listitem>
-                        <para>Creating the server configuration
-                            template</para>
                         <para>Create a configuration for Openvpn, and
                             save it under
-                                <filename>/etc/openvpn/server.conf</filename>
-                           :</para>
+                                <filename>/etc/openvpn/server.conf</filename>:</para>
 
                         <para>
                             <programlisting>port 1194
@@ -1459,20 +1414,14 @@ mute 20</programlisting>
                         </para>
                     </listitem>
                     <listitem>
-                        <para>Create the network scripts</para>
-
-                        <para>The next step is to create both scripts
-                            that will be used when the network
-                            components will start up and shut down.
-                            The scripts will be respectively saved
-                            under
+                        <para>Create the network scripts. Create both
+                            scripts that are used when the network
+                            components starts and shuts down. The
+                            scripts are respectively saved under
                                 <filename>/etc/openvpn/up.sh</filename>
                             and
-                                <filename>/etc/openvpn/down.sh</filename>
-                           :</para>
-
-                        <para>
-                            <filename>/etc/openvpn/up.sh</filename>
+                                <filename>/etc/openvpn/down.sh</filename>:</para>
+                           <example><title>/etc/openvpn/up.sh</title>
                             <programlisting>#!/bin/sh
 # Openvpn startup script.
 
@@ -1480,30 +1429,26 @@ BR=$1
 DEV=$2
 MTU=$3
 /sbin/ifconfig $DEV mtu $MTU promisc up
-/sbin/brctl addif $BR $DEV</programlisting>
-                            <filename>/etc/openvpn/down.sh</filename>
+/sbin/brctl addif $BR $DEV</programlisting></example>
+                           <example> <title>/etc/openvpn/down.sh</title>
                             <programlisting>#!/bin/sh
 # Openvpn shutdown script
 BR=$1
 DEV=$2
-
 /usr/sbin/brctl delif $BR $DEV
-/sbin/ifconfig $DEV down</programlisting>
-                        </para>
-                        <para>Make these two scripts executables by
-                            running the following command:
+/sbin/ifconfig $DEV down</programlisting></example>
+                        <para>Make these two scripts executables, as
+                            follows:
                             <screen><prompt>#</prompt> <userinput>chmod +x /etc/openvpn/{up.sh,down.sh}</userinput></screen></para>
                     </listitem>
                     <listitem>
-
                         <para>Edit the network interface configuration
-                            file</para>
+                            file.</para>
                         <para>Update the
                                 <filename>/etc/network/interfaces</filename>
                             accordingly (We tear down the main
                             interface and enable the bridged
                             interface):</para>
-
                         <programlisting># This file describes the network interfaces available on your system
 # and how to activate them. For more information, see interfaces(5).
 
@@ -1522,15 +1467,13 @@ iface br0 inet dhcp
 bridge_ports eth0</programlisting>
                     </listitem>
                     <listitem>
-                        <para>Edit the rc.local file</para>
-
-                        <para>The next step consists in updating the
+                        <para>Edit the rc.local file.</para>
+                        <para>Update the
                                 <filename>/etc/rc.local</filename>
-                            file. We will ask our image to retrieve
-                            the payload, decrypt it, and use both key
-                            and CRL for our Openvpn service:
+                            file. We ask our image to retrieve the
+                            payload, decrypt it, and use both key and
+                            CRL for our Openvpn service:
                                 <filename>/etc/rc.local</filename>
-
                             <programlisting>#!/bin/sh -e
 #
 # rc.local
@@ -1569,22 +1512,21 @@ else
 fi
 
 
-exit 0</programlisting>
-                            The called script
-                                (<filename>autorun.sh</filename>) is a
-                            script which mainly parses the network
-                            settings of the running instances in order
-                            to set up the initial routes. Your
-                            instance is now ready to be used as a
-                            cloudpipe image. In the next step, we will
-                            update that instance to Glance.</para>
+exit 0</programlisting>The
+                                <filename>autorun.sh</filename> script
+                            mainly parses the network settings of the
+                            running instances to set up the initial
+                            routes. Your instance is now ready to be
+                            used as a cloudpipe image. In the next
+                            step, we update that instance to
+                            Glance.</para>
                     </listitem>
                 </orderedlist>
             </section>
             <section xml:id="cloudpipe-upload-image">
                 <title>Upload your instance to Glance</title>
 
-                <para>We will make use of the <systemitem
+                <para>We make use of the <systemitem
                         class="service">nova</systemitem> snapshot
                     feature in order to create an image from our
                     running instance. We start by retrieving the
@@ -1593,27 +1535,21 @@ exit 0</programlisting>
                 <para>
                     <screen><prompt>$</prompt> <userinput>nova list</userinput></screen>
                 </para>
-                <programlisting>
-+--------------------------------------+------------+--------+---------------------+
+                <programlisting>+--------------------------------------+------------+--------+---------------------+
 |                  ID                  |  Name      | Status |       Networks      |
 +--------------------------------------+------------+--------+---------------------+
 | 739079ab-0f8e-404a-ae6e-a91f4fe99c94 | cloud-pipe | ACTIVE | vlan1=192.168.22.43 |
-+--------------------------------------+------------+--------+---------------------+
-                </programlisting>
++--------------------------------------+------------+--------+---------------------+              </programlisting>
 
-                <para>We create an image with, using the instance ID
-                   :
-
+                <para>We create an image with, using the instance ID :
                     <screen><prompt>$</prompt> <userinput>nova image-create 739079a-b-0f8e-404a-ae6e-a91f4fe99c94</userinput></screen>
                     Make sure the instance has been upload to the
                     Glance repository:
-                    <screen><prompt>$</prompt> <userinput>nova image-list</userinput></screen><programlisting>
-+--------------------------------------+---------------+--------+--------------------------------------+
+                    <screen><prompt>$</prompt> <userinput>nova image-list</userinput></screen><programlisting>+--------------------------------------+---------------+--------+--------------------------------------+
 |                  ID                  |      Name     | Status |                Server                |
 +--------------------------------------+---------------+--------+--------------------------------------+
 | 0bfc8fd3-1590-463b-b178-bce30be5ef7b | cloud-pipance | ACTIVE | fb93eda8-4eb8-42f7-b53c-91c6d83cface |
-+--------------------------------------+---------------+--------+--------------------------------------+
-                    </programlisting>
++--------------------------------------+---------------+--------+--------------------------------------+                 </programlisting>
                     Make that image public (snapshot-based images are
                     private by default):
                     <screen><prompt>$</prompt> <userinput>glance image-update 0bfc8fd3-1590-463b-b178-bce30be5ef7b is_public=true</userinput></screen>
@@ -1627,12 +1563,10 @@ exit 0</programlisting>
                         <filename>/etc/nova.conf</filename>file in
                     order to make nova able to use our image:
                         <filename>/etc/nova.conf</filename>
-                    <programlisting>
-## cloud-pipe vpn client ##
+                    <programlisting>## cloud-pipe vpn client ##
 vpn_image_id=0bfc8fd3-1590-463b-b178-bce30be5ef7b
 use_project_ca=true
-cnt_vpn_clients=5
-                </programlisting>
+cnt_vpn_clients=5              </programlisting>
                     You can now restart all the services:
                     <screen><prompt>#</prompt> <userinput>cd /etc/int.d &amp;&amp; for i in $( ls nova-*); do service $i restart; done</userinput></screen></para>
             </section>
@@ -1642,37 +1576,30 @@ cnt_vpn_clients=5
                 <para>Use the <systemitem class="service">nova
                         cloudpipe</systemitem> feature the following
                     way:
-
                     <screen><prompt>$</prompt> <userinput>nova cloud-pipe create $tenant_id</userinput></screen>
                     Retrieve all the tenants:
-                    <screen><prompt>$</prompt> <userinput>keystone tenant-list</userinput></screen><programlisting>
-+----------------------------------+---------+---------+
+                    <screen><prompt>$</prompt> <userinput>keystone tenant-list</userinput></screen><programlisting>+----------------------------------+---------+---------+
 |                id                |   name  | enabled |
 +----------------------------------+---------+---------+
 | 071ffb95837e4d509cb7153f21c57c4d | stone   | True    |
 | 520b6689e344456cbb074c83f849914a | service | True    |
 | d1f5d27ccf594cdbb034c8a4123494e9 | admin   | True    |
 | dfb0ef4ab6d94d5b9e9e0006d0ac6706 | demo    | True    |
-+----------------------------------+---------+---------+
-                    </programlisting>
++----------------------------------+---------+---------+                  </programlisting>
                     Let's create our cloudpipe project using the
                     tenant"s ID:
                     <screen><prompt>$</prompt> <userinput>nova cloudpipe-create d1f5d27ccf594cdbb034c8a4123494e9</userinput></screen>
                     We can check the service availability:
-                    <screen><prompt>$</prompt> <userinput>nova cloudpipe-list</userinput></screen><programlisting>
-+----------------------------------+------------+-------------+---------------+
+                    <screen><prompt>$</prompt> <userinput>nova cloudpipe-list</userinput></screen><programlisting>+----------------------------------+------------+-------------+---------------+
 |            Project Id            | Public IP  | Public Port |  Internal IP  |
 +----------------------------------+------------+-------------+---------------+
 | d1f5d27ccf594cdbb034c8a4123494e9 | 172.17.1.3 | 1000        | 192.168.22.34 |
-+----------------------------------+------------+-------------+---------------+
-                    </programlisting>
++----------------------------------+------------+-------------+---------------+               </programlisting>
                     The output basically shows our instance is
-                    started. Nova will create the necessary rules for
-                    our cloudpipe instance (icmp and OpenVPN port):
-                    <programlisting>
-ALLOW 1194:1194 from 0.0.0.0/0
-ALLOW -1:-1 from 0.0.0.0/0
-                    </programlisting>
+                    started. Nova creates the necessary rules for our
+                    cloudpipe instance (icmp and OpenVPN port):
+                    <programlisting>ALLOW 1194:1194 from 0.0.0.0/0
+ALLOW -1:-1 from 0.0.0.0/0</programlisting>
                 </para>
             </section>
             <section xml:id="cloudpipe-vpn-access">
@@ -1696,14 +1623,13 @@ ALLOW -1:-1 from 0.0.0.0/0
                             <replaceable>[new_ip]</replaceable>
                         <replaceable>[new_port]</replaceable></command>
                 </para>
-                <para/>
             </section>
             <section xml:id="cloudpipe-certificates-and-revocation">
                 <title>Certificates and Revocation</title>
 
                 <para>For certificate management, it is also useful to
-                    have a cron script that will periodically download
-                    the metadata and copy the new Certificate
+                    have a cron script that periodically downloads
+                    the metadata and copies the new Certificate
                     Revocation List (CRL). This will keep revoked
                     users from connecting and disconnects any users
                     that are connected with revoked certificates when
@@ -1719,13 +1645,12 @@ ALLOW -1:-1 from 0.0.0.0/0
                     images. When a certificate is revoked using
                     nova-manage, a new Certificate Revocation List
                     (crl) is generated. As long as cloudpipe has an
-                    updated crl, it will block revoked users from
+                    updated crl, it blocks revoked users from
                     connecting to the vpn.</para>
                 <para>The user data for cloudpipe isn't currently
                     updated when certs are revoked, so it is necessary
                     to restart the cloudpipe instance if a user's
                     credentials are revoked.</para>
-                <para/>
             </section>
             <section
                 xml:id="cloudpipe-restarting-and-logging-into-vpn">
@@ -1734,8 +1659,8 @@ ALLOW -1:-1 from 0.0.0.0/0
                 <para>You can reboot a cloudpipe vpn through the api
                     if something goes wrong (using <command>nova
                         reboot</command> for example), but if you
-                    generate a new crl, you will have to terminate it
-                    and start it again using the cloudpipe extension.
+                    generate a new crl, you must terminate it
+                    and start it again by using the cloudpipe extension.
                     The cloudpipe instance always gets the first ip in
                     the subnet and if
                         <literal>force_dhcp_release</literal>
@@ -1755,11 +1680,10 @@ ALLOW -1:-1 from 0.0.0.0/0
                     folder. You can use this key to log into the
                     cloudpipe instance for debugging purposes. If you
                     are running multiple copies of <systemitem class="service">nova-api</systemitem> this key
-                    will be on whichever server used the original
+                    is on the server that used the original
                     request. To make debugging easier, you may want to
                     put a common administrative key into the cloudpipe
                     image that you create.</para>
-                <para/>
             </section>
             <section xml:id="cloudpipe-remote-acceess">
 
@@ -1768,33 +1692,26 @@ ALLOW -1:-1 from 0.0.0.0/0
                 <para>Now your cloudpipe instance is running, you can
                     use your favorite OpenVPN client in order to
                     access your instances within their private network
-                    cloudpipe is connected to. In these sections we
-                    will present both ways of using cloudpipe, the
+                    cloudpipe is connected to. These section present both ways of using cloudpipe: The
                     first using a configuration file for clients
                     without interfaces, and for clients using an
                     interface.</para>
-                <para><emphasis role="bold">Connect to your cloudpipe
-                        instance without an interface
-                    (CLI)</emphasis></para>
-                <orderedlist>
-                    <listitem>
-                        <para>Generate your certificates</para>
+                <section xml:id="connect_without_interface"><title>Connect to your cloudpipe instance with the CLI</title>
+                <procedure>
+                    <step>
+                        <para>Generate your certificates.</para>
                         <para>Start by generating a private key and a
                             certificate for your project:
-
-                            <screen><prompt>$</prompt> <userinput>nova x509-create-cert</userinput></screen>
-                        </para>
-                    </listitem>
-                    <listitem>
-
+                            <screen><prompt>$</prompt> <userinput>nova x509-create-cert</userinput></screen></para>
+                    </step>
+                    <step>
                         <para>Create the openvpn configuration
-                            file</para>
+                            file.</para>
                         <para>The following template, which can be
                             found under
                                 <filename>nova/cloudpipe/client.ovpn.template</filename>
                             contains the necessary instructions for
                             establishing a connection:</para>
-
                         <programlisting># NOVA user connection
 # Edit the following lines to point to your cert files:
 cert <emphasis role="bold">/path/to/the/cert/file</emphasis>
@@ -1821,213 +1738,196 @@ verb 2
 keepalive 10 120
 ping-timer-rem
 persist-tun
-persist-key</programlisting>
-
-                        <para>Update the file accordingly. In order
-                            to get the public IP and port of your
-                            cloudpipe instance, you can run the
-                            following command:
-                            <screen><prompt>$</prompt> <userinput>nova cloudpipe-list</userinput></screen><programlisting>
-+----------------------------------+------------+-------------+---------------+
+persist-key</programlisting></step>
+<step>
+                        <para>Update the file accordingly. To get the
+                            public IP and port of your cloudpipe
+                            instance, you can run the following
+                            command:</para>
+                            <screen><prompt>$</prompt> <userinput>nova cloudpipe-list</userinput></screen>
+                            <screen><computeroutput>+----------------------------------+------------+-------------+---------------+
 |            Project Id            | Public IP  | Public Port |  Internal IP  |
 +----------------------------------+------------+-------------+---------------+
 | d1f5d27ccf594cdbb034c8a4123494e9 | 172.17.1.3 | 1000        | 192.168.22.34 |
-+----------------------------------+------------+-------------+---------------+
-                            </programlisting>
-                        </para>
-                    </listitem>
-                    <listitem>
-                        <para>Start your OpenVPN client</para>
++----------------------------------+------------+-------------+---------------+</computeroutput></screen>
+</step>
+                </procedure>           
+                        <para>Start your OpenVPN client.</para>
                         <para>Depending on the client you are using,
                             make sure to save the configuration file
                             under the directory it should be, so the
                             certificate file and the private key.
                             Usually, the file is saved under
                                 <filename>/etc/openvpn/clientconf/client.conf</filename>
-                        </para>
-
-                    </listitem>
-                </orderedlist>
-                <para><emphasis role="bold">Connect to your cloudpipe
-                        instance using an interface</emphasis><orderedlist>
-                        <listitem>
-
-                            <para>Download an OpenVPN client</para>
-                            <para>In order to connect to the
-                                project's network, you will need an
-                                OpenVPN client for your computer. Here
-                                are several clients <itemizedlist>
-                                   <listitem>
-                                   <para>For Ubuntu:</para>
-                                   <para><link
-                                   xlink:href="apt://openvpn"
-                                   >OpenVPN</link>
-                                   </para>
-                                   <para>
-                                   <link
-                                   xlink:href="apt://network-manager-openvpn"
-                                   >network-manager-openvpn</link>
-                                   </para>
-                                   <para>
-                                   <link xlink:href="apt://kvpnc"
-                                   >kvpnc</link> (For Kubuntu)</para>
-                                   <para>
-                                   <link xlink:href="apt://gopenvpn"
-                                   >gopenvpn</link></para>
-                                   </listitem>
-                                   <listitem>
-                                   <para>For Mac OsX:</para>
-                                   <para>
-                                   <link
-                                   xlink:href="http://openvpn.net/"
-                                   >OpenVPN (Official Client)</link>
-                                   </para>
-                                   <para>
-                                   <link
-                                   xlink:href="http://www.thesparklabs.com/viscosity/"
-                                   >Viscosity</link>
-                                   </para>
-                                   <para>
-                                   <link
-                                   xlink:href="http://code.google.com/p/tunnelblick/"
-                                   >Tunnelblick</link>
-                                   </para>
-                                   </listitem>
-                                   <listitem>
-                                   <para>For Windows:</para>
-                                   <para>
-                                   <link
-                                   xlink:href="http://openvpn.net/"
-                                   >OpenVPN (Official Client)</link>
-                                   </para>
-                                   </listitem>
-                                </itemizedlist></para>
-                        </listitem>
-                        <listitem>
-                            <para>Configure your client</para>
-                            <para>In this example we will use
-                                Viscosity, but the same settings apply
-                                to any client. Start by filling the
-                                public ip and the public port of the
-                                cloudpipe instance.</para>
-                            <para>This information can be found by
-                                running a
-                                <screen><prompt>$</prompt> <userinput>nova cloudpipe-list</userinput></screen></para>
-                            <programlisting>
-+----------------------------------+------------+-------------+---------------+
+                        </para>         
+                </section>
+                <section xml:id="connect_with_interface"><title>Connect to your cloudpipe instance with a client</title><procedure>
+                        <step><para>Download an OpenVPN client.</para>
+                        <para>To connect to the project's network,
+                            you require an OpenVPN client for your
+                            computer. Here are several clients:</para><itemizedlist>
+                                <listitem>
+                                    <para>For Ubuntu:</para>
+                                    <para><link
+                                        xlink:href="apt://openvpn"
+                                        >OpenVPN</link>
+                                    </para>
+                                    <para>
+                                        <link
+                                            xlink:href="apt://network-manager-openvpn"
+                                            >network-manager-openvpn</link>
+                                    </para>
+                                    <para>
+                                        <link xlink:href="apt://kvpnc"
+                                            >kvpnc</link> (For Kubuntu)</para>
+                                    <para>
+                                        <link xlink:href="apt://gopenvpn"
+                                            >gopenvpn</link></para>
+                                </listitem>
+                                <listitem>
+                                    <para>For Mac OsX:</para>
+                                    <para>
+                                        <link
+                                            xlink:href="http://openvpn.net/"
+                                            >OpenVPN (Official Client)</link>
+                                    </para>
+                                    <para>
+                                        <link
+                                            xlink:href="http://www.thesparklabs.com/viscosity/"
+                                            >Viscosity</link>
+                                    </para>
+                                    <para>
+                                        <link
+                                            xlink:href="http://code.google.com/p/tunnelblick/"
+                                            >Tunnelblick</link>
+                                    </para>
+                                </listitem>
+                                <listitem>
+                                    <para>For Windows:</para>
+                                    <para>
+                                        <link
+                                            xlink:href="http://openvpn.net/"
+                                            >OpenVPN (Official Client)</link>
+                                    </para>
+                                </listitem>
+                            </itemizedlist>
+                    </step>
+                    <step>
+                        <para>Configure your client.</para>
+                        <para>In this example, we use
+                            Viscosity, but the same settings apply
+                            to any client. Start by filling the
+                            public ip and the public port of the
+                            cloudpipe instance.</para>
+                        <para>This information can be found by
+                            running the following command:</para>
+                        <screen><prompt>$</prompt> <userinput>nova cloudpipe-list</userinput></screen>
+                        <screen><computeroutput>+----------------------------------+------------+-------------+---------------+
 |            Project Id            | Public IP  | Public Port |  Internal IP  |
 +----------------------------------+------------+-------------+---------------+
 | d1f5d27ccf594cdbb034c8a4123494e9 | 172.17.1.3 | 1000        | 192.168.22.34 |
-+----------------------------------+------------+-------------+---------------+
-                            </programlisting>
-                            <figure
-                                xml:id="cloudpipe-viscosity-configuration">
-                                <title>Configuring Viscosity</title>
-                                <itemizedlist>
-                                   <listitem>
-                                   <para>Connection Name:
-                                   "OpenStack-cloudpipe"</para>
-                                   <para>Remote server: "172.17.1.3" </para>
-                                   <para>Port: "1000"</para>
-                                   <para>Protocol: "udp"</para>
-                                   <para>Device Type: "tap"</para>
-                                   </listitem>
-                                </itemizedlist>
-                            </figure>
-
-                            <mediaobject>
-                                <imageobject>
-                                   <imagedata scale="80"
-                                   fileref="figures/cloudpipe/cloudpipe-viscosity-step1.jpg"
-                                   />
-                                </imageobject>
-                            </mediaobject>
++----------------------------------+------------+-------------+---------------+</computeroutput></screen>
+                    </step>
+<step><title>Configure Viscosity</title>                       
+                        <informalfigure
+                            xml:id="cloudpipe-viscosity-configuration">
                             <itemizedlist>
                                 <listitem>
-                                   <para>Certificate: The generated
-                                   certificate</para>
-                                   <para>Key: The private key</para>
+                                    <para>Connection Name:
+                                        "OpenStack-cloudpipe"</para>
+                                    <para>Remote server: "172.17.1.3" </para>
+                                    <para>Port: "1000"</para>
+                                    <para>Protocol: "udp"</para>
+                                    <para>Device Type: "tap"</para>
                                 </listitem>
                             </itemizedlist>
-                            <mediaobject>
-                                <imageobject>
-                                   <imagedata scale="80"
-                                   fileref="figures/cloudpipe/cloudpipe-viscosity-step2.jpg"
-                                   />
-                                </imageobject>
-                            </mediaobject>
-                            <itemizedlist>
-                                <listitem>
-                                   <para>Persistence options:
-                                   "Persistent TUN" and "Persistent
-                                   key"</para>
-                                   <para>Other:" No bind"</para>
-                                </listitem>
-                            </itemizedlist>
-                            <mediaobject>
-                                <imageobject>
-                                   <imagedata scale="80"
-                                   fileref="figures/cloudpipe/cloudpipe-viscosity-step3.jpg"
-                                   />
-                                </imageobject>
-                            </mediaobject>
-                            <itemizedlist>
-                                <listitem>
-                                   <para>Advanced</para>
-                                   <para>Extra settings: "nobind" and
-                                   "resolv-retry infinite" </para>
-                                </listitem>
-                            </itemizedlist>
-                            <mediaobject>
-                                <imageobject>
-                                   <imagedata scale="80"
-                                   fileref="figures/cloudpipe/cloudpipe-viscosity-step4.jpg"
-                                   />
-                                </imageobject>
-                            </mediaobject>
-
-                        </listitem>
-                    </orderedlist>You can now save the configuration
-                    and establish the connection!</para>
-                <para/>
-            </section>
+                        </informalfigure>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata scale="80"
+                                    fileref="figures/cloudpipe/cloudpipe-viscosity-step1.jpg"
+                                />
+                            </imageobject>
+                        </mediaobject>
+                        <itemizedlist>
+                            <listitem>
+                                <para>Certificate: The generated
+                                    certificate</para>
+                                <para>Key: The private key</para>
+                            </listitem>
+                        </itemizedlist>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata scale="80"
+                                    fileref="figures/cloudpipe/cloudpipe-viscosity-step2.jpg"
+                                />
+                            </imageobject>
+                        </mediaobject>
+                        <itemizedlist>
+                            <listitem>
+                                <para>Persistence options:
+                                    "Persistent TUN" and "Persistent
+                                    key"</para>
+                                <para>Other:" No bind"</para>
+                            </listitem>
+                        </itemizedlist>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata scale="80"
+                                    fileref="figures/cloudpipe/cloudpipe-viscosity-step3.jpg"
+                                />
+                            </imageobject>
+                        </mediaobject>
+                        <itemizedlist>
+                            <listitem>
+                                <para>Advanced</para>
+                                <para>Extra settings: "nobind" and
+                                    "resolv-retry infinite" </para>
+                            </listitem>
+                        </itemizedlist>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata scale="80"
+                                    fileref="figures/cloudpipe/cloudpipe-viscosity-step4.jpg"
+                                />
+                            </imageobject>
+                        </mediaobject></step>           
+                       <step> <para>You can now save the configuration
+                            and establish the connection!</para></step></procedure></section>
             <section xml:id="cloudpipe-misc">
                 <title>Cloudpipe Troubleshooting and
                     Automation</title>
                 <itemizedlist>
-
                     <listitem>
                         <para><emphasis role="bold">Troubleshoot your
                                 cloudpipe instance</emphasis></para>
                         <para>A periodic task disassociates the fixed
-                            ip address for the cloudpipe instance.
-                            Into
-                                <filename>/var/log/nova/nova-network.log</filename>,
-                            the following line should appear:
-                            <programlisting>Running periodic task VlanManager._disassociate_stale_fixed_ips from (pid=21578) periodic_tasks /usr/lib/python2.7/dist-packages/nova/manager.py:152</programlisting>
-                            Once the job has been run,
-                                <prompt>$</prompt>
-                            <userinput>nova
-                                cloudpipe-list</userinput>should not
-                            return anything ; but if the cloudpipe
-                            instance is respawned too quickly; the
-                            following error could be encountered:
-                            <programlisting>ERROR nova.rpc.amqp Returning exception Fixed IP address 192.168.22.34 is already in use.</programlisting>
-                            In order to resolve that issue, log into
-                            the mysql server and update the ip address
-                            status:
-                            <screen><prompt>(mysql)</prompt> <userinput>use nova;</userinput></screen><screen><prompt>(mysql)</prompt> <userinput>SELECT * FROM fixed_ips WHERE address='192.168.22.34';</userinput></screen><programlisting>
-+---------------------+---------------------+------------+---------+-----+---------------+------------+-------------+-----------+--------+----------+----------------------+------+
+                                ip address for the cloudpipe instance.
+                                Into
+                                   <filename>/var/log/nova/nova-network.log</filename>,
+                                the following line should appear:
+                                <programlisting>Running periodic task VlanManager._disassociate_stale_fixed_ips from (pid=21578) periodic_tasks /usr/lib/python2.7/dist-packages/nova/manager.py:152</programlisting>
+                                Once the job has been run,
+                                   <prompt>$</prompt>
+                                <userinput>nova
+                                   cloudpipe-list</userinput>should
+                                not return anything ; but if the
+                                cloudpipe instance is respawned too
+                                quickly; the following error could be
+                                encountered:
+                                <programlisting>ERROR nova.rpc.amqp Returning exception Fixed IP address 192.168.22.34 is already in use.</programlisting>
+                                In order to resolve that issue, log
+                                into the mysql server and update the
+                                ip address status:
+                                <screen><prompt>(mysql)</prompt> <userinput>use nova;</userinput></screen><screen><prompt>(mysql)</prompt> <userinput>SELECT * FROM fixed_ips WHERE address='192.168.22.34';</userinput></screen><programlisting>+---------------------+---------------------+------------+---------+-----+---------------+------------+-------------+-----------+--------+----------+----------------------+------+
 | created_at          | updated_at          | deleted_at | deleted | id  | address       | network_id | instance_id | allocated | leased | reserved | virtual_interface_id | host |
 +---------------------+---------------------+------------+---------+-----+---------------+------------+-------------+-----------+--------+----------+----------------------+------+
 | 2012-05-21 12:06:18 | 2012-06-18 09:26:25 | NULL       |       0 | 484 | 192.168.22.34 |         13 |         630 |         0 |      0 |        1 |                 NULL | NULL |
-+---------------------+---------------------+------------+---------+-----+---------------+------------+-------------+-----------+--------+----------+----------------------+------+
-                    </programlisting><screen><prompt>(mysql)</prompt> <userinput>UPDATE fixed_ips SET allocated=0, leased=0, instance_id=NULL WHERE address='192.168.22.34';</userinput></screen><screen><prompt>(mysql)</prompt> <userinput>SELECT * FROM fixed_ips WHERE address='192.168.22.34';</userinput></screen><programlisting> +---------------------+---------------------+------------+---------+-----+---------------+------------+-------------+-----------+--------+----------+----------------------+------+
++---------------------+---------------------+------------+---------+-----+---------------+------------+-------------+-----------+--------+----------+----------------------+------+                  </programlisting><screen><prompt>(mysql)</prompt> <userinput>UPDATE fixed_ips SET allocated=0, leased=0, instance_id=NULL WHERE address='192.168.22.34';</userinput></screen><screen><prompt>(mysql)</prompt> <userinput>SELECT * FROM fixed_ips WHERE address='192.168.22.34';</userinput></screen><programlisting>+---------------------+---------------------+------------+---------+-----+---------------+------------+-------------+-----------+--------+----------+----------------------+------+
 | created_at          | updated_at          | deleted_at | deleted | id  | address       | network_id | instance_id | allocated | leased | reserved | virtual_interface_id |      |                 +---------------------+---------------------+------------+---------+-----+---------------+------------+-------------+-----------+--------+----------+----------------------+------+
 | 2012-05-21 12:06:18 | 2012-06-18 09:26:25 | NULL       |       0 | 484 | 192.168.22.34 |         13 |        NULL |         0 |      0 |        1 |                 NULL | NULL |
-+---------------------+---------------------+------------+---------+-----+---------------+------------+-------------+-----------+--------+----------+----------------------+------+
-                    </programlisting>
-                        </para>
++---------------------+---------------------+------------+---------+-----+---------------+------------+-------------+-----------+--------+----------+----------------------+------+                </programlisting>
+                            </para>
                     </listitem>
                     <listitem>
                         <para><emphasis role="bold">Cloudpipe-related
@@ -2048,7 +1948,6 @@ persist-key</programlisting>
                         <para>Credentials are stored into
                                 <filename>/var/lib/nova/CA/projects/</filename>
                         </para>
-                        <para/>
                     </listitem>
                     <listitem>
                         <para><emphasis role="bold">Automate the
@@ -2069,8 +1968,7 @@ persist-key</programlisting>
         <title>Enabling Ping and SSH on VMs</title>
         <para>Be sure you enable access to your VMs by using the
                 <command>euca-authorize</command> or <command>nova
-                secgroup-add-rule</command> command. Below, you will
-            find the commands to allow <command>ping</command> and
+                secgroup-add-rule</command> command. The following commands allow you to <command>ping</command> and
                 <command>ssh</command> to your VMs:</para>
         <note>
             <para>These commands need to be run as root only if the
@@ -2081,15 +1979,11 @@ persist-key</programlisting>
                 necessary to run these commands as the user.</para>
         </note>
         <para>Using the nova command-line tool:</para>
-        <screen>
-<prompt>$</prompt> <userinput>nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0</userinput>
-<prompt>$</prompt> <userinput>nova secgroup-add-rule default tcp 22 22 0.0.0.0/0</userinput>
-            </screen>
+        <screen><prompt>$</prompt> <userinput>nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0</userinput>
+<prompt>$</prompt> <userinput>nova secgroup-add-rule default tcp 22 22 0.0.0.0/0</userinput>           </screen>
         <para>Using euca2ools:</para>
-        <screen>
-<prompt>$</prompt> <userinput>euca-authorize -P icmp -t -1:-1 -s 0.0.0.0/0 default</userinput>
-<prompt>$</prompt> <userinput>euca-authorize -P tcp -p 22 -s 0.0.0.0/0 default</userinput>
-            </screen>
+        <screen><prompt>$</prompt> <userinput>euca-authorize -P icmp -t -1:-1 -s 0.0.0.0/0 default</userinput>
+<prompt>$</prompt> <userinput>euca-authorize -P tcp -p 22 -s 0.0.0.0/0 default</userinput>         </screen>
 
         <para>If you still cannot ping or SSH your instances after
             issuing the <command>nova secgroup-add-rule</command>
@@ -2098,10 +1992,8 @@ persist-key</programlisting>
             instance, check to see that TWO <literal>dnsmasq</literal>
             processes are running. If not, perform the following as
             root:</para>
-        <screen>
-<prompt>#</prompt> <userinput>killall dnsmasq</userinput>
-<prompt>#</prompt> <userinput>service nova-network restart</userinput>
-           </screen>
+        <screen><prompt>#</prompt> <userinput>killall dnsmasq</userinput>
+<prompt>#</prompt> <userinput>service nova-network restart</userinput>         </screen>
     </section>
     <section xml:id="associating-public-ip">
         <title>Configuring Public (Floating) IP Addresses</title>
@@ -2118,11 +2010,9 @@ persist-key</programlisting>
                 virtual instances.</para>
             <para>If you plan to use this feature, you must add the
                 following to your nova.conf file to specify which
-                interface the nova-network service will bind public IP
+                interface the nova-network service binds public IP
                 addresses to:</para>
-            <programlisting>
-public_interface=vlan100
-        </programlisting>
+            <programlisting>public_interface=vlan100</programlisting>
             <para>Restart the nova-network service if you change
                 nova.conf while the service is running.</para>
             <note>
@@ -2162,25 +2052,24 @@ public_interface=vlan100
             <para>you can check if the forwarding is enabled by
                 running the following command: <screen><prompt>$</prompt> <userinput>cat /proc/sys/net/ipv4/ip_forward</userinput></screen>
                 <screen><computeroutput>0</computeroutput></screen></para>
-            <para>Or using sysctl<screen><prompt>$</prompt> <userinput>sysctl net.ipv4.ip_forward</userinput></screen>
-                <screen><computeroutput>net.ipv4.ip_forward = 0</computeroutput></screen>
-            </para>
+            <para>Or using
+                    sysctl<screen><prompt>$</prompt> <userinput>sysctl net.ipv4.ip_forward</userinput></screen><screen><computeroutput>net.ipv4.ip_forward = 0</computeroutput></screen></para>
             <para>In this example, the IP forwarding is disabled. You
-                can enable it on the fly by running the following
-                command:
-                <screen><prompt>$</prompt> <userinput>sysctl -w net.ipv4.ip_forward=1</userinput></screen>or
-                <screen><prompt>$</prompt> <userinput>echo 1 > /proc/sys/net/ipv4/ip_forward</userinput></screen>
-                In order to make the changes permanent, edit the
-                    <filename>/etc/sysctl.conf</filename> and update
-                the IP forwarding setting:
-                <programlisting>net.ipv4.ip_forward = 1</programlisting>
-                Save the file and run the following command in order
-                to apply the changes:
-                <screen><prompt>$</prompt> <userinput>sysctl -p</userinput></screen>
-                It is also possible to update the setting by
-                restarting the network service. Here's an example for
-                Ubuntu:
-                <screen os="ubuntu"><userinput><prompt>$</prompt>/etc/init.d/procps.sh restart</userinput></screen></para>
+                    can enable it on the fly by running the following
+                    command:
+                    <screen><prompt>$</prompt> <userinput>sysctl -w net.ipv4.ip_forward=1</userinput></screen>or
+                    <screen><prompt>$</prompt> <userinput>echo 1 > /proc/sys/net/ipv4/ip_forward</userinput></screen>To
+                    make the changes permanent, edit the
+                        <filename>/etc/sysctl.conf</filename> and
+                    update the IP forwarding setting:
+                    <programlisting>net.ipv4.ip_forward = 1</programlisting>
+                    Save the file and run the following command in
+                    order to apply the changes:
+                    <screen><prompt>$</prompt> <userinput>sysctl -p</userinput></screen>
+                    It is also possible to update the setting by
+                    restarting the network service. Here's an example
+                    for Ubuntu:
+                    <screen os="ubuntu"><userinput><prompt>$</prompt>/etc/init.d/procps.sh restart</userinput></screen></para>
             <para>Here's an example for RHEL/Fedora/CentOS:</para>
             <para>
                 <screen os="rhel;fedora;centos"><prompt>$</prompt> <userinput>service network restart</userinput></screen>
@@ -2195,9 +2084,7 @@ public_interface=vlan100
                     <command>nova-manage floating create</command>
                 command to add entries to this list, as root.</para>
             <para>For example:</para>
-            <screen>
-<prompt>#</prompt> <userinput>nova-manage floating create --pool=nova --ip_range=68.99.26.170/31</userinput>
-        </screen>
+            <screen><prompt>#</prompt> <userinput>nova-manage floating create --pool=nova --ip_range=68.99.26.170/31</userinput>     </screen>
             <para>The following nova-manage commands apply to floating
                 IPs.</para>
             <itemizedlist>
@@ -2236,26 +2123,22 @@ public_interface=vlan100
                 Add the following line to nova.conf and restart the
                 nova-network service</para>
 
-            <programlisting>
-auto_assign_floating_ip=True
-            </programlisting>
+            <programlisting>auto_assign_floating_ip=True          </programlisting>
             <para>Note that if this option is enabled and all of the
                 floating IP addresses have already been allocated, the
-                    <command>nova boot</command> command will fail
+                    <command>nova boot</command> command fails
                 with an error.</para>
         </section>
     </section>
     <section xml:id="removing-network-from-project">
         <title>Removing a Network from a Project</title>
-        <para>You will find that you cannot remove a network that has
+        <para>You cannot remove a network that has
             already been associated to a project by simply deleting
             it.</para>
         <para>To determine the project ID you must have admin rights.
             You can disassociate the project from the network with a
             scrub command and the project ID as the final parameter:</para>
-        <screen>
-<prompt>$</prompt> <userinput>nova-manage project scrub --project=<replaceable>&lt;id></replaceable></userinput>
-        </screen>
+        <screen><prompt>$</prompt> <userinput>nova-manage project scrub --project=<replaceable>&lt;id></replaceable></userinput>      </screen>
     </section>
     <section xml:id="using-multi-nics">
         <title>Using multiple interfaces for your instances
@@ -2444,8 +2327,7 @@ send_arp_for_ha=true</programlisting>
                 date.</para>
             <para>If a compute host is also an API endpoint, use the
                     <systemitem class="service">nova-api</systemitem> service. Your
-                    <literal>enabled_apis</literal> option will need
-                to contain <literal>metadata</literal>, as well as
+                    <literal>enabled_apis</literal> option must contain <literal>metadata</literal>, as well as
                 additional options depending on the API services. For
                 example, if it supports compute requests, volume
                 requests, and EC2 compatibility, the
@@ -2458,7 +2340,7 @@ enabled_apis=ec2,osapi_compute,osapi_volume,metadata</programlisting></para>
             <para>The <literal>multi_host</literal> option must be in
                 place when you create the network and nova-network
                 must be run on every compute host. These created multi
-                hosts networks will send all network related commands
+                hosts networks send all network related commands
                 to the host that the specific VM is on. You need to
                 edit the configuration option
                     <literal>enabled_apis</literal> such that it
@@ -2534,7 +2416,7 @@ enabled_apis=ec2,osapi_compute,osapi_volume,metadata</programlisting></para>
                     <listitem>
                         <para>Create a <systemitem class="service"
                                 >dnsmasq</systemitem> configuration
-                            file (e.g.,
+                            file (for example,
                                 <filename>/etc/dnsmasq-nova.conf</filename>)
                             that contains the IP address of the
                             external gateway. If running in FlatDHCP
@@ -2561,7 +2443,7 @@ enabled_apis=ec2,osapi_compute,osapi_volume,metadata</programlisting></para>
                                 <literal>172.16.102.1</literal>, the
                                 <systemitem class="service"
                                 >dnsmasq</systemitem>configuration
-                            file (e.g.,
+                            file (for example,
                                 <filename>/etc/dnsmasq-nova.conf</filename>)
                             would contain the
                             following:<programlisting>dhcp-option=tag:'red',option:router,172.16.100.1
@@ -2623,8 +2505,8 @@ dhcp-option=tag:'blue',option:router,172.16.102.1</programlisting></para>
                 the floating IP address, make sure the default
                 security group allows ICMP (ping) and SSH (port 22),
                 so that you can reach the instances:</para>
-            <screen><prompt>$</prompt> <userinput>nova secgroup-list-rules default</userinput>
-<computeroutput>+-------------+-----------+---------+-----------+--------------+
+            <screen><prompt>$</prompt> <userinput>nova secgroup-list-rules default</userinput></screen>
+                <screen><computeroutput>+-------------+-----------+---------+-----------+--------------+
 | IP Protocol | From Port | To Port |  IP Range | Source Group |
 +-------------+-----------+---------+-----------+--------------+
 | icmp        | -1        | -1      | 0.0.0.0/0 |              |
@@ -2633,29 +2515,22 @@ dhcp-option=tag:'blue',option:router,172.16.102.1</programlisting></para>
             <para>Ensure the NAT rules have been added to iptables on
                 the node that nova-network is running on, as
                 root:</para>
-            <screen><prompt>#</prompt> <userinput>iptables -L -nv</userinput>
-<computeroutput>
- -A nova-network-OUTPUT -d 68.99.26.170/32 -j DNAT --to-destination 10.0.0.3
-</computeroutput>
-<prompt>#</prompt> <userinput>iptables -L -nv -t nat</userinput>
-<computeroutput>
--A nova-network-PREROUTING -d 68.99.26.170/32 -j DNAT --to-destination10.0.0.3
+            <screen><prompt>#</prompt> <userinput>iptables -L -nv</userinput></screen>
+                <screen><computeroutput>-A nova-network-OUTPUT -d 68.99.26.170/32 -j DNAT --to-destination 10.0.0.3</computeroutput></screen>
+                <screen><prompt>#</prompt> <userinput>iptables -L -nv -t nat</userinput></screen>
+                <screen><computeroutput>-A nova-network-PREROUTING -d 68.99.26.170/32 -j DNAT --to-destination10.0.0.3
 -A nova-network-floating-snat -s 10.0.0.3/32 -j SNAT --to-source 68.99.26.170</computeroutput>           </screen>
             <para>Check that the public address, in this example
                 "68.99.26.170", has been added to your public
                 interface: You should see the address in the listing
                 when you enter "ip addr" at the command prompt.</para>
-            <screen>
-<prompt>$</prompt> <userinput>ip addr</userinput>
-<computeroutput>
-2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP qlen 1000
+            <screen><prompt>$</prompt> <userinput>ip addr</userinput></screen>
+                <screen><computeroutput>2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP qlen 1000
 link/ether xx:xx:xx:17:4b:c2 brd ff:ff:ff:ff:ff:ff
 inet 13.22.194.80/24 brd 13.22.194.255 scope global eth0
 inet 68.99.26.170/32 scope global eth0
 inet6 fe80::82b:2bf:fe1:4b2/64 scope link
-valid_lft forever preferred_lft forever
-</computeroutput>
-            </screen>
+valid_lft forever preferred_lft forever</computeroutput>         </screen>
 
             <para>Note that you cannot SSH to an instance with a
                 public IP from within the same server as the routing
@@ -2671,7 +2546,7 @@ valid_lft forever preferred_lft forever
                 root:<screen><prompt>#</prompt> <userinput>sysctl -w net.ipv4.conf.<replaceable>eth2</replaceable>.rp_filter=0</userinput></screen></para>
             <para>If this solves your issue, add the following line to
                     <filename>/etc/sysctl.conf</filename> so that the
-                reverse path filter will be disabled the next time the
+                reverse path filter is disabled the next time the
                 compute host
                 reboots:<programlisting>net.ipv4.conf.rp_filter=0</programlisting></para>
         </simplesect>
@@ -2691,14 +2566,14 @@ valid_lft forever preferred_lft forever
             <para>If you can SSH to your instances but you find that
                 the network interactions to your instance is slow, or
                 if you find that running certain operations are slower
-                than they should be (e.g., <command>sudo</command>),
+                than they should be (for example, <command>sudo</command>),
                 then there may be packet loss occurring on the
                 connection to the instance.</para>
             <para>Packet loss can be caused by Linux networking
                 configuration settings related to bridges. Certain
                 settings can cause packets to be dropped between the
-                VLAN interface (e.g., <literal>vlan100</literal>) and
-                the associated bridge interface (e.g.,
+                VLAN interface (for example, <literal>vlan100</literal>) and
+                the associated bridge interface (for example,
                     <literal>br100</literal>) on the host running the
                 nova-network service.</para>
             <para>One way to check if this is the issue in your setup
@@ -2708,43 +2583,43 @@ valid_lft forever preferred_lft forever
                 nova-network, use <command>tcpdump</command> to
                 monitor DNS-related traffic (UDP, port 53) on the VLAN
                 interface. As
-                root:<screen><prompt>#</prompt> <userinput>tcpdump -K -p -i vlan100 -v -vv udp port 53</userinput></screen></para>
+                root:</para><screen><prompt>#</prompt> <userinput>tcpdump -K -p -i vlan100 -v -vv udp port 53</userinput></screen>
             <para>In the second terminal, also on the host running
                 nova-network, use <command>tcpdump</command> to
                 monitor DNS-related traffic on the bridge interface.
                 As
-                root:<screen><prompt>#</prompt> <userinput>tcpdump -K -p -i br100 -v -vv udp port 53</userinput></screen></para>
+                root:</para><screen><prompt>#</prompt> <userinput>tcpdump -K -p -i br100 -v -vv udp port 53</userinput></screen>
             <para>In the third terminal, SSH inside of the instance
                 and generate DNS requests by using the
                     <command>nslookup</command>
-                command:<screen><prompt>$</prompt> <userinput>nslookup www.google.com</userinput></screen></para>
+                command:</para><screen><prompt>$</prompt> <userinput>nslookup www.google.com</userinput></screen>
             <para>The symptoms may be intermittent, so try running
                     <command>nslookup</command> multiple times. If the
                 network configuration is correct, the command should
                 return immediately each time. If it is not functioning
-                properly, the command will hang for several
+                properly, the command hangs for several
                 seconds.</para>
             <para>If the <command>nslookup</command> command sometimes
                 hangs, and there are packets that appear in the first
                 terminal but not the second, then the problem may be
                 due to filtering done on the bridges. Try to disable
                 filtering, as
-                root:<screen><prompt>#</prompt> <userinput>sysctl -w net.bridge.bridge-nf-call-arptables=0</userinput>
+                root:</para><screen><prompt>#</prompt> <userinput>sysctl -w net.bridge.bridge-nf-call-arptables=0</userinput>
 <prompt>#</prompt> <userinput>sysctl -w net.bridge.bridge-nf-call-iptables=0</userinput>
-<prompt>#</prompt> <userinput>sysctl -w net.bridge.bridge-nf-call-ip6tables=0</userinput></screen></para>
+<prompt>#</prompt> <userinput>sysctl -w net.bridge.bridge-nf-call-ip6tables=0</userinput></screen>
             <para>If this solves your issue, add the following line to
                     <filename>/etc/sysctl.conf</filename> so that
-                these changes will take effect the next time the host
-                reboots:<programlisting>net.bridge.bridge-nf-call-arptables=0
+                these changes take effect the next time the host
+                reboots:</para><programlisting>net.bridge.bridge-nf-call-arptables=0
 net.bridge.bridge-nf-call-iptables=0
-net.bridge.bridge-nf-call-ip6tables=0</programlisting></para>
+net.bridge.bridge-nf-call-ip6tables=0</programlisting>
         </simplesect>
         <simplesect>
             <title>KVM: Network connectivity works initially, then
                 fails</title>
             <para>Some administrators have observed an issue with the
                 KVM hypervisor where instances running Ubuntu 12.04
-                will sometimes lose network connectivity after
+                sometimes loses network connectivity after
                 functioning properly for a period of time. Some users
                 have reported success with loading the vhost_net
                 kernel module as a workaround for this issue (see
@@ -2756,8 +2631,9 @@ net.bridge.bridge-nf-call-ip6tables=0</programlisting></para>
                     >improve network performance on KVM</link>. To
                 load the kernel module, as
                 root:<screen><prompt>#</prompt> <userinput>modprobe vhost_net</userinput></screen></para>
-            <para>Note that loading the module has no effect on
-                running instances.</para>
+            <note><para>Loading the module has no effect on
+                running instances.</para></note>
         </simplesect>
+    </section>
     </section>
 </chapter>

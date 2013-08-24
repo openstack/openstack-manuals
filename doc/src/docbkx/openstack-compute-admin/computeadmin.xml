@@ -23,31 +23,37 @@ format="SVG" scale="60"/>
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="ch_system-administration-for-openstack-compute">
-
     <title>System Administration</title>
     <para>By understanding how the different installed nodes interact with each other you can
         administer the OpenStack Compute installation. OpenStack Compute offers many ways to install
         using multiple servers but the general idea is that you can have multiple compute nodes that
         control the virtual servers and a cloud controller node that contains the remaining Nova services.</para>
-    <para>The OpenStack Compute cloud works via the interaction of a series of daemon processes
+    <para>The OpenStack Compute cloud works through the interaction of a series of daemon processes
         named nova-* that reside persistently on the host machine or machines. These binaries can
         all run on the same machine or be spread out on multiple boxes in a large deployment. The
         responsibilities of Services, Managers, and Drivers, can be a bit confusing at first. Here
         is an outline the division of responsibilities to make understanding the system a little bit
         easier.</para>
-    <para>Currently, Services are <systemitem class="service">nova-api</systemitem>, <systemitem class="service">nova-objectstore</systemitem> (which can be replaced with Glance, the
-        OpenStack Image Service), <systemitem class="service">nova-compute</systemitem>, and nova-network. Managers and Drivers are specified
-        by configuration options and loaded using utils.load_object(). Managers are responsible for
-        a certain aspect of the system. It is a logical grouping of code relating to a portion of
-        the system. In general other components should be using the manager to make changes to the
+    <para>Currently, Services are <systemitem class="service"
+            >nova-api</systemitem>, <systemitem class="service"
+            >nova-objectstore</systemitem> (which can be replaced with
+        Glance, the OpenStack Image Service), <systemitem
+            class="service">nova-compute</systemitem>, and
+            <systemitem class="service">nova-network</systemitem>. Managers and
+        Drivers are specified by configuration options and loaded
+        using utils.load_object(). Managers are responsible for a
+        certain aspect of the system. It is a logical grouping of code
+        relating to a portion of the system. In general other
+        components should be using the manager to make changes to the
         components that it is responsible for.</para>
 <itemizedlist>
         <listitem>
-            <para>nova-api. Receives xml requests and sends them to
-                the rest of the system. It is a wsgi app that routes
-                and authenticate requests. It supports the EC2 and
-                OpenStack APIs. There is a nova-api.conf file created
-                when you install Compute.</para>
+            <para><systemitem class="service">nova-api</systemitem>. Receives xml
+                requests and sends them to the rest of the system. It
+                is a wsgi app that routes and authenticate requests.
+                It supports the EC2 and OpenStack APIs. There is a
+                nova-api.conf file created when you install
+                Compute.</para>
         </listitem>
         <listitem>
             <para><systemitem class="service">nova-objectstore</systemitem>: The <systemitem class="service">nova-objectstore</systemitem> service is an ultra simple file-based
@@ -64,15 +70,15 @@ format="SVG" scale="60"/>
                 through Remote Procedure Call (RPC).</para>
         </listitem>
         <listitem>
-            <para>nova-network. Responsible for managing floating and
-                fixed IPs, DHCP, bridging and VLANs. It loads a
-                Service object which exposes the public methods on one
-                of the subclasses of NetworkManager. Different
-                networking strategies are available to the service by
-                changing the network_manager configuration option to
-                FlatManager, FlatDHCPManager, or VlanManager (default
-                is VLAN if no other is specified).</para>
-
+            <para><systemitem class="service">nova-network</systemitem>. Responsible
+                for managing floating and fixed IPs, DHCP, bridging
+                and VLANs. It loads a Service object which exposes the
+                public methods on one of the subclasses of
+                NetworkManager. Different networking strategies are
+                available to the service by changing the
+                network_manager configuration option to FlatManager,
+                FlatDHCPManager, or VlanManager (default is VLAN if no
+                other is specified).</para>
         </listitem>
     </itemizedlist>
     <section xml:id="understanding-the-compute-service-architecture">
@@ -125,8 +131,8 @@ format="SVG" scale="60"/>
         <simplesect>
             <title>Compute Worker</title>
             <para>Compute workers manage computing instances on host
-                machines. Through the API, commands are dispatched to
-                compute workers to:</para>
+                machines. The API dispatches commands to compute
+                workers to complete the following tasks:</para>
             <itemizedlist>
                 <listitem>
                     <para>Run instances</para>
@@ -175,25 +181,24 @@ format="SVG" scale="60"/>
             access and secret key. The user’s access key needs to be
             included in the request, and the request must be signed
             with the secret key. Upon receipt of API requests, Compute
-            will verify the signature and execute commands on behalf
+            verifies the signature and runs commands on behalf
             of the user.</para>
         <para>To begin using nova, you must create a user with the
             Identity Service.</para>
     </section>
     <section xml:id="managing-the-cloud">
-
         <title>Managing the Cloud</title>
-        <para>There are three main tools that a system administrator
-            will find useful to manage their cloud; the nova client,
+        <para>TA system administrator
+            can use the following tools to manage their cloud; the nova client,
             the nova-manage command, and the Euca2ools commands.</para>
-        <para>The nova-manage command may only be run by cloud
+        <para>The nova-manage command can only be run by cloud
             administrators. Both novaclient and euca2ools can be used
             by all users, though specific commands may be restricted
             by Role Based Access Control in the Identity Management
             service.</para>
-        <simplesect>
-            <title>Using the nova command-line tool</title>
-            <para>Installing the python-novaclient gives you a
+        <procedure>
+            <title>To use the nova command-line tool</title>
+            <step><para>Installing the python-novaclient gives you a
                     <code>nova</code> shell command that enables
                 Compute API interactions from the command line. You
                 install the client, and then provide your username and
@@ -206,97 +211,70 @@ format="SVG" scale="60"/>
                     >http://pypi.python.org/pypi/python-novaclient/2.6.3#downloads</link>
                 and then install it in your favorite python
                 environment.</para>
-
-            <screen>
-<prompt>$</prompt> <userinput>curl -O http://pypi.python.org/packages/source/p/python-novaclient/python-novaclient-2.6.3.tar.gz</userinput>
+            <screen><prompt>$</prompt> <userinput>curl -O http://pypi.python.org/packages/source/p/python-novaclient/python-novaclient-2.6.3.tar.gz</userinput>
 <prompt>$</prompt> <userinput>tar -zxvf python-novaclient-2.6.3.tar.gz</userinput>
 <prompt>$</prompt> <userinput>cd python-novaclient-2.6.3</userinput>
-<prompt>$</prompt> <userinput>sudo python setup.py install</userinput>
-    </screen>
-            <para>Now that you have installed the python-novaclient,
+<prompt>$</prompt> <userinput>sudo python setup.py install</userinput></screen></step>
+            <step><para>Now that you have installed the python-novaclient,
                 confirm the installation by entering:</para>
-            <screen>
-<prompt>$</prompt> <userinput>nova help</userinput>
-</screen>
-            <programlisting>
-usage: nova [--debug] [--os-username OS_USERNAME] [--os-password OS_PASSWORD]
-            [--os-tenant-name_name OS_TENANT_NAME] [--os-auth-url OS_AUTH_URL]
-            [--os-region-name OS_REGION_NAME] [--service-type SERVICE_TYPE]
-            [--service-name SERVICE_NAME] [--endpoint-type ENDPOINT_TYPE]
-            [--version VERSION]
-            &lt;subcommand&gt; ...
-</programlisting>
-            <para>In return, you will get a listing of all the
-                commands and parameters for the nova command line
-                client. By setting up the required parameters as
-                environment variables, you can fly through these
-                commands on the command line. You can add
-                    <literal>--os-username</literal> on the nova
-                command, or set them as environment variables:</para>
-            <para>
-                <screen>
-<prompt>$</prompt> <userinput>export OS_USERNAME=joecool</userinput>
+            <screen><prompt>$</prompt> <userinput>nova help</userinput></screen>
+                <screen><computeroutput>usage: nova [--debug] [--os-username OS_USERNAME] [--os-password OS_PASSWORD]
+[--os-tenant-name_name OS_TENANT_NAME] [--os-auth-url OS_AUTH_URL]
+[--os-region-name OS_REGION_NAME] [--service-type SERVICE_TYPE]
+[--service-name SERVICE_NAME] [--endpoint-type ENDPOINT_TYPE]
+[--version VERSION]
+&lt;subcommand&gt; ...</computeroutput></screen></step>
+           <step> <para>This command returns a list of nova
+                commands and parameters. Set the required parameters as
+                environment variables to make running commands easier. You can add
+                <parameter>--os-username</parameter>, for example, on the nova
+                command, or set it as environment variables:</para>
+            <screen><prompt>$</prompt> <userinput>export OS_USERNAME=joecool</userinput>
 <prompt>$</prompt> <userinput>export OS_PASSWORD=coolword</userinput>
-<prompt>$</prompt> <userinput>export OS_TENANT_NAME=coolu</userinput>
-</screen>
-            </para>
-            <para>Using the Identity Service, you are supplied with an
+<prompt>$</prompt> <userinput>export OS_TENANT_NAME=coolu</userinput>  </screen></step><step><para>Using the Identity Service, you are supplied with an
                 authentication endpoint, which nova recognizes as the
-                    <literal>OS_AUTH_URL</literal>.</para>
+                <literal>OS_AUTH_URL</literal>.</para>
             <para>
-                <screen>
-<prompt>$</prompt> <userinput>export OS_AUTH_URL=http://hostname:5000/v2.0</userinput>
-<prompt>$</prompt> <userinput>export NOVA_VERSION=1.1</userinput>
-</screen>
-            </para>
-        </simplesect>
-
-        <simplesect>
-            <title>Using the nova-manage command</title>
+                <screen><prompt>$</prompt> <userinput>export OS_AUTH_URL=http://hostname:5000/v2.0</userinput>
+<prompt>$</prompt> <userinput>export NOVA_VERSION=1.1</userinput></screen>
+            </para></step>
+        </procedure>
+        <procedure>
+            <title>To use the nova-manage command</title>
             <para>The nova-manage command may be used to perform many
                 essential functions for administration and ongoing
                 maintenance of nova, such as network creation or user
                 manipulation.</para>
-            <para>The man page for nova-manage has a good explanation
+          <step>  <para>The man page for nova-manage has a good explanation
                 for each of its functions, and is recommended reading
                 for those starting out. Access it by running:</para>
-            <screen>
-            <prompt>$</prompt> <userinput>man nova-manage</userinput>
-            </screen>
-
-            <para>For administrators, the standard pattern for
+            <screen><prompt>$</prompt> <userinput>man nova-manage</userinput>  </screen></step>  
+           <step> <para>For administrators, the standard pattern for
                 executing a nova-manage command is:</para>
-            <screen>
-<prompt>$</prompt> <userinput>nova-manage category command <replaceable>[args]</replaceable></userinput>
-            </screen>
-
-            <para>For example, to obtain a list of all projects:
-                    <command>nova-manage project list</command></para>
-
-            <para>Run without arguments to see a list of available
-                command categories: nova-manage</para>
-            <para>You can also run with a category argument such as
-                user to see a list of all commands in that category:
-                nova-manage service</para>
-        </simplesect>
+            <screen><prompt>$</prompt> <userinput>nova-manage category command <replaceable>[args]</replaceable></userinput></screen></step>           
+            <step><para>For example, to obtain a list of all projects:</para>
+                <screen><prompt>$</prompt> <userinput>nova-manage project list</userinput></screen></step>         
+           <step> <para>Run without arguments to see a list of available
+                command categories:</para><screen><prompt>$</prompt> <userinput>nova-manage</userinput></screen></step>
+          <step>  <para>You can also run with a category argument such as
+                user to see a list of all commands in that category:</para>
+                <screen><prompt>$</prompt> <userinput>nova-manage service</userinput></screen></step>
+        </procedure>
         <simplesect>
-            <title>Using the euca2ools commands</title>
-            <para>For a command-line interface to EC2 API calls, use
-                the euca2ools command line tool. It is documented at
-                    <link
+            <title>To use the euca2ools commands</title>
+          <para>For a command-line interface to EC2 API calls, use the
+                euca2ools command line tool. See <link
                     xlink:href="http://open.eucalyptus.com/wiki/Euca2oolsGuide_v1.3"
                     >http://open.eucalyptus.com/wiki/Euca2oolsGuide_v1.3</link></para>
         </simplesect>
-    </section>
-
+    </section> 
     <xi:include href="../common/section_nova_cli_usage_statistics.xml"/>
-
     <section xml:id="logging">
         <title>Managing logs</title>
         <simplesect>
             <title>Logging module</title>
             <para>Adding the following line to the
-                    <filename>/etc/nova/nova.conf</filename> file
+                <filename>/etc/nova/nova.conf</filename> file
                 enables you to specify a configuration file to change
                 the logging behavior, in particular for changing the
                 logging level (such as, <literal>DEBUG</literal>,
@@ -392,10 +370,10 @@ syslog_log_facility = LOG_LOCAL0</programlisting>
                 default on most Linux distributions.</para>
             <para>This example shows a minimal configuration for
                     <filename>/etc/rsyslog.conf</filename> on the log
-                server host which will receive the log
-                files:<programlisting># provides TCP syslog reception
+                server host, which receives the log
+                files:</para><programlisting># provides TCP syslog reception
 $ModLoad imtcp
-$InputTCPServerRun 1024</programlisting></para>
+$InputTCPServerRun 1024</programlisting>
             <para>Add to <filename>/etc/rsyslog.conf</filename> a
                 filter rule on which looks for a hostname. The example
                 below use <replaceable>compute-01</replaceable> as an
@@ -422,31 +400,24 @@ local0.error    @@172.20.1.43:1024</programlisting></para>
         <title>Using Migration</title>
         <!--<para>Before starting migrations, review the <link linkend="configuring-migrations"
                 >Configuring Migrations</link> section.</para>-->
-
         <para>Migration provides a scheme to migrate running instances
             from one OpenStack Compute server to another OpenStack
-            Compute server. This feature can be used as described
-            below.</para>
-
-
-        <itemizedlist>
-            <listitem>
-                <para>First, look at the running instances, to get the
+            Compute server.</para>
+        <procedure><title>To migrate instances</title>
+            <step>
+                <para>Look at the running instances, to get the
                     ID of the instance you wish to migrate.</para>
-                <programlisting>
-<prompt>#</prompt> <userinput>nova list</userinput>
-<![CDATA[+--------------------------------------+------+--------+-----------------+
+                <screen><prompt>#</prompt> <userinput>nova list</userinput></screen>
+                <screen><computeroutput><![CDATA[+--------------------------------------+------+--------+-----------------+
 |                  ID                  | Name | Status |Networks         |
 +--------------------------------------+------+--------+-----------------+
 | d1df1b5a-70c4-4fed-98b7-423362f2c47c | vm1  | ACTIVE | private=a.b.c.d |
 | d693db9e-a7cf-45ef-a7c9-b3ecb5f22645 | vm2  | ACTIVE | private=e.f.g.h |
-+--------------------------------------+------+--------+-----------------+
-                 ]]></programlisting>
-                <para>Second, look at information associated with that
-                    instance - our example is vm1 from above.</para>
-                <programlisting>
-<prompt>#</prompt> <userinput>nova show d1df1b5a-70c4-4fed-98b7-423362f2c47c</userinput>
-<![CDATA[+-------------------------------------+----------------------------------------------------------+
++--------------------------------------+------+--------+-----------------+]]></computeroutput></screen></step>
+            <step><para>Look at information associated with that
+                instance - our example is vm1 from above.</para>
+                <screen><prompt>#</prompt> <userinput>nova show d1df1b5a-70c4-4fed-98b7-423362f2c47c</userinput></screen>
+                <screen><computeroutput><![CDATA[+-------------------------------------+----------------------------------------------------------+
 |               Property              |                          Value                           |
 +-------------------------------------+----------------------------------------------------------+
 ...
@@ -458,42 +429,33 @@ local0.error    @@172.20.1.43:1024</programlisting></para>
 | private network                     | a.b.c.d                                                  |
 | status                              | ACTIVE                                                   |
 ...
-+-------------------------------------+----------------------------------------------------------+
-                 ]]></programlisting>
-
++-------------------------------------+----------------------------------------------------------+]]></computeroutput></screen>
                 <para>In this example, vm1 is running on HostB.</para>
-
-            </listitem>
-            <listitem>
-                <para>Third, select the server to migrate instances
+            </step>
+            <step>
+                <para>Select the server to migrate instances
                     to.</para>
-                <programlisting>
-<prompt>#</prompt> <userinput>nova-manage service list</userinput>
-<![CDATA[HostA nova-scheduler enabled  :-) None
+                <screen><prompt>#</prompt> <userinput>nova-manage service list</userinput></screen>
+                <screen><computeroutput><![CDATA[HostA nova-scheduler enabled  :-) None
 HostA nova-network enabled  :-) None
 HostB nova-compute enabled  :-) None
-HostC nova-compute enabled  :-) None
-                 ]]></programlisting>
-
+HostC nova-compute enabled  :-) None]]></computeroutput></screen>
                 <para>In this example, HostC can be picked up because
-                        <systemitem class="service"
+                    <systemitem class="service"
                         >nova-compute</systemitem> is running on
                     it.</para>
-
-            </listitem>
-            <listitem>
-                <para>Third, ensure that HostC has enough resource for
+            </step>
+            <step>
+                <para>Ensure that HostC has enough resource for
                     migration.</para>
-                <programlisting>
-<prompt>#</prompt> <userinput>nova-manage service describe_resource HostC</userinput>
-<![CDATA[HOST             PROJECT     cpu   mem(mb)     hdd
+                <screen><prompt>#</prompt> <userinput>nova-manage service describe_resource HostC</userinput></screen>
+                <screen><computeroutput><![CDATA[HOST             PROJECT     cpu   mem(mb)     hdd
 HostC(total)                  16     32232     878
 HostC(used_now)               13     21284     442
 HostC(used_max)               13     21284     442
 HostC            p1            5     10240     150
 HostC            p2            5     10240     150
-.....
-                 ]]></programlisting>
+.....]]></computeroutput></screen>
                 <itemizedlist>
                     <listitem>
                         <para><emphasis role="bold">cpu:</emphasis>the
@@ -501,7 +463,7 @@ HostC            p2            5     10240     150
                     </listitem>
                     <listitem>
                         <para><emphasis role="bold"
-                                >mem(mb):</emphasis>total amount of
+                            >mem(mb):</emphasis>total amount of
                             memory (MB)</para>
                     </listitem>
                     <listitem>
@@ -524,19 +486,17 @@ HostC            p2            5     10240     150
                     </listitem>
                     <listitem>
                         <para><emphasis role="bold">4th line and
-                                under</emphasis> is used resource per
+                                under</emphasis> shows the resource for each
                             project.</para>
                     </listitem>
                 </itemizedlist>
-            </listitem>
-            <listitem>
-                <para>Finally, use the <command>nova
+            </step>
+            <step>
+                <para>Use the <command>nova
                         live-migration</command> command to migrate
                     the instances.</para>
-                <programlisting>
-<prompt>#</prompt> <userinput>nova live-migration d1df1b5a-70c4-4fed-98b7-423362f2c47c HostC</userinput>
-<![CDATA[Migration of d1df1b5a-70c4-4fed-98b7-423362f2c47c initiated.
-                 ]]></programlisting>
+                <screen><prompt>#</prompt> <userinput>nova live-migration d1df1b5a-70c4-4fed-98b7-423362f2c47c HostC</userinput></screen>
+                <screen><computeroutput><![CDATA[Migration of d1df1b5a-70c4-4fed-98b7-423362f2c47c initiated.]]></computeroutput></screen>
                 <para>Make sure instances are migrated successfully
                     with <command>nova list</command>. If instances
                     are still running on HostB, check logfiles
@@ -551,8 +511,8 @@ HostC            p2            5     10240     150
                     </note><!--<para>See
                             the <link linkend="configuring-migrations">Configuring Migrations</link>
                             section for more details.</para>--></para>
-            </listitem>
-        </itemizedlist>
+            </step>
+        </procedure>
     </section>
     <section xml:id="nova-compute-node-down">
 	<title>Recovering from a failed compute node</title>
@@ -565,27 +525,22 @@ HostC            p2            5     10240     150
     <section xml:id="nova-compute-node-down-manual-recovery">
     <title>Manual recovery</title>
     <para>For KVM/libvirt compute node recovery refer to section above, while the guide below may be applicable for other hypervisors.</para>
-	<simplesect>
-	    <title>Working with host information</title>
-            <para>
-	The first step is to identify the vms on the affected hosts, using tools such as
+	<procedure>
+	    <title>To work with host information</title>
+            <step><para>Identify the vms on the affected hosts, using tools such as
 	a combination of <literal>nova list</literal> and <literal>nova show</literal> or
 	<literal>euca-describe-instances</literal>. Here's an example using the EC2 API
-	 - instance i-000015b9 that is running on node np-rcc54:
-            </para>
-	<programlisting>
-	i-000015b9 at3-ui02 running nectarkey (376, np-rcc54) 0 m1.xxlarge 2012-06-19T00:48:11.000Z 115.146.93.60
-	</programlisting>
-                <para>First, you can review the status of the host
-                    using the nova database, some of the important
-                    information is highlighted below. This example
-                    converts an EC2 API instance ID into an OpenStack
-                    ID - if you used the <literal>nova</literal>
-                    commands, you can substitute the ID directly. You
-                    can find the credentials for your database in
-                        <literal>/etc/nova.conf</literal>.</para>
-                <programlisting>
-SELECT * FROM instances WHERE id = CONV('15b9', 16, 10) \G;
+	 - instance i-000015b9 that is running on node np-rcc54:</para>
+	<programlisting>i-000015b9 at3-ui02 running nectarkey (376, np-rcc54) 0 m1.xxlarge 2012-06-19T00:48:11.000Z 115.146.93.60</programlisting></step>
+	   <step><para>You can review the status of the host by
+	        using the nova database. Some of the important
+	        information is highlighted below. This example
+	        converts an EC2 API instance ID into an OpenStack
+	        ID - if you used the <literal>nova</literal>
+	        commands, you can substitute the ID directly. You
+	        can find the credentials for your database in
+	        <literal>/etc/nova.conf</literal>.</para>
+                <programlisting>SELECT * FROM instances WHERE id = CONV('15b9', 16, 10) \G;
 *************************** 1. row ***************************
               created_at: 2012-06-19 00:48:11
               updated_at: 2012-07-03 00:35:11
@@ -602,50 +557,40 @@ SELECT * FROM instances WHERE id = CONV('15b9', 16, 10) \G;
                     uuid: 3f57699a-e773-4650-a443-b4b37eed5a06
 ...
               task_state: NULL
-...
-</programlisting>
-            </simplesect>
-            <simplesect>
-                <title>Recover the VM</title>
-                <para>Armed with the information of VMs on the failed
-                    host, determine which compute host the affected
-                    VMs should be moved to. In this case, the VM will
-                    move to np-rcc46, which is achieved using this
-                    database command:</para>
-                <programlisting>
-UPDATE instances SET host = 'np-rcc46' WHERE uuid = '3f57699a-e773-4650-a443-b4b37eed5a06';
-</programlisting>
-
-                <para>Next, if using a hypervisor that relies on
-                    libvirt (such as KVM) it is a good idea to update
-                    the <literal>libvirt.xml</literal> file (found in
-                        <literal>/var/lib/nova/instances/[instance
-                        ID]</literal>). The important changes to make
-                    are to change the <literal>DHCPSERVER</literal>
-                    value to the host ip address of the nova compute
-                    host that is the VMs new home, and update the VNC
-                    IP if it isn't already <literal>0.0.0.0</literal>.</para>
-                <para>Next, reboot the VM:
-                    <screen>
-
-<prompt>$</prompt> <userinput>nova reboot --hard 3f57699a-e773-4650-a443-b4b37eed5a06</userinput>
-</screen>
-                </para>
-                <para>In theory, the above database update and
-                        <literal>nova reboot</literal> command are all
-                    that is required to recover the VMs from a failed
-                    host. However, if further problems occur, consider
-                    looking at recreating the network filter
-                    configuration using <literal>virsh</literal>,
+...</programlisting></step>
+	</procedure>
+        <procedure>
+            <title>To recover the VM</title>
+          <step>  <para>Armed with the information of VMs on the failed
+                host, determine to which compute host the affected
+                VMs should move. Run the following
+                database command to move the VM to np-rcc46:</para>
+            <programlisting>UPDATE instances SET host = 'np-rcc46' WHERE uuid = '3f57699a-e773-4650-a443-b4b37eed5a06'; </programlisting>  </step>
+           <step> <para>Next, if using a hypervisor that relies on
+                libvirt (such as KVM) it is a good idea to update
+                the <literal>libvirt.xml</literal> file (found in
+                <literal>/var/lib/nova/instances/[instance
+                    ID]</literal>). The important changes to make
+                are to change the <literal>DHCPSERVER</literal>
+                value to the host ip address of the nova compute
+                host that is the VMs new home, and update the VNC
+                    IP if it isn't already <literal>0.0.0.0</literal>.</para></step>
+          <step>  <para>Next, reboot the VM:</para>
+            <screen><prompt>$</prompt> <userinput>nova reboot --hard 3f57699a-e773-4650-a443-b4b37eed5a06</userinput></screen></step>
+           <step> <para>In theory, the above database update and
+                <literal>nova reboot</literal> command are all
+                that is required to recover the VMs from a failed
+                host. However, if further problems occur, consider
+                looking at recreating the network filter
+                configuration using <literal>virsh</literal>,
                     restarting the nova services or updating the
                         <literal>vm_state</literal> and
                         <literal>power_state</literal> in the nova
-                    database.</para>
-            </simplesect>
-        </section>
+                    database.</para></step>
+        </procedure>
+    </section>
     </section>
     <section xml:id="nova-uid-mismatch">
-
         <title>Recovering from a UID/GID mismatch</title>
         <para>When running OpenStack compute, using a shared
             filesystem or an automated configuration tool, you could
@@ -656,65 +601,58 @@ UPDATE instances SET host = 'np-rcc46' WHERE uuid = '3f57699a-e773-4650-a443-b4b
         <para>The following is a basic procedure run on <systemitem
                 class="service">nova-compute</systemitem> hosts, based
             on the KVM hypervisor, that could help to restore the
-            situation: <itemizedlist>
-                <listitem>
-                    <para>First,make sure you don't use numbers that
+            situation:</para> <procedure><title>To recover from a UID/GID mismatch</title>
+                <step>
+                    <para>Make sure you don't use numbers that
                         are already used for some other
                         user/group.</para>
-                </listitem>
-                <listitem>
+                </step>
+                <step>
                     <para>Set the nova uid in /etc/passwd to the same
-                        number in all hosts (e.g. 112)</para>
-                </listitem>
-                <listitem>
+                        number in all hosts (for example, 112).</para>
+                </step>
+                <step>
                     <para>Set the libvirt-qemu uid in /etc/passwd to
-                        the same number in all hosts (e.g. 119)</para>
-                </listitem>
-                <listitem>
+                        the same number in all hosts (for example, 119).</para>
+                </step>
+                <step>
                     <para>Set the nova group in /etc/group file to the
-                        same number in all hosts (e.g. 120)</para>
-                </listitem>
-                <listitem>
+                        same number in all hosts (for example, 120).</para>
+                </step>
+                <step>
                     <para>Set the libvirtd group in /etc/group file to
-                        the same number in all hosts (e.g. 119)</para>
-                </listitem>
-                <listitem>
-                    <para>Stop the services on the compute node</para>
-                </listitem>
-                <listitem>
+                        the same number in all hosts (for example, 119).</para>
+                </step>
+                <step>
+                    <para>Stop the services on the compute node.</para>
+                </step>
+                <step>
                     <para>Change all the files owned by nova or group
-                        by nova, e.g.
-                        <programlisting>
-
-         find / -uid 108 -exec chown nova {} \; # note the 108 here is the old nova uid before the change
-         find / -gid 120 -exec chgrp nova {} \;
-         </programlisting>
-                    </para>
-                </listitem>
-                <listitem>
+                        by nova. For example:</para>
+                        <programlisting>find / -uid 108 -exec chown nova {} \; # note the 108 here is the old nova uid before the change
+find / -gid 120 -exec chgrp nova {} \;         </programlisting>
+                </step>
+                <step>
                     <para>Repeat the steps for the libvirt-qemu owned
-                        files if those were needed to change</para>
-                </listitem>
-                <listitem>
-                    <para>Restart the services</para>
-                </listitem>
-            </itemizedlist>
-        </para>
-        <para>Following this, you can run the <command>find</command>
-            command to verify that all files using the correct
-            identifiers.</para>
+                        files if those were needed to change.</para>
+                </step>
+                <step>
+                    <para>Restart the services.</para>
+                </step>
+              <step><para>Now you can run the <command>find</command>
+                    command to verify that all files using the correct
+                    identifiers.</para></step>
+            </procedure>
     </section>
-
     <section xml:id="nova-disaster-recovery-process">
         <title>Nova Disaster Recovery Process</title>
         <para>Sometimes, things just don't go right. An incident is
             never planned, by its definition.</para>
-        <para>In this section, we will review managing your cloud
-            after a disaster, and how to easily backup the persistent
-            storage volumes, which is another approach when you face a
-            disaster. Even apart from the disaster scenario, backup
-            ARE mandatory.</para>
-        <para>For reference, you can find a DRP definition here :
+        <para>In this section describes how to manage your cloud
+            after a disaster, and how to easily back up the persistent
+            storage volumes. Back ups
+            ARE mandatory, even outside of disaster scenarios.</para>
+        <para>For reference, you can find a DRP definition here:
                 <link
                 xlink:href="http://en.wikipedia.org/wiki/Disaster_Recovery_Plan"
                 >http://en.wikipedia.org/wiki/Disaster_Recovery_Plan</link>.</para>
@@ -722,9 +660,9 @@ UPDATE instances SET host = 'np-rcc46' WHERE uuid = '3f57699a-e773-4650-a443-b4b
             <title>A- The disaster Recovery Process
                 presentation</title>
             <para>A disaster could happen to several components of
-                your architecture : a disk crash, a network loss, a
-                power cut, etc. In this example, we suppose the
-                following setup:<orderedlist>
+                your architecture: a disk crash, a network loss, a
+                power cut, and so on. In this example, assume the
+                following set up:</para><orderedlist>
                     <listitem>
                         <para>A cloud controller (nova-api,
                             nova-objecstore, nova-network)</para>
@@ -738,11 +676,11 @@ UPDATE instances SET host = 'np-rcc46' WHERE uuid = '3f57699a-e773-4650-a443-b4b
                         <para>A Storage Area Network used by
                             cinder-volumes (aka SAN)</para>
                     </listitem>
-                </orderedlist>The example disaster will be the worst
-                one : a power loss. That power loss applies to the
+                </orderedlist><para>The disaster example is the worst
+                one: a power loss. That power loss applies to the
                 three components. <emphasis role="italic">Let's see
                     what runs and how it runs before the
-                    crash</emphasis>:<itemizedlist>
+                    crash</emphasis>:</para><itemizedlist>
                     <listitem>
                         <para>From the SAN to the cloud controller, we have an
                             active iscsi session (used for the "cinder-volumes"
@@ -763,19 +701,17 @@ UPDATE instances SET host = 'np-rcc46' WHERE uuid = '3f57699a-e773-4650-a443-b4b
                             also have iptables/ ebtables rules which allows the
                             access from the cloud controller to the running
                             instance.</para>
-
                     </listitem>
                     <listitem>
                         <para>And at least, from the cloud controller to the
                             compute node ; saved into database, the current
                             state of the instances (in that case "running" ),
                             and their volumes attachment (mountpoint, volume id,
-                            volume status, etc..)</para>
+                            volume status, and so on.)</para>
                     </listitem>
-                </itemizedlist> Now, after the power loss occurs and
+                </itemizedlist><para>Now, after the power loss occurs and
                 all hardware components restart, the situation is as
                 follows:</para>
-            <para>
                 <itemizedlist>
                     <listitem>
                         <para>From the SAN to the cloud, the ISCSI
@@ -802,12 +738,12 @@ UPDATE instances SET host = 'np-rcc46' WHERE uuid = '3f57699a-e773-4650-a443-b4b
                             at all, since nova could not have guessed
                             the crash.</para>
                     </listitem>
-                </itemizedlist>Before going further, and in order to
+                </itemizedlist><para>Before going further, and to
                 prevent the admin to make fatal mistakes,<emphasis
                     role="bold"> the instances won't be
-                    lost</emphasis>, since no "<command role="italic"
+                    lost</emphasis>, because no "<command role="italic"
                     >destroy</command>" or "<command role="italic"
-                    >terminate</command>" command had been invoked, so
+                    >terminate</command>" command was invoked, so
                 the files for the instances remain on the compute
                 node.</para>
             <para>The plan is to perform the following tasks, in that
@@ -817,46 +753,41 @@ UPDATE instances SET host = 'np-rcc46' WHERE uuid = '3f57699a-e773-4650-a443-b4b
             <para>
                 <orderedlist>
                     <listitem>
-                        <para>We need to get the current relation from
-                            a volume to its instance, since we will
+                        <para>Get the current relation from
+                            a volume to its instance, so that you can
                             recreate the attachment.</para>
                     </listitem>
                     <listitem>
-
-                        <para>We need to update the database in order
+                        <para>Update the database
                             to clean the stalled state. (After that,
-                            we won't be able to perform the first
+                            you cannot perform the first
                             step).</para>
                     </listitem>
                     <listitem>
-                        <para>We need to restart the instances (so go
-                            from a "shutdown" to a "running" state).
+                        <para>Restart the instances. In other words, go from a shutdown to running state.
                         </para>
                     </listitem>
                     <listitem>
-                        <para>After the restart, we can reattach the
+                        <para>After the restart, you can reattach the
                             volumes to their respective instances.
                         </para>
                     </listitem>
                     <listitem>
                         <para>That step, which is not a mandatory one,
-                            exists in an SSH into the instances in
-                            order to reboot them.</para>
-
+                            exists in an SSH into the instances to reboot them.</para>
                     </listitem>
                 </orderedlist>
             </para>
         </simplesect>
         <simplesect>
             <title>B - The Disaster Recovery Process itself</title>
-            <para>
-                <itemizedlist>
+            <para><itemizedlist>
                     <listitem>
                         <para><emphasis role="bold"> Instance to
                                 Volume relation </emphasis>
                         </para>
                         <para>We need to get the current relation from
-                            a volume to its instance, since we will
+                            a volume to its instance, because we
                             recreate the attachment:</para>
                         <para>This relation could be figured by
                             running <command>nova
@@ -873,17 +804,14 @@ UPDATE instances SET host = 'np-rcc46' WHERE uuid = '3f57699a-e773-4650-a443-b4b
                             that we have saved the attachments we need
                             to restore for every volume, the database
                             can be cleaned with the following queries:
-                            <programlisting>
-<prompt>mysql></prompt> <userinput>use cinder;</userinput>
+                            <programlisting><prompt>mysql></prompt> <userinput>use cinder;</userinput>
 <prompt>mysql></prompt> <userinput>update volumes set mountpoint=NULL;</userinput>
 <prompt>mysql></prompt> <userinput>update volumes set status="available" where status &lt;&gt;"error_deleting";</userinput>
 <prompt>mysql></prompt> <userinput>update volumes set attach_status="detached";</userinput>
-<prompt>mysql></prompt> <userinput>update volumes set instance_id=0;</userinput>
-                </programlisting>Now,
+<prompt>mysql></prompt> <userinput>update volumes set instance_id=0;</userinput>               </programlisting>Now,
                             when running <command>nova
                                 volume-list</command> all volumes
                             should be available.</para>
-
                     </listitem>
                     <listitem>
                         <para><emphasis role="bold"> Instances Restart
@@ -895,27 +823,27 @@ UPDATE instances SET host = 'np-rcc46' WHERE uuid = '3f57699a-e773-4650-a443-b4b
                                    <replaceable>$instance</replaceable></command>
                         </para>
                         <para>At that stage, depending on your image,
-                            some instances will completely reboot and
-                            become reachable, while others will stop
-                            on the "plymouth" stage.</para>
+                            some instances completely reboot and
+                            become reachable, while others stop on the
+                            "plymouth" stage.</para>
                         <para><emphasis role="bold">DO NOT reboot a
                                 second time</emphasis> the ones which
                             are stopped at that stage (<emphasis
                                 role="italic">see below, the fourth
                                 step</emphasis>). In fact it depends
-                            on whether you added an
+                            on whether or not you added an
                                 <filename>/etc/fstab</filename> entry
-                            for that volume or not. Images built with
-                            the <emphasis role="italic"
-                                >cloud-init</emphasis> package will
-                            remain on a pending state, while others
-                            will skip the missing volume and start.
-                            (More information is available on <link
+                            for that volume. Images built with the
+                                <emphasis role="italic"
+                                >cloud-init</emphasis> package remain
+                            in a pending state, while others skip the
+                            missing volume and start. (More
+                            information is available on <link
                                 xlink:href="https://help.ubuntu.com/community/CloudInit"
-                                >help.ubuntu.com</link>) But remember
-                            that the idea of that stage is only to ask
-                            nova to reboot every instance, so the
-                            stored state is preserved.</para>
+                                >help.ubuntu.com</link>.) The idea of
+                            that stage is only to ask nova to reboot
+                            every instance, so the stored state is
+                            preserved.</para>
                     </listitem>
                     <listitem>
                         <para><emphasis role="bold"> Volume Attachment
@@ -924,13 +852,12 @@ UPDATE instances SET host = 'np-rcc46' WHERE uuid = '3f57699a-e773-4650-a443-b4b
                         <para>After the restart, we can reattach the
                             volumes to their respective instances. Now
                             that nova has restored the right status,
-                            it is time to perform the attachments via
-                            a <command>nova
-                            volume-attach</command></para>
+                            it is time to perform the attachments
+                            through a <command>nova
+                                volume-attach</command></para>
                         <para>Here is a simple snippet that uses the
-                            file we created :
-                            <programlisting>
-#!/bin/bash
+                            file we created:</para>
+                        <programlisting language="bash">#!/bin/bash
 
 while read line; do
     volume=`echo $line | $CUT -f 1 -d " "`
@@ -939,14 +866,13 @@ while read line; do
         echo "ATTACHING VOLUME FOR INSTANCE - $instance"
     nova volume-attach $instance $volume $mount_point
     sleep 2
-done &lt; $volumes_tmp_file
-                </programlisting>At
-                            that stage, instances which were pending
-                            on the boot sequence (<emphasis
+done &lt; $volumes_tmp_file               </programlisting>
+                        <para>At that stage, instances that were
+                            pending on the boot sequence (<emphasis
                                 role="italic">plymouth</emphasis>)
-                            will automatically continue their boot,
-                            and restart normally, while the ones which
-                            booted will see the volume.</para>
+                            automatically continue their boot, and
+                            restart normally, while the ones that
+                            booted see the volume.</para>
                     </listitem>
                     <listitem>
                         <para><emphasis role="bold"> SSH into
@@ -958,20 +884,18 @@ done &lt; $volumes_tmp_file
                             instance. This restart needs to be made
                             from the instance itself, not through
                             nova. So, we SSH into the instance and
-                            perform a reboot :
-                            <screen>
-<prompt>$</prompt> <userinput>shutdown -r now</userinput>
-                             </screen></para>
+                            perform a reboot:</para>
+                        <screen><prompt>$</prompt> <userinput>shutdown -r now</userinput>                           </screen>
                     </listitem>
                 </itemizedlist>Voila! You successfully recovered your
                 cloud after that.</para>
             <para>Here are some suggestions:</para>
             <para><itemizedlist>
                     <listitem>
-                        <para>Use the <literal>parameter
-                                errors=remount</literal> in the
+                        <para>Use the <parameter>
+                                errors=remount</parameter> parameter in the
                                 <filename>fstab</filename> file, which
-                            will prevent data corruption.</para>
+                            prevents data corruption.</para>
                         <para>The system would lock any write to the disk if it detects an I/O
                             error. This configuration option should be added into the <systemitem class="service">cinder-volume</systemitem>
                             server (the one which performs the ISCSI connection to the SAN), but
@@ -980,15 +904,12 @@ done &lt; $volumes_tmp_file
                     <listitem>
                         <para>Do not add the entry for the SAN's disks to the <systemitem class="service">cinder-volume</systemitem>'s
                                 <filename>fstab</filename> file.</para>
-                        <para>Some systems will hang on that step,
-                            which means you could lose access to your
-                            cloud-controller. In order to re-run the
-                            session manually, you would run the
-                            following command before performing the
-                            mount:
-                            <screen>
-<prompt>#</prompt> <userinput>iscsiadm -m discovery -t st -p $SAN_IP $ iscsiadm -m node --target-name $IQN -p $SAN_IP -l</userinput>
- </screen></para>
+                        <para>Some systems hang on that step, which
+                            means you could lose access to your
+                            cloud-controller. To re-run the session
+                            manually, you would run the following
+                            command before performing the mount:
+                            <screen><prompt>#</prompt> <userinput>iscsiadm -m discovery -t st -p $SAN_IP $ iscsiadm -m node --target-name $IQN -p $SAN_IP -l</userinput></screen></para>
                     </listitem>
                     <listitem>
                         <para>For your instances, if you have the
@@ -999,7 +920,7 @@ done &lt; $volumes_tmp_file
                             directory with the user's bash files and
                             the <filename>authorized_keys</filename>
                             file.</para>
-                        <para>This will allow you to connect to the
+                        <para>This enables you to connect to the
                             instance, even without the volume
                             attached, if you allow only connections
                             through public keys.</para>
@@ -1018,16 +939,14 @@ done &lt; $volumes_tmp_file
             <para>To reproduce the power loss, connect to the compute
                 node which runs that same instance and close the iscsi
                 session. <emphasis role="underline">Do not detach the
-                    volume via <command>nova
+                    volume through <command>nova
                     volume-detach</command></emphasis>, but instead
                 manually close the iscsi session.</para>
             <para>In the following example, the iscsi session is
-                number 15 for that instance:
-                    <screen>
-<prompt>$</prompt> <userinput>iscsiadm -m session -u -r 15</userinput>
-                    </screen><emphasis
-                    role="bold">Do not forget the flag
-                        -<literal>r</literal>; otherwise, you will
+                number 15 for that instance:</para>
+                    <screen><prompt>$</prompt> <userinput>iscsiadm -m session -u -r 15</userinput>                   </screen><para><emphasis
+                    role="bold">Do not forget the
+                        <literal>-r</literal> flag; otherwise, you
                     close ALL sessions</emphasis>.</para>
         </simplesect>
     </section>

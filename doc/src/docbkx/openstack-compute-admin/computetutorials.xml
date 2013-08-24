@@ -167,23 +167,24 @@ export NOVA_VERSION=1.1
 +------+----------------+--------+----------------------+
                 </programlisting></para>
             <para>The instance goes from “launching” to “running” in a
-                short time, and you should be able to connect via SSH.
+                short time, and you should be able to connect through SSH.
                 Look at the IP addresses so that you can connect to
                 the instance once it starts running.</para>
         </section>
         <section xml:id="diagnose-compute-tutorial">
             <title>Diagnose your compute node</title>
 
-            <para>You can obtain extra information about the instance you just spawned : its CPU
-                usage, the memory, the disk io or network io, per instance, by running the
-                    <command>nova diagnostics</command> command: <screen><prompt>$</prompt> <userinput>nova list</userinput></screen><programlisting>
+            <para>You can obtain extra information about the instance you just spawned: its CPU
+                usage, memory, disk I/O or network I/O. Run the
+                    <command>nova diagnostics</command> command:</para> <screen><prompt>$</prompt> <userinput>nova list</userinput></screen>
+<screen><computeroutput>
 +--------------------------------------+------+--------+------------------------+
 | ID                                   | Name | Status | Networks               |
 +--------------------------------------+------+--------+------------------------+
 | 50191b9c-b26d-4b61-8404-f149c29acd5a | test | ACTIVE | local-net=192.168.4.35 |
 +--------------------------------------+------+--------+------------------------+
-                </programlisting>
-                <screen><prompt>$</prompt> <userinput>nova diagnostics 50191b9c-b26d-4b61-8404-f149c29acd5a</userinput> </screen><programlisting>
+                </computeroutput></screen>
+                <screen><prompt>$</prompt> <userinput>nova diagnostics 50191b9c-b26d-4b61-8404-f149c29acd5a</userinput> </screen><screen><computeroutput>
 +------------------+------------+
 | Property         | Value      |
 +------------------+------------+
@@ -205,8 +206,7 @@ export NOVA_VERSION=1.1
 | vnet0_tx_errors  | 0          |
 | vnet0_tx_packets | 0          |
 +------------------+------------+
-                </programlisting>
-            </para>
+                </computeroutput></screen>
         </section>
         <section xml:id="installing-needed-software-for-web-scale">
             <title>Part III: Installing the Needed Software for the Web-Scale Scenario</title>
@@ -215,7 +215,7 @@ export NOVA_VERSION=1.1
 <prompt>$</prompt> <userinput>ssh -i mykeypair ubuntu@10.127.35.119</userinput>
             </screen>
             <para>On this particular image, the 'ubuntu' user has been set up as part of the sudoers
-                group, so you can escalate to 'root' via the following command:</para>
+                group, so you can escalate to 'root' through the following command:</para>
             <screen>
 <prompt>$</prompt> <userinput>sudo -i</userinput>
             </screen>

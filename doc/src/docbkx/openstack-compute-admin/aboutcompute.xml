@@ -58,7 +58,7 @@
             </listitem>
             <listitem>
                 <para><link xlink:href="https://wiki.openstack.org/wiki/GeneralBareMetalProvisioningFramework">
-                        Bare Metal</link> - Provisions physical hardware via pluggable sub-drivers.</para>
+                        Bare Metal</link> - Provisions physical hardware through pluggable sub-drivers.</para>
             </listitem>
         </itemizedlist>
     </section>
@@ -71,9 +71,9 @@
             by the system administrator editing the appropriate <filename>policy.json</filename>
             file that maintains the rules. For example, a rule can be defined so that a user cannot
             allocate a public IP without the admin role. A user's access to particular images is
-            limited by tenant, but the username and password are assigned per user. Key pairs
-            granting access to an instance are enabled per user, but quotas to control resource
-            consumption across available hardware resources are per tenant. <note>
+            limited by tenant, but the username and password are assigned for each user. Key pairs
+            granting access to an instance are enabled for each user, but quotas to control resource
+            consumption across available hardware resources are for each tenant. <note>
                 <para>Earlier versions of OpenStack used the term "project" instead of "tenant".
                     Because of this legacy terminology, some command-line tools use
                         <literal>--project_id</literal> when a tenant ID is expected.</para>
@@ -194,13 +194,13 @@
      </figure>
 
             <para>The OpenStack system copies the base image from the
-                image store to local disk which is used as the first
-                disk of the instance (vda), having small images will
-                result in faster start up of your instances as less
+                image store to local disk, which is used as the first
+                disk of the instance (vda). Using small images 
+                results in faster start up of your instances as less
                 data needs to be copied across the network. The system
                 also creates a new empty disk image to present as the
                 second disk (vdb). Be aware that the second disk is an
-                empty disk with an emphemeral life as it is destroyed
+                empty disk with an ephemeral life as it is destroyed
                 when you delete the instance. The compute node
                 attaches to the requested <systemitem class="service">cinder-volume</systemitem> using iSCSI and
                 maps this to the third disk (vdc) as requested. The
@@ -252,8 +252,8 @@
             scheduler selects the most suitable compute controller to host an instance.</para><para>OpenStack Compute is built on a shared-nothing, messaging-based architecture. You can run all
             of the major components on multiple servers including a compute controller, volume
             controller, network controller, and object store (or image service). A cloud controller
-            communicates with the internal object store via HTTP (Hyper Text Transfer Protocol), but
-            it communicates with a scheduler, network controller, and volume controller via AMQP
+            communicates with the internal object store through HTTP (Hyper Text Transfer Protocol), but
+            it communicates with a scheduler, network controller, and volume controller through AMQP
             (Advanced Message Queue Protocol). To avoid blocking each component while waiting for a
             response, OpenStack Compute uses asynchronous calls, with a call-back that gets
             triggered when a response is received.</para>
@@ -264,25 +264,22 @@
 
       <para>OpenStack provides two classes of block storage,
       "ephemeral" storage and persistent "volumes".  Ephemeral storage
-      exists only for the life of an instance, it will persist across
-      reboots of the guest operating system but when the instance is
+      exists only for the life of an instance. It persists across
+      reboots of the guest operating system, but when the instance is
       deleted so is the associated storage.  All instances have some
       ephemeral storage.  Volumes are persistent virtualized block
       devices independent of any particular instance.  Volumes may be
       attached to a single instance at a time, but may be detached or
       reattached to a different instance while retaining all data,
       much like a USB drive.</para>
-
       <simplesect xml:id="about-ephemeral-storage">
 	<title>Ephemeral Storage</title>
-
 	<para>Ephemeral storage is associated with a single unique
-	instance.  Its size is defined by the flavor of the
+	instance. Its size is defined by the flavor of the
 	instance.</para>
-
 	<para>Data on ephemeral storage ceases to exist when the
        instance it is associated with is terminated. Rebooting the
-       VM or restarting the host server, however, will not destroy
+       VM or restarting the host server, however, does not destroy
        ephemeral data. In the typical use case an instance's root
        filesystem is stored on ephemeral storage. This is often an
        unpleasant surprise for people unfamiliar with the cloud model
@@ -296,7 +293,7 @@
 	table or filesystem.  Cloud aware operating system images may
 	discover, format, and mount this device.  For example the
 	cloud-init package included in Ubuntu's stock cloud images
-	will format this space as an ext3 filesystem and mount it on
+ format this space as an ext3 filesystem and mount it on
 	/mnt. It is important to note this a feature of the guest
 	operating system. OpenStack only provisions the raw
 	storage.</para>
@@ -318,20 +315,19 @@
 	Volumes may attached to only one instance at a time, but may
 	be detached and reattached to either the same or different
 	instances.</para>
-
 	<para>It is possible to configure a volume so that it is bootable and
                 provides a persistent virtual instance similar to
                 traditional non-cloud based virtualization systems. In
                 this use case the resulting instance may still have
                 ephemeral storage depending on the flavor selected,
-                but the root filesystem (and possibly others) will be
-                on the persistent volume and thus state will be
-                maintained even if the instance it shutdown. Details
+                but the root filesystem (and possibly others) is
+                on the persistent volume and its state is
+                maintained even if the instance it shut down. Details
                 of this configuration are discussed in the <link xlink:href="http://docs.openstack.org/cli/quick-start/content/"><citetitle>OpenStack Clients Guide</citetitle></link>.</para>
           <para>Volumes do not provide concurrent access from multiple
 	instances.  For that you need either a traditional network
 	filesystem like NFS or CIFS or a cluster filesystem such as
-	GlusterFS.  These may be built within an OpenStack cluster or
+	GlusterFS. These may be built within an OpenStack cluster or
 	provisioned outside of it, but are not features provided by
 	the OpenStack software.</para>
       </simplesect>

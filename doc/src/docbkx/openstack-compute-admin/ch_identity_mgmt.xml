@@ -45,7 +45,7 @@
         <literal>user_crud_extension</literal> filter, insert it after
       the <literal>*_body</literal> middleware and before the
         <literal>public_service</literal> app in the public_api WSGI
-      pipeline in <filename>keystone-paste.ini</filename> e.g.:</para>
+      pipeline in <filename>keystone-paste.ini</filename>. For example:</para>
     <screen><computeroutput>[filter:user_crud_extension]
 paste.filter_factory = keystone.contrib.user_crud:CrudExtension.factory
 
@@ -166,7 +166,7 @@ pipeline = [...] json_body stats_reporting ec2_extension [...] admin_service</co
     <para>Generally, the following is the first step after a source
       installation:</para>
     <screen><prompt>$</prompt> <userinput>keystone-manage db_sync</userinput></screen>
-    <para>Invoking keystone-manage by itself will give you additional
+    <para>Invoking <command>keystone-manage</command> by itself gives you additional
       usage information.</para>
   </section>
   <section xml:id="configuring-services-to-work-with-keystone">
@@ -191,7 +191,7 @@ pipeline = [...] json_body stats_reporting ec2_extension [...] admin_service</co
         </para>
       </listitem>
     </itemizedlist>
-    <para>The middleware will pass those data down to the service as
+    <para>The middleware passes data to the service as
       headers.</para>
 <xi:include href="../common/section_cli_keystone_credentials.xml"/>
 <xi:include href="../common/section_cli_keystone_apiv3.xml"/>
@@ -438,10 +438,10 @@ role_tree_dn = ou=Roles,dc=openstack,dc=org</computeroutput>
 user_id_attribute = uidNumber
 user_name_attribute = cn</computeroutput>
 </screen>
-        <para>There is a set of allowed actions per object type that
-          you can modify depending on your specific deployment. For
-          example, the users are managed by another tool and you have
-          only read access, in such case the configuration is:</para>
+        <para>Depending on your specific deployment,
+          you can modify a set of allowed actions for each object type. For
+          example, when users are managed by another tool and you have
+          only read access, the configuration is:</para>
         <screen><computeroutput>[ldap]
 
 user_allow_create = False
@@ -457,17 +457,17 @@ role_allow_update = True
 role_allow_delete = True</computeroutput>
 </screen>
         <para>There are some configuration options for filtering
-          users, tenants and roles, if the backend is providing too
-          much output, in such case the configuration will look like:</para>
+          users, tenants and roles, if the backend provides too 
+          much output, the configuration looks as follows:</para>
         <screen><computeroutput>[ldap]
 user_filter = (memberof=CN=openstack-users,OU=workgroups,DC=openstack,DC=com)
 tenant_filter =
 role_filter =</computeroutput>
 </screen>
-        <para>In case that the directory server does not have an
-          attribute enabled of type boolean for the user, there are
-          several configuration parameters that can be used to extract
-          the value from an integer attribute like in Active
+        <para>If the directory server does not have an
+          attribute enabled of type boolean for the user, you can use
+          several configuration parameters to extract
+          the value from an integer attribute, like in Active
           Directory:</para>
         <screen><computeroutput>[ldap]
 user_enabled_attribute = userAccountControl
@@ -529,7 +529,7 @@ role_attribute_ignore    =</computeroutput></screen>
           middleware using the 'admin_user' and 'admin_password'
           options. When using the 'admin_user' and 'admin_password'
           options the 'admin_token' parameter is optional. If
-          'admin_token' is specified it will by used only if the
+          'admin_token' is specified, it is used only if the
           specified token is still valid.</para>
         <para>Here is an example paste config filter that makes use
           of the 'admin_user' and 'admin_password' parameters:</para>
