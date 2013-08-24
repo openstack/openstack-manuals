@@ -20,14 +20,14 @@
                     <itemizedlist>
                         <listitem>
                             <para>Edit <emphasis role="bold">/etc/neutron/neutron.conf</emphasis>:
-                                <programlisting os="ubuntu;debian">[DEFAULT]
+                                <programlisting os="ubuntu;debian" language="ini">[DEFAULT]
 verbose = True
 rabbit_password = password
 [keystone_authtoken]
 admin_tenant_name = service
 admin_user = neutron
 admin_password = password</programlisting>
-                                <programlisting os="centos;rhel;fedora">[DEFAULT]
+                                <programlisting os="centos;rhel;fedora" language="ini">[DEFAULT]
 core_plugin = \
     neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2
 auth_strategy = keystone
@@ -35,7 +35,7 @@ fake_rabbit = False
 rpc_backend=neutron.openstack.common.rpc.impl_qpid
 qpid_username = guest
 qpid_password = guest</programlisting>
-                                <programlisting os="opensuse">[DEFAULT]
+                                <programlisting os="opensuse" language="ini">[DEFAULT]
 verbose = True
 rabbit_password = password
 core_plugin = \
@@ -48,7 +48,7 @@ admin_password = password</programlisting>
                         </listitem>
                         <listitem>
                             <para>Edit <emphasis role="bold">/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</emphasis>:
-                                <programlisting>[database]
+                                <programlisting language="ini">[database]
 sql_connection = mysql://neutron:password@localhost/neutron
 [ovs]
 tenant_network_type = gre
@@ -57,7 +57,7 @@ enable_tunneling = True
 local_ip = 10.10.10.10
 [securitygroup]
 firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver</programlisting>
-                                 <programlisting os="centos;rhel;fedora">[database]
+                                 <programlisting os="centos;rhel;fedora" language="ini">[database]
 sql_connection = mysql://neutron:password@localhost/neutron
 [ovs]
 enable_tunneling = False
@@ -73,7 +73,7 @@ firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewal
                         </listitem>
                         <listitem os="centos;rhel;fedora">
                             <para>Edit <emphasis role="bold">/etc/neutron/api-paste.ini</emphasis>:
-                                <programlisting>[filter:authtoken]
+                                <programlisting language="ini">[filter:authtoken]
 paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
 auth_host = 127.0.0.1
 auth_port = 35357
