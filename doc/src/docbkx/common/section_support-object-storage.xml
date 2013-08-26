@@ -50,10 +50,10 @@
 	<para>This procedure is a last-resort for emergency circumstances - it
 	requires knowledge of the swift python code and may not succeed.</para></warning>
 	<para>First, load the ring and a new ringbuilder object in a Python REPL:</para>
-	<programlisting>>>> from swift.common.ring import RingData, RingBuilder
+	<programlisting language="python">>>> from swift.common.ring import RingData, RingBuilder
 >>> ring = RingData.load('/path/to/account.ring.gz')</programlisting>
 	<para>Now, start copying the data we have in the ring into the builder.</para>
-	<programlisting language="bash">>>> import math
+	<programlisting language="python">>>> import math
 >>> partitions = len(ring._replica2part2dev_id[0])
 >>> replicas = len(ring._replica2part2dev_id)
 
@@ -71,12 +71,12 @@
 	<para>This is the extent of the recoverable fields. For
 	<literal>min_part_hours</literal>  you'll either have to remember
 	 what the value you used was, or just make up a new one.</para>
-	<programlisting>>>> builder.change_min_part_hours(24) # or whatever you want it to be</programlisting>
+	<programlisting language="python">>>> builder.change_min_part_hours(24) # or whatever you want it to be</programlisting>
 	<para>Try some validation: if this doesn't raise an exception, you may
 	 feel some hope. Not too much, though.</para>
-	<programlisting>>>> builder.validate()</programlisting>
+	<programlisting language="python">>>> builder.validate()</programlisting>
 	<para>Save the builder.</para>
-	<programlisting>>>> import pickle
+	<programlisting language="python">>>> import pickle
 >>> pickle.dump(builder.to_dict(), open('account.builder', 'wb'), protocol=2)</programlisting>
 	<para>You should now have a file called 'account.builder' in the current
 	 working directory.
