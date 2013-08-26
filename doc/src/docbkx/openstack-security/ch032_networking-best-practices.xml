@@ -73,16 +73,16 @@
     </section>
     <section xml:id="ch032_networking-best-practices-idp78032">
       <title>Networking Services Limitations</title>
-      <para>There a few current known limitations of OpenStack Networking:</para>
+      <para>OpenStack Networking has the following known limitations:</para>
       <itemizedlist><listitem>
-          <para><emphasis role="bold">Overlapping IP addresses</emphasis>Linux network namespaces are required on nodes running neutron-l3-agent or neutron-dhcp-agent if overlapping IP's are in use. In order to support overlapping IP addresses, the OpenStack Networking DHCP and L3 agents use Linux network namespaces by default. If the host does not support namespaces then the <literal>neutron-l3-agent</literal> and <literal>neutron-dhcp-agent</literal> should be run on different hosts.</para>
-          <para>A further limitation of the L3 Agent is the support a single logical router without namespaces.</para>
+          <para><emphasis role="bold">Overlapping IP addresses</emphasis> &#x2014; If nodes that run either <literal>neutron-l3-agent</literal> or <literal>neutron-dhcp-agent</literal> use overlapping IP addresses, those nodes must use Linux network namespaces. By default, the DHCP and L3 agents use Linux network namespaces. However, if the host does not support these namespaces, run the DHCP and L3 agents on different hosts.</para>
+          <para>If network namespace support is not present, a further limitation of the L3 Agent is that only a single logical router is supported.</para>
         </listitem>
 <listitem>
-          <para><emphasis role="bold">Multi-Host DHCP-agent</emphasis>OpenStack Networking now supports running multiple l3-agent and dhcp-agents with load being split across those agents, but the tight coupling of that scheduling with the location of the VM is not supported in Grizzly. The Havana release is expected to include an exact replacement for the --multi_host flag in nova-network.</para>
+          <para><emphasis role="bold">Multi-Host DHCP-agent</emphasis> &#x2014; OpenStack Networking supports multiple l3-agent and dhcp-agents with load balancing. However, tight coupling of the location of the virtual machine is not supported.</para>
         </listitem>
 <listitem>
-          <para><emphasis role="bold">No IPv6 Support for L3 agents</emphasis>The neutron-l3-agent, used by many plugins to implement L3 forwarding, supports only IPv4 forwarding.</para>
+          <para><emphasis role="bold">No IPv6 Support for L3 agents</emphasis> &#x2014; The neutron-l3-agent, used by many plugins to implement L3 forwarding, supports only IPv4 forwarding.</para>
         </listitem>
 </itemizedlist>
     </section>
