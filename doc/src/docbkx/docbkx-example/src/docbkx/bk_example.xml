@@ -30,7 +30,7 @@
       </annotation>
     </legalnotice>
     <abstract>
-        <para>This document is intended for individuals who whish to produce documentation using Maven and having
+        <para>This document is intended for individuals who wish to produce documentation using Maven and having
            the same "feel" as the documentation that is produced by the mainline OpenStack projects.
         </para>
     </abstract>
@@ -43,10 +43,10 @@
   </info>
   <chapter xml:id="overview">
     <title>Overview</title>
-    <para>Welcome to the getting started with Maven documentation.  Congratulations you have
+    <para>Welcome to the getting started with Maven documentation. Congratulations you have
         successfully downloaded and built the example.
     </para>
-    <para>For more details on the Product Name service, please refer to <link
+    <para>For more details on the Product Name service, see <link
         xlink:href="http://www.rackspacecloud.com/cloud_hosting_products/files"
         >http://www.rackspacecloud.com/cloud_hosting_products/product name</link>
     </para>
@@ -64,7 +64,7 @@
       <para>This version of the Maven Getting Started Guide replaces and obsoletes all previous versions. The
         most recent changes are described in the table below:</para>
       <informaltable rules="all">
-        <thead>
+        <thead align="center">
           <tr>
             <td align="center" colspan="1">Revision Date</td>
             <td align="center" colspan="4">Summary of Changes</td>
@@ -154,7 +154,7 @@
     <section xml:id="pom">
         <title>Who, What, Where, When and Why of pom.xml</title>
         <para>
-            You will of noticed the <emphasis>pom.xml</emphasis> file at the root directory.
+            The <emphasis>pom.xml</emphasis> file is at the root directory.
             This file is used to set the project parameters for the documentation. Including
             what type of documentation to produce and any post processing that needs to happen.
             If you want to know more about
@@ -165,7 +165,7 @@
             then follow the link.
         </para>
         <para>For the <emphasis>pom.xml</emphasis>file that was included in this distribution we will
-            parse the individual lines and explaine the meaning.
+            parse the individual lines and explain the meaning.
         </para>
         <para>
                 <programlisting language="xml"> <xi:include href="../../pom.xml" parse="text" /></programlisting>
@@ -273,21 +273,129 @@
             </section>
         </section>
     </section>
-    <section xml:id="buildxml">
-        <title>Who, What, Where, When and Why of build.xml</title>
-        <para>
-            You will of noticed the <emphasis>build.xml</emphasis> file at the root directory.
-            This file is used to set the project parameters for the documentation. Including
-            what type of documentation to produce and any post processing that needs to happen.
-            If you want to know more about
-            <link
-                xlink:href="http://www.openstack.org">
-                pom.xml - need a link
-            </link>
-            then follow the link.
-        </para>
+    <section xml:id="pomxml">
+        <title>Who, What, Where, When and Why of pom.xml</title>
+        <para> The <emphasis>pom.xml</emphasis> file at the root directory sets the project
+                parameters for the documentation. Including what type of documentation to produce
+                and any post processing that needs to happen. If you want to know more about <link
+                    xlink:href="http://maven.apache.org/guides/introduction/introduction-to-the-pom.html">pom.xml</link> then follow
+                the link. </para>
     </section>
   </chapter>
+      <chapter
+          xml:id="sample_outputs">
+          <title>Sample Outputs</title>
+          <section xml:id="client_token"><title>Example Operations</title>
+              <para><emphasis role="bold">For type="header" in resource or
+                  request</emphasis></para>
+              <para>Specify the following headers in the request:</para>
+              <table width="50%" rules="all">
+                  <caption>Operation Name Request
+                      Headers</caption>
+                  <col width="20%"/>
+                  <col width="20%"/>
+                  <col width="60%"/>
+                  <thead align="center">
+                      <tr align="center"><th>Name</th>
+                          <th>Required</th><th>Description</th></tr></thead>
+                  <tbody><tr><td align="left"><para><literal>X-Auth-Token:</literal> <replaceable>type</replaceable></para></td>
+                      <td>Required</td><td><para>Valid administrative authentication token. </para></td></tr>
+                      <tr>
+                          <td align="left"><para><literal>Accept: json/xml</literal></para></td>
+                          <td>Optional</td>
+                          <td><para>The client accepts JSON or XML requests. Default is
+                              <literal>json</literal>.</para></td>
+                      </tr>
+                  </tbody></table>
+              <para><emphasis role="bold">For
+                  type="template"</emphasis></para>
+              <para>Specify the following required parameters in the URI:</para>
+              <table width="50%" rules="all">
+                  <caption>Operation Name
+                      URI Parameters </caption>
+                  <col width="20%"/>
+                  <col width="10%"/>
+                  <col width="70%"/>
+                  <thead align="center">
+                      <tr><th>Name</th><th>Type</th><th>Description</th></tr></thead>
+                  <tbody>
+                      <tr><td align="left"
+                          ><para><replaceable>user_id</replaceable></para></td>
+                          <td align="left">String</td>
+                          <td><para>The user ID.</para></td>
+                      </tr>
+                  </tbody></table>
+              <para><emphasis role="bold">For type="query"</emphasis></para>
+              <para>To filter the response, specify one or more optional query
+                  parameters in the URI:</para>
+              <table width="50%" rules="all">
+                  <caption>Operation Name
+                      Query Parameters</caption>
+                  <col width="20%"/>
+                  <col width="20%"/>
+                  <col width="60%"/>
+                  <thead align="center">
+                      <tr><th>Name</th>
+                          <th>Type</th><th>Description</th></tr></thead>
+                  <tbody><tr><td align="left"><para><literal>image</literal>=<replaceable>type</replaceable></para></td>
+                      <td>UUID or URL</td><td><para>The image reference.</para></td></tr>
+                      <tr><td align="left"><para><literal>flavor</literal>=<replaceable>type</replaceable></para></td>
+                          <td>UUID or URL</td><td><para>The flavor reference.</para></td></tr>
+                  </tbody></table>
+              <para><emphasis role="bold">For type="plain" in request
+                  representation</emphasis></para>
+              <para>Specify the following attributes in the request body:</para>
+              <table width="50%" rules="all">
+                  <caption>Operation Name
+                      Request Body Attributes </caption>
+                  <col width="20%"/>
+                  <col width="10%"/>
+                  <col width="10%"/>
+                  <col width="60%"/>
+                  <thead align="center">
+                      <tr><th>Name</th>
+                          <th>Required</th>
+                          <th>Type</th><th>Description</th></tr></thead>
+                  <tbody><tr><td align="left"><para><literal>name</literal>=<replaceable>type</replaceable></para></td>
+                      <td>Required</td>
+                      <td>String</td><td><para>The name for the server. </para></td></tr>
+                      <tr><td align="left"><para><literal>adminPass</literal>=<replaceable>type</replaceable></para></td>
+                          <td>Optional</td>
+                          <td>String</td><td><para>The administrative password.</para></td></tr>
+                  </tbody></table>
+              <para><emphasis role="bold">For type="header" in
+                  response</emphasis></para>
+              <para>The following headers appear the response:</para>
+              <table width="50%" rules="all">
+                  <caption>Operation Name
+                      Response Headers</caption>
+                  <col width="30%"/>
+                  <col width="70%"/>
+                  <thead align="center">
+                      <tr><th>Name</th><th>Description</th></tr></thead>
+                  <tbody><tr><td align="left"><para><literal>Content-Type: json/xml</literal>
+                  </para></td><td><para>The content type, which is JSON or XML. </para></td></tr>
+                      <tr>
+                          <td align="left"><para><literal>Content-Length:</literal>
+                              <replaceable>type</replaceable></para></td>
+                          <td><para>The content length.</para></td>
+                      </tr>
+                  </tbody></table>
+              <para><emphasis role="bold">For type="plain" in response
+                  representation</emphasis></para>
+              <para>The following fields appear in the response body: </para>
+              <table width="50%" rules="all">
+                  <caption>Operation Name
+                      Response Body Fields</caption>
+                  <col width="30%"/>
+                  <col width="70%"/>
+                  <thead align="center">
+                      <tr><th>Name</th><th>Description</th></tr></thead>
+                  <tbody><tr><td align="left"><para><literal>name</literal>=<replaceable>type</replaceable></para></td><td><para>The server name.</para></td></tr>
+                      <tr><td align="left"><para><literal>adminPass</literal>=<replaceable>type</replaceable></para></td><td><para>The administrative password.</para></td></tr>
+                  </tbody></table>
+          </section>
+      </chapter>
   <chapter xml:id="troubleshooting">
     <title>Troubleshooting</title>
     <para>Sometimes things go wrong...</para>
