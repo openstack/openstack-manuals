@@ -25,10 +25,10 @@
                         <itemizedlist>
                             <listitem>
                                 <para>Edit <filename>/etc/nova/api-paste.ini</filename>:
-                                    <programlisting os="ubuntu;debian">admin_tenant_name = service
+                                    <programlisting os="ubuntu;debian" language="ini">admin_tenant_name = service
 admin_user = nova
 admin_password = password</programlisting>
-                                    <programlisting os='centos;rhel;fedora'>[filter:authtoken]
+                                    <programlisting os="centos;rhel;fedora" language="ini">[filter:authtoken]
 paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
 service_protocol = http
 service_host = 127.0.0.1
@@ -38,7 +38,7 @@ admin_user  = nova
 admin_password = password
 # Workaround for https://bugs.launchpad.net/nova/+bug/1154809
 auth_version = v2.0</programlisting>
-                                    <programlisting os="opensuse">admin_tenant_name = service
+                                    <programlisting os="opensuse" language="ini">admin_tenant_name = service
 admin_user = nova
 admin_password = password</programlisting>
 </para>
@@ -47,9 +47,9 @@ admin_password = password</programlisting>
                                 <para>Add the following to the <emphasis role="bold">/etc/nova/nova.conf</emphasis> file. This file is
                                     the main configuration file of OpenStack Compute. There is a large amount of configuration options
                                     that can go in this file. This guide illustrates the minimum needed for a simple environment.
-                                    Note that the nova.conf file supplied by your distribution has some options already set. Leave
+                                    Note that the <filename>nova.conf</filename> file supplied by your distribution has some options already set. Leave
                                     them as-is.
-                                    <programlisting os="ubuntu;debian">[DEFAULT]
+                                    <programlisting os="ubuntu;debian" language="ini">[DEFAULT]
 
 sql_connection=mysql://nova:password@localhost/nova
 my_ip=10.10.10.10
@@ -89,7 +89,7 @@ novnc_enable=true
 novncproxy_port=6080
 novncproxy_host=10.0.0.10
 vncserver_listen=0.0.0.0</programlisting>
-<programlisting os='centos;rhel;fedora'># General
+<programlisting os='centos;rhel;fedora' language="ini"># General
 verbose = True
 qpid_username=guest
 qpid_password=guest
@@ -128,7 +128,7 @@ novnc_enable=true
 novncproxy_port=6080
 novncproxy_host=10.0.0.10
 vncserver_listen=0.0.0.0</programlisting>
-                                    <programlisting os="opensuse">[DEFAULT]
+                                    <programlisting os="opensuse" language="ini">[DEFAULT]
 
 sql_connection=mysql://nova:password@localhost/nova
 rabbit_password=password
