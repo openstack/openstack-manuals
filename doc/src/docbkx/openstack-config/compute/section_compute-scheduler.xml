@@ -80,7 +80,7 @@ compute_fill_first_cost_fn_weight=-1.0</programlisting>
         <para>The <literal>scheduler_available_filters</literal>
             configuration option in <filename>nova.conf</filename>
             provides the Compute service with the list of the filters
-            that will be used by the scheduler. The default setting
+            that are used by the scheduler. The default setting
             specifies all of the filter that are included with the
             Compute service:</para>
         <screen><computeroutput>scheduler_available_filters=nova.scheduler.filters.all_filters</computeroutput></screen>
@@ -95,7 +95,7 @@ compute_fill_first_cost_fn_weight=-1.0</programlisting>
 scheduler_available_filters=myfilter.MyFilter</computeroutput></screen>
         <para>The <literal>scheduler_default_filters</literal>
             configuration option in <filename>nova.conf</filename>
-            defines the list of filters that will be applied by the
+            defines the list of filters that are applied by the
                 <systemitem class="service">nova-scheduler</systemitem> service. As
             mentioned, the default filters are:</para>
         <screen><computeroutput>scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter</computeroutput></screen>
@@ -122,8 +122,8 @@ scheduler_available_filters=myfilter.MyFilter</computeroutput></screen>
             <para>Isolates tenants to specific<link
                     linkend="host-aggregates">host aggregates</link>.
                 If a host is in an aggregate that has the metadata key
-                    <literal>filter_tenant_id</literal> it will only
-                create instances from that tenant (or list of
+                    <literal>filter_tenant_id</literal> it only
+                creates instances from that tenant (or list of
                 tenants). A host can be in different aggregates. If a
                 host does not belong to an aggregate with the metadata
                 key, it can create instances from all tenants.</para>
@@ -233,9 +233,8 @@ scheduler_available_filters=myfilter.MyFilter</computeroutput></screen>
                 <filename>nova.conf</filename>. The default setting
                 is:</para>
                 <programlisting language="ini">disk_allocation_ratio=1.0</programlisting>
-            <para>Adjusting this value to be greater than 1.0 will
-                allow scheduling instances while over committing disk
-                resources on the node. This may be desirable if you
+            <para>Adjusting this value to greater than 1.0 enables scheduling instances while over committing disk
+                resources on the node. This might be desirable if you
                 use an image format that is sparse or copy on write
                 such that each virtual instance does not require a 1:1
                 allocation of virtual disk to physical storage.</para>
@@ -414,8 +413,7 @@ isolated_images=342b492c-128f-4a42-8d3a-c5088cf27d13,ebd267a6-ca86-4d6c-9a0e-bd1
             <para>Filter out hosts that have already been attempted
                 for scheduling purposes. If the scheduler selects a
                 host to respond to a service request, and the host
-                fails to respond to the request, this filter will
-                prevent the scheduler from retrying that host for the
+                fails to respond to the request, this filter prevents the scheduler from retrying that host for the
                 service request.</para>
             <para>This filter is only useful if the
                     <literal>scheduler_max_attempts</literal>
@@ -518,7 +516,7 @@ ram_weight_multiplier=1.0</computeroutput></screen>
     <section xml:id="chance-scheduler">
         <title>Chance Scheduler</title>
         <?dbhtml stop-chunking?>
-        <para>As an administrator, you will most likely work with the
+        <para>As an administrator, you work with the
             Filter Scheduler. However, the Compute service also uses
             the Chance Scheduler,
                 <literal>nova.scheduler.chance.ChanceScheduler</literal>,

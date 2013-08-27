@@ -1,140 +1,137 @@
-<section xml:id="ceph-rados"
-    xmlns="http://docbook.org/ns/docbook"
+<section xml:id="ceph-rados" xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-    version="5.0">
-            <title>Ceph RADOS Block Device (RBD)</title>
-            <para>By Sebastien Han from <link xlink:href="http://www.sebastien-han.fr/blog/2012/06/10/introducing-ceph-to-openstack/"></link></para>
-            <para>If you are using KVM or QEMU as your hypervisor, the
-                Compute service can be configured to use
-                <link xlink:href="http://ceph.com/ceph-storage/block-storage/">
-                Ceph's RADOS block devices (RBD)</link> for volumes.</para>
-            <para>Ceph is a massively scalable, open source,
-                distributed storage system. It is comprised of an
-                object store, block store, and a POSIX-compliant
-                distributed file system. The platform is capable of
-                auto-scaling to the exabyte level and beyond, it runs
-                on commodity hardware, it is self-healing and
-                self-managing, and has no single point of failure.
-                Ceph is in the Linux kernel and is integrated with the
-                OpenStack™ cloud operating system. As a result of its
-                open source nature, this portable storage platform may
-                be installed and used in public or private clouds.
-                <figure>
-                  <title>Ceph architecture</title>
-                    <mediaobject>
-                      <imageobject>
-                        <imagedata
-                          fileref="../../../common/figures/ceph/ceph-architecture.png"
-                          contentwidth="6in"/>
-                      </imageobject>
-                    </mediaobject>
-                </figure>
-            </para>
-            <simplesect>
-                <title>RADOS?</title>
-                <para>You can easily get confused by the naming: Ceph?
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Ceph RADOS Block Device (RBD)</title>
+    <para>By Sebastien Han from <link
+            xlink:href="http://www.sebastien-han.fr/blog/2012/06/10/introducing-ceph-to-openstack/"
+        /></para>
+    <para>If you use KVM or QEMU as your hypervisor, you can configure
+        the Compute service to use <link
+            xlink:href="http://ceph.com/ceph-storage/block-storage/">
+            Ceph RADOS block devices (RBD)</link> for volumes.</para>
+    <para>Ceph is a massively scalable, open source, distributed
+        storage system. It is comprised of an object store, block
+        store, and a POSIX-compliant distributed file system. The
+        platform can auto-scale to the exabyte level and beyond. It
+        runs on commodity hardware, is self-healing and self-managing,
+        and has no single point of failure. Ceph is in the Linux
+        kernel and is integrated with the OpenStack cloud operating
+        system. Due to its open source nature, you can install and use
+        this portable storage platform in public or private clouds. <figure>
+            <title>Ceph architecture</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata
+                        fileref="../../../common/figures/ceph/ceph-architecture.png"
+                        contentwidth="6in"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+    </para>
+    <simplesect>
+        <title>RADOS?</title>
+        <para>You can easily get confused by the naming: Ceph?
             RADOS?</para>
-                <para><emphasis>RADOS: Reliable Autonomic Distributed
-                        Object Store</emphasis> is an object storage.
-                    RADOS takes care of distributing the objects
-                    across the whole storage cluster and replicating
-                    them for fault tolerance. It is built with 3 major
-                    components:</para>
-                <itemizedlist>
-                    <listitem>
-                        <para><emphasis>Object Storage Device
-                                (ODS)</emphasis>: the storage daemon -
-                            RADOS service, the location of your data.
-                            You must have this daemon running on each
-                            server of your cluster. For each OSD you
-                            can have an associated hard drive disks.
-                            For performance purposes, it’s usually
-                            better to pool your hard drive disk with
-                            raid arrays, LVM or btrfs pooling.
-                            By default, three pools
-                            are created: data, metadata and
-                            RBD.</para>
-                    </listitem>
-                    <listitem>
-                        <para><emphasis>Meta-Data Server
-                                (MDS)</emphasis>: this is where the
-                            metadata are stored. MDSs builds POSIX
-                            file system on top of objects for Ceph
-                            clients. However if you are not using the
-                            Ceph File System, you do not need a meta
-                            data server.</para>
-                    </listitem>
-                    <listitem>
-                        <para><emphasis>Monitor (MON)</emphasis>: this
-                            lightweight daemon handles all the
-                            communications with the external
-                            applications and the clients. It also
-                            provides a consensus for distributed
-                            decision making in a Ceph/RADOS cluster.
-                            For instance when you mount a Ceph shared
-                            on a client you point to the address of a
-                            MON server. It checks the state and the
-                            consistency of the data. In an ideal setup
-                            you need to run at least 3
-                                <code>ceph-mon</code> daemons, on
-                            separate servers.</para>
-                    </listitem>
-                </itemizedlist>
-                <para>Ceph developers recommend you use btrfs as a
-                    file system for the storage. Using XFS is also
-                    possible and might be a better alternative for
-                    production environments. Neither Ceph nor Btrfs
-                    are ready for production, so it could be risky
-                    to use them in combination. This is why XFS is an
-                    excellent alternative to btrfs. The ext4
-                    file system is also compatible but doesn’t take
-                    advantage of all the power of Ceph.</para>
-
-                <note>
-                    <para>We recommend configuring Ceph to use the XFS
-                        file system in the near term, and btrfs in the
-                        long term once it is stable enough for
-                        production.</para>
-                </note>
-
-                <para>See <link xlink:href="http://ceph.com/docs/master/rec/filesystem/"
-                    >ceph.com/docs/master/rec/file system/</link> for more information about usable file
-                        systems.</para>
-            </simplesect>
-            <simplesect><title>Ways to store, use and expose data</title>
-                <para>There are several ways to store and access your data.</para>
-                <itemizedlist>
-                    <listitem>
-                        <para><emphasis>RADOS</emphasis>: as an
-                            object, default storage mechanism.</para>
-                    </listitem>
-                    <listitem><para><emphasis>RBD</emphasis>: as a block
-                        device. The Linux kernel RBD (rados block
-                        device) driver allows striping a Linux block
-                        device over multiple distributed object store
-                        data objects. It is compatible with the kvm
-                        RBD image.</para></listitem>
-                    <listitem><para><emphasis>CephFS</emphasis>: as a file,
-                        POSIX-compliant file system.</para></listitem>
-                </itemizedlist>
-                <para>Ceph exposes its distributed object store (RADOS) and it can be accessed via multiple interfaces:</para>
-                <itemizedlist>
-                    <listitem><para><emphasis>RADOS Gateway</emphasis>:
-                        Swift and Amazon-S3 compatible RESTful
-                        interface. See <link xlink:href="http://ceph.com/wiki/RADOS_Gateway"
-                            >RADOS_Gateway</link> for further information.</para></listitem>
-                    <listitem><para><emphasis>librados</emphasis> and the
-                        related C/C++ bindings.</para></listitem>
-                    <listitem><para><emphasis>rbd and QEMU-RBD</emphasis>:
-                        Linux kernel and QEMU block devices that
-                        stripe data across multiple
-                        objects.</para></listitem>
-                </itemizedlist>
-                <para>For detailed installation instructions and
-                    benchmarking information, see <link
-                        xlink:href="http://www.sebastien-han.fr/blog/2012/06/10/introducing-ceph-to-openstack/"
-                        >http://www.sebastien-han.fr/blog/2012/06/10/introducing-ceph-to-openstack/</link>.</para>
-            </simplesect>
-
+        <para><emphasis>RADOS: Reliable Autonomic Distributed Object
+                Store</emphasis> is an object store. RADOS distributes
+            objects across the storage cluster and replicates objects
+            for fault tolerance. RADOS contains the following major
+            components:</para>
+        <itemizedlist>
+            <listitem>
+                <para><emphasis>Object Storage Device
+                    (ODS)</emphasis>. The storage daemon - RADOS
+                    service, the location of your data. You must run
+                    this daemon on each server in your cluster. For
+                    each OSD, you can have an associated hard drive
+                    disks. For performance purposes, pool your hard
+                    drive disk with raid arrays, logical volume
+                    management (LVM) or B-tree file system (Btrfs)
+                    pooling. By default, the following pools are
+                    created: data, metadata, and RBD.</para>
+            </listitem>
+            <listitem>
+                <para><emphasis>Meta-Data Server (MDS)</emphasis>.
+                    Stores metadata. MDSs build a POSIX file system on
+                    top of objects for Ceph clients. However, if you
+                    do not use the Ceph file system, you do not need a
+                    metadata server.</para>
+            </listitem>
+            <listitem>
+                <para><emphasis>Monitor (MON)</emphasis>. This
+                    lightweight daemon handles all communications with
+                    external applications and clients. It also
+                    provides a consensus for distributed decision
+                    making in a Ceph/RADOS cluster. For instance, when
+                    you mount a Ceph shared on a client, you point to
+                    the address of a MON server. It checks the state
+                    and the consistency of the data. In an ideal
+                    setup, you must run at least three
+                        <code>ceph-mon</code> daemons on separate
+                    servers.</para>
+            </listitem>
+        </itemizedlist>
+        <para>Ceph developers recommend that you use Btrfs as a file
+            system for storage. XFS might be a better alternative for
+            production environments. Neither Ceph nor Btrfs is ready
+            for production and it could be risky to use them in
+            combination. XFS is an excellent alternative to Btrfs. The
+            ext4 file system is also compatible but does not exploit
+            the power of Ceph.</para>
+        <note>
+            <para>Currently, configure Ceph to use the XFS file
+                system. Use Btrfs when it is stable enough for
+                production.</para>
+        </note>
+        <para>See <link
+                xlink:href="http://ceph.com/docs/master/rec/filesystem/"
+                >ceph.com/docs/master/rec/file system/</link> for more
+            information about usable file systems.</para>
+    </simplesect>
+    <simplesect>
+        <title>Ways to store, use, and expose data</title>
+        <para>To store and access your data, you can use the following
+            storage systems:</para>
+        <itemizedlist>
+            <listitem>
+                <para><emphasis>RADOS</emphasis>. Use as an object,
+                    default storage mechanism.</para>
+            </listitem>
+            <listitem>
+                <para><emphasis>RBD</emphasis>. Use as a block device.
+                    The Linux kernel RBD (rados block device) driver
+                    allows striping a Linux block device over multiple
+                    distributed object store data objects. It is
+                    compatible with the kvm RBD image.</para>
+            </listitem>
+            <listitem>
+                <para><emphasis>CephFS</emphasis>. Use as a file,
+                    POSIX-compliant file system.</para>
+            </listitem>
+        </itemizedlist>
+        <para>Ceph exposes its distributed object store (RADOS). You
+            can access it through the following interfaces:</para>
+        <itemizedlist>
+            <listitem>
+                <para><emphasis>RADOS Gateway</emphasis>. Swift and
+                    Amazon-S3 compatible RESTful interface. See <link
+                        xlink:href="http://ceph.com/wiki/RADOS_Gateway"
+                        >RADOS_Gateway</link> for more
+                    information.</para>
+            </listitem>
+            <listitem>
+                <para><emphasis>librados</emphasis>, and the related
+                    C/C++ bindings.</para>
+            </listitem>
+            <listitem>
+                <para><emphasis>rbd and QEMU-RBD</emphasis>. Linux
+                    kernel and QEMU block devices that stripe data
+                    across multiple objects.</para>
+            </listitem>
+        </itemizedlist>
+        <para>For detailed installation instructions and benchmarking
+            information, see <link
+                xlink:href="http://www.sebastien-han.fr/blog/2012/06/10/introducing-ceph-to-openstack/"
+                >http://www.sebastien-han.fr/blog/2012/06/10/introducing-ceph-to-openstack/</link>.</para>
+    </simplesect>
 </section>
