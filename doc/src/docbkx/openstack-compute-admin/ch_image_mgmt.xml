@@ -5,7 +5,7 @@
     xml:id="ch_image_mgmt">
     <title>Image Management</title>
     <para>The OpenStack Image Service, code-named <emphasis role="italic">glance</emphasis>,
-        provides functionality for discovering, registering, and retrieving virtual machine images.
+        discovers, registers, and retrieves virtual machine images.
         The service includes a <link
             xlink:href="http://api.openstack.org/api-ref.html#os-images-2.0">RESTful API</link> that
         allows users to query VM image metadata and retrieve the actual image with HTTP requests.
@@ -22,24 +22,21 @@
                     role="italic">swift</emphasis>) is the highly-available object storage project
                 in OpenStack.</para>
         </listitem>
-
         <listitem>
             <para>Filesystem - The default backend that OpenStack
                 Image Service uses to store virtual machine images is
                 the filesystem backend. This simple backend writes
                 image files to the local filesystem.</para>
         </listitem>
-
         <listitem>
             <para>S3 - This backend allows OpenStack Image Service to
                 store virtual machine images in Amazon’s S3
                 service.</para>
         </listitem>
-
         <listitem>
             <para>HTTP - OpenStack Image Service can read virtual
-                machine images that are available via HTTP somewhere
-                on the Internet. This store is readonly.</para>
+                machine images that are available through HTTP somewhere
+                on the Internet. This store is read only.</para>
         </listitem>
         <listitem>
             <para>Rados Block Device (RBD) - This backend stores images inside of a Ceph storage
@@ -49,10 +46,9 @@
             <para>GridFS - This backend stores images inside of MongoDB.</para>
         </listitem>
     </itemizedlist>
-
-    <para>This chapter assumes you have a working installation of the Image Service, with a working
-        endpoint and users created in the Identity Service, plus you have sourced the environment
-        variables required by the nova client and glance client.</para>
+    <para>You must have a working installation of the Image Service, with a working
+        endpoint and users created in the Identity Service. Also, you must source the environment
+        variables required by the nova and glance clients.</para>
     <xi:include href="../common/section_tenant-specific-image-storage.xml"/>
     <xi:include href="adding-images.xml"/>
     <section xml:id="starting-images">
@@ -98,7 +94,7 @@
     </section>
     <section xml:id="booting-a-test-image">
         <title>Booting a test image</title>
-        <para>The following assumes you are using QEMU or KVM in your
+        <para>The following example assumes that you are using QEMU or KVM in your
             deployment.</para>
         <para>Download a CirrOS test image:</para>
         <screen>
@@ -174,8 +170,7 @@
         <screen>
 <prompt>$</prompt> <userinput>nova list</userinput>
             </screen>
-        <para>The instance will go from BUILD to ACTIVE in a short
-            time, and you should be able to connect via ssh as
+        <para>The instance changes from BUILD to ACTIVE, and you can connect through ssh as
             'cirros' user, using the private key you created. If your
             ssh keypair fails for some reason, you can also log in
             with the default cirros password:
@@ -185,18 +180,14 @@
 <prompt>$</prompt> <userinput>ssh -i test.pem -l cirros $ipaddress</userinput>
         </screen>
         <para>The 'cirros' user is part of the sudoers group, so you
-            can escalate to 'root' via the following command when
+            can escalate to 'root' through the following command when
             logged in to the instance:</para>
         <screen>
 <prompt>$</prompt> <userinput>sudo -i</userinput>
         </screen>
-
     </section>
-
     <section xml:id="deleting-instances">
-
         <title>Tearing down (deleting) Instances</title>
-
         <para>When you are done with an instance, you can tear it down
             using the <command>nova delete</command> command, passing
             either the instance name or instance ID as the argument.
@@ -214,10 +205,8 @@
 </computeroutput>
 <prompt>$</prompt> <userinput>nova delete my-first-server</userinput>
         </screen>
-
     </section>
     <section xml:id="pausing-and-suspending-instances">
-
         <title>Pausing and Suspending Instances</title>
         <para>Since the release of the API in its 1.1 version, it is
             possible to pause and suspend instances.</para>
@@ -253,10 +242,10 @@
     </section>
     <section xml:id="specify-host-to-boot-instances-on">
         <title>Select a specific host to boot instances on</title>
-        <para>If you have the appropriate permissions, you can select the specific host where the
-            instance will be launched. This is done using the <literal>--availability_zone
-                    <replaceable>zone</replaceable>:<replaceable>host</replaceable></literal>
-            arguments to the <command>nova boot</command> command. For example:</para>
+        <para>If you have the appropriate permissions, you can select the host where the
+            instance launches. Use the <parameter>--availability_zone
+                    <replaceable>zone</replaceable>:<replaceable>host</replaceable></parameter>
+            parameters with the <command>nova boot</command> command. For example:</para>
         <para>
             <screen><prompt>$</prompt> <userinput>nova boot --image &lt;uuid&gt; --flavor m1.tiny --key_name test --availability-zone nova:server2</userinput></screen>
         </para>
@@ -288,7 +277,6 @@
             xlink:href="http://docs.openstack.org/user-guide/content/cli_manage_images.html"
                 >Manage Images Section of the OpenStack User Guide</link> for information on how
             to create images from running instances.</para>
-
     </section>
     <section xml:id="replicating-images">
         <title>Replicating images across multiple data centers</title>
@@ -297,9 +285,9 @@
             to populate a new glance server using the images stored in
             an existing glance server. The images in the replicated
             glance server preserve the uuids, metadata, and image data
-            from the original. Running the tool will output a set of
+            from the original. The tool outputs a set of
             commands that it
-            supports:<screen>$ <userinput>glance-replicator</userinput>
+            supports:</para><screen>$ <userinput>glance-replicator</userinput>
 <computeroutput>Usage: glance-replicator &lt;command> [options] [args]
 
 Commands:
@@ -316,7 +304,7 @@ Options:
   --version             show program's version number and exit
   -h, --help            show this help message and exit
   -c CHUNKSIZE, --chunksize=CHUNKSIZE
-                        Amount of data to transfer per HTTP write
+                        Amount of data to transfer for each HTTP write
   -d, --debug           Print debugging information
   -D DONTREPLICATE, --dontreplicate=DONTREPLICATE
                         List of fields to not replicate
@@ -334,10 +322,10 @@ Options:
   -S SLAVETOKEN, --slavetoken=SLAVETOKEN
                         Pass in your authentication token if you have one.
                         This is the token used for the slave.
-  -v, --verbose         Print more verbose output</computeroutput></screen></para>
+  -v, --verbose         Print more verbose output</computeroutput></screen>
         <para>The replicator supports the following commands:</para>
         <simplesect>
-            <title>livecopy: Load the contents of one glance instance
+            <title>live copy: Load the contents of one glance instance
                 into another</title>
             <para>
                 <screen><userinput>glance-replicator livecopy <replaceable>fromserver:port</replaceable> <replaceable>toserver:port</replaceable></userinput></screen>
@@ -357,14 +345,13 @@ Options:
                 </itemizedlist>
             </para>
             <para>Take a copy of the fromserver, and dump it onto the
-                toserver. Only images visible to the user running the
-                replicator will be copied if glance is configured to
-                use the Identity service (keystone) for
+                to server. Only images visible to the user running the
+                replicator are copied if glance is configured to
+                use the Identity service for
                 authentication. Only images active on
-                    <replaceable>fromserver </replaceable>are copied
-                across. The copy is done "on-the-wire" so there are no
-                large temporary files on the machine running the
-                replicator to clean up.</para>
+                    <replaceable>fromserver</replaceable> are copied. The copy is done "on-the-wire," so
+                no large temporary files need to be cleaned up on the machine that runs the
+                replicator.</para>
         </simplesect>
         <simplesect>
             <title>dump: Dump the contents of a glance instance to
@@ -390,7 +377,7 @@ Options:
                 size of the local glance repository, the resulting
                 dump may consume a large amount of local storage.
                 Therefore, we recommend you use the
-                    <command>size</command> comamnd first to determine
+                    <command>size</command> command first to determine
                 the size of the resulting dump.</para>
         </simplesect>
         <simplesect>
@@ -421,7 +408,8 @@ Options:
         <simplesect>
             <title>compare: Compare the contents of two glance
                 servers</title>
-            <para><screen><userinput>glance-replicator compare <replaceable>fromserver:port</replaceable> <replaceable>toserver:port</replaceable></userinput></screen><itemizedlist>
+            <screen><userinput>glance-replicator compare <replaceable>fromserver:port</replaceable> <replaceable>toserver:port</replaceable></userinput></screen>
+<itemizedlist>
                     <listitem>
                         <para><replaceable>fromserver:port</replaceable>:
                             the location of the master glance
@@ -433,32 +421,32 @@ Options:
                             location of the slave glance instance.
                         </para>
                     </listitem>
-                </itemizedlist>The <command>compare</command> command
-                will show you the differences between the two servers,
+                </itemizedlist><para>The <command>compare</command> command
+                shows the differences between the two servers,
                 which is effectively a dry run of the
                     <command>livecopy</command> command.</para>
         </simplesect>
         <simplesect>
             <title>size: Determine the size of a glance instance if
                 dumped to disk</title>
-            <para><screen><userinput>glance-replicator size</userinput></screen><itemizedlist>
+           <screen><userinput>glance-replicator size</userinput></screen><itemizedlist>
                     <listitem>
                         <para><replaceable>server:port</replaceable>:
                             the location of the glance
                             instance.</para>
                     </listitem>
-                </itemizedlist>The <command>size</command> command
-                will tell you how much disk is going to be used by
+                </itemizedlist><para>The <command>size</command> command
+                shows how much disk is going to be used by
                 image data in either a <command>dump</command> or a
-                    <command>livecopy</command>. Note that this will
-                provide raw number of bytes that would be written to
-                the destination, it has no information about the
+                    <command>livecopy</command>. Note that this 
+                provides the raw number of bytes that would be written to
+                the destination. It has no information about the
                 redundancy costs associated with <systemitem class="service">glance-registry</systemitem>
                 back-ends that use replication for redundancy, such as
                 Swift or Ceph.</para>
         </simplesect>
         <simplesect>
-            <title>Example using livecopy</title>
+            <title>Example using live copy</title>
             <para>Assuming you have a primary glance service running
                 on a node called
                     <literal>primary.example.com</literal> with
@@ -467,9 +455,9 @@ Options:
                 want to replicate its contents to a secondary glance
                 service running on a node called
                     <literal>secondary.example.com</literal>, also on
-                port 9292, you will first need to get authentication
+                port 9292, you must get authentication
                 tokens from keystone for the primary and secondary
-                glance server and then you can use the
+                glance server. Then, you can use the
                     <literal>glance-replicator livecopy</literal>
                 command.</para>
             <para>The following example assumes that you have a
