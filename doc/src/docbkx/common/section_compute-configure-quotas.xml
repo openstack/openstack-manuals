@@ -7,60 +7,25 @@
          xmlns:ns3="http://www.w3.org/1998/Math/MathML"
          xmlns:ns="http://docbook.org/ns/docbook" version="5.0">
         <title>Configuring Quotas</title>
-
-        <para>For tenants, quota controls are available to limit the (flag and default shown in
-parenthesis):<itemizedlist>
-                <listitem>
-                    <para>Number of volumes which may be created (volumes=10)</para>
-                </listitem>
-                <listitem>
-                    <para>Total size of all volumes within a project as measured in GB (gigabytes=1000)</para>
-                </listitem>
-                <listitem>
-                    <para>Number of instances which may be launched (instances=10)</para>
-                </listitem>
-                <listitem>
-                    <para>Number of processor cores which may be allocated (cores=20)</para>
-                </listitem>
-                <listitem>
-                    <para>Publicly accessible IP addresses for
-            persistence in DNS assignment (floating_ips=10)</para>
-                </listitem>
-                <listitem>
-                    <para>Privately (or publicly) accessible IP
-            addresses for management purposes (fixed_ips=-1
-            unlimited)</para>
-                </listitem>
-                <listitem>
-                    <para>Amount of RAM that can be allocated in MB (ram=512000)</para>
-                </listitem>
-                <listitem>
-                    <para>Number of files that can be injected (injected_files=5)</para>
-                </listitem>
-                 <listitem>
-                    <para>Maximal size of injected files in B (injected_file_content_bytes=10240)</para>
-                </listitem>
-                <listitem>
-                    <para>Number of security groups that may be created (security_groups=10)</para>
-                </listitem>
-                 <listitem>
-                <para>Number of rules per security group
-                    (security_group_rules=20)</para>
-            </listitem>
-            <listitem>
-                <para>Number of CPU resources consumed by VM, KVM only
-                    (cpu_quota=5000)</para>
-            </listitem>
-        </itemizedlist></para>
-        <para>The defaults may be modified by setting the variable in
-         <literal>nova.conf</literal>, then restarting the <systemitem class="service">nova-api</systemitem>
-         service.</para>
-        <para>To modify a value for a specific project, the
-            <command>nova-manage</command> command should be used. For
-        example:
-        <screen><userinput><prompt>$</prompt> nova-manage project quota --project=1113f5f266f3477ac03da4e4f82d0568 --key=cores --value=40</userinput></screen>
-        Alternately, quota settings are available through the
-        OpenStack Dashboard in the "Edit Project" page.</para>
-        <xi:include href="../common/tables/nova-quota.xml"/>
-
+        <para>To prevent system capacities from being exhausted without
+      notification, you can set up quotas. Quotas are operational limits.
+      For example, the number of gigabytes allowed per tenant can be
+      controlled so that cloud resources are optimized.
+      Quotas are currently enforced at the tenant (or project) level,
+      rather than by user.
+    </para>
+    <para>For example, a default value might be changed because a tenant requires more than 1TB on a Compute node.
+    </para>
+     <note><para>To view all tenants, run:
+          <screen><prompt>$</prompt> <userinput>keystone tenant-list</userinput>
+<computeroutput>+----------------------------------+----------+---------+
+|                id                |   name   | enabled |
++----------------------------------+----------+---------+
+| a981642d22c94e159a4a6540f70f9f8d |  admin   |   True  |
+| 934b662357674c7b9f5e4ec6ded4d0e7 | tenant01 |   True  |
+| 7bc1dbfd7d284ec4a856ea1eb82dca80 | tenant02 |   True  |
+| 9c554aaef7804ba49e1b21cbd97d218a | services |   True  |
++----------------------------------+----------+---------+</computeroutput></screen>
+        </para></note>
+    <xi:include href="../openstack-admin-user/src/section_cli_set_compute_quotas.xml"/>
 </section>
