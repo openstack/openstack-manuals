@@ -350,9 +350,8 @@
               <screen><computeroutput>openflow_rest_api = &lt;ip-address&gt;:&lt;port-no&gt; ovsdb_interface = &lt;eth0&gt; tunnel_interface = &lt;eth0&gt; </computeroutput></screen>
             </step>
             <step>
-              <para>Restart <systemitem class="service"
-                  >neutron-server</systemitem> to pick up the new
-                settings:</para>
+              <para>Restart <systemitem class="service">neutron-server</systemitem> to pick up the
+                new settings:</para>
               <screen><prompt>$</prompt><userinput>sudo service neutron-server restart</userinput></screen>
             </step>
           </procedure>
@@ -368,18 +367,19 @@
               <para>Edit
                   <filename>/etc/neutron/neutron.conf</filename> and
                 set:</para>
-              <screen><computeroutput>core_plugin = neutron.plugins.plumgrid.plumgrid_nos_plugin.plumgrid_plugin.NeutronPluginPLUMgridV2</computeroutput></screen>
+              <screen><computeroutput>core_plugin = neutron.plugins.plumgrid.plumgrid_plugin.plumgrid_plugin.NeutronPluginPLUMgridV2</computeroutput></screen>
             </step>
             <step>
-              <para>Edit
-                  <filename>/etc/neutron/plugins/plumgrid/plumgrid.ini</filename>
-                under the <systemitem>[plumgridnos]</systemitem>
-                section, and specify the IP address, admin user name,
-                and password of the PLUMgrid director (also known as
-                NOS):
-                <screen><computeroutput>servers=&lt;plumgrid_NOS_IP&gt; username=&lt;username&gt; password=&lt;password&gt;</computeroutput></screen>For
-                database configuration, see <xref
-                  linkend="install_neutron_server"/>.</para>
+              <para>Edit <filename>/etc/neutron/plugins/plumgrid/plumgrid.ini</filename> under the
+                  <systemitem>[PLUMgridDirector]</systemitem> section, and specify the IP address,
+                port, admin user name, and password of the PLUMgrid Director:
+                <programlisting language="ini">[PLUMgridDirector]
+director_server = "PLUMgrid-director-ip-address"
+director_server_port = "PLUMgrid-director-port"
+username = "PLUMgrid-director-admin-username"
+password = "PLUMgrid-director-admin-password"</programlisting>
+                For database configuration, see
+                <xref linkend="install_neutron_server"/>.</para>
             </step>
             <step>
               <para>Restart <systemitem class="service"
