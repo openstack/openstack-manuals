@@ -49,7 +49,7 @@
       <para>When using the VMwareVCDriver (i.e., vCenter) with OpenStack Compute, nova.conf must
         include the following VMWare-specific config options:</para>
 
-      <programlisting>[DEFAULT]
+      <programlisting language="ini">[DEFAULT]
 compute_driver=vmwareapi.VMwareVCDriver
 
 [vmware]
@@ -84,7 +84,7 @@ wsdl_location=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl</progr
         <screen><prompt>$</prompt> <userinput>sudo apt-get install wget</userinput></screen>
         Now that we have a tool to fetch the files for us, we can download them to the local
         file cache.
-        <programlisting>wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/vimService.wsdl
+        <programlisting language="bash">wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/vimService.wsdl
         wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/vim.wsdl
         wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/core-types.xsd
         wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/query-messagetypes.xsd
@@ -98,7 +98,7 @@ wsdl_location=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl</progr
         XML parser underneath Python can be very particular and if you put a space
         in the wrong place it can break the parser. Copy the contents below carefully
         and watch the formatting carefully.
-        <programlisting>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+        <programlisting language="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
             &lt;schema
                targetNamespace="urn:reflect"
                xmlns="http://www.w3.org/2001/XMLSchema"
@@ -110,7 +110,7 @@ wsdl_location=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl</progr
         to look for the SOAP service WSDLs in the local file system and not on the
         remote vSphere server. The following setting should be added to the nova.conf
         for your nova-compute node.
-        <programlisting>vmwareapi_wsdl_loc=file:///opt/stack/vmware/wsdl/5.0/vimService.wsdl
+        <programlisting language="ini">vmwareapi_wsdl_loc=file:///opt/stack/vmware/wsdl/5.0/vimService.wsdl
         </programlisting>
         </para>
       <para>Alternatively, download the version appropriate SDK from <link
@@ -122,7 +122,7 @@ wsdl_location=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl</progr
         using a URL.</para>
         <para>When using the VMwareVCDriver (i.e., vCenter) with OpenStack Compute with vSphere
         version 5.0 or below, nova.conf must include the following extra config option:</para>
-      <programlisting>vmwareapi_wsdl_loc=file:///opt/stack/vmware/SDK/wsdl/vim25/vimService.wsdl
+      <programlisting language="ini">vmwareapi_wsdl_loc=file:///opt/stack/vmware/SDK/wsdl/vim25/vimService.wsdl
       </programlisting>
     </section>
     <section xml:id="VMwareVCDriver_limitations">
@@ -158,7 +158,7 @@ wsdl_location=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl</progr
       <para>When using the VMwareESXDriver (i.e., no vCenter) with OpenStack Compute, configure
         nova.conf with the following VMWare-specific config options:</para>
 
-      <programlisting>[DEFAULT]
+      <programlisting language="ini">[DEFAULT]
 compute_driver=vmwareapi.VMwareESXDriver
 
 [vmware]

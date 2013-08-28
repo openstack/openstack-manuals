@@ -13,7 +13,7 @@
                 >INI file format</link>, with options specified as <literal>key=value</literal>
             pairs, grouped into sections. Almost all of the configuration options are in the
                 <literal>DEFAULT</literal> section. Here's a brief
-            example:<programlisting>[DEFAULT]
+            example:<programlisting language="ini">[DEFAULT]
 debug=true
 verbose=true
 
@@ -30,21 +30,21 @@ server=10.3.4.2</programlisting></para>
                     <listitem>
                         <para>Boolean option. Value must be either <literal>true</literal> or
                                 <literal>false</literal> .
-                            Example:<programlisting>debug=false</programlisting></para>
+                            Example:<programlisting language="ini">debug=false</programlisting></para>
                     </listitem>
                 </varlistentry>
                 <varlistentry>
                     <term>StrOpt</term>
                     <listitem>
                         <para>String option. Value is an arbitrary string.
-                            Example:<programlisting>my_ip=10.0.0.1</programlisting></para>
+                            Example:<programlisting language="ini">my_ip=10.0.0.1</programlisting></para>
                     </listitem>
                 </varlistentry>
                 <varlistentry>
                     <term>IntOption</term>
                     <listitem>
                         <para>Integer option. Value must be an integer. Example:
-                            <programlisting>glance_port=9292</programlisting></para>
+                            <programlisting language="ini">glance_port=9292</programlisting></para>
                     </listitem>
                 </varlistentry>
                 <varlistentry>
@@ -52,7 +52,7 @@ server=10.3.4.2</programlisting></para>
                     <listitem>
                         <para>String option. Same as StrOpt, except that it can be declared multiple
                             times to indicate multiple values.
-                            Example:<programlisting>ldap_dns_servers=dns1.example.org
+                            Example:<programlisting language="ini">ldap_dns_servers=dns1.example.org
 ldap_dns_servers=dns2.example.org</programlisting></para>
                     </listitem>
                 </varlistentry>
@@ -60,14 +60,14 @@ ldap_dns_servers=dns2.example.org</programlisting></para>
                     <term>ListOpt</term>
                     <listitem>
                         <para>List option. Value is a list of arbitrary strings separated by commas.
-                            Example:<programlisting>enabled_apis=ec2,osapi_compute,metadata</programlisting></para>
+                            Example:<programlisting language="ini">enabled_apis=ec2,osapi_compute,metadata</programlisting></para>
                     </listitem>
                 </varlistentry>
                 <varlistentry>
                     <term>FloatOpt</term>
                     <listitem>
                         <para>Floating-point option. Value must be a floating-point number.
-                            Example:<programlisting>ram_allocation_ratio=1.5</programlisting></para>
+                            Example:<programlisting language="ini">ram_allocation_ratio=1.5</programlisting></para>
                     </listitem>
                 </varlistentry>
             </variablelist>
@@ -132,13 +132,13 @@ ldap_dns_servers=dns2.example.org</programlisting></para>
             set,  it can be referenced in later configuration values when preceded by
                 <literal>$</literal>. Consider the following example where <literal>my_ip</literal>
             is defined and then <literal>$my_ip</literal> is used as a
-            variable.<programlisting>my_ip=10.2.3.4
+            variable.<programlisting language="ini">my_ip=10.2.3.4
 glance_host=$my_ip
 metadata_host=$my_ip</programlisting></para>
         <para>If you need a value to contain the <literal>$</literal> symbol, escape it by doing
                 <literal>$$</literal>. For example, if your LDAP DNS password was
                 <literal>$xkj432</literal>, you would
-            do:<programlisting>ldap_dns_password=$$xkj432</programlisting></para>
+            do:<programlisting language="ini">ldap_dns_password=$$xkj432</programlisting></para>
         <para>The Compute code uses Python's <literal>string.Template.safe_substitute()</literal>
             method to implement variable substitution. For more details on how variable substitution
             is resolved, see <link
@@ -149,7 +149,7 @@ metadata_host=$my_ip</programlisting></para>
     <simplesect>
         <title>Whitespace</title>
         <para>To include whitespace in a configuration value, use a quoted string. For
-            example:<programlisting>ldap_dns_passsword='a password with spaces'</programlisting></para>
+            example:<programlisting language="ini">ldap_dns_passsword='a password with spaces'</programlisting></para>
     </simplesect>
     <simplesect>
         <title>Specifying an alternate location for nova.conf</title>
