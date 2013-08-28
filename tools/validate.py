@@ -87,7 +87,7 @@ def verify_section_tags_have_xmid(doc):
                              node.sourceline)
 
 
-def verify_nice_usage_of_whitespaces(docfile):
+def verify_nice_usage_of_whitespaces(rootdir, docfile):
     """Check that no unnecessary whitespaces are used"""
     checks = [
         re.compile(".*\s+\n$"),
@@ -120,9 +120,9 @@ def verify_nice_usage_of_whitespaces(docfile):
                 affected_lines.append(str(lc))
 
     if len(affected_lines) > 0:
-        print ("trailing or unnecessary whitespaces "
+        print ("file %s:" % os.path.relpath(docfile, rootdir));
+        print ("  trailing or unnecessary whitespaces "
                "in following lines: %s" % ", ".join(affected_lines))
-
 
 def error_message(error_log):
     """Return a string that contains the error message.
@@ -179,7 +179,7 @@ def validate_individual_files(rootdir, exceptions, force):
                         any_failures = True
                         print(error_message(schema.error_log))
                     verify_section_tags_have_xmid(doc)
-                    verify_nice_usage_of_whitespaces(os.path.join(root, f))
+                    verify_nice_usage_of_whitespaces(rootdir, path)
                 except etree.XMLSyntaxError as e:
                     any_failures = True
                     print("%s: %s" % (path, e))
