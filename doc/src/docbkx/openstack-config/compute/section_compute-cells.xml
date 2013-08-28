@@ -57,15 +57,42 @@
                     <listitem>
                         <para>List of arbitrary
                                     <literal><replaceable>key</replaceable>=<replaceable>value</replaceable></literal>
-                            pairs defining capabilities of the current cell. These are sent to
-                            parent cells, but aren't used in scheduling until later filter/weight
-                            support is added.</para>
+                            pairs defining capabilities of the current cell.
+                            Values include
+                                <literal>hypervisor=xenserver;kvm,os=linux;windows</literal>.</para>
                     </listitem>
                 </varlistentry>
                 <varlistentry>
                     <term><literal>call_timeout</literal></term>
                     <listitem>
-                        <para>How long to wait for replies from calls between cells.</para>
+                        <para>How long in seconds to wait for replies from calls
+                            between cells.</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term>scheduler_filter_classes</term>
+                    <listitem>
+                        <para>Filter classes that the cells scheduler should
+                            use. By default, uses
+                                "<literal>nova.cells.filters.all_filters</literal>"
+                            to map to all cells filters included with
+                            nova.</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term>scheduler_weight_classes</term>
+                    <listitem><para>Weight classes the cells scheduler should use. By default, uses
+                                "<literal>nova.cells.weights.all_weighers</literal>"
+                            to map to all cells weight algorithms (weighers)
+                            included with Compute.</para></listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term>ram_weight_multiplier</term>
+                    <listitem>
+                        <para>Multiplier used for weighing ram. Negative numbers
+                            mean you want Compute to stack VMs on one host
+                            instead of spreading out new VMs to more hosts in
+                            the cell. Default value is 10.0.</para>
                     </listitem>
                 </varlistentry>
             </variablelist></para>
@@ -147,17 +174,49 @@ rabbit_virtual_host=cell1_vhost</programlisting></para>
 </userinput></screen></para>
         <xi:include href="../../common/tables/nova-cells.xml"/>
     </section>
+    <section xml:id="cell-weights-filters">
+        <title>Cell scheduling configuration</title>
+        <para>New for the Havana release, you can configure some cells with
+            higher weights so that those cells are given priority for new VMs to
+            be launched.</para>
+        <para>As an admin user, you can also add a filter that directs builds to
+            a particular cell. The <filename>policy.json</filename> file must
+            have a line with <literal>"cells_scheduler_filter:TargetCellFilter"
+                : "is_admin:True"</literal> to let an admin user specify a
+            scheduler hint to direct a build to a particular cell.</para>
+        <para>There are two modules available by default in the
+                <filename>nova.conf</filename> file so that cell selection is no
+            longer random. These are selected with the default
+                <filename>nova.conf</filename> file which has
+                <literal>scheduler_weight_classes=nova.cells.weights.all_weighers</literal>
+            as the default.</para>
+            <itemizedlist><listitem><para>ram_by_instance_type: Select cells with the most RAM capacity for the
+                    instance type being requested. Since higher weights win,
+                    Compute returns the number of available units for the
+                    instance type requested. In nova.conf there's a
+                    ram_weight_multiplier defaulted to 10.0 that adds to the
+                    weight by a factor of 10.</para></listitem>
+            <listitem><para>weight_offset: Allows modifying the database to weight a particular cell.
+                    You can use this when you want to disable a cell. Originally
+                    designed so you can set a default cell by making its
+                    weight_offset very high, like 999999999999999. The highest
+                    weight will be first cell scheduled for launching
+                        VMs.</para></listitem></itemizedlist>
+    </section>
     <section xml:id="cell-config-optional-json">
         <title>Optional cell configuration</title>
-        <para>Cells currently keeps all inter cell communication data, including usernames and
-            passwords, in the database. This is undesirable and unnecessary since cells data isn't
-            updated very frequently. The  change described in this section allows cells data to be
-            drawn from a JSON file specified through a new <code>[cells]cells_config</code> option. When
-            specified, the database is no longer consulted when reloading cells data.</para>
-        <para>Cells may now optionally be configured through a JSON-formatted file. The file requires that the columns be present in the Cell model (excluding common database fields and the
-            <code>id</code> column). The queue connection information must be specified through a
-            <code>transport_url</code> field, instead of <code>username</code>, <code>password</code>, and so on. The <code>transport_url</code>
-            has the following form:</para>
+        <para>Cells currently keeps all intercell communication data, including
+            usernames and passwords, in the database. This is undesirable and
+            unnecessary since cells data isn't updated very frequently. Instead,
+            create a JSON file to input cells data specified via a
+                <code>[cells]cells_config</code> option. When specified, the
+            database is no longer consulted when reloading cells data. The file
+            will need the columns present in the Cell model (excluding common
+            database fields and the <code>id</code> column). The queue
+            connection information must be specified through a
+                <code>transport_url</code> field, instead of
+                <code>username</code>, <code>password</code>, and so on. The
+                <code>transport_url</code> has the following form:</para>
             <programlisting>
 rabbit://&lt;username>:&lt;password>@&lt;hostname>:&lt;port>/&lt;virtual_host>
             </programlisting>
