@@ -228,6 +228,13 @@ def build_affected_books(rootdir, book_exceptions, file_exceptions, force):
     books = []
     book_root = rootdir
     for root, dirs, files in os.walk(rootdir):
+        # Don't descend into 'target' subdirectories
+        try:
+            ind = dirs.index('target')
+            del dirs[ind]
+        except ValueError:
+            pass
+
         if os.path.basename(root) in book_exceptions:
             break
         elif "pom.xml" in files:
