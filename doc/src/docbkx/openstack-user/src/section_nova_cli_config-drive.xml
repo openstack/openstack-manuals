@@ -67,7 +67,7 @@
         <para>You can also configure the Compute service to always
             create a config drive by setting the following option in
                 <filename>/etc/nova/nova.conf</filename>:</para>
-        <programlisting language="bash">force_config_drive=true</programlisting>
+        <programlisting language="ini">force_config_drive=true</programlisting>
         <note>
             <para>If a user passes the
                     <literal>--config-drive=true</literal> flag to the
@@ -150,7 +150,7 @@ openstack/latest/user_data</computeroutput></screen>
             (these two files are identical), formatted to improve
             readability:</para>
         <para>
-            <programlisting>{
+            <programlisting language="json">{
     "availability_zone": "nova",
     "files": [
         {
@@ -193,7 +193,7 @@ openstack/latest/user_data</computeroutput></screen>
             files are identical) formatted to improve
             readability:</para>
         <para>
-            <programlisting>{
+            <programlisting language="json">{
     "ami-id": "ami-00000001",
     "ami-launch-index": 0,
     "ami-manifest-path": "FIXME",
@@ -243,18 +243,22 @@ openstack/latest/user_data</computeroutput></screen>
     <simplesect>
         <title>Format of the config drive</title>
         <para>The default format of the config drive as an ISO 9660
-            filesystem. To explicitly specify the ISO 9660 format, add
-            the following line to
+            filesystem. To explicitly specify the ISO 9660 format, 
+            the following line is in
                 <filename>/etc/nova/nova.conf</filename>:</para>
-        <programlisting language="bash">config_drive_format=iso9660</programlisting>
-        <para>For legacy reasons, the config drive can be configured
-            to use VFAT format instead of ISO 9660. It is unlikely
-            that you would require VFAT format, since ISO 9660 is
-            widely supported across operating systems. However, if you
-            wish to use the VFAT format, add the following line to
-                <filename>/etc/nova/nova.conf</filename>
+        <programlisting language="ini">config_drive_format=iso9660</programlisting>
+        <para>By default, you cannot attach the config drive image as a CD drive
+            instead of a disk drive. Change this setting in
+                <filename>/etc/nova/nova.conf</filename> to true if you want a
+            CD drive attached.</para>
+        <programlisting language="ini">config_drive_cdrom=true</programlisting>
+        <para>For legacy reasons, the config drive can be configured to use VFAT
+            format instead of ISO 9660. It is unlikely that you would require
+            VFAT format, since ISO 9660 is widely supported across operating
+            systems. However, if you wish to use the VFAT format, add the
+            following line to <filename>/etc/nova/nova.conf</filename>
             instead:</para>
-        <programlisting language="bash">config_drive_format=vfat</programlisting>
+        <programlisting language="ini">config_drive_format=vfat</programlisting>
         <para>If you choose VFAT, the config drive is 64 MBs.</para>
     </simplesect>
     <simplesect>
