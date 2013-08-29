@@ -8,9 +8,8 @@
         Verify that authentication is behaving as expected by using your
         established username and password to generate an authentication token:
     </para>
-    <screen>
-        <prompt>$</prompt> <userinput>keystone --os-username=admin --os-password=secrete --os-auth-url=http://192.168.206.130:35357/v2.0 token-get</userinput>
-        <computeroutput>
+    <screen><prompt>$</prompt> <userinput>keystone --os-username=admin --os-password=secrete --os-auth-url=http://192.168.206.130:35357/v2.0 token-get</userinput>
+<computeroutput>
 +----------+----------------------------------+
 | Property |              Value               |
 +----------+----------------------------------+
@@ -18,8 +17,7 @@
 |    id    | 960ad732a0eb4b2a88516f18384c1fba |
 | user_id  | a4c2d43f80a549a19864c89d759bb3fe |
 +----------+----------------------------------+
-        </computeroutput>
-    </screen>
+</computeroutput></screen>
     <para>
         You should receive a token in response, paired with your user ID.
     </para>
@@ -31,9 +29,8 @@
         Next, verify that authorization is behaving as expected by requesting
         authorization on a tenant:
     </para>
-    <screen>
-        <prompt>$</prompt> <userinput>keystone --os-username=admin --os-password=secrete --os-tenant-name=demo --os-auth-url=http://192.168.206.130:35357/v2.0 token-get</userinput>
-        <computeroutput>
+    <screen><prompt>$</prompt> <userinput>keystone --os-username=admin --os-password=secrete --os-tenant-name=demo --os-auth-url=http://192.168.206.130:35357/v2.0 token-get</userinput>
+<computeroutput>
 +-----------+----------------------------------+
 |  Property |              Value               |
 +-----------+----------------------------------+
@@ -42,8 +39,7 @@
 | tenant_id | c1ac0f7f0e55448fa3940fa6b8b54911 |
 |  user_id  | a4c2d43f80a549a19864c89d759bb3fe |
 +-----------+----------------------------------+
-        </computeroutput>
-    </screen>
+</computeroutput></screen>
     <para>You should receive a new token in response, this time including the ID
         of the tenant you specified.</para>
     <para>This verifies that your user account has an explicitly defined role on
@@ -56,12 +52,10 @@
     <para>Once the admin user credentials are established, you can set up a
             <literal>keystonerc</literal> file with the admin credentials and
         admin endpoint (note the use of port 35357):</para>
-    <programlisting language="bash">
-        export OS_USERNAME=admin
-        export OS_PASSWORD=secrete
-        export OS_TENANT_NAME=demo
-        export OS_AUTH_URL=http://192.168.206.130:35357/v2.0
-    </programlisting>
+    <programlisting language="bash">export OS_USERNAME=admin
+export OS_PASSWORD=secrete
+export OS_TENANT_NAME=demo
+export OS_AUTH_URL=http://192.168.206.130:35357/v2.0</programlisting>
     <para>
         Save and source the <filename>keystonerc</filename> file.
     </para>
@@ -71,9 +65,8 @@
         by performing the same command as above, but without any
         <literal>--os-*</literal> arguments.
     </para>
-    <screen>
-        <prompt>$</prompt> <userinput>keystone token-get</userinput>
-        <computeroutput>
+    <screen><prompt>$</prompt> <userinput>keystone token-get</userinput>
+<computeroutput>
 +-----------+----------------------------------+
 |  Property |              Value               |
 +-----------+----------------------------------+
@@ -82,8 +75,7 @@
 | tenant_id | c1ac0f7f0e55448fa3940fa6b8b54911 |
 |  user_id  | a4c2d43f80a549a19864c89d759bb3fe |
 +-----------+----------------------------------+
-        </computeroutput>
-    </screen>
+</computeroutput></screen>
     <para>The command returns a token and the ID of the specified tenant.</para>
     <para>
         This verifies that you have configured your environment variables
@@ -102,9 +94,8 @@
                 <literal>--os-auth-url</literal> setting when working with
             keystone CLI.</para>
     </note>
-    <screen>
-        <prompt>$</prompt> <userinput>keystone user-list</userinput>
-        <computeroutput>
+    <screen><prompt>$</prompt> <userinput>keystone user-list</userinput>
+<computeroutput>
 +----------------------------------+---------+-------+--------+
 |                id                | enabled | email |  name  |
 +----------------------------------+---------+-------+--------+
@@ -114,8 +105,7 @@
 | a4c2d43f80a549a19864c89d759bb3fe | True    | None  | admin  |
 | ec47114af7014afd9a8994cbb6057a8b | True    | None  | ec2    |
 +----------------------------------+---------+-------+--------+
-        </computeroutput>
-    </screen>
+</computeroutput></screen>
     <para>
         This verifies that your user account has the <literal>admin</literal>
         role, as defined in keystone's <literal>policy.json</literal> file.

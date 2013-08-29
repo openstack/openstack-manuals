@@ -24,7 +24,7 @@
                 <para>If you do not wish to have the swift admin
                     password stored in your shell's history, you can
                     run the following command:</para>
-                <screen><prompt>$</prompt> <userinput>export SWIFT_PROXY_CONF="/etc/swift/proxy-server.conf export ADMINPASS=$( grep admin_password ${SWIFT_PROXY_CONF} | awk '{ print $NF }' )</userinput> </screen>
+                <screen><prompt>$</prompt> <userinput>export SWIFT_PROXY_CONF="/etc/swift/proxy-server.conf export ADMINPASS=$( grep admin_password ${SWIFT_PROXY_CONF} | awk '{ print $NF }' )</userinput></screen>
             </note>
         </step>
         <step>
@@ -36,11 +36,11 @@
         <step>
             <para>Get the <literal>X-Storage-Url</literal> and
                     <literal>X-Auth-Token</literal> headers:</para>
-            <screen><prompt>$</prompt> <userinput>curl -s http://&lt;AUTH_HOSTNAME&gt;:5000/v2.0/tokens -X 'POST' -d '{"auth":{"passwordCredentials":{"username":"demo", "password":"$DEMOPASS"}}}' -H "Content-Type: application/json" | python -mjson.tool</userinput>    </screen>
+            <screen><prompt>$</prompt> <userinput>curl -s http://&lt;AUTH_HOSTNAME&gt;:5000/v2.0/tokens -X 'POST' -d '{"auth":{"passwordCredentials":{"username":"demo", "password":"$DEMOPASS"}}}' -H "Content-Type: application/json" | python -mjson.tool</userinput></screen>
         </step>
         <step>
             <para>Check that you can HEAD the account:</para>
-            <screen><prompt>$</prompt> <userinput>curl -X HEAD -i -H "X-Auth-Token:&lt;token-returned-from-above-request&gt;' &lt;internal-url-returned-above-including-AUTHnnnnnn&gt;</userinput>       </screen>
+            <screen><prompt>$</prompt> <userinput>curl -X HEAD -i -H "X-Auth-Token:&lt;token-returned-from-above-request&gt;' &lt;internal-url-returned-above-including-AUTHnnnnnn&gt;</userinput></screen>
             <para>For example:</para>
             <screen><computeroutput>HTTP/1.1 204 No Content
 Content-Length: 0
@@ -57,12 +57,12 @@ Date: Thu, 01 Aug 2013 18:39:00 GMT</computeroutput></screen>
             <para>Run the following swift commands to upload files to
                 a container:</para>
             <screen><prompt>$</prompt> <userinput>swift -V 2.0 -A http://&lt;AUTH_HOSTNAME&gt;:5000/v2.0 -U demo:admin -K $ADMINPASS upload myfiles bigfile1.tgz</userinput>
-<prompt>$</prompt> <userinput>swift -V 2.0 -A http://&lt;AUTH_HOSTNAME&gt;:5000/v2.0 -U demo:admin -K $ADMINPASS upload myfiles bigfile2.tgz</userinput>         </screen>
+<prompt>$</prompt> <userinput>swift -V 2.0 -A http://&lt;AUTH_HOSTNAME&gt;:5000/v2.0 -U demo:admin -K $ADMINPASS upload myfiles bigfile2.tgz</userinput></screen>
         </step>
         <step>
             <para>Run the following swift command to download all
                 files from the &#8216;myfiles&#8217; container:</para>
-            <screen><prompt>$</prompt> <userinput>swift -V 2.0 -A http://&lt;AUTH_HOSTNAME&gt;:5000/v2.0 -U demo:admin -K $ADMINPASS download myfiles</userinput>        </screen>
+            <screen><prompt>$</prompt> <userinput>swift -V 2.0 -A http://&lt;AUTH_HOSTNAME&gt;:5000/v2.0 -U demo:admin -K $ADMINPASS download myfiles</userinput></screen>
         </step>
     </procedure>
 </section>

@@ -76,8 +76,7 @@
             xlink:href="http://docs.openstack.org/trunk/openstack-compute/admin/content/compute-options-reference.html"
             >the reference in the OpenStack Compute Administration
             Manual</link>.</para>
-    <programlisting>
-auth_strategy=keystone
+    <programlisting>auth_strategy=keystone
 network_manager=nova.network.manager.FlatDHCPManager
 fixed_range=192.168.100.0/24
 public_interface=eth0
@@ -117,14 +116,10 @@ flat_network_bridge=br100</programlisting>
 <prompt>#</prompt> <userinput>stop nova-scheduler</userinput>
 <prompt>#</prompt> <userinput>stop nova-novncproxy</userinput>
         </screen>
-    <screen os="rhel;fedora;centos">
-        <prompt>$></prompt> <userinput>for svc in api objectstore conductor network volume scheduler cert; do sudo service openstack-nova-$svc stop ; sudo chkconfig openstack-nova-$svc on ;  done</userinput>
-    </screen>
+    <screen os="rhel;fedora;centos"><prompt>$</prompt> <userinput>for svc in api objectstore conductor network volume scheduler cert; do sudo service openstack-nova-$svc stop ; sudo chkconfig openstack-nova-$svc on ;  done</userinput></screen>
     <para>On the compute node run:</para>
     <screen os="ubuntu"><prompt>#</prompt> <userinput>stop nova-compute</userinput>
-<prompt>#</prompt> <userinput>stop nova-network</userinput>
-        </screen>
-    <screen os="rhel;fedora;centos">
-        <prompt>$></prompt> <userinput>for svc in api compute network; do sudo service openstack-nova-$svc stop ; sudo chkconfig openstack-nova-$svc on ;  done</userinput>
+<prompt>#</prompt> <userinput>stop nova-network</userinput></screen>
+    <screen os="rhel;fedora;centos"><prompt>$></prompt> <userinput>for svc in api compute network; do sudo service openstack-nova-$svc stop ; sudo chkconfig openstack-nova-$svc on ;  done</userinput>
     </screen>
 </section>

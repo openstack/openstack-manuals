@@ -5,10 +5,8 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"><title>Configuring the Database for Compute</title>
     <para>Create the tables in your backend data store by running
         the following command:</para>
-    <para>
-        <screen os="ubuntu">sudo nova-manage db sync</screen>
-    </para>
-    <screen os="rhel;fedora;centos">   <prompt>#</prompt>nova-manage db sync</screen>
+    <screen os="ubuntu"><prompt>$</prompt> <userinput>sudo nova-manage db sync</userinput></screen>
+    <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>nova-manage db sync</userinput></screen>
     <para>If you see any response, you can look in
         /var/log/nova/nova-manage.log to see the problem. No
         response means the command completed correctly and your
@@ -27,17 +25,13 @@ sudo start nova-novncproxy
 sudo start libvirt-bin
 sudo /etc/init.d/rabbitmq-server restart </screen>
     </para>
-    <screen os="rhel;fedora;centos">
-        <prompt>#</prompt> <userinput>for svc in api objectstore conductor network volume scheduler cert; do sudo service openstack-nova-$svc start; done</userinput>
-    </screen>
+    <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>for svc in api objectstore conductor network volume scheduler cert; do sudo service openstack-nova-$svc start; done</userinput></screen>
     <para>On the compute node run:</para>
     <para>
         <screen os="ubuntu">sudo start nova-compute
 sudo start nova-network</screen>
     </para>
-    <screen os="rhel;fedora;centos">
-        <prompt>#</prompt> <userinput>for svc in compute network; do sudo service openstack-nova-$svc start; done</userinput>
-    </screen>
+    <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>for svc in compute network; do sudo service openstack-nova-$svc start; done</userinput></screen>
     <para>All nova services are now installed and started. If the
         "start" command doesn't work, your services may not be
         running correctly (or not at all). Review the logs in
