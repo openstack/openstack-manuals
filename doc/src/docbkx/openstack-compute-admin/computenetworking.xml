@@ -352,7 +352,6 @@ echo 'Extra user data here'</computeroutput></screen>
                 by making a GET query
                 to:</para><programlisting>http://169.254.169.254/2009-04-04/meta-data/</programlisting>
             <para>For example:</para>
-       
                 <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/2009-04-04/meta-data/</userinput></screen>
             <screen><computeroutput>ami-id
 ami-launch-index
@@ -723,7 +722,7 @@ iface br100 inet dhcp
                     address, you can simply tell FlatDHCP to bridge
                     into the interface by specifying
                             <literal>flat_interface=<replaceable>&lt;interface></replaceable></literal>
-                    in your configuration file. The network host 
+                    in your configuration file. The network host
                     automatically adds the gateway ip to this bridge.
                     If this is the case for you, edit your
                         <filename>nova.conf</filename> file to contain
@@ -777,7 +776,7 @@ fixed_range=''
 force_dhcp_release=True
 send_arp_for_ha=True
 flat_injected=False
-firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlisting>              
+firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlisting>
                 <para>Notice that
                         <literal>flat_interface</literal> and
                         <literal>public_interface</literal> refer to
@@ -962,7 +961,7 @@ firewall_driver=nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlis
                 though it is a useful convention to remember the
                 association). This creates a bridge interface
                 device called <literal>br169</literal> on the host
-                running the nova-network service. This device 
+                running the nova-network service. This device
                 appears in the output of an <command>ifconfig</command>
                 command.</para>
             <para>Each network is associated with one tenant. As in
@@ -1338,7 +1337,7 @@ fixed_ip_disassociate_timeout=1209600</programlisting></para>
                 instance with openvpn installed. It needs a simple
                 script to grab user data from the metadata server, b64
                 decode it into a zip file, and run the autorun.sh
-                script from inside the zip. The autorun script 
+                script from inside the zip. The autorun script
                 configures and runs openvpn to run by using the data from
                 nova.</para>
             <para>It is also useful to have a cron script that
@@ -1566,7 +1565,7 @@ exit 0</programlisting>The
                     <programlisting>## cloud-pipe vpn client ##
 vpn_image_id=0bfc8fd3-1590-463b-b178-bce30be5ef7b
 use_project_ca=true
-cnt_vpn_clients=5              </programlisting>
+cnt_vpn_clients=5</programlisting>
                     You can now restart all the services:
                     <screen><prompt>#</prompt> <userinput>cd /etc/int.d &amp;&amp; for i in $( ls nova-*); do service $i restart; done</userinput></screen></para>
             </section>
@@ -1751,7 +1750,7 @@ persist-key</programlisting></step>
 | d1f5d27ccf594cdbb034c8a4123494e9 | 172.17.1.3 | 1000        | 192.168.22.34 |
 +----------------------------------+------------+-------------+---------------+</computeroutput></screen>
 </step>
-                </procedure>           
+                </procedure>
                         <para>Start your OpenVPN client.</para>
                         <para>Depending on the client you are using,
                             make sure to save the configuration file
@@ -1759,7 +1758,7 @@ persist-key</programlisting></step>
                             certificate file and the private key.
                             Usually, the file is saved under
                                 <filename>/etc/openvpn/clientconf/client.conf</filename>
-                        </para>         
+                        </para>
                 </section>
                 <section xml:id="connect_with_interface"><title>Connect to your cloudpipe instance with a client</title><procedure>
                         <step><para>Download an OpenVPN client.</para>
@@ -1828,7 +1827,7 @@ persist-key</programlisting></step>
 | d1f5d27ccf594cdbb034c8a4123494e9 | 172.17.1.3 | 1000        | 192.168.22.34 |
 +----------------------------------+------------+-------------+---------------+</computeroutput></screen>
                     </step>
-<step><title>Configure Viscosity</title>                       
+<step><title>Configure Viscosity</title>
                         <informalfigure
                             xml:id="cloudpipe-viscosity-configuration">
                             <itemizedlist>
@@ -1891,7 +1890,7 @@ persist-key</programlisting></step>
                                     fileref="figures/cloudpipe/cloudpipe-viscosity-step4.jpg"
                                 />
                             </imageobject>
-                        </mediaobject></step>           
+                        </mediaobject></step>
                        <step> <para>You can now save the configuration
                             and establish the connection!</para></step></procedure></section>
             <section xml:id="cloudpipe-misc">
@@ -2123,7 +2122,7 @@ persist-key</programlisting></step>
                 Add the following line to nova.conf and restart the
                 nova-network service</para>
 
-            <programlisting>auto_assign_floating_ip=True          </programlisting>
+            <programlisting>auto_assign_floating_ip=True</programlisting>
             <para>Note that if this option is enabled and all of the
                 floating IP addresses have already been allocated, the
                     <command>nova boot</command> command fails
