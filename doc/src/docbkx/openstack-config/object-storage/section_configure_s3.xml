@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="configuring-openstack-object-storage-with-s3_api">
+    <title>Configuring Object Storage with the S3 API</title>
+    <para>The Swift3 middleware emulates the S3 REST API on top of
+        Object Storage.</para>
+    <para>The following operations are currently supported:</para>
+    <itemizedlist>
+        <listitem>
+            <para>GET Service</para>
+        </listitem>
+        <listitem>
+            <para>DELETE Bucket</para>
+        </listitem>
+        <listitem>
+            <para>GET Bucket (List Objects)</para>
+        </listitem>
+        <listitem>
+            <para>PUT Bucket</para>
+        </listitem>
+        <listitem>
+            <para>DELETE Object</para>
+        </listitem>
+        <listitem>
+            <para>GET Object</para>
+        </listitem>
+        <listitem>
+            <para>HEAD Object</para>
+        </listitem>
+        <listitem>
+            <para>PUT Object</para>
+        </listitem>
+        <listitem>
+            <para>PUT Object (Copy)</para>
+        </listitem>
+    </itemizedlist>
+    <para>To use this middleware, first download the latest
+        version from its repository to your proxy
+        server(s).</para>
+    <screen><prompt>$</prompt> <userinput>git clone https://github.com/fujita/swift3.git</userinput></screen>
+    <para>Optional: To use this middleware with Swift 1.7.0 and
+        previous versions, you'll need to use the v1.7 tag of the
+        fujita/swift3 repository. Clone the repo as above and
+        then:</para>
+    <screen><prompt>$</prompt> <userinput>cd swift3; git checkout v1.7</userinput></screen>
+    <para>Then, install it using standard python mechanisms, such
+        as:</para>
+    <screen><prompt>$</prompt> <userinput>sudo python setup.py install</userinput></screen>
+    <para>Alternatively, if you have configured the Ubuntu Cloud
+        Archive, you may use:
+        <screen><prompt>$</prompt> <userinput>sudo apt-get install swift-python-s3</userinput></screen></para>
+    <para>To add this middleware to your configuration, add the
+        swift3 middleware in front of the auth middleware, and
+        before any other middleware that look at swift requests
+        (like rate limiting).</para>
+    <para>Ensure that your proxy-server.conf file contains swift3
+        in the pipeline and the [filter:swift3] section, as shown
+        below:</para>
+    <programlisting>
+[pipeline:main]
+pipeline = healthcheck cache swift3 swauth proxy-server
+
+[filter:swift3]
+use = egg:swift3#swift3
+        </programlisting>
+    <para>Next, configure the tool that you use to connect to the
+        S3 API. For S3curl, for example, you'll need to add your
+        host IP information by adding y our host IP to the
+        @endpoints array (line 33 in s3curl.pl):</para>
+    <literallayout class="monospaced">my @endpoints = ( '1.2.3.4');</literallayout>
+    <para>Now you can send commands to the endpoint, such
+        as:</para>
+    <screen>
+<prompt>$</prompt> <userinput>./s3curl.pl - 'myacc:myuser' -key mypw -get - -s -v http://1.2.3.4:8080</userinput>
+        </screen>
+    <para>To set up your client, the access key will be the
+        concatenation of the account and user strings that should
+        look like test:tester, and the secret access key is the
+        account password. The host should also point to the Swift
+        storage node's hostname. It also will have to use the
+        old-style calling format, and not the hostname-based
+        container format. Here is an example client setup using
+        the Python boto library on a locally installed all-in-one
+        Swift installation.</para>
+    <programlisting>
+connection = boto.s3.Connection(
+    aws_access_key_id='test:tester',
+    aws_secret_access_key='testing',
+    port=8080,
+    host='127.0.0.1',
+    is_secure=False,
+    calling_format=boto.s3.connection.OrdinaryCallingFormat())
+        </programlisting>
+</section>

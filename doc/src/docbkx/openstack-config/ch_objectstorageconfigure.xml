@@ -4,19 +4,10 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="ch_configuring-object-storage">
     <title>Configuring OpenStack Object Storage</title>
-<para>This chapter provides sample configuration files for all the related Object Storage services provided through the swift project.</para>
-    <section xml:id="account-server-conf">
-        <title>Sample Account Server configuration file</title>
-        <programlisting language="ini"><xi:include parse="text"  href="https://raw.github.com/openstack/swift/master/etc/account-server.conf-sample"/></programlisting></section>
-    <section xml:id="container-server-conf">
-        <title>Sample Container Server configuration file</title>
-        <programlisting language="ini"><xi:include parse="text"  href="https://raw.github.com/openstack/swift/master/etc/container-server.conf-sample"/></programlisting></section>
-    <section xml:id="dispersion-conf">
-        <title>Sample Dispersion Server configuration file</title>
-        <programlisting language="ini"><xi:include parse="text"  href="https://raw.github.com/openstack/swift/master/etc/dispersion.conf-sample"/></programlisting></section>
-    <section xml:id="drive-audit-conf">
-        <title>Sample Drive Audit configuration file</title>
-        <programlisting language="ini"><xi:include parse="text"  href="https://raw.github.com/openstack/swift/master/etc/drive-audit.conf-sample"/></programlisting></section>
+<para>OpenStack Object Storage uses paste.deploy to manage server configurations. Default configuration
+options are set in the <code>[DEFAULT]</code> section, and any options specified there
+can be overridden in any of the other sections.</para>
+<!--these need to be placed under appropriate sections
     <section xml:id="memcache-conf">
         <title>Sample Memcache configuration file</title>
         <programlisting language="ini"><xi:include parse="text"  href="https://raw.github.com/openstack/swift/master/etc/memcache.conf-sample"/></programlisting></section>
@@ -25,14 +16,8 @@
         <programlisting language="ini"><xi:include parse="text"  href="https://raw.github.com/openstack/swift/master/etc/mime.types-sample"/></programlisting></section>
     <section xml:id="object-expirer-conf">
         <title>Sample Object Expirer configuration file</title>
-        <programlisting language="ini"><xi:include parse="text"  href="https://raw.github.com/openstack/swift/master/etc/object-expirer.conf-sample"/></programlisting></section>
-    <section xml:id="object-server-conf">
-        <title>Sample Object Server configuration file</title>
-        <programlisting language="ini"><xi:include parse="text"  href="https://raw.github.com/openstack/swift/master/etc/object-server.conf-sample"/></programlisting></section>
-    <section xml:id="proxy-server-conf">
-        <title>Sample Proxy Server configuration file</title>
-        <programlisting language="ini"><xi:include parse="text"  href="https://raw.github.com/openstack/swift/master/etc/proxy-server.conf-sample"/></programlisting></section>
-    <section xml:id="rsyncd-conf">
+        <programlisting><xi:include parse="text"  href="https://raw.github.com/openstack/swift/master/etc/object-expirer.conf-sample"/></programlisting></section>
+  <section xml:id="rsyncd-conf">
         <title>Sample Rsyncd configuration file</title>
         <programlisting language="ini"><xi:include parse="text"  href="https://raw.github.com/openstack/swift/master/etc/rsyncd.conf-sample"/></programlisting></section>
     <section xml:id="swift-bench-conf">
@@ -40,5 +25,86 @@
         <programlisting language="ini"><xi:include parse="text"  href="https://raw.github.com/openstack/swift/master/etc/swift-bench.conf-sample"/></programlisting></section>
     <section xml:id="swift-conf">
         <title>Sample Swift configuration file</title>
-        <programlisting language="ini"><xi:include parse="text"  href="https://raw.github.com/openstack/swift/master/etc/swift.conf-sample"/></programlisting></section>
+        <programlisting><xi:include parse="text"  href="https://raw.github.com/openstack/swift/master/etc/swift.conf-sample"/></programlisting></section>-->
+   <section xml:id="object-server-configuration">
+        <title>Object Server Configuration</title>
+        <para>An example Object Server configuration can be found at
+            etc/object-server.conf-sample in the source code
+            repository.</para>
+        <para>The following configuration options are
+            available:</para>
+
+        <xi:include href="../common/tables/swift-object-server-DEFAULT.xml"/>
+        <xi:include href="../common/tables/swift-object-server-app-object-server.xml"/>
+        <xi:include href="../common/tables/swift-object-server-pipeline-main.xml"/>
+        <xi:include href="../common/tables/swift-object-server-object-replicator.xml"/>
+        <xi:include href="../common/tables/swift-object-server-object-updater.xml"/>
+        <xi:include href="../common/tables/swift-object-server-object-auditor.xml"/>
+        <xi:include href="../common/tables/swift-object-server-filter-healthcheck.xml"/>
+        <xi:include href="../common/tables/swift-object-server-filter-recon.xml"/>
+    <section xml:id="object-server-conf">
+        <title>Sample Object Server configuration file</title>
+        <programlisting><xi:include parse="text"  href="https://raw.github.com/openstack/swift/master/etc/object-server.conf-sample"/></programlisting></section>
+    </section>
+        <section xml:id="container-server-configuration">
+            <title>Container Server Configuration</title>
+            <para>An example Container Server configuration can be found at
+                etc/container-server.conf-sample in the source code repository.</para>
+            <para>The following configuration options are available:</para>
+            <xi:include href="../common/tables/swift-container-server-DEFAULT.xml"/>
+            <xi:include href="../common/tables/swift-container-server-app-container-server.xml"/>
+            <xi:include href="../common/tables/swift-container-server-pipeline-main.xml"/>
+            <xi:include href="../common/tables/swift-container-server-container-replicator.xml"/>
+            <xi:include href="../common/tables/swift-container-server-container-updater.xml"/>
+            <xi:include href="../common/tables/swift-container-server-container-auditor.xml"/>
+            <xi:include href="../common/tables/swift-container-server-container-sync.xml"/>
+            <xi:include href="../common/tables/swift-container-server-filter-healthcheck.xml"/>
+            <xi:include href="../common/tables/swift-container-server-filter-recon.xml"/>
+   <section xml:id="container-server-conf">
+        <title>Sample Container Server configuration file</title>
+        <programlisting><xi:include parse="text"  href="https://raw.github.com/openstack/swift/master/etc/container-server.conf-sample"/></programlisting></section>
+
+        </section>
+        <section xml:id="account-server-configuration">
+            <title>Account Server Configuration</title>
+            <para>An example Account Server configuration can be found at
+                etc/account-server.conf-sample in the source code repository.</para>
+
+            <para>The following configuration options are available:</para>
+            <xi:include href="../common/tables/swift-account-server-DEFAULT.xml"/>
+            <xi:include href="../common/tables/swift-account-server-app-account-server.xml"/>
+            <xi:include href="../common/tables/swift-account-server-pipeline-main.xml"/>
+            <xi:include href="../common/tables/swift-account-server-account-replicator.xml"/>
+            <xi:include href="../common/tables/swift-account-server-account-auditor.xml"/>
+            <xi:include href="../common/tables/swift-account-server-account-reaper.xml"/>
+            <xi:include href="../common/tables/swift-account-server-filter-healthcheck.xml"/>
+            <xi:include href="../common/tables/swift-account-server-filter-recon.xml"/>
+    <section xml:id="account-server-conf">
+        <title>Sample Account Server configuration file</title>
+        <programlisting><xi:include parse="text"  href="https://raw.github.com/openstack/swift/master/etc/account-server.conf-sample"/></programlisting></section>
+        </section>
+        <section xml:id="proxy-server-configuration">
+            <title>Proxy Server Configuration</title>
+            <para>An example Proxy Server configuration can be found at etc/proxy-server.conf-sample
+                in the source code repository.</para>
+            <para>The following configuration options are available:</para>
+            <xi:include href="../common/tables/swift-proxy-server-DEFAULT.xml"/>
+            <xi:include href="../common/tables/swift-proxy-server-app-proxy-server.xml"/>
+            <xi:include href="../common/tables/swift-proxy-server-pipeline-main.xml"/>
+            <xi:include href="../common/tables/swift-proxy-server-filter-account-quotas.xml"/>
+            <xi:include href="../common/tables/swift-proxy-server-filter-authtoken.xml"/>
+            <xi:include href="../common/tables/swift-proxy-server-filter-cache.xml"/>
+            <xi:include href="../common/tables/swift-proxy-server-filter-catch_errors.xml"/>
+            <xi:include href="../common/tables/swift-proxy-server-filter-healthcheck.xml"/>
+            <xi:include href="../common/tables/swift-proxy-server-filter-keystoneauth.xml"/>
+            <xi:include href="../common/tables/swift-proxy-server-filter-list-endpoints.xml"/>
+            <xi:include href="../common/tables/swift-proxy-server-filter-proxy-logging.xml"/>
+            <xi:include href="../common/tables/swift-proxy-server-filter-tempauth.xml"/>
+    <section xml:id="proxy-server-conf">
+        <title>Sample Proxy Server configuration file</title>
+        <programlisting><xi:include parse="text"  href="https://raw.github.com/openstack/swift/master/etc/proxy-server.conf-sample"/></programlisting></section>
+    </section>
+
+<!-- section on Object Storage Features -->
+<xi:include href="object-storage/section_object-storage-features.xml"/>
 </chapter>
