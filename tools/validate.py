@@ -60,7 +60,7 @@ def check_output(*popenargs, **kwargs):
 
 def get_schema():
     """Return the DocBook RELAX NG schema"""
-    url = "http://www.oasis-open.org/docbook/xml/5.0b5/rng/docbookxi.rng"
+    url = "http://docbook.org/xml/5.1CR1/rng/docbookxi.rng"
     relaxng_doc = etree.parse(urllib2.urlopen(url))
     return etree.RelaxNG(relaxng_doc)
 
