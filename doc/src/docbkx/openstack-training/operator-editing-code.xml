@@ -3,13 +3,12 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink"
     version="5.0"
-    xml:id="operator-fix-documentation-bug">
-    <title>Fix a Documentation Bug</title>
+    xml:id="operator-editing-code">
+    <title>Editing Code</title>
     <section xml:id="getting-tools-and-accounts">
         <title>Get Tools and Accounts</title>
         <para>
             <procedure>
-                <title>To get tools and accounts</title>
                 <note>
                     <para>Create a GitHub account at <link xlink:href="http://github.com">github.com.</link></para>
                 </note>
@@ -149,7 +148,6 @@ $ git config --global user.email "your_email@youremail.com" </userinput></screen
         <title>Fix a Documentation Bug</title>
         <para>
             <procedure>
-                <title>To fix a documentation bug</title>
                 <step>
                     <para>Note: For this example, we are going to assume bug
                         1188522 and change 33713</para>
@@ -273,7 +271,6 @@ $ git config --global user.email "your_email@youremail.com" </userinput></screen
         <title>Submit a Documentation Bug Fix</title>
         <para>
             <procedure>
-                <title>To submit a documentation bug fix</title>
                 <step>
                     <para>Bring up<link
                         xlink:href="https://bugs.launchpad.net/openstack-manuals/+filebug"
@@ -298,5 +295,60 @@ $ git config --global user.email "your_email@youremail.com" </userinput></screen
                 </step>
             </procedure>
         </para>
+    </section>
+    <section xml:id="operator-create-branch">
+        <title>Create a Branch</title>
+        <para>
+            <note><para>This section is using the submission of this training material as the example</para></note>
+            <procedure>
+                <step>
+                    <para>Create a bp/training-manuals
+                        branch<programlisting>$ git checkout -b bp/training-manuals</programlisting></para>
+                </step>
+                <step>
+                    <para>From the openstack-manuals repository, use the template <emphasis role="bold"
+                        >user-story-includes-template.xml</emphasis> as the starting point for your user
+                        story. <emphasis role="bold">bk001-ch003-associate-general.xml</emphasis> has at
+                        least one other included user story that you can use for additional help.</para>
+                </step>
+                <step>
+                    <para>Include the user story xml file into the <emphasis role="bold"
+                        >bk001-ch003-associate-general.xml</emphasis> file. Follow the syntax of the
+                        existing xi:include statements.</para>
+                </step>
+                <step>
+                    <para>When your editing is completed. Double check Oxygen doesn't have any errors you
+                        are not expecting.</para>
+                </step>
+                <step>
+                    <para>Run maven locally to verify the build will run without errors
+                        <programlisting>$ mvn clean generate-sources</programlisting></para>
+                </step>
+                <step>
+                    <para>Add your changes into git<programlisting>$ git add .</programlisting></para>
+                </step>
+                <step>
+                    <para>Commit the changes with good syntax. After entering the commit command, VI syntax applies. Use "i" to insert and Esc to break out. ":wq" to write and quit.<programlisting>git commit -a
+
+my very short summary
+
+my more details go here. few sentences would be nice.
+
+blueprint training-manuals</programlisting></para>
+                </step>
+                <step>
+                    <para>Submit your patch for review<programlisting>$ git review</programlisting></para>
+                </step>
+                <step>
+                    <para>Once last step. Go to the review page listed after your submitted your review
+                        and add the training core team as reviewers; Sean Roberts and Colin McNamara.</para>
+                </step>
+                <step>
+                    <para>More details on branching can be found here under <link
+                        xlink:href="https://wiki.openstack.org/wiki/Gerrit_Workflow">Gerrit
+                        Workflow</link> and the <link xlink:href="http://git-scm.com/doc">Git
+                            docs</link></para>
+                </step>
+            </procedure></para>
     </section>
 </section>
