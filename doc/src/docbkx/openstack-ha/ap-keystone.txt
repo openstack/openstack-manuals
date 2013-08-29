@@ -1,17 +1,17 @@
 [[s-keystone]]
-==== Highly available Keystone
+==== Highly available OpenStack Identity
 
-Keystone is the Identity Service in OpenStack and used by many services.
-Making the Keystone service highly available in active / passive mode involves
+OpenStack Identity is the Identity Service in OpenStack and used by many services.
+Making the OpenStack Identity service highly available in active / passive mode involves
 
-* configuring Keystone to listen on the VIP address,
-* managing Keystone daemon with the Pacemaker cluster manager,
+* configuring OpenStack Identity to listen on the VIP address,
+* managing OpenStack Identity daemon with the Pacemaker cluster manager,
 * configuring OpenStack services to use this IP address.
 
-NOTE: Here is the http://docs.openstack.org/trunk/openstack-compute/install/apt/content/ch_installing-openstack-identity-service.html[documentation] for installing Keystone service.
+NOTE: Here is the http://docs.openstack.org/trunk/openstack-compute/install/apt/content/ch_installing-openstack-identity-service.html[documentation] for installing OpenStack Identity service.
 
 
-===== Adding Keystone resource to Pacemaker
+===== Adding OpenStack Identity resource to Pacemaker
 
 First of all, you need to download the resource agent to your system :
 
@@ -24,14 +24,14 @@ chmod a+rx *
 ----
 
 You may now proceed with adding the Pacemaker configuration for
-Keystone resource. Connect to the Pacemaker cluster with +crm
+OpenStack Identity resource. Connect to the Pacemaker cluster with +crm
 configure+, and add the following cluster resources:
 
 ----
 include::includes/pacemaker-keystone.crm[]
 ----
 
-This configuration creates +p_keystone+, a resource for manage Keystone service.
+This configuration creates +p_keystone+, a resource for manage OpenStack Identity service.
 
 +crm configure+ supports batch input, so you may copy and paste the
 above into your live pacemaker configuration, and then make changes as
@@ -40,12 +40,12 @@ required. For example, you may enter +edit p_ip_keystone+ from the
 virtual IP address.
 
 Once completed, commit your configuration changes by entering +commit+
-from the +crm configure+ menu. Pacemaker will then start the Keystone 
+from the +crm configure+ menu. Pacemaker will then start the OpenStack Identity 
 service, and its dependent resources, on one of your nodes.
 
-===== Configuring Keystone service
+===== Configuring OpenStack Identity service
 
-You need to edit your Keystone configuration file (+keystone.conf+) and change the bind parameter :
+You need to edit your OpenStack Identity configuration file (+keystone.conf+) and change the bind parameter :
 ----
 bind_host = 192.168.42.103
 ----
@@ -61,13 +61,13 @@ driver = keystone.identity.backends.sql.Identity
 ----
 
 
-===== Configuring OpenStack Services to use High Available Keystone
+===== Configuring OpenStack Services to use High Available OpenStack Identity
 
-Your OpenStack services must now point their Keystone configuration to
+Your OpenStack services must now point their OpenStack Identity configuration to
 the highly available, virtual cluster IP address -- rather than a
-Keystone server's physical IP address as you normally would.
+OpenStack Identity server's physical IP address as you normally would.
 
-For example with Nova, if your Keystone service IP address is
+For example with OpenStack Compute, if your OpenStack Identity service IP address is
 192.168.42.103 as in the configuration explained here, you would use
 the following line in your API configuration file
 (+api-paste.ini+):
@@ -76,7 +76,7 @@ the following line in your API configuration file
 auth_host = 192.168.42.103
 ----
 
-You need also to create the Keystone Endpoint with this IP.
+You need also to create the OpenStack Identity Endpoint with this IP.
 
 NOTE : If you are using both private and public IP, you should create two Virtual IP and define your endpoint like this :
 ----

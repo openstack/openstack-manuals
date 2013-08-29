@@ -1,17 +1,17 @@
 [[s-neutron-server]]
-==== Highly available Quantum Server
+==== Highly available OpenStack Networking Server
 
-Quantum is the network connectivity service in OpenStack.
-Making the Quantum Server service highly available in active / passive mode involves
+OpenStack Networking is the network connectivity service in OpenStack.
+Making the OpenStack Networking Server service highly available in active / passive mode involves
 
-* configuring Quantum to listen on the VIP address,
-* managing Quantum API Server daemon with the Pacemaker cluster manager,
+* configuring OpenStack Networking to listen on the VIP address,
+* managing OpenStack Networking API Server daemon with the Pacemaker cluster manager,
 * configuring OpenStack services to use this IP address.
 
-NOTE: Here is the http://docs.openstack.org/trunk/openstack-network/admin/content/index.html[documentation] for installing Quantum service.
+NOTE: Here is the http://docs.openstack.org/trunk/openstack-network/admin/content/index.html[documentation] for installing OpenStack Networking service.
 
 
-===== Adding Quantum Server resource to Pacemaker
+===== Adding OpenStack Networking Server resource to Pacemaker
 
 First of all, you need to download the resource agent to your system :
 ----
@@ -21,13 +21,13 @@ chmod a+rx *
 ----
 
 You may now proceed with adding the Pacemaker configuration for
-Quantum Server resource. Connect to the Pacemaker cluster with +crm
+OpenStack Networking Server resource. Connect to the Pacemaker cluster with +crm
 configure+, and add the following cluster resources:
 ----
 include::includes/pacemaker-neutron_server.crm[]
 ----
 
-This configuration creates +p_neutron-server+, a resource for manage Quantum Server service
+This configuration creates +p_neutron-server+, a resource for manage OpenStack Networking Server service
 
 +crm configure+ supports batch input, so you may copy and paste the
 above into your live pacemaker configuration, and then make changes as
@@ -36,10 +36,10 @@ required. For example, you may enter +edit p_neutron-server+ from the
 virtual IP address.
 
 Once completed, commit your configuration changes by entering +commit+
-from the +crm configure+ menu. Pacemaker will then start the Quantum API
+from the +crm configure+ menu. Pacemaker will then start the OpenStack Networking API
 service, and its dependent resources, on one of your nodes.
 
-===== Configuring Quantum Server
+===== Configuring OpenStack Networking Server
 
 Edit +/etc/neutron/neutron.conf+ :
 ----
@@ -49,7 +49,7 @@ bind_host = 192.168.42.103
 # We have to use MySQL connection to store datas :
 sql_connection = mysql://neutron:password@192.168.42.101/neutron
 
-# We bind Quantum Server to the VIP :
+# We bind OpenStack Networking Server to the VIP :
 bind_host = 192.168.42.103
 
 # We send notifications to Highly available RabbitMQ :
@@ -58,18 +58,18 @@ rabbit_host = 192.168.42.102
 ----
 
 
-===== Configuring OpenStack Services to use Highly available Quantum Server
+===== Configuring OpenStack Services to use Highly available OpenStack Networking Server
 
-Your OpenStack services must now point their Quantum Server configuration to
+Your OpenStack services must now point their OpenStack Networking Server configuration to
 the highly available, virtual cluster IP address -- rather than a
-Quantum server's physical IP address as you normally would.
+OpenStack Networking server's physical IP address as you normally would.
 
-For example, you should configure Nova for using Highly Available Quantum Server in editing +nova.conf+ file :
+For example, you should configure OpenStack Compute for using Highly Available OpenStack Networking Server in editing +nova.conf+ file :
 ----
 neutron_url = http://192.168.42.103:9696
 ----
 
-You need to create the Quantum Server Endpoint with this IP.
+You need to create the OpenStack Networking Server Endpoint with this IP.
 
 NOTE : If you are using both private and public IP, you should create two Virtual IP and define your endpoint like this :
 ----
