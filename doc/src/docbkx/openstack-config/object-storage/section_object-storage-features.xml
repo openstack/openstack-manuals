@@ -109,8 +109,8 @@
                 until, the full path to the object, and the key set on
                 the account. For example, here is code generating the
                 signature for a GET for 60 seconds on
-                /v1/AUTH_account/container/object:
-                <programlisting>
+                <code>/v1/AUTH_account/container/object</code>:
+                <programlisting language="python">
     import hmac
     from hashlib import sha1
     from time import time
@@ -163,7 +163,7 @@
     <section xml:id="object-storage-constraints">
             <title>Constraints</title>
             <para>The <literal>swift-constraints</literal> section in
-                    <literal>swift.conf</literal> allows modification
+                    <filename>swift.conf</filename> allows modification
                 of internal limits within swift. These are advanced
                 features for tuning the performance of the cluster and
                 should be altered with caution.</para>
@@ -278,11 +278,11 @@
                 each of these containers and objects. These tools need
                 direct access to the entire cluster and to the ring
                 files (installing them on a proxy server will probably
-                do). Both swift-dispersion-populate and
-                swift-dispersion-report use the same configuration
-                file, <literal>/etc/swift/dispersion.conf</literal>.
+                do). Both <command>swift-dispersion-populate</command> and
+                <command>swift-dispersion-report</command> use the same configuration
+                file, <filename>/etc/swift/dispersion.conf</filename>.
                 Example dispersion.conf file:
-                <programlisting>
+                <programlisting language="ini">
 [dispersion]
 auth_url = http://localhost:8080/auth/v1.0
 auth_user = test:tester
@@ -298,25 +298,23 @@ auth_key = testing
                 swift-dispersion-report to get a dispersion report, or
                 the overall health of the cluster. Here is an example
                 of a cluster in perfect health:
-                <programlisting>
-$ swift-dispersion-report
-Queried 2621 containers for dispersion reporting, 19s, 0 retries
+                <screen><prompt>$</prompt> <userinput>swift-dispersion-report</userinput>
+<computeroutput>Queried 2621 containers for dispersion reporting, 19s, 0 retries
 100.00% of container copies found (7863 of 7863)
 Sample represents 1.00% of the container partition space
 
 Queried 2619 objects for dispersion reporting, 7s, 0 retries
 100.00% of object copies found (7857 of 7857)
 Sample represents 1.00% of the object partition space
-</programlisting>
+</computeroutput></screen>
                 Now, deliberately double the weight of a device in the
                 object ring (with replication turned off) and rerun
                 the dispersion report to show what impact that has:
-                <programlisting>
-$ swift-ring-builder object.builder set_weight d0 200
-$ swift-ring-builder object.builder rebalance
+<screen><prompt>$</prompt> <userinput>swift-ring-builder object.builder set_weight d0 200</userinput>
+<prompt>$</prompt> <userinput>swift-ring-builder object.builder rebalance</userinput>
 ...
-$ swift-dispersion-report
-Queried 2621 containers for dispersion reporting, 8s, 0 retries
+<prompt>$</prompt> <userinput>swift-dispersion-report</userinput>
+<computeroutput>Queried 2621 containers for dispersion reporting, 8s, 0 retries
 100.00% of container copies found (7863 of 7863)
 Sample represents 1.00% of the container partition space
 
@@ -324,7 +322,7 @@ Queried 2619 objects for dispersion reporting, 7s, 0 retries
 There were 1763 partitions missing one copy.
 77.56% of object copies found (6094 of 7857)
 Sample represents 1.00% of the object partition space
-</programlisting>
+</computeroutput></screen>
                 You can see the health of the objects in the cluster
                 has gone down significantly. Of course, this test
                 environment has just four devices, in a production
@@ -346,13 +344,11 @@ Sample represents 1.00% of the object partition space
                 Alternatively, the dispersion report can also be
                 output in json format. This allows it to be more
                 easily consumed by third party utilities:
-                <programlisting>
-$ swift-dispersion-report -j
-{"object": {"retries:": 0, "missing_two": 0, "copies_found": 7863, "missing_one": 0,
+<screen><prompt>$</prompt> <userinput>swift-dispersion-report -j</userinput>
+<computeroutput>{"object": {"retries:": 0, "missing_two": 0, "copies_found": 7863, "missing_one": 0,
 "copies_expected": 7863, "pct_found": 100.0, "overlapping": 0, "missing_all": 0}, "container":
 {"retries:": 0, "missing_two": 0, "copies_found": 12534, "missing_one": 0, "copies_expected":
-12534, "pct_found": 100.0, "overlapping": 15, "missing_all": 0}}
-</programlisting>
+12534, "pct_found": 100.0, "overlapping": 15, "missing_all": 0}}</computeroutput></screen>
             </para>
             <xi:include href="../../common/tables/swift-dispersion-dispersion.xml"/>
         </section>
@@ -421,20 +417,20 @@ $ swift-dispersion-report -j
                 a descriptive body.</para>
             <para>The following command uses an admin account that own
                 the Reseller role to set a quota on the test account:
-                <programlisting>swift -A http://127.0.0.1:8080/auth/v1.0 -U admin:admin -K admin --os-storage-url=http://127.0.0.1:8080/v1/AUTH_test post -m quota-bytes:10000</programlisting>
+                <screen><prompt>$</prompt> <userinput>swift -A http://127.0.0.1:8080/auth/v1.0 -U admin:admin -K admin \
+--os-storage-url=http://127.0.0.1:8080/v1/AUTH_test post -m quota-bytes:10000</userinput></screen>
                 Here is the stat listing of an account where quota has been set:
-                <programlisting>swift -A http://127.0.0.1:8080/auth/v1.0 -U test:tester -K testing stat
-                Account: AUTH_test
-                Containers: 0
-                Objects: 0
-                Bytes: 0
-                Meta Quota-Bytes: 10000
-                X-Timestamp: 1374075958.37454
-                X-Trans-Id: tx602634cf478546a39b1be-0051e6bc7a
-                </programlisting>
+                <screen><prompt>$</prompt> <userinput>swift -A http://127.0.0.1:8080/auth/v1.0 -U test:tester -K testing stat</userinput>
+<computeroutput>Account: AUTH_test
+Containers: 0
+Objects: 0
+Bytes: 0
+Meta Quota-Bytes: 10000
+X-Timestamp: 1374075958.37454
+X-Trans-Id: tx602634cf478546a39b1be-0051e6bc7a</computeroutput></screen>
                 The command below removes the account quota:
-                <programlisting>swift -A http://127.0.0.1:8080/auth/v1.0 -U admin:admin -K admin --os-storage-url=http://127.0.0.1:8080/v1/AUTH_test post -m quota-bytes:
-            </programlisting></para>
+                <screen><prompt>$</prompt> <userinput>swift -A http://127.0.0.1:8080/auth/v1.0 -U admin:admin -K admin --os-storage-url=http://127.0.0.1:8080/v1/AUTH_test post -m quota-bytes:</userinput></screen>
+            </para>
         </section>
     <section xml:id="object-storage-bulk-delete">
         <title>Bulk Delete</title>
@@ -481,12 +477,12 @@ $ swift-dispersion-report -j
 &lt;/form&gt;]]&gt;
 </programlisting>
   <para>The <literal>swift-url</literal> is the URL to the Swift destination, such as:
-  <literal>https://swift-cluster.example.com/v1/AUTH_account/container/object_prefix</literal>
+  <uri>https://swift-cluster.example.com/v1/AUTH_account/container/object_prefix</uri>
   The name of each file uploaded will be appended to the <literal>swift-url</literal> given. So, you can upload
   directly to the root of container with a url like:
-  <literal>https://swift-cluster.example.com/v1/AUTH_account/container/</literal>
+  <uri>https://swift-cluster.example.com/v1/AUTH_account/container/</uri>
   Optionally, you can include an object prefix to better separate different users’ uploads, such as:
-  <literal>https://swift-cluster.example.com/v1/AUTH_account/container/object_prefix</literal>
+  <uri>https://swift-cluster.example.com/v1/AUTH_account/container/object_prefix</uri>
   </para>
 
   <para>Note the form method must be POST and the enctype must be set as “multipart/form-data”.
@@ -499,16 +495,17 @@ $ swift-dispersion-report -j
   The max_file_size attribute must be included and indicates the largest single file upload that can
   be done, in bytes.
 
-  The max_file_count attribute must be included and indicates the maximum number of files that can be
-  uploaded with the form. Include additional <literal>&lt;![CDATA[&lt;input type="file" name="filexx"/&gt;]]&gt;</literal> attributes if
-  desired.
+  The max_file_count attribute must be included and indicates the
+  maximum number of files that can be uploaded with the form. Include
+  additional <code>&lt;![CDATA[&lt;input type="file" name="filexx"/&gt;]]&gt;</code>
+  attributes if desired.
 
   The expires attribute is the Unix timestamp before which the form must be submitted before it is
   invalidated.
 
   The signature attribute is the HMAC-SHA1 signature of the form. Here is sample code for computing
   the signature:
-<programlisting>
+<programlisting language="python">
 import hmac
 from hashlib import sha1
 from time import time
