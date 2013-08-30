@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="admin_cli_manage_projects_users">
+<?dbhtml stop-chunking?>
+    <title>Manage projects, users, and roles</title>
+    <para>As a cloud administrator, you manage projects, users, and
+        roles. Projects are organizational units in the cloud to which
+        you can assign users. Projects are also known as <emphasis
+            role="italic">tenants</emphasis> or <emphasis
+            role="italic">accounts</emphasis>. Users can be members of
+        one or more projects. Roles define which actions users can
+        perform. You assign roles to user-project pairs.</para>
+    <para>You can define actions for OpenStack service roles in the
+                <filename>/etc/<replaceable>PROJECT</replaceable>/policy.json</filename>
+        files. For example, define actions for Compute service roles
+        in the <filename>/etc/nova/policy.json</filename> file.</para>
+    <para>You can manage projects, users, and roles independently from
+        each other.</para>
+    <para>During cloud set up, the operator defines at least one
+        project, user, and role.</para>
+    <para>Learn how to add, update, and delete projects and users,
+        assign users to one or more projects, and change or remove the
+        assignment. To enable or temporarily disable a project or
+        user, you update that project or user. You can also change
+        quotas at the project level.</para>
+    <para>Before you can delete a user account, you must remove the
+        user account from its primary project.</para>
+    <para>Before you can run keystone client commands, you must
+        download and source an OpenStack RC file. See <xref
+            linkend="cli_openrc"/>.</para>
+    <section xml:id="admin_cli_projects">
+        <title>Create a project</title>
+        <procedure>
+            <step>
+                <para>To list all projects with their ID, name, and
+                    whether they are enabled or disabled:</para>
+                <screen><prompt>$</prompt> <userinput>keystone tenant-list</userinput></screen>
+                <screen><computeroutput>+----------------------------------+--------------------+---------+
+|                id                |        name        | enabled |
++----------------------------------+--------------------+---------+
+| f7ac731cc11f40efbc03a9f9e1d1d21f |       admin        |   True  |
+| c150ab41f0d9443f8874e32e725a4cc8 |      alt_demo      |   True  |
+| a9debfe41a6d4d09a677da737b907d5e |        demo        |   True  |
+| 9208739195a34c628c58c95d157917d7 | invisible_to_admin |   True  |
+| 3943a53dc92a49b2827fae94363851e1 |      service       |   True  |
+| 80cab5e1f02045abad92a2864cfd76cb |    test_project    |   True  |
++----------------------------------+--------------------+---------+</computeroutput></screen>
+            </step>
+            <step>
+                <para>Create a project named
+                        <literal>new-project</literal>:</para>
+                <screen><prompt>$</prompt> <userinput>keystone tenant-create --name new-project --description 'my new project'</userinput></screen>
+                <para>By default, the project is enabled.</para>
+                <screen><computeroutput>+-------------+----------------------------------+
+|   Property  |              Value               |
++-------------+----------------------------------+
+| description |          my new project          |
+|   enabled   |               True               |
+|      id     | 1a4a0618b306462c9830f876b0bd6af2 |
+|     name    |           new-project            |
++-------------+----------------------------------+</computeroutput></screen>
+                <para>Note the ID for the project so you can update it
+                    in the next procedure.</para>
+            </step>
+        </procedure>
+    </section>
+    <section xml:id="cli_update_project">
+        <title>Update a project</title>
+        <para>Specify the project ID to update a project. You can
+            update the name, description, and enabled status of a
+            project.</para>
+        <procedure>
+            <step>
+                <para>To temporarily disable a project:</para>
+                <screen><prompt>$</prompt> <userinput>keystone tenant-update <replaceable>PROJECT_ID</replaceable> --enabled false</userinput></screen>
+            </step>
+            <step>
+                <para>To enable a disabled project:</para>
+                <screen><prompt>$</prompt> <userinput>keystone tenant-update <replaceable>PROJECT_ID</replaceable> --enabled true</userinput></screen>
+            </step>
+            <step>
+                <para>To update the name of a project:</para>
+                <screen><prompt>$</prompt> <userinput>keystone tenant-update <replaceable>PROJECT_ID</replaceable> --name project-new</userinput></screen>
+            </step>
+            <step>
+                <para>To verify your changes, show information for the
+                    updated project:</para>
+                <screen><prompt>$</prompt> <userinput>keystone tenant-get <replaceable>PROJECT_ID</replaceable></userinput></screen>
+                <screen><computeroutput>+-------------+----------------------------------+
+|   Property  |              Value               |
++-------------+----------------------------------+
+| description |          my new project          |
+|   enabled   |               True               |
+|      id     | 1a4a0618b306462c9830f876b0bd6af2 |
+|     name    |           project-new            |
++-------------+----------------------------------+</computeroutput></screen>
+            </step>
+        </procedure>
+    </section>
+    <section xml:id="cli_project_delete">
+        <title>Delete a project</title>
+        <procedure>
+            <step>
+                <para>To delete a project:</para>
+                <screen><prompt>$</prompt> <userinput>keystone tenant-delete <replaceable>PROJECT_ID</replaceable></userinput></screen>
+            </step>
+        </procedure>
+    </section>
+    <section xml:id="admin_cli_user_accounts">
+        <title>Create a user</title>
+        <procedure>
+            <step>
+                <para>To list all users:</para>
+                <screen><prompt>$</prompt> <userinput>keystone user-list</userinput></screen>
+                <para>The output shows the ID, name, enabled status,
+                    and e-mail address for each user:</para>
+                <screen><computeroutput>+----------------------------------+----------+---------+----------------------+
+|                id                |   name   | enabled |        email         |
++----------------------------------+----------+---------+----------------------+
+| 352b37f5c89144d4ad0534139266d51f |  admin   |   True  |  admin@example.com   |
+| 86c0de739bcb4802b8dc786921355813 |   demo   |   True  |   demo@example.com   |
+| 32ec34aae8ea432e8af560a1cec0e881 |  glance  |   True  |  glance@example.com  |
+| 7047fcb7908e420cb36e13bbd72c972c |   nova   |   True  |   nova@example.com   |
++----------------------------------+----------+---------+----------------------+</computeroutput></screen>
+            </step>
+            <step>
+                <para>To create a user, you must specify a name.
+                    Optionally, you can specify a tenant ID, password,
+                    and email address. It is recommended that you
+                    include the tenant ID and password because the
+                    user cannot log in to the dashboard without this
+                    information.</para>
+                <para>To create the <literal>new-user</literal>
+                    user:</para>
+                <screen><prompt>$</prompt> <userinput>keystone user-create --name new-user --tenant_id 1a4a0618b306462c9830f876b0bd6af2 --pass <replaceable>PASSWORD</replaceable></userinput></screen>
+                <screen><computeroutput>+----------+----------------------------------+
+| Property |              Value               |
++----------+----------------------------------+
+|  email   |                                  |
+| enabled  |               True               |
+|    id    | 6e5140962b424cb9814fb172889d3be2 |
+|   name   |             new-user             |
+| tenantId | 1a4a0618b306462c9830f876b0bd6af2 |
++----------+----------------------------------+</computeroutput></screen>
+            </step>
+        </procedure>
+    </section>
+    <section xml:id="cli_update_user">
+        <title>Update a user</title>
+        <para>You can update the name, email address, and enabled
+            status for a user.</para>
+        <procedure>
+            <step>
+                <para>To temporarily disable a user account:</para>
+                <screen><prompt>$</prompt> <userinput>keystone user-update <replaceable>USER_ID</replaceable> --enabled false</userinput></screen>
+                <para>If you disable a user account, the user cannot
+                    log in to the dashboard. However, data for the
+                    user account is maintained, so you can enable the
+                    user at any time.</para>
+            </step>
+            <step>
+                <para>To enable a disabled user account:</para>
+                <screen><prompt>$</prompt> <userinput>keystone user-update <replaceable>USER_ID</replaceable> --enabled true</userinput></screen>
+            </step>
+            <step>
+                <para>To change the name and description for a user
+                    account:</para>
+                <screen><prompt>$</prompt> <userinput>keystone user-update <replaceable>USER_ID</replaceable> --name user-new --email new-user@example.com</userinput></screen>
+                <screen><computeroutput>User has been updated.</computeroutput></screen>
+            </step>
+        </procedure>
+    </section>
+    <section xml:id="cli_delete_user">
+        <title>Delete a user</title>
+        <procedure>
+            <step>
+                <para>To delete a specified user account:</para>
+                <screen><prompt>$</prompt> <userinput>keystone user-delete <replaceable>USER_ID</replaceable></userinput></screen>
+            </step>
+        </procedure>
+    </section>
+    <section xml:id="admin_cli_modify_projects">
+        <title>Create and assign a role</title>
+        <para>Users can be members of multiple projects. To assign
+            users to multiple projects, define a role and assign that
+            role to a user-project pair.</para>
+        <procedure>
+            <step>
+                <para>To list the available roles:</para>
+                <screen><prompt>$</prompt> <userinput>keystone role-list</userinput></screen>
+                <screen><computeroutput>+----------------------------------+---------------+
+|                id                |      name     |
++----------------------------------+---------------+
+| 71ccc37d41c8491c975ae72676db687f |     Member    |
+| 149f50a1fe684bfa88dae76a48d26ef7 | ResellerAdmin |
+| 9fe2ff9ee4384b1894a90878d3e92bab |    _member_   |
+| 6ecf391421604da985db2f141e46a7c8 |     admin     |
+| deb4fffd123c4d02a907c2c74559dccf |  anotherrole  |
++----------------------------------+---------------+</computeroutput></screen>
+            </step>
+            <step>
+                <para>To create the <literal>new-role</literal>
+                    role:</para>
+                <screen><prompt>$</prompt> <userinput>keystone role-create --name new-role</userinput></screen>
+                <screen><computeroutput>+----------+----------------------------------+
+| Property |              Value               |
++----------+----------------------------------+
+|    id    | bef1f95537914b1295da6aa038ef4de6 |
+|   name   |             new-role             |
++----------+----------------------------------+</computeroutput></screen>
+            </step>
+            <step>
+                <para>To assign a user to a project, you must assign
+                    the role to a user-project pair. To do this, you
+                    need the user, role, and project IDs.</para>
+                <substeps>
+                    <step>
+                        <para>To list users:</para>
+                        <screen><prompt>$</prompt> <userinput>keystone user-list</userinput></screen>
+                        <screen><computeroutput>+----------------------------------+----------+---------+----------------------+
+|                id                |   name   | enabled |        email         |
++----------------------------------+----------+---------+----------------------+
+| 352b37f5c89144d4ad0534139266d51f |  admin   |   True  |  admin@example.com   |
+| 981422ec906d4842b2fc2a8658a5b534 | alt_demo |   True  | alt_demo@example.com |
+| 036e22a764ae497992f5fb8e9fd79896 |  cinder  |   True  |  cinder@example.com  |
+| 86c0de739bcb4802b8dc786921355813 |   demo   |   True  |   demo@example.com   |
+| 32ec34aae8ea432e8af560a1cec0e881 |  glance  |   True  |  glance@example.com  |
+| 7047fcb7908e420cb36e13bbd72c972c |   nova   |   True  |   nova@example.com   |
++----------------------------------+----------+---------+----------------------+</computeroutput></screen>
+                        <para>Note the ID of the user to which you
+                            want to assign the role.</para>
+                    </step>
+                    <step>
+                        <para>To list role IDs:</para>
+                        <screen><prompt>$</prompt> <userinput>keystone role-list</userinput></screen>
+                        <screen><computeroutput>+----------------------------------+---------------+
+|                id                |      name     |
++----------------------------------+---------------+
+| 71ccc37d41c8491c975ae72676db687f |     Member    |
+| 149f50a1fe684bfa88dae76a48d26ef7 | ResellerAdmin |
+| 9fe2ff9ee4384b1894a90878d3e92bab |    _member_   |
+| 6ecf391421604da985db2f141e46a7c8 |     admin     |
+| deb4fffd123c4d02a907c2c74559dccf |  anotherrole  |
+| bef1f95537914b1295da6aa038ef4de6 |    new-role   |
++----------------------------------+---------------+</computeroutput></screen>
+                        <para>Note the ID of the role that you want to
+                            assign.</para>
+                    </step>
+                    <step>
+                        <para>To list projects:</para>
+                        <screen><prompt>$</prompt> <userinput>keystone tenant-list</userinput></screen>
+                        <screen><computeroutput>+----------------------------------+--------------------+---------+
+|                id                |        name        | enabled |
++----------------------------------+--------------------+---------+
+| f7ac731cc11f40efbc03a9f9e1d1d21f |       admin        |   True  |
+| c150ab41f0d9443f8874e32e725a4cc8 |      alt_demo      |   True  |
+| a9debfe41a6d4d09a677da737b907d5e |        demo        |   True  |
+| 9208739195a34c628c58c95d157917d7 | invisible_to_admin |   True  |
+| caa9b4ce7d5c4225aa25d6ff8b35c31f |      new-user      |   True  |
+| 1a4a0618b306462c9830f876b0bd6af2 |    project-new     |   True  |
+| 3943a53dc92a49b2827fae94363851e1 |      service       |   True  |
+| 80cab5e1f02045abad92a2864cfd76cb |    test_project    |   True  |
++----------------------------------+--------------------+---------+</computeroutput></screen>
+                        <para>Note the ID of the project to which you
+                            want to assign the role.</para>
+                    </step>
+                </substeps>
+            </step>
+            <step>
+                <para>Assign a role to a user-project pair. In this
+                    example, you assign the
+                        <literal>new-role</literal> role to the
+                        <literal>demo</literal> and
+                        <literal>test-project</literal> pair:</para>
+                <screen><prompt>$</prompt> <userinput>keystone user-role-add --user <replaceable>USER_ID</replaceable> --role <replaceable>ROLE_ID</replaceable> --tenant <replaceable>TENANT_ID</replaceable></userinput></screen>
+            </step>
+            <step>
+                <para>To verify the role assignment:</para>
+                <screen><prompt>$</prompt> <userinput>keystone user-role-list --user <replaceable>USER_ID</replaceable> --tenant <replaceable>TENANT_ID</replaceable></userinput></screen>
+                <screen><computeroutput>+----------------------------------+----------+----------------------------------+----------------------------------+
+|                id                |   name   |             user_id              |            tenant_id             |
++----------------------------------+----------+----------------------------------+----------------------------------+
+| bef1f95537914b1295da6aa038ef4de6 | new-role | 86c0de739bcb4802b8dc786921355813 | 80cab5e1f02045abad92a2864cfd76cb |
++----------------------------------+----------+----------------------------------+----------------------------------+</computeroutput></screen>
+            </step>
+            <step>
+                <para>To get details for a specified role:</para>
+                <screen><prompt>$</prompt> <userinput>keystone role-get <replaceable>ROLE_ID</replaceable></userinput></screen>
+                <screen><computeroutput>+----------+----------------------------------+
+| Property |              Value               |
++----------+----------------------------------+
+|    id    | bef1f95537914b1295da6aa038ef4de6 |
+|   name   |             new-role             |
++----------+----------------------------------+</computeroutput></screen>
+            </step>
+            <step>
+                <para>To remove a role from a user-project
+                    pair:</para>
+                <screen><prompt>$</prompt> <userinput>keystone user-role-remove --user <replaceable>USER_ID</replaceable> --role <replaceable>ROLE_ID</replaceable> --tenant <replaceable>TENANT_ID</replaceable></userinput></screen>
+            </step>
+            <step>
+                <para>To verify the role removal, run the following
+                    command:</para>
+                <screen><prompt>$</prompt> <userinput>keystone user-role-list --user <replaceable>USER_ID</replaceable> --tenant <replaceable>TENANT_ID</replaceable></userinput></screen>
+                <para>If the role was removed, the
+                    command output omits the removed role.</para>
+            </step>
+        </procedure>
+    </section>
+</section>

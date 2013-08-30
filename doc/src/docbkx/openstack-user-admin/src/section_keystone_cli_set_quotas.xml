@@ -10,19 +10,20 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
   xml:id="cli_set_quotas">
-  <title>Set quotas</title>
+<?dbhtml stop-chunking?>
+  <title>Manage quotas</title>
   <para>To prevent system capacities from being exhausted without
     notification, you can set up quotas. Quotas are operational
-    limits. For example, the number of gigabytes allowed per tenant
-    can be controlled so that cloud resources are optimized. Quotas
-    are currently enforced at the tenant (or project) level, rather
-    than by user.</para>
+    limits. For example, the number of gigabytes allowed for each
+    tenant can be controlled so that cloud resources are optimized.
+    Quotas are currently enforced at the tenant (or project) level,
+    rather than by user.</para>
   <para>Using the command-line interface, you can manage quotas for
     the OpenStack Compute Service and the Block Storage Service.</para>
   <para>Typically, default values are changed because a tenant
     requires more than 10 volumes, or more than 1TB on a Compute node.</para>
   <note>
-    <para>To view all tenants, run:
+    <para>To view all projects:
       <screen><prompt>$</prompt> <userinput>keystone tenant-list</userinput>
 <computeroutput>+----------------------------------+----------+---------+
 |                id                |   name   | enabled |
@@ -34,123 +35,6 @@
 +----------------------------------+----------+---------+</computeroutput></screen>
     </para>
   </note>
-  <xi:include href="section_cli_set_compute_quotas.xml"/>
-  <section xml:id="cli_set_block_storage_quotas">
-    <title>Set Block Storage quotas</title>
-    <para>As an administrative user, you can update the Block Storage
-      Service quotas for a tenant, as well as update the quota
-      defaults for a new tenant.</para>
-    <para>
-      <table rules="all">
-        <caption>Block Storage Quota Descriptions</caption>
-        <col width="20%"/>
-        <col width="80%"/>
-        <thead>
-          <tr>
-            <td>Property Name</td>
-            <td>Description</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <para>gigabytes</para>
-            </td>
-            <td>
-              <para>Number of volume gigabytes allowed per tenant.
-              </para>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <para>snapshots</para>
-            </td>
-            <td>
-              <para>Number of Block Storage snapshots allowed per
-                tenant.</para>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <para>volumes</para>
-            </td>
-            <td>
-              <para>Number of Block Storage volumes allowed per
-                tenant.</para>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </para>
-    <section xml:id="cli_set_block_storage_quotas_procedure">
-      <title>View and update Block Storage quotas for a tenant
-        (project)</title>
-      <para>As an administrative user, you can use the <command>cinder
-          quota-*</command> commands, which are provided by the
-          <literal>python-cinderclient</literal> package, to view and
-        update tenant quotas.</para>
-      <procedure>
-        <title>To view and update default Block Storage quota
-          values</title>
-        <step>
-          <para>List all default quotas for all tenants, as
-            follows:</para>
-          <screen><prompt>$</prompt> <userinput>cinder quota-defaults</userinput></screen>
-          <para>For example:</para>
-          <screen><prompt>$</prompt> <userinput>cinder quota-defaults</userinput>
-<computeroutput>+-----------+-------+
-|  Property | Value |
-+-----------+-------+
-| gigabytes |  1000 |
-| snapshots |   10  |
-|  volumes  |   10  |
-+-----------+-------+</computeroutput></screen>
-        </step>
-        <step>
-          <para>To update a default value for a new tenant, update the
-            property in the
-              <filename>/etc/cinder/cinder.conf</filename> file.
-          </para>
-        </step>
-      </procedure>
-      <procedure>
-        <title>To view Block Storage quotas for a tenant</title>
-        <step>
-          <para>View quotas for the tenant, as follows:</para>
-          <screen><prompt>#</prompt> <userinput>cinder quota-show <replaceable>tenantName</replaceable></userinput></screen>
-          <para>For example:</para>
-          <screen><prompt>#</prompt> <userinput>cinder quota-show tenant01</userinput>
-<computeroutput>+-----------+-------+
-|  Property | Value |
-+-----------+-------+
-| gigabytes |  1000 |
-| snapshots |   10  |
-|  volumes  |   10  |
-+-----------+-------+</computeroutput></screen>
-        </step>
-      </procedure>
-      <procedure>
-        <title>To update Compute service quotas</title>
-        <step>
-          <para>Place the tenant ID in a usable variable, as
-            follows:</para>
-          <screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list | awk '/<replaceable>tenantName</replaceable>/ {print $2}')</userinput></screen>
-        </step>
-        <step>
-          <para>Update a particular quota value, as follows:</para>
-          <screen><prompt>#</prompt> <userinput>cinder quota-update --<replaceable>quotaName</replaceable> <replaceable>NewValue</replaceable> <replaceable>tenantID</replaceable></userinput></screen>
-          <para>For example:</para>
-          <screen><prompt>#</prompt> <userinput>cinder quota-update --volumes 15 $tenant</userinput>
-<prompt>#</prompt> <userinput>cinder quota-show tenant01</userinput>
-<computeroutput>+-----------+-------+
-|  Property | Value |
-+-----------+-------+
-| gigabytes |  1000 |
-| snapshots |   10  |
-|  volumes  |   15  |
-+-----------+-------+</computeroutput></screen>
-        </step>
-      </procedure>
-    </section>
-  </section>
+  <xi:include href="section_nova_cli_quotas.xml"/>
+  <xi:include href="section_cinder_cli_quotas.xml"/>
 </section>
