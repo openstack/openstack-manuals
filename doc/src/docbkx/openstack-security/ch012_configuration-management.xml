@@ -27,14 +27,13 @@
       </note>
       <section xml:id="ch012_configuration-management-idp48592">
         <title>Triage</title>
-        <para>After receiving notification about a security update, the next step is to determine how critical this update is to a given cloud deployment. In this case, it is useful to have a pre-defined policy. Existing vulnerability rating systems such as the common vulnerability scoring system (CVSS) v2 do not properly account for cloud deployments. The table below provides an example scoring matrix.</para>
+        <para>After receiving notification about a security update, the next step is to determine how critical this update is to a given cloud deployment. In this case, it is useful to have a pre-defined policy. Existing vulnerability rating systems such as the common vulnerability scoring system (CVSS) v2 do not properly account for cloud deployments.</para>
+        <para>In this example we introduce a scoring matrix that places vulnerabilities in three categories: Privilege Escalation, Denial of Service and Information Disclosure. Understanding the type of vulnerability and where it occurs in your infrastructure will enable you to make reasoned response decisions.</para>
+        <para>Privilege Escalation describes the ability of a user to act with the privileges of some other user in a system, bypassing appropriate authorization checks. For example a standard Linux user running code or performing an operation that allows them to conduct further operations with the privileges of the root users on the system.</para>
+        <para>Denial of Service refers to an exploited vulnerability that may cause service or system disruption. This includes both distributed attacks to overwhelm network resources, and single-user attacks that are typically caused through resource allocation bugs or input induced system failure flaws.</para>
+        <para>Information Disclosure vulnerabilities reveal information about your system or operations. These vulnerabilities range from debugging information disclosure, to exposure of critical security data, such as authentication credentials and passwords.</para>
 
           <informaltable rules="all" width="80%"><colgroup><col/><col/><col/><col/><col/></colgroup>
-
-
-
-
-
             <tbody>
               <tr>
                 <td><para> </para></td>
@@ -84,7 +83,7 @@
               </tr>
             </tbody>
           </informaltable>
-
+        <para>The above table illustrates a generic approach to measuring the impact of a vulnerability based on where it occurs in your deployment and the effect; for example, a single level privilege escalation on a Nova API node would potentially allow a standard user of the API to escalate to have the same privileges as the root user on the node.</para>
         <para>We suggest cloud administrators customize and expand this table to suit their needs. Then work to define how to handle the various severity levels. For example, a critical-level security update might require the cloud to be upgraded on a specified time line, whereas a low-level update might be more relaxed.</para>
       </section>
       <section xml:id="ch012_configuration-management-idp100864">
