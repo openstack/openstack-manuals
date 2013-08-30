@@ -4,56 +4,71 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="ch_adv_operational_features">
     <title>Advanced Operational Features</title>
-    <section xml:id="ch_adv_logging">
-        <title>Logging Settings</title>
-        <para>OpenStack Networking components use Python logging module to do logging. Logging
-      configuration can be provided in <filename>neutron.conf</filename> or as command line options.
-      Command options will override ones in <filename>neutron.conf</filename>.</para>
-        <para>Two ways to specify the logging configuration for
-      OpenStack Networking components:</para>
-        <orderedlist>
-            <listitem>
-                <para>Provide logging settings in a logging configuration file.</para>
-                <para>Please see <link xlink:href="http://docs.python.org/howto/logging.html">Python Logging HOWTO</link> for logging configuration file.</para>
-            </listitem>
-            <listitem>
-                <para>Provide logging setting in <filename>neutron.conf</filename></para>
-                <screen>
-                    <computeroutput>
-[DEFAULT]
-# Default log level is WARNING
-# Show debugging output in logs (sets DEBUG log level output)
-# debug = False
+  <section xml:id="ch_adv_logging">
+    <title>Logging Configuration</title>
+    <para>OpenStack Networking components use a Python logging module for logging. You can
+      configure logging using any of the following:</para>
+    <para>
+      <itemizedlist>
+        <listitem>
+          <para>Update settings in the <filename>/etc/neutron/neutron.conf</filename> file. For
+            example:</para>
+          <programlisting language="ini">[DEFAULT]
+# Default log level is INFO
+# verbose and debug has the same result.
+# One of them will set DEBUG log level output
+debug = False
+verbose = True
 
-# Show more verbose log output (sets INFO log level output) if debug is False
-# verbose = False
+# Where to store Neutron state files.  This directory must be writable by the
+# user executing the agent.
+# state_path = /var/lib/neutron
+
+# Where to store lock files
+lock_path = $state_path/lock
 
 # log_format = %(asctime)s %(levelname)8s [%(name)s] %(message)s
 # log_date_format = %Y-%m-%d %H:%M:%S
 
+# use_syslog                           -> syslog
+# log_file and log_dir                 -> log_dir/log_file
+# (not log_file) and log_dir           -> log_dir/{binary_name}.log
+# use_stderr                           -> stderr
+# (not user_stderr) and (not log_file) -> stdout
+# publish_errors                       -> notification system
+
 # use_syslog = False
 # syslog_log_facility = LOG_USER
 
-# if use_syslog is False, we can set log_file and log_dir.
-# if use_syslog is False and we do not set log_file,
-# the log will be printed to stdout.
+# use_stderr = True
 # log_file =
-# log_dir =</computeroutput>
-                </screen>
-            </listitem>
-        </orderedlist>
-    </section>
-    <section xml:id="ch_adv_notification">
-        <title>Notifications</title>
-        <section xml:id="ch_adv_notification_overview">
-        <title>Notification Options</title>
-        <para>Notifications can be sent when OpenStack Networking resources such as network, subnet
-        and port are created, updated or deleted. To support DHCP agent, rpc_notifier driver must be
-        set. To set up the notification, edit notification options in
-          <filename>neutron.conf</filename>:</para>
-        <screen>
-                    <computeroutput>
-# ============ Notification System Options =====================
+log_dir =/var/log/neutron</programlisting>
+        </listitem>
+        <listitem>
+          <para>Use command-line options. For example, use the <systemitem>--debug</systemitem>
+            option when using the <systemitem>neutron</systemitem> command-line tool (see the
+              <citetitle>OpenStack End User Guide</citetitle> for more information).</para>
+          <para>Command-line options override options specified in
+            <filename>neutron.conf</filename>.</para>
+        </listitem>
+        <listitem>
+          <para>Use a python logging configuration file (see <link
+              xlink:href="http://docs.python.org/howto/logging.html">Python Logging HOWTO</link> for
+            more information).</para>
+        </listitem>
+      </itemizedlist>
+    </para>
+  </section>
+  <section xml:id="ch_adv_notification">
+    <title>Notifications</title>
+    <section xml:id="ch_adv_notification_overview">
+      <title>Notification Options</title>
+      <para>You can send notifications  when creating, updating, or deleting OpenStack Networking
+        resources. To support a DHCP agent, you must set up an <literal>rpc_notifier</literal>
+        driver. </para>
+      <para>To configure notifications, update settings in the
+          <filename>/etc/neutron/neutron.conf</filename> file. For example:</para>
+      <programlisting language="ini">============ Notification System Options =====================
 
 # Notifications can be sent when network/subnet/port are create, updated or deleted.
 # There are three methods of sending notifications: logging (via the
@@ -77,22 +92,19 @@ notification_driver = neutron.openstack.common.notifier.rpc_notifier
 
 # Defined in rpc_notifier for rpc way, can be comma separated values.
 # The actual topic names will be %s.%(default_notification_level)s
-notification_topics = notifications
-                    </computeroutput>
-                </screen>
-                </section>
-                <section xml:id="ch_adv_notification_cases">
-                <title>Setting Cases</title>
-                <section xml:id="ch_adv_notification_cases_log_rpc">
-                <title>Logging and RPC</title>
-                <para>The options below will make OpenStack Networking server send notifications via
-          logging and RPC. The logging options are described in <link linkend="ch_adv_logging"
-            >Logging Settings</link>. RPC notifications will go to 'notifications.info' queue binded
-          to a topic exchange defined by 'control_exchange' in
-          <filename>neutron.conf</filename>.</para>
-        <screen>
-                    <computeroutput>
-# ============ Notification System Options =====================
+notification_topics = notifications</programlisting>
+    </section>
+    <section xml:id="ch_adv_notification_cases">
+      <title>Notification Use Cases</title>
+      <section xml:id="ch_adv_notification_cases_log_rpc">
+        <title>Logging and RPC</title>
+        <para>To make the OpenStack Networking server send notifications using logging and RPC, use
+          the following configuration in the <filename>neutron.conf</filename> file.</para>
+        <para>RPC notifications are sent to the <systemitem>notifications.info</systemitem> queue
+          binded to a topic exchange defined by <systemitem>control_exchange</systemitem> (also
+          defined in <systemitem>neutron.conf</systemitem>). Logging options are described in <link
+            linkend="ch_adv_logging">Logging Settings</link>.</para>
+        <programlisting language="ini"># ============ Notification System Options =====================
 
 # Notifications can be sent when network/subnet/port are create, updated or deleted.
 # There are three methods of sending notifications: logging (via the
@@ -116,19 +128,18 @@ default_notification_level = INFO
 
 # Defined in rpc_notifier for rpc way, can be comma separated values.
 # The actual topic names will be %s.%(default_notification_level)s
-notification_topics = notifications
-                    </computeroutput>
-                </screen>
-                </section>
-                <section xml:id="ch_adv_notification_cases_multi_rpc_topics">
-                <title>Multiple RPC Topics</title>
-                <para>The options below will make OpenStack Networking server send notifications to
-          multiple RPC topics. RPC notifications will go to 'notifications_one.info' and
-          'notifications_two.info' queues binded to a topic exchange defined by 'control_exchange'
-          in <filename>neutron.conf</filename>.</para>
-        <screen>
-                    <computeroutput>
-# ============ Notification System Options =====================
+notification_topics = notifications</programlisting>
+      </section>
+      <section xml:id="ch_adv_notification_cases_multi_rpc_topics">
+        <title>Multiple RPC Topics</title>
+        <para>To make the OpenStack Networking server send notifications to multiple RPC topics, use
+          the following configuration in the <filename>neutron.conf</filename> file.</para>
+        <para>RPC notifications are sent to the <systemitem>notifications_one.info</systemitem> and
+          <systemitem>notifications_two.info</systemitem> queues, that are binded to a topic
+          exchange defined by <systemitem>control_exchange</systemitem> (also defined in
+          <systemitem>neutron.conf</systemitem>). Logging options are described in <link
+            linkend="ch_adv_logging">Logging Settings</link>.</para>
+        <programlisting language="ini"># ============ Notification System Options =====================
 
 # Notifications can be sent when network/subnet/port are create, updated or deleted.
 # There are three methods of sending notifications: logging (via the
@@ -152,18 +163,16 @@ default_notification_level = INFO
 
 # Defined in rpc_notifier for rpc way, can be comma separated values.
 # The actual topic names will be %s.%(default_notification_level)s
-notification_topics = notifications_one,notifications_two
-                    </computeroutput>
-                </screen>
-                </section>
-                </section>
+notification_topics = notifications_one,notifications_two</programlisting>
+      </section>
+    </section>
     </section>
     <section xml:id="ch_adv_quotas">
       <title>Quotas</title>
       <para>Quota is a function to limit number of resources. You can enforce default quota for all
       tenants. You will get error when you try to create more resources than the limit.</para>
-      <screen><computeroutput>$ neutron net-create test_net
-Quota exceeded for resources: ['network']</computeroutput></screen>
+      <screen><prompt>$</prompt> <userinput>neutron net-create test_net
+Quota exceeded for resources: ['network']</userinput></screen>
       <para>
         Per-tenant quota configuration is also supported by quota
         extension API. See <link linkend="cfg_quotas_per_tenant">
@@ -179,7 +188,7 @@ Quota exceeded for resources: ['network']</computeroutput></screen>
         (e.g., network, subnet, port), remove a corresponding item from
           <literal>quota_items</literal>. Each of the quota values in the example below is the
         default value.</para>
-        <screen><computeroutput>[quotas]
+        <programlisting language="ini">[quotas]
 # resource name(s) that are supported in quota features
 quota_items = network,subnet,port
 
@@ -193,40 +202,39 @@ quota_subnet = 10
 quota_port = 50
 
 # default driver to use for quota checks
-quota_driver = neutron.quota.ConfDriver</computeroutput></screen>
+quota_driver = neutron.quota.ConfDriver</programlisting>
       <para>OpenStack Networking also supports quotas for L3 resources: router and floating IP. You
         can configure them by adding the following lines to <literal>quotas</literal> section in
           <filename>neutron.conf</filename>. (Note that <literal>quota_items</literal> does not
         affect these quotas.)</para>
-      <screen><computeroutput>[quotas]
+      <programlisting language="ini">[quotas]
 # number of routers allowed per tenant, and minus means unlimited
 quota_router = 10
 
 # number of floating IPs allowed per tenant, and minus means unlimited
-quota_floatingip = 50</computeroutput></screen>
+quota_floatingip = 50</programlisting>
         <para>OpenStack Networking also supports quotas for security group resources: number of
         security groups and the number of rules per security group. You can configure them by adding
         the following lines to <literal>quotas</literal> section in
           <filename>neutron.conf</filename>. (Note that <literal>quota_items</literal> does not
         affect these quotas.)</para>
-        <screen><computeroutput>[quotas]
+        <programlisting language="ini">[quotas]
 # number of security groups per tenant, and minus means unlimited
 quota_security_group = 10
 
 # number of security rules allowed per tenant, and minus means unlimited
-quota_security_group_rule = 100</computeroutput></screen>
+quota_security_group_rule = 100</programlisting>
       </section>
       <section xml:id="cfg_quotas_per_tenant">
         <title>Per-tenant quota configuration</title>
         <para>OpenStack Networking also supports per-tenant quota limit by quota extension API. To
         enable per-tenant quota, you need to set <literal>quota_driver</literal> in
-          <literal>neutron.conf</literal>.</para>
-        <screen><computeroutput>quota_driver = neutron.db.quota_db.DbQuotaDriver</computeroutput></screen>
-        <para>
-          When per-tenant quota is enabled, the output of the following command contains <literal>quotas</literal>.
-        </para>
-        <screen><computeroutput>$ neutron ext-list -c alias -c name
-+-----------------+--------------------------+
+          <literal>neutron.conf</literal>. For example:</para>
+        <programlisting language="ini">quota_driver = neutron.db.quota_db.DbQuotaDriver</programlisting>
+        <para> When per-tenant quota is enabled, the output of the following commands contain
+          <literal>quotas</literal>. </para>
+        <screen><prompt>$</prompt> <userinput>neutron ext-list -c alias -c name</userinput>
+<computeroutput>+-----------------+--------------------------+
 | alias           | name                     |
 +-----------------+--------------------------+
 | agent_scheduler | Agent Schedulers         |
@@ -238,10 +246,10 @@ quota_security_group_rule = 100</computeroutput></screen>
 | router          | Neutron L3 Router        |
 | lbaas           | LoadBalancing service    |
 | extraroute      | Neutron Extra Route      |
-+-----------------+--------------------------+
-
-$ neutron ext-show quotas
-+-------------+------------------------------------------------------------+
++-----------------+--------------------------+</computeroutput></screen>
+      <screen>
+<prompt>$</prompt> <userinput>neutron ext-show quotas</userinput>
+<computeroutput>+-------------+------------------------------------------------------------+
 | Field       | Value                                                      |
 +-------------+------------------------------------------------------------+
 | alias       | quotas                                                     |
@@ -256,25 +264,31 @@ $ neutron ext-show quotas
           Linux Bridge, and Nicira NVP are known to work but new versions of other plugins may
           bring additional functionality - consult the documentation for each plugin.
         </para></note>
-        <para>
-          There are four CLI commands to manage per-tenant quota.
-        </para>
-        <screen><computeroutput> quota-delete               Delete defined quotas of a given tenant.
-  quota-list                 List defined quotas of all tenants.
-  quota-show                 Show quotas of a given tenant
-  quota-update               Define tenant's quotas not to use defaults.</computeroutput></screen>
-        <para>
-          Only users with 'admin' role can change a quota value.
-          Note that the default set of quotas are enforced for all
-          tenants by default, so there is no <literal>quota-create</literal> command.
-        </para>
+        <para> There are four CLI commands to manage per-tenant quotas: <itemizedlist>
+          <listitem>
+            <para><command>neutron quota-delete</command> - Delete defined quotas of a given
+              tenant.</para>
+          </listitem>
+          <listitem>
+            <para><command>neutron quota-list</command> - List defined quotas of all tenants.</para>
+          </listitem>
+          <listitem>
+            <para><command>neutron quota-show</command> - Show quotas of a given tenant.</para>
+          </listitem>
+          <listitem>
+            <para><command>neutron quota-update</command> - Define tenant's quotas not to use
+              defaults.</para>
+          </listitem>
+        </itemizedlist>Only users with 'admin' role can change a quota value. Note that the default
+        set of quotas are enforced for all tenants by default, so there is no
+          <literal>quota-create</literal> command. </para>
         <para>
           <literal>quota-list</literal> displays a list of tenants for which per-tenant quota is enabled.
           The tenants who have the default set of quota limits are not listed.
           This command is permitted to only 'admin' users.
         </para>
-        <screen><computeroutput>$ neutron quota-list
-+------------+---------+------+--------+--------+----------------------------------+
+        <screen><prompt>$</prompt> <userinput>neutron quota-list</userinput>
+<computeroutput>+------------+---------+------+--------+--------+----------------------------------+
 | floatingip | network | port | router | subnet | tenant_id                        |
 +------------+---------+------+--------+--------+----------------------------------+
 |         20 |       5 |   20 |     10 |      5 | 6f88036c45344d9999a1f971e4882723 |
@@ -286,8 +300,8 @@ $ neutron ext-show quotas
           If per-tenant quota limits are not defined for the tenant, the default set of
           quotas are displayed.
         </para>
-        <screen><computeroutput>$ neutron quota-show --tenant_id 6f88036c45344d9999a1f971e4882723
-+------------+-------+
+        <screen><prompt>$</prompt> <userinput>neutron quota-show --tenant_id 6f88036c45344d9999a1f971e4882723</userinput>
+<computeroutput>+------------+-------+
 | Field      | Value |
 +------------+-------+
 | floatingip | 20    |
@@ -299,8 +313,8 @@ $ neutron ext-show quotas
         <para>
           The below is an example called by a non-admin user.
         </para>
-        <screen><computeroutput>$ neutron quota-show
-+------------+-------+
+        <screen><prompt>$</prompt> <userinput>neutron quota-show</userinput>
+<computeroutput>+------------+-------+
 | Field      | Value |
 +------------+-------+
 | floatingip | 20    |
@@ -311,8 +325,8 @@ $ neutron ext-show quotas
 +------------+-------+</computeroutput></screen>
         <para>You can update a quota of the given tenant by <literal>quota-update</literal> command.</para>
         <para>Update the limit of network quota.</para>
-        <screen><computeroutput>$ neutron quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 --network 5
-+------------+-------+
+        <screen><prompt>$</prompt> <userinput>neutron quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 --network 5</userinput>
+<computeroutput>+------------+-------+
 | Field      | Value |
 +------------+-------+
 | floatingip | 50    |
@@ -322,8 +336,8 @@ $ neutron ext-show quotas
 | subnet     | 10    |
 +------------+-------+</computeroutput></screen>
         <para>You can update quotas of multiple resources in one command.</para>
-        <screen><computeroutput>$ neutron quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 --subnet 5 --port 20
-+------------+-------+
+        <screen><prompt>$</prompt> <userinput>neutron quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 --subnet 5 --port 20</userinput>
+<computeroutput>+------------+-------+
 | Field      | Value |
 +------------+-------+
 | floatingip | 50    |
@@ -337,8 +351,8 @@ $ neutron ext-show quotas
           specify new values of the quotas after '--'. The example below updates
           the limit of the number of floating IPs for the given tenant.
         </para>
-        <screen><computeroutput>$ neutron quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 -- --floatingip 20
-+------------+-------+
+        <screen><prompt>$</prompt> <userinput>neutron quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 -- --floatingip 20</userinput>
+<computeroutput>+------------+-------+
 | Field      | Value |
 +------------+-------+
 | floatingip | 20    |
@@ -350,8 +364,8 @@ $ neutron ext-show quotas
         <para>
           You can update the limits of multiple resources including L2 resources and L3 resource in one command.
         </para>
-        <screen><computeroutput>$ neutron quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 --network 3 --subnet 3 --port 3 -- --floatingip 3 --router 3
-+------------+-------+
+        <screen><prompt>$</prompt> <userinput>neutron quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 --network 3 --subnet 3 --port 3 -- --floatingip 3 --router 3</userinput>
+<computeroutput>+------------+-------+
 | Field      | Value |
 +------------+-------+
 | floatingip | 3     |
@@ -365,10 +379,11 @@ $ neutron ext-show quotas
           After <literal>quota-delete</literal>, quota limits enforced to the tenant are reset to
           the default set of quotas.
         </para>
-        <screen><computeroutput>$ neutron quota-delete --tenant_id 6f88036c45344d9999a1f971e4882723
-Deleted quota: 6f88036c45344d9999a1f971e4882723
-$ neutron quota-show --tenant_id 6f88036c45344d9999a1f971e4882723
-+------------+-------+
+        <screen><prompt>$</prompt> <userinput>neutron quota-delete --tenant_id 6f88036c45344d9999a1f971e4882723</userinput>
+<computeroutput>Deleted quota: 6f88036c45344d9999a1f971e4882723</computeroutput></screen>
+      <screen>
+<prompt>$</prompt> <userinput>neutron quota-show --tenant_id 6f88036c45344d9999a1f971e4882723</userinput>
+<computeroutput>+------------+-------+
 | Field      | Value |
 +------------+-------+
 | floatingip | 50    |
