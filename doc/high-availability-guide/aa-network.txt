@@ -1,4 +1,40 @@
 [[ha-aa-network]]
 === OpenStack Network Nodes
 
-(Coming soon)
+OpenStack Network Nodes contains:
+
+* Neutron DHCP Agent
+* Neutron L2 Agent
+* Neutron L3 Agent
+* Neutron Metadata Agent
+* Neutron LBaaS Agent
+
+NOTE: The Neutron L2 Agent does not need to be highly available. It has to be
+installed on each Data Forwarding Node and controls the virtual networking
+drivers as Open-vSwitch or Linux Bridge. One L2 agent runs per node
+and controls its virtual interfaces. That's why it cannot be distributed and
+highly available.
+
+
+==== Running Neutron DHCP Agent
+
+Since the Grizzly release, OpenStack Networking service has a scheduler which
+allows to run multiple agents accross nodes. Also, the DHCP agent can be natively
+highly available. Please follow the http://docs.openstack.org/trunk/openstack-network/admin/content/app_demo_multi_dhcp_agents.html[OpenStack Networking guide] for
+further details.
+
+==== Running Neutron L3 Agent
+
+Since the Grizzly release, the Neutron L3 Agent is scalable thanks to the scheduler
+which allows to distribute virtual routers accross multiple nodes.
+But there is no native feature to bring these routers highly available.
+At this time, there exists the Active / Passive solution to run the Neutron L3
+agent in failover mode with Pacemaker. Please refer to the Active / Passive
+section of this guide.
+
+==== Running Neutron Metadata Agent
+
+There is no native feature to make this service highly available.
+At this time, it exists the Active / Passive solution to run the Neutron
+Metadata agent in failover mode with Pacemaker. Please refer to the Active /
+Passive section of this guide.
