@@ -789,6 +789,380 @@ neutron lb-vip-create --name myvip --protocol-port 80 --protocol HTTP --subnet-i
           </itemizedlist>
         </section>
     </section>
+    <section xml:id="fwaas">
+        <title>Firewall-as-a-Service</title>
+            <para>The Firewall-as-a-Service (FWaaS) API is an
+                experimental API meant to give early adopters and
+                vendors a chance to build implementations against.</para>
+
+            <para><emphasis role="bold">Reference Implementation</emphasis>
+                This extension is backed by a reference implementation that
+                works with the Neutron OVS Plugin and provides perimeter
+                firewall functionality. It leverages the footprint of the
+                Neutron OVS L3 agent and an IPTables driver to apply the
+                Firewall Rules contained in a particular Firewall Policy.
+                This reference implementation supports one Firewall Policy
+                and consequently one logical Firewall instance per tenant
+                (this is not a constraint of the resource model, but of the
+                current reference implementation). The Firewall is realized
+                on a Neutron virtual router. If a tenant has multiple
+                routers, the firewall will be realized on all the routers. If
+                a tenant does not have any router, the firewall will be in
+                <code>PENDING_CREATE</code> state until a router is created
+                and the first interface is added to the router. At that point
+                the firewall policy will be immediately applied to the router
+                and the firewall will change to <code>ACTIVE</code>
+                state.</para>
+        <note>
+            <para>Since this is the first iteration of this implementation,
+                it should probably not be run in production environments
+                without adequate testing.</para>
+        </note>
+        <section xml:id="fwaas_api_abstractions">
+            <title>Firewall-as-a-Service API Abstractions</title>
+            <table rules="all">
+                <caption>Firewall Rules</caption>
+                <col width="20%"/>
+                <col width="20%"/>
+                <col width="20%"/>
+                <col width="40%"/>
+                <thead>
+                    <tr>
+                        <th>Attribute name</th>
+                        <th>Type</th>
+                        <th>Default Value</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>id</td>
+                        <td>uuid-str</td>
+                        <td>generated</td>
+                        <td>UUID for the Firewall Rule.</td>
+                    </tr>
+                    <tr>
+                        <td>tenant_id</td>
+                        <td>uuid-str</td>
+                        <td>N/A</td>
+                        <td>Owner of the Firewall Rule. Only
+                            admin users can specify a tenant_id other
+                            than its own.</td>
+                    </tr>
+                    <tr>
+                        <td>name</td>
+                        <td>String</td>
+                        <td>None</td>
+                        <td>Human readable name for the Firewall Rule
+                            (255 characters limit).</td>
+                    </tr>
+                    <tr>
+                        <td>description</td>
+                        <td>String</td>
+                        <td>None</td>
+                        <td>Human readable description for the Firewall Rule
+                            (1024 characters limit).</td>
+                    </tr>
+                    <tr>
+                        <td>firewall_policy_id</td>
+                        <td>uuid-str or None</td>
+                        <td>allocated by OpenStack Networking</td>
+                        <td>This is a readonly attribute that gets populated
+                            with the uuid of the Firewall Policy when this
+                            Firewall Rule is associated with a Firewall
+                            Policy. A Firewall Rule can be associated with only
+                            one Firewall Policy at a time. However, the
+                            association can be changed to a different Firewall
+                            Policy.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>shared</td>
+                        <td>Boolean</td>
+                        <td>False</td>
+                        <td>When set to True makes this Firewall Rule visible
+                            to tenants other than its owner, and it can be used
+                            in Firewall Policies not owned by its tenant.</td>
+                    </tr>
+                    <tr>
+                        <td>protocol</td>
+                        <td>String</td>
+                        <td>None</td>
+                        <td>IP Protocol (icmp, tcp, udp, None).</td>
+                    </tr>
+                    <tr>
+                        <td>ip_version</td>
+                        <td>Integer or String</td>
+                        <td>4</td>
+                        <td>IP Version (4, 6).</td>
+                    </tr>
+                    <tr>
+                        <td>source_ip_address</td>
+                        <td>String (IP address or CIDR)</td>
+                        <td>None</td>
+                        <td>Source IP address or CIDR.</td>
+                    </tr>
+                    <tr>
+                        <td>destination_ip_address</td>
+                        <td>String (IP address or CIDR)</td>
+                        <td>None</td>
+                        <td>Destination IP address or CIDR.</td>
+                    </tr>
+                    <tr>
+                        <td>source_port</td>
+                        <td>Integer or String (either as a single port number
+                            or in the format of a ':' separated range) </td>
+                        <td>None</td>
+                        <td>Source port number or a range.</td>
+                    </tr>
+                    <tr>
+                        <td>destination_port</td>
+                        <td>Integer or String (either as a single port number
+                            or in the format of a ':' separated range) </td>
+                        <td>None</td>
+                        <td>Destination port number or a range.</td>
+                    </tr>
+                    <tr>
+                        <td>position</td>
+                        <td>Integer</td>
+                        <td>None</td>
+                        <td>This is a readonly attribute that gets assigned
+                            to this rule when the rule is assocated with
+                            a Firewall Policy. It indicates the position of
+                            this rule in that Firewall Policy.</td>
+                    </tr>
+                    <tr>
+                        <td>action</td>
+                        <td>String</td>
+                        <td>deny</td>
+                        <td>Action to be performed on the traffic matching
+                            the rule (allow, deny).</td>
+                    </tr>
+                    <tr>
+                        <td>enabled</td>
+                        <td>Boolean</td>
+                        <td>True</td>
+                        <td>When set to False will disable this rule in the
+                            Firewall Policy. Facilitates selectively turning
+                            off rules without having to disassociate the rule
+                            from the Firewall Policy.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table rules="all">
+                <caption>Firewall Policies</caption>
+                <col width="20%"/>
+                <col width="20%"/>
+                <col width="20%"/>
+                <col width="40%"/>
+                <thead>
+                    <tr>
+                        <th>Attribute name</th>
+                        <th>Type</th>
+                        <th>Default Value</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>id</td>
+                        <td>uuid-str</td>
+                        <td>generated</td>
+                        <td>UUID for the firewall policy.</td>
+                    </tr>
+                    <tr>
+                        <td>tenant_id</td>
+                        <td>uuid-str</td>
+                        <td>N/A</td>
+                        <td>Owner of the Firewall Policy. Only
+                            admin users can specify a tenant_id other
+                            their own.</td>
+                    </tr>
+                    <tr>
+                        <td>name</td>
+                        <td>String</td>
+                        <td>None</td>
+                        <td>Human readable name for the Firewall Policy
+                            (255 characters limit).</td>
+                    </tr>
+                    <tr>
+                        <td>description</td>
+                        <td>String</td>
+                        <td>None</td>
+                        <td>Human readable description for the Firewall Policy
+                            (1024 characters limit).</td>
+                    </tr>
+                    <tr>
+                        <td>shared</td>
+                        <td>Boolean</td>
+                        <td>False</td>
+                        <td>When set to True makes this Firewall Policy visible
+                            to tenants other than its owner, and can be used
+                            to associate with Firewalls not owned by its
+                            tenant.</td>
+                    </tr>
+                    <tr>
+                        <td>firewall_rules</td>
+                        <td>List of uuid-str or None</td>
+                        <td>None</td>
+                        <td>This is an ordered list of Firewall Rule uuids.
+                            The Firewall applies the rules in the order in
+                            which they appear in this list.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>audited</td>
+                        <td>Boolean</td>
+                        <td>False</td>
+                        <td>When set to True by the policy owner indicates
+                            that the Firewall Policy has been audited.This
+                            attribute is meant to aid in the firewall
+                            policy audit workflows. Each time the Firewall
+                            Policy or the associated Firewall Rules are
+                            changed, this attribute will be set to False and
+                            will have to be explicitly set to True through an
+                            update operation.
+                            </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table rules="all">
+                <caption>Firewalls</caption>
+                <col width="20%"/>
+                <col width="20%"/>
+                <col width="20%"/>
+                <col width="40%"/>
+                <thead>
+                    <tr>
+                        <th>Attribute name</th>
+                        <th>Type</th>
+                        <th>Default Value</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>id</td>
+                        <td>uuid-str</td>
+                        <td>generated</td>
+                        <td>UUID for the firewall.</td>
+                    </tr>
+                    <tr>
+                        <td>tenant_id</td>
+                        <td>uuid-str</td>
+                        <td>N/A</td>
+                        <td>Owner of the Firewall. Only admin users can
+                            specify a tenant_id other than its own.</td>
+                    </tr>
+                    <tr>
+                        <td>name</td>
+                        <td>String</td>
+                        <td>None</td>
+                        <td>Human readable name for the Firewall
+                            (255 characters limit).</td>
+                    </tr>
+                    <tr>
+                        <td>description</td>
+                        <td>String</td>
+                        <td>None</td>
+                        <td>Human readable description for the Firewall
+                            (1024 characters limit).</td>
+                    </tr>
+                    <tr>
+                        <td>admin_state_up</td>
+                        <td>Boolean</td>
+                        <td>True</td>
+                        <td>The administrative state of the Firewall. If False
+                            (down), the Firewall does not forward any
+                            packets.</td>
+                    </tr>
+                    <tr>
+                        <td>status</td>
+                        <td>String</td>
+                        <td>N/A </td>
+                        <td><para>Indicates whether the Firewall is
+                                currently operational. Possible values
+                                include: <itemizedlist>
+                                   <listitem>
+                                   <para>ACTIVE</para>
+                                   </listitem>
+                                   <listitem>
+                                   <para>DOWN</para>
+                                   </listitem>
+                                   <listitem>
+                                   <para>PENDING_CREATE</para>
+                                   </listitem>
+                                   <listitem>
+                                   <para>PENDING_UPDATE</para>
+                                   </listitem>
+                                   <listitem>
+                                   <para>PENDING_DELETE</para>
+                                   </listitem>
+                                   <listitem>
+                                   <para>ERROR</para>
+                                   </listitem>
+                                </itemizedlist>
+                            </para></td>
+                    </tr>
+                    <tr>
+                        <td>firewall_policy_id</td>
+                        <td>uuid-str or None</td>
+                        <td>None</td>
+                        <td>The Firewall Policy uuid that this Firewall
+                            is associated with. This Firewall will implement
+                            the rules contained in the Firewall Policy
+                            represented by this uuid.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <section xml:id="fwaas_workflow">
+            <title>Common operations in Firewall-as-a-Service Workflow</title>
+            <itemizedlist>
+            <listitem>
+            <para>Create a firewall rule:</para>
+            <screen><prompt>$</prompt> <userinput>neutron firewall-rule-create --protocol &lt;tcp|udp|icmp|any&gt; --destination-port &lt;port-range&gt; --action &lt;allow|deny&gt;</userinput></screen>
+            <para>The CLI requires that a protocol value be provided. If
+            the rule is protocol agnostic, the 'any' value can be used.
+            </para>
+            <para>In addition to the protocol attribute, other attributes
+            can be specified in the Firewall Rule. Please check the previous
+            section for the supported attributes.</para>
+            </listitem>
+            <listitem>
+            <para>Create a firewall policy:</para>
+            <screen><prompt>$</prompt> <userinput>neutron firewall-policy-create --firewall-rules  "&lt;firewall-rule ids or names separated by space&gt;" myfirewallpolicy</userinput></screen>
+            <para>The order of the rules specified above is important.
+            A firewall policy can be created without any rules and rules
+            can be added later either via the update operation (if adding
+            multiple rules) or via the insert-rule operation (if adding
+            a single rule). Please check the CLI help for more details
+            on these operations.</para>
+            <note><para>The reference implementation always adds a default
+            deny all rule at the end of each policy. This implies that if
+            a firewall policy is created without any rules and is associated
+            with a firewall, that firewall will block all traffic.</para>
+            </note>
+            </listitem>
+            <listitem>
+            <para>Create a firewall:</para>
+            <screen><prompt>$</prompt> <userinput>neutron firewall-create  &lt;firewall-policy-uuid&gt;</userinput></screen>
+            </listitem>
+            </itemizedlist>
+        <note>
+            <para>The FWaaS features and the above workflow can
+            also be accessed from the Horizon user interface. This support is
+            disabled by default, but can be enabled by configuring
+            <filename>$HORIZON_DIR/openstack_dashboard/local/local_settings.py
+            </filename> and setting
+            <programlisting language="ini">
+            'enable_firewall' = True
+            </programlisting>
+            </para>
+        </note>
+        </section>
+    </section>
     <section xml:id="allowed_address_pairs">
         <title>Allowed-Address-Pairs</title>
         <para>Allowed-Address-Pairs is an API extension that extends the port
