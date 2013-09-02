@@ -22,7 +22,8 @@ DATABASES = {
 EOF</userinput></screen>
         <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install openstack-dashboard memcached python-python-memcached
 
- ( cat | sudo tee -a /usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py ) &lt;&lt;EOF
+ ( cat | sudo tee -a /usr/share/openstack-dashboard/openstack_dashboard/\
+local/local_settings.py ) &lt;&lt;EOF
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -36,7 +37,8 @@ DATABASES = {
 EOF</userinput></screen>
         <note os="opensuse">
         <para>Setup apache configuration:
-<screen><prompt>#</prompt> <userinput>cp /etc/apache2/conf.d/openstack-dashboard.conf.sample /etc/apache2/conf.d/openstack-dashboard.conf</userinput>
+<screen><prompt>#</prompt> <userinput>cp /etc/apache2/conf.d/openstack-dashboard.conf.sample \
+   /etc/apache2/conf.d/openstack-dashboard.conf</userinput>
 <prompt>#</prompt> <userinput>a2enmod rewrite;a2enmod ssl;a2enmod wsgi</userinput></screen>
         </para>
         <para>Start the service:

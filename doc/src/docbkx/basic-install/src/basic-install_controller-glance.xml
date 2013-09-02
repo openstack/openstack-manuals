@@ -48,9 +48,12 @@ admin_password = password
 flavor=keystone</programlisting></para>
                 </step>
                 <step>
-                    <para>Restart both services, as follows: <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service glance-api restart &amp;&amp; service glance-registry restart</userinput></screen><screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>service openstack-glance-api restart &amp;&amp; service openstack-glance-registry restart</userinput></screen>
-                    <screen os="opensuse"><prompt>#</prompt><userinput>systemctl restart openstack-glance-api &amp;&amp; systemctl restart openstack-glance-registry</userinput></screen>
-
+                    <para>Restart both services, as follows:
+                    <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service glance-api restart &amp;&amp; service glance-registry restart</userinput></screen>
+                    <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>service openstack-glance-api restart</userinput>
+<prompt>#</prompt> <userinput>service openstack-glance-registry restart</userinput></screen>
+                    <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl restart openstack-glance-api</userinput>
+<prompt>#</prompt> <userinput>systemctl restart openstack-glance-registry</userinput></screen>
                         <note>
                             <para>Check the
                                    <literal>/var/log/glance/*.log</literal>
@@ -72,15 +75,23 @@ flavor=keystone</programlisting></para>
                 <step>
                     <para os="ubuntu;debian">Download and import Ubuntu 12.04
                         LTS UEC image:
-                        <screen><prompt>$</prompt> <userinput>wget http://uec-images.ubuntu.com/releases/12.04.2/release/ubuntu-12.04.2-server-cloudimg-amd64-disk1.img</userinput>
-<prompt>$</prompt> <userinput>glance image-create --is-public true --disk-format qcow2 --container-format bare --name "Ubuntu" &lt; ubuntu-12.04.2-server-cloudimg-amd64-disk1.img</userinput>                      </screen></para>
+                        <screen><prompt>$</prompt> <userinput>wget http://uec-images.ubuntu.com/releases/12.04.2/release/ubuntu-\
+12.04.2-server-cloudimg-amd64-disk1.img</userinput>
+<prompt>$</prompt> <userinput>glance image-create --is-public true --disk-format qcow2 \
+   --container-format bare --name "Ubuntu" \
+   &lt; ubuntu-12.04.2-server-cloudimg-amd64-disk1.img</userinput></screen></para>
                     <para os="centos;rhel;fedora"> Download and import
                         the latest Fedora cloud image:
                         <screen><prompt>$</prompt> <userinput>wget http://cloud.fedoraproject.org/fedora-latest.x86_64.qcow2</userinput>
-<prompt>#</prompt> <userinput>glance image-create --is-public true --disk-format qcow2 --container-format bare --name "Fedora" &lt; fedora-latest.x86_64.qcow2</userinput> </screen></para>
+<prompt>#</prompt> <userinput>glance image-create --is-public true --disk-format qcow2 \
+   --container-format bare --name "Fedora" &lt; fedora-latest.x86_64.qcow2</userinput> </screen></para>
                     <para>Download and import the CirrOS QCOW2 Image:
-                        <screen><prompt>$</prompt> <userinput>wget http://download.cirros-cloud.net/0.3.1/cirros-0.3.1-x86_64-disk.img</userinput>
-<prompt>$</prompt> <userinput>glance image-create --is-public true --disk-format qcow2 --container-format bare --name "CirrOS 0.3.1" &lt; cirros-0.3.1-x86_64-disk.img</userinput></screen></para>
+                        <screen><prompt>$</prompt> <userinput>wget http://download.cirros-cloud.net/0.3.1/cirros-0.3.1-x86_64\
+-disk.img</userinput>
+<prompt>$</prompt> <userinput>glance image-create --is-public true --disk-format qcow2 \
+   --container-format bare --name "CirrOS 0.3.1" \
+   &lt; cirros-0.3.1-x86_64-disk.img</userinput></screen>
+                    </para>
                 </step>
                 <step>
                     <para>Check if the images have been introduced in

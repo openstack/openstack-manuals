@@ -10,11 +10,11 @@
             <title>To configure Open vSwitch</title><step>
                 <para>Install the packages:</para>
                     <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install neutron-plugin-openvswitch-agent \
-neutron-dhcp-agent neutron-l3-agent</userinput></screen>
+   neutron-dhcp-agent neutron-l3-agent</userinput></screen>
                     <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-neutron openstack-neutron-openvswitch\
-openvswitch-switch</userinput></screen>
+   openvswitch-switch</userinput></screen>
                     <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install openstack-neutron openstack-neutron-openvswitch-agent \
-openvswitch-switch</userinput></screen>
+   openvswitch-switch</userinput></screen>
                 <para os="centos;rhel;fedora">In Fedora, the Open
                     vSwitch kernel module is compiled without tunnel
                     support. If you need gre tunnels and network
@@ -107,7 +107,8 @@ ONBOOT=yes</programlisting>
                             <para>Enable a simple NAT service so that
                     Compute nodes can access the Internet through the
                     Cloud Controller:</para>
-                        <screen><prompt>#</prompt> <userinput>iptables -A FORWARD -i eth0 -o br-ex -s 10.10.10.0/24 -m conntrack --ctstate NEW -j ACCEPT</userinput>
+                        <screen><prompt>#</prompt> <userinput>iptables -A FORWARD -i eth0 -o br-ex -s 10.10.10.0/24 -m conntrack \
+   --ctstate NEW -j ACCEPT</userinput>
 <prompt>#</prompt> <userinput>iptables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT</userinput>
 <prompt>#</prompt> <userinput>iptables -A POSTROUTING -s 10.10.10.0/24 -t nat -j MASQUERADE</userinput></screen>
                         <note><para>These rules are lost on reboot. To save or restore the rules, use an appropriate tool from your
@@ -161,7 +162,8 @@ tunnel_id_ranges = 1:1000
 enable_tunneling = True
 local_ip = 10.10.10.9
 [securitygroup]
-firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver</programlisting>
+firewall_driver = \
+  neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver</programlisting>
                     <note xmlns:db="http://docbook.org/ns/docbook">
                         <para>Choose <emphasis role="bold">tunnel
                                 mode</emphasis> because you do not
