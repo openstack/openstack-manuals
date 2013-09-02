@@ -1,27 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter version="5.0" xml:id="ch_configuring-openstack-compute"
-  xmlns="http://docbook.org/ns/docbook"
-  xmlns:xlink="http://www.w3.org/1999/xlink"
+<chapter xmlns="http://docbook.org/ns/docbook"
   xmlns:xi="http://www.w3.org/2001/XInclude"
-  xmlns:ns5="http://www.w3.org/1999/xhtml"
-  xmlns:ns4="http://www.w3.org/2000/svg"
-  xmlns:ns3="http://www.w3.org/1998/Math/MathML"
-  xmlns:ns="http://docbook.org/ns/docbook">
-  <title>Configuring OpenStack Compute</title>
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+  xml:id="ch_configuring-openstack-compute">
+  <title>OpenStack Compute</title>
 
-  <para>The OpenStack system has several key projects that are separate installations but can work
-    together depending on your cloud needs: OpenStack Compute, OpenStack Object Storage, and
-    OpenStack Image Store. There are basic configuration decisions to make, and the <link
-      xlink:href="http://docs.openstack.org/trunk/openstack-compute/install/content/">OpenStack
-      Install Guide</link> covers a few different architectures for certain use cases.</para>
+  <para>The OpenStack system has several components that are installed separately but which can work
+    together depending on your cloud needs. Key components include: OpenStack Compute, OpenStack
+    Object Storage, and OpenStack Image Store. There are basic configuration decisions to make, and
+    the <link xlink:href="http://docs.openstack.org/trunk/openstack-compute/install/content/"
+      >OpenStack Install Guide</link> covers a few different architectures for certain use
+    cases.</para>
   <!--status: right place-->
   <section xml:id="configuring-openstack-compute-basics">
     <?dbhtml stop-chunking?>
-    <title>Post-Installation Configuration for OpenStack
-      Compute</title>
+    <title>Post-Installation Configuration</title>
 
     <para>Configuring your Compute installation involves many
-      configuration files - the <filename>nova.conf</filename> file,
+      configuration files: the <filename>nova.conf</filename> file,
       the <filename>api-paste.ini</filename> file, and related Image
       and Identity management configuration files. This section
       contains the basics for a simple multi-node installation, but
@@ -39,30 +35,7 @@
         default set of options are already configured in
           <filename>nova.conf</filename> when you install
         manually.</para>
-
-      <para>Starting with the default file, you must define the
-        following required items in
-          <filename>/etc/nova/nova.conf</filename>. The options are
-        described below. You can place comments in the
-          <filename>nova.conf</filename> file by entering a new line
-        with a <literal>#</literal> sign at the beginning of the line.
-        To see a listing of all possible configuration options, refer
-        to the tables this guide.</para>
-
-      <para>Here is a simple example <filename>nova.conf</filename>
-        file for a small private cloud, with all the cloud controller
-        services, database server, and messaging server on the same
-        server. In this case, CONTROLLER_IP represents the IP address
-        of a central server, BRIDGE_INTERFACE represents the bridge
-        such as br100, the NETWORK_INTERFACE represents an interface
-        to your VLAN setup, and passwords are represented as
-        DB_PASSWORD_COMPUTE for your Compute (nova) database password,
-        and RABBIT PASSWORD represents the password to your message
-        queue installation.</para>
-
-      <programlisting language="ini"><xi:include parse="text" href="../common/samples/nova.conf"/></programlisting>
-
-      <para>Create a <literal>nova</literal> group, so you can set
+       <para>Create a <literal>nova</literal> group, so you can set
         permissions on the configuration file:</para>
 
       <screen><prompt>$</prompt> <userinput>sudo addgroup nova</userinput></screen>
@@ -77,111 +50,8 @@
 <prompt>$</prompt> <userinput>chown -R <option>username</option>:nova /etc/nova</userinput>
 <prompt>$</prompt> <userinput>chmod 640 /etc/nova/nova.conf</userinput></screen>
     </section>
-    <section
-      xml:id="setting-up-openstack-compute-environment-on-the-compute-node">
-      <title>Setting Up OpenStack Compute Environment on the Compute
-        Node</title>
-      <para>These are the commands you run to ensure the database
-        schema is current:</para>
-      <screen><prompt>$</prompt> <userinput>nova-manage db sync</userinput></screen>
-    </section>
-  <!--status: good, right place-->
-  <section xml:id="general-compute-configuration-overview">
-    <title>General Compute Configuration Overview</title>
-    <para>Most configuration information is available in the
-        <filename>nova.conf</filename> configuration option file. Here
-      are some general purpose configuration options that you can use
-      to learn more about the configuration option file and the node.
-      The configuration file nova.conf is typically stored in
-        <filename>/etc/nova/nova.conf</filename>.</para>
-    <para>You can use a particular configuration option file by using
-      the <literal>option</literal> (<filename>nova.conf</filename>)
-      parameter when running one of the <literal>nova-*</literal>
-      services. This inserts configuration option definitions from the
-      given configuration file name, which may be useful for debugging
-      or performance tuning. Here are some general purpose
-      configuration options.</para>
-    <para>If you want to maintain the state of all the services, you
-      can use the <literal>state_path</literal> configuration option
-      to indicate a top-level directory for storing data related to
-      the state of Compute including images if you are using the
-      Compute object store.</para>
-    <xi:include href="../common/tables/nova-common.xml"/>
-  </section>
-  <!--status: good, right place-->
-  <section xml:id="sample-nova-configuration-files">
-    <title>Example <filename>nova.conf</filename> Configuration
-      Files</title>
-    <para>The following sections describe many of the configuration
-      option settings that can go into the
-        <filename>nova.conf</filename> files. Copies of each
-        <filename>nova.conf</filename> file need to be copied to each
-      compute node. Here are some sample
-        <filename>nova.conf</filename> files that offer examples of
-      specific configurations.</para>
-    <simplesect>
-      <title>KVM, Flat, MySQL, and Glance, OpenStack or EC2
-        API</title>
-      <para>This example <filename>nova.conf</filename> file is from
-        an internal Rackspace test system used for
-        demonstrations.</para>
-      <programlisting language="ini"><xi:include parse="text" href="../common/samples/nova.conf"/></programlisting>
-      <figure xml:id="Nova_conf_KVM_Flat">
-        <title>KVM, Flat, MySQL, and Glance, OpenStack or EC2
-          API</title>
-
-        <mediaobject>
-          <imageobject>
-            <imagedata
-              fileref="../common/figures/SCH_5004_V00_NUAC-Network_mode_KVM_Flat_OpenStack.png"
-              contentwidth="6in"/>
-          </imageobject>
-        </mediaobject>
-      </figure>
-    </simplesect>
-
-    <simplesect>
-      <title>XenServer, Flat networking, MySQL, and Glance, OpenStack
-        API</title>
-
-      <para>This example <filename>nova.conf</filename> file is from
-        an internal Rackspace test system.</para>
-
-      <programlisting language="ini">verbose
-nodaemon
-sql_connection=mysql://root:&lt;password&gt;@127.0.0.1/nova
-network_manager=nova.network.manager.FlatManager
-image_service=nova.image.glance.GlanceImageService
-flat_network_bridge=xenbr0
-compute_driver=xenapi.XenAPIDriver
-xenapi_connection_url=https://&lt;XenServer IP&gt;
-xenapi_connection_username=root
-xenapi_connection_password=supersecret
-xenapi_image_upload_handler=nova.virt.xenapi.imageupload.glance.GlanceStore
-rescue_timeout=86400
-use_ipv6=true
-
-# To enable flat_injected, currently only works on Debian-based systems
-flat_injected=true
-ipv6_backend=account_identifier
-ca_path=./nova/CA
-
-# Add the following to your conf file if you're running on Ubuntu Maverick
-xenapi_remap_vbd_dev=true</programlisting>
-
-      <figure xml:id="Nova_conf_XEN_Flat">
-        <title>KVM, Flat, MySQL, and Glance, OpenStack or EC2
-          API</title>
-        <mediaobject>
-          <imageobject>
-            <imagedata
-              fileref="../common/figures/SCH_5005_V00_NUAC-Network_mode_XEN_Flat_OpenStack.png"
-              scale="60"/>
-          </imageobject>
-        </mediaobject>
-      </figure>
-    </simplesect>
-  </section>
+    <!--status: good, right place-->
+    <xi:include href="compute/section_compute-config-overview.xml"/>
   <section xml:id="configuring-logging">
     <title>Configuring Logging</title>
     <para>You can use <filename>nova.conf</filename> configuration
@@ -193,7 +63,7 @@ xenapi_remap_vbd_dev=true</programlisting>
   </section>
   <section xml:id="configuring-hypervisors">
     <title>Configuring Hypervisors</title>
-    <para>See <xref linkend="ch_hypervisors"/> for details.</para>
+    <para>See <xref linkend="section_compute-hypervisors"/> for details.</para>
   </section>
   <!--status: good, right place-->
   <section xml:id="configuring-authentication-authorization">
@@ -214,8 +84,8 @@ xenapi_remap_vbd_dev=true</programlisting>
         <filename>nova.conf</filename>.</para>
     <xi:include href="../common/tables/nova-ldap.xml"/>
   </section>
-  <xi:include href="compute-configure-ipv6.xml"/>
-  <xi:include href="compute-configure-migrations.xml"/>
+  <xi:include href="compute/section_compute-configure-ipv6.xml"/>
+    <xi:include href="compute/section_compute-configure-migrations.xml"/>
   <section xml:id="configuring-resize">
     <?dbhtml stop-chunking?>
     <title>Configuring Resize</title>
@@ -234,17 +104,24 @@ xenapi_remap_vbd_dev=true</programlisting>
     <!-- End of XenServer/Resize -->
   </section>
   </section>
-
   <!-- End of configuring resize -->
-
-  <xi:include href="compute-configure-db.xml"/>
+  <xi:include href="compute/section_compute-configure-db.xml"/>
   <!-- Oslo rpc mechanism (such as, Rabbit, Qpid, ZeroMQ) -->
-  <xi:include href="../common/section_rpc.xml"/>
-  <xi:include href="../common/section_compute_config-api.xml"></xi:include>
-  <xi:include href="../common/section_compute-configure-ec2.xml"/>
-  <xi:include href="../common/section_compute-configure-quotas.xml"/>
-  <xi:include href="../common/section_compute-configure-console.xml"/>
-  <xi:include href="section_compute-configure-service-groups.xml"/>
-  <xi:include href="../common/section_fibrechannel.xml"/>
-  <xi:include href="../common/section_multiple-compute-nodes.xml"/>
+  <section xml:id="section_compute-components">
+    <title>Components Configuration</title>
+    <xi:include href="../common/section_rpc.xml"/>
+    <xi:include href="../common/section_compute_config-api.xml"></xi:include>
+    <xi:include href="../common/section_compute-configure-ec2.xml"/>
+    <xi:include href="../common/section_compute-configure-quotas.xml"/>
+    <xi:include href="../common/section_compute-configure-console.xml"/>
+    <xi:include href="compute/section_compute-configure-service-groups.xml"/>
+    <xi:include href="../common/section_fibrechannel.xml"/>
+    <xi:include href="../common/section_multiple-compute-nodes.xml"/>
+    <xi:include href="compute/section_compute-hypervisors.xml"/>
+    <xi:include href="compute/section_compute-scheduler.xml"/>
+    <xi:include href="compute/section_compute-cells.xml"/>
+    <xi:include href="compute/section_compute-conductor.xml"/>
+    <xi:include href="compute/section_compute-security.xml"/>
+  </section>
+  <xi:include href="compute/section_compute-options-reference.xml"/>
 </chapter>
