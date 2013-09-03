@@ -23,11 +23,11 @@
         and message queue broker.</para>
     <para>The <systemitem class="service">nova-cells</systemitem> service handles communication
         between cells and selects cells for new instances. This service is required for every cell.
-        Communication between cells is pluggable, and currently the only option is communication via
+        Communication between cells is pluggable, and currently the only option is communication through
         RPC.</para>
     <para>Cells scheduling is separate from host scheduling. <systemitem class="service">nova-cells</systemitem> first picks a
-        cell (now randomly, but future releases will add filtering/weighing functionality, and
-        decisions will then be based on broadcasts of capacity/capabilities). Once a cell is
+        cell (now randomly, but future releases plan to add filtering/weighing functionality, and
+        decisions will be based on broadcasts of capacity/capabilities). Once a cell is
         selected and the new build request reaches its <systemitem class="service">nova-cells</systemitem> service, it is sent
         over to the host scheduler in that cell and the build proceeds as it would have without
         cells.</para>
@@ -73,7 +73,7 @@
     <section xml:id="config-API-cell">
         <title>Configuring the API (top-level) cell</title>
         <para>The compute API class must be changed in the API cell so that requests can be proxied
-            via nova-cells down to the correct cell properly. Add the following to
+            through nova-cells down to the correct cell properly. Add the following to
                 <filename>nova.conf</filename> in the API
             cell:<programlisting language="ini">[DEFAULT]
 compute_api_class=nova.compute.cells_api.ComputeCellsAPI
@@ -149,13 +149,12 @@ rabbit_virtual_host=cell1_vhost</programlisting></para>
     </section>
     <section xml:id="cell-config-optional-json">
         <title>Optional cell configuration</title>
-        <para>Cells currently keeps all intercell communication data, including usernames and
+        <para>Cells currently keeps all inter cell communication data, including usernames and
             passwords, in the database. This is undesirable and unnecessary since cells data isn't
             updated very frequently. The  change described in this section allows cells data to be
-            drawn from a JSON file specified via a new <code>[cells]cells_config</code> option. When
+            drawn from a JSON file specified through a new <code>[cells]cells_config</code> option. When
             specified, the database is no longer consulted when reloading cells data.</para>
-        <para>Cells may now optionally be configured through a JSON-formatted file. The file will
-            need the columns present in the Cell model (excluding common database fields and the
+        <para>Cells may now optionally be configured through a JSON-formatted file. The file requires that the columns be present in the Cell model (excluding common database fields and the
             <code>id</code> column). The queue connection information must be specified through a
             <code>transport_url</code> field, instead of <code>username</code>, <code>password</code>, and so on. The <code>transport_url</code>
             has the following form:</para>

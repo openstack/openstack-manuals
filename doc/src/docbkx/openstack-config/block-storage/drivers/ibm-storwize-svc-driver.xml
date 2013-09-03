@@ -36,7 +36,7 @@
                     <para>OpenStack Nova's Grizzly version supports iSCSI
                     multipath.
                     Once this is configured on the Nova host (outside the
-                    scope of this documentation), multipath will be enabled.
+                    scope of this documentation), multipath is enabled.
                     </para>
                 </note>
 
@@ -44,7 +44,7 @@
                 node should have at least one WWPN port configured.
                 If the <literal>storwize_svc_multipath_enabled</literal> flag
                 is set to True in the Cinder configuration file, the driver
-                will use all available WWPNs to attach the volume to the
+                uses all available WWPNs to attach the volume to the
                 instance (details about the configuration flags appear in the
                 <link linkend="ibm-storwize-svc-driver2"> next section</link>).
                 If the flag is not set, the driver uses the WWPN
@@ -62,9 +62,9 @@
             <simplesect>
                 <title>iSCSI CHAP Authentication</title>
                 <para>If using iSCSI for data access, all new hosts created by
-                the driver on the Storwize family or SVC system will have a
+                the driver on the Storwize family or SVC system has a
                 randomly-generated CHAP secret associated with them.
-                OpenStack compute nodes will use these secrets when creating
+                OpenStack compute nodes use these secrets when creating
                 iSCSI connections.
                 <note>
                     <para>CHAP secrets are not added to existing
@@ -167,7 +167,7 @@ ssh-keygen -t rsa
                 <para>The command prompts for a file to save the key
                 pair.
                 For example, if you select 'key' as the
-                filename, two files will be created:
+                filename, two files are created:
                 <literal>key</literal> and
                 <literal>key.pub</literal>.
                 The <literal>key</literal>
@@ -262,7 +262,7 @@ volume_driver = cinder.volume.drivers.storwize_svc.StorwizeSVCDriver
                             SSH private key
                             (<literal>san_private_key</literal>).
                             One must be specified. If both are
-                            specified the driver will use only the
+                            specified, the driver uses only the
                             SSH private key.
                         </para></footnote>
                         </para></td>
@@ -421,8 +421,8 @@ volume_driver = cinder.volume.drivers.storwize_svc.StorwizeSVCDriver
                             <para>The driver wait timeout threshold
                                    when creating an OpenStack
                                    snapshot. This is actually the
-                                   maximum amount of time the driver
-                                   will wait for the Storwize family
+                                   maximum amount of time that the driver
+                                   waits for the Storwize family
                                    or SVC system to prepare a new
                                    FlashCopy mapping. The driver
                                    accepts a maximum wait time of 600
@@ -483,10 +483,10 @@ enabled_backends = v7k1,v7k2
                 specific to a back-end are placed in the appropriate
                 section.</para>
 
-                <para>By default, volumes will be allocated between back-ends
+                <para>By default, volumes are allocated between back-ends
                 to balance allocated space.
                 However, <literal>volume types</literal> can be used to have
-                finer-grained control over where volumes will be allocated.
+                finer-grained control over where volumes are allocated.
                 Each volume type contains a set of key-value pairs called
                 <literal>extra specs</literal>.
                 Volume types are typically set a priori by an administrator,
@@ -503,39 +503,39 @@ enabled_backends = v7k1,v7k2
                 <para>The following are examples of supported key-values:
                 </para>
 
-                <para>In the following example, the volume will be placed on a
+                <para>In the following example, the volume is placed on a
                 controller named <literal>myv7000</literal>, in a pool named
                 <literal>openstack</literal>:
                 <programlisting>
 capabilities:volume_backend_name=my7000_openstack
                 </programlisting></para>
 
-                <para>In the next example, the volume will be placed
+                <para>In the next example, the volume is placed
                 on a controller that supports compression. Specifying
-                False will require the volume to be placed on a
+                False requires that the volume is placed on a
                 back-end that does not support compression (if no
                 constraints on compression support are required, do
-                not set this key):
+                not set this key):</para>
                 <programlisting>
 capabilities:compression_support='&lt;is&gt; True'
-                </programlisting></para>
+                </programlisting>
 
                 <para>The next example shows how Easy Tier support can be with
                 set with the same semantics as
-                <literal>compression_support</literal>:
+                <literal>compression_support</literal>:</para>
                 <programlisting>
 capabilities:easytier_support='&lt;is&gt; True'
-                </programlisting></para>
+                </programlisting>
 
                 <para>The connection protocol used to attach volumes to
                 instances can also be specified using volume types.
-                In this example, the volume will be placed on a controller
-                that supports Fibre Channel, and Fibre Channel will be used
+                In this example, the volume is placed on a controller
+                that supports Fibre Channel, and Fibre Channel is used
                 when attaching that volume.
-                FC can also be replaced with iSCSI.
+                FC can also be replaced with iSCSI.</para>
                 <programlisting>
 capabilities:storage_protocol='&lt;in&gt; FC'
-                </programlisting></para>
+                </programlisting>
             </simplesect>
             <simplesect>
                 <title>Configuring per-volume creation options</title>
@@ -567,10 +567,10 @@ capabilities:storage_protocol='&lt;in&gt; FC'
             </simplesect>
             <simplesect>
                 <title>Complete volume type examples</title>
-                <para>In the following example, the volume will be placed on
+                <para>In the following example, the volume is placed on
                     a controller named that supports Fibre Channel and
-                    compression, FC will be used when attaching the volume,
-                    and compression will be enabled:</para>
+                    compression, FC is used when attaching the volume,
+                    and compression is enabled:</para>
                 <programlisting>
 cinder type-create compressed
 cinder type-key compressed set capabilities:storage_protocol=''&lt;in&gt; FC' capabilities:compression_support='&lt;is&gt; True' drivers:compression=True
@@ -580,16 +580,16 @@ cinder type-key compressed set capabilities:storage_protocol=''&lt;in&gt; FC' ca
                 with different
                 <itemizedlist>
                     <listitem><para>
-                    performance levels (e.g., allocating entirely on an HDD
+                    performance levels (such as, allocating entirely on an HDD
                     tier, using Easy Tier for an HDD-SDD mix, or allocating
                     entirely on an SSD tier)
                     </para></listitem>
                     <listitem><para>
-                    resiliency levels (e.g., allocating volumes in
+                    resiliency levels (such as, allocating volumes in
                     pools with different RAID levels)
                     </para></listitem>
                     <listitem><para>
-                    features (e.g., enabling/disabling Real-time
+                    features (such as, enabling/disabling Real-time
                     Compression)
                     </para></listitem>
                 </itemizedlist>

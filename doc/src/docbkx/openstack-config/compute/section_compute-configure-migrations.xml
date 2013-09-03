@@ -20,8 +20,7 @@
       <itemizedlist>
         <listitem>
           <para><emphasis role="bold">Migration</emphasis> (or non-live migration):
-          In this case the instance will be shut down (and the instance will
-          know that it has been rebooted) for a period of time in order to be
+          In this case, the instance is shut down (and the instance knows that it was rebooted) for a period of time to be
           moved to another hypervisor.</para>
         </listitem>
         <listitem>
@@ -56,7 +55,7 @@
           </listitem>
           <listitem>
             <para><emphasis role="bold">Shared storage:</emphasis>
-              <filename><replaceable>NOVA-INST-DIR</replaceable>/instances/</filename> (eg
+              <filename><replaceable>NOVA-INST-DIR</replaceable>/instances/</filename> (for example,
                 <filename>/var/lib/nova/instances</filename>) has to be mounted by shared storage.
               This guide uses NFS but other options, including the <link
                 xlink:href="http://gluster.org/community/documentation//index.php/OSConnect"
@@ -80,8 +79,7 @@
             variables, please modify accordingly.</para>
         </note>
         <note>
-          <para>You must specify <literal>vncserver_listen=0.0.0.0</literal> or live migration will
-            not work correctly.</para>
+          <para>You must specify <literal>vncserver_listen=0.0.0.0</literal> or live migration does not work correctly.</para>
         </note>
       </para>
     <para><emphasis role="bold">Example Nova Installation Environment</emphasis> <itemizedlist>
@@ -106,7 +104,7 @@
         </listitem>
 
         <listitem>
-            <para>In this example, <literal>HostA</literal> will be the NFSv4 server which exports <filename><replaceable>NOVA-INST-DIR</replaceable>/instances</filename>,
+            <para>In this example, <literal>HostA</literal> is the NFSv4 server that exports <filename><replaceable>NOVA-INST-DIR</replaceable>/instances</filename>,
                 and <literal>HostB</literal> and <literal>HostC</literal> mount it.</para>
         </listitem>
       </itemizedlist></para>
@@ -127,7 +125,7 @@
         </listitem>
         <listitem><para>Ensure that the UID and GID of your nova and libvirt users
          are identical between each of your servers. This ensures that the permissions
-         on the NFS mount will work correctly.</para>
+         on the NFS mount works correctly.</para>
         </listitem>
         <listitem>
           <para>Follow the instructions at
@@ -241,8 +239,8 @@ after :libvirtd_opts=" -d -l"</programlisting>
       <para>By default, the Compute service does not use libvirt's live migration functionality. To
         enable this functionality, add the following line to <filename>nova.conf</filename>:
         <programlisting>live_migration_flag=VIR_MIGRATE_UNDEFINE_SOURCE,VIR_MIGRATE_PEER2PEER,VIR_MIGRATE_LIVE</programlisting>The
-        Compute service does not use libvirt's live miration by default because there is a risk that
-        the migration process will never terminate. This can happen if the guest operating system
+        Compute service does not use libvirt's live migration by default because there is a risk that
+        the migration process never ends. This can happen if the guest operating system
         dirties blocks on the disk faster than they can migrated.</para>
     </section>
     </section>
@@ -276,10 +274,9 @@ after :libvirtd_opts=" -d -l"</programlisting>
       </para>
 
       <para>
-      In order to use shared storage live migration with XenServer hypervisors,
-      the hosts must be joined to a XenServer pool. In order to create that pool,
-      a host aggregate must be created with special metadata. This metadata will be
-      used by the XAPI plugins to establish the pool.
+      To use shared storage live migration with XenServer hypervisors,
+      the hosts must be joined to a XenServer pool. To create that pool,
+      a host aggregate must be created with special metadata. This metadata is used by the XAPI plugins to establish the pool.
       </para>
 
       <orderedlist>
@@ -302,7 +299,7 @@ after :libvirtd_opts=" -d -l"</programlisting>
           <para>
           Create a host aggregate
           <screen><prompt>$</prompt> <userinput>nova aggregate-create &lt;name-for-pool&gt; &lt;availability-zone&gt;</userinput></screen>
-          The command will display a table which contains the id of the newly created aggregate.
+          The command displays a table which contains the id of the newly created aggregate.
           Now add special metadata to the aggregate, to mark it as a hypervisor pool
           <screen><prompt>$</prompt> <userinput>nova aggregate-set-metadata &lt;aggregate-id&gt; hypervisor_pool=true</userinput></screen>
           <screen><prompt>$</prompt> <userinput>nova aggregate-set-metadata &lt;aggregate-id&gt; operational_state=created</userinput></screen>
@@ -317,8 +314,8 @@ after :libvirtd_opts=" -d -l"</programlisting>
           Add additional hosts to the pool:
           <screen><prompt>$</prompt> <userinput>nova aggregate-add-host &lt;aggregate-id&gt; &lt;compute-host-name&gt;</userinput></screen>
           <note>
-            <para>At this point the added compute node and the host will be shut down, in order to
-            join the host to the XenServer pool. The operation will fail, if any server other than the
+            <para>At this point the added compute node and the host is shut down, to
+            join the host to the XenServer pool. The operation fails, if any server other than the
             compute node is running/suspended on your host.</para>
           </note>
           </para>
@@ -339,10 +336,10 @@ after :libvirtd_opts=" -d -l"</programlisting>
         </itemizedlist>
         <note>
           <para>Please note, that you need to use an extra option <literal>--block-migrate</literal> for the live migration
-          command, in order to use block migration.</para>
+          command, to use block migration.</para>
         </note>
         <note>
-          <para>Please note, that block migration works only with EXT local storage SRs,
+          <para>Block migration works only with EXT local storage SRs,
           and the server should not have any volumes attached.</para>
         </note>
       </para>
