@@ -101,8 +101,8 @@
                 <listitem>
                     <para>Floating IP addresses (assigned to any instance when it launches so the instance has the same publicly accessible IP addresses)</para>
                 </listitem>
-		<listitem>
-		  <para>Fixed IP addresses (assigned to the same instance each time it boots, publicly or privately accessible, typically private for management purposes)</para></listitem>
+                <listitem>
+                  <para>Fixed IP addresses (assigned to the same instance each time it boots, publicly or privately accessible, typically private for management purposes)</para></listitem>
             </itemizedlist></para>
 
     </section><section xml:id="images-and-instances">
@@ -166,9 +166,9 @@
      <figure xml:id="initial-instance-state-figure">
        <title>Base image state with no running instances</title>
        <mediaobject>
-	 <imageobject>
-	   <imagedata fileref="figures/instance-life-1.png"/>
-	 </imageobject>
+         <imageobject>
+           <imagedata fileref="figures/instance-life-1.png"/>
+         </imageobject>
        </mediaobject>
      </figure>
      </simplesect>
@@ -187,15 +187,15 @@
      <figure xml:id="running-instance-state-figure">
        <title>Instance creation from image and run time state</title>
        <mediaobject>
-	 <imageobject>
-	   <imagedata fileref="figures/instance-life-2.png"/>
-	 </imageobject>
+         <imageobject>
+           <imagedata fileref="figures/instance-life-2.png"/>
+         </imageobject>
        </mediaobject>
      </figure>
 
             <para>The OpenStack system copies the base image from the
                 image store to local disk, which is used as the first
-                disk of the instance (vda). Using small images 
+                disk of the instance (vda). Using small images
                 results in faster start up of your instances as less
                 data needs to be copied across the network. The system
                 also creates a new empty disk image to present as the
@@ -231,9 +231,9 @@
      <figure xml:id="end-instance-state-figure">
        <title>End state of image and volume after instance exits</title>
        <mediaobject>
-	 <imageobject>
-	   <imagedata fileref="figures/instance-life-3.png"/>
-	 </imageobject>
+         <imageobject>
+           <imagedata fileref="figures/instance-life-3.png"/>
+         </imageobject>
        </mediaobject>
      </figure>
     </simplesect>
@@ -273,11 +273,11 @@
       reattached to a different instance while retaining all data,
       much like a USB drive.</para>
       <simplesect xml:id="about-ephemeral-storage">
-	<title>Ephemeral Storage</title>
-	<para>Ephemeral storage is associated with a single unique
-	instance. Its size is defined by the flavor of the
-	instance.</para>
-	<para>Data on ephemeral storage ceases to exist when the
+        <title>Ephemeral Storage</title>
+        <para>Ephemeral storage is associated with a single unique
+        instance. Its size is defined by the flavor of the
+        instance.</para>
+        <para>Data on ephemeral storage ceases to exist when the
        instance it is associated with is terminated. Rebooting the
        VM or restarting the host server, however, does not destroy
        ephemeral data. In the typical use case an instance's root
@@ -285,37 +285,37 @@
        unpleasant surprise for people unfamiliar with the cloud model
        of computing.</para>
 
-	<para>In addition to the ephemeral root volume all flavors
-	except the smallest, m1.tiny, provide an additional ephemeral
-	block device varying from 20G for the m1.small through 160G
-	for the m1.xlarge by default - these sizes are configurable.
-	This is presented as a raw block device with no partition
-	table or filesystem.  Cloud aware operating system images may
-	discover, format, and mount this device.  For example the
-	cloud-init package included in Ubuntu's stock cloud images
+        <para>In addition to the ephemeral root volume all flavors
+        except the smallest, m1.tiny, provide an additional ephemeral
+        block device varying from 20G for the m1.small through 160G
+        for the m1.xlarge by default - these sizes are configurable.
+        This is presented as a raw block device with no partition
+        table or filesystem.  Cloud aware operating system images may
+        discover, format, and mount this device.  For example the
+        cloud-init package included in Ubuntu's stock cloud images
  format this space as an ext3 filesystem and mount it on
-	/mnt. It is important to note this a feature of the guest
-	operating system. OpenStack only provisions the raw
-	storage.</para>
+        /mnt. It is important to note this a feature of the guest
+        operating system. OpenStack only provisions the raw
+        storage.</para>
 
       </simplesect>
 
       <simplesect xml:id="about-persistent-storage">
-	<title>Volume Storage</title>
+        <title>Volume Storage</title>
 
-	<para>Volume storage is independent of any particular instance and is
+        <para>Volume storage is independent of any particular instance and is
                 persistent. Volumes are user created and within quota
                 and availability limits may be of any arbitrary
                 size.</para>
 
-	<para>When first created volumes are raw block devices with no
-	partition table and no filesystem.  They must be attached to
-	an instance to be partitioned and/or formatted.  Once this is
-	done they may be used much like an external disk drive.
-	Volumes may attached to only one instance at a time, but may
-	be detached and reattached to either the same or different
-	instances.</para>
-	<para>It is possible to configure a volume so that it is bootable and
+        <para>When first created volumes are raw block devices with no
+        partition table and no filesystem.  They must be attached to
+        an instance to be partitioned and/or formatted.  Once this is
+        done they may be used much like an external disk drive.
+        Volumes may attached to only one instance at a time, but may
+        be detached and reattached to either the same or different
+        instances.</para>
+        <para>It is possible to configure a volume so that it is bootable and
                 provides a persistent virtual instance similar to
                 traditional non-cloud based virtualization systems. In
                 this use case the resulting instance may still have
@@ -325,11 +325,11 @@
                 maintained even if the instance it shut down. Details
                 of this configuration are discussed in the <link xlink:href="http://docs.openstack.org/cli/quick-start/content/"><citetitle>OpenStack Clients Guide</citetitle></link>.</para>
           <para>Volumes do not provide concurrent access from multiple
-	instances.  For that you need either a traditional network
-	filesystem like NFS or CIFS or a cluster filesystem such as
-	GlusterFS. These may be built within an OpenStack cluster or
-	provisioned outside of it, but are not features provided by
-	the OpenStack software.</para>
+        instances.  For that you need either a traditional network
+        filesystem like NFS or CIFS or a cluster filesystem such as
+        GlusterFS. These may be built within an OpenStack cluster or
+        provisioned outside of it, but are not features provided by
+        the OpenStack software.</para>
       </simplesect>
     </section>
 </chapter>
