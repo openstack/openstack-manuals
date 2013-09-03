@@ -17,14 +17,14 @@
             The NFS driver doesn't actually allow an instance to have access to a storage
             device at the block-level. Instead, files are created on an NFS share and then
             mapped to instances, emulated as a block device. This works very similarly to how
-            QEMU stores instances under <literal>/var/lib/nova/instances</literal>.
+            QEMU stores instances under <filename>/var/lib/nova/instances</filename>.
         </para>
     </simplesect>
     <simplesect xml:id="nfs-driver-options">
         <title>Enabling the NFS Driver and Related Options</title>
         <para>To use Cinder with the NFS driver, first set the <literal>volume_driver</literal>
-            in <literal>cinder.conf</literal>:</para>
-        <programlisting>
+            in <filename>cinder.conf</filename>:</para>
+        <programlisting language="ini">
 volume_driver=cinder.volume.drivers.nfs.NfsDriver
     </programlisting>
         <para>The following table contains the options supported by the NFS driver.</para>
@@ -112,35 +112,30 @@ volume_driver=cinder.volume.drivers.nfs.NfsDriver
         One will probably be enough in most cases.</para>
         <para>Add your list of NFS servers to the file you specified with the
             <literal>nfs_shares_config</literal> option. For example, if the value of this option
-            was set to <literal>/etc/cinder/shares.txt</literal>, then:</para>
-        <programlisting>
-            # cat /etc/cinder/shares.txt
+            was set to <filename>/etc/cinder/shares.txt</filename>, then:</para>
+        <screen><prompt>#</prompt> <userinput>cat /etc/cinder/shares.txt</userinput>
+<computeroutput>
             192.168.1.200:/storage
             192.168.1.201:/storage
-            192.168.1.202:/storage
-        </programlisting>
+            192.168.1.202:/storage</computeroutput></screen>
         <para>Comments are allowed in this file. They begin with a <literal>#</literal>.</para>
         <para>The next step is to configure the <literal>nfs_mount_point_base</literal>
             option. This is a directory where <systemitem class="service">cinder-volume</systemitem> will mount all
-            NFS shares stored in <literal>shares.txt</literal>. For this example,
+            NFS shares stored in <filename>shares.txt</filename>. For this example,
             <literal>/var/lib/cinder/nfs</literal> will be used. You can, of course, use the
             default value of <literal>$state_path/mnt</literal>.</para>
         <para>Once these options are set, start the <systemitem class="service">cinder-volume</systemitem>
-            service. <literal>/var/lib/cinder/nfs</literal> should now contain a directory
-            for each NFS share specified in <literal>shares.txt</literal>. The name of each
+            service. <filename>/var/lib/cinder/nfs</filename> should now contain a directory
+            for each NFS share specified in <filename>shares.txt</filename>. The name of each
             directory will be a hashed name:</para>
-        <programlisting>
-            # ls /var/lib/cinder/nfs
-            ...
+        <screen><prompt>#</prompt> <userinput>ls /var/lib/cinder/nfs</userinput>
+<computeroutput>            ...
             46c5db75dc3a3a50a10bfd1a456a9f3f
-            ...
-        </programlisting>
+            ...</computeroutput></screen>
         <para>You can now create volumes as you normally would:</para>
-        <programlisting>
-            # nova volume-create --display-name=myvol 5
-            # ls /var/lib/cinder/nfs/46c5db75dc3a3a50a10bfd1a456a9f3f
-            volume-a8862558-e6d6-4648-b5df-bb84f31c8935
-        </programlisting>
+        <screen><prompt>#</prompt> <userinput>nova volume-create --display-name=myvol 5</userinput>
+<prompt>#</prompt> <userinput>ls /var/lib/cinder/nfs/46c5db75dc3a3a50a10bfd1a456a9f3f</userinput>
+<computeroutput>volume-a8862558-e6d6-4648-b5df-bb84f31c8935</computeroutput></screen>
         <para>This volume can also be attached and deleted just like other volumes. However,
         snapshotting is <emphasis>not</emphasis> supported.</para>
     </simplesect>
