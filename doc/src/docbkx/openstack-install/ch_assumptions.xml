@@ -18,19 +18,27 @@
                 repository).</para>
             <para os="ubuntu">You have a collection of compute nodes,
                 each installed with Ubuntu Server 12.04.</para>
+            <para os="opensuse">You have a collection of compute nodes,
+                each installed with openSUSE 12.3.</para>
             <note>
                 <para>
-                    <phrase os="rhel;centos;fedora">There is also an
+                  There are also
+                    <phrase os="rhel;centos;fedora;opensuse">an
                             <link
                             xlink:href="http://docs.openstack.org/trunk/openstack-compute/install/apt/content/"
                             >OpenStack Install and Deploy Manual for
-                            Ubuntu</link>.</phrase>
-                    <phrase os="ubuntu">There is also an <link
+                            Ubuntu</link> and </phrase>
+                    <phrase os="ubuntu;opensuse">an <link
                             xlink:href="http://docs.openstack.org/trunk/openstack-compute/install/yum/content/"
                             >OpenStack Install and Deploy Manual for
-                            RHEL, CentOS and Fedora</link>.</phrase>
-                    Debian, openSUSE, and SLES also have OpenStack
-                    support, but are not documented here.</para>
+                            RHEL, CentOS and Fedora</link></phrase>
+                    <phrase os="ubuntu"> and </phrase>
+                    <phrase os="rhel;centos;fedora;ubuntu;">an <link
+                            xlink:href="http://docs.openstack.org/trunk/openstack-compute/install/zypper/content/"
+                            >OpenStack Install and Deploy Manual for
+                            openSUSE</link></phrase>.
+                    Debian also has OpenStack
+                    support, but is not documented here.</para>
             </note>
         </listitem>
         <listitem>
@@ -62,6 +70,8 @@
                 RabbitMQ as the messaging backend. <phrase os="ubuntu"
                     >RabbitMQ is the default messaging back-end on
                     Ubuntu</phrase>
+                    <phrase os="opensuse">RabbitMQ is the default
+                    messaging back-end on openSUSE</phrase>
                 <phrase os="rhel;centos;fedora">Qpid is the default
                     messaging back-end on Fedora</phrase>.</para>
         </listitem>
@@ -91,6 +101,17 @@
                     <command>apt-get upgrade</command>, install the
                 keyring:</para>
             <screen>sudo apt-get install ubuntu-cloud-keyring</screen>
+        </listitem>
+        <listitem os="opensuse">
+          <para os="opensuse">On openSUSE, use the Open Build Service
+          repositories for Grizzly:
+          <screen><prompt>#</prompt> <userinput>zypper ar -f obs://Cloud:OpenStack:Grizzly/openSUSE_12.3 Grizzly</userinput></screen>
+          </para>
+        </listitem>
+        <listitem os="opensuse">
+            <para>Ensure the operating system is up-to-date by running
+                    <command>zypper update</command> prior to the
+                installation.</para>
         </listitem>
         <listitem os="rhel;fedora;centos">
             <para>Ensure the operating system is up-to-date by running
