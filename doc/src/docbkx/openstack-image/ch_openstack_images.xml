@@ -103,15 +103,15 @@
                     </listitem>
                 </itemizedlist></para>
             <para>The simplest way to support this in your image is to install the <link
-                    xlink:href="https://launchpad.net/cloud-utils">cloud-utils</link>package
+                    xlink:href="https://launchpad.net/cloud-utils">cloud-utils</link> package
                 (contains the <command>growpart</command> tool for extending partitions), the <link
                     xlink:href="https://launchpad.net/cloud-initramfs-tools"
                     >cloud-initramfs-tools</link> package (which will support resizing root
                 partition on the first boot), and the <link
                     xlink:href="https://launchpad.net/cloud-init">cloud-init</link> package into
                 your image. With these installed, the image will perform the root partition resize
-                on boot (e.g., in <filename>/etc/rc.local</filename>). These packages are in the
-                Ubuntu nd Debian package repository, as well as the EPEL repository (for
+                on boot (for example in <filename>/etc/rc.local</filename>). These packages are in the
+                Ubuntu and Debian package repository, as well as the EPEL repository (for
                 Fedora/RHEL/CentOS/Scientific Linux guests).</para>
             <para>If you are not able to install <literal>cloud-initramfs-tools</literal>, Robert
                 Plestenjak has a github project called <link
@@ -236,8 +236,8 @@
                     <filename>/etc/rc.local</filename> file and add the following lines before the
                 line “touch /var/lock/subsys/local”. This code fragment is taken from the <link
                     xlink:href="https://github.com/rackerjoe/oz-image-build/blob/master/templates/centos60_x86_64.tdl"
-                    >rackerjoe oz-image-build CentOS 6 template</link></para>
-            <programlisting>if [ ! -d /root/.ssh ]; then
+                    >rackerjoe oz-image-build CentOS 6 template</link>.</para>
+            <programlisting language="bash">if [ ! -d /root/.ssh ]; then
   mkdir -p /root/.ssh
   chmod 700 /root/.ssh
 fi
