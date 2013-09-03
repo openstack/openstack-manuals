@@ -14,6 +14,22 @@
         Network Computing) protocol or  the newer <link xlink:href="http://spice-space.org"
             >SPICE</link> protocol. We'll use the VNC protocol here, since you're more likely to be
         able to find a VNC client that works on your local desktop.</para>
+    <section xml:id="net-running">
+        <title>Ensuring the libvirt default network is running</title>
+        <para>Before starting a virtual machine with libvirt, verify that the libvirt "default"
+            network has been started. This network must be active for your virtual machine to be
+            able to connect out to the network. Starting this network will create a Linux bridge
+            (usually called <literal>virbr0</literal>), iptables rules, and a dnsmasq process that
+            will serve as a DHCP server.</para>
+        <para>To verify that the libvirt "default" network is enabled, use the <command>virsh
+                net-list</command> command and verify that the "default" network is
+            active:<screen><userinput>#</userinput> <command>virsh net-list</command>
+<computeroutput>Name                 State      Autostart
+-----------------------------------------
+default              active     yes</computeroutput></screen></para>
+        <para>If the network is not active, start it by
+            doing:<screen><prompt>#</prompt> <userinput>virsh net-start default</userinput></screen></para>
+    </section>
     <section xml:id="virt-manager">
         <title>Using the virt-manager X11 GUI</title>
     <para>If you plan to create a virtual machine image on a machine that can run X11 applications,
