@@ -1,0 +1,63 @@
+[[s-ceilometer-agent-central]]
+==== Highly available Ceilometer Central Agent
+
+Ceilometer is the metering service in OpenStack.
+Central Agent polls for resource utilization statistics for resources not tied
+to instances or compute nodes.
+
+NOTE: Due to limitations of a polling model, a single instance of this agent
+can be polling a given list of meters. In this setup, we install this service
+on the API nodes also in the active / passive mode.
+
+
+Making the Ceilometer Central Agent service highly available in active / passive mode involves
+managing its daemon with the Pacemaker cluster manager,
+
+NOTE: You will find at http://docs.openstack.org/developer/ceilometer/install/manual.html#installing-the-central-agent[this page]
+the process to install Ceilometer Central Agent.
+
+
+===== Adding Ceilometer Central Agent resource to Pacemaker
+
+First of all, you need to download the resource agent to your system :
+
+----
+cd /usr/lib/ocf/resource.d/openstack
+wget https://raw.github.com/madkiss/openstack-resource-agents/master/ocf/ceilometer-agent-central
+chmod a+rx *
+----
+
+You may then proceed with adding the Pacemaker configuration for
+Ceilometer Central Agent resource. Connect to the Pacemaker cluster with +crm
+configure+, and add the following cluster resources:
+
+----
+include::includes/pacemaker-ceilometer_agent_central.crm[]
+----
+
+This configuration creates
+
+* +p_ceilometer-agent-central+, a resource for manage Ceilometer Central Agent service
+
++crm configure+ supports batch input, so you may copy and paste the
+above into your live pacemaker configuration, and then make changes as
+required.
+
+Once completed, commit your configuration changes by entering +commit+
+from the +crm configure+ menu. Pacemaker will then start the Ceilometer Central Agent
+service, and its dependent resources, on one of your nodes.
+
+===== Configuring Ceilometer Central Agent service
+
+Edit +/etc/ceilometer/ceilometer.conf+ :
+----
+# We have to use MySQL connection to store datas :
+sql_connection=mysql://ceilometer:password@192.168.42.101/ceilometer
+
+# We use API VIP for Identity Service connection :
+os_auth_url=http://192.168.42.103:5000/v2.0
+
+# We send notifications to High Available RabbitMQ :
+notifier_strategy = rabbit
+rabbit_host = 192.168.42.102
+----
