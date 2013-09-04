@@ -29,7 +29,7 @@ import sys
 import urllib2
 
 # These are files that are known to not be in DocBook format
-FILE_EXCEPTIONS = ['ha-guide-docinfo.xml', 'bk001-ch003-associate-general.xml']
+FILE_EXCEPTIONS = ['st-training-guides.xml', 'ha-guide-docinfo.xml', 'bk001-ch003-associate-general.xml']
 
 # These are books that we aren't checking yet
 BOOK_EXCEPTIONS = []
