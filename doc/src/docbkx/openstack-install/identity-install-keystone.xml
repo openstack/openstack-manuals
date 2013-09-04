@@ -24,7 +24,7 @@
     the <filename>/var/lib/keystone</filename>
     directory.<screen><prompt>$</prompt> <userinput>sudo rm /var/lib/keystone/keystone.db</userinput></screen></para>
   <para>Configure the production-ready backend data store rather than
-    using the catalog supplied by default for the ability to backup
+    using the catalog supplied by default for the ability to back up
     the service and endpoint data. This example shows MySQL.</para>
   <para>The following sequence of commands will create a MySQL
     database named "keystone" and a MySQL user named "keystone" with
@@ -59,7 +59,7 @@
       and <literal>Host='localhost'</literal>. The <literal>User=''</literal> acts as a wildcard,
       matching all users. If you do not have the <literal>'keystone'@'localhost'</literal> account,
       and you try to log in as the keystone user, the precedence rules of MySQL will match against
-      the <literal>User='' Host='localhost</literal> account before it matches against the
+      the <literal>User='' Host='localhost'</literal> account before it matches against the
         <literal>User='keystone' Host='%'</literal> account. This will result in an error message
       that looks like:</para>
       <para>
@@ -158,7 +158,7 @@
         service token, when you use the token the <command>keystone</command> client may output the
         following warning, depending on the version of python-keystoneclient you are
         running:<screen><computeroutput>WARNING: Bypassing authentication using a token &amp; endpoint (authentication credentials are being ignored).</computeroutput></screen></para>
-      <para>First, create a default tenant, we'll name it
+      <para>First, create a default tenant. We'll name it
           <literal>demo</literal> in this example. There is an --enabled
         parameter available for tenant-create and user-create that defaults to
         true. Refer to the help in <literal>keystone help user-create</literal>
@@ -305,8 +305,8 @@
     <para>Keystone also acts as a service catalog to let other
       OpenStack systems know where relevant API endpoints exist for
       OpenStack Services. The OpenStack Dashboard, in particular, uses
-      the service catalog heavily - and this <emphasis role="strong">
-        must</emphasis> be configured for the OpenStack Dashboard to
+      the service catalog heavily. This <emphasis role="strong">must</emphasis>
+      be configured for the OpenStack Dashboard to
       properly function.</para>
     <para>There are two alternative ways of defining services with
       keystone: <orderedlist>
@@ -328,10 +328,8 @@
         <filename>/etc/keystone/keystone.conf</filename> file should
       contain the following lines if it is properly configured to use
       the database backend.</para>
-    <programlisting>
-[catalog]
-driver = keystone.catalog.backends.sql.Catalog
-      </programlisting>
+    <programlisting>[catalog]
+driver = keystone.catalog.backends.sql.Catalog</programlisting>
     <section xml:id="elements-of-keystone-service-catalog-entry">
       <title>Elements of a Keystone service catalog entry</title>
       <para>For each service in the catalog, you must perform two
@@ -518,9 +516,7 @@ driver = keystone.catalog.backends.sql.Catalog
 </screen>
       <para>Define the Volume service, which also requires a separate
         endpoint for each tenant.</para>
-      <screen>
-<prompt>$</prompt> <userinput>keystone service-create --name=cinder --type=volume --description=&quot;Volume Service&quot;
-</userinput>
+      <screen><prompt>$</prompt> <userinput>keystone service-create --name=cinder --type=volume --description=&quot;Volume Service&quot;</userinput>
 <computeroutput>
 +-------------+----------------------------------+
 |   Property  |              Value               |
@@ -536,8 +532,7 @@ driver = keystone.catalog.backends.sql.Catalog
  --service-id=1ff4ece13c3e48d8a6461faebd9cd38f \
  --publicurl='http://192.168.206.130:8776/v1/%(tenant_id)s' \
  --internalurl='http://192.168.206.130:8776/v1/%(tenant_id)s' \
- --adminurl='http://192.168.206.130:8776/v1/%(tenant_id)s'
-</userinput>
+ --adminurl='http://192.168.206.130:8776/v1/%(tenant_id)s'</userinput>
 <computeroutput>
 +-------------+----------------------------------------------+
 |   Property  |                   Value                      |
@@ -549,12 +544,9 @@ driver = keystone.catalog.backends.sql.Catalog
 | region      | RegionOne                                    |
 | service_id  | 8a70cd235c7d4a05b43b2dffb9942cc0             |
 +-------------+----------------------------------------------+
-</computeroutput>
-</screen>
+</computeroutput></screen>
       <para>Define the Image service:</para>
-      <screen>
-<prompt>$</prompt> <userinput>keystone service-create --name=glance --type=image --description="Image Service"
-</userinput>
+      <screen><prompt>$</prompt> <userinput>keystone service-create --name=glance --type=image --description="Image Service"</userinput>
 <computeroutput>
 +-------------+----------------------------------+
 |   Property  |              Value               |
@@ -570,8 +562,7 @@ driver = keystone.catalog.backends.sql.Catalog
  --service-id=7d5258c490144c8c92505267785327c1 \
  --publicurl=http://192.168.206.130:9292 \
  --internalurl=http://192.168.206.130:9292 \
- --adminurl=http://192.168.206.130:9292
-</userinput>
+ --adminurl=http://192.168.206.130:9292</userinput>
 <computeroutput>
 +-------------+-----------------------------------+
 |   Property  |             Value                 |
@@ -583,11 +574,9 @@ driver = keystone.catalog.backends.sql.Catalog
 | region      | RegionOne                         |
 | service_id  | 7d5258c490144c8c92505267785327c1  |
 +-------------+-----------------------------------+
-</computeroutput>
-</screen>
+</computeroutput></screen>
       <para>Define the EC2 compatibility service:</para>
-      <screen>
-<prompt>$</prompt> <userinput>keystone service-create --name=ec2 --type=ec2 --description=&quot;EC2 Compatibility Layer&quot;</userinput>
+      <screen><prompt>$</prompt> <userinput>keystone service-create --name=ec2 --type=ec2 --description=&quot;EC2 Compatibility Layer&quot;</userinput>
 <computeroutput>+-------------+----------------------------------+
 |   Property  |              Value               |
 +-------------+----------------------------------+
@@ -602,8 +591,7 @@ driver = keystone.catalog.backends.sql.Catalog
  --service-id=181cdad1d1264387bcc411e1c6a6a5fd \
  --publicurl=http://192.168.206.130:8773/services/Cloud \
  --internalurl=http://192.168.206.130:8773/services/Cloud \
- --adminurl=http://192.168.206.130:8773/services/Admin
-</userinput>
+ --adminurl=http://192.168.206.130:8773/services/Admin</userinput>
 <computeroutput>
 +-------------+--------------------------------------------+
 |   Property  |                  Value                     |
@@ -615,11 +603,9 @@ driver = keystone.catalog.backends.sql.Catalog
 | region      | RegionOne                                  |
 | service_id  | 181cdad1d1264387bcc411e1c6a6a5fd           |
 +-------------+--------------------------------------------+
-</computeroutput>
-</screen>
+</computeroutput></screen>
       <para>Define the Object Storage service:</para>
-      <screen>
-<prompt>$</prompt> <userinput>keystone service-create --name=swift --type=object-store --description=&quot;Object Storage Service&quot;</userinput>
+      <screen><prompt>$</prompt> <userinput>keystone service-create --name=swift --type=object-store --description=&quot;Object Storage Service&quot;</userinput>
 <computeroutput>+-------------+---------------------------------+
 |   Property  |              Value               |
 +-------------+----------------------------------+
@@ -634,8 +620,7 @@ driver = keystone.catalog.backends.sql.Catalog
  --service-id=272efad2d1234376cbb911c1e5a5a6ed \
  --publicurl 'http://192.168.206.130:8888/v1/AUTH_%(tenant_id)s' \
  --internalurl 'http://192.168.206.130:8888/v1/AUTH_%(tenant_id)s' \
- --adminurl 'http://192.168.206.130:8888/v1'
-</userinput>
+ --adminurl 'http://192.168.206.130:8888/v1'</userinput>
 <computeroutput>
 +-------------+---------------------------------------------------+
 |   Property  |                       Value                       |
@@ -647,8 +632,7 @@ driver = keystone.catalog.backends.sql.Catalog
 | region      | RegionOne                                         |
 | service_id  | 272efad2d1234376cbb911c1e5a5a6ed                  |
 +-------------+---------------------------------------------------+
-</computeroutput>
-</screen>
+</computeroutput></screen>
     </section>
     <section xml:id="scripted-keystone-setup">
       <title>Setting up Tenants, Users, Roles, and Services -

@@ -8,7 +8,7 @@
           <phrase os="ubuntu">RabbitMQ</phrase><phrase os="centos;rhel;fedora">Qpid</phrase>
           but <phrase os="ubuntu">Qpid</phrase><phrase os="centos;rhel;fedora">RabbitMQ</phrase>
           and ZeroMQ (0MQ) are also available.</para>
-    <screen os="ubuntu">sudo apt-get install rabbitmq-server</screen>
+    <screen os="ubuntu"><prompt>$</prompt> <userinput>sudo apt-get install rabbitmq-server</userinput></screen>
     <procedure os="centos;rhel;fedora"><title>To install a messaging queue server:</title>
       <step>
         <para>
@@ -25,7 +25,7 @@
           Install the Qpid message broker and supporting utilities that will
           be needed in subsequent procedures.
         </para>
-        <screen><prompt>#</prompt>yum install qpid-cpp-server memcached openstack-utils</screen>
+        <screen><prompt>#</prompt> <userinput>yum install qpid-cpp-server memcached openstack-utils</userinput></screen>
       </step>
       <step>
         <para>
@@ -33,7 +33,7 @@
           <literal>auth</literal> configuration key to <literal>no</literal>
           in the <filename>/etc/qpidd.conf</filename> file.
         </para>
-        <screen><prompt>#</prompt> echo "auth=no" >> /etc/qpidd.conf</screen>
+        <screen><prompt>#</prompt> <userinput>echo "auth=no" >> /etc/qpidd.conf</userinput></screen>
       </step>
       <step>
         <para>
@@ -45,7 +45,7 @@
         <para>
           Configure the Qpid message broker to start automatically in future.
         </para>
-        <screen><prompt>#</prompt> chkconfig qpidd on</screen>
+        <screen><prompt>#</prompt> <userinput>chkconfig qpidd on</userinput></screen>
       </step>
       <step>
         <para>
@@ -53,8 +53,8 @@
           calls by setting the value of the <literal>rpc_backend</literal>
           configuration key in <filename>/etc/nova/nova.conf</filename>.
         </para>
-        <screen><prompt>#</prompt> openstack-config --set /etc/nova/nova.conf \
-                   DEFAULT rpc_backend nova.rpc.impl_qpid</screen>
+        <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf \
+                   DEFAULT rpc_backend nova.rpc.impl_qpid</userinput></screen>
       </step>
       <step>
         <para>
@@ -62,8 +62,8 @@
           the <literal>qpid_hostname</literal> configuration key in
           <filename>/etc/nova/nova.conf</filename>.
         </para>
-        <screen><prompt>#</prompt> openstack-config --set /etc/nova/nova.conf \
-                   DEFAULT qpid_hostname <replaceable>127.0.0.1</replaceable></screen>
+        <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf \
+                   DEFAULT qpid_hostname <replaceable>127.0.0.1</replaceable></userinput></screen>
         <para>
           Replace <replaceable>127.0.0.1</replaceable> with the IP address or
           host name of your message broker.

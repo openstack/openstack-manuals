@@ -33,40 +33,38 @@ bridge_fd 0</programlisting></para>
     <para os="centos;fedora;rhel">Here's an example network setup for RHEL, Fedora, or CentOS. Create
 
         <filename>/etc/sysconfig/network-scripts/ifcfg-br100</filename>:</para>
-    <programlisting os="centos;fedora;rhel">
-DEVICE=br100
+    <programlisting os="centos;fedora;rhel">DEVICE=br100
 TYPE=Bridge
 ONBOOT=yes
 DELAY=0
 BOOTPROTO=static
 IPADDR=192.168.100.1
-NETMASK=255.255.255.0
-    </programlisting>
+NETMASK=255.255.255.0</programlisting>
     <para>Also install bridge-utils:</para>
     <screen os="ubuntu"><prompt>$</prompt> <userinput>sudo apt-get install bridge-utils</userinput></screen>
     <screen os="rhel;centos;fedora"><prompt>$</prompt> <userinput>sudo yum install bridge-utils</userinput></screen>
     <para>Ensure that you set up the bridge, although if you use flat_network_bridge=br100 in your
             <filename>nova.conf</filename> file, nova will set up the bridge for you when you run
             the <command>nova network-create</command> command.</para>
-    <literallayout class="monospaced">sudo brctl addbr br100</literallayout>
+    <screen><prompt>$</prompt> <userinput>sudo brctl addbr br100</userinput></screen>
     <para>Lastly, restart networking to have these changes take
         effect. (This method is deprecated but "<code>restart
             networking</code>" doesn't always work.)</para>
-    <literallayout class="monospaced">sudo /etc/init.d/networking restart</literallayout>
+    <screen><prompt>$</prompt> <userinput>sudo /etc/init.d/networking restart</userinput></screen>
     <section xml:id="config-requirements-rhel" os="rhel;centos">
         <title>Configuration requirements with
             RHEL</title>
         <para>Set selinux in permissive mode:</para>
-        <screen><prompt>$></prompt> <userinput>sudo setenforce permissive</userinput></screen>
+        <screen><prompt>$</prompt> <userinput>sudo setenforce permissive</userinput></screen>
         <para>Otherwise you will get issues like <link
             xlink:href="https://bugzilla.redhat.com/show_bug.cgi?id=734346"
             >https://bugzilla.redhat.com/show_bug.cgi?id=734346</link> /usr/bin/nova-dhcpbridge: No such file or
             directory.</para>
         <para>If you are using a distribution based on RHEL 6.2 or earlier, use the <command>openstack-config</command> utility to
               turn off forced DHCP releases:</para>
-        <screen><prompt>$></prompt> <userinput>sudo openstack-config --set /etc/nova/nova.conf DEFAULT force_dhcp_release False</userinput></screen>
+        <screen><prompt>$</prompt> <userinput>sudo openstack-config --set /etc/nova/nova.conf DEFAULT force_dhcp_release False</userinput></screen>
         <para>If you are using a distribution based on RHEL 6.3 or later, install the dnsmasq utilities (<package>dnsmasq-utils</package>) package, which provides support for forced DHCP releases:</para>
-        <screen><prompt>$></prompt> <userinput>sudo yum install dnsmasq-utils</userinput></screen>
+        <screen><prompt>$</prompt> <userinput>sudo yum install dnsmasq-utils</userinput></screen>
         <para os="rhel;centos;fedora">If you intend to use guest images that don't have a single partition, then allow libguestfs to inspect the image so that files can be injected, by setting:
         </para>
         <screen><prompt>$></prompt> <userinput>sudo openstack-config --set /etc/nova/nova.conf DEFAULT libvirt_inject_partition -1</userinput></screen>
