@@ -150,12 +150,15 @@ def validate_individual_files(rootdir, exceptions, force):
     schema = get_schema()
 
     any_failures = False
-    modified_files = get_modified_files()
-    print("\nFollowing files will be validated:")
-    for f in modified_files:
-        print(">>> %s" % f)
-    print("")
-    modified_files = map(lambda x: os.path.abspath(x), modified_files)
+    if force:
+        print("\nValidating all files")
+    else:
+        modified_files = get_modified_files()
+        print("\nFollowing files will be validated:")
+        for f in modified_files:
+            print(">>> %s" % f)
+            print("")
+            modified_files = map(lambda x: os.path.abspath(x), modified_files)
 
     for root, dirs, files in os.walk(rootdir):
         # Don't descend into 'target' subdirectories
