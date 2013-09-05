@@ -10,6 +10,7 @@
         reference server.</para>
     <screen os="ubuntu"><prompt>$</prompt> <userinput>sudo apt-get install ntp</userinput></screen>
     <screen os="rhel;fedora;centos"><prompt>$</prompt> <userinput>sudo yum install ntp</userinput></screen>
+    <screen os="opensuse"><prompt>$</prompt> <userinput>sudo zypper install ntp</userinput></screen>
     <para>Set up the NTP server on your controller node so that it
         receives data by modifying the <filename>ntp.conf</filename>
         file and restarting the service. As root:</para>
@@ -17,6 +18,8 @@
 <prompt>#</prompt> <userinput>service ntp restart</userinput></screen>
    <screen os="rhel;fedora;centos"><prompt>$</prompt> <userinput>sudo service ntpd start</userinput>
 <prompt>$</prompt> <userinput>sudo chkconfig ntpd on</userinput></screen>
+   <screen os="opensuse"><prompt>$</prompt> <userinput>sudo systemctl start ntp.service</userinput>
+<prompt>$</prompt> <userinput>sudo systemctl enable ntp.service</userinput></screen>
     <para>Set up the NTP client on your compute node so that the time
         between controller node and compute node is synchronized. The
         simplest way to do this is to add a daily cron job that
