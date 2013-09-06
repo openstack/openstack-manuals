@@ -699,26 +699,94 @@ neutron security-group-rule-create --direction ingress --protocol tcp --port_ran
         </note>
         <section xml:id="lbaas_workflow">
             <title>Common Load-Balancer-as-a-Service Workflow</title>
-            <para>Create a load balancer pool:</para>
-            <screen><computeroutput>
+
+            <itemizedlist>
+
+            <listitem>
+              <para><emphasis role="bold">Find the correct subnet
+              ID.</emphasis> The load balancer virtual IP (vip) and
+              the instances that provide the balanced service must all
+              be on the same subnet.  The first step then is to obtain
+              a list of available subnets and their IDs:</para>
+              <screen><computeroutput>
+neutron subnet-list</computeroutput></screen>
+            </listitem>
+
+            <listitem>
+              <para><emphasis role="bold">Create a load balancer
+              pool</emphasis> using the appropriate subnet ID from the
+              list obtained above:</para>
+              <screen><computeroutput>
 neutron lb-pool-create --lb-method ROUND_ROBIN --name mypool --protocol HTTP --subnet-id &lt;subnet-uuid&gt;</computeroutput></screen>
-            <para>Associate two web servers with pool:</para>
-            <screen><computeroutput>
+              <para>Valid options for <code>--lb-method</code> depend on
+              the backend provider.  For the reference implementation
+              based on HAProxy valid options are: ROUND_ROBIN,
+              LEAST_CONNECTIONS, or SOURCE_IP</para>
+              <para>Valid options for protocol are: HTTP, HTTPS, or TCP</para>
+            </listitem>
+
+            <listitem>
+              <para><emphasis role="bold">Associate servers</emphasis> with pool:</para>
+              <screen><computeroutput>
 neutron lb-member-create --address  &lt;webserver one IP&gt; --protocol-port 80 mypool
 neutron lb-member-create --address  &lt;webserver two IP&gt; --protocol-port 80 mypool</computeroutput></screen>
-            <para>Create a health monitor which checks to make sure
-                our instances are still running on the specified
-                protocol-port:</para>
-            <screen><computeroutput>
+              <para>Optionally <code>--weight</code> may be specified as
+              an integer in the range 0..256. The weight of a member
+              determines the portion of requests or connections it
+              services compared to the other members of the pool. A
+              value of 0 means the member will not participate in
+              load-balancing but will still accept persistent
+              connections.</para>
+            </listitem>
+
+            <listitem>
+              <para><emphasis role="bold">Create a health
+              monitor</emphasis> which checks to make sure our
+              instances are still running on the specified
+              protocol-port:</para>
+              <screen><computeroutput>
 neutron lb-healthmonitor-create --delay 3 --type HTTP --max-retries 3 --timeout 3</computeroutput></screen>
-            <para>Associate health monitor with pool:</para>
-            <screen><computeroutput>
+              <para>Valid options for <code>--type</code> are: PING,
+              TCP, HTTP, HTTPS.  It is also possible to set
+              <code>--url_path</code> which defaults to "/" and if
+              specified must begin with a leading slash</para>
+            </listitem>
+
+            <listitem>
+              <para><emphasis role="bold">Associate health monitor with pool:</emphasis></para>
+              <screen><computeroutput>
 neutron lb-healthmonitor-associate  &lt;healthmonitor-uuid&gt; mypool</computeroutput></screen>
-            <para>Create a Virtual IP Address (VIP) that when accessed
-                via the load balancer will direct the requests to one
-                of the pool members:</para>
-            <screen><computeroutput>
+            </listitem>
+
+            <listitem>
+              <para><emphasis role="bold">Create a Virtual IP Address
+              (VIP)</emphasis> that when accessed via the load
+              balancer will direct the requests to one of the pool
+              members:</para>
+              <screen><computeroutput>
 neutron lb-vip-create --name myvip --protocol-port 80 --protocol HTTP --subnet-id &lt;subnet-uuid&gt; mypool</computeroutput></screen>
+              <para>Values for <code>--protocol</code> here are these
+              same as in the pool creation step above.</para>
+              <para>Connection rate limiting can be implemented using
+              the <code>--connection-limit</code> flag and specifying
+              maximum connections per second.</para>
+              <para>As written above the load balancer will not have
+              persistent sessions, to define persistent sessions so
+              that a given client will always connect to the same
+              backend (so long as it is still operational) use the
+              following form:</para>
+              <screen><computeroutput>
+neutron lb-vip-create --name myvip --protocol-port 80 --protocol HTTP --subnet-id &lt;subnet-uuid&gt; --session-persistence type=dict type=&lt;type&gt;,[cookie_name=&lt;name&gt;] mypool</computeroutput></screen>
+              <para>Valid session persistence types are: APP_COOKIE,
+              HTTP_COOKIE or SOURCE_IP.</para>
+              <para>The APP_COOKIE type reuses a cookie from your
+              application to manage persistence and requires the
+              additional option <code>cookie_name=&lt;name&gt;</code>
+              to inform the load balancer of which cookie name to use,
+              this <code>cookie_name</code> is unused with other
+              persistence types.</para>
+            </listitem>
+          </itemizedlist>
         </section>
     </section>
     <section xml:id="plugin_specific_extensions">
