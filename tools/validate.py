@@ -146,6 +146,52 @@ def get_modified_files():
     return modified_files
 
 
+def check_deleted_files(rootdir, file_exceptions):
+    """ Check whether files got deleted and verify that no other file references them.
+
+    """
+    print("\nChecking for removed files")
+    modified_files = get_modified_files()
+    deleted_files = []
+    any_removed = False
+    for f in modified_files:
+        full = os.path.abspath(f)
+        if not os.path.exists(full):
+            print("  Removed file: %s" % f)
+            deleted_files.append(full)
+            any_removed = True
+
+    if any_removed:
+        # Figure out whether this file was included anywhere
+        missing_reference = False
+
+        for root, dirs, files in os.walk(rootdir):
+            # Don't descend into 'target' subdirectories
+            try:
+                ind = dirs.index('target')
+                del dirs[ind]
+            except ValueError:
+                pass
+
+            os.chdir(root)
+
+            for f in files:
+                if (f.endswith('.xml') and
+                    f != 'pom.xml' and
+                    f not in file_exceptions):
+                    path = os.path.abspath(os.path.join(root, f))
+                    doc = etree.parse(path)
+                    ns = {"xi": "http://www.w3.org/2001/XInclude"}
+                    for node in doc.xpath('//xi:include', namespaces=ns):
+                        href = node.get('href')
+                        if (href.endswith('.xml') and
+                            os.path.abspath(href) in deleted_files):
+                            print("  File %s has an xi:include on deleted file %s " % (f, href))
+                            missing_reference = True
+            if missing_reference:
+                sys.exit(1)
+
+
 def validate_individual_files(rootdir, exceptions, force):
     schema = get_schema()
 
@@ -268,7 +314,13 @@ def build_affected_books(rootdir, book_exceptions, file_exceptions, force):
     else:
         print("No books are affected by modified files. Building all books.")
 
-    pool = multiprocessing.Pool(processes=multiprocessing.cpu_count())
+    maxjobs = multiprocessing.cpu_count()
+    # Jenkins fails sometimes with errors if too many jobs run, artificially
+    # limit to 4 for now.
+    # See https://bugs.launchpad.net/openstack-manuals/+bug/1221721
+    if maxjobs > 4:
+        maxjobs = 4
+    pool = multiprocessing.Pool(maxjobs)
     print("Queuing the following books for building:")
     for book in books:
         print("  %s" % os.path.basename(book))
@@ -294,6 +346,7 @@ def main(rootdir, force):
     if force:
         print("Validation of all files and build of all books will be forced.")
 
+    check_deleted_files(rootdir, FILE_EXCEPTIONS)
     validate_individual_files(rootdir, FILE_EXCEPTIONS, force)
     build_affected_books(rootdir, BOOK_EXCEPTIONS, FILE_EXCEPTIONS, force)
 
