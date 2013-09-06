@@ -466,116 +466,116 @@ pipeline = [...] json_body stats_reporting ec2_extension [...] admin_service</co
         variables required by the nova and glance clients.</para>
     </section>
     <section xml:id="section_instance-mgmt">
-	<title>Instance management</title>
+        <title>Instance management</title>
 
-	<para>Instances are the running virtual machines within an
-		OpenStack cloud.</para>
-	<section xml:id="section_instance-mgmt-interfaces">
-		<?dbhtml stop-chunking?>
-		<title>Interfaces to instance management</title>
+        <para>Instances are the running virtual machines within an
+                OpenStack cloud.</para>
+        <section xml:id="section_instance-mgmt-interfaces">
+                <?dbhtml stop-chunking?>
+                <title>Interfaces to instance management</title>
 
-		<para>OpenStack provides command line, web based, and API
-			based instance management. Additionally a number of third
-			party management tools are available for use with
-			OpenStack using either the native API or the provided EC2
-			compatibility API.</para>
+                <para>OpenStack provides command line, web based, and API
+                        based instance management. Additionally a number of third
+                        party management tools are available for use with
+                        OpenStack using either the native API or the provided EC2
+                        compatibility API.</para>
 
-		<simplesect xml:id="instance-mgmt-novaclient">
-			<title>Nova CLI</title>
+                <simplesect xml:id="instance-mgmt-novaclient">
+                        <title>Nova CLI</title>
 
-			<para>The <application>nova</application> command provided
-				by the OpenStack python-novaclient package is the
-				basic command line utility for users interacting with
-				OpenStack. This is available as a native package for
-				most modern Linux distributions or the latest version
-				can be installed directly using
-					<application>pip</application> python package
-				installer:
-				<programlisting language="bash">sudo pip install -e git+https://github.com/openstack/python-novaclient.git#egg=python-novaclient</programlisting>
-			</para>
+                        <para>The <application>nova</application> command provided
+                                by the OpenStack python-novaclient package is the
+                                basic command line utility for users interacting with
+                                OpenStack. This is available as a native package for
+                                most modern Linux distributions or the latest version
+                                can be installed directly using
+                                        <application>pip</application> python package
+                                installer:
+                                <programlisting language="bash">sudo pip install -e git+https://github.com/openstack/python-novaclient.git#egg=python-novaclient</programlisting>
+                        </para>
 
-			<para>Full details for <application>nova</application> and
-				other CLI tools are provided in the <link
-					xlink:href="http://docs.openstack.org/cli/quick-start/content/index.html"
-					>OpenStack CLI Guide</link>. What follows is the
-				minimal introduction required to follow the CLI
-				example in this chapter. In the case of a conflict the
-					<link
-					xlink:href="http://docs.openstack.org/cli/quick-start/content/index.html"
-					>OpenStack CLI Guide</link> should be considered
-				authoritative (and a bug filed against this section).</para>
+                        <para>Full details for <application>nova</application> and
+                                other CLI tools are provided in the <link
+                                        xlink:href="http://docs.openstack.org/cli/quick-start/content/index.html"
+                                        >OpenStack CLI Guide</link>. What follows is the
+                                minimal introduction required to follow the CLI
+                                example in this chapter. In the case of a conflict the
+                                        <link
+                                        xlink:href="http://docs.openstack.org/cli/quick-start/content/index.html"
+                                        >OpenStack CLI Guide</link> should be considered
+                                authoritative (and a bug filed against this section).</para>
 
-			<para>In order to function the
-					<application>nova</application> CLI needs to know
-				four things:</para>
-			<itemizedlist>
-				<listitem>
-					<para><literal>Authentication URL</literal>: This can be passed as
-						the --os_auth_url flag or using the
-						OS_AUTH_URL environment variable.</para>
-				</listitem>
-				<listitem>
-					<para><literal>Tenant (sometimes referred to as project)
-						name</literal>: This can be passed as the
-						--os_tenant_name flag or using the
-						OS_TENANT_NAME environment variable.</para>
-				</listitem>
-				<listitem>
-					<para><literal>User name</literal>: This can be passed as the
-						--os_username flag or using the OS_USERNAME
-						environment variable.</para>
-				</listitem>
-				<listitem>
-					<para><literal>Password</literal>: This can be passed as the
-						--os_password flag or using the OS_PASSWORD
-						environment variable.</para>
-				</listitem>
-			</itemizedlist>
+                        <para>In order to function the
+                                        <application>nova</application> CLI needs to know
+                                four things:</para>
+                        <itemizedlist>
+                                <listitem>
+                                        <para><literal>Authentication URL</literal>: This can be passed as
+                                                the --os_auth_url flag or using the
+                                                OS_AUTH_URL environment variable.</para>
+                                </listitem>
+                                <listitem>
+                                        <para><literal>Tenant (sometimes referred to as project)
+                                                name</literal>: This can be passed as the
+                                                --os_tenant_name flag or using the
+                                                OS_TENANT_NAME environment variable.</para>
+                                </listitem>
+                                <listitem>
+                                        <para><literal>User name</literal>: This can be passed as the
+                                                --os_username flag or using the OS_USERNAME
+                                                environment variable.</para>
+                                </listitem>
+                                <listitem>
+                                        <para><literal>Password</literal>: This can be passed as the
+                                                --os_password flag or using the OS_PASSWORD
+                                                environment variable.</para>
+                                </listitem>
+                        </itemizedlist>
 
-			<para>For example if you have your Identity Service
-				running on the default port (5000) on host
-				keystone.example.com and want to use the
-					<application>nova</application> cli as the user
-				"demouser" with the password "demopassword" in the
-				"demoproject" tenant you can export the following
-				values in your shell environment or pass the
-				equivalent command line args (presuming these
-				identities already exist):</para>
+                        <para>For example if you have your Identity Service
+                                running on the default port (5000) on host
+                                keystone.example.com and want to use the
+                                        <application>nova</application> cli as the user
+                                "demouser" with the password "demopassword" in the
+                                "demoproject" tenant you can export the following
+                                values in your shell environment or pass the
+                                equivalent command line args (presuming these
+                                identities already exist):</para>
 
-			<programlisting language="bash">
+                        <programlisting language="bash">
    export OS_AUTH_URL="http://keystone.example.com:5000/v2.0/"
    export OS_USERNAME=demouser
    export OS_PASSWORD=demopassword
    export OS_TENANT_NAME=demoproject</programlisting>
 
-			<para>If you are using the <link
-					linkend="instance-mgmt-horizon">Horizon</link> web
-				dashboard, users can easily download credential files
-				like this with the correct values for your particular
-				implementation.</para>
+                        <para>If you are using the <link
+                                        linkend="instance-mgmt-horizon">Horizon</link> web
+                                dashboard, users can easily download credential files
+                                like this with the correct values for your particular
+                                implementation.</para>
 
-		</simplesect>
-		<simplesect xml:id="instance-mgmt-horizon">
-			<title>Horizon web dashboard</title>
-			<para>Horizon is the highly customizable and extensible
-				OpenStack web dashboard. The <link
-					xlink:href="http://docs.openstack.org/developer/horizon"
-					>Horizon Project</link> home page has detailed
-				information on deploying horizon.</para>
-		</simplesect>
+                </simplesect>
+                <simplesect xml:id="instance-mgmt-horizon">
+                        <title>Horizon web dashboard</title>
+                        <para>Horizon is the highly customizable and extensible
+                                OpenStack web dashboard. The <link
+                                        xlink:href="http://docs.openstack.org/developer/horizon"
+                                        >Horizon Project</link> home page has detailed
+                                information on deploying horizon.</para>
+                </simplesect>
 
-		<simplesect xml:id="instance-mgmt-novaapi">
-			<title>Compute API</title>
-			<para>OpenStack provides a RESTful API for all
-				functionality. Complete API documentation is available
-				at http://docs.openstack.org/api. The <link
-					xlink:href="http://docs.openstack.org/api/openstack-compute/2"
-					>OpenStack Compute API</link> documentation refers
-				to instances as "servers".</para>
-			<para>The <link linkend="instance-mgmt-novaclient">nova
-					cli</link> can be made to show the API calls it is
-				making by passing it the --debug flag
-				<screen><prompt>#</prompt> <userinput>nova --debug list</userinput>
+                <simplesect xml:id="instance-mgmt-novaapi">
+                        <title>Compute API</title>
+                        <para>OpenStack provides a RESTful API for all
+                                functionality. Complete API documentation is available
+                                at http://docs.openstack.org/api. The <link
+                                        xlink:href="http://docs.openstack.org/api/openstack-compute/2"
+                                        >OpenStack Compute API</link> documentation refers
+                                to instances as "servers".</para>
+                        <para>The <link linkend="instance-mgmt-novaclient">nova
+                                        cli</link> can be made to show the API calls it is
+                                making by passing it the --debug flag
+                                <screen><prompt>#</prompt> <userinput>nova --debug list</userinput>
  <computeroutput>connect: (10.0.0.15, 5000)
 send: 'POST /v2.0/tokens HTTP/1.1\r\nHost: 10.0.0.15:5000\r\nContent-Length: 116\r\ncontent-type: application/json\r\naccept-encoding: gzip, deflate\r\naccept: application/json\r\nuser-agent: python-novaclient\r\n\r\n{"auth": {"tenantName": "demoproject", "passwordCredentials": {"username": "demouser", "password": "demopassword"}}}'
 reply: 'HTTP/1.1 200 OK\r\n'
@@ -595,126 +595,126 @@ header: Date: Thu, 13 Sep 2012 20:27:36 GMT
 +----+------+--------+----------+
 +----+------+--------+----------+</computeroutput></screen></para>
 
-		</simplesect>
-		<simplesect xml:id="instance-mgmt-ec2compat">
-			<title>EC2 Compatibility API</title>
+                </simplesect>
+                <simplesect xml:id="instance-mgmt-ec2compat">
+                        <title>EC2 Compatibility API</title>
 
-			<para>In addition to the native compute API OpenStack
-				provides an EC2 compatible API. This allows legacy
-				workflows built for EC2 to work with OpenStack.</para>
+                        <para>In addition to the native compute API OpenStack
+                                provides an EC2 compatible API. This allows legacy
+                                workflows built for EC2 to work with OpenStack.</para>
 
-			<!--<para><link linkend="configuring-ec2-API">Configuring the
-					EC2 API</link> lists configuration options for
-				customizing this compatibility API on your OpenStack
-				cloud.</para> -->
-		</simplesect>
+                        <!--<para><link linkend="configuring-ec2-API">Configuring the
+                                        EC2 API</link> lists configuration options for
+                                customizing this compatibility API on your OpenStack
+                                cloud.</para> -->
+                </simplesect>
 
-		<simplesect xml:id="instance-mgmt-3rdparty">
-			<title>Third-party tools</title>
+                <simplesect xml:id="instance-mgmt-3rdparty">
+                        <title>Third-party tools</title>
 
-			<para>There are numerous third party tools and language
-				specific SDKs for interacting with OpenStack clouds
-				both through native and compatibility APIs. These are
-				not OpenStack projects so we can only provide links to
-				some of the more popular projects and a brief
-				description. For detailed installation and usage info
-				please see the individual project pages</para>
+                        <para>There are numerous third party tools and language
+                                specific SDKs for interacting with OpenStack clouds
+                                both through native and compatibility APIs. These are
+                                not OpenStack projects so we can only provide links to
+                                some of the more popular projects and a brief
+                                description. For detailed installation and usage info
+                                please see the individual project pages</para>
 
-			<para>
-				<itemizedlist>
-					<listitem>
-						<para><link
-								xlink:href="http://open.eucalyptus.com/wiki/Euca2oolsGuide"
-								>euca2ools </link> is a popular open
-							source CLI for interacting with the EC2
-							API. This is convenient for multi cloud
-							environments where EC2 is the common API,
-							or for transitioning from EC2 API based
-							clouds to OpenStack.</para>
-					</listitem>
-					<listitem>
-						<para><link
-								xlink:href="http://code.google.com/p/hybridfox/"
-								>hybridfox</link> is a Firefox browser
-							add-on that provides a graphical interface
-							to many popular public and private cloud
-							technologies.</para>
-					</listitem>
-					<listitem>
-						<para><link
-								xlink:href="https://github.com/boto/boto"
-								>boto</link> is a Python library for
-							interacting with Amazon Web Services. It
-							can be used to access OpenStack through
-							the EC2 compatibility API</para>
-					</listitem>
-					<listitem>
-						<para><link
-								xlink:href="https://rubygems.org/gems/fog"
-								>fog</link> is the Ruby cloud services
-							library and provides methods for
-							interacting with a large number of cloud
-							and virtualization platforms.</para>
-					</listitem>
-					<listitem>
-						<para><link xlink:href="http://heat-api.org/"
-								>heat</link> is a high level
-							orchestration system that provides a
-							programmable interface to orchestrate
-							multiple cloud applications implementing
-							well known standards such as
-							CloudFormation and TOSCA. Unlike other
-							projects mentioned in this section <link
-								xlink:href="http://heat-api.org/"
-								>heat</link> requires changes to your
-							OpenStack deployment and is working toward
-							official inclusion as an OpenStack
-							project. At this point <link
-								xlink:href="http://heat-api.org/"
-								>heat</link> is a development project
-							not a production resource, but it does
-							show what the not too distant future of
-							instance management may be like.</para>
-					</listitem>
-					<listitem>
-						<para><link
-								xlink:href="http://www.php-opencloud.com"
-								>php-opencloud</link> is a PHP SDK that
-							should work with most OpenStack-based cloud
-							deployments and the Rackspace public cloud.
+                        <para>
+                                <itemizedlist>
+                                        <listitem>
+                                                <para><link
+                                                                xlink:href="http://open.eucalyptus.com/wiki/Euca2oolsGuide"
+                                                                >euca2ools </link> is a popular open
+                                                        source CLI for interacting with the EC2
+                                                        API. This is convenient for multi cloud
+                                                        environments where EC2 is the common API,
+                                                        or for transitioning from EC2 API based
+                                                        clouds to OpenStack.</para>
+                                        </listitem>
+                                        <listitem>
+                                                <para><link
+                                                                xlink:href="http://code.google.com/p/hybridfox/"
+                                                                >hybridfox</link> is a Firefox browser
+                                                        add-on that provides a graphical interface
+                                                        to many popular public and private cloud
+                                                        technologies.</para>
+                                        </listitem>
+                                        <listitem>
+                                                <para><link
+                                                                xlink:href="https://github.com/boto/boto"
+                                                                >boto</link> is a Python library for
+                                                        interacting with Amazon Web Services. It
+                                                        can be used to access OpenStack through
+                                                        the EC2 compatibility API</para>
+                                        </listitem>
+                                        <listitem>
+                                                <para><link
+                                                                xlink:href="https://rubygems.org/gems/fog"
+                                                                >fog</link> is the Ruby cloud services
+                                                        library and provides methods for
+                                                        interacting with a large number of cloud
+                                                        and virtualization platforms.</para>
+                                        </listitem>
+                                        <listitem>
+                                                <para><link xlink:href="http://heat-api.org/"
+                                                                >heat</link> is a high level
+                                                        orchestration system that provides a
+                                                        programmable interface to orchestrate
+                                                        multiple cloud applications implementing
+                                                        well known standards such as
+                                                        CloudFormation and TOSCA. Unlike other
+                                                        projects mentioned in this section <link
+                                                                xlink:href="http://heat-api.org/"
+                                                                >heat</link> requires changes to your
+                                                        OpenStack deployment and is working toward
+                                                        official inclusion as an OpenStack
+                                                        project. At this point <link
+                                                                xlink:href="http://heat-api.org/"
+                                                                >heat</link> is a development project
+                                                        not a production resource, but it does
+                                                        show what the not too distant future of
+                                                        instance management may be like.</para>
+                                        </listitem>
+                                        <listitem>
+                                                <para><link
+                                                                xlink:href="http://www.php-opencloud.com"
+                                                                >php-opencloud</link> is a PHP SDK that
+                                                        should work with most OpenStack-based cloud
+                                                        deployments and the Rackspace public cloud.
 
-						</para>
-					</listitem>
-				</itemizedlist>
-			</para>
-		</simplesect>
-	</section>
+                                                </para>
+                                        </listitem>
+                                </itemizedlist>
+                        </para>
+                </simplesect>
+        </section>
 
-	<section xml:id="section_instance-building-blocks">
-		<?dbhtml stop-chunking?>
-		<title>Building blocks</title>
+        <section xml:id="section_instance-building-blocks">
+                <?dbhtml stop-chunking?>
+                <title>Building blocks</title>
 
-		<para>There are two fundamental requirements for a computing
-			system, software and hardware. Virtualization and cloud
-			frameworks tend to blur these lines and some of your
-			"hardware" may actually be "software" but conceptually you
-			still need an operating system and something to run it
-			on.</para>
+                <para>There are two fundamental requirements for a computing
+                        system, software and hardware. Virtualization and cloud
+                        frameworks tend to blur these lines and some of your
+                        "hardware" may actually be "software" but conceptually you
+                        still need an operating system and something to run it
+                        on.</para>
 
-		<simplesect xml:id="instance-building-blocks-images">
-			<title>Images</title>
-			<para>In OpenStack the base operating system is usually
-				copied from an image stored in the Glance image
-				service. This is the most common case and results in
-				an ephemeral instance which starts from a know
-				templated state and lose all accumulated state on
-				shutdown. It is also possible in special cases to put
-				an operating system on a persistent "volume" in the
-				Nova-Volume or Cinder volume system. This gives a more
-				traditional persistent system that accumulates state
-				which is preserved across restarts. To get a list of
-				available images on your system run:
-				<screen><prompt>$</prompt> <userinput>nova image-list</userinput>
+                <simplesect xml:id="instance-building-blocks-images">
+                        <title>Images</title>
+                        <para>In OpenStack the base operating system is usually
+                                copied from an image stored in the Glance image
+                                service. This is the most common case and results in
+                                an ephemeral instance which starts from a know
+                                templated state and lose all accumulated state on
+                                shutdown. It is also possible in special cases to put
+                                an operating system on a persistent "volume" in the
+                                Nova-Volume or Cinder volume system. This gives a more
+                                traditional persistent system that accumulates state
+                                which is preserved across restarts. To get a list of
+                                available images on your system run:
+                                <screen><prompt>$</prompt> <userinput>nova image-list</userinput>
  <computeroutput>
 +--------------------------------------+-------------------------------+--------+--------------------------------------+
 | ID                                   | Name                          | Status | Server                               |
@@ -725,41 +725,41 @@ header: Date: Thu, 13 Sep 2012 20:27:36 GMT
 +--------------------------------------+-------------------------------+--------+--------------------------------------+
  </computeroutput>
  </screen>
-			</para>
-			<para>The displayed image attributes are:</para>
-			<itemizedlist>
-				<listitem>
-					<para><literal>ID</literal>: the automatically generate UUID of the
-						image</para>
-				</listitem>
-				<listitem>
-					<para><literal>Name</literal>: a free form human readable name given
-						to the image</para>
-				</listitem>
-				<listitem>
-					<para><literal>Status</literal>: shows the status of the image ACTIVE
-						images are available for use.</para>
-				</listitem>
-				<listitem>
-					<para><literal>Server</literal>: for images that are created as
-						snapshots of running instance this is the UUID
-						of the instance the snapshot derives from, for
-						uploaded images it is blank</para>
-				</listitem>
-			</itemizedlist>
-		</simplesect>
-		<simplesect xml:id="instance-building-blocks-flavors">
-			<title>Flavors</title>
-			<para>Virtual hardware templates are called "flavors" in
-				OpenStack. The default install provides a range of
-				five flavors. These are configurable by admin users
-				(this too is configurable and may be delegated by
-				redefining the access controls for
-				"compute_extension:flavormanage" in
-					<filename>/etc/nova/policy.json</filename> on the
-				compute-api server). To get a list of available
-				flavors on your system run:</para>
-			<screen><prompt>$</prompt> <userinput>nova flavor-list</userinput>
+                        </para>
+                        <para>The displayed image attributes are:</para>
+                        <itemizedlist>
+                                <listitem>
+                                        <para><literal>ID</literal>: the automatically generate UUID of the
+                                                image</para>
+                                </listitem>
+                                <listitem>
+                                        <para><literal>Name</literal>: a free form human readable name given
+                                                to the image</para>
+                                </listitem>
+                                <listitem>
+                                        <para><literal>Status</literal>: shows the status of the image ACTIVE
+                                                images are available for use.</para>
+                                </listitem>
+                                <listitem>
+                                        <para><literal>Server</literal>: for images that are created as
+                                                snapshots of running instance this is the UUID
+                                                of the instance the snapshot derives from, for
+                                                uploaded images it is blank</para>
+                                </listitem>
+                        </itemizedlist>
+                </simplesect>
+                <simplesect xml:id="instance-building-blocks-flavors">
+                        <title>Flavors</title>
+                        <para>Virtual hardware templates are called "flavors" in
+                                OpenStack. The default install provides a range of
+                                five flavors. These are configurable by admin users
+                                (this too is configurable and may be delegated by
+                                redefining the access controls for
+                                "compute_extension:flavormanage" in
+                                        <filename>/etc/nova/policy.json</filename> on the
+                                compute-api server). To get a list of available
+                                flavors on your system run:</para>
+                        <screen><prompt>$</prompt> <userinput>nova flavor-list</userinput>
  <computeroutput>
 +----+-----------+-----------+------+-----------+------+-------+-------------+
 | ID |    Name   | Memory_MB | Disk | Ephemeral | Swap | VCPUs | RXTX_Factor |
@@ -773,58 +773,58 @@ header: Date: Thu, 13 Sep 2012 20:27:36 GMT
 </computeroutput></screen>
     </simplesect>
     </section>
-	<xi:include href="../common/section_customize_flavors.xml"/>
-	<section xml:id="section_instance-creation">
-		<?dbhtml stop-chunking?>
-		<title>Instances</title>
-		<para>For information about launching instances through the
-			nova command-line client, see the <link
-				xlink:href="http://docs.openstack.org/cli/quick-start/content/"
-					><citetitle>OpenStack Clients
-				Guide</citetitle></link>.</para>
-		<!--moved the following to the OpenStack Clients Guide -->
-		<!-- once OpenStack End User Guide is signed off, move to there -->
-		<!--<xi:include href="../openstack-user/src/section_cli_openrc.xml"/>
-		<xi:include href="../common/section_nova_cli_boot.xml"/> -->
-	</section>
-	<section xml:id="section_instance-scheduling-constraints">
-		<title>Control where instances run</title>
-		<para>The <!--<xref linkend="ch_scheduling"/>-->
-			<citetitle>OpenStack Configuration Reference</citetitle>
-			provides detailed information on controlling where your
-			instances run, including ensuring a set of instances run
-			on different compute nodes for service resiliency or on
-			the same node for high performance inter-instance
-			communications</para>
-		<para>Additionally admin users can specify and exact compute
-			node to run on by specifying <literal>--availability-zone
-				&lt;availability-zone&gt;:&lt;compute-host&gt;</literal>
-			on the command line, for example to force an instance to
-			launch on the <literal>nova-1</literal> compute node in
-			the default <literal>nova</literal> availability zone:
-			<screen><prompt>#</prompt> <userinput>nova boot --image aee1d242-730f-431f-88c1-87630c0f07ba --flavor 1 --availability-zone nova:nova-1 testhost</userinput></screen></para>
-	</section>
-	<section xml:id="section_instance-data">
-		<?dbhtml stop-chunking?>
-		<title>Instance-specific data</title>
-		<para>For each instance, you can specify certain data
-			including authorized_keys key injection, user-data,
-			metadata service, and file injection.</para>
-		<para>For information, see the <link
-				xlink:href="http://docs.openstack.org/cli/quick-start/content/"
-					><citetitle>OpenStack Clients
-				Guide</citetitle></link>.</para>
-	</section>
-	<section xml:id="section_instance-networking">
+        <xi:include href="../common/section_customize_flavors.xml"/>
+        <section xml:id="section_instance-creation">
+                <?dbhtml stop-chunking?>
+                <title>Instances</title>
+                <para>For information about launching instances through the
+                        nova command-line client, see the <link
+                                xlink:href="http://docs.openstack.org/cli/quick-start/content/"
+                                        ><citetitle>OpenStack Clients
+                                Guide</citetitle></link>.</para>
+                <!--moved the following to the OpenStack Clients Guide -->
+                <!-- once OpenStack End User Guide is signed off, move to there -->
+                <!--<xi:include href="../openstack-user/src/section_cli_openrc.xml"/>
+                <xi:include href="../common/section_nova_cli_boot.xml"/> -->
+        </section>
+        <section xml:id="section_instance-scheduling-constraints">
+                <title>Control where instances run</title>
+                <para>The <!--<xref linkend="ch_scheduling"/>-->
+                        <citetitle>OpenStack Configuration Reference</citetitle>
+                        provides detailed information on controlling where your
+                        instances run, including ensuring a set of instances run
+                        on different compute nodes for service resiliency or on
+                        the same node for high performance inter-instance
+                        communications</para>
+                <para>Additionally admin users can specify and exact compute
+                        node to run on by specifying <literal>--availability-zone
+                                &lt;availability-zone&gt;:&lt;compute-host&gt;</literal>
+                        on the command line, for example to force an instance to
+                        launch on the <literal>nova-1</literal> compute node in
+                        the default <literal>nova</literal> availability zone:
+                        <screen><prompt>#</prompt> <userinput>nova boot --image aee1d242-730f-431f-88c1-87630c0f07ba --flavor 1 --availability-zone nova:nova-1 testhost</userinput></screen></para>
+        </section>
+        <section xml:id="section_instance-data">
+                <?dbhtml stop-chunking?>
+                <title>Instance-specific data</title>
+                <para>For each instance, you can specify certain data
+                        including authorized_keys key injection, user-data,
+                        metadata service, and file injection.</para>
+                <para>For information, see the <link
+                                xlink:href="http://docs.openstack.org/cli/quick-start/content/"
+                                        ><citetitle>OpenStack Clients
+                                Guide</citetitle></link>.</para>
+        </section>
+        <section xml:id="section_instance-networking">
             <?dbhtml stop-chunking?>
             <title>Instance networking</title>
             <para>For information, see <link
                     xlink:href="http://docs.openstack.org/cli/quick-start/content/"
                         ><citetitle>OpenStack Clients Guide</citetitle></link>.</para>
         </section>
-	<xi:include href="../common/section_nova_cli_volumes.xml"/>
+        <xi:include href="../common/section_nova_cli_volumes.xml"/>
 </section>
-    
+
 <section xml:id="section_networking-nova">
     <title>Networking with nova-network</title>
     <para>By understanding the available networking configuration options you can design the best
@@ -2434,7 +2434,7 @@ done &lt; $volumes_tmp_file</programlisting>
                 settings. In nova.conf, include the logfile option to enable logging. Alternatively
                 you can set use_syslog=1, and then the nova daemon logs to syslog.</para></section>
         <section xml:id="section_common-errors-and-fixes-for-openstack-compute">
-            <title>Common Compute errors and fixes </title>
+            <title>Common Compute errors and fixes</title>
             <para>The ask.openstack.org site offers a place to ask and
                 answer questions, and you can also mark questions as
                 frequently asked questions. This section describes some
@@ -2506,7 +2506,6 @@ done &lt; $volumes_tmp_file</programlisting>
             <para>Next, check the /var/log/libvirt/qemu/i-ze0bnh1q.log
                 file to see if it exists and has any useful error messages
                 in it.</para>
-            
             <para>Finally, from the instances/i-ze0bnh1q directory, try
                 <code>virsh create libvirt.xml</code> and see if you
                 get an error there.</para>
