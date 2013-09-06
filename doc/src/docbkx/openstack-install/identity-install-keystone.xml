@@ -8,7 +8,8 @@
     to the other servers you intend to use for OpenStack services, as
     root:</para>
   <screen os="ubuntu;deb"><prompt>#</prompt> <userinput>apt-get install keystone python-keystone python-keystoneclient</userinput></screen>
-  <screen os="rhel;centos;fedora"><prompt>$</prompt> <userinput>yum install openstack-utils openstack-keystone python-keystoneclient</userinput> </screen>
+  <screen os="rhel;centos;fedora"><prompt>$</prompt> <userinput>yum install openstack-utils openstack-keystone python-keystoneclient</userinput></screen>
+  <screen os="opensuse"><prompt>$</prompt> <userinput>zypper install openstack-utils openstack-keystone python-keystoneclient</userinput></screen>
   <para>After installing, you need to delete the sqlite database it
     creates, then change the configuration to point to a MySQL
     database. This configuration enables easier scaling scenarios
@@ -20,7 +21,7 @@
   <para os="ubuntu">Delete the <filename>keystone.db</filename> file created in
     the <filename>/var/lib/keystone</filename>
     directory.<screen><prompt>#</prompt> <userinput>rm /var/lib/keystone/keystone.db</userinput></screen></para>
-  <para os="rhel;centos;fedora">Delete the <filename>keystone.db</filename> file created in
+  <para os="rhel;centos;fedora;opensuse">Delete the <filename>keystone.db</filename> file created in
     the <filename>/var/lib/keystone</filename>
     directory.<screen><prompt>$</prompt> <userinput>sudo rm /var/lib/keystone/keystone.db</userinput></screen></para>
   <para>Configure the production-ready backend data store rather than
@@ -29,9 +30,9 @@
   <para>The following sequence of commands will create a MySQL
     database named "keystone" and a MySQL user named "keystone" with
     full access to the "keystone" MySQL database.</para>
-  <para>On Fedora, RHEL, and CentOS, you can configure the Keystone
+  <para>On Fedora, RHEL, CentOS, and openSUSE, you can configure the Keystone
     database with the <command>openstack-db</command>
-    command.<screen os="rhel;centos;fedora"><prompt>$</prompt> <userinput>sudo openstack-db --init --service keystone</userinput> </screen></para>
+    command.<screen os="rhel;centos;fedora;opensuse"><prompt>$</prompt> <userinput>sudo openstack-db --init --service keystone</userinput> </screen></para>
   <para>To manually create the database, start the <command>mysql</command> command line client by
     running:</para>
   <screen><prompt>$</prompt> <userinput>mysql -u root -p</userinput></screen>
@@ -94,7 +95,7 @@
       <filename>keystone.conf</filename> file. An example is provided in the Appendix or you can
     generate a random string. The sample token is:</para>
   <programlisting>admin_token = 012345SECRET99TOKEN012345</programlisting>
-  <screen os="rhel;centos;fedora"><prompt>$</prompt> <userinput>export ADMIN_TOKEN=$(openssl rand -hex 10)</userinput>
+  <screen os="rhel;centos;fedora;opensuse"><prompt>$</prompt> <userinput>export ADMIN_TOKEN=$(openssl rand -hex 10)</userinput>
 <prompt>$</prompt> <userinput>sudo openstack-config --set /etc/keystone/keystone.conf DEFAULT admin_token $ADMIN_TOKEN</userinput></screen>
   <para>By default Keystone will use PKI tokens. To
     create the signing keys and certificates run:</para>
@@ -103,6 +104,8 @@
 <prompt>$</prompt> sudo chown -R keystone:keystone /etc/keystone/* /var/log/keystone/keystone.log</screen>
   </para>
   <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>keystone-manage pki_setup</userinput>
+<prompt>#</prompt> <userinput>chown -R keystone:keystone /etc/keystone/* /var/log/keystone/keystone.log</userinput></screen>
+  <screen os="opensuse"><prompt>#</prompt> <userinput>keystone-manage pki_setup</userinput>
 <prompt>#</prompt> <userinput>chown -R keystone:keystone /etc/keystone/* /var/log/keystone/keystone.log</userinput></screen>
   <para os="ubuntu">
     <note>
@@ -113,6 +116,8 @@
     database configuration.</para>
   <screen os="ubuntu"><prompt>#</prompt> <userinput>sudo service keystone restart</userinput></screen>
   <screen os="rhel;fedora;centos"><prompt>$</prompt> <userinput>sudo service openstack-keystone start &amp;&amp; sudo chkconfig openstack-keystone on</userinput></screen>
+  <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl restart openstack-keystone.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-keystone.service</userinput></screen>
   <para>Lastly, initialize the new keystone database, as root:</para>
   <screen><prompt>#</prompt> <userinput>keystone-manage db_sync</userinput></screen>
   <section xml:id="configure-keystone">
@@ -159,7 +164,7 @@
         following warning, depending on the version of python-keystoneclient you are
         running:<screen><computeroutput>WARNING: Bypassing authentication using a token &amp; endpoint (authentication credentials are being ignored).</computeroutput></screen></para>
       <para>First, create a default tenant. We'll name it
-          <literal>demo</literal> in this example. There is an --enabled
+          <literal>demo</literal> in this example. There is an <parameter>--enabled</parameter>
         parameter available for tenant-create and user-create that defaults to
         true. Refer to the help in <literal>keystone help user-create</literal>
         and <literal>keystone help user-update</literal> for more
