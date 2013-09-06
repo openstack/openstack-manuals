@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="cli_set_block_storage_quotas"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Manage Block Storage service quotas</title>
+    <para>As an administrative user, you can update the Block Storage
+        service quotas for a project. You can also update the quota
+        defaults for a new project.</para>
+    <para>
+        <table rules="all">
+            <caption>Block Storage quotas</caption>
+            <col width="20%"/>
+            <col width="80%"/>
+            <thead>
+                <tr>
+                    <td>Property name</td>
+                    <td>Defines the number of</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <para>gigabytes</para>
+                    </td>
+                    <td>
+                        <para>Volume gigabytes allowed for each
+                            tenant.</para>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <para>snapshots</para>
+                    </td>
+                    <td>
+                        <para>Volume snapshots allowed for each
+                            tenant.</para>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <para>volumes</para>
+                    </td>
+                    <td>
+                        <para>Volumes allowed for each tenant.</para>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </para>
+    <section xml:id="cli_set_block_storage_quotas_procedure">
+        <title>View and update Block Storage quotas</title>
+        <para>As an administrative user, you can view and update Block
+            Storage quotas.</para>
+        <procedure>
+            <step>
+                <para>List the default quotas for all projects, as
+                    follows:</para>
+                <screen><prompt>$</prompt> <userinput>cinder quota-defaults</userinput></screen>
+                <screen><computeroutput>+-----------+-------+
+|  Property | Value |
++-----------+-------+
+| gigabytes |  1000 |
+| snapshots |   10  |
+|  volumes  |   10  |
++-----------+-------+</computeroutput></screen>
+            </step>
+            <step>
+                <para>To update a default value for a new project,
+                    update the property in the
+                        <filename>/etc/cinder/cinder.conf</filename>
+                    file.</para>
+            </step>
+
+
+            <step>
+                <para>View Block Storage quotas for a project, as
+                    follows:</para>
+                <screen><prompt>#</prompt> <userinput>cinder quota-show <replaceable>TENANT_NAME</replaceable></userinput></screen>
+                <para>For example:</para>
+                <screen><prompt>#</prompt> <userinput>cinder quota-show tenant01</userinput></screen>
+                <screen><computeroutput>+-----------+-------+
+|  Property | Value |
++-----------+-------+
+| gigabytes |  1000 |
+| snapshots |   10  |
+|  volumes  |   10  |
++-----------+-------+</computeroutput></screen>
+            </step>
+            <step>
+                <para>To update Block Storage service quotas, place
+                    the tenant ID in a usable variable, as
+                    follows:</para>
+                <screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list | awk '/<replaceable>tenantName</replaceable>/ {print $2}')</userinput></screen>
+            </step>
+            <step>
+                <para>Update a particular quota value, as
+                    follows:</para>
+                <screen><prompt>#</prompt> <userinput>cinder quota-update --<replaceable>quotaName</replaceable> <replaceable>NewValue</replaceable> <replaceable>tenantID</replaceable></userinput></screen>
+                <para>For example:</para>
+                <screen><prompt>#</prompt> <userinput>cinder quota-update --volumes 15 $tenant</userinput></screen>
+                <screen><prompt>#</prompt> <userinput>cinder quota-show tenant01</userinput></screen>
+                <screen><computeroutput>+-----------+-------+
+|  Property | Value |
++-----------+-------+
+| gigabytes |  1000 |
+| snapshots |   10  |
+|  volumes  |   15  |
++-----------+-------+</computeroutput></screen>
+            </step>
+        </procedure>
+    </section>
+</section>

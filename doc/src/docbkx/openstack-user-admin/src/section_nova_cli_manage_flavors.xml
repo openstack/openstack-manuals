@@ -3,6 +3,7 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="cli_manage_flavors">
+<?dbhtml stop-chunking?>
     <title>Manage flavors</title>
         <para>In OpenStack, flavors define the compute, memory, and
             storage capacity of nova computing instances. To put it
@@ -10,7 +11,7 @@
             for a server. It defines the <quote>size</quote> of a
             virtual server that can be launched.</para>
         <para>A flavor consists of the following parameters:</para>
-    <variablelist> <title>Flavor parameters</title>
+    <variablelist>
             <varlistentry>
                 <term>Flavor ID</term>
                 <listitem>
@@ -63,7 +64,7 @@
                 </listitem>
             </varlistentry>
         </variablelist>
-        <para>Default Flavors</para>
+        <para>The default flavors are:</para>
         <itemizedlist>
             <listitem>
                 <para>m1.tiny (1 VCPU/0 GB Disk/512 MB RAM)</para>
@@ -84,36 +85,30 @@
                 <para>m1.xlarge (8 VCPU/10 GB Disk/8192 MB RAM)</para>
             </listitem>
         </itemizedlist>
-        <para>You can manage flavors with the nova
+        <para>You can create and manage flavors with the nova
             <command>flavor-*</command> commands provided by the
             <filename>python-novaclient</filename> package.</para>
-        <procedure>
-                <title>To list flavors</title>
+    <section xml:id="cli_create_flavor"><title>Create flavors</title><procedure> 
                 <step>
-                    <para>When you list flavors, the list shows the ID and name,
+                    <para>List flavors to show the ID and name,
                         the amount of memory, the amount of disk space
                         for the root partition and for the ephemeral
                         partition, the swap, and the number of virtual
                         CPUs for each flavor.</para>
                     <screen><prompt>$</prompt> <userinput>nova flavor-list</userinput></screen>
-                </step>
-        </procedure>
-            <procedure>
-                <title>To create a flavor</title>
+                </step>            
                 <step>
+                    <para>If the flavor you want does not exist, you can create a flavor.</para>
                     <para>When you create a flavor, you must specify
-                        the flavor name, ID, RAM size, disk size, and the
-                        number of VCPUs. For optional parameters, see nova
-                        <command>help</command>
-                        <command>flavor-create</command>.</para>
-                    <screen><prompt>$</prompt> <userinput>nova flavor-create FLAVOR_NAME FLAVOR_ID RAM_IN_MB ROOT_DISK_IN_GB NUMBER_OF_VCPUS</userinput></screen>
-                </step>
-            </procedure>
-            <procedure>
-                <title>To delete a flavor</title>
-                <step>
-                    <para>Delete a specified flavor, as follows:</para>
-                    <screen><prompt>$</prompt> <userinput>nova flavor-delete FLAVOR_ID</userinput></screen>
-                </step>
-            </procedure>
+                    the flavor name, ID, RAM size, disk size, and the
+                    number of VCPUs. </para>
+                    <screen><prompt>$</prompt> <userinput>nova flavor-create <replaceable>FLAVOR_NAME</replaceable> <replaceable>FLAVOR_ID</replaceable> <replaceable>RAM_IN_MB ROOT_DISK_IN_GB</replaceable> <replaceable>NUMBER_OF_VCPUS</replaceable></userinput></screen>
+              <para>For a list of optional parameters, run the following command:</para> <screen><prompt>$</prompt> <userinput>nova help flavor-create</userinput></screen></step>
+    </procedure></section>
+    <section xml:id="cli_delete_flavor"><title>Delete a flavor</title><procedure>      
+        <step>
+            <para>Delete a specified flavor, as follows:</para>
+            <screen><prompt>$</prompt> <userinput>nova flavor-delete <replaceable>FLAVOR_ID</replaceable></userinput></screen>
+        </step>
+    </procedure></section>
 </section>
