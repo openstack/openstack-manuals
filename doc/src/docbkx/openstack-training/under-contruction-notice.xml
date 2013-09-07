@@ -14,39 +14,94 @@
   <para>
     <itemizedlist>
       <listitem>
-        <para>Attending a user group using the training materials</para>
-        <para>The OpenStack community training started at the SFBay OpenStack User Group. More
-          information this user group and others using the training guides on the <link
-            xlink:href="https://wiki.openstack.org/wiki/OpenStackUserGroups">OpenStack User Groups
-            page</link>.</para>
-      </listitem>
+        <formalpara><title>Attending a user group using the training materials</title>
+          <para>The OpenStack community training started at the SFBay OpenStack User Group. More
+            information this user group and others using the training guides on the <link
+              xlink:href="https://wiki.openstack.org/wiki/OpenStackUserGroups">OpenStack User Groups
+              page</link>.</para>
+          </formalpara>
+        </listitem>
       <listitem>
-        <para>Teach / Lead a user group using the training materials</para>
-        <para>Awesome! Your experience will not only give you more experience with OpenStack, but
-          you will help some people find new jobs. We have put all the information about <link
-            xlink:href="https://wiki.openstack.org/wiki/OpenStackUserGroups/HowTo#Running_a_Hackathon"
-            >How To Run An OpenStack Hackathon</link> here.</para>
-      </listitem>
+          <formalpara><title>Teach / Lead a user group using the training materials</title>
+          <para>Awesome! Your experience will not only give you more experience with OpenStack, but
+            you will help some people find new jobs. We have put all the information about <link
+              xlink:href="https://wiki.openstack.org/wiki/OpenStackUserGroups/HowTo#Running_a_Hackathon"
+              >How To Run An OpenStack Hackathon</link> here.</para></formalpara>
+        </listitem>
       <listitem>
-        <para>Helping to create the training pages</para>
-        <para>We can't do this without operators and developers using and creating the content.
-          Anyone can contribute content. First things first, you will need the tools to get started.
-          Go to the <link
-            xlink:href="http://docs.openstack.org/trunk/openstack-training/content/getting-tools-and-accounts.html"
-            >Getting Tools and Accounts</link> page.</para>
-        <para>Once you have your tools ready to go, you can assign some work to yourself.  Go to the
-            <link xlink:href="https://trello.com/board/openstack-training/51d6e5fee37248fd5b003de9"
-            >Training Trello/KanBan storyboard</link> and assign a user story from the Sprint
-          Backlog to yourself. If you don't have a Trello account, no problem, just create one.
-          Email seanrob@yahoo-inc.com and you will have access.</para>
-        <para>You will need to create branch in order to create new material. If you don't know what
-          a branch is, no problem. Go to the <link
-            xlink:href="http://docs.openstack.org/trunk/openstack-training/content/operator-create-branch.html"
-            >Creating a Branch</link> page.</para>
-        <note><para>Find the <emphasis role="bold">user-story-includes-template.xml</emphasis> file in the
-          <emphasis role="bold">/openstack-training/</emphasis> directory for syntax on how to create
-          your user stories.</para></note>
-      </listitem>
+          <formalpara>
+            <title>Helping to create the training pages</title>
+          <para>
+              <itemizedlist>
+                <listitem>
+                  <para>We are currently working on creating the Associate Training Guide. It is the
+                    first of four training guides. We are using the <link
+                      xlink:href="http://docs.openstack.org/grizzly/openstack-compute/install/apt/content/"
+                      >Basic Install Guide docs</link> as the source for most of the material. The
+                    basic idea is we link as much of the material from existing documentation so we
+                    reuse and improve the existing docs. The topics in the Associate Training Guide
+                    are in a bunch of KanBan story board cards. Each card in the story board
+                    represents something that an Associate trainee needs to learn. But first things
+                    first, you need to get some basic tools and accounts installed and configured
+                    before you can really start.</para>
+                  <para><emphasis role="bold">Getting Accounts and Tools:</emphasis> We can't do
+                    this without operators and developers using and creating the content. Anyone can
+                    contribute content. You will need the tools to get started. Go to the <link
+                      xlink:href="http://docs.openstack.org/trunk/openstack-training/content/getting-tools-and-accounts.html"
+                      >Getting Tools and Accounts</link> page.</para>
+                </listitem>
+                <listitem>
+                  <para><emphasis role="bold">Pick a Card:</emphasis> Once you have your tools ready
+                    to go, you can assign some work to yourself. Go to the <link
+                      xlink:href="https://trello.com/board/openstack-training/51d6e5fee37248fd5b003de9"
+                      >Training Trello/KanBan storyboard</link> and assign a card / user story from
+                    the Sprint Backlog to yourself. If you don't have a Trello account, no problem,
+                    just create one. Email seanrob@yahoo-inc.com and you will have access.</para>
+                </listitem>
+                <listitem>
+                  <para><emphasis role="bold">Create the Content:</emphasis> Each card / user story
+                    from the KanBan story board will be a separate chunk of content you will add to
+                    the openstack-manuals repository openstack-training sub-project. I created a
+                    template file to explain the xi:include syntax. The <emphasis role="bold"
+                      >user-story-includes-template.xml</emphasis> file is in the <emphasis
+                      role="bold">openstack-manuals/openstack-training/</emphasis> directory. I also
+                    assigned one of the cards <link
+                      xlink:href="https://trello.com/c/n274jOdP/9-as-a-trainee-i-need-to-be-able-to-understand-how-to-install-ubuntu-12-04-or-13-04-in-later-versions"
+                      >Install Ubuntu 12.04 LTS</link> to myself. I moved it from the Sprint board
+                    to the Doing board. I then created a branch using Git. You will need to create
+                    branch in order to create new material. If you don't know what a branch is, no
+                    problem. Go to the <link
+                      xlink:href="http://docs.openstack.org/trunk/openstack-training/content/operator-create-branch.html"
+                      >Creating a Branch</link> page. Once my branch was created, I then opened my
+                    XML editor Oxygen and opened the set file <emphasis role="bold"
+                      >st-training-guides.xml</emphasis>. The XML structure follows the hierarchy
+                    Set -> Book -> Chapter -> Section. The <emphasis role="bold"
+                      >st-training-guides.xml</emphasis> file holds the set level. Notice the set
+                    file uses xi:include statements to include the books. We want to open the
+                    associate book. Open the associate book and you will see the chapter include
+                    statements. These are the chapters that make up the Associate Training Guide
+                    book. I wanted to add my new content from my assigned card <link
+                      xlink:href="https://trello.com/c/n274jOdP/9-as-a-trainee-i-need-to-be-able-to-understand-how-to-install-ubuntu-12-04-or-13-04-in-later-versions"
+                      >Install Ubuntu 12.04 LTS</link> to the <emphasis role="bold"
+                      >bk001-ch003-asssociate-general.xml</emphasis> file. Look at the file to see
+                    my example. Once I finished adding and editing, I  needed to merge the new
+                    content. Review <link
+                      xlink:href="http://docs.openstack.org/trunk/openstack-training/content/operator-create-branch.html"
+                      >Creating a Branch</link> again for instructions on how to complete the branch
+                    merge. Thats it!</para>
+                </listitem>
+              </itemizedlist>
+            </para>
+          </formalpara>
+        <note>
+          <para>Here are more details on commiting changes to OpenStack <link
+                xlink:href="http://docs.openstack.org/trunk/openstack-training/content/operator-fix-documentation-bug.html"
+                >fixing a documentation bug</link> , <link
+                xlink:href="https://wiki.openstack.org/wiki/Gerrit_Workflow">Gerrit Workflow</link>,
+                <link xlink:href="https://wiki.openstack.org/wiki/Documentation/HowTo">Documentation
+                  HowTo</link> and , <link xlink:href="http://git-scm.com/doc">Git Documentation</link></para>
+        </note>
+        </listitem>
     </itemizedlist>
   </para>
   <para>More details on the OpenStack Training project.</para>
