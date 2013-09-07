@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="introduction-to-xen">
+    <?dbhtml stop-chunking?>
+    <title xml:id="introduction-to-xen.title">Xen, XenAPI, XenServer,
+        and XCP</title>
+    <para>This section describes Xen, XenAPI, XenServer, and XCP,
+        their differences, and how to use them with OpenStack. After
+        you understand how the Xen and KVM architectures differ, you
+        can determine when to use each architecture in your OpenStack
+        cloud.</para>
+    <section xml:id="basic-terminology">
+        <title>Xen Terminology</title>
+        <para><emphasis role="bold">Xen</emphasis>. A hypervisor that
+            provides the fundamental isolation between virtual
+            machines. Xen is open source (GPLv2) and is managed by
+            Xen.org, an cross-industry organization.</para>
+        <para>Xen is a component of many different products and
+            projects. The hypervisor itself is very similar across all
+            these projects, but the way that it is managed can be
+            different, which can cause confusion if you're not clear
+            which tool stack you are using. Make sure you know what
+            tool stack you want before you get started.</para>
+        <para><emphasis role="bold">Xen Cloud Platform
+                (XCP)</emphasis>. An open source (GPLv2) tool stack
+            for Xen. It is designed specifically as a platform for
+            enterprise and cloud computing, and is well integrated
+            with OpenStack. XCP is available both as a binary
+            distribution, installed from an iso, and from Linux
+            distributions, such as <link
+                xlink:href="http://packages.ubuntu.com/precise/xcp-xapi"
+                >xcp-xapi</link> in Ubuntu. The current versions of
+            XCP available in Linux distributions do not yet include
+            all the features available in the binary distribution of
+            XCP.</para>
+        <para><emphasis role="bold">Citrix XenServer</emphasis>. A
+            commercial product. It is based on XCP, and exposes the
+            same tool stack and management API. As an analogy, think
+            of XenServer being based on XCP in the way that Red Hat
+            Enterprise Linux is based on Fedora. XenServer has a free
+            version (which is very similar to XCP) and paid-for
+            versions with additional features enabled. Citrix provides
+            support for XenServer, but as of July 2012, they do not
+            provide any support for XCP. For a comparison between
+            these products see the <link
+                xlink:href="http://wiki.xen.org/wiki/XCP/XenServer_Feature_Matrix"
+                > XCP Feature Matrix</link>.</para>
+        <para>Both XenServer and XCP include Xen, Linux, and the
+            primary control daemon known as <emphasis role="bold"
+                >xapi</emphasis>.</para>
+        <para>The API shared between XCP and XenServer is called
+                <emphasis role="bold">XenAPI</emphasis>. OpenStack
+            usually refers to XenAPI, to indicate that the integration
+            works equally well on XCP and XenServer. Sometimes, a
+            careless person will refer to XenServer specifically, but
+            you can be reasonably confident that anything that works
+            on XenServer will also work on the latest version of XCP.
+            Read the <link
+                xlink:href="http://docs.vmd.citrix.com/XenServer/6.0.0/1.0/en_gb/sdk.html#object_model_overview"
+                > XenAPI Object Model Overview</link> for definitions
+            of XenAPI specific terms such as SR, VDI, VIF and
+            PIF.</para>
+        <section xml:id="privileged-and-unprivileged-domains">
+            <title>Privileged and Unprivileged Domains</title>
+            <para>A Xen host runs a number of virtual machines, VMs,
+                or domains (the terms are synonymous on Xen). One of
+                these is in charge of running the rest of the system,
+                and is known as "domain 0," or "dom0." It is the first
+                domain to boot after Xen, and owns the storage and
+                networking hardware, the device drivers, and the
+                primary control software. Any other VM is
+                unprivileged, and are known as a "domU" or "guest".
+                All customer VMs are unprivileged of course, but you
+                should note that on Xen the OpenStack control software
+                    (<systemitem class="service"
+                    >nova-compute</systemitem>) also runs in a domU.
+                This gives a level of security isolation between the
+                privileged system software and the OpenStack software
+                (much of which is customer-facing). This architecture
+                is described in more detail later.</para>
+            <para>There is an ongoing project to split domain 0 into
+                multiple privileged domains known as <emphasis
+                    role="bold">driver domains</emphasis> and
+                    <emphasis role="bold">stub domains</emphasis>.
+                This would give even better separation between
+                critical components. This technology is what powers
+                Citrix XenClient RT, and is likely to be added into
+                XCP in the next few years. However, the current
+                architecture just has three levels of separation:
+                dom0, the OpenStack domU, and the completely
+                unprivileged customer VMs.</para>
+        </section>
+        <section xml:id="paravirtualized-vs-hvm-domains">
+            <title>Paravirtualized versus hardware virtualized
+                domains</title>
+            <para>A Xen virtual machine can be <emphasis role="bold"
+                    >paravirtualized (PV)</emphasis> or <emphasis
+                    role="bold">hardware virtualized (HVM)</emphasis>.
+                This refers to the interaction between Xen, domain 0,
+                and the guest VM's kernel. PV guests are aware of the
+                fact that they are virtualized and will co-operate
+                with Xen and domain 0; this gives them better
+                performance characteristics. HVM guests are not aware
+                of their environment, and the hardware has to pretend
+                that they are running on an unvirtualized machine. HVM
+                guests have the advantage that there is no need to
+                modify the guest operating system, which is essential
+                when running Windows.</para>
+            <para>In OpenStack, customer VMs may run in either PV or
+                HVM mode. However, the OpenStack domU (that's the one
+                running <systemitem class="service"
+                    >nova-compute</systemitem>) <emphasis role="bold"
+                    >must</emphasis> be running in PV mode.</para>
+        </section>
+    </section>
+    <section xml:id="xenapi-deployment-architecture">
+        <title xml:id="xenapi-deployment-architecture.title">XenAPI
+            Deployment Architecture</title>
+        <para>When you deploy OpenStack on XCP or XenServer, you get
+            something similar to this: <informalfigure>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata
+                            fileref="figures/xenserver_architecture.png"
+                            contentwidth="140mm"/>
+                    </imageobject>
+                </mediaobject>
+            </informalfigure></para>
+        <para>Key things to note: <itemizedlist>
+                <listitem>
+                    <para>The hypervisor: Xen</para>
+                </listitem>
+                <listitem>
+                    <para>Domain 0: runs xapi and some small pieces
+                        from OpenStack (some xapi plugins and network
+                        isolation rules). The majority of this is
+                        provided by XenServer or XCP (or yourself
+                        using Kronos).</para>
+                </listitem>
+                <listitem>
+                    <para>OpenStack VM: The <systemitem
+                            class="service">nova-compute</systemitem>
+                        code runs in a paravirtualized virtual
+                        machine, running on the host under management.
+                        Each host runs a local instance of <systemitem
+                            class="service">nova-compute</systemitem>.
+                        It will often also be running nova-network
+                        (depending on your network mode). In this
+                        case, nova-network is managing the addresses
+                        given to the tenant VMs through DHCP.</para>
+                </listitem>
+                <listitem>
+                    <para>Nova uses the XenAPI Python library to talk
+                        to xapi, and it uses the Management Network to
+                        reach from the domU to dom0 without leaving
+                        the host.</para>
+                </listitem>
+            </itemizedlist></para>
+        <para>Some notes on the networking: <itemizedlist>
+                <listitem>
+                    <para>The above diagram assumes FlatDHCP
+                        networking (the DevStack default).</para>
+                </listitem>
+                <listitem>
+                    <para>There are three main OpenStack Networks:<itemizedlist>
+                            <listitem>
+                                <para>Management network - RabbitMQ,
+                                   MySQL, etc. Please note that the
+                                   VM images are downloaded by the
+                                   XenAPI plugins, so please make
+                                   sure that the images can be
+                                   downloaded through the management
+                                   network. It usually means binding
+                                   those services to the management
+                                   interface.</para>
+                            </listitem>
+                            <listitem>
+                                <para>Tenant network - controlled by
+                                   nova-network. The parameters of
+                                   this network depend on the
+                                   networking model selected (Flat,
+                                   Flat DHCP, VLAN).</para>
+                            </listitem>
+                            <listitem>
+                                <para>Public network - floating IPs,
+                                   public API endpoints.</para>
+                            </listitem>
+                        </itemizedlist></para>
+                </listitem>
+                <listitem>
+                    <para>The networks shown here need to be connected
+                        to the corresponding physical networks within
+                        the data center. In the simplest case, three
+                        individual physical network cards could be
+                        used. It is also possible to use VLANs to
+                        separate these networks. Please note, that the
+                        selected configuration must be in line with
+                        the networking model selected for the cloud.
+                        (In case of VLAN networking, the physical
+                        channels have to be able to forward the tagged
+                        traffic.)</para>
+                </listitem>
+            </itemizedlist></para>
+    </section>
+    <section xml:id="pools">
+        <title>XenAPI Pools</title>
+        <para>The host-aggregates feature enables you to create pools
+            of XenServer hosts to enable live migration when using
+            shared storage. However, you cannot configure shared
+            storage.</para>
+    </section>
+    <section xml:id="further-reading">
+        <title>Further Reading</title>
+        <para>Here are some of the resources available to learn more
+            about Xen: <itemizedlist>
+                <listitem>
+                    <para>Citrix XenServer official
+                            documentation:<link
+                            xlink:href="http://docs.vmd.citrix.com/XenServer/6.0.0/1.0/en_gb/"
+                            >
+                            http://docs.vmd.citrix.com/XenServer</link>.</para>
+                </listitem>
+                <listitem>
+                    <para>What is Xen? by Xen.org: <link
+                            xlink:href="http://xen.org/files/Marketing/WhatisXen.pdf"
+                            >
+                            http://xen.org/files/Marketing/WhatisXen.pdf</link>.</para>
+                </listitem>
+                <listitem>
+                    <para>Xen Hypervisor project: <link
+                            xlink:href="http://xen.org/products/xenhyp.html"
+                            >
+                            http://xen.org/products/xenhyp.html</link>.</para>
+                </listitem>
+                <listitem>
+                    <para>XCP project: <link
+                            xlink:href="http://xen.org/products/cloudxen.html"
+                            >
+                            http://xen.org/products/cloudxen.html</link>.</para>
+                </listitem>
+                <listitem>
+                    <para>Further XenServer and OpenStack information:
+                            <link
+                            xlink:href="http://wiki.openstack.org/XenServer"
+                            >
+                            http://wiki.openstack.org/XenServer</link>.</para>
+                </listitem>
+            </itemizedlist></para>
+    </section>
+    <xi:include href="section_xen-install.xml"/>
+    <xi:include href="../config-reference/compute/section_compute-configure-xen.xml"/>
+</section>
