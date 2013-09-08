@@ -9,10 +9,8 @@
         or a secured HTTPS deployment. While the standard installation
         uses a non-encrypted HTTP channel, you can enable SSL support
         for the dashboard.</para>
-    <section xml:id="dashboard-config-http">
-        <title>Configure the dashboard for HTTP</title>
-        <procedure>
-            <title>To configure the dashboard for HTTP:</title>
+    <procedure xml:id="dashboard-config-http">
+            <title>To configure the dashboard for HTTP</title>
             <step>
                 <para>Specify the host for your OpenStack Identity
                     Service endpoint in the
@@ -21,11 +19,9 @@
                     setting.</para>
                 <para>The following example shows this setting:</para>
                 <programlisting language="python"><?db-font-size 65%?><xi:include parse="text" href="samples/local_settings.py"/></programlisting>
-                <para>The <literal>HORIZON_CONFIG</literal> dictionary
-                    contains all the settings for the dashboard.
-                    Whether or not a service is in the Dashboard
-                    depends on the Service Catalog configuration in
-                    the Identity service. For the full listing, see
+                <para>The service catalog configuration in the
+                Identity Service determines whether a service appears
+                in the dashboard. For the full listing, see
                         <link
                         xlink:href="http://docs.openstack.org/developer/horizon/topics/settings.html"
                         >Horizon Settings and
@@ -37,18 +33,21 @@
 <prompt>#</prompt> <userinput>service memcached restart</userinput></screen>
             </step>
         </procedure>
-    </section>
-    <section xml:id="dashboard-config-https">
-        <title>Configure the dashboard for HTTPS</title>
-        <procedure>
-            <title>To configure the dashboard for HTTPS:</title>
+    <procedure xml:id="dashboard-config-https">
+            <title>To configure the dashboard for HTTPS</title>
             <para>The following example uses the domain,
                 "http://openstack.example.com." Use a domain that fits
                 your current setup.</para>
             <step>
                 <para>In<filename>/etc/openstack-dashboard/local_settings.py</filename>
                     update the following
-                    directive:<programlisting>USE_SSL = True</programlisting></para>
+                    directives:<programlisting>USE_SSL = True
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_HTTPONLY = True</programlisting></para>
+                <para>The first option is required to enable HTTPS.
+                The other recommended settings defend against
+                cross-site scripting and require HTTPS.</para>
             </step>
             <step>
                 <para>Edit
@@ -72,16 +71,31 @@ Allow from all
                 <para>After:</para>
                 <programlisting><?db-font-size 65%?>&lt;VirtualHost *:80&gt;
 ServerName openstack.example.com
-RedirectPermanent / https://openstack.example.com
+&lt;IfModule mod_rewrite.c&gt;
+  RewriteEngine On
+  RewriteCond %{HTTPS} off
+  RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+&lt;/IfModule&gt;
+&lt;IfModule !mod_rewrite.c&gt;
+  RedirectPermanent / https://openstack.example.com
+&lt;/IfModule&gt;
 &lt;/VirtualHost&gt;
 &lt;VirtualHost *:443&gt;
 ServerName openstack.example.com
 
 SSLEngine On
+# Remember to replace certificates and keys with valid paths in your environment
 SSLCertificateFile /etc/apache2/SSL/openstack.example.com.crt
 SSLCACertificateFile /etc/apache2/SSL/openstack.example.com.crt
 SSLCertificateKeyFile /etc/apache2/SSL/openstack.example.com.key
 SetEnvIf User-Agent &quot;.*MSIE.*&quot; nokeepalive ssl-unclean-shutdown
+
+# HTTP Strict Transport Security (HSTS) enforces that all communications
+# with a server go over SSL. This mitigates the threat from attacks such
+# as SSL-Strip which replaces links on the wire, stripping away https prefixes
+# and potentially allowing an attacker to view confidential information on the
+# wire
+Header add Strict-Transport-Security "max-age=15768000"
 
 WSGIScriptAlias / /usr/share/openstack-dashboard/openstack_dashboard/wsgi/django.wsgi
 WSGIDaemonProcess horizon user=www-data group=www-data processes=3 threads=10
@@ -92,19 +106,33 @@ Allow from all
 &lt;/Directory&gt;
 &lt;/VirtualHost&gt;</programlisting>
                 <para>In this configuration, Apache listens on the
-                    port 443 and redirects all the hits to the HTTPS
-                    protocol for all the non-secured requests. In the
-                    secured section, the private key, public key, and
-                    certificate to use are defined.</para>
+                port 443 and redirects all the hits to the HTTPS
+                protocol for all the non-secured requests. The secured
+                section defines the private key, public key, and
+                certificate to use.</para>
             </step>
             <step>
                 <para>Restart Apache and memcached:</para>
                 <screen><prompt>#</prompt> <userinput>service apache2 restart</userinput>
 <prompt>#</prompt> <userinput>service memcached restart</userinput></screen>
-                <para>If you call the HTTP version of the dashboard
-                    through your browser, you are redirected to the
-                    HTTPS page.</para>
+                <para>If you try to access the dashboard through HTTP,
+                the browser redirects you to the HTTPS page.</para>
             </step>
         </procedure>
-    </section>
+    <procedure xml:id="adjust-vnc-window">
+        <title>To adjust the dimensions of the VNC window in the
+            Dashboard</title>
+        <para>The <filename>_detail_vnc.html</filename> file defines
+        the size of the VNC window. To change the window size, edit
+        this file.</para>
+        <step>
+            <para>Edit
+                <filename>/usr/share/pyshared/horizon/dashboards/nova/instances/templates/instances/_detail_vnc.html.</filename></para>
+        </step>
+        <step>
+            <para>Modify the <literal>width</literal> and
+                    <literal>height</literal> parameters, as follows:</para>
+            <programlisting>&lt;iframe src="{{ vnc_url }}" width="720" height="430"&gt;&lt;/iframe&gt;</programlisting>
+        </step>
+    </procedure>
 </section>
