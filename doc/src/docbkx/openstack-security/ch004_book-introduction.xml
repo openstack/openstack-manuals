@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://docbook.org/ns/docbook" xmlns:db="http://docbook.org/ns/docbook" version="5.0" xml:id="ch004_book-introduction"><?dbhtml stop-chunking?>
     <title>Introduction to OpenStack</title>
-    <para>This guide provides security insight into OpenStack deployments. The intended audience includes cloud architects, deployers, and administrators.  In addition, cloud users will find the guide both educational and helpful in provider selection, while auditors will find it useful as a reference document to support their compliance certification efforts. This guide is also recommended for anyone interested in cloud security.</para>
+    <para>This guide provides security insight into OpenStack
+    deployments. The intended audience is cloud architects, deployers,
+    and administrators.  In addition, cloud users will find the guide
+    both educational and helpful in provider selection, while auditors
+    will find it useful as a reference document to support their
+    compliance certification efforts. This guide is also recommended
+    for anyone interested in cloud security.</para>
     <para>Each OpenStack deployment embraces a wide variety of technologies, spanning Linux distributions, database systems, messaging queues, OpenStack components themselves, access control policies, logging services, security monitoring tools, and much more. It should come as no surprise that the security issues involved are equally diverse, and their in-depth analysis would require several guides. We strive to find a balance, providing enough context to understand OpenStack security issues and their handling, and provide external references for further information. The guide could be read from start to finish or sampled as necessary like a reference.</para>
     <para>We briefly introduce the kinds of clouds: private, public, and hybrid before presenting an overview of the OpenStack components and their related security concerns in the remainder of the chapter.</para>
     <section xml:id="ch004_book-introduction-idp117824">
@@ -9,11 +15,33 @@
       <para>OpenStack is a key enabler in adoption of cloud technology and has several common deployment use cases. These are commonly known as Public, Private, and Hybrid models. The following sections use the National Institute of Standards and Technology (NIST) <link xlink:href="http://csrc.nist.gov/publications/nistpubs/800-145/SP800-145.pdf">definition of cloud</link> to introduce these different types of cloud as they apply to OpenStack.</para>
       <section xml:id="ch004_book-introduction-idp119328">
         <title>Public Cloud</title>
-        <para>According to NIST, a public cloud is one in which the infrastructure is open to the general public for consumption. OpenStack public clouds are typically run by a service provider and can be consumed by individuals, corporations, or any paying customer. A public cloud provider may expose a full set of features such as software defined networking, block storage, in addition to multiple instance types. Due to the nature of public clouds, they will be exposed to a higher degree of risk. As a consumer of a public cloud you should validate that your selected provider has the necessary certifications, attestations, and other regulatory considerations. As a public cloud provider, depending on your target customers, you may be subject to one or more regulations. Additionally, even if not required to meet regulatory requirements, a provider should ensure tenant isolation as well as protecting management infrastructure from external attacks.</para>
+        <para>According to NIST, a public cloud is one in which the
+        infrastructure is open to the general public for consumption.
+        OpenStack public clouds are typically run by a service
+        provider and can be consumed by individuals, corporations, or
+        any paying customer. A public cloud provider may expose a full
+        set of features such as software defined networking, block
+        storage, in addition to multiple instance types. Due to the
+        nature of public clouds, they are exposed to a higher degree
+        of risk. As a consumer of a public cloud you should validate
+        that your selected provider has the necessary certifications,
+        attestations, and other regulatory considerations. As a public
+        cloud provider, depending on your target customers, you may be
+        subject to one or more regulations. Additionally, even if not
+        required to meet regulatory requirements, a provider should
+        ensure tenant isolation as well as protecting management
+        infrastructure from external attacks.</para>
       </section>
       <section xml:id="ch004_book-introduction-idp121488">
         <title>Private Cloud</title>
-        <para>At the opposite end of the spectrum is the private cloud. As NIST defines it, a private cloud is provisioned for exclusive use by a single organization comprising multiple consumers (e.g. business units). It may be owned, managed, and operated by the organization, a third-party, or some combination of them, and it may exist on or off premises. Private cloud use cases are diverse, as such, their individual security concerns will vary.</para>
+        <para>At the opposite end of the spectrum is the private
+        cloud. As NIST defines it, a private cloud is provisioned for
+        exclusive use by a single organization comprising multiple
+        consumers (e.g. business units). It may be owned, managed, and
+        operated by the organization, a third-party, or some
+        combination of them, and it may exist on or off premises.
+        Private cloud use cases are diverse, as such, their individual
+        security concerns vary.</para>
       </section>
       <section xml:id="ch004_book-introduction-idp123456">
         <title>Community cloud</title>
@@ -22,7 +50,11 @@
       <section xml:id="ch004_book-introduction-idp125312">
         <title>Hybrid Cloud</title>
         <para>A hybrid cloud is defined by NIST as a composition of two or more distinct cloud infrastructures (private, community, or public) that remain unique entities, but are bound together by standardized or proprietary technology that enables data and application portability (e.g., cloud bursting for load balancing between clouds).  For example an online retailer may have their advertising and catalogue presented on a public cloud that allows for elastic provisioning. This would enable them to handle seasonal loads in a flexible, cost-effective fashion. Once a customer begins to process their order, they are transferred to the more secure private cloud backend that is PCI compliant.</para>
-        <para>For the purposes of this document, we treat Community and Hybrid similarly, dealing explicitly only with the extremes of Public and Private clouds from a security perspective. Your security measures will depend where your deployment falls upon the private public continuum.</para>
+        <para>For the purposes of this document, we treat Community
+        and Hybrid similarly, dealing explicitly only with the
+        extremes of Public and Private clouds from a security
+        perspective. Your security measures depend where your
+        deployment falls upon the private public continuum.</para>
       </section>
     </section>
     <section xml:id="ch004_book-introduction-idp128528">
@@ -39,9 +71,13 @@
         <title>OpenStack Compute</title>
         <para>OpenStack compute (Nova) provides services to support the management of virtual machine instances at scale, instances that host multi-tiered applications, dev/test environments, "Big Data" crunching Hadoop clusters, and/or high performance computing.</para>
         <para>Nova facilitates this management through an abstraction layer that interfaces with supported hypervisors, which we address later on in more detail.</para>
-        <para>Later in the guide, we will focus generically on the virtualization stack as it relates to hypervisors.</para>
-	<para>For information about the current state of feature support, see <link xlink:href="https://wiki.openstack.org/wiki/HypervisorSupportMatrix">OpenStack's Hypervisor Support Matrix</link>.</para>
-        <para>The security of Nova is critical for an OpenStack deployment. Hardening techniques should include support for strong instance isolation, secure communication between Nova sub-components, and resiliency of public facing API endpoints.</para>
+        <para>Later in the guide, we focus generically on the
+        virtualization stack as it relates to hypervisors.</para>
+	<para>For information about the current state of feature support, see
+          <link
+          xlink:href="https://wiki.openstack.org/wiki/HypervisorSupportMatrix"
+          >OpenStack Hypervisor Support Matrix</link>.</para>
+        <para>The security of Nova is critical for an OpenStack deployment. Hardening techniques should include support for strong instance isolation, secure communication between Nova sub-components, and resiliency of public-facing <glossterm>API</glossterm> endpoints.</para>
       </section>
       <section xml:id="ch004_book-introduction-idp138800">
         <title>OpenStack Object Storage</title>
@@ -51,12 +87,16 @@
       </section>
       <section xml:id="ch004_book-introduction-idp141536">
         <title>OpenStack Block Storage</title>
-        <para>OpenStack block storage service (Cinder), provides persistent block storage for compute instances. Cinder is responsible for managing the life-cycle of block devices, from the creation and attachment of volumes to instances, to their release.</para>
+        <para>The OpenStack Block Storage service (Cinder) provides
+        persistent block storage for compute instances. Cinder is
+        responsible for managing the life-cycle of block devices, from
+        the creation and attachment of volumes to instances, to their
+        release.</para>
         <para>Security considerations for block storage are similar to that of object storage.</para>
       </section>
       <section xml:id="ch004_book-introduction-idp143424">
         <title>OpenStack Networking</title>
-        <para>The OpenStack networking service (Neutron, previously called Quantum), provides various networking services to cloud users (tenants) such as IP address management, DNS, DHCP, load balancing, and security groups (network access rules, like firewall policies). It provides a framework for software defined networking (SDN) that allows for pluggable integration with various networking solutions.</para>
+        <para>The OpenStack networking service (Neutron, previously called Quantum), provides various networking services to cloud users (tenants) such as IP address management, <glossterm>DNS</glossterm>, <glossterm>DHCP</glossterm>, load balancing, and security groups (network access rules, like firewall policies). It provides a framework for software defined networking (SDN) that allows for pluggable integration with various networking solutions.</para>
         <para>OpenStack Networking allows cloud tenants to manage their guest network configurations. Security concerns with the networking service include network traffic isolation, availability, integrity and confidentiality.</para>
       </section>
       <section xml:id="ch004_book-introduction-idp145600">
@@ -75,7 +115,7 @@
       </section>
       <section xml:id="ch004_book-introduction-idp152400">
         <title>Other Supporting Technology</title>
-        <para>OpenStack relies on messaging for internal communication between several of its services. By default, OpenStack uses message queues based on the Advanced Message Queue Protocol (AMQP).  Similar to most OpenStack services, it supports pluggable components. Today the implementation backend could be either RabbitMQ, Qpid, or ZeroMQ.</para>
+        <para>OpenStack relies on messaging for internal communication between several of its services. By default, OpenStack uses message queues based on the Advanced Message Queue Protocol (<glossterm>AMQP</glossterm>).  Similar to most OpenStack services, it supports pluggable components. Today the implementation backend could be <glossterm>RabbitMQ</glossterm>, <glossterm>Qpid</glossterm>, or <glossterm>ZeroMQ</glossterm>.</para>
         <para>As most management commands flow through the message queueing system, it is a primary security concern for any OpenStack deployment.  Message queueing security is discussed in detail later in this guide.</para>
         <para>Several of the components use databases though it is not explicitly called out. Securing the access to the databases and their contents is yet another security concern, and consequently discussed in more detail later in this guide.</para>
       </section>
