@@ -8,7 +8,7 @@ Validates all xml files against the DocBook 5 RELAX NG schema, and
 attempts to build all books.
 
 Options:
-    path     Root directory, defaults to <repo root>/doc/src/doc/docbkx
+    path     Root directory, defaults to <repo root>/doc
 
 Ignores pom.xml files and subdirectories named "target".
 
@@ -29,7 +29,7 @@ import sys
 import urllib2
 
 # These are files that are known to not be in DocBook format
-FILE_EXCEPTIONS = ['st-training-guides.xml', 'ha-guide-docinfo.xml', 'bk001-ch003-associate-general.xml']
+FILE_EXCEPTIONS = ['st-training-guides.xml', 'ha-guide-docinfo.xml', 'bk001-ch003-associate-general.xml', 'basic-install-pom.xml']
 
 # These are books that we aren't checking yet
 BOOK_EXCEPTIONS = []
@@ -157,7 +157,6 @@ def validate_individual_files(rootdir, exceptions, force):
         print("\nFollowing files will be validated:")
         for f in modified_files:
             print(">>> %s" % f)
-            print("")
             modified_files = map(lambda x: os.path.abspath(x), modified_files)
 
     for root, dirs, files in os.walk(rootdir):
@@ -299,7 +298,7 @@ def main(rootdir, force):
 
 
 def default_root():
-    """Return the location of openstack-manuals/doc/src/docbkx
+    """Return the location of openstack-manuals/doc/
 
     The current working directory must be inside of the openstack-manuals
     repository for this method to succeed"""
@@ -310,15 +309,14 @@ def default_root():
         print("git failed: %s" % e)
         sys.exit(1)
 
-    return os.path.join(gitroot, "doc/src/docbkx")
+    return os.path.join(gitroot, "doc")
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Validate XML files against "
                                      "the DocBook 5 RELAX NG schema")
     parser.add_argument('path', nargs='?', default=default_root(),
                         help="Root directory that contains DocBook files, "
-                        "defaults to `git rev-parse --show-toplevel`/doc/src/"
-                        "docbkx")
+                        "defaults to `git rev-parse --show-toplevel`/doc/")
     parser.add_argument("--force", help="force the validation of all files "
                         "and build all books", action="store_true")
     args = parser.parse_args()
