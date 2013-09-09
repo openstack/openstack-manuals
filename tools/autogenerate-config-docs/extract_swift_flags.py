@@ -125,7 +125,7 @@ def create_new_tables(repo, verbose):
     of truth in that order to determine helptext for options found in
     sample config files
     """
-    existing_tables = glob.glob('../../doc/src/docbkx/common/tables/swift*xml')
+    existing_tables = glob.glob('../../doc/common/tables/swift*xml')
     options = {}
     #use the existing tables to get a list of option names
     options = get_existing_options(existing_tables)
