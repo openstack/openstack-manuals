@@ -135,6 +135,24 @@ def error_message(error_log):
     errs.reverse()
     return "\n".join(errs)
 
+# Check whether only files in www got updated
+def only_www_touched():
+    try:
+        args = ["git", "diff", "--name-only", "HEAD", "HEAD~1"]
+        modified_files = check_output(args).strip().split()
+    except (CalledProcessError, OSError) as e:
+        print("git failed: %s" % e)
+        sys.exit(1)
+
+    www_changed = False
+    other_changed = False
+    for f in modified_files:
+        if f.startswith("www/"):
+            www_changed = True
+        else:
+            other_changed = True
+
+    return www_changed and not other_changed
 
 def get_modified_files():
     try:
@@ -344,6 +362,10 @@ def build_affected_books(rootdir, book_exceptions, file_exceptions, force):
 def main(rootdir, force):
     if force:
         print("Validation of all files and build of all books will be forced.")
+
+    if not force and only_www_touched():
+        print("Only files in www directory changed, no validation done.")
+        return
 
     check_deleted_files(rootdir, FILE_EXCEPTIONS)
     validate_individual_files(rootdir, FILE_EXCEPTIONS, force)
