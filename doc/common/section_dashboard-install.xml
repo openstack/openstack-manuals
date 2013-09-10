@@ -22,6 +22,7 @@
                 Identity Service as root:</para>
             <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install memcached libapache2-mod-wsgi openstack-dashboard</userinput></screen>
             <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install memcached python-memcached mod_wsgi openstack-dashboard</userinput></screen>
+            <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install memcached python-python-memcached apache2-mod_wsgi openstack-dashboard</userinput></screen>
         </step>
         <step>
             <para>Modify the value of
@@ -29,21 +30,22 @@
                     <filename os="ubuntu"
                     >/etc/openstack-dashboard/local_settings.py</filename><filename
                     os="centos;fedora;rhel"
-                    >/etc/openstack-dashboard/local_settings</filename> to match
-                the ones set in <filename os="ubuntu"
+                    >/etc/openstack-dashboard/local_settings</filename><filename
+                    os="opensuse">/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>
+                    to match the ones set in <filename os="ubuntu"
                     >/etc/memcached.conf</filename><filename
-                    os="centos;fedora;rhel"
+                    os="centos;fedora;rhel;opensuse"
                     >/etc/sysconfig/memcached.conf</filename>.</para>
             <para>Open <filename os="ubuntu"
-                    >/etc/openstack-dashboard/local_settings.py</filename><filename
-                    os="centos;fedora;rhel"
+                    >/etc/openstack-dashboard/local_settings.py</filename>
+                  <filename os="centos;fedora;rhel"
                     >/etc/openstack-dashboard/local_settings</filename> and look
                 for this line:</para>
             <programlisting language="bash" linenumbering="unnumbered">CACHES = {
-	'default': {
-		'BACKEND' : 'django.core.cache.backends.memcached.MemcachedCache',
-		'LOCATION' : '127.0.0.1:11211'
-	}
+        'default': {
+                'BACKEND' : 'django.core.cache.backends.memcached.MemcachedCache',
+                'LOCATION' : '127.0.0.1:11211'
+        }
 }</programlisting>
             <note xlink:href="#installing-openstack-dashboard"
                 xlink:title="Notes">
@@ -53,7 +55,7 @@
                         <para>The address and port must match the ones set in
                                 <filename os="ubuntu"
                                 >/etc/memcached.conf</filename><filename
-                                os="centos;fedora;rhel"
+                                os="centos;fedora;rhel;opensuse"
                                 >/etc/sysconfig/memcached</filename>.</para>
                         <para>If you change the memcached settings, you must
                             restart the Apache web server for the changes to
@@ -70,7 +72,9 @@
                             the <filename os="centos;fedora;rhel"
                                 >/etc/openstack-dashboard/local_settings</filename><filename
                                 os="ubuntu"
-                                >/etc/openstack-dashboard/local_settings.py</filename>
+                                >/etc/openstack-dashboard/local_settings.py</filename><filename
+                                os="opensuse"
+                                >/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>
                             file.</para>
                         <para>Change the following parameter: <code>TIME_ZONE =
                                 "UTC"</code>
