@@ -13,7 +13,7 @@
             <simplesect>
                 <title>Network Configuration</title>
 
-            	<para>The Storwize family or SVC system must be
+                <para>The Storwize family or SVC system must be
                 configured for iSCSI, Fibre Channel, or both.</para>
 
                 <para>If using iSCSI, each Storwize family or SVC node should
@@ -80,8 +80,8 @@
             </simplesect>
             <simplesect>
                 <title>Configuring storage pools</title>
-                <para>The IBM Storwize/SVC driver allocates all volumes in a
-                single pool.
+                <para>Each instance of the IBM Storwize/SVC driver allocates
+                all volumes in a single pool.
                 The pool should be created in advance and be
                 provided to the driver using the
                 <literal>storwize_svc_volpool_name</literal>
@@ -161,9 +161,7 @@
                 <para>You can create an SSH key pair using OpenSSH,
                 by running:
                 </para>
-                <programlisting>
-ssh-keygen -t rsa
-                </programlisting>
+<screen><prompt>$</prompt> <userinput>ssh-keygen -t rsa</userinput></screen>
                 <para>The command prompts for a file to save the key
                 pair.
                 For example, if you select 'key' as the
@@ -199,9 +197,7 @@ ssh-keygen -t rsa
                         SVC driver by setting the
                             <literal>volume_driver</literal> option in
                             <filename>cinder.conf</filename> as follows:</para>
-                <programlisting>
-volume_driver = cinder.volume.drivers.storwize_svc.StorwizeSVCDriver
-                </programlisting>
+<programlisting>volume_driver = cinder.volume.drivers.storwize_svc.StorwizeSVCDriver</programlisting>
             </simplesect>
             <simplesect>
                 <title>Configuring options for the Storwize family and
@@ -213,10 +209,10 @@ volume_driver = cinder.volume.drivers.storwize_svc.StorwizeSVCDriver
                 <table rules="all">
                 <caption>List of configuration flags for Storwize
                             storage and SVC driver</caption>
-                <col width="35%"/>
-                <col width="15%"/>
-                <col width="15%"/>
-                <col width="35%"/>
+                <col width="40%"/>
+                <col width="10%"/>
+                <col width="12%"/>
+                <col width="38%"/>
                 <thead>
                 <tr>
                     <td>Flag name</td>
@@ -410,6 +406,16 @@ volume_driver = cinder.volume.drivers.storwize_svc.StorwizeSVCDriver
                     </tr>
                     <tr>
                         <td><para>
+                        <literal>storwize_svc_vol_iogrp</literal>
+                        </para>
+                        </td>
+                        <td><para>Optional</para></td>
+                        <td><para>0</para></td>
+                        <td><para>The I/O group in which to allocate vdisks
+                            </para></td>
+                    </tr>
+                    <tr>
+                        <td><para>
                         <literal>storwize_svc_flashcopy_timeout
                         </literal>
                         </para>
@@ -457,96 +463,94 @@ volume_driver = cinder.volume.drivers.storwize_svc.StorwizeSVCDriver
                             </para></footnote>
                         </para></td>
                     </tr>
+                    <tr>
+                        <td><para>
+                        <literal>storwize_svc_multihost_enabled
+                        </literal>
+                        </para>
+                        </td>
+                        <td><para>Optional</para></td>
+                        <td><para>True</para></td>
+                        <td><para>Enable mapping vdisks to multiple hosts
+                            <footnote xml:id='storwize-svc-fn9'>
+                            <para>This option allows the driver to map a vdisk
+                                   to more than one host at a time. This scenario
+                                   occurs during migration of a virtual machine
+                                   with an attached volume; the volume is
+                                   simultaneously mapped to both the source and
+                                   destination compute hosts. If your deployment
+                                   does not require attaching vdisks to multiple
+                                   hosts, setting this flag to False will provide
+                                   added safety.
+                            </para></footnote>
+                        </para></td>
+                    </tr>
                 </tbody>
             </table>
             </simplesect>
             <simplesect>
-                <title>Working with multiple back-ends</title>
-                <para>Cinder has support for multiple back-ends. This
-                can be accomplished by running multiple instances of
-                <systemitem class="service">cinder-volume</systemitem>, each with its own configuration file,
-                or by including multiple sections in one configuration
-                file. For example:
-                <programlisting>
-[DEFAULT]
-...
-enabled_backends = v7k1,v7k2
+                <title>Placement with volume types</title>
+                <para>The IBM Storwize/SVC driver exposes capabilities
+                that can be added to the <literal>extra specs</literal>
+                of volume types, and used by the filter scheduler to
+                determine placement of new volumes. Make sure to prefix
+                these keys with <literal>capabilities:</literal> to
+                indicate that the scheduler should use them. The following
+                <literal>extra specs</literal> are supported:</para>
 
-[v7k1]
-...
+                <itemizedlist>
+                    <listitem><para>capabilities:volume_backend_name - Specify
+                    a specific backend where the volume should be created. The
+                    backend name is a contatenation of the name of the
+                    IBM Storwize/SVC storage system as shown in
+                    <literal>lssystem</literal>, an underscore,
+                    and the name of the pool (mdisk group). For example:
+<programlisting>capabilities:volume_backend_name=my7000_openstackpool</programlisting>
+                    </para></listitem>
 
-[v7k2]
-...
-                </programlisting>Here,
-                common options are placed under
-                    <literal>[DEFAULT]</literal>, while options
-                specific to a back-end are placed in the appropriate
-                section.</para>
+                    <listitem><para>capabilities:compression_support - Specify
+                    a backend according to compression support. A value of
+                    <literal>True</literal> should be used to request a backend
+                    that supports compression, and a value of
+                    <literal>False</literal> will request a backend that does
+                    not support compression. If you do not have constraints on
+                    compression support, do not set this key. Note that
+                    specifying <literal>True</literal> does not enable
+                    compression; it only requests that the volume be placed on
+                    a backend that supports compression. Example syntax:
+<programlisting>capabilities:compression_support='&lt;is&gt; True'</programlisting>
+                    </para></listitem>
 
-                <para>By default, volumes are allocated between back-ends
-                to balance allocated space.
-                However, <literal>volume types</literal> can be used to have
-                finer-grained control over where volumes are allocated.
-                Each volume type contains a set of key-value pairs called
-                <literal>extra specs</literal>.
-                Volume types are typically set a priori by an administrator,
-                and can be managed using the cinder client, using the
-                <literal>type-create</literal>, <literal>type-delete</literal>,
-                <literal>type-key</literal>, and <literal>type-list</literal>
-                arguments.</para>
+                    <listitem><para>capabilities:easytier_support - Similar
+                    semantics as the <literal>compression_support</literal> key,
+                    but for specifying according to support of the Easy Tier
+                    feature. Example syntax:
+<programlisting>capabilities:easytier_support='&lt;is&gt; True'</programlisting>
+                    </para></listitem>
 
-                <para>The <literal>extra specs</literal> keys which have the
-                "capabilities" prefix (called "scope") are interpreted by the
-                Cinder scheduler and used to make placement decisions according
-                to the capabilities of the available back-ends.</para>
-
-                <para>The following are examples of supported key-values:
-                </para>
-
-                <para>In the following example, the volume is placed on a
-                controller named <literal>myv7000</literal>, in a pool named
-                <literal>openstack</literal>:
-                <programlisting>
-capabilities:volume_backend_name=my7000_openstack
-                </programlisting></para>
-
-                <para>In the next example, the volume is placed
-                on a controller that supports compression. Specifying
-                False requires that the volume is placed on a
-                back-end that does not support compression (if no
-                constraints on compression support are required, do
-                not set this key):</para>
-                <programlisting>
-capabilities:compression_support='&lt;is&gt; True'
-                </programlisting>
-
-                <para>The next example shows how Easy Tier support can be with
-                set with the same semantics as
-                <literal>compression_support</literal>:</para>
-                <programlisting>
-capabilities:easytier_support='&lt;is&gt; True'
-                </programlisting>
-
-                <para>The connection protocol used to attach volumes to
-                instances can also be specified using volume types.
-                In this example, the volume is placed on a controller
-                that supports Fibre Channel, and Fibre Channel is used
-                when attaching that volume.
-                FC can also be replaced with iSCSI.</para>
-                <programlisting>
-capabilities:storage_protocol='&lt;in&gt; FC'
-                </programlisting>
+                    <listitem><para>capabilities:storage_protocol - Specifies
+                    the connection protocol used to attach volumes of this type
+                    to instances. Legal values are <literal>iSCSI</literal> and
+                    <literal>FC</literal>. This <literal>extra specs</literal>
+                    value is used for both placement and setting the protocol
+                    used for this volume. In the example syntax, note &lt;in&gt;
+                    is used as opposed to &lt;is&gt; used in the previous
+                    examples.
+<programlisting>capabilities:storage_protocol='&lt;in&gt; FC'</programlisting>
+                    </para></listitem>
+                </itemizedlist>
             </simplesect>
+
             <simplesect>
                 <title>Configuring per-volume creation options</title>
-                <para>The volume types previously described can also
+                <para>Volume types can also
                 be used to pass options to the IBM Storwize/SVC
                 driver, which over-ride the default values set in the
                 configuration file. Contrary to the previous examples
                 where the "capabilities" scope was used to pass
                 parameters to the Cinder scheduler, options can be
                 passed to the IBM Storwize/SVC driver with the
-                "drivers" scope, or by omitting the scope.</para>
+                "drivers" scope.</para>
 
                 <para>The following <literal>extra specs</literal> keys are
                 supported by the IBM Storwize/SVC driver:
@@ -558,6 +562,7 @@ capabilities:storage_protocol='&lt;in&gt; FC'
                     <listitem><para>compression</para></listitem>
                     <listitem><para>easytier</para></listitem>
                     <listitem><para>multipath</para></listitem>
+                    <listitem><para>iogrp</para></listitem>
                 </itemizedlist>
                 These keys have the same semantics as their counterparts in the
                 configuration file.  They are set similarly; for example,
@@ -566,15 +571,15 @@ capabilities:storage_protocol='&lt;in&gt; FC'
                 </para>
             </simplesect>
             <simplesect>
-                <title>Complete volume type examples</title>
-                <para>In the following example, the volume is placed on
-                    a controller named that supports Fibre Channel and
-                    compression, FC is used when attaching the volume,
-                    and compression is enabled:</para>
-                <programlisting>
-cinder type-create compressed
-cinder type-key compressed set capabilities:storage_protocol=''&lt;in&gt; FC' capabilities:compression_support='&lt;is&gt; True' drivers:compression=True
-                </programlisting>
+                <title>Example using volume types</title>
+                <para>In the following example, we create a volume type to specify
+                    a controller that supports iSCSI and
+                    compression, to use iSCSI when attaching the volume,
+                    and and to enable compression:</para>
+<screen><prompt>$</prompt> <userinput>cinder type-create compressed</userinput>
+<prompt>$</prompt> <userinput>cinder type-key compressed set capabilities:storage_protocol='&lt;in&gt; iSCSI' capabilities:compression_support='&lt;is&gt; True' drivers:compression=True</userinput></screen>
+                <para>We can then create a 50GB volume using this type:</para>
+<screen><prompt>$</prompt> <userinput>cinder create --display-name "compressed volume" --volume-type compressed 50</userinput></screen>
 
                 <para>Volume types can be used, for example, to provide users
                 with different
@@ -596,4 +601,49 @@ cinder type-key compressed set capabilities:storage_protocol=''&lt;in&gt; FC' ca
                 </para>
             </simplesect>
         </section>
+        <section xml:id="ibm-storwize-svc-driver3">
+            <title>Operational Notes for the Storwize Family and SVC Driver</title>
+            <simplesect>
+                <title>Volume Migration</title>
+
+                <para>In the context of OpenStack Block Storage's volume
+                migration feature, the IBM Storwize/SVC driver enables the
+                storage's virtualization technology. When migrating a
+                volume from one pool to another, the volume will appear
+                in the destination pool almost immediately, while the
+                storage moves the data in the background.</para>
+
+                <note>
+                    <para>To enable this feature, both pools involved in
+                    a given volume migration must have the same values
+                    for <literal>extent_size</literal>. If the pools
+                    have different values for
+                    <literal>extent_size</literal>, the data will still
+                    be moved directly between the pools (not host-side
+                    copy), but the operation will be synchronous.</para>
+                </note>
+
+            </simplesect>
+
+            <simplesect>
+                <title>Extending Volumes</title>
+
+                <para>The IBM Storwize/SVC driver allows for extending a
+                volume's size, but only for volumes without snapshots.</para>
+            </simplesect>
+
+            <simplesect>
+                <title>Snapshots and Clones</title>
+
+                <para>Snapshots are implemented using FlashCopy with no
+                background copy (space-efficient). Volume clones
+                (volumes created from existing volumes) are implemented
+                with FlashCopy, but with background copy enabled. This
+                means that volume clones are independent, full copies.
+                While this background copy is taking place, attempting
+                to delete or extend the source volume will result in
+                that operation waiting for the copy to complete.</para>
+            </simplesect>
+
         </section>
+    </section>
