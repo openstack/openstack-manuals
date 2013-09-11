@@ -221,7 +221,7 @@ def validate_individual_files(rootdir, exceptions, force):
         print("\nFollowing files will be validated:")
         for f in modified_files:
             print(">>> %s" % f)
-            modified_files = map(lambda x: os.path.abspath(x), modified_files)
+        modified_files = map(lambda x: os.path.abspath(x), modified_files)
 
     for root, dirs, files in os.walk(rootdir):
         # Don't descend into 'target' subdirectories
@@ -255,7 +255,7 @@ def validate_individual_files(rootdir, exceptions, force):
 
     if any_failures:
         sys.exit(1)
-
+    print("Validation passed.\n")
 
 def logging_build_book(result):
     RESULTS_OF_BUILDS.append(result)
