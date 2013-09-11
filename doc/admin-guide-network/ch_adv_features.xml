@@ -789,6 +789,45 @@ neutron lb-vip-create --name myvip --protocol-port 80 --protocol HTTP --subnet-i
           </itemizedlist>
         </section>
     </section>
+    <section xml:id="allowed_address_pairs">
+        <title>Allowed-Address-Pairs</title>
+        <para>Allowed-Address-Pairs is an API extension that extends the port
+              attribute. This extension allows one to specify arbitrary
+              mac_address/ip_address(cidr) pairs that are allowed to pass through
+              a port regardless of subnet. The main use case for this is to
+              enable the ability to use protocols such as VRRP which floats
+              an ip address between two instances to enable fast dataplane
+              failover.</para>
+        <note>
+            <para>The allowed-address-pairs extension is currently only
+                  supported by the following plugins: Nicira NVP, OpenvSwitch,
+                  and ML2.</para>
+        </note>
+        <section xml:id="allowed_address_pairs_workflow">
+            <title>Common Allowed Address Pairs Workflow</title>
+            <itemizedlist>
+            <listitem>
+              <para>Create a port with a specific allowed-address-pairs:</para>
+              <screen><prompt>$</prompt><userinput> neutron port-create net1 --allowed-address-pairs type=dict list=true mac_address=&lt;mac_address&gt;,ip_address=&lt;ip_cidr&gt;</userinput></screen>
+            </listitem>
+            <listitem>
+              <para>Update a port adding allowed-address-pairs:</para>
+              <screen><prompt>$</prompt><userinput> neutron port-update  &lt;subnet-uuid&gt; --allowed-address-pairs type=dict list=true mac_address=&lt;mac_address&gt;,ip_address=&lt;ip_cidr&gt;</userinput></screen>
+            </listitem>
+          </itemizedlist>
+          <note><para>Setting an allowed-address-pair that matches the
+                      mac_address and ip_address of a port is prevented. This
+                      is because that would have no effect since traffic
+                      matching the mac_address and ip_address is already
+                      allowed to pass through the port.</para></note>
+          <note><para>If your plugin implements the port-security extension
+                      port-security-enabled must be set to True on the port
+                      in order to have allowed-address-pairs on a port. The reason for this
+                      is because if port-security-enabled is set to False this allows
+                      all traffic to be passed through the port thus having
+                      allowed-address-pairs would have no effect.</para></note>
+        </section>
+    </section>
     <section xml:id="plugin_specific_extensions">
         <title>Plugin Specific Extensions</title>
         <?dbhtml stop-chunking?>
