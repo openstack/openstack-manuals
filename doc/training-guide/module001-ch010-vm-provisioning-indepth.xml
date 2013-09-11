@@ -6,4 +6,117 @@
   xml:id="module001-ch010-vm-provisioning-indepth">
   <title>VM Provisioning Indepth</title>
   <para>More Content To be Added ...</para>
+  <para>The request flow for provisioning an Instance goes like
+    this:</para>
+  <orderedlist>
+    <listitem>
+      <para>Dashboard or CLI gets the user credentials authenticates
+        with Keystone via REST api.</para>
+    </listitem>
+  </orderedlist>
+  <para>Keystone authenticate the credentials and generate &amp; send
+    back auth-token which will be used for sending request to other
+    Components through REST-call.</para>
+  <orderedlist>
+    <listitem>
+      <para>Dashboard or CLI convert the new instance request
+        specified in ‘launch instance’ or ‘nova-boot’ form to REST
+        API request and send it to nova-api.</para>
+    </listitem>
+    <listitem>
+      <para>nova-api receive the request and sends the request for
+        validation auth-token and access permission to
+        keystone.</para>
+    </listitem>
+  </orderedlist>
+  <para>Keystone validates the token and sends updated auth headers
+    with roles and permissions.</para>
+  <orderedlist>
+    <listitem>
+      <para>nova-api interacts with nova-database.</para>
+    </listitem>
+  </orderedlist>
+  <para>Creates initial db entry for new instance.</para>
+  <orderedlist>
+    <listitem>
+      <para>nova-api sends the rpc.call request to nova-scheduler
+        excepting to get updated instance entry with host ID
+        specified.</para>
+    </listitem>
+    <listitem>
+      <para>nova-scheduler picks the request from the queue.</para>
+    </listitem>
+    <listitem>
+      <para>nova-scheduler interacts with nova-database to find an
+        appropriate host via filtering and weighing.</para>
+    </listitem>
+  </orderedlist>
+  <para>Returns the updated instance entry with appropriate host ID
+    after filtering and weighing.</para>
+  <para>nova-scheduler sends the rpc.cast request to nova-compute for
+    ‘launching instance’ on appropriate host .</para>
+  <orderedlist>
+    <listitem>
+      <para>nova-compute picks the request from the queue.</para>
+    </listitem>
+    <listitem>
+      <para>nova-compute send the rpc.call request to nova-conductor
+        to fetch the instance information such as host ID and flavor(
+        Ram , CPU ,Disk).</para>
+    </listitem>
+    <listitem>
+      <para>nova-conductor picks the request from the queue.</para>
+    </listitem>
+    <listitem>
+      <para>nova-conductor interacts with nova-database.</para>
+    </listitem>
+  </orderedlist>
+  <para>Return the instance information.</para>
+  <para>nova-compute picks the instance information from the
+    queue.</para>
+  <orderedlist>
+    <listitem>
+      <para>nova-compute does the REST call by passing auth-token to
+        glance-api to get the Image URI by Image ID from glance and
+        upload image from image storage.</para>
+    </listitem>
+    <listitem>
+      <para>glance-api validates the auth-token with keystone. </para>
+    </listitem>
+  </orderedlist>
+  <para>nova-compute get the image metadata.</para>
+  <para>nova-compute does the REST-call by passing auth-token to
+    Network API to allocate and configure the network such that
+    instance gets the IP address. </para>
+  <orderedlist>
+    <listitem>
+      <para>quantum-server validates the auth-token with
+        keystone.</para>
+    </listitem>
+  </orderedlist>
+  <para>nova-compute get the network info.</para>
+  <orderedlist>
+    <listitem>
+      <para>nova-compute does the REST call by passing auth-token to
+        Volume API to attach volumes to instance.</para>
+    </listitem>
+    <listitem>
+      <para>cinder-api validates the auth-token with keystone.</para>
+    </listitem>
+  </orderedlist>
+  <para>nova-compute gets the block storage info.</para>
+  <orderedlist>
+    <listitem>
+      <para>nova-compute generates data for hypervisor driver and
+        executes request on Hypervisor( via libvirt or api).</para>
+    </listitem>
+  </orderedlist>
+  <figure>
+    <title>Nova VM Provisioning</title>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="figures/image02.png"/>
+      </imageobject>
+    </mediaobject>
+  </figure>
 </chapter>
