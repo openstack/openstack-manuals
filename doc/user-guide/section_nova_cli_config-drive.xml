@@ -30,6 +30,8 @@
             current version of cloud-init as of this writing (0.7.1)
             has been confirmed to work with Ubuntu, as well as
             Fedora-based images such as RHEL.</para>
+        <para>Config drive is currently supported by the following
+            hypervisors: libvirt, xenserver, hyper-v and vmware.</para>
         <para>If an image does not have the cloud-init package
             installed, the image must be customized to run a script
             that mounts the config drive on boot, reads the data from
@@ -45,7 +47,12 @@
                         >#1165174</link>). Make sure you install this
                     program on each compute host before attempting to
                     use config drive, or an instance will not boot
-                    properly.</para>
+                    properly. The path to where
+                    <command>genisoimage</command> is installed can
+                    be set using the <literal>mkisofs_cmd</literal> flag. If
+                    <command>genisoimage</command> is in the path
+                    used by nova-compute you do not need to set
+                    the value of this flag.</para>
             </note>
             <note>
                 <para>If you use Xen with a config drive, disable the
