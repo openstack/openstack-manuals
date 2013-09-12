@@ -356,4 +356,95 @@ blueprint training-manuals</programlisting></para>
                 </step>
             </procedure></para>
     </section>
+    <section xml:id="operator-add-training-content">
+        <title>Add Content to the Training Manuals</title>
+        <para>
+            <procedure>
+                <step><para><emphasis role="bold">Getting Accounts and Tools:</emphasis> We can't do
+                    this without operators and developers using and creating the content. Anyone can
+                    contribute content. You will need the tools to get started. Go to the <link
+                        xlink:href="http://docs.openstack.org/trunk/openstack-training/content/getting-tools-and-accounts.html"
+                        >Getting Tools and Accounts</link> page.</para>
+                </step>
+                 <step><para><emphasis role="bold">Pick a Card:</emphasis> Once you have your tools ready to go, you can
+                        assign some work to yourself. Go to the <link
+                            xlink:href="https://trello.com/board/openstack-training/51d6e5fee37248fd5b003de9"
+                            >Training Trello/KanBan storyboard</link> and assign a card / user story
+                        from the Sprint Backlog to yourself. If you don't have a Trello account, no
+                        problem, just create one. Email seanrob@yahoo-inc.com and you will have
+                        access. Move the card from the Sprint Backlog to Doing.</para>
+                    </step>
+                    <step>
+                    <para><emphasis role="bold">Create the Content:</emphasis> Each card / user
+                        story from the KanBan story board will be a separate chunk of content you
+                        will add to the openstack-manuals repository openstack-training sub-project. </para>
+                    </step>
+                <step>
+                    <para>Open the file <emphasis role="bold">st-training-guides.xml</emphasis> with
+                        your XML editor. All the content starts with the set file <emphasis
+                            role="bold">st-training-guides.xml</emphasis>. The XML structure follows
+                        the hierarchy Set -> Book -> Chapter -> Section. The <emphasis role="bold"
+                            >st-training-guides.xml</emphasis> file holds the set level. Notice the
+                        set file uses xi:include statements to include the books. We want to open
+                        the associate book. Open the associate book and you will see the chapter
+                        include statements. These are the chapters that make up the Associate
+                        Training Guide book.</para>
+                </step>
+                <step>
+                    <para>Create a branch using the card number as <emphasis role="bold"
+                            >associate-card-XXX</emphasis> where XXX is the card number. Review
+                            <link
+                            xlink:href="http://docs.openstack.org/trunk/openstack-training/content/operator-create-branch.html"
+                            >Creating a Branch</link> again for instructions on how to complete the
+                        branch merge.</para>
+                </step>
+                <step>
+                    <para>Copy the <emphasis role="bold">user-story-includes-template.xml
+                        </emphasis>to <emphasis role="bold"
+                        >associate-card-XXX.xml</emphasis>.</para>
+                </step>
+                <step>
+                    <para>Open the <emphasis role="bold"
+                            >bk001-ch003-asssociate-general.xml</emphasis> file and add <emphasis
+                            role="bold">&lt;xi:include
+                        href="associate-card-XXX.xml"></emphasis></para>
+                </step>
+                <step>
+                    <para>Side by side, open<emphasis role="bold"> associate-card-XXX.xml</emphasis>
+                        with your XML editor and open the <emphasis role="bold">ubuntu 12.04 install
+                            guide</emphasis> with your HTML browser.</para>
+                </step>
+                <step>
+                    <para>Find the HTML content to include. Find the XML file that matches the HTML.
+                        Include the whole page using a simple href like <emphasis role="bold"
+                            >&lt;xi:include href="associate-card-XXX.xml"></emphasis> or include a
+                        section using xpath like <emphasis role="bold">&lt;xi:include
+                            href="../basic-install/src/basic-install_controller-common.xml"
+                            xpointer="xmlns(db=http://docbook.org/ns/docbook) xpath(//*[@xml:id =
+                            'controller-os'])"></emphasis> . Review the <emphasis role="bold"
+                            >user-story-includes-template.xml</emphasis> file for the whole
+                        syntax.</para>
+                </step>
+                <step>
+                    <para>Copy in other content sources like the Aptira content, your own text
+                        describing what needs to be learned with the section, diagrams, and quizes.
+                        If you include content from another source like Aptira cocntent make extra
+                        paragraph referencing the file and/or HTTP address the content came
+                        from.</para>
+                </step>
+                <step>
+                    <para>Verify the code is good by runnning mvn clean generate-sources and by
+                        reviewing the local HTML in <link
+                            xlink:href="target/docbkx/webhelp/local/training-guide/content/"
+                            >file:///Users/(localUser)/code/openstack-manuals/doc/training-guide/target/docbkx/webhelp/local/training-guide/content/</link></para>
+                </step>
+                <step>
+                    <para>Merge the branch</para>
+                </step>
+                <step>
+                    <para>Move the card from Doing to Done</para>
+                </step>
+            </procedure>
+        </para>
+    </section>
 </section>
