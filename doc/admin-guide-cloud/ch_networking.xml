@@ -1723,16 +1723,18 @@ neutron security-group-rule-create --direction ingress --protocol tcp --port_ran
         <title>Load-Balancer-as-a-Service</title>
         <note>
             <para>The Load-Balancer-as-a-Service API is an
-                experimental API meant to give early adopters and
-                vendors a chance to build implementations against. The
-                reference implementation should probably not be run in
-                production environments.</para>
+                API meant to provision and configure load balancers.
+                The Havana release offers a reference implementation that is based on
+                the HAProxy software load balancer.</para>
         </note>
         <section xml:id="lbaas_workflow">
             <title>Common Load-Balancer-as-a-Service workflow</title>
-            <para>Create a load balancer pool:</para>
+            <para>Create a load balancer pool using specific provider:</para>
             <screen><computeroutput>
-neutron lb-pool-create --lb-method ROUND_ROBIN --name mypool --protocol HTTP --subnet-id &lt;subnet-uuid&gt;</computeroutput></screen>
+neutron lb-pool-create --lb-method ROUND_ROBIN --name mypool --protocol HTTP --subnet-id &lt;subnet-uuid&gt; <parameter>--provider &lt;provider_name&gt;</parameter></computeroutput></screen>
+            <para><parameter>--provider</parameter> is an optional argument; if not used, the pool is created with default provider for LBaaS service.
+                The default provider however should be configured in the <literal>[service_providers]</literal> section of <filename>neutron.conf</filename> file.
+                If no default provider is specified for LBaaS, the <parameter>--provider</parameter> option is mandatory for pool creation.</para>
             <para>Associate two web servers with pool:</para>
             <screen><computeroutput>
 neutron lb-member-create --address  &lt;webserver one IP&gt; --protocol-port 80 mypool
