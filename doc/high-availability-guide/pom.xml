@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">   
-    <modelVersion>4.0.0</modelVersion> 
+    <modelVersion>4.0.0</modelVersion>
     <groupId>org.openstack.docs</groupId>
     <artifactId>openstack-guide</artifactId>
     <version>1.0.0-SNAPSHOT</version>
@@ -16,10 +16,9 @@
     <!-- ################################################ -->
     <!-- USE "mvn clean generate-sources" to run this POM -->
     <!-- ################################################ -->
-    
+
     <build>
         <plugins>
-            
             <plugin>
                 <groupId>com.rackspace.cloud.api</groupId>
                 <artifactId>clouddocs-maven-plugin</artifactId>
@@ -54,10 +53,10 @@
                             <sectionAutolabel>0</sectionAutolabel>
                             <sectionLabelIncludesComponentLabel>0</sectionLabelIncludesComponentLabel>
 
-			    <webhelpDirname>high-availability-guide</webhelpDirname>
-			    <targetDirectory>${basedir}/target/docbkx/webhelp/${release.path.name}</targetDirectory>
-			    <includeDateInPdfFilename>0</includeDateInPdfFilename>
-			    <pdfFilenameBase>high-availability-guide-${release.path.name}</pdfFilenameBase>
+                            <webhelpDirname>high-availability-guide</webhelpDirname>
+                            <targetDirectory>${basedir}/target/docbkx/webhelp</targetDirectory>
+                            <includeDateInPdfFilename>0</includeDateInPdfFilename>
+                            <pdfFilenameBase>high-availability-guide</pdfFilenameBase>
 
                         </configuration>
                     </execution>
@@ -67,18 +66,18 @@
                             <goal>generate-webhelp</goal>
                         </goals>
                         <phase>generate-sources</phase>
-			<configuration>
-			  <includes>dummy.xml</includes>
-			  <postProcess>
-			    <delete includeemptydirs="true" verbose="true">
-			      <fileset dir="${basedir}/target/docbkx/webhelp/${release.path.name}" >
-				<include name="**/*"/>
-				<exclude name="high-availability-guide/**"/>
-			      </fileset>
-			    </delete>
-			  </postProcess>
-			</configuration>
-		    </execution>
+                        <configuration>
+                          <includes>dummy.xml</includes>
+                          <postProcess>
+                            <delete includeemptydirs="true" verbose="true">
+                              <fileset dir="${basedir}/target/docbkx/webhelp" >
+                                <include name="**/*"/>
+                                <exclude name="high-availability-guide/**"/>
+                              </fileset>
+                            </delete>
+                          </postProcess>
+                        </configuration>
+                    </execution>
                 </executions>
                 <configuration>
                     <!-- These parameters apply to pdf and webhelp -->
@@ -87,12 +86,11 @@
                     <includes>
                         bk-ha-guide.xml
                     </includes>
-                    <canonicalUrlBase>http://docs.openstack.org/${release.path.name}/high-availability-guide/content/</canonicalUrlBase>
+                    <canonicalUrlBase>http://docs.openstack.org/high-availability-guide/content/</canonicalUrlBase>
                     <profileSecurity>reviewer</profileSecurity>
                     <branding>openstack</branding>
                 </configuration>
             </plugin>
-            
         </plugins>
     </build>
 
