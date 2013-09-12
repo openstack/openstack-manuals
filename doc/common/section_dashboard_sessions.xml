@@ -12,7 +12,9 @@
             <literal>SESSION_ENGINE</literal> setting in your
             <filename os="centos;fedora;rhel">
             /etc/openstack-dashboard/local_settings</filename>
-        <filename os="ubuntu">local_settings.py</filename> file.</para>
+        <filename os="ubuntu">local_settings.py</filename><filename
+        os="opensuse">/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>
+            file.</para>
     <para>The following sections describe the pros and cons of each
         option as it pertains to deploying the dashboard.</para>
     <section xml:id="dashboard-session-local">
@@ -131,6 +133,8 @@ CACHES = {
                         >/etc/openstack-dashboard/local_settings.py</filename>
                     <filename os="centos;fedora;rhel"
                         >/etc/openstack-dashboard/local_settings</filename>
+                    <filename os="opensuse"
+                        >/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>
                     file, change these options:</para>
                 <programlisting language="python">SESSION_ENGINE = 'django.core.cache.backends.db.DatabaseCache'
 DATABASES = {
@@ -146,7 +150,7 @@ DATABASES = {
 }</programlisting>
             </step>
             <step>
-                <para>After configuring the <filename os="ubuntu"
+                <para>After configuring the <filename os="ubuntu;opensuse"
                         >local_settings.py</filename>
                     <filename os="centos;fedora;rhel"
                         >/etc/openstack-dashboard/local_settings</filename>
@@ -172,6 +176,7 @@ No fixtures found.</computeroutput></screen>
                     symbolic link settings:</para>
                 <screen os="ubuntu"><prompt>#</prompt> <userinput>/etc/init.d/apache2 restart</userinput></screen>
                 <screen os="centos;fedora;rhel"><prompt>#</prompt> <userinput>service httpd restart</userinput></screen>
+                <screen os="centos;fedora;rhel"><prompt>#</prompt> <userinput>service apache2 restart</userinput></screen>
             </step>
             <step os="ubuntu">
                 <para>Restart the <systemitem class="service">nova-api</systemitem> service to ensure that the

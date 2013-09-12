@@ -40,9 +40,21 @@ DELAY=0
 BOOTPROTO=static
 IPADDR=192.168.100.1
 NETMASK=255.255.255.0</programlisting>
+    <para os="opensuse">Here's an example network setup for openSUSE. Create
+        <filename>/etc/sysconfig/network/ifcfg-br100</filename>:</para>
+    <programlisting os="opensuse">DEVICE=br100
+TYPE=Bridge
+ONBOOT=yes
+DELAY=0
+BOOTPROTO=static
+STARTMODE=auto
+IPADDR=192.168.100.1
+NETMASK=255.255.255.0</programlisting>
+
     <para>Also install bridge-utils:</para>
     <screen os="ubuntu"><prompt>$</prompt> <userinput>sudo apt-get install bridge-utils</userinput></screen>
     <screen os="rhel;centos;fedora"><prompt>$</prompt> <userinput>sudo yum install bridge-utils</userinput></screen>
+    <screen os="opensuse"><prompt>$</prompt> <userinput>sudo zypper install bridge-utils</userinput></screen>
     <para>Ensure that you set up the bridge, although if you use flat_network_bridge=br100 in your
             <filename>nova.conf</filename> file, nova will set up the bridge for you when you run
             the <command>nova network-create</command> command.</para>
