@@ -17,9 +17,8 @@ For more details, see the `OpenStack Documentation HowTo wiki page
 
 In addition to the guides, this repository contains:
 
- * api.openstack.org: ``doc/src/docbkx/openstack-api-site``
  * docs.openstack.org: ``www``
-
+ * tools for gating tests prior to merging documentation in this repo
 
 Prerequisites
 =============
@@ -37,24 +36,24 @@ On Fedora 15 and later::
 Building
 ========
 The different manuals are in subdirectories of the
-``openstack-manuals/doc/src/docbkx`` directory.
+``openstack-manuals/doc/`` directory.
 
-For example, the root directory of the *OpenStack Compute Administration Guide*
-is ``openstack-manuals/doc/src/docbkx/openstack-compute-admin``.
+For example, the root directory of the *OpenStack User Guide*
+is ``openstack-manuals/doc/user-guide``.
 
 To build a specific guide, look for a ``pom.xml`` file within a subdirectory,
 then run the ``mvn`` command in that directory. For example::
 
-    cd openstack-manuals/doc/src/docbkx/openstack-compute-admin
+    cd openstack-manuals/doc/user-guide/
     mvn clean generate-sources
 
 The generated PDF documentation file is::
 
-    openstack-manuals/doc/src/docbkx/openstack-compute-admin/target/docbkx/webhelp/trunk/openstack-compute/admin/os-compute-adminguide-trunk.pdf
+    openstack-manuals/doc/user-guide/target/docbkx/webhelp/user-guide.pdf
 
 The root of the generated HTML documentation is::
 
-    openstack-manuals/doc/src/docbkx/openstack-compute-admin/target/docbkx/webhelp/os-compute-adminguide/content/index.html
+    openstack-manuals/doc/src/user-guide/target/docbkx/webhelp/user-guide/content/index.html
 
 
 Contributing
@@ -62,7 +61,7 @@ Contributing
 Our community welcomes all people interested in open source cloud computing,
 and there are no formal membership requirements. The best way to join the
 community is to talk with others online or at a meetup and offer contributions
-through Launchpad, the `OpenStack wiki <http://wiki.openstack.org>`_, blogs,
+through our processes, the `OpenStack wiki <http://wiki.openstack.org>`_, blogs,
 or on IRC at ``#openstack`` on ``irc.freenode.net``.
 
 We welcome all types of contributions, from blueprint designs to documentation
