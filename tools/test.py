@@ -60,7 +60,7 @@ def check_output(*popenargs, **kwargs):
 
 def get_schema():
     """Return the DocBook RELAX NG schema"""
-    url = "http://www.oasis-open.org/docbook/xml/5.0b5/rng/docbookxi.rng"
+    url = "http://docbook.org/xml/5.1CR1/rng/docbookxi.rng"
     relaxng_doc = etree.parse(urllib2.urlopen(url))
     return etree.RelaxNG(relaxng_doc)
 
@@ -145,17 +145,64 @@ def get_modified_files():
         sys.exit(1)
     return modified_files
 
+def check_deleted_files(rootdir, file_exceptions):
+    """ Check whether files got deleted and verify that no other file references them.
+
+    """
+    print("\nChecking for removed files")
+    modified_files = get_modified_files()
+    deleted_files = []
+    any_removed = False
+    for f in modified_files:
+        full = os.path.abspath(f)
+        if not os.path.exists(full):
+            print("  Removed file: %s" % f)
+            deleted_files.append(full)
+            any_removed = True
+
+    if any_removed:
+        # Figure out whether this file was included anywhere
+        missing_reference = False
+
+        for root, dirs, files in os.walk(rootdir):
+            # Don't descend into 'target' subdirectories
+            try:
+                ind = dirs.index('target')
+                del dirs[ind]
+            except ValueError:
+                pass
+
+            os.chdir(root)
+
+            for f in files:
+                if (f.endswith('.xml') and
+                    f != 'pom.xml' and
+                    f not in file_exceptions):
+                    path = os.path.abspath(os.path.join(root, f))
+                    doc = etree.parse(path)
+                    ns = {"xi": "http://www.w3.org/2001/XInclude"}
+                    for node in doc.xpath('//xi:include', namespaces=ns):
+                        href = node.get('href')
+                        if (href.endswith('.xml') and
+                            os.path.abspath(href) in deleted_files):
+                            print("  File %s has an xi:include on deleted file %s " % (f, href))
+                            missing_reference = True
+            if missing_reference:
+                sys.exit(1)
 
 def validate_individual_files(rootdir, exceptions, force=False, niceness=False, voting=True):
     schema = get_schema()
 
     any_failures = False
     modified_files = get_modified_files()
-    print("\nFollowing files will be validated:")
-    for f in modified_files:
-        print(">>> %s" % f)
-    print("")
-    modified_files = map(lambda x: os.path.abspath(x), modified_files)
+    if force:
+        print("\nValidating all files")
+    else:
+        modified_files = get_modified_files()
+        print("\nFollowing files will be validated:")
+        for f in modified_files:
+            print(">>> %s" % f)
+        modified_files = map(lambda x: os.path.abspath(x), modified_files)
 
     for root, dirs, files in os.walk(rootdir):
         # Don't descend into 'target' subdirectories
@@ -190,6 +237,8 @@ def validate_individual_files(rootdir, exceptions, force=False, niceness=False, 
 
     if voting and any_failures:
         sys.exit(1)
+    print("Validation passed.\n")
+
 
 
 def logging_build_book(result):
@@ -229,6 +278,13 @@ def build_affected_books(rootdir, book_exceptions, file_exceptions, force=False,
     books = []
     book_root = rootdir
     for root, dirs, files in os.walk(rootdir):
+        # Don't descend into 'target' subdirectories
+        try:
+            ind = dirs.index('target')
+            del dirs[ind]
+        except ValueError:
+            pass
+
         if os.path.basename(root) in book_exceptions:
             break
         elif "pom.xml" in files:
@@ -259,10 +315,19 @@ def build_affected_books(rootdir, book_exceptions, file_exceptions, force=False,
     else:
         print("No books are affected by modified files. Building all books.")
 
-    pool = multiprocessing.Pool(processes=multiprocessing.cpu_count())
+    maxjobs = multiprocessing.cpu_count()
+    # Jenkins fails sometimes with errors if too many jobs run, artificially
+    # limit to 4 for now.
+    # See https://bugs.launchpad.net/openstack-manuals/+bug/1221721
+    if maxjobs > 4:
+        maxjobs = 4
+    pool = multiprocessing.Pool(maxjobs)
+    print("Queuing the following books for building:")
     for book in books:
+        print("  %s" % os.path.basename(book))
         pool.apply_async(build_book, (rootdir, book), callback = logging_build_book)
     pool.close()
+    print("Building all books now...")
     pool.join()
 
     any_failures = False
@@ -281,6 +346,9 @@ def build_affected_books(rootdir, book_exceptions, file_exceptions, force=False,
 def main(args):
     if args.check_syntax:
         validate_individual_files(args.path, FILE_EXCEPTIONS, args.force, args.with_niceness, args.non_voting)
+
+    if args.check_delete:
+        check_deleted_files(args.path, FILE_EXCEPTIONS)
 
     if args.check_build:
         build_affected_books(args.path, BOOK_EXCEPTIONS, FILE_EXCEPTIONS, args.force, args.non_voting)
@@ -312,6 +380,8 @@ if __name__ == '__main__':
                         "modified files", action="store_true")
     parser.add_argument("--check-syntax", help="check the syntax of modified "
                         "files", action="store_true")
+    parser.add_argument("--check-delete", help="check that deleted files "
+                        "are not used", action="store_true")
     parser.add_argument("--with-niceness", help="when checking the syntax "
                         "also check the niceness of the syntax",
                         action="store_true")
