@@ -25,7 +25,7 @@
             <plugin>
                 <groupId>com.rackspace.cloud.api</groupId>
                 <artifactId>clouddocs-maven-plugin</artifactId>
-                <version>1.9.2</version> 
+                <version>1.9.2</version>
                 <executions>
                     <execution>
                         <id>generate-webhelp</id>
@@ -59,9 +59,9 @@
 <tocSectionDepth>1</tocSectionDepth>
 <tocChapterDepth>1</tocChapterDepth>
                             <sectionLabelIncludesComponentLabel>0</sectionLabelIncludesComponentLabel>
-                            <targetDirectory>target/docbkx/webhelp/${release.path.name}</targetDirectory>
+                            <targetDirectory>target/docbkx/webhelp/</targetDirectory>
                             <webhelpDirname>image-guide</webhelpDirname>
-                            <pdfFilenameBase>bk-imageguide-${release.path.name}</pdfFilenameBase>
+                            <pdfFilenameBase>image-guide</pdfFilenameBase>
                         </configuration>
                     </execution>
                     <execution>
@@ -70,18 +70,18 @@
                             <goal>generate-webhelp</goal>
                         </goals>
                         <phase>generate-sources</phase>
-			<configuration>
-			  <includes>dummy.xml</includes>
-			  <postProcess>
-			    <delete includeemptydirs="true">
-			      <fileset dir="${basedir}/target/docbkx/webhelp/${release.path.name}" >
-				<include name="**/*"/>
-				<exclude name="image-guide/**"/>
-			      </fileset>
-			    </delete>
-			  </postProcess>
-			</configuration>
-		    </execution>
+                        <configuration>
+                          <includes>dummy.xml</includes>
+                          <postProcess>
+                            <delete includeemptydirs="true">
+                              <fileset dir="${basedir}/target/docbkx/webhelp" >
+                                <include name="**/*"/>
+                                <exclude name="image-guide/**"/>
+                              </fileset>
+                            </delete>
+                          </postProcess>
+                        </configuration>
+                    </execution>
                 </executions>
                 <configuration>
                     <!-- These parameters apply to pdf and webhelp -->
