@@ -178,8 +178,10 @@
       | id          | b5815b046cfe47bb891a7b64119e7f80 |
       | name        | demo                             |
       +-------------+----------------------------------+</computeroutput></screen>
-      <para>Create a default user named <literal>admin</literal>.</para>
-      <screen><prompt>$</prompt> <userinput>keystone user-create --tenant-id b5815b046cfe47bb891a7b64119e7f80 --name admin --pass secrete</userinput>
+      <para>Set the <literal>id</literal> value from previous command as a shell variable.
+    <screen><prompt>$</prompt> <userinput>export TENANT_ID=b5815b046cfe47bb891a7b64119e7f80</userinput></screen>
+      Create a default user named <literal>admin</literal>.</para>
+      <screen><prompt>$</prompt> <userinput>keystone user-create --tenant-id $TENANT_ID --name admin --pass secrete</userinput>
 <computeroutput>      +----------+----------------------------------+
       | Property |              Value               |
       +----------+----------------------------------+
@@ -189,7 +191,9 @@
       | name     | admin                            |
       | tenantId | b5815b046cfe47bb891a7b64119e7f80 |
       +----------+----------------------------------+</computeroutput></screen>
-      <para>Create an administrative role based on keystone's default
+      <para>Set the admin <literal>id</literal> value from previous command's output as a shell variable.
+    <screen><prompt>$</prompt> <userinput>export ADMIN_USER_ID=a4c2d43f80a549a19864c89d759bb3fe</userinput></screen>
+        Create an administrative role based on keystone's default
           <literal>policy.json</literal> file,
           <literal>admin</literal>.</para>
       <screen><prompt>$</prompt> <userinput>keystone role-create --name admin</userinput>
@@ -199,11 +203,13 @@
       | id       | e3d9d157cc95410ea45d23bbbc2e5c10 |
       | name     | admin                            |
       +----------+----------------------------------+</computeroutput></screen>
-      <para>Grant the <literal>admin</literal> role to the
+        <para>Set the role <literal>id</literal> value from previous command's output as a shell variable.
+        <screen><prompt>$</prompt> <userinput>export ROLE_ID=e3d9d157cc95410ea45d23bbbc2e5c10</userinput></screen>
+      Grant the <literal>admin</literal> role to the
           <literal>admin</literal> user in the
           <literal>demo</literal> tenant with
         "user-role-add".</para>
-      <screen><prompt>$</prompt> <userinput>keystone user-role-add --user-id a4c2d43f80a549a19864c89d759bb3fe --tenant-id b5815b046cfe47bb891a7b64119e7f80 --role-id e3d9d157cc95410ea45d23bbbc2e5c10</userinput>
+      <screen><prompt>$</prompt> <userinput>keystone user-role-add --user-id $ADMIN_USER_ID --tenant-id $TENANT_ID --role-id $ROLE_ID</userinput>
 <computeroutput/></screen>
       <para>Create a service tenant named service. This tenant contains all the
         services that we make known to the service catalog.</para>
@@ -216,9 +222,12 @@
       | id          | eb7e0c10a99446cfa14c244374549e9d |
       | name        | service                          |
       +-------------+----------------------------------+</computeroutput></screen>
-      <para>Create a glance service user in the service tenant. You'll do this
+
+        <para>Set the tenant <literal>id</literal> value from previous command's output as a shell variable.
+        <screen><prompt>$</prompt> <userinput>export SERVICE_TENANT_ID=eb7e0c10a99446cfa14c244374549e9d</userinput></screen>
+        Create a glance service user in the service tenant. You'll do this
         for any service you add to be in the Identity service catalog.</para>
-      <screen><prompt>$</prompt> <userinput>keystone user-create --tenant-id eb7e0c10a99446cfa14c244374549e9d --name glance --pass glance</userinput>
+      <screen><prompt>$</prompt> <userinput>keystone user-create --tenant-id $SERVICE_TENANT_ID --name glance --pass glance</userinput>
 <computeroutput>WARNING: Bypassing authentication using a token &amp; endpoint (authentication credentials are being ignored).
       +----------+----------------------------------+
       | Property |             Value                |
@@ -229,13 +238,15 @@
       | name     | glance                           |
       | tenantId | eb7e0c10a99446cfa14c244374549e9d |
       +----------+----------------------------------+</computeroutput></screen>
-      <para>Grant the <literal>admin</literal> role to the
+<para>Set the <literal>id</literal> value from previous command as a shell variable.
+            <screen><prompt>$</prompt> <userinput>export GLANCE_USER_ID=46b2667a7807483d983e0b4037a1623b</userinput></screen>
+      Grant the <literal>admin</literal> role to the
           <literal>glance</literal> user in the
           <literal>service</literal> tenant.</para>
-      <screen><prompt>$</prompt> <userinput>keystone user-role-add --user-id 46b2667a7807483d983e0b4037a1623b --tenant-id eb7e0c10a99446cfa14c244374549e9d --role-id e3d9d157cc95410ea45d23bbbc2e5c10</userinput>
+      <screen><prompt>$</prompt> <userinput>keystone user-role-add --user-id $GLANCE_USER_ID --tenant-id $SERVICE_TENANT_ID --role-id $ROLE_ID</userinput>
 <computeroutput/></screen>
       <para>Create a nova service user in the service tenant.</para>
-      <screen><prompt>$</prompt> <userinput>keystone user-create --tenant-id eb7e0c10a99446cfa14c244374549e9d --name nova --pass nova</userinput>
+      <screen><prompt>$</prompt> <userinput>keystone user-create --tenant-id $SERVICE_TENANT_ID --name nova --pass nova</userinput>
 <computeroutput>WARNING: Bypassing authentication using a token &amp; endpoint (authentication credentials are being ignored).
       +----------+----------------------------------+
       | Property |             Value                |
@@ -246,13 +257,16 @@
       | name     | nova                             |
       | tenantId | eb7e0c10a99446cfa14c244374549e9d |
       +----------+----------------------------------+</computeroutput></screen>
-      <para>Grant the <literal>admin</literal> role to the
+
+<para>Set the nova user's <literal>id</literal> value from previous command's output as a shell variable.
+        <screen><prompt>$</prompt> <userinput>export NOVA_USER_ID=54b3776a8707834d983e0b4037b1345c</userinput></screen>
+      Grant the <literal>admin</literal> role to the
           <literal>nova</literal> user in the
           <literal>service</literal> tenant.</para>
-      <screen><prompt>$</prompt> <userinput>keystone user-role-add --user-id 54b3776a8707834d983e0b4037b1345c --tenant-id eb7e0c10a99446cfa14c244374549e9d --role-id e3d9d157cc95410ea45d23bbbc2e5c10</userinput>
+      <screen><prompt>$</prompt> <userinput>keystone user-role-add --user-id $NOVA_USER_ID --tenant-id $SERVICE_TENANT_ID --role-id $ROLE_ID</userinput>
 <computeroutput/></screen>
       <para>Create a cinder service user in the service tenant.</para>
-      <screen><prompt>$</prompt> <userinput>keystone user-create --tenant-id eb7e0c10a99446cfa14c244374549e9d --name cinder --pass openstack</userinput>
+      <screen><prompt>$</prompt> <userinput>keystone user-create --tenant-id $SERVICE_TENANT_ID --name cinder --pass openstack</userinput>
 <computeroutput>WARNING: Bypassing authentication using a token &amp; endpoint (authentication credentials are being ignored).
       +----------+----------------------------------+
       | Property |             Value                |
@@ -263,13 +277,15 @@
       | name     | cinder                           |
       | tenantId | eb7e0c10a99446cfa14c244374549e9d |
       +----------+----------------------------------+</computeroutput></screen>
-      <para>Grant the <literal>admin</literal> role to the
+<para>Set the cinder user's <literal>id</literal> value from previous command's output as a shell variable.
+        <screen><prompt>$</prompt> <userinput>export CINDER_USER_ID=c95bf79153874ac69b4758ebf75498a6</userinput></screen>
+      Grant the <literal>admin</literal> role to the
           <literal>cinder</literal> user in the <literal>service</literal>
         tenant.</para>
-      <screen><prompt>$</prompt> <userinput>keystone user-role-add --user-id c95bf79153874ac69b4758ebf75498a6 --tenant-id eb7e0c10a99446cfa14c244374549e9d --role-id e3d9d157cc95410ea45d23bbbc2e5c10</userinput>
+      <screen><prompt>$</prompt> <userinput>keystone user-role-add --user-id $CINDER_USER_ID --tenant-id $SERVICE_TENANT_ID --role-id $ROLE_ID</userinput>
 <computeroutput/></screen>
       <para>Create an ec2 service user in the service tenant.</para>
-      <screen><prompt>$</prompt> <userinput>keystone user-create --tenant-id eb7e0c10a99446cfa14c244374549e9d --name ec2 --pass ec2</userinput>
+      <screen><prompt>$</prompt> <userinput>keystone user-create --tenant-id $SERVICE_TENANT_ID --name ec2 --pass ec2</userinput>
 <computeroutput>      +----------+----------------------------------+
       | Property |             Value                |
       +----------+----------------------------------+
@@ -279,14 +295,16 @@
       | name     | ec2                              |
       | tenantId | eb7e0c10a99446cfa14c244374549e9d |
       +----------+----------------------------------+</computeroutput></screen>
-      <para>Grant the <literal>admin</literal> role to the
+<para>Set the ec2 user's <literal>id</literal> value from previous command's output as a shell variable.
+        <screen><prompt>$</prompt> <userinput>export EC2_USER_ID=32e7668b8707834d983e0b4037b1345c</userinput></screen>
+      Grant the <literal>admin</literal> role to the
           <literal>ec2</literal> user in the
           <literal>service</literal> tenant.</para>
-      <screen><prompt>$</prompt> <userinput>keystone user-role-add --user-id 32e7668b8707834d983e0b4037b1345c --tenant-id eb7e0c10a99446cfa14c244374549e9d --role-id e3d9d157cc95410ea45d23bbbc2e5c10</userinput>
+      <screen><prompt>$</prompt> <userinput>keystone user-role-add --user-id $EC2_USER_ID --tenant-id $SERVICE_TENANT_ID --role-id $ROLE_ID</userinput>
 <computeroutput/></screen>
 
       <para>Create an Object Storage service user in the service tenant.</para>
-      <screen><prompt>$</prompt> <userinput>keystone user-create --tenant-id eb7e0c10a99446cfa14c244374549e9d --name swift --pass swiftpass</userinput>
+      <screen><prompt>$</prompt> <userinput>keystone user-create --tenant-id $SERVICE_TENANT_ID --name swift --pass swiftpass</userinput>
 <computeroutput>      +----------+----------------------------------+
       | Property |             Value                |
       +----------+----------------------------------+
@@ -296,10 +314,12 @@
       | name     | swift                            |
       | tenantId | eb7e0c10a99446cfa14c244374549e9d |
       +----------+----------------------------------+</computeroutput></screen>
-      <para>Grant the <literal>admin</literal> role to the
+<para>Set the swift user's <literal>id</literal> value from previous command's output as a shell variable.
+        <screen><prompt>$</prompt> <userinput>export SWIFT_USER_ID=4346677b8909823e389f0b4037b1246e</userinput></screen>
+      Grant the <literal>admin</literal> role to the
           <literal>swift</literal> user in the
           <literal>service</literal> tenant.</para>
-      <screen><prompt>$</prompt> <userinput>keystone user-role-add --user-id 4346677b8909823e389f0b4037b1246e --tenant-id eb7e0c10a99446cfa14c244374549e9d --role-id e3d9d157cc95410ea45d23bbbc2e5c10</userinput>
+      <screen><prompt>$</prompt> <userinput>keystone user-role-add --user-id $SWIFT_USER_ID --tenant-id $SERVICE_TENANT_ID --role-id $ROLE_ID</userinput>
 <computeroutput/></screen>
       <para>Next you create definitions for the services.</para>
 
