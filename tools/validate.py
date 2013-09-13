@@ -87,7 +87,7 @@ def verify_section_tags_have_xmid(doc):
                              node.sourceline)
 
 
-def verify_nice_usage_of_whitespaces(rootdir, docfile):
+def verify_nice_usage_of_whitespaces(rootdir, docfile, found_extra_whitespace):
     """Check that no unnecessary whitespaces are used"""
     checks = [
         re.compile(".*\s+\n$"),
@@ -120,9 +120,12 @@ def verify_nice_usage_of_whitespaces(rootdir, docfile):
                 affected_lines.append(str(lc))
 
     if len(affected_lines) > 0:
-        print ("file %s:" % os.path.relpath(docfile, rootdir));
-        print ("  trailing or unnecessary whitespaces "
-               "in following lines: %s" % ", ".join(affected_lines))
+        if not found_extra_whitespace:
+            print("  Trailing or unnessary whitespaces found:")
+        found_extra_whitespace = True
+        print("   %s lines: %s" % (os.path.relpath(docfile, rootdir),
+                                   ", ".join(affected_lines)))
+    return found_extra_whitespace
 
 def error_message(error_log):
     """Return a string that contains the error message.
@@ -212,6 +215,7 @@ def check_deleted_files(rootdir, file_exceptions):
 
 def validate_individual_files(rootdir, exceptions, force):
     schema = get_schema()
+    found_extra_whitespace = False
 
     any_failures = False
     if force:
@@ -245,7 +249,7 @@ def validate_individual_files(rootdir, exceptions, force):
                         any_failures = True
                         print(error_message(schema.error_log))
                     verify_section_tags_have_xmid(doc)
-                    verify_nice_usage_of_whitespaces(rootdir, path)
+                    found_extra_whitespace = verify_nice_usage_of_whitespaces(rootdir, path, found_extra_whitespace)
                 except etree.XMLSyntaxError as e:
                     any_failures = True
                     print("%s: %s" % (path, e))
@@ -343,7 +347,7 @@ def build_affected_books(rootdir, book_exceptions, file_exceptions, force):
         print("  %s" % os.path.basename(book))
         pool.apply_async(build_book, (rootdir, book), callback = logging_build_book)
     pool.close()
-    print("Building all books now...")
+    print("Building all queued books now...")
     pool.join()
 
     any_failures = False
