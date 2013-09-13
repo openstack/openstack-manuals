@@ -1,30 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section xml:id="baremetal" xmlns="http://docbook.org/ns/docbook"
-    xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-    <title>Manage bare metal nodes</title>
-    <para>If you use the bare metal driver, you must create and add a
-    network interface to a bare metal node. Then, you can launch an
-    instance from a bare metal image.</para>
-  <para>You can list and delete bare metal nodes. When you delete a
-    node, any associated network interfaces are removed. You can list
-    and remove network interfaces that are associated with a bare
-    metal node.</para>
-
- <itemizedlist><title>Commands</title><listitem>
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+  <title>Manage bare metal nodes</title>
+  <para>The bare metal driver for OpenStack Compute manages provisioning of
+    physical hardware using common cloud APIs and tools such as Orchestration
+    (Heat). The use case for this driver is for single tenant clouds such as a
+    high-performance computing cluster or deploying OpenStack itself.
+    Development efforts are focused on moving the driver out of the Compute code
+    base in the Icehouse release. If you use the bare metal driver, you must
+    create and add a network interface to a bare metal node. Then, you can
+    launch an instance from a bare metal image.</para>
+  <para>You can list and delete bare metal nodes. When you delete a node, any
+    associated network interfaces are removed. You can list and remove network
+    interfaces that are associated with a bare metal node.</para>
+  <itemizedlist>
+    <title>Commands</title>
+    <listitem>
       <para><command>baremetal-interface-add</command></para>
       <para>Adds a network interface to a bare metal node.</para>
     </listitem>
     <listitem>
       <para><command>baremetal-interface-list</command></para>
-      <para>Lists network interfaces associated with a bare metal
-        node.</para>
+      <para>Lists network interfaces associated with a bare metal node.</para>
     </listitem>
     <listitem>
       <para>
         <command>baremetal-interface-remove</command></para>
-      <para>Removes a network interface from a bare metal
-        node.</para>
+      <para>Removes a network interface from a bare metal node.</para>
     </listitem>
     <listitem>
       <para>
@@ -34,8 +37,7 @@
     <listitem>
       <para>
         <command>baremetal-node-delete</command></para>
-      <para>Removes a bare metal node and any associated
-        interfaces.</para>
+      <para>Removes a bare metal node and any associated interfaces.</para>
     </listitem>
     <listitem>
       <para><command>baremetal-node-list</command></para>
@@ -44,10 +46,14 @@
     <listitem>
       <para><command>baremetal-node-show</command></para>
       <para>Shows information about a bare metal node.</para>
-    </listitem></itemizedlist>
-  <procedure><title>To manage bare metal nodes</title><step><para>Create a bare metal node:</para>
-    <screen><prompt>$</prompt> <userinput>nova baremetal-node-create --pm_address=1.2.3.4 --pm_user=ipmi --pm_password=ipmi $(hostname -f) 1 512 10 aa:bb:cc:dd:ee:ff</userinput></screen>
-    <screen><computeroutput>+------------------+-------------------+
+    </listitem>
+  </itemizedlist>
+  <procedure>
+    <title>To manage bare metal nodes</title>
+    <step>
+      <para>Create a bare metal node:</para>
+      <screen><prompt>$</prompt> <userinput>nova baremetal-node-create --pm_address=1.2.3.4 --pm_user=ipmi --pm_password=ipmi $(hostname -f) 1 512 10 aa:bb:cc:dd:ee:ff</userinput></screen>
+      <screen><computeroutput>+------------------+-------------------+
 | Property         | Value             |
 +------------------+-------------------+
 | instance_uuid    | None              |
@@ -64,9 +70,10 @@
 | terminal_port    | None              |
 +------------------+-------------------+</computeroutput></screen>
     </step>
-      <step><para>Add a network interface to the node:</para>
-        <screen><prompt>$</prompt> <userinput>nova baremetal-interface-add 1 aa:bb:cc:dd:ee:ff</userinput></screen>
-<screen><computeroutput>+-------------+-------------------+
+    <step>
+      <para>Add a network interface to the node:</para>
+      <screen><prompt>$</prompt> <userinput>nova baremetal-interface-add 1 aa:bb:cc:dd:ee:ff</userinput></screen>
+      <screen><computeroutput>+-------------+-------------------+
 | Property    | Value             |
 +-------------+-------------------+
 | datapath_id | 0                 |
@@ -74,8 +81,9 @@
 | port_no     | 0                 |
 | address     | aa:bb:cc:dd:ee:ff |
 +-------------+-------------------+</computeroutput>       </screen>
-      </step>
-    <step><para>Launch an instance from a bare metal image:</para>
+    </step>
+    <step>
+      <para>Launch an instance from a bare metal image:</para>
       <screen><prompt>$</prompt> <userinput>nova boot --image my-baremetal-image --flavor my-baremetal-flavor test</userinput>        </screen>
       <screen>+-----------------------------+--------------------------------------+
 | Property                    | Value                                |
@@ -85,10 +93,11 @@
 
 ... wait for instance to become active ...       </screen>
     </step>
-      <step><para>You can list bare metal nodes and interfaces, as follows:</para>
+    <step>
+      <para>You can list bare metal nodes and interfaces, as follows:</para>
       <screen><prompt>$</prompt> <userinput>nova baremetal-node-list</userinput></screen>
-<para>When a node is in use, its status includes the UUID of the
-        instance that runs on it:</para>
+      <para>When a node is in use, its status includes the UUID of the instance
+        that runs on it:</para>
       <screen><computeroutput>+----+--------+------+-----------+---------+-------------------
   +------+------------+-------------+-------------+---------------+
 | ID | Host   | CPUs | Memory_MB | Disk_GB | MAC Address
@@ -99,10 +108,10 @@
   | None | 1.2.3.4    | ipmi        |             | None          |
 +----+--------+------+-----------+---------+-------------------
   +------+------------+-------------+-------------+---------------+</computeroutput></screen>
-</step>
-
-<step><para>Show details for a bare metal node:</para>
-        <screen><prompt>$</prompt> <userinput>nova baremetal-node-show 1</userinput>     </screen>
+    </step>
+    <step>
+      <para>Show details for a bare metal node:</para>
+      <screen><prompt>$</prompt> <userinput>nova baremetal-node-show 1</userinput>     </screen>
       <screen><computeroutput>+------------------+--------------------------------------+
 | Property         | Value                                |
 +------------------+--------------------------------------+
@@ -119,5 +128,14 @@
 | id               | 1                                    |
 | pm_user          | ipmi                                 |
 | terminal_port    | None                                 |
-+------------------+--------------------------------------+</computeroutput></screen></step></procedure>
++------------------+--------------------------------------+</computeroutput></screen>
+    </step>
+  </procedure>
+  <note>
+    <para>Set the <parameter>--availability_zone</parameter> parameter to
+      specify which zone or node to start the server. You can separate the zone
+      from the hostname with a comma. As an example:
+      <screen><prompt>$</prompt> <userinput>nova boot --availability_zone=zone:<replaceable>host</replaceable>,<replaceable>node</replaceable></userinput></screen>
+      Specifying "host" is optional for the <parameter>--availability_zone</parameter> parameter, and "zone:,node" also works.</para>
+  </note>
 </section>
