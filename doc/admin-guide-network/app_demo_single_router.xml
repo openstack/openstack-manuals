@@ -300,7 +300,7 @@ export SERVICE_TOKEN=password</programlisting></para>
             <listitem>
                 <para>Export the
                     variables:<screen><prompt>$</prompt> <userinput>source novarc echo "source novarc">>.bashrc</userinput></screen>
-		</para>
+                </para>
             </listitem>
         </itemizedlist>
         <para>The admin user creates a network and subnet on behalf of
@@ -311,8 +311,8 @@ export SERVICE_TOKEN=password</programlisting></para>
                 <step>
                     <para>Get the tenant ID (Used as $TENANT_ID
                         later).</para>
-                    <screen><prompt>$</prompt> <userinput>keystone tenant-list</userinput></screen>
-                    <screen><computeroutput>+----------------------------------+--------------------+---------+
+                    <screen><prompt>$</prompt> <userinput>keystone tenant-list</userinput>
+<computeroutput>+----------------------------------+--------------------+---------+
 |                id                |        name        | enabled |
 +----------------------------------+--------------------+---------+
 | 48fb81ab2f6b409bafac8961a594980f |  provider_tenant   |   True  |
@@ -326,8 +326,8 @@ export SERVICE_TOKEN=password</programlisting></para>
                             role="bold">net1</emphasis> for tenant_A
                         ($TENANT_ID will be
                         e40fa60181524f9f9ee7aa1038748f08):</para>
-                    <screen><prompt>$</prompt> <userinput>neutron net-create --tenant-id $TENANT_ID net1</userinput></screen>
-                    <screen><computeroutput>+---------------------------+--------------------------------------+
+                    <screen><prompt>$</prompt> <userinput>neutron net-create --tenant-id $TENANT_ID net1</userinput>
+<computeroutput>+---------------------------+--------------------------------------+
 | Field                     | Value                                |
 +---------------------------+--------------------------------------+
 | admin_state_up            | True                                 |
@@ -347,8 +347,8 @@ export SERVICE_TOKEN=password</programlisting></para>
                     <para>Create a subnet on the network <emphasis
                             role="bold">net1</emphasis> (ID field
                         below is used as $SUBNET_ID later):</para>
-                    <screen><prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $TENANT_ID net1 10.5.5.0/24</userinput></screen>
-                    <screen><computeroutput>+------------------+--------------------------------------------+
+                    <screen><prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $TENANT_ID net1 10.5.5.0/24</userinput>
+<computeroutput>+------------------+--------------------------------------------+
 | Field            | Value                                      |
 +------------------+--------------------------------------------+
 | allocation_pools | {"start": "10.5.5.2", "end": "10.5.5.254"} |
@@ -373,8 +373,8 @@ export SERVICE_TOKEN=password</programlisting></para>
                     <para>Create a router named <emphasis role="bold"
                             >router1</emphasis> (ID is used as
                         $ROUTER_ID later):</para>
-                    <screen><prompt>$</prompt> <userinput>neutron router-create router1</userinput></screen>
-                    <screen><computeroutput>+-----------------------+--------------------------------------+
+                    <screen><prompt>$</prompt> <userinput>neutron router-create router1</userinput>
+<computeroutput>+-----------------------+--------------------------------------+
 | Field                 | Value                                |
 +-----------------------+--------------------------------------+
 | admin_state_up        | True                                 |
@@ -396,8 +396,8 @@ export SERVICE_TOKEN=password</programlisting></para>
                             >router1</emphasis> and attach it to the
                         subnet from <emphasis role="bold"
                             >net1</emphasis>:</para>
-                    <screen><prompt>$</prompt> <userinput>neutron router-interface-add $ROUTER_ID $SUBNET_ID</userinput></screen>
-                    <screen><computeroutput>Added interface to router 685f64e7-a020-4fdf-a8ad-e41194ae124b</computeroutput></screen>
+                    <screen><prompt>$</prompt> <userinput>neutron router-interface-add $ROUTER_ID $SUBNET_ID</userinput>
+<computeroutput>Added interface to router 685f64e7-a020-4fdf-a8ad-e41194ae124b</computeroutput></screen>
                     <note>
                         <para>You can repeat this step to add more
                             interfaces for other networks that belong
@@ -407,8 +407,8 @@ export SERVICE_TOKEN=password</programlisting></para>
                 <step>
                     <para>Create the external network named <emphasis
                             role="bold">ext_net</emphasis>:</para>
-                    <screen><prompt>$</prompt> <userinput>neutron net-create ext_net --router:external=True</userinput></screen>
-                    <screen><computeroutput>+---------------------------+--------------------------------------+
+                    <screen><prompt>$</prompt> <userinput>neutron net-create ext_net --router:external=True</userinput>
+<computeroutput>+---------------------------+--------------------------------------+
 | Field                     | Value                                |
 +---------------------------+--------------------------------------+
 | admin_state_up            | True                                 |
@@ -432,8 +432,8 @@ export SERVICE_TOKEN=password</programlisting></para>
                     </note>
                     <screen><prompt>$</prompt> <userinput>neutron subnet-create ext_net \
 --allocation-pool start=7.7.7.130,end=7.7.7.150 \
---gateway 7.7.7.1 7.7.7.0/24 --disable-dhcp</userinput></screen>
-                    <screen><computeroutput>+------------------+--------------------------------------------------+
+--gateway 7.7.7.1 7.7.7.0/24 --disable-dhcp</userinput>
+<computeroutput>+------------------+--------------------------------------------------+
 | Field            | Value                                            |
 +------------------+--------------------------------------------------+
 | allocation_pools | {"start": "7.7.7.130", "end": "7.7.7.150"}       |
@@ -452,8 +452,8 @@ export SERVICE_TOKEN=password</programlisting></para>
                 <step>
                     <para>Set the router's gateway to be the external
                         network:</para>
-                    <screen><prompt>$</prompt> <userinput>neutron router-gateway-set $ROUTER_ID $EXTERNAL_NETWORK_ID</userinput></screen>
-                    <screen><computeroutput>Set gateway for router 685f64e7-a020-4fdf-a8ad-e41194ae124b</computeroutput></screen>
+                    <screen><prompt>$</prompt> <userinput>neutron router-gateway-set $ROUTER_ID $EXTERNAL_NETWORK_ID</userinput>
+<computeroutput>Set gateway for router 685f64e7-a020-4fdf-a8ad-e41194ae124b</computeroutput></screen>
                 </step>
             </procedure></para>
         <para>A user from tenant_A completes the following steps, so
@@ -466,7 +466,6 @@ export SERVICE_TOKEN=password</programlisting></para>
                         ($PORT_ID) that was allocated for the VM is
                         required and can be found as follows:</para>
                     <screen><prompt>$</prompt> <userinput>nova list</userinput>
-
 <computeroutput>+--------------------------------------+--------+--------+---------------+
 |                  ID                  |  Name  | Status |    Networks   |
 +--------------------------------------+--------+--------+---------------+
@@ -474,7 +473,6 @@ export SERVICE_TOKEN=password</programlisting></para>
 +--------------------------------------+--------+--------+---------------+
 </computeroutput>
 <userinput>neutron port-list -- --device_id 1cdc671d-a296-4476-9a75-f9ca1d92fd26</userinput>
-
 <computeroutput>+--------------------------------------+------+-------------------+---------------------------------------------------------------------------------+
 | id                                   | name | mac_address       | fixed_ips                                                                       |
 +--------------------------------------+------+-------------------+---------------------------------------------------------------------------------+
@@ -484,9 +482,8 @@ export SERVICE_TOKEN=password</programlisting></para>
                 <step>
                     <para>Allocate a floating IP (Used as
                         $FLOATING_ID):</para>
-                    <screen><prompt>$</prompt> <userinput>neutron floatingip-create ext_net</userinput><computeroutput>
-
-+---------------------+--------------------------------------+
+                    <screen><prompt>$</prompt> <userinput>neutron floatingip-create ext_net</userinput>
+<computeroutput>+---------------------+--------------------------------------+
 | Field               | Value                                |
 +---------------------+--------------------------------------+
 | fixed_ip_address    |                                      |
@@ -501,15 +498,13 @@ export SERVICE_TOKEN=password</programlisting></para>
                 <step>
                     <para>Associate the floating IP with the VM's
                         port:</para>
-                    <screen><prompt>$</prompt> <userinput>neutron floatingip-associate $FLOATING_ID $PORT_ID</userinput><computeroutput>
-
-Associated floatingip 40952c83-2541-4d0c-b58e-812c835079a5</computeroutput></screen>
+                    <screen><prompt>$</prompt> <userinput>neutron floatingip-associate $FLOATING_ID $PORT_ID</userinput>
+<computeroutput>Associated floatingip 40952c83-2541-4d0c-b58e-812c835079a5</computeroutput></screen>
                 </step>
                 <step>
                     <para>Show the floating IP:</para>
-                    <screen><prompt>$</prompt> <userinput>neutron floatingip-show $FLOATING_ID</userinput><computeroutput>
-
-+---------------------+--------------------------------------+
+                    <screen><prompt>$</prompt> <userinput>neutron floatingip-show $FLOATING_ID</userinput>
+<computeroutput>+---------------------+--------------------------------------+
 | Field               | Value                                |
 +---------------------+--------------------------------------+
 | fixed_ip_address    | 10.5.5.3                             |
@@ -524,8 +519,7 @@ Associated floatingip 40952c83-2541-4d0c-b58e-812c835079a5</computeroutput></scr
                 <step>
                     <para>Test the floating IP:</para>
                     <screen><prompt>$</prompt> <userinput>ping 7.7.7.131</userinput>
-<computeroutput>
-PING 7.7.7.131 (7.7.7.131) 56(84) bytes of data.
+<computeroutput>PING 7.7.7.131 (7.7.7.131) 56(84) bytes of data.
 64 bytes from 7.7.7.131: icmp_req=2 ttl=64 time=0.152 ms
 64 bytes from 7.7.7.131: icmp_req=3 ttl=64 time=0.049 ms
 </computeroutput></screen>

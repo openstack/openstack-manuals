@@ -54,10 +54,9 @@
                             a risk that the snapshot could become
                             corrupted.</para>
                     <para>Use the following command to obtain a list
-                        of all
-                        volumes.<screen>
-<prompt>$</prompt> <userinput>lvdisplay</userinput>
-                        </screen>In
+                        of all volumes:
+                        <screen><prompt>$</prompt> <userinput>lvdisplay</userinput></screen>
+                        In
                         this example, we will refer to a volume called
                             <literal>volume-00000001</literal>, which
                         is a 10GB volume. This process can be applied
@@ -70,9 +69,7 @@
                         achieved while the volume is attached to an
                         instance :</para>
                     <para>
-                        <screen>
-<prompt>$</prompt> <userinput>lvcreate --size 10G --snapshot --name volume-00000001-snapshot /dev/nova-volumes/volume-00000001</userinput>
-                        </screen>
+                        <screen><prompt>$</prompt> <userinput>lvcreate --size 10G --snapshot --name volume-00000001-snapshot /dev/nova-volumes/volume-00000001</userinput></screen>
                     </para>
                     <para>We indicate to LVM we want a snapshot of an
                         already existing volume with the
@@ -210,9 +207,7 @@
                         <para>Now that the volume has been mounted,
                             you can create a backup of it:</para>
                         <para>
-                            <screen>
-<prompt>$</prompt> <userinput>tar --exclude={"lost+found","some/data/to/exclude"} -czf volume-00000001.tar.gz -C /mnt/ /backup/destination</userinput>
-                            </screen>
+                            <screen><prompt>$</prompt> <userinput>tar --exclude={"lost+found","some/data/to/exclude"} -czf volume-00000001.tar.gz -C /mnt/ /backup/destination</userinput></screen>
                         </para>
                         <para>This command will create a tar.gz file
                             containing the data, <emphasis
@@ -239,9 +234,9 @@
                         <para>The following command runs a checksum
                             for our file, and saves the result to a
                             file :</para>
-                        <para><screen>
-<prompt>$</prompt> <userinput>sha1sum volume-00000001.tar.gz > volume-00000001.checksum</userinput>
-                        </screen><emphasis
+                        <para>
+                          <screen><prompt>$</prompt> <userinput>sha1sum volume-00000001.tar.gz > volume-00000001.checksum</userinput></screen>
+                        <emphasis
                                 role="bold">Be aware</emphasis> the
                                 <command>sha1sum</command> should be
                             used carefully, since the required time

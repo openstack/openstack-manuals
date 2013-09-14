@@ -83,7 +83,7 @@ compute_fill_first_cost_fn_weight=-1.0</programlisting>
             that are used by the scheduler. The default setting
             specifies all of the filter that are included with the
             Compute service:</para>
-        <screen><computeroutput>scheduler_available_filters=nova.scheduler.filters.all_filters</computeroutput></screen>
+        <programlisting language="ini">scheduler_available_filters=nova.scheduler.filters.all_filters</programlisting>
         <para>This configuration option can be specified multiple
             times. For example, if you implemented your own custom
             filter in Python called
@@ -91,14 +91,14 @@ compute_fill_first_cost_fn_weight=-1.0</programlisting>
             use both the built-in filters and your custom filter, your
                 <filename>nova.conf</filename> file would
             contain:</para>
-        <screen><computeroutput>scheduler_available_filters=nova.scheduler.filters.all_filters
-scheduler_available_filters=myfilter.MyFilter</computeroutput></screen>
+        <programlisting language="ini">scheduler_available_filters=nova.scheduler.filters.all_filters
+scheduler_available_filters=myfilter.MyFilter</programlisting>
         <para>The <literal>scheduler_default_filters</literal>
             configuration option in <filename>nova.conf</filename>
             defines the list of filters that are applied by the
                 <systemitem class="service">nova-scheduler</systemitem> service. As
             mentioned, the default filters are:</para>
-        <screen><computeroutput>scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter</computeroutput></screen>
+        <programlisting language="ini">scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter</programlisting>
         <para>The following sections describe the available
             filters.</para>
         <section xml:id="aggregatecorefilter">
@@ -184,12 +184,12 @@ scheduler_available_filters=myfilter.MyFilter</computeroutput></screen>
                 Configuration option in
                 <filename>nova.conf</filename>. The default setting
                 is:</para>
-            <screen><computeroutput>cpu_allocation_ratio=16.0</computeroutput></screen>
+            <programlisting language="ini">cpu_allocation_ratio=16.0</programlisting>
             <para>With this setting, if 8 vCPUs are on a node, the
                 scheduler allows instances up to 128 vCPU to be run on
                 that node.</para>
             <para>To disallow vCPU overcommitment set:</para>
-            <screen><computeroutput>cpu_allocation_ratio=1.0</computeroutput></screen>
+            <programlisting language="ini">cpu_allocation_ratio=1.0</programlisting>
         </section>
         <section xml:id="differenthostfilter">
             <title>DifferentHostFilter</title>
@@ -316,10 +316,8 @@ scheduler_available_filters=myfilter.MyFilter</computeroutput></screen>
                 using the <literal>isolated_hosts</literal> and
                     <literal>isolated_images</literal> configuration
                 options. For example:
-                <screen><computeroutput>
-isolated_hosts=server1,server2
-isolated_images=342b492c-128f-4a42-8d3a-c5088cf27d13,ebd267a6-ca86-4d6c-9a0e-bd132d6b7d09
-            </computeroutput></screen>
+                <programlisting language="ini">isolated_hosts=server1,server2
+isolated_images=342b492c-128f-4a42-8d3a-c5088cf27d13,ebd267a6-ca86-4d6c-9a0e-bd132d6b7d09</programlisting>
             </para>
         </section>
         <section xml:id="jsonfilter">
@@ -403,7 +401,7 @@ isolated_images=342b492c-128f-4a42-8d3a-c5088cf27d13,ebd267a6-ca86-4d6c-9a0e-bd1
                 configuration option in
                 <filename>nova.conf</filename>. The default setting
                 is:</para>
-            <screen><computeroutput>ram_allocation_ratio=1.5</computeroutput></screen>
+            <programlisting language="ini">ram_allocation_ratio=1.5</programlisting>
             <para>With this setting, if there is 1GB of free RAM, the
                 scheduler allows instances up to size 1.5GB to be run
                 on that instance.</para>
@@ -506,8 +504,8 @@ isolated_images=342b492c-128f-4a42-8d3a-c5088cf27d13,ebd267a6-ca86-4d6c-9a0e-bd1
             which selects the only weigher available -- the
             RamWeigher. Hosts are then weighed and sorted with the
             largest weight winning.</para>
-        <screen><computeroutput>scheduler_weight_classes=nova.scheduler.weights.all_weighers
-ram_weight_multiplier=1.0</computeroutput></screen>
+        <programlisting language="ini">scheduler_weight_classes=nova.scheduler.weights.all_weighers
+ram_weight_multiplier=1.0</programlisting>
         <para>The default is to spread instances across all hosts
             evenly. Set the <literal>ram_weight_multiplier</literal>
             option to a negative number if you prefer stacking instead

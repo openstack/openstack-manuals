@@ -14,8 +14,8 @@
         <procedure xml:id="host_usage_statistics">
             <title>To show host usage statistics</title>
             <step><para>List the hosts and the nova-related services that run on
-                them:</para><screen><prompt>$</prompt> <userinput>nova host-list</userinput></screen>
-            <screen><computeroutput>+------------------+-------------+----------+
+                them:</para><screen><prompt>$</prompt> <userinput>nova host-list</userinput>
+<computeroutput>+------------------+-------------+----------+
 | host_name        | service     | zone     |
 +------------------+-------------+----------+
 | devstack-grizzly | conductor   | internal |
@@ -24,10 +24,12 @@
 | devstack-grizzly | network     | internal |
 | devstack-grizzly | scheduler   | internal |
 | devstack-grizzly | consoleauth | internal |
-+------------------+-------------+----------+</computeroutput></screen></step>
++------------------+-------------+----------+</computeroutput></screen>
+        </step>
         <step><para>Get a summary of resource usage of all of the instances running
-                on the host.</para><screen><prompt>$</prompt> <userinput>nova host-describe <replaceable>devstack-grizzly</replaceable></userinput></screen>
-            <screen><computeroutput>+------------------+----------------------------------+-----+-----------+---------+
+                on the host.</para>
+                <screen><prompt>$</prompt> <userinput>nova host-describe <replaceable>devstack-grizzly</replaceable></userinput>
+<computeroutput>+------------------+----------------------------------+-----+-----------+---------+
 | HOST             | PROJECT                          | cpu | memory_mb | disk_gb |
 +------------------+----------------------------------+-----+-----------+---------+
 | devstack-grizzly | (total)                          | 2   | 4003      | 157     |
@@ -55,16 +57,16 @@
             <para>Get CPU, memory, I/O, and network statistics for an
                 instance.</para>
             <para>First, list instances:</para>
-            <screen><prompt>$</prompt> <userinput>nova list</userinput></screen>
-            <screen><computeroutput>+--------------------------------------+----------------------+--------+------------+-------------+------------------+
+            <screen><prompt>$</prompt> <userinput>nova list</userinput>
+<computeroutput>+--------------------------------------+----------------------+--------+------------+-------------+------------------+
 | ID                                   | Name                 | Status | Task State | Power State | Networks         |
 +--------------------------------------+----------------------+--------+------------+-------------+------------------+
 | 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5 | myCirrosServer       | ACTIVE | None       | Running     | private=10.0.0.3 |
 | 8a99547e-7385-4ad1-ae50-4ecfaaad5f42 | myInstanceFromVolume | ACTIVE | None       | Running     | private=10.0.0.4 |
 +--------------------------------------+----------------------+--------+------------+-------------+------------------+</computeroutput></screen>
             <para>Then, get diagnostic statistics:</para>
-            <screen><prompt>$</prompt> <userinput>nova diagnostics myCirrosServer</userinput></screen>
-            <screen><computeroutput>+------------------+----------------+
+            <screen><prompt>$</prompt> <userinput>nova diagnostics myCirrosServer</userinput>
+<computeroutput>+------------------+----------------+
 | Property         | Value          |
 +------------------+----------------+
 | vnet1_rx         | 1210744        |
@@ -84,13 +86,15 @@
 | vda_errors       | -1             |
 +------------------+----------------+</computeroutput></screen>
         </step>
-       <step> <para>Get summary statistics for each tenant:</para><screen><prompt>$</prompt> <userinput>nova usage-list</userinput></screen>
-            <screen><computeroutput>Usage from 2013-06-25 to 2013-07-24:
+       <step> <para>Get summary statistics for each tenant:</para>
+       <screen><prompt>$</prompt> <userinput>nova usage-list</userinput>
+<computeroutput>Usage from 2013-06-25 to 2013-07-24:
 +----------------------------------+-----------+--------------+-----------+---------------+
 | Tenant ID                        | Instances | RAM MB-Hours | CPU Hours | Disk GB-Hours |
 +----------------------------------+-----------+--------------+-----------+---------------+
 | b70d90d65e464582b6b2161cf3603ced | 1         | 344064.44    | 672.00    | 0.00          |
 | 66265572db174a7aa66eba661f58eb9e | 3         | 671626.76    | 327.94    | 6558.86       |
 +----------------------------------+-----------+--------------+-----------+---------------+</computeroutput></screen>
-       </step> </procedure>
+       </step>
+     </procedure>
 </section>

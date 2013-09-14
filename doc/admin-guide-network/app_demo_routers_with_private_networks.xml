@@ -228,12 +228,12 @@ libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver
                             </listitem>
                             <listitem>
                                 <para>Add the integration bridge to the Open vSwitch</para>
-                                <screen><computeroutput>sudo ovs-vsctl add-br br-int</computeroutput></screen>
+                                <screen><prompt>$</prompt> <userinput>sudo ovs-vsctl add-br br-int</userinput></screen>
                             </listitem>
                             <listitem>
                                 <para>Update the OpenStack Networking configuration file, <filename>
                                 /etc/neutron/neutron.conf</filename></para>
-                                <programlisting>[DEFAULT]
+                                <programlisting language="ini">[DEFAULT]
 core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2
 control_exchange = neutron
 rabbit_host = controlnode
@@ -244,7 +244,7 @@ notification_driver = neutron.openstack.common.notifier.rabbit_notifier
                                 <para>Update the plugin configuration file, <filename>
                                 /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>.</para>
                                 <para>Compute Node:</para>
-                                <programlisting>[database]
+                                <programlisting language="ini">[database]
 sql_connection = mysql://root:root@controlnode:3306/ovs_neutron?charset=utf8
 [ovs]
 tenant_network_type = gre
@@ -253,7 +253,7 @@ enable_tunneling = True
 local_ip = 9.181.89.202
 </programlisting>
                                 <para>Network Node:</para>
-                                <programlisting>[database]
+                                <programlisting language="ini">[database]
 sql_connection = mysql://root:root@controlnode:3306/ovs_neutron?charset=utf8
 [ovs]
 tenant_network_type = gre
@@ -364,9 +364,8 @@ export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/</programlisting>
                             <listitem>
                                 <para>Get the tenant ID (Used as
                                    $TENANT_ID later)</para>
-                                <screen><prompt>$</prompt> <userinput>keystone tenant-list</userinput></screen>
-                                <screen><computeroutput>
-+----------------------------------+---------+---------+
+                                <screen><prompt>$</prompt> <userinput>keystone tenant-list</userinput>
+<computeroutput>+----------------------------------+---------+---------+
 |                id                |   name  | enabled |
 +----------------------------------+---------+---------+
 | 247e478c599f45b5bd297e8ddbbc9b6a | TenantA |   True  |
@@ -379,9 +378,8 @@ export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/</programlisting>
                             </listitem>
                             <listitem>
                                 <para>Get the user information</para>
-                                <screen><prompt>$</prompt> <userinput>keystone user-list</userinput></screen>
-                                <screen><computeroutput>
-+----------------------------------+-------+---------+-------------------+
+                                <screen><prompt>$</prompt> <userinput>keystone user-list</userinput>
+<computeroutput>+----------------------------------+-------+---------+-------------------+
 |                id                |  name | enabled |       email       |
 +----------------------------------+-------+---------+-------------------+
 | 5a9149ed991744fa85f71e4aa92eb7ec |  demo |   True  |                   |
@@ -395,9 +393,8 @@ export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/</programlisting>
                             <listitem>
                                 <para>Create the external network and
                         its subnet by admin user:</para>
-                                <screen><prompt>$</prompt> <userinput>neutron net-create Ext-Net --provider:network_type local --router:external true</userinput></screen>
-<screen><computeroutput>
-Created a new network:
+                                <screen><prompt>$</prompt> <userinput>neutron net-create Ext-Net --provider:network_type local --router:external true</userinput>
+<computeroutput>Created a new network:
 +---------------------------+--------------------------------------+
 | Field                     | Value                                |
 +---------------------------+--------------------------------------+
@@ -415,9 +412,8 @@ Created a new network:
 +---------------------------+--------------------------------------+
 </computeroutput></screen>
 
-<screen><prompt>$</prompt> <userinput>neutron subnet-create Ext-Net 30.0.0.0/24 --disable-dhcp</userinput></screen>
-<screen><computeroutput>
-Created a new subnet:
+<screen><prompt>$</prompt> <userinput>neutron subnet-create Ext-Net 30.0.0.0/24 --disable-dhcp</userinput>
+<computeroutput>Created a new subnet:
 +------------------+--------------------------------------------+
 | Field            | Value                                      |
 +------------------+--------------------------------------------+
@@ -458,9 +454,8 @@ Created a new subnet:
                               <listitem>
                                 <para>Create a network for TenantA</para>
                                 <screen><prompt>$</prompt> <userinput>neutron --os-tenant-name TenantA --os-username UserA --os-password password \
- --os-auth-url=http://localhost:5000/v2.0 net-create TenantA-Net</userinput></screen>
-<screen><computeroutput>
-Created a new network:
+ --os-auth-url=http://localhost:5000/v2.0 net-create TenantA-Net</userinput>
+<computeroutput>Created a new network:
 +-----------------+--------------------------------------+
 | Field           | Value                                |
 +-----------------+--------------------------------------+
@@ -474,9 +469,8 @@ Created a new network:
 | tenant_id       | 247e478c599f45b5bd297e8ddbbc9b6a     |
 +-----------------+--------------------------------------+</computeroutput></screen>
                                 <para>After that we can use admin user to query the network's provider network information:</para>
-                                <screen><prompt>$</prompt> <userinput>neutron net-show TenantA-Net</userinput></screen>
-<screen><computeroutput>
-+---------------------------+--------------------------------------+
+                                <screen><prompt>$</prompt> <userinput>neutron net-show TenantA-Net</userinput>
+<computeroutput>+---------------------------+--------------------------------------+
 | Field                     | Value                                |
 +---------------------------+--------------------------------------+
 | admin_state_up            | True                                 |
@@ -498,9 +492,8 @@ Created a new network:
                                 <para>Create a subnet on the network TenantA-Net</para>
                                 <screen><prompt>$</prompt> <userinput>
 neutron --os-tenant-name TenantA --os-username UserA --os-password password\
-  --os-auth-url=http://localhost:5000/v2.0 subnet-create TenantA-Net 10.0.0.0/24</userinput></screen>
-<screen><computeroutput>
-Created a new subnet:
+  --os-auth-url=http://localhost:5000/v2.0 subnet-create TenantA-Net 10.0.0.0/24</userinput>
+<computeroutput>Created a new subnet:
 +------------------+--------------------------------------------+
 | Field            | Value                                      |
 +------------------+--------------------------------------------+
@@ -524,8 +517,8 @@ Created a new subnet:
   --os-auth-url=http://localhost:5000/v2.0 boot --image tty --flavor 1 \
   --nic net-id=7d0e8d5d-c63c-4f13-a117-4dc4e33e7d68 TenantA_VM1</userinput></screen>
 <screen><prompt>$</prompt> <userinput>nova --os-tenant-name TenantA --os-username UserA --os-password password \
-   --os-auth-url=http://localhost:5000/v2.0 list</userinput></screen>
-<screen><computeroutput>
+   --os-auth-url=http://localhost:5000/v2.0 list</userinput>
+<computeroutput>
 +--------------------------------------+-------------+--------+----------------------+
 | ID                                   | Name        | Status | Networks             |
 +--------------------------------------+-------------+--------+----------------------+
@@ -537,10 +530,8 @@ Created a new subnet:
                                 <para>Create and configure a router
                                 for TenantA:</para>
                                 <screen><prompt>$</prompt> <userinput>neutron --os-tenant-name TenantA --os-username UserA --os-password password \
-  --os-auth-url=http://localhost:5000/v2.0 router-create TenantA-R1</userinput></screen>
-
-<screen><computeroutput>
-Created a new router:
+  --os-auth-url=http://localhost:5000/v2.0 router-create TenantA-R1</userinput>
+<computeroutput>Created a new router:
 +-----------------------+--------------------------------------+
 | Field                 | Value                                |
 +-----------------------+--------------------------------------+
@@ -556,18 +547,15 @@ Created a new router:
   --os-auth-url=http://localhost:5000/v2.0 router-interface-add \
   TenantA-R1 51e2c223-0492-4385-b6e9-83d4e6d10657</userinput></screen>
   <para>Added interface to router TenantA-R1</para>
-                        <screen><computeroutput>
-neutron router-gateway-set TenantA-R1 Ext-Net
-                        </computeroutput></screen>
+                        <screen><prompt>$</prompt> <userinput>neutron router-gateway-set TenantA-R1 Ext-Net</userinput></screen>
                         <para><emphasis role="bold"> We are using admin user to run last command since our external network is owned by admin tenant.</emphasis></para>
                       </listitem>
                             <listitem>
                                 <para>Associate a floating IP for
                                 TenantA_VM1</para>
                                 <para>1. Create a floating IP</para><screen><prompt>$</prompt> <userinput>neutron --os-tenant-name TenantA --os-username UserA --os-password password \
-  --os-auth-url=http://localhost:5000/v2.0 floatingip-create Ext-Net</userinput></screen>
-<screen><computeroutput>
-Created a new floatingip:
+  --os-auth-url=http://localhost:5000/v2.0 floatingip-create Ext-Net</userinput>
+<computeroutput>Created a new floatingip:
 +---------------------+--------------------------------------+
 | Field               | Value                                |
 +---------------------+--------------------------------------+
@@ -583,9 +571,8 @@ Created a new floatingip:
 <para>2. Get the port ID of the VM with ID 7c5e6499-7ef7-4e36-8216-62c2941d21ff</para>
 <screen><prompt>$</prompt> <userinput>neutron --os-tenant-name TenantA --os-username UserA --os-password password \
   --os-auth-url=http://localhost:5000/v2.0 port-list -- \
-  --device_id 7c5e6499-7ef7-4e36-8216-62c2941d21ff</userinput></screen>
-<screen><computeroutput>
-+--------------------------------------+------+-------------------+---------------------------------------------------------------------------------+
+  --device_id 7c5e6499-7ef7-4e36-8216-62c2941d21ff</userinput>
+<computeroutput>+--------------------------------------+------+-------------------+---------------------------------------------------------------------------------+
 | id                                   | name | mac_address       | fixed_ips                                                                       |
 +--------------------------------------+------+-------------------+---------------------------------------------------------------------------------+
 | 6071d430-c66e-4125-b972-9a937c427520 |      | fa:16:3e:a0:73:0d | {"subnet_id": "51e2c223-0492-4385-b6e9-83d4e6d10657", "ip_address": "10.0.0.3"} |
@@ -594,13 +581,11 @@ Created a new floatingip:
 <para>3. Associate the floating IP with the VM port</para>
 <screen><prompt>$</prompt> <userinput>neutron --os-tenant-name TenantA --os-username UserA --os-password password \
   --os-auth-url=http://localhost:5000/v2.0 floatingip-associate \
-  5a1f90ed-aa3c-4df3-82cb-116556e96bf1 6071d430-c66e-4125-b972-9a937c427520</userinput></screen>
-<screen><computeroutput>
-Associated floatingip 5a1f90ed-aa3c-4df3-82cb-116556e96bf1
+  5a1f90ed-aa3c-4df3-82cb-116556e96bf1 6071d430-c66e-4125-b972-9a937c427520</userinput>
+<computeroutput>Associated floatingip 5a1f90ed-aa3c-4df3-82cb-116556e96bf1
 </computeroutput></screen>
-<screen><prompt>$</prompt> <userinput>neutron floatingip-list</userinput></screen>
-<screen><computeroutput>
-+--------------------------------------+------------------+---------------------+--------------------------------------+
+<screen><prompt>$</prompt> <userinput>neutron floatingip-list</userinput>
+<computeroutput>+--------------------------------------+------------------+---------------------+--------------------------------------+
 | id                                   | fixed_ip_address | floating_ip_address | port_id                              |
 +--------------------------------------+------------------+---------------------+--------------------------------------+
 | 5a1f90ed-aa3c-4df3-82cb-116556e96bf1 | 10.0.0.3         | 30.0.0.2            | 6071d430-c66e-4125-b972-9a937c427520 |
@@ -612,9 +597,8 @@ Associated floatingip 5a1f90ed-aa3c-4df3-82cb-116556e96bf1
                                 <para>In my environment, 192.168.1.0/24 is my public network connected
                                 with my physical router, which also connects to the external network 30.0.0.0/24.
                                 With the floating IP and virtual router, we can ping the public network within the server of tenant A:</para>
-                                <screen><prompt>$</prompt> <userinput>ping 192.168.1.1</userinput></screen>
-                                <screen><computeroutput>
-PING 192.168.1.1 (192.168.1.1) 56(84) bytes of data.
+                                <screen><prompt>$</prompt> <userinput>ping 192.168.1.1</userinput>
+<computeroutput>PING 192.168.1.1 (192.168.1.1) 56(84) bytes of data.
 64 bytes from 192.168.1.1: icmp_req=1 ttl=64 time=1.74 ms
 64 bytes from 192.168.1.1: icmp_req=2 ttl=64 time=1.50 ms
 64 bytes from 192.168.1.1: icmp_req=3 ttl=64 time=1.23 ms
@@ -626,9 +610,8 @@ rtt min/avg/max/mdev = 1.234/1.495/1.745/0.211 ms
                             </listitem>
                             <listitem>
                                 <para>Ping floating IP of the TenantA's server</para>
-                                <screen><prompt>$</prompt> <userinput>ping 30.0.0.2</userinput></screen>
-                                <screen><computeroutput>
-PING 30.0.0.2 (30.0.0.2) 56(84) bytes of data.
+                                <screen><prompt>$</prompt> <userinput>ping 30.0.0.2</userinput>
+<computeroutput>PING 30.0.0.2 (30.0.0.2) 56(84) bytes of data.
 64 bytes from 30.0.0.2: icmp_req=1 ttl=63 time=45.0 ms
 64 bytes from 30.0.0.2: icmp_req=2 ttl=63 time=0.898 ms
 64 bytes from 30.0.0.2: icmp_req=3 ttl=63 time=0.940 ms
@@ -662,9 +645,8 @@ rtt min/avg/max/mdev = 0.898/15.621/45.027/20.793 ms
   10.0.1.0/24 --name TenantC-Subnet2</userinput>
 </screen>
                                 <para>After that we can use admin user to query the network's provider network information:</para>
-                                <screen><prompt>$</prompt> <userinput>neutron net-show TenantC-Net1</userinput></screen>
-<screen><computeroutput>
-+---------------------------+--------------------------------------+
+                                <screen><prompt>$</prompt> <userinput>neutron net-show TenantC-Net1</userinput>
+<computeroutput>+---------------------------+--------------------------------------+
 | Field                     | Value                                |
 +---------------------------+--------------------------------------+
 | admin_state_up            | True                                 |
@@ -680,9 +662,8 @@ rtt min/avg/max/mdev = 0.898/15.621/45.027/20.793 ms
 | tenant_id                 | 2b4fec24e62e4ff28a8445ad83150f9d     |
 +---------------------------+--------------------------------------+
 </computeroutput></screen>
-<screen><prompt>$</prompt> <userinput>neutron net-show TenantC-Net2</userinput></screen>
-<screen><computeroutput>
-+---------------------------+--------------------------------------+
+<screen><prompt>$</prompt> <userinput>neutron net-show TenantC-Net2</userinput>
+<computeroutput>+---------------------------+--------------------------------------+
 | Field                     | Value                                |
 +---------------------------+--------------------------------------+
 | admin_state_up            | True                                 |
@@ -716,8 +697,8 @@ rtt min/avg/max/mdev = 0.898/15.621/45.027/20.793 ms
                             <listitem>
                                 <para>List servers of TenantC</para>
                                 <screen><prompt>$</prompt> <userinput>nova --os-tenant-name TenantC --os-username UserC --os-password password \
-  --os-auth-url=http://localhost:5000/v2.0 list</userinput></screen>
-<screen><computeroutput>
+  --os-auth-url=http://localhost:5000/v2.0 list</userinput>
+<computeroutput>
 +--------------------------------------+-------------+--------+-----------------------+
 | ID                                   | Name        | Status | Networks              |
 +--------------------------------------+-------------+--------+-----------------------+

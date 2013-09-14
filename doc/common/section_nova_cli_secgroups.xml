@@ -17,22 +17,21 @@
                 group is created, it can be viewed in the security
                 group list.</para>
     <para>
-        <screen>
-<prompt>$</prompt> <userinput>nova secgroup-create secure1 "Test security group"</userinput>
-+---------+---------------------+
+        <screen><prompt>$</prompt> <userinput>nova secgroup-create secure1 "Test security group"</userinput>
+<computeroutput>+---------+---------------------+
 |   Name  |     Description     |
 +---------+---------------------+
 | secure1 | Test security group |
 +---------+---------------------+
-
+</computeroutput>
 <prompt>$</prompt> <userinput>nova secgroup-list</userinput>
-+---------+---------------------+
+<computeroutput>+---------+---------------------+
 |   Name  |     Description     |
 +---------+---------------------+
 | default |       default       |
 | secure1 | Test security group |
-+---------+---------------------+
-</screen></para>
++---------+---------------------+</computeroutput></screen>
+</para>
 <para>Security groups can be deleted with <command>nova secgroup-delete</command>. The default
                 security group cannot be deleted. The default security group contains these initial
                 settings:<itemizedlist>
@@ -59,15 +58,13 @@
                 view the security group list, it no longer
                 appears.</para>
             <para>
-                <screen>
-<prompt>$</prompt> <userinput>nova secgroup-delete secure1</userinput>
+                <screen><prompt>$</prompt> <userinput>nova secgroup-delete secure1</userinput>
 <prompt>$</prompt> <userinput>nova secgroup-list</userinput>
-+---------+-------------+
+<computeroutput>+---------+-------------+
 |   Name  | Description |
 +---------+-------------+
 | default |   default   |
-+---------+-------------+
-        </screen>
++---------+-------------+</computeroutput></screen>
             </para>
 </section>
         <section xml:id="secgroup_rules">
@@ -138,35 +135,32 @@
             <para>For example, in order to allow any IP address to
                 access to a web server running on one of your instance
                 inside the default security
-                group:<screen>
-<prompt>$</prompt> <userinput>nova secgroup-add-rule default tcp 80 80 0.0.0.0/0</userinput>
-+-------------+-----------+---------+-----------+--------------+
+                group:<screen><prompt>$</prompt> <userinput>nova secgroup-add-rule default tcp 80 80 0.0.0.0/0</userinput>
+<computeroutput>+-------------+-----------+---------+-----------+--------------+
 | IP Protocol | From Port | To Port |  IP Range | Source Group |
 +-------------+-----------+---------+-----------+--------------+
 |     tcp     |     80    |    80   | 0.0.0.0/0 |              |
-+-------------+-----------+---------+-----------+--------------+
-            </screen></para>
++-------------+-----------+---------+-----------+--------------+</computeroutput></screen>
+            </para>
             <para>In order to allow any IP address to ping an instance
                 inside the default security group (Code 0, Type 8 for
                 the ECHO
-                request.):<screen>
-<prompt>$</prompt> <userinput>nova secgroup-add-rule default icmp 0 8 0.0.0.0/0</userinput>
-+-------------+-----------+---------+-----------+--------------+
+                request.):<screen><prompt>$</prompt> <userinput>nova secgroup-add-rule default icmp 0 8 0.0.0.0/0</userinput>
+<computeroutput>+-------------+-----------+---------+-----------+--------------+
 | IP Protocol | From Port | To Port |  IP Range | Source Group |
 +-------------+-----------+---------+-----------+--------------+
 |     icmp    |     0     |    8    | 0.0.0.0/0 |              |
-+-------------+-----------+---------+-----------+--------------+
-            </screen></para>
++-------------+-----------+---------+-----------+--------------+</computeroutput></screen>
+            </para>
             <para>
-                <screen>
-<prompt>$</prompt> <userinput>nova secgroup-list-rules default</userinput>
-+-------------+-----------+---------+-----------+--------------+
+                <screen><prompt>$</prompt> <userinput>nova secgroup-list-rules default</userinput>
+<computeroutput>+-------------+-----------+---------+-----------+--------------+
 | IP Protocol | From Port | To Port |  IP Range | Source Group |
 +-------------+-----------+---------+-----------+--------------+
 |     tcp     |     80    |    80   | 0.0.0.0/0 |              |
 |     icmp    |     0     |    8    | 0.0.0.0/0 |              |
-+-------------+-----------+---------+-----------+--------------+
-                </screen></para>
++-------------+-----------+---------+-----------+--------------+</computeroutput></screen>
+                </para>
             <para>In order to delete a rule, you need to specify the exact same arguments you used
                 to create it:<itemizedlist>
                     <listitem>
@@ -184,11 +178,8 @@
                     <listitem>
                         <para>&lt;cidr&gt; CIDR for address range.</para>
                     </listitem>
-                </itemizedlist><screen>
-<prompt>$</prompt> <userinput>nova secgroup-delete-rule default tcp 80 80 0.0.0.0/0</userinput>
-                </screen>
+                </itemizedlist><screen><prompt>$</prompt> <userinput>nova secgroup-delete-rule default tcp 80 80 0.0.0.0/0</userinput></screen>
             </para>
         </section>
 
 </section>
-

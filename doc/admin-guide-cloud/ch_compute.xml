@@ -361,14 +361,14 @@
       the <literal>*_body</literal> middleware and before the
         <literal>public_service</literal> app in the public_api WSGI
       pipeline in <filename>keystone-paste.ini</filename>. For example:</para>
-    <screen><computeroutput>[filter:user_crud_extension]
+    <programlisting language="ini">[filter:user_crud_extension]
 paste.filter_factory = keystone.contrib.user_crud:CrudExtension.factory
 
 [pipeline:public_api]
-pipeline = stats_monitoring url_normalize token_auth admin_token_auth xml_body json_body debug ec2_extension user_crud_extension public_service</computeroutput></screen>
+pipeline = stats_monitoring url_normalize token_auth admin_token_auth xml_body json_body debug ec2_extension user_crud_extension public_service</programlisting>
     <para>Each user can change their own password with a HTTP PATCH,
       as follows:</para>
-    <screen><prompt>$</prompt> <userinput>&gt; curl -X PATCH http://localhost:5000/v2.0/OS-KSCRUD/users/&lt;userid&gt; -H &quot;Content-type: application/json&quot;  \
+    <screen><prompt>$</prompt> <userinput>curl -X PATCH http://localhost:5000/v2.0/OS-KSCRUD/users/&lt;userid&gt; -H &quot;Content-type: application/json&quot;  \
       -H &quot;X_Auth_Token: &lt;authtokenid&gt;&quot; -d '{&quot;user&quot;: {&quot;password&quot;: &quot;ABCD&quot;, &quot;original_password&quot;: &quot;DCBA&quot;}}'</userinput></screen>
     <para>If the backend is kvs or sql, all users' passwords are
       changed and their tokens are deleted.</para>
@@ -381,21 +381,21 @@ pipeline = stats_monitoring url_normalize token_auth admin_token_auth xml_body j
         <literal>stats_monitoring</literal> filter and include it at
       the beginning of any desired WSGI pipelines in
         <filename>keystone-paste.ini</filename>, as follows:</para>
-    <screen><computeroutput>[filter:stats_monitoring]
+    <programlisting language="ini">[filter:stats_monitoring]
 paste.filter_factory = keystone.contrib.stats:StatsMiddleware.factory
 
 [pipeline:public_api]
-pipeline = stats_monitoring [...] public_service</computeroutput></screen>
+pipeline = stats_monitoring [...] public_service</programlisting>
     <para>To enable reporting of collected data, define a
         <literal>stats_reporting</literal> filter and include it near
       the end of your <literal>admin_api</literal> WSGI pipeline after
         <literal>*_body</literal> middleware and before
         <literal>*_extension</literal> filters, as follows:</para>
-    <screen><computeroutput>[filter:stats_reporting]
+    <programlisting language="ini">[filter:stats_reporting]
 paste.filter_factory = keystone.contrib.stats:StatsExtension.factory
 
 [pipeline:admin_api]
-pipeline = [...] json_body stats_reporting ec2_extension [...] admin_service</computeroutput></screen>
+pipeline = [...] json_body stats_reporting ec2_extension [...] admin_service</programlisting>
     <para>Query the admin API for statistics, as follows:</para>
     <screen><prompt>$</prompt> <userinput>curl -H 'X-Auth-Token: ADMIN' http://localhost:35357/v2.0/OS-STATS/stats</userinput></screen>
     <para>Reset collected data, as follows:</para>
@@ -715,8 +715,7 @@ header: Date: Thu, 13 Sep 2012 20:27:36 GMT
                                 which are preserved across restarts. To get a list of
                                 available images on your system run:</para>
                                 <screen><prompt>$</prompt> <userinput>nova image-list</userinput>
- <computeroutput>
-+--------------------------------------+-------------------------------+--------+--------------------------------------+
+ <computeroutput>+--------------------------------------+-------------------------------+--------+--------------------------------------+
 | ID                                   | Name                          | Status | Server                               |
 +--------------------------------------+-------------------------------+--------+--------------------------------------+
 | aee1d242-730f-431f-88c1-87630c0f07ba | Ubuntu 12.04 cloudimg amd64   | ACTIVE |                                      |
@@ -759,8 +758,7 @@ header: Date: Thu, 13 Sep 2012 20:27:36 GMT
                                 compute-api server). To get a list of available
                                 flavors on your system run:</para>
                         <screen><prompt>$</prompt> <userinput>nova flavor-list</userinput>
- <computeroutput>
-+----+-----------+-----------+------+-----------+------+-------+-------------+
+ <computeroutput>+----+-----------+-----------+------+-----------+------+-------+-------------+
 | ID |    Name   | Memory_MB | Disk | Ephemeral | Swap | VCPUs | RXTX_Factor |
 +----+-----------+-----------+------+-----------+------+-------+-------------+
 | 1  | m1.tiny   | 512       | 1    | N/A       | 0    | 1     |             |
@@ -1079,14 +1077,15 @@ header: Date: Thu, 13 Sep 2012 20:27:36 GMT
                 OpenStack metadata API, make a GET request to
                 <programlisting>http://169.254.169.254/openstack</programlisting>For
                 example:</para>
-            <para><screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/openstack</userinput></screen><screen><computeroutput>2012-08-10
+            <para><screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/openstack</userinput>
+<computeroutput>2012-08-10
 latest</computeroutput></screen>
                 To retrieve a list of supported versions for the
                 EC2-compatible metadata API, make a GET request to
                 <programlisting>http://169.254.169.254</programlisting></para>
             <para>For example:</para>
-<screen><prompt>$</prompt> <userinput>curl http://169.254.169.254</userinput></screen>
-            <screen><computeroutput>1.0
+<screen><prompt>$</prompt> <userinput>curl http://169.254.169.254</userinput>
+<computeroutput>1.0
 2007-01-19
 2007-03-01
 2007-08-29
@@ -1378,8 +1377,8 @@ iface eth1 inet dhcp</programlisting></para>
                 <para>If you aren't able to reach your instances through the floating IP address,
                     make sure the default security group allows ICMP (ping) and SSH (port 22), so
                     that you can reach the instances:</para>
-                <screen><prompt>$</prompt> <userinput>nova secgroup-list-rules default</userinput></screen>
-                <screen><computeroutput>+-------------+-----------+---------+-----------+--------------+
+                <screen><prompt>$</prompt> <userinput>nova secgroup-list-rules default</userinput>
+<computeroutput>+-------------+-----------+---------+-----------+--------------+
 | IP Protocol | From Port | To Port |  IP Range | Source Group |
 +-------------+-----------+---------+-----------+--------------+
 | icmp        | -1        | -1      | 0.0.0.0/0 |              |
@@ -1877,8 +1876,8 @@ local0.error    @@172.20.1.43:1024</programlisting></para>
             <step>
                 <para>Look at the running instances, to get the
                     ID of the instance you wish to migrate.</para>
-                <screen><prompt>#</prompt> <userinput>nova list</userinput></screen>
-                <screen><computeroutput><![CDATA[+--------------------------------------+------+--------+-----------------+
+                <screen><prompt>#</prompt> <userinput>nova list</userinput>
+<computeroutput><![CDATA[+--------------------------------------+------+--------+-----------------+
 |                  ID                  | Name | Status |Networks         |
 +--------------------------------------+------+--------+-----------------+
 | d1df1b5a-70c4-4fed-98b7-423362f2c47c | vm1  | ACTIVE | private=a.b.c.d |
@@ -1886,8 +1885,8 @@ local0.error    @@172.20.1.43:1024</programlisting></para>
 +--------------------------------------+------+--------+-----------------+]]></computeroutput></screen></step>
             <step><para>Look at information associated with that
                 instance - our example is vm1 from above.</para>
-                <screen><prompt>#</prompt> <userinput>nova show d1df1b5a-70c4-4fed-98b7-423362f2c47c</userinput></screen>
-                <screen><computeroutput><![CDATA[+-------------------------------------+----------------------------------------------------------+
+                <screen><prompt>#</prompt> <userinput>nova show d1df1b5a-70c4-4fed-98b7-423362f2c47c</userinput>
+<computeroutput><![CDATA[+-------------------------------------+----------------------------------------------------------+
 |               Property              |                          Value                           |
 +-------------------------------------+----------------------------------------------------------+
 ...
@@ -1905,8 +1904,8 @@ local0.error    @@172.20.1.43:1024</programlisting></para>
             <step>
                 <para>Select the server to migrate instances
                     to.</para>
-                <screen><prompt>#</prompt> <userinput>nova-manage service list</userinput></screen>
-                <screen><computeroutput><![CDATA[HostA nova-scheduler enabled  :-) None
+                <screen><prompt>#</prompt> <userinput>nova-manage service list</userinput>
+<computeroutput><![CDATA[HostA nova-scheduler enabled  :-) None
 HostA nova-network enabled  :-) None
 HostB nova-compute enabled  :-) None
 HostC nova-compute enabled  :-) None]]></computeroutput></screen>
@@ -1918,8 +1917,8 @@ HostC nova-compute enabled  :-) None]]></computeroutput></screen>
             <step>
                 <para>Ensure that HostC has enough resource for
                     migration.</para>
-                <screen><prompt>#</prompt> <userinput>nova-manage service describe_resource HostC</userinput></screen>
-                <screen><computeroutput><![CDATA[HOST             PROJECT     cpu   mem(mb)     hdd
+                <screen><prompt>#</prompt> <userinput>nova-manage service describe_resource HostC</userinput>
+<computeroutput><![CDATA[HOST             PROJECT     cpu   mem(mb)     hdd
 HostC(total)                  16     32232     878
 HostC(used_now)               13     21284     442
 HostC(used_max)               13     21284     442
@@ -1965,8 +1964,8 @@ HostC            p2            5     10240     150
                 <para>Use the <command>nova
                         live-migration</command> command to migrate
                     the instances.</para>
-                <screen><prompt>#</prompt> <userinput>nova live-migration d1df1b5a-70c4-4fed-98b7-423362f2c47c HostC</userinput></screen>
-                <screen><computeroutput><![CDATA[Migration of d1df1b5a-70c4-4fed-98b7-423362f2c47c initiated.]]></computeroutput></screen>
+                <screen><prompt>#</prompt> <userinput>nova live-migration d1df1b5a-70c4-4fed-98b7-423362f2c47c HostC</userinput>
+<computeroutput><![CDATA[Migration of d1df1b5a-70c4-4fed-98b7-423362f2c47c initiated.]]></computeroutput></screen>
                 <para>Make sure instances are migrated successfully
                     with <command>nova list</command>. If instances
                     are still running on HostB, check logfiles
@@ -2351,7 +2350,7 @@ done &lt; $volumes_tmp_file</programlisting>
                             from the instance itself, not through
                             nova. So, we SSH into the instance and
                             perform a reboot:</para>
-                        <screen><prompt>$</prompt> <userinput>shutdown -r now</userinput>                           </screen>
+                        <screen><prompt>#</prompt> <userinput>shutdown -r now</userinput></screen>
                     </listitem>
                 </itemizedlist>Voila! You successfully recovered your
                 cloud after that.</para>
@@ -2375,7 +2374,8 @@ done &lt; $volumes_tmp_file</programlisting>
                             cloud-controller. To re-run the session
                             manually, you would run the following
                             command before performing the mount:
-                            <screen><prompt>#</prompt> <userinput>iscsiadm -m discovery -t st -p $SAN_IP $ iscsiadm -m node --target-name $IQN -p $SAN_IP -l</userinput></screen></para>
+                            <screen><prompt>#</prompt> <userinput>iscsiadm -m discovery -t st -p $SAN_IP $ iscsiadm -m node --target-name $IQN -p $SAN_IP -l</userinput></screen>
+                        </para>
                     </listitem>
                     <listitem>
                         <para>For your instances, if you have the

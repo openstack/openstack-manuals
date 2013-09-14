@@ -148,9 +148,8 @@ SrWY8lF3HrTcJT23sZIleg==</screen></para>
             external CA is to first generate a PKCS #10 Certificate
             Request Syntax (CRS) using OpenSSL CLI.</para>
         <para>First create a certificate request configuration file
-            (e.g. <literal>cert_req.conf</literal>):</para>
-        <screen>
-[ req ]
+            (e.g. <filename>cert_req.conf</filename>):</para>
+        <programlisting language="ini">[ req ]
 default_bits            = 1024
 default_keyfile         = keystonekey.pem
 default_md              = sha1
@@ -166,19 +165,18 @@ organizationName        = OpenStack
 organizationalUnitName  = Keystone
 commonName              = Keystone Signing
 emailAddress            = keystone@openstack.org
-</screen>
+</programlisting>
         <para>Then generate a CRS with OpenSSL CLI. <emphasis
                 role="strong">Do not encrypt the generated private
                 key. Must use the -nodes option.</emphasis>
         </para>
         <para>For example:</para>
-        <screen>
-openssl req -newkey rsa:1024 -keyout signing_key.pem -keyform PEM -out signing_cert_req.pem -outform PEM -config cert_req.conf -nodes
-</screen>
+        <screen><prompt>$</prompt> <userinput>openssl req -newkey rsa:1024 -keyout signing_key.pem -keyform PEM \
+  -out signing_cert_req.pem -outform PEM -config cert_req.conf -nodes</userinput></screen>
         <para>If everything is successfully, you should end up with
-                <literal>signing_cert_req.pem</literal> and
-                <literal>signing_key.pem</literal>. Send
-                <literal>signing_cert_req.pem</literal> to your CA to
+                <filename>signing_cert_req.pem</filename> and
+                <filename>signing_key.pem</filename>. Send
+                <filename>signing_cert_req.pem</filename> to your CA to
             request a token signing certificate and make sure to ask
             the certificate to be in PEM format. Also, make sure your
             trusted CA certificate chain is also in PEM format.
@@ -190,35 +188,34 @@ openssl req -newkey rsa:1024 -keyout signing_key.pem -keyform PEM -out signing_c
         <itemizedlist>
             <listitem>
                 <para>
-                    <literal>signing_cert.pem</literal> - (Keystone
+                    <filename>signing_cert.pem</filename> - (Keystone
                     token) signing certificate in PEM format</para>
             </listitem>
             <listitem>
                 <para>
-                    <literal>signing_key.pem</literal> - corresponding
+                    <filename>signing_key.pem</filename> - corresponding
                     (non-encrypted) private key in PEM format</para>
             </listitem>
             <listitem>
                 <para>
-                    <literal>cacert.pem</literal> - trust CA
+                    <filename>cacert.pem</filename> - trust CA
                     certificate chain in PEM format</para>
             </listitem>
         </itemizedlist>
         <para>Copy the above to your certificate directory. For
             example:</para>
-        <screen>
-mkdir -p /etc/keystone/ssl/certs
-cp signing_cert.pem /etc/keystone/ssl/certs/
-cp signing_key.pem /etc/keystone/ssl/certs/
-cp cacert.pem /etc/keystone/ssl/certs/
-chmod -R 700 /etc/keystone/ssl/certs
+        <screen><prompt>#</prompt> <userinput>mkdir -p /etc/keystone/ssl/certs</userinput>
+<prompt>#</prompt> <userinput>cp signing_cert.pem /etc/keystone/ssl/certs/</userinput>
+<prompt>#</prompt> <userinput>cp signing_key.pem /etc/keystone/ssl/certs/</userinput>
+<prompt>#</prompt> <userinput>cp cacert.pem /etc/keystone/ssl/certs/</userinput>
+<prompt>#</prompt> <userinput>chmod -R 700 /etc/keystone/ssl/certs</userinput>
 </screen>
         <note>
             <para>Make sure the certificate directory is only
                 accessible by root.</para>
         </note>
         <para>If your certificate directory path is different from
-            the default <literal>/etc/keystone/ssl/certs</literal>,
+            the default <filename>/etc/keystone/ssl/certs</filename>,
             make sure it is reflected in the
                 <literal>[signing]</literal> section of the
             configuration file.</para>

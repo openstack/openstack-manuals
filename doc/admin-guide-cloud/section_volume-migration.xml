@@ -42,20 +42,14 @@
             backends, and migrate an attached volume from one to the
             other. This will use the 3rd migration flow.</para>
             <para>First, we can list the available backends:
-                <screen>
-<prompt>$</prompt> <userinput>cinder-manage host list</userinput>
-                    <computeroutput>
-server1@lvmstorage-1    zone1
-server2@lvmstorage-2    zone1
-                    </computeroutput>
-                </screen>
+                <screen><prompt>$</prompt> <userinput>cinder-manage host list</userinput>
+<computeroutput>server1@lvmstorage-1    zone1
+server2@lvmstorage-2    zone1</computeroutput></screen>
             </para>
             <para>Next, as the admin user, we can see the current status
             of the volume (replace the example ID with your own):</para>
-                <screen>
-<prompt>$</prompt> <userinput>cinder show 6088f80a-f116-4331-ad48-9afb0dfb196c</userinput>
-                    <computeroutput>
-+--------------------------------+--------------------------------------+
+                <screen><prompt>$</prompt> <userinput>cinder show 6088f80a-f116-4331-ad48-9afb0dfb196c</userinput>
+<computeroutput>+--------------------------------+--------------------------------------+
 |            Property            |                Value                 |
 +--------------------------------+--------------------------------------+
 |          attachments           |                [...]                 |
@@ -75,9 +69,7 @@ server2@lvmstorage-2    zone1
 |          source_volid          |                 None                 |
 |             status             |                in-use                |
 |          volume_type           |                 None                 |
-+--------------------------------+--------------------------------------+
-                    </computeroutput>
-                </screen>
++--------------------------------+--------------------------------------+</computeroutput></screen>
             <para>Of special note are the following attributes:</para>
             <itemizedlist>
                 <listitem>
@@ -109,9 +101,7 @@ server2@lvmstorage-2    zone1
                 </listitem>
             </itemizedlist>
             <para>Now we will migrate this volume to the second LVM backend:
-                <screen>
-<prompt>$</prompt> <userinput>cinder migrate 6088f80a-f116-4331-ad48-9afb0dfb196c server2@lvmstorage-2</userinput>
-                </screen>
+                <screen><prompt>$</prompt> <userinput>cinder migrate 6088f80a-f116-4331-ad48-9afb0dfb196c server2@lvmstorage-2</userinput></screen>
             </para>
             <para>We can use the <command>cinder show</command> command to see
         the status of the migration. While migrating, the
@@ -120,8 +110,7 @@ server2@lvmstorage-2    zone1
         error, <literal>migstat</literal> will be set to <literal>None</literal>
         and the <literal>host</literal> attribute will show the original host.
         On success, in our example, the output would look like:</para>
-        <screen><computeroutput>
-+--------------------------------+--------------------------------------+
+        <screen><computeroutput>+--------------------------------+--------------------------------------+
 |            Property            |                Value                 |
 +--------------------------------+--------------------------------------+
 |          attachments           |                [...]                 |

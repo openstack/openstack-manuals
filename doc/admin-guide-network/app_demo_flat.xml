@@ -270,9 +270,8 @@ export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/</programlisting>
                             <listitem>
                                 <para>Get the tenant ID (Used as
                                    $TENANT_ID later):</para>
-                                <screen><prompt>$</prompt> <userinput>keystone tenant-list</userinput></screen>
-                                <screen><computeroutput>
-+----------------------------------+---------+---------+
+                                <screen><prompt>$</prompt> <userinput>keystone tenant-list</userinput>
+<computeroutput>+----------------------------------+---------+---------+
 |                id                |   name  | enabled |
 +----------------------------------+---------+---------+
 | 247e478c599f45b5bd297e8ddbbc9b6a | TenantA |   True  |
@@ -285,9 +284,8 @@ export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/</programlisting>
                             </listitem>
                             <listitem>
                                 <para>Get the User information:</para>
-                                <screen><prompt>$</prompt> <userinput>keystone user-list</userinput></screen>
-                                <screen><computeroutput>
-+----------------------------------+-------+---------+-------------------+
+                                <screen><prompt>$</prompt> <userinput>keystone user-list</userinput>
+<computeroutput>+----------------------------------+-------+---------+-------------------+
 |                id                |  name | enabled |       email       |
 +----------------------------------+-------+---------+-------------------+
 | 5a9149ed991744fa85f71e4aa92eb7ec |  demo |   True  |                   |
@@ -303,8 +301,8 @@ export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/</programlisting>
                                    demo tenant ($TENANT_ID will be
                                    b7445f221cda4f4a8ac7db6b218b1339):</para>
                                 <screen><prompt>$</prompt> <userinput>neutron net-create --tenant-id $TENANT_ID sharednet1 --shared --provider:network_type flat \
-  --provider:physical_network physnet1</userinput></screen>
-                                <screen><computeroutput>Created a new network:
+  --provider:physical_network physnet1</userinput>
+<computeroutput>Created a new network:
 +---------------------------+--------------------------------------+
 | Field                     | Value                                |
 +---------------------------+--------------------------------------+
@@ -324,8 +322,8 @@ export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/</programlisting>
                             </listitem>
                             <listitem>
                                 <para>Create a subnet on the network:</para>
-                                <screen><prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $TENANT_ID sharednet1 30.0.0.0/24</userinput></screen>
-                                <screen><computeroutput>Created a new subnet:
+                                <screen><prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $TENANT_ID sharednet1 30.0.0.0/24</userinput>
+<computeroutput>Created a new subnet:
 +------------------+--------------------------------------------+
 | Field            | Value                                      |
 +------------------+--------------------------------------------+
@@ -349,9 +347,8 @@ export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/</programlisting>
   --os-auth-url=http://localhost:5000/v2.0 boot --image tty --flavor 1 \
   --nic net-id=04457b44-e22a-4a5c-be54-a53a9b2818e7 TenantA_VM1</userinput></screen>
 <screen><prompt>$</prompt> <userinput>nova --os-tenant-name TenantA --os-username UserA --os-password password \
---os-auth-url=http://localhost:5000/v2.0  list</userinput></screen>
-<screen><computeroutput>
-+--------------------------------------+-------------+--------+---------------------+
+--os-auth-url=http://localhost:5000/v2.0  list</userinput>
+<computeroutput>+--------------------------------------+-------------+--------+---------------------+
 | ID                                   | Name        | Status | Networks            |
 +--------------------------------------+-------------+--------+---------------------+
 | 09923b39-050d-4400-99c7-e4b021cdc7c4 | TenantA_VM1 | ACTIVE | sharednet1=30.0.0.3 |
@@ -368,9 +365,8 @@ export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/</programlisting>
                             </listitem>
                             <listitem>
                                 <para>Ping the public network within the server of tenant A:</para>
-                                <screen><prompt>$</prompt> <userinput>ping 192.168.1.1</userinput></screen>
-                                <screen><computeroutput>
-PING 192.168.1.1 (192.168.1.1) 56(84) bytes of data.
+                                <screen><prompt>$</prompt> <userinput>ping 192.168.1.1</userinput>
+<computeroutput>PING 192.168.1.1 (192.168.1.1) 56(84) bytes of data.
 64 bytes from 192.168.1.1: icmp_req=1 ttl=64 time=1.74 ms
 64 bytes from 192.168.1.1: icmp_req=2 ttl=64 time=1.50 ms
 64 bytes from 192.168.1.1: icmp_req=3 ttl=64 time=1.23 ms

@@ -99,19 +99,19 @@ format="PNG" />
                                 <para>Neutron configuration file
                                 <filename>/etc/neutron/neutron.conf</filename>:
                                 </para>
-                                <screen><computeroutput>[DEFAULT]
+                                <programlisting language="ini">[DEFAULT]
 core_plugin = neutron.plugins.linuxbridge.lb_neutron_plugin.LinuxBridgePluginV2
 rabbit_host = controlnode
 allow_overlapping_ips = True
 host = controlnode
 agent_down_time = 5
-</computeroutput></screen>
+</programlisting>
                             </listitem>
                             <listitem>
                                 <para>Update the plugin configuration file <filename
                                     >/etc/neutron/plugins/linuxbridge/linuxbridge_conf.ini</filename>:
                                 </para>
-                                <screen><computeroutput>[vlans]
+                                <programlisting language="ini">[vlans]
 tenant_network_type = vlan
 network_vlan_ranges = physnet1:1000:2999
 [database]
@@ -119,7 +119,7 @@ sql_connection = mysql://root:root@127.0.0.1:3306/neutron_linux_bridge
 reconnect_interval = 2
 [linux_bridge]
 physical_interface_mappings = physnet1:eth0
-</computeroutput></screen>
+</programlisting>
                             </listitem>
                         </orderedlist>
                 </listitem>
@@ -130,32 +130,32 @@ physical_interface_mappings = physnet1:eth0
                                 <para>Neutron configuration file <filename
                                     >/etc/neutron/neutron.conf</filename>:
                                 </para>
-                                <screen><computeroutput>[DEFAULT]
+                                <programlisting language="ini">[DEFAULT]
 rabbit_host = controlnode
 rabbit_password = openstack
 # host = HostB on hostb
 host = HostA
-</computeroutput></screen>
+</programlisting>
                             </listitem>
                             <listitem>
                                 <para>Update the plugin configuration file <filename
                                     >/etc/neutron/plugins/linuxbridge/linuxbridge_conf.ini</filename>:
                                 </para>
-                                <screen><computeroutput>[vlans]
+                                <programlisting language="ini">[vlans]
 tenant_network_type = vlan
 network_vlan_ranges = physnet1:1000:2999
 [database]
 sql_connection = mysql://root:root@127.0.0.1:3306/neutron_linux_bridge
 reconnect_interval = 2
 [linux_bridge]
-physical_interface_mappings = physnet1:eth0</computeroutput></screen>
+physical_interface_mappings = physnet1:eth0</programlisting>
                             </listitem>
                             <listitem>
                                 <para>Update the nova configuration
                                    file <filename
                                    >/etc/nova/nova.conf</filename>:
                                 </para>
-                                <screen><computeroutput>[DEFAULT]
+                                <programlisting language="ini">[DEFAULT]
 network_api_class=nova.network.neutronv2.api.API
 
 neutron_admin_username=neutron
@@ -165,7 +165,7 @@ neutron_auth_strategy=keystone
 neutron_admin_tenant_name=servicetenant
 neutron_url=http://100.1.1.10:9696/
 firewall_driver=nova.virt.firewall.NoopFirewallDriver
-</computeroutput></screen>
+</programlisting>
                             </listitem>
                         </orderedlist>
                 </listitem>
@@ -175,9 +175,9 @@ firewall_driver=nova.virt.firewall.NoopFirewallDriver
                                 <para>Update the DHCP configuration file <filename
                                     >/etc/neutron/dhcp_agent.ini</filename>:
                                 </para>
-                                <screen><computeroutput>[DEFAULT]
+                                <programlisting language="ini">[DEFAULT]
 interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver
-</computeroutput></screen>
+</programlisting>
                             </listitem>
 
                         </orderedlist>
