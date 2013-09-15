@@ -24,36 +24,47 @@
             system that is capable of mounting an ISO9660 or VFAT file
             system. This functionality should be available on all
             modern operating systems.</para>
-        <para>In addition, an image that has been built with a recent
+    </simplesect>
+    <simplesect>
+        <title>Compute host requirements</title>
+        <para>Config drive is currently supported by the following
+            hypervisors: libvirt, xenserver, hyper-v and vmware.</para>
+        <para>To use config drive with libvirt, xenserver or vmware, the
+            <command>genisoimage</command> program must be
+            installed on each compute host. In the Ubuntu
+            packages, it is not installed by default (see bug
+            <link xlink:href="https://bugs.launchpad.net/cloud-archive/+bug/1165174">#1165174</link>).
+            Make sure you install this
+            program on each compute host before attempting to
+            use config drive, or an instance will not boot
+            properly. The path to where
+            <command>genisoimage</command> is installed can
+            be set using the <literal>mkisofs_cmd</literal> flag. If
+            <command>genisoimage</command> is in the path
+            used by nova-compute you do not need to set
+            the value of this flag.</para>
+        <para>To use config drive with hyper-v, you must set the
+            value of the <literal>mkisofs_cmd</literal> to the
+            full path to an installation of <literal>mkisofs.exe</literal>.
+            Additionally, you will need to set the value of the
+            <literal>qemu_img_cmd</literal> flag in the <literal>hyperv</literal>
+            configuration section to the full path to an installation
+            of the <literal>qemu-img</literal> command.</para>
+    </simplesect>
+    <simplesect>
+        <title>Image requirements</title>
+        <para>An image that has been built with a recent
             version of the cloud-init package will be able to
             automatically access metadata passed via config drive. The
             current version of cloud-init as of this writing (0.7.1)
             has been confirmed to work with Ubuntu, as well as
             Fedora-based images such as RHEL.</para>
-        <para>Config drive is currently supported by the following
-            hypervisors: libvirt, xenserver, hyper-v and vmware.</para>
         <para>If an image does not have the cloud-init package
             installed, the image must be customized to run a script
             that mounts the config drive on boot, reads the data from
             the drive, and takes appropriate action such as adding the
             public key to an account. See below for details on how
-            data is organized on the config drive.<note>
-                <para>To use config drive, the
-                        <command>genisoimage</command> program must be
-                    installed on each compute host. In the Ubuntu
-                    packages, it is not installed by default (see bug
-                        <link
-                        xlink:href="https://bugs.launchpad.net/cloud-archive/+bug/1165174"
-                        >#1165174</link>). Make sure you install this
-                    program on each compute host before attempting to
-                    use config drive, or an instance will not boot
-                    properly. The path to where
-                    <command>genisoimage</command> is installed can
-                    be set using the <literal>mkisofs_cmd</literal> flag. If
-                    <command>genisoimage</command> is in the path
-                    used by nova-compute you do not need to set
-                    the value of this flag.</para>
-            </note>
+            data is organized on the config drive.
             <note>
                 <para>If you use Xen with a config drive, disable the
                     agent through the
