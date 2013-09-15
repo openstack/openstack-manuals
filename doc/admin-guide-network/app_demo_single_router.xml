@@ -236,16 +236,24 @@ admin_password = password</programlisting>
                         packages:<screen><prompt>#</prompt> <userinput>apt-get install openvswitch-switch neutron-plugin-openvswitch-agent</userinput></screen></para>
                 </step>
                 <step>
-                    <para>Start open vSwitch
-                        Service:<screen><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput></screen></para>
+                    <para>Start the OpenvSwitch
+                        service:<screen><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput></screen></para>
                 </step>
                 <step>
-                    <para>Configure Virtual
-                        Bridging:<screen><prompt>#</prompt> <userinput>ovs-vsctl add-br br-int</userinput></screen></para>
+                    <para>Create the integration
+                        bridge:<screen><prompt>#</prompt> <userinput>ovs-vsctl add-br br-int</userinput></screen></para>
+                </step>
+                <step>
+                    <para>Create the network bridge <emphasis
+                            role="bold">br-eth1</emphasis> (All VM
+                        communication between the nodes occurs through
+                        eth1):</para>
+                    <screen><prompt>#</prompt> <userinput>ovs-vsctl add-br br-eth1</userinput>
+<prompt>#</prompt> <userinput>ovs-vsctl add-port br-eth1 eth1</userinput></screen>
                 </step>
                 <step>
                     <para>Update the OpenStack Networking
-                        configuration file, <filename>
+                        configuration file <filename>
 			/etc/neutron/neutron.conf</filename>:</para>
                     <programlisting language="bash">rabbit_password = password
 rabbit_host = 192.168.0.1</programlisting>
@@ -261,7 +269,7 @@ network_vlan_ranges = physnet1:1:4094
 bridge_mappings = physnet1:br-eth1</programlisting>
                 </step>
                 <step>
-                    <para>Start the DHCP agent:</para>
+                    <para>Restart the OpenvSwitch Neutron plugin agent:</para>
                     <screen><prompt>#</prompt> <userinput>service neutron-plugin-openvswitch-agent restart</userinput></screen>
                 </step>
             </procedure>
