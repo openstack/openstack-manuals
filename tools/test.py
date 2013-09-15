@@ -136,6 +136,25 @@ def error_message(error_log):
     return "\n".join(errs)
 
 
+# Check whether only files in www got updated
+def only_www_touched():
+    try:
+        args = ["git", "diff", "--name-only", "HEAD", "HEAD~1"]
+        modified_files = check_output(args).strip().split()
+    except (CalledProcessError, OSError) as e:
+        print("git failed: %s" % e)
+        sys.exit(1)
+
+    www_changed = False
+    other_changed = False
+    for f in modified_files:
+        if f.startswith("www/"):
+            www_changed = True
+        else:
+            other_changed = True
+
+    return www_changed and not other_changed
+
 def get_modified_files():
     try:
         args = ["git", "diff", "--name-only", "--relative", "HEAD", "HEAD~1"]
@@ -344,6 +363,11 @@ def build_affected_books(rootdir, book_exceptions, file_exceptions, force=False,
 
 
 def main(args):
+
+    if not force and only_www_touched():
+        print("Only files in www directory changed, nothing to do.")
+        return
+
     if args.check_syntax:
         validate_individual_files(args.path, FILE_EXCEPTIONS, args.force, args.with_niceness, args.non_voting)
 
