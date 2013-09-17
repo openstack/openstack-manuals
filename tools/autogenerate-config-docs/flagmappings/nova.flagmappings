@@ -9,7 +9,9 @@ allow_resize_to_same_host policy
 allow_same_net_traffic network
 allowed_direct_url_schemes glance
 allowed_rpc_exception_modules testing
+amqp_durable_queues rpc
 api_paste_config wsgi
+amqp_auto_delete rpc
 api_rate_limit authentication
 api_retry_count vmware
 attestation_api_url trustedcomputing
@@ -89,6 +91,7 @@ control_exchange rpc
 cpu_allocation_ratio scheduling
 create_unique_mac_address_attempts network
 crl_file ca
+datastore_regex vmware
 db_backend baremetal
 db_backend db
 db_check_interval db
@@ -109,6 +112,7 @@ deploy_kernel baremetal
 deploy_ramdisk baremetal
 dhcp_domain network
 dhcp_lease_time network
+dhcp_options_enabled neutron
 dhcpbridge network
 dhcpbridge_flagfile network
 disable_process_locking common
@@ -120,8 +124,10 @@ dmz_net vpn
 dns_server network
 dns_update_periodic_interval network
 dnsmasq_config_file network
+docker_registry_default_port docker
 driver baremetal
 driver cells
+dynamic_memory_ratio hyperv
 ec2_dmz_host ec2
 ec2_host ec2
 ec2_listen ec2
@@ -134,6 +140,7 @@ ec2_strict_validation ec2
 ec2_timestamp_expiry ec2
 ec2_workers ec2
 enable cells
+enable_instance_metrics_collection hyperv
 enable_instance_password compute
 enable_network_quota quota
 enable_new_services api
@@ -151,7 +158,6 @@ fatal_exception_format_errors logging
 filesystems glance
 firewall_driver network
 fixed_ip_disassociate_timeout network
-fixed_range network
 fixed_range_v6 ipv6
 flat_injected network
 flat_interface network
@@ -160,6 +166,7 @@ flat_network_dns network
 floating_ip_dns_manager network
 force_config_drive configdrive
 force_dhcp_release network
+force_hyperv_utils_v1 hyperv
 force_raw_images hypervisor
 force_snat_range network
 force_volumeutils_v1 volumes
@@ -238,12 +245,15 @@ ldap_dns_user ldap
 libvirt_cpu_mode hypervisor
 libvirt_cpu_model hypervisor
 libvirt_disk_prefix hypervisor
+libvirt_images_rbd_ceph_conf hypervisor
 libvirt_images_type hypervisor
+libvirt_images_rbd_pool hypervisor
 libvirt_images_volume_group hypervisor
 libvirt_inject_key hypervisor
 libvirt_inject_partition hypervisor
 libvirt_inject_password hypervisor
 libvirt_iscsi_use_multipath hypervisor
+libvirt_iser_use_multipath hypervisor
 libvirt_lvm_snapshot_size hypervisor
 libvirt_nonblocking hypervisor
 libvirt_ovs_bridge hypervisor
@@ -285,6 +295,7 @@ max_hop_count cells
 max_instances_per_host scheduling
 max_io_ops_per_host scheduling
 max_kernel_ramdisk_size xen
+max_local_block_devices policy
 max_pool_size db
 memcached_servers common
 max_overflow db
@@ -297,6 +308,7 @@ maximum_instance_delete_attempts compute
 metadata_manager metadata
 metadata_port metadata
 metadata_workers metadata
+migrate_max_retries conductor
 min_pool_size db
 mkisofs_cmd configdrive
 monkey_patch testing
@@ -343,6 +355,7 @@ novncproxy_base_url vnc
 null_kernel api
 num_aoe_discover_tries volumes
 num_iscsi_scan_tries volumes
+num_iser_scan_tries volumes
 num_networks network
 os_region_name volumes
 osapi_compute_ext_list api
@@ -358,6 +371,8 @@ osapi_max_limit policy
 osapi_max_request_body_size policy
 password redis
 password_length policy
+pci_alias pci
+pci_passthrough_whitelist pci
 periodic_enable periodic
 periodic_fuzzy_delay periodic
 policy_default_rule policy
@@ -380,6 +395,7 @@ pxe_config_template baremetal
 pxe_deploy_timeout baremetal
 pxe_network_config baremetal
 pybasedir common
+qemu_allowed_storage_drivers volumes
 qemu_img_cmd hyperv
 qpid_heartbeat qpid
 qpid_hostname qpid
@@ -389,6 +405,7 @@ qpid_port qpid
 qpid_protocol qpid
 qpid_sasl_mechanisms qpid
 qpid_tcp_nodelay qpid
+qpid_topology_version qpid
 qpid_username qpid
 quota_cores quota
 quota_driver quota
@@ -403,7 +420,6 @@ quota_metadata_items quota
 quota_ram quota
 quota_security_group_rules quota
 quota_security_groups quota
-rabbit_durable_queues rabbitmq
 rabbit_ha_queues rabbitmq
 rabbit_host rabbitmq
 rabbit_hosts rabbitmq
@@ -417,8 +433,8 @@ rabbit_userid rabbitmq
 rabbit_virtual_host rabbitmq
 ram_allocation_ratio scheduling
 ram_weight_multiplier scheduling
-rbd_secret_uuid volume
-rbd_user volume
+rbd_secret_uuid volumes
+rbd_user volumes
 reboot_timeout compute
 reclaim_instance_interval compute
 recv_timeout zookeeper
@@ -437,7 +453,9 @@ reserve_percent cells
 reserved_host_disk_mb scheduling
 reserved_host_memory_mb scheduling
 resize_confirm_window compute
+restrict_isolated_hosts_to_isolated_images scheduling
 resume_guests_state_on_host_boot compute
+resize_fs_using_block_device policy
 retry_interval db
 ringfile rpc
 rootwrap_config common
@@ -467,8 +485,8 @@ s3_listen_port s3
 s3_port s3
 s3_secret_key s3
 s3_use_ssl s3
-scality_sofs_config volume
-scality_sofs_mount_point volume
+scality_sofs_config volumes
+scality_sofs_mount_point volumes
 scheduler upgrade_levels
 scheduler_available_filters scheduling
 scheduler_default_filters scheduling
@@ -581,6 +599,7 @@ vpn_ip vpn
 vpn_key_suffix vpn
 vpn_start vpn
 vswitch_name hyperv
+workers conductor
 wsdl_location vmware
 wsgi_log_format wsgi
 xen_hvmloader_path xen
@@ -591,9 +610,13 @@ xenapi_connection_password xen
 xenapi_connection_url xen
 xenapi_connection_username xen
 xenapi_disable_agent xen
+xenapi_image_compression_level xen
 xenapi_image_upload_handler xen
+xenapi_ipxe_boot_menu_url xen
 xenapi_login_timeout xen
+xenapi_ipxe_mkisofs_cmd xen
 xenapi_num_vbd_unplug_retries xen
+xenapi_ipxe_network_name xen
 xenapi_ovs_integration_bridge xen
 xenapi_remap_vbd_dev xen
 xenapi_remap_vbd_dev_prefix xen

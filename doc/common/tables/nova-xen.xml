@@ -11,7 +11,7 @@
            <thead>
               <tr>
                   <td>Configuration option=Default value</td>
-                  <td>(Type) Description</td>
+                  <td>Description</td>
               </tr>
           </thead>
           <tbody>
@@ -117,7 +117,7 @@
               </tr>
               <tr>
                        <td>xenapi_connection_url=None</td>
-                       <td>(StrOpt) URL for connection to XenServer/Xen Cloud Platform. Required if compute_driver=xenapi.XenAPIDriver</td>
+                       <td>(StrOpt) URL for connection to XenServer/Xen Cloud Platform. A special value of unix://local can be used to connect to the local unix socket.  Required if compute_driver=xenapi.XenAPIDriver</td>
               </tr>
               <tr>
                        <td>xenapi_connection_username=root</td>
@@ -128,16 +128,32 @@
                        <td>(BoolOpt) Disables the use of the XenAPI agent in any image regardless of what image properties are present. </td>
               </tr>
               <tr>
+                       <td>xenapi_image_compression_level=None</td>
+                       <td>(IntOpt) Compression level for images, e.g., 9 for gzip -9. Range is 1-9, 9 being most compressed but most CPU intensive on dom0.</td>
+              </tr>
+              <tr>
                        <td>xenapi_image_upload_handler=nova.virt.xenapi.image.glance.GlanceStore</td>
                        <td>(StrOpt) Dom0 plugin driver used to handle image uploads.</td>
+              </tr>
+              <tr>
+                       <td>xenapi_ipxe_boot_menu_url=None</td>
+                       <td>(StrOpt) URL to the iPXE boot menu</td>
               </tr>
               <tr>
                        <td>xenapi_login_timeout=10</td>
                        <td>(IntOpt) Timeout in seconds for XenAPI login.</td>
               </tr>
               <tr>
+                       <td>xenapi_ipxe_mkisofs_cmd=mkisofs</td>
+                       <td>(StrOpt) Name and optionally path of the tool used for ISO image creation</td>
+              </tr>
+              <tr>
                        <td>xenapi_num_vbd_unplug_retries=10</td>
                        <td>(IntOpt) Maximum number of retries to unplug VBD</td>
+              </tr>
+              <tr>
+                       <td>xenapi_ipxe_network_name=None</td>
+                       <td>(StrOpt) Name of network to use for booting iPXE ISOs</td>
               </tr>
               <tr>
                        <td>xenapi_ovs_integration_bridge=xapi1</td>
