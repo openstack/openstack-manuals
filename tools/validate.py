@@ -205,8 +205,7 @@ def check_deleted_files(rootdir, file_exceptions):
                     ns = {"xi": "http://www.w3.org/2001/XInclude"}
                     for node in doc.xpath('//xi:include', namespaces=ns):
                         href = node.get('href')
-                        if (href.endswith('.xml') and
-                            os.path.abspath(href) in deleted_files):
+                        if (os.path.abspath(href) in deleted_files):
                             print("  File %s has an xi:include on deleted file %s " % (f, href))
                             missing_reference = True
             if missing_reference:
@@ -322,8 +321,7 @@ def build_affected_books(rootdir, book_exceptions, file_exceptions, force):
                 ns = {"xi": "http://www.w3.org/2001/XInclude"}
                 for node in doc.xpath('//xi:include', namespaces=ns):
                     href = node.get('href')
-                    if (href.endswith('.xml') and
-                        f not in file_exceptions and
+                    if (f not in file_exceptions and
                         os.path.abspath(href) in modified_files):
                         affected_books.append(book_root)
                         break
