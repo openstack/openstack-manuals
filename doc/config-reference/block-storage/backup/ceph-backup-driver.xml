@@ -1,0 +1,60 @@
+<section xml:id="ceph-backup-driver"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0">
+    <title>Ceph Backup Driver</title>
+        <para>The Ceph backup driver supports backing up volumes of any type
+              to a Ceph backend store. It is also capable of detecting whether
+              the volume to be backed up is a Ceph RBD volume and if so,
+              attempts to perform incremental/differential backups.
+        </para>
+        <para>Support is also included for the following in the case of source
+                volume being a Ceph RBD volume:
+        </para>
+        <itemizedlist>
+            <listitem><para>backing up within the same Ceph pool
+            (not recommended)</para>
+            </listitem>
+            <listitem><para>backing up between different Ceph pools</para>
+            </listitem>
+            <listitem><para>backing up between different Ceph clusters</para>
+            </listitem>
+        </itemizedlist>
+        <para>At the time of writing, differential backup support in
+                Ceph/librbd was quite new so this driver accounts for this
+                by first attempting differential backup and falling back to
+                full backup/copy if the former fails.
+        </para>
+        <para>If incremental backups are used, multiple backups of the same
+                volume are stored as snapshots so that minimal space is
+                consumed in the backup store and restoring the volume takes
+                a far reduced amount of time compared to a full copy.
+        </para>
+        <para>Note that Cinder supports restoring to a new volume or the
+                original volume the backup was taken from. For the latter
+                case, a full copy is enforced since this was deemed the safest
+                action to take. It is therefore recommended to always
+                restore to a new volume (default).
+        </para>
+        <para>To enable the Ceph backup driver, include the following option
+                in cinder.conf:</para>
+        <programlisting>
+        backup_driver=cinder.backup.driver.ceph
+        </programlisting>
+        <para>The following configuration options are available for the
+                Ceph backup driver.
+        </para>
+        <xi:include href="../../../common/tables/cinder-backups_ceph.xml" />
+        <para>Here is an example of the default options for the Ceph backup
+                driver.
+        </para>
+        <programlisting>
+        backup_ceph_conf=/etc/ceph/ceph.conf
+        backup_ceph_user=cinder
+        backup_ceph_chunk_size=134217728
+        backup_ceph_pool=backups
+        backup_ceph_stripe_unit=0
+        backup_ceph_stripe_count=0
+        </programlisting>
+</section>
