@@ -953,6 +953,25 @@ neutron lb-vip-create --name myvip --protocol-port 80 --protocol HTTP --subnet-i
                     <screen><computeroutput>neutron queue-delete &lt;queue_id or name&gt;'</computeroutput></screen>
                 </section>
             </section>
+            <section xml:id="nicira_nvp_plugin_l3_extension">
+               <title>Nicira NVP L3 Extension</title>
+               <para>NVP exposes its L3 capabilities through gateway services
+                 which are usually configured out of band from OpenStack.
+                 In order to use NVP with L3 capabilities first create a
+                 L3 gateway service in the NVP Manager. Next, in <filename>
+                 /etc/neutron/plugins/nicira/nvp.ini</filename> set <literal>default_l3_gw_service_uuid</literal>
+                 to this value. Now, when routers are created they will by default
+                 be mapped to this gateway service.</para>
+                <section xml:id="nicira_l3_walk_through">
+                    <title>Nicira NVP L3 Extension Walk Through</title>
+                    <para>Create external network and map it to a specific NVP gateway service:</para>
+                    <screen><prompt>$</prompt> <userinput>neutron net-create public --router:external=True --provider:network_type l3_ext \
+--provider:physical_network &lt;L3-Gateway-Service-UUID&gt;</userinput></screen>
+                    <para>Terminate traffic on a specific VLAN from a NVP gateway service:</para>
+                    <screen><prompt>$</prompt> <userinput>neutron net-create public --router:external=True --provider:network_type l3_ext \
+--provider:physical_network &lt;L3-Gateway-Service-UUID&gt; -provider:segmentation_id &lt;VLAN_ID&gt;</userinput></screen>
+                </section>
+            </section>
         </section>
     </section>
 </chapter>
