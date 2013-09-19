@@ -4,16 +4,16 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="ch_adv_features">
     <title>Advanced Features through API Extensions</title>
-    <para>This section discusses two API extensions implemented by
-        several plugins.  We include them in this guide as they
+    <para>This section discusses two API extensions that are
+        implemented by several plugins.  Because these extensions
         provide capabilities similar to what was available in
-        nova-network and are thus likely to be relevant to a large
+        nova-network, they are likely to be of interest to a large
         portion of the OpenStack community.  </para>
     <section xml:id="provider_networks">
         <title>Provider Networks</title>
-        <para>Provider networks allow cloud administrators to create
+        <para>Provider networks enable cloud administrators to create
             OpenStack Networking networks that map directly to
-            physical networks in the data center.  This is commonly
+            physical networks in the data center. This is commonly
             used to give tenants direct access to a "public" network
             that can be used to reach the Internet.  It may also be
             used to integrate with VLANs in the network that already
@@ -791,13 +791,13 @@ neutron lb-vip-create --name myvip --protocol-port 80 --protocol HTTP --subnet-i
     </section>
     <section xml:id="allowed_address_pairs">
         <title>Allowed-Address-Pairs</title>
-        <para>Allowed-Address-Pairs is an API extension that extends the port
-              attribute. This extension allows one to specify arbitrary
-              mac_address/ip_address(cidr) pairs that are allowed to pass through
-              a port regardless of subnet. The main use case for this is to
-              enable the ability to use protocols such as VRRP which floats
-              an ip address between two instances to enable fast dataplane
-              failover.</para>
+        <para>Allowed-Address-Pairs is an API extension that extends
+            the port attribute. This extension allows one to specify
+            arbitrary mac_address/ip_address(cidr) pairs that are
+            allowed to pass through a port regardless of subnet. The
+            main use case for this is to enable the ability to use
+            protocols such as VRRP which floats an ip address between
+            two instances to enable fast data plane failover.</para>
         <note>
             <para>The allowed-address-pairs extension is currently only
                   supported by the following plugins: Nicira NVP, OpenvSwitch,
@@ -953,15 +953,75 @@ neutron lb-vip-create --name myvip --protocol-port 80 --protocol HTTP --subnet-i
                     <screen><computeroutput>neutron queue-delete &lt;queue_id or name&gt;'</computeroutput></screen>
                 </section>
             </section>
+            <section xml:id="nicira_nvp_provider_extension">
+                <title>Nicira NVP provider networks extension</title>
+                <para>Provider networks can be implemented in different ways by
+                    the underlying NVP platform.</para>
+                <para>The <emphasis>FLAT</emphasis> and
+                        <emphasis>VLAN</emphasis> network types use
+                    bridged transport connectors. These network types
+                    enable the attachment of large number of ports. To
+                    handle the increased scale, the NVP plug-in can
+                    back a single Openstack Network with a chain of
+                    NVP logical switches. You can specify the maximum
+                    number of ports on each logical switch in this
+                    chain on the
+                        <literal>max_lp_per_bridged_ls</literal>
+                    parameter, which  has a default value of
+                    5,000.</para>
+                <para>The recommended value for this parameter varies with the
+                    NVP version running in the backend, as shown in the
+                    following table.</para>
+                <para>
+                    <table rules="all">
+                        <caption>Recommended values for max_lp_per_bridged_ls</caption>
+                        <col width="50%"/>
+                        <col width="50%"/>
+                        <thead>
+                            <tr>
+                                <td>NVP version</td>
+                                <td>Recommended Value</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2.x</td>
+                                <td>64</td>
+                            </tr>
+                            <tr>
+                                <td>3.0.x</td>
+                                <td>5,000</td>
+                            </tr>
+                            <tr>
+                                <td>3.1.x</td>
+                                <td>5,000</td>
+                            </tr>
+                            <tr>
+                                <td>3.2.x</td>
+                                <td>10,000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </para>
+                <para>In addition to the above network types, the NVP
+                    plug-in also supports a special
+                        <emphasis>l3_ext</emphasis> network type,
+                    which maps external networks to specific NVP
+                    gateway services as discussed in the following
+                    section.</para>
+            </section>
             <section xml:id="nicira_nvp_plugin_l3_extension">
                <title>Nicira NVP L3 Extension</title>
-               <para>NVP exposes its L3 capabilities through gateway services
-                 which are usually configured out of band from OpenStack.
-                 In order to use NVP with L3 capabilities first create a
-                 L3 gateway service in the NVP Manager. Next, in <filename>
-                 /etc/neutron/plugins/nicira/nvp.ini</filename> set <literal>default_l3_gw_service_uuid</literal>
-                 to this value. Now, when routers are created they will by default
-                 be mapped to this gateway service.</para>
+               <para>NVP exposes its L3 capabilities through gateway
+                    services which are usually configured out of band
+                    from OpenStack. To use NVP with L3 capabilities,
+                    first create a L3 gateway service in the NVP
+                    Manager. Next, in <filename>
+                        /etc/neutron/plugins/nicira/nvp.ini</filename>
+                    set <literal>default_l3_gw_service_uuid</literal>
+                    to this value. Now, when routers are created they
+                    will by default be mapped to this gateway
+                    service.</para>
                 <section xml:id="nicira_l3_walk_through">
                     <title>Nicira NVP L3 Extension Walk Through</title>
                     <para>Create external network and map it to a specific NVP gateway service:</para>
