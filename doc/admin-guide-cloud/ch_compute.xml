@@ -334,138 +334,53 @@
       </simplesect>
     </section>
     </section>
-    <section xml:id="section_identity-mgmt">
-        <title>Identity management</title>
-  <para>The Identity Service, code-named Keystone, is the default identity service for OpenStack.
-            After you install the Identity Service, you configure it through the
-                <filename>etc/keystone.conf</filename> configuration file, the PasteDeploy
-                <filename>etc/keystone-paste.ini</filename> configuration file, and possibly a
-            separate logging configuration file. You use the keystone command-line client to
-            initialize data into the Identity Service.</para>
-  <xi:include href="../common/section_keystone-concepts.xml"/>
-  <section xml:id="section_memcached-and-system-time">
-    <title>Memcached and system time</title>
-      <para>If you use <link xlink:href="http://memcached.org/">memcached</link> with the Identity Service&#x2014;for example, using the
-      memcache token driver or the <literal>auth_token</literal>
-          middleware&#x2014;ensure that the system time of memcached
-      hosts is set to UTC. Memcached uses the host's system time in
-      determining whether a key has expired, whereas the Identity Service sets key
-      expiry in UTC. The timezone used by the Identity Service and memcached must
-      match if key expiry is to behave as expected.</para>
-  </section>
-  <section xml:id="section_user-crud">
-    <title>User CRUD</title>
-    <para>The Identity Service provides a user CRUD filter that can be
-      added to the public_api pipeline. This user crud filter allows
-      users to use a HTTP PATCH to change their own password. To
-      enable this extension you should define a
-        <literal>user_crud_extension</literal> filter, insert it after
-      the <literal>*_body</literal> middleware and before the
-        <literal>public_service</literal> app in the public_api WSGI
-      pipeline in <filename>keystone-paste.ini</filename>. For example:</para>
-    <programlisting language="ini">[filter:user_crud_extension]
-paste.filter_factory = keystone.contrib.user_crud:CrudExtension.factory
-
-[pipeline:public_api]
-pipeline = stats_monitoring url_normalize token_auth admin_token_auth xml_body json_body debug ec2_extension user_crud_extension public_service</programlisting>
-    <para>Each user can change their own password with a HTTP PATCH,
-      as follows:</para>
-    <screen><prompt>$</prompt> <userinput>curl -X PATCH http://localhost:5000/v2.0/OS-KSCRUD/users/&lt;userid&gt; -H &quot;Content-type: application/json&quot;  \
-      -H &quot;X_Auth_Token: &lt;authtokenid&gt;&quot; -d '{&quot;user&quot;: {&quot;password&quot;: &quot;ABCD&quot;, &quot;original_password&quot;: &quot;DCBA&quot;}}'</userinput></screen>
-    <para>If the backend is kvs or sql, all users' passwords are
-      changed and their tokens are deleted.</para>
-  </section>
-  <section xml:id="section_monitoring">
-    <title>Monitoring</title>
-    <para>The Identity Service provides some basic request/response monitoring
-      statistics.</para>
-    <para>To enable data collection, define a
-        <literal>stats_monitoring</literal> filter and include it at
-      the beginning of any desired WSGI pipelines in
-        <filename>keystone-paste.ini</filename>, as follows:</para>
-    <programlisting language="ini">[filter:stats_monitoring]
-paste.filter_factory = keystone.contrib.stats:StatsMiddleware.factory
-
-[pipeline:public_api]
-pipeline = stats_monitoring [...] public_service</programlisting>
-    <para>To enable reporting of collected data, define a
-        <literal>stats_reporting</literal> filter and include it near
-      the end of your <literal>admin_api</literal> WSGI pipeline after
-        <literal>*_body</literal> middleware and before
-        <literal>*_extension</literal> filters, as follows:</para>
-    <programlisting language="ini">[filter:stats_reporting]
-paste.filter_factory = keystone.contrib.stats:StatsExtension.factory
-
-[pipeline:admin_api]
-pipeline = [...] json_body stats_reporting ec2_extension [...] admin_service</programlisting>
-    <para>Query the admin API for statistics, as follows:</para>
-    <screen><prompt>$</prompt> <userinput>curl -H 'X-Auth-Token: ADMIN' http://localhost:35357/v2.0/OS-STATS/stats</userinput></screen>
-    <para>Reset collected data, as follows:</para>
-    <screen><prompt>$</prompt> <userinput>curl -H 'X-Auth-Token: ADMIN' -X DELETE http://localhost:35357/v2.0/OS-STATS/stats</userinput></screen>
-  </section>
-  <xi:include href="../common/section_keystone_certificates-for-pki.xml"/>
-  <section xml:id="section_running-keystone">
-    <title>Run the Identity Service</title>
-    <para>To start the Identity Service, run the following
-      command:</para>
-    <screen><prompt>$</prompt> <userinput>keystone-all</userinput></screen>
-    <para>This command starts two wsgi.Server instances, configured by
-      the <filename>keystone.conf</filename> and
-        <filename>keystone-paste.ini</filename> configuration file.
-      One of these wsgi 'servers' is <literal>admin</literal> (the
-      administration API) and the other is <literal>main</literal>
-      (the primary/public API interface). Both of these run in a
-      single process.</para>
-  </section>
-  <xi:include href="../common/section_identity-troubleshooting.xml"/>
-</section>
     <section xml:id="section_image-mgmt">
-    <title>Image management</title>
-    <para>The OpenStack Image Service, code-named <emphasis role="italic">glance</emphasis>,
-        discovers, registers, and retrieves virtual machine images.
-        The service includes a <link
-            xlink:href="http://api.openstack.org/api-ref.html#os-images-2.0">RESTful API</link> that
-        allows users to query VM image metadata and retrieve the actual image with HTTP requests.
-        You can also use the <link
-            xlink:href="http://docs.openstack.org/cli/quick-start/content/glance_client.html">glance
-            command-line tool</link>, or the <link
-            xlink:href="http://docs.openstack.org/developer/python-glanceclient/">Python API</link>
-        to accomplish the same tasks.</para>
-    <para>VM images made available through OpenStack Image Service can be stored in a variety of
-        locations. The OpenStack Image Service supports the following backend stores:</para>
-    <itemizedlist>
-        <listitem>
-            <para>OpenStack Object Storage - OpenStack Object Storage (code-named <emphasis
+        <title>Image management</title>
+        <para>The OpenStack Image Service, code-named <emphasis role="italic">glance</emphasis>,
+            discovers, registers, and retrieves virtual machine images.
+            The service includes a <link
+                xlink:href="http://api.openstack.org/api-ref.html#os-images-2.0">RESTful API</link> that
+            allows users to query VM image metadata and retrieve the actual image with HTTP requests.
+            You can also use the <link
+                xlink:href="http://docs.openstack.org/cli/quick-start/content/glance_client.html">glance
+                command-line tool</link>, or the <link
+                    xlink:href="http://docs.openstack.org/developer/python-glanceclient/">Python API</link>
+            to accomplish the same tasks.</para>
+        <para>VM images made available through OpenStack Image Service can be stored in a variety of
+            locations. The OpenStack Image Service supports the following backend stores:</para>
+        <itemizedlist>
+            <listitem>
+                <para>OpenStack Object Storage - OpenStack Object Storage (code-named <emphasis
                     role="italic">swift</emphasis>) is the highly-available object storage project
-                in OpenStack.</para>
-        </listitem>
-        <listitem>
-            <para>Filesystem - The default backend that OpenStack
-                Image Service uses to store virtual machine images is
-                the filesystem backend. This simple backend writes
-                image files to the local filesystem.</para>
-        </listitem>
-        <listitem>
-            <para>S3 - This backend allows OpenStack Image Service to
-                store virtual machine images in Amazon’s S3
-                service.</para>
-        </listitem>
-        <listitem>
-            <para>HTTP - OpenStack Image Service can read virtual
-                machine images that are available through HTTP somewhere
-                on the Internet. This store is read only.</para>
-        </listitem>
-        <listitem>
-            <para>Rados Block Device (RBD) - This backend stores images inside of a Ceph storage
-                cluster using Ceph's RBD interface.</para>
-        </listitem>
-        <listitem>
-            <para>GridFS - This backend stores images inside of MongoDB.</para>
-        </listitem>
-    </itemizedlist>
-    <para>You must have a working installation of the Image Service, with a working
-        endpoint and users created in the Identity Service. Also, you must source the environment
-        variables required by the nova and glance clients.</para>
+                    in OpenStack.</para>
+            </listitem>
+            <listitem>
+                <para>Filesystem - The default backend that OpenStack
+                    Image Service uses to store virtual machine images is
+                    the filesystem backend. This simple backend writes
+                    image files to the local filesystem.</para>
+            </listitem>
+            <listitem>
+                <para>S3 - This backend allows OpenStack Image Service to
+                    store virtual machine images in Amazon’s S3
+                    service.</para>
+            </listitem>
+            <listitem>
+                <para>HTTP - OpenStack Image Service can read virtual
+                    machine images that are available through HTTP somewhere
+                    on the Internet. This store is read only.</para>
+            </listitem>
+            <listitem>
+                <para>Rados Block Device (RBD) - This backend stores images inside of a Ceph storage
+                    cluster using Ceph's RBD interface.</para>
+            </listitem>
+            <listitem>
+                <para>GridFS - This backend stores images inside of MongoDB.</para>
+            </listitem>
+        </itemizedlist>
+        <para>You must have a working installation of the Image Service, with a working
+            endpoint and users created in the Identity Service. Also, you must source the environment
+            variables required by the nova and glance clients.</para>
     </section>
     <section xml:id="section_instance-mgmt">
         <title>Instance management</title>
