@@ -11,7 +11,7 @@
            <thead>
               <tr>
                   <td>Configuration option=Default value</td>
-                  <td>(Type) Description</td>
+                  <td>Description</td>
               </tr>
           </thead>
           <tbody>
@@ -60,24 +60,80 @@
                        <td>(ListOpt) A list of backend names to use. These backend names should be backed by a unique [CONFIG] group with its options</td>
               </tr>
               <tr>
-                       <td>glusterfs_disk_util=df</td>
-                       <td>(StrOpt) Use du or df for free space calculation</td>
+                       <td>eqlx_chap_login=admin</td>
+                       <td>(StrOpt) Existing CHAP account name</td>
               </tr>
               <tr>
-                       <td>glusterfs_mount_point_base=$state_path/mnt</td>
-                       <td>(StrOpt) Base dir containing mount points for gluster shares</td>
+                       <td>eqlx_chap_password=password</td>
+                       <td>(StrOpt) Password for specified CHAP account name</td>
               </tr>
               <tr>
-                       <td>glusterfs_shares_config=/etc/cinder/glusterfs_shares</td>
-                       <td>(StrOpt) File with the list of available gluster shares</td>
+                       <td>eqlx_cli_max_retries=5</td>
+                       <td>(IntOpt) Maximum retry count for reconnection</td>
               </tr>
               <tr>
-                       <td>glusterfs_sparsed_volumes=True</td>
-                       <td>(BoolOpt) Create volumes as sparsed files which take no space.If set to False volume is created as regular file.In such case volume creation takes a lot of time.</td>
+                       <td>eqlx_cli_timeout=30</td>
+                       <td>(IntOpt) Timeout for the Group Manager cli command execution</td>
+              </tr>
+              <tr>
+                       <td>eqlx_group_name=group-0</td>
+                       <td>(StrOpt) Group name to use for creating volumes</td>
+              </tr>
+              <tr>
+                       <td>eqlx_pool=default</td>
+                       <td>(StrOpt) Pool in which volumes will be created</td>
+              </tr>
+              <tr>
+                       <td>eqlx_use_chap=False</td>
+                       <td>(BoolOpt) Use CHAP authentificaion for targets?</td>
+              </tr>
+              <tr>
+                       <td>expiry_thres_minutes=720</td>
+                       <td>(IntOpt) Threshold minutes after which cache file can be cleaned.</td>
               </tr>
               <tr>
                        <td>hds_cinder_config_file=/opt/hds/hus/cinder_hus_conf.xml</td>
                        <td>(StrOpt) configuration file for HDS cinder plugin for HUS</td>
+              </tr>
+              <tr>
+                       <td>hp3par_api_url=</td>
+                       <td>(StrOpt) 3PAR WSAPI Server Url like https://&lt;3par ip&gt;:8080/api/v1</td>
+              </tr>
+              <tr>
+                       <td>hp3par_cpg=OpenStack</td>
+                       <td>(StrOpt) The CPG to use for volume creation</td>
+              </tr>
+              <tr>
+                       <td>hp3par_cpg_snap=</td>
+                       <td>(StrOpt) The CPG to use for Snapshots for volumes. If empty hp3par_cpg will be used</td>
+              </tr>
+              <tr>
+                       <td>hp3par_debug=False</td>
+                       <td>(BoolOpt) Enable HTTP debugging to 3PAR</td>
+              </tr>
+              <tr>
+                       <td>hp3par_domain=None</td>
+                       <td>(StrOpt) This option is DEPRECATED and no longer used. The 3par domain name to use.</td>
+              </tr>
+              <tr>
+                       <td>hp3par_iscsi_ips=</td>
+                       <td>(ListOpt) List of target iSCSI addresses to use.</td>
+              </tr>
+              <tr>
+                       <td>hp3par_password=</td>
+                       <td>(StrOpt) 3PAR Super user password</td>
+              </tr>
+              <tr>
+                       <td>hp3par_snapshot_expiration=</td>
+                       <td>(StrOpt) The time in hours when a snapshot expires  and is deleted.  This must be larger than expiration</td>
+              </tr>
+              <tr>
+                       <td>hp3par_snapshot_retention=</td>
+                       <td>(StrOpt) The time in hours to retain a snapshot.  You can't delete it before this expires.</td>
+              </tr>
+              <tr>
+                       <td>hp3par_username=</td>
+                       <td>(StrOpt) 3PAR Super user username</td>
               </tr>
               <tr>
                        <td>iscsi_helper=tgtadm</td>
@@ -89,11 +145,11 @@
               </tr>
               <tr>
                        <td>iscsi_ip_address=$my_ip</td>
-                       <td>(StrOpt) The port that the iSCSI daemon is listening on</td>
+                       <td>(StrOpt) The IP address that the iSCSI daemon is listening on</td>
               </tr>
               <tr>
                        <td>iscsi_num_targets=100</td>
-                       <td>(IntOpt) Number of iscsi target ids per host</td>
+                       <td>(IntOpt) The maximum number of iscsi target ids per host</td>
               </tr>
               <tr>
                        <td>iscsi_port=3260</td>
@@ -104,8 +160,36 @@
                        <td>(StrOpt) prefix for iscsi volumes</td>
               </tr>
               <tr>
+                       <td>iser_helper=tgtadm</td>
+                       <td>(StrOpt) iser target user-land tool to use</td>
+              </tr>
+              <tr>
+                       <td>iser_ip_address=$my_ip</td>
+                       <td>(StrOpt) The IP address that the iSER daemon is listening on</td>
+              </tr>
+              <tr>
+                       <td>iser_num_targets=100</td>
+                       <td>(IntOpt) The maximum number of iser target ids per host</td>
+              </tr>
+              <tr>
+                       <td>iser_port=3260</td>
+                       <td>(IntOpt) The port that the iSER daemon is listening on</td>
+              </tr>
+              <tr>
+                       <td>iser_target_prefix=iqn.2010-10.org.iser.openstack:</td>
+                       <td>(StrOpt) prefix for iser volumes</td>
+              </tr>
+              <tr>
+                       <td>keymgr_api_class=cinder.keymgr.not_implemented_key_mgr.NotImplementedKeyManager</td>
+                       <td>(StrOpt) The full class name of the key manager API class</td>
+              </tr>
+              <tr>
                        <td>lvm_mirrors=0</td>
                        <td>(IntOpt) If set, create lvms with multiple mirrors. Note that this requires lvm_mirrors + 2 pvs with available space</td>
+              </tr>
+              <tr>
+                       <td>lvm_type=default</td>
+                       <td>(StrOpt) Type of LVM volumes to deploy; (default or thin)</td>
               </tr>
               <tr>
                        <td>max_age=0</td>
@@ -140,10 +224,6 @@
                        <td>(IntOpt) Minimum number of SQL connections to keep open in a pool</td>
               </tr>
               <tr>
-                       <td>netapp_login=None</td>
-                       <td>(StrOpt) User name for the storage controller</td>
-              </tr>
-              <tr>
                        <td>netapp_password=None</td>
                        <td>(StrOpt) Password for the storage controller</td>
               </tr>
@@ -172,84 +252,20 @@
                        <td>(StrOpt) Transport type protocol</td>
               </tr>
               <tr>
-                       <td>netapp_vfiler=None</td>
-                       <td>(StrOpt) Vfiler to use for provisioning</td>
-              </tr>
-              <tr>
                        <td>netapp_volume_list=None</td>
                        <td>(StrOpt) Comma separated volumes to be used for provisioning</td>
               </tr>
               <tr>
-                       <td>netapp_vserver=openstack</td>
+                       <td>netapp_vserver=None</td>
                        <td>(StrOpt) Cluster vserver to use for provisioning</td>
               </tr>
               <tr>
-                       <td>nexenta_blocksize=</td>
-                       <td>(StrOpt) block size for volumes (blank=default,8KB)</td>
+                       <td>num_iser_scan_tries=3</td>
+                       <td>(IntOpt) The maximum number of times to rescan iSER targetto find volume</td>
               </tr>
               <tr>
-                       <td>nexenta_host=</td>
-                       <td>(StrOpt) IP address of Nexenta SA</td>
-              </tr>
-              <tr>
-                       <td>nexenta_iscsi_target_portal_port=3260</td>
-                       <td>(IntOpt) Nexenta target portal port</td>
-              </tr>
-              <tr>
-                       <td>nexenta_password=nexenta</td>
-                       <td>(StrOpt) Password to connect to Nexenta SA</td>
-              </tr>
-              <tr>
-                       <td>nexenta_rest_port=2000</td>
-                       <td>(IntOpt) HTTP port to connect to Nexenta REST API server</td>
-              </tr>
-              <tr>
-                       <td>nexenta_rest_protocol=auto</td>
-                       <td>(StrOpt) Use http or https for REST connection (default auto)</td>
-              </tr>
-              <tr>
-                       <td>nexenta_sparse=False</td>
-                       <td>(BoolOpt) flag to create sparse volumes</td>
-              </tr>
-              <tr>
-                       <td>nexenta_target_group_prefix=cinder/</td>
-                       <td>(StrOpt) prefix for iSCSI target groups on SA</td>
-              </tr>
-              <tr>
-                       <td>nexenta_target_prefix=iqn.1986-03.com.sun:02:cinder-</td>
-                       <td>(StrOpt) IQN prefix for iSCSI targets</td>
-              </tr>
-              <tr>
-                       <td>nexenta_user=admin</td>
-                       <td>(StrOpt) User name to connect to Nexenta SA</td>
-              </tr>
-              <tr>
-                       <td>nexenta_volume=cinder</td>
-                       <td>(StrOpt) pool on SA that will hold all volumes</td>
-              </tr>
-              <tr>
-                       <td>nfs_mount_options=None</td>
-                       <td>(StrOpt) Mount options passed to the nfs client. See section of the nfs man page for details</td>
-              </tr>
-              <tr>
-                       <td>nfs_mount_point_base=$state_path/mnt</td>
-                       <td>(StrOpt) Base dir containing mount points for nfs shares</td>
-              </tr>
-              <tr>
-                       <td>nfs_oversub_ratio=1.0</td>
-                       <td>(FloatOpt) This will compare the allocated to available space on the volume destination.  If the ratio exceeds this number, the destination will no longer be valid.</td>
-              </tr>
-              <tr>
-                       <td>nfs_shares_config=/etc/cinder/nfs_shares</td>
-                       <td>(StrOpt) File with the list of available nfs shares</td>
-              </tr>
-              <tr>
-                       <td>nfs_sparsed_volumes=True</td>
-                       <td>(BoolOpt) Create volumes as sparsed files which take no space.If set to False volume is created as regular file.In such case volume creation takes a lot of time.</td>
-              </tr>
-              <tr>
-                       <td>nfs_used_ratio=0.95</td>
-                       <td>(FloatOpt) Percent of ACTUAL usage of the underlying volume before no new volumes can be allocated to the volume destination.</td>
+                       <td>num_volume_device_scan_tries=3</td>
+                       <td>(IntOpt) The maximum number of times to rescan targetsto find volume</td>
               </tr>
               <tr>
                        <td>rbd_ceph_conf=</td>
@@ -258,6 +274,10 @@
               <tr>
                        <td>rbd_flatten_volume_from_snapshot=False</td>
                        <td>(BoolOpt) flatten volumes created from snapshots to remove dependency</td>
+              </tr>
+              <tr>
+                       <td>rbd_max_clone_depth=5</td>
+                       <td>(IntOpt) maximum number of nested clones that can be taken of a volume before enforcing a flatten prior to next clone. A value of zero disables cloning</td>
               </tr>
               <tr>
                        <td>rbd_pool=rbd</td>
@@ -328,6 +348,10 @@
                        <td>(BoolOpt) Allow tenants to specify QOS on create</td>
               </tr>
               <tr>
+                       <td>sf_api_port=443</td>
+                       <td>(IntOpt) SolidFire API port. Useful if the device api is behind a proxy on a different port.</td>
+              </tr>
+              <tr>
                        <td>sf_emulate_512=True</td>
                        <td>(BoolOpt) Set 512 byte emulation on volume creation; </td>
               </tr>
@@ -337,7 +361,7 @@
               </tr>
               <tr>
                        <td>storwize_svc_flashcopy_timeout=120</td>
-                       <td>(IntOpt) Maximum number of seconds to wait for FlashCopy to be prepared. Maximum value is 600 seconds (10 minutes).</td>
+                       <td>(IntOpt) Maximum number of seconds to wait for FlashCopy to be prepared. Maximum value is 600 seconds (10 minutes)</td>
               </tr>
               <tr>
                        <td>storwize_svc_multihostmap_enabled=True</td>
@@ -345,7 +369,7 @@
               </tr>
               <tr>
                        <td>storwize_svc_multipath_enabled=False</td>
-                       <td>(BoolOpt) Connect with multipath (currently FC-only)</td>
+                       <td>(BoolOpt) Connect with multipath (FC only; iSCSI multipath is controlled by Nova)</td>
               </tr>
               <tr>
                        <td>storwize_svc_vol_autoexpand=True</td>
@@ -364,6 +388,10 @@
                        <td>(IntOpt) Storage system grain size parameter for volumes (32/64/128/256)</td>
               </tr>
               <tr>
+                       <td>storwize_svc_vol_iogrp=0</td>
+                       <td>(IntOpt) The I/O group in which to allocate volumes</td>
+              </tr>
+              <tr>
                        <td>storwize_svc_vol_rsize=2</td>
                        <td>(IntOpt) Storage system space-efficiency parameter for volumes (percentage)</td>
               </tr>
@@ -376,12 +404,20 @@
                        <td>(StrOpt) Storage system storage pool for volumes</td>
               </tr>
               <tr>
+                       <td>thres_avl_size_perc_start=20</td>
+                       <td>(IntOpt) Threshold available percent to start cache cleaning.</td>
+              </tr>
+              <tr>
+                       <td>thres_avl_size_perc_stop=60</td>
+                       <td>(IntOpt) Threshold available percent to stop cache cleaning.</td>
+              </tr>
+              <tr>
                        <td>volume_backend_name=None</td>
                        <td>(StrOpt) The backend name for a given driver implementation</td>
               </tr>
               <tr>
                        <td>volume_clear=zero</td>
-                       <td>(StrOpt) Method used to wipe old volumes (valid options are: none, zero, shred)</td>
+                       <td>(StrOpt) Method used to wipe old voumes (valid options are: none, zero, shred)</td>
               </tr>
               <tr>
                        <td>volume_clear_size=0</td>
@@ -436,16 +472,12 @@
                        <td>(StrOpt) Path to store VHD backed volumes</td>
               </tr>
               <tr>
-                       <td>xiv_proxy=xiv_openstack.nova_proxy.XIVNovaProxy</td>
-                       <td>(StrOpt) Proxy driver</td>
+                       <td>xiv_ds8k_connection_type=iscsi</td>
+                       <td>(StrOpt) Connection type to the IBM Storage Array (fibre_channel|iscsi)</td>
               </tr>
               <tr>
-                       <td>zadara_default_cache_policy=write-through</td>
-                       <td>(StrOpt) Default cache policy for volumes</td>
-              </tr>
-              <tr>
-                       <td>zadara_default_encryption=NO</td>
-                       <td>(StrOpt) Default encryption policy for volumes</td>
+                       <td>xiv_ds8k_proxy=xiv_ds8k_openstack.nova_proxy.XIVDS8KNovaProxy</td>
+                       <td>(StrOpt) Proxy driver that connects to the IBM Storage Array</td>
               </tr>
               <tr>
                        <td>zadara_default_stripesize=64</td>
@@ -464,8 +496,16 @@
                        <td>(StrOpt) User name for the VPSA</td>
               </tr>
               <tr>
+                       <td>zadara_vol_encrypt=False</td>
+                       <td>(BoolOpt) Default encryption policy for volumes</td>
+              </tr>
+              <tr>
                        <td>zadara_vol_name_template=OS_%s</td>
                        <td>(StrOpt) Default template for VPSA volume names</td>
+              </tr>
+              <tr>
+                       <td>zadara_vol_thin=True</td>
+                       <td>(BoolOpt) Default thin provisioning policy for volumes</td>
               </tr>
               <tr>
                        <td>zadara_vpsa_allow_nonexistent_delete=True</td>
