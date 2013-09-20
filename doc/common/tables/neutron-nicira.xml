@@ -11,13 +11,25 @@
            <thead>
               <tr>
                   <td>Configuration option=Default value</td>
-                  <td>(Type) Description</td>
+                  <td>Description</td>
               </tr>
           </thead>
           <tbody>
               <tr>
+                       <td>agent_mode=agent</td>
+                       <td>(StrOpt) The mode used to implement DHCP/metadata services.</td>
+              </tr>
+              <tr>
                        <td>concurrent_connections=5</td>
                        <td>(IntOpt) Maximum concurrent connections</td>
+              </tr>
+              <tr>
+                       <td>datacenter_moid=None</td>
+                       <td>(StrOpt) Optional parameter identifying the ID of datacenter to deploy NSX Edges</td>
+              </tr>
+              <tr>
+                       <td>datastore_id=None</td>
+                       <td>(StrOpt) Optional parameter identifying the ID of datastore to deploy NSX Edges</td>
               </tr>
               <tr>
                        <td>default_interface_name=breth0</td>
@@ -40,12 +52,20 @@
                        <td>(StrOpt) This is uuid of the default NVP Transport zone that will be used for creating tunneled isolated "Neutron" networks. It needs to be created in NVP before starting Neutron with the nvp plugin.</td>
               </tr>
               <tr>
-                       <td>enable_metadata_access_network=True</td>
-                       <td>(BoolOpt) Enables dedicated connection to the metadata proxy for metadata server access via Neutron router</td>
+                       <td>deployment_container_id=None</td>
+                       <td>(StrOpt) Optional parameter identifying the ID of datastore to deploy NSX Edges</td>
+              </tr>
+              <tr>
+                       <td>external_network=None</td>
+                       <td>(StrOpt) Network ID for physical network connectivity</td>
               </tr>
               <tr>
                        <td>http_timeout=10</td>
                        <td>(IntOpt) Time before aborting a request</td>
+              </tr>
+              <tr>
+                       <td>manager_uri=None</td>
+                       <td>(StrOpt) uri for vsm</td>
               </tr>
               <tr>
                        <td>max_lp_per_bridged_ls=64</td>
@@ -56,8 +76,20 @@
                        <td>(IntOpt) Maximum number of ports of a logical switch on an overlay transport zone (default 64)</td>
               </tr>
               <tr>
+                       <td>max_random_sync_delay=0</td>
+                       <td>(IntOpt) Maximum value for the additional random delay in seconds between runs of the state synchronization task</td>
+              </tr>
+              <tr>
                        <td>metadata_mode=access_network</td>
                        <td>(StrOpt) If set to access_network this enables a dedicated connection to the metadata proxy for metadata server access via Neutron router. If set to dhcp_host_route this enables host route injection via the dhcp agent. This option is only useful if running on a host that does not support namespaces otherwise access_network should be used.</td>
+              </tr>
+              <tr>
+                       <td>min_chunk_size=500</td>
+                       <td>(IntOpt) Minimum number of resources to be retrieved from NVP during state synchronization</td>
+              </tr>
+              <tr>
+                       <td>min_sync_req_delay=10</td>
+                       <td>(IntOpt) Minimum delay, in seconds, between two state synchronization queries to NVP. It must not exceed state_sync_interval</td>
               </tr>
               <tr>
                        <td>nvp_cluster_uuid=None</td>
@@ -84,8 +116,24 @@
                        <td>(IntOpt) Number of times a redirect should be followed</td>
               </tr>
               <tr>
+                       <td>resource_pool_id=default</td>
+                       <td>(StrOpt) Shared resource pool id</td>
+              </tr>
+              <tr>
                        <td>retries=2</td>
                        <td>(IntOpt) Number of time a request should be retried</td>
+              </tr>
+              <tr>
+                       <td>state_sync_interval=120</td>
+                       <td>(IntOpt) Interval in seconds between runs of the state synchronization task. Set it to 0 to disable it</td>
+              </tr>
+              <tr>
+                       <td>task_status_check_interval=2000</td>
+                       <td>(IntOpt) Task status check interval</td>
+              </tr>
+              <tr>
+                       <td>user=admin</td>
+                       <td>(StrOpt) User name for vsm</td>
               </tr>
        </tbody>
         </table>
