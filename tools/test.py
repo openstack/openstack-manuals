@@ -199,12 +199,28 @@ def check_deleted_files(rootdir, file_exceptions):
                     f not in file_exceptions):
                     path = os.path.abspath(os.path.join(root, f))
                     doc = etree.parse(path)
+
+                    # Check for inclusion of files as part of imagedata
+                    for node in doc.findall('//{http://docbook.org/ns/docbook}imagedata'):
+                        href = node.get('fileref')
+                        if (f not in file_exceptions and
+                            os.path.abspath(href) in deleted_files):
+                            print("  File %s has an imagedata href for deleted file %s " % (f, href))
+                            missing_reference = True
+
+                            break
+
+                    if missing_reference:
+                        break
+
+                    # Check for inclusion of files as part of xi:include
                     ns = {"xi": "http://www.w3.org/2001/XInclude"}
                     for node in doc.xpath('//xi:include', namespaces=ns):
                         href = node.get('href')
                         if (os.path.abspath(href) in deleted_files):
                             print("  File %s has an xi:include on deleted file %s " % (f, href))
                             missing_reference = True
+
             if missing_reference:
                 sys.exit(1)
 
@@ -317,6 +333,19 @@ def build_affected_books(rootdir, book_exceptions, file_exceptions, force=False,
                 f not in file_exceptions):
                 path = os.path.abspath(os.path.join(root, f))
                 doc = etree.parse(path)
+
+                # Check for inclusion of files as part of imagedata
+                for node in doc.findall('//{http://docbook.org/ns/docbook}imagedata'):
+                    href = node.get('fileref')
+                    if (f not in file_exceptions and
+                        os.path.abspath(href) in modified_files):
+                        affected_books.append(book_root)
+                        break
+
+                if book_root in affected_books:
+                    break
+
+                # Check for inclusion of files as part of xi:include
                 ns = {"xi": "http://www.w3.org/2001/XInclude"}
                 for node in doc.xpath('//xi:include', namespaces=ns):
                     href = node.get('href')
