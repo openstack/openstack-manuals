@@ -391,7 +391,7 @@ def build_affected_books(rootdir, book_exceptions, file_exceptions, force=False,
 
 def main(args):
 
-    if not force and only_www_touched():
+    if not args.force and only_www_touched():
         print("Only files in www directory changed, nothing to do.")
         return
 
