@@ -12,14 +12,14 @@
         <para>This driver enables the use of GPFS in a similar fashion as the NFS driver. With the
             GPFS driver, instances do not actually access a storage device at the block level.
             Instead, volume backing files are created in a GPFS file system and mapped to instances,
-            which emulate a block device. </para>
+            which emulate a block device.</para>
         <para>
             <note>
                 <para>GPFS software must be installed and running on nodes where Cinder volume and
                     Nova compute services are running in the OpenStack environment. A GPFS file
                     system must also be created and mounted on these nodes before starting the
                         <literal>cinder-volume</literal> service. The details of these GPFS specific
-                    steps are covered in GPFS Administration documentation. </para>
+                    steps are covered in GPFS Administration documentation.</para>
             </note>
         </para>
         <para>Optionally, Glance can be configured to store images on a GPFS file system. When
@@ -28,7 +28,7 @@
             volumes using copy on write optimization strategy.</para>
     </section>
     <section xml:id="GPFS-driver-options">
-        <title>Enabling the GPFS Driver </title>
+        <title>Enabling the GPFS Driver</title>
         <para>To use Cinder with the GPFS driver, first set the <literal>volume_driver</literal> in
                 <filename>cinder.conf</filename>:</para>
         <programlisting>volume_driver = cinder.volume.drivers.gpfs.GPFSDriver</programlisting>
@@ -36,11 +36,11 @@
             driver.</para>
         <xi:include href="../../../common/tables/cinder-gpfs_volume.xml"/>
         <note>
-            <para>The flag <literal>gpfs_images_share_mode</literal> is only valid if the Image service 
-               is configured to use GPFS with <literal>gpfs_images_dir</literal> flag. Also note, 
-               when the value of this flag is <literal>copy_on_write</literal>, the paths 
-               specified by the flags <literal>gpfs_mount_point_base</literal> and 
-               <literal>gpfs_images_dir</literal> must both reside in the same GPFS file system 
+            <para>The flag <literal>gpfs_images_share_mode</literal> is only valid if the Image service
+               is configured to use GPFS with <literal>gpfs_images_dir</literal> flag. Also note,
+               when the value of this flag is <literal>copy_on_write</literal>, the paths
+               specified by the flags <literal>gpfs_mount_point_base</literal> and
+               <literal>gpfs_images_dir</literal> must both reside in the same GPFS file system
                and in the same GPFS fileset.
             </para>
         </note>
@@ -105,7 +105,7 @@
                         <entry>
                             <para>Specify the allocation policy to be used for the volume file. Note
                                 that this option only works if "allow-write-affinity" is set for the
-                                GPFS data pool. </para>
+                                GPFS data pool.</para>
                         </entry>
                     </row>
                     <row>
@@ -113,7 +113,7 @@
                         <entry>
                             <para>Specify how many blocks are laid out sequentially in the volume
                                 file to behave like a single large block. This option only works if
-                                "allow-write-affinity" is set for the GPFS data pool. </para>
+                                "allow-write-affinity" is set for the GPFS data pool.</para>
                         </entry>
                     </row>
                     <row>
@@ -142,7 +142,7 @@
             <para>Volume snapshots are implemented using the GPFS file clone feature. Whenever a new
                 snapshot is created, the snapshot file is efficiently created as a read-only clone
                 parent of the volume, and the volume file uses copy on write optimization strategy
-                to minimize data movement. </para>
+                to minimize data movement.</para>
             <para>Similarly when a new volume is created from a snapshot or from an existing volume,
                 the same approach is taken. The same approach is also used when a new volume is
                 created from a Glance image, if the source image is in raw format, and

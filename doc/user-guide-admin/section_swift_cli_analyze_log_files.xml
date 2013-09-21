@@ -5,8 +5,8 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="analyzing-log-files-with-swift-cli">
     <title>Analyze log files</title>
-    <para>Use the swift command-line client to analyze log files. </para>
-    <para>The swift client is simple to use, scalable, and flexible. </para><para>Use the swift client <option>-o</option> or
+    <para>Use the swift command-line client to analyze log files.</para>
+    <para>The swift client is simple to use, scalable, and flexible.</para><para>Use the swift client <option>-o</option> or
             <option>-output</option> option to get short answers to
         questions about logs,</para>
     <para>You can use the <option>-o —output</option> option with a
@@ -14,7 +14,7 @@
         specific file or to STDOUT (<literal>-</literal>). The ability
         to redirect the output to STDOUT enables you to pipe
             (<literal>|</literal>) data without saving it to disk
-        first. </para>
+        first.</para>
     <section xml:id="swift_file_analysis"><title>Upload and analyze log files</title><procedure>
 <step>
             <para>This example assumes that
@@ -27,7 +27,7 @@
     <para>Each file uses the following line format:</para>
     <example><title>Log line format</title><screen><computeroutput>Nov 15 21:53:52 lucid64 proxy-server - 127.0.0.1 15/Nov/2010/22/53/52 DELETE /v1/AUTH_cd4f57824deb4248a533f2c28bf156d3/2eefc05599d44df38a7f18b0b42ffedd HTTP/1.0 204 - \
 - test%3Atester%2CAUTH_tkcdab3c6296e249d7b7e2454ee57266ff - - - txaba5984c-aac7-460e-b04b-afc43f0c6571 - 0.0432</computeroutput></screen></example>
-</step><step>              
+</step><step>
     <para>Change into the <filename class="directory"
                     >logtest</filename> directory:</para>
     <screen><prompt>$</prompt> <userinput>cd logtest</userinput></screen></step>
@@ -53,23 +53,24 @@ Objects: 4
 Bytes: 5864468
 Read ACL:
 Write ACL:</computeroutput></screen></step>
-        <step><para> List all objects in the logtest container:</para> 
+        <step><para>List all objects in the logtest container:</para>
             <screen><prompt>$</prompt> <userinput>swift -A http:///swift-auth.com:11000/v1.0 -U test:tester -K testing list logtest</userinput></screen>
             <screen><computeroutput>2010-11-15-21_access.log
 2010-11-15-22_access.log
 2010-11-16-21_access.log
 2010-11-16-22_access.log</computeroutput></screen></step></procedure></section>
-     <section xml:id="swift_upload_files"><title>Download and analyze an object</title>  <procedure> 
+     <section xml:id="swift_upload_files"><title>Download and analyze an object</title>
+     <procedure>
             <para>This example uses the <option>-o —output</option>
                 option and a hyphen (<literal>-</literal>) to get
-                information about an object. </para>
+                information about an object.</para>
             <para>Use the swift <command>download</command> command to
                 download the object. On this command, stream the
                 output to <command>awk</command> to break down
                 requests by return code and the date <literal>2200 on
-                    November 16th, 2010</literal>. </para>
+                    November 16th, 2010</literal>.</para>
             <para>Using the log line format, find the request type in
-                column 9 and the return code in column 12. </para>
+                column 9 and the return code in column 12.</para>
             <para>After <command>awk</command> processes the output,
                 it pipes it to <command>sort</command> and
                     <command>uniq -c</command> to sum up the number of
@@ -113,7 +114,7 @@ Write ACL:</computeroutput></screen></step>
                     <para>Use a bash for loop with awk and swift with
                     the <option>-o —output</option> option and a
                     hyphen (<literal>-</literal>) to discover how many
-                    PUT requests are in each log file. </para>
+                    PUT requests are in each log file.</para>
 
             <para>Run the swift <command>list</command> command to
                     list objects in the logtest container. Then, for
@@ -135,14 +136,14 @@ Write ACL:</computeroutput></screen></step>
             <para>Run the swift <command>list -p 2010-11-15</command>
                     command to list objects in the logtest container
                     that begin with the <literal>2010-11-15</literal>
-                    string. </para>
+                    string.</para>
                 <para>For each item in the list, run the swift
-                        <command>download -o -</command> command. </para>
+                        <command>download -o -</command> command.</para>
                 <para>Pipe the output to <command>grep</command> and
                         <command>wc</command>. Use the
                         <command>echo</command> command to display the
                     object name.</para>
-         
+
                 <screen><prompt>$</prompt> <userinput>for f in `swift -A http://swift-auth.com:11000/v1.0 -U test:tester -K testing list -p 2010-11-15 logtest` ; \
         do  echo -ne “$f - PUTS - ” ; swift -A http://127.0.0.1:11000/v1.0 -U test:tester \
         -K testing download -o - logtest $f | grep PUT | wc -l ; \
