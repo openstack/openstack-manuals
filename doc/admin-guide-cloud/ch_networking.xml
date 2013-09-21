@@ -15,7 +15,7 @@
             addressing in the cloud. The OpenStack Networking service
             enables operators to leverage different networking
             technologies to power their cloud networking.</para>
-        <para>The Openstack Networking service also provides an API to
+        <para>The OpenStack Networking service also provides an API to
             configure and manage a variety of network services ranging
             from L3 forwarding and NAT to load balancing, edge
             firewalls, and IPSEC VPN.</para>
@@ -170,7 +170,6 @@
                             >http://wiki.openstack.org/Quantum-NEC-OpenFlow-Plugin</link>
                     </para>
                 </listitem>
-
                 <listitem>
                     <para><emphasis role="bold">Nicira NVP
                             Plug-in</emphasis>. Documentation is
@@ -211,7 +210,6 @@
             <?hard-pagebreak?>
             <para>Not all OpenStack networking plug-ins are compatible
                 with all possible OpenStack compute drivers:</para>
-
             <table rules="all">
                 <caption>Plug-in Compatibility with OpenStack Compute
                     Drivers</caption>
@@ -428,30 +426,28 @@
         </section>
         <section xml:id="services">
             <title>Place services on physical hosts</title>
-            <para>Like other OpenStack services, Networking provides
-                cloud administrators with significant flexibility in
-                deciding which individual services should run on which
-                physical devices. At one extreme, all service daemons
-                can be run on a single physical host for evaluation
-                purposes. At the other, each service could have its
-                own physical hosts and, in some cases, be replicated
-                across multiple hosts for redundancy. For more
-                information, see the <citetitle
+            <para>Like other OpenStack services, Networking enables
+                cloud administrators to run one or more services on
+                one or more physical devices. At one extreme, the
+                cloud administrator can run all service daemons on a
+                single physical host for evaluation purposes.
+                Alternatively the cloud administrator can run each
+                service on its own physical host and, in some cases,
+                can replicate services across multiple hosts for
+                redundancy. For more information, see the <citetitle
                     xmlns:svg="http://www.w3.org/2000/svg"
                     xmlns:html="http://www.w3.org/1999/xhtml"
                     >OpenStack Configuration
                 Reference</citetitle>.</para>
-            <para>In this guide, we focus primarily on a standard
-                architecture that includes a “cloud controller” host,
-                a “network gateway” host, and a set of hypervisors for
-                running VMs.  The "cloud controller" and "network
-                gateway" can be combined in simple deployments.
-                However, if you expect VMs to send significant amounts
-                of traffic to or from the Internet, a dedicated
-                network gateway host is recommended to avoid potential
-                CPU contention between packet forwarding performed by
-                the <literal>neutron-l3-agent</literal> and other
-                OpenStack services.</para>
+            <para>A standard architecture includes a cloud controller
+                host, a network gateway host, and a set of hypervisors
+                that run virtual machines. The cloud controller and
+                network gateway can be on the same host. However, if
+                you expect VMs to send significant traffic to or from
+                the Internet, a dedicated network gateway host helps
+                avoid CPU contention between the <systemitem
+                    role="agent">neutron-l3-agent</systemitem> and
+                other OpenStack services that forward packets.</para>
         </section>
         <section xml:id="connectivity">
             <title>Network connectivity for physical hosts</title>
