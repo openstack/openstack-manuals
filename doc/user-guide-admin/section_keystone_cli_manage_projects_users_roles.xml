@@ -30,8 +30,78 @@
     <para>Before you can run keystone client commands, you must
         download and source an OpenStack RC file. See <xref
             linkend="cli_openrc"/>.</para>
+    <section xml:id="services">
+        <title>Services</title>
+        <para>To look at your service catalog, use these keystone client commands.</para>
+        <section xml:id="keystone-service-create">
+            <title><literal>service-create</literal></title>
+            <para>Keyword arguments:</para>
+            <itemizedlist>
+                <listitem>
+                    <para>Name</para>
+                </listitem>
+                <listitem>
+                    <para>Type</para>
+                </listitem>
+                <listitem>
+                    <para>Description</para>
+                </listitem>
+            </itemizedlist>
+            <para>Example:</para>
+            <screen><prompt>$</prompt> <userinput>
+keystone service create \
+--name=nova \
+--type=compute \
+--description=&quot;Nova Compute Service&quot;</userinput>
+</screen>
+        </section>
+        <section xml:id="keystone-service-list">
+            <title><literal>service-list</literal></title>
+            <para>Arguments</para>
+            <itemizedlist>
+                <listitem>
+                    <para>service_id</para>
+                </listitem>
+            </itemizedlist>
+            <para>Example:</para>
+            <screen>
+keystone service-list
+</screen>
+        </section>
+        <section xml:id="keystone-service-get">
+            <title><literal>service-get</literal></title>
+            <para>Arguments</para>
+            <itemizedlist>
+                <listitem>
+                    <para>service_id</para>
+                </listitem>
+            </itemizedlist>
+            <para>Example:</para>
+            <screen><prompt>$</prompt> <userinput>
+keystone service-get 08741d8ed88242ca88d1f61484a0fe3b</userinput>
+</screen>
+        </section>
+        <section xml:id="keystone-service-delete">
+            <title><literal>service-delete</literal></title>
+            <para>Arguments</para>
+            <itemizedlist>
+                <listitem>
+                    <para>service_id</para>
+                </listitem>
+            </itemizedlist>
+            <para>Example:</para>
+            <screen><prompt>$</prompt> <userinput>
+keystone service-delete 08741d8ed88242ca88d1f61484a0fe3b</userinput>
+</screen>
+        </section>
     <section xml:id="admin_cli_projects">
-        <title>Create a project</title>
+        <title>Create a tenant (project)</title>
+        <para>A tenant is a group of zero or more users. In nova, a
+            tenant owns virtual machines. In swift, a tenant owns
+            containers. In the Dashboard, tenants are represented as projects. 
+            Users can be associated with more than one tenant.
+            Each tenant and user pairing can have a role associated with
+            it.</para>
         <procedure>
             <step>
                 <para>To list all projects with their ID, name, and
@@ -308,5 +378,6 @@
                     command output omits the removed role.</para>
             </step>
         </procedure>
+    </section>
     </section>
 </section>
