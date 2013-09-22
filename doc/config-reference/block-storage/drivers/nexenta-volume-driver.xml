@@ -60,179 +60,13 @@
                 The following table contains the options supported by the
                 Nexenta iSCSI driver.
             </para>
-            <table rules="all">
-                <caption>
-                    List of configuration flags for Nexenta iSCSI driver
-                </caption>
-                <col width="35%"/>
-                <col width="15%"/>
-                <col width="15%"/>
-                <col width="35%"/>
-                <thead>
-                    <tr>
-                        <td>Flag Name</td>
-                        <td>Type</td>
-                        <td>Default</td>
-                        <td>Description</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <para><code>nexenta_rest_protocol</code></para>
-                        </td>
-                        <td><para>Optional</para></td>
-                        <td><para>auto</para></td>
-                        <td>
-                            <para>
-                                (StrOpt) NMS protocol can be set to
-                                <code>http</code> or <code>https</code>, but
-                                the default is <code>auto</code> which makes
-                                the driver try to use HTTP and switch to HTTPS
-                                in case of failure.
-                            </para>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><para><code>nexenta_host</code></para></td>
-                        <td><para>Mandatory</para></td>
-                        <td><para/></td>
-                        <td>
-                            <para>
-                                (StrOpt) Hostname or IP of your NexentaStor
-                                appliance.
-                            </para>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><para><code>nexenta_rest_port</code></para></td>
-                        <td><para>Optional</para></td>
-                        <td><para><code>2000</code></para></td>
-                        <td>
-                            <para>
-                                (IntOpt) The port where Nexenta listens for
-                                REST requests (the same port where the NMV
-                                works).
-                            </para>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><para><code>nexenta_user</code></para></td>
-                        <td><para>Optional</para></td>
-                        <td><para>admin</para></td>
-                        <td>
-                            <para>
-                                (StrOpt) Username of the NMS user with all
-                                necessary privileges on the appliance,
-                                including the access to REST API.
-                            </para>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><para><code>nexenta_password</code></para></td>
-                        <td><para>Optional</para></td>
-                        <td><para>nexenta</para></td>
-                        <td>
-                            <para>
-                                (StrOpt) Password of the NMS user with all
-                                necessary privileges on the appliance,
-                                including the access to REST API.
-                            </para>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><para><code>nexenta_volume</code></para></td>
-                        <td><para>Optional</para></td>
-                        <td><para>cinder</para></td>
-                        <td>
-                            <para>
-                                (StrOpt) Name of the volume on the NexentaStor
-                                appliance that you would like to use in
-                                Compute, this volume must exist on appliance.
-                            </para>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <para><code>nexenta_target_prefix</code></para>
-                        </td>
-                        <td><para>Optional</para></td>
-                        <td><para>iqn.1986-03.com.sun:02:cinder-</para></td>
-                        <td>
-                            <para>
-                                (StrOpt) The prefix that is prepended to volume
-                                id to form the iSCSI target name. The target
-                                prefix does not change the name of the ZVol on
-                                the selected NexentaStor appliance, just the
-                                name that is exported.
-                            </para>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <para>
-                                <code>nexenta_target_group_prefix</code>
-                            </para>
-                        </td>
-                        <td><para>Optional</para></td>
-                        <td><para>cinder/</para></td>
-                        <td>
-                            <para>
-                                (StrOpt) The prefix for iSCSI target groups.
-                            </para>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <para>
-                                <code>nexenta_iscsi_target_portal_port</code>
-                            </para>
-                        </td>
-                        <td><para>Optional</para></td>
-                        <td><para>3260</para></td>
-                        <td>
-                            <para>
-                                (IntOpt) The port to connect to NexentaStor
-                                appliance over iSCSI.
-                            </para>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><para><code>nexenta_blocksize</code></para></td>
-                        <td><para>Optional</para></td>
-                        <td><para>8KB</para></td>
-                        <td>
-                            <para>
-                                (StrOpt) The size of the blocks in newly
-                                created zvols on appliance, with the suffix;
-                                for example, the default 8K means 8 kilobytes.
-                            </para>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><para><code>nexenta_sparse</code></para></td>
-                        <td><para>Optional</para></td>
-                        <td><para>True</para></td>
-                        <td>
-                            <para>
-                                (BoolOpt) Use sparse zvols. Sparse zvols do not
-                                pre-allocate disk space before content is
-                                actually written.
-                            </para>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <xi:include href="../../../common/tables/cinder-storage_nexenta_iscsi.xml" />
             <para>
                 To use Compute with the Nexenta iSCSI driver, first set the
                 <code>volume_driver</code>:
             </para>
-            <para>
-                <code>
-                    volume_driver=
-                    cinder.volume.drivers.nexenta.volume.NexentaDriver
-                </code>
-            </para>
+            <programlisting language="ini">volume_driver=cinder.volume.drivers.nexenta.volume.NexentaDriver
+</programlisting>
             <para>
                 Then set value for <code>nexenta_host</code> and other
                 parameters from table if needed.
@@ -271,136 +105,14 @@
                 To use Compute with the Nexenta NFS driver, first set the
                 <code>volume_driver</code>:
             </para>
-            <para>
-                <code>
-                    volume_driver=
-                    cinder.volume.drivers.nexenta.nfs.NexentaNfsDriver
-                </code>
-            </para>
+            <programlisting language="ini">
+volume_driver = cinder.volume.drivers.nexenta.nfs.NexentaNfsDriver
+</programlisting>
             <para>
                 The following table contains the options supported by the
                 Nexenta NFS driver.
             </para>
-            <table rules="all">
-                <caption>
-                    List of configuration flags for Nexenta NFS driver
-                </caption>
-                <col width="35%"/>
-                <col width="15%"/>
-                <col width="15%"/>
-                <col width="35%"/>
-                <thead>
-                    <tr>
-                        <td>Flag Name</td>
-                        <td>Type</td>
-                        <td>Default</td>
-                        <td>Description</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <para>
-                                <code>nexenta_shares_config</code>
-                            </para>
-                        </td>
-                        <td><para>Mandatory</para></td>
-                        <td>
-                            <para>
-                                <filename>/etc/cinder/nfs_shares</filename>
-                            </para>
-                        </td>
-                        <td>
-                            <para>
-                                (StrOpt) File with the list of available NFS
-                                shares.
-                            </para>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <para><code>nexenta_mount_point_base</code></para>
-                        </td>
-                        <td><para>Optional</para></td>
-                        <td><para><code>$state_path/mnt</code></para></td>
-                        <td>
-                            <para>
-                                (StrOpt) Base dir where NFS shares are expected
-                                to be mounted.
-                            </para>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <para><code>nexenta_sparsed_volumes</code></para>
-                        </td>
-                        <td><para>Optional</para></td>
-                        <td><para>True</para></td>
-                        <td>
-                            <para>
-                                (BoolOpt) Create volumes as sparsed files which
-                                take no space. If set to False, volume is
-                                created as regular file. In such case volume
-                                creation takes a lot of time.
-                            </para>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <para>
-                                <code>nexenta_volume_compression</code>
-                            </para>
-                        </td>
-                        <td><para>Optional</para></td>
-                        <td><para>on</para></td>
-                        <td>
-                            <para>
-                                (StrOpt) ZFS compression value for new volumes.
-                            </para>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <para><code>nexenta_mount_options</code></para>
-                        </td>
-                        <td><para>Optional</para></td>
-                        <td><para><code>None</code></para></td>
-                        <td>
-                            <para>
-                                (StrOpt) Mount options passed to the NFS client.
-                                See section of the nfs man page for details.
-                            </para>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><para><code>nexenta_used_ratio</code></para></td>
-                        <td><para>Optional</para></td>
-                        <td><para><code>0.95</code></para></td>
-                        <td>
-                            <para>
-                                (FloatOpt) Percent of ACTUAL usage of the
-                                underlying volume before no new volumes can be
-                                allocated to the volume destination.
-                            </para>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <para><code>nexenta_oversub_ratio</code></para>
-                        </td>
-                        <td><para>Optional</para></td>
-                        <td><para><code>1.0</code></para></td>
-                        <td>
-                            <para>
-                                (FloatOpt) This compares the allocated to
-                                available space on the volume destination. If
-                                the ratio exceeds this number, the destination
-                                is no longer valid.
-                            </para>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <xi:include href="../../../common/tables/cinder-storage_nexenta_nfs.xml" />
             <para>
                 Add your list of Nexenta NFS servers to the file you specified
                 with the <code>nexenta_shares_config</code> option. For
@@ -409,10 +121,9 @@
             </para>
             <screen>
 <prompt>#</prompt> <userinput>cat /etc/cinder/nfs_shares</userinput>
-<computeroutput>192.168.1.200:/storage http://admin:nexenta@192.168.1.200:2000</computeroutput>
-<computeroutput>192.168.1.201:/storage http://admin:nexenta@192.168.1.201:2000</computeroutput>
-<computeroutput>192.168.1.202:/storage http://admin:nexenta@192.168.1.202:2000</computeroutput>
-            </screen>
+<computeroutput>192.168.1.200:/storage http://admin:nexenta@192.168.1.200:2000
+192.168.1.201:/storage http://admin:nexenta@192.168.1.201:2000
+192.168.1.202:/storage http://admin:nexenta@192.168.1.202:2000</computeroutput></screen>
             <para>
                 Comments are allowed in this file. They begin with a
                 <code>#</code>.

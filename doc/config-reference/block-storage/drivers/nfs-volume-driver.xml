@@ -30,74 +30,7 @@
         <programlisting>volume_driver=cinder.volume.drivers.nfs.NfsDriver</programlisting>
         <para>The following table contains the options supported by
             the NFS driver.</para>
-        <table rules="all">
-            <caption>List of configuration flags for NFS</caption>
-            <col width="35%"/>
-            <col width="15%"/>
-            <col width="15%"/>
-            <col width="35%"/>
-            <thead>
-                <tr>
-                    <td>Flag Name</td>
-                    <td>Type</td>
-                    <td>Default</td>
-                    <td>Description</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><para><literal>nfs_shares_config</literal></para></td>
-                    <td><para>Mandatory</para></td>
-                    <td><para/></td>
-                    <td><para>(StrOpt) File with the list of available
-                            NFS shares.</para></td>
-                </tr>
-                <tr>
-                    <td><para><literal>nfs_mount_point_base</literal></para></td>
-                    <td><para>Optional</para></td>
-                    <td><para><literal>$state_path/mnt</literal></para></td>
-                    <td><para>(StrOpt) Base dir where nfs shares are
-                            expected to be mounted.</para></td>
-                </tr>
-                <tr>
-                    <td><para><literal>nfs_sparsed_volumes</literal></para></td>
-                    <td><para>Optional</para></td>
-                    <td><para>True</para></td>
-                    <td><para>(BoolOpt) Create volumes as sparsed
-                            files which take no space. If set to
-                            False, volume is created as regular file.
-                            In such case volume creation takes a lot
-                            of time.</para></td>
-                </tr>
-                <tr>
-                    <td><para><literal>nfs_mount_options</literal></para></td>
-                    <td><para>Optional</para></td>
-                    <td><para>None</para></td>
-                    <td><para>(StrOpt) Mount options passed to the nfs
-                            client. See section of the nfs man page
-                            for details.</para></td>
-                </tr>
-                <tr>
-                    <td><para><literal>nfs_used_ratio</literal></para></td>
-                    <td><para>Optional</para></td>
-                    <td><para><literal>0.95</literal></para></td>
-                    <td><para>(FloatOpt) Percent of ACTUAL usage of
-                            the underlying volume before no new
-                            volumes can be allocated to the volume
-                            destination.</para></td>
-                </tr>
-                <tr>
-                    <td><para><literal>nfs_oversub_ratio</literal></para></td>
-                    <td><para>Optional</para></td>
-                    <td><para><literal>1.0</literal></para></td>
-                    <td><para>(FloatOpt) This compares the allocated
-                            to available space on the volume
-                            destination. If the ratio exceeds this
-                            number, the destination is no longer
-                            valid.</para></td>
-                </tr>
-            </tbody>
-        </table>
+            <xi:include href="../../../common/tables/cinder-storage_nfs.xml" />
     </section>
     <section xml:id="nfs-driver-howto">
         <title>How to Use the NFS Driver</title>
@@ -130,10 +63,10 @@
                     For example, if the value of this option was set
                     to <literal>/etc/cinder/shares.txt</literal>,
                     then:</para>
-                <programlisting># cat /etc/cinder/shares.txt
-            192.168.1.200:/storage
-            192.168.1.201:/storage
-            192.168.1.202:/storage</programlisting>
+                <screen><prompt>#</prompt> <userinput>cat /etc/cinder/shares.txt</userinput>
+<computeroutput>192.168.1.200:/storage
+192.168.1.201:/storage
+192.168.1.202:/storage</computeroutput></screen>
                 <para>Comments are allowed in this file. They begin
                     with a <literal>#</literal>.</para>
             </step>
@@ -155,17 +88,17 @@
                     now contain a directory for each NFS share
                     specified in <literal>shares.txt</literal>. The
                     name of each directory is a hashed name:</para>
-                <programlisting># ls /var/lib/cinder/nfs
-            ...
-            46c5db75dc3a3a50a10bfd1a456a9f3f
-            ...</programlisting>
+                <screen><prompt>#</prompt> <userinput>ls /var/lib/cinder/nfs/</userinput>
+<computeroutput>...
+46c5db75dc3a3a50a10bfd1a456a9f3f
+...</computeroutput></screen>
             </step>
             <step>
                 <para>You can now create volumes as you normally
                     would:</para>
-                <programlisting># nova volume-create --display-name=myvol 5
-            # ls /var/lib/cinder/nfs/46c5db75dc3a3a50a10bfd1a456a9f3f
-            volume-a8862558-e6d6-4648-b5df-bb84f31c8935</programlisting>
+                <screen><prompt>#</prompt> <userinput>nova volume-create --display-name=myvol 5</userinput>
+<prompt>#</prompt> <userinput>ls /var/lib/cinder/nfs/46c5db75dc3a3a50a10bfd1a456a9f3f</userinput>
+<computeroutput>volume-a8862558-e6d6-4648-b5df-bb84f31c8935</computeroutput></screen>
                 <para>This volume can also be attached and deleted
                     just like other volumes. However, snapshotting is
                         <emphasis>not</emphasis> supported.</para>
