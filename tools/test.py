@@ -155,7 +155,14 @@ def only_www_touched():
 
     return www_changed and not other_changed
 
-def get_modified_files():
+def get_modified_files(rootdir):
+    """Get modified files below doc directory"""
+
+    # There are several tree traversals in this program that do a
+    # chroot, we need to run this git command always from the rootdir,
+    # so assure that.
+    os.chdir(rootdir)
+
     try:
         args = ["git", "diff", "--name-only", "--relative", "HEAD", "HEAD~1"]
         modified_files = check_output(args).strip().split()
@@ -169,7 +176,7 @@ def check_deleted_files(rootdir, file_exceptions):
 
     """
     print("\nChecking for removed files")
-    modified_files = get_modified_files()
+    modified_files = get_modified_files(rootdir)
     deleted_files = []
     any_removed = False
     for f in modified_files:
@@ -228,11 +235,10 @@ def validate_individual_files(rootdir, exceptions, force=False, niceness=False, 
     schema = get_schema()
 
     any_failures = False
-    modified_files = get_modified_files()
     if force:
         print("\nValidating all files")
     else:
-        modified_files = get_modified_files()
+        modified_files = get_modified_files(rootdir)
         print("\nFollowing files will be validated:")
         for f in modified_files:
             print(">>> %s" % f)
@@ -306,7 +312,7 @@ def build_affected_books(rootdir, book_exceptions, file_exceptions, force=False,
 
     This will throw an exception if a book fails to build
     """
-    modified_files = get_modified_files()
+    modified_files = get_modified_files(rootdir)
     modified_files = map(lambda x: os.path.abspath(x), modified_files)
     affected_books = []
     books = []
