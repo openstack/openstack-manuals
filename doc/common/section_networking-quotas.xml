@@ -1,193 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter xmlns="http://docbook.org/ns/docbook"
-    xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
-    xml:id="ch_adv_operational_features">
-    <title>Advanced Operational Features</title>
-  <section xml:id="ch_adv_logging">
-    <title>Logging Configuration</title>
-    <para>OpenStack Networking components use a Python logging module for logging. You can
-      configure logging using any of the following:</para>
-    <para>
-      <itemizedlist>
-        <listitem>
-          <para>Update settings in the <filename>/etc/neutron/neutron.conf</filename> file. For
-            example:</para>
-          <programlisting language="ini">[DEFAULT]
-# Default log level is INFO
-# verbose and debug has the same result.
-# One of them will set DEBUG log level output
-debug = False
-verbose = True
-
-# Where to store Neutron state files.  This directory must be writable by the
-# user executing the agent.
-# state_path = /var/lib/neutron
-
-# Where to store lock files
-lock_path = $state_path/lock
-
-# log_format = %(asctime)s %(levelname)8s [%(name)s] %(message)s
-# log_date_format = %Y-%m-%d %H:%M:%S
-
-# use_syslog                           -> syslog
-# log_file and log_dir                 -> log_dir/log_file
-# (not log_file) and log_dir           -> log_dir/{binary_name}.log
-# use_stderr                           -> stderr
-# (not user_stderr) and (not log_file) -> stdout
-# publish_errors                       -> notification system
-
-# use_syslog = False
-# syslog_log_facility = LOG_USER
-
-# use_stderr = True
-# log_file =
-log_dir =/var/log/neutron</programlisting>
-        </listitem>
-        <listitem>
-          <para>Use command-line options. For example, use the <systemitem>--debug</systemitem>
-            option when using the <systemitem>neutron</systemitem> command-line tool (see the
-              <citetitle>OpenStack End User Guide</citetitle> for more information).</para>
-          <para>Command-line options override options specified in
-            <filename>neutron.conf</filename>.</para>
-        </listitem>
-        <listitem>
-          <para>Use a python logging configuration file (see <link
-              xlink:href="http://docs.python.org/howto/logging.html">Python Logging HOWTO</link> for
-            more information).</para>
-        </listitem>
-      </itemizedlist>
-    </para>
-  </section>
-  <section xml:id="ch_adv_notification">
-    <title>Notifications</title>
-    <section xml:id="ch_adv_notification_overview">
-      <title>Notification Options</title>
-      <para>You can send notifications  when creating, updating, or deleting OpenStack Networking
-        resources. To support a DHCP agent, you must set up an <literal>rpc_notifier</literal>
-        driver.</para>
-      <para>To configure notifications, update settings in the
-          <filename>/etc/neutron/neutron.conf</filename> file. For example:</para>
-      <programlisting language="ini">============ Notification System Options =====================
-
-# Notifications can be sent when network/subnet/port are create, updated or deleted.
-# There are three methods of sending notifications: logging (via the
-# log_file directive), rpc (via a message queue) and
-# noop (no notifications sent, the default)
-
-# Notification_driver can be defined multiple times
-# Do nothing driver
-# notification_driver = neutron.openstack.common.notifier.no_op_notifier
-# Logging driver
-# notification_driver = neutron.openstack.common.notifier.log_notifier
-# RPC driver
-notification_driver = neutron.openstack.common.notifier.rpc_notifier
-
-# default_notification_level is used to form actual topic names or to set logging level
-# default_notification_level = INFO
-
-# default_publisher_id is a part of the notification payload
-# host = myhost.com
-# default_publisher_id = $host
-
-# Defined in rpc_notifier for rpc way, can be comma separated values.
-# The actual topic names will be %s.%(default_notification_level)s
-notification_topics = notifications</programlisting>
-    </section>
-    <section xml:id="ch_adv_notification_cases">
-      <title>Notification Use Cases</title>
-      <section xml:id="ch_adv_notification_cases_log_rpc">
-        <title>Logging and RPC</title>
-        <para>To make the OpenStack Networking server send notifications using logging and RPC, use
-          the following configuration in the <filename>neutron.conf</filename> file.</para>
-        <para>RPC notifications are sent to the <systemitem>notifications.info</systemitem> queue
-          binded to a topic exchange defined by <systemitem>control_exchange</systemitem> (also
-          defined in <systemitem>neutron.conf</systemitem>). Logging options are described in <link
-            linkend="ch_adv_logging">Logging Settings</link>.</para>
-        <programlisting language="ini"># ============ Notification System Options =====================
-
-# Notifications can be sent when network/subnet/port are create, updated or deleted.
-# There are three methods of sending notifications: logging (via the
-# log_file directive), rpc (via a message queue) and
-# noop (no notifications sent, the default)
-
-# Notification_driver can be defined multiple times
-# Do nothing driver
-# notification_driver = neutron.openstack.common.notifier.no_op_notifier
-# Logging driver
-notification_driver = neutron.openstack.common.notifier.log_notifier
-# RPC driver
-notification_driver = neutron.openstack.common.notifier.rpc_notifier
-
-# default_notification_level is used to form actual topic names or to set logging level
-default_notification_level = INFO
-
-# default_publisher_id is a part of the notification payload
-# host = myhost.com
-# default_publisher_id = $host
-
-# Defined in rpc_notifier for rpc way, can be comma separated values.
-# The actual topic names will be %s.%(default_notification_level)s
-notification_topics = notifications</programlisting>
-      </section>
-      <section xml:id="ch_adv_notification_cases_multi_rpc_topics">
-        <title>Multiple RPC Topics</title>
-        <para>To make the OpenStack Networking server send notifications to multiple RPC topics, use
-          the following configuration in the <filename>neutron.conf</filename> file.</para>
-        <para>RPC notifications are sent to the <systemitem>notifications_one.info</systemitem> and
-          <systemitem>notifications_two.info</systemitem> queues, that are binded to a topic
-          exchange defined by <systemitem>control_exchange</systemitem> (also defined in
-          <systemitem>neutron.conf</systemitem>). Logging options are described in <link
-            linkend="ch_adv_logging">Logging Settings</link>.</para>
-        <programlisting language="ini"># ============ Notification System Options =====================
-
-# Notifications can be sent when network/subnet/port are create, updated or deleted.
-# There are three methods of sending notifications: logging (via the
-# log_file directive), rpc (via a message queue) and
-# noop (no notifications sent, the default)
-
-# Notification_driver can be defined multiple times
-# Do nothing driver
-# notification_driver = neutron.openstack.common.notifier.no_op_notifier
-# Logging driver
-# notification_driver = neutron.openstack.common.notifier.log_notifier
-# RPC driver
-notification_driver = neutron.openstack.common.notifier.rabbit_notifier
-
-# default_notification_level is used to form actual topic names or to set logging level
-default_notification_level = INFO
-
-# default_publisher_id is a part of the notification payload
-# host = myhost.com
-# default_publisher_id = $host
-
-# Defined in rpc_notifier for rpc way, can be comma separated values.
-# The actual topic names will be %s.%(default_notification_level)s
-notification_topics = notifications_one,notifications_two</programlisting>
-      </section>
-    </section>
-    </section>
-    <section xml:id="ch_adv_quotas">
+<section xml:id="section_networking-advanced-quotas"
+  xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
       <title>Quotas</title>
-      <para>Quota is a function to limit number of resources. You can enforce default quota for all
-      tenants. You will get error when you try to create more resources than the limit.</para>
-      <screen><prompt>$</prompt> <userinput>neutron net-create test_net
-Quota exceeded for resources: ['network']</userinput></screen>
-      <para>
-        Per-tenant quota configuration is also supported by quota
-        extension API. See <link linkend="cfg_quotas_per_tenant">
-        Per-tenant quota configuration</link> for details.
-      </para>
+      <para>Quota is a function used to limit the number of resources. A default quota may be
+    enforced for all tenants. Attempting to create resources over the limit triggers an
+    error.</para>
+      <screen><prompt>$</prompt> <userinput>neutron net-create test_net</userinput>
+<computeroutput>Quota exceeded for resources: ['network']</computeroutput></screen>
+      <para>Per-tenant quota configuration is also supported by the quota extension API. See <link
+      linkend="cfg_quotas_per_tenant"> Per-tenant quota configuration</link> for details. </para>
       <section xml:id="cfg_quotas_common">
         <title>Basic quota configuration</title>
-        <para>In OpenStack Networking default quota mechanism, all
-        tenants have a same quota value, i.e., a number of resources
-        that a tenant can create. This is enabled by default.</para>
-        <para>The value of quota is defined in the OpenStack Networking configuration file
-          (<filename>neutron.conf</filename>). If you want to disable quotas for a specific resource
-        (e.g., network, subnet, port), remove a corresponding item from
-          <literal>quota_items</literal>. Each of the quota values in the example below is the
-        default value.</para>
+        <para>In the Networking default quota mechanism, all tenants have the same quota value, such
+      as the number of resources that a tenant can create. This is enabled by default.</para>
+        <para>The quota value is defined in the OpenStack Networking configuration file
+        (<filename>neutron.conf</filename>). If you want to disable quotas for a specific resource
+      (e.g., network, subnet, port), remove a corresponding item from
+      <literal>quota_items</literal>. Each of the quota values in the example below is the default
+      value.</para>
         <programlisting language="ini">[quotas]
 # resource name(s) that are supported in quota features
 quota_items = network,subnet,port
@@ -393,5 +225,4 @@ quota_security_group_rule = 100</programlisting>
 | subnet     | 10    |
 +------------+-------+</computeroutput></screen>
       </section>
-    </section>
-</chapter>
+</section>

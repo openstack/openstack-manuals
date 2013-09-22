@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="ch_adv_config">
+<section xml:id="section_networking-advanced-config"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
     <title>Advanced Configuration Options</title>
     <para>This section describes advanced configurations options for various system components (i.e.
         config options where the default is usually ok, but that the user may want to tweak). After
         installing from packages, $NEUTRON_CONF_DIR is <filename>/etc/neutron</filename>.</para>
-    <section xml:id="neutron_server">
+    <section xml:id="section_neutron_server">
         <title>OpenStack Networking Server with Plugin</title>
         <para>This is the web server that runs the OpenStack Networking API Web Server. It is
             responsible for loading a plugin and passing the API calls to the plugin for processing.
@@ -103,7 +105,7 @@ mysql&gt; grant all on &lt;database-name&gt;.* to '&lt;user-name&gt;'@'%';</comp
         <para>All of the plugin configuration files options can be found in the Appendix -
             Configuration File Options.</para>
     </section>
-    <section xml:id="adv_cfg_dhcp_agent">
+    <section xml:id="section_adv_cfg_dhcp_agent">
         <title>DHCP Agent</title>
         <para>There is an option to run a DHCP server that will allocate IP addresses to virtual
             machines running on the network. When a subnet is created, by default, the
@@ -143,13 +145,11 @@ mysql&gt; grant all on &lt;database-name&gt;.* to '&lt;user-name&gt;'@'%';</comp
                     </tr>
                 </tbody>
             </table></para>
-        <para>All of the DHCP agent configuration options can be found in the <link
-                linkend="dhcp_agent_ini"> Appendix - Configuration File Options</link>.</para>
         <section xml:id="adv_cfg_dhcp_agent_namespace">
             <title>Namespace</title>
             <para>By default the DHCP agent makes use of Linux network namespaces in order to
                 support overlapping IP addresses. Requirements for network namespaces support are
-                described in the <link linkend="ch_limitations">Limitation</link> section.</para>
+                described in the <link linkend="section_limitations">Limitations</link> section.</para>
             <para>
                 <emphasis role="bold">If the Linux installation does not support network namespace,
                     you must disable using network namespace in the DHCP agent config
@@ -157,7 +157,7 @@ mysql&gt; grant all on &lt;database-name&gt;.* to '&lt;user-name&gt;'@'%';</comp
             <screen><computeroutput>use_namespaces = False</computeroutput></screen>
         </section>
     </section>
-    <section xml:id="adv_cfg_l3_agent">
+    <section xml:id="section_adv_cfg_l3_agent">
         <title>L3 Agent</title>
         <para>There is an option to run a L3 agent that will give enable layer 3 forwarding and
             floating IP support. The node that runs the L3 agent should run:</para>
@@ -219,13 +219,11 @@ admin_password $SERVICE_PASSWORD</computeroutput></screen>
                 </listitem>
             </orderedlist>
         </para>
-        <para>All of the L3 agent configuration options can be found in the <link
-                linkend="l3_agent"> Appendix - Configuration File Options</link>.</para>
         <section xml:id="adv_cfg_l3_agent_namespace">
             <title>Namespace</title>
             <para>By default the L3 agent makes use of Linux network namespaces in order to support
                 overlapping IP addresses. Requirements for network namespaces support are described
-                in the <link linkend="ch_limitations">Limitation</link> section.</para>
+                in the <link linkend="section_limitations">Limitation</link> section.</para>
             <para>
                 <emphasis role="bold">If the Linux installation does not support network namespace,
                     you must disable using network namespace in the L3 agent config file</emphasis>
@@ -290,4 +288,93 @@ gateway_external_network_id = e828e54c-850a-4e74-80a8-8b79c6a285d8
 external_network_bridge = br-ex-2</computeroutput></screen>
         </section>
     </section>
-</chapter>
+    <section xml:id="section_limitations">
+        <title>Limitations</title>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para><emphasis>No equivalent for nova-network
+                        --multi_host flag:</emphasis> Nova-network has
+                        a model where the L3, NAT, and DHCP processing
+                        happen on the compute node itself, rather than a
+                        dedicated networking node. OpenStack Networking
+                        now support running multiple l3-agent and dhcp-agents
+                        with load being split across those agents, but the
+                        tight coupling of that scheduling with the location of
+                        the VM is not supported in Grizzly.  The Havana release is expected
+                        to include an exact replacement for the --multi_host flag
+                        in nova-network.</para>
+                </listitem>
+                <listitem>
+                    <para><emphasis>Linux network namespace required on nodes running <systemitem class="
+                        service">neutron-l3-agent</systemitem>
+                        or <systemitem class="
+                        service">neutron-dhcp-agent</systemitem> if overlapping IPs are in use: </emphasis>. In order
+                        to support overlapping IP addresses, the OpenStack Networking DHCP and L3 agents
+                        use Linux network namespaces by default. The hosts running these processes must
+                        support network namespaces. To support network namespaces, the following are
+                        required:</para>
+                    <itemizedlist>
+                        <listitem>
+                            <para>Linux kernel 2.6.24 or newer (with CONFIG_NET_NS=y in kernel
+                                configuration) and</para>
+                        </listitem>
+                        <listitem>
+                            <para>iproute2 utilities ('ip' command) version 3.1.0 (aka 20111117) or
+                                newer</para>
+                        </listitem>
+                    </itemizedlist>
+                    <para>To check whether your host supports namespaces try running the following as
+                        root:</para>
+                    <screen><prompt>#</prompt> <userinput>ip netns add test-ns</userinput>
+<prompt>#</prompt> <userinput>ip netns exec test-ns ifconfig</userinput></screen>
+                    <para>If the preceding commands do not produce errors, your platform is likely
+                        sufficient to use the dhcp-agent or l3-agent with namespace. In our experience,
+                        Ubuntu 12.04 or later support namespaces as does Fedora 17 and new, but some
+                        older RHEL platforms do not by default. It may be possible to upgrade the
+                        iproute2 package on a platform that does not support namespaces by default.</para>
+                    <para>If you need to disable namespaces, make sure the
+                        <filename>neutron.conf</filename> used by neutron-server has the following
+                        setting:</para>
+                    <programlisting>allow_overlapping_ips=False</programlisting>
+                    <para>and that the dhcp_agent.ini and l3_agent.ini have the following
+                        setting:</para>
+                    <programlisting>use_namespaces=False</programlisting>
+                    <note><para>If the host does not support namespaces then the <systemitem class="service"
+                        >neutron-l3-agent</systemitem> and <systemitem class="service"
+                            >neutron-dhcp-agent</systemitem> should be run on different hosts. This
+                        is due to the fact that there is no isolation between the IP addresses
+                        created by the L3 agent and by the DHCP agent. By manipulating the routing
+                        the user can ensure that these networks have access to one another.</para></note>
+                    <para>If you run both L3 and DHCP services on the same node, you should enable
+                        namespaces to avoid conflicts with routes:</para>
+                    <programlisting>use_namespaces=True</programlisting>
+                </listitem>
+            </itemizedlist>
+            <itemizedlist><listitem>
+                <para><emphasis>No IPv6 support for L3 agent:</emphasis> The <systemitem class="
+                    service">neutron-l3-agent</systemitem>, used
+                    by many plugins to implement L3 forwarding, supports only IPv4 forwarding.
+                    Currently, there are no errors provided if you configure IPv6 addresses via the
+                    API.</para>
+            </listitem>
+                <listitem>
+                    <para><emphasis>ZeroMQ support is experimental</emphasis>: Some agents, including
+                        <systemitem class="service"
+                            >neutron-dhcp-agent</systemitem>, <systemitem class="service"
+                                >neutron-openvswitch-agent</systemitem>, and <systemitem class="service"
+                                    >neutron-linuxbridge-agent</systemitem> use
+                        RPC to communicate. ZeroMQ is an available option in the configuration file, but
+                        has not been tested and should be considered experimental. In particular, there
+                        are believed to be issues with ZeroMQ and the dhcp agent.</para>
+                </listitem><listitem>
+                    <para><emphasis>MetaPlugin is experimental</emphasis>: This release includes a
+                        "MetaPlugin" that is intended to support multiple plugins at the same time for
+                        different API requests, based on the content of those API requests. This
+                        functionality has not been widely reviewed or tested by the core team, and
+                        should be considered experimental until further validation is performed.</para>
+                </listitem>
+            </itemizedlist>
+        </para>
+    </section>
+</section>
