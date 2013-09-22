@@ -742,6 +742,32 @@ interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlist
           </step>
         </procedure></para>
     </section>
+    <section xml:id="install_neutron-fwaas-agent">
+      <title>Install FWaaS Agent</title>
+      <para>The FWaaS agent is colocated with the Neutron L3 agent and does
+          not require any additional packages apart from those required for
+          the Neutron L3 agent. The FWaaS functionality can be enabled by
+          setting the configuration as described below.
+          <procedure>
+          <title>Configuring FWaaS Service and Agent</title>
+          <step>
+            <para>Make sure to set the following parameter in
+                <filename>neutron.conf</filename> on the host that
+              runs <systemitem class="service"
+                >neutron-server</systemitem>:</para>
+            <programlisting language="ini">service_plugins = neutron.services.firewall.fwaas_plugin.FirewallPlugin</programlisting>
+          </step>
+          <step>
+            <para>To use the reference implementation, you must also
+                add a FWaaS driver configuration to the
+                <filename>neutron.conf</filename> on every node
+                on which the Neutron L3 agent is deployed:</para>
+            <programlisting language="ini">[fwaas]
+driver = neutron.services.firewall.drivers.linux.iptables_fwaas.IptablesFwaasDriver
+enabled = True</programlisting>
+          </step>
+        </procedure></para>
+    </section>
     <section xml:id="install_neutron_client">
       <title>Install OpenStack Networking CLI Client</title>
       <para>Install the OpenStack Networking CLI client by
