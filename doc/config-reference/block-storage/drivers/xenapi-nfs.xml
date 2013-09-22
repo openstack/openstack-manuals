@@ -11,8 +11,8 @@
 <para>
 This driver is not accessing the NFS share directly, it is only accessing the
 share through XenAPI Storage Manager. This driver should be considered as a
-reference implementation for using XenAPI's storage manager in OpenStack (
-present in XenServer and XCP).
+reference implementation for using XenAPI's storage manager in OpenStack
+(present in XenServer and XCP).
 </para>
 
 <simplesect>
@@ -30,7 +30,7 @@ present in XenServer and XCP).
             <para>An NFS share, that is configured for XenServer/XCP. For the
             specific requirements, export options, please refer to the
             administration guide of your specific XenServer version. It is also
-            requirement, that the NFS share is accessible by all the XenServers
+            required that the NFS share is accessible by all the XenServers
             components within your cloud.</para>
         </listitem>
         <listitem>
@@ -91,10 +91,14 @@ present in XenServer and XCP).
     <title>Configuration Options</title>
     <para>Assuming the following setup:</para>
     <itemizedlist>
-        <listitem><para>XenServer box at <literal>10.2.2.1</literal></para></listitem>
-        <listitem><para>XenServer password is <literal>r00tme</literal></para></listitem>
-        <listitem><para>NFS server is <literal>nfs.example.com</literal></para></listitem>
-        <listitem><para>NFS export is at <literal>/volumes</literal></para></listitem>
+        <listitem><para>XenServer box at <literal>10.2.2.1</literal></para>
+        </listitem>
+        <listitem><para>XenServer password is <literal>r00tme</literal></para>
+        </listitem>
+        <listitem><para>NFS server is <literal>nfs.example.com</literal></para>
+        </listitem>
+        <listitem><para>NFS export is at <literal>/volumes</literal></para>
+        </listitem>
     </itemizedlist>
 
     <para>To use XenAPINFS as your cinder driver, set the following
@@ -108,5 +112,9 @@ xenapi_connection_password = r00tme
 xenapi_nfs_server = nfs.example.com
 xenapi_nfs_serverpath = /volumes
 </programlisting>
+
+    <para>The following table contains the configuration options
+    supported by the XenAPINFS driver.</para>
+    <xi:include href="../../../common/tables/cinder-storage_xen.xml" />
 </simplesect>
 </section>
