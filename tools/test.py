@@ -155,7 +155,7 @@ def only_www_touched():
 
     return www_changed and not other_changed
 
-def get_modified_files(rootdir):
+def get_modified_files(rootdir, filter=None):
     """Get modified files below doc directory"""
 
     # There are several tree traversals in this program that do a
@@ -165,6 +165,8 @@ def get_modified_files(rootdir):
 
     try:
         args = ["git", "diff", "--name-only", "--relative", "HEAD", "HEAD~1"]
+        if filter != None:
+            args.append(filter)
         modified_files = check_output(args).strip().split()
     except (subprocess.CalledProcessError, OSError) as e:
         print("git failed: %s" % e)
@@ -176,60 +178,61 @@ def check_deleted_files(rootdir, file_exceptions):
 
     """
     print("\nChecking for removed files")
-    modified_files = get_modified_files(rootdir)
-    deleted_files = []
-    any_removed = False
-    for f in modified_files:
-        full = os.path.abspath(f)
-        if not os.path.exists(full):
-            print("  Removed file: %s" % f)
-            deleted_files.append(full)
-            any_removed = True
+    deleted_files = get_modified_files(rootdir, "--diff-filter=D")
+    if not deleted_files:
+        print("No files were removed.")
+        return
 
-    if any_removed:
-        # Figure out whether this file was included anywhere
-        missing_reference = False
+    print(" Removed files:")
+    for f in deleted_files:
+        print ("   %s" % f)
+ 
+    deleted_files = map(lambda x: os.path.abspath(x), deleted_files)
 
-        for root, dirs, files in os.walk(rootdir):
-            # Don't descend into 'target' subdirectories
-            try:
-                ind = dirs.index('target')
-                del dirs[ind]
-            except ValueError:
-                pass
+    # Figure out whether files were included anywhere
+    missing_reference = False
 
-            os.chdir(root)
+    for root, dirs, files in os.walk(rootdir):
+        # Don't descend into 'target' subdirectories
+        try:
+            ind = dirs.index('target')
+            del dirs[ind]
+        except ValueError:
+            pass
 
-            for f in files:
-                if (f.endswith('.xml') and
-                    f != 'pom.xml' and
-                    f not in file_exceptions):
-                    path = os.path.abspath(os.path.join(root, f))
-                    doc = etree.parse(path)
+        os.chdir(root)
 
-                    # Check for inclusion of files as part of imagedata
-                    for node in doc.findall('//{http://docbook.org/ns/docbook}imagedata'):
-                        href = node.get('fileref')
-                        if (f not in file_exceptions and
-                            os.path.abspath(href) in deleted_files):
-                            print("  File %s has an imagedata href for deleted file %s " % (f, href))
-                            missing_reference = True
+        for f in files:
+            if (f.endswith('.xml') and
+                f != 'pom.xml' and
+                f not in file_exceptions):
+                path = os.path.abspath(os.path.join(root, f))
+                doc = etree.parse(path)
 
-                            break
+                # Check for inclusion of files as part of imagedata
+                for node in doc.findall('//{http://docbook.org/ns/docbook}imagedata'):
+                    href = node.get('fileref')
+                    if (f not in file_exceptions and
+                        os.path.abspath(href) in deleted_files):
+                        print("  File %s has an imagedata href for deleted file %s " % (f, href))
+                        missing_reference = True
 
-                    if missing_reference:
                         break
 
-                    # Check for inclusion of files as part of xi:include
-                    ns = {"xi": "http://www.w3.org/2001/XInclude"}
-                    for node in doc.xpath('//xi:include', namespaces=ns):
-                        href = node.get('href')
-                        if (os.path.abspath(href) in deleted_files):
-                            print("  File %s has an xi:include on deleted file %s " % (f, href))
-                            missing_reference = True
+                if missing_reference:
+                    break
 
-            if missing_reference:
-                sys.exit(1)
+                # Check for inclusion of files as part of xi:include
+                ns = {"xi": "http://www.w3.org/2001/XInclude"}
+                for node in doc.xpath('//xi:include', namespaces=ns):
+                    href = node.get('href')
+                    if (os.path.abspath(href) in deleted_files):
+                        print("  File %s has an xi:include on deleted file %s " % (f, href))
+                        missing_reference = True
+    if missing_reference:
+        sys.exit(1)
+
+    print("Passed removed file check.")
 
 def validate_individual_files(rootdir, exceptions, force=False, niceness=False, voting=True):
     schema = get_schema()
