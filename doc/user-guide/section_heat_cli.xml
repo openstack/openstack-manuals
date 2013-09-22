@@ -6,14 +6,14 @@
     xmlns:html="http://www.w3.org/1999/xhtml" version="5.0"
     xml:id="heat-stack-create">
     <title>Create and manage stacks</title>
-    <procedure>
-        <title>To create a stack from an example template file</title>
+    <section xml:id="create_stacks_proc"> <title>Create a stack from an example template file</title>
+    <procedure>      
         <step>
             <para>To create a stack, or template, from an <link
                     xlink:href="https://github.com/openstack/heat-templates">example template
                     file</link>, run following command:</para>
-            <screen><prompt>$</prompt> <userinput><?db-font-size 75%?>heat stack-create mystack --template-file=/path/to/heat/templates/WordPress_Single_Instance.template
---parameters="InstanceType=m1.large;DBUsername=wp;DBPassword=verybadpassword;KeyName=heat_key;LinuxDistribution=F17"</userinput></screen>
+            <screen><prompt>$</prompt> <userinput><?db-font-size 75%?>heat stack-create mystack --template-file=/path/to/heat/templates/WordPress_Single_Instance.template \
+        --parameters="InstanceType=m1.large;DBUsername=wp;DBPassword=verybadpassword;KeyName=heat_key;LinuxDistribution=F17"</userinput></screen>
 <para>The <literal>--parameters</literal> values that you specify
                 depend on which parameters are defined in the
                 template. If the template file is hosted on a website,
@@ -38,8 +38,11 @@
                 message.</para>
         </step>
     </procedure>
+    </section>
+<section xml:id="stack_get_info"><title>Get information about stacks</title>
+<para>To explore the state and history of a particular stack, you can
+            run a number of commands.</para>
     <procedure>
-        <title>To list stacks</title>
         <step>
             <para>To see which stacks are visible to the current user,
                 run the following command:
@@ -50,19 +53,16 @@
 | 7edc7480-bda5-4e1c-9d5d-f567d3b6a050 | my-otherstack | CREATE_FAILED   | 2013-04-03T23:28:20Z |
 +--------------------------------------+---------------+-----------------+----------------------+</computeroutput></screen></para>
         </step>
-    </procedure>
-    <procedure xml:id="heat-stack-details">
-        <title>To view stack details</title>
-        <para>To explore the state and history of a particular stack, you can run a number of commands.</para>
-        <step>
+   <step>
+ 
             <para>To show the details of a stack, run the following
                 command:</para>
-            <screen><prompt>$</prompt> <userinput><?db-font-size 75%?>heat stack-show mystack</userinput></screen></step>
+            <screen><prompt>$</prompt> <userinput>heat stack-show mystack</userinput></screen></step>
            <step><para>A stack consists of a collection of resources. To list the
-                resources, including their status, in a stack, run the
-                following command:</para>
-            <screen><prompt>$</prompt> <userinput><?db-font-size 75%?>heat resource-list mystack</userinput></screen>
-<screen><computeroutput><?db-font-size 65%?>+---------------------+--------------------+-----------------+----------------------+
+                    resources and their status, run the following
+                    command:</para>
+            <screen><prompt>$</prompt> <userinput>heat resource-list mystack</userinput></screen>
+<screen><?db-font-size 65%?><computeroutput>+---------------------+--------------------+-----------------+----------------------+
 | logical_resource_id | resource_type      | resource_status | updated_time         |
 +---------------------+--------------------+-----------------+----------------------+
 | WikiDatabase        | AWS::EC2::Instance | CREATE_COMPLETE | 2013-04-03T23:25:56Z |
@@ -71,14 +71,13 @@
 <step>
             <para>To show the details for the specified resource in a
                 stack, run the following command:</para>
-            <screen><prompt>$</prompt> <userinput><?db-font-size 75%?>heat resource-show mystack WikiDatabase</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>heat resource-show mystack WikiDatabase</userinput></screen>
             <para>Some resources have associated metadata which can
                 change throughout the life-cycle of a resource:</para>
-            <screen><prompt>$</prompt> <userinput><?db-font-size 75%?>heat resource-metadata mystack WikiDatabase</userinput></screen></step>
-           <step><para>A series of events is generated during the
-                life-cycle of a stack. This command will display those
-                events.</para>
-            <screen><prompt>$</prompt> <userinput><?db-font-size 75%?>heat event-list mystack</userinput></screen><screen><computeroutput><?db-font-size 65%?>+---------------------+----+------------------------+-----------------+----------------------+
+            <screen><prompt>$</prompt> <userinput>heat resource-metadata mystack WikiDatabase</userinput></screen></step>
+           <step><para>A series of events is generated during the life-cycle of a
+                    stack. This command displays those events:</para>
+            <screen><prompt>$</prompt> <userinput>heat event-list mystack</userinput></screen><screen><computeroutput><?db-font-size 65%?>+---------------------+----+------------------------+-----------------+----------------------+
 | logical_resource_id | id | resource_status_reason | resource_status | event_time           |
 +---------------------+----+------------------------+-----------------+----------------------+
 | WikiDatabase        | 1  | state changed          | IN_PROGRESS     | 2013-04-03T23:22:09Z |
@@ -86,16 +85,16 @@
 +---------------------+----+------------------------+-----------------+----------------------+</computeroutput></screen>
             </step><step><para>To show the details for a particular event, run the following
                 command:</para>
-            <screen><prompt>$</prompt> <userinput><?db-font-size 75%?>heat event-show WikiDatabase 1</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>heat event-show WikiDatabase 1</userinput></screen>
         </step>
     </procedure>
-    <procedure xml:id="heat-stack-update">
-        <title>To update a stack</title>
+</section>
+    <section xml:id="heat-stack-update"><title>Update stacks</title>
+    <procedure>
         <step>
             <para>To update an existing stack from a modified template
-                file, run a command like the following
-                command:</para><screen><prompt>$</prompt> <userinput><?db-font-size 75%?>heat stack-update mystack --template-file=/path/to/heat/templates/WordPress_Single_Instance_v2.template
-     --parameters="InstanceType=m1.large;DBUsername=wp;DBPassword=verybadpassword;KeyName=heat_key;LinuxDistribution=F17"</userinput></screen><screen><computeroutput><?db-font-size 65%?>+--------------------------------------+---------------+-----------------+----------------------+
+                    file, run the following command:</para><screen><prompt>$</prompt> <userinput>heat stack-update mystack --template-file=/path/to/heat/templates/WordPress_Single_Instance_v2.template
+     --parameters="InstanceType=m1.large;DBUsername=wp;DBPassword=verybadpassword;KeyName=heat_key;LinuxDistribution=F17"</userinput></screen><screen><?db-font-size 65%?><computeroutput>+--------------------------------------+---------------+-----------------+----------------------+
 | id                                   | stack_name    | stack_status    | creation_time        |
 +--------------------------------------+---------------+-----------------+----------------------+
 | 4c712026-dcd5-4664-90b8-0915494c1332 | mystack       | UPDATE_COMPLETE | 2013-04-03T23:22:08Z |
@@ -105,4 +104,5 @@
                 are replaced with new resources.</para>
         </step>
     </procedure>
+    </section>
 </section>
