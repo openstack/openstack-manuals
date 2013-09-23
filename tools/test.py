@@ -24,6 +24,7 @@ import argparse
 import multiprocessing
 import os
 import re
+import shutil
 import subprocess
 import sys
 import urllib2
@@ -368,6 +369,8 @@ def build_book(book):
     result = True
     returncode = 0
     try:
+        shutil.rmtree(os.path.expanduser("~/.fop"),
+                      ignore_errors=True)
         output = subprocess.check_output(
             ["mvn", "clean", "generate-sources"],
             stderr=subprocess.STDOUT
