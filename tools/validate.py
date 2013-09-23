@@ -30,12 +30,16 @@ import sys
 import urllib2
 
 # These are files that are known to not be in DocBook format
-FILE_EXCEPTIONS = ['st-training-guides.xml', 'ha-guide-docinfo.xml', 'bk001-ch003-associate-general.xml', 'basic-install-pom.xml']
+FILE_EXCEPTIONS = ['st-training-guides.xml',
+                   'ha-guide-docinfo.xml',
+                   'bk001-ch003-associate-general.xml',
+                   'basic-install-pom.xml']
 
 # These are books that we aren't checking yet
 BOOK_EXCEPTIONS = []
 
 RESULTS_OF_BUILDS = []
+
 
 # NOTE(berendt): check_output as provided in Python 2.7.5 to make script
 #                usable with Python < 2.7
@@ -109,8 +113,10 @@ def verify_nice_usage_of_whitespaces(rootdir, docfile, found_extra_whitespace):
     ]
 
     for element in elements:
-        checks.append(re.compile(".*<%s>\s+[\w\-().:!?{}\[\]]+.*\n" % element)),
-        checks.append(re.compile(".*[\w\-().:!?{}\[\]]+\s+<\/%s>.*\n" % element))
+        checks.append(re.compile(".*<%s>\s+[\w\-().:!?{}\[\]]+.*\n"
+                                 % element)),
+        checks.append(re.compile(".*[\w\-().:!?{}\[\]]+\s+<\/%s>.*\n"
+                                 % element))
 
     lc = 0
     affected_lines = []
@@ -128,6 +134,7 @@ def verify_nice_usage_of_whitespaces(rootdir, docfile, found_extra_whitespace):
                                    ", ".join(affected_lines)))
     return found_extra_whitespace
 
+
 def error_message(error_log):
     """Return a string that contains the error message.
 
@@ -139,12 +146,15 @@ def error_message(error_log):
     errs.reverse()
     return "\n".join(errs)
 
+
 # Check whether only files in www got updated
 def only_www_touched():
+    """Check whether only files in www directory are touched"""
+
     try:
         args = ["git", "diff", "--name-only", "HEAD~1", "HEAD"]
         modified_files = check_output(args).strip().split()
-    except (CalledProcessError, OSError) as e:
+    except (subprocess.CalledProcessError, OSError) as e:
         print("git failed: %s" % e)
         sys.exit(1)
 
@@ -158,38 +168,41 @@ def only_www_touched():
 
     return www_changed and not other_changed
 
-def get_modified_files(rootdir, filter=None):
+
+def get_modified_files(rootdir, filtering=None):
     """Get modified files below doc directory"""
 
     # There are several tree traversals in this program that do a
-    # chroot, we need to run this git command always from the rootdir,
+    # chdir, we need to run this git command always from the rootdir,
     # so assure that.
     os.chdir(rootdir)
     try:
         args = ["git", "diff", "--name-only", "--relative", "HEAD~1", "HEAD"]
-        if filter != None:
-            args.append(filter)
+        if filtering is not None:
+            args.append(filtering)
         modified_files = check_output(args).strip().split()
-    except (CalledProcessError, OSError) as e:
+    except (subprocess.CalledProcessError, OSError) as e:
         print("git failed: %s" % e)
         sys.exit(1)
     return modified_files
 
 
-def check_deleted_files(rootdir, file_exceptions):
-    """ Check whether files got deleted and verify that no other file references them.
+def check_deleted_files(rootdir, file_exceptions, verbose):
+    """ Check whether files got deleted and verify that no other file
+    references them.
 
     """
-    print("\nChecking for removed files")
+    print("\nChecking that no removed files are referenced...")
     deleted_files = get_modified_files(rootdir, "--diff-filter=D")
     if not deleted_files:
         print("No files were removed.")
         return
 
-    print(" Removed files:")
-    for f in deleted_files:
-        print ("   %s" % f)
- 
+    if verbose:
+        print(" Removed files:")
+        for f in deleted_files:
+            print ("   %s" % f)
+
     deleted_files = map(lambda x: os.path.abspath(x), deleted_files)
 
     # Figure out whether files were included anywhere
@@ -207,17 +220,19 @@ def check_deleted_files(rootdir, file_exceptions):
 
         for f in files:
             if (f.endswith('.xml') and
-                f != 'pom.xml' and
-                f not in file_exceptions):
+                    f != 'pom.xml' and
+                    f not in file_exceptions):
                 path = os.path.abspath(os.path.join(root, f))
                 doc = etree.parse(path)
 
                 # Check for inclusion of files as part of imagedata
-                for node in doc.findall('//{http://docbook.org/ns/docbook}imagedata'):
+                for node in doc.findall(
+                        '//{http://docbook.org/ns/docbook}imagedata'):
                     href = node.get('fileref')
                     if (f not in file_exceptions and
-                        os.path.abspath(href) in deleted_files):
-                        print("  File %s has an imagedata href for deleted file %s " % (f, href))
+                            os.path.abspath(href) in deleted_files):
+                        print("  File %s has imagedata href for deleted "
+                              "file %s" % (f, href))
                         missing_reference = True
 
                         break
@@ -230,27 +245,86 @@ def check_deleted_files(rootdir, file_exceptions):
                 for node in doc.xpath('//xi:include', namespaces=ns):
                     href = node.get('href')
                     if (os.path.abspath(href) in deleted_files):
-                        print("  File %s has an xi:include on deleted file %s " % (f, href))
+                        print("  File %s has an xi:include on deleted file %s "
+                              % (f, href))
                         missing_reference = True
     if missing_reference:
+        print("Failed removed file check, %d files were removed."
+              % len(deleted_files))
         sys.exit(1)
 
-    print("Passed removed file check.")
+    print("Passed removed file check, %d files were removed."
+          % len(deleted_files))
 
 
-def validate_individual_files(rootdir, exceptions, force):
+def validate_one_file(schema, rootdir, path, verbose,
+                      any_failures, found_extra_whitespace):
+    """Validate a single file"""
+    # We pass schema in as a way of caching it, generating it is expensive
+
+    if verbose:
+        print(" Validating %s" % path)
+    try:
+        doc = etree.parse(path)
+        if validation_failed(schema, doc):
+            any_failures = True
+            print(error_message(schema.error_log))
+        verify_section_tags_have_xmid(doc)
+        found_extra_whitespace = verify_nice_usage_of_whitespaces(
+            rootdir, path, found_extra_whitespace)
+    except etree.XMLSyntaxError as e:
+        any_failures = True
+        print("%s: %s" % (path, e))
+    except ValueError as e:
+        any_failures = True
+        print("%s: %s" % (path, e))
+
+    return any_failures, found_extra_whitespace
+
+
+def is_xml(filename):
+    """Returns true if file ends with .xml and is not a pom.xml file"""
+
+    return filename.endswith('.xml') and not filename.endswith('/pom.xml')
+
+
+def validate_individual_files(rootdir, exceptions, verbose):
+    """Validate list of modified files."""
+
     schema = get_schema()
-    found_extra_whitespace = False
-
+    extra_whitespace = False
     any_failures = False
-    if force:
-        print("\nValidating all files")
-    else:
-        modified_files = get_modified_files(rootdir)
-        print("\nFollowing files will be validated:")
-        for f in modified_files:
-            print(">>> %s" % f)
-        modified_files = map(lambda x: os.path.abspath(x), modified_files)
+    no_validated = 0
+
+    # Do not select delete files, just Added, Copied, Modified, Renamed,
+    # or Type changed
+    modified_files = get_modified_files(rootdir, "--diff-filter=ACMRT")
+
+    modified_files = filter(is_xml, modified_files)
+    print("\nValidating files...")
+    modified_files = map(lambda x: os.path.abspath(x), modified_files)
+
+    for f in modified_files:
+        if os.path.basename(f) in exceptions:
+            continue
+        any_failures, extra_whitespace = validate_one_file(
+            schema, rootdir, f, verbose, any_failures, extra_whitespace)
+        no_validated = no_validated + 1
+
+    if any_failures:
+        sys.exit(1)
+
+    print("Validation passed, validated %d files.\n" % no_validated)
+
+
+def validate_all_files(rootdir, exceptions, verbose):
+    """Validate all xml files."""
+
+    schema = get_schema()
+    extra_whitespace = False
+    any_failures = False
+    no_validated = 0
+    print("\nValidating all files")
 
     for root, dirs, files in os.walk(rootdir):
         # Don't descend into 'target' subdirectories
@@ -263,34 +337,27 @@ def validate_individual_files(rootdir, exceptions, force):
         for f in files:
             # Ignore maven files, which are called pom.xml
             if (f.endswith('.xml') and
-                f != 'pom.xml' and
-                f not in exceptions):
-                try:
-                    path = os.path.abspath(os.path.join(root, f))
-                    if not force and path not in modified_files:
-                        continue
-                    doc = etree.parse(path)
-                    if validation_failed(schema, doc):
-                        any_failures = True
-                        print(error_message(schema.error_log))
-                    verify_section_tags_have_xmid(doc)
-                    found_extra_whitespace = verify_nice_usage_of_whitespaces(rootdir, path, found_extra_whitespace)
-                except etree.XMLSyntaxError as e:
-                    any_failures = True
-                    print("%s: %s" % (path, e))
-                except ValueError as e:
-                    any_failures = True
-                    print("%s: %s" % (path, e))
+                    f != 'pom.xml' and
+                    f not in exceptions):
+                path = os.path.abspath(os.path.join(root, f))
+                any_failures, extra_whitespace = validate_one_file(
+                    schema, rootdir, path, verbose, any_failures,
+                    extra_whitespace)
+                no_validated = no_validated + 1
 
     if any_failures:
         sys.exit(1)
-    print("Validation passed.\n")
+    print("Validation passed, validated %d files.\n" % no_validated)
+
 
 def logging_build_book(result):
+    """Callback for book building"""
     RESULTS_OF_BUILDS.append(result)
 
 
-def build_book(rootdir, book):
+def build_book(book):
+    """Build a single book"""
+
     os.chdir(book)
     result = True
     returncode = 0
@@ -342,16 +409,17 @@ def build_affected_books(rootdir, book_exceptions, file_exceptions, force):
 
         for f in files:
             if (f.endswith('.xml') and
-                f != 'pom.xml' and
-                f not in file_exceptions):
+                    f != 'pom.xml' and
+                    f not in file_exceptions):
                 path = os.path.abspath(os.path.join(root, f))
                 doc = etree.parse(path)
 
                 # Check for inclusion of files as part of imagedata
-                for node in doc.findall('//{http://docbook.org/ns/docbook}imagedata'):
+                for node in doc.findall(
+                        '//{http://docbook.org/ns/docbook}imagedata'):
                     href = node.get('fileref')
                     if (f not in file_exceptions and
-                        os.path.abspath(href) in modified_files):
+                            os.path.abspath(href) in modified_files):
                         affected_books.append(book_root)
                         break
 
@@ -363,7 +431,7 @@ def build_affected_books(rootdir, book_exceptions, file_exceptions, force):
                 for node in doc.xpath('//xi:include', namespaces=ns):
                     href = node.get('href')
                     if (f not in file_exceptions and
-                        os.path.abspath(href) in modified_files):
+                            os.path.abspath(href) in modified_files):
                         affected_books.append(book_root)
                         break
             if book_root in affected_books:
@@ -384,7 +452,8 @@ def build_affected_books(rootdir, book_exceptions, file_exceptions, force):
     print("Queuing the following books for building:")
     for book in books:
         print("  %s" % os.path.basename(book))
-        pool.apply_async(build_book, (rootdir, book), callback = logging_build_book)
+        pool.apply_async(build_book, book,
+                         callback=logging_build_book)
     pool.close()
     print("Building all queued books now...")
     pool.join()
@@ -395,14 +464,15 @@ def build_affected_books(rootdir, book_exceptions, file_exceptions, force):
             print(">>> Build of book %s succeeded." % book)
         else:
             any_failures = True
-            print(">>> Build of book %s failed (returncode = %d)." % (book, returncode))
+            print(">>> Build of book %s failed (returncode = %d)."
+                  % (book, returncode))
             print("\n%s" % output)
 
     if any_failures:
         sys.exit(1)
 
 
-def main(rootdir, force):
+def main(rootdir, force, verbose):
     if force:
         print("Validation of all files and build of all books will be forced.")
 
@@ -410,8 +480,12 @@ def main(rootdir, force):
         print("Only files in www directory changed, no validation done.")
         return
 
-    check_deleted_files(rootdir, FILE_EXCEPTIONS)
-    validate_individual_files(rootdir, FILE_EXCEPTIONS, force)
+    check_deleted_files(rootdir, FILE_EXCEPTIONS, verbose)
+    if force:
+        validate_all_files(rootdir, FILE_EXCEPTIONS, verbose)
+    else:
+        validate_individual_files(rootdir, FILE_EXCEPTIONS, verbose)
+
     build_affected_books(rootdir, BOOK_EXCEPTIONS, FILE_EXCEPTIONS, force)
 
 
@@ -423,7 +497,7 @@ def default_root():
     try:
         args = ["git", "rev-parse", "--show-toplevel"]
         gitroot = check_output(args).rstrip()
-    except (CalledProcessError, OSError) as e:
+    except (subprocess.CalledProcessError, OSError) as e:
         print("git failed: %s" % e)
         sys.exit(1)
 
@@ -435,7 +509,9 @@ if __name__ == '__main__':
     parser.add_argument('path', nargs='?', default=default_root(),
                         help="Root directory that contains DocBook files, "
                         "defaults to `git rev-parse --show-toplevel`/doc/")
-    parser.add_argument("--force", help="force the validation of all files "
+    parser.add_argument("--force", help="Force the validation of all files "
                         "and build all books", action="store_true")
+    parser.add_argument("--verbose", help="Verbose execution",
+                        action="store_true")
     args = parser.parse_args()
-    main(args.path, args.force)
+    main(args.path, args.force, args.verbose)
