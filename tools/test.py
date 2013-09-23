@@ -457,10 +457,10 @@ def build_affected_books(rootdir, book_exceptions, file_exceptions,
     print("Queuing the following books for building:")
     for book in books:
         print("  %s" % os.path.basename(book))
-        pool.apply_async(build_book, book,
+        pool.apply_async(build_book, (book, ),
                          callback=logging_build_book)
     pool.close()
-    print("Building all books now...")
+    print("Building all queued %d books now..." % len(books))
     pool.join()
 
     any_failures = False
