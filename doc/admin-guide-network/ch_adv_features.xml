@@ -202,7 +202,7 @@
                     <code>extension:provider_network:set</code>
                 action. The default OpenStack Networking API policy
                 configuration authorizes both actions for users with
-                the admin role. See <xref linkend="ch_auth"/> for
+                the admin role. See ch_auth for
                 details on policy configuration.</para>
         </section>
         <section xml:id="provider_api_workflow">
@@ -228,23 +228,9 @@
             <para>
                 <screen><prompt>$</prompt> <userinput>neutron net-create &lt;name&gt; --tenant_id &lt;tenant-id&gt; --provider:network_type gre --provider:segmentation_id &lt;tunnel-id&gt;</userinput></screen>
             </para>
-            <para>When creating flat networks or VLAN networks,
-                &lt;phys-net-name&gt; must be known to the plugin. See
-                    <xref linkend="ovs_neutron_plugin"/> and <xref
-                    linkend="linuxbridge_conf"/> for details on
-                configuring network_vlan_ranges to identify all
-                physical networks. When creating VLAN networks,
-                &lt;VID&gt; can fall either within or outside any
-                configured ranges of VLAN IDs from which tenant
-                networks are allocated. Similarly, when creating GRE
-                networks, &lt;tunnel-id&gt; can fall either within or
-                outside any tunnel ID ranges from which tenant
-                networks are allocated.</para>
-            <para>Once provider networks have been created, subnets
-                can be allocated and they can be used similarly to
-                other virtual networks, subject to authorization
-                policy based on the specified
-                &lt;tenant_id&gt;.</para>
+            <para>When creating flat networks or VLAN networks, &lt;phys-net-name&gt; must be known to the plugin. See ovs_neutron_plugin and linuxbridge_conf for details on configuring network_vlan_ranges to identify all physical networks. When creating VLAN networks, &lt;VID&gt; can fall either within or outside any configured ranges of VLAN IDs from which tenant networks are allocated. Similarly, when creating GRE networks, &lt;tunnel-id&gt; can fall either within or outside any tunnel ID ranges from which tenant networks are allocated.</para>
+<para>Once provider networks have been created, subnets can be allocated and they can be used similarly to other virtual networks, subject to authorization
+                policy based on the specified &lt;tenant_id&gt;.</para>
         </section>
     </section>
     <section xml:id="l3_router_and_nat">
@@ -259,8 +245,8 @@
             networks, and can also provide a "gateway" that connects
             one or more private L2 networks to a shared "external"
             network (e.g., a public network for access to the
-            Internet). See <xref linkend="use_cases_single_router"/>
-            and <xref linkend="use_cases_tenant_router"/> for details
+            Internet). See use_cases_single_router
+            and use_cases_tenant_router for details
             on common models of deploying OpenStack Networking L3
             routers.</para>
         <para>The L3 router provides basic NAT capabilities on
@@ -508,27 +494,17 @@ neutron floatingip-associate &lt;floatingip-id&gt; &lt;internal VM port-id&gt; <
             change is made restart <systemitem class="service">nova-api</systemitem> and <systemitem class="service">nova-compute</systemitem> in order to pick up this change. After
             this change is made one will be able to use both the OpenStack Compute and OpenStack
             Network security group API at the same time.</para>
-    	<note>
-		<itemizedlist>
-			<listitem><para>To use the OpenStack Compute security group
-                	API with OpenStack Networking, the OpenStack Networking
-                	plugin must implement the security group API. The
-                	following plugins currently implement this: Nicira
-			NVP, Open vSwitch, Linux Bridge, NEC, and Ryu.</para></listitem>
-
-			<listitem><para>You must configure the correct firewall driver in the
-			<literal>securitygroup</literal> section of the plugin/agent configuration file.
-			Some plugins and agents, such as Linux Bridge Agent and Open vSwitch Agent, use
-			the no-operation driver as the default, which results in non-working security
-			groups.</para></listitem>
-
-			<listitem><para>When using the security group API through OpenStack
-                	Compute, security groups are applied to all ports on
-                	an instance. The reason for this is that OpenStack
-                	Compute security group APIs are instances based and
-			not port based as OpenStack Networking.</para></listitem>
-		</itemizedlist>
-	</note>
+        <note>
+            <itemizedlist>
+                <listitem><para>To use the OpenStack Compute security group API with OpenStack Networking, the OpenStack Networking plugin must implement the security group API. The
+                	following plugins currently implement this: Nicira NVP, Open vSwitch, Linux Bridge, NEC, and Ryu.</para>
+                </listitem>
+                <listitem><para>You must configure the correct firewall driver in the <literal>securitygroup</literal> section of the plugin/agent configuration file. Some plugins and agents, such as Linux Bridge Agent and Open vSwitch Agent, use the no-operation driver as the default, which results in non-working security groups.</para>
+                </listitem>
+                <listitem><para>When using the security group API through OpenStack Compute, security groups are applied to all ports on an instance. The reason for this is that OpenStack Compute security group APIs are instances based and not port based as OpenStack Networking.</para>
+                </listitem>
+            </itemizedlist>
+        </note>
         <section xml:id="securitygroup_api_abstractions">
             <title>Security Group API Abstractions</title>
             <table rules="all">

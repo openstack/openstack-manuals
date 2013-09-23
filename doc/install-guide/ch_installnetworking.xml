@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter xmlns="http://docbook.org/ns/docbook"
-  xmlns:xi="http://www.w3.org/2001/XInclude"
-  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
-  xml:id="ch_install">
-  <title>OpenStack Networking Installation</title>
-  <para>Learn how to install and get the OpenStack Networking service
-    up and running.</para>
-  <section xml:id="install_prereqs">
-    <title>Initial Prerequisites</title>
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="ch_installing-openstack-networking">
+    <title>Installing OpenStack Networking Service</title>
+  <section xml:id="section_install_prereqs">
+    <title>Initial prerequisites</title>
     <para>
       <itemizedlist>
         <listitem>
@@ -24,8 +22,8 @@
       </itemizedlist>
     </para>
   </section>
-  <section xml:id="install_ubuntu">
-    <title>Install Packages (Ubuntu)</title>
+  <section xml:id="section_install_ubuntu">
+    <title>Install packages (Ubuntu)</title>
     <note>
       <para>This procedure uses the Cloud Archive for Ubuntu. You can
         read more about it at <link
@@ -788,7 +786,7 @@ enabled = True</programlisting>
           <systemitem>/etc/neutron</systemitem> directory.</para>
     </section>
   </section>
-  <section xml:id="install_fedora">
+  <section xml:id="section_install_fedora">
     <title>Installing Packages (Fedora)</title>
     <para>You can retrieve the OpenStack packages for Fedora from:
         <link
@@ -1009,4 +1007,150 @@ enabled = True</programlisting>
           <systemitem>/etc/neutron</systemitem> directory.</para>
     </section>
   </section>
-</chapter>
+  <section xml:id="section_networking-demo-setup">
+    <title>Set up for deployment use cases</title>
+    <para>This section describes how to configure the OpenStack
+      Networking service and its components for some typical use
+      cases.</para>
+  <xi:include href="section_networking-single-flat.xml"/>
+  <xi:include href="section_networking-provider-router-with-private_networks.xml"/>
+  <xi:include href="section_networking-pertenant-routers-with-private-networks.xml"/>
+  </section>
+    <section xml:id="section_networking-use-cases">
+        <title>OpenStack Networking Deployment Use Cases</title>
+        <para>
+            The following common-use cases for OpenStack Networking are
+            not exhaustive, but can be combined to create more complex use cases.
+        </para>
+        <section xml:id="section_use-cases-single-flat">
+            <title>Use Case: Single Flat Network</title>
+            <para>In the simplest use case, a single OpenStack Networking network is created.  This is a
+                "shared" network, meaning it is visible to all tenants via the OpenStack Networking
+                API.  Tenant VMs have a single NIC, and receive
+                a fixed IP address from the subnet(s) associated with that network.
+                This use case essentially maps to the FlatManager
+                and FlatDHCPManager models provided by OpenStack Compute. Floating IPs are not
+                supported.</para>
+            <para>This network type is often created by the OpenStack administrator
+                to map directly to an existing physical network in the data center (called a
+                "provider network").  This allows the provider to use a physical
+                router on that data center network as the gateway for VMs to reach
+                the outside world.  For each subnet on an external network, the gateway
+                configuration on the physical router must be manually configured
+                outside of OpenStack.</para>
+            <para>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata scale="80" fileref="../common/figures/UseCase-SingleFlat.png"/>
+                    </imageobject>
+                </mediaobject>
+                <!--Image source link: https://docs.google.com/a/nicira.com/drawings/d/1Jb6iSoBo4G7fv7i2EMpYTMTxesLPmEPKIbI7sVbhhqY/edit -->
+            </para>
+        </section>
+        <?hard-pagebreak?>
+        <section xml:id="section_use-cases-multi-flat">
+            <title>Use Case: Multiple Flat Network</title>
+            <para>
+                This use case is similar to the above Single Flat Network use case,
+                except that tenants can see multiple shared networks via the OpenStack Networking API
+                and can choose which network (or networks) to plug into.
+            </para>
+            <para>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata scale="60" fileref="../common/figures/UseCase-MultiFlat.png"/>
+                    </imageobject>
+                </mediaobject>
+                <!--Image source link: https://docs.google.com/a/nicira.com/drawings/d/14ayGsyunW_P-wvY8OiueE407f7540JD3VsWUH18KHvU/edit -->
+            </para>
+        </section>
+        <?hard-pagebreak?>
+        <section xml:id="section_use-cases-mixed">
+            <title>Use Case: Mixed Flat and Private Network</title>
+            <para>
+                This use case is an extension of the above Flat Network use cases.
+                In addition to being able to see one or more shared networks via
+                the OpenStack Networking API, tenants can also have access to private per-tenant
+                networks (only visible to tenant users).
+            </para>
+            <para>
+                Created VMs can have NICs on any of the shared networks and/or any of the private networks
+                belonging to the tenant.  This enables the creation of "multi-tier"
+                topologies using VMs with multiple NICs.  It also supports a model where
+                a VM acting as a gateway can provide services such as routing, NAT, or
+                load balancing.
+            </para>
+            <para>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata scale="55" fileref="../common/figures/UseCase-MixedFlatPrivate.png"/>
+                    </imageobject>
+                </mediaobject>
+                <!--Image source link: https://docs.google.com/a/nicira.com/drawings/d/1efSqR6KA2gv-OKl5Rl-oV_zwgYP8mgQHFP2DsBj5Fqo/edit -->
+            </para>
+        </section>
+        <?hard-pagebreak?>
+        <section xml:id="section_use-cases-single-router">
+            <title>Use Case: Provider Router with Private Networks</title>
+            <para>
+                This use case provides each tenant with one or more private networks, which
+                connect to the outside world via an OpenStack Networking router.
+                When each tenant gets exactly one network, this architecture maps to the same
+                logical topology as the VlanManager in OpenStack Compute (although of course, OpenStack Networking doesn't
+                require VLANs).  Using the OpenStack Networking API, the tenant can only see a
+                network for each private network assigned to that tenant. The router
+                object in the API is created and owned by the cloud administrator.
+            </para>
+            <para>
+                This model supports giving VMs public addresses using
+                "floating IPs", in which the router maps public addresses from the
+                external network to fixed IPs on private networks.  Hosts without floating
+                IPs can still create outbound connections to the external network, because
+                the provider router performs SNAT to the router's external IP. The
+                IP address of the physical router is used as the <literal>gateway_ip</literal> of the
+                external network subnet, so the provider has a default router for
+                Internet traffic.
+            </para>
+            <para>
+                The router provides L3 connectivity between private networks, meaning
+                that different tenants can reach each other's instances unless additional
+                filtering is used (for example, security groups).  Because there is only a single
+                router, tenant networks cannot use overlapping IPs.  Thus, it is likely
+                that the administrator would create the private networks on behalf of the tenants.
+            </para>
+            <para>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata scale="55" fileref="../common/figures/UseCase-SingleRouter.png"/>
+                    </imageobject>
+                </mediaobject>
+                <!--Image source link: https://docs.google.com/a/nicira.com/drawings/d/1DKxeZZXml_fNZHRoGPKkC7sGdkPJZCtWytYZqHIp_ZE/edit -->
+            </para>
+        </section>
+        <?hard-pagebreak?>
+        <section xml:id="section_use-cases-tenant-router">
+            <title>Use Case: Per-tenant Routers with Private Networks</title>
+            <para>
+                This use case represents a more advanced router scenario in which each tenant gets
+                at least one router, and potentially has access to the OpenStack Networking API to
+                create additional routers.  The tenant can create their own networks,
+                potentially uplinking those networks to a router.  This model enables
+                tenant-defined, multi-tier applications, with
+                each tier being a separate network behind the router.  Since there are
+                multiple routers, tenant subnets can overlap without conflicting,
+                since access to external networks all happens via SNAT or Floating IPs.
+                Each router uplink and floating IP is allocated from the external network
+                subnet.
+            </para>
+            <para>
+                <mediaobject>
+                  <imageobject>
+                        <imagedata scale="55"
+                            fileref="../common/figures/UseCase-MultiRouter.png" align="left"/>
+                    </imageobject>
+                </mediaobject>
+              <!--Image source link: https://docs.google.com/a/nicira.com/drawings/d/1mmQc8cBUoTEfEns-ehIyQSTvOrjUdl5xeGDv9suVyAY/edit -->
+            </para>
+        </section>
+    </section>
+    </chapter>
