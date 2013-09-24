@@ -29,9 +29,21 @@ xml:id="host-aggregates">
                     <term><command>nova aggregate-create <replaceable>&lt;name></replaceable>
                             <replaceable>&lt;availability-zone></replaceable></command></term>
                     <listitem>
-                        <para>Create a new aggregate named <replaceable>&lt;name></replaceable> in
-                            availability zone <replaceable>&lt;availability-zone></replaceable>.
-                            Returns the ID of the newly created aggregate.</para>
+                        <para>Create a new aggregate named
+                                <replaceable>&lt;name></replaceable> in
+                            availability zone
+                                <replaceable>&lt;availability-zone></replaceable>.
+                            Returns the ID of the newly created aggregate. Hosts
+                            can be made available to multiple availability
+                            zones, but administrators should be careful when
+                            adding the host to a different host aggregate within
+                            the same availability zone and pay attention when
+                            using the aggregate-set-metadata and
+                            aggregate-update commands to avoid user confusion
+                            when they boot instances in different availability
+                            zones. You will see an error message if you cannot
+                            add a particular host in an aggregate zone it is not
+                            intended for.</para>
                     </listitem>
                 </varlistentry>
                 <varlistentry>
@@ -96,7 +108,6 @@ xml:id="host-aggregates">
                     </listitem>
                 </varlistentry>
             </variablelist></para>
-
             <note><para>These commands are only accessible to administrators. If the username and tenant
                 you are using to access the Compute service do not have the <literal>admin</literal>
                 role, or have not been explicitly granted the appropriate privileges, you will see
@@ -104,7 +115,6 @@ xml:id="host-aggregates">
                 commands:<screen><computeroutput>ERROR: Policy doesn't allow compute_extension:aggregates to be performed. (HTTP 403) (Request-ID: req-299fbff6-6729-4cef-93b2-e7e1f96b4864)
 </computeroutput></screen><screen><computeroutput>ERROR: Policy doesn't allow compute_extension:hosts to be performed. (HTTP 403) (Request-ID: req-ef2400f6-6776-4ea3-b6f1-7704085c27d1)
 </computeroutput></screen></para></note>
-
     </simplesect>
     <simplesect>
         <title>Configure scheduler to support host aggregates</title>
