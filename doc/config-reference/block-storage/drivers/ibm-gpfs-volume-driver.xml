@@ -1,137 +1,167 @@
 <section xml:id="GPFS-driver" xmlns="http://docbook.org/ns/docbook"
-    xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink"
-    version="5.0">
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
     <title>IBM GPFS Volume Driver</title>
-    <para>The General Parallel File System (GPFS) is a cluster file system that provides concurrent
-        access to file systems from multiple nodes. The storage provided by these nodes can be
-        direct attached, network attached, SAN attached or a combination of these methods. GPFS
-        provides many features beyond common data access including data replication, policy based
-        storage management, and space efficient file snapshot and clone operations.</para>
+    <para>The General Parallel File System (GPFS) is a cluster file
+        system that provides concurrent access to file systems from
+        multiple nodes. The storage provided by these nodes can be
+        direct attached, network attached, SAN attached or a
+        combination of these methods. GPFS provides many features
+        beyond common data access including data replication, policy
+        based storage management, and space efficient file snapshot
+        and clone operations.</para>
     <section xml:id="GPFS-driver-background">
         <title>How the GPFS Driver Works</title>
-        <para>This driver enables the use of GPFS in a similar fashion as the NFS driver. With the
-            GPFS driver, instances do not actually access a storage device at the block level.
-            Instead, volume backing files are created in a GPFS file system and mapped to instances,
-            which emulate a block device.</para>
+        <para>This driver enables the use of GPFS in a similar fashion
+            as the NFS driver. With the GPFS driver, instances do not
+            actually access a storage device at the block level.
+            Instead, volume backing files are created in a GPFS file
+            system and mapped to instances, which emulate a block
+            device.</para>
         <para>
             <note>
-                <para>GPFS software must be installed and running on nodes where Cinder volume and
-                    Nova compute services are running in the OpenStack environment. A GPFS file
-                    system must also be created and mounted on these nodes before starting the
-                        <literal>cinder-volume</literal> service. The details of these GPFS specific
-                    steps are covered in GPFS Administration documentation.</para>
+                <para>GPFS software must be installed and running on
+                    nodes where Cinder volume and Nova compute
+                    services are running in the OpenStack environment.
+                    A GPFS file system must also be created and
+                    mounted on these nodes before starting the
+                        <literal>cinder-volume</literal> service. The
+                    details of these GPFS specific steps are covered
+                    in GPFS Administration documentation.</para>
             </note>
         </para>
-        <para>Optionally, Glance can be configured to store images on a GPFS file system. When
-            Cinder volumes are created from Glance images, if both image and volume data reside in
-            the same GPFS file system, the data from image files is moved efficiently to Cinder
-            volumes using copy on write optimization strategy.</para>
+        <para>Optionally, Glance can be configured to store images on
+            a GPFS file system. When Cinder volumes are created from
+            Glance images, if both image and volume data reside in the
+            same GPFS file system, the data from image files is moved
+            efficiently to Cinder volumes using copy on write
+            optimization strategy.</para>
     </section>
     <section xml:id="GPFS-driver-options">
         <title>Enabling the GPFS Driver</title>
-        <para>To use Cinder with the GPFS driver, first set the <literal>volume_driver</literal> in
+        <para>To use Cinder with the GPFS driver, first set the
+                <literal>volume_driver</literal> in
                 <filename>cinder.conf</filename>:</para>
         <programlisting>volume_driver = cinder.volume.drivers.gpfs.GPFSDriver</programlisting>
-        <para>The following table contains the configuration options supported by the GPFS
-            driver.</para>
-        <xi:include href="../../../common/tables/cinder-gpfs_volume.xml"/>
+        <para>The following table contains the configuration options
+            supported by the GPFS driver.</para>
+        <xi:include
+            href="../../../common/tables/cinder-gpfs_volume.xml"/>
         <note>
-            <para>The flag <literal>gpfs_images_share_mode</literal> is only valid if the Image service
-               is configured to use GPFS with <literal>gpfs_images_dir</literal> flag. Also note,
-               when the value of this flag is <literal>copy_on_write</literal>, the paths
-               specified by the flags <literal>gpfs_mount_point_base</literal> and
-               <literal>gpfs_images_dir</literal> must both reside in the same GPFS file system
-               and in the same GPFS fileset.
-            </para>
+            <para>The flag <literal>gpfs_images_share_mode</literal>
+                is only valid if the Image service is configured to
+                use GPFS with <literal>gpfs_images_dir</literal> flag.
+                Also note, when the value of this flag is
+                    <literal>copy_on_write</literal>, the paths
+                specified by the flags
+                    <literal>gpfs_mount_point_base</literal> and
+                    <literal>gpfs_images_dir</literal> must both
+                reside in the same GPFS file system and in the same
+                GPFS file set. </para>
         </note>
     </section>
     <section xml:id="GPFS-volume-options">
         <title>Volume Creation Options</title>
-        <para>It is possible to specify additional volume configuration options on a per-volume
-            basis by specifiying volume metadata. The volume is created using the specified options.
-            Changing the metadata after the volume is created has no effect. The following table
-            lists the volume creation options supported by the GPFS volume driver.</para>
-        <table frame="all">
-            <title>List of Volume Creation Options for GPFS Volume Driver:</title>
-            <tgroup cols="2">
-                <colspec colname="c1" colnum="1" colwidth="1*"/>
-                <colspec colname="c2" colnum="2" colwidth="1.74*"/>
-                <thead>
-                    <row>
-                        <entry>Metadata Item Name</entry>
-                        <entry>Description</entry>
-                    </row>
-                </thead>
-                <tbody>
-                    <row>
-                        <entry><literal>fstype</literal></entry>
-                        <entry>The driver will create a file system or swap area on the new volume.
-                            If <literal>fstype=swap</literal> is specified, the mkswap command is
-                            used to create a swap area. Otherwise the mkfs command is passed the
-                            specified type, for example ext3, ext4, etc.</entry>
-                    </row>
-                    <row>
-                        <entry><literal>fslabel</literal></entry>
-                        <entry>The driver will set the file system label for the file system
-                            specified by fstype option. This value is only used if fstype is
-                            specified.</entry>
-                    </row>
-                    <row>
-                        <entry><literal>data_pool_name</literal></entry>
-                        <entry>
-                            <para>The driver will assign the volume file to the specified GPFS
-                                storage pool. Note that the GPFS storage pool must already be
-                                created.</para>
-                        </entry>
-                    </row>
-                    <row>
-                        <entry><literal>replicas</literal></entry>
-                        <entry>
-                            <para>Specify how many copies of the volume file to create. Valid values
-                                are 1, 2, and, for GPFS V3.5.0.7 and later, 3. This value cannot be
-                                greater than the value of the MaxDataReplicas attribute of the file
-                                system.</para>
-                        </entry>
-                    </row>
-                    <row>
-                        <entry><literal>dio</literal></entry>
-                        <entry>
-                            <para>Enable or disable the Direct I/O caching policy for the volume
-                                file. Valid values are "yes" and "no".</para>
-                        </entry>
-                    </row>
-                    <row>
-                        <entry><literal>write_affinity_depth</literal></entry>
-                        <entry>
-                            <para>Specify the allocation policy to be used for the volume file. Note
-                                that this option only works if "allow-write-affinity" is set for the
-                                GPFS data pool.</para>
-                        </entry>
-                    </row>
-                    <row>
-                        <entry><literal>block_group_factor</literal></entry>
-                        <entry>
-                            <para>Specify how many blocks are laid out sequentially in the volume
-                                file to behave like a single large block. This option only works if
-                                "allow-write-affinity" is set for the GPFS data pool.</para>
-                        </entry>
-                    </row>
-                    <row>
-                        <entry><literal>write_affinity_failure_group</literal></entry>
-                        <entry>
-                            <para>Specify the range of nodes (in GPFS shared nothing architecture)
-                                where replicas of blocks in the volume file are to be written. See
-                                GPFS Administration and Programming Reference guide for more details
-                                on this option.</para>
-                        </entry>
-                    </row>
-                </tbody>
-            </tgroup>
+        <para>It is possible to specify additional volume
+            configuration options on a per-volume basis by specifying
+            volume metadata. The volume is created using the specified
+            options. Changing the metadata after the volume is created
+            has no effect. The following table lists the volume
+            creation options supported by the GPFS volume
+            driver.</para>
+        <table rules="all">
+            <caption>Volume Create Options for GPFS Volume
+                Drive</caption>
+            <thead>
+                <tr>
+                    <th>Metadata Item Name</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><literal>fstype</literal></td>
+                    <td>The driver will create a file system or swap
+                        area on the new volume. If
+                            <literal>fstype=swap</literal> is
+                        specified, the mkswap command is used to
+                        create a swap area. Otherwise the mkfs command
+                        is passed the specified type, for example
+                        ext3, ext4, etc.</td>
+                </tr>
+                <tr>
+                    <td><literal>fslabel</literal></td>
+                    <td>The driver will set the file system label for
+                        the file system specified by fstype option.
+                        This value is only used if fstype is
+                        specified.</td>
+                </tr>
+                <tr>
+                    <td><literal>data_pool_name</literal></td>
+                    <td>
+                        <para>The driver will assign the volume file
+                            to the specified GPFS storage pool. Note
+                            that the GPFS storage pool must already be
+                            created.</para>
+                    </td>
+                </tr>
+                <tr>
+                    <td><literal>replicas</literal></td>
+                    <td>
+                        <para>Specify how many copies of the volume
+                            file to create. Valid values are 1, 2,
+                            and, for GPFS V3.5.0.7 and later, 3. This
+                            value cannot be greater than the value of
+                            the MaxDataReplicas attribute of the file
+                            system.</para>
+                    </td>
+                </tr>
+                <tr>
+                    <td><literal>dio</literal></td>
+                    <td>
+                        <para>Enable or disable the Direct I/O caching
+                            policy for the volume file. Valid values
+                            are "yes" and "no".</para>
+                    </td>
+                </tr>
+                <tr>
+                    <td><literal>write_affinity_depth</literal></td>
+                    <td>
+                        <para>Specify the allocation policy to be used
+                            for the volume file. Note that this option
+                            only works if "allow-write-affinity" is
+                            set for the GPFS data pool.</para>
+                    </td>
+                </tr>
+                <tr>
+                    <td><literal>block_group_factor</literal></td>
+                    <td>
+                        <para>Specify how many blocks are laid out
+                            sequentially in the volume file to behave
+                            like a single large block. This option
+                            only works if "allow-write-affinity" is
+                            set for the GPFS data pool.</para>
+                    </td>
+                </tr>
+                <tr>
+                    <td><literal>write_affinity_failure_group</literal></td>
+                    <td>
+                        <para>Specify the range of nodes (in GPFS
+                            shared nothing architecture) where
+                            replicas of blocks in the volume file are
+                            to be written. See GPFS Administration and
+                            Programming Reference guide for more
+                            details on this option.</para>
+                    </td>
+                </tr>
+            </tbody>
         </table>
         <simplesect>
             <title>Example Using Volume Creation Options</title>
-            <para>This example shows the creation of a 50GB volume with an ext4 filesystem labeled
-                    <literal>newfs</literal>and direct IO enabled:</para>
+            <para>This example shows the creation of a 50GB volume
+                with an ext4 filesystem labeled
+                    <literal>newfs</literal>and direct IO
+                enabled:</para>
             <screen><prompt>$</prompt><userinput>cinder create --metadata fstype=ext4 fslabel=newfs dio=yes --display-name volume_1 50</userinput> </screen>
         </simplesect>
     </section>
@@ -139,15 +169,19 @@
         <title>Operational Notes for GPFS Driver</title>
         <simplesect>
             <title>Snapshots and Clones</title>
-            <para>Volume snapshots are implemented using the GPFS file clone feature. Whenever a new
-                snapshot is created, the snapshot file is efficiently created as a read-only clone
-                parent of the volume, and the volume file uses copy on write optimization strategy
-                to minimize data movement.</para>
-            <para>Similarly when a new volume is created from a snapshot or from an existing volume,
-                the same approach is taken. The same approach is also used when a new volume is
-                created from a Glance image, if the source image is in raw format, and
-                    <literal>gpfs_images_share_mode</literal> is set to
-                    <literal>copy_on_write</literal>.</para>
+            <para>Volume snapshots are implemented using the GPFS file
+                clone feature. Whenever a new snapshot is created, the
+                snapshot file is efficiently created as a read-only
+                clone parent of the volume, and the volume file uses
+                copy on write optimization strategy to minimize data
+                movement.</para>
+            <para>Similarly when a new volume is created from a
+                snapshot or from an existing volume, the same approach
+                is taken. The same approach is also used when a new
+                volume is created from a Glance image, if the source
+                image is in raw format, and
+                    <literal>gpfs_images_share_mode</literal> is set
+                to <literal>copy_on_write</literal>.</para>
         </simplesect>
     </section>
 </section>
