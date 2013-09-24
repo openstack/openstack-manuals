@@ -11,10 +11,18 @@
            <thead>
               <tr>
                   <td>Configuration option=Default value</td>
-                  <td>(Type) Description</td>
+                  <td>Description</td>
               </tr>
           </thead>
           <tbody>
+              <tr>
+                       <td>enable_metrics_collection=False</td>
+                       <td>(BoolOpt) Enables metrics collections for switch ports by using Hyper-V's metric APIs. Collected data can by retrieved by other apps and services, e.g.: Ceilometer. Requires Hyper-V / Windows Server 2012 and above</td>
+              </tr>
+              <tr>
+                       <td>force_hyperv_utils_v1=False</td>
+                       <td>(BoolOpt) Force V1 WMI utility classes</td>
+              </tr>
               <tr>
                        <td>local_network_vswitch=private</td>
                        <td>(StrOpt) Private vswitch name used for local networks</td>
@@ -22,22 +30,6 @@
               <tr>
                        <td>network_vlan_ranges=</td>
                        <td>(ListOpt) List of &lt;physical_network&gt;:&lt;vlan_min&gt;:&lt;vlan_max&gt; or &lt;physical_network&gt;</td>
-              </tr>
-              <tr>
-                       <td>network_vlan_ranges=</td>
-                       <td>(ListOpt) List of &lt;physical_network&gt;:&lt;vlan_min&gt;:&lt;vlan_max&gt; or &lt;physical_network&gt;</td>
-              </tr>
-              <tr>
-                       <td>network_vlan_ranges=default:1:1000</td>
-                       <td>(ListOpt) List of &lt;physical_network&gt;:&lt;vlan_min&gt;:&lt;vlan_max&gt; or &lt;physical_network&gt;</td>
-              </tr>
-              <tr>
-                       <td>network_vlan_ranges=</td>
-                       <td>(ListOpt) List of &lt;physical_network&gt;:&lt;vlan_min&gt;:&lt;vlan_max&gt; or &lt;physical_network&gt;</td>
-              </tr>
-              <tr>
-                       <td>network_vlan_ranges=</td>
-                       <td>(ListOpt) List of &lt;physical_network&gt;:&lt;vlan_min&gt;:&lt;vlan_max&gt; or &lt;physical_network&gt; specifying physical_network names usable for VLAN provider and tenant networks, as well as ranges of VLAN tags on each available for allocation to tenant networks.</td>
               </tr>
               <tr>
                        <td>physical_network_vswitch_mappings=</td>
@@ -53,7 +45,7 @@
               </tr>
               <tr>
                        <td>tenant_network_type=local</td>
-                       <td>(StrOpt) Network type for tenant networks (local, vlan, or none)</td>
+                       <td>(StrOpt) Network type for tenant networks (local, vlan, gre, vxlan, or none)</td>
               </tr>
               <tr>
                        <td>tenant_network_type=vlan</td>
@@ -61,7 +53,11 @@
               </tr>
               <tr>
                        <td>tenant_network_type=local</td>
-                       <td>(StrOpt) Network type for tenant networks (local, vlan, gre, vxlan, or none)</td>
+                       <td>(StrOpt) N1K Tenant Network Type</td>
+              </tr>
+              <tr>
+                       <td>tenant_network_type=local</td>
+                       <td>(StrOpt) Network type for tenant networks (local, vlan, or none)</td>
               </tr>
        </tbody>
         </table>
