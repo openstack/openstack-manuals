@@ -4,6 +4,11 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="configuring-compute-API">
     <title>Configuring the Compute API</title>
+    <para>The Compute API, run by the
+           <systemitem class="service">nova-api</systemitem>
+           daemon, is the component of OpenStack Compute that
+           receives and responds to user requests, whether they
+           be direct API calls, or via the CLI tools or dashboard.</para>
     <simplesect>
         <title>Configuring Compute API password handling</title>
         <para>The OpenStack Compute API allows the user to specify an
@@ -22,26 +27,6 @@
             <literal>enable_instance_password</literal> can be used to
             disable the return of the admin password for installations
             that don't support setting instance passwords.</para>
-        <table rules="all">
-            <caption>Description of nova.conf API related configuration
-                options</caption>
-            <thead>
-                <tr>
-                    <td>Configuration option</td>
-                    <td>Default</td>
-                    <td>Description</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><literal>enable_instance_password</literal></td>
-                    <td><literal>true</literal></td>
-                    <td>When true, the create and rebuild compute API calls
-                        return the server admin password. When false, the server
-                        admin password is not included in API responses.</td>
-                </tr>
-            </tbody>
-        </table>
     </simplesect>
     <simplesect>
         <title>Configuring Compute API Rate Limiting</title>
@@ -173,5 +158,9 @@ paste.filter_factory = nova.api.openstack.compute.limits:RateLimitingMiddleware.
 paste.filter_factory = nova.api.openstack.compute.limits:RateLimitingMiddleware.factory
 limits =(POST, "*", .*, 10, MINUTE);(POST, "*/servers", ^/servers, 50, DAY);(PUT, "*", .*, 10, MINUTE);(GET, "*changes-since*", .*changes-since.*, 3, MINUTE);(DELETE, "*", .*, 100, MINUTE)
             </programlisting>
+    </simplesect>
+    <simplesect>
+      <title>List of configuration options for Compute API</title>
+      <xi:include href="tables/nova-api.xml"/>
     </simplesect>
 </section>
