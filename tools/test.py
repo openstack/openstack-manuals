@@ -482,19 +482,17 @@ def build_affected_books(rootdir, book_exceptions, file_exceptions,
 
 def main(args):
 
+    if args.check_all:
+        args.check_deletion = True
+        args.check_syntax = True
+        args.check_build = True
+        args.check_niceness = True
+
     if not args.force and only_www_touched():
         print("Only files in www directory changed, nothing to do.")
         return
 
-    if args.job_build:
-        args.check_delete = True
-        args.check_syntax = True
-        args.check_build = True
-
-    if args.job_niceness:
-        args.check_niceness = True
-
-    if args.check_delete:
+    if args.check_deletions:
         check_deleted_files(args.path, FILE_EXCEPTIONS, args.verbose)
 
     if args.check_syntax or args.check_niceness:
@@ -537,20 +535,16 @@ if __name__ == '__main__':
                         "modified files", action="store_true")
     parser.add_argument("--check-syntax", help="Check the syntax of modified "
                         "files", action="store_true")
-    parser.add_argument("--check-delete", help="Check that deleted files "
+    parser.add_argument("--check-deletions", help="Check that deleted files "
                         "are not used.", action="store_true")
     parser.add_argument("--check-niceness", help="Check the niceness of "
                         "files, for example whitespace.",
                         action="store_true")
+    parser.add_argument("--check-all", help="Run all checks",
+                        action="store_true")
     parser.add_argument("--non-voting", help="Do not exit on failures",
                         action="store_false")
     parser.add_argument("--verbose", help="Verbose execution",
-                        action="store_true")
-    parser.add_argument("--job-niceness", help="Override values "
-                        "for running as niceness gate-job",
-                        action="store_true")
-    parser.add_argument("--job-build", help="Override values "
-                        "for running as build gate-job",
                         action="store_true")
     args = parser.parse_args()
     main(args)
