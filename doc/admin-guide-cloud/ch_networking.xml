@@ -4,37 +4,28 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="ch_networking">
     <title>Networking</title>
-    <para>Learn OpenStack Networking concepts, architecture, and basic
-        and advanced neutron and nova command-line interface (CLI)
-        commands so that you can administer OpenStack Networking in a
+    <para>Learn Networking concepts, architecture, and basic and advanced Neutron and Nova
+        command-line interface (CLI) commands so that you can administer Networking in a
         cloud.</para>
-    <section xml:id="neworking-intro">
+    <section xml:id="section_neworking-intro">
         <title>Introduction to Networking</title>
-        <para>The OpenStack Networking service, code-named neutron,
-            provides an API for defining network connectivity and
-            addressing in the cloud. The OpenStack Networking service
-            enables operators to leverage different networking
-            technologies to power their cloud networking.</para>
-        <para>The OpenStack Networking service also provides an API to
-            configure and manage a variety of network services ranging
-            from L3 forwarding and NAT to load balancing, edge
-            firewalls, and IPSEC VPN.</para>
-        <para>For a detailed description of the OpenStack Networking
-            API abstractions and their attributes, see the <link
-                xlink:href="http://docs.openstack.org/api/openstack-network/2.0/content/"
-                    ><citetitle>OpenStack Networking API v2.0
-                    Reference</citetitle></link>.</para>
+        <para>The Networking service, code-named Neutron, provides an API for defining network
+            connectivity and addressing in the cloud. The Networking service enables operators to
+            leverage different networking technologies to power their cloud networking.</para>
+        <para>The Networking service also provides an API to configure and manage a variety of
+            network services ranging from L3 forwarding and NAT to load balancing, edge firewalls,
+            and IPSEC VPN.</para>
+        <para>For a detailed description of the Networking API abstractions and their attributes,
+            see the <link xlink:href="http://docs.openstack.org/api/openstack-network/2.0/content/"
+                    ><citetitle>OpenStack Networking API v2.0 Reference</citetitle></link>.</para>
         <section xml:id="section_networking-api">
             <title>Networking API</title>
-            <para>Networking is a virtual network service that
-                provides a powerful API to define the network
-                connectivity and IP addressing used by devices from
-                other services, such as OpenStack Compute.</para>
-            <para>The Compute API has a virtual server abstraction to
-                describe computing resources. Similarly, the OpenStack
-                Networking API has virtual network, subnet, and port
-                abstractions to describe networking resources. In more
-                detail:</para>
+            <para>Networking is a virtual network service that provides a powerful API to define the
+                network connectivity and IP addressing used by devices from other services, such as
+                Compute.</para>
+            <para>The Compute API has a virtual server abstraction to describe computing resources.
+                Similarly, the Networking API has virtual network, subnet, and port abstractions to
+                describe networking resources. In more detail:</para>
             <itemizedlist>
                 <listitem>
                     <para><emphasis role="bold">Network</emphasis>. An
@@ -56,16 +47,12 @@
                         port.</para>
                 </listitem>
             </itemizedlist>
-            <para>You can configure rich network topologies by
-                creating and configuring networks and subnets, and
-                then instructing other OpenStack services like
-                OpenStack Compute to attach virtual devices to ports
-                on these networks. In particular, OpenStack Networking
-                supports each tenant having multiple private networks,
-                and allows tenants to choose their own IP addressing
-                scheme (even if those IP addresses overlap with those
-                used by other tenants). The OpenStack Networking
-                service:</para>
+            <para>You can configure rich network topologies by creating and configuring networks and
+                subnets, and then instructing other OpenStack services like Compute to attach
+                virtual devices to ports on these networks. In particular, Networking supports each
+                tenant having multiple private networks, and allows tenants to choose their own IP
+                addressing scheme (even if those IP addresses overlap with those used by other
+                tenants). The Networking service:</para>
             <itemizedlist>
                 <listitem>
                     <para>Enables advanced cloud networking use cases,
@@ -80,13 +67,10 @@
                         offerings.</para>
                 </listitem>
                 <listitem>
-                    <para>Provides a mechanism that lets cloud
-                        administrators expose additional API
-                        capabilities through API extensions. At first,
-                        new functionality is introduced as an API
-                        extension. Over time, the functionality
-                        becomes part of the core OpenStack Networking
-                        API.</para>
+                    <para>Provides a mechanism that lets cloud administrators expose additional API
+                        capabilities through API extensions. At first, new functionality is
+                        introduced as an API extension. Over time, the functionality becomes part of
+                        the core Networking API.</para>
                 </listitem>
             </itemizedlist>
         </section>
@@ -97,20 +81,14 @@
                 Traditional networking is not designed to scale to
                 cloud proportions nor to handle automatic
                 configuration.</para>
-            <para>The original OpenStack Compute network
-                implementation assumed a very basic model of
-                performing all isolation through Linux VLANs and IP
-                tables. OpenStack Networking introduces the concept of
-                a <emphasis role="italic">plug-in</emphasis>, which is
-                a back-end implementation of the OpenStack Networking
-                API. A plug-in can use a variety of technologies to
-                implement the logical API requests. Some OpenStack
-                Networking plug-ins might use basic Linux VLANs and IP
-                tables, while others might use more advanced
-                technologies, such as L2-in-L3 tunneling or OpenFlow,
-                to provide similar benefits.</para>
-            <para>OpenStack Networking includes the following
-                plug-ins:</para>
+            <para>The original Compute network implementation assumed a very basic model of
+                performing all isolation through Linux VLANs and IP tables. Networking introduces
+                the concept of a <emphasis role="italic">plug-in</emphasis>, which is a back-end
+                implementation of the Networking API. A plug-in can use a variety of technologies to
+                implement the logical API requests. Some Networking plug-ins might use basic Linux
+                VLANs and IP tables, while others might use more advanced technologies, such as
+                L2-in-L3 tunneling or OpenFlow, to provide similar benefits.</para>
+            <para>Networking includes the following plug-ins:</para>
             <itemizedlist>
                 <listitem>
                     <para><emphasis role="bold">Big Switch Plug-in
@@ -200,19 +178,15 @@
                     </para>
                 </listitem>
             </itemizedlist>
-            <para>Plug-ins can have different properties for hardware
-                requirements, features, performance, scale, or
-                operator tools. Because OpenStack Networking supports
-                a large number of plug-ins, the cloud administrator is
-                able to weigh different options and decide which
-                networking technology is right for the
-                deployment.</para>
+            <para>Plug-ins can have different properties for hardware requirements, features,
+                performance, scale, or operator tools. Because Networking supports a large number of
+                plug-ins, the cloud administrator is able to weigh different options and decide
+                which networking technology is right for the deployment.</para>
             <?hard-pagebreak?>
-            <para>Not all OpenStack networking plug-ins are compatible
-                with all possible OpenStack compute drivers:</para>
+            <para>Not all Networking plug-ins are compatible with all possible Compute
+                drivers:</para>
             <table rules="all">
-                <caption>Plug-in Compatibility with OpenStack Compute
-                    Drivers</caption>
+                <caption>Plug-in compatibility with Compute drivers</caption>
                 <thead>
                     <tr>
                         <th/>
@@ -346,28 +320,19 @@
         <section xml:id="arch_overview">
             <title>Overview</title>
 
-            <para>OpenStack Networking is a standalone service, just
-                like other OpenStack services such as OpenStack
-                Compute, OpenStack Image service, OpenStack Identity
-                service, or the OpenStack Dashboard. Like those
-                services, a deployment of OpenStack Networking often
-                involves deploying several processes on a variety of
+            <para>Networking is a standalone service, just like other OpenStack services such as
+                Compute, Image service, Identity service, or the Dashboard. Like those services, a
+                deployment of Networking often involves deploying several processes on a variety of
                 hosts.</para>
-            <para>The main process of the OpenStack Networking server
-                is <literal>neutron-server</literal>, which is a
-                Python daemon that exposes the OpenStack Networking
-                API and passes user requests to the configured
-                OpenStack Networking plug-in for additional
-                processing. Typically, the plug-in requires access to
-                a database for persistent storage (also similar to
-                other OpenStack services).</para>
-            <para>If your deployment uses a controller host to run
-                centralized OpenStack Compute components, you can
-                deploy the OpenStack Networking server on that same
-                host. However, OpenStack Networking is entirely
-                standalone and can be deployed on its own host as
-                well. OpenStack Networking also includes additional
-                agents that might be required, depending on your
+            <para>The main process of the Networking server is <literal>neutron-server</literal>,
+                which is a Python daemon that exposes the Networking API and passes user requests to
+                the configured Networking plug-in for additional processing. Typically, the plug-in
+                requires access to a database for persistent storage (also similar to other
+                OpenStack services).</para>
+            <para>If your deployment uses a controller host to run centralized Compute components,
+                you can deploy the Networking server on that same host. However, Networking is
+                entirely standalone and can be deployed on its own host as well. Networking also
+                includes additional agents that might be required, depending on your
                 deployment:</para>
             <itemizedlist>
                 <listitem>
@@ -396,31 +361,23 @@
                     </para>
                 </listitem>
             </itemizedlist>
-            <para>These agents interact with the main neutron process
-                through RPC (for example, rabbitmq or qpid) or through
-                the standard OpenStack Networking API. Further: <itemizedlist>
+            <para>These agents interact with the main neutron process through RPC (for example,
+                rabbitmq or qpid) or through the standard Networking API. Further: <itemizedlist>
                     <listitem>
-                        <para>Networking relies on the OpenStack
-                            Identity service (keystone) for the
-                            authentication and authorization of all
-                            API request. </para>
+                        <para>Networking relies on the Identity service (Keystone) for the
+                            authentication and authorization of all API request. </para>
                     </listitem>
                     <listitem>
-                        <para>Compute (nova) interacts with OpenStack
-                            Networking through calls to its standard
-                            API.  As part of creating a VM, the
-                                <systemitem class="service"
-                                >nova-compute</systemitem> service
-                            communicates with the OpenStack Networking
-                            API to plug each virtual NIC on the VM
-                            into a particular network.   </para>
+                        <para>Compute (Nova) interacts with Networking through calls to its standard
+                            API.  As part of creating a VM, the <systemitem class="service"
+                                >nova-compute</systemitem> service communicates with the Networking
+                            API to plug each virtual NIC on the VM into a particular network. 
+                             </para>
                     </listitem>
                     <listitem>
-                        <para>The Dashboard (Horizon) integrates with
-                            the OpenStack Networking API, allowing
-                            administrators and tenant users to create
-                            and manage network services through the
-                            Dashboard GUI.</para>
+                        <para>The Dashboard (Horizon) integrates with the Networking API, allowing
+                            administrators and tenant users to create and manage network services
+                            through the Dashboard GUI.</para>
                     </listitem>
                 </itemizedlist></para>
         </section>
@@ -458,9 +415,8 @@
                     />
                 </imageobject>
             </mediaobject>
-            <para>A standard OpenStack Networking set up has one or
-                more of the following distinct physical data center
-                networks:</para>
+            <para>A standard Networking set up has one or more of the following distinct physical
+                data center networks:</para>
             <itemizedlist>
                 <listitem>
                     <para><emphasis role="bold">Management
@@ -470,12 +426,9 @@
                         only within the data center.  </para>
                 </listitem>
                 <listitem>
-                    <para><emphasis role="bold">Data
-                            network</emphasis>. Provides VM data
-                        communication within the cloud deployment. 
-                        The IP addressing requirements of this network
-                        depend on the OpenStack Networking plug-in
-                        being used. </para>
+                    <para><emphasis role="bold">Data network</emphasis>. Provides VM data
+                        communication within the cloud deployment.  The IP addressing requirements
+                        of this network depend on the Networking plug-in being used. </para>
                 </listitem>
                 <listitem>
                     <para><emphasis role="bold">External
@@ -485,17 +438,12 @@
                         reachable by anyone on the Internet. </para>
                 </listitem>
                 <listitem>
-                    <para><emphasis role="bold">API
-                        network</emphasis>. Exposes all OpenStack
-                        APIs, including the OpenStack Networking API,
-                        to tenants. IP addresses on this network
-                        should be reachable by anyone on the
-                        Internet. The API network may be the same as
-                        the external network, because it is possible
-                        to create an external-network subnet that is
-                        allocated IP ranges that use less than the
-                        full range of IP addresses in an IP
-                        block.</para>
+                    <para><emphasis role="bold">API network</emphasis>. Exposes all OpenStack APIs,
+                        including the Networking API, to tenants. IP addresses on this network
+                        should be reachable by anyone on the Internet. The API network may be the
+                        same as the external network, because it is possible to create an
+                        external-network subnet that is allocated IP ranges that use less than the
+                        full range of IP addresses in an IP block.</para>
                 </listitem>
             </itemizedlist>
         </section>
@@ -503,80 +451,57 @@
     <section xml:id="section_networking-use">
         <title>Use Networking</title>
 
-        <para>You can use OpenStack Networking in the following ways: <itemizedlist>
+        <para>You can use Networking in the following ways: <itemizedlist>
                 <listitem>
-                    <para>Expose the OpenStack Networking API to cloud
-                        tenants, which enables them to build rich
-                        network topologies.</para>
+                    <para>Expose the Networking API to cloud tenants, which enables them to build
+                        rich network topologies.</para>
                 </listitem>
                 <listitem>
-                    <para>Have the cloud administrator, or an
-                        automated administrative tool, create network
-                        connectivity on behalf of tenants.</para>
+                    <para>Have the cloud administrator, or an automated administrative tool, create
+                        network connectivity on behalf of tenants.</para>
                 </listitem>
             </itemizedlist></para>
         <para>A tenant or cloud administrator can both perform the
             following procedures.</para>
         <section xml:id="api_features">
             <title>Core Networking API features</title>
-            <para>After you install and run OpenStack Networking,
-                tenants and administrators can perform
-                create-read-update-delete (CRUD) API networking
-                operations by using either the
-                    <command>neutron</command> CLI tool or the API.
-                Like other OpenStack CLI tools, the
-                    <command>neutron</command> tool is just a basic
-                wrapper around the OpenStack Networking API. Any
-                operation that can be performed using the CLI has an
-                equivalent API call that can be performed
-                programmatically.</para>
+            <para>After you install and run Networking, tenants and administrators can perform
+                create-read-update-delete (CRUD) API networking operations by using either the
+                    <command>neutron</command> CLI tool or the API. Like other OpenStack CLI tools,
+                the <command>neutron</command> tool is just a basic wrapper around the Networking
+                API. Any operation that can be performed using the CLI has an equivalent API call
+                that can be performed programmatically.</para>
             <para>The CLI includes a number of options. For details,
                 refer to the <citetitle>OpenStack End User
                     Guide</citetitle>.</para>
             <section xml:id="api_abstractions">
                 <title>API abstractions</title>
-                <para>The OpenStack Networking v2.0 API provides
-                    control over both L2 network topologies and the IP
-                    addresses used on those networks (IP Address
-                    Management or IPAM). There is also an extension to
-                    cover basic L3 forwarding and NAT, which provides
-                    capabilities similar to
-                        <command>nova-network</command>.</para>
-                <para>In the OpenStack Networking API: <itemizedlist>
+                <para>The Networking v2.0 API provides control over both L2 network topologies and
+                    the IP addresses used on those networks (IP Address Management or IPAM). There
+                    is also an extension to cover basic L3 forwarding and NAT, which provides
+                    capabilities similar to <command>nova-network</command>.</para>
+                <para>In the Networking API: <itemizedlist>
                         <listitem>
-                            <para>A 'Network' is an isolated L2
-                                network segment (similar to a VLAN),
-                                which forms the basis for describing
-                                the L2 network topology available in
-                                an OpenStack Networking deployment.
-                            </para>
+                            <para>A 'Network' is an isolated L2 network segment (similar to a VLAN),
+                                which forms the basis for describing the L2 network topology
+                                available in an Networking deployment. </para>
                         </listitem>
                         <listitem>
-                            <para>A 'Subnet' associates a block of IP
-                                addresses and other network
-                                configuration (for example, default
-                                gateways or dns-servers) with an
-                                OpenStack Networking network. Each
-                                subnet represents an IPv4 or IPv6
-                                address block and, if needed, each
-                                OpenStack Networking network can have
-                                multiple subnets.</para>
+                            <para>A 'Subnet' associates a block of IP addresses and other network
+                                configuration (for example, default gateways or dns-servers) with an
+                                Networking network. Each subnet represents an IPv4 or IPv6 address
+                                block and, if needed, each Networking network can have multiple
+                                subnets.</para>
                         </listitem>
                         <listitem>
-                            <para>A 'Port' represents an attachment
-                                port to a L2 OpenStack Networking
-                                network. When a port is created on the
-                                network, by default it is allocated an
-                                available fixed IP address out of one
-                                of the designated subnets for each IP
-                                version (if one exists). When the port
-                                is destroyed, its allocated addresses
-                                return to the pool of available IPs on
-                                the subnet. Users of the OpenStack
-                                Networking API can either choose a
-                                specific IP address from the block, or
-                                let OpenStack Networking choose the
-                                first available IP address.</para>
+                            <para>A 'Port' represents an attachment port to a L2 Networking network.
+                                When a port is created on the network, by default it is allocated an
+                                available fixed IP address out of one of the designated subnets for
+                                each IP version (if one exists). When the port is destroyed, its
+                                allocated addresses return to the pool of available IPs on the
+                                subnet. Users of the Networking API can either choose a specific IP
+                                address from the block, or let Networking choose the first available
+                                IP address.</para>
                         </listitem>
                     </itemizedlist></para>
                 <para>The following table summarizes the attributes
@@ -916,14 +841,10 @@
                         whose <systemitem>device_owner</systemitem>
                         begins with: <itemizedlist>
                             <listitem>
-                                <para><literal>network</literal> is
-                                   created by OpenStack
-                                   Networking.</para>
+                                <para><literal>network</literal> is created by Networking.</para>
                             </listitem>
                             <listitem>
-                                <para><literal>compute</literal> is
-                                   created by OpenStack Compute.
-                                </para>
+                                <para><literal>compute</literal> is created by Compute. </para>
                             </listitem>
                         </itemizedlist>
                     </para>
@@ -931,19 +852,15 @@
             </section>
             <section xml:id="admin_api_config">
                 <title>Administrative operations</title>
-                <para>The cloud administrator can perform any
-                        <systemitem>neutron</systemitem> call on
-                    behalf of tenants by specifying an OpenStack
-                    Identity <systemitem>tenant_id</systemitem> in the
-                    request, as follows:</para>
+                <para>The cloud administrator can perform any <systemitem>neutron</systemitem> call
+                    on behalf of tenants by specifying an Identity
+                        <systemitem>tenant_id</systemitem> in the request, as follows:</para>
                 <screen><prompt>$</prompt> <userinput>neutron net-create --tenant-id=<replaceable>tenant-id</replaceable> <replaceable>network-name</replaceable></userinput></screen>
                 <para>For example:</para>
                 <screen><prompt>$</prompt> <userinput>neutron net-create --tenant-id=5e4bbe24b67a4410bc4d9fae29ec394e net1</userinput></screen>
                 <note>
-                    <para>To view all tenant IDs in OpenStack
-                        Identity, run the following command as an
-                        OpenStack Identity (keystone) admin
-                        user:</para>
+                    <para>To view all tenant IDs in Identity, run the following command as an
+                        Identity (Keystone) admin user:</para>
                     <screen><prompt>$</prompt> <userinput>keystone tenant-list</userinput></screen>
                 </note>
             </section>
@@ -1026,22 +943,14 @@
                             <td><screen><prompt>$</prompt> <userinput>neutron net-list</userinput></screen></td>
                         </tr>
                         <tr>
-                            <td>Boots a VM with a single NIC on a
-                                selected OpenStack Networking
-                                network.</td>
+                            <td>Boots a VM with a single NIC on a selected Networking network.</td>
                             <td><screen><prompt>$</prompt> <userinput>nova boot --image <replaceable>img</replaceable> --flavor <replaceable>flavor</replaceable> --nic net-id=<replaceable>net-id</replaceable> <replaceable>vm-name</replaceable></userinput></screen>
                             </td>
                         </tr>
                         <tr>
-                            <td><para>Searches for ports with a
-                                   <systemitem>device_id</systemitem>
-                                   that matches the OpenStack Compute
-                                   instance UUID.</para><note>
-                                   <para>The
-                                   <systemitem>device_id</systemitem>
-                                   can also be a logical router
-                                   ID.</para>
-                                </note></td>
+                            <td><para>Searches for ports with a <systemitem>device_id</systemitem> (see Note below) that matches the
+                                    Compute instance UUID. </para>
+                            </td>
                             <td><screen><prompt>$</prompt> <userinput>neutron port-list --device_id=<replaceable>vm-id</replaceable></userinput></screen></td>
                         </tr>
                         <tr>
@@ -1057,23 +966,23 @@
                         </tr>
                     </tbody>
                 </table>
+                <note><para>The
+                    <systemitem>device_id</systemitem>
+                    can also be a logical router
+                    ID.</para>
+                </note>
                 <note>
                     <itemizedlist>
                         <listitem>
-                            <para>When you boot a Compute VM, a port
-                                on the network is automatically
-                                created that corresponds to the VM NIC
-                                and is automatically associated with
-                                the default security group. You can
-                                configure <link
-                                   linkend="enabling_ping_and_ssh"
-                                   >security group rules</link> to
+                            <para>When you boot a Compute VM, a port on the network that corresponds
+                                to the VM NIC is automatically created and associated with the
+                                default security group. You can configure <link
+                                    linkend="enabling_ping_and_ssh">security group rules</link> to
                                 enable users to access the VM.</para>
                         </listitem>
                         <listitem>
-                            <para>When you delete a Compute VM, the
-                                underlying OpenStack Networking port
-                                is automatically deleted.</para>
+                            <para>When you delete a Compute VM, the underlying Networking port is
+                                automatically deleted.</para>
                         </listitem>
                     </itemizedlist>
                 </note>
@@ -1099,13 +1008,10 @@
                             <td><screen><prompt>$</prompt> <userinput>nova boot --image <replaceable>img</replaceable> --flavor <replaceable>flavor</replaceable> --nic net-id=<replaceable>net1-id</replaceable> --nic net-id=<replaceable>net2-id</replaceable> <replaceable>vm-name</replaceable></userinput></screen></td>
                         </tr>
                         <tr>
-                            <td>Boots a VM with a specific IP address.
-                                First, create an OpenStack Networking
-                                port with a specific IP address. Then,
-                                boot a VM specifying a
-                                   <systemitem>port-id</systemitem>
-                                rather than a
-                                   <systemitem>net-id</systemitem>.</td>
+                            <td>Boots a VM with a specific IP address. First, create an Networking
+                                port with a specific IP address. Then, boot a VM specifying a
+                                    <systemitem>port-id</systemitem> rather than a
+                                    <systemitem>net-id</systemitem>.</td>
                             <td><screen><prompt>$</prompt> <userinput>neutron port-create --fixed-ip subnet_id=<replaceable>subnet-id</replaceable>,ip_address=<replaceable>IP</replaceable> <replaceable>net-id</replaceable></userinput>
 <prompt>$</prompt> <userinput>nova boot --image <replaceable>img</replaceable> --flavor <replaceable>flavor</replaceable> --nic port-id=<replaceable>port-id</replaceable> <replaceable>vm-name</replaceable></userinput></screen>
                             </td>
@@ -1123,11 +1029,9 @@
                     </tbody>
                 </table>
                 <note>
-                    <para>OpenStack Networking does not currently
-                        support the <command>v4-fixed-ip</command>
-                        parameter of the <command>--nic</command>
-                        option for the <command>nova</command>
-                        command.</para>
+                    <para>Networking does not currently support the <command>v4-fixed-ip</command>
+                        parameter of the <command>--nic</command> option for the
+                            <command>nova</command> command.</para>
                 </note>
             </section>
             <section xml:id="enabling_ping_and_ssh">
@@ -1165,14 +1069,10 @@
                     </listitem>
                 </itemizedlist>
                 <note>
-                    <para>If your plug-in implements OpenStack
-                        Networking security groups, you can also
-                        leverage Compute security groups by setting
-                            <systemitem>security_group_api =
-                            neutron</systemitem> in
-                            <filename>nova.conf</filename>. After
-                        setting this option, all Compute security
-                        group commands are proxied to OpenStack
+                    <para>If your plug-in implements Networking security groups, you can also
+                        leverage Compute security groups by setting <systemitem>security_group_api =
+                            neutron</systemitem> in <filename>nova.conf</filename>. After setting
+                        this option, all Compute security group commands are proxied to
                         Networking.</para>
                 </note>
             </section>
@@ -1184,27 +1084,21 @@
             capabilities similar to what was available in
             nova-network: These plug-ins are likely to be of interest
             to the OpenStack community.</para>
-        <section xml:id="provider_networks">
+        <section xml:id="section_provider_networks">
             <title>Provider networks</title>
-            <para>Provider networks allow cloud administrators to
-                create OpenStack Networking networks that map directly
-                to physical networks in the data center.  This is
-                commonly used to give tenants direct access to a
-                public network that can be used to reach the
-                Internet.  It may also be used to integrate with VLANs
-                in the network that already have a defined meaning
-                (for example, allow a VM from the "marketing"
-                department to be placed on the same VLAN as bare-metal
-                marketing hosts in the same data center).</para>
-            <para>The provider extension allows administrators to
-                explicitly manage the relationship between OpenStack
-                Networking virtual networks and underlying physical
-                mechanisms such as VLANs and tunnels. When this
-                extension is supported, OpenStack Networking client
-                users with administrative privileges see additional
-                provider attributes on all virtual networks, and are
-                able to specify these attributes in order to create
-                provider networks.</para>
+            <para>Provider networks enable cloud administrators to create Networking networks that
+                map directly to the physical networks in the data center. This is commonly used to
+                give tenants direct access to a public network that can be used to reach the
+                Internet. It may also be used to integrate with VLANs in the network that already
+                have a defined meaning (for example, allow a VM from the "marketing" department to
+                be placed on the same VLAN as bare-metal marketing hosts in the same data
+                center).</para>
+            <para>The provider extension allows administrators to explicitly manage the relationship
+                between Networking virtual networks and underlying physical mechanisms such as VLANs
+                and tunnels. When this extension is supported, Networking client users with
+                administrative privileges see additional provider attributes on all virtual
+                networks, and are able to specify these attributes in order to create provider
+                networks.</para>
             <para>The provider extension is supported by the
                 openvswitch and linuxbridge plug-ins. Configuration of
                 these plug-ins requires familiarity with this
@@ -1215,30 +1109,19 @@
                     extension and in the configuration of plug-ins
                     supporting the provider extension:<itemizedlist>
                         <listitem>
-                            <para><emphasis role="bold">virtual
-                                   network</emphasis>. An OpenStack
-                                Networking L2 network (identified by a
-                                UUID and optional name) whose ports
-                                can be attached as vNICs to OpenStack
-                                Compute instances and to various
-                                OpenStack Networking agents. The
-                                openvswitch and linuxbridge plug-ins
-                                each support several different
-                                mechanisms to realize virtual
-                                networks.</para>
+                            <para><emphasis role="bold">virtual network</emphasis>. An Networking L2
+                                network (identified by a UUID and optional name) whose ports can be
+                                attached as vNICs to Compute instances and to various Networking
+                                agents. The openvswitch and linuxbridge plug-ins each support
+                                several different mechanisms to realize virtual networks.</para>
                         </listitem>
                         <listitem>
-                            <para><emphasis role="bold">physical
-                                   network</emphasis>. A network
-                                connecting virtualization hosts (such
-                                as, OpenStack Compute nodes) with each
-                                other and with other network
-                                resources. Each physical network may
-                                support multiple virtual networks. The
-                                provider extension and the plug-in
-                                configurations identify physical
-                                networks using simple string
-                                names.</para>
+                            <para><emphasis role="bold">physical network</emphasis>. A network
+                                connecting virtualization hosts (such as, Compute nodes) with each
+                                other and with other network resources. Each physical network may
+                                support multiple virtual networks. The provider extension and the
+                                plug-in configurations identify physical networks using simple
+                                string names.</para>
                         </listitem>
                         <listitem>
                             <para><emphasis role="bold">tenant
@@ -1293,16 +1176,11 @@
                                 but may have other uses.</para>
                         </listitem>
                         <listitem>
-                            <para><emphasis role="bold">GRE
-                                   network</emphasis>. A virtual
-                                network realized as network packets
-                                encapsulated using GRE. GRE networks
-                                are also referred to as "tunnels". GRE
-                                tunnel packets are routed by the
-                                host's IP routing table, so GRE
-                                networks are not associated by
-                                OpenStack Networking with specific
-                                physical networks.</para>
+                            <para><emphasis role="bold">GRE network</emphasis>. A virtual network
+                                realized as network packets encapsulated using GRE. GRE networks are
+                                also referred to as "tunnels". GRE tunnel packets are routed by the
+                                host's IP routing table, so GRE networks are not associated by
+                                Networking with specific physical networks.</para>
                         </listitem>
                     </itemizedlist></para>
                 <para>Both the openvswitch and linuxbridge plug-ins
@@ -1314,9 +1192,8 @@
             </section>
             <section xml:id="provider_attributes">
                 <title>Provider attributes</title>
-                <para>The provider extension extends the OpenStack
-                    Networking network resource with the following
-                    three additional attributes:</para>
+                <para>The provider extension extends the Networking network resource with the
+                    following three additional attributes:</para>
                 <table rules="all">
                     <caption>Provider Network Attributes</caption>
                     <col width="25%"/>
@@ -1377,20 +1254,13 @@
                         </tr>
                     </tbody>
                 </table>
-                <para>The provider attributes are returned by
-                    OpenStack Networking API operations when the
-                    client is authorized for the
-                        <code>extension:provider_network:view</code>
-                    action through the OpenStack Networking policy
-                    configuration. The provider attributes are only
-                    accepted for network API operations if the client
-                    is authorized for the
-                        <code>extension:provider_network:set</code>
-                    action. The default OpenStack Networking API
-                    policy configuration authorizes both actions for
-                    users with the admin role. See <xref
-                        linkend="section_auth"/> for details on policy
-                    configuration.</para>
+                <para>The provider attributes are returned by Networking API operations when the
+                    client is authorized for the <code>extension:provider_network:view</code> action
+                    through the Networking policy configuration. The provider attributes are only
+                    accepted for network API operations if the client is authorized for the
+                        <code>extension:provider_network:set</code> action. The default Networking
+                    API policy configuration authorizes both actions for users with the admin role.
+                    See <xref linkend="section_auth"/> for details on policy configuration.</para>
             </section>
             <section xml:id="provider_api_workflow">
                 <title>Provider Extension API operations</title>
@@ -1488,36 +1358,25 @@
                 </table>
             </section>
         </section>
-        <section xml:id="l3_router_and_nat">
+        <section xml:id="section_l3_router_and_nat">
             <title>L3 Routing and NAT</title>
-            <para>Just like the core OpenStack Networking API provides
-                abstract L2 network segments that are decoupled from
-                the technology used to implement the L2 network,
-                OpenStack Networking includes an API extension that
-                provides abstract L3 routers that API users can
-                dynamically provision and configure. These OpenStack
-                Networking routers can connect multiple L2 OpenStack
-                Networking networks, and can also provide a "gateway"
-                that connects one or more private L2 networks to a
-                shared "external" network (for example, a public
-                network for access to the Internet). See the
-                    <citetitle xmlns:svg="http://www.w3.org/2000/svg"
-                    xmlns:html="http://www.w3.org/1999/xhtml"
-                    >OpenStack Configuration Reference</citetitle> for
-                details on common models of deploying Networking L3
+            <para>Just like the core Networking API provides abstract L2 network segments that are
+                decoupled from the technology used to implement the L2 network, Networking includes
+                an API extension that provides abstract L3 routers that API users can dynamically
+                provision and configure. These Networking routers can connect multiple L2 Networking
+                networks, and can also provide a "gateway" that connects one or more private L2
+                networks to a shared "external" network (for example, a public network for access to
+                the Internet). See the <citetitle xmlns:svg="http://www.w3.org/2000/svg"
+                    xmlns:html="http://www.w3.org/1999/xhtml">OpenStack Configuration
+                    Reference</citetitle> for details on common models of deploying Networking L3
                 routers.</para>
-            <para>The L3 router provides basic NAT capabilities on
-                "gateway" ports that uplink the router to external
-                networks. This router SNATs all traffic by default,
-                and supports "Floating IPs", which creates a static
-                one-to-one mapping from a public IP on the external
-                network to a private IP on one of the other subnets
-                attached to the router. This allows a tenant to
-                selectively expose VMs on private networks to other
-                hosts on the external network (and often to all hosts
-                on the Internet). Floating IPs can be allocated and
-                then mapped from one OpenStack Networking port to
-                another, as needed.</para>
+            <para>The L3 router provides basic NAT capabilities on "gateway" ports that uplink the
+                router to external networks. This router SNATs all traffic by default, and supports
+                "Floating IPs", which creates a static one-to-one mapping from a public IP on the
+                external network to a private IP on one of the other subnets attached to the router.
+                This allows a tenant to selectively expose VMs on private networks to other hosts on
+                the external network (and often to all hosts on the Internet). Floating IPs can be
+                allocated and then mapped from one Networking port to another, as needed.</para>
             <section xml:id="l3_api_abstractions">
                 <title>L3 API abstractions</title>
                 <table rules="all">
@@ -1606,7 +1465,7 @@
                         <tr>
                             <td>floating_ip_address</td>
                             <td>string (IP address)</td>
-                            <td>allocated by OpenStack Networking</td>
+                            <td>allocated by Networking</td>
                             <td>The external network IP address
                                 available to be mapped to an internal
                                 IP address.</td>
@@ -1632,19 +1491,16 @@
                             <td>port_id</td>
                             <td>uuid-str</td>
                             <td>Null</td>
-                            <td>Indicates the internal OpenStack
-                                Networking port associated with the
-                                external floating IP.</td>
+                            <td>Indicates the internal Networking port associated with the external
+                                floating IP.</td>
                         </tr>
                         <tr>
                             <td>fixed_ip_address</td>
                             <td>string (IP address)</td>
                             <td>Null</td>
-                            <td>Indicates the IP address on the
-                                internal port that is mapped to by the
-                                floating IP (since an OpenStack
-                                Networking port might have more than
-                                one IP address).</td>
+                            <td>Indicates the IP address on the internal port that is mapped to by
+                                the floating IP (since an Networking port might have more than one
+                                IP address).</td>
                         </tr>
                         <tr>
                             <td>tenant_id</td>
@@ -1717,21 +1573,14 @@
                                    external connectivity.</para></td>
                             <td>
                                 <screen><prompt>$</prompt> <userinput>neutron router-gateway-set router1 &lt;ext-net-id&gt;</userinput></screen>
-                                <para>The router obtains an interface
-                                   with the gateway_ip address of the
-                                   subnet, and this interface is
-                                   attached to a port on the L2
-                                   OpenStack Networking network
-                                   associated with the subnet. The
-                                   router also gets a gateway
-                                   interface to the specified external
-                                   network. This provides SNAT
-                                   connectivity to the external
-                                   network as well as support for
-                                   floating IPs allocated on that
-                                   external networks. Commonly an
-                                   external network maps to a network
-                                   in the provider</para>
+                                <para>The router obtains an interface with the gateway_ip address of
+                                    the subnet, and this interface is attached to a port on the L2
+                                    Networking network associated with the subnet. The router also
+                                    gets a gateway interface to the specified external network. This
+                                    provides SNAT connectivity to the external network as well as
+                                    support for floating IPs allocated on that external
+                                    networks. Commonly an external network maps to a network in the
+                                    provider</para>
                             </td>
                         </tr>
                         <tr>
@@ -1763,19 +1612,13 @@
                                    floating IP should map.</para></td>
                             <td>
                                 <screen><prompt>$</prompt> <userinput>neutron port-list -c id -c fixed_ips -- --device_id=&lt;instance_id&gt;</userinput></screen>
-                                <para>This port must be on an
-                                   OpenStack Networking subnet that is
-                                   attached to a router uplinked to
-                                   the external network used to create
-                                   the floating IP.  Conceptually,
-                                   this is because the router must be
-                                   able to perform the Destination NAT
-                                   (DNAT) rewriting of packets from
-                                   the Floating IP address (chosen
-                                   from a subnet on the external
-                                   network) to the internal Fixed IP
-                                   (chosen from a private subnet that
-                                   is “behind” the router).</para>
+                                <para>This port must be on an Networking subnet that is attached to
+                                    a router uplinked to the external network used to create the
+                                    floating IP.  Conceptually, this is because the router must be
+                                    able to perform the Destination NAT (DNAT) rewriting of packets
+                                    from the Floating IP address (chosen from a subnet on the
+                                    external network) to the internal Fixed IP (chosen from a
+                                    private subnet that is “behind” the router).</para>
                             </td>
                         </tr>
                         <tr>
@@ -1854,46 +1697,34 @@
                 </table>
             </section>
         </section>
-        <section xml:id="securitygroups">
+        <section xml:id="section_securitygroups">
             <title>Security groups</title>
             <para>Security groups and security group rules allows
                 administrators and tenants the ability to specify the
                 type of traffic and direction (ingress/egress) that is
                 allowed to pass through a port. A security group is a
                 container for security group rules.</para>
-            <para>When a port is created in OpenStack Networking it is
-                associated with a security group. If a security group
-                is not specified the port is associated with a
-                'default' security group. By default, this group drops
-                all ingress traffic and allows all egress. Rules can
-                be added to this group in order to change the
-                behaviour.</para>
-            <para>To use the OpenStack Compute security group APIs or
-                use OpenStack Compute to orchestrate the creation of
-                ports for instances on specific security groups, you
-                must complete additional configuration. You must
-                configure the <filename>/etc/nova/nova.conf</filename>
-                file and set the
-                    <code>security_group_api=neutron</code> option on
-                every node that runs <systemitem class="service"
-                    >nova-compute</systemitem> and <systemitem
-                    class="service">nova-api</systemitem>. After you
-                make this change, restart <systemitem class="service"
-                    >nova-api</systemitem> and <systemitem
-                    class="service">nova-compute</systemitem> to pick
-                up this change. Then, you can use both the OpenStack
-                Compute and OpenStack Network security group APIs at
-                the same time.</para>
+            <para>When a port is created in Networking it is associated with a security group. If a
+                security group is not specified the port is associated with a 'default' security
+                group. By default, this group drops all ingress traffic and allows all egress. Rules
+                can be added to this group in order to change the behaviour.</para>
+            <para>To use the Compute security group APIs or use Compute to orchestrate the creation
+                of ports for instances on specific security groups, you must complete additional
+                configuration. You must configure the <filename>/etc/nova/nova.conf</filename> file
+                and set the <code>security_group_api=neutron</code> option on every node that runs
+                    <systemitem class="service">nova-compute</systemitem> and <systemitem
+                    class="service">nova-api</systemitem>. After you make this change, restart
+                    <systemitem class="service">nova-api</systemitem> and <systemitem
+                    class="service">nova-compute</systemitem> to pick up this change. Then, you can
+                use both the Compute and OpenStack Network security group APIs at the same
+                time.</para>
             <note>
                 <itemizedlist>
                     <listitem>
-                        <para>To use the OpenStack Compute security
-                            group API with OpenStack Networking, the
-                            OpenStack Networking plug-in must
-                            implement the security group API. The
-                            following plug-ins currently implement
-                            this: Nicira NVP, Open vSwitch, Linux
-                            Bridge, NEC, and Ryu.</para>
+                        <para>To use the Compute security group API with Networking, the Networking
+                            plug-in must implement the security group API. The following plug-ins
+                            currently implement this: Nicira NVP, Open vSwitch, Linux Bridge, NEC,
+                            and Ryu.</para>
                     </listitem>
                     <listitem>
                         <para>You must configure the correct firewall
@@ -1907,12 +1738,9 @@
                             security groups.</para>
                     </listitem>
                     <listitem>
-                        <para>When using the security group API
-                            through OpenStack Compute, security groups
-                            are applied to all ports on an instance.
-                            The reason for this is that OpenStack
-                            Compute security group APIs are instances
-                            based and not port based as OpenStack
+                        <para>When using the security group API through Compute, security groups are
+                            applied to all ports on an instance. The reason for this is that Compute
+                            security group APIs are instances based and not port based as
                             Networking.</para>
                     </listitem>
                 </itemizedlist>
@@ -1990,7 +1818,7 @@
                         <tr>
                             <td>security_group_id</td>
                             <td>uuid-str or Integer</td>
-                            <td>allocated by OpenStack Networking</td>
+                            <td>allocated by Networking</td>
                             <td>The security group to associate rule
                                 with.</td>
                         </tr>
@@ -2036,8 +1864,7 @@
                         <tr>
                             <td>remote_group_id</td>
                             <td>uuid-str or Integer</td>
-                            <td>allocated by OpenStack Networking or
-                                OpenStack Compute</td>
+                            <td>allocated by Networking or Compute</td>
                             <td>Source security group to apply to
                                 rule.</td>
                         </tr>
@@ -2204,38 +2031,433 @@
                 </tbody>
             </table>
         </section>
-        <section xml:id="plugin_specific_extensions">
+        <section xml:id="fwaas">
+        <title>Firewall-as-a-Service</title>
+            <para>The Firewall-as-a-Service (FWaaS) API is an
+                experimental API meant to give early adopters and
+                vendors a chance to build implementations against.</para>
+
+            <para><emphasis role="bold">Reference Implementation</emphasis> This extension is backed
+                by a reference implementation that works with the Neutron OVS plug-in and provides
+                perimeter firewall functionality. It leverages the footprint of the Neutron OVS L3
+                agent and an IPTables driver to apply the Firewall Rules contained in a particular
+                Firewall Policy. This reference implementation supports one Firewall Policy and
+                consequently one logical Firewall instance per tenant (this is not a constraint of
+                the resource model, but of the current reference implementation). The Firewall is
+                realized on a Neutron virtual router. If a tenant has multiple routers, the firewall
+                will be realized on all the routers. If a tenant does not have any router, the
+                firewall will be in <code>PENDING_CREATE</code> state until a router is created and
+                the first interface is added to the router. At that point the firewall policy will
+                be immediately applied to the router and the firewall will change to
+                    <code>ACTIVE</code> state.</para>
+        <note>
+            <para>Since this is the first iteration of this implementation,
+                it should probably not be run in production environments
+                without adequate testing.</para>
+        </note>
+        <section xml:id="fwaas_api_abstractions">
+            <title>Firewall-as-a-Service API abstractions</title>
+            <table rules="all">
+                <caption>Firewall Rules</caption>
+                <col width="20%"/>
+                <col width="20%"/>
+                <col width="20%"/>
+                <col width="40%"/>
+                <thead>
+                    <tr>
+                        <th>Attribute name</th>
+                        <th>Type</th>
+                        <th>Default Value</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>id</td>
+                        <td>uuid-str</td>
+                        <td>generated</td>
+                        <td>UUID for the Firewall Rule.</td>
+                    </tr>
+                    <tr>
+                        <td>tenant_id</td>
+                        <td>uuid-str</td>
+                        <td>N/A</td>
+                        <td>Owner of the Firewall Rule. Only
+                            admin users can specify a tenant_id other
+                            than its own.</td>
+                    </tr>
+                    <tr>
+                        <td>name</td>
+                        <td>String</td>
+                        <td>None</td>
+                        <td>Human readable name for the Firewall Rule
+                            (255 characters limit).</td>
+                    </tr>
+                    <tr>
+                        <td>description</td>
+                        <td>String</td>
+                        <td>None</td>
+                        <td>Human readable description for the Firewall Rule
+                            (1024 characters limit).</td>
+                    </tr>
+                    <tr>
+                        <td>firewall_policy_id</td>
+                        <td>uuid-str or None</td>
+                        <td>allocated by Networking</td>
+                        <td>This is a readonly attribute that gets populated
+                            with the uuid of the Firewall Policy when this
+                            Firewall Rule is associated with a Firewall
+                            Policy. A Firewall Rule can be associated with only
+                            one Firewall Policy at a time. However, the
+                            association can be changed to a different Firewall
+                            Policy.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>shared</td>
+                        <td>Boolean</td>
+                        <td>False</td>
+                        <td>When set to True makes this Firewall Rule visible
+                            to tenants other than its owner, and it can be used
+                            in Firewall Policies not owned by its tenant.</td>
+                    </tr>
+                    <tr>
+                        <td>protocol</td>
+                        <td>String</td>
+                        <td>None</td>
+                        <td>IP Protocol (icmp, tcp, udp, None).</td>
+                    </tr>
+                    <tr>
+                        <td>ip_version</td>
+                        <td>Integer or String</td>
+                        <td>4</td>
+                        <td>IP Version (4, 6).</td>
+                    </tr>
+                    <tr>
+                        <td>source_ip_address</td>
+                        <td>String (IP address or CIDR)</td>
+                        <td>None</td>
+                        <td>Source IP address or CIDR.</td>
+                    </tr>
+                    <tr>
+                        <td>destination_ip_address</td>
+                        <td>String (IP address or CIDR)</td>
+                        <td>None</td>
+                        <td>Destination IP address or CIDR.</td>
+                    </tr>
+                    <tr>
+                        <td>source_port</td>
+                        <td>Integer or String (either as a single port number
+                            or in the format of a ':' separated range) </td>
+                        <td>None</td>
+                        <td>Source port number or a range.</td>
+                    </tr>
+                    <tr>
+                        <td>destination_port</td>
+                        <td>Integer or String (either as a single port number
+                            or in the format of a ':' separated range) </td>
+                        <td>None</td>
+                        <td>Destination port number or a range.</td>
+                    </tr>
+                    <tr>
+                        <td>position</td>
+                        <td>Integer</td>
+                        <td>None</td>
+                        <td>This is a readonly attribute that gets assigned
+                            to this rule when the rule is assocated with
+                            a Firewall Policy. It indicates the position of
+                            this rule in that Firewall Policy.</td>
+                    </tr>
+                    <tr>
+                        <td>action</td>
+                        <td>String</td>
+                        <td>deny</td>
+                        <td>Action to be performed on the traffic matching
+                            the rule (allow, deny).</td>
+                    </tr>
+                    <tr>
+                        <td>enabled</td>
+                        <td>Boolean</td>
+                        <td>True</td>
+                        <td>When set to False will disable this rule in the
+                            Firewall Policy. Facilitates selectively turning
+                            off rules without having to disassociate the rule
+                            from the Firewall Policy.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table rules="all">
+                <caption>Firewall Policies</caption>
+                <col width="20%"/>
+                <col width="20%"/>
+                <col width="20%"/>
+                <col width="40%"/>
+                <thead>
+                    <tr>
+                        <th>Attribute name</th>
+                        <th>Type</th>
+                        <th>Default Value</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>id</td>
+                        <td>uuid-str</td>
+                        <td>generated</td>
+                        <td>UUID for the firewall policy.</td>
+                    </tr>
+                    <tr>
+                        <td>tenant_id</td>
+                        <td>uuid-str</td>
+                        <td>N/A</td>
+                        <td>Owner of the Firewall Policy. Only
+                            admin users can specify a tenant_id other
+                            their own.</td>
+                    </tr>
+                    <tr>
+                        <td>name</td>
+                        <td>String</td>
+                        <td>None</td>
+                        <td>Human readable name for the Firewall Policy
+                            (255 characters limit).</td>
+                    </tr>
+                    <tr>
+                        <td>description</td>
+                        <td>String</td>
+                        <td>None</td>
+                        <td>Human readable description for the Firewall Policy
+                            (1024 characters limit).</td>
+                    </tr>
+                    <tr>
+                        <td>shared</td>
+                        <td>Boolean</td>
+                        <td>False</td>
+                        <td>When set to True makes this Firewall Policy visible
+                            to tenants other than its owner, and can be used
+                            to associate with Firewalls not owned by its
+                            tenant.</td>
+                    </tr>
+                    <tr>
+                        <td>firewall_rules</td>
+                        <td>List of uuid-str or None</td>
+                        <td>None</td>
+                        <td>This is an ordered list of Firewall Rule uuids.
+                            The Firewall applies the rules in the order in
+                            which they appear in this list.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>audited</td>
+                        <td>Boolean</td>
+                        <td>False</td>
+                        <td>When set to True by the policy owner indicates
+                            that the Firewall Policy has been audited.This
+                            attribute is meant to aid in the firewall
+                            policy audit workflows. Each time the Firewall
+                            Policy or the associated Firewall Rules are
+                            changed, this attribute will be set to False and
+                            will have to be explicitly set to True through an
+                            update operation.
+                            </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table rules="all">
+                <caption>Firewalls</caption>
+                <col width="20%"/>
+                <col width="20%"/>
+                <col width="20%"/>
+                <col width="40%"/>
+                <thead>
+                    <tr>
+                        <th>Attribute name</th>
+                        <th>Type</th>
+                        <th>Default Value</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>id</td>
+                        <td>uuid-str</td>
+                        <td>generated</td>
+                        <td>UUID for the firewall.</td>
+                    </tr>
+                    <tr>
+                        <td>tenant_id</td>
+                        <td>uuid-str</td>
+                        <td>N/A</td>
+                        <td>Owner of the Firewall. Only admin users can
+                            specify a tenant_id other than its own.</td>
+                    </tr>
+                    <tr>
+                        <td>name</td>
+                        <td>String</td>
+                        <td>None</td>
+                        <td>Human readable name for the Firewall
+                            (255 characters limit).</td>
+                    </tr>
+                    <tr>
+                        <td>description</td>
+                        <td>String</td>
+                        <td>None</td>
+                        <td>Human readable description for the Firewall
+                            (1024 characters limit).</td>
+                    </tr>
+                    <tr>
+                        <td>admin_state_up</td>
+                        <td>Boolean</td>
+                        <td>True</td>
+                        <td>The administrative state of the Firewall. If False
+                            (down), the Firewall does not forward any
+                            packets.</td>
+                    </tr>
+                    <tr>
+                        <td>status</td>
+                        <td>String</td>
+                        <td>N/A </td>
+                        <td><para>Indicates whether the Firewall is
+                                currently operational. Possible values
+                                include: <itemizedlist>
+                                   <listitem>
+                                   <para>ACTIVE</para>
+                                   </listitem>
+                                   <listitem>
+                                   <para>DOWN</para>
+                                   </listitem>
+                                   <listitem>
+                                   <para>PENDING_CREATE</para>
+                                   </listitem>
+                                   <listitem>
+                                   <para>PENDING_UPDATE</para>
+                                   </listitem>
+                                   <listitem>
+                                   <para>PENDING_DELETE</para>
+                                   </listitem>
+                                   <listitem>
+                                   <para>ERROR</para>
+                                   </listitem>
+                                </itemizedlist>
+                            </para></td>
+                    </tr>
+                    <tr>
+                        <td>firewall_policy_id</td>
+                        <td>uuid-str or None</td>
+                        <td>None</td>
+                        <td>The Firewall Policy uuid that this Firewall
+                            is associated with. This Firewall will implement
+                            the rules contained in the Firewall Policy
+                            represented by this uuid.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <section xml:id="fwaas_workflow">
+            <title>Basic Firewall-as-a-Service operations</title>
+            <itemizedlist>
+            <listitem>
+            <para>Create a firewall rule:</para>
+            <screen><prompt>$</prompt> <userinput>neutron firewall-rule-create --protocol &lt;tcp|udp|icmp|any&gt; --destination-port &lt;port-range&gt; --action &lt;allow|deny&gt;</userinput></screen>
+            <para>The CLI requires that a protocol value be provided. If
+            the rule is protocol agnostic, the 'any' value can be used.
+            </para>
+            <para>In addition to the protocol attribute, other attributes
+            can be specified in the Firewall Rule. Please check the previous
+            section for the supported attributes.</para>
+            </listitem>
+            <listitem>
+            <para>Create a firewall policy:</para>
+            <screen><prompt>$</prompt> <userinput>neutron firewall-policy-create --firewall-rules  "&lt;firewall-rule ids or names separated by space&gt;" myfirewallpolicy</userinput></screen>
+            <para>The order of the rules specified above is important.
+            A firewall policy can be created without any rules and rules
+            can be added later either via the update operation (if adding
+            multiple rules) or via the insert-rule operation (if adding
+            a single rule). Please check the CLI help for more details
+            on these operations.</para>
+            <note><para>The reference implementation always adds a default
+            deny all rule at the end of each policy. This implies that if
+            a firewall policy is created without any rules and is associated
+            with a firewall, that firewall will block all traffic.</para>
+            </note>
+            </listitem>
+            <listitem>
+            <para>Create a firewall:</para>
+            <screen><prompt>$</prompt> <userinput>neutron firewall-create  &lt;firewall-policy-uuid&gt;</userinput></screen>
+            </listitem>
+            </itemizedlist>
+        <note>
+            <para>The FWaaS features and the above workflow can
+            also be accessed from the Horizon user interface. This support is
+            disabled by default, but can be enabled by configuring
+            <filename>$HORIZON_DIR/openstack_dashboard/local/local_settings.py
+            </filename> and setting
+            <programlisting language="ini">
+            'enable_firewall' = True
+            </programlisting>
+            </para>
+        </note>
+        </section>
+    </section>
+        <section xml:id="section_allowed_address_pairs">
+            <title>Allowed-address-pairs</title>
+            <para>Allowed-address-pairs is an API extension that extends the port attribute. This
+                extension allows one to specify arbitrary mac_address/ip_address(cidr) pairs that
+                are allowed to pass through a port regardless of subnet. The main use case for this
+                is to enable the ability to use protocols such as VRRP which floats an ip address
+                between two instances to enable fast data plane failover.</para>
+            <note>
+                <para>The allowed-address-pairs extension is currently only supported by the
+                    following plug-ins: Nicira NVP, OpenvSwitch, and ML2.</para>
+            </note>
+            <section xml:id="section_allowed_address_pairs_workflow">
+                <title>Basic allowed address pairs operations</title>
+                <itemizedlist>
+                    <listitem>
+                        <para>Create a port with a specific allowed-address-pairs:</para>
+                        <screen><prompt>$</prompt> <userinput>neutron port-create net1 --allowed-address-pairs type=dict list=true mac_address=&lt;mac_address&gt;,ip_address=&lt;ip_cidr&gt;</userinput></screen>
+                    </listitem>
+                    <listitem>
+                        <para>Update a port adding allowed-address-pairs:</para>
+                        <screen><prompt>$</prompt> <userinput>neutron port-update  &lt;subnet-uuid&gt; --allowed-address-pairs type=dict list=true mac_address=&lt;mac_address&gt;,ip_address=&lt;ip_cidr&gt;</userinput></screen>
+                    </listitem>
+                </itemizedlist>
+                <note><para>Setting an allowed-address-pair that matches the
+                    mac_address and ip_address of a port is prevented. This
+                    is because that would have no effect since traffic
+                    matching the mac_address and ip_address is already
+                    allowed to pass through the port.</para></note>
+                <note><para>If your plug-in implements the port-security extension port-security-enabled must be set to
+                        True on the port in order to have allowed-address-pairs on a port. The
+                        reason for this is because if port-security-enabled is set to False this
+                        allows all traffic to be passed through the port thus having
+                        allowed-address-pairs would have no effect.</para></note>
+            </section>
+        </section>
+        <section xml:id="section_plugin_specific_extensions">
             <title>Plug-in specific extensions</title>
             <?dbhtml stop-chunking?>
             <para>Each vendor may choose to implement additional API
                 extensions to the core API. This section describes the
                 extensions for each plug-in.</para>
-            <section xml:id="nicira_extensions">
+            <section xml:id="section_nicira_extensions">
                 <title>Nicira NVP extensions</title>
-                <para>The Nicira NVP plug-in Extensions</para>
-                <section xml:id="nicira_nvp_plugin_qos_extension">
+                <para>The following sections explain Nicira NVP plug-in extensions.</para>
+                <section xml:id="section_nicira_nvp_plugin_qos_extension">
                     <title>Nicira NVP QoS extension</title>
-                    <para>The Nicira NVP QoS extension rate-limits
-                        network ports to guarantee a specific amount
-                        of bandwidth for each port. This extension, by
-                        default, is only accessible by a tenant with
-                        an admin role but is configurable through the
-                            <filename>policy.json</filename> file. To
-                        use this extension, create a queue and specify
-                        the min/max bandwidth rates (kbps) and
-                        optionally set the QoS Marking and DSCP value
-                        (if your network fabric uses these values to
-                        make forwarding decisions). Once created, you
-                        can associate a queue with a network. Then,
-                        when ports are created on that network they
-                        are automatically created and associated with
-                        the specific queue size that was associated
-                        with the network. Because one size queue for a
-                        every port on a network may not be optimal, a
-                        scaling factor from the nova flavor
-                        'rxtx_factor' is passed in from OpenStack
-                        Compute when creating the port to scale the
-                        queue.</para>
+                    <para>The Nicira NVP QoS extension rate-limits network ports to guarantee a
+                        specific amount of bandwidth for each port. This extension, by default, is
+                        only accessible by a tenant with an admin role but is configurable through
+                        the <filename>policy.json</filename> file. To use this extension, create a
+                        queue and specify the min/max bandwidth rates (kbps) and optionally set the
+                        QoS Marking and DSCP value (if your network fabric uses these values to make
+                        forwarding decisions). Once created, you can associate a queue with a
+                        network. Then, when ports are created on that network they are automatically
+                        created and associated with the specific queue size that was associated with
+                        the network. Because one size queue for a every port on a network may not be
+                        optimal, a scaling factor from the Nova flavor 'rxtx_factor' is passed in
+                        from Compute when creating the port to scale the queue.</para>
                     <para>Lastly, if you want to set a specific
                         baseline QoS policy for the amount of
                         bandwidth a single port can use (unless a
@@ -2248,7 +2470,7 @@
                         queues are added to ports that are
                         subsequently created but are not added to
                         existing ports.</para>
-                    <section xml:id="nicira_nvp_qos_api_abstractions">
+                    <section xml:id="section_nicira_nvp_qos_api_abstractions">
                         <title>Nicira NVP QoS API abstractions</title>
                         <table rules="all">
                             <caption>Nicira NVP QoS
@@ -2325,8 +2547,7 @@
                         </table>
                     </section>
                     <section xml:id="nicira_nvp_qos_walk_through">
-                        <title>Common Nicira NVP QoS
-                            operations</title>
+                        <title>Basic Nicira NVP QoS operations</title>
                         <para>The following table shows example
                             neutron commands that enable you to
                             complete basic queue operations:</para>
@@ -2383,6 +2604,85 @@
                         </table>
                     </section>
                 </section>
+                <section xml:id="section_nicira_nvp_provider_extension">
+                    <title>Nicira NVP provider networks extension</title>
+                    <para>Provider networks can be implemented in different ways by
+                        the underlying NVP platform.</para>
+                    <para>The <emphasis>FLAT</emphasis> and
+                        <emphasis>VLAN</emphasis> network types use
+                        bridged transport connectors. These network types
+                        enable the attachment of large number of ports. To
+                        handle the increased scale, the NVP plug-in can
+                        back a single Openstack Network with a chain of
+                        NVP logical switches. You can specify the maximum
+                        number of ports on each logical switch in this
+                        chain on the
+                        <literal>max_lp_per_bridged_ls</literal>
+                        parameter, which  has a default value of
+                        5,000.</para>
+                    <para>The recommended value for this parameter varies with the
+                        NVP version running in the backend, as shown in the
+                        following table.</para>
+                    <para>
+                        <table rules="all">
+                            <caption>Recommended values for max_lp_per_bridged_ls</caption>
+                            <col width="50%"/>
+                            <col width="50%"/>
+                            <thead>
+                                <tr>
+                                    <td>NVP version</td>
+                                    <td>Recommended Value</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2.x</td>
+                                    <td>64</td>
+                                </tr>
+                                <tr>
+                                    <td>3.0.x</td>
+                                    <td>5,000</td>
+                                </tr>
+                                <tr>
+                                    <td>3.1.x</td>
+                                    <td>5,000</td>
+                                </tr>
+                                <tr>
+                                    <td>3.2.x</td>
+                                    <td>10,000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </para>
+                    <para>In addition to the above network types, the NVP
+                        plug-in also supports a special
+                        <emphasis>l3_ext</emphasis> network type,
+                        which maps external networks to specific NVP
+                        gateway services as discussed in the following
+                        section.</para>
+                </section>
+                <section xml:id="section_nicira_nvp_plugin_l3_extension">
+                    <title>Nicira NVP L3 extension</title>
+                    <para>NVP exposes its L3 capabilities through gateway
+                        services which are usually configured out of band
+                        from OpenStack. To use NVP with L3 capabilities,
+                        first create a L3 gateway service in the NVP
+                        Manager. Next, in <filename>
+                            /etc/neutron/plugins/nicira/nvp.ini</filename>
+                        set <literal>default_l3_gw_service_uuid</literal>
+                        to this value. Now, when routers are created they
+                        will by default be mapped to this gateway
+                        service.</para>
+                    <section xml:id="section_nicira_l3_walk_through">
+                        <title>Nicira NVP L3 extension operations</title>
+                        <para>Create external network and map it to a specific NVP gateway service:</para>
+                        <screen><prompt>$</prompt> <userinput>neutron net-create public --router:external=True --provider:network_type l3_ext \
+--provider:physical_network &lt;L3-Gateway-Service-UUID&gt;</userinput></screen>
+                        <para>Terminate traffic on a specific VLAN from a NVP gateway service:</para>
+                        <screen><prompt>$</prompt> <userinput>neutron net-create public --router:external=True --provider:network_type l3_ext \
+--provider:physical_network &lt;L3-Gateway-Service-UUID&gt; -provider:segmentation_id &lt;VLAN_ID&gt;</userinput></screen>
+                    </section>
+                </section>
             </section>
         </section>
     </section>
@@ -2395,8 +2695,8 @@
                     <filename>neutron.conf</filename> or as command
                 line options. Command options override ones in
                     <filename>neutron.conf</filename>.</para>
-            <para>To configure logging for OpenStack Networking
-                components, use one of the following methods:</para>
+            <para>To configure logging for Networking components, use one of the following
+                methods:</para>
             <itemizedlist>
                 <listitem>
                     <para>Provide logging settings in a logging
@@ -2473,17 +2773,13 @@ notification_topics = notifications</programlisting>
                 <section
                     xml:id="section_adv_notification_cases_log_rpc">
                     <title>Logging and RPC</title>
-                    <para>The following options configure the
-                        OpenStack Networking server to send
-                        notifications through logging and RPC. The
-                        logging options are described in <citetitle
-                            xmlns:svg="http://www.w3.org/2000/svg"
-                            xmlns:html="http://www.w3.org/1999/xhtml"
-                            >OpenStack Configuration
-                            Reference</citetitle> . RPC notifications
-                        go to 'notifications.info' queue bound to a
-                        topic exchange defined by 'control_exchange'
-                        in <filename>neutron.conf</filename>.</para>
+                    <para>The following options configure the Networking server to send
+                        notifications through logging and RPC. The logging options are described in
+                            <citetitle xmlns:svg="http://www.w3.org/2000/svg"
+                            xmlns:html="http://www.w3.org/1999/xhtml">OpenStack Configuration
+                            Reference</citetitle> . RPC notifications go to 'notifications.info'
+                        queue bound to a topic exchange defined by 'control_exchange' in
+                            <filename>neutron.conf</filename>.</para>
                     <programlisting language="ini"># ============ Notification System Options =====================
 
 # Notifications can be sent when network/subnet/port are create, updated or deleted.
@@ -2513,13 +2809,11 @@ notification_topics = notifications</programlisting>
                 <section
                     xml:id="ch_adv_notification_cases_multi_rpc_topics">
                     <title>Multiple RPC topics</title>
-                    <para>The following options configure the
-                        OpenStack Networking server to send
-                        notifications to multiple RPC topics. RPC
-                        notifications go to 'notifications_one.info'
-                        and 'notifications_two.info' queues bound to a
-                        topic exchange defined by 'control_exchange'
-                        in <filename>neutron.conf</filename>.</para>
+                    <para>The following options configure the Networking server to send
+                        notifications to multiple RPC topics. RPC notifications go to
+                        'notifications_one.info' and 'notifications_two.info' queues bound to a
+                        topic exchange defined by 'control_exchange' in
+                            <filename>neutron.conf</filename>.</para>
                     <programlisting language="ini"># ============ Notification System Options =====================
 
 # Notifications can be sent when network/subnet/port are create, updated or deleted.
@@ -2552,26 +2846,19 @@ notification_topics = notifications_one,notifications_two</programlisting>
 
     <section xml:id="section_auth">
         <title>Authentication and authorization</title>
-        <para>OpenStack Networking uses the OpenStack Identity service
-            (project name keystone) as the default authentication
-            service. When OpenStack Identity is enabled Users
-            submitting requests to the OpenStack Networking service
-            must provide an authentication token in X-Auth-Token
-            request header. The aforementioned token should have been
-            obtained by authenticating with the OpenStack Identity
-            endpoint. For more information concerning authentication
-            with OpenStack Identity, please refer to the OpenStack
-            Identity documentation. When OpenStack Identity is
-            enabled, it is not mandatory to specify tenant_id for
-            resources in create requests, as the tenant ID is derived
-            from the Authentication token.</para>
+        <para>Networking uses the Identity service (project name Keystone) as the default
+            authentication service. When Identity is enabled Users submitting requests to the
+            Networking service must provide an authentication token in X-Auth-Token request header.
+            The aforementioned token should have been obtained by authenticating with the Identity
+            endpoint. For more information concerning authentication with Identity, please refer to
+            the Identity documentation. When Identity is enabled, it is not mandatory to specify
+            tenant_id for resources in create requests, as the tenant ID is derived from the
+            Authentication token.</para>
         <note>
-            <para>The default authorization settings only allow
-                administrative users to create resources on behalf of
-                a different tenant. OpenStack Networking uses
-                information received from OpenStack Identity to
-                authorize user requests. OpenStack Networking handles
-                two kind of authorization policies:</para>
+            <para>The default authorization settings only allow administrative users to create
+                resources on behalf of a different tenant. Networking uses information received from
+                Identity to authorize user requests. Networking handles two kind of authorization
+                policies:</para>
         </note>
         <itemizedlist>
             <listitem>
@@ -2581,53 +2868,36 @@ notification_topics = notifications_one,notifications_two</programlisting>
                     over specific attributes;</para>
             </listitem>
             <listitem>
-                <para><emphasis role="bold">Resource-based</emphasis>
-                    policies specify whether access to specific
-                    resource is granted or not according to the
-                    permissions configured for the resource (currently
-                    available only for the network resource). The
-                    actual authorization policies enforced in
-                    OpenStack Networking might vary from deployment to
-                    deployment.</para>
+                <para><emphasis role="bold">Resource-based</emphasis> policies specify whether
+                    access to specific resource is granted or not according to the permissions
+                    configured for the resource (currently available only for the network resource).
+                    The actual authorization policies enforced in Networking might vary from
+                    deployment to deployment.</para>
             </listitem>
         </itemizedlist>
-        <para>The policy engine reads entries from the <emphasis
-                role="italic">policy.json</emphasis> file. The actual
-            location of this file might vary from distribution to
-            distribution. Entries can be updated while the system is
-            running, and no service restart is required. Every time
-            the policy file is updated, the policies are automatically
-            reloaded. Currently the only way of updating such policies
-            is to edit the policy file. In this section, the terms
-                <emphasis role="italic">policy</emphasis> and
-                <emphasis role="italic">rule</emphasis> refer to
-            objects that are specified in the same way in the policy
-            file. There are no syntax differences between a rule and a
-            policy. A policy is something that is matched directly
-            from the OpenStack Networking policy engine. A rule is an
-            element in a policy, which is evaluated. For instance in
-                <code>create_subnet:
-                [["admin_or_network_owner"]]</code>, <emphasis
-                role="italic">create_subnet</emphasis> is a policy,
-            and <emphasis role="italic"
+        <para>The policy engine reads entries from the <emphasis role="italic"
+                >policy.json</emphasis> file. The actual location of this file might vary from
+            distribution to distribution. Entries can be updated while the system is running, and no
+            service restart is required. Every time the policy file is updated, the policies are
+            automatically reloaded. Currently the only way of updating such policies is to edit the
+            policy file. In this section, the terms <emphasis role="italic">policy</emphasis> and
+                <emphasis role="italic">rule</emphasis> refer to objects that are specified in the
+            same way in the policy file. There are no syntax differences between a rule and a
+            policy. A policy is something that is matched directly from the Networking policy
+            engine. A rule is an element in a policy, which is evaluated. For instance in
+                <code>create_subnet: [["admin_or_network_owner"]]</code>, <emphasis role="italic"
+                >create_subnet</emphasis> is a policy, and <emphasis role="italic"
                 >admin_or_network_owner</emphasis> is a rule.</para>
-        <para>Policies are triggered by the OpenStack Networking
-            policy engine whenever one of them matches an OpenStack
-            Networking API operation or a specific attribute being
-            used in a given operation. For instance the
-                <code>create_subnet</code> policy is triggered every
-            time a <code>POST /v2.0/subnets</code> request is sent to
-            the OpenStack Networking server; on the other hand
-                <code>create_network:shared</code> is triggered every
-            time the <emphasis role="italic">shared</emphasis>
-            attribute is explicitly specified (and set to a value
-            different from its default) in a <code>POST
-                /v2.0/networks</code> request. It is also worth
-            mentioning that policies can be also related to specific
-            API extensions; for instance
-                <code>extension:provider_network:set</code> is be
-            triggered if the attributes defined by the Provider
-            Network extensions are specified in an API request.</para>
+        <para>Policies are triggered by the Networking policy engine whenever one of them matches an
+            Networking API operation or a specific attribute being used in a given operation. For
+            instance the <code>create_subnet</code> policy is triggered every time a <code>POST
+                /v2.0/subnets</code> request is sent to the Networking server; on the other hand
+                <code>create_network:shared</code> is triggered every time the <emphasis
+                role="italic">shared</emphasis> attribute is explicitly specified (and set to a
+            value different from its default) in a <code>POST /v2.0/networks</code> request. It is
+            also worth mentioning that policies can be also related to specific API extensions; for
+            instance <code>extension:provider_network:set</code> is be triggered if the attributes
+            defined by the Provider Network extensions are specified in an API request.</para>
         <para>An authorization policy can be composed by one or more
             rules. If more rules are specified, evaluation policy
             succeeds if any of the rules evaluates successfully; if an
@@ -2636,8 +2906,8 @@ notification_topics = notifications_one,notifications_two</programlisting>
             rules are recursive. Once a rule is matched, the rule(s)
             can be resolved to another rule, until a terminal rule is
             reached.</para>
-        <para>The OpenStack Networking policy engine currently defines
-            the following kinds of terminal rules:</para>
+        <para>The Networking policy engine currently defines the following kinds of terminal
+            rules:</para>
         <para><itemizedlist>
                 <listitem>
                     <para><emphasis role="bold">Role-based
@@ -2748,12 +3018,9 @@ notification_topics = notifications_one,notifications_two</programlisting>
             service as active/passive, which avoids IP conflicts with
             respect to gateway IP addresses.</para>
         <section xml:id="ha_pacemaker">
-            <title>OpenStack Networking High Availability with
-                Pacemaker</title>
-            <para>You can run some OpenStack Networking services into
-                a cluster (Active / Passive or Active / Active for
-                OpenStack Networking Server only) with
-                Pacemaker.</para>
+            <title>Networking High Availability with Pacemaker</title>
+            <para>You can run some Networking services into a cluster (Active / Passive or Active /
+                Active for Networking Server only) with Pacemaker.</para>
             <para>Download the latest resources agents:</para>
             <itemizedlist>
                 <listitem>
