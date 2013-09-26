@@ -11,295 +11,349 @@
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
   xml:id="cli_set_compute_quotas">
   <title>Manage Compute service quotas</title>
-  <para>As an administrative user, you can view and set the Compute
-    Service quotas for a project. You can also update the quota
-    defaults for a new project.</para>
-  <table rules="all">
-    <caption>Compute service quotas</caption>
-    <col width="20%"/>
-    <col width="45%"/>
-    <col width="35%"/>
-    <thead>
-      <tr>
-        <td>Quota</td>
-        <td>Defines the number of</td>
-        <td>Property name</td>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          <para>Fixed Ips</para>
-       </td>
-        <td>
-          <para>Fixed IP addresses allowed for each tenant. Must be equal to or greater than the number of
-            allowed instances.</para>
-       </td>
-        <td>
-          <para><systemitem>fixed-ips</systemitem>
-          </para>
-       </td>
-      </tr>
-      <tr>
-        <td>
-          <para>Floating Ips</para>
-       </td>
-        <td>
-          <para>Floating IP addresses allowed for each tenant.</para>
-       </td>
-        <td>
-          <para><systemitem>floating-ips</systemitem>
-          </para>
-       </td>
-      </tr>
-      <tr>
-        <td>
-          <para>Injected File Content Bytes</para>
-       </td>
-        <td>
-          <para>Content bytes allowed for each injected file.</para>
-       </td>
-        <td>
-          <para><systemitem>injected-file-content-bytes</systemitem>
-          </para>
-       </td>
-      </tr>
-      <tr>
-        <td>
-          <para>Injected File Path Bytes</para>
-       </td>
-        <td>
-          <para>Bytes allowed for each injected file path.</para>
-       </td>
-        <td>
-          <para><systemitem>injected-file-path-bytes</systemitem>
-          </para>
-       </td>
-      </tr>
-      <tr>
-        <td>
-          <para>Injected Files</para>
-       </td>
-        <td>
-          <para>Injected files allowed for each tenant.</para>
-       </td>
-        <td>
-          <para><systemitem>injected-files</systemitem>
-          </para>
-       </td>
-      </tr>
-      <tr>
-        <td>
-          <para>Instances</para>
-       </td>
-        <td>
-          <para>Instances allowed for each tenant.</para>
-       </td>
-        <td>
-          <para><systemitem>instances</systemitem>
-          </para>
-       </td>
-      </tr>
-      <tr>
-        <td>
-          <para>Key Pairs</para>
-       </td>
-        <td>
-          <para>Key pairs allowed for each user.</para>
-       </td>
-        <td>
-          <para><systemitem>key-pairs</systemitem>
-          </para>
-       </td>
-      </tr>
-      <tr>
-        <td>
-          <para>Metadata Items</para>
-       </td>
-        <td>
-          <para>Metadata items allowed for each instance.</para>
-       </td>
-        <td>
-          <para><systemitem>metadata-items</systemitem>
-          </para>
-       </td>
-      </tr>
-      <tr>
-        <td>
-          <para>Ram</para>
-       </td>
-        <td>
-          <para>Megabytes of instance RAM allowed for each
-            tenant.</para>
-       </td>
-        <td>
-          <para><systemitem>ram</systemitem>
-          </para>
-       </td>
-      </tr>
-      <tr>
-        <td>
-          <para>Security Group Rules</para>
-       </td>
-        <td>
-          <para>Rules for each security group.</para>
-       </td>
-        <td>
-          <para><systemitem>security-group-rules</systemitem>
-          </para>
-       </td>
-      </tr>
-      <tr>
-        <td>
-          <para>Security Groups</para>
-       </td>
-        <td>
-          <para>Security groups for each project.</para>
-       </td>
-        <td>
-          <para><systemitem>security-groups</systemitem>
-          </para>
-       </td>
-      </tr>
-      <tr>
-        <td>
-          <para>VCPUs</para>
-       </td>
-        <td>
-          <para>Instance cores allowed for each project.</para>
-       </td>
-        <td>
-          <para><systemitem>cores</systemitem>
-          </para>
-       </td>
-      </tr>
-    </tbody>
-  </table>
-  <section xml:id="cli_set_compute_quotas_procedure">
-    <title>View and update Compute service quotas</title>
-    <para>As an administrative user, you can view and update project
-      quotas.</para>
-    <procedure>
-      <step>
-        <para>List the default Compute service project quotas:</para>
-        <screen><prompt>$</prompt> <userinput>nova quota-defaults</userinput></screen>
-        <screen><computeroutput>+-----------------------------+-------+
-| Property                    | Value |
+  <para>As an administrative user, you can use the <command>nova quota-*</command>
+    commands, which are provided by the <literal>python-novaclient</literal>
+    package, to update the Compute Service quotas for a specific tenant or
+    tenant user, as well as update the quota defaults for a new tenant.</para>
+      <table rules="all">
+      <caption>Compute Quota Descriptions</caption>
+      <col width="40%"/>
+       <col width="60%"/>
+       <thead>
+          <tr>
+            <td>
+              Quota Name
+            </td>
+            <td>
+              Description
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <para>
+                <systemitem>cores</systemitem>
+              </para>
+            </td>
+            <td>
+              <para>
+                Number of instance cores (VCPUs) allowed per tenant.
+              </para>
+            </td>
+          </tr>
+               <tr>
+            <td>
+              <para>
+                <systemitem>fixed-ips</systemitem>
+              </para>
+            </td>
+            <td>
+              <para>
+                Number of fixed IP addresses allowed per tenant. This number
+                must be equal to or greater than the number of allowed
+                instances.
+              </para>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <para>
+                <systemitem>floating-ips</systemitem>
+              </para>
+            </td>
+            <td>
+              <para>
+                Number of floating IP addresses allowed per tenant.
+              </para>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <para>
+                <systemitem>injected-file-content-bytes</systemitem>
+              </para>
+            </td>
+            <td>
+              <para>
+                Number of content bytes allowed per injected file.
+              </para>
+            </td>
+          </tr>
+                  <tr>
+                       <td>
+              <para>
+                <systemitem>injected-file-path-bytes</systemitem>
+              </para>
+            </td>
+            <td>
+              <para>
+                Number of bytes allowed per injected file path.
+              </para>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <para>
+                <systemitem>injected-files</systemitem>
+              </para>
+            </td>
+            <td>
+              <para>
+                Number of injected files allowed per tenant.
+              </para>
+            </td>
+
+          </tr>
+          <tr>
+            <td>
+              <para>
+                <systemitem>instances</systemitem>
+              </para>
+            </td> 
+            <td>
+              <para>
+                Number of instances allowed per tenant.
+              </para>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <para>
+                <systemitem>key-pairs</systemitem>
+              </para>
+            </td>
+            <td>
+              <para>
+                Number of key pairs allowed per user.
+              </para>
+            </td>
+          </tr>
+             <tr>
+              <td>
+              <para>
+                <systemitem>metadata-items</systemitem>
+              </para>
+            </td>
+            <td>
+              <para>
+                Number of metadata items allowed per instance.
+              </para>
+            </td>
+          </tr>
+           <tr>
+            <td>
+              <para>
+                <systemitem>ram</systemitem>
+              </para>
+            </td>
+            <td>
+              <para>
+                Megabytes of instance ram allowed per tenant.
+              </para>
+            </td>
+          </tr>
+                    <tr>
+            <td>
+              <para>
+                <systemitem>security-groups</systemitem>
+              </para>
+            </td>
+            <td>
+              <para>
+                Number of security groups per tenant.
+              </para>
+            </td>
+          </tr>
+                  <tr>
+            <td>
+              <para>
+                <systemitem>security-group-rules</systemitem>
+              </para>
+            </td>
+            <td>
+              <para>
+                Number of rules per security group.
+              </para>
+            </td>
+          </tr>
+
+              </tbody>
+     </table>
+      <section xml:id="cli_set_compute_tenant_quotas_procedure">
+    <title>View and update Compute quotas for a tenant (project)</title>
+      <procedure>
+        <title>To view and update default quota values</title>
+        <step>
+            <para>List all default quotas for all tenants, as follows:</para>
+            <screen><prompt>$</prompt> <userinput>nova quota-defaults</userinput></screen>
+            <para>For example:
+            </para>
+            <screen><prompt>$</prompt> <userinput>nova quota-defaults</userinput>
+<computeroutput>+-----------------------------+-------+
+| Quota                       | Limit |
 +-----------------------------+-------+
-| metadata_items              | 128   |
-| injected_file_content_bytes | 10240 |
+| instances                   | 10    |
+| cores                       | 20    |
 | ram                         | 51200 |
 | floating_ips                | 10    |
-| key_pairs                   | 100   |
-| instances                   | 10    |
-| security_group_rules        | 20    |
-| injected_files              | 5     |
-| cores                       | 20    |
 | fixed_ips                   | -1    |
-| injected_file_path_bytes    | 255   |
-| security_groups             | 10    |
-+-----------------------------+-------+</computeroutput></screen>
-      </step>
-      <step>
-        <para>To update a default value for a new project, update the
-            <literal>default</literal> property in the
-            <filename>/etc/nova/nova.conf</filename> file, as
-          follows:</para>
-        <screen><prompt>$</prompt> <userinput>nova quota-class-update default --<replaceable>key</replaceable> <replaceable>value</replaceable></userinput></screen>
-        <para>For example:</para>
-        <screen><prompt>$</prompt> <userinput>nova quota-class-update default --instances 15</userinput></screen>
-      </step>
-      <step>
-        <para>Verify your changes by showing the quotas for the quota
-          class, as follows:</para>
-        <screen><prompt>$</prompt> <userinput>nova quota-class-show default</userinput></screen>
-        <screen><computeroutput>+-----------------------------+-------+
-| Property                    | Value |
-+-----------------------------+-------+
 | metadata_items              | 128   |
+| injected_files              | 5     |
 | injected_file_content_bytes | 10240 |
+| injected_file_path_bytes    | 255   |
+| key_pairs                   | 100   |
+| security_groups             | 10    |
+| security_group_rules        | 20    |
++-----------------------------+-------+</computeroutput></screen>
+        </step>
+        <step>
+          <para>Update a default value for a new tenant, as follows:
+          </para>
+          <screen><prompt>$</prompt> <userinput>nova quota-class-update --<replaceable>key</replaceable> <replaceable>value</replaceable> default</userinput></screen>
+          <para>For example:
+          </para>
+         <screen><prompt>$</prompt> <userinput>nova quota-class-update --instances 15 default</userinput></screen>
+        </step>
+    </procedure>
+    <procedure>
+        <title>To view quota values for an existing tenant (project)</title>
+        <step><para>Place the tenant ID in a useable variable, as follows:</para>
+<screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list | awk '/<replaceable>tenantName</replaceable>/ {print $2}')</userinput></screen>
+        </step>
+        <step>
+            <para>List the currently set quota values for a
+                tenant, as follows:</para>
+<screen><prompt>$</prompt> <userinput>nova quota-show --tenant $tenant</userinput></screen>
+<para>For example:</para>
+<screen><prompt>$</prompt> <userinput>nova quota-show --tenant $tenant</userinput>
+<computeroutput>+-----------------------------+-------+
+| Quota                       | Limit |
++-----------------------------+-------+
+| instances                   | 10    |
+| cores                       | 20    |
 | ram                         | 51200 |
 | floating_ips                | 10    |
-| key_pairs                   | 100   |
-| instances                   | 15    |
-| security_group_rules        | 20    |
-| injected_files              | 5     |
-| cores                       | 20    |
 | fixed_ips                   | -1    |
-| injected_file_path_bytes    | 255   |
-| security_groups             | 10    |
-+-----------------------------+-------+</computeroutput></screen>
-      </step>
-    </procedure>
-  </section>
-  <section xml:id="cli_view_quotas_tenant">
-    <title>View project quotas</title>
-    <procedure>
-      <step>
-        <para>Place the tenant ID in a usable variable, as
-          follows:</para>
-        <screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list | awk '/<replaceable>tenantName</replaceable>/ {print $2}')</userinput></screen>
-      </step>
-      <step>
-        <para>List the currently set quota values for a tenant, as
-          follows:</para>
-        <screen><prompt>$</prompt> <userinput>nova quota-show --tenant $tenant</userinput></screen>
-        <para>For example:</para>
-        <screen><prompt>$</prompt> <userinput>nova quota-show --tenant $tenant</userinput>
-<computeroutput>+-----------------------------+-------+
-| Property                    | Value |
-+-----------------------------+-------+
 | metadata_items              | 128   |
+| injected_files              | 5     |
 | injected_file_content_bytes | 10240 |
-| ram                         | 51200 |
-| floating_ips                | 12    |
+| injected_file_path_bytes    | 255   |
 | key_pairs                   | 100   |
+| security_groups             | 10    |
+| security_group_rules        | 20    |
++-----------------------------+-------+</computeroutput></screen>
+        </step>
+    </procedure>
+     <procedure>
+        <title>To update quota values for an existing tenant (project)</title>
+        <step><para>Obtain the tenant ID, as follows:</para>
+            <screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list | awk '/<replaceable>tenantName</replaceable>/ {print $2}')</userinput></screen>
+        </step>
+        <step>
+          <para>Update a particular quota value, as follows:</para>
+          <screen><prompt>#</prompt> <userinput>nova quota-update --<replaceable>quotaName</replaceable> <replaceable>quotaValue</replaceable> <replaceable>tenantID</replaceable></userinput></screen>
+        <para>For example:</para>
+        <screen><prompt>#</prompt> <userinput>nova quota-update --floating-ips 20 $tenant
+<prompt>#</prompt> nova quota-show --tenant $tenant</userinput>
+<computeroutput>+-----------------------------+-------+
+| Quota                       | Limit |
++-----------------------------+-------+
 | instances                   | 10    |
-| security_group_rules        | 20    |
-| injected_files              | 5     |
 | cores                       | 20    |
-| fixed_ips                   | -1    |
-| injected_file_path_bytes    | 255   |
-| security_groups             | 10    |
-+-----------------------------+-------+</computeroutput></screen>
-      </step>
-    </procedure>
-  </section>
-  <section xml:id="cli_update_quotas_projects">
-    <title>Update project quotas</title>
-    <procedure>
-      <step>
-        <para>Get the tenant ID, as follows:</para>
-        <screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list | awk '/<replaceable>tenantName</replaceable>/ {print $2}')</userinput></screen>
-      </step>
-      <step>
-        <para>Update a specified quota value, as follows:</para>
-        <screen><prompt>$</prompt> <userinput>nova quota-update --<replaceable>quotaName</replaceable> <replaceable>quotaValue</replaceable> <replaceable>tenantID</replaceable></userinput></screen>
-        <para>For example:</para>
-        <screen><prompt>$</prompt> <userinput>nova quota-update --floating-ips 20 $tenant
-<prompt>$</prompt> nova quota-show --tenant $tenant</userinput>
-<computeroutput>+-----------------------------+-------+
-| Property                    | Value |
-+-----------------------------+-------+
-| metadata_items              | 128   |
-| injected_file_content_bytes | 10240 |
 | ram                         | 51200 |
 | floating_ips                | 20    |
-| key_pairs                   | 100   |
-| instances                   | 10    |
-| security_group_rules        | 20    |
-| injected_files              | 5     |
-| cores                       | 20    |
 | fixed_ips                   | -1    |
+| metadata_items              | 128   |
+| injected_files              | 5     |
+| injected_file_content_bytes | 10240 |
 | injected_file_path_bytes    | 255   |
+| key_pairs                   | 100   |
 | security_groups             | 10    |
-+-----------------------------+-------+</computeroutput></screen>
+| security_group_rules        | 20    |
++-----------------------------+-------+
+</computeroutput></screen>
+            <note>
+            <para>To view a list of options for the
+                    <command>quota-update</command> command, run:
+            </para>
+<screen><prompt>$</prompt> <userinput>nova help quota-update</userinput></screen></note>
+        </step>
+    </procedure>
+      </section>
+  <section xml:id="cli_set_compute_user_quotas_procedure">
+    <title>View and update Compute quotas for a tenant user</title>
+    <procedure>
+      <title>To view quota values for a tenant user</title>
+      <step><para>Place the user ID in a useable variable, as follows:</para>
+        <screen><prompt>$</prompt> <userinput>tenantUser=$(keystone user-list | awk '/<replaceable>userName</replaceable>/ {print $2}')</userinput></screen>
+      </step>
+      <step>
+        <para>Place the user's tenant ID in a useable variable, as follows:</para>
+        <screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list | awk '/<replaceable>tenantName</replaceable>/ {print $2}')</userinput></screen>
+      </step>
+      <step>
+        <para>List the currently set quota values for a
+          tenant user, as follows:</para>
+        <screen><prompt>$</prompt> <userinput>nova quota-show --user $tenantUser --tenant $tenant</userinput> </screen>
+        <para>For example:</para>
+        <screen><prompt>$</prompt> <userinput>nova quota-show --user $tenantUser --tenant $tenant</userinput>
+<computeroutput>+-----------------------------+-------+
+| Quota                       | Limit |
++-----------------------------+-------+
+| instances                   | 10    |
+| cores                       | 20    |
+| ram                         | 51200 |
+| floating_ips                | 20    |
+| fixed_ips                   | -1    |
+| metadata_items              | 128   |
+| injected_files              | 5     |
+| injected_file_content_bytes | 10240 |
+| injected_file_path_bytes    | 255   |
+| key_pairs                   | 100   |
+| security_groups             | 10    |
+| security_group_rules        | 20    |
++-----------------------------+-------+
+</computeroutput></screen>
+      </step>
+    </procedure>
+    <procedure>
+      <title>To update quota values for a tenant user</title>
+      <step><para>Place the user ID in a useable variable, as follows:</para>
+        <screen><prompt>$</prompt> <userinput>tenantUser=$(keystone user-list | awk '/<replaceable>userName</replaceable>/ {print $2}')</userinput></screen>
+      </step>
+      <step><para>Place the user's tenant ID in a useable variable, as follows:</para>
+        <screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list | awk '/<replaceable>userName</replaceable>/ {print $2}')</userinput></screen>
+      </step>
+      <step>
+        <para>Update a particular quota value, as follows:</para>
+        <screen><prompt>#</prompt> <userinput>nova quota-update  --user $tenantUser --<replaceable>quotaName</replaceable> <replaceable>quotaValue</replaceable> $tenant</userinput></screen>
+        <para>For example:</para>
+        <screen><prompt>#</prompt> <userinput>nova quota-update --user $tenantUser --floating-ips 12 $tenant
+<prompt>#</prompt> nova quota-show --user $tenantUser --tenant $tenant</userinput>
+<computeroutput>+-----------------------------+-------+
+| Quota                       | Limit |
++-----------------------------+-------+
+| instances                   | 10    |
+| cores                       | 20    |
+| ram                         | 51200 |
+| floating_ips                | 12    |
+| fixed_ips                   | -1    |
+| metadata_items              | 128   |
+| injected_files              | 5     |
+| injected_file_content_bytes | 10240 |
+| injected_file_path_bytes    | 255   |
+| key_pairs                   | 100   |
+| security_groups             | 10    |
+| security_group_rules        | 20    |
++-----------------------------+-------+
+</computeroutput></screen>
         <note>
           <para>To view a list of options for the
-              <command>quota-update</command> command, run:</para>
-          <screen><prompt>$</prompt> <userinput>nova help quota-update</userinput></screen>
-        </note>
+            <command>quota-update</command> command, run:
+          </para>
+          <screen><prompt>$</prompt> <userinput>nova help quota-update</userinput></screen></note>
       </step>
     </procedure>
   </section>
-</section>
+  </section>

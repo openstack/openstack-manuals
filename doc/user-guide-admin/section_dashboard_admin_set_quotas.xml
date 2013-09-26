@@ -12,43 +12,45 @@
   xml:id="dashboard_set_quotas">
   <?dbhtml stop-chunking?>
   <title>View and manage quotas</title>
-  <para>As an administrative user, you can set quotas when you <xref
-      linkend="dashboard_create_project"/> or update quotas for an
-    existing project. Quotas are operational limits that prevent
-    system capacities from being exhausted without notification. For
-    example, to optimize cloud resources, you can control the number
-    of gigabytes allowed for each project. You enforce quotas at the
-    project, or tenant, level rather than at the user level.</para>
+  <para>To prevent system capacities from being exhausted without notification,
+    you can set up quotas. Quotas are operational limits. For example, the
+    number of gigabytes allowed for each tenant can be controlled so that
+    cloud resources are optimized. Quotas can be enforced at both the tenant
+    (or project) and the tenant-user level.</para>
   <para>Typically, you change quotas when a project needs more than 10
     volumes or 1 TB on a Compute node.</para>
-  <para>The following tables describe the Compute and Block Storage
+  <para>Using the Dashboard, you can view default Compute and Block Storage
+    quotas for new tenants, as well as update quotas for existing tenants.</para>
+  <note>
+    <para>Using the command-line interface, you can manage quotas for the
+      OpenStack Compute Service, the OpenStack Block Storage Service, and
+      the OpenStack Networking Service (see <xref linkend="cli_set_quotas"/>).
+      Additionally, you can update Compute service quotas for
+      tenant users.</para>
+  </note>
+  <para>The following table describes the Compute and Block Storage
     service quotas:</para>
   <table rules="all" width="50%" xml:id="compute_quotas">
-    <caption>Compute quotas</caption>
+    <caption>Quota Descriptions</caption>
     <col width="30%"/>
-    <col width="70%"/>
+    <col width="50%"/>
+    <col width="20%"/>
     <thead>
       <tr>
-        <th>Quota</th>
+        <th>Quota Name</th>
         <th>Defines the number of</th>
+        <th>Service</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td>
-          <para>Metadata Items</para>
+          <para>Gigabytes</para>
         </td>
         <td>
-          <para>Metadata items allowed for each instance.</para>
+          <para>Volume gigabytes allowed for each project.</para>
         </td>
-      </tr>
-      <tr>
-        <td>
-          <para>VCPUs</para>
-        </td>
-        <td>
-          <para>Instance cores allowed for each project.</para>
-        </td>
+        <td>Block Storage</td>
       </tr>
       <tr>
         <td>
@@ -57,6 +59,7 @@
         <td>
           <para>Instances allowed for each project.</para>
         </td>
+        <td>Compute</td>
       </tr>
       <tr>
         <td>
@@ -65,6 +68,7 @@
         <td>
           <para>Injected files allowed for each project.</para>
         </td>
+        <td>Compute</td>
       </tr>
       <tr>
         <td>
@@ -73,6 +77,16 @@
         <td>
           <para>Content bytes allowed for each injected file.</para>
         </td>
+        <td>Compute</td>
+      </tr>
+      <tr>
+        <td>
+          <para>Metadata Items</para>
+        </td>
+        <td>
+          <para>Metadata items allowed for each instance.</para>
+        </td>
+        <td>Compute</td>
       </tr>
       <tr>
         <td>
@@ -81,24 +95,7 @@
         <td>
           <para>RAM megabytes allowed for each instance.</para>
         </td>
-      </tr>
-      <tr>
-        <td>
-          <para>Floating IPs</para>
-        </td>
-        <td>
-          <para>Floating IP addresses allowed for each project.</para>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <para>Fixed IPs</para>
-        </td>
-        <td>
-          <para>Fixed IP addresses allowed for each project. Must be
-            equal to or greater than the number of allowed
-            instances.</para>
-        </td>
+        <td>Compute</td>
       </tr>
       <tr>
         <td>
@@ -107,6 +104,7 @@
         <td>
           <para>Security groups allowed for each project.</para>
         </td>
+        <td>Compute</td>
       </tr>
       <tr>
         <td>
@@ -115,35 +113,7 @@
         <td>
           <para>Rules allowed for each security group.</para>
         </td>
-      </tr>
-    </tbody>
-  </table>
-  <table rules="all" width="50%" xml:id="block_storage_quotas">
-    <caption>Block Storage quotas</caption>
-    <col width="30%"/>
-    <col width="70%"/>
-    <thead>
-      <tr>
-        <th>Quota</th>
-        <th>Defines the number of</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          <para>Volumes</para>
-        </td>
-        <td>
-          <para>Volumes allowed for each project.</para>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <para>Gigabytes</para>
-        </td>
-        <td>
-          <para>Volume gigabytes allowed for each project.</para>
-        </td>
+        <td>Compute</td>
       </tr>
       <tr>
         <td>
@@ -152,21 +122,37 @@
         <td>
           <para>Volume snapshots allowed for each project.</para>
         </td>
+        <td>Block Storage</td>
+      </tr>
+      <tr>
+        <td>
+          <para>VCPUs</para>
+        </td>
+        <td>
+          <para>Instance cores allowed for each project.</para>
+        </td>
+        <td>Compute</td>
+      </tr>
+      <tr>
+        <td>
+          <para>Volumes</para>
+        </td>
+        <td>
+          <para>Volumes allowed for each project.</para>
+        </td>
+        <td>Block Storage</td>
       </tr>
     </tbody>
   </table>
-  <section xml:id="dashboard_set_quotas_procedure">
+  
+  <section xml:id="dashboard_view_quotas_procedure">
     <title>View default project quotas</title>
     <procedure>
       <step>
-        <para>Log in to the OpenStack dashboard and choose the
-            <guilabel>admin</guilabel> project from the
-            <guilabel>CURRENT PROJECT</guilabel> drop-down
-          list.</para>
+        <para>Log in to the OpenStack dashboard.</para>
       </step>
-      <step>
-        <para>On the <guilabel>Admin</guilabel> tab, click the
-            <guilabel>System Info</guilabel> category.</para>
+      <step><para>On the <guilabel>Admin</guilabel> tab, click the
+            <guilabel>Defaults</guilabel> category.</para>
       </step>
       <step>
         <para>Click the <guilabel>Default Quotas</guilabel> tab to
@@ -174,30 +160,31 @@
           services.</para>
       </step>
     </procedure>
+    <note><para>You can sort the table by clicking on either the <guilabel>Quota Name</guilabel> or <guilabel>Limit</guilabel> column headers.</para></note>
   </section>
-  <section xml:id="dashboard_project_quotas">
+  <section xml:id="dashboard_update_project_quotas">
     <title>Update project quotas</title>
     <procedure>
+      <step>
+        <para>Log in to the OpenStack dashboard.</para>
+      </step>
       <step>
         <para>On the <guilabel>Admin</guilabel> tab, click the
             <guilabel>Projects</guilabel> category.</para>
       </step>
       <step>
-        <para>Select a project to change its quota values.</para>
-      </step>
-      <step>
-        <para>In the <guilabel>More</guilabel> drop-down list, click
-            <guilabel>Modify Quotas</guilabel>.</para>
+        <para>In the <guilabel>More</guilabel> drop-down list for a project, click
+          <guilabel>Modify Quotas</guilabel>.</para>
       </step>
       <step>
         <para>On the <guilabel>Quota</guilabel> tab in the
-            <guilabel>Edit Project</guilabel> window, edit quota
+            <guilabel>Edit Project</guilabel> window, edit the quota
           values. Then, click <guibutton>Save</guibutton>.</para>
       </step>
     </procedure>
     <note>
       <para>The dashboard does not show all possible project quotas.
-        To view and update the quotas for a service, use the keystone
+        To view and update the quotas for a service, use its
         command-line client. See <xref linkend="cli_set_quotas"
         />.</para>
     </note>
