@@ -4,28 +4,37 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="ch_networking">
     <title>Networking</title>
-    <para>Learn Networking concepts, architecture, and basic and advanced Neutron and Nova
-        command-line interface (CLI) commands so that you can administer Networking in a
+    <para>Learn Networking concepts, architecture, and basic and
+        advanced neutron and nova command-line interface (CLI)
+        commands so that you can administer Networking in a
         cloud.</para>
     <section xml:id="section_neworking-intro">
         <title>Introduction to Networking</title>
-        <para>The Networking service, code-named Neutron, provides an API for defining network
-            connectivity and addressing in the cloud. The Networking service enables operators to
-            leverage different networking technologies to power their cloud networking.</para>
-        <para>The Networking service also provides an API to configure and manage a variety of
-            network services ranging from L3 forwarding and NAT to load balancing, edge firewalls,
-            and IPSEC VPN.</para>
-        <para>For a detailed description of the Networking API abstractions and their attributes,
-            see the <link xlink:href="http://docs.openstack.org/api/openstack-network/2.0/content/"
-                    ><citetitle>OpenStack Networking API v2.0 Reference</citetitle></link>.</para>
+        <para>The Networking service, code-named Neutron, provides an
+            API for defining network connectivity and addressing in
+            the cloud. The Networking service enables operators to
+            leverage different networking technologies to power their
+            cloud networking.</para>
+        <para>The Networking service also provides an API to configure
+            and manage a variety of network services ranging from L3
+            forwarding and NAT to load balancing, edge firewalls, and
+            IPSEC VPN.</para>
+        <para>For a detailed description of the Networking API
+            abstractions and their attributes, see the <link
+                xlink:href="http://docs.openstack.org/api/openstack-network/2.0/content/"
+                    ><citetitle>OpenStack Networking API v2.0
+                    Reference</citetitle></link>.</para>
         <section xml:id="section_networking-api">
             <title>Networking API</title>
-            <para>Networking is a virtual network service that provides a powerful API to define the
-                network connectivity and IP addressing used by devices from other services, such as
-                Compute.</para>
-            <para>The Compute API has a virtual server abstraction to describe computing resources.
-                Similarly, the Networking API has virtual network, subnet, and port abstractions to
-                describe networking resources. In more detail:</para>
+            <para>Networking is a virtual network service that
+                provides a powerful API to define the network
+                connectivity and IP addressing used by devices from
+                other services, such as Compute.</para>
+            <para>The Compute API has a virtual server abstraction to
+                describe computing resources. Similarly, the
+                Networking API has virtual network, subnet, and port
+                abstractions to describe networking resources. In more
+                detail:</para>
             <itemizedlist>
                 <listitem>
                     <para><emphasis role="bold">Network</emphasis>. An
@@ -47,11 +56,14 @@
                         port.</para>
                 </listitem>
             </itemizedlist>
-            <para>You can configure rich network topologies by creating and configuring networks and
-                subnets, and then instructing other OpenStack services like Compute to attach
-                virtual devices to ports on these networks. In particular, Networking supports each
-                tenant having multiple private networks, and allows tenants to choose their own IP
-                addressing scheme (even if those IP addresses overlap with those used by other
+            <para>You can configure rich network topologies by
+                creating and configuring networks and subnets, and
+                then instructing other OpenStack services like Compute
+                to attach virtual devices to ports on these networks.
+                In particular, Networking supports each tenant having
+                multiple private networks, and allows tenants to
+                choose their own IP addressing scheme (even if those
+                IP addresses overlap with those used by other
                 tenants). The Networking service:</para>
             <itemizedlist>
                 <listitem>
@@ -63,31 +75,30 @@
                 </listitem>
                 <listitem>
                     <para>Offers flexibility for the cloud
-                        administrator to customized network
+                        administrator to customize network
                         offerings.</para>
                 </listitem>
                 <listitem>
-                    <para>Provides a mechanism that lets cloud administrators expose additional API
-                        capabilities through API extensions. At first, new functionality is
-                        introduced as an API extension. Over time, the functionality becomes part of
-                        the core Networking API.</para>
+                    <para>Enables developers to extend the Networking
+                        API. Over time, the extended functionality
+                        becomes part of the core Networking
+                        API.</para>
                 </listitem>
             </itemizedlist>
         </section>
         <section xml:id="section_plugin-arch">
             <title>Plug-in architecture</title>
-            <para>Enhancing traditional networking solutions to
-                provide rich cloud networking is challenging.
-                Traditional networking is not designed to scale to
-                cloud proportions nor to handle automatic
-                configuration.</para>
-            <para>The original Compute network implementation assumed a very basic model of
-                performing all isolation through Linux VLANs and IP tables. Networking introduces
-                the concept of a <emphasis role="italic">plug-in</emphasis>, which is a back-end
-                implementation of the Networking API. A plug-in can use a variety of technologies to
-                implement the logical API requests. Some Networking plug-ins might use basic Linux
-                VLANs and IP tables, while others might use more advanced technologies, such as
-                L2-in-L3 tunneling or OpenFlow, to provide similar benefits.</para>
+            <para>The original Compute network implementation assumed
+                a basic model of isolation through Linux VLANs and IP
+                tables. Networking introduces the concept of a
+                    <emphasis role="italic">plug-in</emphasis>, which
+                is a back-end implementation of the Networking API. A
+                plug-in can use a variety of technologies to implement
+                the logical API requests. Some Networking plug-ins
+                might use basic Linux VLANs and IP tables, while
+                others might use more advanced technologies, such as
+                L2-in-L3 tunneling or OpenFlow, to provide similar
+                benefits.</para>
             <para>Networking includes the following plug-ins:</para>
             <itemizedlist>
                 <listitem>
@@ -124,7 +135,7 @@
                         in this guide at <link
                             xlink:href="http://wiki.openstack.org/Quantum-Linux-Bridge-Plugin"
                             >http://wiki.openstack.org/Neutron-Linux-Bridge-Plugin</link>
-                         </para>
+                    </para>
                 </listitem>
                 <listitem>
                     <para><emphasis role="bold">Mellanox
@@ -178,15 +189,18 @@
                     </para>
                 </listitem>
             </itemizedlist>
-            <para>Plug-ins can have different properties for hardware requirements, features,
-                performance, scale, or operator tools. Because Networking supports a large number of
-                plug-ins, the cloud administrator is able to weigh different options and decide
-                which networking technology is right for the deployment.</para>
+            <para>Plug-ins can have different properties for hardware
+                requirements, features, performance, scale, or
+                operator tools. Because Networking supports a large
+                number of plug-ins, the cloud administrator is able to
+                weigh different options and decide which networking
+                technology is right for the deployment.</para>
             <?hard-pagebreak?>
-            <para>Not all Networking plug-ins are compatible with all possible Compute
-                drivers:</para>
+            <para>Not all Networking plug-ins are compatible with all
+                possible Compute drivers:</para>
             <table rules="all">
-                <caption>Plug-in compatibility with Compute drivers</caption>
+                <caption>Plug-in compatibility with Compute
+                    drivers</caption>
                 <thead>
                     <tr>
                         <th/>
@@ -320,66 +334,75 @@
         <section xml:id="arch_overview">
             <title>Overview</title>
 
-            <para>Networking is a standalone service, just like other OpenStack services such as
-                Compute, Image service, Identity service, or the Dashboard. Like those services, a
-                deployment of Networking often involves deploying several processes on a variety of
+            <para>Networking is a standalone service, just like other
+                OpenStack services such as Compute, Image service,
+                Identity service, or the Dashboard. Like those
+                services, a deployment of Networking often involves
+                deploying several processes on a variety of
                 hosts.</para>
-            <para>The main process of the Networking server is <literal>neutron-server</literal>,
-                which is a Python daemon that exposes the Networking API and passes user requests to
-                the configured Networking plug-in for additional processing. Typically, the plug-in
-                requires access to a database for persistent storage (also similar to other
-                OpenStack services).</para>
-            <para>If your deployment uses a controller host to run centralized Compute components,
-                you can deploy the Networking server on that same host. However, Networking is
-                entirely standalone and can be deployed on its own host as well. Networking also
-                includes additional agents that might be required, depending on your
-                deployment:</para>
+            <para>The Networking server uses the <systemitem
+                    class="service">neutron-server</systemitem> daemon
+                to expose the Networking API and to pass user requests
+                to the configured Networking plug-in for additional
+                processing. Typically, the plug-in requires access to
+                a database for persistent storage (also similar to
+                other OpenStack services).</para>
+            <para>If your deployment uses a controller host to run
+                centralized Compute components, you can deploy the
+                Networking server on that same host. However,
+                Networking is entirely standalone and can be deployed
+                on its own host as well. Depending on your deployment,
+                Networking can also include the following
+                agents:</para>
             <itemizedlist>
                 <listitem>
                     <para><emphasis role="bold">plug-in
                             agent</emphasis>
                             (<literal>neutron-*-agent</literal>). Runs
                         on each hypervisor to perform local vswitch
-                        configuration. The agent to be run will depend
-                        on which plug-in you are using, because some
-                        plug-ins do not actually require an agent.
-                    </para>
+                        configuration. The agent that runs depends on
+                        the plug-in that you use, and some plug-ins do
+                        not require an agent. </para>
                 </listitem>
                 <listitem>
                     <para><emphasis role="bold">dhcp agent</emphasis>
                             (<literal>neutron-dhcp-agent</literal>).
-                        Provides DHCP services to tenant networks.
-                        This agent is the same for all plug-ins.
-                    </para>
+                        Provides DHCP services to tenant networks. All
+                        plug-ins use this agent. </para>
                 </listitem>
                 <listitem>
                     <para><emphasis role="bold">l3 agent</emphasis>
                         <literal>(neutron-l3-agent</literal>).
                         Provides L3/NAT forwarding to provide external
-                        network access for VMs on tenant networks.
-                        This agent is the same for all plug-ins.
-                    </para>
+                        network access for VMs on tenant networks. All
+                        plug-ins use this agent. </para>
                 </listitem>
             </itemizedlist>
-            <para>These agents interact with the main neutron process through RPC (for example,
-                rabbitmq or qpid) or through the standard Networking API. Further: <itemizedlist>
-                    <listitem>
-                        <para>Networking relies on the Identity service (Keystone) for the
-                            authentication and authorization of all API request. </para>
-                    </listitem>
-                    <listitem>
-                        <para>Compute (Nova) interacts with Networking through calls to its standard
-                            API.  As part of creating a VM, the <systemitem class="service"
-                                >nova-compute</systemitem> service communicates with the Networking
-                            API to plug each virtual NIC on the VM into a particular network. 
-                             </para>
-                    </listitem>
-                    <listitem>
-                        <para>The Dashboard (Horizon) integrates with the Networking API, allowing
-                            administrators and tenant users to create and manage network services
-                            through the Dashboard GUI.</para>
-                    </listitem>
-                </itemizedlist></para>
+            <para>These agents interact with the main neutron process
+                through RPC (for example, rabbitmq or qpid) or through
+                the standard Networking API. Further:</para>
+            <itemizedlist>
+                <listitem>
+                    <para>Networking relies on the Identity service
+                        (Keystone) for the authentication and
+                        authorization of all API requests.</para>
+                </listitem>
+                <listitem>
+                    <para>Compute (Nova) interacts with Networking
+                        through calls to its standard API.  As part of
+                        creating a VM, the <systemitem class="service"
+                            >nova-compute</systemitem> service
+                        communicates with the Networking API to plug
+                        each virtual NIC on the VM into a particular
+                        network.  </para>
+                </listitem>
+                <listitem>
+                    <para>The Dashboard (Horizon) integrates with the
+                        Networking API, enabling administrators and
+                        tenant users to create and manage network
+                        services through a web-based GUI.</para>
+                </listitem>
+            </itemizedlist>
         </section>
         <section xml:id="networking-services">
             <title>Place services on physical hosts</title>
@@ -403,7 +426,7 @@
                 you expect VMs to send significant traffic to or from
                 the Internet, a dedicated network gateway host helps
                 avoid CPU contention between the <systemitem
-                    role="agent">neutron-l3-agent</systemitem> and
+                    class="service">neutron-l3-agent</systemitem> and
                 other OpenStack services that forward packets.</para>
         </section>
         <section xml:id="network-connectivity">
@@ -415,8 +438,9 @@
                     />
                 </imageobject>
             </mediaobject>
-            <para>A standard Networking set up has one or more of the following distinct physical
-                data center networks:</para>
+            <para>A standard Networking set up has one or more of the
+                following distinct physical data center
+                networks:</para>
             <itemizedlist>
                 <listitem>
                     <para><emphasis role="bold">Management
@@ -426,24 +450,31 @@
                         only within the data center.  </para>
                 </listitem>
                 <listitem>
-                    <para><emphasis role="bold">Data network</emphasis>. Provides VM data
-                        communication within the cloud deployment.  The IP addressing requirements
-                        of this network depend on the Networking plug-in being used. </para>
+                    <para><emphasis role="bold">Data
+                            network</emphasis>. Provides VM data
+                        communication within the cloud deployment. 
+                        The IP addressing requirements of this network
+                        depend on the Networking plug-in that is
+                        used.</para>
                 </listitem>
                 <listitem>
                     <para><emphasis role="bold">External
                             network</emphasis>. Provides VMs with
                         Internet access in some deployment scenarios. 
-                        IP addresses on this network should be
-                        reachable by anyone on the Internet. </para>
+                        Anyone on the Internet can reach IP addresses
+                        on this network.</para>
                 </listitem>
                 <listitem>
-                    <para><emphasis role="bold">API network</emphasis>. Exposes all OpenStack APIs,
-                        including the Networking API, to tenants. IP addresses on this network
-                        should be reachable by anyone on the Internet. The API network may be the
-                        same as the external network, because it is possible to create an
-                        external-network subnet that is allocated IP ranges that use less than the
-                        full range of IP addresses in an IP block.</para>
+                    <para><emphasis role="bold">API
+                        network</emphasis>. Exposes all OpenStack
+                        APIs, including the Networking API, to
+                        tenants. IP addresses on this network should
+                        be reachable by anyone on the Internet. The
+                        API network might be the same as the external
+                        network, because it is possible to create an
+                        external-network subnet that is allocated IP
+                        ranges that use less than the full range of IP
+                        addresses in an IP block.</para>
                 </listitem>
             </itemizedlist>
         </section>
@@ -451,63 +482,80 @@
     <section xml:id="section_networking-use">
         <title>Use Networking</title>
 
-        <para>You can use Networking in the following ways: <itemizedlist>
-                <listitem>
-                    <para>Expose the Networking API to cloud tenants, which enables them to build
-                        rich network topologies.</para>
-                </listitem>
-                <listitem>
-                    <para>Have the cloud administrator, or an automated administrative tool, create
-                        network connectivity on behalf of tenants.</para>
-                </listitem>
-            </itemizedlist></para>
+        <para>You can use Networking in the following ways:</para>
+        <itemizedlist>
+            <listitem>
+                <para>Expose the Networking API to cloud tenants,
+                    which enables them to build rich network
+                    topologies.</para>
+            </listitem>
+            <listitem>
+                <para>Have the cloud administrator, or an automated
+                    administrative tool, create network connectivity
+                    on behalf of tenants.</para>
+            </listitem>
+        </itemizedlist>
         <para>A tenant or cloud administrator can both perform the
             following procedures.</para>
         <section xml:id="api_features">
             <title>Core Networking API features</title>
-            <para>After you install and run Networking, tenants and administrators can perform
-                create-read-update-delete (CRUD) API networking operations by using either the
-                    <command>neutron</command> CLI tool or the API. Like other OpenStack CLI tools,
-                the <command>neutron</command> tool is just a basic wrapper around the Networking
-                API. Any operation that can be performed using the CLI has an equivalent API call
-                that can be performed programmatically.</para>
+            <para>After you install and run Networking, tenants and
+                administrators can perform create-read-update-delete
+                (CRUD) API networking operations by using the
+                Networking API directly or the neutron command-line
+                interface (CLI). The neutron CLI is a wrapper around
+                the Networking API. Every Networking API call has a
+                corresponding neutron command.</para>
             <para>The CLI includes a number of options. For details,
-                refer to the <citetitle>OpenStack End User
-                    Guide</citetitle>.</para>
+                refer to the <link
+                    xlink:href="http://docs.openstack.org/user-guide/content/"
+                        ><citetitle>OpenStack End User
+                        Guide</citetitle></link>.</para>
             <section xml:id="api_abstractions">
                 <title>API abstractions</title>
-                <para>The Networking v2.0 API provides control over both L2 network topologies and
-                    the IP addresses used on those networks (IP Address Management or IPAM). There
-                    is also an extension to cover basic L3 forwarding and NAT, which provides
-                    capabilities similar to <command>nova-network</command>.</para>
-                <para>In the Networking API: <itemizedlist>
-                        <listitem>
-                            <para>A 'Network' is an isolated L2 network segment (similar to a VLAN),
-                                which forms the basis for describing the L2 network topology
-                                available in an Networking deployment. </para>
-                        </listitem>
-                        <listitem>
-                            <para>A 'Subnet' associates a block of IP addresses and other network
-                                configuration (for example, default gateways or dns-servers) with an
-                                Networking network. Each subnet represents an IPv4 or IPv6 address
-                                block and, if needed, each Networking network can have multiple
-                                subnets.</para>
-                        </listitem>
-                        <listitem>
-                            <para>A 'Port' represents an attachment port to a L2 Networking network.
-                                When a port is created on the network, by default it is allocated an
-                                available fixed IP address out of one of the designated subnets for
-                                each IP version (if one exists). When the port is destroyed, its
-                                allocated addresses return to the pool of available IPs on the
-                                subnet. Users of the Networking API can either choose a specific IP
-                                address from the block, or let Networking choose the first available
-                                IP address.</para>
-                        </listitem>
-                    </itemizedlist></para>
+                <para>The Networking v2.0 API provides control over
+                    both L2 network topologies and the IP addresses
+                    used on those networks (IP Address Management or
+                    IPAM). There is also an extension to cover basic
+                    L3 forwarding and NAT, which provides capabilities
+                    similar to <command>nova-network</command>.</para>
+                <para>In the Networking API:</para>
+                <itemizedlist>
+                    <listitem>
+                        <para>Network. An isolated L2 network segment
+                            (similar to a VLAN) that forms the basis
+                            for describing the L2 network topology
+                            available in an Networking deployment.
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>Subnet. Associates a block of IP
+                            addresses and other network configuration,
+                            such as, default gateways or dns-servers,
+                            with an Networking network. Each subnet
+                            represents an IPv4 or IPv6 address block
+                            and, if needed, each Networking network
+                            can have multiple subnets.</para>
+                    </listitem>
+                    <listitem>
+                        <para>Port. Represents an attachment port to a
+                            L2 Networking network. When a port is
+                            created on the network, by default it is
+                            allocated an available fixed IP address
+                            out of one of the designated subnets for
+                            each IP version (if one exists). When the
+                            port is destroyed, its allocated addresses
+                            return to the pool of available IPs on the
+                            subnet. Users of the Networking API can
+                            either choose a specific IP address from
+                            the block, or let Networking choose the
+                            first available IP address.</para>
+                    </listitem>
+                </itemizedlist>
                 <para>The following table summarizes the attributes
-                    available for each of the previous networking
-                    abstractions. For more operations about API
-                    abstraction and operations, see the <link
+                    available for each networking abstraction. For
+                    information about API abstraction and operations,
+                    see the <link
                         xlink:href="http://docs.openstack.org/api/openstack-network/2.0/content/"
                         >Networking API v2.0 Reference</link>.</para>
                 <table rules="all">
@@ -526,7 +574,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><systemitem>admin_state_up</systemitem></td>
+                            <td><option>admin_state_up</option></td>
                             <td>bool</td>
                             <td>True</td>
                             <td>Administrative state of the network.
@@ -535,20 +583,20 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><systemitem>id</systemitem></td>
+                            <td><option>id</option></td>
                             <td>uuid-str</td>
                             <td>Generated</td>
                             <td>UUID for this network.</td>
                         </tr>
                         <tr>
-                            <td><systemitem>name</systemitem></td>
+                            <td><option>name</option></td>
                             <td>string</td>
                             <td>None</td>
                             <td>Human-readable name for this network;
                                 is not required to be unique.</td>
                         </tr>
                         <tr>
-                            <td><systemitem>shared</systemitem></td>
+                            <td><option>shared</option></td>
                             <td>bool</td>
                             <td>False</td>
                             <td>Specifies whether this network
@@ -558,21 +606,21 @@
                                 administrative users only.</td>
                         </tr>
                         <tr>
-                            <td><systemitem>status</systemitem></td>
+                            <td><option>status</option></td>
                             <td>string</td>
                             <td>N/A</td>
                             <td>Indicates whether this network is
                                 currently operational.</td>
                         </tr>
                         <tr>
-                            <td><systemitem>subnets</systemitem></td>
+                            <td><option>subnets</option></td>
                             <td>list(uuid-str)</td>
                             <td>Empty list</td>
                             <td>List of subnets associated with this
                                 network.</td>
                         </tr>
                         <tr>
-                            <td><systemitem>tenant_id</systemitem></td>
+                            <td><option>tenant_id</option></td>
                             <td>uuid-str</td>
                             <td>N/A</td>
                             <td>Tenant owner of the network. Only
@@ -599,13 +647,12 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><systemitem>allocation_pools</systemitem></td>
+                            <td><option>allocation_pools</option></td>
                             <td>list(dict)</td>
                             <td>Every address in
-                                   <systemitem>cidr</systemitem>,
-                                excluding
-                                   <systemitem>gateway_ip</systemitem>
-                                (if configured).</td>
+                                <option>cidr</option>, excluding
+                                   <option>gateway_ip</option> (if
+                                configured).</td>
                             <td><para>List of cidr sub-ranges that are
                                    available for dynamic allocation to
                                    ports. Syntax:</para>
@@ -614,37 +661,36 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><systemitem>cidr</systemitem></td>
+                            <td><option>cidr</option></td>
                             <td>string</td>
                             <td>N/A</td>
                             <td>IP range for this subnet, based on the
                                 IP version.</td>
                         </tr>
                         <tr>
-                            <td><systemitem>dns_nameservers</systemitem></td>
+                            <td><option>dns_nameservers</option></td>
                             <td>list(string)</td>
                             <td>Empty list</td>
                             <td>List of DNS name servers used by hosts
                                 in this subnet.</td>
                         </tr>
                         <tr>
-                            <td><systemitem>enable_dhcp</systemitem></td>
+                            <td><option>enable_dhcp</option></td>
                             <td>bool</td>
                             <td>True</td>
                             <td>Specifies whether DHCP is enabled for
                                 this subnet.</td>
                         </tr>
                         <tr>
-                            <td><systemitem>gateway_ip</systemitem></td>
+                            <td><option>gateway_ip</option></td>
                             <td>string</td>
-                            <td>First address in
-                                   <systemitem>cidr</systemitem>
+                            <td>First address in <option>cidr</option>
                             </td>
                             <td>Default gateway used by devices in
                                 this subnet.</td>
                         </tr>
                         <tr>
-                            <td><systemitem>host_routes</systemitem></td>
+                            <td><option>host_routes</option></td>
                             <td>list(dict)</td>
                             <td>Empty list</td>
                             <td>Routes that should be used by devices
@@ -652,33 +698,33 @@
                                 including local subnet route).</td>
                         </tr>
                         <tr>
-                            <td><systemitem>id</systemitem></td>
+                            <td><option>id</option></td>
                             <td>uuid-string</td>
                             <td>Generated</td>
                             <td>UUID representing this subnet.</td>
                         </tr>
                         <tr>
-                            <td><systemitem>ip_version</systemitem></td>
+                            <td><option>ip_version</option></td>
                             <td>int</td>
                             <td>4</td>
                             <td>IP version.</td>
                         </tr>
                         <tr>
-                            <td><systemitem>name</systemitem></td>
+                            <td><option>name</option></td>
                             <td>string</td>
                             <td>None</td>
                             <td>Human-readable name for this subnet
                                 (might not be unique).</td>
                         </tr>
                         <tr>
-                            <td><systemitem>network_id</systemitem></td>
+                            <td><option>network_id</option></td>
                             <td>uuid-string</td>
                             <td>N/A</td>
                             <td>Network with which this subnet is
                                 associated.</td>
                         </tr>
                         <tr>
-                            <td><systemitem>tenant_id</systemitem></td>
+                            <td><option>tenant_id</option></td>
                             <td>uuid-string</td>
                             <td>N/A</td>
                             <td>Owner of network. Only administrative
@@ -704,7 +750,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><systemitem>admin_state_up</systemitem></td>
+                            <td><option>admin_state_up</option></td>
                             <td>bool</td>
                             <td>true</td>
                             <td>Administrative state of this port. If
@@ -712,7 +758,7 @@
                                 does not forward packets.</td>
                         </tr>
                         <tr>
-                            <td><systemitem>device_id</systemitem></td>
+                            <td><option>device_id</option></td>
                             <td>string</td>
                             <td>None</td>
                             <td>Identifies the device using this port
@@ -720,14 +766,14 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><systemitem>device_owner</systemitem></td>
+                            <td><option>device_owner</option></td>
                             <td>string</td>
                             <td>None</td>
                             <td>Identifies the entity using this port
                                 (for example, a dhcp agent).</td>
                         </tr>
                         <tr>
-                            <td><systemitem>fixed_ips</systemitem></td>
+                            <td><option>fixed_ips</option></td>
                             <td>list(dict)</td>
                             <td>Automatically allocated from pool</td>
                             <td>Specifies IP addresses for this port;
@@ -736,40 +782,40 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><systemitem>id</systemitem></td>
+                            <td><option>id</option></td>
                             <td>uuid-string</td>
                             <td>Generated</td>
                             <td>UUID for this port.</td>
                         </tr>
                         <tr>
-                            <td><systemitem>mac_address</systemitem></td>
+                            <td><option>mac_address</option></td>
                             <td>string</td>
                             <td>Generated</td>
                             <td>Mac address to use on this port.</td>
                         </tr>
                         <tr>
-                            <td><systemitem>name</systemitem></td>
+                            <td><option>name</option></td>
                             <td>string</td>
                             <td>None</td>
                             <td>Human-readable name for this port
                                 (might not be unique).</td>
                         </tr>
                         <tr>
-                            <td><systemitem>network_id</systemitem></td>
+                            <td><option>network_id</option></td>
                             <td>uuid-string</td>
                             <td>N/A</td>
                             <td>Network with which this port is
                                 associated.</td>
                         </tr>
                         <tr>
-                            <td><systemitem>status</systemitem></td>
+                            <td><option>status</option></td>
                             <td>string</td>
                             <td>N/A</td>
                             <td>Indicates whether the network is
                                 currently operational.</td>
                         </tr>
                         <tr>
-                            <td><systemitem>tenant_id</systemitem></td>
+                            <td><option>tenant_id</option></td>
                             <td>uuid-string</td>
                             <td>N/A</td>
                             <td>Owner of the network. Only
@@ -819,11 +865,9 @@
                         </tr>
                         <tr>
                             <td>Lists ports for a specified tenant and
-                                displays the
-                                   <systemitem>id</systemitem>,
-                                   <systemitem>fixed_ips</systemitem>,
-                                and
-                                   <systemitem>device_owner</systemitem>
+                                displays the <option>id</option>,
+                                   <option>fixed_ips</option>, and
+                                   <option>device_owner</option>
                                 columns.</td>
                             <td><screen><prompt>$</prompt> <userinput>neutron port-list -c id -c fixed_ips -c device_owner</userinput></screen>
                             </td>
@@ -836,31 +880,36 @@
                     </tbody>
                 </table>
                 <note>
-                    <para>The <systemitem>device_owner</systemitem>
-                        field describes who owns the port. A port
-                        whose <systemitem>device_owner</systemitem>
-                        begins with: <itemizedlist>
-                            <listitem>
-                                <para><literal>network</literal> is created by Networking.</para>
-                            </listitem>
-                            <listitem>
-                                <para><literal>compute</literal> is created by Compute. </para>
-                            </listitem>
-                        </itemizedlist>
-                    </para>
+                    <para>The <option>device_owner</option> field
+                        describes who owns the port. A port whose
+                            <option>device_owner</option> begins
+                        with:</para>
+                    <itemizedlist>
+                        <listitem>
+                            <para><literal>network</literal> is
+                                created by Networking.</para>
+                        </listitem>
+                        <listitem>
+                            <para><literal>compute</literal> is
+                                created by Compute. </para>
+                        </listitem>
+                    </itemizedlist>
                 </note>
             </section>
             <section xml:id="admin_api_config">
                 <title>Administrative operations</title>
-                <para>The cloud administrator can perform any <systemitem>neutron</systemitem> call
-                    on behalf of tenants by specifying an Identity
-                        <systemitem>tenant_id</systemitem> in the request, as follows:</para>
+                <para>The cloud administrator can run any
+                        <command>neutron</command> command on behalf
+                    of tenants by specifying an Identity
+                        <option>tenant_id</option> in the command, as
+                    follows:</para>
                 <screen><prompt>$</prompt> <userinput>neutron net-create --tenant-id=<replaceable>tenant-id</replaceable> <replaceable>network-name</replaceable></userinput></screen>
                 <para>For example:</para>
                 <screen><prompt>$</prompt> <userinput>neutron net-create --tenant-id=5e4bbe24b67a4410bc4d9fae29ec394e net1</userinput></screen>
                 <note>
-                    <para>To view all tenant IDs in Identity, run the following command as an
-                        Identity (Keystone) admin user:</para>
+                    <para>To view all tenant IDs in Identity, run the
+                        following command as an Identity Service admin
+                        user:</para>
                     <screen><prompt>$</prompt> <userinput>keystone tenant-list</userinput></screen>
                 </note>
             </section>
@@ -943,20 +992,25 @@
                             <td><screen><prompt>$</prompt> <userinput>neutron net-list</userinput></screen></td>
                         </tr>
                         <tr>
-                            <td>Boots a VM with a single NIC on a selected Networking network.</td>
+                            <td>Boots a VM with a single NIC on a
+                                selected Networking network.</td>
                             <td><screen><prompt>$</prompt> <userinput>nova boot --image <replaceable>img</replaceable> --flavor <replaceable>flavor</replaceable> --nic net-id=<replaceable>net-id</replaceable> <replaceable>vm-name</replaceable></userinput></screen>
                             </td>
                         </tr>
                         <tr>
-                            <td><para>Searches for ports with a <systemitem>device_id</systemitem> (see Note below) that matches the
-                                    Compute instance UUID. </para>
+                            <td><para>Searches for ports with a
+                                   <option>device_id</option> that
+                                   matches the Compute instance UUID.
+                                   See <xref
+                                   linkend="network_compute_note"/>.
+                                </para>
                             </td>
                             <td><screen><prompt>$</prompt> <userinput>neutron port-list --device_id=<replaceable>vm-id</replaceable></userinput></screen></td>
                         </tr>
                         <tr>
                             <td>Searches for ports, but shows only the
-                                   <systemitem>mac_address</systemitem>
-                                for the port.</td>
+                                   <option>mac_address</option> for
+                                the port.</td>
                             <td><screen><prompt>$</prompt> <userinput>neutron port-list --field mac_address --device_id=<replaceable>vm-id</replaceable></userinput></screen></td>
                         </tr>
                         <tr>
@@ -966,22 +1020,26 @@
                         </tr>
                     </tbody>
                 </table>
-                <note><para>The
-                    <systemitem>device_id</systemitem>
-                    can also be a logical router
-                    ID.</para>
-                </note>
                 <note>
+                    <para>The <option>device_id</option> can also be a
+                        logical router ID.</para>
+                </note>
+                <note xml:id="network_compute_note">
+                    <title>VM creation and deletion</title>
                     <itemizedlist>
                         <listitem>
-                            <para>When you boot a Compute VM, a port on the network that corresponds
-                                to the VM NIC is automatically created and associated with the
-                                default security group. You can configure <link
-                                    linkend="enabling_ping_and_ssh">security group rules</link> to
+                            <para>When you boot a Compute VM, a port
+                                on the network that corresponds to the
+                                VM NIC is automatically created and
+                                associated with the default security
+                                group. You can configure <link
+                                   linkend="enabling_ping_and_ssh"
+                                   >security group rules</link> to
                                 enable users to access the VM.</para>
                         </listitem>
                         <listitem>
-                            <para>When you delete a Compute VM, the underlying Networking port is
+                            <para>When you delete a Compute VM, the
+                                underlying Networking port is
                                 automatically deleted.</para>
                         </listitem>
                     </itemizedlist>
@@ -1008,10 +1066,12 @@
                             <td><screen><prompt>$</prompt> <userinput>nova boot --image <replaceable>img</replaceable> --flavor <replaceable>flavor</replaceable> --nic net-id=<replaceable>net1-id</replaceable> --nic net-id=<replaceable>net2-id</replaceable> <replaceable>vm-name</replaceable></userinput></screen></td>
                         </tr>
                         <tr>
-                            <td>Boots a VM with a specific IP address. First, create an Networking
-                                port with a specific IP address. Then, boot a VM specifying a
-                                    <systemitem>port-id</systemitem> rather than a
-                                    <systemitem>net-id</systemitem>.</td>
+                            <td>Boots a VM with a specific IP address.
+                                First, create an Networking port with
+                                a specific IP address. Then, boot a VM
+                                specifying a <option>port-id</option>
+                                rather than a
+                                <option>net-id</option>.</td>
                             <td><screen><prompt>$</prompt> <userinput>neutron port-create --fixed-ip subnet_id=<replaceable>subnet-id</replaceable>,ip_address=<replaceable>IP</replaceable> <replaceable>net-id</replaceable></userinput>
 <prompt>$</prompt> <userinput>nova boot --image <replaceable>img</replaceable> --flavor <replaceable>flavor</replaceable> --nic port-id=<replaceable>port-id</replaceable> <replaceable>vm-name</replaceable></userinput></screen>
                             </td>
@@ -1020,8 +1080,7 @@
                             <td>Boots a VM that connects to all
                                 networks that are accessible to the
                                 tenant who submits the request
-                                (without the
-                                   <systemitem>--nic</systemitem>
+                                (without the <option>--nic</option>
                                 option).</td>
                             <td><screen><prompt>$</prompt> <userinput>nova boot --image <replaceable>img</replaceable> --flavor <replaceable>flavor</replaceable> <replaceable>vm-name</replaceable></userinput></screen>
                             </td>
@@ -1029,8 +1088,9 @@
                     </tbody>
                 </table>
                 <note>
-                    <para>Networking does not currently support the <command>v4-fixed-ip</command>
-                        parameter of the <command>--nic</command> option for the
+                    <para>Networking does not currently support the
+                            <command>v4-fixed-ip</command> parameter
+                        of the <command>--nic</command> option for the
                             <command>nova</command> command.</para>
                 </note>
             </section>
@@ -1060,8 +1120,8 @@
                                 secgroup-add-rule</command> or
                                 <command>euca-authorize</command>
                             command. The following
-                                <systemitem>nova</systemitem> commands
-                            allow <command>ping</command> and
+                                <command>nova</command> commands allow
+                                <command>ping</command> and
                                 <command>ssh</command> access to your
                             VMs.</para>
                         <screen><prompt>$</prompt> <userinput>nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0</userinput>
@@ -1069,1795 +1129,42 @@
                     </listitem>
                 </itemizedlist>
                 <note>
-                    <para>If your plug-in implements Networking security groups, you can also
-                        leverage Compute security groups by setting <systemitem>security_group_api =
-                            neutron</systemitem> in <filename>nova.conf</filename>. After setting
-                        this option, all Compute security group commands are proxied to
+                    <para>If your plug-in implements Networking
+                        security groups, you can also leverage Compute
+                        security groups by setting
+                            <code>security_group_api = neutron</code>
+                        in the <filename>nova.conf</filename> file.
+                        After you set this option, all Compute
+                        security group commands are proxied to
                         Networking.</para>
                 </note>
             </section>
         </section>
     </section>
-    <section xml:id="section_networking-adv-features">
-        <title>Advanced features through API extensions</title>
-        <para>Several plug-ins implement API extensions that provide
-            capabilities similar to what was available in
-            nova-network: These plug-ins are likely to be of interest
-            to the OpenStack community.</para>
-        <section xml:id="section_provider_networks">
-            <title>Provider networks</title>
-            <para>Provider networks enable cloud administrators to create Networking networks that
-                map directly to the physical networks in the data center. This is commonly used to
-                give tenants direct access to a public network that can be used to reach the
-                Internet. It may also be used to integrate with VLANs in the network that already
-                have a defined meaning (for example, allow a VM from the "marketing" department to
-                be placed on the same VLAN as bare-metal marketing hosts in the same data
-                center).</para>
-            <para>The provider extension allows administrators to explicitly manage the relationship
-                between Networking virtual networks and underlying physical mechanisms such as VLANs
-                and tunnels. When this extension is supported, Networking client users with
-                administrative privileges see additional provider attributes on all virtual
-                networks, and are able to specify these attributes in order to create provider
-                networks.</para>
-            <para>The provider extension is supported by the
-                openvswitch and linuxbridge plug-ins. Configuration of
-                these plug-ins requires familiarity with this
-                extension.</para>
-            <section xml:id="provider_terminology">
-                <title>Terminology</title>
-                <para>A number of terms are used in the provider
-                    extension and in the configuration of plug-ins
-                    supporting the provider extension:<itemizedlist>
-                        <listitem>
-                            <para><emphasis role="bold">virtual network</emphasis>. An Networking L2
-                                network (identified by a UUID and optional name) whose ports can be
-                                attached as vNICs to Compute instances and to various Networking
-                                agents. The openvswitch and linuxbridge plug-ins each support
-                                several different mechanisms to realize virtual networks.</para>
-                        </listitem>
-                        <listitem>
-                            <para><emphasis role="bold">physical network</emphasis>. A network
-                                connecting virtualization hosts (such as, Compute nodes) with each
-                                other and with other network resources. Each physical network may
-                                support multiple virtual networks. The provider extension and the
-                                plug-in configurations identify physical networks using simple
-                                string names.</para>
-                        </listitem>
-                        <listitem>
-                            <para><emphasis role="bold">tenant
-                                   network</emphasis>. A "normal"
-                                virtual network created by/for a
-                                tenant. The tenant is not aware of how
-                                that network is physically
-                                realized.</para>
-                        </listitem>
-                        <listitem>
-                            <para><emphasis role="bold">provider
-                                   network</emphasis>. A virtual
-                                network administratively created to
-                                map to a specific network in the data
-                                center, typically to enable direct
-                                access to non-OpenStack resources on
-                                that network. Tenants can be given
-                                access to provider networks.</para>
-                        </listitem>
-                        <listitem>
-                            <para><emphasis role="bold">VLAN
-                                   network</emphasis>. A virtual
-                                network realized as packets on a
-                                specific physical network containing
-                                IEEE 802.1Q headers with a specific
-                                VID field value. VLAN networks sharing
-                                the same physical network are isolated
-                                from each other at L2, and can even
-                                have overlapping IP address spaces.
-                                Each distinct physical network
-                                supporting VLAN networks is treated as
-                                a separate VLAN trunk, with a distinct
-                                space of VID values. Valid VID values
-                                are 1 through 4094.</para>
-                        </listitem>
-                        <listitem>
-                            <para><emphasis role="bold">flat
-                                   network</emphasis>. A virtual
-                                network realized as packets on a
-                                specific physical network containing
-                                no IEEE 802.1Q header. Each physical
-                                network can realize at most one flat
-                                network.</para>
-                        </listitem>
-                        <listitem>
-                            <para><emphasis role="bold">local
-                                   network</emphasis>. A virtual
-                                network that allows communication
-                                within each host, but not across a
-                                network. Local networks are intended
-                                mainly for single-node test scenarios,
-                                but may have other uses.</para>
-                        </listitem>
-                        <listitem>
-                            <para><emphasis role="bold">GRE network</emphasis>. A virtual network
-                                realized as network packets encapsulated using GRE. GRE networks are
-                                also referred to as "tunnels". GRE tunnel packets are routed by the
-                                host's IP routing table, so GRE networks are not associated by
-                                Networking with specific physical networks.</para>
-                        </listitem>
-                    </itemizedlist></para>
-                <para>Both the openvswitch and linuxbridge plug-ins
-                    support VLAN networks, flat networks, and local
-                    networks. Only the openvswitch plug-in currently
-                    supports GRE networks, provided that the host's
-                    Linux kernel supports the required Open vSwitch
-                    features.</para>
-            </section>
-            <section xml:id="provider_attributes">
-                <title>Provider attributes</title>
-                <para>The provider extension extends the Networking network resource with the
-                    following three additional attributes:</para>
-                <table rules="all">
-                    <caption>Provider Network Attributes</caption>
-                    <col width="25%"/>
-                    <col width="10%"/>
-                    <col width="25%"/>
-                    <col width="40%"/>
-                    <thead>
-                        <tr>
-                            <th>Attribute name</th>
-                            <th>Type</th>
-                            <th>Default Value</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>provider:network_type</td>
-                            <td>String</td>
-                            <td>N/A</td>
-                            <td>The physical mechanism by which the
-                                virtual network is realized. Possible
-                                values are "flat", "vlan", "local",
-                                and "gre", corresponding to flat
-                                networks, VLAN networks, local
-                                networks, and GRE networks as defined
-                                above. All types of provider networks
-                                can be created by administrators,
-                                while tenant networks can be realized
-                                as "vlan", "gre", or "local" network
-                                types depending on plug-in
-                                configuration.</td>
-                        </tr>
-                        <tr>
-                            <td>provider:physical_network</td>
-                            <td>String</td>
-                            <td>If a physical network named "default"
-                                has been configured, and if
-                                provider:network_type is "flat" or
-                                "vlan", then "default" is used.</td>
-                            <td>The name of the physical network over
-                                which the virtual network is realized
-                                for flat and VLAN networks. Not
-                                applicable to the "local" or "gre"
-                                network types.</td>
-                        </tr>
-                        <tr>
-                            <td>provider:segmentation_id</td>
-                            <td>Integer</td>
-                            <td>N/A</td>
-                            <td>For VLAN networks, the VLAN VID on the
-                                physical network that realizes the
-                                virtual network. Valid VLAN VIDs are 1
-                                through 4094. For GRE networks, the
-                                tunnel ID. Valid tunnel IDs are any 32
-                                bit unsigned integer. Not applicable
-                                to the "flat" or "local" network
-                                types.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <para>The provider attributes are returned by Networking API operations when the
-                    client is authorized for the <code>extension:provider_network:view</code> action
-                    through the Networking policy configuration. The provider attributes are only
-                    accepted for network API operations if the client is authorized for the
-                        <code>extension:provider_network:set</code> action. The default Networking
-                    API policy configuration authorizes both actions for users with the admin role.
-                    See <xref linkend="section_auth"/> for details on policy configuration.</para>
-            </section>
-            <section xml:id="provider_api_workflow">
-                <title>Provider Extension API operations</title>
-                <para>To use the provider extension with the default
-                    policy settings, you must have the administrative
-                    role.</para>
-                <para>The following table shows example neutron
-                    commands that enable you to complete basic
-                    provider extension API operations:</para>
-                <table rules="all">
-                    <caption>Basic provider extension API
-                        operations</caption>
-                    <col width="40%"/>
-                    <col width="60%"/>
-                    <thead>
-                        <tr>
-                            <th>Operation</th>
-                            <th>Command</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <para>Shows all attributes of a
-                                   network, including provider
-                                   attributes.</para></td>
-                            <td>
-                                <screen><prompt>$</prompt> <userinput>neutron net-show &lt;name or net-id&gt;</userinput></screen>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <para>Creates a local provider
-                                   network.</para></td>
-                            <td>
-                                <screen><prompt>$</prompt> <userinput>neutron net-create &lt;name&gt; --tenant_id &lt;tenant-id&gt; --provider:network_type local</userinput></screen>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <para>Creates a flat provider network.
-                                   When you create flat networks,
-                                   &lt;phys-net-name&gt; must be known
-                                   to the plug-in. See the <citetitle
-                                   xmlns:svg="http://www.w3.org/2000/svg"
-                                   xmlns:html="http://www.w3.org/1999/xhtml"
-                                   >OpenStack Configuration
-                                   Reference</citetitle> for
-                                   details.</para></td>
-                            <td>
-                                <screen><prompt>$</prompt> <userinput>neutron net-create &lt;name&gt; --tenant_id &lt;tenant-id&gt; --provider:network_type flat --provider:physical_network &lt;phys-net-name&gt;</userinput></screen>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <para>Creates a VLAN provider network.
-                                   When you create VLAN networks,
-                                   &lt;phys-net-name&gt; must be known
-                                   to the plug-in. See the <citetitle
-                                   xmlns:svg="http://www.w3.org/2000/svg"
-                                   xmlns:html="http://www.w3.org/1999/xhtml"
-                                   >OpenStack Configuration
-                                   Reference</citetitle> for details
-                                   on configuring network_vlan_ranges
-                                   to identify all physical networks.
-                                   When you create VLAN networks,
-                                   &lt;VID&gt; can fall either within
-                                   or outside any configured ranges of
-                                   VLAN IDs from which tenant networks
-                                   are allocated.</para></td>
-                            <td>
-                                <screen><prompt>$</prompt> <userinput>neutron net-create &lt;name&gt; --tenant_id &lt;tenant-id&gt; --provider:network_type vlan --provider:physical_network &lt;phys-net-name&gt; --provider:segmentation_id &lt;VID&gt;</userinput></screen>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <para>Creates a GRE provider network.
-                                   When you create GRE networks,
-                                   &lt;tunnel-id&gt; can be either
-                                   inside or outside any tunnel ID
-                                   ranges from which tenant networks
-                                   are allocated.</para>
-                                <para>After you create provider
-                                   networks, you can allocate subnets,
-                                   which you can use in the same way
-                                   as other virtual networks, subject
-                                   to authorization policy based on
-                                   the specified
-                                   &lt;tenant_id&gt;.</para></td>
-                            <td>
-                                <screen><prompt>$</prompt> <userinput>neutron net-create &lt;name&gt; --tenant_id &lt;tenant-id&gt; --provider:network_type gre --provider:segmentation_id &lt;tunnel-id&gt;</userinput></screen>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-        </section>
-        <section xml:id="section_l3_router_and_nat">
-            <title>L3 Routing and NAT</title>
-            <para>Just like the core Networking API provides abstract L2 network segments that are
-                decoupled from the technology used to implement the L2 network, Networking includes
-                an API extension that provides abstract L3 routers that API users can dynamically
-                provision and configure. These Networking routers can connect multiple L2 Networking
-                networks, and can also provide a "gateway" that connects one or more private L2
-                networks to a shared "external" network (for example, a public network for access to
-                the Internet). See the <citetitle xmlns:svg="http://www.w3.org/2000/svg"
-                    xmlns:html="http://www.w3.org/1999/xhtml">OpenStack Configuration
-                    Reference</citetitle> for details on common models of deploying Networking L3
-                routers.</para>
-            <para>The L3 router provides basic NAT capabilities on "gateway" ports that uplink the
-                router to external networks. This router SNATs all traffic by default, and supports
-                "Floating IPs", which creates a static one-to-one mapping from a public IP on the
-                external network to a private IP on one of the other subnets attached to the router.
-                This allows a tenant to selectively expose VMs on private networks to other hosts on
-                the external network (and often to all hosts on the Internet). Floating IPs can be
-                allocated and then mapped from one Networking port to another, as needed.</para>
-            <section xml:id="l3_api_abstractions">
-                <title>L3 API abstractions</title>
-                <table rules="all">
-                    <caption>Router</caption>
-                    <col width="20%"/>
-                    <col width="20%"/>
-                    <col width="20%"/>
-                    <col width="40%"/>
-                    <thead>
-                        <tr>
-                            <th>Attribute name</th>
-                            <th>Type</th>
-                            <th>Default Value</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>id</td>
-                            <td>uuid-str</td>
-                            <td>generated</td>
-                            <td>UUID for the router.</td>
-                        </tr>
-                        <tr>
-                            <td>name</td>
-                            <td>String</td>
-                            <td>None</td>
-                            <td>Human-readable name for the router.
-                                Might not be unique.</td>
-                        </tr>
-                        <tr>
-                            <td>admin_state_up</td>
-                            <td>Bool</td>
-                            <td>True</td>
-                            <td>The administrative state of router. If
-                                false (down), the router does not
-                                forward packets.</td>
-                        </tr>
-                        <tr>
-                            <td>status</td>
-                            <td>String</td>
-                            <td>N/A</td>
-                            <td><para>Indicates whether router is
-                                   currently operational.</para></td>
-                        </tr>
-                        <tr>
-                            <td>tenant_id</td>
-                            <td>uuid-str</td>
-                            <td>N/A</td>
-                            <td>Owner of the router. Only admin users
-                                can specify a tenant_id other than its
-                                own.</td>
-                        </tr>
-                        <tr>
-                            <td>external_gateway_info</td>
-                            <td>dict contain 'network_id' key-value
-                                pair</td>
-                            <td>Null</td>
-                            <td>External network that this router
-                                connects to for gateway services (for
-                                example, NAT)</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table rules="all">
-                    <caption>Floating IP</caption>
-                    <col width="20%"/>
-                    <col width="20%"/>
-                    <col width="20%"/>
-                    <col width="40%"/>
-                    <thead>
-                        <tr>
-                            <th>Attribute name</th>
-                            <th>Type</th>
-                            <th>Default Value</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>id</td>
-                            <td>uuid-str</td>
-                            <td>generated</td>
-                            <td>UUID for the floating IP.</td>
-                        </tr>
-                        <tr>
-                            <td>floating_ip_address</td>
-                            <td>string (IP address)</td>
-                            <td>allocated by Networking</td>
-                            <td>The external network IP address
-                                available to be mapped to an internal
-                                IP address.</td>
-                        </tr>
-                        <tr>
-                            <td>floating_network_id</td>
-                            <td>uuid-str</td>
-                            <td>N/A</td>
-                            <td><para>The network indicating the set
-                                   of subnets from which the floating
-                                   IP should be allocated</para></td>
-                        </tr>
-                        <tr>
-                            <td>router_id</td>
-                            <td>uuid-str</td>
-                            <td>N/A</td>
-                            <td>Read-only value indicating the router
-                                that connects the external network to
-                                the associated internal port, if a
-                                port is associated.</td>
-                        </tr>
-                        <tr>
-                            <td>port_id</td>
-                            <td>uuid-str</td>
-                            <td>Null</td>
-                            <td>Indicates the internal Networking port associated with the external
-                                floating IP.</td>
-                        </tr>
-                        <tr>
-                            <td>fixed_ip_address</td>
-                            <td>string (IP address)</td>
-                            <td>Null</td>
-                            <td>Indicates the IP address on the internal port that is mapped to by
-                                the floating IP (since an Networking port might have more than one
-                                IP address).</td>
-                        </tr>
-                        <tr>
-                            <td>tenant_id</td>
-                            <td>uuid-str</td>
-                            <td>N/A</td>
-                            <td>Owner of the Floating IP. Only admin
-                                users can specify a tenant_id other
-                                than its own.</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-            </section>
-            <section xml:id="l3_workflow">
-                <title>Basic L3 operations</title>
-                <para>External networks are visible to all users.
-                    However, the default policy settings enable only
-                    administrative users to create, update, and delete
-                    external networks.</para>
-                <para>The following table shows example neutron
-                    commands that enable you to complete basic L3
-                    operations:</para>
-                <table rules="all">
-                    <caption>Basic L3 operations</caption>
-                    <col width="40%"/>
-                    <col width="60%"/>
-                    <thead>
-                        <tr>
-                            <th>Operation</th>
-                            <th>Command</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <para>Creates external
-                                   networks.</para></td>
-                            <td>
-                                <screen><prompt>$</prompt> <userinput>neutron net-create public --router:external=True</userinput>
-<prompt>$</prompt> <userinput>neutron subnet-create public 172.16.1.0/24</userinput></screen>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <para>Lists external
-                                networks.</para></td>
-                            <td>
-                                <screen><prompt>$</prompt> <userinput>neutron net-list -- --router:external=True</userinput></screen>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><para>Creates an internal-only router
-                                   that connects to multiple L2
-                                   networks privately.</para></td>
-                            <td>
-                                <screen><prompt>$</prompt> <userinput>neutron net-create net1</userinput>
-<prompt>$</prompt> <userinput>neutron subnet-create net1 10.0.0.0/24</userinput>
-<prompt>$</prompt> <userinput>neutron net-create net2</userinput>
-<prompt>$</prompt> <userinput>neutron subnet-create net2 10.0.1.0/24</userinput>
-<prompt>$</prompt> <userinput>neutron router-create router1</userinput>
-<prompt>$</prompt> <userinput>neutron router-interface-add router1 &lt;subnet1-uuid&gt;</userinput>
-<prompt>$</prompt> <userinput>neutron router-interface-add router1 &lt;subnet2-uuid&gt;</userinput></screen>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <para>Connects a router to an external
-                                   network, which enables that router
-                                   to act as a NAT gateway for
-                                   external connectivity.</para></td>
-                            <td>
-                                <screen><prompt>$</prompt> <userinput>neutron router-gateway-set router1 &lt;ext-net-id&gt;</userinput></screen>
-                                <para>The router obtains an interface with the gateway_ip address of
-                                    the subnet, and this interface is attached to a port on the L2
-                                    Networking network associated with the subnet. The router also
-                                    gets a gateway interface to the specified external network. This
-                                    provides SNAT connectivity to the external network as well as
-                                    support for floating IPs allocated on that external
-                                    networks. Commonly an external network maps to a network in the
-                                    provider</para>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <para>Lists routers.</para></td>
-                            <td>
-                                <screen><prompt>$</prompt> <userinput>neutron router-list</userinput></screen>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <para>Shows information for a
-                                   specified router.</para></td>
-                            <td>
-                                <screen><prompt>$</prompt> <userinput>neutron router-show &lt;router_id&gt;</userinput></screen>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <para>Shows all internal interfaces
-                                   for a router.</para>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <para>Identifies the
-                                   <literal>port-id</literal> that
-                                   represents the VM NIC to which the
-                                   floating IP should map.</para></td>
-                            <td>
-                                <screen><prompt>$</prompt> <userinput>neutron port-list -c id -c fixed_ips -- --device_id=&lt;instance_id&gt;</userinput></screen>
-                                <para>This port must be on an Networking subnet that is attached to
-                                    a router uplinked to the external network used to create the
-                                    floating IP.  Conceptually, this is because the router must be
-                                    able to perform the Destination NAT (DNAT) rewriting of packets
-                                    from the Floating IP address (chosen from a subnet on the
-                                    external network) to the internal Fixed IP (chosen from a
-                                    private subnet that is “behind” the router).</para>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <para>Creates a floating IP address
-                                   and associates it with a
-                                   port.</para></td>
-                            <td>
-                                <screen><prompt>$</prompt> <userinput>neutron floatingip-create &lt;ext-net-id&gt;</userinput>
-<prompt>$</prompt> <userinput>neutron floatingip-associate &lt;floatingip-id&gt; &lt;internal VM port-id&gt;</userinput></screen>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <para>Creates a floating IP address
-                                   and associates it with a port, in a
-                                   single step.</para></td>
-                            <td>
-                                <screen><prompt>$</prompt> <userinput>neutron floatingip-create --port_id &lt;internal VM port-id&gt; &lt;ext-net-id&gt;</userinput></screen>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <para>Lists floating IPs.</para></td>
-                            <td>
-                                <screen><prompt>$</prompt> <userinput>neutron floatingip-list</userinput></screen>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <para>Finds floating IP for a
-                                   specified VM port.</para></td>
-                            <td>
-                                <screen><prompt>$</prompt> <userinput>neutron floatingip-list -- --port_id=ZZZ</userinput></screen>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <para>Disassociates a floating IP
-                                   address.</para></td>
-                            <td>
-                                <screen><prompt>$</prompt> <userinput>neutron floatingip-disassociate &lt;floatingip-id&gt;</userinput></screen>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <para>Deletes the floating IP
-                                   address.</para></td>
-                            <td>
-                                <screen><prompt>$</prompt> <userinput>neutron floatingip-delete &lt;floatingip-id&gt;</userinput></screen>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <para>Clears the gateway.</para></td>
-                            <td>
-                                <screen><prompt>$</prompt> <userinput>neutron router-gateway-clear router1</userinput></screen>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <para>Removes the interfaces from the
-                                   router.</para></td>
-                            <td>
-                                <screen><prompt>$</prompt> <userinput>neutron router-interface-delete router1 &lt;subnet-id&gt;</userinput></screen>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <para>Deletes the router.</para></td>
-                            <td>
-                                <screen><prompt>$</prompt> <userinput>neutron router-delete router1</userinput></screen>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-        </section>
-        <section xml:id="section_securitygroups">
-            <title>Security groups</title>
-            <para>Security groups and security group rules allows
-                administrators and tenants the ability to specify the
-                type of traffic and direction (ingress/egress) that is
-                allowed to pass through a port. A security group is a
-                container for security group rules.</para>
-            <para>When a port is created in Networking it is associated with a security group. If a
-                security group is not specified the port is associated with a 'default' security
-                group. By default, this group drops all ingress traffic and allows all egress. Rules
-                can be added to this group in order to change the behaviour.</para>
-            <para>To use the Compute security group APIs or use Compute to orchestrate the creation
-                of ports for instances on specific security groups, you must complete additional
-                configuration. You must configure the <filename>/etc/nova/nova.conf</filename> file
-                and set the <code>security_group_api=neutron</code> option on every node that runs
-                    <systemitem class="service">nova-compute</systemitem> and <systemitem
-                    class="service">nova-api</systemitem>. After you make this change, restart
-                    <systemitem class="service">nova-api</systemitem> and <systemitem
-                    class="service">nova-compute</systemitem> to pick up this change. Then, you can
-                use both the Compute and OpenStack Network security group APIs at the same
-                time.</para>
-            <note>
-                <itemizedlist>
-                    <listitem>
-                        <para>To use the Compute security group API with Networking, the Networking
-                            plug-in must implement the security group API. The following plug-ins
-                            currently implement this: Nicira NVP, Open vSwitch, Linux Bridge, NEC,
-                            and Ryu.</para>
-                    </listitem>
-                    <listitem>
-                        <para>You must configure the correct firewall
-                            driver in the
-                                <literal>securitygroup</literal>
-                            section of the plug-in/agent configuration
-                            file. Some plug-ins and agents, such as
-                            Linux Bridge Agent and Open vSwitch Agent,
-                            use the no-operation driver as the
-                            default, which results in non-working
-                            security groups.</para>
-                    </listitem>
-                    <listitem>
-                        <para>When using the security group API through Compute, security groups are
-                            applied to all ports on an instance. The reason for this is that Compute
-                            security group APIs are instances based and not port based as
-                            Networking.</para>
-                    </listitem>
-                </itemizedlist>
-            </note>
-            <section xml:id="securitygroup_api_abstractions">
-                <title>Security Group API Abstractions</title>
-                <table rules="all">
-                    <caption>Security Group Attributes</caption>
-                    <col width="20%"/>
-                    <col width="20%"/>
-                    <col width="20%"/>
-                    <col width="40%"/>
-                    <thead>
-                        <tr>
-                            <th>Attribute name</th>
-                            <th>Type</th>
-                            <th>Default Value</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>id</td>
-                            <td>uuid-str</td>
-                            <td>generated</td>
-                            <td>UUID for the security group.</td>
-                        </tr>
-                        <tr>
-                            <td>name</td>
-                            <td>String</td>
-                            <td>None</td>
-                            <td>Human-readable name for the security
-                                group. Might not be unique. Cannot be
-                                named default as that is automatically
-                                created for a tenant.</td>
-                        </tr>
-                        <tr>
-                            <td>description</td>
-                            <td>String</td>
-                            <td>None</td>
-                            <td>Human-readable description of a
-                                security group.</td>
-                        </tr>
-                        <tr>
-                            <td>tenant_id</td>
-                            <td>uuid-str</td>
-                            <td>N/A</td>
-                            <td>Owner of the security group. Only
-                                admin users can specify a tenant_id
-                                other than their own.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table rules="all">
-                    <caption>Security Group Rules</caption>
-                    <col width="20%"/>
-                    <col width="20%"/>
-                    <col width="20%"/>
-                    <col width="40%"/>
-                    <thead>
-                        <tr>
-                            <th>Attribute name</th>
-                            <th>Type</th>
-                            <th>Default Value</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>id</td>
-                            <td>uuid-str</td>
-                            <td>generated</td>
-                            <td>UUID for the security group rule.</td>
-                        </tr>
-                        <tr>
-                            <td>security_group_id</td>
-                            <td>uuid-str or Integer</td>
-                            <td>allocated by Networking</td>
-                            <td>The security group to associate rule
-                                with.</td>
-                        </tr>
-                        <tr>
-                            <td>direction</td>
-                            <td>String</td>
-                            <td>N/A</td>
-                            <td>The direction the traffic is allow
-                                (ingress/egress) from a VM.</td>
-                        </tr>
-                        <tr>
-                            <td>protocol</td>
-                            <td>String</td>
-                            <td>None</td>
-                            <td>IP Protocol (icmp, tcp, udp, and so
-                                on).</td>
-                        </tr>
-                        <tr>
-                            <td>port_range_min</td>
-                            <td>Integer</td>
-                            <td>None</td>
-                            <td>Port at start of range</td>
-                        </tr>
-                        <tr>
-                            <td>port_range_max</td>
-                            <td>Integer</td>
-                            <td>None</td>
-                            <td>Port at end of range</td>
-                        </tr>
-                        <tr>
-                            <td>ethertype</td>
-                            <td>String</td>
-                            <td>None</td>
-                            <td>ethertype in L2 packet (IPv4, IPv6,
-                                and so on)</td>
-                        </tr>
-                        <tr>
-                            <td>remote_ip_prefix</td>
-                            <td>string (IP cidr)</td>
-                            <td>None</td>
-                            <td>CIDR for address range</td>
-                        </tr>
-                        <tr>
-                            <td>remote_group_id</td>
-                            <td>uuid-str or Integer</td>
-                            <td>allocated by Networking or Compute</td>
-                            <td>Source security group to apply to
-                                rule.</td>
-                        </tr>
-                        <tr>
-                            <td>tenant_id</td>
-                            <td>uuid-str</td>
-                            <td>N/A</td>
-                            <td>Owner of the security group rule. Only
-                                admin users can specify a tenant_id
-                                other than its own.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-            <section xml:id="securitygroup_workflow">
-                <title>Basic security group operations</title>
-                <para>The following table shows example neutron
-                    commands that enable you to complete basic
-                    security group operations:</para>
-                <table rules="all">
-                    <caption>Basic security group operations</caption>
-                    <col width="40%"/>
-                    <col width="60%"/>
-                    <thead>
-                        <tr>
-                            <th>Operation</th>
-                            <th>Command</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <para>Creates a security group for our
-                                   web servers.</para></td>
-                            <td>
-                                <screen><prompt>$</prompt> <userinput>neutron security-group-create webservers --description "security group for webservers"</userinput></screen></td>
-                        </tr>
-                        <tr>
-                            <td><para>Lists security
-                                groups.</para></td>
-                            <td><screen><prompt>$</prompt> <userinput>neutron security-group-list</userinput></screen>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <para>Creates a security group rule to
-                                   allow port 80 ingress.</para></td>
-                            <td><screen><prompt>$</prompt> <userinput>neutron security-group-rule-create --direction ingress --protocol tcp --port_range_min 80 --port_range_max 80 &lt;security_group_uuid&gt;</userinput></screen>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <para>Lists security group
-                                   rules.</para></td>
-                            <td><screen><prompt>$</prompt> <userinput>neutron security-group-rule-list</userinput></screen>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><para>Deletes a security group
-                                   rule.</para></td>
-                            <td><screen><prompt>$</prompt> <userinput>neutron security-group-rule-delete &lt;security_group_rule_uuid&gt;</userinput></screen>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <para>Deletes a security
-                                group.</para></td>
-                            <td><screen><prompt>$</prompt> <userinput>neutron security-group-delete &lt;security_group_uuid&gt;</userinput></screen>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><para>Creates a port and associates
-                                   two security groups.</para></td>
-                            <td><screen><prompt>$</prompt> <userinput>neutron port-create --security-group &lt;security_group_id1&gt; --security-group &lt;security_group_id2&gt; &lt;network_id&gt;</userinput></screen>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <para>Removes security groups from a
-                                   port.</para></td>
-                            <td><screen><prompt>$</prompt> <userinput>neutron port-update --no-security-groups &lt;port_id&gt;</userinput></screen>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-        </section>
-        <section xml:id="lbaas_workflow">
-            <title>Basic Load-Balancer-as-a-Service operations</title>
-            <note>
-                <para>The Load-Balancer-as-a-Service (LBaaS) API
-                    provisions and configures load balancers. The
-                    Havana release offers a reference implementation
-                    that is based on the HAProxy software load
-                    balancer.</para>
-            </note>
-            <para>The following table shows example neutron commands
-                that enable you to complete basic LBaaS
-                operations:</para>
-            <table rules="all">
-                <caption>Basic LBaaS operations</caption>
-                <col width="40%"/>
-                <col width="60%"/>
-                <thead>
-                    <tr>
-                        <th>Operation</th>
-                        <th>Command</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <para>Creates a load balancer pool by
-                                using specific provider.</para>
-                            <para><parameter>--provider</parameter> is
-                                an optional argument. If not used, the
-                                pool is created with default provider
-                                for LBaaS service. You should
-                                configure the default provider in the
-                                   <literal>[service_providers]</literal>
-                                section of
-                                   <filename>neutron.conf</filename>
-                                file. If no default provider is
-                                specified for LBaaS, the
-                                   <parameter>--provider</parameter>
-                                option is required for pool
-                                creation.</para></td>
-                        <td>
-                            <screen><prompt>$</prompt> <userinput>neutron lb-pool-create --lb-method ROUND_ROBIN --name mypool --protocol HTTP --subnet-id &lt;subnet-uuid&gt; <parameter>--provider &lt;provider_name&gt;</parameter></userinput></screen></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <para>Associates two web servers with
-                                pool.</para></td>
-                        <td>
-                            <screen><prompt>$</prompt> <userinput>neutron lb-member-create --address  &lt;webserver one IP&gt; --protocol-port 80 mypool</userinput>
-<prompt>$</prompt> <userinput>neutron lb-member-create --address  &lt;webserver two IP&gt; --protocol-port 80 mypool</userinput></screen></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <para>Creates a health monitor which
-                                checks to make sure our instances are
-                                still running on the specified
-                                protocol-port.</para></td>
-                        <td><screen><prompt>$</prompt> <userinput>neutron lb-healthmonitor-create --delay 3 --type HTTP --max-retries 3 --timeout 3</userinput></screen>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><para>Associates a health monitor with
-                                pool.</para></td>
-                        <td><screen><prompt>$</prompt> <userinput>neutron lb-healthmonitor-associate  &lt;healthmonitor-uuid&gt; mypool</userinput></screen>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <para>Creates a virtual IP (VIP) address
-                                that, when accessed through the load
-                                balancer, directs the requests to one
-                                of the pool members.</para></td>
-                        <td>
-                            <screen><prompt>$</prompt> <userinput>neutron lb-vip-create --name myvip --protocol-port 80 --protocol HTTP --subnet-id &lt;subnet-uuid&gt; mypool</userinput></screen>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-        <section xml:id="fwaas">
-        <title>Firewall-as-a-Service</title>
-            <para>The Firewall-as-a-Service (FWaaS) API is an
-                experimental API meant to give early adopters and
-                vendors a chance to build implementations against.</para>
-
-            <para><emphasis role="bold">Reference Implementation</emphasis> This extension is backed
-                by a reference implementation that works with the Neutron OVS plug-in and provides
-                perimeter firewall functionality. It leverages the footprint of the Neutron OVS L3
-                agent and an IPTables driver to apply the Firewall Rules contained in a particular
-                Firewall Policy. This reference implementation supports one Firewall Policy and
-                consequently one logical Firewall instance per tenant (this is not a constraint of
-                the resource model, but of the current reference implementation). The Firewall is
-                realized on a Neutron virtual router. If a tenant has multiple routers, the firewall
-                will be realized on all the routers. If a tenant does not have any router, the
-                firewall will be in <code>PENDING_CREATE</code> state until a router is created and
-                the first interface is added to the router. At that point the firewall policy will
-                be immediately applied to the router and the firewall will change to
-                    <code>ACTIVE</code> state.</para>
-        <note>
-            <para>Since this is the first iteration of this implementation,
-                it should probably not be run in production environments
-                without adequate testing.</para>
-        </note>
-        <section xml:id="fwaas_api_abstractions">
-            <title>Firewall-as-a-Service API abstractions</title>
-            <table rules="all">
-                <caption>Firewall Rules</caption>
-                <col width="20%"/>
-                <col width="20%"/>
-                <col width="20%"/>
-                <col width="40%"/>
-                <thead>
-                    <tr>
-                        <th>Attribute name</th>
-                        <th>Type</th>
-                        <th>Default Value</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>id</td>
-                        <td>uuid-str</td>
-                        <td>generated</td>
-                        <td>UUID for the Firewall Rule.</td>
-                    </tr>
-                    <tr>
-                        <td>tenant_id</td>
-                        <td>uuid-str</td>
-                        <td>N/A</td>
-                        <td>Owner of the Firewall Rule. Only
-                            admin users can specify a tenant_id other
-                            than its own.</td>
-                    </tr>
-                    <tr>
-                        <td>name</td>
-                        <td>String</td>
-                        <td>None</td>
-                        <td>Human readable name for the Firewall Rule
-                            (255 characters limit).</td>
-                    </tr>
-                    <tr>
-                        <td>description</td>
-                        <td>String</td>
-                        <td>None</td>
-                        <td>Human readable description for the Firewall Rule
-                            (1024 characters limit).</td>
-                    </tr>
-                    <tr>
-                        <td>firewall_policy_id</td>
-                        <td>uuid-str or None</td>
-                        <td>allocated by Networking</td>
-                        <td>This is a readonly attribute that gets populated
-                            with the uuid of the Firewall Policy when this
-                            Firewall Rule is associated with a Firewall
-                            Policy. A Firewall Rule can be associated with only
-                            one Firewall Policy at a time. However, the
-                            association can be changed to a different Firewall
-                            Policy.
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>shared</td>
-                        <td>Boolean</td>
-                        <td>False</td>
-                        <td>When set to True makes this Firewall Rule visible
-                            to tenants other than its owner, and it can be used
-                            in Firewall Policies not owned by its tenant.</td>
-                    </tr>
-                    <tr>
-                        <td>protocol</td>
-                        <td>String</td>
-                        <td>None</td>
-                        <td>IP Protocol (icmp, tcp, udp, None).</td>
-                    </tr>
-                    <tr>
-                        <td>ip_version</td>
-                        <td>Integer or String</td>
-                        <td>4</td>
-                        <td>IP Version (4, 6).</td>
-                    </tr>
-                    <tr>
-                        <td>source_ip_address</td>
-                        <td>String (IP address or CIDR)</td>
-                        <td>None</td>
-                        <td>Source IP address or CIDR.</td>
-                    </tr>
-                    <tr>
-                        <td>destination_ip_address</td>
-                        <td>String (IP address or CIDR)</td>
-                        <td>None</td>
-                        <td>Destination IP address or CIDR.</td>
-                    </tr>
-                    <tr>
-                        <td>source_port</td>
-                        <td>Integer or String (either as a single port number
-                            or in the format of a ':' separated range) </td>
-                        <td>None</td>
-                        <td>Source port number or a range.</td>
-                    </tr>
-                    <tr>
-                        <td>destination_port</td>
-                        <td>Integer or String (either as a single port number
-                            or in the format of a ':' separated range) </td>
-                        <td>None</td>
-                        <td>Destination port number or a range.</td>
-                    </tr>
-                    <tr>
-                        <td>position</td>
-                        <td>Integer</td>
-                        <td>None</td>
-                        <td>This is a readonly attribute that gets assigned
-                            to this rule when the rule is assocated with
-                            a Firewall Policy. It indicates the position of
-                            this rule in that Firewall Policy.</td>
-                    </tr>
-                    <tr>
-                        <td>action</td>
-                        <td>String</td>
-                        <td>deny</td>
-                        <td>Action to be performed on the traffic matching
-                            the rule (allow, deny).</td>
-                    </tr>
-                    <tr>
-                        <td>enabled</td>
-                        <td>Boolean</td>
-                        <td>True</td>
-                        <td>When set to False will disable this rule in the
-                            Firewall Policy. Facilitates selectively turning
-                            off rules without having to disassociate the rule
-                            from the Firewall Policy.</td>
-                    </tr>
-                </tbody>
-            </table>
-            <table rules="all">
-                <caption>Firewall Policies</caption>
-                <col width="20%"/>
-                <col width="20%"/>
-                <col width="20%"/>
-                <col width="40%"/>
-                <thead>
-                    <tr>
-                        <th>Attribute name</th>
-                        <th>Type</th>
-                        <th>Default Value</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>id</td>
-                        <td>uuid-str</td>
-                        <td>generated</td>
-                        <td>UUID for the firewall policy.</td>
-                    </tr>
-                    <tr>
-                        <td>tenant_id</td>
-                        <td>uuid-str</td>
-                        <td>N/A</td>
-                        <td>Owner of the Firewall Policy. Only
-                            admin users can specify a tenant_id other
-                            their own.</td>
-                    </tr>
-                    <tr>
-                        <td>name</td>
-                        <td>String</td>
-                        <td>None</td>
-                        <td>Human readable name for the Firewall Policy
-                            (255 characters limit).</td>
-                    </tr>
-                    <tr>
-                        <td>description</td>
-                        <td>String</td>
-                        <td>None</td>
-                        <td>Human readable description for the Firewall Policy
-                            (1024 characters limit).</td>
-                    </tr>
-                    <tr>
-                        <td>shared</td>
-                        <td>Boolean</td>
-                        <td>False</td>
-                        <td>When set to True makes this Firewall Policy visible
-                            to tenants other than its owner, and can be used
-                            to associate with Firewalls not owned by its
-                            tenant.</td>
-                    </tr>
-                    <tr>
-                        <td>firewall_rules</td>
-                        <td>List of uuid-str or None</td>
-                        <td>None</td>
-                        <td>This is an ordered list of Firewall Rule uuids.
-                            The Firewall applies the rules in the order in
-                            which they appear in this list.
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>audited</td>
-                        <td>Boolean</td>
-                        <td>False</td>
-                        <td>When set to True by the policy owner indicates
-                            that the Firewall Policy has been audited.This
-                            attribute is meant to aid in the firewall
-                            policy audit workflows. Each time the Firewall
-                            Policy or the associated Firewall Rules are
-                            changed, this attribute will be set to False and
-                            will have to be explicitly set to True through an
-                            update operation.
-                            </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table rules="all">
-                <caption>Firewalls</caption>
-                <col width="20%"/>
-                <col width="20%"/>
-                <col width="20%"/>
-                <col width="40%"/>
-                <thead>
-                    <tr>
-                        <th>Attribute name</th>
-                        <th>Type</th>
-                        <th>Default Value</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>id</td>
-                        <td>uuid-str</td>
-                        <td>generated</td>
-                        <td>UUID for the firewall.</td>
-                    </tr>
-                    <tr>
-                        <td>tenant_id</td>
-                        <td>uuid-str</td>
-                        <td>N/A</td>
-                        <td>Owner of the Firewall. Only admin users can
-                            specify a tenant_id other than its own.</td>
-                    </tr>
-                    <tr>
-                        <td>name</td>
-                        <td>String</td>
-                        <td>None</td>
-                        <td>Human readable name for the Firewall
-                            (255 characters limit).</td>
-                    </tr>
-                    <tr>
-                        <td>description</td>
-                        <td>String</td>
-                        <td>None</td>
-                        <td>Human readable description for the Firewall
-                            (1024 characters limit).</td>
-                    </tr>
-                    <tr>
-                        <td>admin_state_up</td>
-                        <td>Boolean</td>
-                        <td>True</td>
-                        <td>The administrative state of the Firewall. If False
-                            (down), the Firewall does not forward any
-                            packets.</td>
-                    </tr>
-                    <tr>
-                        <td>status</td>
-                        <td>String</td>
-                        <td>N/A </td>
-                        <td><para>Indicates whether the Firewall is
-                                currently operational. Possible values
-                                include: <itemizedlist>
-                                   <listitem>
-                                   <para>ACTIVE</para>
-                                   </listitem>
-                                   <listitem>
-                                   <para>DOWN</para>
-                                   </listitem>
-                                   <listitem>
-                                   <para>PENDING_CREATE</para>
-                                   </listitem>
-                                   <listitem>
-                                   <para>PENDING_UPDATE</para>
-                                   </listitem>
-                                   <listitem>
-                                   <para>PENDING_DELETE</para>
-                                   </listitem>
-                                   <listitem>
-                                   <para>ERROR</para>
-                                   </listitem>
-                                </itemizedlist>
-                            </para></td>
-                    </tr>
-                    <tr>
-                        <td>firewall_policy_id</td>
-                        <td>uuid-str or None</td>
-                        <td>None</td>
-                        <td>The Firewall Policy uuid that this Firewall
-                            is associated with. This Firewall will implement
-                            the rules contained in the Firewall Policy
-                            represented by this uuid.
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-        <section xml:id="fwaas_workflow">
-            <title>Basic Firewall-as-a-Service operations</title>
-            <itemizedlist>
-            <listitem>
-            <para>Create a firewall rule:</para>
-            <screen><prompt>$</prompt> <userinput>neutron firewall-rule-create --protocol &lt;tcp|udp|icmp|any&gt; --destination-port &lt;port-range&gt; --action &lt;allow|deny&gt;</userinput></screen>
-            <para>The CLI requires that a protocol value be provided. If
-            the rule is protocol agnostic, the 'any' value can be used.
-            </para>
-            <para>In addition to the protocol attribute, other attributes
-            can be specified in the Firewall Rule. Please check the previous
-            section for the supported attributes.</para>
-            </listitem>
-            <listitem>
-            <para>Create a firewall policy:</para>
-            <screen><prompt>$</prompt> <userinput>neutron firewall-policy-create --firewall-rules  "&lt;firewall-rule ids or names separated by space&gt;" myfirewallpolicy</userinput></screen>
-            <para>The order of the rules specified above is important.
-            A firewall policy can be created without any rules and rules
-            can be added later either via the update operation (if adding
-            multiple rules) or via the insert-rule operation (if adding
-            a single rule). Please check the CLI help for more details
-            on these operations.</para>
-            <note><para>The reference implementation always adds a default
-            deny all rule at the end of each policy. This implies that if
-            a firewall policy is created without any rules and is associated
-            with a firewall, that firewall will block all traffic.</para>
-            </note>
-            </listitem>
-            <listitem>
-            <para>Create a firewall:</para>
-            <screen><prompt>$</prompt> <userinput>neutron firewall-create  &lt;firewall-policy-uuid&gt;</userinput></screen>
-            </listitem>
-            </itemizedlist>
-        <note>
-            <para>The FWaaS features and the above workflow can
-            also be accessed from the Horizon user interface. This support is
-            disabled by default, but can be enabled by configuring
-            <filename>$HORIZON_DIR/openstack_dashboard/local/local_settings.py
-            </filename> and setting
-            <programlisting language="ini">
-            'enable_firewall' = True
-            </programlisting>
-            </para>
-        </note>
-        </section>
-    </section>
-        <section xml:id="section_allowed_address_pairs">
-            <title>Allowed-address-pairs</title>
-            <para>Allowed-address-pairs is an API extension that extends the port attribute. This
-                extension allows one to specify arbitrary mac_address/ip_address(cidr) pairs that
-                are allowed to pass through a port regardless of subnet. The main use case for this
-                is to enable the ability to use protocols such as VRRP which floats an ip address
-                between two instances to enable fast data plane failover.</para>
-            <note>
-                <para>The allowed-address-pairs extension is currently only supported by the
-                    following plug-ins: Nicira NVP, OpenvSwitch, and ML2.</para>
-            </note>
-            <section xml:id="section_allowed_address_pairs_workflow">
-                <title>Basic allowed address pairs operations</title>
-                <itemizedlist>
-                    <listitem>
-                        <para>Create a port with a specific allowed-address-pairs:</para>
-                        <screen><prompt>$</prompt> <userinput>neutron port-create net1 --allowed-address-pairs type=dict list=true mac_address=&lt;mac_address&gt;,ip_address=&lt;ip_cidr&gt;</userinput></screen>
-                    </listitem>
-                    <listitem>
-                        <para>Update a port adding allowed-address-pairs:</para>
-                        <screen><prompt>$</prompt> <userinput>neutron port-update  &lt;subnet-uuid&gt; --allowed-address-pairs type=dict list=true mac_address=&lt;mac_address&gt;,ip_address=&lt;ip_cidr&gt;</userinput></screen>
-                    </listitem>
-                </itemizedlist>
-                <note><para>Setting an allowed-address-pair that matches the
-                    mac_address and ip_address of a port is prevented. This
-                    is because that would have no effect since traffic
-                    matching the mac_address and ip_address is already
-                    allowed to pass through the port.</para></note>
-                <note><para>If your plug-in implements the port-security extension port-security-enabled must be set to
-                        True on the port in order to have allowed-address-pairs on a port. The
-                        reason for this is because if port-security-enabled is set to False this
-                        allows all traffic to be passed through the port thus having
-                        allowed-address-pairs would have no effect.</para></note>
-            </section>
-        </section>
-        <section xml:id="section_plugin_specific_extensions">
-            <title>Plug-in specific extensions</title>
-            <?dbhtml stop-chunking?>
-            <para>Each vendor may choose to implement additional API
-                extensions to the core API. This section describes the
-                extensions for each plug-in.</para>
-            <section xml:id="section_nicira_extensions">
-                <title>Nicira NVP extensions</title>
-                <para>The following sections explain Nicira NVP plug-in extensions.</para>
-                <section xml:id="section_nicira_nvp_plugin_qos_extension">
-                    <title>Nicira NVP QoS extension</title>
-                    <para>The Nicira NVP QoS extension rate-limits network ports to guarantee a
-                        specific amount of bandwidth for each port. This extension, by default, is
-                        only accessible by a tenant with an admin role but is configurable through
-                        the <filename>policy.json</filename> file. To use this extension, create a
-                        queue and specify the min/max bandwidth rates (kbps) and optionally set the
-                        QoS Marking and DSCP value (if your network fabric uses these values to make
-                        forwarding decisions). Once created, you can associate a queue with a
-                        network. Then, when ports are created on that network they are automatically
-                        created and associated with the specific queue size that was associated with
-                        the network. Because one size queue for a every port on a network may not be
-                        optimal, a scaling factor from the Nova flavor 'rxtx_factor' is passed in
-                        from Compute when creating the port to scale the queue.</para>
-                    <para>Lastly, if you want to set a specific
-                        baseline QoS policy for the amount of
-                        bandwidth a single port can use (unless a
-                        network queue is specified with the network a
-                        port is created on) a default queue can be
-                        created in neutron which then causes ports
-                        created to be associated with a queue of that
-                        size times the rxtx scaling factor. Note that
-                        after a network or default queue is specified,
-                        queues are added to ports that are
-                        subsequently created but are not added to
-                        existing ports.</para>
-                    <section xml:id="section_nicira_nvp_qos_api_abstractions">
-                        <title>Nicira NVP QoS API abstractions</title>
-                        <table rules="all">
-                            <caption>Nicira NVP QoS
-                                Attributes</caption>
-                            <col width="20%"/>
-                            <col width="20%"/>
-                            <col width="20%"/>
-                            <col width="40%"/>
-                            <thead>
-                                <tr>
-                                   <th>Attribute name</th>
-                                   <th>Type</th>
-                                   <th>Default Value</th>
-                                   <th>Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                   <td>id</td>
-                                   <td>uuid-str</td>
-                                   <td>generated</td>
-                                   <td>UUID for the QoS queue.</td>
-                                </tr>
-                                <tr>
-                                   <td>default</td>
-                                   <td>Boolean</td>
-                                   <td>False by default</td>
-                                   <td>If True, ports are created with
-                                   this queue size unless the network
-                                   port is created or associated with
-                                   a queue at port creation time.</td>
-                                </tr>
-                                <tr>
-                                   <td>name</td>
-                                   <td>String</td>
-                                   <td>None</td>
-                                   <td>Name for QoS queue.</td>
-                                </tr>
-                                <tr>
-                                   <td>min</td>
-                                   <td>Integer</td>
-                                   <td>0</td>
-                                   <td>Minimum Bandwidth Rate (kbps).
-                                   </td>
-                                </tr>
-                                <tr>
-                                   <td>max</td>
-                                   <td>Integer</td>
-                                   <td>N/A</td>
-                                   <td>Maximum Bandwidth Rate (kbps).
-                                   </td>
-                                </tr>
-                                <tr>
-                                   <td>qos_marking</td>
-                                   <td>String</td>
-                                   <td>untrusted by default</td>
-                                   <td>Whether QoS marking should be
-                                   trusted or untrusted.</td>
-                                </tr>
-                                <tr>
-                                   <td>dscp</td>
-                                   <td>Integer</td>
-                                   <td>0</td>
-                                   <td>DSCP Marking value.</td>
-                                </tr>
-                                <tr>
-                                   <td>tenant_id</td>
-                                   <td>uuid-str</td>
-                                   <td>N/A</td>
-                                   <td>The owner of the QoS
-                                   queue.</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </section>
-                    <section xml:id="nicira_nvp_qos_walk_through">
-                        <title>Basic Nicira NVP QoS operations</title>
-                        <para>The following table shows example
-                            neutron commands that enable you to
-                            complete basic queue operations:</para>
-                        <table rules="all">
-                            <caption>Basic Nicira NVP QoS
-                                operations</caption>
-                            <col width="40%"/>
-                            <col width="60%"/>
-                            <thead>
-                                <tr>
-                                   <th>Operation</th>
-                                   <th>Command</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                   <td>
-                                   <para>Creates QoS Queue
-                                   (admin-only).</para></td>
-                                   <td>
-                                   <screen><prompt>$</prompt> <userinput>neutron queue-create--min 10 --max 1000 myqueue</userinput></screen>
-                                   </td>
-                                </tr>
-                                <tr>
-                                   <td>
-                                   <para>Associates a queue with a
-                                   network.</para></td>
-                                   <td>
-                                   <screen><prompt>$</prompt> <userinput>neutron net-create network --queue_id=&lt;queue_id&gt;</userinput></screen>
-                                   </td>
-                                </tr>
-                                <tr>
-                                   <td>
-                                   <para>Creates a default system
-                                   queue.</para></td>
-                                   <td><screen><prompt>$</prompt> <userinput>neutron queue-create --default True --min 10 --max 2000 default</userinput></screen>
-                                   </td>
-                                </tr>
-                                <tr>
-                                   <td><para>Lists QoS
-                                   queues.</para></td>
-                                   <td><screen><prompt>$</prompt> <userinput>neutron queue-list</userinput></screen>
-                                   </td>
-                                </tr>
-                                <tr>
-                                   <td>
-                                   <para>Deletes a QoS
-                                   queue.</para></td>
-                                   <td>
-                                   <screen><prompt>$</prompt> <userinput>neutron queue-delete &lt;queue_id or name&gt;'</userinput></screen>
-                                   </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </section>
-                </section>
-                <section xml:id="section_nicira_nvp_provider_extension">
-                    <title>Nicira NVP provider networks extension</title>
-                    <para>Provider networks can be implemented in different ways by
-                        the underlying NVP platform.</para>
-                    <para>The <emphasis>FLAT</emphasis> and
-                        <emphasis>VLAN</emphasis> network types use
-                        bridged transport connectors. These network types
-                        enable the attachment of large number of ports. To
-                        handle the increased scale, the NVP plug-in can
-                        back a single Openstack Network with a chain of
-                        NVP logical switches. You can specify the maximum
-                        number of ports on each logical switch in this
-                        chain on the
-                        <literal>max_lp_per_bridged_ls</literal>
-                        parameter, which  has a default value of
-                        5,000.</para>
-                    <para>The recommended value for this parameter varies with the
-                        NVP version running in the backend, as shown in the
-                        following table.</para>
-                    <para>
-                        <table rules="all">
-                            <caption>Recommended values for max_lp_per_bridged_ls</caption>
-                            <col width="50%"/>
-                            <col width="50%"/>
-                            <thead>
-                                <tr>
-                                    <td>NVP version</td>
-                                    <td>Recommended Value</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>2.x</td>
-                                    <td>64</td>
-                                </tr>
-                                <tr>
-                                    <td>3.0.x</td>
-                                    <td>5,000</td>
-                                </tr>
-                                <tr>
-                                    <td>3.1.x</td>
-                                    <td>5,000</td>
-                                </tr>
-                                <tr>
-                                    <td>3.2.x</td>
-                                    <td>10,000</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </para>
-                    <para>In addition to the above network types, the NVP
-                        plug-in also supports a special
-                        <emphasis>l3_ext</emphasis> network type,
-                        which maps external networks to specific NVP
-                        gateway services as discussed in the following
-                        section.</para>
-                </section>
-                <section xml:id="section_nicira_nvp_plugin_l3_extension">
-                    <title>Nicira NVP L3 extension</title>
-                    <para>NVP exposes its L3 capabilities through gateway
-                        services which are usually configured out of band
-                        from OpenStack. To use NVP with L3 capabilities,
-                        first create a L3 gateway service in the NVP
-                        Manager. Next, in <filename>
-                            /etc/neutron/plugins/nicira/nvp.ini</filename>
-                        set <literal>default_l3_gw_service_uuid</literal>
-                        to this value. Now, when routers are created they
-                        will by default be mapped to this gateway
-                        service.</para>
-                    <section xml:id="section_nicira_l3_walk_through">
-                        <title>Nicira NVP L3 extension operations</title>
-                        <para>Create external network and map it to a specific NVP gateway service:</para>
-                        <screen><prompt>$</prompt> <userinput>neutron net-create public --router:external=True --provider:network_type l3_ext \
---provider:physical_network &lt;L3-Gateway-Service-UUID&gt;</userinput></screen>
-                        <para>Terminate traffic on a specific VLAN from a NVP gateway service:</para>
-                        <screen><prompt>$</prompt> <userinput>neutron net-create public --router:external=True --provider:network_type l3_ext \
---provider:physical_network &lt;L3-Gateway-Service-UUID&gt; -provider:segmentation_id &lt;VLAN_ID&gt;</userinput></screen>
-                    </section>
-                </section>
-            </section>
-        </section>
-    </section>
-    <section xml:id="section_networking-adv-operational_features">
-        <title>Advanced operational features</title>
-        <section xml:id="section_adv_logging">
-            <title>Logging settings</title>
-            <para>Networking components use Python logging module to
-                do logging. Logging configuration can be provided in
-                    <filename>neutron.conf</filename> or as command
-                line options. Command options override ones in
-                    <filename>neutron.conf</filename>.</para>
-            <para>To configure logging for Networking components, use one of the following
-                methods:</para>
-            <itemizedlist>
-                <listitem>
-                    <para>Provide logging settings in a logging
-                        configuration file.</para>
-                    <para>See <link
-                            xlink:href="http://docs.python.org/howto/logging.html"
-                            >Python Logging HOWTO</link> for logging
-                        configuration file.</para>
-                </listitem>
-                <listitem>
-                    <para>Provide logging setting in
-                            <filename>neutron.conf</filename></para>
-                    <programlisting language="ini">[DEFAULT]
-# Default log level is WARNING
-# Show debugging output in logs (sets DEBUG log level output)
-# debug = False
-
-# Show more verbose log output (sets INFO log level output) if debug is False
-# verbose = False
-
-# log_format = %(asctime)s %(levelname)8s [%(name)s] %(message)s
-# log_date_format = %Y-%m-%d %H:%M:%S
-
-# use_syslog = False
-# syslog_log_facility = LOG_USER
-
-# if use_syslog is False, we can set log_file and log_dir.
-# if use_syslog is False and we do not set log_file,
-# the log will be printed to stdout.
-# log_file =
-# log_dir =</programlisting>
-                </listitem>
-            </itemizedlist>
-        </section>
-        <section xml:id="section_adv_notification">
-            <title>Notifications</title>
-            <para>Notifications can be sent when Networking resources
-                such as network, subnet and port are created, updated
-                or deleted.</para>
-            <section xml:id="section_adv_notification_overview">
-                <title>Notification options</title>
-                <para>To support DHCP agent, rpc_notifier driver must
-                    be set. To set up the notification, edit
-                    notification options in
-                        <filename>neutron.conf</filename>:</para>
-                <programlisting language="ini"># ============ Notification System Options =====================
-
-# Notifications can be sent when network/subnet/port are create, updated or deleted.
-# There are three methods of sending notifications: logging (via the
-# log_file directive), rpc (via a message queue) and
-# noop (no notifications sent, the default)
-
-# Notification_driver can be defined multiple times
-# Do nothing driver
-# notification_driver = neutron.openstack.common.notifier.no_op_notifier
-# Logging driver
-# notification_driver = neutron.openstack.common.notifier.log_notifier
-# RPC driver
-notification_driver = neutron.openstack.common.notifier.rpc_notifier
-
-# default_notification_level is used to form actual topic names or to set logging level
-# default_notification_level = INFO
-
-# default_publisher_id is a part of the notification payload
-# host = myhost.com
-# default_publisher_id = $host
-
-# Defined in rpc_notifier for rpc way, can be comma separated values.
-# The actual topic names will be %s.%(default_notification_level)s
-notification_topics = notifications</programlisting>
-            </section>
-            <section xml:id="section_adv_notification_cases">
-                <title>Setting cases</title>
-                <section
-                    xml:id="section_adv_notification_cases_log_rpc">
-                    <title>Logging and RPC</title>
-                    <para>The following options configure the Networking server to send
-                        notifications through logging and RPC. The logging options are described in
-                            <citetitle xmlns:svg="http://www.w3.org/2000/svg"
-                            xmlns:html="http://www.w3.org/1999/xhtml">OpenStack Configuration
-                            Reference</citetitle> . RPC notifications go to 'notifications.info'
-                        queue bound to a topic exchange defined by 'control_exchange' in
-                            <filename>neutron.conf</filename>.</para>
-                    <programlisting language="ini"># ============ Notification System Options =====================
-
-# Notifications can be sent when network/subnet/port are create, updated or deleted.
-# There are three methods of sending notifications: logging (via the
-# log_file directive), rpc (via a message queue) and
-# noop (no notifications sent, the default)
-
-# Notification_driver can be defined multiple times
-# Do nothing driver
-# notification_driver = neutron.openstack.common.notifier.no_op_notifier
-# Logging driver
-notification_driver = neutron.openstack.common.notifier.log_notifier
-# RPC driver
-notification_driver = neutron.openstack.common.notifier.rpc_notifier
-
-# default_notification_level is used to form actual topic names or to set logging level
-default_notification_level = INFO
-
-# default_publisher_id is a part of the notification payload
-# host = myhost.com
-# default_publisher_id = $host
-
-# Defined in rpc_notifier for rpc way, can be comma separated values.
-# The actual topic names will be %s.%(default_notification_level)s
-notification_topics = notifications</programlisting>
-                </section>
-                <section
-                    xml:id="ch_adv_notification_cases_multi_rpc_topics">
-                    <title>Multiple RPC topics</title>
-                    <para>The following options configure the Networking server to send
-                        notifications to multiple RPC topics. RPC notifications go to
-                        'notifications_one.info' and 'notifications_two.info' queues bound to a
-                        topic exchange defined by 'control_exchange' in
-                            <filename>neutron.conf</filename>.</para>
-                    <programlisting language="ini"># ============ Notification System Options =====================
-
-# Notifications can be sent when network/subnet/port are create, updated or deleted.
-# There are three methods of sending notifications: logging (via the
-# log_file directive), rpc (via a message queue) and
-# noop (no notifications sent, the default)
-
-# Notification_driver can be defined multiple times
-# Do nothing driver
-# notification_driver = neutron.openstack.common.notifier.no_op_notifier
-# Logging driver
-# notification_driver = neutron.openstack.common.notifier.log_notifier
-# RPC driver
-notification_driver = neutron.openstack.common.notifier.rabbit_notifier
-
-# default_notification_level is used to form actual topic names or to set logging level
-default_notification_level = INFO
-
-# default_publisher_id is a part of the notification payload
-# host = myhost.com
-# default_publisher_id = $host
-
-# Defined in rpc_notifier for rpc way, can be comma separated values.
-# The actual topic names will be %s.%(default_notification_level)s
-notification_topics = notifications_one,notifications_two</programlisting>
-                </section>
-            </section>
-        </section>
-    </section>
-
+    <xi:include href="section_networking_adv_features.xml"/>
+    <xi:include href="section_networking_adv_operational_features.xml"/>
     <section xml:id="section_auth">
         <title>Authentication and authorization</title>
-        <para>Networking uses the Identity service (project name Keystone) as the default
-            authentication service. When Identity is enabled Users submitting requests to the
-            Networking service must provide an authentication token in X-Auth-Token request header.
-            The aforementioned token should have been obtained by authenticating with the Identity
-            endpoint. For more information concerning authentication with Identity, please refer to
-            the Identity documentation. When Identity is enabled, it is not mandatory to specify
-            tenant_id for resources in create requests, as the tenant ID is derived from the
-            Authentication token.</para>
+        <para>Networking uses the Identity Service as the default
+            authentication service. When the Identity Service is
+            enabled, users who submit requests to the Networking
+            service must provide an authentication token in
+                <literal>X-Auth-Token</literal> request header. Users
+            obtain this token by authenticating with the Identity
+            Service endpoint. For more information about
+            authentication with the Identity Service, see <link
+                xlink:href="http://docs.openstack.org/api/openstack-identity-service/2.0/content/"
+                    ><citetitle>OpenStack Identity Service API v2.0
+                    Reference</citetitle></link>. When the Identity
+            Service is enabled, it is not mandatory to specify the
+            tenant ID for resources in create requests because the
+            tenant ID is derived from the authentication token.</para>
         <note>
-            <para>The default authorization settings only allow administrative users to create
-                resources on behalf of a different tenant. Networking uses information received from
-                Identity to authorize user requests. Networking handles two kind of authorization
+            <para>The default authorization settings only allow
+                administrative users to create resources on behalf of
+                a different tenant. Networking uses information
+                received from Identity to authorize user requests.
+                Networking handles two kind of authorization
                 policies:</para>
         </note>
         <itemizedlist>
@@ -2868,36 +1175,52 @@ notification_topics = notifications_one,notifications_two</programlisting>
                     over specific attributes;</para>
             </listitem>
             <listitem>
-                <para><emphasis role="bold">Resource-based</emphasis> policies specify whether
-                    access to specific resource is granted or not according to the permissions
-                    configured for the resource (currently available only for the network resource).
-                    The actual authorization policies enforced in Networking might vary from
-                    deployment to deployment.</para>
+                <para><emphasis role="bold">Resource-based</emphasis>
+                    policies specify whether access to specific
+                    resource is granted or not according to the
+                    permissions configured for the resource (currently
+                    available only for the network resource). The
+                    actual authorization policies enforced in
+                    Networking might vary from deployment to
+                    deployment.</para>
             </listitem>
         </itemizedlist>
-        <para>The policy engine reads entries from the <emphasis role="italic"
-                >policy.json</emphasis> file. The actual location of this file might vary from
-            distribution to distribution. Entries can be updated while the system is running, and no
-            service restart is required. Every time the policy file is updated, the policies are
-            automatically reloaded. Currently the only way of updating such policies is to edit the
-            policy file. In this section, the terms <emphasis role="italic">policy</emphasis> and
-                <emphasis role="italic">rule</emphasis> refer to objects that are specified in the
-            same way in the policy file. There are no syntax differences between a rule and a
-            policy. A policy is something that is matched directly from the Networking policy
-            engine. A rule is an element in a policy, which is evaluated. For instance in
-                <code>create_subnet: [["admin_or_network_owner"]]</code>, <emphasis role="italic"
-                >create_subnet</emphasis> is a policy, and <emphasis role="italic"
+        <para>The policy engine reads entries from the
+                <filename>policy.json</filename> file. The actual
+            location of this file might vary from distribution to
+            distribution. Entries can be updated while the system is
+            running, and no service restart is required. Every time
+            the policy file is updated, the policies are automatically
+            reloaded. Currently the only way of updating such policies
+            is to edit the policy file. In this section, the terms
+                <emphasis role="italic">policy</emphasis> and
+                <emphasis role="italic">rule</emphasis> refer to
+            objects that are specified in the same way in the policy
+            file. There are no syntax differences between a rule and a
+            policy. A policy is something that is matched directly
+            from the Networking policy engine. A rule is an element in
+            a policy, which is evaluated. For instance in
+                <code>create_subnet:
+                [["admin_or_network_owner"]]</code>, <emphasis
+                role="italic">create_subnet</emphasis> is a policy,
+            and <emphasis role="italic"
                 >admin_or_network_owner</emphasis> is a rule.</para>
-        <para>Policies are triggered by the Networking policy engine whenever one of them matches an
-            Networking API operation or a specific attribute being used in a given operation. For
-            instance the <code>create_subnet</code> policy is triggered every time a <code>POST
-                /v2.0/subnets</code> request is sent to the Networking server; on the other hand
-                <code>create_network:shared</code> is triggered every time the <emphasis
-                role="italic">shared</emphasis> attribute is explicitly specified (and set to a
-            value different from its default) in a <code>POST /v2.0/networks</code> request. It is
-            also worth mentioning that policies can be also related to specific API extensions; for
-            instance <code>extension:provider_network:set</code> is be triggered if the attributes
-            defined by the Provider Network extensions are specified in an API request.</para>
+        <para>Policies are triggered by the Networking policy engine
+            whenever one of them matches an Networking API operation
+            or a specific attribute being used in a given operation.
+            For instance the <code>create_subnet</code> policy is
+            triggered every time a <code>POST /v2.0/subnets</code>
+            request is sent to the Networking server; on the other
+            hand <code>create_network:shared</code> is triggered every
+            time the <emphasis role="italic">shared</emphasis>
+            attribute is explicitly specified (and set to a value
+            different from its default) in a <code>POST
+                /v2.0/networks</code> request. It is also worth
+            mentioning that policies can be also related to specific
+            API extensions; for instance
+                <code>extension:provider_network:set</code> is be
+            triggered if the attributes defined by the Provider
+            Network extensions are specified in an API request.</para>
         <para>An authorization policy can be composed by one or more
             rules. If more rules are specified, evaluation policy
             succeeds if any of the rules evaluates successfully; if an
@@ -2906,45 +1229,43 @@ notification_topics = notifications_one,notifications_two</programlisting>
             rules are recursive. Once a rule is matched, the rule(s)
             can be resolved to another rule, until a terminal rule is
             reached.</para>
-        <para>The Networking policy engine currently defines the following kinds of terminal
-            rules:</para>
-        <para><itemizedlist>
-                <listitem>
-                    <para><emphasis role="bold">Role-based
-                            rules</emphasis> evaluate successfully if
-                        the user who submits the request has the
-                        specified role. For instance
-                            <code>"role:admin"</code>is successful if
-                        the user submitting the request is an
-                        administrator.</para>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">Field-based rules
-                        </emphasis>evaluate successfully if a field of
-                        the resource specified in the current request
-                        matches a specific value. For instance
-                            <code>"field:networks:shared=True"</code>
-                        is successful if the attribute <emphasis
-                            role="italic">shared</emphasis> of the
-                            <emphasis role="italic">network</emphasis>
-                        resource is set to true.</para>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">Generic
-                            rules</emphasis> compare an attribute in
-                        the resource with an attribute extracted from
-                        the user's security credentials and evaluates
-                        successfully if the comparison is successful.
-                        For instance
-                            <code>"tenant_id:%(tenant_id)s"</code> is
-                        successful if the tenant identifier in the
-                        resource is equal to the tenant identifier of
-                        the user submitting the request.</para>
-                </listitem>
-            </itemizedlist> The following is an extract from the
-            default policy.json file:</para>
-        <para>
-            <programlisting language="bash">{
+        <para>The Networking policy engine currently defines the
+            following kinds of terminal rules:</para>
+        <itemizedlist>
+            <listitem>
+                <para><emphasis role="bold">Role-based
+                        rules</emphasis> evaluate successfully if the
+                    user who submits the request has the specified
+                    role. For instance <code>"role:admin"</code> is
+                    successful if the user who submits the request is
+                    an administrator.</para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Field-based rules
+                    </emphasis>evaluate successfully if a field of the
+                    resource specified in the current request matches
+                    a specific value. For instance
+                        <code>"field:networks:shared=True"</code> is
+                    successful if the <literal>shared</literal>
+                    attribute of the <literal>network</literal>
+                    resource is set to true.</para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Generic rules</emphasis>
+                    compare an attribute in the resource with an
+                    attribute extracted from the user's security
+                    credentials and evaluates successfully if the
+                    comparison is successful. For instance
+                        <code>"tenant_id:%(tenant_id)s"</code> is
+                    successful if the tenant identifier in the
+                    resource is equal to the tenant identifier of the
+                    user submitting the request.</para>
+            </listitem>
+        </itemizedlist>
+        <para>The following is an extract from the default
+                <filename>policy.json</filename> file:</para>
+
+        <programlisting language="bash">{
 [1] "admin_or_owner": [["role:admin"], ["tenant_id:%(tenant_id)s"]],
     "admin_or_network_owner": [["role:admin"], ["tenant_id:%(network_tenant_id)s"]],
     "admin_only": [["role:admin"]], "regular_user": [],
@@ -2966,14 +1287,13 @@ notification_topics = notifications_one,notifications_two</programlisting>
     "update_port": [["rule:admin_or_owner"]],
     "delete_port": [["rule:admin_or_owner"]]
 }</programlisting>
-        </para>
         <para>[1] is a rule which evaluates successfully if the
             current user is an administrator or the owner of the
             resource specified in the request (tenant identifier is
             equal).</para>
         <para>[2] is the default policy which is always evaluated if
             an API operation does not match any of the policies in
-            policy.json.</para>
+                <filename>policy.json</filename>.</para>
         <para>[3] This policy evaluates successfully if either
                 <emphasis role="italic">admin_or_owner</emphasis>, or
                 <emphasis role="italic">shared</emphasis> evaluates
@@ -3013,14 +1333,18 @@ notification_topics = notifications_one,notifications_two</programlisting>
         <title>High Availability</title>
         <para>The use of high-availability in a Networking deployment
             helps prevent individual node failures. In general, you
-            can run neutron-server and neutron-dhcp-agent in an
-            active-active fashion. You can run the neutron-l3-agent
-            service as active/passive, which avoids IP conflicts with
-            respect to gateway IP addresses.</para>
+            can run <systemitem class="service"
+                >neutron-server</systemitem> and <systemitem
+                class="service">neutron-dhcp-agent</systemitem> in an
+            active-active fashion. You can run the <systemitem
+                class="service">neutron-l3-agent</systemitem> service
+            as active/passive, which avoids IP conflicts with respect
+            to gateway IP addresses.</para>
         <section xml:id="ha_pacemaker">
             <title>Networking High Availability with Pacemaker</title>
-            <para>You can run some Networking services into a cluster (Active / Passive or Active /
-                Active for Networking Server only) with Pacemaker.</para>
+            <para>You can run some Networking services into a cluster
+                (Active / Passive or Active / Active for Networking
+                Server only) with Pacemaker.</para>
             <para>Download the latest resources agents:</para>
             <itemizedlist>
                 <listitem>
