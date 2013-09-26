@@ -16,23 +16,35 @@
     notification, you can set up quotas. Quotas are operational
     limits. For example, the number of gigabytes allowed for each
     tenant can be controlled so that cloud resources are optimized.
-    Quotas are currently enforced at the tenant (or project) level,
-    rather than by user.</para>
+    Quotas can be enforced at both the tenant (or project)
+    and the tenant-user level.</para>
   <para>Using the command-line interface, you can manage quotas for
-    the OpenStack Compute Service and the Block Storage Service.</para>
+    the OpenStack Compute Service, the OpenStack Block Storage Service,
+    and the OpenStack Networking Service.</para>
   <para>Typically, default values are changed because a tenant
     requires more than 10 volumes, or more than 1TB on a Compute node.</para>
   <note>
-    <para>To view all projects:
+    <para>To view all tenants (projects), run:
       <screen><prompt>$</prompt> <userinput>keystone tenant-list</userinput>
 <computeroutput>+----------------------------------+----------+---------+
 |                id                |   name   | enabled |
 +----------------------------------+----------+---------+
-| a981642d22c94e159a4a6540f70f9f8d |  admin   |   True  |
-| 934b662357674c7b9f5e4ec6ded4d0e7 | tenant01 |   True  |
-| 7bc1dbfd7d284ec4a856ea1eb82dca80 | tenant02 |   True  |
-| 9c554aaef7804ba49e1b21cbd97d218a | services |   True  |
+| e66d97ac1b704897853412fc8450f7b9 |  admin   |   True  |
+| bf4a37b885fe46bd86e999e50adad1d3 | services |   True  |
+| 21bd1c7c95234fd28f589b60903606fa | tenant01 |   True  |
+| f599c5cd1cba4125ae3d7caed08e288c | tenant02 |   True  |
 +----------------------------------+----------+---------+</computeroutput></screen>
+    </para>
+    <para>To display all current users for a tenant, run:</para>
+    <para>
+      <screen><prompt>$</prompt> <userinput>keystone user-list --tenant-id <replaceable>tenantID</replaceable></userinput>
+<computeroutput>+----------------------------------+--------+---------+-------+
+|                id                |  name  | enabled | email |
++----------------------------------+--------+---------+-------+
+| ea30aa434ab24a139b0e85125ec8a217 | demo00 |   True  |       |
+| 4f8113c1d838467cad0c2f337b3dfded | demo01 |   True  |       |
++----------------------------------+--------+---------+-------+
+</computeroutput></screen>
     </para>
   </note>
   <xi:include href="../common/section_nova_cli_quotas.xml"/>
