@@ -3,6 +3,7 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="managing-volumes">
+    <?dbhtml stop-chunking?>
     <title>Block Storage</title>
     <para>The OpenStack Block Storage service works though the
         interaction of a series of daemon processes named cinder-*
@@ -26,6 +27,7 @@
         service is similar to the Amazon EC2 Elastic Block Storage
         (EBS) offering.</para>
     </section>
+    <?hard-pagebreak?>
     <section xml:id="section_manage-volumes">
     <title>Manage volumes</title>
     <para>The default OpenStack Block Storage service implementation
@@ -45,8 +47,6 @@
     <para>The following high-level procedure shows you how to create
         and attach a volume to a server instance.</para>
     <procedure>
-        <title>To create and attach a volume to a server
-            instance:</title>
         <step><para>You must configure both OpenStack Compute and the
             OpenStack Block Storage service through the
                 <filename>cinder.conf</filename> file.</para></step>
@@ -83,14 +83,11 @@
         <systemitem class="service">nova-compute</systemitem>. The walk through uses
         a custom partitioning scheme that carves out 60GB of space
         and labels it as LVM. The network uses
-        <literal>FlatManger</literal> is the
+        <literal>FlatManager</literal> is the
         <literal>NetworkManager</literal> setting for
         OpenStack Compute (Nova).</para>
-    <para>Please note that the network mode doesn't interfere at
-        all with the way cinder works, but networking must be set
-        up for cinder to work. Please refer to <link
-            xlink:href="http://docs.openstack.org/grizzly/openstack-network/admin/content/">Networking Administration</link> for more
-        details.</para>
+    <para>The network mode does not interfere with the way cinder works, but networking must be set
+        up for cinder to work. For details, see <xref linkend="ch_networking"/>.</para>
     <para>To set up Compute to use volumes, ensure that Block
         Storage is installed along with lvm2. This guide describes how to:</para>
     <para>
@@ -106,11 +103,15 @@
 
     <section xml:id="boot-from-volume">
         <title>Boot from volume</title>
-        <para>In some cases, instances can be stored and run from inside volumes. This is explained in further detail in the <link xlink:href="http://docs.openstack.org/user-guide/content/boot_from_volume.html">Boot From Volume</link>
-            section of the <citetitle>OpenStack End User Guide</citetitle>.</para>
-    </section>
-
-    <xi:include href="section_troubleshoot-cinder.xml"/>
+        <para>In some cases, instances can be stored and run from
+                inside volumes. For information, see the <link
+                    xlink:href="http://docs.openstack.org/user-guide/content/boot_from_volume.html"
+                    >Launch an instance from a volume</link> section in the
+            <link xlink:href="http://docs.openstack.org/user-guide/content/"><citetitle>OpenStack End User
+                Guide</citetitle></link>.</para>
+    </section>     
+        <?hard-pagebreak?>
+        <xi:include href="section_troubleshoot-cinder.xml"/>
     <xi:include href="section_multi_backend.xml"/>
     <xi:include href="section_backup-block-storage-disks.xml"/>
     <xi:include href="section_volume-migration.xml"/>

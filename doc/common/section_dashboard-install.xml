@@ -5,93 +5,99 @@
 <!ENTITY mdash  "&#x2014;">
 <!ENTITY hellip "&#x2026;">
 ]>
-<section xml:id="installing-openstack-dashboard"
+<section xml:id="install_dashboard"
     xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-    <title>Install and configure the dashboard</title>
+    <?dbhtml stop-chunking?>
+    <title>Install the dashboard</title>
     <para>Before you can install and configure the dashboard, meet the
-        requirements in <xref linkend="dashboard-system-requirements"/>.</para>
-    <para>For more information about how to deploy the dashboard, see <link
+        requirements in <xref linkend="dashboard-system-requirements"
+        />.</para>
+    <para>For more information about how to deploy the dashboard, see
+            <link
             xlink:href="http://docs.openstack.org/developer/horizon/topics/deployment.html"
             >Deploying Horizon</link>.</para>
     <procedure>
-        <title>To install the dashboard</title>
         <step>
-            <para>Install the dashboard on the node that can contact the
-                Identity Service as root:</para>
-            <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install memcached libapache2-mod-wsgi openstack-dashboard</userinput></screen>
-            <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install memcached python-memcached mod_wsgi openstack-dashboard</userinput></screen>
-            <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install memcached python-python-memcached apache2-mod_wsgi openstack-dashboard</userinput></screen>
+            <para>Install the dashboard on the node that can contact
+                the Identity Service as root:</para>
+            <screen os="ubuntu" language="bash"><prompt>#</prompt> <userinput>apt-get install memcached libapache2-mod-wsgi openstack-dashboard</userinput></screen>
+            <screen os="rhel;centos;fedora" language="bash"><prompt>#</prompt> <userinput>yum install memcached python-memcached mod_wsgi openstack-dashboard</userinput></screen>
+            <screen os="opensuse" language="bash"><prompt>#</prompt> <userinput>zypper install memcached python-python-memcached apache2-mod_wsgi openstack-dashboard</userinput></screen>
         </step>
         <step>
             <para>Modify the value of
-                    <literal>CACHES['default']['LOCATION']</literal> in
-                    <filename os="ubuntu"
+                    <literal>CACHES['default']['LOCATION']</literal>
+                in <filename os="ubuntu"
                     >/etc/openstack-dashboard/local_settings.py</filename><filename
                     os="centos;fedora;rhel"
                     >/etc/openstack-dashboard/local_settings</filename><filename
-                    os="opensuse">/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>
-                    to match the ones set in <filename os="ubuntu"
+                    os="opensuse"
+                    >/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>
+                to match the ones set in <filename os="ubuntu"
                     >/etc/memcached.conf</filename><filename
                     os="centos;fedora;rhel;opensuse"
                     >/etc/sysconfig/memcached.conf</filename>.</para>
             <para>Open <filename os="ubuntu"
                     >/etc/openstack-dashboard/local_settings.py</filename>
-                  <filename os="centos;fedora;rhel"
-                    >/etc/openstack-dashboard/local_settings</filename> and look
-                for this line:</para>
-            <programlisting language="bash" linenumbering="unnumbered">CACHES = {
-        'default': {
-                'BACKEND' : 'django.core.cache.backends.memcached.MemcachedCache',
-                'LOCATION' : '127.0.0.1:11211'
-        }
-}</programlisting>
+                <filename os="centos;fedora;rhel"
+                    >/etc/openstack-dashboard/local_settings</filename>
+                and look for this line:</para>
+            <programlisting language="bash" linenumbering="unnumbered"><?db-font-size 75%?>CACHES = {
+       'default': {
+       'BACKEND' : 'django.core.cache.backends.memcached.MemcachedCache',
+       'LOCATION' : '127.0.0.1:11211'
+       }
+    }</programlisting>
             <note xlink:href="#installing-openstack-dashboard"
                 xlink:title="Notes">
                 <title>Notes</title>
                 <itemizedlist>
                     <listitem>
-                        <para>The address and port must match the ones set in
-                                <filename os="ubuntu"
+                        <para>The address and port must match the ones
+                            set in <filename os="ubuntu"
                                 >/etc/memcached.conf</filename><filename
                                 os="centos;fedora;rhel;opensuse"
                                 >/etc/sysconfig/memcached</filename>.</para>
-                        <para>If you change the memcached settings, you must
-                            restart the Apache web server for the changes to
-                            take effect.</para>
+                        <para>If you change the memcached settings,
+                            you must restart the Apache web server for
+                            the changes to take effect.</para>
                     </listitem>
                     <listitem>
-                        <para>You can use options other than memcached option
-                            for session storage. Set the session back-end
-                            through the <parameter>SESSION_ENGINE</parameter>
+                        <para>You can use options other than memcached
+                            option for session storage. Set the
+                            session back-end through the
+                                <parameter>SESSION_ENGINE</parameter>
                             option.</para>
                     </listitem>
                     <listitem>
-                        <para>To change the timezone, use the dashboard or edit
-                            the <filename os="centos;fedora;rhel"
+                        <para>To change the timezone, use the
+                            dashboard or edit the <filename
+                                os="centos;fedora;rhel"
                                 >/etc/openstack-dashboard/local_settings</filename><filename
                                 os="ubuntu"
                                 >/etc/openstack-dashboard/local_settings.py</filename><filename
                                 os="opensuse"
                                 >/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>
                             file.</para>
-                        <para>Change the following parameter: <code>TIME_ZONE =
-                                "UTC"</code>
+                        <para>Change the following parameter:
+                                <code>TIME_ZONE = "UTC"</code>
                         </para>
                     </listitem>
-
                 </itemizedlist>
             </note>
         </step>
         <step>
-            <para>Make sure that the web browser on your local machine supports
-                HTML5.</para>
+            <para>Make sure that the web browser on your local machine
+                supports HTML5.</para>
             <para>Enable cookies and JavaScript.</para>
             <note>
-                <para>To use the VNC client with the dashboard, the browser must
-                    support HTML5 Canvas and HTML5 WebSockets.</para>
-                <para>For details about browsers that support noVNC, see <link
+                <para>To use the VNC client with the dashboard, the
+                    browser must support HTML5 Canvas and HTML5
+                    WebSockets.</para>
+                <para>For details about browsers that support noVNC,
+                    see <link
                         xlink:href="https://github.com/kanaka/noVNC/blob/master/README.md"
                         >https://github.com/kanaka/noVNC/blob/master/README.md</link>,
                     and <link
@@ -99,6 +105,5 @@
                         >https://github.com/kanaka/noVNC/wiki/Browser-support</link>.</para>
             </note>
         </step>
-  </procedure>
-  <xi:include href="section_dashboard-configure.xml"/>
+    </procedure>
 </section>

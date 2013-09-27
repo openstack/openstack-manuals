@@ -3,166 +3,135 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
   xml:id="ch-identity-mgmt-config">
+  <?dbhtml stop-chunking?>
   <title>Identity Management</title>
-  <para>
-    The default identity management system for OpenStack is the OpenStack Identity Service, code-named Keystone.
-    Once Identity is installed, it is configured via a primary
-    configuration file (<filename>etc/keystone.conf</filename>), possibly
-    a separate logging configuration file, and initializing data into
-    keystone using the command line client.
-  </para>
+  <para>The default identity management system for OpenStack is the
+    OpenStack Identity Service, code-named Keystone. Once Identity is
+    installed, it is configured via a primary configuration file
+      (<filename>etc/keystone.conf</filename>), possibly a separate
+    logging configuration file, and initializing data into keystone
+    using the command line client.</para>
   <xi:include href="../common/section_keystone-concepts.xml"/>
   <section xml:id="user-crud">
     <title>User CRUD</title>
-    <para>
-      Keystone provides a user CRUD filter that can be added to the
-      public_api pipeline. This user crud filter allows users to use a
-      HTTP PATCH to change their own password. To enable this extension
-      you should define a <literal>user_crud_extension</literal> filter, insert it after
+    <para>Keystone provides a user CRUD filter that can be added to
+      the public_api pipeline. This user crud filter enables users to
+      use a HTTP PATCH to change their own password. To enable this
+      extension you should define a
+        <literal>user_crud_extension</literal> filter, insert it after
       the <literal>*_body</literal> middleware and before the
-      <literal>public_service</literal> app in the public_api WSGI
-      pipeline in <filename>keystone.conf</filename> e.g.:
-    </para>
-    <programlisting language="ini">
-[filter:user_crud_extension]
+        <literal>public_service</literal> app in the public_api WSGI
+      pipeline in <filename>keystone.conf</filename> e.g.:</para>
+    <programlisting language="ini"><?db-font-size 75%?>[filter:user_crud_extension]
 paste.filter_factory = keystone.contrib.user_crud:CrudExtension.factory
 
 [pipeline:public_api]
-pipeline = stats_monitoring url_normalize token_auth admin_token_auth xml_body json_body debug ec2_extension user_crud_extension public_service
-</programlisting>
-    <para>
-      Each user can then change their own password with a HTTP PATCH
-    </para>
-    <programlisting language="ini">
-&gt; curl -X PATCH http://localhost:5000/v2.0/OS-KSCRUD/users/&lt;userid&gt; -H &quot;Content-type: application/json&quot;  \
--H &quot;X_Auth_Token: &lt;authtokenid&gt;&quot; -d '{&quot;user&quot;: {&quot;password&quot;: &quot;ABCD&quot;, &quot;original_password&quot;: &quot;DCBA&quot;}}'
-</programlisting>
-    <para>
-      In addition to changing their password all of the users current
-      tokens will be deleted (if the backend used is kvs or sql)
-    </para>
+pipeline = stats_monitoring url_normalize token_auth admin_token_auth xml_body json_body debug ec2_extension user_crud_extension public_service</programlisting>
+    <para>Each user can then change their own password with a HTTP
+      PATCH</para>
+    <programlisting language="ini"><?db-font-size 75%?>&gt; curl -X PATCH http://localhost:5000/v2.0/OS-KSCRUD/users/&lt;userid&gt; -H &quot;Content-type: application/json&quot;  \
+-H &quot;X_Auth_Token: &lt;authtokenid&gt;&quot; -d '{&quot;user&quot;: {&quot;password&quot;: &quot;ABCD&quot;, &quot;original_password&quot;: &quot;DCBA&quot;}}'</programlisting>
+    <para>In addition to changing their password all of the users
+      current tokens are deleted (if the back end is kvs or
+      sql).</para>
   </section>
   <section xml:id="keystone-logging">
     <title>Logging</title>
-    <para> Logging is configured externally to the rest of Identity,
-      the file specifying the logging configuration is in the
+    <para>You configure logging externally to the rest of Identity.
+      The file specifying the logging configuration is in the
         <literal>[DEFAULT]</literal> section of the
         <filename>keystone.conf</filename> file under
-        <literal>log_config</literal>. If you wish to route all your
-      logging through syslog, set <literal>use_syslog=true</literal>
-      option in the <literal>[DEFAULT]</literal> section. </para>
-    <para>
-      A sample logging file is available with the project in the
-      directory <filename>etc/logging.conf.sample</filename>. Like other
-      OpenStack projects, Identity uses the `python logging module`,
-      which includes extensive configuration options for choosing the
-      output levels and formats.
-    </para>
-    <para>
-      In addition to this documentation page, you can check the
-      <filename>etc/keystone.conf</filename> sample configuration files
-      distributed with keystone for example configuration files for each
-      server application.
-    </para>
-    <para>For services which have separate paste-deploy ini file,
-      auth_token middleware can be alternatively configured in
-      [keystone_authtoken] section in the main config file, such as 
-      <filename>nova.conf</filename>. For
-      example in Nova, all middleware parameters can be removed from
-      api-paste.ini like these:</para>
-    <programlisting language="ini"> [filter:authtoken] 
-    paste.filter_factory =
-      keystoneclient.middleware.auth_token:filter_factory 
-      </programlisting>
-      <para>and set in
-      <filename>nova.conf</filename> like these: </para>
-      <programlisting language="ini">[DEFAULT] 
-      ... 
-      auth_strategy=keystone
+        <literal>log_config</literal>. To route logging through
+      syslog, set <literal>use_syslog=true</literal> option in the
+        <literal>[DEFAULT]</literal> section.</para>
+    <para>A sample logging file is available with the project in the
+      directory <filename>etc/logging.conf.sample</filename>. Like
+      other OpenStack projects, Identity uses the python logging
+      module, which includes extensive configuration options for
+      choosing the output levels and formats.</para>
+    <para>Review the <filename>etc/keystone.conf</filename> sample
+      configuration files distributed with keystone for example
+      configuration files for each server application.</para>
+    <para>For services which have separate paste-deploy ini file, you
+      can configure auth_token middleware in [keystone_authtoken]
+      section in the main config file, such as
+        <filename>nova.conf</filename>. For example in Compute, you
+      can remove the middleware parameters from
+        <filename>api-paste.ini</filename>, as follows:</para>
+    <programlisting language="ini"><?db-font-size 75%?>[filter:authtoken] 
+paste.filter_factory =
+keystoneclient.middleware.auth_token:filter_factory</programlisting>
+    <para>And set the following values in
+        <filename>nova.conf</filename>, as follows:</para>
+    <programlisting language="ini"><?db-font-size 75%?>[DEFAULT] 
+... 
+auth_strategy=keystone
       
-      [keystone_authtoken] 
-      auth_host = 127.0.0.1 
-      auth_port = 35357
-      auth_protocol = http 
-      auth_uri = http://127.0.0.1:5000/
-      admin_user = admin 
-      admin_password = SuperSekretPassword
-      admin_tenant_name = service 
-      </programlisting>
-      <para>Note that middleware parameters in
-      paste config take priority, they must be removed to use values
-      in [keystone_authtoken] section.</para>
+[keystone_authtoken] 
+auth_host = 127.0.0.1 
+auth_port = 35357
+auth_protocol = http 
+auth_uri = http://127.0.0.1:5000/
+admin_user = admin 
+admin_password = SuperSekretPassword
+admin_tenant_name = service </programlisting>
+    <note>
+      <para>Middleware parameters in paste config take priority. You
+        must remove them to use values in [keystone_authtoken]
+        section.</para>
+    </note>
   </section>
   <section xml:id="monitoring">
     <title>Monitoring</title>
-    <para>
-      Keystone provides some basic request/response monitoring
-      statistics out of the box.
-    </para>
-    <para>
-      Enable data collection by defining a
-      <literal>stats_monitoring</literal> filter and including it at the
-      beginning of any desired WSGI pipelines:
-    </para>
-    <programlisting language="ini">
-[filter:stats_monitoring]
+    <para>Keystone provides some basic request/response monitoring
+      statistics out of the box.</para>
+    <para>Enable data collection by defining a
+        <literal>stats_monitoring</literal> filter and including it at
+      the beginning of any desired WSGI pipelines:</para>
+    <programlisting language="ini"><?db-font-size 75%?>[filter:stats_monitoring]
 paste.filter_factory = keystone.contrib.stats:StatsMiddleware.factory
 
 [pipeline:public_api]
-pipeline = stats_monitoring [...] public_service
-</programlisting>
-    <para>
-      Enable the reporting of collected data by defining a
-      <literal>stats_reporting</literal> filter and including it near
-      the end of your <literal>admin_api</literal> WSGI pipeline (After
-      <literal>*_body</literal> middleware and before
-      <literal>*_extension</literal> filters is recommended):
-    </para>
-    <programlisting language="ini">
-[filter:stats_reporting]
+pipeline = stats_monitoring [...] public_service</programlisting>
+    <para>Enable the reporting of collected data by defining a
+        <literal>stats_reporting</literal> filter and including it
+      near the end of your <literal>admin_api</literal> WSGI pipeline
+      (After <literal>*_body</literal> middleware and before
+        <literal>*_extension</literal> filters is recommended):</para>
+    <programlisting language="ini"><?db-font-size 75%?>[filter:stats_reporting]
 paste.filter_factory = keystone.contrib.stats:StatsExtension.factory
 
 [pipeline:admin_api]
-pipeline = [...] json_body stats_reporting ec2_extension [...] admin_service
-</programlisting>
-    <para>
-      Query the admin API for statistics using:
-    </para>
+pipeline = [...] json_body stats_reporting ec2_extension [...] admin_service</programlisting>
+    <para>Query the admin API for statistics using:</para>
     <screen><prompt>$</prompt> <userinput>curl -H 'X-Auth-Token: ADMIN' http://localhost:35357/v2.0/OS-STATS/stats</userinput></screen>
-    <para>
-      Reset collected data using:
-    </para>
-    <screen><prompt>$</prompt> <userinput>curl -H 'X-Auth-Token: ADMIN' -X DELETE http://localhost:35357/v2.0/OS-STATS/stats</userinput></screen>
+    <para>Reset collected data using:</para>
+    <screen><prompt>$</prompt> <userinput>curl -H 'X-Auth-Token: ADMIN' -X DELETE \
+           http://localhost:35357/v2.0/OS-STATS/stats</userinput></screen>
   </section>
   <section xml:id="running-keystone">
-    <title>Running</title>
-    <para>
-      Running Identity is simply starting the services by using the
-      command:
-    </para>
-    <screen><prompt>$</prompt> <userinput>
-keystone-all
-</userinput></screen>
-    <para>
-      Invoking this command starts up two wsgi.Server instances,
-      configured by the <filename>keystone.conf</filename> file as
-      described above. One of these wsgi 'servers' is
-      <literal>admin</literal> (the administration API) and the other is
-      <literal>main</literal> (the primary/public API interface). Both
-      of these run in a single process.
-    </para>
+    <title>Start the Identity Service</title>
+    <para>To start the services for the Identity Service, run the
+      following command:</para>
+    <screen><prompt>$</prompt> <userinput>keystone-all</userinput></screen>
+    <para>This command starts two wsgi.Server instances configured by
+      the <filename>keystone.conf</filename> file as described
+      previously. One of these wsgi servers is
+        <literal>admin</literal> (the administration API) and the
+      other is <literal>main</literal> (the primary/public API
+      interface). Both run in a single process.</para>
   </section>
-    <section xml:id="example-usage">
-      <title>Example usage</title>
-      <para>The <literal>keystone</literal> client is set up to expect commands
-        in the general form of <literal>keystone</literal>
-        <literal>command</literal>
-        <literal>argument</literal>, followed by flag-like keyword arguments to
-        provide additional (often optional) information. For example, the
-        command <literal>user-list</literal> and
-          <literal>tenant-create</literal> can be invoked as follows: </para>
-      <programlisting language="bash">
-# Using token auth env variables
+  <section xml:id="example-usage">
+    <title>Example usage</title>
+    <para>The <literal>keystone</literal> client is set up to expect
+      commands in the general form of <literal>keystone</literal>
+      <literal>command</literal>
+      <literal>argument</literal>, followed by flag-like keyword
+      arguments to provide additional (often optional) information.
+      For example, the command <literal>user-list</literal> and
+        <literal>tenant-create</literal> can be invoked as
+      follows:</para>
+    <programlisting language="bash"><?db-font-size 65%?># Using token auth env variables
 export SERVICE_ENDPOINT=http://127.0.0.1:5000/v2.0/
 export SERVICE_TOKEN=secrete_token
 keystone user-list
@@ -181,25 +150,22 @@ keystone tenant-create --name=demo
 
 # Using user + password + tenant_name flags
 keystone --username=admin --password=secrete --tenant_name=admin user-list
-keystone --username=admin --password=secrete --tenant_name=admin tenant-create --name=demo
-</programlisting>
-    </section>
-    <section xml:id="auth-token-middleware-with-username-and-password">
-      <title>Auth-Token Middleware with Username and Password</title>
-      <para>
-        It is also possible to configure Keystone's auth_token
-        middleware using the 'admin_user' and 'admin_password' options.
-        When using the 'admin_user' and 'admin_password' options the
-        'admin_token' parameter is optional. If 'admin_token' is
-        specified it will by used only if the specified token is still
-        valid.
-      </para>
-      <para>
-        Here is an example paste config filter that makes use of the
-        'admin_user' and 'admin_password' parameters:
-      </para>
-      <screen>
-[filter:authtoken]
+keystone --username=admin --password=secrete --tenant_name=admin tenant-create --name=demo</programlisting>
+  </section>
+  <section xml:id="auth-token-middleware-with-username-and-password">
+    <title>Auth-Token middleware with user name and password</title>
+    <para>It is also possible to configure the Identity Service
+      Auth-Token middleware using the <option>admin_user</option> and
+        <option>admin_password</option> options. When using the
+        <option>admin_user</option> and
+        <option>admin_password</option> options the
+        <option>admin_token</option> parameter is optional. If
+        <option>admin_token</option> is specified it is used only if
+      the specified token is still valid.</para>
+    <para>Here is an example paste config filter that makes use of the
+        <option>admin_user</option> and
+        <option>admin_password</option> parameters:</para>
+    <screen>[filter:authtoken]
 paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
 service_port = 5000
 service_host = 127.0.0.1
@@ -207,13 +173,11 @@ auth_port = 35357
 auth_host = 127.0.0.1
 auth_token = 012345SECRET99TOKEN012345
 admin_user = admin
-admin_password = keystone123
-</screen>
-      <para>
-        It should be noted that when using this option an admin
-        tenant/role relationship is required. The admin user is granted
-        access to the 'Admin' role on the 'admin' tenant.
-      </para>
-    </section>
+admin_password = keystone123</screen>
+    <para>It should be noted that when using this option an admin
+      tenant/role relationship is required. The admin user is granted
+      access to the Admin role on the admin tenant.</para>
+  </section>
+  <?hard-pagebreak?>
   <xi:include href="../common/section_identity-troubleshooting.xml"/>
 </chapter>

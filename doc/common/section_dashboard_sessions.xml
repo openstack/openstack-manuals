@@ -6,9 +6,9 @@
     <title>Set up session storage for the dashboard</title>
     <para>The dashboard uses <link
             xlink:href="https://docs.djangoproject.com/en/dev/topics/http/sessions/"
-            >Django’s sessions framework</link> to handle user session
-        data. However, you can use any available session backend. You
-        customize the session backend through the
+            >Django sessions framework</link> to handle user session
+        data. However, you can use any available session back end. You
+        customize the session back end through the
             <literal>SESSION_ENGINE</literal> setting in your
             <filename os="centos;fedora;rhel">
             /etc/openstack-dashboard/local_settings</filename>
@@ -20,7 +20,7 @@
     <section xml:id="dashboard-session-local">
         <title>Local memory cache</title>
         <para>Local memory storage is the quickest and easiest session
-            backend to set up, as it has no external dependencies
+            back end to set up, as it has no external dependencies
             whatsoever. It has the following significant
             drawbacks:</para>
         <itemizedlist>
@@ -33,11 +33,11 @@
                     terminates.</para>
             </listitem>
         </itemizedlist>
-        <para>The local memory backend is enabled as the default for
+        <para>The local memory back end is enabled as the default for
             Horizon solely because it has no dependencies. It is not
             recommended for production use, or even for serious
             development work. Enabled by:</para>
-        <programlisting language="python">SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+        <programlisting language="python"><?db-font-size 75%?>SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 CACHES = {
     'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
 }</programlisting>
@@ -62,7 +62,7 @@ CACHES = {
             </listitem>
         </itemizedlist>
         <para>Enabled by:</para>
-        <programlisting language="python">SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+        <programlisting language="python"><?db-font-size 75%?>SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 CACHES = {
     'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache'
     'LOCATION': 'my_memcached_host:11211',
@@ -82,7 +82,7 @@ CACHES = {
             </listitem>
         </itemizedlist>
         <para>Enabled by:</para>
-        <programlisting language="python">SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+        <programlisting language="python"><?db-font-size 75%?>SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 CACHES = {
     "default": {
         "BACKEND": "redis_cache.cache.RedisCache",
@@ -136,7 +136,7 @@ CACHES = {
                     <filename os="opensuse"
                         >/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>
                     file, change these options:</para>
-                <programlisting language="python">SESSION_ENGINE = 'django.core.cache.backends.db.DatabaseCache'
+                <programlisting language="python"><?db-font-size 75%?>SESSION_ENGINE = 'django.core.cache.backends.db.DatabaseCache'
 DATABASES = {
     'default': {
         # Database configuration here
@@ -189,20 +189,20 @@ No fixtures found.</computeroutput></screen>
     <section xml:id="dashboard-session-cached-database">
         <title>Cached database</title>
         <para>To mitigate the performance issues of database queries,
-            you can use the Django cached_db session backend, which
+            you can use the Django cached_db session back end, which
             utilizes both your database and caching infrastructure to
             perform write-through caching and efficient retrieval.</para>
         <para>Enable this hybrid setting by configuring both your
             database and cache, as discussed previously. Then, set the
             following value:</para>
-        <programlisting language="python">SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"</programlisting>
+        <programlisting language="python"><?db-font-size 75%?>SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"</programlisting>
     </section>
     <section xml:id="dashboard-session-cookies">
         <title>Cookies</title>
         <para>If you use Django 1.4 or later, the signed_cookies
-            backend avoids server load and scaling problems.</para>
-        <para>This backend stores session data in a cookie, which is
-            stored by the user’s browser. The backend uses a
+            back end avoids server load and scaling problems.</para>
+        <para>This back end stores session data in a cookie, which is
+            stored by the user’s browser. The back end uses a
             cryptographic signing technique to ensure session data is
             not tampered with during transport. This is not the same
             as encryption; session data is still readable by an

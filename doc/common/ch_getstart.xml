@@ -1,618 +1,723 @@
 <?xml version="1.0" encoding="utf-8"?>
 <chapter xmlns="http://docbook.org/ns/docbook"
- xmlns:xi="http://www.w3.org/2001/XInclude"
- xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
- xml:id="ch_getting-started-with-openstack">
- <title>Get started with OpenStack</title>
- <?dbhtml stop-chunking?>
- <para>The OpenStack project is an
-  open source cloud computing platform for all types of clouds, which aims
-  to be simple to implement, massively scalable, and feature
-  rich. Developers and cloud computing technologists from around the
-  world create the OpenStack project.</para>
- <para>OpenStack provides an Infrastructure as a Service (IaaS)
-  solution through a set of interrelated services. Each service offers
-  an application programming interface (API) that facilitates this
-  integration.</para>
- <section xml:id="openstack-architecture">
-  <title>OpenStack architecture</title>
-  <para>The following table describes the OpenStack services that make
-   up the OpenStack architecture:</para>
-  <table rules="all">
-   <caption>OpenStack services</caption>
-   <col width="20%"/>
-   <col width="10%"/>
-   <col width="70%"/>
-   <thead>
-    <tr>
-     <th>Service</th>
-     <th>Project name</th>
-     <th>Description</th>
-    </tr>
-   </thead>
-   <tbody>
-    <tr>
-     <td><link xlink:href="http://www.openstack.org/software/openstack-dashboard/"
- >Dashboard</link></td>
-     <td><link xlink:href="http://docs.openstack.org/developer/horizon/">Horizon</link></td>
-     <td>Enables users to interact with all OpenStack services to launch
-      an instance, assign IP addresses, set access controls, and so
-      on.</td>
-    </tr>
-    <tr>
-     <td><link xlink:href="http://www.openstack.org/software/openstack-shared-services/">Identity
-       Service</link></td>
-     <td><link xlink:href="http://docs.openstack.org/developer/keystone/">Keystone</link></td>
-     <td>Provides authentication and authorization for all the OpenStack services. Also
-provides a service catalog within a particular OpenStack cloud.</td>
-    </tr>
-    <tr>
-     <td><link xlink:href="http://www.openstack.org/software/openstack-compute/">Compute
-      Service</link></td>
-     <td><link xlink:href="http://docs.openstack.org/developer/nova/">Nova</link></td>
-     <td>Provisions and manages large networks of virtual machines on
-      demand.</td>
-    </tr>
-    <tr>
-     <td><link xlink:href="http://www.openstack.org/software/openstack-storage/">Object Storage
-       Service</link></td>
-     <td><link xlink:href="http://docs.openstack.org/developer/swift/">Swift</link></td>
-     <td>Stores and retrieve files. Does not mount directories like a file
-      server.</td>
-    </tr>
-    <tr>
-     <td><link xlink:href="http://www.openstack.org/software/openstack-storage/">Block Storage
- Service</link></td>
-     <td><link xlink:href="http://docs.openstack.org/developer/cinder/">Cinder</link></td>
-     <td>Provides persistent block storage to guest virtual machines.</td>
-    </tr>
-    <tr>
-     <td><link xlink:href="http://www.openstack.org/software/openstack-shared-services/">Image
-       Service</link></td>
-     <td><link xlink:href="http://docs.openstack.org/developer/glance/"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+  xml:id="ch_getting-started-with-openstack">
+  <title>Get started with OpenStack</title>
+  <?dbhtml stop-chunking?>
+  <para>The OpenStack project is an open source cloud computing
+    platform for all types of clouds, which aims to be simple to
+    implement, massively scalable, and feature rich. Developers and
+    cloud computing technologists from around the world create the
+    OpenStack project.</para>
+  <para>OpenStack provides an Infrastructure as a Service (IaaS)
+    solution through a set of interrelated services. Each service
+    offers an application programming interface (API) that facilitates
+    this integration.</para>
+  <section xml:id="openstack-architecture">
+    <title>OpenStack architecture</title>
+    <para>The following table describes the OpenStack services that
+      make up the OpenStack architecture:</para>
+    <table rules="all">
+      <caption>OpenStack services</caption>
+      <col width="20%"/>
+      <col width="10%"/>
+      <col width="70%"/>
+      <thead>
+        <tr>
+          <th>Service</th>
+          <th>Project name</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><link
+              xlink:href="http://www.openstack.org/software/openstack-dashboard/"
+              >Dashboard</link></td>
+          <td><link
+              xlink:href="http://docs.openstack.org/developer/horizon/"
+              >Horizon</link></td>
+          <td>Enables users to interact with all OpenStack services to
+            launch an instance, assign IP addresses, set access
+            controls, and so on.</td>
+        </tr>
+        <tr>
+          <td><link
+              xlink:href="http://www.openstack.org/software/openstack-shared-services/"
+              >Identity Service</link></td>
+          <td><link
+              xlink:href="http://docs.openstack.org/developer/keystone/"
+              >Keystone</link></td>
+          <td>Provides authentication and authorization for all the
+            OpenStack services. Also provides a service catalog within
+            a particular OpenStack cloud.</td>
+        </tr>
+        <tr>
+          <td><link
+              xlink:href="http://www.openstack.org/software/openstack-compute/"
+              >Compute Service</link></td>
+          <td><link
+              xlink:href="http://docs.openstack.org/developer/nova/"
+              >Nova</link></td>
+          <td>Provisions and manages large networks of virtual
+            machines on demand.</td>
+        </tr>
+        <tr>
+          <td><link
+              xlink:href="http://www.openstack.org/software/openstack-storage/"
+              >Object Storage Service</link></td>
+          <td><link
+              xlink:href="http://docs.openstack.org/developer/swift/"
+              >Swift</link></td>
+          <td>Stores and retrieve files. Does not mount directories
+            like a file server.</td>
+        </tr>
+        <tr>
+          <td><link
+              xlink:href="http://www.openstack.org/software/openstack-storage/"
+              >Block Storage Service</link></td>
+          <td><link
+              xlink:href="http://docs.openstack.org/developer/cinder/"
+              >Cinder</link></td>
+          <td>Provides persistent block storage to guest virtual
+            machines.</td>
+        </tr>
+        <tr>
+          <td><link
+              xlink:href="http://www.openstack.org/software/openstack-shared-services/"
+              >Image Service</link></td>
+          <td><link
+              xlink:href="http://docs.openstack.org/developer/glance/"
               >Glance</link></td>
-     <td>Provides a registry of virtual machine images. Compute Service
-       uses it to provision instances.
-     </td>
-    </tr>
-    <tr>
-     <td><link xlink:href="http://www.openstack.org/software/openstack-networking/">Networking
-       Service</link></td>
-     <td><link xlink:href="http://docs.openstack.org/developer/neutron/">Neutron</link></td>
-     <td>Enables network connectivity as a service among interface devices
-      managed by other OpenStack services, usually Compute Service.
-      Enables users to create and attach interfaces to networks. Has a
-      pluggable architecture that supports many popular networking
-      vendors and technologies.</td>
-    </tr>
-    <tr>
-     <td><link xlink:href="http://www.openstack.org/software/openstack-shared-services/"
-       >Metering/Monitoring Service</link></td>
-     <td><link xlink:href="http://docs.openstack.org/developer/ceilometer/">Ceilometer</link></td>
-     <td>Monitors and meters the OpenStack cloud for billing, benchmarking, scalability, and statistics
-      purposes.</td>
-    </tr>
-    <tr>
-     <td><link xlink:href="http://www.openstack.org/software/openstack-shared-services/">Orchestration
-       Service</link></td>
-     <td><link xlink:href="http://docs.openstack.org/developer/heat/">Heat</link></td>
-     <td>Orchestrates multiple composite cloud applications by using the
-      AWS CloudFormation template format, through both an
-      OpenStack-native REST API and a CloudFormation-compatible Query
-      API.</td>
-    </tr>
-   </tbody>
-  </table>
-  <section xml:id="conceptual-architecture">
-   <title>Conceptual architecture</title>
-   <para>The following diagram shows the relationships among the
-    OpenStack services:</para>
-   <informalfigure xml:id="concept_arch">
-    <mediaobject>
-     <imageobject>
-      <imagedata
- fileref="figures/openstack_havana_conceptual_arch.png"
- contentwidth="6in"/>
-     </imageobject>
-    </mediaobject>
-   </informalfigure>
+          <td>Provides a registry of virtual machine images. Compute
+            Service uses it to provision instances. </td>
+        </tr>
+        <tr>
+          <td><link
+              xlink:href="http://www.openstack.org/software/openstack-networking/"
+              >Networking Service</link></td>
+          <td><link
+              xlink:href="http://docs.openstack.org/developer/neutron/"
+              >Neutron</link></td>
+          <td>Enables network connectivity as a service among
+            interface devices managed by other OpenStack services,
+            usually Compute Service. Enables users to create and
+            attach interfaces to networks. Has a pluggable
+            architecture that supports many popular networking vendors
+            and technologies.</td>
+        </tr>
+        <tr>
+          <td><link
+              xlink:href="http://www.openstack.org/software/openstack-shared-services/"
+              >Metering/Monitoring Service</link></td>
+          <td><link
+              xlink:href="http://docs.openstack.org/developer/ceilometer/"
+              >Ceilometer</link></td>
+          <td>Monitors and meters the OpenStack cloud for billing,
+            benchmarking, scalability, and statistics purposes.</td>
+        </tr>
+        <tr>
+          <td><link
+              xlink:href="http://www.openstack.org/software/openstack-shared-services/"
+              >Orchestration Service</link></td>
+          <td><link
+              xlink:href="http://docs.openstack.org/developer/heat/"
+              >Heat</link></td>
+          <td>Orchestrates multiple composite cloud applications by
+            using the AWS CloudFormation template format, through both
+            an OpenStack-native REST API and a
+            CloudFormation-compatible Query API.</td>
+        </tr>
+      </tbody>
+    </table>
+    <?hard-pagebreak?>
+    <section xml:id="conceptual-architecture">
+      <title>Conceptual architecture</title>
+      <para>The following diagram shows the relationships among the
+        OpenStack services:</para>
+      <informalfigure xml:id="concept_arch">
+        <mediaobject>
+          <imageobject>
+            <imagedata
+              fileref="figures/openstack_havana_conceptual_arch.png"
+              contentwidth="6in"/>
+          </imageobject>
+        </mediaobject>
+      </informalfigure>
+    </section>
+    <?hard-pagebreak?>
+    <section xml:id="logical-architecture">
+      <title>Logical architecture</title>
+      <para>To design, install, and configure a cloud, cloud
+        administrators must understand the logical
+        architecture.</para>
+      <para>OpenStack modules are one of the following types:</para>
+      <itemizedlist>
+        <listitem>
+          <para>Daemon. Runs as a daemon. On Linux platforms, it's
+            usually installed as a service.</para>
+        </listitem>
+        <listitem>
+          <para>Script. Runs installation and tests of a virtual
+            environment. For example, a script called
+              <code>run_tests.sh</code> installs a virtual environment
+            for a service and then may also run tests to verify that
+            virtual environment functions well.</para>
+        </listitem>
+        <listitem>
+          <para>Command-line interface (CLI). Enables users to submit
+            API calls to OpenStack services through easy-to-use
+            commands.</para>
+        </listitem>
+      </itemizedlist>
+      <para>The following diagram shows the most common, but not the
+        only, architecture for an OpenStack cloud:</para>
+      <!-- Source files in this repository in doc/src/docbkx/common/figures/openstack-arch-grizzly-v1.zip https://github.com/openstack/openstack-manuals/raw/master/doc/src/docbkx/common/figures/openstack-arch-grizzly-v1.zip -->
+      <figure xml:id="os-logical-arch">
+        <title>OpenStack logical architecture</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata
+              fileref="figures/openstack-arch-grizzly-v1-logical.jpg"
+              contentwidth="6.5in"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+      <para>As in the conceptual architecture, end users can interact
+        through the dashboard, CLIs, and APIs. All services
+        authenticate through a common Identity Service and individual
+        services interact with each other through public APIs, except
+        where privileged administrator commands are necessary.</para>
+    </section>
   </section>
-  <section xml:id="logical-architecture">
-   <title>Logical architecture</title>
-   <para>To design, install, and configure a cloud, cloud administrators
-    must understand the logical architecture.</para>
-   <para>OpenStack modules are one of the following types:</para>
-   <itemizedlist>
-    <listitem>
-     <para>Daemon. Runs as a daemon. On Linux platforms, it's usually installed as a service.</para>
-    </listitem>
-    <listitem>
-     <para>Script. Runs installation and tests of a virtual environment. For example, a script called <code>run_tests.sh</code> installs a virtual environment for a service and then may also run tests to verify that virtual environment functions well.</para>
-    </listitem>
-    <listitem>
-     <para>Command-line interface (CLI). Enables users to submit API calls to OpenStack services through
-      easy-to-use commands.</para>
-    </listitem>
-   </itemizedlist>
-   <para>The following diagram shows the most common, but not the only,
-    architecture for an OpenStack cloud:</para>
-    <!-- Source files in this repository in doc/src/docbkx/common/figures/openstack-arch-grizzly-v1.zip https://github.com/openstack/openstack-manuals/raw/master/doc/src/docbkx/common/figures/openstack-arch-grizzly-v1.zip -->
-   <figure xml:id="os-logical-arch"><title>OpenStack logical architecture</title>
-    <mediaobject>
-     <imageobject>
-      <imagedata fileref="figures/openstack-arch-grizzly-v1-logical.jpg"
- contentwidth="6.5in"/>
-     </imageobject>
-    </mediaobject>
-   </figure>
-   <para>As in the conceptual architecture, end users can interact
-    through the dashboard, CLIs, and APIs. All services authenticate
-    through a common Identity Service and individual services interact
-    with each other through public APIs, except where privileged
-    administrator commands are necessary.</para>
+  <?hard-pagebreak?>
+  <section xml:id="openstack-services">
+    <title>OpenStack services</title>
+    <para>This section describes OpenStack services in detail.</para>
+    <section xml:id="dashboard-service">
+      <title>Dashboard</title>
+      <para>The dashboard is a modular <link
+          xlink:href="https://www.djangoproject.com/">Django web
+          application</link> that provides a graphical interface to
+        OpenStack services.</para>
+      <informalfigure>
+        <mediaobject>
+          <imageobject>
+            <imagedata contentwidth="4in"
+              fileref="figures/horizon-screenshot.jpg"/>
+          </imageobject>
+        </mediaobject>
+      </informalfigure>
+      <para>The dashboard is usually deployed through <link
+          xlink:href="http://code.google.com/p/modwsgi/"
+          >mod_wsgi</link> in Apache. You can modify the dashboard
+        code to make it suitable for different sites.</para>
+      <para>From a network architecture point of view, this service
+        must be accessible to customers and the public API for each
+        OpenStack service. To use the administrator functionality for
+        other services, it must also connect to Admin API endpoints,
+        which should not be accessible by customers.</para>
+    </section>
+    <section xml:id="identity-service">
+      <title>Identity Service</title>
+      <para>The Identity Service is an OpenStack project that provides
+        identity, token, catalog, and policy services to OpenStack
+        projects. It consists of:</para>
+      <itemizedlist>
+        <listitem>
+          <para><systemitem class="service">keystone-all</systemitem>.
+            Starts both the service and administrative APIs in a
+            single process to provide Catalog, Authorization, and
+            Authentication services for OpenStack.</para>
+        </listitem>
+        <listitem>
+          <para>Identity Service functions. Each has a pluggable back
+            end that allows different ways to use the particular
+            service. Most support standard back ends like LDAP or
+            SQL.</para>
+        </listitem>
+      </itemizedlist>
+      <para>The Identity Service is mostly used to customize
+        authentication services.</para>
+    </section>
+    <?hard-pagebreak?>
+    <section xml:id="compute-service">
+      <title>Compute Service</title>
+      <para>The Compute Service is a cloud computing fabric
+        controller, the main part of an IaaS system. It can be used
+        for hosting and managing cloud computing systems. The main
+        modules are implemented in Python.</para>
+      <para>The Compute Service is made up of the following functional
+        areas and their underlying components:</para>
+      <itemizedlist>
+        <title>API</title>
+        <listitem>
+          <para><systemitem class="service">nova-api</systemitem>
+            service. Accepts and responds to end user compute API
+            calls. Supports the OpenStack Compute API, the Amazon EC2
+            API, and a special Admin API for privileged users to
+            perform administrative actions. Also, initiates most
+            orchestration activities, such as running an instance, and
+            enforces some policies.</para>
+        </listitem>
+        <listitem>
+          <para><systemitem class="service"
+              >nova-api-metadata</systemitem> service. Accepts
+            metadata requests from instances. The <systemitem
+              class="service">nova-api-metadata</systemitem> service
+            is generally only used when you run in multi-host mode
+            with <systemitem class="service">nova-network</systemitem>
+            installations. For details, see <link
+              xlink:href="http://docs.openstack.org/trunk/openstack-compute/admin/content/metadata-service.html"
+              >Metadata service</link>.</para>
+        </listitem>
+      </itemizedlist>
+      <itemizedlist>
+        <title>Compute core</title>
+        <listitem>
+          <para><systemitem class="service">nova-compute</systemitem>
+            process. A worker daemon that creates and terminates
+            virtual machine instances through hypervisor APIs. For
+            example, XenAPI for XenServer/XCP, libvirt for KVM or
+            QEMU, VMwareAPI for VMware, and so on. The process by
+            which it does so is fairly complex but the basics are
+            simple: Accept actions from the queue and perform a series
+            of system commands, like launching a KVM instance, to
+            carry them out while updating state in the
+            database.</para>
+        </listitem>
+        <listitem>
+          <para><systemitem class="service"
+              >nova-scheduler</systemitem> process. Conceptually the
+            simplest piece of code in Compute. Takes a virtual machine
+            instance request from the queue and determines on which
+            compute server host it should run.</para>
+        </listitem>
+        <listitem>
+          <para><systemitem class="service"
+              >nova-conductor</systemitem> module. Mediates
+            interactions between <systemitem class="service"
+              >nova-compute</systemitem> and the database. Aims to
+            eliminate direct accesses to the cloud database made by
+              <systemitem class="service">nova-compute</systemitem>.
+            The <systemitem class="service"
+              >nova-conductor</systemitem> module scales horizontally.
+            However, do not deploy it on any nodes where <systemitem
+              class="service">nova-compute</systemitem> runs. For more
+            information, see <link
+              xlink:href="http://russellbryantnet.wordpress.com/2012/11/19/a-new-nova-service-nova-conductor/"
+              >A new Nova service: nova-conductor</link>.</para>
+        </listitem>
+      </itemizedlist>
+      <itemizedlist>
+        <title>Networking for VMs</title>
+        <listitem>
+          <para><systemitem class="service">nova-network</systemitem>
+            worker daemon. Similar to <systemitem class="service"
+              >nova-compute</systemitem>, it accepts networking tasks
+            from the queue and performs tasks to manipulate the
+            network, such as setting up bridging interfaces or
+            changing iptables rules. This functionality is being
+            migrated to OpenStack Networking, which is a separate
+            OpenStack service.</para>
+        </listitem>
+        <listitem>
+          <para><systemitem class="service"
+              >nova-dhcpbridge</systemitem> script. Tracks IP address
+            leases and records them in the database by using the
+            dnsmasq <literal>dhcp-script</literal> facility. This
+            functionality is being migrated to OpenStack Networking.
+            OpenStack Networking provides a different script.</para>
+        </listitem>
+      </itemizedlist>
+      <?hard-pagebreak?>
+      <itemizedlist>
+        <title>Console interface</title>
+        <listitem>
+          <para><systemitem class="service"
+              >nova-consoleauth</systemitem> daemon. Authorizes tokens
+            for users that console proxies provide. See <systemitem
+              class="service">nova-novncproxy</systemitem> and
+              <systemitem class="service"
+              >nova-xvpnvcproxy</systemitem>. This service must be
+            running for console proxies to work. Many proxies of
+            either type can be run against a single <systemitem
+              class="service">nova-consoleauth</systemitem> service in
+            a cluster configuration. For information, see <link
+              xlink:href="http://docs.openstack.org/trunk/openstack-compute/admin/content/about-nova-consoleauth.html"
+              >About nova-consoleauth</link>.</para>
+        </listitem>
+        <listitem>
+          <para><systemitem class="service"
+              >nova-novncproxy</systemitem> daemon. Provides a proxy
+            for accessing running instances through a VNC connection.
+            Supports browser-based novnc clients.</para>
+        </listitem>
+        <listitem>
+          <para><systemitem class="service">nova-console</systemitem>
+            daemon. Deprecated for use with Grizzly. Instead, the
+              <systemitem class="service"
+              >nova-xvpnvncproxy</systemitem> is used.</para>
+        </listitem>
+        <listitem>
+          <para><systemitem class="service"
+              >nova-xvpnvncproxy</systemitem> daemon. A proxy for
+            accessing running instances through a VNC connection.
+            Supports a Java client specifically designed for
+            OpenStack.</para>
+        </listitem>
+        <listitem>
+          <para><systemitem class="service">nova-cert</systemitem>
+            daemon. Manages x509 certificates.</para>
+        </listitem>
+      </itemizedlist>
+      <itemizedlist>
+        <title>Image Management (EC2 scenario)</title>
+        <listitem>
+          <para><systemitem class="service"
+              >nova-objectstore</systemitem> daemon. Provides an S3
+            interface for registering images with the Image Service.
+            Mainly used for installations that must support euca2ools.
+            The euca2ools tools talk to <systemitem class="service"
+              >nova-objectstore</systemitem> in <emphasis
+              role="italic">S3 language</emphasis>, and <systemitem
+              class="service">nova-objectstore</systemitem> translates
+            S3 requests into Image Service requests.</para>
+        </listitem>
+        <listitem>
+          <para>euca2ools client. A set of command-line interpreter
+            commands for managing cloud resources. Though not an
+            OpenStack module, you can configure <systemitem
+              class="service">nova-api</systemitem> to support this
+            EC2 interface. For more information, see the <link
+              xlink:href="http://www.eucalyptus.com/eucalyptus-cloud/documentation/2.0"
+              >Eucalyptus 2.0 Documentation</link>.</para>
+        </listitem>
+      </itemizedlist>
+      <itemizedlist>
+        <title>Command Line Interpreter/Interfaces</title>
+        <listitem>
+          <para>nova client. Enables users to submit commands as a
+            tenant administrator or end user.</para>
+        </listitem>
+        <listitem>
+          <para>nova-manage client. Enables cloud administrators to
+            submit commands.</para>
+        </listitem>
+      </itemizedlist>
+      <itemizedlist>
+        <title>Other components</title>
+        <listitem>
+          <para>The queue. A central hub for passing messages between
+            daemons. Usually implemented with <link
+              xlink:href="http://www.rabbitmq.com/">RabbitMQ</link>,
+            but could be any AMPQ message queue, such as <link
+              xlink:href="http://qpid.apache.org/">Apache Qpid</link>)
+            or <link xlink:href="http://www.zeromq.org/">Zero
+              MQ</link>.</para>
+        </listitem>
+        <listitem>
+          <para>SQL database. Stores most build-time and runtime
+            states for a cloud infrastructure. Includes instance types
+            that are available for use, instances in use, available
+            networks, and projects. Theoretically, OpenStack Compute
+            can support any database that SQL-Alchemy supports, but
+            the only databases widely used are sqlite3 databases,
+            MySQL (only appropriate for test and development work),
+            and PostgreSQL.</para>
+        </listitem>
+      </itemizedlist>
+      <para>The Compute Service interacts with other OpenStack
+        services: Identity Service for authentication, Image Service
+        for images, and the OpenStack Dashboard for a web
+        interface.</para>
+    </section>
+    <?hard-pagebreak?>
+    <section xml:id="object-storage-service">
+      <title>Object Storage Service</title>
+      <para>The Object Storage Service is a highly scalable and
+        durable multi-tenant object storage system for large amounts
+        of unstructured data at low cost through a RESTful http
+        API.</para>
+      <para>It includes the following components:</para>
+      <itemizedlist>
+        <listitem>
+          <para><systemitem class="service"
+              >swift-proxy-server</systemitem>. Accepts Object Storage
+            API and raw HTTP requests to upload files, modify
+            metadata, and create containers. It also serves file or
+            container listings to web browsers. To improve
+            performance, the proxy server can use an optional cache
+            usually deployed with memcache.</para>
+        </listitem>
+        <listitem>
+          <para>Account servers. Manage accounts defined with the
+            Object Storage Service.</para>
+        </listitem>
+        <listitem>
+          <para>Container servers. Manage a mapping of containers, or
+            folders, within the Object Storage Service.</para>
+        </listitem>
+        <listitem>
+          <para>Object servers. Manage actual objects, such as files,
+            on the storage nodes.</para>
+        </listitem>
+        <listitem>
+          <para>A number of periodic processes. Performs housekeeping
+            tasks on the large data store. The replication services
+            ensure consistency and availability through the cluster.
+            Other periodic processes include auditors, updaters, and
+            reapers.</para>
+        </listitem>
+      </itemizedlist>
+      <para>Configurable WSGI middleware, which is usually the
+        Identity Service, handles authentication.</para>
+      <xi:include href="section_storage-concepts.xml"/>
+    </section>
+    <section xml:id="block-storage-service">
+      <title>Block Storage Service</title>
+      <para>The Block Storage Service enables management of volumes,
+        volume snapshots, and volume types. It includes the following
+        components:</para>
+      <itemizedlist>
+        <listitem>
+          <para><systemitem class="service">cinder-api</systemitem>.
+            Accepts API requests and routes them to <systemitem
+              class="service">cinder-volume</systemitem> for
+            action.</para>
+        </listitem>
+        <listitem>
+          <para><systemitem class="service"
+            >cinder-volume</systemitem>. Responds to requests to read
+            from and write to the Object Storage database to maintain
+            state, interacting with other processes (like <systemitem
+              class="service">cinder-scheduler</systemitem>) through a
+            message queue and directly upon block storage providing
+            hardware or software. It can interact with a variety of
+            storage providers through a driver architecture.</para>
+        </listitem>
+        <listitem>
+          <para><systemitem class="service"
+              >cinder-scheduler</systemitem> daemon. Like the
+              <systemitem class="service">nova-scheduler</systemitem>,
+            picks the optimal block storage provider node on which to
+            create the volume.</para>
+        </listitem>
+        <listitem>
+          <para>Messaging queue. Routes information between the Block
+            Storage Service processes and a database, which stores
+            volume state.</para>
+        </listitem>
+      </itemizedlist>
+      <para>The Block Storage Service interacts with Compute to
+        provide volumes for instances.</para>
+    </section>
+    <section xml:id="image-service">
+      <title>Image Service</title>
+      <para>The Image Service includes the following
+        components:</para>
+      <itemizedlist>
+        <listitem>
+          <para><systemitem class="service">glance-api</systemitem>.
+            Accepts Image API calls for image discovery, retrieval,
+            and storage.</para>
+        </listitem>
+        <listitem>
+          <para><systemitem class="service"
+              >glance-registry</systemitem>. Stores, processes, and
+            retrieves metadata about images. Metadata includes size,
+            type, and so on.</para>
+        </listitem>
+        <listitem>
+          <para>Database. Stores image metadata. You can choose your
+            database depending on your preference. Most deployments
+            use MySQL or SQlite.</para>
+        </listitem>
+        <listitem>
+          <para>Storage repository for image files. In <xref
+              linkend="os-logical-arch"/>, the Object Storage Service
+            is the image repository. However, you can configure a
+            different repository. The Image Service supports normal
+            file systems, RADOS block devices, Amazon S3, and HTTP.
+            Some of these choices are limited to read-only
+            usage.</para>
+        </listitem>
+      </itemizedlist>
+      <para>A number of periodic processes run on the Image Service to
+        support caching. Replication services ensures consistency and
+        availability through the cluster. Other periodic processes
+        include auditors, updaters, and reapers.</para>
+      <para>As shown in <xref linkend="concept_arch"/>, the Image
+        Service is central to the overall IaaS picture. It accepts API
+        requests for images or image metadata from end users or
+        Compute components and can store its disk files in the Object
+        Storage Service.</para>
+    </section>
+    <section xml:id="networking-service">
+      <title>Networking Service</title>
+      <para>Provides network-connectivity-as-a-service between
+        interface devices that are managed by other OpenStack
+        services, usually Compute. Enables users to create and attach
+        interfaces to networks. Like many OpenStack services,
+        OpenStack Networking is highly configurable due to its plug-in
+        architecture. These plug-ins accommodate different networking
+        equipment and software. Consequently, the architecture and
+        deployment vary dramatically.</para>
+      <para>Includes the following components:</para>
+      <itemizedlist>
+        <listitem>
+          <para><systemitem class="service"
+              >neutron-server</systemitem>. Accepts and routes API
+            requests to the appropriate OpenStack Networking plug-in
+            for action.</para>
+        </listitem>
+        <listitem>
+          <para>OpenStack Networking plug-ins and agents. Plugs and
+            unplugs ports, creates networks or subnets, and provides
+            IP addressing. These plug-ins and agents differ depending
+            on the vendor and technologies used in the particular
+            cloud. OpenStack Networking ships with plug-ins and agents
+            for Cisco virtual and physical switches, Nicira NVP
+            product, NEC OpenFlow products, Open vSwitch, Linux
+            bridging, and the Ryu Network Operating System.</para>
+          <para>The common agents are L3 (layer 3), DHCP (dynamic host
+            IP addressing), and a plug-in agent.</para>
+        </listitem>
+        <listitem>
+          <para>Messaging queue. Most OpenStack Networking
+            installations make use of a messaging queue to route
+            information between the neutron-server and various agents
+            as well as a database to store networking state for
+            particular plug-ins.</para>
+        </listitem>
+      </itemizedlist>
+      <para>OpenStack Networking interacts mainly with OpenStack
+        Compute, where it provides networks and connectivity for its
+        instances.</para>
+    </section>
+    <?hard-pagebreak?>
+    <section xml:id="metering-service">
+      <title>Metering/Monitoring Service</title>
+      <para>The Metering Service is designed to:</para>
+      <para>
+        <itemizedlist>
+          <listitem>
+            <para>Efficiently collect the metering data about the CPU
+              and network costs.</para>
+          </listitem>
+          <listitem>
+            <para>Collect data by monitoring notifications sent from
+              services or by polling the infrastructure.</para>
+          </listitem>
+          <listitem>
+            <para>Configure the type of collected data to meet various
+              operating requirements. Accessing and inserting the
+              metering data through the REST API.</para>
+          </listitem>
+          <listitem>
+            <para>Expand the framework to collect custom usage data by
+              additional plug-ins.</para>
+          </listitem>
+          <listitem>
+            <para>Produce signed metering messages that cannot be
+              repudiated.</para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>The system consists of the following basic
+        components:</para>
+      <itemizedlist>
+        <listitem>
+          <para>A compute agent. Runs on each compute node and polls
+            for resource utilization statistics. There may be other
+            types of agents in the future, but for now we will focus
+            on creating the compute agent.</para>
+        </listitem>
+        <listitem>
+          <para>A central agent. Runs on a central management server
+            to poll for resource utilization statistics for resources
+            not tied to instances or compute nodes.</para>
+        </listitem>
+        <listitem>
+          <para>A collector. Runs on one or more central management
+            servers to monitor the message queues (for notifications
+            and for metering data coming from the agent). Notification
+            messages are processed and turned into metering messages
+            and sent back out onto the message bus using the
+            appropriate topic. Metering messages are written to the
+            data store without modification.</para>
+        </listitem>
+        <listitem>
+          <para>A data store. A database capable of handling
+            concurrent writes (from one or more collector instances)
+            and reads (from the API server).</para>
+        </listitem>
+        <listitem>
+          <para>An API server. Runs on one or more central management
+            servers to provide access to the data from the data store.
+            These services communicate using the standard OpenStack
+            messaging bus. Only the collector and API server have
+            access to the data store.</para>
+        </listitem>
+      </itemizedlist>
+      <para>These services communicate by using the standard OpenStack
+        messaging bus. Only the collector and API server have access
+        to the data store.</para>
+    </section>
+    <?hard-pagebreak?>
+    <section xml:id="orchestration-service">
+      <title>Orchestration Service</title>
+      <para>The Orchestration Service provides a template-based
+        orchestration for describing a cloud application by running
+        OpenStack API calls to generate running cloud applications.
+        The software integrates other core components of OpenStack
+        into a one-file template system. The templates enable you to
+        create most OpenStack resource types, such as instances,
+        floating IPs, volumes, security groups, users, and so on.
+        Also, provides some more advanced functionality, such as
+        instance high availability, instance auto-scaling, and nested
+        stacks. By providing very tight integration with other
+        OpenStack core projects, all OpenStack core projects could
+        receive a larger user base.</para>
+      <para>Enables deployers to integrate with the Orchestration
+        Service directly or through custom plug-ins.</para>
+      <para>The Orchestration Service consists of the following
+        components:</para>
+      <itemizedlist>
+        <listitem>
+          <para><code>heat</code> tool. A CLI that communicates with
+            the heat-api to run AWS CloudFormation APIs. End
+            developers could also use the heat REST API
+            directly.</para>
+        </listitem>
+        <listitem>
+          <para><code>heat-api</code> component. Provides an
+            OpenStack-native REST API that processes API requests by
+            sending them to the heat-engine over RPC.</para>
+        </listitem>
+        <listitem>
+          <para><code>heat-api-cfn</code> component. Provides an AWS
+            Query API that is compatible with AWS CloudFormation and
+            processes API requests by sending them to the heat-engine
+            over RPC.</para>
+        </listitem>
+        <listitem>
+          <para><code>heat-engine</code>. Orchestrates the launching
+            of templates and provides events back to the API
+            consumer.</para>
+        </listitem>
+      </itemizedlist>
+    </section>
   </section>
- </section>
- <section xml:id="openstack-services">
-  <title>OpenStack services</title>
-  <para>This section describes OpenStack services in detail.</para>
-  <section xml:id="dashboard-service">
-   <title>Dashboard</title>
-   <para>The dashboard is a modular <link
-     xlink:href="https://www.djangoproject.com/">Django web
-     application</link> that provides a graphical interface to
-    OpenStack services.</para>
-   <informalfigure>
-    <mediaobject>
-     <imageobject>
-      <imagedata contentwidth="4in"
- fileref="figures/horizon-screenshot.jpg"/>
-     </imageobject>
-    </mediaobject>
-   </informalfigure>
-   <para>The dashboard is usually deployed through <link
-     xlink:href="http://code.google.com/p/modwsgi/">mod_wsgi</link> in
-    Apache. You can modify the dashboard code to make it suitable for
-    different sites.</para>
-   <para>From a network architecture point of view, this service must be
-    accessible to customers and the public API for each OpenStack
-    service. To use the administrator functionality for other
-    services, it must also connect to Admin API endpoints, which
-    should not be accessible by customers.</para>
+  <section xml:id="feedback">
+    <title>Feedback</title>
+    <para>To provide feedback on documentation, join and use the
+        <email>openstack-docs@lists.openstack.org</email> mailing list
+      at <link
+        xlink:href="http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack-docs"
+        >OpenStack Documentation Mailing List</link>, or <link
+        xlink:href="https://bugs.launchpad.net/openstack-manuals/+filebug"
+        >report a bug</link>.</para>
   </section>
-  <section xml:id="identity-service">
-   <title>Identity Service</title>
-   <para>The Identity Service is an OpenStack project that provides
-    identity, token, catalog, and policy services to OpenStack
-    projects. It consists of:</para>
-   <itemizedlist>
-    <listitem>
-     <para><systemitem class="service">keystone-all</systemitem>. Starts both the service and
-      administrative APIs in a single process to provide Catalog, Authorization, and Authentication
-      services for OpenStack.</para>
-    </listitem>
-    <listitem>
-     <para>Identity Service functions. Each has a pluggable backend that allows different ways to use
-      the particular service. Most support standard backends like LDAP or SQL.</para>
-    </listitem>
-   </itemizedlist>
-   <para>The Identity Service is mostly used to customize authentication
-    services.</para>
-  </section>
-  <section xml:id="compute-service">
-   <title>Compute Service</title>
-   <para>The Compute Service is a cloud computing fabric controller, the
-    main part of an IaaS system. It can be used for hosting and
-    managing cloud computing systems. The main modules are implemented
-    in Python.</para>
-   <para>The Compute Service is made up of the following functional
-    areas and their underlying components:</para>
-   <itemizedlist>
-    <title>API</title>
-    <listitem>
-     <para><systemitem class="service">nova-api</systemitem> service.
-      Accepts and responds to end user compute API calls. Supports the
-      OpenStack Compute API, the Amazon EC2 API, and a special Admin
-      API for privileged users to perform administrative actions.
-      Also, initiates most orchestration activities, such as running
-      an instance, and enforces some policies.</para>
-    </listitem>
-    <listitem>
-     <para><systemitem class="service">nova-api-metadata</systemitem>
-      service. Accepts metadata requests from instances. The
-       <systemitem class="service">nova-api-metadata</systemitem>
-      service is generally only used when you run in multi-host mode
-      with <systemitem class="service">nova-network</systemitem>
-      installations. For details, see <link
-       xlink:href="http://docs.openstack.org/trunk/openstack-compute/admin/content/metadata-service.html"
-       >Metadata service</link>.</para>
-    </listitem>
-   </itemizedlist>
-   <itemizedlist>
-    <title>Compute core</title>
-    <listitem>
-     <para><systemitem class="service">nova-compute</systemitem> process. A
-      worker daemon that creates and terminates virtual machine
-      instances through hypervisor APIs. For example, XenAPI for
-      XenServer/XCP, libvirt for KVM or QEMU, VMwareAPI for VMware,
-      and so on. The process by which it does so is fairly complex but
-      the basics are simple: Accept actions from the queue and perform
-      a series of system commands, like launching a KVM instance, to
-      carry them out while updating state in the database.</para>
-    </listitem>
-    <listitem>
-     <para><systemitem class="service">nova-scheduler</systemitem>
-      process. Conceptually the simplest piece of code in Compute.
-      Takes a virtual machine instance request from the queue and
-      determines on which compute server host it should run.</para>
-    </listitem>
-    <listitem>
-     <para><systemitem class="service">nova-conductor</systemitem> module.
-      Mediates interactions between <systemitem class="service"
-       >nova-compute</systemitem> and the database. Aims to eliminate
-      direct accesses to the cloud database made by <systemitem
-       class="service">nova-compute</systemitem>. The <systemitem
-       class="service">nova-conductor</systemitem> module scales
-      horizontally. However, do not deploy it on any nodes where
-       <systemitem class="service">nova-compute</systemitem> runs. For
-      more information, see <link
-       xlink:href="http://russellbryantnet.wordpress.com/2012/11/19/a-new-nova-service-nova-conductor/"
-       >A new Nova service: nova-conductor</link>.</para>
-    </listitem>
-   </itemizedlist>
-   <itemizedlist>
-    <title>Networking for VMs</title>
-    <listitem>
-     <para><systemitem class="service">nova-network</systemitem>
-worker daemon. Similar to <systemitem class="service"
- >nova-compute</systemitem>, it accepts networking tasks
-from the queue and performs tasks to manipulate the
-network, such as setting up bridging interfaces or
-changing iptables rules. This functionality is being
-migrated to OpenStack Networking, which is a separate
-OpenStack service.</para>
-    </listitem>
-    <listitem>
-     <para><systemitem class="service">nova-dhcpbridge</systemitem>
-      script. Tracks IP address leases and records them in the
-      database by using the dnsmasq <literal>dhcp-script</literal>
-      facility. This functionality is being migrated to OpenStack
-      Networking. OpenStack Networking provides a different
-      script.</para>
-    </listitem>
-   </itemizedlist>
-   <itemizedlist>
-    <title>Console interface</title>
-    <listitem>
-     <para><systemitem class="service"
- >nova-consoleauth</systemitem> daemon. Authorizes tokens
-for users that console proxies provide. See <systemitem
- class="service">nova-novncproxy</systemitem> and
- <systemitem class="service"
- >nova-xvpnvcproxy</systemitem>. This service must be
-running for console proxies to work. Many proxies of
-either type can be run against a single <systemitem
- class="service">nova-consoleauth</systemitem> service in
-a cluster configuration. For information, see <link
- xlink:href="http://docs.openstack.org/trunk/openstack-compute/admin/content/about-nova-consoleauth.html"
- >About nova-consoleauth</link>.</para>
-    </listitem>
-    <listitem>
-     <para><systemitem class="service">nova-novncproxy</systemitem>
-      daemon. Provides a proxy for accessing running instances through
-      a VNC connection. Supports browser-based novnc clients.</para>
-    </listitem>
-    <listitem>
-     <para><systemitem class="service">nova-console</systemitem>
-daemon. Deprecated for use with Grizzly. Instead, the
- <systemitem class="service"
- >nova-xvpnvncproxy</systemitem> is used.</para>
-    </listitem>
-    <listitem>
-     <para><systemitem class="service">nova-xvpnvncproxy</systemitem>
-      daemon. A proxy for accessing running instances through a VNC
-      connection. Supports a Java client specifically designed for
-      OpenStack.</para>
-    </listitem>
-    <listitem>
-     <para><systemitem class="service">nova-cert</systemitem>
-daemon. Manages x509 certificates.</para>
-    </listitem>
-   </itemizedlist>
-   <itemizedlist>
-    <title>Image Management (EC2 scenario)</title>
-    <listitem>
-     <para><systemitem class="service">nova-objectstore</systemitem>
-      daemon. Provides an S3 interface for registering images with the
-      Image Service. Mainly used for installations that must support
-      euca2ools. The euca2ools tools talk to <systemitem
-       class="service">nova-objectstore</systemitem> in <emphasis
-       role="italic">S3 language</emphasis>, and <systemitem
-       class="service">nova-objectstore</systemitem> translates S3
-      requests into Image Service requests.</para>
-    </listitem>
-    <listitem>
-     <para>euca2ools client. A set of command-line interpreter commands
-      for managing cloud resources. Though not an OpenStack module,
-      you can configure <systemitem class="service"
-       >nova-api</systemitem> to support this EC2 interface. For more
-      information, see the <link
-       xlink:href="http://www.eucalyptus.com/eucalyptus-cloud/documentation/2.0"
-       >Eucalyptus 2.0 Documentation</link>.</para>
-    </listitem>
-   </itemizedlist>
-   <itemizedlist>
-    <title>Command Line Interpreter/Interfaces</title>
-    <listitem>
-     <para>nova client. Enables users to submit commands as a tenant
-      administrator or end user.</para>
-    </listitem>
-    <listitem>
-     <para>nova-manage client. Enables cloud administrators to submit
-      commands.</para>
-    </listitem>
-   </itemizedlist>
-   <itemizedlist>
-    <title>Other components</title>
-    <listitem>
-     <para>The queue. A central hub for passing messages between daemons.
-      Usually implemented with <link
-       xlink:href="http://www.rabbitmq.com/">RabbitMQ</link>, but
-      could be any AMPQ message queue, such as <link
-       xlink:href="http://qpid.apache.org/">Apache Qpid</link>) or
-       <link xlink:href="http://www.zeromq.org/">Zero
-      MQ</link>.</para>
-    </listitem>
-    <listitem>
-     <para>SQL database. Stores most build-time and runtime states for
-      a cloud infrastructure. Includes instance types that are
-      available for use, instances in use, available networks, and
-      projects. Theoretically, OpenStack Compute can support any
-      database that SQL-Alchemy supports, but the only databases
-      widely used are sqlite3 databases, MySQL (only appropriate for
-      test and development work), and PostgreSQL.</para>
-    </listitem>
-   </itemizedlist>
-   <para>The Compute Service interacts with other OpenStack services:
-    Identity Service for authentication, Image Service for images, and
-    the OpenStack Dashboard for a web interface.</para>
-  </section>
-  <section xml:id="object-storage-service">
-   <title>Object Storage Service</title>
-   <para>The Object Storage Service is a highly scalable and durable
-    multi-tenant object storage system for large amounts of
-    unstructured data at low cost through a RESTful http API.</para>
-   <para>It includes the following components:</para>
-   <itemizedlist>
-    <listitem>
-     <para><systemitem class="service">swift-proxy-server</systemitem>.
-      Accepts Object Storage API and raw HTTP requests to upload
-      files, modify metadata, and create containers. It also serves
-      file or container listings to web browsers. To improve
-      performance, the proxy server can use an optional cache usually
-      deployed with memcache.</para>
-    </listitem>
-    <listitem>
-     <para>Account servers. Manage accounts defined with the Object
-      Storage Service.</para>
-    </listitem>
-    <listitem>
-     <para>Container servers. Manage a mapping of containers, or folders,
-      within the Object Storage Service.</para>
-    </listitem>
-    <listitem>
-     <para>Object servers. Manage actual objects, such as files, on the
-      storage nodes.</para>
-    </listitem>
-    <listitem>
-     <para>A number of periodic processes. Performs housekeeping tasks on
-      the large data store. The replication services ensure
-      consistency and availability through the cluster. Other periodic
-      processes include auditors, updaters, and reapers.</para>
-    </listitem>
-   </itemizedlist>
-   <para>Configurable WSGI middleware, which is usually the
-Identity Service, handles authentication.</para>
- <xi:include href="section_storage-concepts.xml"/>
-  </section>
-  <section xml:id="block-storage-service">
-   <title>Block Storage Service</title>
-   <para>The Block Storage Service enables management of volumes, volume
-    snapshots, and volume types. It includes the following
-    components:</para>
-   <itemizedlist>
-    <listitem>
-     <para><systemitem class="service">cinder-api</systemitem>.
-Accepts API requests and routes them to <systemitem
- class="service">cinder-volume</systemitem> for
-action.</para>
-    </listitem>
-    <listitem>
-     <para><systemitem class="service">cinder-volume</systemitem>. Responds to requests to read from and
-      write to the Object Storage database to maintain state, interacting with other processes (like
-       <systemitem class="service">cinder-scheduler</systemitem>) through a message queue and
-      directly upon block storage providing hardware or software. It can interact with a variety of
-      storage providers through a driver architecture.</para>
-    </listitem>
-    <listitem>
-     <para><systemitem class="service"
- >cinder-scheduler</systemitem> daemon. Like the
- <systemitem class="service">nova-scheduler</systemitem>,
-picks the optimal block storage provider node on which to
-create the volume.</para>
-    </listitem>
-    <listitem>
-     <para>Messaging queue. Routes information between the Block Storage
-      Service processes and a database, which stores volume
-      state.</para>
-    </listitem>
-   </itemizedlist>
-   <para>The Block Storage Service interacts with Compute to provide
-    volumes for instances.</para>
-  </section>
-  <section xml:id="image-service">
-   <title>Image Service</title>
-   <para>The Image Service includes the following components:</para>
-   <itemizedlist>
-    <listitem>
-     <para><systemitem class="service">glance-api</systemitem>. Accepts
-      Image API calls for image discovery, retrieval, and
-      storage.</para>
-    </listitem>
-    <listitem>
-     <para><systemitem class="service">glance-registry</systemitem>.
-      Stores, processes, and retrieves metadata about images. Metadata
-      includes size, type, and so on.</para>
-    </listitem>
-    <listitem>
-     <para>Database. Stores image metadata. You can choose your database
-      depending on your preference. Most deployments use MySQL or
-      SQlite.</para>
-    </listitem>
-    <listitem>
-     <para>Storage repository for image files. In <xref
-       linkend="os-logical-arch"/>, the Object Storage Service is the
-      image repository. However, you can configure a different
-      repository. The Image Service supports normal filesystems, RADOS
-      block devices, Amazon S3, and HTTP. Some of these choices are
-      limited to read-only usage.</para>
-    </listitem>
-   </itemizedlist>
-   <para>A number of periodic processes run on the Image Service to
-support caching. Replication services ensures consistency and
-availability through the cluster. Other periodic processes
-include auditors, updaters, and reapers.</para>
-   <para>As shown in <xref linkend="concept_arch"/>, the Image Service
-    is central to the overall IaaS picture. It accepts API requests
-    for images or image metadata from end users or Compute components
-    and can store its disk files in the Object Storage Service.</para>
-  </section>
-  <section xml:id="networking-service">
-   <title>Networking Service</title>
-   <para>Provides network-connectivity-as-a-service between interface
-    devices that are managed by other OpenStack services, usually
-    Compute. Enables users to create and attach interfaces to
-    networks. Like many OpenStack services, OpenStack Networking is
-    highly configurable due to its plug-in architecture. These
-    plug-ins accommodate different networking equipment and software.
-    Consequently, the architecture and deployment vary dramatically.</para>
-   <para>Includes the following components:</para>
-   <itemizedlist>
-    <listitem>
-     <para><systemitem class="service">neutron-server</systemitem>.
-      Accepts and routes API requests to the appropriate OpenStack
-      Networking plug-in for action.</para>
-    </listitem>
-    <listitem>
-     <para>OpenStack Networking plug-ins and agents. Plugs and unplugs
-      ports, creates networks or subnets, and provides IP addressing.
-      These plug-ins and agents differ depending on the vendor and
-      technologies used in the particular cloud. OpenStack Networking
-      ships with plug-ins and agents for Cisco virtual and physical
-      switches, Nicira NVP product, NEC OpenFlow products, Open
-      vSwitch, Linux bridging, and the Ryu Network Operating
-      System.</para>
-     <para>The common agents are L3 (layer 3), DHCP (dynamic host IP addressing), and a plug-in
-      agent.</para>
-    </listitem>
-    <listitem>
-     <para>Messaging queue. Most OpenStack Networking installations make
-      use of a messaging queue to route information between the
-      neutron-server and various agents as well as a database to store
-      networking state for particular plug-ins.</para>
-    </listitem>
-   </itemizedlist>
-   <para>OpenStack Networking interacts mainly with OpenStack
-Compute, where it provides networks and connectivity for its
-instances.</para>
-  </section>
-  <section xml:id="metering-service">
-   <title>Metering/Monitoring Service</title>
-   <para>The Metering Service is designed to:</para>
-   <para>
-    <itemizedlist>
-     <listitem>
-      <para>Efficiently collect the metering data about the CPU and network costs.</para>
-     </listitem>
-     <listitem><para>Collect data by monitoring notifications sent from services or by polling the
- infrastructure.</para>
-     </listitem>
-     <listitem><para>Configure the type of collected data to meet various operating requirements.
- Accessing and inserting the metering data through the REST API.</para>
-     </listitem>
-     <listitem><para>Expand the framework to collect custom usage data by additional
-       plug-ins.</para></listitem>
-     <listitem><para>Produce signed metering messages that cannot be
-       repudiated.</para></listitem>
-    </itemizedlist>
-   </para>
-   <para>The system consists of the following basic components:</para>
-   <itemizedlist>
-    <listitem>
-     <para>A compute agent. Runs on each compute node and polls for resource utilization
- statistics. There may be other types of agents in the future, but for now we will
- focus on creating the compute agent.</para>
-    </listitem>
-    <listitem><para>A central agent. Runs on a central management server to poll for resource
- utilization statistics for resources not tied to instances or compute nodes.</para>
-    </listitem>
-    <listitem><para>A collector. Runs on one or more central management servers to monitor the
- message queues (for notifications and for metering data coming from the agent).
- Notification messages are processed and turned into metering messages and sent back
- out onto the message bus using the appropriate topic. Metering messages are written
- to the data store without modification.</para>
-    </listitem>
-    <listitem><para>A data store. A database capable of handling concurrent writes (from one or more
- collector instances) and reads (from the API server).</para>
-    </listitem>
-    <listitem><para>An API server. Runs on one or more central management servers to provide access to the data
- from the data store. These services communicate using the standard OpenStack messaging
- bus. Only the collector and API server have access to the data store.</para>
-    </listitem>
-   </itemizedlist>
-   <para>These services communicate by using the standard OpenStack messaging bus. Only the collector and API server have access to the data store.</para>
-  </section>
-  <section xml:id="orchestration-service">
-   <title>Orchestration Service</title>
-   <para>The Orchestration Service provides a template-based
-    orchestration for describing a cloud application by running
-    OpenStack API calls to generate running cloud applications. The
-    software integrates other core components of OpenStack into a
-    one-file template system. The templates enable you to create most
-    OpenStack resource types, such as instances, floating IPs,
-    volumes, security groups, users, and so on. Also, provides some
-    more advanced functionality, such as instance high availability,
-    instance auto-scaling, and nested stacks. By providing very tight
-    integration with other OpenStack core projects, all OpenStack core
-    projects could receive a larger user base.</para>
-   <para>Enables deployers to integrate with the Orchestration Service
-    directly or through custom plug-ins.</para>
-   <para>The Orchestration Service consists of the following
-    components:</para>
-   <itemizedlist>
-    <listitem><para><code>heat</code> tool. A CLI that communicates with the
-      heat-api to run AWS CloudFormation APIs. End developers could
-      also use the heat REST API directly.</para>
-    </listitem>
-    <listitem><para><code>heat-api</code> component. Provides an OpenStack-native
-      REST API that processes API requests by sending them to the
-      heat-engine over RPC.</para>
-    </listitem>
-    <listitem><para><code>heat-api-cfn</code> component. Provides an AWS Query API that is compatible with AWS CloudFormation
-      and processes API requests by sending them to the heat-engine over RPC.</para></listitem>
-  <listitem><para><code>heat-engine</code>. Orchestrates the launching of templates and provides events back to the API
-      consumer.</para>
-  </listitem>
-   </itemizedlist>
-  </section>
- </section>
- <section xml:id="feedback">
-  <title>Feedback</title>
-  <para>To provide feedback on documentation, join and use the
-<email>openstack-docs@lists.openstack.org</email> mailing list
- at <link
-xlink:href="http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack-docs"
->OpenStack Documentation Mailing List</link>, or <link
-xlink:href="https://bugs.launchpad.net/openstack-manuals/+filebug"
->report a bug</link>.</para>
- </section>
 </chapter>
