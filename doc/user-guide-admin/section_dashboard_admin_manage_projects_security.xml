@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="dashboard_manage_projects_security">
+    <?dbhtml stop-chunking?>
+    <title>Manage project security</title>
+    <para>Security groups are sets of IP filter rules that are applied to all project instances, and
+        which define networking access to the instance. Group rules are project specific; project
+        members can edit the default rules for their group and add new rule sets.</para>
+    <para>All projects have a "default" security group which is applied to any instance that has no
+        other defined security group. Unless you change the default, this security group denies all
+        incoming traffic and allows only outgoing traffic to your instance.</para>
+    <note><para>For information about updating global controls on the command line, see
+        <xref linkend="nova_cli_manage_projects_security"/>.</para></note>
+    <procedure>
+        <title>Create a Security Group</title>
+        <step>
+            <para>Log in to the OpenStack dashboard as a project member.</para>
+        </step>
+        <step><para>On the <guilabel>Project</guilabel> tab, select the appropriate
+            project from the <guilabel>CURRENT PROJECT</guilabel> drop-down
+            list, and click the <guilabel>Access &amp; Security</guilabel>
+            category.</para>
+        </step>
+        <step>
+            <para>On the <guilabel>Security Groups</guilabel> tab, click the <guibutton>Create
+                    Security Group</guibutton> button.</para>
+        </step>
+        <step><para>Provide the group with a name and a relevant description, click <guibutton>Create
+            Security Group</guibutton>. By default, the new rule provides outgoing access
+                rules for the group.</para>
+         </step>
+    </procedure>
+    <procedure>
+            <title>Update Security Group Rules</title>
+        <step>
+            <para>Log in to the OpenStack dashboard as a project member.</para>
+        </step>
+        <step>
+            <para>On the <guilabel>Project</guilabel> tab, select the appropriate project from the
+                    <guilabel>CURRENT PROJECT</guilabel> drop-down list, and click the
+                    <guilabel>Access &amp; Security</guilabel> category.</para>
+        </step>
+        <step>
+            <para>On the <guilabel>Security Groups</guilabel> tab, click the relevant group's
+                    <guibutton>Edit rules</guibutton> button: <itemizedlist>
+                    <listitem>
+                        <para>To delete a rule, select the rule's check box, and click
+                                <guilabel>Delete Rule</guilabel>.</para>
+                    </listitem>
+                    <listitem>
+                        <para>To add a new rule, click <guibutton>Add Rule</guibutton>. Update the rule fields
+                            using the following rule descriptions, and click <guilabel>Add</guilabel>.</para>
+                        <para>
+                            <table frame="void">
+                                <caption>Rule Fields</caption>
+                                <col width="14%"/>
+                                <col width="76%"/>
+                                <col width="10%"/>
+                                <thead>
+                                    <tr>
+                                        <th>Field Name</th>
+                                        <th>Description</th>
+                                        <th>Network</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Rule</td>
+                                        <td><para>Rule protocol type. Valid types are:<itemizedlist>
+                                            <listitem>
+                                                <para>Custom TCP Rule - Typically used to exchange data
+                                                    between systems, and for end-user communication.</para>
+                                            </listitem>
+                                            <listitem>
+                                                <para>Custom UDP Rule - Typically used to exchange data
+                                                    between systems, particularly at the application
+                                                    level.</para>
+                                            </listitem>
+                                            <listitem>
+                                                <para>Custom ICMP Rule - Typically used by network devices
+                                                    (for example, routers) to send error or monitoring
+                                                    messages.</para>
+                                            </listitem>
+                                            <listitem>
+                                                <para>Other Protocol - Other protocol type (for
+                                                  example, SCTP, which can be used to handle
+                                                  application data at the SCTP level). Only
+                                                  available for OpenStack Networking security
+                                                  groups.</para>
+                                            </listitem>
+                                        </itemizedlist></para></td>
+                                        <td>Compute / OpenStack Networking</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Direction</td>
+                                        <td>Direction of network traffic to which the rule applies: 'Ingress'
+                                            (inbound) or 'Egress' (outbound).</td>
+                                        <td>OpenStack Networking</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Open Port</td>
+                                        <td>For TCP or UDP rules, specifies the <guilabel>Port</guilabel> or
+                                            <guilabel>Port Range</guilabel> to be opened for the rule.</td>
+                                        <td>Compute / OpenStack Networking</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Port / From Port / To Port</td>
+                                        <td>For TCP or UDP rules, specifies the specific local port,
+                                            or a range of local ports, for incoming or outgoing
+                                            traffic.</td>
+                                        <td>Compute / OpenStack Networking</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Type</td>
+                                        <td>For ICMP rules, specifies the ICMP message that is being passed.</td>
+                                        <td>Compute / OpenStack Networking</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Code</td>
+                                        <td>For ICMP rules, specifies the ICMP subtype code, which provides
+                                            further information about the <guilabel>Type</guilabel>
+                                            message.</td>
+                                        <td>Compute / OpenStack Networking</td>
+                                    </tr>
+                                    <tr>
+                                        <td>IP Protocol</td>
+                                        <td>For 'Other Protocol' rules, specifies the IP protocol to
+                                            be used for the rule. The protocol must be specified as
+                                            an integer (see <link
+                                                xlink:href="http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml"
+                                                >http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml</link>).</td>
+                                        <td>OpenStack Networking</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Remote</td>
+                                        <td><para>Traffic source for the rule:
+                                            <itemizedlist>
+                                            <listitem>
+                                                <para><guilabel>CIDR</guilabel> (Classless Inter-Domain
+                                                    Routing) - IP address block, which limits access to IPs
+                                                    within the block.</para>
+                                            </listitem>
+                                            <listitem>
+                                                <para><guilabel>Security Group</guilabel> - Source Group
+                                                    which allows any instance in the group to access any
+                                                    other group instance.</para>
+                                            </listitem>
+                                        </itemizedlist></para></td>
+                                        <td>Compute / OpenStack Networking</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ether Type</td>
+                                        <td>Traffic protocol to be used for the rule ('IPv4' or 'IPv6').</td>
+                                        <td>OpenStack Networking</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </para>
+                    </listitem>
+                </itemizedlist></para>
+             </step>
+    </procedure>
+    <procedure>
+        <title>Delete a Security Group</title>
+        <step>
+            <para>Log in to the OpenStack dashboard as a project member.</para>
+        </step>
+        <step>
+            <para>On the <guilabel>Project</guilabel> tab, select the appropriate project from the
+                <guilabel>CURRENT PROJECT</guilabel> drop-down list, and click the
+                <guilabel>Access &amp; Security</guilabel> category.</para>
+        </step>
+        <step>
+            <para>On the <guilabel>Security Groups</guilabel> tab, select the
+                relevant group's check box, and click the <guibutton>Delete
+                Security Group</guibutton> button.</para>
+        </step>
+    </procedure>
+</section>
