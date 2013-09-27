@@ -7,16 +7,19 @@
     version="5.0"
     xml:id="ch_introduction-to-openstack-compute">
     <title>Compute</title>
-    <para>Compute gives you a tool to orchestrate a cloud, including running instances, managing
-        networks, and controlling access to the cloud through users and projects. The underlying
-        open source project's name is Nova, and it provides the software that can control an
-        Infrastructure as a Service (IaaS) cloud computing platform. It is similar in scope to
-        Amazon EC2 and Rackspace Cloud Servers.</para>
+    <para>Compute gives you a tool to orchestrate a cloud, including running
+        instances, managing networks, and controlling access to the
+        cloud through users and projects. The underlying open source
+        project's name is Nova, and it provides the software that can
+        control an Infrastructure as a Service (IaaS) cloud computing
+        platform. It is similar in scope to Amazon EC2 and Rackspace
+        Cloud Servers.</para>
     <section xml:id="section_compute-intro">
         <title>Introduction to Compute</title>
-    <para>Compute does not include any virtualization software; rather it defines drivers that
-            interact with underlying virtualization mechanisms that run on your host operating
-            system, and exposes functionality over a web-based API.</para>
+    <para>Compute does not include any virtualization software; rather it
+        defines drivers that interact with underlying virtualization
+        mechanisms that run on your host operating system, and exposes
+        functionality over a web-based API.</para>
 
     <section xml:id="section_hypervisors">
         <title>Hypervisors</title>
@@ -80,15 +83,18 @@
             consumption across available hardware resources are for each tenant. <note>
                 <para>Earlier versions of OpenStack used the term "project" instead of "tenant".
                     Because of this legacy terminology, some command-line tools use
-                        <literal>--project_id</literal> when a tenant ID is expected.</para>
+                        <parameter>--project_id</parameter> when a tenant ID is expected.</para>
             </note></para>
-<para>While the original EC2 API supports users, OpenStack Compute adds the concept of tenants.
-            Tenants are isolated resource containers forming the principal organizational structure
-            within the Compute service. They consist of a separate VLAN, volumes, instances, images,
-            keys, and users. A user can specify which tenant he or she wishes to be known as by
-            appending <literal>:project_id</literal> to his or her access key. If no tenant is
-            specified in the API request, Compute attempts to use a tenant with the same ID as the
-            user.</para>
+            <para>While the original EC2 API supports users, OpenStack
+            Compute adds the concept of tenants.  Tenants are isolated
+            resource containers that form the principal organizational
+            structure within the Compute service. They consist of a
+            separate VLAN, volumes, instances, images, keys, and
+            users. A user can specify which tenant he or she wishes to
+            be known as by appending <literal>:project_id</literal> to
+            his or her access key. If no tenant is specified in the
+            API request, Compute attempts to use a tenant with the
+            same ID as the user.</para>
         <para>For tenants, quota controls are available to limit the:<itemizedlist>
                 <listitem>
                     <para>Number of volumes which may be created</para>
@@ -103,11 +109,17 @@
                     <para>Number of processor cores which may be allocated</para>
                 </listitem>
                 <listitem>
-                    <para>Floating IP addresses (assigned to any instance when it launches so the instance has the same publicly accessible IP addresses)</para>
+                    <para>Floating IP addresses (assigned to any
+                    instance when it launches so the instance has the
+                    same publicly accessible IP addresses)</para>
                 </listitem>
                 <listitem>
-                  <para>Fixed IP addresses (assigned to the same instance each time it boots, publicly or privately accessible, typically private for management purposes)</para></listitem>
-            </itemizedlist></para>
+                  <para>Fixed IP addresses (assigned to the same
+                  instance each time it boots, publicly or privately
+                  accessible, typically private for management
+                  purposes)</para></listitem>
+            </itemizedlist>
+        </para>
 
     </section><section xml:id="section_images-and-instances">
     <title>Images and instances</title>
@@ -118,8 +130,8 @@
                 implement a virtual system within that cloud. These configuration details as well as
                 the specific command line utilities and API calls to perform the actions described
                 are presented in <xref linkend="section_image-mgmt"/> and the
-                volume-specific info in <citetitle>OpenStack Configuration
-                Reference</citetitle>.</para>
+                volume-specific info in <link xlink:href="http://docs.openstack.org/trunk/config-reference/content/"><citetitle>
+                OpenStack Configuration Reference</citetitle></link>.</para>
 
     <para>Images are disk images which are templates for virtual
             machine file systems. The image service, Glance, is
@@ -145,7 +157,8 @@
 
     <para>Additional resources such as persistent volume storage and
             public IP address may be added to and removed from running
-            instances. The examples below show the <systemitem class="service">cinder-volume</systemitem> service
+            instances. The examples below show the
+            <systemitem class="service">cinder-volume</systemitem> service
             which provide persistent block storage as opposed to the
             ephemeral storage provided by the instance flavor.</para>
 
@@ -162,7 +175,8 @@
                 images. In the cloud there is an available compute
                 node with available vCPU, memory and local disk
                 resources. Plus there are a number of predefined
-                volumes in the <systemitem class="service">cinder-volume</systemitem> service.</para>
+                volumes in the <systemitem class="service">cinder-volume</systemitem>
+                service.</para>
 
      <figure xml:id="initial-instance-state-figure">
        <title>Base image state with no running instances</title>
@@ -182,8 +196,8 @@
      flavor provides a root volume (as all flavors do) labeled vda in
      the diagram and additional ephemeral storage labeled vdb in the
      diagram.  The user has also opted to map a volume from the
-     <systemitem class="service">cinder-volume</systemitem> store to the third virtual disk, vdc, on this
-     instance.</para>
+     <systemitem class="service">cinder-volume</systemitem> store to
+     the third virtual disk, vdc, on this instance.</para>
 
      <figure xml:id="run-instance-state-figure">
        <title>Instance creation from image and run time state</title>
@@ -193,30 +207,27 @@
          </imageobject>
        </mediaobject>
      </figure>
+     <para>The OpenStack system copies the base image from the image
+     store to the local disk. The local disk is the first disk (vda)
+     that the instance accesses.  Using small images results in faster
+     start up of your instances as less data is copied across the
+     network. The system also creates a new empty disk image to
+     present as the second disk (vdb). Be aware that the second disk
+     is an empty disk with an ephemeral life as it is destroyed when
+     you delete the instance. The compute node attaches to the
+     requested <systemitem class="service">cinder-volume</systemitem>
+     using iSCSI and maps this to the third disk (vdc) as
+     requested. The vCPU and memory resources are provisioned and the
+     instance is booted from the first drive. The instance runs and
+     changes data on the disks indicated in red in the diagram
+     <link linkend="run-instance-state-figure" />.</para>
 
-            <para>The OpenStack system copies the base image from the
-                image store to local disk, which is used as the first
-                disk of the instance (vda). Using small images
-                results in faster start up of your instances as less
-                data needs to be copied across the network. The system
-                also creates a new empty disk image to present as the
-                second disk (vdb). Be aware that the second disk is an
-                empty disk with an ephemeral life as it is destroyed
-                when you delete the instance. The compute node
-                attaches to the requested <systemitem class="service">cinder-volume</systemitem> using iSCSI and
-                maps this to the third disk (vdc) as requested. The
-                vCPU and memory resources are provisioned and the
-                instance is booted from the first drive. The instance
-                runs and changes data on the disks indicated in red in
-                the diagram.</para>
-
-     <para>There are many possible variations in the details of the
-     scenario, particularly in terms of what the backing storage is
-     and the network protocols used to attach and move storage. One
-     variant worth mentioning here is that the ephemeral storage used
-     for volumes vda and vdb in this example may be backed by network
-     storage rather than local disk.  The details are left for later
-     chapters.</para>
+     <para>The details of this scenario can vary, particularly the
+     type of back-end storage and the network protocols that are used.
+     One variant worth mentioning here is that the ephemeral storage
+     used for volumes vda and vdb in this example may be backed by
+     network storage rather than local disk.  The details are left for
+     later chapters.</para>
 
     </simplesect>
 
@@ -282,22 +293,22 @@
        instance it is associated with is terminated. Rebooting the
        VM or restarting the host server, however, does not destroy
        ephemeral data. In the typical use case an instance's root
-       filesystem is stored on ephemeral storage. This is often an
+       file system is stored on ephemeral storage. This is often an
        unpleasant surprise for people unfamiliar with the cloud model
        of computing.</para>
 
-        <para>In addition to the ephemeral root volume all flavors
+        <para>In addition to the ephemeral root volume, all flavors
         except the smallest, m1.tiny, provide an additional ephemeral
-        block device varying from 20G for the m1.small through 160G
-        for the m1.xlarge by default - these sizes are configurable.
-        This is presented as a raw block device with no partition
-        table or filesystem.  Cloud aware operating system images may
-        discover, format, and mount this device.  For example the
-        cloud-init package included in Ubuntu's stock cloud images
- format this space as an ext3 filesystem and mount it on
-        /mnt. It is important to note this a feature of the guest
-        operating system. OpenStack only provisions the raw
-        storage.</para>
+        block device whose size ranges from 20 GB for m1.small to 160
+        GB for m1.xlarge. You can configure these sizes.  This is
+        presented as a raw block device with no partition table or
+        file system.  Cloud aware operating system images may discover,
+        format, and mount this device.  For example the cloud-init
+        package included in Ubuntu's stock cloud images format this
+        space as an ext3 file system and mount it on
+        <filename>/mnt</filename>. It is important to note this a
+        feature of the guest operating system. OpenStack only
+        provisions the raw storage.</para>
 
       </simplesect>
 
@@ -310,7 +321,7 @@
                 size.</para>
 
         <para>When first created volumes are raw block devices with no
-        partition table and no filesystem.  They must be attached to
+        partition table and no file system.  They must be attached to
         an instance to be partitioned and/or formatted.  Once this is
         done they may be used much like an external disk drive.
         Volumes may attached to only one instance at a time, but may
@@ -321,13 +332,16 @@
                 traditional non-cloud based virtualization systems. In
                 this use case the resulting instance may still have
                 ephemeral storage depending on the flavor selected,
-                but the root filesystem (and possibly others) is
+                but the root file system (and possibly others) is
                 on the persistent volume and its state is
                 maintained even if the instance it shut down. Details
-                of this configuration are discussed in the <link xlink:href="http://docs.openstack.org/user-guide/content/index.html"><citetitle>OpenStack End User Guide</citetitle></link>.</para>
+                of this configuration are discussed in the
+        <link xlink:href="http://docs.openstack.org/user-guide/content/index.html">
+          <citetitle>OpenStack End User Guide</citetitle></link>.
+        </para>
           <para>Volumes do not provide concurrent access from multiple
         instances.  For that you need either a traditional network
-        filesystem like NFS or CIFS or a cluster filesystem such as
+        file system like NFS or CIFS or a cluster file system such as
         GlusterFS. These may be built within an OpenStack cluster or
         provisioned outside of it, but are not features provided by
         the OpenStack software.</para>
@@ -357,8 +371,8 @@
             <listitem>
                 <para>Filesystem - The default backend that OpenStack
                     Image Service uses to store virtual machine images is
-                    the filesystem backend. This simple backend writes
-                    image files to the local filesystem.</para>
+                    the file system backend. This simple backend writes
+                    image files to the local file system.</para>
             </listitem>
             <listitem>
                 <para>S3 - This backend allows OpenStack Image Service to
@@ -426,27 +440,27 @@
                                         <application>nova</application> CLI needs to know
                                 four things:</para>
                         <itemizedlist>
-                                <listitem>
-                                        <para><literal>Authentication URL</literal>: This can be passed as
-                                                the --os_auth_url flag or using the
-                                                OS_AUTH_URL environment variable.</para>
-                                </listitem>
-                                <listitem>
-                                        <para><literal>Tenant (sometimes referred to as project)
-                                                name</literal>: This can be passed as the
-                                                --os_tenant_name flag or using the
-                                                OS_TENANT_NAME environment variable.</para>
-                                </listitem>
-                                <listitem>
-                                        <para><literal>User name</literal>: This can be passed as the
-                                                --os_username flag or using the OS_USERNAME
-                                                environment variable.</para>
-                                </listitem>
-                                <listitem>
-                                        <para><literal>Password</literal>: This can be passed as the
-                                                --os_password flag or using the OS_PASSWORD
-                                                environment variable.</para>
-                                </listitem>
+                          <listitem>
+                            <para><literal>Authentication URL</literal>: This can be passed as
+                            the <parameter>--os_auth_url</parameter> flag or using the
+                            OS_AUTH_URL environment variable.</para>
+                          </listitem>
+                          <listitem>
+                            <para><literal>Tenant (sometimes referred to as project)
+                            name</literal>: This can be passed as the
+                            <parameter>--os_tenant_name</parameter> flag or using the
+                            OS_TENANT_NAME environment variable.</para>
+                          </listitem>
+                          <listitem>
+                            <para><literal>User name</literal>: This can be passed as the
+                            <parameter>--os_username</parameter> flag or using the OS_USERNAME
+                            environment variable.</para>
+                          </listitem>
+                          <listitem>
+                            <para><literal>Password</literal>: This can be passed as the
+                            <parameter>--os_password</parameter> flag or using the OS_PASSWORD
+                            environment variable.</para>
+                          </listitem>
                         </itemizedlist>
 
                         <para>For example if you have your Identity Service
@@ -484,14 +498,17 @@
                 <simplesect xml:id="instance-mgmt-novaapi">
                         <title>Compute API</title>
                         <para>OpenStack provides a RESTful API for all
-                                functionality. Complete API documentation is available
-                                at http://docs.openstack.org/api. The <link
-                                        xlink:href="http://docs.openstack.org/api/openstack-compute/2"
-                                        >OpenStack Compute API</link> documentation refers
-                                to instances as "servers".</para>
+                          functionality. Complete API documentation is
+                          available at <link
+                          xlink:href="http://docs.openstack.org/api">http://docs.openstack.org/api</link>.
+                          The <link
+                          xlink:href="http://docs.openstack.org/api/openstack-compute/2"
+                          >OpenStack Compute API</link> documentation
+                          refers to instances as "servers".</para>
                         <para>The <link linkend="instance-mgmt-novaclient">nova
                                         cli</link> can be made to show the API calls it is
-                                making by passing it the --debug flag
+                                making by passing it the
+                                <parameter>--debug</parameter> flag
                                 <screen><prompt>#</prompt> <userinput>nova --debug list</userinput>
  <computeroutput>connect: (10.0.0.15, 5000)
 send: 'POST /v2.0/tokens HTTP/1.1\r\nHost: 10.0.0.15:5000\r\nContent-Length: 116\r\ncontent-type: application/json\r\naccept-encoding: gzip, deflate\r\naccept: application/json\r\nuser-agent: python-novaclient\r\n\r\n{"auth": {"tenantName": "demoproject", "passwordCredentials": {"username": "demouser", "password": "demopassword"}}}'
@@ -510,8 +527,8 @@ header: Date: Thu, 13 Sep 2012 20:27:36 GMT
 +----+------+--------+----------+
 | ID | Name | Status | Networks |
 +----+------+--------+----------+
-+----+------+--------+----------+</computeroutput></screen></para>
-
++----+------+--------+----------+</computeroutput></screen>
+                        </para>
                 </simplesect>
                 <simplesect xml:id="instance-mgmt-ec2compat">
                         <title>EC2 Compatibility API</title>
@@ -743,22 +760,27 @@ header: Date: Thu, 13 Sep 2012 20:27:36 GMT
         <title>Networking options</title>
         <para>This section offers a brief overview of each concept in
             networking for Compute. With the Grizzly release, you can
-            choose to either install and configure nova-network for
-            networking between VMs or use the Networking service
-            (neutron) for networking. To configure Compute networking
-            options with Neutron, see <link
-                xlink:href="http://docs.openstack.org/trunk/openstack-network/admin/content/"
-                >Network Administration Guide</link>.</para>
+            choose to either install and configure <systemitem
+            class="service">nova-network</systemitem> for networking
+            between VMs or use the Networking service (neutron) for
+            networking. To configure Compute networking options with
+            Neutron, see <link
+            xlink:href="http://docs.openstack.org/trunk/openstack-network/admin/content/"
+            >Network Administration Guide</link>.</para>
         <para>For each VM instance, Compute assigns to it a private IP
-            address. (Currently, Compute with nova-network only
+            address. (Currently, Compute with <systemitem
+            class="service">nova-network</systemitem> only
             supports Linux bridge networking that allows the virtual
             interfaces to connect to the outside network through the
             physical interface.)</para>
-        <para>The network controller with nova-network provides
+        <para>The network controller with <systemitem
+            class="service">nova-network</systemitem> provides
             virtual networks to enable compute servers to interact
             with each other and with the public network.</para>
-        <para>Currently, Compute with nova-network supports three
-            kinds of networks, implemented in three “Network Manager” types:<itemizedlist>
+        <para>Currently, Compute with <systemitem
+            class="service">nova-network</systemitem> supports these
+            kinds of networks, implemented in different “Network Manager” types:
+            <itemizedlist>
                 <listitem>
                     <para>Flat Network Manager</para>
                 </listitem>
@@ -837,7 +859,7 @@ header: Date: Thu, 13 Sep 2012 20:27:36 GMT
             administrator may create the Linux networking bridge
             (typically named <literal>br100</literal>, although this
             configurable) on the systems running the
-                <literal>nova-network</literal> service. All instances
+                <systemitem class="service">nova-network</systemitem> service. All instances
             of the system are attached to the same bridge, configured
             manually by the network administrator.</para>
         <para>
@@ -858,7 +880,7 @@ header: Date: Thu, 13 Sep 2012 20:27:36 GMT
             bridge on the compute node. In addition a DHCP server is
             running to configure instances (depending on
             single-/multi-host mode, alongside each
-                <literal>nova-network</literal>). In this mode,
+                <systemitem class="service">nova-network</systemitem>). In this mode,
             Compute does a bit more configuration in that it attempts
             to bridge into an ethernet device
                 (<literal>flat_interface</literal>, eth0 by default).
@@ -866,7 +888,8 @@ header: Date: Thu, 13 Sep 2012 20:27:36 GMT
             listening on this bridge, usually on IP address 10.0.0.1
             (see <link linkend="section_dnsmasq">DHCP server: dnsmasq</link>).
             For every instance, nova allocates a fixed IP address
-            and configure dnsmasq with the MAC/IP pair for the VM. For example, dnsmasq doesn't take part in the IP address
+            and configure dnsmasq with the MAC/IP pair for the VM. For example,
+            dnsmasq doesn't take part in the IP address
             allocation process, it only hands out IPs according to the
             mapping done by nova. Instances receive their fixed IPs by
             doing a dhcpdiscover. These IPs are <emphasis
@@ -944,8 +967,11 @@ header: Date: Thu, 13 Sep 2012 20:27:36 GMT
         <para>The behavior of dnsmasq can be customized by creating a dnsmasq configuration file.
                 Specify the config file using the <literal>dnsmasq_config_file</literal>
                 configuration option. For
-                example:<programlisting>dnsmasq_config_file=/etc/dnsmasq-nova.conf</programlisting>See
-                the <citetitle>OpenStack Configuration Reference</citetitle> for an example of how
+                example:
+                <programlisting>dnsmasq_config_file=/etc/dnsmasq-nova.conf</programlisting>
+                See  the <link xlink:href="http://docs.openstack.org/trunk/config-reference/content/"><citetitle>
+                OpenStack Configuration Reference</citetitle></link>
+                for an example of how
                 to change the behavior of dnsmasq using a dnsmasq configuration file. The dnsmasq
                 documentation has a more comprehensive <link
                     xlink:href="http://www.thekelleys.org.uk/dnsmasq/docs/dnsmasq.conf.example"
@@ -1433,11 +1459,12 @@ net.bridge.bridge-nf-call-ip6tables=0</programlisting>
                 requests and sends them to the rest of the system. It
                 is a wsgi app that routes and authenticate requests.
                 It supports the EC2 and OpenStack APIs. There is a
-                nova-api.conf file created when you install
+                <filename>nova-api.conf</filename> file created when you install
                 Compute.</para>
         </listitem>
         <listitem>
-            <para><systemitem class="service">nova-objectstore</systemitem>: The <systemitem class="service">nova-objectstore</systemitem> service is an ultra simple file-based
+            <para><systemitem class="service">nova-objectstore</systemitem>: The
+            <systemitem class="service">nova-objectstore</systemitem> service is an ultra simple file-based
                 storage system for images that replicates most of the S3 API. It can be replaced
                 with OpenStack Image Service and a simple image manager or use OpenStack Object
                 Storage as the virtual machine image storage facility. It must reside on the same
@@ -1896,27 +1923,27 @@ HostC            p2            5     10240     150
         </procedure>
     </section>
     <section xml:id="section_nova-compute-node-down">
-	<title>Recover from a failed compute node</title>
-	<para>If you have deployed OpenStack Compute with a shared filesystem,
-	you can quickly recover from a failed compute node.</para>
+        <title>Recover from a failed compute node</title>
+        <para>If you have deployed OpenStack Compute with a shared file system,
+        you can quickly recover from a failed compute node.</para>
     <section xml:id="nova-compute-node-down-manual-recovery">
     <title>Manual recovery</title>
     <para>For KVM/libvirt compute node recovery refer to section above, while the guide below may be applicable for other hypervisors.</para>
-	<procedure>
-	    <title>To work with host information</title>
+        <procedure>
+            <title>To work with host information</title>
             <step><para>Identify the vms on the affected hosts, using tools such as
-	a combination of <literal>nova list</literal> and <literal>nova show</literal> or
-	<literal>euca-describe-instances</literal>. Here's an example using the EC2 API
-	 - instance i-000015b9 that is running on node np-rcc54:</para>
-	<programlisting>i-000015b9 at3-ui02 running nectarkey (376, np-rcc54) 0 m1.xxlarge 2012-06-19T00:48:11.000Z 115.146.93.60</programlisting></step>
-	   <step><para>You can review the status of the host by
-	        using the nova database. Some of the important
-	        information is highlighted below. This example
-	        converts an EC2 API instance ID into an OpenStack
-	        ID - if you used the <literal>nova</literal>
-	        commands, you can substitute the ID directly. You
-	        can find the credentials for your database in
-	        <literal>/etc/nova.conf</literal>.</para>
+        a combination of <literal>nova list</literal> and <literal>nova show</literal> or
+        <literal>euca-describe-instances</literal>. Here's an example using the EC2 API
+         - instance i-000015b9 that is running on node np-rcc54:</para>
+        <programlisting>i-000015b9 at3-ui02 running nectarkey (376, np-rcc54) 0 m1.xxlarge 2012-06-19T00:48:11.000Z 115.146.93.60</programlisting></step>
+           <step><para>You can review the status of the host by
+                using the nova database. Some of the important
+                information is highlighted below. This example
+                converts an EC2 API instance ID into an OpenStack
+                ID - if you used the <literal>nova</literal>
+                commands, you can substitute the ID directly. You
+                can find the credentials for your database in
+                <filename>/etc/nova.conf</filename>.</para>
                 <programlisting>SELECT * FROM instances WHERE id = CONV('15b9', 16, 10) \G;
 *************************** 1. row ***************************
               created_at: 2012-06-19 00:48:11
@@ -1935,7 +1962,7 @@ HostC            p2            5     10240     150
 ...
               task_state: NULL
 ...</programlisting></step>
-	</procedure>
+        </procedure>
         <procedure>
             <title>To recover the VM</title>
           <step>  <para>Armed with the information of VMs on the failed
@@ -1970,7 +1997,7 @@ HostC            p2            5     10240     150
     <section xml:id="section_nova-uid-mismatch">
         <title>Recover from a UID/GID mismatch</title>
         <para>When running OpenStack compute, using a shared
-            filesystem or an automated configuration tool, you could
+            file system or an automated configuration tool, you could
             encounter a situation where some files on your compute
             node are using the wrong UID or GID. This causes a raft of
             errors, such as being unable to live migrate, or start
@@ -1985,29 +2012,33 @@ HostC            p2            5     10240     150
                         user/group.</para>
                 </step>
                 <step>
-                    <para>Set the nova uid in /etc/passwd to the same
-                        number in all hosts (for example, 112).</para>
+                    <para>Set the nova uid in
+                    <filename>/etc/passwd</filename> to the same
+                    number in all hosts (for example, 112).</para>
                 </step>
                 <step>
-                    <para>Set the libvirt-qemu uid in /etc/passwd to
-                        the same number in all hosts (for example, 119).</para>
+                    <para>Set the libvirt-qemu uid in
+                    <filename>/etc/passwd</filename> to the same number
+                    in all hosts (for example, 119).</para>
                 </step>
                 <step>
-                    <para>Set the nova group in /etc/group file to the
-                        same number in all hosts (for example, 120).</para>
+                    <para>Set the nova group in
+                    <filename>/etc/group</filename> file to the same
+                    number in all hosts (for example, 120).</para>
                 </step>
                 <step>
-                    <para>Set the libvirtd group in /etc/group file to
-                        the same number in all hosts (for example, 119).</para>
+                    <para>Set the libvirtd group in
+                    <filename>/etc/group</filename> file to the same
+                    number in all hosts (for example, 119).</para>
                 </step>
                 <step>
                     <para>Stop the services on the compute node.</para>
                 </step>
                 <step>
-                    <para>Change all the files owned by nova or group
-                        by nova. For example:</para>
+                    <para>Change all the files owned by user nova or
+                        by group nova. For example:</para>
                         <programlisting>find / -uid 108 -exec chown nova {} \; # note the 108 here is the old nova uid before the change
-find / -gid 120 -exec chgrp nova {} \;         </programlisting>
+find / -gid 120 -exec chgrp nova {} \;</programlisting>
                 </step>
                 <step>
                     <para>Repeat the steps for the libvirt-qemu owned
@@ -2051,7 +2082,8 @@ find / -gid 120 -exec chgrp nova {} \;         </programlisting>
                     </listitem>
                     <listitem>
                         <para>A Storage Area Network used by
-                            cinder-volumes (aka SAN)</para>
+                            <systemitem class="service">cinder-volumes</systemitem>
+                            (aka SAN)</para>
                     </listitem>
                 </orderedlist><para>The disaster example is the worst
                 one: a power loss. That power loss applies to the
@@ -2328,120 +2360,6 @@ done &lt; $volumes_tmp_file</programlisting>
                     close ALL sessions</emphasis>.</para>
         </simplesect>
     </section>
-</section>
-    <section xml:id="section_compute-troubleshoot">
-        <title>Troubleshoot Compute</title>
-        <para>Common problems for Compute typically involve misconfigured networking or credentials that are not sourced properly in the environment. Also, most flat networking configurations do not enable ping or ssh from a compute node to the instances running on that node. Another common problem is trying to run 32-bit images on a 64-bit compute node. This section offers more information about how to troubleshoot Compute.</para>
-        <section xml:id="section_log-files-for-openstack-compute"><title>Log files for OpenStack Compute</title><para>Log files are stored in /var/log/nova and there is a log file for each
-            service, for example nova-compute.log. You can format the log
-            strings using options for the nova.log module. The options used to
-            set format strings are: logging_context_format_string and
-            logging_default_format_string. If the log level is set to debug, you
-            can also specify logging_debug_format_suffix to append extra
-            formatting. For information about what variables are available for
-            the formatter see:
-            http://docs.python.org/library/logging.html#formatter.</para>
-            <para>You have two options for logging for OpenStack Compute based on configuration
-                settings. In nova.conf, include the logfile option to enable logging. Alternatively
-                you can set use_syslog=1, and then the nova daemon logs to syslog.</para></section>
-        <section xml:id="section_common-errors-and-fixes-for-openstack-compute">
-            <title>Common Compute errors and fixes</title>
-            <para>The ask.openstack.org site offers a place to ask and
-                answer questions, and you can also mark questions as
-                frequently asked questions. This section describes some
-                errors people have posted previously. We
-                are constantly fixing bugs, so online resources are a
-                great way to get the most up-to-date errors and
-                fixes.</para>
-            <simplesect>
-                <title>Credential errors, 401, 403 forbidden errors</title>
-            <para>A 403 forbidden error is caused by missing credentials.
-                Through current installation methods, there are basically
-                two ways to get the novarc file. The manual method
-                requires getting it from within a project zipfile, and the
-                scripted method just generates novarc out of the project
-                zip file and sources it for you. If you do the manual
-                method through a zip file, then the following novarc
-                alone, you end up losing the creds that are tied to the
-                user you created with nova-manage in the steps
-                before.</para>
-            <para>When you run <systemitem class="service">nova-api</systemitem> the first time, it generates the
-                certificate authority information, including openssl.cnf.
-                If it gets started out of order, you may not be able to
-                create your zip file. Once your CA information is
-                available, you should be able to go back to nova-manage to
-                create your zipfile.</para>
-            <para>You may also need to check your proxy settings to see if
-                they are causing problems with the novarc creation.</para>
-            </simplesect>
-            <simplesect><title>Instance errors</title>
-            <para>Sometimes a particular instance shows "pending" or you
-                cannot SSH to it. Sometimes the image itself is the
-                problem. For example, when using flat manager networking,
-                you do not have a dhcp server, and an ami-tiny image
-                doesn't support interface injection so you cannot connect
-                to it. The fix for this type of problem is to use an
-                Ubuntu image, which should obtain an IP address correctly
-                with FlatManager network settings. To troubleshoot other
-                possible problems with an instance, such as one that stays
-                in a spawning state, first check your instances directory
-                for i-ze0bnh1q dir to make sure it has the following
-                files:</para>
-            <itemizedlist>
-                <listitem>
-                    <para>libvirt.xml</para>
-                </listitem>
-                <listitem>
-                    <para>disk</para>
-                </listitem>
-                <listitem>
-                    <para>disk-raw</para>
-                </listitem>
-                <listitem>
-                    <para>kernel</para>
-                </listitem>
-                <listitem>
-                    <para>ramdisk</para>
-                </listitem>
-                <listitem>
-                    <para>console.log (Once the instance actually starts
-                        you should see a console.log.)</para>
-                </listitem>
-            </itemizedlist>
-            <para>Check the file sizes to see if they are reasonable. If
-                any are missing/zero/very small then <systemitem class="service">nova-compute</systemitem> has
-                somehow not completed download of the images from
-                objectstore.</para>
-            <para>Also check nova-compute.log for exceptions. Sometimes
-                they don't show up in the console output.</para>
-            <para>Next, check the /var/log/libvirt/qemu/i-ze0bnh1q.log
-                file to see if it exists and has any useful error messages
-                in it.</para>
-            <para>Finally, from the instances/i-ze0bnh1q directory, try
-                <code>virsh create libvirt.xml</code> and see if you
-                get an error there.</para>
-            </simplesect>
-        </section>
-        <section xml:id="section_reset-state">
-            <title>Manually reset the state of an instance</title>
-            <para>If an instance gets stuck in an intermediate state (e.g., "deleting"), you can
-                manually reset the state of an instance using the <command>nova
-                    reset-state</command> command. This will reset it to an error state, which you
-                can then delete. For
-                example:<screen><prompt>$</prompt> <userinput>nova reset-state c6bbbf26-b40a-47e7-8d5c-eb17bf65c485</userinput>
-<prompt>$</prompt> <userinput>nova delete c6bbbf26-b40a-47e7-8d5c-eb17bf65c485</userinput></screen></para>
-            <para>You can also use the <literal>--active</literal> to force the instance back into
-                an active state instead of an error state, for example:<screen><prompt>$</prompt> <userinput>nova reset-state --active c6bbbf26-b40a-47e7-8d5c-eb17bf65c485</userinput></screen>
-            </para>
-        </section>
-        <section xml:id="section_problems-with-injection">
-            <title>Problems with injection</title>
-            <para>If you are diagnosing problems with instances not booting,
-                or booting slowly, consider investigating file injection as a
-                cause. Setting <literal>libvirt_injection_partition</literal>
-                to -2 disables injection in libvirt. This can be required if you want to make user
-                specified files available from the metadata server (and config drive is not enabled),
-                for performance reasons, and also to avoid boot failure if injection itself fails.</para>
-        </section>
-    </section>
+  </section>
+  <xi:include href="../common/section_support-compute.xml"/>
 </chapter>
