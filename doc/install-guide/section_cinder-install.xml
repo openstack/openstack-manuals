@@ -13,6 +13,14 @@
         iscsi-initiator-utils scsi-target-utils</userinput></screen>
     <screen os="opensuse"><prompt>$</prompt> <userinput>sudo zypper install openstack-cinder openstack-cinder-doc \
         open-iscsi tgt</userinput></screen>
+    <note><para>If you are using XenServer type vhd images, you will also need the <command>vhd-util</command>
+    binary to be able to create volumes from uploaded images.</para>
+    <para>This could be installed by:</para>
+    <screen os="ubuntu"><prompt>$</prompt> <userinput>sudo apt-get install blktap-utils</userinput></screen>
+    <screen os="opensuse"><prompt>$</prompt> <userinput>sudo zypper in xen-tools</userinput></screen>
+    <screen os="rhel;centos;fedora"><prompt>$</prompt> <userinput>sudo yum install blktap</userinput></screen>
+    </note>
+
     <para>Edit <filename>/etc/cinder/api-paste.ini</filename> (filter
         authtoken).<programlisting>[filter:authtoken]
 paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
