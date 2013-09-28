@@ -415,36 +415,50 @@ def build_affected_books(rootdir, book_exceptions, file_exceptions,
 
         os.chdir(root)
 
-        for f in files:
-            if (f.endswith('.xml') and
-                    f != 'pom.xml' and
-                    f not in file_exceptions):
-                path = os.path.abspath(os.path.join(root, f))
-                doc = etree.parse(path)
-
-                # Check for inclusion of files as part of imagedata
-                for node in doc.findall(
-                        '//{http://docbook.org/ns/docbook}imagedata'):
-                    href = node.get('fileref')
-                    if (f not in file_exceptions and
-                            os.path.abspath(href) in modified_files):
+        # We can scan only for depth of one of inclusion
+        # therefore skip the common directory since there's no
+        # book build in it.
+        if not root.endswith('doc/common'):
+            for f in files:
+                if (f.endswith('.xml') and
+                        f != 'pom.xml' and
+                        f not in file_exceptions):
+                    path = os.path.abspath(os.path.join(root, f))
+                    # If the file itself is modified, build the book
+                    if path in modified_files:
                         affected_books.append(book_root)
                         break
 
+                    # If the file itself is modified, build the book.
+                    # Note this is an optimization in most cases but
+                    # needed for bk-*.xml since those are included by
+                    # pom.xml and pom.xml is not checked for
+                    # modification of included files.
+                    doc = etree.parse(path)
+    
+                    # Check for inclusion of files as part of imagedata
+                    for node in doc.findall(
+                            '//{http://docbook.org/ns/docbook}imagedata'):
+                        href = node.get('fileref')
+                        if (f not in file_exceptions and
+                                os.path.abspath(href) in modified_files):
+                            affected_books.append(book_root)
+                            break
+    
+                    if book_root in affected_books:
+                        break
+    
+                    # Check for inclusion of files as part of xi:include
+                    ns = {"xi": "http://www.w3.org/2001/XInclude"}
+                    for node in doc.xpath('//xi:include', namespaces=ns):
+                        href = node.get('href')
+                        if (f not in file_exceptions and
+                                os.path.abspath(href) in modified_files):
+                            affected_books.append(book_root)
+                            break
                 if book_root in affected_books:
                     break
-
-                # Check for inclusion of files as part of xi:include
-                ns = {"xi": "http://www.w3.org/2001/XInclude"}
-                for node in doc.xpath('//xi:include', namespaces=ns):
-                    href = node.get('href')
-                    if (f not in file_exceptions and
-                            os.path.abspath(href) in modified_files):
-                        affected_books.append(book_root)
-                        break
-            if book_root in affected_books:
-                break
-
+    
     if not force and affected_books:
         books = affected_books
     else:
@@ -478,7 +492,7 @@ def build_affected_books(rootdir, book_exceptions, file_exceptions,
 
     if voting and any_failures:
         sys.exit(1)
-
+    print("Building finished.")
 
 def main(args):
 
